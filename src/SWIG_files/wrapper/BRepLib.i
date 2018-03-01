@@ -1,5 +1,5 @@
 /*
-Copyright 2008-2017 Thomas Paviot (tpaviot@gmail.com)
+Copyright 2008-2018 Thomas Paviot (tpaviot@gmail.com)
 
 
 This file is part of pythonOCC.
@@ -55,6 +55,9 @@ def register_handle(handle, base_object):
 
 /* typedefs */
 /* end typedefs declaration */
+
+/* templates */
+/* end templates declaration */
 
 /* public enums */
 enum BRepLib_EdgeError {
@@ -215,17 +218,31 @@ class BRepLib {
 ") UpdateEdgeTolerance;
 		static Standard_Boolean UpdateEdgeTolerance (const TopoDS_Shape & S,const Standard_Real MinToleranceRequest,const Standard_Real MaxToleranceToCheck);
 		%feature("compactdefaultargs") SameParameter;
-		%feature("autodoc", "	* Computes new 2d curve(s) for the edge <E> to have the same parameter as the 3d curve. The algorithm is not done if the flag SameParameter was True on the Edge.
+		%feature("autodoc", "	* Computes new 2d curve--s-- for the edge <theEdge> to have the same parameter as the 3d curve. The algorithm is not done if the flag SameParameter was True on the Edge.
 
-	:param E:
-	:type E: TopoDS_Edge &
+	:param theEdge:
+	:type theEdge: TopoDS_Edge &
 	:param Tolerance: default value is 1.0e-5
 	:type Tolerance: float
 	:rtype: void
 ") SameParameter;
-		static void SameParameter (const TopoDS_Edge & E,const Standard_Real Tolerance = 1.0e-5);
+		static void SameParameter (const TopoDS_Edge & theEdge,const Standard_Real Tolerance = 1.0e-5);
 		%feature("compactdefaultargs") SameParameter;
-		%feature("autodoc", "	* Computes new 2d curve(s) for all the edges of <S> to have the same parameter as the 3d curve. The algorithm is not done if the flag SameParameter was True on an Edge.
+		%feature("autodoc", "	* Computes new 2d curve--s-- for the edge <theEdge> to have the same parameter as the 3d curve. The algorithm is not done if the flag SameParameter was True on the Edge. theNewTol is a new tolerance of vertices of the input edge --not applied inside the algorithm, but pre-computed--. If IsUseOldEdge is true then the input edge will be modified, otherwise the new copy of input edge will be created. Returns the new edge as a result, can be ignored if IsUseOldEdge is true.
+
+	:param theEdge:
+	:type theEdge: TopoDS_Edge &
+	:param theTolerance:
+	:type theTolerance: float
+	:param theNewTol:
+	:type theNewTol: float &
+	:param IsUseOldEdge:
+	:type IsUseOldEdge: bool
+	:rtype: TopoDS_Edge
+") SameParameter;
+		static TopoDS_Edge SameParameter (const TopoDS_Edge & theEdge,const Standard_Real theTolerance,Standard_Real &OutValue,const Standard_Boolean IsUseOldEdge);
+		%feature("compactdefaultargs") SameParameter;
+		%feature("autodoc", "	* Computes new 2d curve--s-- for all the edges of <S> to have the same parameter as the 3d curve. The algorithm is not done if the flag SameParameter was True on an Edge.
 
 	:param S:
 	:type S: TopoDS_Shape &
@@ -236,8 +253,22 @@ class BRepLib {
 	:rtype: void
 ") SameParameter;
 		static void SameParameter (const TopoDS_Shape & S,const Standard_Real Tolerance = 1.0e-5,const Standard_Boolean forced = Standard_False);
+		%feature("compactdefaultargs") SameParameter;
+		%feature("autodoc", "	* Computes new 2d curve--s-- for all the edges of <S> to have the same parameter as the 3d curve. The algorithm is not done if the flag SameParameter was True on an Edge. theReshaper is used to record the modifications of input shape <S> to prevent any modifications on the shape itself. Thus the input shape --and its subshapes-- will not be modified, instead the reshaper will contain a modified empty-copies of original subshapes as substitutions.
+
+	:param S:
+	:type S: TopoDS_Shape &
+	:param theReshaper:
+	:type theReshaper: BRepTools_ReShape &
+	:param Tolerance: default value is 1.0e-5
+	:type Tolerance: float
+	:param forced: default value is Standard_False
+	:type forced: bool
+	:rtype: void
+") SameParameter;
+		static void SameParameter (const TopoDS_Shape & S,BRepTools_ReShape & theReshaper,const Standard_Real Tolerance = 1.0e-5,const Standard_Boolean forced = Standard_False);
 		%feature("compactdefaultargs") UpdateTolerances;
-		%feature("autodoc", "	* Replaces tolerance of FACE EDGE VERTEX by the tolerance Max of their connected handling shapes. It is not necessary to use this call after SameParameter. (called in)
+		%feature("autodoc", "	* Replaces tolerance of FACE EDGE VERTEX by the tolerance Max of their connected handling shapes. It is not necessary to use this call after SameParameter. --called in--
 
 	:param S:
 	:type S: TopoDS_Shape &
@@ -246,8 +277,28 @@ class BRepLib {
 	:rtype: void
 ") UpdateTolerances;
 		static void UpdateTolerances (const TopoDS_Shape & S,const Standard_Boolean verifyFaceTolerance = Standard_False);
+		%feature("compactdefaultargs") UpdateTolerances;
+		%feature("autodoc", "	* Replaces tolerance of FACE EDGE VERTEX by the tolerance Max of their connected handling shapes. It is not necessary to use this call after SameParameter. --called in-- theReshaper is used to record the modifications of input shape <S> to prevent any modifications on the shape itself. Thus the input shape --and its subshapes-- will not be modified, instead the reshaper will contain a modified empty-copies of original subshapes as substitutions.
+
+	:param S:
+	:type S: TopoDS_Shape &
+	:param theReshaper:
+	:type theReshaper: BRepTools_ReShape &
+	:param verifyFaceTolerance: default value is Standard_False
+	:type verifyFaceTolerance: bool
+	:rtype: void
+") UpdateTolerances;
+		static void UpdateTolerances (const TopoDS_Shape & S,BRepTools_ReShape & theReshaper,const Standard_Boolean verifyFaceTolerance = Standard_False);
+		%feature("compactdefaultargs") UpdateInnerTolerances;
+		%feature("autodoc", "	* Checks tolerances of edges --including inner points-- and vertices of a shape and updates them to satisfy 'SameParameter' condition
+
+	:param S:
+	:type S: TopoDS_Shape &
+	:rtype: void
+") UpdateInnerTolerances;
+		static void UpdateInnerTolerances (const TopoDS_Shape & S);
 		%feature("compactdefaultargs") OrientClosedSolid;
-		%feature("autodoc", "	* Orients the solid forward and the shell with the orientation to have matter in the solid. Returns False if the solid is unOrientable (open or incoherent)
+		%feature("autodoc", "	* Orients the solid forward and the shell with the orientation to have matter in the solid. Returns False if the solid is unOrientable --open or incoherent--
 
 	:param solid:
 	:type solid: TopoDS_Solid &
@@ -265,10 +316,22 @@ class BRepLib {
 ") EncodeRegularity;
 		static void EncodeRegularity (const TopoDS_Shape & S,const Standard_Real TolAng = 1.0e-10);
 		%feature("compactdefaultargs") EncodeRegularity;
-		%feature("autodoc", "	* Encodes the Regularity beetween <F1> and <F2> by <E> Warning: <TolAng> is an angular tolerance, expressed in Rad. Warning: If the edge's regularity is coded before, nothing is done.
+		%feature("autodoc", "	* Encodes the Regularity of edges in list <LE> on the shape <S> Warning: <TolAng> is an angular tolerance, expressed in Rad. Warning: If the edges's regularity are coded before, nothing is done.
 
 	:param S:
-	:type S: TopoDS_Edge &
+	:type S: TopoDS_Shape &
+	:param LE:
+	:type LE: TopTools_ListOfShape &
+	:param TolAng: default value is 1.0e-10
+	:type TolAng: float
+	:rtype: void
+") EncodeRegularity;
+		static void EncodeRegularity (const TopoDS_Shape & S,const TopTools_ListOfShape & LE,const Standard_Real TolAng = 1.0e-10);
+		%feature("compactdefaultargs") EncodeRegularity;
+		%feature("autodoc", "	* Encodes the Regularity beetween <F1> and <F2> by <E> Warning: <TolAng> is an angular tolerance, expressed in Rad. Warning: If the edge's regularity is coded before, nothing is done.
+
+	:param E:
+	:type E: TopoDS_Edge &
 	:param F1:
 	:type F1: TopoDS_Face &
 	:param F2:
@@ -277,9 +340,9 @@ class BRepLib {
 	:type TolAng: float
 	:rtype: void
 ") EncodeRegularity;
-		static void EncodeRegularity (TopoDS_Edge & S,const TopoDS_Face & F1,const TopoDS_Face & F2,const Standard_Real TolAng = 1.0e-10);
+		static void EncodeRegularity (TopoDS_Edge & E,const TopoDS_Face & F1,const TopoDS_Face & F2,const Standard_Real TolAng = 1.0e-10);
 		%feature("compactdefaultargs") SortFaces;
-		%feature("autodoc", "	* Sorts in LF the Faces of S on the complexity of their surfaces (Plane,Cylinder,Cone,Sphere,Torus,other)
+		%feature("autodoc", "	* Sorts in LF the Faces of S on the complexity of their surfaces --Plane,Cylinder,Cone,Sphere,Torus,other--
 
 	:param S:
 	:type S: TopoDS_Shape &
@@ -289,7 +352,7 @@ class BRepLib {
 ") SortFaces;
 		static void SortFaces (const TopoDS_Shape & S,TopTools_ListOfShape & LF);
 		%feature("compactdefaultargs") ReverseSortFaces;
-		%feature("autodoc", "	* Sorts in LF the Faces of S on the reverse complexity of their surfaces (other,Torus,Sphere,Cone,Cylinder,Plane)
+		%feature("autodoc", "	* Sorts in LF the Faces of S on the reverse complexity of their surfaces --other,Torus,Sphere,Cone,Cylinder,Plane--
 
 	:param S:
 	:type S: TopoDS_Shape &
@@ -310,6 +373,56 @@ class BRepLib {
 	:rtype: bool
 ") EnsureNormalConsistency;
 		static Standard_Boolean EnsureNormalConsistency (const TopoDS_Shape & S,const Standard_Real theAngTol = 0.001,const Standard_Boolean ForceComputeNormals = Standard_False);
+		%feature("compactdefaultargs") BoundingVertex;
+		%feature("autodoc", "	* Calculates the bounding sphere around the set of vertexes from the theLV list. Returns the center --theNewCenter-- and the radius --theNewTol-- of this sphere. This can be used to construct the new vertex which covers the given set of other vertices.
+
+	:param theLV:
+	:type theLV: NCollection_List<TopoDS_Shape> &
+	:param theNewCenter:
+	:type theNewCenter: gp_Pnt
+	:param theNewTol:
+	:type theNewTol: float &
+	:rtype: void
+") BoundingVertex;
+		static void BoundingVertex (const NCollection_List<TopoDS_Shape> & theLV,gp_Pnt & theNewCenter,Standard_Real &OutValue);
+		%feature("compactdefaultargs") FindValidRange;
+		%feature("autodoc", "	* For an edge defined by 3d curve and tolerance and vertices defined by points, parameters on curve and tolerances, finds a range of curve between vertices not covered by vertices tolerances. Returns false if there is no such range. Otherwise, sets theFirst and theLast as its bounds.
+
+	:param theCurve:
+	:type theCurve: Adaptor3d_Curve &
+	:param theTolE:
+	:type theTolE: float
+	:param theParV1:
+	:type theParV1: float
+	:param thePntV1:
+	:type thePntV1: gp_Pnt
+	:param theTolV1:
+	:type theTolV1: float
+	:param theParV2:
+	:type theParV2: float
+	:param thePntV2:
+	:type thePntV2: gp_Pnt
+	:param theTolV2:
+	:type theTolV2: float
+	:param theFirst:
+	:type theFirst: float &
+	:param theLast:
+	:type theLast: float &
+	:rtype: bool
+") FindValidRange;
+		static Standard_Boolean FindValidRange (const Adaptor3d_Curve & theCurve,const Standard_Real theTolE,const Standard_Real theParV1,const gp_Pnt & thePntV1,const Standard_Real theTolV1,const Standard_Real theParV2,const gp_Pnt & thePntV2,const Standard_Real theTolV2,Standard_Real &OutValue,Standard_Real &OutValue);
+		%feature("compactdefaultargs") FindValidRange;
+		%feature("autodoc", "	* Finds a range of 3d curve of the edge not covered by vertices tolerances. Returns false if there is no such range. Otherwise, sets theFirst and theLast as its bounds.
+
+	:param theEdge:
+	:type theEdge: TopoDS_Edge &
+	:param theFirst:
+	:type theFirst: float &
+	:param theLast:
+	:type theLast: float &
+	:rtype: bool
+") FindValidRange;
+		static Standard_Boolean FindValidRange (const TopoDS_Edge & theEdge,Standard_Real &OutValue,Standard_Real &OutValue);
 };
 
 
@@ -322,7 +435,7 @@ class BRepLib {
 class BRepLib_CheckCurveOnSurface {
 	public:
 		%feature("compactdefaultargs") BRepLib_CheckCurveOnSurface;
-		%feature("autodoc", "	* Empty contructor
+		%feature("autodoc", "	* Default contructor
 
 	:rtype: None
 ") BRepLib_CheckCurveOnSurface;
@@ -337,22 +450,6 @@ class BRepLib_CheckCurveOnSurface {
 	:rtype: None
 ") BRepLib_CheckCurveOnSurface;
 		 BRepLib_CheckCurveOnSurface (const TopoDS_Edge & theEdge,const TopoDS_Face & theFace);
-		%feature("compactdefaultargs") BRepLib_CheckCurveOnSurface;
-		%feature("autodoc", "	* Contructor
-
-	:param theCurve:
-	:type theCurve: Handle_Geom_Curve &
-	:param thePCurve:
-	:type thePCurve: Handle_Geom2d_Curve &
-	:param theSurface:
-	:type theSurface: Handle_Geom_Surface &
-	:param theFirst:
-	:type theFirst: float
-	:param theLast:
-	:type theLast: float
-	:rtype: None
-") BRepLib_CheckCurveOnSurface;
-		 BRepLib_CheckCurveOnSurface (const Handle_Geom_Curve & theCurve,const Handle_Geom2d_Curve & thePCurve,const Handle_Geom_Surface & theSurface,const Standard_Real theFirst,const Standard_Real theLast);
 		%feature("compactdefaultargs") Init;
 		%feature("autodoc", "	* Sets the data for the algorithm
 
@@ -363,56 +460,6 @@ class BRepLib_CheckCurveOnSurface {
 	:rtype: None
 ") Init;
 		void Init (const TopoDS_Edge & theEdge,const TopoDS_Face & theFace);
-		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	* Sets the data for the algorithm
-
-	:param theCurve:
-	:type theCurve: Handle_Geom_Curve &
-	:param thePCurve:
-	:type thePCurve: Handle_Geom2d_Curve &
-	:param theSurface:
-	:type theSurface: Handle_Geom_Surface &
-	:param theFirst:
-	:type theFirst: float
-	:param theLast:
-	:type theLast: float
-	:rtype: None
-") Init;
-		void Init (const Handle_Geom_Curve & theCurve,const Handle_Geom2d_Curve & thePCurve,const Handle_Geom_Surface & theSurface,const Standard_Real theFirst,const Standard_Real theLast);
-		%feature("compactdefaultargs") Curve;
-		%feature("autodoc", "	* Returns my3DCurve
-
-	:rtype: Handle_Geom_Curve
-") Curve;
-		Handle_Geom_Curve Curve ();
-		%feature("compactdefaultargs") PCurve;
-		%feature("autodoc", "	* Returns my2DCurve
-
-	:rtype: Handle_Geom2d_Curve
-") PCurve;
-		Handle_Geom2d_Curve PCurve ();
-		%feature("compactdefaultargs") PCurve2;
-		%feature("autodoc", "	* Returns my2DCurve
-
-	:rtype: Handle_Geom2d_Curve
-") PCurve2;
-		Handle_Geom2d_Curve PCurve2 ();
-		%feature("compactdefaultargs") Surface;
-		%feature("autodoc", "	* Returns mySurface
-
-	:rtype: Handle_Geom_Surface
-") Surface;
-		Handle_Geom_Surface Surface ();
-		%feature("compactdefaultargs") Range;
-		%feature("autodoc", "	* Returns the range
-
-	:param theFirst:
-	:type theFirst: float &
-	:param theLast:
-	:type theLast: float &
-	:rtype: None
-") Range;
-		void Range (Standard_Real &OutValue,Standard_Real &OutValue);
 		%feature("compactdefaultargs") Perform;
 		%feature("autodoc", "	* Performs the calculation If isTheMultyTheadDisabled == True then computation will be made without any parallelization.
 
@@ -421,6 +468,40 @@ class BRepLib_CheckCurveOnSurface {
 	:rtype: None
 ") Perform;
 		void Perform (const Standard_Boolean isTheMultyTheradDisabled = Standard_False);
+		%feature("compactdefaultargs") Curve;
+		%feature("autodoc", "	* Returns source 3D-Curve
+
+	:rtype: Handle_Geom_Curve
+") Curve;
+		Handle_Geom_Curve Curve ();
+		%feature("compactdefaultargs") PCurve;
+		%feature("autodoc", "	* Returns mine 2D-Curve
+
+	:rtype: Handle_Geom2d_Curve
+") PCurve;
+		Handle_Geom2d_Curve PCurve ();
+		%feature("compactdefaultargs") PCurve2;
+		%feature("autodoc", "	* Returns 2nd 2D-Curve --if it exists, e.g. for seam-edge--
+
+	:rtype: Handle_Geom2d_Curve
+") PCurve2;
+		Handle_Geom2d_Curve PCurve2 ();
+		%feature("compactdefaultargs") Surface;
+		%feature("autodoc", "	* Returns source surface
+
+	:rtype: Handle_Geom_Surface
+") Surface;
+		Handle_Geom_Surface Surface ();
+		%feature("compactdefaultargs") Range;
+		%feature("autodoc", "	* Returns first and last parameter of the curves --2D- and 3D-curves are considered to have same range--
+
+	:param theFirst:
+	:type theFirst: float &
+	:param theLast:
+	:type theLast: float &
+	:rtype: None
+") Range;
+		void Range (Standard_Real &OutValue,Standard_Real &OutValue);
 		%feature("compactdefaultargs") IsDone;
 		%feature("autodoc", "	* Returns true if the max distance has been found
 
@@ -456,10 +537,6 @@ class BRepLib_CheckCurveOnSurface {
 %nodefaultctor BRepLib_Command;
 class BRepLib_Command {
 	public:
-		%feature("compactdefaultargs") Delete;
-		%feature("autodoc", "	:rtype: void
-") Delete;
-		virtual void Delete ();
 		%feature("compactdefaultargs") IsDone;
 		%feature("autodoc", "	:rtype: bool
 ") IsDone;
@@ -583,7 +660,7 @@ class BRepLib_FuseEdges {
 ") Edges;
 		void Edges (TopTools_DataMapOfIntegerListOfShape & theMapLstEdg);
 		%feature("compactdefaultargs") ResultEdges;
-		%feature("autodoc", "	* returns all the fused edges. each integer entry in the map corresponds to the integer in the DataMapOfIntegerListOfShape we get in method Edges. That is to say, to the list of edges in theMapLstEdg(i) corresponds the resulting edge theMapEdge(i)
+		%feature("autodoc", "	* returns all the fused edges. each integer entry in the map corresponds to the integer in the DataMapOfIntegerListOfShape we get in method Edges. That is to say, to the list of edges in theMapLstEdg--i-- corresponds the resulting edge theMapEdge--i--
 
 	:param theMapEdg:
 	:type theMapEdg: TopTools_DataMapOfIntegerShape &
@@ -628,7 +705,7 @@ class BRepLib_FuseEdges {
 class BRepLib_MakeShape : public BRepLib_Command {
 	public:
 		%feature("compactdefaultargs") Build;
-		%feature("autodoc", "	* This is called by Shape(). It does nothing but may be redefined.
+		%feature("autodoc", "	* This is called by Shape----. It does nothing but may be redefined.
 
 	:rtype: None
 ") Build;
@@ -1631,7 +1708,7 @@ class BRepLib_MakeFace : public BRepLib_MakeShape {
 ") BRepLib_MakeFace;
 		 BRepLib_MakeFace (const gp_Torus & C);
 		%feature("compactdefaultargs") BRepLib_MakeFace;
-		%feature("autodoc", "	* Make a face from a Surface. Accepts tolerance value (TolDegen) for resolution of degenerated edges.
+		%feature("autodoc", "	* Make a face from a Surface. Accepts tolerance value --TolDegen-- for resolution of degenerated edges.
 
 	:param S:
 	:type S: Handle_Geom_Surface &
@@ -1721,7 +1798,7 @@ class BRepLib_MakeFace : public BRepLib_MakeShape {
 ") BRepLib_MakeFace;
 		 BRepLib_MakeFace (const gp_Torus & C,const Standard_Real UMin,const Standard_Real UMax,const Standard_Real VMin,const Standard_Real VMax);
 		%feature("compactdefaultargs") BRepLib_MakeFace;
-		%feature("autodoc", "	* Make a face from a Surface. Accepts min & max parameters to construct the face's bounds. Also accepts tolerance value (TolDegen) for resolution of degenerated edges.
+		%feature("autodoc", "	* Make a face from a Surface. Accepts min & max parameters to construct the face's bounds. Also accepts tolerance value --TolDegen-- for resolution of degenerated edges.
 
 	:param S:
 	:type S: Handle_Geom_Surface &
@@ -1839,7 +1916,7 @@ class BRepLib_MakeFace : public BRepLib_MakeShape {
 ") Init;
 		void Init (const TopoDS_Face & F);
 		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	* Creates the face from the surface. If Bound is True a wire is made from the natural bounds. Accepts tolerance value (TolDegen) for resolution of degenerated edges.
+		%feature("autodoc", "	* Creates the face from the surface. If Bound is True a wire is made from the natural bounds. Accepts tolerance value --TolDegen-- for resolution of degenerated edges.
 
 	:param S:
 	:type S: Handle_Geom_Surface &
@@ -1851,7 +1928,7 @@ class BRepLib_MakeFace : public BRepLib_MakeShape {
 ") Init;
 		void Init (const Handle_Geom_Surface & S,const Standard_Boolean Bound,const Standard_Real TolDegen);
 		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	* Creates the face from the surface and the min-max values. Accepts tolerance value (TolDegen) for resolution of degenerated edges.
+		%feature("autodoc", "	* Creates the face from the surface and the min-max values. Accepts tolerance value --TolDegen-- for resolution of degenerated edges.
 
 	:param S:
 	:type S: Handle_Geom_Surface &

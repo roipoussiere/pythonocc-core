@@ -1,5 +1,5 @@
 /*
-Copyright 2008-2017 Thomas Paviot (tpaviot@gmail.com)
+Copyright 2008-2018 Thomas Paviot (tpaviot@gmail.com)
 
 
 This file is part of pythonOCC.
@@ -56,6 +56,20 @@ def register_handle(handle, base_object):
 /* typedefs */
 /* end typedefs declaration */
 
+/* templates */
+%template(StepShape_Array1OfFace) NCollection_Array1 <Handle_StepShape_Face>;
+%template(StepShape_Array1OfConnectedEdgeSet) NCollection_Array1 <Handle_StepShape_ConnectedEdgeSet>;
+%template(StepShape_Array1OfValueQualifier) NCollection_Array1 <StepShape_ValueQualifier>;
+%template(StepShape_Array1OfShapeDimensionRepresentationItem) NCollection_Array1 <StepShape_ShapeDimensionRepresentationItem>;
+%template(StepShape_Array1OfOrientedEdge) NCollection_Array1 <Handle_StepShape_OrientedEdge>;
+%template(StepShape_Array1OfShell) NCollection_Array1 <StepShape_Shell>;
+%template(StepShape_Array1OfConnectedFaceSet) NCollection_Array1 <Handle_StepShape_ConnectedFaceSet>;
+%template(StepShape_Array1OfEdge) NCollection_Array1 <Handle_StepShape_Edge>;
+%template(StepShape_Array1OfGeometricSetSelect) NCollection_Array1 <StepShape_GeometricSetSelect>;
+%template(StepShape_Array1OfFaceBound) NCollection_Array1 <Handle_StepShape_FaceBound>;
+%template(StepShape_Array1OfOrientedClosedShell) NCollection_Array1 <Handle_StepShape_OrientedClosedShell>;
+/* end templates declaration */
+
 /* public enums */
 enum StepShape_AngleRelator {
 	StepShape_Equal = 0,
@@ -71,876 +85,6 @@ enum StepShape_BooleanOperator {
 
 /* end public enums declaration */
 
-%nodefaultctor StepShape_Array1OfConnectedEdgeSet;
-class StepShape_Array1OfConnectedEdgeSet {
-	public:
-		%feature("compactdefaultargs") StepShape_Array1OfConnectedEdgeSet;
-		%feature("autodoc", "	:param Low:
-	:type Low: int
-	:param Up:
-	:type Up: int
-	:rtype: None
-") StepShape_Array1OfConnectedEdgeSet;
-		 StepShape_Array1OfConnectedEdgeSet (const Standard_Integer Low,const Standard_Integer Up);
-		%feature("compactdefaultargs") StepShape_Array1OfConnectedEdgeSet;
-		%feature("autodoc", "	:param Item:
-	:type Item: Handle_StepShape_ConnectedEdgeSet &
-	:param Low:
-	:type Low: int
-	:param Up:
-	:type Up: int
-	:rtype: None
-") StepShape_Array1OfConnectedEdgeSet;
-		 StepShape_Array1OfConnectedEdgeSet (const Handle_StepShape_ConnectedEdgeSet & Item,const Standard_Integer Low,const Standard_Integer Up);
-		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	:param V:
-	:type V: Handle_StepShape_ConnectedEdgeSet &
-	:rtype: None
-") Init;
-		void Init (const Handle_StepShape_ConnectedEdgeSet & V);
-		%feature("compactdefaultargs") Destroy;
-		%feature("autodoc", "	:rtype: None
-") Destroy;
-		void Destroy ();
-		%feature("compactdefaultargs") IsAllocated;
-		%feature("autodoc", "	:rtype: bool
-") IsAllocated;
-		Standard_Boolean IsAllocated ();
-		%feature("compactdefaultargs") Assign;
-		%feature("autodoc", "	:param Other:
-	:type Other: StepShape_Array1OfConnectedEdgeSet &
-	:rtype: StepShape_Array1OfConnectedEdgeSet
-") Assign;
-		const StepShape_Array1OfConnectedEdgeSet & Assign (const StepShape_Array1OfConnectedEdgeSet & Other);
-		%feature("compactdefaultargs") operator =;
-		%feature("autodoc", "	:param Other:
-	:type Other: StepShape_Array1OfConnectedEdgeSet &
-	:rtype: StepShape_Array1OfConnectedEdgeSet
-") operator =;
-		const StepShape_Array1OfConnectedEdgeSet & operator = (const StepShape_Array1OfConnectedEdgeSet & Other);
-		%feature("compactdefaultargs") Length;
-		%feature("autodoc", "	:rtype: int
-") Length;
-		Standard_Integer Length ();
-		%feature("compactdefaultargs") Lower;
-		%feature("autodoc", "	:rtype: int
-") Lower;
-		Standard_Integer Lower ();
-		%feature("compactdefaultargs") Upper;
-		%feature("autodoc", "	:rtype: int
-") Upper;
-		Standard_Integer Upper ();
-		%feature("compactdefaultargs") SetValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param Value:
-	:type Value: Handle_StepShape_ConnectedEdgeSet &
-	:rtype: None
-") SetValue;
-		void SetValue (const Standard_Integer Index,const Handle_StepShape_ConnectedEdgeSet & Value);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: Handle_StepShape_ConnectedEdgeSet
-") Value;
-		Handle_StepShape_ConnectedEdgeSet Value (const Standard_Integer Index);
-		%feature("compactdefaultargs") ChangeValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: Handle_StepShape_ConnectedEdgeSet
-") ChangeValue;
-		Handle_StepShape_ConnectedEdgeSet ChangeValue (const Standard_Integer Index);
-};
-
-
-%extend StepShape_Array1OfConnectedEdgeSet {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor StepShape_Array1OfConnectedFaceSet;
-class StepShape_Array1OfConnectedFaceSet {
-	public:
-		%feature("compactdefaultargs") StepShape_Array1OfConnectedFaceSet;
-		%feature("autodoc", "	:param Low:
-	:type Low: int
-	:param Up:
-	:type Up: int
-	:rtype: None
-") StepShape_Array1OfConnectedFaceSet;
-		 StepShape_Array1OfConnectedFaceSet (const Standard_Integer Low,const Standard_Integer Up);
-		%feature("compactdefaultargs") StepShape_Array1OfConnectedFaceSet;
-		%feature("autodoc", "	:param Item:
-	:type Item: Handle_StepShape_ConnectedFaceSet &
-	:param Low:
-	:type Low: int
-	:param Up:
-	:type Up: int
-	:rtype: None
-") StepShape_Array1OfConnectedFaceSet;
-		 StepShape_Array1OfConnectedFaceSet (const Handle_StepShape_ConnectedFaceSet & Item,const Standard_Integer Low,const Standard_Integer Up);
-		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	:param V:
-	:type V: Handle_StepShape_ConnectedFaceSet &
-	:rtype: None
-") Init;
-		void Init (const Handle_StepShape_ConnectedFaceSet & V);
-		%feature("compactdefaultargs") Destroy;
-		%feature("autodoc", "	:rtype: None
-") Destroy;
-		void Destroy ();
-		%feature("compactdefaultargs") IsAllocated;
-		%feature("autodoc", "	:rtype: bool
-") IsAllocated;
-		Standard_Boolean IsAllocated ();
-		%feature("compactdefaultargs") Assign;
-		%feature("autodoc", "	:param Other:
-	:type Other: StepShape_Array1OfConnectedFaceSet &
-	:rtype: StepShape_Array1OfConnectedFaceSet
-") Assign;
-		const StepShape_Array1OfConnectedFaceSet & Assign (const StepShape_Array1OfConnectedFaceSet & Other);
-		%feature("compactdefaultargs") operator =;
-		%feature("autodoc", "	:param Other:
-	:type Other: StepShape_Array1OfConnectedFaceSet &
-	:rtype: StepShape_Array1OfConnectedFaceSet
-") operator =;
-		const StepShape_Array1OfConnectedFaceSet & operator = (const StepShape_Array1OfConnectedFaceSet & Other);
-		%feature("compactdefaultargs") Length;
-		%feature("autodoc", "	:rtype: int
-") Length;
-		Standard_Integer Length ();
-		%feature("compactdefaultargs") Lower;
-		%feature("autodoc", "	:rtype: int
-") Lower;
-		Standard_Integer Lower ();
-		%feature("compactdefaultargs") Upper;
-		%feature("autodoc", "	:rtype: int
-") Upper;
-		Standard_Integer Upper ();
-		%feature("compactdefaultargs") SetValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param Value:
-	:type Value: Handle_StepShape_ConnectedFaceSet &
-	:rtype: None
-") SetValue;
-		void SetValue (const Standard_Integer Index,const Handle_StepShape_ConnectedFaceSet & Value);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: Handle_StepShape_ConnectedFaceSet
-") Value;
-		Handle_StepShape_ConnectedFaceSet Value (const Standard_Integer Index);
-		%feature("compactdefaultargs") ChangeValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: Handle_StepShape_ConnectedFaceSet
-") ChangeValue;
-		Handle_StepShape_ConnectedFaceSet ChangeValue (const Standard_Integer Index);
-};
-
-
-%extend StepShape_Array1OfConnectedFaceSet {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor StepShape_Array1OfEdge;
-class StepShape_Array1OfEdge {
-	public:
-		%feature("compactdefaultargs") StepShape_Array1OfEdge;
-		%feature("autodoc", "	:param Low:
-	:type Low: int
-	:param Up:
-	:type Up: int
-	:rtype: None
-") StepShape_Array1OfEdge;
-		 StepShape_Array1OfEdge (const Standard_Integer Low,const Standard_Integer Up);
-		%feature("compactdefaultargs") StepShape_Array1OfEdge;
-		%feature("autodoc", "	:param Item:
-	:type Item: Handle_StepShape_Edge &
-	:param Low:
-	:type Low: int
-	:param Up:
-	:type Up: int
-	:rtype: None
-") StepShape_Array1OfEdge;
-		 StepShape_Array1OfEdge (const Handle_StepShape_Edge & Item,const Standard_Integer Low,const Standard_Integer Up);
-		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	:param V:
-	:type V: Handle_StepShape_Edge &
-	:rtype: None
-") Init;
-		void Init (const Handle_StepShape_Edge & V);
-		%feature("compactdefaultargs") Destroy;
-		%feature("autodoc", "	:rtype: None
-") Destroy;
-		void Destroy ();
-		%feature("compactdefaultargs") IsAllocated;
-		%feature("autodoc", "	:rtype: bool
-") IsAllocated;
-		Standard_Boolean IsAllocated ();
-		%feature("compactdefaultargs") Assign;
-		%feature("autodoc", "	:param Other:
-	:type Other: StepShape_Array1OfEdge &
-	:rtype: StepShape_Array1OfEdge
-") Assign;
-		const StepShape_Array1OfEdge & Assign (const StepShape_Array1OfEdge & Other);
-		%feature("compactdefaultargs") operator =;
-		%feature("autodoc", "	:param Other:
-	:type Other: StepShape_Array1OfEdge &
-	:rtype: StepShape_Array1OfEdge
-") operator =;
-		const StepShape_Array1OfEdge & operator = (const StepShape_Array1OfEdge & Other);
-		%feature("compactdefaultargs") Length;
-		%feature("autodoc", "	:rtype: int
-") Length;
-		Standard_Integer Length ();
-		%feature("compactdefaultargs") Lower;
-		%feature("autodoc", "	:rtype: int
-") Lower;
-		Standard_Integer Lower ();
-		%feature("compactdefaultargs") Upper;
-		%feature("autodoc", "	:rtype: int
-") Upper;
-		Standard_Integer Upper ();
-		%feature("compactdefaultargs") SetValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param Value:
-	:type Value: Handle_StepShape_Edge &
-	:rtype: None
-") SetValue;
-		void SetValue (const Standard_Integer Index,const Handle_StepShape_Edge & Value);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: Handle_StepShape_Edge
-") Value;
-		Handle_StepShape_Edge Value (const Standard_Integer Index);
-		%feature("compactdefaultargs") ChangeValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: Handle_StepShape_Edge
-") ChangeValue;
-		Handle_StepShape_Edge ChangeValue (const Standard_Integer Index);
-};
-
-
-%extend StepShape_Array1OfEdge {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor StepShape_Array1OfFace;
-class StepShape_Array1OfFace {
-	public:
-		%feature("compactdefaultargs") StepShape_Array1OfFace;
-		%feature("autodoc", "	:param Low:
-	:type Low: int
-	:param Up:
-	:type Up: int
-	:rtype: None
-") StepShape_Array1OfFace;
-		 StepShape_Array1OfFace (const Standard_Integer Low,const Standard_Integer Up);
-		%feature("compactdefaultargs") StepShape_Array1OfFace;
-		%feature("autodoc", "	:param Item:
-	:type Item: Handle_StepShape_Face &
-	:param Low:
-	:type Low: int
-	:param Up:
-	:type Up: int
-	:rtype: None
-") StepShape_Array1OfFace;
-		 StepShape_Array1OfFace (const Handle_StepShape_Face & Item,const Standard_Integer Low,const Standard_Integer Up);
-		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	:param V:
-	:type V: Handle_StepShape_Face &
-	:rtype: None
-") Init;
-		void Init (const Handle_StepShape_Face & V);
-		%feature("compactdefaultargs") Destroy;
-		%feature("autodoc", "	:rtype: None
-") Destroy;
-		void Destroy ();
-		%feature("compactdefaultargs") IsAllocated;
-		%feature("autodoc", "	:rtype: bool
-") IsAllocated;
-		Standard_Boolean IsAllocated ();
-		%feature("compactdefaultargs") Assign;
-		%feature("autodoc", "	:param Other:
-	:type Other: StepShape_Array1OfFace &
-	:rtype: StepShape_Array1OfFace
-") Assign;
-		const StepShape_Array1OfFace & Assign (const StepShape_Array1OfFace & Other);
-		%feature("compactdefaultargs") operator =;
-		%feature("autodoc", "	:param Other:
-	:type Other: StepShape_Array1OfFace &
-	:rtype: StepShape_Array1OfFace
-") operator =;
-		const StepShape_Array1OfFace & operator = (const StepShape_Array1OfFace & Other);
-		%feature("compactdefaultargs") Length;
-		%feature("autodoc", "	:rtype: int
-") Length;
-		Standard_Integer Length ();
-		%feature("compactdefaultargs") Lower;
-		%feature("autodoc", "	:rtype: int
-") Lower;
-		Standard_Integer Lower ();
-		%feature("compactdefaultargs") Upper;
-		%feature("autodoc", "	:rtype: int
-") Upper;
-		Standard_Integer Upper ();
-		%feature("compactdefaultargs") SetValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param Value:
-	:type Value: Handle_StepShape_Face &
-	:rtype: None
-") SetValue;
-		void SetValue (const Standard_Integer Index,const Handle_StepShape_Face & Value);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: Handle_StepShape_Face
-") Value;
-		Handle_StepShape_Face Value (const Standard_Integer Index);
-		%feature("compactdefaultargs") ChangeValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: Handle_StepShape_Face
-") ChangeValue;
-		Handle_StepShape_Face ChangeValue (const Standard_Integer Index);
-};
-
-
-%extend StepShape_Array1OfFace {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor StepShape_Array1OfFaceBound;
-class StepShape_Array1OfFaceBound {
-	public:
-		%feature("compactdefaultargs") StepShape_Array1OfFaceBound;
-		%feature("autodoc", "	:param Low:
-	:type Low: int
-	:param Up:
-	:type Up: int
-	:rtype: None
-") StepShape_Array1OfFaceBound;
-		 StepShape_Array1OfFaceBound (const Standard_Integer Low,const Standard_Integer Up);
-		%feature("compactdefaultargs") StepShape_Array1OfFaceBound;
-		%feature("autodoc", "	:param Item:
-	:type Item: Handle_StepShape_FaceBound &
-	:param Low:
-	:type Low: int
-	:param Up:
-	:type Up: int
-	:rtype: None
-") StepShape_Array1OfFaceBound;
-		 StepShape_Array1OfFaceBound (const Handle_StepShape_FaceBound & Item,const Standard_Integer Low,const Standard_Integer Up);
-		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	:param V:
-	:type V: Handle_StepShape_FaceBound &
-	:rtype: None
-") Init;
-		void Init (const Handle_StepShape_FaceBound & V);
-		%feature("compactdefaultargs") Destroy;
-		%feature("autodoc", "	:rtype: None
-") Destroy;
-		void Destroy ();
-		%feature("compactdefaultargs") IsAllocated;
-		%feature("autodoc", "	:rtype: bool
-") IsAllocated;
-		Standard_Boolean IsAllocated ();
-		%feature("compactdefaultargs") Assign;
-		%feature("autodoc", "	:param Other:
-	:type Other: StepShape_Array1OfFaceBound &
-	:rtype: StepShape_Array1OfFaceBound
-") Assign;
-		const StepShape_Array1OfFaceBound & Assign (const StepShape_Array1OfFaceBound & Other);
-		%feature("compactdefaultargs") operator =;
-		%feature("autodoc", "	:param Other:
-	:type Other: StepShape_Array1OfFaceBound &
-	:rtype: StepShape_Array1OfFaceBound
-") operator =;
-		const StepShape_Array1OfFaceBound & operator = (const StepShape_Array1OfFaceBound & Other);
-		%feature("compactdefaultargs") Length;
-		%feature("autodoc", "	:rtype: int
-") Length;
-		Standard_Integer Length ();
-		%feature("compactdefaultargs") Lower;
-		%feature("autodoc", "	:rtype: int
-") Lower;
-		Standard_Integer Lower ();
-		%feature("compactdefaultargs") Upper;
-		%feature("autodoc", "	:rtype: int
-") Upper;
-		Standard_Integer Upper ();
-		%feature("compactdefaultargs") SetValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param Value:
-	:type Value: Handle_StepShape_FaceBound &
-	:rtype: None
-") SetValue;
-		void SetValue (const Standard_Integer Index,const Handle_StepShape_FaceBound & Value);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: Handle_StepShape_FaceBound
-") Value;
-		Handle_StepShape_FaceBound Value (const Standard_Integer Index);
-		%feature("compactdefaultargs") ChangeValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: Handle_StepShape_FaceBound
-") ChangeValue;
-		Handle_StepShape_FaceBound ChangeValue (const Standard_Integer Index);
-};
-
-
-%extend StepShape_Array1OfFaceBound {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor StepShape_Array1OfGeometricSetSelect;
-class StepShape_Array1OfGeometricSetSelect {
-	public:
-		%feature("compactdefaultargs") StepShape_Array1OfGeometricSetSelect;
-		%feature("autodoc", "	:param Low:
-	:type Low: int
-	:param Up:
-	:type Up: int
-	:rtype: None
-") StepShape_Array1OfGeometricSetSelect;
-		 StepShape_Array1OfGeometricSetSelect (const Standard_Integer Low,const Standard_Integer Up);
-		%feature("compactdefaultargs") StepShape_Array1OfGeometricSetSelect;
-		%feature("autodoc", "	:param Item:
-	:type Item: StepShape_GeometricSetSelect &
-	:param Low:
-	:type Low: int
-	:param Up:
-	:type Up: int
-	:rtype: None
-") StepShape_Array1OfGeometricSetSelect;
-		 StepShape_Array1OfGeometricSetSelect (const StepShape_GeometricSetSelect & Item,const Standard_Integer Low,const Standard_Integer Up);
-		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	:param V:
-	:type V: StepShape_GeometricSetSelect &
-	:rtype: None
-") Init;
-		void Init (const StepShape_GeometricSetSelect & V);
-		%feature("compactdefaultargs") Destroy;
-		%feature("autodoc", "	:rtype: None
-") Destroy;
-		void Destroy ();
-		%feature("compactdefaultargs") IsAllocated;
-		%feature("autodoc", "	:rtype: bool
-") IsAllocated;
-		Standard_Boolean IsAllocated ();
-		%feature("compactdefaultargs") Assign;
-		%feature("autodoc", "	:param Other:
-	:type Other: StepShape_Array1OfGeometricSetSelect &
-	:rtype: StepShape_Array1OfGeometricSetSelect
-") Assign;
-		const StepShape_Array1OfGeometricSetSelect & Assign (const StepShape_Array1OfGeometricSetSelect & Other);
-		%feature("compactdefaultargs") operator =;
-		%feature("autodoc", "	:param Other:
-	:type Other: StepShape_Array1OfGeometricSetSelect &
-	:rtype: StepShape_Array1OfGeometricSetSelect
-") operator =;
-		const StepShape_Array1OfGeometricSetSelect & operator = (const StepShape_Array1OfGeometricSetSelect & Other);
-		%feature("compactdefaultargs") Length;
-		%feature("autodoc", "	:rtype: int
-") Length;
-		Standard_Integer Length ();
-		%feature("compactdefaultargs") Lower;
-		%feature("autodoc", "	:rtype: int
-") Lower;
-		Standard_Integer Lower ();
-		%feature("compactdefaultargs") Upper;
-		%feature("autodoc", "	:rtype: int
-") Upper;
-		Standard_Integer Upper ();
-		%feature("compactdefaultargs") SetValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param Value:
-	:type Value: StepShape_GeometricSetSelect &
-	:rtype: None
-") SetValue;
-		void SetValue (const Standard_Integer Index,const StepShape_GeometricSetSelect & Value);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: StepShape_GeometricSetSelect
-") Value;
-		const StepShape_GeometricSetSelect & Value (const Standard_Integer Index);
-		%feature("compactdefaultargs") ChangeValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: StepShape_GeometricSetSelect
-") ChangeValue;
-		StepShape_GeometricSetSelect & ChangeValue (const Standard_Integer Index);
-};
-
-
-%extend StepShape_Array1OfGeometricSetSelect {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor StepShape_Array1OfOrientedClosedShell;
-class StepShape_Array1OfOrientedClosedShell {
-	public:
-		%feature("compactdefaultargs") StepShape_Array1OfOrientedClosedShell;
-		%feature("autodoc", "	:param Low:
-	:type Low: int
-	:param Up:
-	:type Up: int
-	:rtype: None
-") StepShape_Array1OfOrientedClosedShell;
-		 StepShape_Array1OfOrientedClosedShell (const Standard_Integer Low,const Standard_Integer Up);
-		%feature("compactdefaultargs") StepShape_Array1OfOrientedClosedShell;
-		%feature("autodoc", "	:param Item:
-	:type Item: Handle_StepShape_OrientedClosedShell &
-	:param Low:
-	:type Low: int
-	:param Up:
-	:type Up: int
-	:rtype: None
-") StepShape_Array1OfOrientedClosedShell;
-		 StepShape_Array1OfOrientedClosedShell (const Handle_StepShape_OrientedClosedShell & Item,const Standard_Integer Low,const Standard_Integer Up);
-		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	:param V:
-	:type V: Handle_StepShape_OrientedClosedShell &
-	:rtype: None
-") Init;
-		void Init (const Handle_StepShape_OrientedClosedShell & V);
-		%feature("compactdefaultargs") Destroy;
-		%feature("autodoc", "	:rtype: None
-") Destroy;
-		void Destroy ();
-		%feature("compactdefaultargs") IsAllocated;
-		%feature("autodoc", "	:rtype: bool
-") IsAllocated;
-		Standard_Boolean IsAllocated ();
-		%feature("compactdefaultargs") Assign;
-		%feature("autodoc", "	:param Other:
-	:type Other: StepShape_Array1OfOrientedClosedShell &
-	:rtype: StepShape_Array1OfOrientedClosedShell
-") Assign;
-		const StepShape_Array1OfOrientedClosedShell & Assign (const StepShape_Array1OfOrientedClosedShell & Other);
-		%feature("compactdefaultargs") operator =;
-		%feature("autodoc", "	:param Other:
-	:type Other: StepShape_Array1OfOrientedClosedShell &
-	:rtype: StepShape_Array1OfOrientedClosedShell
-") operator =;
-		const StepShape_Array1OfOrientedClosedShell & operator = (const StepShape_Array1OfOrientedClosedShell & Other);
-		%feature("compactdefaultargs") Length;
-		%feature("autodoc", "	:rtype: int
-") Length;
-		Standard_Integer Length ();
-		%feature("compactdefaultargs") Lower;
-		%feature("autodoc", "	:rtype: int
-") Lower;
-		Standard_Integer Lower ();
-		%feature("compactdefaultargs") Upper;
-		%feature("autodoc", "	:rtype: int
-") Upper;
-		Standard_Integer Upper ();
-		%feature("compactdefaultargs") SetValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param Value:
-	:type Value: Handle_StepShape_OrientedClosedShell &
-	:rtype: None
-") SetValue;
-		void SetValue (const Standard_Integer Index,const Handle_StepShape_OrientedClosedShell & Value);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: Handle_StepShape_OrientedClosedShell
-") Value;
-		Handle_StepShape_OrientedClosedShell Value (const Standard_Integer Index);
-		%feature("compactdefaultargs") ChangeValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: Handle_StepShape_OrientedClosedShell
-") ChangeValue;
-		Handle_StepShape_OrientedClosedShell ChangeValue (const Standard_Integer Index);
-};
-
-
-%extend StepShape_Array1OfOrientedClosedShell {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor StepShape_Array1OfOrientedEdge;
-class StepShape_Array1OfOrientedEdge {
-	public:
-		%feature("compactdefaultargs") StepShape_Array1OfOrientedEdge;
-		%feature("autodoc", "	:param Low:
-	:type Low: int
-	:param Up:
-	:type Up: int
-	:rtype: None
-") StepShape_Array1OfOrientedEdge;
-		 StepShape_Array1OfOrientedEdge (const Standard_Integer Low,const Standard_Integer Up);
-		%feature("compactdefaultargs") StepShape_Array1OfOrientedEdge;
-		%feature("autodoc", "	:param Item:
-	:type Item: Handle_StepShape_OrientedEdge &
-	:param Low:
-	:type Low: int
-	:param Up:
-	:type Up: int
-	:rtype: None
-") StepShape_Array1OfOrientedEdge;
-		 StepShape_Array1OfOrientedEdge (const Handle_StepShape_OrientedEdge & Item,const Standard_Integer Low,const Standard_Integer Up);
-		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	:param V:
-	:type V: Handle_StepShape_OrientedEdge &
-	:rtype: None
-") Init;
-		void Init (const Handle_StepShape_OrientedEdge & V);
-		%feature("compactdefaultargs") Destroy;
-		%feature("autodoc", "	:rtype: None
-") Destroy;
-		void Destroy ();
-		%feature("compactdefaultargs") IsAllocated;
-		%feature("autodoc", "	:rtype: bool
-") IsAllocated;
-		Standard_Boolean IsAllocated ();
-		%feature("compactdefaultargs") Assign;
-		%feature("autodoc", "	:param Other:
-	:type Other: StepShape_Array1OfOrientedEdge &
-	:rtype: StepShape_Array1OfOrientedEdge
-") Assign;
-		const StepShape_Array1OfOrientedEdge & Assign (const StepShape_Array1OfOrientedEdge & Other);
-		%feature("compactdefaultargs") operator =;
-		%feature("autodoc", "	:param Other:
-	:type Other: StepShape_Array1OfOrientedEdge &
-	:rtype: StepShape_Array1OfOrientedEdge
-") operator =;
-		const StepShape_Array1OfOrientedEdge & operator = (const StepShape_Array1OfOrientedEdge & Other);
-		%feature("compactdefaultargs") Length;
-		%feature("autodoc", "	:rtype: int
-") Length;
-		Standard_Integer Length ();
-		%feature("compactdefaultargs") Lower;
-		%feature("autodoc", "	:rtype: int
-") Lower;
-		Standard_Integer Lower ();
-		%feature("compactdefaultargs") Upper;
-		%feature("autodoc", "	:rtype: int
-") Upper;
-		Standard_Integer Upper ();
-		%feature("compactdefaultargs") SetValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param Value:
-	:type Value: Handle_StepShape_OrientedEdge &
-	:rtype: None
-") SetValue;
-		void SetValue (const Standard_Integer Index,const Handle_StepShape_OrientedEdge & Value);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: Handle_StepShape_OrientedEdge
-") Value;
-		Handle_StepShape_OrientedEdge Value (const Standard_Integer Index);
-		%feature("compactdefaultargs") ChangeValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: Handle_StepShape_OrientedEdge
-") ChangeValue;
-		Handle_StepShape_OrientedEdge ChangeValue (const Standard_Integer Index);
-};
-
-
-%extend StepShape_Array1OfOrientedEdge {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor StepShape_Array1OfShell;
-class StepShape_Array1OfShell {
-	public:
-		%feature("compactdefaultargs") StepShape_Array1OfShell;
-		%feature("autodoc", "	:param Low:
-	:type Low: int
-	:param Up:
-	:type Up: int
-	:rtype: None
-") StepShape_Array1OfShell;
-		 StepShape_Array1OfShell (const Standard_Integer Low,const Standard_Integer Up);
-		%feature("compactdefaultargs") StepShape_Array1OfShell;
-		%feature("autodoc", "	:param Item:
-	:type Item: StepShape_Shell &
-	:param Low:
-	:type Low: int
-	:param Up:
-	:type Up: int
-	:rtype: None
-") StepShape_Array1OfShell;
-		 StepShape_Array1OfShell (const StepShape_Shell & Item,const Standard_Integer Low,const Standard_Integer Up);
-		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	:param V:
-	:type V: StepShape_Shell &
-	:rtype: None
-") Init;
-		void Init (const StepShape_Shell & V);
-		%feature("compactdefaultargs") Destroy;
-		%feature("autodoc", "	:rtype: None
-") Destroy;
-		void Destroy ();
-		%feature("compactdefaultargs") IsAllocated;
-		%feature("autodoc", "	:rtype: bool
-") IsAllocated;
-		Standard_Boolean IsAllocated ();
-		%feature("compactdefaultargs") Assign;
-		%feature("autodoc", "	:param Other:
-	:type Other: StepShape_Array1OfShell &
-	:rtype: StepShape_Array1OfShell
-") Assign;
-		const StepShape_Array1OfShell & Assign (const StepShape_Array1OfShell & Other);
-		%feature("compactdefaultargs") operator =;
-		%feature("autodoc", "	:param Other:
-	:type Other: StepShape_Array1OfShell &
-	:rtype: StepShape_Array1OfShell
-") operator =;
-		const StepShape_Array1OfShell & operator = (const StepShape_Array1OfShell & Other);
-		%feature("compactdefaultargs") Length;
-		%feature("autodoc", "	:rtype: int
-") Length;
-		Standard_Integer Length ();
-		%feature("compactdefaultargs") Lower;
-		%feature("autodoc", "	:rtype: int
-") Lower;
-		Standard_Integer Lower ();
-		%feature("compactdefaultargs") Upper;
-		%feature("autodoc", "	:rtype: int
-") Upper;
-		Standard_Integer Upper ();
-		%feature("compactdefaultargs") SetValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param Value:
-	:type Value: StepShape_Shell &
-	:rtype: None
-") SetValue;
-		void SetValue (const Standard_Integer Index,const StepShape_Shell & Value);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: StepShape_Shell
-") Value;
-		const StepShape_Shell & Value (const Standard_Integer Index);
-		%feature("compactdefaultargs") ChangeValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: StepShape_Shell
-") ChangeValue;
-		StepShape_Shell & ChangeValue (const Standard_Integer Index);
-};
-
-
-%extend StepShape_Array1OfShell {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor StepShape_Array1OfValueQualifier;
-class StepShape_Array1OfValueQualifier {
-	public:
-		%feature("compactdefaultargs") StepShape_Array1OfValueQualifier;
-		%feature("autodoc", "	:param Low:
-	:type Low: int
-	:param Up:
-	:type Up: int
-	:rtype: None
-") StepShape_Array1OfValueQualifier;
-		 StepShape_Array1OfValueQualifier (const Standard_Integer Low,const Standard_Integer Up);
-		%feature("compactdefaultargs") StepShape_Array1OfValueQualifier;
-		%feature("autodoc", "	:param Item:
-	:type Item: StepShape_ValueQualifier &
-	:param Low:
-	:type Low: int
-	:param Up:
-	:type Up: int
-	:rtype: None
-") StepShape_Array1OfValueQualifier;
-		 StepShape_Array1OfValueQualifier (const StepShape_ValueQualifier & Item,const Standard_Integer Low,const Standard_Integer Up);
-		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	:param V:
-	:type V: StepShape_ValueQualifier &
-	:rtype: None
-") Init;
-		void Init (const StepShape_ValueQualifier & V);
-		%feature("compactdefaultargs") Destroy;
-		%feature("autodoc", "	:rtype: None
-") Destroy;
-		void Destroy ();
-		%feature("compactdefaultargs") IsAllocated;
-		%feature("autodoc", "	:rtype: bool
-") IsAllocated;
-		Standard_Boolean IsAllocated ();
-		%feature("compactdefaultargs") Assign;
-		%feature("autodoc", "	:param Other:
-	:type Other: StepShape_Array1OfValueQualifier &
-	:rtype: StepShape_Array1OfValueQualifier
-") Assign;
-		const StepShape_Array1OfValueQualifier & Assign (const StepShape_Array1OfValueQualifier & Other);
-		%feature("compactdefaultargs") operator =;
-		%feature("autodoc", "	:param Other:
-	:type Other: StepShape_Array1OfValueQualifier &
-	:rtype: StepShape_Array1OfValueQualifier
-") operator =;
-		const StepShape_Array1OfValueQualifier & operator = (const StepShape_Array1OfValueQualifier & Other);
-		%feature("compactdefaultargs") Length;
-		%feature("autodoc", "	:rtype: int
-") Length;
-		Standard_Integer Length ();
-		%feature("compactdefaultargs") Lower;
-		%feature("autodoc", "	:rtype: int
-") Lower;
-		Standard_Integer Lower ();
-		%feature("compactdefaultargs") Upper;
-		%feature("autodoc", "	:rtype: int
-") Upper;
-		Standard_Integer Upper ();
-		%feature("compactdefaultargs") SetValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param Value:
-	:type Value: StepShape_ValueQualifier &
-	:rtype: None
-") SetValue;
-		void SetValue (const Standard_Integer Index,const StepShape_ValueQualifier & Value);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: StepShape_ValueQualifier
-") Value;
-		const StepShape_ValueQualifier & Value (const Standard_Integer Index);
-		%feature("compactdefaultargs") ChangeValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: StepShape_ValueQualifier
-") ChangeValue;
-		StepShape_ValueQualifier & ChangeValue (const Standard_Integer Index);
-};
-
-
-%extend StepShape_Array1OfValueQualifier {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
 %nodefaultctor StepShape_Block;
 class StepShape_Block : public StepGeom_GeometricRepresentationItem {
 	public:
@@ -953,12 +97,6 @@ class StepShape_Block : public StepGeom_GeometricRepresentationItem {
 		%feature("compactdefaultargs") Init;
 		%feature("autodoc", "	:param aName:
 	:type aName: Handle_TCollection_HAsciiString &
-	:rtype: void
-") Init;
-		virtual void Init (const Handle_TCollection_HAsciiString & aName);
-		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	:param aName:
-	:type aName: Handle_TCollection_HAsciiString &
 	:param aPosition:
 	:type aPosition: Handle_StepGeom_Axis2Placement3d &
 	:param aX:
@@ -967,9 +105,9 @@ class StepShape_Block : public StepGeom_GeometricRepresentationItem {
 	:type aY: float
 	:param aZ:
 	:type aZ: float
-	:rtype: void
+	:rtype: None
 ") Init;
-		virtual void Init (const Handle_TCollection_HAsciiString & aName,const Handle_StepGeom_Axis2Placement3d & aPosition,const Standard_Real aX,const Standard_Real aY,const Standard_Real aZ);
+		void Init (const Handle_TCollection_HAsciiString & aName,const Handle_StepGeom_Axis2Placement3d & aPosition,const Standard_Real aX,const Standard_Real aY,const Standard_Real aZ);
 		%feature("compactdefaultargs") SetPosition;
 		%feature("autodoc", "	:param aPosition:
 	:type aPosition: Handle_StepGeom_Axis2Placement3d &
@@ -1044,19 +182,20 @@ class Handle_StepShape_Block : public Handle_StepGeom_GeometricRepresentationIte
         static const Handle_StepShape_Block DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_StepShape_Block {
     StepShape_Block* _get_reference() {
-    return (StepShape_Block*)$self->Access();
+    return (StepShape_Block*)$self->get();
     }
 };
 
 %extend Handle_StepShape_Block {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend StepShape_Block {
@@ -1084,7 +223,7 @@ class StepShape_BooleanOperand {
 ") TypeOfContent;
 		Standard_Integer TypeOfContent ();
 		%feature("compactdefaultargs") SolidModel;
-		%feature("autodoc", "	* returns Value as a SolidModel (Null if another type)
+		%feature("autodoc", "	* returns Value as a SolidModel --Null if another type--
 
 	:rtype: Handle_StepShape_SolidModel
 ") SolidModel;
@@ -1096,7 +235,7 @@ class StepShape_BooleanOperand {
 ") SetSolidModel;
 		void SetSolidModel (const Handle_StepShape_SolidModel & aSolidModel);
 		%feature("compactdefaultargs") HalfSpaceSolid;
-		%feature("autodoc", "	* returns Value as a HalfSpaceSolid (Null if another type)
+		%feature("autodoc", "	* returns Value as a HalfSpaceSolid --Null if another type--
 
 	:rtype: Handle_StepShape_HalfSpaceSolid
 ") HalfSpaceSolid;
@@ -1108,7 +247,7 @@ class StepShape_BooleanOperand {
 ") SetHalfSpaceSolid;
 		void SetHalfSpaceSolid (const Handle_StepShape_HalfSpaceSolid & aHalfSpaceSolid);
 		%feature("compactdefaultargs") CsgPrimitive;
-		%feature("autodoc", "	* returns Value as a CsgPrimitive (Null if another type) CsgPrimitive is another Select Type
+		%feature("autodoc", "	* returns Value as a CsgPrimitive --Null if another type-- CsgPrimitive is another Select Type
 
 	:rtype: StepShape_CsgPrimitive
 ") CsgPrimitive;
@@ -1120,7 +259,7 @@ class StepShape_BooleanOperand {
 ") SetCsgPrimitive;
 		void SetCsgPrimitive (const StepShape_CsgPrimitive & aCsgPrimitive);
 		%feature("compactdefaultargs") BooleanResult;
-		%feature("autodoc", "	* returns Value as a BooleanResult (Null if another type)
+		%feature("autodoc", "	* returns Value as a BooleanResult --Null if another type--
 
 	:rtype: Handle_StepShape_BooleanResult
 ") BooleanResult;
@@ -1151,21 +290,15 @@ class StepShape_BooleanResult : public StepGeom_GeometricRepresentationItem {
 		%feature("compactdefaultargs") Init;
 		%feature("autodoc", "	:param aName:
 	:type aName: Handle_TCollection_HAsciiString &
-	:rtype: void
-") Init;
-		virtual void Init (const Handle_TCollection_HAsciiString & aName);
-		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	:param aName:
-	:type aName: Handle_TCollection_HAsciiString &
 	:param aOperator:
 	:type aOperator: StepShape_BooleanOperator
 	:param aFirstOperand:
 	:type aFirstOperand: StepShape_BooleanOperand &
 	:param aSecondOperand:
 	:type aSecondOperand: StepShape_BooleanOperand &
-	:rtype: void
+	:rtype: None
 ") Init;
-		virtual void Init (const Handle_TCollection_HAsciiString & aName,const StepShape_BooleanOperator aOperator,const StepShape_BooleanOperand & aFirstOperand,const StepShape_BooleanOperand & aSecondOperand);
+		void Init (const Handle_TCollection_HAsciiString & aName,const StepShape_BooleanOperator aOperator,const StepShape_BooleanOperand & aFirstOperand,const StepShape_BooleanOperand & aSecondOperand);
 		%feature("compactdefaultargs") SetOperator;
 		%feature("autodoc", "	:param aOperator:
 	:type aOperator: StepShape_BooleanOperator
@@ -1230,19 +363,20 @@ class Handle_StepShape_BooleanResult : public Handle_StepGeom_GeometricRepresent
         static const Handle_StepShape_BooleanResult DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_StepShape_BooleanResult {
     StepShape_BooleanResult* _get_reference() {
-    return (StepShape_BooleanResult*)$self->Access();
+    return (StepShape_BooleanResult*)$self->get();
     }
 };
 
 %extend Handle_StepShape_BooleanResult {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend StepShape_BooleanResult {
@@ -1251,7 +385,7 @@ class Handle_StepShape_BooleanResult : public Handle_StepGeom_GeometricRepresent
 	}
 };
 %nodefaultctor StepShape_BoxDomain;
-class StepShape_BoxDomain : public MMgt_TShared {
+class StepShape_BoxDomain : public Standard_Transient {
 	public:
 		%feature("compactdefaultargs") StepShape_BoxDomain;
 		%feature("autodoc", "	* Returns a BoxDomain
@@ -1268,9 +402,9 @@ class StepShape_BoxDomain : public MMgt_TShared {
 	:type aYlength: float
 	:param aZlength:
 	:type aZlength: float
-	:rtype: void
+	:rtype: None
 ") Init;
-		virtual void Init (const Handle_StepGeom_CartesianPoint & aCorner,const Standard_Real aXlength,const Standard_Real aYlength,const Standard_Real aZlength);
+		void Init (const Handle_StepGeom_CartesianPoint & aCorner,const Standard_Real aXlength,const Standard_Real aYlength,const Standard_Real aZlength);
 		%feature("compactdefaultargs") SetCorner;
 		%feature("autodoc", "	:param aCorner:
 	:type aCorner: Handle_StepGeom_CartesianPoint &
@@ -1333,7 +467,7 @@ class StepShape_BoxDomain : public MMgt_TShared {
 %}
 
 %nodefaultctor Handle_StepShape_BoxDomain;
-class Handle_StepShape_BoxDomain : public Handle_MMgt_TShared {
+class Handle_StepShape_BoxDomain : public Handle_Standard_Transient {
 
     public:
         // constructors
@@ -1345,19 +479,20 @@ class Handle_StepShape_BoxDomain : public Handle_MMgt_TShared {
         static const Handle_StepShape_BoxDomain DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_StepShape_BoxDomain {
     StepShape_BoxDomain* _get_reference() {
-    return (StepShape_BoxDomain*)$self->Access();
+    return (StepShape_BoxDomain*)$self->get();
     }
 };
 
 %extend Handle_StepShape_BoxDomain {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend StepShape_BoxDomain {
@@ -1408,19 +543,20 @@ class Handle_StepShape_ConnectedFaceShapeRepresentation : public Handle_StepRepr
         static const Handle_StepShape_ConnectedFaceShapeRepresentation DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_StepShape_ConnectedFaceShapeRepresentation {
     StepShape_ConnectedFaceShapeRepresentation* _get_reference() {
-    return (StepShape_ConnectedFaceShapeRepresentation*)$self->Access();
+    return (StepShape_ConnectedFaceShapeRepresentation*)$self->get();
     }
 };
 
 %extend Handle_StepShape_ConnectedFaceShapeRepresentation {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend StepShape_ConnectedFaceShapeRepresentation {
@@ -1429,7 +565,7 @@ class Handle_StepShape_ConnectedFaceShapeRepresentation : public Handle_StepRepr
 	}
 };
 %nodefaultctor StepShape_ContextDependentShapeRepresentation;
-class StepShape_ContextDependentShapeRepresentation : public MMgt_TShared {
+class StepShape_ContextDependentShapeRepresentation : public Standard_Transient {
 	public:
 		%feature("compactdefaultargs") StepShape_ContextDependentShapeRepresentation;
 		%feature("autodoc", "	:rtype: None
@@ -1485,7 +621,7 @@ class StepShape_ContextDependentShapeRepresentation : public MMgt_TShared {
 %}
 
 %nodefaultctor Handle_StepShape_ContextDependentShapeRepresentation;
-class Handle_StepShape_ContextDependentShapeRepresentation : public Handle_MMgt_TShared {
+class Handle_StepShape_ContextDependentShapeRepresentation : public Handle_Standard_Transient {
 
     public:
         // constructors
@@ -1497,19 +633,20 @@ class Handle_StepShape_ContextDependentShapeRepresentation : public Handle_MMgt_
         static const Handle_StepShape_ContextDependentShapeRepresentation DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_StepShape_ContextDependentShapeRepresentation {
     StepShape_ContextDependentShapeRepresentation* _get_reference() {
-    return (StepShape_ContextDependentShapeRepresentation*)$self->Access();
+    return (StepShape_ContextDependentShapeRepresentation*)$self->get();
     }
 };
 
 %extend Handle_StepShape_ContextDependentShapeRepresentation {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend StepShape_ContextDependentShapeRepresentation {
@@ -1535,37 +672,37 @@ class StepShape_CsgPrimitive : public StepData_SelectType {
 ") CaseNum;
 		Standard_Integer CaseNum (const Handle_Standard_Transient & ent);
 		%feature("compactdefaultargs") Sphere;
-		%feature("autodoc", "	* returns Value as a Sphere (Null if another type)
+		%feature("autodoc", "	* returns Value as a Sphere --Null if another type--
 
 	:rtype: Handle_StepShape_Sphere
 ") Sphere;
 		Handle_StepShape_Sphere Sphere ();
 		%feature("compactdefaultargs") Block;
-		%feature("autodoc", "	* returns Value as a Block (Null if another type)
+		%feature("autodoc", "	* returns Value as a Block --Null if another type--
 
 	:rtype: Handle_StepShape_Block
 ") Block;
 		Handle_StepShape_Block Block ();
 		%feature("compactdefaultargs") RightAngularWedge;
-		%feature("autodoc", "	* returns Value as a RightAngularWedge (Null if another type)
+		%feature("autodoc", "	* returns Value as a RightAngularWedge --Null if another type--
 
 	:rtype: Handle_StepShape_RightAngularWedge
 ") RightAngularWedge;
 		Handle_StepShape_RightAngularWedge RightAngularWedge ();
 		%feature("compactdefaultargs") Torus;
-		%feature("autodoc", "	* returns Value as a Torus (Null if another type)
+		%feature("autodoc", "	* returns Value as a Torus --Null if another type--
 
 	:rtype: Handle_StepShape_Torus
 ") Torus;
 		Handle_StepShape_Torus Torus ();
 		%feature("compactdefaultargs") RightCircularCone;
-		%feature("autodoc", "	* returns Value as a RightCircularCone (Null if another type)
+		%feature("autodoc", "	* returns Value as a RightCircularCone --Null if another type--
 
 	:rtype: Handle_StepShape_RightCircularCone
 ") RightCircularCone;
 		Handle_StepShape_RightCircularCone RightCircularCone ();
 		%feature("compactdefaultargs") RightCircularCylinder;
-		%feature("autodoc", "	* returns Value as a RightCircularCylinder (Null if another type)
+		%feature("autodoc", "	* returns Value as a RightCircularCylinder --Null if another type--
 
 	:rtype: Handle_StepShape_RightCircularCylinder
 ") RightCircularCylinder;
@@ -1598,7 +735,7 @@ class StepShape_CsgSelect {
 ") TypeOfContent;
 		Standard_Integer TypeOfContent ();
 		%feature("compactdefaultargs") BooleanResult;
-		%feature("autodoc", "	* returns Value as a BooleanResult (Null if another type)
+		%feature("autodoc", "	* returns Value as a BooleanResult --Null if another type--
 
 	:rtype: Handle_StepShape_BooleanResult
 ") BooleanResult;
@@ -1610,7 +747,7 @@ class StepShape_CsgSelect {
 ") SetBooleanResult;
 		void SetBooleanResult (const Handle_StepShape_BooleanResult & aBooleanResult);
 		%feature("compactdefaultargs") CsgPrimitive;
-		%feature("autodoc", "	* returns Value as a CsgPrimitive (Null if another type)
+		%feature("autodoc", "	* returns Value as a CsgPrimitive --Null if another type--
 
 	:rtype: StepShape_CsgPrimitive
 ") CsgPrimitive;
@@ -1670,19 +807,20 @@ class Handle_StepShape_DefinitionalRepresentationAndShapeRepresentation : public
         static const Handle_StepShape_DefinitionalRepresentationAndShapeRepresentation DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_StepShape_DefinitionalRepresentationAndShapeRepresentation {
     StepShape_DefinitionalRepresentationAndShapeRepresentation* _get_reference() {
-    return (StepShape_DefinitionalRepresentationAndShapeRepresentation*)$self->Access();
+    return (StepShape_DefinitionalRepresentationAndShapeRepresentation*)$self->get();
     }
 };
 
 %extend Handle_StepShape_DefinitionalRepresentationAndShapeRepresentation {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend StepShape_DefinitionalRepresentationAndShapeRepresentation {
@@ -1708,13 +846,13 @@ class StepShape_DimensionalCharacteristic : public StepData_SelectType {
 ") CaseNum;
 		Standard_Integer CaseNum (const Handle_Standard_Transient & ent);
 		%feature("compactdefaultargs") DimensionalLocation;
-		%feature("autodoc", "	* Returns Value as DimensionalLocation (or Null if another type)
+		%feature("autodoc", "	* Returns Value as DimensionalLocation --or Null if another type--
 
 	:rtype: Handle_StepShape_DimensionalLocation
 ") DimensionalLocation;
 		Handle_StepShape_DimensionalLocation DimensionalLocation ();
 		%feature("compactdefaultargs") DimensionalSize;
-		%feature("autodoc", "	* Returns Value as DimensionalSize (or Null if another type)
+		%feature("autodoc", "	* Returns Value as DimensionalSize --or Null if another type--
 
 	:rtype: Handle_StepShape_DimensionalSize
 ") DimensionalSize;
@@ -1728,7 +866,7 @@ class StepShape_DimensionalCharacteristic : public StepData_SelectType {
 	}
 };
 %nodefaultctor StepShape_DimensionalCharacteristicRepresentation;
-class StepShape_DimensionalCharacteristicRepresentation : public MMgt_TShared {
+class StepShape_DimensionalCharacteristicRepresentation : public Standard_Transient {
 	public:
 		%feature("compactdefaultargs") StepShape_DimensionalCharacteristicRepresentation;
 		%feature("autodoc", "	* Empty constructor
@@ -1737,7 +875,7 @@ class StepShape_DimensionalCharacteristicRepresentation : public MMgt_TShared {
 ") StepShape_DimensionalCharacteristicRepresentation;
 		 StepShape_DimensionalCharacteristicRepresentation ();
 		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	* Initialize all fields (own and inherited)
+		%feature("autodoc", "	* Initialize all fields --own and inherited--
 
 	:param aDimension:
 	:type aDimension: StepShape_DimensionalCharacteristic &
@@ -1796,7 +934,7 @@ class StepShape_DimensionalCharacteristicRepresentation : public MMgt_TShared {
 %}
 
 %nodefaultctor Handle_StepShape_DimensionalCharacteristicRepresentation;
-class Handle_StepShape_DimensionalCharacteristicRepresentation : public Handle_MMgt_TShared {
+class Handle_StepShape_DimensionalCharacteristicRepresentation : public Handle_Standard_Transient {
 
     public:
         // constructors
@@ -1808,19 +946,20 @@ class Handle_StepShape_DimensionalCharacteristicRepresentation : public Handle_M
         static const Handle_StepShape_DimensionalCharacteristicRepresentation DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_StepShape_DimensionalCharacteristicRepresentation {
     StepShape_DimensionalCharacteristicRepresentation* _get_reference() {
-    return (StepShape_DimensionalCharacteristicRepresentation*)$self->Access();
+    return (StepShape_DimensionalCharacteristicRepresentation*)$self->get();
     }
 };
 
 %extend Handle_StepShape_DimensionalCharacteristicRepresentation {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend StepShape_DimensionalCharacteristicRepresentation {
@@ -1871,19 +1010,20 @@ class Handle_StepShape_DimensionalLocation : public Handle_StepRepr_ShapeAspectR
         static const Handle_StepShape_DimensionalLocation DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_StepShape_DimensionalLocation {
     StepShape_DimensionalLocation* _get_reference() {
-    return (StepShape_DimensionalLocation*)$self->Access();
+    return (StepShape_DimensionalLocation*)$self->get();
     }
 };
 
 %extend Handle_StepShape_DimensionalLocation {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend StepShape_DimensionalLocation {
@@ -1892,7 +1032,7 @@ class Handle_StepShape_DimensionalLocation : public Handle_StepRepr_ShapeAspectR
 	}
 };
 %nodefaultctor StepShape_DimensionalSize;
-class StepShape_DimensionalSize : public MMgt_TShared {
+class StepShape_DimensionalSize : public Standard_Transient {
 	public:
 		%feature("compactdefaultargs") StepShape_DimensionalSize;
 		%feature("autodoc", "	* Empty constructor
@@ -1901,7 +1041,7 @@ class StepShape_DimensionalSize : public MMgt_TShared {
 ") StepShape_DimensionalSize;
 		 StepShape_DimensionalSize ();
 		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	* Initialize all fields (own and inherited)
+		%feature("autodoc", "	* Initialize all fields --own and inherited--
 
 	:param aAppliesTo:
 	:type aAppliesTo: Handle_StepRepr_ShapeAspect &
@@ -1960,7 +1100,7 @@ class StepShape_DimensionalSize : public MMgt_TShared {
 %}
 
 %nodefaultctor Handle_StepShape_DimensionalSize;
-class Handle_StepShape_DimensionalSize : public Handle_MMgt_TShared {
+class Handle_StepShape_DimensionalSize : public Handle_Standard_Transient {
 
     public:
         // constructors
@@ -1972,19 +1112,20 @@ class Handle_StepShape_DimensionalSize : public Handle_MMgt_TShared {
         static const Handle_StepShape_DimensionalSize DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_StepShape_DimensionalSize {
     StepShape_DimensionalSize* _get_reference() {
-    return (StepShape_DimensionalSize*)$self->Access();
+    return (StepShape_DimensionalSize*)$self->get();
     }
 };
 
 %extend Handle_StepShape_DimensionalSize {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend StepShape_DimensionalSize {
@@ -2002,7 +1143,7 @@ class StepShape_EdgeBasedWireframeModel : public StepGeom_GeometricRepresentatio
 ") StepShape_EdgeBasedWireframeModel;
 		 StepShape_EdgeBasedWireframeModel ();
 		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	* Initialize all fields (own and inherited)
+		%feature("autodoc", "	* Initialize all fields --own and inherited--
 
 	:param aRepresentationItem_Name:
 	:type aRepresentationItem_Name: Handle_TCollection_HAsciiString &
@@ -2059,19 +1200,20 @@ class Handle_StepShape_EdgeBasedWireframeModel : public Handle_StepGeom_Geometri
         static const Handle_StepShape_EdgeBasedWireframeModel DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_StepShape_EdgeBasedWireframeModel {
     StepShape_EdgeBasedWireframeModel* _get_reference() {
-    return (StepShape_EdgeBasedWireframeModel*)$self->Access();
+    return (StepShape_EdgeBasedWireframeModel*)$self->get();
     }
 };
 
 %extend Handle_StepShape_EdgeBasedWireframeModel {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend StepShape_EdgeBasedWireframeModel {
@@ -2089,7 +1231,7 @@ class StepShape_FaceBasedSurfaceModel : public StepGeom_GeometricRepresentationI
 ") StepShape_FaceBasedSurfaceModel;
 		 StepShape_FaceBasedSurfaceModel ();
 		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	* Initialize all fields (own and inherited)
+		%feature("autodoc", "	* Initialize all fields --own and inherited--
 
 	:param aRepresentationItem_Name:
 	:type aRepresentationItem_Name: Handle_TCollection_HAsciiString &
@@ -2146,19 +1288,20 @@ class Handle_StepShape_FaceBasedSurfaceModel : public Handle_StepGeom_GeometricR
         static const Handle_StepShape_FaceBasedSurfaceModel DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_StepShape_FaceBasedSurfaceModel {
     StepShape_FaceBasedSurfaceModel* _get_reference() {
-    return (StepShape_FaceBasedSurfaceModel*)$self->Access();
+    return (StepShape_FaceBasedSurfaceModel*)$self->get();
     }
 };
 
 %extend Handle_StepShape_FaceBasedSurfaceModel {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend StepShape_FaceBasedSurfaceModel {
@@ -2178,17 +1321,11 @@ class StepShape_GeometricSet : public StepGeom_GeometricRepresentationItem {
 		%feature("compactdefaultargs") Init;
 		%feature("autodoc", "	:param aName:
 	:type aName: Handle_TCollection_HAsciiString &
-	:rtype: void
-") Init;
-		virtual void Init (const Handle_TCollection_HAsciiString & aName);
-		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	:param aName:
-	:type aName: Handle_TCollection_HAsciiString &
 	:param aElements:
 	:type aElements: Handle_StepShape_HArray1OfGeometricSetSelect &
-	:rtype: void
+	:rtype: None
 ") Init;
-		virtual void Init (const Handle_TCollection_HAsciiString & aName,const Handle_StepShape_HArray1OfGeometricSetSelect & aElements);
+		void Init (const Handle_TCollection_HAsciiString & aName,const Handle_StepShape_HArray1OfGeometricSetSelect & aElements);
 		%feature("compactdefaultargs") SetElements;
 		%feature("autodoc", "	:param aElements:
 	:type aElements: Handle_StepShape_HArray1OfGeometricSetSelect &
@@ -2243,19 +1380,20 @@ class Handle_StepShape_GeometricSet : public Handle_StepGeom_GeometricRepresenta
         static const Handle_StepShape_GeometricSet DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_StepShape_GeometricSet {
     StepShape_GeometricSet* _get_reference() {
-    return (StepShape_GeometricSet*)$self->Access();
+    return (StepShape_GeometricSet*)$self->get();
     }
 };
 
 %extend Handle_StepShape_GeometricSet {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend StepShape_GeometricSet {
@@ -2281,19 +1419,19 @@ class StepShape_GeometricSetSelect : public StepData_SelectType {
 ") CaseNum;
 		Standard_Integer CaseNum (const Handle_Standard_Transient & ent);
 		%feature("compactdefaultargs") Point;
-		%feature("autodoc", "	* returns Value as a Point (Null if another type)
+		%feature("autodoc", "	* returns Value as a Point --Null if another type--
 
 	:rtype: Handle_StepGeom_Point
 ") Point;
 		Handle_StepGeom_Point Point ();
 		%feature("compactdefaultargs") Curve;
-		%feature("autodoc", "	* returns Value as a Curve (Null if another type)
+		%feature("autodoc", "	* returns Value as a Curve --Null if another type--
 
 	:rtype: Handle_StepGeom_Curve
 ") Curve;
 		Handle_StepGeom_Curve Curve ();
 		%feature("compactdefaultargs") Surface;
-		%feature("autodoc", "	* returns Value as a Surface (Null if another type)
+		%feature("autodoc", "	* returns Value as a Surface --Null if another type--
 
 	:rtype: Handle_StepGeom_Surface
 ") Surface;
@@ -2302,1216 +1440,6 @@ class StepShape_GeometricSetSelect : public StepData_SelectType {
 
 
 %extend StepShape_GeometricSetSelect {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor StepShape_HArray1OfConnectedEdgeSet;
-class StepShape_HArray1OfConnectedEdgeSet : public MMgt_TShared {
-	public:
-		%feature("compactdefaultargs") StepShape_HArray1OfConnectedEdgeSet;
-		%feature("autodoc", "	:param Low:
-	:type Low: int
-	:param Up:
-	:type Up: int
-	:rtype: None
-") StepShape_HArray1OfConnectedEdgeSet;
-		 StepShape_HArray1OfConnectedEdgeSet (const Standard_Integer Low,const Standard_Integer Up);
-		%feature("compactdefaultargs") StepShape_HArray1OfConnectedEdgeSet;
-		%feature("autodoc", "	:param Low:
-	:type Low: int
-	:param Up:
-	:type Up: int
-	:param V:
-	:type V: Handle_StepShape_ConnectedEdgeSet &
-	:rtype: None
-") StepShape_HArray1OfConnectedEdgeSet;
-		 StepShape_HArray1OfConnectedEdgeSet (const Standard_Integer Low,const Standard_Integer Up,const Handle_StepShape_ConnectedEdgeSet & V);
-		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	:param V:
-	:type V: Handle_StepShape_ConnectedEdgeSet &
-	:rtype: None
-") Init;
-		void Init (const Handle_StepShape_ConnectedEdgeSet & V);
-		%feature("compactdefaultargs") Length;
-		%feature("autodoc", "	:rtype: int
-") Length;
-		Standard_Integer Length ();
-		%feature("compactdefaultargs") Lower;
-		%feature("autodoc", "	:rtype: int
-") Lower;
-		Standard_Integer Lower ();
-		%feature("compactdefaultargs") Upper;
-		%feature("autodoc", "	:rtype: int
-") Upper;
-		Standard_Integer Upper ();
-		%feature("compactdefaultargs") SetValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param Value:
-	:type Value: Handle_StepShape_ConnectedEdgeSet &
-	:rtype: None
-") SetValue;
-		void SetValue (const Standard_Integer Index,const Handle_StepShape_ConnectedEdgeSet & Value);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: Handle_StepShape_ConnectedEdgeSet
-") Value;
-		Handle_StepShape_ConnectedEdgeSet Value (const Standard_Integer Index);
-		%feature("compactdefaultargs") ChangeValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: Handle_StepShape_ConnectedEdgeSet
-") ChangeValue;
-		Handle_StepShape_ConnectedEdgeSet ChangeValue (const Standard_Integer Index);
-		%feature("compactdefaultargs") Array1;
-		%feature("autodoc", "	:rtype: StepShape_Array1OfConnectedEdgeSet
-") Array1;
-		const StepShape_Array1OfConnectedEdgeSet & Array1 ();
-		%feature("compactdefaultargs") ChangeArray1;
-		%feature("autodoc", "	:rtype: StepShape_Array1OfConnectedEdgeSet
-") ChangeArray1;
-		StepShape_Array1OfConnectedEdgeSet & ChangeArray1 ();
-};
-
-
-%extend StepShape_HArray1OfConnectedEdgeSet {
-	%pythoncode {
-		def GetHandle(self):
-		    try:
-		        return self.thisHandle
-		    except:
-		        self.thisHandle = Handle_StepShape_HArray1OfConnectedEdgeSet(self)
-		        self.thisown = False
-		        return self.thisHandle
-	}
-};
-
-%pythonappend Handle_StepShape_HArray1OfConnectedEdgeSet::Handle_StepShape_HArray1OfConnectedEdgeSet %{
-    # register the handle in the base object
-    if len(args) > 0:
-        register_handle(self, args[0])
-%}
-
-%nodefaultctor Handle_StepShape_HArray1OfConnectedEdgeSet;
-class Handle_StepShape_HArray1OfConnectedEdgeSet : public Handle_MMgt_TShared {
-
-    public:
-        // constructors
-        Handle_StepShape_HArray1OfConnectedEdgeSet();
-        Handle_StepShape_HArray1OfConnectedEdgeSet(const Handle_StepShape_HArray1OfConnectedEdgeSet &aHandle);
-        Handle_StepShape_HArray1OfConnectedEdgeSet(const StepShape_HArray1OfConnectedEdgeSet *anItem);
-        void Nullify();
-        Standard_Boolean IsNull() const;
-        static const Handle_StepShape_HArray1OfConnectedEdgeSet DownCast(const Handle_Standard_Transient &AnObject);
-
-};
-%extend Handle_StepShape_HArray1OfConnectedEdgeSet {
-    StepShape_HArray1OfConnectedEdgeSet* _get_reference() {
-    return (StepShape_HArray1OfConnectedEdgeSet*)$self->Access();
-    }
-};
-
-%extend Handle_StepShape_HArray1OfConnectedEdgeSet {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
-};
-
-%extend StepShape_HArray1OfConnectedEdgeSet {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor StepShape_HArray1OfConnectedFaceSet;
-class StepShape_HArray1OfConnectedFaceSet : public MMgt_TShared {
-	public:
-		%feature("compactdefaultargs") StepShape_HArray1OfConnectedFaceSet;
-		%feature("autodoc", "	:param Low:
-	:type Low: int
-	:param Up:
-	:type Up: int
-	:rtype: None
-") StepShape_HArray1OfConnectedFaceSet;
-		 StepShape_HArray1OfConnectedFaceSet (const Standard_Integer Low,const Standard_Integer Up);
-		%feature("compactdefaultargs") StepShape_HArray1OfConnectedFaceSet;
-		%feature("autodoc", "	:param Low:
-	:type Low: int
-	:param Up:
-	:type Up: int
-	:param V:
-	:type V: Handle_StepShape_ConnectedFaceSet &
-	:rtype: None
-") StepShape_HArray1OfConnectedFaceSet;
-		 StepShape_HArray1OfConnectedFaceSet (const Standard_Integer Low,const Standard_Integer Up,const Handle_StepShape_ConnectedFaceSet & V);
-		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	:param V:
-	:type V: Handle_StepShape_ConnectedFaceSet &
-	:rtype: None
-") Init;
-		void Init (const Handle_StepShape_ConnectedFaceSet & V);
-		%feature("compactdefaultargs") Length;
-		%feature("autodoc", "	:rtype: int
-") Length;
-		Standard_Integer Length ();
-		%feature("compactdefaultargs") Lower;
-		%feature("autodoc", "	:rtype: int
-") Lower;
-		Standard_Integer Lower ();
-		%feature("compactdefaultargs") Upper;
-		%feature("autodoc", "	:rtype: int
-") Upper;
-		Standard_Integer Upper ();
-		%feature("compactdefaultargs") SetValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param Value:
-	:type Value: Handle_StepShape_ConnectedFaceSet &
-	:rtype: None
-") SetValue;
-		void SetValue (const Standard_Integer Index,const Handle_StepShape_ConnectedFaceSet & Value);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: Handle_StepShape_ConnectedFaceSet
-") Value;
-		Handle_StepShape_ConnectedFaceSet Value (const Standard_Integer Index);
-		%feature("compactdefaultargs") ChangeValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: Handle_StepShape_ConnectedFaceSet
-") ChangeValue;
-		Handle_StepShape_ConnectedFaceSet ChangeValue (const Standard_Integer Index);
-		%feature("compactdefaultargs") Array1;
-		%feature("autodoc", "	:rtype: StepShape_Array1OfConnectedFaceSet
-") Array1;
-		const StepShape_Array1OfConnectedFaceSet & Array1 ();
-		%feature("compactdefaultargs") ChangeArray1;
-		%feature("autodoc", "	:rtype: StepShape_Array1OfConnectedFaceSet
-") ChangeArray1;
-		StepShape_Array1OfConnectedFaceSet & ChangeArray1 ();
-};
-
-
-%extend StepShape_HArray1OfConnectedFaceSet {
-	%pythoncode {
-		def GetHandle(self):
-		    try:
-		        return self.thisHandle
-		    except:
-		        self.thisHandle = Handle_StepShape_HArray1OfConnectedFaceSet(self)
-		        self.thisown = False
-		        return self.thisHandle
-	}
-};
-
-%pythonappend Handle_StepShape_HArray1OfConnectedFaceSet::Handle_StepShape_HArray1OfConnectedFaceSet %{
-    # register the handle in the base object
-    if len(args) > 0:
-        register_handle(self, args[0])
-%}
-
-%nodefaultctor Handle_StepShape_HArray1OfConnectedFaceSet;
-class Handle_StepShape_HArray1OfConnectedFaceSet : public Handle_MMgt_TShared {
-
-    public:
-        // constructors
-        Handle_StepShape_HArray1OfConnectedFaceSet();
-        Handle_StepShape_HArray1OfConnectedFaceSet(const Handle_StepShape_HArray1OfConnectedFaceSet &aHandle);
-        Handle_StepShape_HArray1OfConnectedFaceSet(const StepShape_HArray1OfConnectedFaceSet *anItem);
-        void Nullify();
-        Standard_Boolean IsNull() const;
-        static const Handle_StepShape_HArray1OfConnectedFaceSet DownCast(const Handle_Standard_Transient &AnObject);
-
-};
-%extend Handle_StepShape_HArray1OfConnectedFaceSet {
-    StepShape_HArray1OfConnectedFaceSet* _get_reference() {
-    return (StepShape_HArray1OfConnectedFaceSet*)$self->Access();
-    }
-};
-
-%extend Handle_StepShape_HArray1OfConnectedFaceSet {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
-};
-
-%extend StepShape_HArray1OfConnectedFaceSet {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor StepShape_HArray1OfEdge;
-class StepShape_HArray1OfEdge : public MMgt_TShared {
-	public:
-		%feature("compactdefaultargs") StepShape_HArray1OfEdge;
-		%feature("autodoc", "	:param Low:
-	:type Low: int
-	:param Up:
-	:type Up: int
-	:rtype: None
-") StepShape_HArray1OfEdge;
-		 StepShape_HArray1OfEdge (const Standard_Integer Low,const Standard_Integer Up);
-		%feature("compactdefaultargs") StepShape_HArray1OfEdge;
-		%feature("autodoc", "	:param Low:
-	:type Low: int
-	:param Up:
-	:type Up: int
-	:param V:
-	:type V: Handle_StepShape_Edge &
-	:rtype: None
-") StepShape_HArray1OfEdge;
-		 StepShape_HArray1OfEdge (const Standard_Integer Low,const Standard_Integer Up,const Handle_StepShape_Edge & V);
-		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	:param V:
-	:type V: Handle_StepShape_Edge &
-	:rtype: None
-") Init;
-		void Init (const Handle_StepShape_Edge & V);
-		%feature("compactdefaultargs") Length;
-		%feature("autodoc", "	:rtype: int
-") Length;
-		Standard_Integer Length ();
-		%feature("compactdefaultargs") Lower;
-		%feature("autodoc", "	:rtype: int
-") Lower;
-		Standard_Integer Lower ();
-		%feature("compactdefaultargs") Upper;
-		%feature("autodoc", "	:rtype: int
-") Upper;
-		Standard_Integer Upper ();
-		%feature("compactdefaultargs") SetValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param Value:
-	:type Value: Handle_StepShape_Edge &
-	:rtype: None
-") SetValue;
-		void SetValue (const Standard_Integer Index,const Handle_StepShape_Edge & Value);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: Handle_StepShape_Edge
-") Value;
-		Handle_StepShape_Edge Value (const Standard_Integer Index);
-		%feature("compactdefaultargs") ChangeValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: Handle_StepShape_Edge
-") ChangeValue;
-		Handle_StepShape_Edge ChangeValue (const Standard_Integer Index);
-		%feature("compactdefaultargs") Array1;
-		%feature("autodoc", "	:rtype: StepShape_Array1OfEdge
-") Array1;
-		const StepShape_Array1OfEdge & Array1 ();
-		%feature("compactdefaultargs") ChangeArray1;
-		%feature("autodoc", "	:rtype: StepShape_Array1OfEdge
-") ChangeArray1;
-		StepShape_Array1OfEdge & ChangeArray1 ();
-};
-
-
-%extend StepShape_HArray1OfEdge {
-	%pythoncode {
-		def GetHandle(self):
-		    try:
-		        return self.thisHandle
-		    except:
-		        self.thisHandle = Handle_StepShape_HArray1OfEdge(self)
-		        self.thisown = False
-		        return self.thisHandle
-	}
-};
-
-%pythonappend Handle_StepShape_HArray1OfEdge::Handle_StepShape_HArray1OfEdge %{
-    # register the handle in the base object
-    if len(args) > 0:
-        register_handle(self, args[0])
-%}
-
-%nodefaultctor Handle_StepShape_HArray1OfEdge;
-class Handle_StepShape_HArray1OfEdge : public Handle_MMgt_TShared {
-
-    public:
-        // constructors
-        Handle_StepShape_HArray1OfEdge();
-        Handle_StepShape_HArray1OfEdge(const Handle_StepShape_HArray1OfEdge &aHandle);
-        Handle_StepShape_HArray1OfEdge(const StepShape_HArray1OfEdge *anItem);
-        void Nullify();
-        Standard_Boolean IsNull() const;
-        static const Handle_StepShape_HArray1OfEdge DownCast(const Handle_Standard_Transient &AnObject);
-
-};
-%extend Handle_StepShape_HArray1OfEdge {
-    StepShape_HArray1OfEdge* _get_reference() {
-    return (StepShape_HArray1OfEdge*)$self->Access();
-    }
-};
-
-%extend Handle_StepShape_HArray1OfEdge {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
-};
-
-%extend StepShape_HArray1OfEdge {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor StepShape_HArray1OfFace;
-class StepShape_HArray1OfFace : public MMgt_TShared {
-	public:
-		%feature("compactdefaultargs") StepShape_HArray1OfFace;
-		%feature("autodoc", "	:param Low:
-	:type Low: int
-	:param Up:
-	:type Up: int
-	:rtype: None
-") StepShape_HArray1OfFace;
-		 StepShape_HArray1OfFace (const Standard_Integer Low,const Standard_Integer Up);
-		%feature("compactdefaultargs") StepShape_HArray1OfFace;
-		%feature("autodoc", "	:param Low:
-	:type Low: int
-	:param Up:
-	:type Up: int
-	:param V:
-	:type V: Handle_StepShape_Face &
-	:rtype: None
-") StepShape_HArray1OfFace;
-		 StepShape_HArray1OfFace (const Standard_Integer Low,const Standard_Integer Up,const Handle_StepShape_Face & V);
-		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	:param V:
-	:type V: Handle_StepShape_Face &
-	:rtype: None
-") Init;
-		void Init (const Handle_StepShape_Face & V);
-		%feature("compactdefaultargs") Length;
-		%feature("autodoc", "	:rtype: int
-") Length;
-		Standard_Integer Length ();
-		%feature("compactdefaultargs") Lower;
-		%feature("autodoc", "	:rtype: int
-") Lower;
-		Standard_Integer Lower ();
-		%feature("compactdefaultargs") Upper;
-		%feature("autodoc", "	:rtype: int
-") Upper;
-		Standard_Integer Upper ();
-		%feature("compactdefaultargs") SetValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param Value:
-	:type Value: Handle_StepShape_Face &
-	:rtype: None
-") SetValue;
-		void SetValue (const Standard_Integer Index,const Handle_StepShape_Face & Value);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: Handle_StepShape_Face
-") Value;
-		Handle_StepShape_Face Value (const Standard_Integer Index);
-		%feature("compactdefaultargs") ChangeValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: Handle_StepShape_Face
-") ChangeValue;
-		Handle_StepShape_Face ChangeValue (const Standard_Integer Index);
-		%feature("compactdefaultargs") Array1;
-		%feature("autodoc", "	:rtype: StepShape_Array1OfFace
-") Array1;
-		const StepShape_Array1OfFace & Array1 ();
-		%feature("compactdefaultargs") ChangeArray1;
-		%feature("autodoc", "	:rtype: StepShape_Array1OfFace
-") ChangeArray1;
-		StepShape_Array1OfFace & ChangeArray1 ();
-};
-
-
-%extend StepShape_HArray1OfFace {
-	%pythoncode {
-		def GetHandle(self):
-		    try:
-		        return self.thisHandle
-		    except:
-		        self.thisHandle = Handle_StepShape_HArray1OfFace(self)
-		        self.thisown = False
-		        return self.thisHandle
-	}
-};
-
-%pythonappend Handle_StepShape_HArray1OfFace::Handle_StepShape_HArray1OfFace %{
-    # register the handle in the base object
-    if len(args) > 0:
-        register_handle(self, args[0])
-%}
-
-%nodefaultctor Handle_StepShape_HArray1OfFace;
-class Handle_StepShape_HArray1OfFace : public Handle_MMgt_TShared {
-
-    public:
-        // constructors
-        Handle_StepShape_HArray1OfFace();
-        Handle_StepShape_HArray1OfFace(const Handle_StepShape_HArray1OfFace &aHandle);
-        Handle_StepShape_HArray1OfFace(const StepShape_HArray1OfFace *anItem);
-        void Nullify();
-        Standard_Boolean IsNull() const;
-        static const Handle_StepShape_HArray1OfFace DownCast(const Handle_Standard_Transient &AnObject);
-
-};
-%extend Handle_StepShape_HArray1OfFace {
-    StepShape_HArray1OfFace* _get_reference() {
-    return (StepShape_HArray1OfFace*)$self->Access();
-    }
-};
-
-%extend Handle_StepShape_HArray1OfFace {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
-};
-
-%extend StepShape_HArray1OfFace {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor StepShape_HArray1OfFaceBound;
-class StepShape_HArray1OfFaceBound : public MMgt_TShared {
-	public:
-		%feature("compactdefaultargs") StepShape_HArray1OfFaceBound;
-		%feature("autodoc", "	:param Low:
-	:type Low: int
-	:param Up:
-	:type Up: int
-	:rtype: None
-") StepShape_HArray1OfFaceBound;
-		 StepShape_HArray1OfFaceBound (const Standard_Integer Low,const Standard_Integer Up);
-		%feature("compactdefaultargs") StepShape_HArray1OfFaceBound;
-		%feature("autodoc", "	:param Low:
-	:type Low: int
-	:param Up:
-	:type Up: int
-	:param V:
-	:type V: Handle_StepShape_FaceBound &
-	:rtype: None
-") StepShape_HArray1OfFaceBound;
-		 StepShape_HArray1OfFaceBound (const Standard_Integer Low,const Standard_Integer Up,const Handle_StepShape_FaceBound & V);
-		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	:param V:
-	:type V: Handle_StepShape_FaceBound &
-	:rtype: None
-") Init;
-		void Init (const Handle_StepShape_FaceBound & V);
-		%feature("compactdefaultargs") Length;
-		%feature("autodoc", "	:rtype: int
-") Length;
-		Standard_Integer Length ();
-		%feature("compactdefaultargs") Lower;
-		%feature("autodoc", "	:rtype: int
-") Lower;
-		Standard_Integer Lower ();
-		%feature("compactdefaultargs") Upper;
-		%feature("autodoc", "	:rtype: int
-") Upper;
-		Standard_Integer Upper ();
-		%feature("compactdefaultargs") SetValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param Value:
-	:type Value: Handle_StepShape_FaceBound &
-	:rtype: None
-") SetValue;
-		void SetValue (const Standard_Integer Index,const Handle_StepShape_FaceBound & Value);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: Handle_StepShape_FaceBound
-") Value;
-		Handle_StepShape_FaceBound Value (const Standard_Integer Index);
-		%feature("compactdefaultargs") ChangeValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: Handle_StepShape_FaceBound
-") ChangeValue;
-		Handle_StepShape_FaceBound ChangeValue (const Standard_Integer Index);
-		%feature("compactdefaultargs") Array1;
-		%feature("autodoc", "	:rtype: StepShape_Array1OfFaceBound
-") Array1;
-		const StepShape_Array1OfFaceBound & Array1 ();
-		%feature("compactdefaultargs") ChangeArray1;
-		%feature("autodoc", "	:rtype: StepShape_Array1OfFaceBound
-") ChangeArray1;
-		StepShape_Array1OfFaceBound & ChangeArray1 ();
-};
-
-
-%extend StepShape_HArray1OfFaceBound {
-	%pythoncode {
-		def GetHandle(self):
-		    try:
-		        return self.thisHandle
-		    except:
-		        self.thisHandle = Handle_StepShape_HArray1OfFaceBound(self)
-		        self.thisown = False
-		        return self.thisHandle
-	}
-};
-
-%pythonappend Handle_StepShape_HArray1OfFaceBound::Handle_StepShape_HArray1OfFaceBound %{
-    # register the handle in the base object
-    if len(args) > 0:
-        register_handle(self, args[0])
-%}
-
-%nodefaultctor Handle_StepShape_HArray1OfFaceBound;
-class Handle_StepShape_HArray1OfFaceBound : public Handle_MMgt_TShared {
-
-    public:
-        // constructors
-        Handle_StepShape_HArray1OfFaceBound();
-        Handle_StepShape_HArray1OfFaceBound(const Handle_StepShape_HArray1OfFaceBound &aHandle);
-        Handle_StepShape_HArray1OfFaceBound(const StepShape_HArray1OfFaceBound *anItem);
-        void Nullify();
-        Standard_Boolean IsNull() const;
-        static const Handle_StepShape_HArray1OfFaceBound DownCast(const Handle_Standard_Transient &AnObject);
-
-};
-%extend Handle_StepShape_HArray1OfFaceBound {
-    StepShape_HArray1OfFaceBound* _get_reference() {
-    return (StepShape_HArray1OfFaceBound*)$self->Access();
-    }
-};
-
-%extend Handle_StepShape_HArray1OfFaceBound {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
-};
-
-%extend StepShape_HArray1OfFaceBound {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor StepShape_HArray1OfGeometricSetSelect;
-class StepShape_HArray1OfGeometricSetSelect : public MMgt_TShared {
-	public:
-		%feature("compactdefaultargs") StepShape_HArray1OfGeometricSetSelect;
-		%feature("autodoc", "	:param Low:
-	:type Low: int
-	:param Up:
-	:type Up: int
-	:rtype: None
-") StepShape_HArray1OfGeometricSetSelect;
-		 StepShape_HArray1OfGeometricSetSelect (const Standard_Integer Low,const Standard_Integer Up);
-		%feature("compactdefaultargs") StepShape_HArray1OfGeometricSetSelect;
-		%feature("autodoc", "	:param Low:
-	:type Low: int
-	:param Up:
-	:type Up: int
-	:param V:
-	:type V: StepShape_GeometricSetSelect &
-	:rtype: None
-") StepShape_HArray1OfGeometricSetSelect;
-		 StepShape_HArray1OfGeometricSetSelect (const Standard_Integer Low,const Standard_Integer Up,const StepShape_GeometricSetSelect & V);
-		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	:param V:
-	:type V: StepShape_GeometricSetSelect &
-	:rtype: None
-") Init;
-		void Init (const StepShape_GeometricSetSelect & V);
-		%feature("compactdefaultargs") Length;
-		%feature("autodoc", "	:rtype: int
-") Length;
-		Standard_Integer Length ();
-		%feature("compactdefaultargs") Lower;
-		%feature("autodoc", "	:rtype: int
-") Lower;
-		Standard_Integer Lower ();
-		%feature("compactdefaultargs") Upper;
-		%feature("autodoc", "	:rtype: int
-") Upper;
-		Standard_Integer Upper ();
-		%feature("compactdefaultargs") SetValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param Value:
-	:type Value: StepShape_GeometricSetSelect &
-	:rtype: None
-") SetValue;
-		void SetValue (const Standard_Integer Index,const StepShape_GeometricSetSelect & Value);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: StepShape_GeometricSetSelect
-") Value;
-		const StepShape_GeometricSetSelect & Value (const Standard_Integer Index);
-		%feature("compactdefaultargs") ChangeValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: StepShape_GeometricSetSelect
-") ChangeValue;
-		StepShape_GeometricSetSelect & ChangeValue (const Standard_Integer Index);
-		%feature("compactdefaultargs") Array1;
-		%feature("autodoc", "	:rtype: StepShape_Array1OfGeometricSetSelect
-") Array1;
-		const StepShape_Array1OfGeometricSetSelect & Array1 ();
-		%feature("compactdefaultargs") ChangeArray1;
-		%feature("autodoc", "	:rtype: StepShape_Array1OfGeometricSetSelect
-") ChangeArray1;
-		StepShape_Array1OfGeometricSetSelect & ChangeArray1 ();
-};
-
-
-%extend StepShape_HArray1OfGeometricSetSelect {
-	%pythoncode {
-		def GetHandle(self):
-		    try:
-		        return self.thisHandle
-		    except:
-		        self.thisHandle = Handle_StepShape_HArray1OfGeometricSetSelect(self)
-		        self.thisown = False
-		        return self.thisHandle
-	}
-};
-
-%pythonappend Handle_StepShape_HArray1OfGeometricSetSelect::Handle_StepShape_HArray1OfGeometricSetSelect %{
-    # register the handle in the base object
-    if len(args) > 0:
-        register_handle(self, args[0])
-%}
-
-%nodefaultctor Handle_StepShape_HArray1OfGeometricSetSelect;
-class Handle_StepShape_HArray1OfGeometricSetSelect : public Handle_MMgt_TShared {
-
-    public:
-        // constructors
-        Handle_StepShape_HArray1OfGeometricSetSelect();
-        Handle_StepShape_HArray1OfGeometricSetSelect(const Handle_StepShape_HArray1OfGeometricSetSelect &aHandle);
-        Handle_StepShape_HArray1OfGeometricSetSelect(const StepShape_HArray1OfGeometricSetSelect *anItem);
-        void Nullify();
-        Standard_Boolean IsNull() const;
-        static const Handle_StepShape_HArray1OfGeometricSetSelect DownCast(const Handle_Standard_Transient &AnObject);
-
-};
-%extend Handle_StepShape_HArray1OfGeometricSetSelect {
-    StepShape_HArray1OfGeometricSetSelect* _get_reference() {
-    return (StepShape_HArray1OfGeometricSetSelect*)$self->Access();
-    }
-};
-
-%extend Handle_StepShape_HArray1OfGeometricSetSelect {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
-};
-
-%extend StepShape_HArray1OfGeometricSetSelect {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor StepShape_HArray1OfOrientedClosedShell;
-class StepShape_HArray1OfOrientedClosedShell : public MMgt_TShared {
-	public:
-		%feature("compactdefaultargs") StepShape_HArray1OfOrientedClosedShell;
-		%feature("autodoc", "	:param Low:
-	:type Low: int
-	:param Up:
-	:type Up: int
-	:rtype: None
-") StepShape_HArray1OfOrientedClosedShell;
-		 StepShape_HArray1OfOrientedClosedShell (const Standard_Integer Low,const Standard_Integer Up);
-		%feature("compactdefaultargs") StepShape_HArray1OfOrientedClosedShell;
-		%feature("autodoc", "	:param Low:
-	:type Low: int
-	:param Up:
-	:type Up: int
-	:param V:
-	:type V: Handle_StepShape_OrientedClosedShell &
-	:rtype: None
-") StepShape_HArray1OfOrientedClosedShell;
-		 StepShape_HArray1OfOrientedClosedShell (const Standard_Integer Low,const Standard_Integer Up,const Handle_StepShape_OrientedClosedShell & V);
-		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	:param V:
-	:type V: Handle_StepShape_OrientedClosedShell &
-	:rtype: None
-") Init;
-		void Init (const Handle_StepShape_OrientedClosedShell & V);
-		%feature("compactdefaultargs") Length;
-		%feature("autodoc", "	:rtype: int
-") Length;
-		Standard_Integer Length ();
-		%feature("compactdefaultargs") Lower;
-		%feature("autodoc", "	:rtype: int
-") Lower;
-		Standard_Integer Lower ();
-		%feature("compactdefaultargs") Upper;
-		%feature("autodoc", "	:rtype: int
-") Upper;
-		Standard_Integer Upper ();
-		%feature("compactdefaultargs") SetValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param Value:
-	:type Value: Handle_StepShape_OrientedClosedShell &
-	:rtype: None
-") SetValue;
-		void SetValue (const Standard_Integer Index,const Handle_StepShape_OrientedClosedShell & Value);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: Handle_StepShape_OrientedClosedShell
-") Value;
-		Handle_StepShape_OrientedClosedShell Value (const Standard_Integer Index);
-		%feature("compactdefaultargs") ChangeValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: Handle_StepShape_OrientedClosedShell
-") ChangeValue;
-		Handle_StepShape_OrientedClosedShell ChangeValue (const Standard_Integer Index);
-		%feature("compactdefaultargs") Array1;
-		%feature("autodoc", "	:rtype: StepShape_Array1OfOrientedClosedShell
-") Array1;
-		const StepShape_Array1OfOrientedClosedShell & Array1 ();
-		%feature("compactdefaultargs") ChangeArray1;
-		%feature("autodoc", "	:rtype: StepShape_Array1OfOrientedClosedShell
-") ChangeArray1;
-		StepShape_Array1OfOrientedClosedShell & ChangeArray1 ();
-};
-
-
-%extend StepShape_HArray1OfOrientedClosedShell {
-	%pythoncode {
-		def GetHandle(self):
-		    try:
-		        return self.thisHandle
-		    except:
-		        self.thisHandle = Handle_StepShape_HArray1OfOrientedClosedShell(self)
-		        self.thisown = False
-		        return self.thisHandle
-	}
-};
-
-%pythonappend Handle_StepShape_HArray1OfOrientedClosedShell::Handle_StepShape_HArray1OfOrientedClosedShell %{
-    # register the handle in the base object
-    if len(args) > 0:
-        register_handle(self, args[0])
-%}
-
-%nodefaultctor Handle_StepShape_HArray1OfOrientedClosedShell;
-class Handle_StepShape_HArray1OfOrientedClosedShell : public Handle_MMgt_TShared {
-
-    public:
-        // constructors
-        Handle_StepShape_HArray1OfOrientedClosedShell();
-        Handle_StepShape_HArray1OfOrientedClosedShell(const Handle_StepShape_HArray1OfOrientedClosedShell &aHandle);
-        Handle_StepShape_HArray1OfOrientedClosedShell(const StepShape_HArray1OfOrientedClosedShell *anItem);
-        void Nullify();
-        Standard_Boolean IsNull() const;
-        static const Handle_StepShape_HArray1OfOrientedClosedShell DownCast(const Handle_Standard_Transient &AnObject);
-
-};
-%extend Handle_StepShape_HArray1OfOrientedClosedShell {
-    StepShape_HArray1OfOrientedClosedShell* _get_reference() {
-    return (StepShape_HArray1OfOrientedClosedShell*)$self->Access();
-    }
-};
-
-%extend Handle_StepShape_HArray1OfOrientedClosedShell {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
-};
-
-%extend StepShape_HArray1OfOrientedClosedShell {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor StepShape_HArray1OfOrientedEdge;
-class StepShape_HArray1OfOrientedEdge : public MMgt_TShared {
-	public:
-		%feature("compactdefaultargs") StepShape_HArray1OfOrientedEdge;
-		%feature("autodoc", "	:param Low:
-	:type Low: int
-	:param Up:
-	:type Up: int
-	:rtype: None
-") StepShape_HArray1OfOrientedEdge;
-		 StepShape_HArray1OfOrientedEdge (const Standard_Integer Low,const Standard_Integer Up);
-		%feature("compactdefaultargs") StepShape_HArray1OfOrientedEdge;
-		%feature("autodoc", "	:param Low:
-	:type Low: int
-	:param Up:
-	:type Up: int
-	:param V:
-	:type V: Handle_StepShape_OrientedEdge &
-	:rtype: None
-") StepShape_HArray1OfOrientedEdge;
-		 StepShape_HArray1OfOrientedEdge (const Standard_Integer Low,const Standard_Integer Up,const Handle_StepShape_OrientedEdge & V);
-		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	:param V:
-	:type V: Handle_StepShape_OrientedEdge &
-	:rtype: None
-") Init;
-		void Init (const Handle_StepShape_OrientedEdge & V);
-		%feature("compactdefaultargs") Length;
-		%feature("autodoc", "	:rtype: int
-") Length;
-		Standard_Integer Length ();
-		%feature("compactdefaultargs") Lower;
-		%feature("autodoc", "	:rtype: int
-") Lower;
-		Standard_Integer Lower ();
-		%feature("compactdefaultargs") Upper;
-		%feature("autodoc", "	:rtype: int
-") Upper;
-		Standard_Integer Upper ();
-		%feature("compactdefaultargs") SetValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param Value:
-	:type Value: Handle_StepShape_OrientedEdge &
-	:rtype: None
-") SetValue;
-		void SetValue (const Standard_Integer Index,const Handle_StepShape_OrientedEdge & Value);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: Handle_StepShape_OrientedEdge
-") Value;
-		Handle_StepShape_OrientedEdge Value (const Standard_Integer Index);
-		%feature("compactdefaultargs") ChangeValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: Handle_StepShape_OrientedEdge
-") ChangeValue;
-		Handle_StepShape_OrientedEdge ChangeValue (const Standard_Integer Index);
-		%feature("compactdefaultargs") Array1;
-		%feature("autodoc", "	:rtype: StepShape_Array1OfOrientedEdge
-") Array1;
-		const StepShape_Array1OfOrientedEdge & Array1 ();
-		%feature("compactdefaultargs") ChangeArray1;
-		%feature("autodoc", "	:rtype: StepShape_Array1OfOrientedEdge
-") ChangeArray1;
-		StepShape_Array1OfOrientedEdge & ChangeArray1 ();
-};
-
-
-%extend StepShape_HArray1OfOrientedEdge {
-	%pythoncode {
-		def GetHandle(self):
-		    try:
-		        return self.thisHandle
-		    except:
-		        self.thisHandle = Handle_StepShape_HArray1OfOrientedEdge(self)
-		        self.thisown = False
-		        return self.thisHandle
-	}
-};
-
-%pythonappend Handle_StepShape_HArray1OfOrientedEdge::Handle_StepShape_HArray1OfOrientedEdge %{
-    # register the handle in the base object
-    if len(args) > 0:
-        register_handle(self, args[0])
-%}
-
-%nodefaultctor Handle_StepShape_HArray1OfOrientedEdge;
-class Handle_StepShape_HArray1OfOrientedEdge : public Handle_MMgt_TShared {
-
-    public:
-        // constructors
-        Handle_StepShape_HArray1OfOrientedEdge();
-        Handle_StepShape_HArray1OfOrientedEdge(const Handle_StepShape_HArray1OfOrientedEdge &aHandle);
-        Handle_StepShape_HArray1OfOrientedEdge(const StepShape_HArray1OfOrientedEdge *anItem);
-        void Nullify();
-        Standard_Boolean IsNull() const;
-        static const Handle_StepShape_HArray1OfOrientedEdge DownCast(const Handle_Standard_Transient &AnObject);
-
-};
-%extend Handle_StepShape_HArray1OfOrientedEdge {
-    StepShape_HArray1OfOrientedEdge* _get_reference() {
-    return (StepShape_HArray1OfOrientedEdge*)$self->Access();
-    }
-};
-
-%extend Handle_StepShape_HArray1OfOrientedEdge {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
-};
-
-%extend StepShape_HArray1OfOrientedEdge {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor StepShape_HArray1OfShell;
-class StepShape_HArray1OfShell : public MMgt_TShared {
-	public:
-		%feature("compactdefaultargs") StepShape_HArray1OfShell;
-		%feature("autodoc", "	:param Low:
-	:type Low: int
-	:param Up:
-	:type Up: int
-	:rtype: None
-") StepShape_HArray1OfShell;
-		 StepShape_HArray1OfShell (const Standard_Integer Low,const Standard_Integer Up);
-		%feature("compactdefaultargs") StepShape_HArray1OfShell;
-		%feature("autodoc", "	:param Low:
-	:type Low: int
-	:param Up:
-	:type Up: int
-	:param V:
-	:type V: StepShape_Shell &
-	:rtype: None
-") StepShape_HArray1OfShell;
-		 StepShape_HArray1OfShell (const Standard_Integer Low,const Standard_Integer Up,const StepShape_Shell & V);
-		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	:param V:
-	:type V: StepShape_Shell &
-	:rtype: None
-") Init;
-		void Init (const StepShape_Shell & V);
-		%feature("compactdefaultargs") Length;
-		%feature("autodoc", "	:rtype: int
-") Length;
-		Standard_Integer Length ();
-		%feature("compactdefaultargs") Lower;
-		%feature("autodoc", "	:rtype: int
-") Lower;
-		Standard_Integer Lower ();
-		%feature("compactdefaultargs") Upper;
-		%feature("autodoc", "	:rtype: int
-") Upper;
-		Standard_Integer Upper ();
-		%feature("compactdefaultargs") SetValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param Value:
-	:type Value: StepShape_Shell &
-	:rtype: None
-") SetValue;
-		void SetValue (const Standard_Integer Index,const StepShape_Shell & Value);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: StepShape_Shell
-") Value;
-		const StepShape_Shell & Value (const Standard_Integer Index);
-		%feature("compactdefaultargs") ChangeValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: StepShape_Shell
-") ChangeValue;
-		StepShape_Shell & ChangeValue (const Standard_Integer Index);
-		%feature("compactdefaultargs") Array1;
-		%feature("autodoc", "	:rtype: StepShape_Array1OfShell
-") Array1;
-		const StepShape_Array1OfShell & Array1 ();
-		%feature("compactdefaultargs") ChangeArray1;
-		%feature("autodoc", "	:rtype: StepShape_Array1OfShell
-") ChangeArray1;
-		StepShape_Array1OfShell & ChangeArray1 ();
-};
-
-
-%extend StepShape_HArray1OfShell {
-	%pythoncode {
-		def GetHandle(self):
-		    try:
-		        return self.thisHandle
-		    except:
-		        self.thisHandle = Handle_StepShape_HArray1OfShell(self)
-		        self.thisown = False
-		        return self.thisHandle
-	}
-};
-
-%pythonappend Handle_StepShape_HArray1OfShell::Handle_StepShape_HArray1OfShell %{
-    # register the handle in the base object
-    if len(args) > 0:
-        register_handle(self, args[0])
-%}
-
-%nodefaultctor Handle_StepShape_HArray1OfShell;
-class Handle_StepShape_HArray1OfShell : public Handle_MMgt_TShared {
-
-    public:
-        // constructors
-        Handle_StepShape_HArray1OfShell();
-        Handle_StepShape_HArray1OfShell(const Handle_StepShape_HArray1OfShell &aHandle);
-        Handle_StepShape_HArray1OfShell(const StepShape_HArray1OfShell *anItem);
-        void Nullify();
-        Standard_Boolean IsNull() const;
-        static const Handle_StepShape_HArray1OfShell DownCast(const Handle_Standard_Transient &AnObject);
-
-};
-%extend Handle_StepShape_HArray1OfShell {
-    StepShape_HArray1OfShell* _get_reference() {
-    return (StepShape_HArray1OfShell*)$self->Access();
-    }
-};
-
-%extend Handle_StepShape_HArray1OfShell {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
-};
-
-%extend StepShape_HArray1OfShell {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor StepShape_HArray1OfValueQualifier;
-class StepShape_HArray1OfValueQualifier : public MMgt_TShared {
-	public:
-		%feature("compactdefaultargs") StepShape_HArray1OfValueQualifier;
-		%feature("autodoc", "	:param Low:
-	:type Low: int
-	:param Up:
-	:type Up: int
-	:rtype: None
-") StepShape_HArray1OfValueQualifier;
-		 StepShape_HArray1OfValueQualifier (const Standard_Integer Low,const Standard_Integer Up);
-		%feature("compactdefaultargs") StepShape_HArray1OfValueQualifier;
-		%feature("autodoc", "	:param Low:
-	:type Low: int
-	:param Up:
-	:type Up: int
-	:param V:
-	:type V: StepShape_ValueQualifier &
-	:rtype: None
-") StepShape_HArray1OfValueQualifier;
-		 StepShape_HArray1OfValueQualifier (const Standard_Integer Low,const Standard_Integer Up,const StepShape_ValueQualifier & V);
-		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	:param V:
-	:type V: StepShape_ValueQualifier &
-	:rtype: None
-") Init;
-		void Init (const StepShape_ValueQualifier & V);
-		%feature("compactdefaultargs") Length;
-		%feature("autodoc", "	:rtype: int
-") Length;
-		Standard_Integer Length ();
-		%feature("compactdefaultargs") Lower;
-		%feature("autodoc", "	:rtype: int
-") Lower;
-		Standard_Integer Lower ();
-		%feature("compactdefaultargs") Upper;
-		%feature("autodoc", "	:rtype: int
-") Upper;
-		Standard_Integer Upper ();
-		%feature("compactdefaultargs") SetValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param Value:
-	:type Value: StepShape_ValueQualifier &
-	:rtype: None
-") SetValue;
-		void SetValue (const Standard_Integer Index,const StepShape_ValueQualifier & Value);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: StepShape_ValueQualifier
-") Value;
-		const StepShape_ValueQualifier & Value (const Standard_Integer Index);
-		%feature("compactdefaultargs") ChangeValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: StepShape_ValueQualifier
-") ChangeValue;
-		StepShape_ValueQualifier & ChangeValue (const Standard_Integer Index);
-		%feature("compactdefaultargs") Array1;
-		%feature("autodoc", "	:rtype: StepShape_Array1OfValueQualifier
-") Array1;
-		const StepShape_Array1OfValueQualifier & Array1 ();
-		%feature("compactdefaultargs") ChangeArray1;
-		%feature("autodoc", "	:rtype: StepShape_Array1OfValueQualifier
-") ChangeArray1;
-		StepShape_Array1OfValueQualifier & ChangeArray1 ();
-};
-
-
-%extend StepShape_HArray1OfValueQualifier {
-	%pythoncode {
-		def GetHandle(self):
-		    try:
-		        return self.thisHandle
-		    except:
-		        self.thisHandle = Handle_StepShape_HArray1OfValueQualifier(self)
-		        self.thisown = False
-		        return self.thisHandle
-	}
-};
-
-%pythonappend Handle_StepShape_HArray1OfValueQualifier::Handle_StepShape_HArray1OfValueQualifier %{
-    # register the handle in the base object
-    if len(args) > 0:
-        register_handle(self, args[0])
-%}
-
-%nodefaultctor Handle_StepShape_HArray1OfValueQualifier;
-class Handle_StepShape_HArray1OfValueQualifier : public Handle_MMgt_TShared {
-
-    public:
-        // constructors
-        Handle_StepShape_HArray1OfValueQualifier();
-        Handle_StepShape_HArray1OfValueQualifier(const Handle_StepShape_HArray1OfValueQualifier &aHandle);
-        Handle_StepShape_HArray1OfValueQualifier(const StepShape_HArray1OfValueQualifier *anItem);
-        void Nullify();
-        Standard_Boolean IsNull() const;
-        static const Handle_StepShape_HArray1OfValueQualifier DownCast(const Handle_Standard_Transient &AnObject);
-
-};
-%extend Handle_StepShape_HArray1OfValueQualifier {
-    StepShape_HArray1OfValueQualifier* _get_reference() {
-    return (StepShape_HArray1OfValueQualifier*)$self->Access();
-    }
-};
-
-%extend Handle_StepShape_HArray1OfValueQualifier {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
-};
-
-%extend StepShape_HArray1OfValueQualifier {
 	%pythoncode {
 	__repr__ = _dumps_object
 	}
@@ -3528,19 +1456,13 @@ class StepShape_HalfSpaceSolid : public StepGeom_GeometricRepresentationItem {
 		%feature("compactdefaultargs") Init;
 		%feature("autodoc", "	:param aName:
 	:type aName: Handle_TCollection_HAsciiString &
-	:rtype: void
-") Init;
-		virtual void Init (const Handle_TCollection_HAsciiString & aName);
-		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	:param aName:
-	:type aName: Handle_TCollection_HAsciiString &
 	:param aBaseSurface:
 	:type aBaseSurface: Handle_StepGeom_Surface &
 	:param aAgreementFlag:
 	:type aAgreementFlag: bool
-	:rtype: void
+	:rtype: None
 ") Init;
-		virtual void Init (const Handle_TCollection_HAsciiString & aName,const Handle_StepGeom_Surface & aBaseSurface,const Standard_Boolean aAgreementFlag);
+		void Init (const Handle_TCollection_HAsciiString & aName,const Handle_StepGeom_Surface & aBaseSurface,const Standard_Boolean aAgreementFlag);
 		%feature("compactdefaultargs") SetBaseSurface;
 		%feature("autodoc", "	:param aBaseSurface:
 	:type aBaseSurface: Handle_StepGeom_Surface &
@@ -3595,19 +1517,20 @@ class Handle_StepShape_HalfSpaceSolid : public Handle_StepGeom_GeometricRepresen
         static const Handle_StepShape_HalfSpaceSolid DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_StepShape_HalfSpaceSolid {
     StepShape_HalfSpaceSolid* _get_reference() {
-    return (StepShape_HalfSpaceSolid*)$self->Access();
+    return (StepShape_HalfSpaceSolid*)$self->get();
     }
 };
 
 %extend Handle_StepShape_HalfSpaceSolid {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend StepShape_HalfSpaceSolid {
@@ -3616,7 +1539,7 @@ class Handle_StepShape_HalfSpaceSolid : public Handle_StepGeom_GeometricRepresen
 	}
 };
 %nodefaultctor StepShape_LimitsAndFits;
-class StepShape_LimitsAndFits : public MMgt_TShared {
+class StepShape_LimitsAndFits : public Standard_Transient {
 	public:
 		%feature("compactdefaultargs") StepShape_LimitsAndFits;
 		%feature("autodoc", "	:rtype: None
@@ -3696,7 +1619,7 @@ class StepShape_LimitsAndFits : public MMgt_TShared {
 %}
 
 %nodefaultctor Handle_StepShape_LimitsAndFits;
-class Handle_StepShape_LimitsAndFits : public Handle_MMgt_TShared {
+class Handle_StepShape_LimitsAndFits : public Handle_Standard_Transient {
 
     public:
         // constructors
@@ -3708,19 +1631,20 @@ class Handle_StepShape_LimitsAndFits : public Handle_MMgt_TShared {
         static const Handle_StepShape_LimitsAndFits DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_StepShape_LimitsAndFits {
     StepShape_LimitsAndFits* _get_reference() {
-    return (StepShape_LimitsAndFits*)$self->Access();
+    return (StepShape_LimitsAndFits*)$self->get();
     }
 };
 
 %extend Handle_StepShape_LimitsAndFits {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend StepShape_LimitsAndFits {
@@ -3729,7 +1653,7 @@ class Handle_StepShape_LimitsAndFits : public Handle_MMgt_TShared {
 	}
 };
 %nodefaultctor StepShape_MeasureQualification;
-class StepShape_MeasureQualification : public MMgt_TShared {
+class StepShape_MeasureQualification : public Standard_Transient {
 	public:
 		%feature("compactdefaultargs") StepShape_MeasureQualification;
 		%feature("autodoc", "	:rtype: None
@@ -3827,7 +1751,7 @@ class StepShape_MeasureQualification : public MMgt_TShared {
 %}
 
 %nodefaultctor Handle_StepShape_MeasureQualification;
-class Handle_StepShape_MeasureQualification : public Handle_MMgt_TShared {
+class Handle_StepShape_MeasureQualification : public Handle_Standard_Transient {
 
     public:
         // constructors
@@ -3839,19 +1763,20 @@ class Handle_StepShape_MeasureQualification : public Handle_MMgt_TShared {
         static const Handle_StepShape_MeasureQualification DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_StepShape_MeasureQualification {
     StepShape_MeasureQualification* _get_reference() {
-    return (StepShape_MeasureQualification*)$self->Access();
+    return (StepShape_MeasureQualification*)$self->get();
     }
 };
 
 %extend Handle_StepShape_MeasureQualification {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend StepShape_MeasureQualification {
@@ -3950,19 +1875,20 @@ class Handle_StepShape_MeasureRepresentationItemAndQualifiedRepresentationItem :
         static const Handle_StepShape_MeasureRepresentationItemAndQualifiedRepresentationItem DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_StepShape_MeasureRepresentationItemAndQualifiedRepresentationItem {
     StepShape_MeasureRepresentationItemAndQualifiedRepresentationItem* _get_reference() {
-    return (StepShape_MeasureRepresentationItemAndQualifiedRepresentationItem*)$self->Access();
+    return (StepShape_MeasureRepresentationItemAndQualifiedRepresentationItem*)$self->get();
     }
 };
 
 %extend Handle_StepShape_MeasureRepresentationItemAndQualifiedRepresentationItem {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend StepShape_MeasureRepresentationItemAndQualifiedRepresentationItem {
@@ -3971,7 +1897,7 @@ class Handle_StepShape_MeasureRepresentationItemAndQualifiedRepresentationItem :
 	}
 };
 %nodefaultctor StepShape_PlusMinusTolerance;
-class StepShape_PlusMinusTolerance : public MMgt_TShared {
+class StepShape_PlusMinusTolerance : public Standard_Transient {
 	public:
 		%feature("compactdefaultargs") StepShape_PlusMinusTolerance;
 		%feature("autodoc", "	:rtype: None
@@ -4027,7 +1953,7 @@ class StepShape_PlusMinusTolerance : public MMgt_TShared {
 %}
 
 %nodefaultctor Handle_StepShape_PlusMinusTolerance;
-class Handle_StepShape_PlusMinusTolerance : public Handle_MMgt_TShared {
+class Handle_StepShape_PlusMinusTolerance : public Handle_Standard_Transient {
 
     public:
         // constructors
@@ -4039,19 +1965,20 @@ class Handle_StepShape_PlusMinusTolerance : public Handle_MMgt_TShared {
         static const Handle_StepShape_PlusMinusTolerance DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_StepShape_PlusMinusTolerance {
     StepShape_PlusMinusTolerance* _get_reference() {
-    return (StepShape_PlusMinusTolerance*)$self->Access();
+    return (StepShape_PlusMinusTolerance*)$self->get();
     }
 };
 
 %extend Handle_StepShape_PlusMinusTolerance {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend StepShape_PlusMinusTolerance {
@@ -4060,7 +1987,7 @@ class Handle_StepShape_PlusMinusTolerance : public Handle_MMgt_TShared {
 	}
 };
 %nodefaultctor StepShape_PrecisionQualifier;
-class StepShape_PrecisionQualifier : public MMgt_TShared {
+class StepShape_PrecisionQualifier : public Standard_Transient {
 	public:
 		%feature("compactdefaultargs") StepShape_PrecisionQualifier;
 		%feature("autodoc", "	:rtype: None
@@ -4104,7 +2031,7 @@ class StepShape_PrecisionQualifier : public MMgt_TShared {
 %}
 
 %nodefaultctor Handle_StepShape_PrecisionQualifier;
-class Handle_StepShape_PrecisionQualifier : public Handle_MMgt_TShared {
+class Handle_StepShape_PrecisionQualifier : public Handle_Standard_Transient {
 
     public:
         // constructors
@@ -4116,19 +2043,20 @@ class Handle_StepShape_PrecisionQualifier : public Handle_MMgt_TShared {
         static const Handle_StepShape_PrecisionQualifier DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_StepShape_PrecisionQualifier {
     StepShape_PrecisionQualifier* _get_reference() {
-    return (StepShape_PrecisionQualifier*)$self->Access();
+    return (StepShape_PrecisionQualifier*)$self->get();
     }
 };
 
 %extend Handle_StepShape_PrecisionQualifier {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend StepShape_PrecisionQualifier {
@@ -4213,19 +2141,20 @@ class Handle_StepShape_QualifiedRepresentationItem : public Handle_StepRepr_Repr
         static const Handle_StepShape_QualifiedRepresentationItem DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_StepShape_QualifiedRepresentationItem {
     StepShape_QualifiedRepresentationItem* _get_reference() {
-    return (StepShape_QualifiedRepresentationItem*)$self->Access();
+    return (StepShape_QualifiedRepresentationItem*)$self->get();
     }
 };
 
 %extend Handle_StepShape_QualifiedRepresentationItem {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend StepShape_QualifiedRepresentationItem {
@@ -4251,37 +2180,37 @@ class StepShape_ReversibleTopologyItem : public StepData_SelectType {
 ") CaseNum;
 		Standard_Integer CaseNum (const Handle_Standard_Transient & ent);
 		%feature("compactdefaultargs") Edge;
-		%feature("autodoc", "	* returns Value as a Edge (Null if another type)
+		%feature("autodoc", "	* returns Value as a Edge --Null if another type--
 
 	:rtype: Handle_StepShape_Edge
 ") Edge;
 		Handle_StepShape_Edge Edge ();
 		%feature("compactdefaultargs") Path;
-		%feature("autodoc", "	* returns Value as a Path (Null if another type)
+		%feature("autodoc", "	* returns Value as a Path --Null if another type--
 
 	:rtype: Handle_StepShape_Path
 ") Path;
 		Handle_StepShape_Path Path ();
 		%feature("compactdefaultargs") Face;
-		%feature("autodoc", "	* returns Value as a Face (Null if another type)
+		%feature("autodoc", "	* returns Value as a Face --Null if another type--
 
 	:rtype: Handle_StepShape_Face
 ") Face;
 		Handle_StepShape_Face Face ();
 		%feature("compactdefaultargs") FaceBound;
-		%feature("autodoc", "	* returns Value as a FaceBound (Null if another type)
+		%feature("autodoc", "	* returns Value as a FaceBound --Null if another type--
 
 	:rtype: Handle_StepShape_FaceBound
 ") FaceBound;
 		Handle_StepShape_FaceBound FaceBound ();
 		%feature("compactdefaultargs") ClosedShell;
-		%feature("autodoc", "	* returns Value as a ClosedShell (Null if another type)
+		%feature("autodoc", "	* returns Value as a ClosedShell --Null if another type--
 
 	:rtype: Handle_StepShape_ClosedShell
 ") ClosedShell;
 		Handle_StepShape_ClosedShell ClosedShell ();
 		%feature("compactdefaultargs") OpenShell;
-		%feature("autodoc", "	* returns Value as a OpenShell (Null if another type)
+		%feature("autodoc", "	* returns Value as a OpenShell --Null if another type--
 
 	:rtype: Handle_StepShape_OpenShell
 ") OpenShell;
@@ -4306,12 +2235,6 @@ class StepShape_RightAngularWedge : public StepGeom_GeometricRepresentationItem 
 		%feature("compactdefaultargs") Init;
 		%feature("autodoc", "	:param aName:
 	:type aName: Handle_TCollection_HAsciiString &
-	:rtype: void
-") Init;
-		virtual void Init (const Handle_TCollection_HAsciiString & aName);
-		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	:param aName:
-	:type aName: Handle_TCollection_HAsciiString &
 	:param aPosition:
 	:type aPosition: Handle_StepGeom_Axis2Placement3d &
 	:param aX:
@@ -4322,9 +2245,9 @@ class StepShape_RightAngularWedge : public StepGeom_GeometricRepresentationItem 
 	:type aZ: float
 	:param aLtx:
 	:type aLtx: float
-	:rtype: void
+	:rtype: None
 ") Init;
-		virtual void Init (const Handle_TCollection_HAsciiString & aName,const Handle_StepGeom_Axis2Placement3d & aPosition,const Standard_Real aX,const Standard_Real aY,const Standard_Real aZ,const Standard_Real aLtx);
+		void Init (const Handle_TCollection_HAsciiString & aName,const Handle_StepGeom_Axis2Placement3d & aPosition,const Standard_Real aX,const Standard_Real aY,const Standard_Real aZ,const Standard_Real aLtx);
 		%feature("compactdefaultargs") SetPosition;
 		%feature("autodoc", "	:param aPosition:
 	:type aPosition: Handle_StepGeom_Axis2Placement3d &
@@ -4409,19 +2332,20 @@ class Handle_StepShape_RightAngularWedge : public Handle_StepGeom_GeometricRepre
         static const Handle_StepShape_RightAngularWedge DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_StepShape_RightAngularWedge {
     StepShape_RightAngularWedge* _get_reference() {
-    return (StepShape_RightAngularWedge*)$self->Access();
+    return (StepShape_RightAngularWedge*)$self->get();
     }
 };
 
 %extend Handle_StepShape_RightAngularWedge {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend StepShape_RightAngularWedge {
@@ -4441,12 +2365,6 @@ class StepShape_RightCircularCone : public StepGeom_GeometricRepresentationItem 
 		%feature("compactdefaultargs") Init;
 		%feature("autodoc", "	:param aName:
 	:type aName: Handle_TCollection_HAsciiString &
-	:rtype: void
-") Init;
-		virtual void Init (const Handle_TCollection_HAsciiString & aName);
-		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	:param aName:
-	:type aName: Handle_TCollection_HAsciiString &
 	:param aPosition:
 	:type aPosition: Handle_StepGeom_Axis1Placement &
 	:param aHeight:
@@ -4455,9 +2373,9 @@ class StepShape_RightCircularCone : public StepGeom_GeometricRepresentationItem 
 	:type aRadius: float
 	:param aSemiAngle:
 	:type aSemiAngle: float
-	:rtype: void
+	:rtype: None
 ") Init;
-		virtual void Init (const Handle_TCollection_HAsciiString & aName,const Handle_StepGeom_Axis1Placement & aPosition,const Standard_Real aHeight,const Standard_Real aRadius,const Standard_Real aSemiAngle);
+		void Init (const Handle_TCollection_HAsciiString & aName,const Handle_StepGeom_Axis1Placement & aPosition,const Standard_Real aHeight,const Standard_Real aRadius,const Standard_Real aSemiAngle);
 		%feature("compactdefaultargs") SetPosition;
 		%feature("autodoc", "	:param aPosition:
 	:type aPosition: Handle_StepGeom_Axis1Placement &
@@ -4532,19 +2450,20 @@ class Handle_StepShape_RightCircularCone : public Handle_StepGeom_GeometricRepre
         static const Handle_StepShape_RightCircularCone DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_StepShape_RightCircularCone {
     StepShape_RightCircularCone* _get_reference() {
-    return (StepShape_RightCircularCone*)$self->Access();
+    return (StepShape_RightCircularCone*)$self->get();
     }
 };
 
 %extend Handle_StepShape_RightCircularCone {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend StepShape_RightCircularCone {
@@ -4564,21 +2483,15 @@ class StepShape_RightCircularCylinder : public StepGeom_GeometricRepresentationI
 		%feature("compactdefaultargs") Init;
 		%feature("autodoc", "	:param aName:
 	:type aName: Handle_TCollection_HAsciiString &
-	:rtype: void
-") Init;
-		virtual void Init (const Handle_TCollection_HAsciiString & aName);
-		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	:param aName:
-	:type aName: Handle_TCollection_HAsciiString &
 	:param aPosition:
 	:type aPosition: Handle_StepGeom_Axis1Placement &
 	:param aHeight:
 	:type aHeight: float
 	:param aRadius:
 	:type aRadius: float
-	:rtype: void
+	:rtype: None
 ") Init;
-		virtual void Init (const Handle_TCollection_HAsciiString & aName,const Handle_StepGeom_Axis1Placement & aPosition,const Standard_Real aHeight,const Standard_Real aRadius);
+		void Init (const Handle_TCollection_HAsciiString & aName,const Handle_StepGeom_Axis1Placement & aPosition,const Standard_Real aHeight,const Standard_Real aRadius);
 		%feature("compactdefaultargs") SetPosition;
 		%feature("autodoc", "	:param aPosition:
 	:type aPosition: Handle_StepGeom_Axis1Placement &
@@ -4643,19 +2556,20 @@ class Handle_StepShape_RightCircularCylinder : public Handle_StepGeom_GeometricR
         static const Handle_StepShape_RightCircularCylinder DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_StepShape_RightCircularCylinder {
     StepShape_RightCircularCylinder* _get_reference() {
-    return (StepShape_RightCircularCylinder*)$self->Access();
+    return (StepShape_RightCircularCylinder*)$self->get();
     }
 };
 
 %extend Handle_StepShape_RightCircularCylinder {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend StepShape_RightCircularCylinder {
@@ -4706,22 +2620,72 @@ class Handle_StepShape_ShapeDefinitionRepresentation : public Handle_StepRepr_Pr
         static const Handle_StepShape_ShapeDefinitionRepresentation DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_StepShape_ShapeDefinitionRepresentation {
     StepShape_ShapeDefinitionRepresentation* _get_reference() {
-    return (StepShape_ShapeDefinitionRepresentation*)$self->Access();
+    return (StepShape_ShapeDefinitionRepresentation*)$self->get();
     }
 };
 
 %extend Handle_StepShape_ShapeDefinitionRepresentation {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend StepShape_ShapeDefinitionRepresentation {
+	%pythoncode {
+	__repr__ = _dumps_object
+	}
+};
+%nodefaultctor StepShape_ShapeDimensionRepresentationItem;
+class StepShape_ShapeDimensionRepresentationItem : public StepData_SelectType {
+	public:
+		%feature("compactdefaultargs") StepShape_ShapeDimensionRepresentationItem;
+		%feature("autodoc", "	* Returns a ShapeDimensionRepresentationItem select type
+
+	:rtype: None
+") StepShape_ShapeDimensionRepresentationItem;
+		 StepShape_ShapeDimensionRepresentationItem ();
+		%feature("compactdefaultargs") CaseNum;
+		%feature("autodoc", "	* Recognizes a ShapeDimensionRepresentationItem Kind Entity that is : 1 -> CompoundRepresentationItem 2 -> DescriptiveRepresentationItem 3 -> MeasureRepresentationItem 4 -> Placement 0 else
+
+	:param ent:
+	:type ent: Handle_Standard_Transient &
+	:rtype: int
+") CaseNum;
+		Standard_Integer CaseNum (const Handle_Standard_Transient & ent);
+		%feature("compactdefaultargs") CompoundRepresentationItem;
+		%feature("autodoc", "	* returns Value as a CompoundRepresentationItem --Null if another type--
+
+	:rtype: Handle_StepRepr_CompoundRepresentationItem
+") CompoundRepresentationItem;
+		Handle_StepRepr_CompoundRepresentationItem CompoundRepresentationItem ();
+		%feature("compactdefaultargs") DescriptiveRepresentationItem;
+		%feature("autodoc", "	* returns Value as a DescriptiveRepresentationItem --Null if another type--
+
+	:rtype: Handle_StepRepr_DescriptiveRepresentationItem
+") DescriptiveRepresentationItem;
+		Handle_StepRepr_DescriptiveRepresentationItem DescriptiveRepresentationItem ();
+		%feature("compactdefaultargs") MeasureRepresentationItem;
+		%feature("autodoc", "	* returns Value as a MeasureRepresentationItem --Null if another type--
+
+	:rtype: Handle_StepRepr_MeasureRepresentationItem
+") MeasureRepresentationItem;
+		Handle_StepRepr_MeasureRepresentationItem MeasureRepresentationItem ();
+		%feature("compactdefaultargs") Placement;
+		%feature("autodoc", "	* returns Value as a Placement --Null if another type--
+
+	:rtype: Handle_StepGeom_Placement
+") Placement;
+		Handle_StepGeom_Placement Placement ();
+};
+
+
+%extend StepShape_ShapeDimensionRepresentationItem {
 	%pythoncode {
 	__repr__ = _dumps_object
 	}
@@ -4769,19 +2733,20 @@ class Handle_StepShape_ShapeRepresentation : public Handle_StepRepr_Representati
         static const Handle_StepShape_ShapeRepresentation DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_StepShape_ShapeRepresentation {
     StepShape_ShapeRepresentation* _get_reference() {
-    return (StepShape_ShapeRepresentation*)$self->Access();
+    return (StepShape_ShapeRepresentation*)$self->get();
     }
 };
 
 %extend Handle_StepShape_ShapeRepresentation {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend StepShape_ShapeRepresentation {
@@ -4807,13 +2772,13 @@ class StepShape_Shell : public StepData_SelectType {
 ") CaseNum;
 		Standard_Integer CaseNum (const Handle_Standard_Transient & ent);
 		%feature("compactdefaultargs") OpenShell;
-		%feature("autodoc", "	* returns Value as a OpenShell (Null if another type)
+		%feature("autodoc", "	* returns Value as a OpenShell --Null if another type--
 
 	:rtype: Handle_StepShape_OpenShell
 ") OpenShell;
 		Handle_StepShape_OpenShell OpenShell ();
 		%feature("compactdefaultargs") ClosedShell;
-		%feature("autodoc", "	* returns Value as a ClosedShell (Null if another type)
+		%feature("autodoc", "	* returns Value as a ClosedShell --Null if another type--
 
 	:rtype: Handle_StepShape_ClosedShell
 ") ClosedShell;
@@ -4838,17 +2803,11 @@ class StepShape_ShellBasedSurfaceModel : public StepGeom_GeometricRepresentation
 		%feature("compactdefaultargs") Init;
 		%feature("autodoc", "	:param aName:
 	:type aName: Handle_TCollection_HAsciiString &
-	:rtype: void
-") Init;
-		virtual void Init (const Handle_TCollection_HAsciiString & aName);
-		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	:param aName:
-	:type aName: Handle_TCollection_HAsciiString &
 	:param aSbsmBoundary:
 	:type aSbsmBoundary: Handle_StepShape_HArray1OfShell &
-	:rtype: void
+	:rtype: None
 ") Init;
-		virtual void Init (const Handle_TCollection_HAsciiString & aName,const Handle_StepShape_HArray1OfShell & aSbsmBoundary);
+		void Init (const Handle_TCollection_HAsciiString & aName,const Handle_StepShape_HArray1OfShell & aSbsmBoundary);
 		%feature("compactdefaultargs") SetSbsmBoundary;
 		%feature("autodoc", "	:param aSbsmBoundary:
 	:type aSbsmBoundary: Handle_StepShape_HArray1OfShell &
@@ -4903,19 +2862,20 @@ class Handle_StepShape_ShellBasedSurfaceModel : public Handle_StepGeom_Geometric
         static const Handle_StepShape_ShellBasedSurfaceModel DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_StepShape_ShellBasedSurfaceModel {
     StepShape_ShellBasedSurfaceModel* _get_reference() {
-    return (StepShape_ShellBasedSurfaceModel*)$self->Access();
+    return (StepShape_ShellBasedSurfaceModel*)$self->get();
     }
 };
 
 %extend Handle_StepShape_ShellBasedSurfaceModel {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend StepShape_ShellBasedSurfaceModel {
@@ -4966,19 +2926,20 @@ class Handle_StepShape_SolidModel : public Handle_StepGeom_GeometricRepresentati
         static const Handle_StepShape_SolidModel DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_StepShape_SolidModel {
     StepShape_SolidModel* _get_reference() {
-    return (StepShape_SolidModel*)$self->Access();
+    return (StepShape_SolidModel*)$self->get();
     }
 };
 
 %extend Handle_StepShape_SolidModel {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend StepShape_SolidModel {
@@ -4998,19 +2959,13 @@ class StepShape_Sphere : public StepGeom_GeometricRepresentationItem {
 		%feature("compactdefaultargs") Init;
 		%feature("autodoc", "	:param aName:
 	:type aName: Handle_TCollection_HAsciiString &
-	:rtype: void
-") Init;
-		virtual void Init (const Handle_TCollection_HAsciiString & aName);
-		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	:param aName:
-	:type aName: Handle_TCollection_HAsciiString &
 	:param aRadius:
 	:type aRadius: float
 	:param aCentre:
 	:type aCentre: Handle_StepGeom_Point &
-	:rtype: void
+	:rtype: None
 ") Init;
-		virtual void Init (const Handle_TCollection_HAsciiString & aName,const Standard_Real aRadius,const Handle_StepGeom_Point & aCentre);
+		void Init (const Handle_TCollection_HAsciiString & aName,const Standard_Real aRadius,const Handle_StepGeom_Point & aCentre);
 		%feature("compactdefaultargs") SetRadius;
 		%feature("autodoc", "	:param aRadius:
 	:type aRadius: float
@@ -5065,19 +3020,20 @@ class Handle_StepShape_Sphere : public Handle_StepGeom_GeometricRepresentationIt
         static const Handle_StepShape_Sphere DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_StepShape_Sphere {
     StepShape_Sphere* _get_reference() {
-    return (StepShape_Sphere*)$self->Access();
+    return (StepShape_Sphere*)$self->get();
     }
 };
 
 %extend Handle_StepShape_Sphere {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend StepShape_Sphere {
@@ -5103,7 +3059,7 @@ class StepShape_SurfaceModel : public StepData_SelectType {
 ") CaseNum;
 		Standard_Integer CaseNum (const Handle_Standard_Transient & ent);
 		%feature("compactdefaultargs") ShellBasedSurfaceModel;
-		%feature("autodoc", "	* returns Value as a ShellBasedSurfaceModel (Null if another type)
+		%feature("autodoc", "	* returns Value as a ShellBasedSurfaceModel --Null if another type--
 
 	:rtype: Handle_StepShape_ShellBasedSurfaceModel
 ") ShellBasedSurfaceModel;
@@ -5152,7 +3108,7 @@ class StepShape_ToleranceMethodDefinition : public StepData_SelectType {
 	}
 };
 %nodefaultctor StepShape_ToleranceValue;
-class StepShape_ToleranceValue : public MMgt_TShared {
+class StepShape_ToleranceValue : public Standard_Transient {
 	public:
 		%feature("compactdefaultargs") StepShape_ToleranceValue;
 		%feature("autodoc", "	:rtype: None
@@ -5208,7 +3164,7 @@ class StepShape_ToleranceValue : public MMgt_TShared {
 %}
 
 %nodefaultctor Handle_StepShape_ToleranceValue;
-class Handle_StepShape_ToleranceValue : public Handle_MMgt_TShared {
+class Handle_StepShape_ToleranceValue : public Handle_Standard_Transient {
 
     public:
         // constructors
@@ -5220,19 +3176,20 @@ class Handle_StepShape_ToleranceValue : public Handle_MMgt_TShared {
         static const Handle_StepShape_ToleranceValue DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_StepShape_ToleranceValue {
     StepShape_ToleranceValue* _get_reference() {
-    return (StepShape_ToleranceValue*)$self->Access();
+    return (StepShape_ToleranceValue*)$self->get();
     }
 };
 
 %extend Handle_StepShape_ToleranceValue {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend StepShape_ToleranceValue {
@@ -5283,19 +3240,20 @@ class Handle_StepShape_TopologicalRepresentationItem : public Handle_StepRepr_Re
         static const Handle_StepShape_TopologicalRepresentationItem DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_StepShape_TopologicalRepresentationItem {
     StepShape_TopologicalRepresentationItem* _get_reference() {
-    return (StepShape_TopologicalRepresentationItem*)$self->Access();
+    return (StepShape_TopologicalRepresentationItem*)$self->get();
     }
 };
 
 %extend Handle_StepShape_TopologicalRepresentationItem {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend StepShape_TopologicalRepresentationItem {
@@ -5315,21 +3273,15 @@ class StepShape_Torus : public StepGeom_GeometricRepresentationItem {
 		%feature("compactdefaultargs") Init;
 		%feature("autodoc", "	:param aName:
 	:type aName: Handle_TCollection_HAsciiString &
-	:rtype: void
-") Init;
-		virtual void Init (const Handle_TCollection_HAsciiString & aName);
-		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	:param aName:
-	:type aName: Handle_TCollection_HAsciiString &
 	:param aPosition:
 	:type aPosition: Handle_StepGeom_Axis1Placement &
 	:param aMajorRadius:
 	:type aMajorRadius: float
 	:param aMinorRadius:
 	:type aMinorRadius: float
-	:rtype: void
+	:rtype: None
 ") Init;
-		virtual void Init (const Handle_TCollection_HAsciiString & aName,const Handle_StepGeom_Axis1Placement & aPosition,const Standard_Real aMajorRadius,const Standard_Real aMinorRadius);
+		void Init (const Handle_TCollection_HAsciiString & aName,const Handle_StepGeom_Axis1Placement & aPosition,const Standard_Real aMajorRadius,const Standard_Real aMinorRadius);
 		%feature("compactdefaultargs") SetPosition;
 		%feature("autodoc", "	:param aPosition:
 	:type aPosition: Handle_StepGeom_Axis1Placement &
@@ -5394,19 +3346,20 @@ class Handle_StepShape_Torus : public Handle_StepGeom_GeometricRepresentationIte
         static const Handle_StepShape_Torus DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_StepShape_Torus {
     StepShape_Torus* _get_reference() {
-    return (StepShape_Torus*)$self->Access();
+    return (StepShape_Torus*)$self->get();
     }
 };
 
 %extend Handle_StepShape_Torus {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend StepShape_Torus {
@@ -5415,7 +3368,7 @@ class Handle_StepShape_Torus : public Handle_StepGeom_GeometricRepresentationIte
 	}
 };
 %nodefaultctor StepShape_TypeQualifier;
-class StepShape_TypeQualifier : public MMgt_TShared {
+class StepShape_TypeQualifier : public Standard_Transient {
 	public:
 		%feature("compactdefaultargs") StepShape_TypeQualifier;
 		%feature("autodoc", "	:rtype: None
@@ -5459,7 +3412,7 @@ class StepShape_TypeQualifier : public MMgt_TShared {
 %}
 
 %nodefaultctor Handle_StepShape_TypeQualifier;
-class Handle_StepShape_TypeQualifier : public Handle_MMgt_TShared {
+class Handle_StepShape_TypeQualifier : public Handle_Standard_Transient {
 
     public:
         // constructors
@@ -5471,22 +3424,107 @@ class Handle_StepShape_TypeQualifier : public Handle_MMgt_TShared {
         static const Handle_StepShape_TypeQualifier DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_StepShape_TypeQualifier {
     StepShape_TypeQualifier* _get_reference() {
-    return (StepShape_TypeQualifier*)$self->Access();
+    return (StepShape_TypeQualifier*)$self->get();
     }
 };
 
 %extend Handle_StepShape_TypeQualifier {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend StepShape_TypeQualifier {
+	%pythoncode {
+	__repr__ = _dumps_object
+	}
+};
+%nodefaultctor StepShape_ValueFormatTypeQualifier;
+class StepShape_ValueFormatTypeQualifier : public Standard_Transient {
+	public:
+		%feature("compactdefaultargs") StepShape_ValueFormatTypeQualifier;
+		%feature("autodoc", "	:rtype: None
+") StepShape_ValueFormatTypeQualifier;
+		 StepShape_ValueFormatTypeQualifier ();
+		%feature("compactdefaultargs") Init;
+		%feature("autodoc", "	* Init all field own and inherited
+
+	:param theFormatType:
+	:type theFormatType: Handle_TCollection_HAsciiString &
+	:rtype: None
+") Init;
+		void Init (const Handle_TCollection_HAsciiString & theFormatType);
+		%feature("compactdefaultargs") FormatType;
+		%feature("autodoc", "	* Returns field FormatType
+
+	:rtype: inline Handle_TCollection_HAsciiString
+") FormatType;
+		inline Handle_TCollection_HAsciiString FormatType ();
+		%feature("compactdefaultargs") SetFormatType;
+		%feature("autodoc", "	* Set field FormatType
+
+	:param theFormatType:
+	:type theFormatType: Handle_TCollection_HAsciiString &
+	:rtype: inline void
+") SetFormatType;
+		inline void SetFormatType (const Handle_TCollection_HAsciiString & theFormatType);
+};
+
+
+%extend StepShape_ValueFormatTypeQualifier {
+	%pythoncode {
+		def GetHandle(self):
+		    try:
+		        return self.thisHandle
+		    except:
+		        self.thisHandle = Handle_StepShape_ValueFormatTypeQualifier(self)
+		        self.thisown = False
+		        return self.thisHandle
+	}
+};
+
+%pythonappend Handle_StepShape_ValueFormatTypeQualifier::Handle_StepShape_ValueFormatTypeQualifier %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
+%nodefaultctor Handle_StepShape_ValueFormatTypeQualifier;
+class Handle_StepShape_ValueFormatTypeQualifier : public Handle_Standard_Transient {
+
+    public:
+        // constructors
+        Handle_StepShape_ValueFormatTypeQualifier();
+        Handle_StepShape_ValueFormatTypeQualifier(const Handle_StepShape_ValueFormatTypeQualifier &aHandle);
+        Handle_StepShape_ValueFormatTypeQualifier(const StepShape_ValueFormatTypeQualifier *anItem);
+        void Nullify();
+        Standard_Boolean IsNull() const;
+        static const Handle_StepShape_ValueFormatTypeQualifier DownCast(const Handle_Standard_Transient &AnObject);
+
+};
+
+%extend Handle_StepShape_ValueFormatTypeQualifier {
+    StepShape_ValueFormatTypeQualifier* _get_reference() {
+    return (StepShape_ValueFormatTypeQualifier*)$self->get();
+    }
+};
+
+%extend Handle_StepShape_ValueFormatTypeQualifier {
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
+};
+
+%extend StepShape_ValueFormatTypeQualifier {
 	%pythoncode {
 	__repr__ = _dumps_object
 	}
@@ -5499,7 +3537,7 @@ class StepShape_ValueQualifier : public StepData_SelectType {
 ") StepShape_ValueQualifier;
 		 StepShape_ValueQualifier ();
 		%feature("compactdefaultargs") CaseNum;
-		%feature("autodoc", "	* Recognizes a kind of ValueQualifier Select Type : 1 -> PrecisionQualifier from StepShape 2 -> TypeQualifier from StepShape 3 -> UnceraintyQualifier .. not yet implemented
+		%feature("autodoc", "	* Recognizes a kind of ValueQualifier Select Type : 1 -> PrecisionQualifier from StepShape 2 -> TypeQualifier from StepShape 3 -> UnceraintyQualifier .. not yet implemented 4 -> ValueFormatTypeQualifier
 
 	:param ent:
 	:type ent: Handle_Standard_Transient &
@@ -5518,6 +3556,12 @@ class StepShape_ValueQualifier : public StepData_SelectType {
 	:rtype: Handle_StepShape_TypeQualifier
 ") TypeQualifier;
 		Handle_StepShape_TypeQualifier TypeQualifier ();
+		%feature("compactdefaultargs") ValueFormatTypeQualifier;
+		%feature("autodoc", "	* Returns Value as ValueFormatTypeQualifier
+
+	:rtype: Handle_StepShape_ValueFormatTypeQualifier
+") ValueFormatTypeQualifier;
+		Handle_StepShape_ValueFormatTypeQualifier ValueFormatTypeQualifier ();
 };
 
 
@@ -5569,19 +3613,20 @@ class Handle_StepShape_AdvancedBrepShapeRepresentation : public Handle_StepShape
         static const Handle_StepShape_AdvancedBrepShapeRepresentation DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_StepShape_AdvancedBrepShapeRepresentation {
     StepShape_AdvancedBrepShapeRepresentation* _get_reference() {
-    return (StepShape_AdvancedBrepShapeRepresentation*)$self->Access();
+    return (StepShape_AdvancedBrepShapeRepresentation*)$self->get();
     }
 };
 
 %extend Handle_StepShape_AdvancedBrepShapeRepresentation {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend StepShape_AdvancedBrepShapeRepresentation {
@@ -5599,7 +3644,7 @@ class StepShape_AngularLocation : public StepShape_DimensionalLocation {
 ") StepShape_AngularLocation;
 		 StepShape_AngularLocation ();
 		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	* Initialize all fields (own and inherited)
+		%feature("autodoc", "	* Initialize all fields --own and inherited--
 
 	:param aShapeAspectRelationship_Name:
 	:type aShapeAspectRelationship_Name: Handle_TCollection_HAsciiString &
@@ -5664,19 +3709,20 @@ class Handle_StepShape_AngularLocation : public Handle_StepShape_DimensionalLoca
         static const Handle_StepShape_AngularLocation DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_StepShape_AngularLocation {
     StepShape_AngularLocation* _get_reference() {
-    return (StepShape_AngularLocation*)$self->Access();
+    return (StepShape_AngularLocation*)$self->get();
     }
 };
 
 %extend Handle_StepShape_AngularLocation {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend StepShape_AngularLocation {
@@ -5694,7 +3740,7 @@ class StepShape_AngularSize : public StepShape_DimensionalSize {
 ") StepShape_AngularSize;
 		 StepShape_AngularSize ();
 		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	* Initialize all fields (own and inherited)
+		%feature("autodoc", "	* Initialize all fields --own and inherited--
 
 	:param aDimensionalSize_AppliesTo:
 	:type aDimensionalSize_AppliesTo: Handle_StepRepr_ShapeAspect &
@@ -5753,19 +3799,20 @@ class Handle_StepShape_AngularSize : public Handle_StepShape_DimensionalSize {
         static const Handle_StepShape_AngularSize DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_StepShape_AngularSize {
     StepShape_AngularSize* _get_reference() {
-    return (StepShape_AngularSize*)$self->Access();
+    return (StepShape_AngularSize*)$self->get();
     }
 };
 
 %extend Handle_StepShape_AngularSize {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend StepShape_AngularSize {
@@ -5789,21 +3836,11 @@ class StepShape_BoxedHalfSpace : public StepShape_HalfSpaceSolid {
 	:type aBaseSurface: Handle_StepGeom_Surface &
 	:param aAgreementFlag:
 	:type aAgreementFlag: bool
-	:rtype: void
-") Init;
-		virtual void Init (const Handle_TCollection_HAsciiString & aName,const Handle_StepGeom_Surface & aBaseSurface,const Standard_Boolean aAgreementFlag);
-		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	:param aName:
-	:type aName: Handle_TCollection_HAsciiString &
-	:param aBaseSurface:
-	:type aBaseSurface: Handle_StepGeom_Surface &
-	:param aAgreementFlag:
-	:type aAgreementFlag: bool
 	:param aEnclosure:
 	:type aEnclosure: Handle_StepShape_BoxDomain &
-	:rtype: void
+	:rtype: None
 ") Init;
-		virtual void Init (const Handle_TCollection_HAsciiString & aName,const Handle_StepGeom_Surface & aBaseSurface,const Standard_Boolean aAgreementFlag,const Handle_StepShape_BoxDomain & aEnclosure);
+		void Init (const Handle_TCollection_HAsciiString & aName,const Handle_StepGeom_Surface & aBaseSurface,const Standard_Boolean aAgreementFlag,const Handle_StepShape_BoxDomain & aEnclosure);
 		%feature("compactdefaultargs") SetEnclosure;
 		%feature("autodoc", "	:param aEnclosure:
 	:type aEnclosure: Handle_StepShape_BoxDomain &
@@ -5848,19 +3885,20 @@ class Handle_StepShape_BoxedHalfSpace : public Handle_StepShape_HalfSpaceSolid {
         static const Handle_StepShape_BoxedHalfSpace DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_StepShape_BoxedHalfSpace {
     StepShape_BoxedHalfSpace* _get_reference() {
-    return (StepShape_BoxedHalfSpace*)$self->Access();
+    return (StepShape_BoxedHalfSpace*)$self->get();
     }
 };
 
 %extend Handle_StepShape_BoxedHalfSpace {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend StepShape_BoxedHalfSpace {
@@ -5911,19 +3949,20 @@ class Handle_StepShape_CompoundShapeRepresentation : public Handle_StepShape_Sha
         static const Handle_StepShape_CompoundShapeRepresentation DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_StepShape_CompoundShapeRepresentation {
     StepShape_CompoundShapeRepresentation* _get_reference() {
-    return (StepShape_CompoundShapeRepresentation*)$self->Access();
+    return (StepShape_CompoundShapeRepresentation*)$self->get();
     }
 };
 
 %extend Handle_StepShape_CompoundShapeRepresentation {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend StepShape_CompoundShapeRepresentation {
@@ -5941,7 +3980,7 @@ class StepShape_ConnectedEdgeSet : public StepShape_TopologicalRepresentationIte
 ") StepShape_ConnectedEdgeSet;
 		 StepShape_ConnectedEdgeSet ();
 		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	* Initialize all fields (own and inherited)
+		%feature("autodoc", "	* Initialize all fields --own and inherited--
 
 	:param aRepresentationItem_Name:
 	:type aRepresentationItem_Name: Handle_TCollection_HAsciiString &
@@ -5998,19 +4037,20 @@ class Handle_StepShape_ConnectedEdgeSet : public Handle_StepShape_TopologicalRep
         static const Handle_StepShape_ConnectedEdgeSet DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_StepShape_ConnectedEdgeSet {
     StepShape_ConnectedEdgeSet* _get_reference() {
-    return (StepShape_ConnectedEdgeSet*)$self->Access();
+    return (StepShape_ConnectedEdgeSet*)$self->get();
     }
 };
 
 %extend Handle_StepShape_ConnectedEdgeSet {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend StepShape_ConnectedEdgeSet {
@@ -6030,17 +4070,11 @@ class StepShape_ConnectedFaceSet : public StepShape_TopologicalRepresentationIte
 		%feature("compactdefaultargs") Init;
 		%feature("autodoc", "	:param aName:
 	:type aName: Handle_TCollection_HAsciiString &
-	:rtype: void
-") Init;
-		virtual void Init (const Handle_TCollection_HAsciiString & aName);
-		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	:param aName:
-	:type aName: Handle_TCollection_HAsciiString &
 	:param aCfsFaces:
 	:type aCfsFaces: Handle_StepShape_HArray1OfFace &
-	:rtype: void
+	:rtype: None
 ") Init;
-		virtual void Init (const Handle_TCollection_HAsciiString & aName,const Handle_StepShape_HArray1OfFace & aCfsFaces);
+		void Init (const Handle_TCollection_HAsciiString & aName,const Handle_StepShape_HArray1OfFace & aCfsFaces);
 		%feature("compactdefaultargs") SetCfsFaces;
 		%feature("autodoc", "	:param aCfsFaces:
 	:type aCfsFaces: Handle_StepShape_HArray1OfFace &
@@ -6095,19 +4129,20 @@ class Handle_StepShape_ConnectedFaceSet : public Handle_StepShape_TopologicalRep
         static const Handle_StepShape_ConnectedFaceSet DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_StepShape_ConnectedFaceSet {
     StepShape_ConnectedFaceSet* _get_reference() {
-    return (StepShape_ConnectedFaceSet*)$self->Access();
+    return (StepShape_ConnectedFaceSet*)$self->get();
     }
 };
 
 %extend Handle_StepShape_ConnectedFaceSet {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend StepShape_ConnectedFaceSet {
@@ -6158,19 +4193,20 @@ class Handle_StepShape_CsgShapeRepresentation : public Handle_StepShape_ShapeRep
         static const Handle_StepShape_CsgShapeRepresentation DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_StepShape_CsgShapeRepresentation {
     StepShape_CsgShapeRepresentation* _get_reference() {
-    return (StepShape_CsgShapeRepresentation*)$self->Access();
+    return (StepShape_CsgShapeRepresentation*)$self->get();
     }
 };
 
 %extend Handle_StepShape_CsgShapeRepresentation {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend StepShape_CsgShapeRepresentation {
@@ -6190,17 +4226,11 @@ class StepShape_CsgSolid : public StepShape_SolidModel {
 		%feature("compactdefaultargs") Init;
 		%feature("autodoc", "	:param aName:
 	:type aName: Handle_TCollection_HAsciiString &
-	:rtype: void
-") Init;
-		virtual void Init (const Handle_TCollection_HAsciiString & aName);
-		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	:param aName:
-	:type aName: Handle_TCollection_HAsciiString &
 	:param aTreeRootExpression:
 	:type aTreeRootExpression: StepShape_CsgSelect &
-	:rtype: void
+	:rtype: None
 ") Init;
-		virtual void Init (const Handle_TCollection_HAsciiString & aName,const StepShape_CsgSelect & aTreeRootExpression);
+		void Init (const Handle_TCollection_HAsciiString & aName,const StepShape_CsgSelect & aTreeRootExpression);
 		%feature("compactdefaultargs") SetTreeRootExpression;
 		%feature("autodoc", "	:param aTreeRootExpression:
 	:type aTreeRootExpression: StepShape_CsgSelect &
@@ -6245,19 +4275,20 @@ class Handle_StepShape_CsgSolid : public Handle_StepShape_SolidModel {
         static const Handle_StepShape_CsgSolid DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_StepShape_CsgSolid {
     StepShape_CsgSolid* _get_reference() {
-    return (StepShape_CsgSolid*)$self->Access();
+    return (StepShape_CsgSolid*)$self->get();
     }
 };
 
 %extend Handle_StepShape_CsgSolid {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend StepShape_CsgSolid {
@@ -6275,7 +4306,7 @@ class StepShape_DimensionalLocationWithPath : public StepShape_DimensionalLocati
 ") StepShape_DimensionalLocationWithPath;
 		 StepShape_DimensionalLocationWithPath ();
 		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	* Initialize all fields (own and inherited)
+		%feature("autodoc", "	* Initialize all fields --own and inherited--
 
 	:param aShapeAspectRelationship_Name:
 	:type aShapeAspectRelationship_Name: Handle_TCollection_HAsciiString &
@@ -6340,19 +4371,20 @@ class Handle_StepShape_DimensionalLocationWithPath : public Handle_StepShape_Dim
         static const Handle_StepShape_DimensionalLocationWithPath DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_StepShape_DimensionalLocationWithPath {
     StepShape_DimensionalLocationWithPath* _get_reference() {
-    return (StepShape_DimensionalLocationWithPath*)$self->Access();
+    return (StepShape_DimensionalLocationWithPath*)$self->get();
     }
 };
 
 %extend Handle_StepShape_DimensionalLocationWithPath {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend StepShape_DimensionalLocationWithPath {
@@ -6370,7 +4402,7 @@ class StepShape_DimensionalSizeWithPath : public StepShape_DimensionalSize {
 ") StepShape_DimensionalSizeWithPath;
 		 StepShape_DimensionalSizeWithPath ();
 		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	* Initialize all fields (own and inherited)
+		%feature("autodoc", "	* Initialize all fields --own and inherited--
 
 	:param aDimensionalSize_AppliesTo:
 	:type aDimensionalSize_AppliesTo: Handle_StepRepr_ShapeAspect &
@@ -6429,19 +4461,20 @@ class Handle_StepShape_DimensionalSizeWithPath : public Handle_StepShape_Dimensi
         static const Handle_StepShape_DimensionalSizeWithPath DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_StepShape_DimensionalSizeWithPath {
     StepShape_DimensionalSizeWithPath* _get_reference() {
-    return (StepShape_DimensionalSizeWithPath*)$self->Access();
+    return (StepShape_DimensionalSizeWithPath*)$self->get();
     }
 };
 
 %extend Handle_StepShape_DimensionalSizeWithPath {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend StepShape_DimensionalSizeWithPath {
@@ -6492,19 +4525,20 @@ class Handle_StepShape_DirectedDimensionalLocation : public Handle_StepShape_Dim
         static const Handle_StepShape_DirectedDimensionalLocation DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_StepShape_DirectedDimensionalLocation {
     StepShape_DirectedDimensionalLocation* _get_reference() {
-    return (StepShape_DirectedDimensionalLocation*)$self->Access();
+    return (StepShape_DirectedDimensionalLocation*)$self->get();
     }
 };
 
 %extend Handle_StepShape_DirectedDimensionalLocation {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend StepShape_DirectedDimensionalLocation {
@@ -6524,19 +4558,13 @@ class StepShape_Edge : public StepShape_TopologicalRepresentationItem {
 		%feature("compactdefaultargs") Init;
 		%feature("autodoc", "	:param aName:
 	:type aName: Handle_TCollection_HAsciiString &
-	:rtype: void
-") Init;
-		virtual void Init (const Handle_TCollection_HAsciiString & aName);
-		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	:param aName:
-	:type aName: Handle_TCollection_HAsciiString &
 	:param aEdgeStart:
 	:type aEdgeStart: Handle_StepShape_Vertex &
 	:param aEdgeEnd:
 	:type aEdgeEnd: Handle_StepShape_Vertex &
-	:rtype: void
+	:rtype: None
 ") Init;
-		virtual void Init (const Handle_TCollection_HAsciiString & aName,const Handle_StepShape_Vertex & aEdgeStart,const Handle_StepShape_Vertex & aEdgeEnd);
+		void Init (const Handle_TCollection_HAsciiString & aName,const Handle_StepShape_Vertex & aEdgeStart,const Handle_StepShape_Vertex & aEdgeEnd);
 		%feature("compactdefaultargs") SetEdgeStart;
 		%feature("autodoc", "	:param aEdgeStart:
 	:type aEdgeStart: Handle_StepShape_Vertex &
@@ -6591,19 +4619,20 @@ class Handle_StepShape_Edge : public Handle_StepShape_TopologicalRepresentationI
         static const Handle_StepShape_Edge DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_StepShape_Edge {
     StepShape_Edge* _get_reference() {
-    return (StepShape_Edge*)$self->Access();
+    return (StepShape_Edge*)$self->get();
     }
 };
 
 %extend Handle_StepShape_Edge {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend StepShape_Edge {
@@ -6654,19 +4683,20 @@ class Handle_StepShape_EdgeBasedWireframeShapeRepresentation : public Handle_Ste
         static const Handle_StepShape_EdgeBasedWireframeShapeRepresentation DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_StepShape_EdgeBasedWireframeShapeRepresentation {
     StepShape_EdgeBasedWireframeShapeRepresentation* _get_reference() {
-    return (StepShape_EdgeBasedWireframeShapeRepresentation*)$self->Access();
+    return (StepShape_EdgeBasedWireframeShapeRepresentation*)$self->get();
     }
 };
 
 %extend Handle_StepShape_EdgeBasedWireframeShapeRepresentation {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend StepShape_EdgeBasedWireframeShapeRepresentation {
@@ -6686,17 +4716,11 @@ class StepShape_Face : public StepShape_TopologicalRepresentationItem {
 		%feature("compactdefaultargs") Init;
 		%feature("autodoc", "	:param aName:
 	:type aName: Handle_TCollection_HAsciiString &
-	:rtype: void
-") Init;
-		virtual void Init (const Handle_TCollection_HAsciiString & aName);
-		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	:param aName:
-	:type aName: Handle_TCollection_HAsciiString &
 	:param aBounds:
 	:type aBounds: Handle_StepShape_HArray1OfFaceBound &
-	:rtype: void
+	:rtype: None
 ") Init;
-		virtual void Init (const Handle_TCollection_HAsciiString & aName,const Handle_StepShape_HArray1OfFaceBound & aBounds);
+		void Init (const Handle_TCollection_HAsciiString & aName,const Handle_StepShape_HArray1OfFaceBound & aBounds);
 		%feature("compactdefaultargs") SetBounds;
 		%feature("autodoc", "	:param aBounds:
 	:type aBounds: Handle_StepShape_HArray1OfFaceBound &
@@ -6751,19 +4775,20 @@ class Handle_StepShape_Face : public Handle_StepShape_TopologicalRepresentationI
         static const Handle_StepShape_Face DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_StepShape_Face {
     StepShape_Face* _get_reference() {
-    return (StepShape_Face*)$self->Access();
+    return (StepShape_Face*)$self->get();
     }
 };
 
 %extend Handle_StepShape_Face {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend StepShape_Face {
@@ -6783,19 +4808,13 @@ class StepShape_FaceBound : public StepShape_TopologicalRepresentationItem {
 		%feature("compactdefaultargs") Init;
 		%feature("autodoc", "	:param aName:
 	:type aName: Handle_TCollection_HAsciiString &
-	:rtype: void
-") Init;
-		virtual void Init (const Handle_TCollection_HAsciiString & aName);
-		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	:param aName:
-	:type aName: Handle_TCollection_HAsciiString &
 	:param aBound:
 	:type aBound: Handle_StepShape_Loop &
 	:param aOrientation:
 	:type aOrientation: bool
-	:rtype: void
+	:rtype: None
 ") Init;
-		virtual void Init (const Handle_TCollection_HAsciiString & aName,const Handle_StepShape_Loop & aBound,const Standard_Boolean aOrientation);
+		void Init (const Handle_TCollection_HAsciiString & aName,const Handle_StepShape_Loop & aBound,const Standard_Boolean aOrientation);
 		%feature("compactdefaultargs") SetBound;
 		%feature("autodoc", "	:param aBound:
 	:type aBound: Handle_StepShape_Loop &
@@ -6850,19 +4869,20 @@ class Handle_StepShape_FaceBound : public Handle_StepShape_TopologicalRepresenta
         static const Handle_StepShape_FaceBound DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_StepShape_FaceBound {
     StepShape_FaceBound* _get_reference() {
-    return (StepShape_FaceBound*)$self->Access();
+    return (StepShape_FaceBound*)$self->get();
     }
 };
 
 %extend Handle_StepShape_FaceBound {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend StepShape_FaceBound {
@@ -6913,19 +4933,20 @@ class Handle_StepShape_FacetedBrepShapeRepresentation : public Handle_StepShape_
         static const Handle_StepShape_FacetedBrepShapeRepresentation DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_StepShape_FacetedBrepShapeRepresentation {
     StepShape_FacetedBrepShapeRepresentation* _get_reference() {
-    return (StepShape_FacetedBrepShapeRepresentation*)$self->Access();
+    return (StepShape_FacetedBrepShapeRepresentation*)$self->get();
     }
 };
 
 %extend Handle_StepShape_FacetedBrepShapeRepresentation {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend StepShape_FacetedBrepShapeRepresentation {
@@ -6976,19 +4997,20 @@ class Handle_StepShape_GeometricCurveSet : public Handle_StepShape_GeometricSet 
         static const Handle_StepShape_GeometricCurveSet DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_StepShape_GeometricCurveSet {
     StepShape_GeometricCurveSet* _get_reference() {
-    return (StepShape_GeometricCurveSet*)$self->Access();
+    return (StepShape_GeometricCurveSet*)$self->get();
     }
 };
 
 %extend Handle_StepShape_GeometricCurveSet {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend StepShape_GeometricCurveSet {
@@ -7039,19 +5061,20 @@ class Handle_StepShape_GeometricallyBoundedSurfaceShapeRepresentation : public H
         static const Handle_StepShape_GeometricallyBoundedSurfaceShapeRepresentation DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_StepShape_GeometricallyBoundedSurfaceShapeRepresentation {
     StepShape_GeometricallyBoundedSurfaceShapeRepresentation* _get_reference() {
-    return (StepShape_GeometricallyBoundedSurfaceShapeRepresentation*)$self->Access();
+    return (StepShape_GeometricallyBoundedSurfaceShapeRepresentation*)$self->get();
     }
 };
 
 %extend Handle_StepShape_GeometricallyBoundedSurfaceShapeRepresentation {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend StepShape_GeometricallyBoundedSurfaceShapeRepresentation {
@@ -7102,19 +5125,20 @@ class Handle_StepShape_GeometricallyBoundedWireframeShapeRepresentation : public
         static const Handle_StepShape_GeometricallyBoundedWireframeShapeRepresentation DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_StepShape_GeometricallyBoundedWireframeShapeRepresentation {
     StepShape_GeometricallyBoundedWireframeShapeRepresentation* _get_reference() {
-    return (StepShape_GeometricallyBoundedWireframeShapeRepresentation*)$self->Access();
+    return (StepShape_GeometricallyBoundedWireframeShapeRepresentation*)$self->get();
     }
 };
 
 %extend Handle_StepShape_GeometricallyBoundedWireframeShapeRepresentation {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend StepShape_GeometricallyBoundedWireframeShapeRepresentation {
@@ -7165,19 +5189,20 @@ class Handle_StepShape_Loop : public Handle_StepShape_TopologicalRepresentationI
         static const Handle_StepShape_Loop DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_StepShape_Loop {
     StepShape_Loop* _get_reference() {
-    return (StepShape_Loop*)$self->Access();
+    return (StepShape_Loop*)$self->get();
     }
 };
 
 %extend Handle_StepShape_Loop {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend StepShape_Loop {
@@ -7197,27 +5222,21 @@ class StepShape_LoopAndPath : public StepShape_TopologicalRepresentationItem {
 		%feature("compactdefaultargs") Init;
 		%feature("autodoc", "	:param aName:
 	:type aName: Handle_TCollection_HAsciiString &
-	:rtype: void
-") Init;
-		virtual void Init (const Handle_TCollection_HAsciiString & aName);
-		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	:param aName:
-	:type aName: Handle_TCollection_HAsciiString &
 	:param aLoop:
 	:type aLoop: Handle_StepShape_Loop &
 	:param aPath:
 	:type aPath: Handle_StepShape_Path &
-	:rtype: void
+	:rtype: None
 ") Init;
-		virtual void Init (const Handle_TCollection_HAsciiString & aName,const Handle_StepShape_Loop & aLoop,const Handle_StepShape_Path & aPath);
+		void Init (const Handle_TCollection_HAsciiString & aName,const Handle_StepShape_Loop & aLoop,const Handle_StepShape_Path & aPath);
 		%feature("compactdefaultargs") Init;
 		%feature("autodoc", "	:param aName:
 	:type aName: Handle_TCollection_HAsciiString &
 	:param aEdgeList:
 	:type aEdgeList: Handle_StepShape_HArray1OfOrientedEdge &
-	:rtype: void
+	:rtype: None
 ") Init;
-		virtual void Init (const Handle_TCollection_HAsciiString & aName,const Handle_StepShape_HArray1OfOrientedEdge & aEdgeList);
+		void Init (const Handle_TCollection_HAsciiString & aName,const Handle_StepShape_HArray1OfOrientedEdge & aEdgeList);
 		%feature("compactdefaultargs") SetLoop;
 		%feature("autodoc", "	:param aLoop:
 	:type aLoop: Handle_StepShape_Loop &
@@ -7292,19 +5311,20 @@ class Handle_StepShape_LoopAndPath : public Handle_StepShape_TopologicalRepresen
         static const Handle_StepShape_LoopAndPath DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_StepShape_LoopAndPath {
     StepShape_LoopAndPath* _get_reference() {
-    return (StepShape_LoopAndPath*)$self->Access();
+    return (StepShape_LoopAndPath*)$self->get();
     }
 };
 
 %extend Handle_StepShape_LoopAndPath {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend StepShape_LoopAndPath {
@@ -7324,25 +5344,19 @@ class StepShape_ManifoldSolidBrep : public StepShape_SolidModel {
 		%feature("compactdefaultargs") Init;
 		%feature("autodoc", "	:param aName:
 	:type aName: Handle_TCollection_HAsciiString &
-	:rtype: void
-") Init;
-		virtual void Init (const Handle_TCollection_HAsciiString & aName);
-		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	:param aName:
-	:type aName: Handle_TCollection_HAsciiString &
 	:param aOuter:
 	:type aOuter: Handle_StepShape_ClosedShell &
-	:rtype: void
+	:rtype: None
 ") Init;
-		virtual void Init (const Handle_TCollection_HAsciiString & aName,const Handle_StepShape_ClosedShell & aOuter);
+		void Init (const Handle_TCollection_HAsciiString & aName,const Handle_StepShape_ClosedShell & aOuter);
 		%feature("compactdefaultargs") Init;
 		%feature("autodoc", "	:param aName:
 	:type aName: Handle_TCollection_HAsciiString &
 	:param aOuter:
 	:type aOuter: Handle_StepShape_ConnectedFaceSet &
-	:rtype: void
+	:rtype: None
 ") Init;
-		virtual void Init (const Handle_TCollection_HAsciiString & aName,const Handle_StepShape_ConnectedFaceSet & aOuter);
+		void Init (const Handle_TCollection_HAsciiString & aName,const Handle_StepShape_ConnectedFaceSet & aOuter);
 		%feature("compactdefaultargs") SetOuter;
 		%feature("autodoc", "	:param aOuter:
 	:type aOuter: Handle_StepShape_ConnectedFaceSet &
@@ -7387,19 +5401,20 @@ class Handle_StepShape_ManifoldSolidBrep : public Handle_StepShape_SolidModel {
         static const Handle_StepShape_ManifoldSolidBrep DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_StepShape_ManifoldSolidBrep {
     StepShape_ManifoldSolidBrep* _get_reference() {
-    return (StepShape_ManifoldSolidBrep*)$self->Access();
+    return (StepShape_ManifoldSolidBrep*)$self->get();
     }
 };
 
 %extend Handle_StepShape_ManifoldSolidBrep {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend StepShape_ManifoldSolidBrep {
@@ -7450,19 +5465,20 @@ class Handle_StepShape_ManifoldSurfaceShapeRepresentation : public Handle_StepSh
         static const Handle_StepShape_ManifoldSurfaceShapeRepresentation DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_StepShape_ManifoldSurfaceShapeRepresentation {
     StepShape_ManifoldSurfaceShapeRepresentation* _get_reference() {
-    return (StepShape_ManifoldSurfaceShapeRepresentation*)$self->Access();
+    return (StepShape_ManifoldSurfaceShapeRepresentation*)$self->get();
     }
 };
 
 %extend Handle_StepShape_ManifoldSurfaceShapeRepresentation {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend StepShape_ManifoldSurfaceShapeRepresentation {
@@ -7513,19 +5529,20 @@ class Handle_StepShape_NonManifoldSurfaceShapeRepresentation : public Handle_Ste
         static const Handle_StepShape_NonManifoldSurfaceShapeRepresentation DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_StepShape_NonManifoldSurfaceShapeRepresentation {
     StepShape_NonManifoldSurfaceShapeRepresentation* _get_reference() {
-    return (StepShape_NonManifoldSurfaceShapeRepresentation*)$self->Access();
+    return (StepShape_NonManifoldSurfaceShapeRepresentation*)$self->get();
     }
 };
 
 %extend Handle_StepShape_NonManifoldSurfaceShapeRepresentation {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend StepShape_NonManifoldSurfaceShapeRepresentation {
@@ -7545,17 +5562,11 @@ class StepShape_Path : public StepShape_TopologicalRepresentationItem {
 		%feature("compactdefaultargs") Init;
 		%feature("autodoc", "	:param aName:
 	:type aName: Handle_TCollection_HAsciiString &
-	:rtype: void
-") Init;
-		virtual void Init (const Handle_TCollection_HAsciiString & aName);
-		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	:param aName:
-	:type aName: Handle_TCollection_HAsciiString &
 	:param aEdgeList:
 	:type aEdgeList: Handle_StepShape_HArray1OfOrientedEdge &
-	:rtype: void
+	:rtype: None
 ") Init;
-		virtual void Init (const Handle_TCollection_HAsciiString & aName,const Handle_StepShape_HArray1OfOrientedEdge & aEdgeList);
+		void Init (const Handle_TCollection_HAsciiString & aName,const Handle_StepShape_HArray1OfOrientedEdge & aEdgeList);
 		%feature("compactdefaultargs") SetEdgeList;
 		%feature("autodoc", "	:param aEdgeList:
 	:type aEdgeList: Handle_StepShape_HArray1OfOrientedEdge &
@@ -7610,19 +5621,20 @@ class Handle_StepShape_Path : public Handle_StepShape_TopologicalRepresentationI
         static const Handle_StepShape_Path DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_StepShape_Path {
     StepShape_Path* _get_reference() {
-    return (StepShape_Path*)$self->Access();
+    return (StepShape_Path*)$self->get();
     }
 };
 
 %extend Handle_StepShape_Path {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend StepShape_Path {
@@ -7673,19 +5685,20 @@ class Handle_StepShape_PointRepresentation : public Handle_StepShape_ShapeRepres
         static const Handle_StepShape_PointRepresentation DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_StepShape_PointRepresentation {
     StepShape_PointRepresentation* _get_reference() {
-    return (StepShape_PointRepresentation*)$self->Access();
+    return (StepShape_PointRepresentation*)$self->get();
     }
 };
 
 %extend Handle_StepShape_PointRepresentation {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend StepShape_PointRepresentation {
@@ -7702,6 +5715,40 @@ class StepShape_ShapeDimensionRepresentation : public StepShape_ShapeRepresentat
 	:rtype: None
 ") StepShape_ShapeDimensionRepresentation;
 		 StepShape_ShapeDimensionRepresentation ();
+		%feature("compactdefaultargs") Init;
+		%feature("autodoc", "	* Initialize all fields AP214
+
+	:param theName:
+	:type theName: Handle_TCollection_HAsciiString &
+	:param theItems:
+	:type theItems: Handle_StepRepr_HArray1OfRepresentationItem &
+	:param theContextOfItems:
+	:type theContextOfItems: Handle_StepRepr_RepresentationContext &
+	:rtype: None
+") Init;
+		void Init (const Handle_TCollection_HAsciiString & theName,const Handle_StepRepr_HArray1OfRepresentationItem & theItems,const Handle_StepRepr_RepresentationContext & theContextOfItems);
+		%feature("compactdefaultargs") Init;
+		%feature("autodoc", "	* Initialize all fields AP242
+
+	:param theName:
+	:type theName: Handle_TCollection_HAsciiString &
+	:param theItems:
+	:type theItems: Handle_StepShape_HArray1OfShapeDimensionRepresentationItem &
+	:param theContextOfItems:
+	:type theContextOfItems: Handle_StepRepr_RepresentationContext &
+	:rtype: None
+") Init;
+		void Init (const Handle_TCollection_HAsciiString & theName,const Handle_StepShape_HArray1OfShapeDimensionRepresentationItem & theItems,const Handle_StepRepr_RepresentationContext & theContextOfItems);
+		%feature("compactdefaultargs") SetItemsAP242;
+		%feature("autodoc", "	:param theItems:
+	:type theItems: Handle_StepShape_HArray1OfShapeDimensionRepresentationItem &
+	:rtype: None
+") SetItemsAP242;
+		void SetItemsAP242 (const Handle_StepShape_HArray1OfShapeDimensionRepresentationItem & theItems);
+		%feature("compactdefaultargs") ItemsAP242;
+		%feature("autodoc", "	:rtype: Handle_StepShape_HArray1OfShapeDimensionRepresentationItem
+") ItemsAP242;
+		Handle_StepShape_HArray1OfShapeDimensionRepresentationItem ItemsAP242 ();
 };
 
 
@@ -7736,19 +5783,20 @@ class Handle_StepShape_ShapeDimensionRepresentation : public Handle_StepShape_Sh
         static const Handle_StepShape_ShapeDimensionRepresentation DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_StepShape_ShapeDimensionRepresentation {
     StepShape_ShapeDimensionRepresentation* _get_reference() {
-    return (StepShape_ShapeDimensionRepresentation*)$self->Access();
+    return (StepShape_ShapeDimensionRepresentation*)$self->get();
     }
 };
 
 %extend Handle_StepShape_ShapeDimensionRepresentation {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend StepShape_ShapeDimensionRepresentation {
@@ -7799,19 +5847,20 @@ class Handle_StepShape_ShapeRepresentationWithParameters : public Handle_StepSha
         static const Handle_StepShape_ShapeRepresentationWithParameters DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_StepShape_ShapeRepresentationWithParameters {
     StepShape_ShapeRepresentationWithParameters* _get_reference() {
-    return (StepShape_ShapeRepresentationWithParameters*)$self->Access();
+    return (StepShape_ShapeRepresentationWithParameters*)$self->get();
     }
 };
 
 %extend Handle_StepShape_ShapeRepresentationWithParameters {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend StepShape_ShapeRepresentationWithParameters {
@@ -7831,19 +5880,13 @@ class StepShape_SolidReplica : public StepShape_SolidModel {
 		%feature("compactdefaultargs") Init;
 		%feature("autodoc", "	:param aName:
 	:type aName: Handle_TCollection_HAsciiString &
-	:rtype: void
-") Init;
-		virtual void Init (const Handle_TCollection_HAsciiString & aName);
-		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	:param aName:
-	:type aName: Handle_TCollection_HAsciiString &
 	:param aParentSolid:
 	:type aParentSolid: Handle_StepShape_SolidModel &
 	:param aTransformation:
 	:type aTransformation: Handle_StepGeom_CartesianTransformationOperator3d &
-	:rtype: void
+	:rtype: None
 ") Init;
-		virtual void Init (const Handle_TCollection_HAsciiString & aName,const Handle_StepShape_SolidModel & aParentSolid,const Handle_StepGeom_CartesianTransformationOperator3d & aTransformation);
+		void Init (const Handle_TCollection_HAsciiString & aName,const Handle_StepShape_SolidModel & aParentSolid,const Handle_StepGeom_CartesianTransformationOperator3d & aTransformation);
 		%feature("compactdefaultargs") SetParentSolid;
 		%feature("autodoc", "	:param aParentSolid:
 	:type aParentSolid: Handle_StepShape_SolidModel &
@@ -7898,19 +5941,20 @@ class Handle_StepShape_SolidReplica : public Handle_StepShape_SolidModel {
         static const Handle_StepShape_SolidReplica DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_StepShape_SolidReplica {
     StepShape_SolidReplica* _get_reference() {
-    return (StepShape_SolidReplica*)$self->Access();
+    return (StepShape_SolidReplica*)$self->get();
     }
 };
 
 %extend Handle_StepShape_SolidReplica {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend StepShape_SolidReplica {
@@ -7930,17 +5974,11 @@ class StepShape_SweptAreaSolid : public StepShape_SolidModel {
 		%feature("compactdefaultargs") Init;
 		%feature("autodoc", "	:param aName:
 	:type aName: Handle_TCollection_HAsciiString &
-	:rtype: void
-") Init;
-		virtual void Init (const Handle_TCollection_HAsciiString & aName);
-		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	:param aName:
-	:type aName: Handle_TCollection_HAsciiString &
 	:param aSweptArea:
 	:type aSweptArea: Handle_StepGeom_CurveBoundedSurface &
-	:rtype: void
+	:rtype: None
 ") Init;
-		virtual void Init (const Handle_TCollection_HAsciiString & aName,const Handle_StepGeom_CurveBoundedSurface & aSweptArea);
+		void Init (const Handle_TCollection_HAsciiString & aName,const Handle_StepGeom_CurveBoundedSurface & aSweptArea);
 		%feature("compactdefaultargs") SetSweptArea;
 		%feature("autodoc", "	:param aSweptArea:
 	:type aSweptArea: Handle_StepGeom_CurveBoundedSurface &
@@ -7985,19 +6023,20 @@ class Handle_StepShape_SweptAreaSolid : public Handle_StepShape_SolidModel {
         static const Handle_StepShape_SweptAreaSolid DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_StepShape_SweptAreaSolid {
     StepShape_SweptAreaSolid* _get_reference() {
-    return (StepShape_SweptAreaSolid*)$self->Access();
+    return (StepShape_SweptAreaSolid*)$self->get();
     }
 };
 
 %extend Handle_StepShape_SweptAreaSolid {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend StepShape_SweptAreaSolid {
@@ -8017,17 +6056,11 @@ class StepShape_SweptFaceSolid : public StepShape_SolidModel {
 		%feature("compactdefaultargs") Init;
 		%feature("autodoc", "	:param aName:
 	:type aName: Handle_TCollection_HAsciiString &
-	:rtype: void
-") Init;
-		virtual void Init (const Handle_TCollection_HAsciiString & aName);
-		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	:param aName:
-	:type aName: Handle_TCollection_HAsciiString &
 	:param aSweptArea:
 	:type aSweptArea: Handle_StepShape_FaceSurface &
-	:rtype: void
+	:rtype: None
 ") Init;
-		virtual void Init (const Handle_TCollection_HAsciiString & aName,const Handle_StepShape_FaceSurface & aSweptArea);
+		void Init (const Handle_TCollection_HAsciiString & aName,const Handle_StepShape_FaceSurface & aSweptArea);
 		%feature("compactdefaultargs") SetSweptFace;
 		%feature("autodoc", "	:param aSweptArea:
 	:type aSweptArea: Handle_StepShape_FaceSurface &
@@ -8072,19 +6105,20 @@ class Handle_StepShape_SweptFaceSolid : public Handle_StepShape_SolidModel {
         static const Handle_StepShape_SweptFaceSolid DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_StepShape_SweptFaceSolid {
     StepShape_SweptFaceSolid* _get_reference() {
-    return (StepShape_SweptFaceSolid*)$self->Access();
+    return (StepShape_SweptFaceSolid*)$self->get();
     }
 };
 
 %extend Handle_StepShape_SweptFaceSolid {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend StepShape_SweptFaceSolid {
@@ -8135,19 +6169,20 @@ class Handle_StepShape_TransitionalShapeRepresentation : public Handle_StepShape
         static const Handle_StepShape_TransitionalShapeRepresentation DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_StepShape_TransitionalShapeRepresentation {
     StepShape_TransitionalShapeRepresentation* _get_reference() {
-    return (StepShape_TransitionalShapeRepresentation*)$self->Access();
+    return (StepShape_TransitionalShapeRepresentation*)$self->get();
     }
 };
 
 %extend Handle_StepShape_TransitionalShapeRepresentation {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend StepShape_TransitionalShapeRepresentation {
@@ -8198,19 +6233,20 @@ class Handle_StepShape_Vertex : public Handle_StepShape_TopologicalRepresentatio
         static const Handle_StepShape_Vertex DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_StepShape_Vertex {
     StepShape_Vertex* _get_reference() {
-    return (StepShape_Vertex*)$self->Access();
+    return (StepShape_Vertex*)$self->get();
     }
 };
 
 %extend Handle_StepShape_Vertex {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend StepShape_Vertex {
@@ -8232,19 +6268,11 @@ class StepShape_BrepWithVoids : public StepShape_ManifoldSolidBrep {
 	:type aName: Handle_TCollection_HAsciiString &
 	:param aOuter:
 	:type aOuter: Handle_StepShape_ClosedShell &
-	:rtype: void
-") Init;
-		virtual void Init (const Handle_TCollection_HAsciiString & aName,const Handle_StepShape_ClosedShell & aOuter);
-		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	:param aName:
-	:type aName: Handle_TCollection_HAsciiString &
-	:param aOuter:
-	:type aOuter: Handle_StepShape_ClosedShell &
 	:param aVoids:
 	:type aVoids: Handle_StepShape_HArray1OfOrientedClosedShell &
-	:rtype: void
+	:rtype: None
 ") Init;
-		virtual void Init (const Handle_TCollection_HAsciiString & aName,const Handle_StepShape_ClosedShell & aOuter,const Handle_StepShape_HArray1OfOrientedClosedShell & aVoids);
+		void Init (const Handle_TCollection_HAsciiString & aName,const Handle_StepShape_ClosedShell & aOuter,const Handle_StepShape_HArray1OfOrientedClosedShell & aVoids);
 		%feature("compactdefaultargs") SetVoids;
 		%feature("autodoc", "	:param aVoids:
 	:type aVoids: Handle_StepShape_HArray1OfOrientedClosedShell &
@@ -8299,19 +6327,20 @@ class Handle_StepShape_BrepWithVoids : public Handle_StepShape_ManifoldSolidBrep
         static const Handle_StepShape_BrepWithVoids DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_StepShape_BrepWithVoids {
     StepShape_BrepWithVoids* _get_reference() {
-    return (StepShape_BrepWithVoids*)$self->Access();
+    return (StepShape_BrepWithVoids*)$self->get();
     }
 };
 
 %extend Handle_StepShape_BrepWithVoids {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend StepShape_BrepWithVoids {
@@ -8362,19 +6391,20 @@ class Handle_StepShape_ClosedShell : public Handle_StepShape_ConnectedFaceSet {
         static const Handle_StepShape_ClosedShell DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_StepShape_ClosedShell {
     StepShape_ClosedShell* _get_reference() {
-    return (StepShape_ClosedShell*)$self->Access();
+    return (StepShape_ClosedShell*)$self->get();
     }
 };
 
 %extend Handle_StepShape_ClosedShell {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend StepShape_ClosedShell {
@@ -8392,7 +6422,7 @@ class StepShape_ConnectedFaceSubSet : public StepShape_ConnectedFaceSet {
 ") StepShape_ConnectedFaceSubSet;
 		 StepShape_ConnectedFaceSubSet ();
 		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	* Initialize all fields (own and inherited)
+		%feature("autodoc", "	* Initialize all fields --own and inherited--
 
 	:param aRepresentationItem_Name:
 	:type aRepresentationItem_Name: Handle_TCollection_HAsciiString &
@@ -8451,19 +6481,20 @@ class Handle_StepShape_ConnectedFaceSubSet : public Handle_StepShape_ConnectedFa
         static const Handle_StepShape_ConnectedFaceSubSet DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_StepShape_ConnectedFaceSubSet {
     StepShape_ConnectedFaceSubSet* _get_reference() {
-    return (StepShape_ConnectedFaceSubSet*)$self->Access();
+    return (StepShape_ConnectedFaceSubSet*)$self->get();
     }
 };
 
 %extend Handle_StepShape_ConnectedFaceSubSet {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend StepShape_ConnectedFaceSubSet {
@@ -8487,23 +6518,13 @@ class StepShape_EdgeCurve : public StepShape_Edge {
 	:type aEdgeStart: Handle_StepShape_Vertex &
 	:param aEdgeEnd:
 	:type aEdgeEnd: Handle_StepShape_Vertex &
-	:rtype: void
-") Init;
-		virtual void Init (const Handle_TCollection_HAsciiString & aName,const Handle_StepShape_Vertex & aEdgeStart,const Handle_StepShape_Vertex & aEdgeEnd);
-		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	:param aName:
-	:type aName: Handle_TCollection_HAsciiString &
-	:param aEdgeStart:
-	:type aEdgeStart: Handle_StepShape_Vertex &
-	:param aEdgeEnd:
-	:type aEdgeEnd: Handle_StepShape_Vertex &
 	:param aEdgeGeometry:
 	:type aEdgeGeometry: Handle_StepGeom_Curve &
 	:param aSameSense:
 	:type aSameSense: bool
-	:rtype: void
+	:rtype: None
 ") Init;
-		virtual void Init (const Handle_TCollection_HAsciiString & aName,const Handle_StepShape_Vertex & aEdgeStart,const Handle_StepShape_Vertex & aEdgeEnd,const Handle_StepGeom_Curve & aEdgeGeometry,const Standard_Boolean aSameSense);
+		void Init (const Handle_TCollection_HAsciiString & aName,const Handle_StepShape_Vertex & aEdgeStart,const Handle_StepShape_Vertex & aEdgeEnd,const Handle_StepGeom_Curve & aEdgeGeometry,const Standard_Boolean aSameSense);
 		%feature("compactdefaultargs") SetEdgeGeometry;
 		%feature("autodoc", "	:param aEdgeGeometry:
 	:type aEdgeGeometry: Handle_StepGeom_Curve &
@@ -8558,19 +6579,20 @@ class Handle_StepShape_EdgeCurve : public Handle_StepShape_Edge {
         static const Handle_StepShape_EdgeCurve DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_StepShape_EdgeCurve {
     StepShape_EdgeCurve* _get_reference() {
-    return (StepShape_EdgeCurve*)$self->Access();
+    return (StepShape_EdgeCurve*)$self->get();
     }
 };
 
 %extend Handle_StepShape_EdgeCurve {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend StepShape_EdgeCurve {
@@ -8587,12 +6609,6 @@ class StepShape_EdgeLoop : public StepShape_Loop {
 	:rtype: None
 ") StepShape_EdgeLoop;
 		 StepShape_EdgeLoop ();
-		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	:param aName:
-	:type aName: Handle_TCollection_HAsciiString &
-	:rtype: void
-") Init;
-		virtual void Init (const Handle_TCollection_HAsciiString & aName);
 		%feature("compactdefaultargs") Init;
 		%feature("autodoc", "	:param aName:
 	:type aName: Handle_TCollection_HAsciiString &
@@ -8655,19 +6671,20 @@ class Handle_StepShape_EdgeLoop : public Handle_StepShape_Loop {
         static const Handle_StepShape_EdgeLoop DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_StepShape_EdgeLoop {
     StepShape_EdgeLoop* _get_reference() {
-    return (StepShape_EdgeLoop*)$self->Access();
+    return (StepShape_EdgeLoop*)$self->get();
     }
 };
 
 %extend Handle_StepShape_EdgeLoop {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend StepShape_EdgeLoop {
@@ -8689,21 +6706,13 @@ class StepShape_ExtrudedAreaSolid : public StepShape_SweptAreaSolid {
 	:type aName: Handle_TCollection_HAsciiString &
 	:param aSweptArea:
 	:type aSweptArea: Handle_StepGeom_CurveBoundedSurface &
-	:rtype: void
-") Init;
-		virtual void Init (const Handle_TCollection_HAsciiString & aName,const Handle_StepGeom_CurveBoundedSurface & aSweptArea);
-		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	:param aName:
-	:type aName: Handle_TCollection_HAsciiString &
-	:param aSweptArea:
-	:type aSweptArea: Handle_StepGeom_CurveBoundedSurface &
 	:param aExtrudedDirection:
 	:type aExtrudedDirection: Handle_StepGeom_Direction &
 	:param aDepth:
 	:type aDepth: float
-	:rtype: void
+	:rtype: None
 ") Init;
-		virtual void Init (const Handle_TCollection_HAsciiString & aName,const Handle_StepGeom_CurveBoundedSurface & aSweptArea,const Handle_StepGeom_Direction & aExtrudedDirection,const Standard_Real aDepth);
+		void Init (const Handle_TCollection_HAsciiString & aName,const Handle_StepGeom_CurveBoundedSurface & aSweptArea,const Handle_StepGeom_Direction & aExtrudedDirection,const Standard_Real aDepth);
 		%feature("compactdefaultargs") SetExtrudedDirection;
 		%feature("autodoc", "	:param aExtrudedDirection:
 	:type aExtrudedDirection: Handle_StepGeom_Direction &
@@ -8758,19 +6767,20 @@ class Handle_StepShape_ExtrudedAreaSolid : public Handle_StepShape_SweptAreaSoli
         static const Handle_StepShape_ExtrudedAreaSolid DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_StepShape_ExtrudedAreaSolid {
     StepShape_ExtrudedAreaSolid* _get_reference() {
-    return (StepShape_ExtrudedAreaSolid*)$self->Access();
+    return (StepShape_ExtrudedAreaSolid*)$self->get();
     }
 };
 
 %extend Handle_StepShape_ExtrudedAreaSolid {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend StepShape_ExtrudedAreaSolid {
@@ -8787,14 +6797,6 @@ class StepShape_ExtrudedFaceSolid : public StepShape_SweptFaceSolid {
 	:rtype: None
 ") StepShape_ExtrudedFaceSolid;
 		 StepShape_ExtrudedFaceSolid ();
-		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	:param aName:
-	:type aName: Handle_TCollection_HAsciiString &
-	:param aSweptArea:
-	:type aSweptArea: Handle_StepShape_FaceSurface &
-	:rtype: void
-") Init;
-		virtual void Init (const Handle_TCollection_HAsciiString & aName,const Handle_StepShape_FaceSurface & aSweptArea);
 		%feature("compactdefaultargs") Init;
 		%feature("autodoc", "	:param aName:
 	:type aName: Handle_TCollection_HAsciiString &
@@ -8861,19 +6863,20 @@ class Handle_StepShape_ExtrudedFaceSolid : public Handle_StepShape_SweptFaceSoli
         static const Handle_StepShape_ExtrudedFaceSolid DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_StepShape_ExtrudedFaceSolid {
     StepShape_ExtrudedFaceSolid* _get_reference() {
-    return (StepShape_ExtrudedFaceSolid*)$self->Access();
+    return (StepShape_ExtrudedFaceSolid*)$self->get();
     }
 };
 
 %extend Handle_StepShape_ExtrudedFaceSolid {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend StepShape_ExtrudedFaceSolid {
@@ -8924,19 +6927,20 @@ class Handle_StepShape_FaceOuterBound : public Handle_StepShape_FaceBound {
         static const Handle_StepShape_FaceOuterBound DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_StepShape_FaceOuterBound {
     StepShape_FaceOuterBound* _get_reference() {
-    return (StepShape_FaceOuterBound*)$self->Access();
+    return (StepShape_FaceOuterBound*)$self->get();
     }
 };
 
 %extend Handle_StepShape_FaceOuterBound {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend StepShape_FaceOuterBound {
@@ -8958,21 +6962,13 @@ class StepShape_FaceSurface : public StepShape_Face {
 	:type aName: Handle_TCollection_HAsciiString &
 	:param aBounds:
 	:type aBounds: Handle_StepShape_HArray1OfFaceBound &
-	:rtype: void
-") Init;
-		virtual void Init (const Handle_TCollection_HAsciiString & aName,const Handle_StepShape_HArray1OfFaceBound & aBounds);
-		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	:param aName:
-	:type aName: Handle_TCollection_HAsciiString &
-	:param aBounds:
-	:type aBounds: Handle_StepShape_HArray1OfFaceBound &
 	:param aFaceGeometry:
 	:type aFaceGeometry: Handle_StepGeom_Surface &
 	:param aSameSense:
 	:type aSameSense: bool
-	:rtype: void
+	:rtype: None
 ") Init;
-		virtual void Init (const Handle_TCollection_HAsciiString & aName,const Handle_StepShape_HArray1OfFaceBound & aBounds,const Handle_StepGeom_Surface & aFaceGeometry,const Standard_Boolean aSameSense);
+		void Init (const Handle_TCollection_HAsciiString & aName,const Handle_StepShape_HArray1OfFaceBound & aBounds,const Handle_StepGeom_Surface & aFaceGeometry,const Standard_Boolean aSameSense);
 		%feature("compactdefaultargs") SetFaceGeometry;
 		%feature("autodoc", "	:param aFaceGeometry:
 	:type aFaceGeometry: Handle_StepGeom_Surface &
@@ -9027,19 +7023,20 @@ class Handle_StepShape_FaceSurface : public Handle_StepShape_Face {
         static const Handle_StepShape_FaceSurface DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_StepShape_FaceSurface {
     StepShape_FaceSurface* _get_reference() {
-    return (StepShape_FaceSurface*)$self->Access();
+    return (StepShape_FaceSurface*)$self->get();
     }
 };
 
 %extend Handle_StepShape_FaceSurface {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend StepShape_FaceSurface {
@@ -9090,19 +7087,20 @@ class Handle_StepShape_FacetedBrep : public Handle_StepShape_ManifoldSolidBrep {
         static const Handle_StepShape_FacetedBrep DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_StepShape_FacetedBrep {
     StepShape_FacetedBrep* _get_reference() {
-    return (StepShape_FacetedBrep*)$self->Access();
+    return (StepShape_FacetedBrep*)$self->get();
     }
 };
 
 %extend Handle_StepShape_FacetedBrep {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend StepShape_FacetedBrep {
@@ -9119,14 +7117,6 @@ class StepShape_FacetedBrepAndBrepWithVoids : public StepShape_ManifoldSolidBrep
 	:rtype: None
 ") StepShape_FacetedBrepAndBrepWithVoids;
 		 StepShape_FacetedBrepAndBrepWithVoids ();
-		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	:param aName:
-	:type aName: Handle_TCollection_HAsciiString &
-	:param aOuter:
-	:type aOuter: Handle_StepShape_ClosedShell &
-	:rtype: void
-") Init;
-		virtual void Init (const Handle_TCollection_HAsciiString & aName,const Handle_StepShape_ClosedShell & aOuter);
 		%feature("compactdefaultargs") Init;
 		%feature("autodoc", "	:param aName:
 	:type aName: Handle_TCollection_HAsciiString &
@@ -9223,19 +7213,20 @@ class Handle_StepShape_FacetedBrepAndBrepWithVoids : public Handle_StepShape_Man
         static const Handle_StepShape_FacetedBrepAndBrepWithVoids DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_StepShape_FacetedBrepAndBrepWithVoids {
     StepShape_FacetedBrepAndBrepWithVoids* _get_reference() {
-    return (StepShape_FacetedBrepAndBrepWithVoids*)$self->Access();
+    return (StepShape_FacetedBrepAndBrepWithVoids*)$self->get();
     }
 };
 
 %extend Handle_StepShape_FacetedBrepAndBrepWithVoids {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend StepShape_FacetedBrepAndBrepWithVoids {
@@ -9286,19 +7277,20 @@ class Handle_StepShape_OpenShell : public Handle_StepShape_ConnectedFaceSet {
         static const Handle_StepShape_OpenShell DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_StepShape_OpenShell {
     StepShape_OpenShell* _get_reference() {
-    return (StepShape_OpenShell*)$self->Access();
+    return (StepShape_OpenShell*)$self->get();
     }
 };
 
 %extend Handle_StepShape_OpenShell {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend StepShape_OpenShell {
@@ -9322,9 +7314,9 @@ class StepShape_OrientedEdge : public StepShape_Edge {
 	:type aEdgeElement: Handle_StepShape_Edge &
 	:param aOrientation:
 	:type aOrientation: bool
-	:rtype: void
+	:rtype: None
 ") Init;
-		virtual void Init (const Handle_TCollection_HAsciiString & aName,const Handle_StepShape_Edge & aEdgeElement,const Standard_Boolean aOrientation);
+		void Init (const Handle_TCollection_HAsciiString & aName,const Handle_StepShape_Edge & aEdgeElement,const Standard_Boolean aOrientation);
 		%feature("compactdefaultargs") SetEdgeElement;
 		%feature("autodoc", "	:param aEdgeElement:
 	:type aEdgeElement: Handle_StepShape_Edge &
@@ -9399,19 +7391,20 @@ class Handle_StepShape_OrientedEdge : public Handle_StepShape_Edge {
         static const Handle_StepShape_OrientedEdge DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_StepShape_OrientedEdge {
     StepShape_OrientedEdge* _get_reference() {
-    return (StepShape_OrientedEdge*)$self->Access();
+    return (StepShape_OrientedEdge*)$self->get();
     }
 };
 
 %extend Handle_StepShape_OrientedEdge {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend StepShape_OrientedEdge {
@@ -9431,21 +7424,13 @@ class StepShape_OrientedFace : public StepShape_Face {
 		%feature("compactdefaultargs") Init;
 		%feature("autodoc", "	:param aName:
 	:type aName: Handle_TCollection_HAsciiString &
-	:param aBounds:
-	:type aBounds: Handle_StepShape_HArray1OfFaceBound &
-	:rtype: void
-") Init;
-		virtual void Init (const Handle_TCollection_HAsciiString & aName,const Handle_StepShape_HArray1OfFaceBound & aBounds);
-		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	:param aName:
-	:type aName: Handle_TCollection_HAsciiString &
 	:param aFaceElement:
 	:type aFaceElement: Handle_StepShape_Face &
 	:param aOrientation:
 	:type aOrientation: bool
-	:rtype: void
+	:rtype: None
 ") Init;
-		virtual void Init (const Handle_TCollection_HAsciiString & aName,const Handle_StepShape_Face & aFaceElement,const Standard_Boolean aOrientation);
+		void Init (const Handle_TCollection_HAsciiString & aName,const Handle_StepShape_Face & aFaceElement,const Standard_Boolean aOrientation);
 		%feature("compactdefaultargs") SetFaceElement;
 		%feature("autodoc", "	:param aFaceElement:
 	:type aFaceElement: Handle_StepShape_Face &
@@ -9520,19 +7505,20 @@ class Handle_StepShape_OrientedFace : public Handle_StepShape_Face {
         static const Handle_StepShape_OrientedFace DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_StepShape_OrientedFace {
     StepShape_OrientedFace* _get_reference() {
-    return (StepShape_OrientedFace*)$self->Access();
+    return (StepShape_OrientedFace*)$self->get();
     }
 };
 
 %extend Handle_StepShape_OrientedFace {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend StepShape_OrientedFace {
@@ -9552,21 +7538,13 @@ class StepShape_OrientedPath : public StepShape_Path {
 		%feature("compactdefaultargs") Init;
 		%feature("autodoc", "	:param aName:
 	:type aName: Handle_TCollection_HAsciiString &
-	:param aEdgeList:
-	:type aEdgeList: Handle_StepShape_HArray1OfOrientedEdge &
-	:rtype: void
-") Init;
-		virtual void Init (const Handle_TCollection_HAsciiString & aName,const Handle_StepShape_HArray1OfOrientedEdge & aEdgeList);
-		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	:param aName:
-	:type aName: Handle_TCollection_HAsciiString &
 	:param aPathElement:
 	:type aPathElement: Handle_StepShape_EdgeLoop &
 	:param aOrientation:
 	:type aOrientation: bool
-	:rtype: void
+	:rtype: None
 ") Init;
-		virtual void Init (const Handle_TCollection_HAsciiString & aName,const Handle_StepShape_EdgeLoop & aPathElement,const Standard_Boolean aOrientation);
+		void Init (const Handle_TCollection_HAsciiString & aName,const Handle_StepShape_EdgeLoop & aPathElement,const Standard_Boolean aOrientation);
 		%feature("compactdefaultargs") SetPathElement;
 		%feature("autodoc", "	:param aPathElement:
 	:type aPathElement: Handle_StepShape_EdgeLoop &
@@ -9641,19 +7619,20 @@ class Handle_StepShape_OrientedPath : public Handle_StepShape_Path {
         static const Handle_StepShape_OrientedPath DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_StepShape_OrientedPath {
     StepShape_OrientedPath* _get_reference() {
-    return (StepShape_OrientedPath*)$self->Access();
+    return (StepShape_OrientedPath*)$self->get();
     }
 };
 
 %extend Handle_StepShape_OrientedPath {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend StepShape_OrientedPath {
@@ -9673,17 +7652,11 @@ class StepShape_PolyLoop : public StepShape_Loop {
 		%feature("compactdefaultargs") Init;
 		%feature("autodoc", "	:param aName:
 	:type aName: Handle_TCollection_HAsciiString &
-	:rtype: void
-") Init;
-		virtual void Init (const Handle_TCollection_HAsciiString & aName);
-		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	:param aName:
-	:type aName: Handle_TCollection_HAsciiString &
 	:param aPolygon:
 	:type aPolygon: Handle_StepGeom_HArray1OfCartesianPoint &
-	:rtype: void
+	:rtype: None
 ") Init;
-		virtual void Init (const Handle_TCollection_HAsciiString & aName,const Handle_StepGeom_HArray1OfCartesianPoint & aPolygon);
+		void Init (const Handle_TCollection_HAsciiString & aName,const Handle_StepGeom_HArray1OfCartesianPoint & aPolygon);
 		%feature("compactdefaultargs") SetPolygon;
 		%feature("autodoc", "	:param aPolygon:
 	:type aPolygon: Handle_StepGeom_HArray1OfCartesianPoint &
@@ -9738,19 +7711,20 @@ class Handle_StepShape_PolyLoop : public Handle_StepShape_Loop {
         static const Handle_StepShape_PolyLoop DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_StepShape_PolyLoop {
     StepShape_PolyLoop* _get_reference() {
-    return (StepShape_PolyLoop*)$self->Access();
+    return (StepShape_PolyLoop*)$self->get();
     }
 };
 
 %extend Handle_StepShape_PolyLoop {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend StepShape_PolyLoop {
@@ -9772,21 +7746,13 @@ class StepShape_RevolvedAreaSolid : public StepShape_SweptAreaSolid {
 	:type aName: Handle_TCollection_HAsciiString &
 	:param aSweptArea:
 	:type aSweptArea: Handle_StepGeom_CurveBoundedSurface &
-	:rtype: void
-") Init;
-		virtual void Init (const Handle_TCollection_HAsciiString & aName,const Handle_StepGeom_CurveBoundedSurface & aSweptArea);
-		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	:param aName:
-	:type aName: Handle_TCollection_HAsciiString &
-	:param aSweptArea:
-	:type aSweptArea: Handle_StepGeom_CurveBoundedSurface &
 	:param aAxis:
 	:type aAxis: Handle_StepGeom_Axis1Placement &
 	:param aAngle:
 	:type aAngle: float
-	:rtype: void
+	:rtype: None
 ") Init;
-		virtual void Init (const Handle_TCollection_HAsciiString & aName,const Handle_StepGeom_CurveBoundedSurface & aSweptArea,const Handle_StepGeom_Axis1Placement & aAxis,const Standard_Real aAngle);
+		void Init (const Handle_TCollection_HAsciiString & aName,const Handle_StepGeom_CurveBoundedSurface & aSweptArea,const Handle_StepGeom_Axis1Placement & aAxis,const Standard_Real aAngle);
 		%feature("compactdefaultargs") SetAxis;
 		%feature("autodoc", "	:param aAxis:
 	:type aAxis: Handle_StepGeom_Axis1Placement &
@@ -9841,19 +7807,20 @@ class Handle_StepShape_RevolvedAreaSolid : public Handle_StepShape_SweptAreaSoli
         static const Handle_StepShape_RevolvedAreaSolid DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_StepShape_RevolvedAreaSolid {
     StepShape_RevolvedAreaSolid* _get_reference() {
-    return (StepShape_RevolvedAreaSolid*)$self->Access();
+    return (StepShape_RevolvedAreaSolid*)$self->get();
     }
 };
 
 %extend Handle_StepShape_RevolvedAreaSolid {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend StepShape_RevolvedAreaSolid {
@@ -9875,9 +7842,9 @@ class StepShape_RevolvedFaceSolid : public StepShape_SweptFaceSolid {
 	:type aName: Handle_TCollection_HAsciiString &
 	:param aSweptArea:
 	:type aSweptArea: Handle_StepShape_FaceSurface &
-	:rtype: void
+	:rtype: None
 ") Init;
-		virtual void Init (const Handle_TCollection_HAsciiString & aName,const Handle_StepShape_FaceSurface & aSweptArea);
+		void Init (const Handle_TCollection_HAsciiString & aName,const Handle_StepShape_FaceSurface & aSweptArea);
 		%feature("compactdefaultargs") Init;
 		%feature("autodoc", "	:param aName:
 	:type aName: Handle_TCollection_HAsciiString &
@@ -9944,19 +7911,20 @@ class Handle_StepShape_RevolvedFaceSolid : public Handle_StepShape_SweptFaceSoli
         static const Handle_StepShape_RevolvedFaceSolid DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_StepShape_RevolvedFaceSolid {
     StepShape_RevolvedFaceSolid* _get_reference() {
-    return (StepShape_RevolvedFaceSolid*)$self->Access();
+    return (StepShape_RevolvedFaceSolid*)$self->get();
     }
 };
 
 %extend Handle_StepShape_RevolvedFaceSolid {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend StepShape_RevolvedFaceSolid {
@@ -9974,7 +7942,7 @@ class StepShape_Subedge : public StepShape_Edge {
 ") StepShape_Subedge;
 		 StepShape_Subedge ();
 		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	* Initialize all fields (own and inherited)
+		%feature("autodoc", "	* Initialize all fields --own and inherited--
 
 	:param aRepresentationItem_Name:
 	:type aRepresentationItem_Name: Handle_TCollection_HAsciiString &
@@ -10035,19 +8003,20 @@ class Handle_StepShape_Subedge : public Handle_StepShape_Edge {
         static const Handle_StepShape_Subedge DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_StepShape_Subedge {
     StepShape_Subedge* _get_reference() {
-    return (StepShape_Subedge*)$self->Access();
+    return (StepShape_Subedge*)$self->get();
     }
 };
 
 %extend Handle_StepShape_Subedge {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend StepShape_Subedge {
@@ -10065,7 +8034,7 @@ class StepShape_Subface : public StepShape_Face {
 ") StepShape_Subface;
 		 StepShape_Subface ();
 		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	* Initialize all fields (own and inherited)
+		%feature("autodoc", "	* Initialize all fields --own and inherited--
 
 	:param aRepresentationItem_Name:
 	:type aRepresentationItem_Name: Handle_TCollection_HAsciiString &
@@ -10124,19 +8093,20 @@ class Handle_StepShape_Subface : public Handle_StepShape_Face {
         static const Handle_StepShape_Subface DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_StepShape_Subface {
     StepShape_Subface* _get_reference() {
-    return (StepShape_Subface*)$self->Access();
+    return (StepShape_Subface*)$self->get();
     }
 };
 
 %extend Handle_StepShape_Subface {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend StepShape_Subface {
@@ -10156,17 +8126,11 @@ class StepShape_VertexLoop : public StepShape_Loop {
 		%feature("compactdefaultargs") Init;
 		%feature("autodoc", "	:param aName:
 	:type aName: Handle_TCollection_HAsciiString &
-	:rtype: void
-") Init;
-		virtual void Init (const Handle_TCollection_HAsciiString & aName);
-		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	:param aName:
-	:type aName: Handle_TCollection_HAsciiString &
 	:param aLoopVertex:
 	:type aLoopVertex: Handle_StepShape_Vertex &
-	:rtype: void
+	:rtype: None
 ") Init;
-		virtual void Init (const Handle_TCollection_HAsciiString & aName,const Handle_StepShape_Vertex & aLoopVertex);
+		void Init (const Handle_TCollection_HAsciiString & aName,const Handle_StepShape_Vertex & aLoopVertex);
 		%feature("compactdefaultargs") SetLoopVertex;
 		%feature("autodoc", "	:param aLoopVertex:
 	:type aLoopVertex: Handle_StepShape_Vertex &
@@ -10211,19 +8175,20 @@ class Handle_StepShape_VertexLoop : public Handle_StepShape_Loop {
         static const Handle_StepShape_VertexLoop DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_StepShape_VertexLoop {
     StepShape_VertexLoop* _get_reference() {
-    return (StepShape_VertexLoop*)$self->Access();
+    return (StepShape_VertexLoop*)$self->get();
     }
 };
 
 %extend Handle_StepShape_VertexLoop {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend StepShape_VertexLoop {
@@ -10243,17 +8208,11 @@ class StepShape_VertexPoint : public StepShape_Vertex {
 		%feature("compactdefaultargs") Init;
 		%feature("autodoc", "	:param aName:
 	:type aName: Handle_TCollection_HAsciiString &
-	:rtype: void
-") Init;
-		virtual void Init (const Handle_TCollection_HAsciiString & aName);
-		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	:param aName:
-	:type aName: Handle_TCollection_HAsciiString &
 	:param aVertexGeometry:
 	:type aVertexGeometry: Handle_StepGeom_Point &
-	:rtype: void
+	:rtype: None
 ") Init;
-		virtual void Init (const Handle_TCollection_HAsciiString & aName,const Handle_StepGeom_Point & aVertexGeometry);
+		void Init (const Handle_TCollection_HAsciiString & aName,const Handle_StepGeom_Point & aVertexGeometry);
 		%feature("compactdefaultargs") SetVertexGeometry;
 		%feature("autodoc", "	:param aVertexGeometry:
 	:type aVertexGeometry: Handle_StepGeom_Point &
@@ -10298,19 +8257,20 @@ class Handle_StepShape_VertexPoint : public Handle_StepShape_Vertex {
         static const Handle_StepShape_VertexPoint DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_StepShape_VertexPoint {
     StepShape_VertexPoint* _get_reference() {
-    return (StepShape_VertexPoint*)$self->Access();
+    return (StepShape_VertexPoint*)$self->get();
     }
 };
 
 %extend Handle_StepShape_VertexPoint {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend StepShape_VertexPoint {
@@ -10361,19 +8321,20 @@ class Handle_StepShape_AdvancedFace : public Handle_StepShape_FaceSurface {
         static const Handle_StepShape_AdvancedFace DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_StepShape_AdvancedFace {
     StepShape_AdvancedFace* _get_reference() {
-    return (StepShape_AdvancedFace*)$self->Access();
+    return (StepShape_AdvancedFace*)$self->get();
     }
 };
 
 %extend Handle_StepShape_AdvancedFace {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend StepShape_AdvancedFace {
@@ -10393,21 +8354,13 @@ class StepShape_OrientedClosedShell : public StepShape_ClosedShell {
 		%feature("compactdefaultargs") Init;
 		%feature("autodoc", "	:param aName:
 	:type aName: Handle_TCollection_HAsciiString &
-	:param aCfsFaces:
-	:type aCfsFaces: Handle_StepShape_HArray1OfFace &
-	:rtype: void
-") Init;
-		virtual void Init (const Handle_TCollection_HAsciiString & aName,const Handle_StepShape_HArray1OfFace & aCfsFaces);
-		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	:param aName:
-	:type aName: Handle_TCollection_HAsciiString &
 	:param aClosedShellElement:
 	:type aClosedShellElement: Handle_StepShape_ClosedShell &
 	:param aOrientation:
 	:type aOrientation: bool
-	:rtype: void
+	:rtype: None
 ") Init;
-		virtual void Init (const Handle_TCollection_HAsciiString & aName,const Handle_StepShape_ClosedShell & aClosedShellElement,const Standard_Boolean aOrientation);
+		void Init (const Handle_TCollection_HAsciiString & aName,const Handle_StepShape_ClosedShell & aClosedShellElement,const Standard_Boolean aOrientation);
 		%feature("compactdefaultargs") SetClosedShellElement;
 		%feature("autodoc", "	:param aClosedShellElement:
 	:type aClosedShellElement: Handle_StepShape_ClosedShell &
@@ -10482,19 +8435,20 @@ class Handle_StepShape_OrientedClosedShell : public Handle_StepShape_ClosedShell
         static const Handle_StepShape_OrientedClosedShell DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_StepShape_OrientedClosedShell {
     StepShape_OrientedClosedShell* _get_reference() {
-    return (StepShape_OrientedClosedShell*)$self->Access();
+    return (StepShape_OrientedClosedShell*)$self->get();
     }
 };
 
 %extend Handle_StepShape_OrientedClosedShell {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend StepShape_OrientedClosedShell {
@@ -10514,21 +8468,13 @@ class StepShape_OrientedOpenShell : public StepShape_OpenShell {
 		%feature("compactdefaultargs") Init;
 		%feature("autodoc", "	:param aName:
 	:type aName: Handle_TCollection_HAsciiString &
-	:param aCfsFaces:
-	:type aCfsFaces: Handle_StepShape_HArray1OfFace &
-	:rtype: void
-") Init;
-		virtual void Init (const Handle_TCollection_HAsciiString & aName,const Handle_StepShape_HArray1OfFace & aCfsFaces);
-		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	:param aName:
-	:type aName: Handle_TCollection_HAsciiString &
 	:param aOpenShellElement:
 	:type aOpenShellElement: Handle_StepShape_OpenShell &
 	:param aOrientation:
 	:type aOrientation: bool
-	:rtype: void
+	:rtype: None
 ") Init;
-		virtual void Init (const Handle_TCollection_HAsciiString & aName,const Handle_StepShape_OpenShell & aOpenShellElement,const Standard_Boolean aOrientation);
+		void Init (const Handle_TCollection_HAsciiString & aName,const Handle_StepShape_OpenShell & aOpenShellElement,const Standard_Boolean aOrientation);
 		%feature("compactdefaultargs") SetOpenShellElement;
 		%feature("autodoc", "	:param aOpenShellElement:
 	:type aOpenShellElement: Handle_StepShape_OpenShell &
@@ -10603,19 +8549,20 @@ class Handle_StepShape_OrientedOpenShell : public Handle_StepShape_OpenShell {
         static const Handle_StepShape_OrientedOpenShell DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_StepShape_OrientedOpenShell {
     StepShape_OrientedOpenShell* _get_reference() {
-    return (StepShape_OrientedOpenShell*)$self->Access();
+    return (StepShape_OrientedOpenShell*)$self->get();
     }
 };
 
 %extend Handle_StepShape_OrientedOpenShell {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend StepShape_OrientedOpenShell {
@@ -10633,7 +8580,7 @@ class StepShape_SeamEdge : public StepShape_OrientedEdge {
 ") StepShape_SeamEdge;
 		 StepShape_SeamEdge ();
 		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	* Initialize all fields (own and inherited)
+		%feature("autodoc", "	* Initialize all fields --own and inherited--
 
 	:param aRepresentationItem_Name:
 	:type aRepresentationItem_Name: Handle_TCollection_HAsciiString &
@@ -10694,19 +8641,20 @@ class Handle_StepShape_SeamEdge : public Handle_StepShape_OrientedEdge {
         static const Handle_StepShape_SeamEdge DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_StepShape_SeamEdge {
     StepShape_SeamEdge* _get_reference() {
-    return (StepShape_SeamEdge*)$self->Access();
+    return (StepShape_SeamEdge*)$self->get();
     }
 };
 
 %extend Handle_StepShape_SeamEdge {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend StepShape_SeamEdge {

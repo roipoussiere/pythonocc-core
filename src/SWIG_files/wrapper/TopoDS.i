@@ -1,5 +1,5 @@
 /*
-Copyright 2008-2017 Thomas Paviot (tpaviot@gmail.com)
+Copyright 2008-2018 Thomas Paviot (tpaviot@gmail.com)
 
 
 This file is part of pythonOCC.
@@ -55,6 +55,10 @@ def register_handle(handle, base_object):
 
 /* typedefs */
 /* end typedefs declaration */
+
+/* templates */
+%template(TopoDS_ListOfShape) NCollection_List <TopoDS_Shape>;
+/* end templates declaration */
 
 /* public enums */
 /* end public enums declaration */
@@ -182,6 +186,45 @@ class TopoDS {
 	__repr__ = _dumps_object
 	}
 };
+%nodefaultctor TopoDS_AlertWithShape;
+class TopoDS_AlertWithShape : public Message_Alert {
+	public:
+		%feature("compactdefaultargs") TopoDS_AlertWithShape;
+		%feature("autodoc", "	* Constructor with shape argument
+
+	:param theShape:
+	:type theShape: TopoDS_Shape &
+	:rtype: None
+") TopoDS_AlertWithShape;
+		 TopoDS_AlertWithShape (const TopoDS_Shape & theShape);
+		%feature("compactdefaultargs") GetShape;
+		%feature("autodoc", "	* Returns contained shape
+
+	:rtype: TopoDS_Shape
+") GetShape;
+		const TopoDS_Shape  GetShape ();
+		%feature("compactdefaultargs") SupportsMerge;
+		%feature("autodoc", "	* Returns false.
+
+	:rtype: bool
+") SupportsMerge;
+		Standard_Boolean SupportsMerge ();
+		%feature("compactdefaultargs") Merge;
+		%feature("autodoc", "	* Returns false.
+
+	:param theTarget:
+	:type theTarget: Handle_Message_Alert &
+	:rtype: bool
+") Merge;
+		Standard_Boolean Merge (const Handle_Message_Alert & theTarget);
+};
+
+
+%extend TopoDS_AlertWithShape {
+	%pythoncode {
+	__repr__ = _dumps_object
+	}
+};
 class TopoDS_Builder {
 	public:
 		%feature("compactdefaultargs") MakeWire;
@@ -253,7 +296,7 @@ class TopoDS_Builder {
 	}
 };
 %nodefaultctor TopoDS_HShape;
-class TopoDS_HShape : public MMgt_TShared {
+class TopoDS_HShape : public Standard_Transient {
 	public:
 		%feature("compactdefaultargs") TopoDS_HShape;
 		%feature("autodoc", "	* Constructs an empty shape object
@@ -311,7 +354,7 @@ class TopoDS_HShape : public MMgt_TShared {
 %}
 
 %nodefaultctor Handle_TopoDS_HShape;
-class Handle_TopoDS_HShape : public Handle_MMgt_TShared {
+class Handle_TopoDS_HShape : public Handle_Standard_Transient {
 
     public:
         // constructors
@@ -323,19 +366,20 @@ class Handle_TopoDS_HShape : public Handle_MMgt_TShared {
         static const Handle_TopoDS_HShape DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_TopoDS_HShape {
     TopoDS_HShape* _get_reference() {
-    return (TopoDS_HShape*)$self->Access();
+    return (TopoDS_HShape*)$self->get();
     }
 };
 
 %extend Handle_TopoDS_HShape {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend TopoDS_HShape {
@@ -398,249 +442,6 @@ class TopoDS_Iterator {
 
 
 %extend TopoDS_Iterator {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor TopoDS_ListIteratorOfListOfShape;
-class TopoDS_ListIteratorOfListOfShape {
-	public:
-		%feature("compactdefaultargs") TopoDS_ListIteratorOfListOfShape;
-		%feature("autodoc", "	:rtype: None
-") TopoDS_ListIteratorOfListOfShape;
-		 TopoDS_ListIteratorOfListOfShape ();
-		%feature("compactdefaultargs") TopoDS_ListIteratorOfListOfShape;
-		%feature("autodoc", "	:param L:
-	:type L: TopoDS_ListOfShape &
-	:rtype: None
-") TopoDS_ListIteratorOfListOfShape;
-		 TopoDS_ListIteratorOfListOfShape (const TopoDS_ListOfShape & L);
-		%feature("compactdefaultargs") Initialize;
-		%feature("autodoc", "	:param L:
-	:type L: TopoDS_ListOfShape &
-	:rtype: None
-") Initialize;
-		void Initialize (const TopoDS_ListOfShape & L);
-		%feature("compactdefaultargs") More;
-		%feature("autodoc", "	:rtype: bool
-") More;
-		Standard_Boolean More ();
-		%feature("compactdefaultargs") Next;
-		%feature("autodoc", "	:rtype: None
-") Next;
-		void Next ();
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:rtype: TopoDS_Shape
-") Value;
-		TopoDS_Shape  Value ();
-};
-
-
-%extend TopoDS_ListIteratorOfListOfShape {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor TopoDS_ListNodeOfListOfShape;
-class TopoDS_ListNodeOfListOfShape : public TCollection_MapNode {
-	public:
-		%feature("compactdefaultargs") TopoDS_ListNodeOfListOfShape;
-		%feature("autodoc", "	:param I:
-	:type I: TopoDS_Shape &
-	:param n:
-	:type n: TCollection_MapNodePtr &
-	:rtype: None
-") TopoDS_ListNodeOfListOfShape;
-		 TopoDS_ListNodeOfListOfShape (const TopoDS_Shape & I,const TCollection_MapNodePtr & n);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:rtype: TopoDS_Shape
-") Value;
-		TopoDS_Shape  Value ();
-};
-
-
-%extend TopoDS_ListNodeOfListOfShape {
-	%pythoncode {
-		def GetHandle(self):
-		    try:
-		        return self.thisHandle
-		    except:
-		        self.thisHandle = Handle_TopoDS_ListNodeOfListOfShape(self)
-		        self.thisown = False
-		        return self.thisHandle
-	}
-};
-
-%pythonappend Handle_TopoDS_ListNodeOfListOfShape::Handle_TopoDS_ListNodeOfListOfShape %{
-    # register the handle in the base object
-    if len(args) > 0:
-        register_handle(self, args[0])
-%}
-
-%nodefaultctor Handle_TopoDS_ListNodeOfListOfShape;
-class Handle_TopoDS_ListNodeOfListOfShape : public Handle_TCollection_MapNode {
-
-    public:
-        // constructors
-        Handle_TopoDS_ListNodeOfListOfShape();
-        Handle_TopoDS_ListNodeOfListOfShape(const Handle_TopoDS_ListNodeOfListOfShape &aHandle);
-        Handle_TopoDS_ListNodeOfListOfShape(const TopoDS_ListNodeOfListOfShape *anItem);
-        void Nullify();
-        Standard_Boolean IsNull() const;
-        static const Handle_TopoDS_ListNodeOfListOfShape DownCast(const Handle_Standard_Transient &AnObject);
-
-};
-%extend Handle_TopoDS_ListNodeOfListOfShape {
-    TopoDS_ListNodeOfListOfShape* _get_reference() {
-    return (TopoDS_ListNodeOfListOfShape*)$self->Access();
-    }
-};
-
-%extend Handle_TopoDS_ListNodeOfListOfShape {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
-};
-
-%extend TopoDS_ListNodeOfListOfShape {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor TopoDS_ListOfShape;
-class TopoDS_ListOfShape {
-	public:
-		%feature("compactdefaultargs") TopoDS_ListOfShape;
-		%feature("autodoc", "	:rtype: None
-") TopoDS_ListOfShape;
-		 TopoDS_ListOfShape ();
-		%feature("compactdefaultargs") TopoDS_ListOfShape;
-		%feature("autodoc", "	:param Other:
-	:type Other: TopoDS_ListOfShape &
-	:rtype: None
-") TopoDS_ListOfShape;
-		 TopoDS_ListOfShape (const TopoDS_ListOfShape & Other);
-		%feature("compactdefaultargs") Assign;
-		%feature("autodoc", "	:param Other:
-	:type Other: TopoDS_ListOfShape &
-	:rtype: None
-") Assign;
-		void Assign (const TopoDS_ListOfShape & Other);
-		%feature("compactdefaultargs") operator =;
-		%feature("autodoc", "	:param Other:
-	:type Other: TopoDS_ListOfShape &
-	:rtype: None
-") operator =;
-		void operator = (const TopoDS_ListOfShape & Other);
-		%feature("compactdefaultargs") Extent;
-		%feature("autodoc", "	:rtype: int
-") Extent;
-		Standard_Integer Extent ();
-		%feature("compactdefaultargs") Clear;
-		%feature("autodoc", "	:rtype: None
-") Clear;
-		void Clear ();
-		%feature("compactdefaultargs") IsEmpty;
-		%feature("autodoc", "	:rtype: bool
-") IsEmpty;
-		Standard_Boolean IsEmpty ();
-		%feature("compactdefaultargs") Prepend;
-		%feature("autodoc", "	:param I:
-	:type I: TopoDS_Shape &
-	:rtype: None
-") Prepend;
-		void Prepend (const TopoDS_Shape & I);
-		%feature("compactdefaultargs") Prepend;
-		%feature("autodoc", "	:param I:
-	:type I: TopoDS_Shape &
-	:param theIt:
-	:type theIt: TopoDS_ListIteratorOfListOfShape &
-	:rtype: None
-") Prepend;
-		void Prepend (const TopoDS_Shape & I,TopoDS_ListIteratorOfListOfShape & theIt);
-		%feature("compactdefaultargs") Prepend;
-		%feature("autodoc", "	:param Other:
-	:type Other: TopoDS_ListOfShape &
-	:rtype: None
-") Prepend;
-		void Prepend (TopoDS_ListOfShape & Other);
-		%feature("compactdefaultargs") Append;
-		%feature("autodoc", "	:param I:
-	:type I: TopoDS_Shape &
-	:rtype: None
-") Append;
-		void Append (const TopoDS_Shape & I);
-		%feature("compactdefaultargs") Append;
-		%feature("autodoc", "	:param I:
-	:type I: TopoDS_Shape &
-	:param theIt:
-	:type theIt: TopoDS_ListIteratorOfListOfShape &
-	:rtype: None
-") Append;
-		void Append (const TopoDS_Shape & I,TopoDS_ListIteratorOfListOfShape & theIt);
-		%feature("compactdefaultargs") Append;
-		%feature("autodoc", "	:param Other:
-	:type Other: TopoDS_ListOfShape &
-	:rtype: None
-") Append;
-		void Append (TopoDS_ListOfShape & Other);
-		%feature("compactdefaultargs") First;
-		%feature("autodoc", "	:rtype: TopoDS_Shape
-") First;
-		TopoDS_Shape  First ();
-		%feature("compactdefaultargs") Last;
-		%feature("autodoc", "	:rtype: TopoDS_Shape
-") Last;
-		TopoDS_Shape  Last ();
-		%feature("compactdefaultargs") RemoveFirst;
-		%feature("autodoc", "	:rtype: None
-") RemoveFirst;
-		void RemoveFirst ();
-		%feature("compactdefaultargs") Remove;
-		%feature("autodoc", "	:param It:
-	:type It: TopoDS_ListIteratorOfListOfShape &
-	:rtype: None
-") Remove;
-		void Remove (TopoDS_ListIteratorOfListOfShape & It);
-		%feature("compactdefaultargs") InsertBefore;
-		%feature("autodoc", "	:param I:
-	:type I: TopoDS_Shape &
-	:param It:
-	:type It: TopoDS_ListIteratorOfListOfShape &
-	:rtype: None
-") InsertBefore;
-		void InsertBefore (const TopoDS_Shape & I,TopoDS_ListIteratorOfListOfShape & It);
-		%feature("compactdefaultargs") InsertBefore;
-		%feature("autodoc", "	:param Other:
-	:type Other: TopoDS_ListOfShape &
-	:param It:
-	:type It: TopoDS_ListIteratorOfListOfShape &
-	:rtype: None
-") InsertBefore;
-		void InsertBefore (TopoDS_ListOfShape & Other,TopoDS_ListIteratorOfListOfShape & It);
-		%feature("compactdefaultargs") InsertAfter;
-		%feature("autodoc", "	:param I:
-	:type I: TopoDS_Shape &
-	:param It:
-	:type It: TopoDS_ListIteratorOfListOfShape &
-	:rtype: None
-") InsertAfter;
-		void InsertAfter (const TopoDS_Shape & I,TopoDS_ListIteratorOfListOfShape & It);
-		%feature("compactdefaultargs") InsertAfter;
-		%feature("autodoc", "	:param Other:
-	:type Other: TopoDS_ListOfShape &
-	:param It:
-	:type It: TopoDS_ListIteratorOfListOfShape &
-	:rtype: None
-") InsertAfter;
-		void InsertAfter (TopoDS_ListOfShape & Other,TopoDS_ListIteratorOfListOfShape & It);
-};
-
-
-%extend TopoDS_ListOfShape {
 	%pythoncode {
 	__repr__ = _dumps_object
 	}
@@ -1011,7 +812,7 @@ class TopoDS_Shape {
 	}
 };
 %nodefaultctor TopoDS_TShape;
-class TopoDS_TShape : public MMgt_TShared {
+class TopoDS_TShape : public Standard_Transient {
 	public:
 		%feature("compactdefaultargs") Free;
 		%feature("autodoc", "	* Returns the free flag.
@@ -1159,7 +960,7 @@ class TopoDS_TShape : public MMgt_TShared {
 %}
 
 %nodefaultctor Handle_TopoDS_TShape;
-class Handle_TopoDS_TShape : public Handle_MMgt_TShared {
+class Handle_TopoDS_TShape : public Handle_Standard_Transient {
 
     public:
         // constructors
@@ -1171,19 +972,20 @@ class Handle_TopoDS_TShape : public Handle_MMgt_TShared {
         static const Handle_TopoDS_TShape DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_TopoDS_TShape {
     TopoDS_TShape* _get_reference() {
-    return (TopoDS_TShape*)$self->Access();
+    return (TopoDS_TShape*)$self->get();
     }
 };
 
 %extend Handle_TopoDS_TShape {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend TopoDS_TShape {
@@ -1348,19 +1150,20 @@ class Handle_TopoDS_TCompSolid : public Handle_TopoDS_TShape {
         static const Handle_TopoDS_TCompSolid DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_TopoDS_TCompSolid {
     TopoDS_TCompSolid* _get_reference() {
-    return (TopoDS_TCompSolid*)$self->Access();
+    return (TopoDS_TCompSolid*)$self->get();
     }
 };
 
 %extend Handle_TopoDS_TCompSolid {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend TopoDS_TCompSolid {
@@ -1423,19 +1226,20 @@ class Handle_TopoDS_TCompound : public Handle_TopoDS_TShape {
         static const Handle_TopoDS_TCompound DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_TopoDS_TCompound {
     TopoDS_TCompound* _get_reference() {
-    return (TopoDS_TCompound*)$self->Access();
+    return (TopoDS_TCompound*)$self->get();
     }
 };
 
 %extend Handle_TopoDS_TCompound {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend TopoDS_TCompound {
@@ -1486,19 +1290,20 @@ class Handle_TopoDS_TEdge : public Handle_TopoDS_TShape {
         static const Handle_TopoDS_TEdge DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_TopoDS_TEdge {
     TopoDS_TEdge* _get_reference() {
-    return (TopoDS_TEdge*)$self->Access();
+    return (TopoDS_TEdge*)$self->get();
     }
 };
 
 %extend Handle_TopoDS_TEdge {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend TopoDS_TEdge {
@@ -1561,19 +1366,20 @@ class Handle_TopoDS_TFace : public Handle_TopoDS_TShape {
         static const Handle_TopoDS_TFace DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_TopoDS_TFace {
     TopoDS_TFace* _get_reference() {
-    return (TopoDS_TFace*)$self->Access();
+    return (TopoDS_TFace*)$self->get();
     }
 };
 
 %extend Handle_TopoDS_TFace {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend TopoDS_TFace {
@@ -1636,19 +1442,20 @@ class Handle_TopoDS_TShell : public Handle_TopoDS_TShape {
         static const Handle_TopoDS_TShell DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_TopoDS_TShell {
     TopoDS_TShell* _get_reference() {
-    return (TopoDS_TShell*)$self->Access();
+    return (TopoDS_TShell*)$self->get();
     }
 };
 
 %extend Handle_TopoDS_TShell {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend TopoDS_TShell {
@@ -1711,19 +1518,20 @@ class Handle_TopoDS_TSolid : public Handle_TopoDS_TShape {
         static const Handle_TopoDS_TSolid DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_TopoDS_TSolid {
     TopoDS_TSolid* _get_reference() {
-    return (TopoDS_TSolid*)$self->Access();
+    return (TopoDS_TSolid*)$self->get();
     }
 };
 
 %extend Handle_TopoDS_TSolid {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend TopoDS_TSolid {
@@ -1774,19 +1582,20 @@ class Handle_TopoDS_TVertex : public Handle_TopoDS_TShape {
         static const Handle_TopoDS_TVertex DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_TopoDS_TVertex {
     TopoDS_TVertex* _get_reference() {
-    return (TopoDS_TVertex*)$self->Access();
+    return (TopoDS_TVertex*)$self->get();
     }
 };
 
 %extend Handle_TopoDS_TVertex {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend TopoDS_TVertex {
@@ -1849,19 +1658,20 @@ class Handle_TopoDS_TWire : public Handle_TopoDS_TShape {
         static const Handle_TopoDS_TWire DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_TopoDS_TWire {
     TopoDS_TWire* _get_reference() {
-    return (TopoDS_TWire*)$self->Access();
+    return (TopoDS_TWire*)$self->get();
     }
 };
 
 %extend Handle_TopoDS_TWire {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend TopoDS_TWire {

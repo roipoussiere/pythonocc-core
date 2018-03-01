@@ -1,5 +1,5 @@
 /*
-Copyright 2008-2017 Thomas Paviot (tpaviot@gmail.com)
+Copyright 2008-2018 Thomas Paviot (tpaviot@gmail.com)
 
 
 This file is part of pythonOCC.
@@ -56,6 +56,10 @@ def register_handle(handle, base_object):
 /* typedefs */
 /* end typedefs declaration */
 
+/* templates */
+%template(GccEnt_Array1OfPosition) NCollection_Array1 <GccEnt_Position>;
+/* end templates declaration */
+
 /* public enums */
 enum GccEnt_Position {
 	GccEnt_unqualified = 0,
@@ -70,6 +74,42 @@ enum GccEnt_Position {
 %rename(gccent) GccEnt;
 class GccEnt {
 	public:
+		%feature("compactdefaultargs") Print;
+		%feature("autodoc", "	* Prints the name of Position type as a String on the Stream.
+
+	:param thePosition:
+	:type thePosition: GccEnt_Position
+	:param theStream:
+	:type theStream: Standard_OStream &
+	:rtype: Standard_OStream
+") Print;
+		static Standard_OStream & Print (const GccEnt_Position thePosition,Standard_OStream & theStream);
+		%feature("compactdefaultargs") PositionToString;
+		%feature("autodoc", "	* Returns the string name for a given position. @param thePosition position type returns string identifier from the list UNQUALIFIED ENCLOSING ENCLOSED OUTSIDE NOQUALIFIER
+
+	:param thePosition:
+	:type thePosition: GccEnt_Position
+	:rtype: char *
+") PositionToString;
+		static const char * PositionToString (GccEnt_Position thePosition);
+		%feature("compactdefaultargs") PositionFromString;
+		%feature("autodoc", "	* Returns the position from the given string identifier --using case-insensitive comparison--. @param thePositionString string identifier returns position or GccEnt_unqualified if string identifier is invalid
+
+	:param thePositionString:
+	:type thePositionString: char *
+	:rtype: GccEnt_Position
+") PositionFromString;
+		static GccEnt_Position PositionFromString (const char * thePositionString);
+		%feature("compactdefaultargs") PositionFromString;
+		%feature("autodoc", "	* Determines the position from the given string identifier --using case-insensitive comparison--. @param thePositionString string identifier @param thePosition detected shape type returns True if string identifier is known
+
+	:param thePositionString:
+	:type thePositionString: char *
+	:param thePosition:
+	:type thePosition: GccEnt_Position &
+	:rtype: bool
+") PositionFromString;
+		static Standard_Boolean PositionFromString (const char * thePositionString,GccEnt_Position & thePosition);
 		%feature("compactdefaultargs") Unqualified;
 		%feature("autodoc", "	* Constructs a qualified line, so that the relative position to the circle or line of the solution computed by a construction algorithm using the qualified circle or line is not qualified, i.e. all solutions apply.
 
@@ -134,93 +174,6 @@ class GccEnt {
 	__repr__ = _dumps_object
 	}
 };
-%nodefaultctor GccEnt_Array1OfPosition;
-class GccEnt_Array1OfPosition {
-	public:
-		%feature("compactdefaultargs") GccEnt_Array1OfPosition;
-		%feature("autodoc", "	:param Low:
-	:type Low: int
-	:param Up:
-	:type Up: int
-	:rtype: None
-") GccEnt_Array1OfPosition;
-		 GccEnt_Array1OfPosition (const Standard_Integer Low,const Standard_Integer Up);
-		%feature("compactdefaultargs") GccEnt_Array1OfPosition;
-		%feature("autodoc", "	:param Item:
-	:type Item: GccEnt_Position &
-	:param Low:
-	:type Low: int
-	:param Up:
-	:type Up: int
-	:rtype: None
-") GccEnt_Array1OfPosition;
-		 GccEnt_Array1OfPosition (const GccEnt_Position & Item,const Standard_Integer Low,const Standard_Integer Up);
-		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	:param V:
-	:type V: GccEnt_Position &
-	:rtype: None
-") Init;
-		void Init (const GccEnt_Position & V);
-		%feature("compactdefaultargs") Destroy;
-		%feature("autodoc", "	:rtype: None
-") Destroy;
-		void Destroy ();
-		%feature("compactdefaultargs") IsAllocated;
-		%feature("autodoc", "	:rtype: bool
-") IsAllocated;
-		Standard_Boolean IsAllocated ();
-		%feature("compactdefaultargs") Assign;
-		%feature("autodoc", "	:param Other:
-	:type Other: GccEnt_Array1OfPosition &
-	:rtype: GccEnt_Array1OfPosition
-") Assign;
-		const GccEnt_Array1OfPosition & Assign (const GccEnt_Array1OfPosition & Other);
-		%feature("compactdefaultargs") operator =;
-		%feature("autodoc", "	:param Other:
-	:type Other: GccEnt_Array1OfPosition &
-	:rtype: GccEnt_Array1OfPosition
-") operator =;
-		const GccEnt_Array1OfPosition & operator = (const GccEnt_Array1OfPosition & Other);
-		%feature("compactdefaultargs") Length;
-		%feature("autodoc", "	:rtype: int
-") Length;
-		Standard_Integer Length ();
-		%feature("compactdefaultargs") Lower;
-		%feature("autodoc", "	:rtype: int
-") Lower;
-		Standard_Integer Lower ();
-		%feature("compactdefaultargs") Upper;
-		%feature("autodoc", "	:rtype: int
-") Upper;
-		Standard_Integer Upper ();
-		%feature("compactdefaultargs") SetValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param Value:
-	:type Value: GccEnt_Position &
-	:rtype: None
-") SetValue;
-		void SetValue (const Standard_Integer Index,const GccEnt_Position & Value);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: GccEnt_Position
-") Value;
-		const GccEnt_Position  Value (const Standard_Integer Index);
-		%feature("compactdefaultargs") ChangeValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: GccEnt_Position
-") ChangeValue;
-		GccEnt_Position  ChangeValue (const Standard_Integer Index);
-};
-
-
-%extend GccEnt_Array1OfPosition {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
 %nodefaultctor GccEnt_QualifiedCirc;
 class GccEnt_QualifiedCirc {
 	public:
@@ -270,24 +223,6 @@ class GccEnt_QualifiedCirc {
 	:rtype: bool
 ") IsOutside;
 		Standard_Boolean IsOutside ();
-		%feature("compactdefaultargs") GccEnt_QualifiedCirc;
-		%feature("autodoc", "	:rtype: None
-") GccEnt_QualifiedCirc;
-		 GccEnt_QualifiedCirc ();
-		%feature("compactdefaultargs") _CSFDB_GetGccEnt_QualifiedCircTheQualified;
-		%feature("autodoc", "	:rtype: gp_Circ2d
-") _CSFDB_GetGccEnt_QualifiedCircTheQualified;
-		const gp_Circ2d  _CSFDB_GetGccEnt_QualifiedCircTheQualified ();
-		%feature("compactdefaultargs") _CSFDB_GetGccEnt_QualifiedCircTheQualifier;
-		%feature("autodoc", "	:rtype: GccEnt_Position
-") _CSFDB_GetGccEnt_QualifiedCircTheQualifier;
-		GccEnt_Position _CSFDB_GetGccEnt_QualifiedCircTheQualifier ();
-		%feature("compactdefaultargs") _CSFDB_SetGccEnt_QualifiedCircTheQualifier;
-		%feature("autodoc", "	:param p:
-	:type p: GccEnt_Position
-	:rtype: None
-") _CSFDB_SetGccEnt_QualifiedCircTheQualifier;
-		void _CSFDB_SetGccEnt_QualifiedCircTheQualifier (const GccEnt_Position p);
 };
 
 
@@ -339,24 +274,6 @@ class GccEnt_QualifiedLin {
 	:rtype: bool
 ") IsOutside;
 		Standard_Boolean IsOutside ();
-		%feature("compactdefaultargs") GccEnt_QualifiedLin;
-		%feature("autodoc", "	:rtype: None
-") GccEnt_QualifiedLin;
-		 GccEnt_QualifiedLin ();
-		%feature("compactdefaultargs") _CSFDB_GetGccEnt_QualifiedLinTheQualifier;
-		%feature("autodoc", "	:rtype: GccEnt_Position
-") _CSFDB_GetGccEnt_QualifiedLinTheQualifier;
-		GccEnt_Position _CSFDB_GetGccEnt_QualifiedLinTheQualifier ();
-		%feature("compactdefaultargs") _CSFDB_SetGccEnt_QualifiedLinTheQualifier;
-		%feature("autodoc", "	:param p:
-	:type p: GccEnt_Position
-	:rtype: None
-") _CSFDB_SetGccEnt_QualifiedLinTheQualifier;
-		void _CSFDB_SetGccEnt_QualifiedLinTheQualifier (const GccEnt_Position p);
-		%feature("compactdefaultargs") _CSFDB_GetGccEnt_QualifiedLinTheQualified;
-		%feature("autodoc", "	:rtype: gp_Lin2d
-") _CSFDB_GetGccEnt_QualifiedLinTheQualified;
-		const gp_Lin2d  _CSFDB_GetGccEnt_QualifiedLinTheQualified ();
 };
 
 

@@ -1,5 +1,5 @@
 /*
-Copyright 2008-2017 Thomas Paviot (tpaviot@gmail.com)
+Copyright 2008-2018 Thomas Paviot (tpaviot@gmail.com)
 
 
 This file is part of pythonOCC.
@@ -56,10 +56,15 @@ def register_handle(handle, base_object):
 /* typedefs */
 /* end typedefs declaration */
 
+/* templates */
+%template(XmlLDrivers_SequenceOfNamespaceDef) NCollection_Sequence <XmlLDrivers_NamespaceDef>;
+/* end templates declaration */
+
 /* public enums */
 /* end public enums declaration */
 
 %rename(xmlldrivers) XmlLDrivers;
+%nodefaultctor XmlLDrivers;
 class XmlLDrivers {
 	public:
 		%feature("compactdefaultargs") Factory;
@@ -67,11 +72,19 @@ class XmlLDrivers {
 	:type theGUID: Standard_GUID &
 	:rtype: Handle_Standard_Transient
 ") Factory;
-		static Handle_Standard_Transient Factory (const Standard_GUID & theGUID);
+		Handle_Standard_Transient Factory (const Standard_GUID & theGUID);
 		%feature("compactdefaultargs") CreationDate;
 		%feature("autodoc", "	:rtype: TCollection_AsciiString
 ") CreationDate;
 		static TCollection_AsciiString CreationDate ();
+		%feature("compactdefaultargs") DefineFormat;
+		%feature("autodoc", "	* Defines format 'XmlLOcaf' and registers its read and write drivers in the specified application
+
+	:param theApp:
+	:type theApp: Handle_TDocStd_Application &
+	:rtype: void
+") DefineFormat;
+		static void DefineFormat (const Handle_TDocStd_Application & theApp);
 		%feature("compactdefaultargs") AttributeDrivers;
 		%feature("autodoc", "	:param theMsgDriver:
 	:type theMsgDriver: Handle_CDM_MessageDriver &
@@ -79,9 +92,15 @@ class XmlLDrivers {
 ") AttributeDrivers;
 		static Handle_XmlMDF_ADriverTable AttributeDrivers (const Handle_CDM_MessageDriver & theMsgDriver);
 		%feature("compactdefaultargs") StorageVersion;
-		%feature("autodoc", "	:rtype: TCollection_AsciiString
+		%feature("autodoc", "	:rtype: int
 ") StorageVersion;
-		static TCollection_AsciiString StorageVersion ();
+		static int StorageVersion ();
+		%feature("compactdefaultargs") SetStorageVersion;
+		%feature("autodoc", "	:param version:
+	:type version: int
+	:rtype: void
+") SetStorageVersion;
+		static void SetStorageVersion (const int version);
 };
 
 
@@ -97,18 +116,6 @@ class XmlLDrivers_DocumentRetrievalDriver : public PCDM_RetrievalDriver {
 		%feature("autodoc", "	:rtype: None
 ") XmlLDrivers_DocumentRetrievalDriver;
 		 XmlLDrivers_DocumentRetrievalDriver ();
-		%feature("compactdefaultargs") SchemaName;
-		%feature("autodoc", "	:rtype: TCollection_ExtendedString
-") SchemaName;
-		virtual TCollection_ExtendedString SchemaName ();
-		%feature("compactdefaultargs") Make;
-		%feature("autodoc", "	:param PD:
-	:type PD: Handle_PCDM_Document &
-	:param TD:
-	:type TD: Handle_CDM_Document &
-	:rtype: void
-") Make;
-		virtual void Make (const Handle_PCDM_Document & PD,const Handle_CDM_Document & TD);
 		%feature("compactdefaultargs") CreateDocument;
 		%feature("autodoc", "	:rtype: Handle_CDM_Document
 ") CreateDocument;
@@ -123,6 +130,18 @@ class XmlLDrivers_DocumentRetrievalDriver : public PCDM_RetrievalDriver {
 	:rtype: void
 ") Read;
 		virtual void Read (const TCollection_ExtendedString & theFileName,const Handle_CDM_Document & theNewDocument,const Handle_CDM_Application & theApplication);
+		%feature("compactdefaultargs") Read;
+		%feature("autodoc", "	:param theIStream:
+	:type theIStream: Standard_IStream &
+	:param theStorageData:
+	:type theStorageData: Handle_Storage_Data &
+	:param theDoc:
+	:type theDoc: Handle_CDM_Document &
+	:param theApplication:
+	:type theApplication: Handle_CDM_Application &
+	:rtype: void
+") Read;
+		virtual void Read (Standard_IStream & theIStream,const Handle_Storage_Data & theStorageData,const Handle_CDM_Document & theDoc,const Handle_CDM_Application & theApplication);
 		%feature("compactdefaultargs") AttributeDrivers;
 		%feature("autodoc", "	:param theMsgDriver:
 	:type theMsgDriver: Handle_CDM_MessageDriver &
@@ -163,19 +182,20 @@ class Handle_XmlLDrivers_DocumentRetrievalDriver : public Handle_PCDM_RetrievalD
         static const Handle_XmlLDrivers_DocumentRetrievalDriver DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_XmlLDrivers_DocumentRetrievalDriver {
     XmlLDrivers_DocumentRetrievalDriver* _get_reference() {
-    return (XmlLDrivers_DocumentRetrievalDriver*)$self->Access();
+    return (XmlLDrivers_DocumentRetrievalDriver*)$self->get();
     }
 };
 
 %extend Handle_XmlLDrivers_DocumentRetrievalDriver {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend XmlLDrivers_DocumentRetrievalDriver {
@@ -192,10 +212,6 @@ class XmlLDrivers_DocumentStorageDriver : public PCDM_StorageDriver {
 	:rtype: None
 ") XmlLDrivers_DocumentStorageDriver;
 		 XmlLDrivers_DocumentStorageDriver (const TCollection_ExtendedString & theCopyright);
-		%feature("compactdefaultargs") SchemaName;
-		%feature("autodoc", "	:rtype: TCollection_ExtendedString
-") SchemaName;
-		virtual TCollection_ExtendedString SchemaName ();
 		%feature("compactdefaultargs") Write;
 		%feature("autodoc", "	:param theDocument:
 	:type theDocument: Handle_CDM_Document &
@@ -204,6 +220,14 @@ class XmlLDrivers_DocumentStorageDriver : public PCDM_StorageDriver {
 	:rtype: void
 ") Write;
 		virtual void Write (const Handle_CDM_Document & theDocument,const TCollection_ExtendedString & theFileName);
+		%feature("compactdefaultargs") Write;
+		%feature("autodoc", "	:param theDocument:
+	:type theDocument: Handle_CDM_Document &
+	:param theOStream:
+	:type theOStream: Standard_OStream &
+	:rtype: void
+") Write;
+		virtual void Write (const Handle_CDM_Document & theDocument,Standard_OStream & theOStream);
 		%feature("compactdefaultargs") AttributeDrivers;
 		%feature("autodoc", "	:param theMsgDriver:
 	:type theMsgDriver: Handle_CDM_MessageDriver &
@@ -244,19 +268,20 @@ class Handle_XmlLDrivers_DocumentStorageDriver : public Handle_PCDM_StorageDrive
         static const Handle_XmlLDrivers_DocumentStorageDriver DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_XmlLDrivers_DocumentStorageDriver {
     XmlLDrivers_DocumentStorageDriver* _get_reference() {
-    return (XmlLDrivers_DocumentStorageDriver*)$self->Access();
+    return (XmlLDrivers_DocumentStorageDriver*)$self->get();
     }
 };
 
 %extend Handle_XmlLDrivers_DocumentStorageDriver {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend XmlLDrivers_DocumentStorageDriver {
@@ -291,220 +316,6 @@ class XmlLDrivers_NamespaceDef {
 
 
 %extend XmlLDrivers_NamespaceDef {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor XmlLDrivers_SequenceNodeOfSequenceOfNamespaceDef;
-class XmlLDrivers_SequenceNodeOfSequenceOfNamespaceDef : public TCollection_SeqNode {
-	public:
-		%feature("compactdefaultargs") XmlLDrivers_SequenceNodeOfSequenceOfNamespaceDef;
-		%feature("autodoc", "	:param I:
-	:type I: XmlLDrivers_NamespaceDef &
-	:param n:
-	:type n: TCollection_SeqNodePtr &
-	:param p:
-	:type p: TCollection_SeqNodePtr &
-	:rtype: None
-") XmlLDrivers_SequenceNodeOfSequenceOfNamespaceDef;
-		 XmlLDrivers_SequenceNodeOfSequenceOfNamespaceDef (const XmlLDrivers_NamespaceDef & I,const TCollection_SeqNodePtr & n,const TCollection_SeqNodePtr & p);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:rtype: XmlLDrivers_NamespaceDef
-") Value;
-		XmlLDrivers_NamespaceDef & Value ();
-};
-
-
-%extend XmlLDrivers_SequenceNodeOfSequenceOfNamespaceDef {
-	%pythoncode {
-		def GetHandle(self):
-		    try:
-		        return self.thisHandle
-		    except:
-		        self.thisHandle = Handle_XmlLDrivers_SequenceNodeOfSequenceOfNamespaceDef(self)
-		        self.thisown = False
-		        return self.thisHandle
-	}
-};
-
-%pythonappend Handle_XmlLDrivers_SequenceNodeOfSequenceOfNamespaceDef::Handle_XmlLDrivers_SequenceNodeOfSequenceOfNamespaceDef %{
-    # register the handle in the base object
-    if len(args) > 0:
-        register_handle(self, args[0])
-%}
-
-%nodefaultctor Handle_XmlLDrivers_SequenceNodeOfSequenceOfNamespaceDef;
-class Handle_XmlLDrivers_SequenceNodeOfSequenceOfNamespaceDef : public Handle_TCollection_SeqNode {
-
-    public:
-        // constructors
-        Handle_XmlLDrivers_SequenceNodeOfSequenceOfNamespaceDef();
-        Handle_XmlLDrivers_SequenceNodeOfSequenceOfNamespaceDef(const Handle_XmlLDrivers_SequenceNodeOfSequenceOfNamespaceDef &aHandle);
-        Handle_XmlLDrivers_SequenceNodeOfSequenceOfNamespaceDef(const XmlLDrivers_SequenceNodeOfSequenceOfNamespaceDef *anItem);
-        void Nullify();
-        Standard_Boolean IsNull() const;
-        static const Handle_XmlLDrivers_SequenceNodeOfSequenceOfNamespaceDef DownCast(const Handle_Standard_Transient &AnObject);
-
-};
-%extend Handle_XmlLDrivers_SequenceNodeOfSequenceOfNamespaceDef {
-    XmlLDrivers_SequenceNodeOfSequenceOfNamespaceDef* _get_reference() {
-    return (XmlLDrivers_SequenceNodeOfSequenceOfNamespaceDef*)$self->Access();
-    }
-};
-
-%extend Handle_XmlLDrivers_SequenceNodeOfSequenceOfNamespaceDef {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
-};
-
-%extend XmlLDrivers_SequenceNodeOfSequenceOfNamespaceDef {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor XmlLDrivers_SequenceOfNamespaceDef;
-class XmlLDrivers_SequenceOfNamespaceDef : public TCollection_BaseSequence {
-	public:
-		%feature("compactdefaultargs") XmlLDrivers_SequenceOfNamespaceDef;
-		%feature("autodoc", "	:rtype: None
-") XmlLDrivers_SequenceOfNamespaceDef;
-		 XmlLDrivers_SequenceOfNamespaceDef ();
-		%feature("compactdefaultargs") XmlLDrivers_SequenceOfNamespaceDef;
-		%feature("autodoc", "	:param Other:
-	:type Other: XmlLDrivers_SequenceOfNamespaceDef &
-	:rtype: None
-") XmlLDrivers_SequenceOfNamespaceDef;
-		 XmlLDrivers_SequenceOfNamespaceDef (const XmlLDrivers_SequenceOfNamespaceDef & Other);
-		%feature("compactdefaultargs") Clear;
-		%feature("autodoc", "	:rtype: None
-") Clear;
-		void Clear ();
-		%feature("compactdefaultargs") Assign;
-		%feature("autodoc", "	:param Other:
-	:type Other: XmlLDrivers_SequenceOfNamespaceDef &
-	:rtype: XmlLDrivers_SequenceOfNamespaceDef
-") Assign;
-		const XmlLDrivers_SequenceOfNamespaceDef & Assign (const XmlLDrivers_SequenceOfNamespaceDef & Other);
-		%feature("compactdefaultargs") operator =;
-		%feature("autodoc", "	:param Other:
-	:type Other: XmlLDrivers_SequenceOfNamespaceDef &
-	:rtype: XmlLDrivers_SequenceOfNamespaceDef
-") operator =;
-		const XmlLDrivers_SequenceOfNamespaceDef & operator = (const XmlLDrivers_SequenceOfNamespaceDef & Other);
-		%feature("compactdefaultargs") Append;
-		%feature("autodoc", "	:param T:
-	:type T: XmlLDrivers_NamespaceDef &
-	:rtype: None
-") Append;
-		void Append (const XmlLDrivers_NamespaceDef & T);
-		%feature("compactdefaultargs") Append;
-		%feature("autodoc", "	:param S:
-	:type S: XmlLDrivers_SequenceOfNamespaceDef &
-	:rtype: None
-") Append;
-		void Append (XmlLDrivers_SequenceOfNamespaceDef & S);
-		%feature("compactdefaultargs") Prepend;
-		%feature("autodoc", "	:param T:
-	:type T: XmlLDrivers_NamespaceDef &
-	:rtype: None
-") Prepend;
-		void Prepend (const XmlLDrivers_NamespaceDef & T);
-		%feature("compactdefaultargs") Prepend;
-		%feature("autodoc", "	:param S:
-	:type S: XmlLDrivers_SequenceOfNamespaceDef &
-	:rtype: None
-") Prepend;
-		void Prepend (XmlLDrivers_SequenceOfNamespaceDef & S);
-		%feature("compactdefaultargs") InsertBefore;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param T:
-	:type T: XmlLDrivers_NamespaceDef &
-	:rtype: None
-") InsertBefore;
-		void InsertBefore (const Standard_Integer Index,const XmlLDrivers_NamespaceDef & T);
-		%feature("compactdefaultargs") InsertBefore;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param S:
-	:type S: XmlLDrivers_SequenceOfNamespaceDef &
-	:rtype: None
-") InsertBefore;
-		void InsertBefore (const Standard_Integer Index,XmlLDrivers_SequenceOfNamespaceDef & S);
-		%feature("compactdefaultargs") InsertAfter;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param T:
-	:type T: XmlLDrivers_NamespaceDef &
-	:rtype: None
-") InsertAfter;
-		void InsertAfter (const Standard_Integer Index,const XmlLDrivers_NamespaceDef & T);
-		%feature("compactdefaultargs") InsertAfter;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param S:
-	:type S: XmlLDrivers_SequenceOfNamespaceDef &
-	:rtype: None
-") InsertAfter;
-		void InsertAfter (const Standard_Integer Index,XmlLDrivers_SequenceOfNamespaceDef & S);
-		%feature("compactdefaultargs") First;
-		%feature("autodoc", "	:rtype: XmlLDrivers_NamespaceDef
-") First;
-		const XmlLDrivers_NamespaceDef & First ();
-		%feature("compactdefaultargs") Last;
-		%feature("autodoc", "	:rtype: XmlLDrivers_NamespaceDef
-") Last;
-		const XmlLDrivers_NamespaceDef & Last ();
-		%feature("compactdefaultargs") Split;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param Sub:
-	:type Sub: XmlLDrivers_SequenceOfNamespaceDef &
-	:rtype: None
-") Split;
-		void Split (const Standard_Integer Index,XmlLDrivers_SequenceOfNamespaceDef & Sub);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: XmlLDrivers_NamespaceDef
-") Value;
-		const XmlLDrivers_NamespaceDef & Value (const Standard_Integer Index);
-		%feature("compactdefaultargs") SetValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param I:
-	:type I: XmlLDrivers_NamespaceDef &
-	:rtype: None
-") SetValue;
-		void SetValue (const Standard_Integer Index,const XmlLDrivers_NamespaceDef & I);
-		%feature("compactdefaultargs") ChangeValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: XmlLDrivers_NamespaceDef
-") ChangeValue;
-		XmlLDrivers_NamespaceDef & ChangeValue (const Standard_Integer Index);
-		%feature("compactdefaultargs") Remove;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: None
-") Remove;
-		void Remove (const Standard_Integer Index);
-		%feature("compactdefaultargs") Remove;
-		%feature("autodoc", "	:param FromIndex:
-	:type FromIndex: int
-	:param ToIndex:
-	:type ToIndex: int
-	:rtype: None
-") Remove;
-		void Remove (const Standard_Integer FromIndex,const Standard_Integer ToIndex);
-};
-
-
-%extend XmlLDrivers_SequenceOfNamespaceDef {
 	%pythoncode {
 	__repr__ = _dumps_object
 	}

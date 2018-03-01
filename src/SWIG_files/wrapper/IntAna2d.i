@@ -1,5 +1,5 @@
 /*
-Copyright 2008-2017 Thomas Paviot (tpaviot@gmail.com)
+Copyright 2008-2018 Thomas Paviot (tpaviot@gmail.com)
 
 
 This file is part of pythonOCC.
@@ -55,6 +55,9 @@ def register_handle(handle, base_object):
 
 /* typedefs */
 /* end typedefs declaration */
+
+/* templates */
+/* end templates declaration */
 
 /* public enums */
 /* end public enums declaration */
@@ -259,7 +262,7 @@ class IntAna2d_AnaIntersection {
 ") NbPoints;
 		Standard_Integer NbPoints ();
 		%feature("compactdefaultargs") Point;
-		%feature("autodoc", "	* returns the intersection point of range N; If (N<=0) or (N>NbPoints), an exception is raised.
+		%feature("autodoc", "	* returns the intersection point of range N; If --N<=0-- or --N>NbPoints--, an exception is raised.
 
 	:param N:
 	:type N: int
@@ -360,7 +363,7 @@ class IntAna2d_Conic {
 ") Coefficients;
 		void Coefficients (Standard_Real &OutValue,Standard_Real &OutValue,Standard_Real &OutValue,Standard_Real &OutValue,Standard_Real &OutValue,Standard_Real &OutValue);
 		%feature("compactdefaultargs") NewCoefficients;
-		%feature("autodoc", "	* Returns the coefficients of the polynomial equation ( written in the natural coordinates system ) A x x + B y y + 2 C x y + 2 D x + 2 E y + F in the local coordinates system defined by Axis
+		%feature("autodoc", "	* Returns the coefficients of the polynomial equation -- written in the natural coordinates system -- A x x + B y y + 2 C x y + 2 D x + 2 E y + F in the local coordinates system defined by Axis
 
 	:param A:
 	:type A: float &
@@ -405,7 +408,7 @@ class IntAna2d_IntPoint {
 ") IntAna2d_IntPoint;
 		 IntAna2d_IntPoint (const Standard_Real X,const Standard_Real Y,const Standard_Real U1,const Standard_Real U2);
 		%feature("compactdefaultargs") IntAna2d_IntPoint;
-		%feature("autodoc", "	* Create an intersection point between a parametric 2d line, and a line given by an implicit equation (ImplicitCurve). X,Y are the coordinate of the point. U1 is the parameter on the parametric element. Empty constructor. It's necessary to use one of the SetValue method after this one.
+		%feature("autodoc", "	* Create an intersection point between a parametric 2d line, and a line given by an implicit equation --ImplicitCurve--. X,Y are the coordinate of the point. U1 is the parameter on the parametric element. Empty constructor. It's necessary to use one of the SetValue method after this one.
 
 	:param X:
 	:type X: float
@@ -470,40 +473,6 @@ class IntAna2d_IntPoint {
 	:rtype: float
 ") ParamOnSecond;
 		Standard_Real ParamOnSecond ();
-		%feature("compactdefaultargs") _CSFDB_GetIntAna2d_IntPointmyu1;
-		%feature("autodoc", "	:rtype: float
-") _CSFDB_GetIntAna2d_IntPointmyu1;
-		Standard_Real _CSFDB_GetIntAna2d_IntPointmyu1 ();
-		%feature("compactdefaultargs") _CSFDB_SetIntAna2d_IntPointmyu1;
-		%feature("autodoc", "	:param p:
-	:type p: float
-	:rtype: None
-") _CSFDB_SetIntAna2d_IntPointmyu1;
-		void _CSFDB_SetIntAna2d_IntPointmyu1 (const Standard_Real p);
-		%feature("compactdefaultargs") _CSFDB_GetIntAna2d_IntPointmyu2;
-		%feature("autodoc", "	:rtype: float
-") _CSFDB_GetIntAna2d_IntPointmyu2;
-		Standard_Real _CSFDB_GetIntAna2d_IntPointmyu2 ();
-		%feature("compactdefaultargs") _CSFDB_SetIntAna2d_IntPointmyu2;
-		%feature("autodoc", "	:param p:
-	:type p: float
-	:rtype: None
-") _CSFDB_SetIntAna2d_IntPointmyu2;
-		void _CSFDB_SetIntAna2d_IntPointmyu2 (const Standard_Real p);
-		%feature("compactdefaultargs") _CSFDB_GetIntAna2d_IntPointmyp;
-		%feature("autodoc", "	:rtype: gp_Pnt2d
-") _CSFDB_GetIntAna2d_IntPointmyp;
-		const gp_Pnt2d  _CSFDB_GetIntAna2d_IntPointmyp ();
-		%feature("compactdefaultargs") _CSFDB_GetIntAna2d_IntPointmyimplicit;
-		%feature("autodoc", "	:rtype: bool
-") _CSFDB_GetIntAna2d_IntPointmyimplicit;
-		Standard_Boolean _CSFDB_GetIntAna2d_IntPointmyimplicit ();
-		%feature("compactdefaultargs") _CSFDB_SetIntAna2d_IntPointmyimplicit;
-		%feature("autodoc", "	:param p:
-	:type p: bool
-	:rtype: None
-") _CSFDB_SetIntAna2d_IntPointmyimplicit;
-		void _CSFDB_SetIntAna2d_IntPointmyimplicit (const Standard_Boolean p);
 };
 
 

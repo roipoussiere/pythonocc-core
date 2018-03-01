@@ -1,5 +1,5 @@
 /*
-Copyright 2008-2017 Thomas Paviot (tpaviot@gmail.com)
+Copyright 2008-2018 Thomas Paviot (tpaviot@gmail.com)
 
 
 This file is part of pythonOCC.
@@ -56,13 +56,17 @@ def register_handle(handle, base_object):
 /* typedefs */
 /* end typedefs declaration */
 
+/* templates */
+/* end templates declaration */
+
 /* public enums */
 enum IntWalk_StatusDeflection {
 	IntWalk_PasTropGrand = 0,
-	IntWalk_PointConfondu = 1,
-	IntWalk_ArretSurPointPrecedent = 2,
-	IntWalk_ArretSurPoint = 3,
-	IntWalk_OK = 4,
+	IntWalk_StepTooSmall = 1,
+	IntWalk_PointConfondu = 2,
+	IntWalk_ArretSurPointPrecedent = 3,
+	IntWalk_ArretSurPoint = 4,
+	IntWalk_OK = 5,
 };
 
 /* end public enums declaration */
@@ -71,7 +75,7 @@ enum IntWalk_StatusDeflection {
 class IntWalk_PWalking {
 	public:
 		%feature("compactdefaultargs") IntWalk_PWalking;
-		%feature("autodoc", "	* Constructor used to set the data to compute intersection lines between Caro1 and Caro2. Deflection is the maximum deflection admitted between two consecutive points on the resulting polyline. TolTangency is the tolerance to find a tangent point. Func is the criterion which has to be evaluated at each solution point (each point of the line). It is necessary to call the Perform method to compute the intersection lines. The line found starts at a point on or in 2 natural domains of surfaces. It can be closed in the standard case if it is open it stops and begins at the border of one of the domains. If an open line stops at the middle of a domain, one stops at the tangent point. Epsilon is SquareTolerance of points confusion.
+		%feature("autodoc", "	* Constructor used to set the data to compute intersection lines between Caro1 and Caro2. Deflection is the maximum deflection admitted between two consecutive points on the resulting polyline. TolTangency is the tolerance to find a tangent point. Func is the criterion which has to be evaluated at each solution point --each point of the line--. It is necessary to call the Perform method to compute the intersection lines. The line found starts at a point on or in 2 natural domains of surfaces. It can be closed in the standard case if it is open it stops and begins at the border of one of the domains. If an open line stops at the middle of a domain, one stops at the tangent point. Epsilon is SquareTolerance of points confusion.
 
 	:param Caro1:
 	:type Caro1: Handle_Adaptor3d_HSurface &
@@ -89,7 +93,7 @@ class IntWalk_PWalking {
 ") IntWalk_PWalking;
 		 IntWalk_PWalking (const Handle_Adaptor3d_HSurface & Caro1,const Handle_Adaptor3d_HSurface & Caro2,const Standard_Real TolTangency,const Standard_Real Epsilon,const Standard_Real Deflection,const Standard_Real Increment);
 		%feature("compactdefaultargs") IntWalk_PWalking;
-		%feature("autodoc", "	* Returns the intersection line containing the exact point Poin. This line is a polygonal line. Deflection is the maximum deflection admitted between two consecutive points on the resulting polyline. TolTangency is the tolerance to find a tangent point. Func is the criterion which has to be evaluated at each solution point (each point of the line). The line found starts at a point on or in 2 natural domains of surfaces. It can be closed in the standard case if it is open it stops and begins at the border of one of the domains. If an open line stops at the middle of a domain, one stops at the tangent point. Epsilon is SquareTolerance of points confusion.
+		%feature("autodoc", "	* Returns the intersection line containing the exact point Poin. This line is a polygonal line. Deflection is the maximum deflection admitted between two consecutive points on the resulting polyline. TolTangency is the tolerance to find a tangent point. Func is the criterion which has to be evaluated at each solution point --each point of the line--. The line found starts at a point on or in 2 natural domains of surfaces. It can be closed in the standard case if it is open it stops and begins at the border of one of the domains. If an open line stops at the middle of a domain, one stops at the tangent point. Epsilon is SquareTolerance of points confusion.
 
 	:param Caro1:
 	:type Caro1: Handle_Adaptor3d_HSurface &
@@ -123,7 +127,7 @@ class IntWalk_PWalking {
 ") Perform;
 		void Perform (const TColStd_Array1OfReal & ParDep);
 		%feature("compactdefaultargs") Perform;
-		%feature("autodoc", "	* calculate the line of intersection. The regulation of steps is done using min and max values on u and v. (if this data is not presented as in the previous method, the initial steps are calculated starting from min and max uv of faces).
+		%feature("autodoc", "	* calculate the line of intersection. The regulation of steps is done using min and max values on u and v. --if this data is not presented as in the previous method, the initial steps are calculated starting from min and max uv of faces--.
 
 	:param ParDep:
 	:type ParDep: TColStd_Array1OfReal &
@@ -205,9 +209,11 @@ class IntWalk_PWalking {
 ") TangentAtLine;
 		const gp_Dir  TangentAtLine (Standard_Integer &OutValue);
 		%feature("compactdefaultargs") TestDeflection;
-		%feature("autodoc", "	:rtype: IntWalk_StatusDeflection
+		%feature("autodoc", "	:param ChoixIso:
+	:type ChoixIso: IntImp_ConstIsoparametric
+	:rtype: IntWalk_StatusDeflection
 ") TestDeflection;
-		IntWalk_StatusDeflection TestDeflection ();
+		IntWalk_StatusDeflection TestDeflection (const IntImp_ConstIsoparametric ChoixIso);
 		%feature("compactdefaultargs") TestArret;
 		%feature("autodoc", "	:param DejaReparti:
 	:type DejaReparti: bool
@@ -254,6 +260,12 @@ class IntWalk_PWalking {
 	:rtype: bool
 ") SeekAdditionalPoints;
 		Standard_Boolean SeekAdditionalPoints (const Handle_Adaptor3d_HSurface & theASurf1,const Handle_Adaptor3d_HSurface & theASurf2,const Standard_Integer theMinNbPoints);
+		%feature("compactdefaultargs") MaxStep;
+		%feature("autodoc", "	:param theIndex:
+	:type theIndex: int
+	:rtype: float
+") MaxStep;
+		Standard_Real MaxStep (Standard_Integer theIndex);
 };
 
 
@@ -265,10 +277,6 @@ class IntWalk_PWalking {
 %nodefaultctor IntWalk_TheFunctionOfTheInt2S;
 class IntWalk_TheFunctionOfTheInt2S : public math_FunctionSetWithDerivatives {
 	public:
-		%feature("compactdefaultargs") IntWalk_TheFunctionOfTheInt2S;
-		%feature("autodoc", "	:rtype: None
-") IntWalk_TheFunctionOfTheInt2S;
-		 IntWalk_TheFunctionOfTheInt2S ();
 		%feature("compactdefaultargs") IntWalk_TheFunctionOfTheInt2S;
 		%feature("autodoc", "	:param S1:
 	:type S1: Handle_Adaptor3d_HSurface &
@@ -328,7 +336,9 @@ class IntWalk_TheFunctionOfTheInt2S : public math_FunctionSetWithDerivatives {
 ") ComputeParameters;
 		void ComputeParameters (const IntImp_ConstIsoparametric ChoixIso,const TColStd_Array1OfReal & Param,math_Vector & UVap,math_Vector & BornInf,math_Vector & BornSup,math_Vector & Tolerance);
 		%feature("compactdefaultargs") Root;
-		%feature("autodoc", "	:rtype: float
+		%feature("autodoc", "	* returns somme des fi*fi
+
+	:rtype: float
 ") Root;
 		Standard_Real Root ();
 		%feature("compactdefaultargs") Point;
@@ -377,11 +387,9 @@ class IntWalk_TheFunctionOfTheInt2S : public math_FunctionSetWithDerivatives {
 class IntWalk_TheInt2S {
 	public:
 		%feature("compactdefaultargs") IntWalk_TheInt2S;
-		%feature("autodoc", "	:rtype: None
-") IntWalk_TheInt2S;
-		 IntWalk_TheInt2S ();
-		%feature("compactdefaultargs") IntWalk_TheInt2S;
-		%feature("autodoc", "	:param Param:
+		%feature("autodoc", "	* compute the solution point with the close point
+
+	:param Param:
 	:type Param: TColStd_Array1OfReal &
 	:param S1:
 	:type S1: Handle_Adaptor3d_HSurface &
@@ -393,7 +401,9 @@ class IntWalk_TheInt2S {
 ") IntWalk_TheInt2S;
 		 IntWalk_TheInt2S (const TColStd_Array1OfReal & Param,const Handle_Adaptor3d_HSurface & S1,const Handle_Adaptor3d_HSurface & S2,const Standard_Real TolTangency);
 		%feature("compactdefaultargs") IntWalk_TheInt2S;
-		%feature("autodoc", "	:param S1:
+		%feature("autodoc", "	* initialize the parameters to compute the solution point it 's possible to write to optimize: IntImp_Int2S inter--S1,S2,Func,TolTangency--; math_FunctionSetRoot rsnld--inter.Function------; while ...{ Param--1--=... Param--2--=... param--3--=... inter.Perform--Param,rsnld--; }
+
+	:param S1:
 	:type S1: Handle_Adaptor3d_HSurface &
 	:param S2:
 	:type S2: Handle_Adaptor3d_HSurface &
@@ -403,7 +413,9 @@ class IntWalk_TheInt2S {
 ") IntWalk_TheInt2S;
 		 IntWalk_TheInt2S (const Handle_Adaptor3d_HSurface & S1,const Handle_Adaptor3d_HSurface & S2,const Standard_Real TolTangency);
 		%feature("compactdefaultargs") Perform;
-		%feature("autodoc", "	:param Param:
+		%feature("autodoc", "	* returns the best constant isoparametric to find the next intersection's point +stores the solution point --the solution point is found with the close point to intersect the isoparametric with the other patch; the choice of the isoparametic is calculated--
+
+	:param Param:
 	:type Param: TColStd_Array1OfReal &
 	:param Rsnld:
 	:type Rsnld: math_FunctionSetRoot &
@@ -411,7 +423,9 @@ class IntWalk_TheInt2S {
 ") Perform;
 		IntImp_ConstIsoparametric Perform (const TColStd_Array1OfReal & Param,math_FunctionSetRoot & Rsnld);
 		%feature("compactdefaultargs") Perform;
-		%feature("autodoc", "	:param Param:
+		%feature("autodoc", "	* returns the best constant isoparametric to find the next intersection's point +stores the solution point --the solution point is found with the close point to intersect the isoparametric with the other patch; the choice of the isoparametic is given by ChoixIso--
+
+	:param Param:
 	:type Param: TColStd_Array1OfReal &
 	:param Rsnld:
 	:type Rsnld: math_FunctionSetRoot &
@@ -421,39 +435,57 @@ class IntWalk_TheInt2S {
 ") Perform;
 		IntImp_ConstIsoparametric Perform (const TColStd_Array1OfReal & Param,math_FunctionSetRoot & Rsnld,const IntImp_ConstIsoparametric ChoixIso);
 		%feature("compactdefaultargs") IsDone;
-		%feature("autodoc", "	:rtype: bool
+		%feature("autodoc", "	* Returns True if the creation completed without failure.
+
+	:rtype: bool
 ") IsDone;
 		Standard_Boolean IsDone ();
 		%feature("compactdefaultargs") IsEmpty;
-		%feature("autodoc", "	:rtype: bool
+		%feature("autodoc", "	* Returns True when there is no solution to the problem.
+
+	:rtype: bool
 ") IsEmpty;
 		Standard_Boolean IsEmpty ();
 		%feature("compactdefaultargs") Point;
-		%feature("autodoc", "	:rtype: IntSurf_PntOn2S
+		%feature("autodoc", "	* Returns the intersection point.
+
+	:rtype: IntSurf_PntOn2S
 ") Point;
 		const IntSurf_PntOn2S & Point ();
 		%feature("compactdefaultargs") IsTangent;
-		%feature("autodoc", "	:rtype: bool
+		%feature("autodoc", "	* Returns True if the surfaces are tangent at the intersection point.
+
+	:rtype: bool
 ") IsTangent;
 		Standard_Boolean IsTangent ();
 		%feature("compactdefaultargs") Direction;
-		%feature("autodoc", "	:rtype: gp_Dir
+		%feature("autodoc", "	* Returns the tangent at the intersection line.
+
+	:rtype: gp_Dir
 ") Direction;
 		const gp_Dir  Direction ();
 		%feature("compactdefaultargs") DirectionOnS1;
-		%feature("autodoc", "	:rtype: gp_Dir2d
+		%feature("autodoc", "	* Returns the tangent at the intersection line in the parametric space of the first surface.
+
+	:rtype: gp_Dir2d
 ") DirectionOnS1;
 		const gp_Dir2d  DirectionOnS1 ();
 		%feature("compactdefaultargs") DirectionOnS2;
-		%feature("autodoc", "	:rtype: gp_Dir2d
+		%feature("autodoc", "	* Returns the tangent at the intersection line in the parametric space of the second surface.
+
+	:rtype: gp_Dir2d
 ") DirectionOnS2;
 		const gp_Dir2d  DirectionOnS2 ();
 		%feature("compactdefaultargs") Function;
-		%feature("autodoc", "	:rtype: IntWalk_TheFunctionOfTheInt2S
+		%feature("autodoc", "	* return the math function which is used to compute the intersection
+
+	:rtype: IntWalk_TheFunctionOfTheInt2S
 ") Function;
 		IntWalk_TheFunctionOfTheInt2S & Function ();
 		%feature("compactdefaultargs") ChangePoint;
-		%feature("autodoc", "	:rtype: IntSurf_PntOn2S
+		%feature("autodoc", "	* return the intersection point which is enable for changing.
+
+	:rtype: IntSurf_PntOn2S
 ") ChangePoint;
 		IntSurf_PntOn2S & ChangePoint ();
 };

@@ -1,5 +1,5 @@
 /*
-Copyright 2008-2017 Thomas Paviot (tpaviot@gmail.com)
+Copyright 2008-2018 Thomas Paviot (tpaviot@gmail.com)
 
 
 This file is part of pythonOCC.
@@ -56,6 +56,9 @@ def register_handle(handle, base_object):
 /* typedefs */
 /* end typedefs declaration */
 
+/* templates */
+/* end templates declaration */
+
 /* public enums */
 enum FilletSurf_StatusDone {
 	FilletSurf_IsOk = 0,
@@ -102,7 +105,7 @@ class FilletSurf_Builder {
 ") FilletSurf_Builder;
 		 FilletSurf_Builder (const TopoDS_Shape & S,const TopTools_ListOfShape & E,const Standard_Real R,const Standard_Real Ta = 1.0e-2,const Standard_Real Tapp3d = 1.0e-4,const Standard_Real Tapp2d = 1.0e-5);
 		%feature("compactdefaultargs") Perform;
-		%feature("autodoc", "	* ---Purpose computation of the fillet (list of NUBS)
+		%feature("autodoc", "	* ---Purpose computation of the fillet --list of NUBS--
 
 	:rtype: None
 ") Perform;
@@ -146,7 +149,7 @@ class FilletSurf_Builder {
 ") TolApp3d;
 		Standard_Real TolApp3d (const Standard_Integer Index);
 		%feature("compactdefaultargs") SupportFace1;
-		%feature("autodoc", "	* gives the first support face relative to SurfaceFillet(Index);
+		%feature("autodoc", "	* gives the first support face relative to SurfaceFillet--Index--;
 
 	:param Index:
 	:type Index: int
@@ -154,7 +157,7 @@ class FilletSurf_Builder {
 ") SupportFace1;
 		const TopoDS_Face  SupportFace1 (const Standard_Integer Index);
 		%feature("compactdefaultargs") SupportFace2;
-		%feature("autodoc", "	* gives the second support face relative to SurfaceFillet(Index);
+		%feature("autodoc", "	* gives the second support face relative to SurfaceFillet--Index--;
 
 	:param Index:
 	:type Index: int
@@ -162,7 +165,7 @@ class FilletSurf_Builder {
 ") SupportFace2;
 		const TopoDS_Face  SupportFace2 (const Standard_Integer Index);
 		%feature("compactdefaultargs") CurveOnFace1;
-		%feature("autodoc", "	* gives the 3d curve of SurfaceFillet(Index) on SupportFace1(Index)
+		%feature("autodoc", "	* gives the 3d curve of SurfaceFillet--Index-- on SupportFace1--Index--
 
 	:param Index:
 	:type Index: int
@@ -170,7 +173,7 @@ class FilletSurf_Builder {
 ") CurveOnFace1;
 		Handle_Geom_Curve CurveOnFace1 (const Standard_Integer Index);
 		%feature("compactdefaultargs") CurveOnFace2;
-		%feature("autodoc", "	* gives the 3d curve of SurfaceFillet(Index) on SupportFace2(Index)
+		%feature("autodoc", "	* gives the 3d curve of SurfaceFillet--Index-- on SupportFace2--Index--
 
 	:param Index:
 	:type Index: int
@@ -178,7 +181,7 @@ class FilletSurf_Builder {
 ") CurveOnFace2;
 		Handle_Geom_Curve CurveOnFace2 (const Standard_Integer Index);
 		%feature("compactdefaultargs") PCurveOnFace1;
-		%feature("autodoc", "	* gives the PCurve associated to CurvOnSup1(Index) on the support face
+		%feature("autodoc", "	* gives the PCurve associated to CurvOnSup1--Index-- on the support face
 
 	:param Index:
 	:type Index: int
@@ -186,7 +189,7 @@ class FilletSurf_Builder {
 ") PCurveOnFace1;
 		Handle_Geom2d_Curve PCurveOnFace1 (const Standard_Integer Index);
 		%feature("compactdefaultargs") PCurve1OnFillet;
-		%feature("autodoc", "	* gives the PCurve associated to CurveOnFace1(Index) on the Fillet
+		%feature("autodoc", "	* gives the PCurve associated to CurveOnFace1--Index-- on the Fillet
 
 	:param Index:
 	:type Index: int
@@ -194,7 +197,7 @@ class FilletSurf_Builder {
 ") PCurve1OnFillet;
 		Handle_Geom2d_Curve PCurve1OnFillet (const Standard_Integer Index);
 		%feature("compactdefaultargs") PCurveOnFace2;
-		%feature("autodoc", "	* gives the PCurve associated to CurveOnSup2(Index) on the support face
+		%feature("autodoc", "	* gives the PCurve associated to CurveOnSup2--Index-- on the support face
 
 	:param Index:
 	:type Index: int
@@ -202,7 +205,7 @@ class FilletSurf_Builder {
 ") PCurveOnFace2;
 		Handle_Geom2d_Curve PCurveOnFace2 (const Standard_Integer Index);
 		%feature("compactdefaultargs") PCurve2OnFillet;
-		%feature("autodoc", "	* gives the PCurve associated to CurveOnSup2(Index) on the fillet
+		%feature("autodoc", "	* gives the PCurve associated to CurveOnSup2--Index-- on the fillet
 
 	:param Index:
 	:type Index: int
@@ -311,7 +314,7 @@ class FilletSurf_InternalBuilder : public ChFi3d_FilBuilder {
 ") TolApp3d;
 		Standard_Real TolApp3d (const Standard_Integer Index);
 		%feature("compactdefaultargs") SupportFace1;
-		%feature("autodoc", "	* gives the first support face relative to SurfaceFillet(Index);
+		%feature("autodoc", "	* gives the first support face relative to SurfaceFillet--Index--;
 
 	:param Index:
 	:type Index: int
@@ -319,7 +322,7 @@ class FilletSurf_InternalBuilder : public ChFi3d_FilBuilder {
 ") SupportFace1;
 		const TopoDS_Face  SupportFace1 (const Standard_Integer Index);
 		%feature("compactdefaultargs") SupportFace2;
-		%feature("autodoc", "	* gives the second support face relative to SurfaceFillet(Index);
+		%feature("autodoc", "	* gives the second support face relative to SurfaceFillet--Index--;
 
 	:param Index:
 	:type Index: int
@@ -327,7 +330,7 @@ class FilletSurf_InternalBuilder : public ChFi3d_FilBuilder {
 ") SupportFace2;
 		const TopoDS_Face  SupportFace2 (const Standard_Integer Index);
 		%feature("compactdefaultargs") CurveOnFace1;
-		%feature("autodoc", "	* gives the 3d curve of SurfaceFillet(Index) on SupportFace1(Index)
+		%feature("autodoc", "	* gives the 3d curve of SurfaceFillet--Index-- on SupportFace1--Index--
 
 	:param Index:
 	:type Index: int
@@ -335,7 +338,7 @@ class FilletSurf_InternalBuilder : public ChFi3d_FilBuilder {
 ") CurveOnFace1;
 		Handle_Geom_Curve CurveOnFace1 (const Standard_Integer Index);
 		%feature("compactdefaultargs") CurveOnFace2;
-		%feature("autodoc", "	* gives the 3d curve of SurfaceFillet(Index) on SupportFace2(Index)
+		%feature("autodoc", "	* gives the 3d curve of SurfaceFillet--Index-- on SupportFace2--Index--
 
 	:param Index:
 	:type Index: int
@@ -343,7 +346,7 @@ class FilletSurf_InternalBuilder : public ChFi3d_FilBuilder {
 ") CurveOnFace2;
 		Handle_Geom_Curve CurveOnFace2 (const Standard_Integer Index);
 		%feature("compactdefaultargs") PCurveOnFace1;
-		%feature("autodoc", "	* gives the PCurve associated to CurvOnSup1(Index) on the support face
+		%feature("autodoc", "	* gives the PCurve associated to CurvOnSup1--Index-- on the support face
 
 	:param Index:
 	:type Index: int
@@ -351,7 +354,7 @@ class FilletSurf_InternalBuilder : public ChFi3d_FilBuilder {
 ") PCurveOnFace1;
 		Handle_Geom2d_Curve PCurveOnFace1 (const Standard_Integer Index);
 		%feature("compactdefaultargs") PCurve1OnFillet;
-		%feature("autodoc", "	* gives the PCurve associated to CurveOnFace1(Index) on the Fillet
+		%feature("autodoc", "	* gives the PCurve associated to CurveOnFace1--Index-- on the Fillet
 
 	:param Index:
 	:type Index: int
@@ -359,7 +362,7 @@ class FilletSurf_InternalBuilder : public ChFi3d_FilBuilder {
 ") PCurve1OnFillet;
 		Handle_Geom2d_Curve PCurve1OnFillet (const Standard_Integer Index);
 		%feature("compactdefaultargs") PCurveOnFace2;
-		%feature("autodoc", "	* gives the PCurve associated to CurveOnSup2(Index) on the support face
+		%feature("autodoc", "	* gives the PCurve associated to CurveOnSup2--Index-- on the support face
 
 	:param Index:
 	:type Index: int
@@ -367,7 +370,7 @@ class FilletSurf_InternalBuilder : public ChFi3d_FilBuilder {
 ") PCurveOnFace2;
 		Handle_Geom2d_Curve PCurveOnFace2 (const Standard_Integer Index);
 		%feature("compactdefaultargs") PCurve2OnFillet;
-		%feature("autodoc", "	* gives the PCurve associated to CurveOnSup2(Index) on the fillet
+		%feature("autodoc", "	* gives the PCurve associated to CurveOnSup2--Index-- on the fillet
 
 	:param Index:
 	:type Index: int

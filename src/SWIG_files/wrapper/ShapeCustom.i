@@ -1,5 +1,5 @@
 /*
-Copyright 2008-2017 Thomas Paviot (tpaviot@gmail.com)
+Copyright 2008-2018 Thomas Paviot (tpaviot@gmail.com)
 
 
 This file is part of pythonOCC.
@@ -55,6 +55,9 @@ def register_handle(handle, base_object):
 
 /* typedefs */
 /* end typedefs declaration */
+
+/* templates */
+/* end templates declaration */
 
 /* public enums */
 /* end public enums declaration */
@@ -141,7 +144,7 @@ class ShapeCustom {
 ") SweptToElementary;
 		static TopoDS_Shape SweptToElementary (const TopoDS_Shape & S);
 		%feature("compactdefaultargs") ConvertToBSpline;
-		%feature("autodoc", "	* Returns a new shape with all surfaces of linear extrusion, revolution, offset, and planar surfaces converted according to flags to Geom_BSplineSurface (with same parameterisation).
+		%feature("autodoc", "	* Returns a new shape with all surfaces of linear extrusion, revolution, offset, and planar surfaces converted according to flags to Geom_BSplineSurface --with same parameterisation--.
 
 	:param S:
 	:type S: TopoDS_Shape &
@@ -184,7 +187,7 @@ class ShapeCustom_Curve {
 ") Init;
 		void Init (const Handle_Geom_Curve & C);
 		%feature("compactdefaultargs") ConvertToPeriodic;
-		%feature("autodoc", "	* Tries to convert the Curve to the Periodic form Returns the resulting curve Works only if the Curve is BSpline and is closed with Precision::Confusion() Else, or in case of failure, returns a Null Handle
+		%feature("autodoc", "	* Tries to convert the Curve to the Periodic form Returns the resulting curve Works only if the Curve is BSpline and is closed with Precision::Confusion---- Else, or in case of failure, returns a Null Handle
 
 	:param substitute:
 	:type substitute: bool
@@ -316,19 +319,20 @@ class Handle_ShapeCustom_Modification : public Handle_BRepTools_Modification {
         static const Handle_ShapeCustom_Modification DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_ShapeCustom_Modification {
     ShapeCustom_Modification* _get_reference() {
-    return (ShapeCustom_Modification*)$self->Access();
+    return (ShapeCustom_Modification*)$self->get();
     }
 };
 
 %extend Handle_ShapeCustom_Modification {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend ShapeCustom_Modification {
@@ -337,7 +341,7 @@ class Handle_ShapeCustom_Modification : public Handle_BRepTools_Modification {
 	}
 };
 %nodefaultctor ShapeCustom_RestrictionParameters;
-class ShapeCustom_RestrictionParameters : public MMgt_TShared {
+class ShapeCustom_RestrictionParameters : public Standard_Transient {
 	public:
 		%feature("compactdefaultargs") ShapeCustom_RestrictionParameters;
 		%feature("autodoc", "	* Sets default parameters.
@@ -575,7 +579,7 @@ class ShapeCustom_RestrictionParameters : public MMgt_TShared {
 %}
 
 %nodefaultctor Handle_ShapeCustom_RestrictionParameters;
-class Handle_ShapeCustom_RestrictionParameters : public Handle_MMgt_TShared {
+class Handle_ShapeCustom_RestrictionParameters : public Handle_Standard_Transient {
 
     public:
         // constructors
@@ -587,19 +591,20 @@ class Handle_ShapeCustom_RestrictionParameters : public Handle_MMgt_TShared {
         static const Handle_ShapeCustom_RestrictionParameters DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_ShapeCustom_RestrictionParameters {
     ShapeCustom_RestrictionParameters* _get_reference() {
-    return (ShapeCustom_RestrictionParameters*)$self->Access();
+    return (ShapeCustom_RestrictionParameters*)$self->get();
     }
 };
 
 %extend Handle_ShapeCustom_RestrictionParameters {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend ShapeCustom_RestrictionParameters {
@@ -643,7 +648,7 @@ class ShapeCustom_Surface {
 ") ConvertToAnalytical;
 		Handle_Geom_Surface ConvertToAnalytical (const Standard_Real tol,const Standard_Boolean substitute);
 		%feature("compactdefaultargs") ConvertToPeriodic;
-		%feature("autodoc", "	* Tries to convert the Surface to the Periodic form Returns the resulting surface Works only if the Surface is BSpline and is closed with Precision::Confusion() Else, or in case of failure, returns a Null Handle
+		%feature("autodoc", "	* Tries to convert the Surface to the Periodic form Returns the resulting surface Works only if the Surface is BSpline and is closed with Precision::Confusion---- Else, or in case of failure, returns a Null Handle
 
 	:param substitute:
 	:type substitute: bool
@@ -781,19 +786,20 @@ class Handle_ShapeCustom_TrsfModification : public Handle_BRepTools_TrsfModifica
         static const Handle_ShapeCustom_TrsfModification DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_ShapeCustom_TrsfModification {
     ShapeCustom_TrsfModification* _get_reference() {
-    return (ShapeCustom_TrsfModification*)$self->Access();
+    return (ShapeCustom_TrsfModification*)$self->get();
     }
 };
 
 %extend Handle_ShapeCustom_TrsfModification {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend ShapeCustom_TrsfModification {
@@ -917,7 +923,7 @@ class ShapeCustom_ConvertToBSpline : public ShapeCustom_Modification {
 ") NewParameter;
 		Standard_Boolean NewParameter (const TopoDS_Vertex & V,const TopoDS_Edge & E,Standard_Real &OutValue,Standard_Real &OutValue);
 		%feature("compactdefaultargs") Continuity;
-		%feature("autodoc", "	* Returns the continuity of <NewE> between <NewF1> and <NewF2>. //! <NewE> is the new edge created from <E>. <NewF1> (resp. <NewF2>) is the new face created from <F1> (resp. <F2>).
+		%feature("autodoc", "	* Returns the continuity of <NewE> between <NewF1> and <NewF2>. //! <NewE> is the new edge created from <E>. <NewF1> --resp. <NewF2>-- is the new face created from <F1> --resp. <F2>--.
 
 	:param E:
 	:type E: TopoDS_Edge &
@@ -968,19 +974,20 @@ class Handle_ShapeCustom_ConvertToBSpline : public Handle_ShapeCustom_Modificati
         static const Handle_ShapeCustom_ConvertToBSpline DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_ShapeCustom_ConvertToBSpline {
     ShapeCustom_ConvertToBSpline* _get_reference() {
-    return (ShapeCustom_ConvertToBSpline*)$self->Access();
+    return (ShapeCustom_ConvertToBSpline*)$self->get();
     }
 };
 
 %extend Handle_ShapeCustom_ConvertToBSpline {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend ShapeCustom_ConvertToBSpline {
@@ -1072,7 +1079,7 @@ class ShapeCustom_DirectModification : public ShapeCustom_Modification {
 ") NewParameter;
 		Standard_Boolean NewParameter (const TopoDS_Vertex & V,const TopoDS_Edge & E,Standard_Real &OutValue,Standard_Real &OutValue);
 		%feature("compactdefaultargs") Continuity;
-		%feature("autodoc", "	* Returns the continuity of <NewE> between <NewF1> and <NewF2>. //! <NewE> is the new edge created from <E>. <NewF1> (resp. <NewF2>) is the new face created from <F1> (resp. <F2>).
+		%feature("autodoc", "	* Returns the continuity of <NewE> between <NewF1> and <NewF2>. //! <NewE> is the new edge created from <E>. <NewF1> --resp. <NewF2>-- is the new face created from <F1> --resp. <F2>--.
 
 	:param E:
 	:type E: TopoDS_Edge &
@@ -1123,19 +1130,20 @@ class Handle_ShapeCustom_DirectModification : public Handle_ShapeCustom_Modifica
         static const Handle_ShapeCustom_DirectModification DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_ShapeCustom_DirectModification {
     ShapeCustom_DirectModification* _get_reference() {
-    return (ShapeCustom_DirectModification*)$self->Access();
+    return (ShapeCustom_DirectModification*)$self->get();
     }
 };
 
 %extend Handle_ShapeCustom_DirectModification {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend ShapeCustom_DirectModification {

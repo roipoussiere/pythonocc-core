@@ -1,5 +1,5 @@
 /*
-Copyright 2008-2017 Thomas Paviot (tpaviot@gmail.com)
+Copyright 2008-2018 Thomas Paviot (tpaviot@gmail.com)
 
 
 This file is part of pythonOCC.
@@ -56,6 +56,9 @@ def register_handle(handle, base_object):
 /* typedefs */
 /* end typedefs declaration */
 
+/* templates */
+/* end templates declaration */
+
 /* public enums */
 enum ChFi3d_FilletShape {
 	ChFi3d_Rational = 0,
@@ -69,7 +72,7 @@ enum ChFi3d_FilletShape {
 class ChFi3d {
 	public:
 		%feature("compactdefaultargs") ConcaveSide;
-		%feature("autodoc", "	* Returns Reversed in Or1 and(or) Or2 if the concave edge defined by the interior of faces F1 and F2, in the neighbourhood of their boundary E is of the edge opposite to the normal of their surface support. The orientation of faces is not taken into consideration in the calculation. The function returns 0 if the calculation fails (tangence), if not, it returns the number of choice of the fillet or chamfer corresponding to the orientations calculated and to the tangent to the guide line read in E.
+		%feature("autodoc", "	* Returns Reversed in Or1 and--or-- Or2 if the concave edge defined by the interior of faces F1 and F2, in the neighbourhood of their boundary E is of the edge opposite to the normal of their surface support. The orientation of faces is not taken into consideration in the calculation. The function returns 0 if the calculation fails --tangence--, if not, it returns the number of choice of the fillet or chamfer corresponding to the orientations calculated and to the tangent to the guide line read in E.
 
 	:param S1:
 	:type S1: BRepAdaptor_Surface &
@@ -139,10 +142,6 @@ class ChFi3d {
 %nodefaultctor ChFi3d_Builder;
 class ChFi3d_Builder {
 	public:
-		%feature("compactdefaultargs") Delete;
-		%feature("autodoc", "	:rtype: void
-") Delete;
-		virtual void Delete ();
 		%feature("compactdefaultargs") SetParams;
 		%feature("autodoc", "	:param Tang:
 	:type Tang: float
@@ -200,7 +199,7 @@ class ChFi3d_Builder {
 ") NbElements;
 		Standard_Integer NbElements ();
 		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	* gives the n'th set of edges (contour) if I >NbElements()
+		%feature("autodoc", "	* gives the n'th set of edges --contour-- if I >NbElements----
 
 	:param I:
 	:type I: int
@@ -242,7 +241,7 @@ class ChFi3d_Builder {
 ") Abscissa;
 		Standard_Real Abscissa (const Standard_Integer IC,const TopoDS_Vertex & V);
 		%feature("compactdefaultargs") RelativeAbscissa;
-		%feature("autodoc", "	* returns the relative abscissa([0.,1.]) of the vertex V on the contour of index IC.
+		%feature("autodoc", "	* returns the relative abscissa--[0.,1.]-- of the vertex V on the contour of index IC.
 
 	:param IC:
 	:type IC: int
@@ -280,7 +279,7 @@ class ChFi3d_Builder {
 ") IsDone;
 		Standard_Boolean IsDone ();
 		%feature("compactdefaultargs") Shape;
-		%feature("autodoc", "	* if (Isdone()) makes the result. if (!Isdone())
+		%feature("autodoc", "	* if --Isdone------ makes the result. if --!Isdone------
 
 	:rtype: TopoDS_Shape
 ") Shape;
@@ -346,7 +345,7 @@ class ChFi3d_Builder {
 ") HasResult;
 		Standard_Boolean HasResult ();
 		%feature("compactdefaultargs") BadShape;
-		%feature("autodoc", "	* if (HasResult()) returns partial result if (!HasResult())
+		%feature("autodoc", "	* if --HasResult------ returns partial result if --!HasResult------
 
 	:rtype: TopoDS_Shape
 ") BadShape;
@@ -372,7 +371,7 @@ class ChFi3d_Builder {
 ") Builder;
 		Handle_TopOpeBRepBuild_HBuilder Builder ();
 		%feature("compactdefaultargs") SplitKPart;
-		%feature("autodoc", "	* Method, implemented in the inheritants, calculates the elements of construction of the surface (fillet or chamfer).
+		%feature("autodoc", "	* Method, implemented in the inheritants, calculates the elements of construction of the surface --fillet or chamfer--.
 
 	:param Data:
 	:type Data: Handle_ChFiDS_SurfData &
@@ -476,7 +475,7 @@ class ChFi3d_ChBuilder : public ChFi3d_Builder {
 ") ChFi3d_ChBuilder;
 		 ChFi3d_ChBuilder (const TopoDS_Shape & S,const Standard_Real Ta = 1.0e-2);
 		%feature("compactdefaultargs") Add;
-		%feature("autodoc", "	* initializes a contour with the edge <E> as first (the next are found by propagation ). The two distances (parameters of the chamfer) must be set after. if the edge <E> has more than 2 adjacent faces
+		%feature("autodoc", "	* initializes a contour with the edge <E> as first --the next are found by propagation --. The two distances --parameters of the chamfer-- must be set after. if the edge <E> has more than 2 adjacent faces
 
 	:param E:
 	:type E: TopoDS_Edge &
@@ -484,7 +483,7 @@ class ChFi3d_ChBuilder : public ChFi3d_Builder {
 ") Add;
 		void Add (const TopoDS_Edge & E);
 		%feature("compactdefaultargs") Add;
-		%feature("autodoc", "	* initializes a new contour with the edge <E> as first (the next are found by propagation ), and the distance <Dis> if the edge <E> has more than 2 adjacent faces
+		%feature("autodoc", "	* initializes a new contour with the edge <E> as first --the next are found by propagation --, and the distance <Dis> if the edge <E> has more than 2 adjacent faces
 
 	:param Dis:
 	:type Dis: float
@@ -518,7 +517,7 @@ class ChFi3d_ChBuilder : public ChFi3d_Builder {
 ") GetDist;
 		void GetDist (const Standard_Integer IC,Standard_Real &OutValue);
 		%feature("compactdefaultargs") Add;
-		%feature("autodoc", "	* initializes a new contour with the edge <E> as first (the next are found by propagation ), and the distance <Dis1> and <Dis2> if the edge <E> has more than 2 adjacent faces
+		%feature("autodoc", "	* initializes a new contour with the edge <E> as first --the next are found by propagation --, and the distance <Dis1> and <Dis2> if the edge <E> has more than 2 adjacent faces
 
 	:param Dis1:
 	:type Dis1: float
@@ -558,7 +557,7 @@ class ChFi3d_ChBuilder : public ChFi3d_Builder {
 ") Dists;
 		void Dists (const Standard_Integer IC,Standard_Real &OutValue,Standard_Real &OutValue);
 		%feature("compactdefaultargs") AddDA;
-		%feature("autodoc", "	* initializes a new contour with the edge <E> as first (the next are found by propagation ), and the distance <Dis1> and <Angle> if the edge <E> has more than 2 adjacent faces
+		%feature("autodoc", "	* initializes a new contour with the edge <E> as first --the next are found by propagation --, and the distance <Dis1> and <Angle> if the edge <E> has more than 2 adjacent faces
 
 	:param Dis:
 	:type Dis: float
@@ -804,7 +803,7 @@ class ChFi3d_ChBuilder : public ChFi3d_Builder {
 ") SimulSurf;
 		virtual void SimulSurf (Handle_ChFiDS_SurfData & Data,const Handle_ChFiDS_HElSpine & Guide,const Handle_ChFiDS_Spine & Spine,const Standard_Integer Choix,const Handle_BRepAdaptor_HSurface & S1,const Handle_Adaptor3d_TopolTool & I1,const Handle_BRepAdaptor_HCurve2d & PC1,const Handle_BRepAdaptor_HSurface & Sref1,const Handle_BRepAdaptor_HCurve2d & PCref1,Standard_Boolean &OutValue,const TopAbs_Orientation Or1,const Handle_BRepAdaptor_HSurface & S2,const Handle_Adaptor3d_TopolTool & I2,const Handle_BRepAdaptor_HCurve2d & PC2,const Handle_BRepAdaptor_HSurface & Sref2,const Handle_BRepAdaptor_HCurve2d & PCref2,Standard_Boolean &OutValue,const TopAbs_Orientation Or2,const Standard_Real Fleche,const Standard_Real TolGuide,Standard_Real &OutValue,Standard_Real &OutValue,const Standard_Boolean Inside,const Standard_Boolean Appro,const Standard_Boolean Forward,const Standard_Boolean RecP1,const Standard_Boolean RecRst1,const Standard_Boolean RecP2,const Standard_Boolean RecRst2,const math_Vector & Soldep);
 		%feature("compactdefaultargs") PerformSurf;
-		%feature("autodoc", "	* Methode, implemented in inheritants, calculates the elements of construction of the surface (fillet or chamfer).
+		%feature("autodoc", "	* Methode, implemented in inheritants, calculates the elements of construction of the surface --fillet or chamfer--.
 
 	:param Data:
 	:type Data: ChFiDS_SequenceOfSurfData &
@@ -852,7 +851,7 @@ class ChFi3d_ChBuilder : public ChFi3d_Builder {
 ") PerformSurf;
 		virtual Standard_Boolean PerformSurf (ChFiDS_SequenceOfSurfData & Data,const Handle_ChFiDS_HElSpine & Guide,const Handle_ChFiDS_Spine & Spine,const Standard_Integer Choix,const Handle_BRepAdaptor_HSurface & S1,const Handle_Adaptor3d_TopolTool & I1,const Handle_BRepAdaptor_HSurface & S2,const Handle_Adaptor3d_TopolTool & I2,const Standard_Real MaxStep,const Standard_Real Fleche,const Standard_Real TolGuide,Standard_Real &OutValue,Standard_Real &OutValue,const Standard_Boolean Inside,const Standard_Boolean Appro,const Standard_Boolean Forward,const Standard_Boolean RecOnS1,const Standard_Boolean RecOnS2,const math_Vector & Soldep,Standard_Integer &OutValue,Standard_Integer &OutValue);
 		%feature("compactdefaultargs") PerformSurf;
-		%feature("autodoc", "	* Method, implemented in the inheritants, calculates the elements of construction of the surface (fillet or chamfer) contact edge/face.
+		%feature("autodoc", "	* Method, implemented in the inheritants, calculates the elements of construction of the surface --fillet or chamfer-- contact edge/face.
 
 	:param Data:
 	:type Data: ChFiDS_SequenceOfSurfData &
@@ -908,7 +907,7 @@ class ChFi3d_ChBuilder : public ChFi3d_Builder {
 ") PerformSurf;
 		virtual void PerformSurf (ChFiDS_SequenceOfSurfData & Data,const Handle_ChFiDS_HElSpine & Guide,const Handle_ChFiDS_Spine & Spine,const Standard_Integer Choix,const Handle_BRepAdaptor_HSurface & S1,const Handle_Adaptor3d_TopolTool & I1,const Handle_BRepAdaptor_HCurve2d & PC1,const Handle_BRepAdaptor_HSurface & Sref1,const Handle_BRepAdaptor_HCurve2d & PCref1,Standard_Boolean &OutValue,const Handle_BRepAdaptor_HSurface & S2,const Handle_Adaptor3d_TopolTool & I2,const TopAbs_Orientation Or2,const Standard_Real MaxStep,const Standard_Real Fleche,const Standard_Real TolGuide,Standard_Real &OutValue,Standard_Real &OutValue,const Standard_Boolean Inside,const Standard_Boolean Appro,const Standard_Boolean Forward,const Standard_Boolean RecP,const Standard_Boolean RecS,const Standard_Boolean RecRst,const math_Vector & Soldep);
 		%feature("compactdefaultargs") PerformSurf;
-		%feature("autodoc", "	* Method, implemented in inheritants, calculates the elements of construction of the surface (fillet or chamfer) contact edge/face.
+		%feature("autodoc", "	* Method, implemented in inheritants, calculates the elements of construction of the surface --fillet or chamfer-- contact edge/face.
 
 	:param Data:
 	:type Data: ChFiDS_SequenceOfSurfData &
@@ -964,7 +963,7 @@ class ChFi3d_ChBuilder : public ChFi3d_Builder {
 ") PerformSurf;
 		virtual void PerformSurf (ChFiDS_SequenceOfSurfData & Data,const Handle_ChFiDS_HElSpine & Guide,const Handle_ChFiDS_Spine & Spine,const Standard_Integer Choix,const Handle_BRepAdaptor_HSurface & S1,const Handle_Adaptor3d_TopolTool & I1,const TopAbs_Orientation Or1,const Handle_BRepAdaptor_HSurface & S2,const Handle_Adaptor3d_TopolTool & I2,const Handle_BRepAdaptor_HCurve2d & PC2,const Handle_BRepAdaptor_HSurface & Sref2,const Handle_BRepAdaptor_HCurve2d & PCref2,Standard_Boolean &OutValue,const Standard_Real MaxStep,const Standard_Real Fleche,const Standard_Real TolGuide,Standard_Real &OutValue,Standard_Real &OutValue,const Standard_Boolean Inside,const Standard_Boolean Appro,const Standard_Boolean Forward,const Standard_Boolean RecP,const Standard_Boolean RecS,const Standard_Boolean RecRst,const math_Vector & Soldep);
 		%feature("compactdefaultargs") PerformSurf;
-		%feature("autodoc", "	* Method, implemented in inheritants, calculates the elements of construction of the surface (fillet or chamfer) contact edge/edge.
+		%feature("autodoc", "	* Method, implemented in inheritants, calculates the elements of construction of the surface --fillet or chamfer-- contact edge/edge.
 
 	:param Data:
 	:type Data: ChFiDS_SequenceOfSurfData &
@@ -1075,7 +1074,7 @@ class ChFi3d_FilBuilder : public ChFi3d_Builder {
 ") GetFilletShape;
 		ChFi3d_FilletShape GetFilletShape ();
 		%feature("compactdefaultargs") Add;
-		%feature("autodoc", "	* initialisation of a contour with the first edge (the following are found by propagation). Attention, you need to start with SetRadius.
+		%feature("autodoc", "	* initialisation of a contour with the first edge --the following are found by propagation--. Attention, you need to start with SetRadius.
 
 	:param E:
 	:type E: TopoDS_Edge &

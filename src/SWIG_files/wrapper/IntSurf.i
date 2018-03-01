@@ -1,5 +1,5 @@
 /*
-Copyright 2008-2017 Thomas Paviot (tpaviot@gmail.com)
+Copyright 2008-2018 Thomas Paviot (tpaviot@gmail.com)
 
 
 This file is part of pythonOCC.
@@ -55,8 +55,15 @@ def register_handle(handle, base_object):
 
 /* typedefs */
 typedef Handle_NCollection_BaseAllocator IntSurf_Allocator;
-typedef NCollection_Sequence <IntSurf_PntOn2S> IntSurf_SequenceOfPntOn2S;
 /* end typedefs declaration */
+
+/* templates */
+%template(IntSurf_SequenceOfCouple) NCollection_Sequence <IntSurf_Couple>;
+%template(IntSurf_SequenceOfPathPoint) NCollection_Sequence <IntSurf_PathPoint>;
+%template(IntSurf_SequenceOfInteriorPoint) NCollection_Sequence <IntSurf_InteriorPoint>;
+%template(IntSurf_SequenceOfPntOn2S) NCollection_Sequence <IntSurf_PntOn2S>;
+%template(IntSurf_ListOfPntOn2S) NCollection_List <IntSurf_PntOn2S>;
+/* end templates declaration */
 
 /* public enums */
 enum IntSurf_Situation {
@@ -93,6 +100,18 @@ class IntSurf {
 	:rtype: void
 ") MakeTransition;
 		static void MakeTransition (const gp_Vec & TgFirst,const gp_Vec & TgSecond,const gp_Dir & Normal,IntSurf_Transition & TFirst,IntSurf_Transition & TSecond);
+		%feature("compactdefaultargs") SetPeriod;
+		%feature("autodoc", "	* Fills theArrOfPeriod array by the period values of theFirstSurf and theSecondSurf. [0] = U-period of theFirstSurf, [1] = V-period of theFirstSurf, [2] = U-period of theSecondSurf, [3] = V-period of theSecondSurf. //! If surface is not periodic in correspond direction then its period is considered to be equal to 0.
+
+	:param theFirstSurf:
+	:type theFirstSurf: Handle_Adaptor3d_HSurface &
+	:param theSecondSurf:
+	:type theSecondSurf: Handle_Adaptor3d_HSurface &
+	:param theArrOfPeriod:
+	:type theArrOfPeriod: float
+	:rtype: void
+") SetPeriod;
+		static void SetPeriod (const Handle_Adaptor3d_HSurface & theFirstSurf,const Handle_Adaptor3d_HSurface & theSecondSurf,Standard_Real theArrOfPeriod[4]);
 };
 
 
@@ -266,7 +285,7 @@ class IntSurf_InteriorPointTool {
 	}
 };
 %nodefaultctor IntSurf_LineOn2S;
-class IntSurf_LineOn2S : public MMgt_TShared {
+class IntSurf_LineOn2S : public Standard_Transient {
 	public:
 		%feature("compactdefaultargs") IntSurf_LineOn2S;
 		%feature("autodoc", "	:param theAllocator: default value is 0
@@ -374,7 +393,7 @@ class IntSurf_LineOn2S : public MMgt_TShared {
 %}
 
 %nodefaultctor Handle_IntSurf_LineOn2S;
-class Handle_IntSurf_LineOn2S : public Handle_MMgt_TShared {
+class Handle_IntSurf_LineOn2S : public Handle_Standard_Transient {
 
     public:
         // constructors
@@ -386,265 +405,23 @@ class Handle_IntSurf_LineOn2S : public Handle_MMgt_TShared {
         static const Handle_IntSurf_LineOn2S DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_IntSurf_LineOn2S {
     IntSurf_LineOn2S* _get_reference() {
-    return (IntSurf_LineOn2S*)$self->Access();
+    return (IntSurf_LineOn2S*)$self->get();
     }
 };
 
 %extend Handle_IntSurf_LineOn2S {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend IntSurf_LineOn2S {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor IntSurf_ListIteratorOfListOfPntOn2S;
-class IntSurf_ListIteratorOfListOfPntOn2S {
-	public:
-		%feature("compactdefaultargs") IntSurf_ListIteratorOfListOfPntOn2S;
-		%feature("autodoc", "	:rtype: None
-") IntSurf_ListIteratorOfListOfPntOn2S;
-		 IntSurf_ListIteratorOfListOfPntOn2S ();
-		%feature("compactdefaultargs") IntSurf_ListIteratorOfListOfPntOn2S;
-		%feature("autodoc", "	:param L:
-	:type L: IntSurf_ListOfPntOn2S &
-	:rtype: None
-") IntSurf_ListIteratorOfListOfPntOn2S;
-		 IntSurf_ListIteratorOfListOfPntOn2S (const IntSurf_ListOfPntOn2S & L);
-		%feature("compactdefaultargs") Initialize;
-		%feature("autodoc", "	:param L:
-	:type L: IntSurf_ListOfPntOn2S &
-	:rtype: None
-") Initialize;
-		void Initialize (const IntSurf_ListOfPntOn2S & L);
-		%feature("compactdefaultargs") More;
-		%feature("autodoc", "	:rtype: bool
-") More;
-		Standard_Boolean More ();
-		%feature("compactdefaultargs") Next;
-		%feature("autodoc", "	:rtype: None
-") Next;
-		void Next ();
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:rtype: IntSurf_PntOn2S
-") Value;
-		IntSurf_PntOn2S & Value ();
-};
-
-
-%extend IntSurf_ListIteratorOfListOfPntOn2S {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor IntSurf_ListNodeOfListOfPntOn2S;
-class IntSurf_ListNodeOfListOfPntOn2S : public TCollection_MapNode {
-	public:
-		%feature("compactdefaultargs") IntSurf_ListNodeOfListOfPntOn2S;
-		%feature("autodoc", "	:param I:
-	:type I: IntSurf_PntOn2S &
-	:param n:
-	:type n: TCollection_MapNodePtr &
-	:rtype: None
-") IntSurf_ListNodeOfListOfPntOn2S;
-		 IntSurf_ListNodeOfListOfPntOn2S (const IntSurf_PntOn2S & I,const TCollection_MapNodePtr & n);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:rtype: IntSurf_PntOn2S
-") Value;
-		IntSurf_PntOn2S & Value ();
-};
-
-
-%extend IntSurf_ListNodeOfListOfPntOn2S {
-	%pythoncode {
-		def GetHandle(self):
-		    try:
-		        return self.thisHandle
-		    except:
-		        self.thisHandle = Handle_IntSurf_ListNodeOfListOfPntOn2S(self)
-		        self.thisown = False
-		        return self.thisHandle
-	}
-};
-
-%pythonappend Handle_IntSurf_ListNodeOfListOfPntOn2S::Handle_IntSurf_ListNodeOfListOfPntOn2S %{
-    # register the handle in the base object
-    if len(args) > 0:
-        register_handle(self, args[0])
-%}
-
-%nodefaultctor Handle_IntSurf_ListNodeOfListOfPntOn2S;
-class Handle_IntSurf_ListNodeOfListOfPntOn2S : public Handle_TCollection_MapNode {
-
-    public:
-        // constructors
-        Handle_IntSurf_ListNodeOfListOfPntOn2S();
-        Handle_IntSurf_ListNodeOfListOfPntOn2S(const Handle_IntSurf_ListNodeOfListOfPntOn2S &aHandle);
-        Handle_IntSurf_ListNodeOfListOfPntOn2S(const IntSurf_ListNodeOfListOfPntOn2S *anItem);
-        void Nullify();
-        Standard_Boolean IsNull() const;
-        static const Handle_IntSurf_ListNodeOfListOfPntOn2S DownCast(const Handle_Standard_Transient &AnObject);
-
-};
-%extend Handle_IntSurf_ListNodeOfListOfPntOn2S {
-    IntSurf_ListNodeOfListOfPntOn2S* _get_reference() {
-    return (IntSurf_ListNodeOfListOfPntOn2S*)$self->Access();
-    }
-};
-
-%extend Handle_IntSurf_ListNodeOfListOfPntOn2S {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
-};
-
-%extend IntSurf_ListNodeOfListOfPntOn2S {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor IntSurf_ListOfPntOn2S;
-class IntSurf_ListOfPntOn2S {
-	public:
-		%feature("compactdefaultargs") IntSurf_ListOfPntOn2S;
-		%feature("autodoc", "	:rtype: None
-") IntSurf_ListOfPntOn2S;
-		 IntSurf_ListOfPntOn2S ();
-		%feature("compactdefaultargs") IntSurf_ListOfPntOn2S;
-		%feature("autodoc", "	:param Other:
-	:type Other: IntSurf_ListOfPntOn2S &
-	:rtype: None
-") IntSurf_ListOfPntOn2S;
-		 IntSurf_ListOfPntOn2S (const IntSurf_ListOfPntOn2S & Other);
-		%feature("compactdefaultargs") Assign;
-		%feature("autodoc", "	:param Other:
-	:type Other: IntSurf_ListOfPntOn2S &
-	:rtype: None
-") Assign;
-		void Assign (const IntSurf_ListOfPntOn2S & Other);
-		%feature("compactdefaultargs") operator =;
-		%feature("autodoc", "	:param Other:
-	:type Other: IntSurf_ListOfPntOn2S &
-	:rtype: None
-") operator =;
-		void operator = (const IntSurf_ListOfPntOn2S & Other);
-		%feature("compactdefaultargs") Extent;
-		%feature("autodoc", "	:rtype: int
-") Extent;
-		Standard_Integer Extent ();
-		%feature("compactdefaultargs") Clear;
-		%feature("autodoc", "	:rtype: None
-") Clear;
-		void Clear ();
-		%feature("compactdefaultargs") IsEmpty;
-		%feature("autodoc", "	:rtype: bool
-") IsEmpty;
-		Standard_Boolean IsEmpty ();
-		%feature("compactdefaultargs") Prepend;
-		%feature("autodoc", "	:param I:
-	:type I: IntSurf_PntOn2S &
-	:rtype: None
-") Prepend;
-		void Prepend (const IntSurf_PntOn2S & I);
-		%feature("compactdefaultargs") Prepend;
-		%feature("autodoc", "	:param I:
-	:type I: IntSurf_PntOn2S &
-	:param theIt:
-	:type theIt: IntSurf_ListIteratorOfListOfPntOn2S &
-	:rtype: None
-") Prepend;
-		void Prepend (const IntSurf_PntOn2S & I,IntSurf_ListIteratorOfListOfPntOn2S & theIt);
-		%feature("compactdefaultargs") Prepend;
-		%feature("autodoc", "	:param Other:
-	:type Other: IntSurf_ListOfPntOn2S &
-	:rtype: None
-") Prepend;
-		void Prepend (IntSurf_ListOfPntOn2S & Other);
-		%feature("compactdefaultargs") Append;
-		%feature("autodoc", "	:param I:
-	:type I: IntSurf_PntOn2S &
-	:rtype: None
-") Append;
-		void Append (const IntSurf_PntOn2S & I);
-		%feature("compactdefaultargs") Append;
-		%feature("autodoc", "	:param I:
-	:type I: IntSurf_PntOn2S &
-	:param theIt:
-	:type theIt: IntSurf_ListIteratorOfListOfPntOn2S &
-	:rtype: None
-") Append;
-		void Append (const IntSurf_PntOn2S & I,IntSurf_ListIteratorOfListOfPntOn2S & theIt);
-		%feature("compactdefaultargs") Append;
-		%feature("autodoc", "	:param Other:
-	:type Other: IntSurf_ListOfPntOn2S &
-	:rtype: None
-") Append;
-		void Append (IntSurf_ListOfPntOn2S & Other);
-		%feature("compactdefaultargs") First;
-		%feature("autodoc", "	:rtype: IntSurf_PntOn2S
-") First;
-		IntSurf_PntOn2S & First ();
-		%feature("compactdefaultargs") Last;
-		%feature("autodoc", "	:rtype: IntSurf_PntOn2S
-") Last;
-		IntSurf_PntOn2S & Last ();
-		%feature("compactdefaultargs") RemoveFirst;
-		%feature("autodoc", "	:rtype: None
-") RemoveFirst;
-		void RemoveFirst ();
-		%feature("compactdefaultargs") Remove;
-		%feature("autodoc", "	:param It:
-	:type It: IntSurf_ListIteratorOfListOfPntOn2S &
-	:rtype: None
-") Remove;
-		void Remove (IntSurf_ListIteratorOfListOfPntOn2S & It);
-		%feature("compactdefaultargs") InsertBefore;
-		%feature("autodoc", "	:param I:
-	:type I: IntSurf_PntOn2S &
-	:param It:
-	:type It: IntSurf_ListIteratorOfListOfPntOn2S &
-	:rtype: None
-") InsertBefore;
-		void InsertBefore (const IntSurf_PntOn2S & I,IntSurf_ListIteratorOfListOfPntOn2S & It);
-		%feature("compactdefaultargs") InsertBefore;
-		%feature("autodoc", "	:param Other:
-	:type Other: IntSurf_ListOfPntOn2S &
-	:param It:
-	:type It: IntSurf_ListIteratorOfListOfPntOn2S &
-	:rtype: None
-") InsertBefore;
-		void InsertBefore (IntSurf_ListOfPntOn2S & Other,IntSurf_ListIteratorOfListOfPntOn2S & It);
-		%feature("compactdefaultargs") InsertAfter;
-		%feature("autodoc", "	:param I:
-	:type I: IntSurf_PntOn2S &
-	:param It:
-	:type It: IntSurf_ListIteratorOfListOfPntOn2S &
-	:rtype: None
-") InsertAfter;
-		void InsertAfter (const IntSurf_PntOn2S & I,IntSurf_ListIteratorOfListOfPntOn2S & It);
-		%feature("compactdefaultargs") InsertAfter;
-		%feature("autodoc", "	:param Other:
-	:type Other: IntSurf_ListOfPntOn2S &
-	:param It:
-	:type It: IntSurf_ListIteratorOfListOfPntOn2S &
-	:rtype: None
-") InsertAfter;
-		void InsertAfter (IntSurf_ListOfPntOn2S & Other,IntSurf_ListIteratorOfListOfPntOn2S & It);
-};
-
-
-%extend IntSurf_ListOfPntOn2S {
 	%pythoncode {
 	__repr__ = _dumps_object
 	}
@@ -801,7 +578,7 @@ class IntSurf_PathPointTool {
 ") Direction3d;
 		static gp_Vec Direction3d (const IntSurf_PathPoint & PStart);
 		%feature("compactdefaultargs") Direction2d;
-		%feature("autodoc", "	* returns the tangent at the intersection in the parametric space of the parametrized surface.This tangent is associated to the value2d la tangente a un sens signifiant (indique le sens de chemin ement) an exception is raised if IsTangent is true.
+		%feature("autodoc", "	* returns the tangent at the intersection in the parametric space of the parametrized surface.This tangent is associated to the value2d la tangente a un sens signifiant --indique le sens de chemin ement-- an exception is raised if IsTangent is true.
 
 	:param PStart:
 	:type PStart: IntSurf_PathPoint &
@@ -917,6 +694,14 @@ class IntSurf_PntOn2S {
 	:rtype: gp_Pnt
 ") Value;
 		const gp_Pnt  Value ();
+		%feature("compactdefaultargs") ValueOnSurface;
+		%feature("autodoc", "	* Returns the point in 2d space of one of the surfaces.
+
+	:param OnFirst:
+	:type OnFirst: bool
+	:rtype: gp_Pnt2d
+") ValueOnSurface;
+		gp_Pnt2d ValueOnSurface (const Standard_Boolean OnFirst);
 		%feature("compactdefaultargs") ParametersOnS1;
 		%feature("autodoc", "	* Returns the parameters of the point on the first surface.
 
@@ -937,6 +722,18 @@ class IntSurf_PntOn2S {
 	:rtype: None
 ") ParametersOnS2;
 		void ParametersOnS2 (Standard_Real &OutValue,Standard_Real &OutValue);
+		%feature("compactdefaultargs") ParametersOnSurface;
+		%feature("autodoc", "	* Returns the parameters of the point in the parametric space of one of the surface.
+
+	:param OnFirst:
+	:type OnFirst: bool
+	:param U:
+	:type U: float &
+	:param V:
+	:type V: float &
+	:rtype: None
+") ParametersOnSurface;
+		void ParametersOnSurface (const Standard_Boolean OnFirst,Standard_Real &OutValue,Standard_Real &OutValue);
 		%feature("compactdefaultargs") Parameters;
 		%feature("autodoc", "	* Returns the parameters of the point on both surfaces.
 
@@ -952,17 +749,17 @@ class IntSurf_PntOn2S {
 ") Parameters;
 		void Parameters (Standard_Real &OutValue,Standard_Real &OutValue,Standard_Real &OutValue,Standard_Real &OutValue);
 		%feature("compactdefaultargs") IsSame;
-		%feature("autodoc", "	* Returns True if 2D- and 3D-coordinates of theOterPoint are equal to corresponding coordinates of me (with given tolerance). If theTol2D == 0.0 we will compare 3D-points only.
+		%feature("autodoc", "	* Returns True if 2D- and 3D-coordinates of theOterPoint are equal to corresponding coordinates of me --with given tolerance--. If theTol2D < 0.0 we will compare 3D-points only.
 
-	:param theOterPoint:
-	:type theOterPoint: IntSurf_PntOn2S &
+	:param theOtherPoint:
+	:type theOtherPoint: IntSurf_PntOn2S &
 	:param theTol3D: default value is 0.0
 	:type theTol3D: float
-	:param theTol2D: default value is 0.0
+	:param theTol2D: default value is -1.0
 	:type theTol2D: float
 	:rtype: bool
 ") IsSame;
-		Standard_Boolean IsSame (const IntSurf_PntOn2S & theOterPoint,const Standard_Real theTol3D = 0.0,const Standard_Real theTol2D = 0.0);
+		Standard_Boolean IsSame (const IntSurf_PntOn2S & theOtherPoint,const Standard_Real theTol3D = 0.0,const Standard_Real theTol2D = -1.0);
 };
 
 
@@ -1216,648 +1013,6 @@ class IntSurf_QuadricTool {
 	__repr__ = _dumps_object
 	}
 };
-%nodefaultctor IntSurf_SequenceNodeOfSequenceOfCouple;
-class IntSurf_SequenceNodeOfSequenceOfCouple : public TCollection_SeqNode {
-	public:
-		%feature("compactdefaultargs") IntSurf_SequenceNodeOfSequenceOfCouple;
-		%feature("autodoc", "	:param I:
-	:type I: IntSurf_Couple &
-	:param n:
-	:type n: TCollection_SeqNodePtr &
-	:param p:
-	:type p: TCollection_SeqNodePtr &
-	:rtype: None
-") IntSurf_SequenceNodeOfSequenceOfCouple;
-		 IntSurf_SequenceNodeOfSequenceOfCouple (const IntSurf_Couple & I,const TCollection_SeqNodePtr & n,const TCollection_SeqNodePtr & p);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:rtype: IntSurf_Couple
-") Value;
-		IntSurf_Couple & Value ();
-};
-
-
-%extend IntSurf_SequenceNodeOfSequenceOfCouple {
-	%pythoncode {
-		def GetHandle(self):
-		    try:
-		        return self.thisHandle
-		    except:
-		        self.thisHandle = Handle_IntSurf_SequenceNodeOfSequenceOfCouple(self)
-		        self.thisown = False
-		        return self.thisHandle
-	}
-};
-
-%pythonappend Handle_IntSurf_SequenceNodeOfSequenceOfCouple::Handle_IntSurf_SequenceNodeOfSequenceOfCouple %{
-    # register the handle in the base object
-    if len(args) > 0:
-        register_handle(self, args[0])
-%}
-
-%nodefaultctor Handle_IntSurf_SequenceNodeOfSequenceOfCouple;
-class Handle_IntSurf_SequenceNodeOfSequenceOfCouple : public Handle_TCollection_SeqNode {
-
-    public:
-        // constructors
-        Handle_IntSurf_SequenceNodeOfSequenceOfCouple();
-        Handle_IntSurf_SequenceNodeOfSequenceOfCouple(const Handle_IntSurf_SequenceNodeOfSequenceOfCouple &aHandle);
-        Handle_IntSurf_SequenceNodeOfSequenceOfCouple(const IntSurf_SequenceNodeOfSequenceOfCouple *anItem);
-        void Nullify();
-        Standard_Boolean IsNull() const;
-        static const Handle_IntSurf_SequenceNodeOfSequenceOfCouple DownCast(const Handle_Standard_Transient &AnObject);
-
-};
-%extend Handle_IntSurf_SequenceNodeOfSequenceOfCouple {
-    IntSurf_SequenceNodeOfSequenceOfCouple* _get_reference() {
-    return (IntSurf_SequenceNodeOfSequenceOfCouple*)$self->Access();
-    }
-};
-
-%extend Handle_IntSurf_SequenceNodeOfSequenceOfCouple {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
-};
-
-%extend IntSurf_SequenceNodeOfSequenceOfCouple {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor IntSurf_SequenceNodeOfSequenceOfInteriorPoint;
-class IntSurf_SequenceNodeOfSequenceOfInteriorPoint : public TCollection_SeqNode {
-	public:
-		%feature("compactdefaultargs") IntSurf_SequenceNodeOfSequenceOfInteriorPoint;
-		%feature("autodoc", "	:param I:
-	:type I: IntSurf_InteriorPoint &
-	:param n:
-	:type n: TCollection_SeqNodePtr &
-	:param p:
-	:type p: TCollection_SeqNodePtr &
-	:rtype: None
-") IntSurf_SequenceNodeOfSequenceOfInteriorPoint;
-		 IntSurf_SequenceNodeOfSequenceOfInteriorPoint (const IntSurf_InteriorPoint & I,const TCollection_SeqNodePtr & n,const TCollection_SeqNodePtr & p);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:rtype: IntSurf_InteriorPoint
-") Value;
-		IntSurf_InteriorPoint & Value ();
-};
-
-
-%extend IntSurf_SequenceNodeOfSequenceOfInteriorPoint {
-	%pythoncode {
-		def GetHandle(self):
-		    try:
-		        return self.thisHandle
-		    except:
-		        self.thisHandle = Handle_IntSurf_SequenceNodeOfSequenceOfInteriorPoint(self)
-		        self.thisown = False
-		        return self.thisHandle
-	}
-};
-
-%pythonappend Handle_IntSurf_SequenceNodeOfSequenceOfInteriorPoint::Handle_IntSurf_SequenceNodeOfSequenceOfInteriorPoint %{
-    # register the handle in the base object
-    if len(args) > 0:
-        register_handle(self, args[0])
-%}
-
-%nodefaultctor Handle_IntSurf_SequenceNodeOfSequenceOfInteriorPoint;
-class Handle_IntSurf_SequenceNodeOfSequenceOfInteriorPoint : public Handle_TCollection_SeqNode {
-
-    public:
-        // constructors
-        Handle_IntSurf_SequenceNodeOfSequenceOfInteriorPoint();
-        Handle_IntSurf_SequenceNodeOfSequenceOfInteriorPoint(const Handle_IntSurf_SequenceNodeOfSequenceOfInteriorPoint &aHandle);
-        Handle_IntSurf_SequenceNodeOfSequenceOfInteriorPoint(const IntSurf_SequenceNodeOfSequenceOfInteriorPoint *anItem);
-        void Nullify();
-        Standard_Boolean IsNull() const;
-        static const Handle_IntSurf_SequenceNodeOfSequenceOfInteriorPoint DownCast(const Handle_Standard_Transient &AnObject);
-
-};
-%extend Handle_IntSurf_SequenceNodeOfSequenceOfInteriorPoint {
-    IntSurf_SequenceNodeOfSequenceOfInteriorPoint* _get_reference() {
-    return (IntSurf_SequenceNodeOfSequenceOfInteriorPoint*)$self->Access();
-    }
-};
-
-%extend Handle_IntSurf_SequenceNodeOfSequenceOfInteriorPoint {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
-};
-
-%extend IntSurf_SequenceNodeOfSequenceOfInteriorPoint {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor IntSurf_SequenceNodeOfSequenceOfPathPoint;
-class IntSurf_SequenceNodeOfSequenceOfPathPoint : public TCollection_SeqNode {
-	public:
-		%feature("compactdefaultargs") IntSurf_SequenceNodeOfSequenceOfPathPoint;
-		%feature("autodoc", "	:param I:
-	:type I: IntSurf_PathPoint &
-	:param n:
-	:type n: TCollection_SeqNodePtr &
-	:param p:
-	:type p: TCollection_SeqNodePtr &
-	:rtype: None
-") IntSurf_SequenceNodeOfSequenceOfPathPoint;
-		 IntSurf_SequenceNodeOfSequenceOfPathPoint (const IntSurf_PathPoint & I,const TCollection_SeqNodePtr & n,const TCollection_SeqNodePtr & p);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:rtype: IntSurf_PathPoint
-") Value;
-		IntSurf_PathPoint & Value ();
-};
-
-
-%extend IntSurf_SequenceNodeOfSequenceOfPathPoint {
-	%pythoncode {
-		def GetHandle(self):
-		    try:
-		        return self.thisHandle
-		    except:
-		        self.thisHandle = Handle_IntSurf_SequenceNodeOfSequenceOfPathPoint(self)
-		        self.thisown = False
-		        return self.thisHandle
-	}
-};
-
-%pythonappend Handle_IntSurf_SequenceNodeOfSequenceOfPathPoint::Handle_IntSurf_SequenceNodeOfSequenceOfPathPoint %{
-    # register the handle in the base object
-    if len(args) > 0:
-        register_handle(self, args[0])
-%}
-
-%nodefaultctor Handle_IntSurf_SequenceNodeOfSequenceOfPathPoint;
-class Handle_IntSurf_SequenceNodeOfSequenceOfPathPoint : public Handle_TCollection_SeqNode {
-
-    public:
-        // constructors
-        Handle_IntSurf_SequenceNodeOfSequenceOfPathPoint();
-        Handle_IntSurf_SequenceNodeOfSequenceOfPathPoint(const Handle_IntSurf_SequenceNodeOfSequenceOfPathPoint &aHandle);
-        Handle_IntSurf_SequenceNodeOfSequenceOfPathPoint(const IntSurf_SequenceNodeOfSequenceOfPathPoint *anItem);
-        void Nullify();
-        Standard_Boolean IsNull() const;
-        static const Handle_IntSurf_SequenceNodeOfSequenceOfPathPoint DownCast(const Handle_Standard_Transient &AnObject);
-
-};
-%extend Handle_IntSurf_SequenceNodeOfSequenceOfPathPoint {
-    IntSurf_SequenceNodeOfSequenceOfPathPoint* _get_reference() {
-    return (IntSurf_SequenceNodeOfSequenceOfPathPoint*)$self->Access();
-    }
-};
-
-%extend Handle_IntSurf_SequenceNodeOfSequenceOfPathPoint {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
-};
-
-%extend IntSurf_SequenceNodeOfSequenceOfPathPoint {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor IntSurf_SequenceOfCouple;
-class IntSurf_SequenceOfCouple : public TCollection_BaseSequence {
-	public:
-		%feature("compactdefaultargs") IntSurf_SequenceOfCouple;
-		%feature("autodoc", "	:rtype: None
-") IntSurf_SequenceOfCouple;
-		 IntSurf_SequenceOfCouple ();
-		%feature("compactdefaultargs") IntSurf_SequenceOfCouple;
-		%feature("autodoc", "	:param Other:
-	:type Other: IntSurf_SequenceOfCouple &
-	:rtype: None
-") IntSurf_SequenceOfCouple;
-		 IntSurf_SequenceOfCouple (const IntSurf_SequenceOfCouple & Other);
-		%feature("compactdefaultargs") Clear;
-		%feature("autodoc", "	:rtype: None
-") Clear;
-		void Clear ();
-		%feature("compactdefaultargs") Assign;
-		%feature("autodoc", "	:param Other:
-	:type Other: IntSurf_SequenceOfCouple &
-	:rtype: IntSurf_SequenceOfCouple
-") Assign;
-		const IntSurf_SequenceOfCouple & Assign (const IntSurf_SequenceOfCouple & Other);
-		%feature("compactdefaultargs") operator =;
-		%feature("autodoc", "	:param Other:
-	:type Other: IntSurf_SequenceOfCouple &
-	:rtype: IntSurf_SequenceOfCouple
-") operator =;
-		const IntSurf_SequenceOfCouple & operator = (const IntSurf_SequenceOfCouple & Other);
-		%feature("compactdefaultargs") Append;
-		%feature("autodoc", "	:param T:
-	:type T: IntSurf_Couple &
-	:rtype: None
-") Append;
-		void Append (const IntSurf_Couple & T);
-		%feature("compactdefaultargs") Append;
-		%feature("autodoc", "	:param S:
-	:type S: IntSurf_SequenceOfCouple &
-	:rtype: None
-") Append;
-		void Append (IntSurf_SequenceOfCouple & S);
-		%feature("compactdefaultargs") Prepend;
-		%feature("autodoc", "	:param T:
-	:type T: IntSurf_Couple &
-	:rtype: None
-") Prepend;
-		void Prepend (const IntSurf_Couple & T);
-		%feature("compactdefaultargs") Prepend;
-		%feature("autodoc", "	:param S:
-	:type S: IntSurf_SequenceOfCouple &
-	:rtype: None
-") Prepend;
-		void Prepend (IntSurf_SequenceOfCouple & S);
-		%feature("compactdefaultargs") InsertBefore;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param T:
-	:type T: IntSurf_Couple &
-	:rtype: None
-") InsertBefore;
-		void InsertBefore (const Standard_Integer Index,const IntSurf_Couple & T);
-		%feature("compactdefaultargs") InsertBefore;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param S:
-	:type S: IntSurf_SequenceOfCouple &
-	:rtype: None
-") InsertBefore;
-		void InsertBefore (const Standard_Integer Index,IntSurf_SequenceOfCouple & S);
-		%feature("compactdefaultargs") InsertAfter;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param T:
-	:type T: IntSurf_Couple &
-	:rtype: None
-") InsertAfter;
-		void InsertAfter (const Standard_Integer Index,const IntSurf_Couple & T);
-		%feature("compactdefaultargs") InsertAfter;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param S:
-	:type S: IntSurf_SequenceOfCouple &
-	:rtype: None
-") InsertAfter;
-		void InsertAfter (const Standard_Integer Index,IntSurf_SequenceOfCouple & S);
-		%feature("compactdefaultargs") First;
-		%feature("autodoc", "	:rtype: IntSurf_Couple
-") First;
-		const IntSurf_Couple & First ();
-		%feature("compactdefaultargs") Last;
-		%feature("autodoc", "	:rtype: IntSurf_Couple
-") Last;
-		const IntSurf_Couple & Last ();
-		%feature("compactdefaultargs") Split;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param Sub:
-	:type Sub: IntSurf_SequenceOfCouple &
-	:rtype: None
-") Split;
-		void Split (const Standard_Integer Index,IntSurf_SequenceOfCouple & Sub);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: IntSurf_Couple
-") Value;
-		const IntSurf_Couple & Value (const Standard_Integer Index);
-		%feature("compactdefaultargs") SetValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param I:
-	:type I: IntSurf_Couple &
-	:rtype: None
-") SetValue;
-		void SetValue (const Standard_Integer Index,const IntSurf_Couple & I);
-		%feature("compactdefaultargs") ChangeValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: IntSurf_Couple
-") ChangeValue;
-		IntSurf_Couple & ChangeValue (const Standard_Integer Index);
-		%feature("compactdefaultargs") Remove;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: None
-") Remove;
-		void Remove (const Standard_Integer Index);
-		%feature("compactdefaultargs") Remove;
-		%feature("autodoc", "	:param FromIndex:
-	:type FromIndex: int
-	:param ToIndex:
-	:type ToIndex: int
-	:rtype: None
-") Remove;
-		void Remove (const Standard_Integer FromIndex,const Standard_Integer ToIndex);
-};
-
-
-%extend IntSurf_SequenceOfCouple {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor IntSurf_SequenceOfInteriorPoint;
-class IntSurf_SequenceOfInteriorPoint : public TCollection_BaseSequence {
-	public:
-		%feature("compactdefaultargs") IntSurf_SequenceOfInteriorPoint;
-		%feature("autodoc", "	:rtype: None
-") IntSurf_SequenceOfInteriorPoint;
-		 IntSurf_SequenceOfInteriorPoint ();
-		%feature("compactdefaultargs") IntSurf_SequenceOfInteriorPoint;
-		%feature("autodoc", "	:param Other:
-	:type Other: IntSurf_SequenceOfInteriorPoint &
-	:rtype: None
-") IntSurf_SequenceOfInteriorPoint;
-		 IntSurf_SequenceOfInteriorPoint (const IntSurf_SequenceOfInteriorPoint & Other);
-		%feature("compactdefaultargs") Clear;
-		%feature("autodoc", "	:rtype: None
-") Clear;
-		void Clear ();
-		%feature("compactdefaultargs") Assign;
-		%feature("autodoc", "	:param Other:
-	:type Other: IntSurf_SequenceOfInteriorPoint &
-	:rtype: IntSurf_SequenceOfInteriorPoint
-") Assign;
-		const IntSurf_SequenceOfInteriorPoint & Assign (const IntSurf_SequenceOfInteriorPoint & Other);
-		%feature("compactdefaultargs") operator =;
-		%feature("autodoc", "	:param Other:
-	:type Other: IntSurf_SequenceOfInteriorPoint &
-	:rtype: IntSurf_SequenceOfInteriorPoint
-") operator =;
-		const IntSurf_SequenceOfInteriorPoint & operator = (const IntSurf_SequenceOfInteriorPoint & Other);
-		%feature("compactdefaultargs") Append;
-		%feature("autodoc", "	:param T:
-	:type T: IntSurf_InteriorPoint &
-	:rtype: None
-") Append;
-		void Append (const IntSurf_InteriorPoint & T);
-		%feature("compactdefaultargs") Append;
-		%feature("autodoc", "	:param S:
-	:type S: IntSurf_SequenceOfInteriorPoint &
-	:rtype: None
-") Append;
-		void Append (IntSurf_SequenceOfInteriorPoint & S);
-		%feature("compactdefaultargs") Prepend;
-		%feature("autodoc", "	:param T:
-	:type T: IntSurf_InteriorPoint &
-	:rtype: None
-") Prepend;
-		void Prepend (const IntSurf_InteriorPoint & T);
-		%feature("compactdefaultargs") Prepend;
-		%feature("autodoc", "	:param S:
-	:type S: IntSurf_SequenceOfInteriorPoint &
-	:rtype: None
-") Prepend;
-		void Prepend (IntSurf_SequenceOfInteriorPoint & S);
-		%feature("compactdefaultargs") InsertBefore;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param T:
-	:type T: IntSurf_InteriorPoint &
-	:rtype: None
-") InsertBefore;
-		void InsertBefore (const Standard_Integer Index,const IntSurf_InteriorPoint & T);
-		%feature("compactdefaultargs") InsertBefore;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param S:
-	:type S: IntSurf_SequenceOfInteriorPoint &
-	:rtype: None
-") InsertBefore;
-		void InsertBefore (const Standard_Integer Index,IntSurf_SequenceOfInteriorPoint & S);
-		%feature("compactdefaultargs") InsertAfter;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param T:
-	:type T: IntSurf_InteriorPoint &
-	:rtype: None
-") InsertAfter;
-		void InsertAfter (const Standard_Integer Index,const IntSurf_InteriorPoint & T);
-		%feature("compactdefaultargs") InsertAfter;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param S:
-	:type S: IntSurf_SequenceOfInteriorPoint &
-	:rtype: None
-") InsertAfter;
-		void InsertAfter (const Standard_Integer Index,IntSurf_SequenceOfInteriorPoint & S);
-		%feature("compactdefaultargs") First;
-		%feature("autodoc", "	:rtype: IntSurf_InteriorPoint
-") First;
-		const IntSurf_InteriorPoint & First ();
-		%feature("compactdefaultargs") Last;
-		%feature("autodoc", "	:rtype: IntSurf_InteriorPoint
-") Last;
-		const IntSurf_InteriorPoint & Last ();
-		%feature("compactdefaultargs") Split;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param Sub:
-	:type Sub: IntSurf_SequenceOfInteriorPoint &
-	:rtype: None
-") Split;
-		void Split (const Standard_Integer Index,IntSurf_SequenceOfInteriorPoint & Sub);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: IntSurf_InteriorPoint
-") Value;
-		const IntSurf_InteriorPoint & Value (const Standard_Integer Index);
-		%feature("compactdefaultargs") SetValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param I:
-	:type I: IntSurf_InteriorPoint &
-	:rtype: None
-") SetValue;
-		void SetValue (const Standard_Integer Index,const IntSurf_InteriorPoint & I);
-		%feature("compactdefaultargs") ChangeValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: IntSurf_InteriorPoint
-") ChangeValue;
-		IntSurf_InteriorPoint & ChangeValue (const Standard_Integer Index);
-		%feature("compactdefaultargs") Remove;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: None
-") Remove;
-		void Remove (const Standard_Integer Index);
-		%feature("compactdefaultargs") Remove;
-		%feature("autodoc", "	:param FromIndex:
-	:type FromIndex: int
-	:param ToIndex:
-	:type ToIndex: int
-	:rtype: None
-") Remove;
-		void Remove (const Standard_Integer FromIndex,const Standard_Integer ToIndex);
-};
-
-
-%extend IntSurf_SequenceOfInteriorPoint {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor IntSurf_SequenceOfPathPoint;
-class IntSurf_SequenceOfPathPoint : public TCollection_BaseSequence {
-	public:
-		%feature("compactdefaultargs") IntSurf_SequenceOfPathPoint;
-		%feature("autodoc", "	:rtype: None
-") IntSurf_SequenceOfPathPoint;
-		 IntSurf_SequenceOfPathPoint ();
-		%feature("compactdefaultargs") IntSurf_SequenceOfPathPoint;
-		%feature("autodoc", "	:param Other:
-	:type Other: IntSurf_SequenceOfPathPoint &
-	:rtype: None
-") IntSurf_SequenceOfPathPoint;
-		 IntSurf_SequenceOfPathPoint (const IntSurf_SequenceOfPathPoint & Other);
-		%feature("compactdefaultargs") Clear;
-		%feature("autodoc", "	:rtype: None
-") Clear;
-		void Clear ();
-		%feature("compactdefaultargs") Assign;
-		%feature("autodoc", "	:param Other:
-	:type Other: IntSurf_SequenceOfPathPoint &
-	:rtype: IntSurf_SequenceOfPathPoint
-") Assign;
-		const IntSurf_SequenceOfPathPoint & Assign (const IntSurf_SequenceOfPathPoint & Other);
-		%feature("compactdefaultargs") operator =;
-		%feature("autodoc", "	:param Other:
-	:type Other: IntSurf_SequenceOfPathPoint &
-	:rtype: IntSurf_SequenceOfPathPoint
-") operator =;
-		const IntSurf_SequenceOfPathPoint & operator = (const IntSurf_SequenceOfPathPoint & Other);
-		%feature("compactdefaultargs") Append;
-		%feature("autodoc", "	:param T:
-	:type T: IntSurf_PathPoint &
-	:rtype: None
-") Append;
-		void Append (const IntSurf_PathPoint & T);
-		%feature("compactdefaultargs") Append;
-		%feature("autodoc", "	:param S:
-	:type S: IntSurf_SequenceOfPathPoint &
-	:rtype: None
-") Append;
-		void Append (IntSurf_SequenceOfPathPoint & S);
-		%feature("compactdefaultargs") Prepend;
-		%feature("autodoc", "	:param T:
-	:type T: IntSurf_PathPoint &
-	:rtype: None
-") Prepend;
-		void Prepend (const IntSurf_PathPoint & T);
-		%feature("compactdefaultargs") Prepend;
-		%feature("autodoc", "	:param S:
-	:type S: IntSurf_SequenceOfPathPoint &
-	:rtype: None
-") Prepend;
-		void Prepend (IntSurf_SequenceOfPathPoint & S);
-		%feature("compactdefaultargs") InsertBefore;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param T:
-	:type T: IntSurf_PathPoint &
-	:rtype: None
-") InsertBefore;
-		void InsertBefore (const Standard_Integer Index,const IntSurf_PathPoint & T);
-		%feature("compactdefaultargs") InsertBefore;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param S:
-	:type S: IntSurf_SequenceOfPathPoint &
-	:rtype: None
-") InsertBefore;
-		void InsertBefore (const Standard_Integer Index,IntSurf_SequenceOfPathPoint & S);
-		%feature("compactdefaultargs") InsertAfter;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param T:
-	:type T: IntSurf_PathPoint &
-	:rtype: None
-") InsertAfter;
-		void InsertAfter (const Standard_Integer Index,const IntSurf_PathPoint & T);
-		%feature("compactdefaultargs") InsertAfter;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param S:
-	:type S: IntSurf_SequenceOfPathPoint &
-	:rtype: None
-") InsertAfter;
-		void InsertAfter (const Standard_Integer Index,IntSurf_SequenceOfPathPoint & S);
-		%feature("compactdefaultargs") First;
-		%feature("autodoc", "	:rtype: IntSurf_PathPoint
-") First;
-		const IntSurf_PathPoint & First ();
-		%feature("compactdefaultargs") Last;
-		%feature("autodoc", "	:rtype: IntSurf_PathPoint
-") Last;
-		const IntSurf_PathPoint & Last ();
-		%feature("compactdefaultargs") Split;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param Sub:
-	:type Sub: IntSurf_SequenceOfPathPoint &
-	:rtype: None
-") Split;
-		void Split (const Standard_Integer Index,IntSurf_SequenceOfPathPoint & Sub);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: IntSurf_PathPoint
-") Value;
-		const IntSurf_PathPoint & Value (const Standard_Integer Index);
-		%feature("compactdefaultargs") SetValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param I:
-	:type I: IntSurf_PathPoint &
-	:rtype: None
-") SetValue;
-		void SetValue (const Standard_Integer Index,const IntSurf_PathPoint & I);
-		%feature("compactdefaultargs") ChangeValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: IntSurf_PathPoint
-") ChangeValue;
-		IntSurf_PathPoint & ChangeValue (const Standard_Integer Index);
-		%feature("compactdefaultargs") Remove;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: None
-") Remove;
-		void Remove (const Standard_Integer Index);
-		%feature("compactdefaultargs") Remove;
-		%feature("autodoc", "	:param FromIndex:
-	:type FromIndex: int
-	:param ToIndex:
-	:type ToIndex: int
-	:rtype: None
-") Remove;
-		void Remove (const Standard_Integer FromIndex,const Standard_Integer ToIndex);
-};
-
-
-%extend IntSurf_SequenceOfPathPoint {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
 %nodefaultctor IntSurf_Transition;
 class IntSurf_Transition {
 	public:
@@ -1918,7 +1073,7 @@ class IntSurf_Transition {
 ") SetValue;
 		void SetValue ();
 		%feature("compactdefaultargs") TransitionType;
-		%feature("autodoc", "	* Returns the type of Transition (in/out/touch/undecided) for the arc given by value. This the transition of the intersection line compared to the Arc of restriction, i-e when the function returns INSIDE for example, it means that the intersection line goes inside the part of plane limited by the arc of restriction.
+		%feature("autodoc", "	* Returns the type of Transition --in/out/touch/undecided-- for the arc given by value. This the transition of the intersection line compared to the Arc of restriction, i-e when the function returns INSIDE for example, it means that the intersection line goes inside the part of plane limited by the arc of restriction.
 
 	:rtype: IntSurf_TypeTrans
 ") TransitionType;

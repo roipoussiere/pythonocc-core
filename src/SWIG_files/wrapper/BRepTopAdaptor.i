@@ -1,5 +1,5 @@
 /*
-Copyright 2008-2017 Thomas Paviot (tpaviot@gmail.com)
+Copyright 2008-2018 Thomas Paviot (tpaviot@gmail.com)
 
 
 This file is part of pythonOCC.
@@ -57,119 +57,13 @@ def register_handle(handle, base_object):
 typedef TColStd_SequenceOfAddress BRepTopAdaptor_SeqOfPtr;
 /* end typedefs declaration */
 
+/* templates */
+%template(BRepTopAdaptor_MapOfShapeTool) NCollection_DataMap <TopoDS_Shape , BRepTopAdaptor_Tool , TopTools_ShapeMapHasher>;
+/* end templates declaration */
+
 /* public enums */
 /* end public enums declaration */
 
-%nodefaultctor BRepTopAdaptor_DataMapIteratorOfMapOfShapeTool;
-class BRepTopAdaptor_DataMapIteratorOfMapOfShapeTool : public TCollection_BasicMapIterator {
-	public:
-		%feature("compactdefaultargs") BRepTopAdaptor_DataMapIteratorOfMapOfShapeTool;
-		%feature("autodoc", "	:rtype: None
-") BRepTopAdaptor_DataMapIteratorOfMapOfShapeTool;
-		 BRepTopAdaptor_DataMapIteratorOfMapOfShapeTool ();
-		%feature("compactdefaultargs") BRepTopAdaptor_DataMapIteratorOfMapOfShapeTool;
-		%feature("autodoc", "	:param aMap:
-	:type aMap: BRepTopAdaptor_MapOfShapeTool &
-	:rtype: None
-") BRepTopAdaptor_DataMapIteratorOfMapOfShapeTool;
-		 BRepTopAdaptor_DataMapIteratorOfMapOfShapeTool (const BRepTopAdaptor_MapOfShapeTool & aMap);
-		%feature("compactdefaultargs") Initialize;
-		%feature("autodoc", "	:param aMap:
-	:type aMap: BRepTopAdaptor_MapOfShapeTool &
-	:rtype: None
-") Initialize;
-		void Initialize (const BRepTopAdaptor_MapOfShapeTool & aMap);
-		%feature("compactdefaultargs") Key;
-		%feature("autodoc", "	:rtype: TopoDS_Shape
-") Key;
-		const TopoDS_Shape  Key ();
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:rtype: BRepTopAdaptor_Tool
-") Value;
-		const BRepTopAdaptor_Tool & Value ();
-};
-
-
-%extend BRepTopAdaptor_DataMapIteratorOfMapOfShapeTool {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor BRepTopAdaptor_DataMapNodeOfMapOfShapeTool;
-class BRepTopAdaptor_DataMapNodeOfMapOfShapeTool : public TCollection_MapNode {
-	public:
-		%feature("compactdefaultargs") BRepTopAdaptor_DataMapNodeOfMapOfShapeTool;
-		%feature("autodoc", "	:param K:
-	:type K: TopoDS_Shape &
-	:param I:
-	:type I: BRepTopAdaptor_Tool &
-	:param n:
-	:type n: TCollection_MapNodePtr &
-	:rtype: None
-") BRepTopAdaptor_DataMapNodeOfMapOfShapeTool;
-		 BRepTopAdaptor_DataMapNodeOfMapOfShapeTool (const TopoDS_Shape & K,const BRepTopAdaptor_Tool & I,const TCollection_MapNodePtr & n);
-		%feature("compactdefaultargs") Key;
-		%feature("autodoc", "	:rtype: TopoDS_Shape
-") Key;
-		TopoDS_Shape  Key ();
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:rtype: BRepTopAdaptor_Tool
-") Value;
-		BRepTopAdaptor_Tool & Value ();
-};
-
-
-%extend BRepTopAdaptor_DataMapNodeOfMapOfShapeTool {
-	%pythoncode {
-		def GetHandle(self):
-		    try:
-		        return self.thisHandle
-		    except:
-		        self.thisHandle = Handle_BRepTopAdaptor_DataMapNodeOfMapOfShapeTool(self)
-		        self.thisown = False
-		        return self.thisHandle
-	}
-};
-
-%pythonappend Handle_BRepTopAdaptor_DataMapNodeOfMapOfShapeTool::Handle_BRepTopAdaptor_DataMapNodeOfMapOfShapeTool %{
-    # register the handle in the base object
-    if len(args) > 0:
-        register_handle(self, args[0])
-%}
-
-%nodefaultctor Handle_BRepTopAdaptor_DataMapNodeOfMapOfShapeTool;
-class Handle_BRepTopAdaptor_DataMapNodeOfMapOfShapeTool : public Handle_TCollection_MapNode {
-
-    public:
-        // constructors
-        Handle_BRepTopAdaptor_DataMapNodeOfMapOfShapeTool();
-        Handle_BRepTopAdaptor_DataMapNodeOfMapOfShapeTool(const Handle_BRepTopAdaptor_DataMapNodeOfMapOfShapeTool &aHandle);
-        Handle_BRepTopAdaptor_DataMapNodeOfMapOfShapeTool(const BRepTopAdaptor_DataMapNodeOfMapOfShapeTool *anItem);
-        void Nullify();
-        Standard_Boolean IsNull() const;
-        static const Handle_BRepTopAdaptor_DataMapNodeOfMapOfShapeTool DownCast(const Handle_Standard_Transient &AnObject);
-
-};
-%extend Handle_BRepTopAdaptor_DataMapNodeOfMapOfShapeTool {
-    BRepTopAdaptor_DataMapNodeOfMapOfShapeTool* _get_reference() {
-    return (BRepTopAdaptor_DataMapNodeOfMapOfShapeTool*)$self->Access();
-    }
-};
-
-%extend Handle_BRepTopAdaptor_DataMapNodeOfMapOfShapeTool {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
-};
-
-%extend BRepTopAdaptor_DataMapNodeOfMapOfShapeTool {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
 %nodefaultctor BRepTopAdaptor_FClass2d;
 class BRepTopAdaptor_FClass2d {
 	public:
@@ -210,7 +104,7 @@ class BRepTopAdaptor_FClass2d {
 ") operator =;
 		const BRepTopAdaptor_FClass2d & operator = (const BRepTopAdaptor_FClass2d & Other);
 		%feature("compactdefaultargs") TestOnRestriction;
-		%feature("autodoc", "	* Test a point with +- an offset (Tol) and returns On if some points are OUT an some are IN (Caution: Internal use . see the code for more details)
+		%feature("autodoc", "	* Test a point with +- an offset --Tol-- and returns On if some points are OUT an some are IN --Caution: Internal use . see the code for more details--
 
 	:param Puv:
 	:type Puv: gp_Pnt2d
@@ -259,7 +153,7 @@ class BRepTopAdaptor_HVertex : public Adaptor3d_HVertex {
 ") Parameter;
 		virtual Standard_Real Parameter (const Handle_Adaptor2d_HCurve2d & C);
 		%feature("compactdefaultargs") Resolution;
-		%feature("autodoc", "	* Parametric resolution (2d).
+		%feature("autodoc", "	* Parametric resolution --2d--.
 
 	:param C:
 	:type C: Handle_Adaptor2d_HCurve2d &
@@ -310,105 +204,23 @@ class Handle_BRepTopAdaptor_HVertex : public Handle_Adaptor3d_HVertex {
         static const Handle_BRepTopAdaptor_HVertex DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_BRepTopAdaptor_HVertex {
     BRepTopAdaptor_HVertex* _get_reference() {
-    return (BRepTopAdaptor_HVertex*)$self->Access();
+    return (BRepTopAdaptor_HVertex*)$self->get();
     }
 };
 
 %extend Handle_BRepTopAdaptor_HVertex {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend BRepTopAdaptor_HVertex {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor BRepTopAdaptor_MapOfShapeTool;
-class BRepTopAdaptor_MapOfShapeTool : public TCollection_BasicMap {
-	public:
-		%feature("compactdefaultargs") BRepTopAdaptor_MapOfShapeTool;
-		%feature("autodoc", "	:param NbBuckets: default value is 1
-	:type NbBuckets: int
-	:rtype: None
-") BRepTopAdaptor_MapOfShapeTool;
-		 BRepTopAdaptor_MapOfShapeTool (const Standard_Integer NbBuckets = 1);
-		%feature("compactdefaultargs") Assign;
-		%feature("autodoc", "	:param Other:
-	:type Other: BRepTopAdaptor_MapOfShapeTool &
-	:rtype: BRepTopAdaptor_MapOfShapeTool
-") Assign;
-		BRepTopAdaptor_MapOfShapeTool & Assign (const BRepTopAdaptor_MapOfShapeTool & Other);
-		%feature("compactdefaultargs") operator =;
-		%feature("autodoc", "	:param Other:
-	:type Other: BRepTopAdaptor_MapOfShapeTool &
-	:rtype: BRepTopAdaptor_MapOfShapeTool
-") operator =;
-		BRepTopAdaptor_MapOfShapeTool & operator = (const BRepTopAdaptor_MapOfShapeTool & Other);
-		%feature("compactdefaultargs") ReSize;
-		%feature("autodoc", "	:param NbBuckets:
-	:type NbBuckets: int
-	:rtype: None
-") ReSize;
-		void ReSize (const Standard_Integer NbBuckets);
-		%feature("compactdefaultargs") Clear;
-		%feature("autodoc", "	:rtype: None
-") Clear;
-		void Clear ();
-		%feature("compactdefaultargs") Bind;
-		%feature("autodoc", "	:param K:
-	:type K: TopoDS_Shape &
-	:param I:
-	:type I: BRepTopAdaptor_Tool &
-	:rtype: bool
-") Bind;
-		Standard_Boolean Bind (const TopoDS_Shape & K,const BRepTopAdaptor_Tool & I);
-		%feature("compactdefaultargs") IsBound;
-		%feature("autodoc", "	:param K:
-	:type K: TopoDS_Shape &
-	:rtype: bool
-") IsBound;
-		Standard_Boolean IsBound (const TopoDS_Shape & K);
-		%feature("compactdefaultargs") UnBind;
-		%feature("autodoc", "	:param K:
-	:type K: TopoDS_Shape &
-	:rtype: bool
-") UnBind;
-		Standard_Boolean UnBind (const TopoDS_Shape & K);
-		%feature("compactdefaultargs") Find;
-		%feature("autodoc", "	:param K:
-	:type K: TopoDS_Shape &
-	:rtype: BRepTopAdaptor_Tool
-") Find;
-		const BRepTopAdaptor_Tool & Find (const TopoDS_Shape & K);
-		%feature("compactdefaultargs") ChangeFind;
-		%feature("autodoc", "	:param K:
-	:type K: TopoDS_Shape &
-	:rtype: BRepTopAdaptor_Tool
-") ChangeFind;
-		BRepTopAdaptor_Tool & ChangeFind (const TopoDS_Shape & K);
-		%feature("compactdefaultargs") Find1;
-		%feature("autodoc", "	:param K:
-	:type K: TopoDS_Shape &
-	:rtype: Standard_Address
-") Find1;
-		Standard_Address Find1 (const TopoDS_Shape & K);
-		%feature("compactdefaultargs") ChangeFind1;
-		%feature("autodoc", "	:param K:
-	:type K: TopoDS_Shape &
-	:rtype: Standard_Address
-") ChangeFind1;
-		Standard_Address ChangeFind1 (const TopoDS_Shape & K);
-};
-
-
-%extend BRepTopAdaptor_MapOfShapeTool {
 	%pythoncode {
 	__repr__ = _dumps_object
 	}
@@ -554,7 +366,7 @@ class BRepTopAdaptor_TopolTool : public Adaptor3d_TopolTool {
 ") Classify;
 		virtual TopAbs_State Classify (const gp_Pnt2d & P2d,const Standard_Real Tol,const Standard_Boolean RecadreOnPeriodic = Standard_True);
 		%feature("compactdefaultargs") IsThePointOn;
-		%feature("autodoc", "	* see the code for specifications)
+		%feature("autodoc", "	* see the code for specifications--
 
 	:param P2d:
 	:type P2d: gp_Pnt2d
@@ -685,19 +497,20 @@ class Handle_BRepTopAdaptor_TopolTool : public Handle_Adaptor3d_TopolTool {
         static const Handle_BRepTopAdaptor_TopolTool DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_BRepTopAdaptor_TopolTool {
     BRepTopAdaptor_TopolTool* _get_reference() {
-    return (BRepTopAdaptor_TopolTool*)$self->Access();
+    return (BRepTopAdaptor_TopolTool*)$self->get();
     }
 };
 
 %extend Handle_BRepTopAdaptor_TopolTool {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend BRepTopAdaptor_TopolTool {

@@ -1,5 +1,5 @@
 /*
-Copyright 2008-2017 Thomas Paviot (tpaviot@gmail.com)
+Copyright 2008-2018 Thomas Paviot (tpaviot@gmail.com)
 
 
 This file is part of pythonOCC.
@@ -56,6 +56,9 @@ def register_handle(handle, base_object):
 /* typedefs */
 /* end typedefs declaration */
 
+/* templates */
+/* end templates declaration */
+
 /* public enums */
 /* end public enums declaration */
 
@@ -93,7 +96,7 @@ class RWStepBasic_RWAction {
 ") WriteStep;
 		void WriteStep (StepData_StepWriter & SW,const Handle_StepBasic_Action & ent);
 		%feature("compactdefaultargs") Share;
-		%feature("autodoc", "	* Fills data for graph (shared items)
+		%feature("autodoc", "	* Fills data for graph --shared items--
 
 	:param ent:
 	:type ent: Handle_StepBasic_Action &
@@ -144,7 +147,7 @@ class RWStepBasic_RWActionAssignment {
 ") WriteStep;
 		void WriteStep (StepData_StepWriter & SW,const Handle_StepBasic_ActionAssignment & ent);
 		%feature("compactdefaultargs") Share;
-		%feature("autodoc", "	* Fills data for graph (shared items)
+		%feature("autodoc", "	* Fills data for graph --shared items--
 
 	:param ent:
 	:type ent: Handle_StepBasic_ActionAssignment &
@@ -195,7 +198,7 @@ class RWStepBasic_RWActionMethod {
 ") WriteStep;
 		void WriteStep (StepData_StepWriter & SW,const Handle_StepBasic_ActionMethod & ent);
 		%feature("compactdefaultargs") Share;
-		%feature("autodoc", "	* Fills data for graph (shared items)
+		%feature("autodoc", "	* Fills data for graph --shared items--
 
 	:param ent:
 	:type ent: Handle_StepBasic_ActionMethod &
@@ -246,7 +249,7 @@ class RWStepBasic_RWActionRequestAssignment {
 ") WriteStep;
 		void WriteStep (StepData_StepWriter & SW,const Handle_StepBasic_ActionRequestAssignment & ent);
 		%feature("compactdefaultargs") Share;
-		%feature("autodoc", "	* Fills data for graph (shared items)
+		%feature("autodoc", "	* Fills data for graph --shared items--
 
 	:param ent:
 	:type ent: Handle_StepBasic_ActionRequestAssignment &
@@ -297,7 +300,7 @@ class RWStepBasic_RWActionRequestSolution {
 ") WriteStep;
 		void WriteStep (StepData_StepWriter & SW,const Handle_StepBasic_ActionRequestSolution & ent);
 		%feature("compactdefaultargs") Share;
-		%feature("autodoc", "	* Fills data for graph (shared items)
+		%feature("autodoc", "	* Fills data for graph --shared items--
 
 	:param ent:
 	:type ent: Handle_StepBasic_ActionRequestSolution &
@@ -781,7 +784,7 @@ class RWStepBasic_RWCertification {
 ") WriteStep;
 		void WriteStep (StepData_StepWriter & SW,const Handle_StepBasic_Certification & ent);
 		%feature("compactdefaultargs") Share;
-		%feature("autodoc", "	* Fills data for graph (shared items)
+		%feature("autodoc", "	* Fills data for graph --shared items--
 
 	:param ent:
 	:type ent: Handle_StepBasic_Certification &
@@ -832,7 +835,7 @@ class RWStepBasic_RWCertificationAssignment {
 ") WriteStep;
 		void WriteStep (StepData_StepWriter & SW,const Handle_StepBasic_CertificationAssignment & ent);
 		%feature("compactdefaultargs") Share;
-		%feature("autodoc", "	* Fills data for graph (shared items)
+		%feature("autodoc", "	* Fills data for graph --shared items--
 
 	:param ent:
 	:type ent: Handle_StepBasic_CertificationAssignment &
@@ -883,7 +886,7 @@ class RWStepBasic_RWCertificationType {
 ") WriteStep;
 		void WriteStep (StepData_StepWriter & SW,const Handle_StepBasic_CertificationType & ent);
 		%feature("compactdefaultargs") Share;
-		%feature("autodoc", "	* Fills data for graph (shared items)
+		%feature("autodoc", "	* Fills data for graph --shared items--
 
 	:param ent:
 	:type ent: Handle_StepBasic_CertificationType &
@@ -934,7 +937,7 @@ class RWStepBasic_RWCharacterizedObject {
 ") WriteStep;
 		void WriteStep (StepData_StepWriter & SW,const Handle_StepBasic_CharacterizedObject & ent);
 		%feature("compactdefaultargs") Share;
-		%feature("autodoc", "	* Fills data for graph (shared items)
+		%feature("autodoc", "	* Fills data for graph --shared items--
 
 	:param ent:
 	:type ent: Handle_StepBasic_CharacterizedObject &
@@ -985,7 +988,7 @@ class RWStepBasic_RWContract {
 ") WriteStep;
 		void WriteStep (StepData_StepWriter & SW,const Handle_StepBasic_Contract & ent);
 		%feature("compactdefaultargs") Share;
-		%feature("autodoc", "	* Fills data for graph (shared items)
+		%feature("autodoc", "	* Fills data for graph --shared items--
 
 	:param ent:
 	:type ent: Handle_StepBasic_Contract &
@@ -1036,7 +1039,7 @@ class RWStepBasic_RWContractAssignment {
 ") WriteStep;
 		void WriteStep (StepData_StepWriter & SW,const Handle_StepBasic_ContractAssignment & ent);
 		%feature("compactdefaultargs") Share;
-		%feature("autodoc", "	* Fills data for graph (shared items)
+		%feature("autodoc", "	* Fills data for graph --shared items--
 
 	:param ent:
 	:type ent: Handle_StepBasic_ContractAssignment &
@@ -1087,7 +1090,7 @@ class RWStepBasic_RWContractType {
 ") WriteStep;
 		void WriteStep (StepData_StepWriter & SW,const Handle_StepBasic_ContractType & ent);
 		%feature("compactdefaultargs") Share;
-		%feature("autodoc", "	* Fills data for graph (shared items)
+		%feature("autodoc", "	* Fills data for graph --shared items--
 
 	:param ent:
 	:type ent: Handle_StepBasic_ContractType &
@@ -1829,7 +1832,7 @@ class RWStepBasic_RWDocument {
 ") WriteStep;
 		void WriteStep (StepData_StepWriter & SW,const Handle_StepBasic_Document & ent);
 		%feature("compactdefaultargs") Share;
-		%feature("autodoc", "	* Fills data for graph (shared items)
+		%feature("autodoc", "	* Fills data for graph --shared items--
 
 	:param ent:
 	:type ent: Handle_StepBasic_Document &
@@ -1880,7 +1883,7 @@ class RWStepBasic_RWDocumentFile {
 ") WriteStep;
 		void WriteStep (StepData_StepWriter & SW,const Handle_StepBasic_DocumentFile & ent);
 		%feature("compactdefaultargs") Share;
-		%feature("autodoc", "	* Fills data for graph (shared items)
+		%feature("autodoc", "	* Fills data for graph --shared items--
 
 	:param ent:
 	:type ent: Handle_StepBasic_DocumentFile &
@@ -1931,7 +1934,7 @@ class RWStepBasic_RWDocumentProductAssociation {
 ") WriteStep;
 		void WriteStep (StepData_StepWriter & SW,const Handle_StepBasic_DocumentProductAssociation & ent);
 		%feature("compactdefaultargs") Share;
-		%feature("autodoc", "	* Fills data for graph (shared items)
+		%feature("autodoc", "	* Fills data for graph --shared items--
 
 	:param ent:
 	:type ent: Handle_StepBasic_DocumentProductAssociation &
@@ -1982,7 +1985,7 @@ class RWStepBasic_RWDocumentProductEquivalence {
 ") WriteStep;
 		void WriteStep (StepData_StepWriter & SW,const Handle_StepBasic_DocumentProductEquivalence & ent);
 		%feature("compactdefaultargs") Share;
-		%feature("autodoc", "	* Fills data for graph (shared items)
+		%feature("autodoc", "	* Fills data for graph --shared items--
 
 	:param ent:
 	:type ent: Handle_StepBasic_DocumentProductEquivalence &
@@ -2076,7 +2079,7 @@ class RWStepBasic_RWDocumentRepresentationType {
 ") WriteStep;
 		void WriteStep (StepData_StepWriter & SW,const Handle_StepBasic_DocumentRepresentationType & ent);
 		%feature("compactdefaultargs") Share;
-		%feature("autodoc", "	* Fills data for graph (shared items)
+		%feature("autodoc", "	* Fills data for graph --shared items--
 
 	:param ent:
 	:type ent: Handle_StepBasic_DocumentRepresentationType &
@@ -2256,7 +2259,7 @@ class RWStepBasic_RWEffectivityAssignment {
 ") WriteStep;
 		void WriteStep (StepData_StepWriter & SW,const Handle_StepBasic_EffectivityAssignment & ent);
 		%feature("compactdefaultargs") Share;
-		%feature("autodoc", "	* Fills data for graph (shared items)
+		%feature("autodoc", "	* Fills data for graph --shared items--
 
 	:param ent:
 	:type ent: Handle_StepBasic_EffectivityAssignment &
@@ -2307,7 +2310,7 @@ class RWStepBasic_RWEulerAngles {
 ") WriteStep;
 		void WriteStep (StepData_StepWriter & SW,const Handle_StepBasic_EulerAngles & ent);
 		%feature("compactdefaultargs") Share;
-		%feature("autodoc", "	* Fills data for graph (shared items)
+		%feature("autodoc", "	* Fills data for graph --shared items--
 
 	:param ent:
 	:type ent: Handle_StepBasic_EulerAngles &
@@ -2358,7 +2361,7 @@ class RWStepBasic_RWExternalIdentificationAssignment {
 ") WriteStep;
 		void WriteStep (StepData_StepWriter & SW,const Handle_StepBasic_ExternalIdentificationAssignment & ent);
 		%feature("compactdefaultargs") Share;
-		%feature("autodoc", "	* Fills data for graph (shared items)
+		%feature("autodoc", "	* Fills data for graph --shared items--
 
 	:param ent:
 	:type ent: Handle_StepBasic_ExternalIdentificationAssignment &
@@ -2409,7 +2412,7 @@ class RWStepBasic_RWExternalSource {
 ") WriteStep;
 		void WriteStep (StepData_StepWriter & SW,const Handle_StepBasic_ExternalSource & ent);
 		%feature("compactdefaultargs") Share;
-		%feature("autodoc", "	* Fills data for graph (shared items)
+		%feature("autodoc", "	* Fills data for graph --shared items--
 
 	:param ent:
 	:type ent: Handle_StepBasic_ExternalSource &
@@ -2460,7 +2463,7 @@ class RWStepBasic_RWExternallyDefinedItem {
 ") WriteStep;
 		void WriteStep (StepData_StepWriter & SW,const Handle_StepBasic_ExternallyDefinedItem & ent);
 		%feature("compactdefaultargs") Share;
-		%feature("autodoc", "	* Fills data for graph (shared items)
+		%feature("autodoc", "	* Fills data for graph --shared items--
 
 	:param ent:
 	:type ent: Handle_StepBasic_ExternallyDefinedItem &
@@ -2511,7 +2514,7 @@ class RWStepBasic_RWGeneralProperty {
 ") WriteStep;
 		void WriteStep (StepData_StepWriter & SW,const Handle_StepBasic_GeneralProperty & ent);
 		%feature("compactdefaultargs") Share;
-		%feature("autodoc", "	* Fills data for graph (shared items)
+		%feature("autodoc", "	* Fills data for graph --shared items--
 
 	:param ent:
 	:type ent: Handle_StepBasic_GeneralProperty &
@@ -2562,7 +2565,7 @@ class RWStepBasic_RWGroup {
 ") WriteStep;
 		void WriteStep (StepData_StepWriter & SW,const Handle_StepBasic_Group & ent);
 		%feature("compactdefaultargs") Share;
-		%feature("autodoc", "	* Fills data for graph (shared items)
+		%feature("autodoc", "	* Fills data for graph --shared items--
 
 	:param ent:
 	:type ent: Handle_StepBasic_Group &
@@ -2613,7 +2616,7 @@ class RWStepBasic_RWGroupAssignment {
 ") WriteStep;
 		void WriteStep (StepData_StepWriter & SW,const Handle_StepBasic_GroupAssignment & ent);
 		%feature("compactdefaultargs") Share;
-		%feature("autodoc", "	* Fills data for graph (shared items)
+		%feature("autodoc", "	* Fills data for graph --shared items--
 
 	:param ent:
 	:type ent: Handle_StepBasic_GroupAssignment &
@@ -2664,7 +2667,7 @@ class RWStepBasic_RWGroupRelationship {
 ") WriteStep;
 		void WriteStep (StepData_StepWriter & SW,const Handle_StepBasic_GroupRelationship & ent);
 		%feature("compactdefaultargs") Share;
-		%feature("autodoc", "	* Fills data for graph (shared items)
+		%feature("autodoc", "	* Fills data for graph --shared items--
 
 	:param ent:
 	:type ent: Handle_StepBasic_GroupRelationship &
@@ -2715,7 +2718,7 @@ class RWStepBasic_RWIdentificationAssignment {
 ") WriteStep;
 		void WriteStep (StepData_StepWriter & SW,const Handle_StepBasic_IdentificationAssignment & ent);
 		%feature("compactdefaultargs") Share;
-		%feature("autodoc", "	* Fills data for graph (shared items)
+		%feature("autodoc", "	* Fills data for graph --shared items--
 
 	:param ent:
 	:type ent: Handle_StepBasic_IdentificationAssignment &
@@ -2766,7 +2769,7 @@ class RWStepBasic_RWIdentificationRole {
 ") WriteStep;
 		void WriteStep (StepData_StepWriter & SW,const Handle_StepBasic_IdentificationRole & ent);
 		%feature("compactdefaultargs") Share;
-		%feature("autodoc", "	* Fills data for graph (shared items)
+		%feature("autodoc", "	* Fills data for graph --shared items--
 
 	:param ent:
 	:type ent: Handle_StepBasic_IdentificationRole &
@@ -2989,7 +2992,7 @@ class RWStepBasic_RWMassUnit {
 ") WriteStep;
 		void WriteStep (StepData_StepWriter & SW,const Handle_StepBasic_MassUnit & ent);
 		%feature("compactdefaultargs") Share;
-		%feature("autodoc", "	* Fills data for graph (shared items)
+		%feature("autodoc", "	* Fills data for graph --shared items--
 
 	:param ent:
 	:type ent: Handle_StepBasic_MassUnit &
@@ -3126,7 +3129,7 @@ class RWStepBasic_RWNameAssignment {
 ") WriteStep;
 		void WriteStep (StepData_StepWriter & SW,const Handle_StepBasic_NameAssignment & ent);
 		%feature("compactdefaultargs") Share;
-		%feature("autodoc", "	* Fills data for graph (shared items)
+		%feature("autodoc", "	* Fills data for graph --shared items--
 
 	:param ent:
 	:type ent: Handle_StepBasic_NameAssignment &
@@ -3220,7 +3223,7 @@ class RWStepBasic_RWObjectRole {
 ") WriteStep;
 		void WriteStep (StepData_StepWriter & SW,const Handle_StepBasic_ObjectRole & ent);
 		%feature("compactdefaultargs") Share;
-		%feature("autodoc", "	* Fills data for graph (shared items)
+		%feature("autodoc", "	* Fills data for graph --shared items--
 
 	:param ent:
 	:type ent: Handle_StepBasic_ObjectRole &
@@ -3739,7 +3742,7 @@ class RWStepBasic_RWProductCategoryRelationship {
 ") WriteStep;
 		void WriteStep (StepData_StepWriter & SW,const Handle_StepBasic_ProductCategoryRelationship & ent);
 		%feature("compactdefaultargs") Share;
-		%feature("autodoc", "	* Fills data for graph (shared items)
+		%feature("autodoc", "	* Fills data for graph --shared items--
 
 	:param ent:
 	:type ent: Handle_StepBasic_ProductCategoryRelationship &
@@ -3790,7 +3793,7 @@ class RWStepBasic_RWProductConceptContext {
 ") WriteStep;
 		void WriteStep (StepData_StepWriter & SW,const Handle_StepBasic_ProductConceptContext & ent);
 		%feature("compactdefaultargs") Share;
-		%feature("autodoc", "	* Fills data for graph (shared items)
+		%feature("autodoc", "	* Fills data for graph --shared items--
 
 	:param ent:
 	:type ent: Handle_StepBasic_ProductConceptContext &
@@ -4056,7 +4059,7 @@ class RWStepBasic_RWProductDefinitionFormationRelationship {
 ") WriteStep;
 		void WriteStep (StepData_StepWriter & SW,const Handle_StepBasic_ProductDefinitionFormationRelationship & ent);
 		%feature("compactdefaultargs") Share;
-		%feature("autodoc", "	* Fills data for graph (shared items)
+		%feature("autodoc", "	* Fills data for graph --shared items--
 
 	:param ent:
 	:type ent: Handle_StepBasic_ProductDefinitionFormationRelationship &
@@ -4116,6 +4119,92 @@ class RWStepBasic_RWProductDefinitionFormationWithSpecifiedSource {
 	__repr__ = _dumps_object
 	}
 };
+%nodefaultctor RWStepBasic_RWProductDefinitionReference;
+class RWStepBasic_RWProductDefinitionReference {
+	public:
+		%feature("compactdefaultargs") RWStepBasic_RWProductDefinitionReference;
+		%feature("autodoc", "	:rtype: None
+") RWStepBasic_RWProductDefinitionReference;
+		 RWStepBasic_RWProductDefinitionReference ();
+		%feature("compactdefaultargs") ReadStep;
+		%feature("autodoc", "	:param data:
+	:type data: Handle_StepData_StepReaderData &
+	:param num:
+	:type num: int
+	:param ach:
+	:type ach: Handle_Interface_Check &
+	:param ent:
+	:type ent: Handle_StepBasic_ProductDefinitionReference &
+	:rtype: None
+") ReadStep;
+		void ReadStep (const Handle_StepData_StepReaderData & data,const Standard_Integer num,Handle_Interface_Check & ach,const Handle_StepBasic_ProductDefinitionReference & ent);
+		%feature("compactdefaultargs") WriteStep;
+		%feature("autodoc", "	:param SW:
+	:type SW: StepData_StepWriter &
+	:param ent:
+	:type ent: Handle_StepBasic_ProductDefinitionReference &
+	:rtype: None
+") WriteStep;
+		void WriteStep (StepData_StepWriter & SW,const Handle_StepBasic_ProductDefinitionReference & ent);
+		%feature("compactdefaultargs") Share;
+		%feature("autodoc", "	:param ent:
+	:type ent: Handle_StepBasic_ProductDefinitionReference &
+	:param iter:
+	:type iter: Interface_EntityIterator &
+	:rtype: None
+") Share;
+		void Share (const Handle_StepBasic_ProductDefinitionReference & ent,Interface_EntityIterator & iter);
+};
+
+
+%extend RWStepBasic_RWProductDefinitionReference {
+	%pythoncode {
+	__repr__ = _dumps_object
+	}
+};
+%nodefaultctor RWStepBasic_RWProductDefinitionReferenceWithLocalRepresentation;
+class RWStepBasic_RWProductDefinitionReferenceWithLocalRepresentation {
+	public:
+		%feature("compactdefaultargs") RWStepBasic_RWProductDefinitionReferenceWithLocalRepresentation;
+		%feature("autodoc", "	:rtype: None
+") RWStepBasic_RWProductDefinitionReferenceWithLocalRepresentation;
+		 RWStepBasic_RWProductDefinitionReferenceWithLocalRepresentation ();
+		%feature("compactdefaultargs") ReadStep;
+		%feature("autodoc", "	:param data:
+	:type data: Handle_StepData_StepReaderData &
+	:param num:
+	:type num: int
+	:param ach:
+	:type ach: Handle_Interface_Check &
+	:param ent:
+	:type ent: Handle_StepBasic_ProductDefinitionReferenceWithLocalRepresentation &
+	:rtype: None
+") ReadStep;
+		void ReadStep (const Handle_StepData_StepReaderData & data,const Standard_Integer num,Handle_Interface_Check & ach,const Handle_StepBasic_ProductDefinitionReferenceWithLocalRepresentation & ent);
+		%feature("compactdefaultargs") WriteStep;
+		%feature("autodoc", "	:param SW:
+	:type SW: StepData_StepWriter &
+	:param ent:
+	:type ent: Handle_StepBasic_ProductDefinitionReferenceWithLocalRepresentation &
+	:rtype: None
+") WriteStep;
+		void WriteStep (StepData_StepWriter & SW,const Handle_StepBasic_ProductDefinitionReferenceWithLocalRepresentation & ent);
+		%feature("compactdefaultargs") Share;
+		%feature("autodoc", "	:param ent:
+	:type ent: Handle_StepBasic_ProductDefinitionReferenceWithLocalRepresentation &
+	:param iter:
+	:type iter: Interface_EntityIterator &
+	:rtype: None
+") Share;
+		void Share (const Handle_StepBasic_ProductDefinitionReferenceWithLocalRepresentation & ent,Interface_EntityIterator & iter);
+};
+
+
+%extend RWStepBasic_RWProductDefinitionReferenceWithLocalRepresentation {
+	%pythoncode {
+	__repr__ = _dumps_object
+	}
+};
 %nodefaultctor RWStepBasic_RWProductDefinitionRelationship;
 class RWStepBasic_RWProductDefinitionRelationship {
 	public:
@@ -4150,7 +4239,7 @@ class RWStepBasic_RWProductDefinitionRelationship {
 ") WriteStep;
 		void WriteStep (StepData_StepWriter & SW,const Handle_StepBasic_ProductDefinitionRelationship & ent);
 		%feature("compactdefaultargs") Share;
-		%feature("autodoc", "	* Fills data for graph (shared items)
+		%feature("autodoc", "	* Fills data for graph --shared items--
 
 	:param ent:
 	:type ent: Handle_StepBasic_ProductDefinitionRelationship &
@@ -4373,7 +4462,7 @@ class RWStepBasic_RWRoleAssociation {
 ") WriteStep;
 		void WriteStep (StepData_StepWriter & SW,const Handle_StepBasic_RoleAssociation & ent);
 		%feature("compactdefaultargs") Share;
-		%feature("autodoc", "	* Fills data for graph (shared items)
+		%feature("autodoc", "	* Fills data for graph --shared items--
 
 	:param ent:
 	:type ent: Handle_StepBasic_RoleAssociation &
@@ -4966,7 +5055,7 @@ class RWStepBasic_RWThermodynamicTemperatureUnit {
 ") WriteStep;
 		void WriteStep (StepData_StepWriter & SW,const Handle_StepBasic_ThermodynamicTemperatureUnit & ent);
 		%feature("compactdefaultargs") Share;
-		%feature("autodoc", "	* Fills data for graph (shared items)
+		%feature("autodoc", "	* Fills data for graph --shared items--
 
 	:param ent:
 	:type ent: Handle_StepBasic_ThermodynamicTemperatureUnit &
@@ -5060,7 +5149,7 @@ class RWStepBasic_RWVersionedActionRequest {
 ") WriteStep;
 		void WriteStep (StepData_StepWriter & SW,const Handle_StepBasic_VersionedActionRequest & ent);
 		%feature("compactdefaultargs") Share;
-		%feature("autodoc", "	* Fills data for graph (shared items)
+		%feature("autodoc", "	* Fills data for graph --shared items--
 
 	:param ent:
 	:type ent: Handle_StepBasic_VersionedActionRequest &

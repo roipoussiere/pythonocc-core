@@ -1,5 +1,5 @@
 /*
-Copyright 2008-2017 Thomas Paviot (tpaviot@gmail.com)
+Copyright 2008-2018 Thomas Paviot (tpaviot@gmail.com)
 
 
 This file is part of pythonOCC.
@@ -56,6 +56,9 @@ def register_handle(handle, base_object):
 /* typedefs */
 /* end typedefs declaration */
 
+/* templates */
+/* end templates declaration */
+
 /* public enums */
 /* end public enums declaration */
 
@@ -63,7 +66,7 @@ def register_handle(handle, base_object):
 class BRepFilletAPI_LocalOperation : public BRepBuilderAPI_MakeShape {
 	public:
 		%feature("compactdefaultargs") Add;
-		%feature("autodoc", "	* Adds a contour in the builder (builds a contour of tangent edges).
+		%feature("autodoc", "	* Adds a contour in the builder --builds a contour of tangent edges--.
 
 	:param E:
 	:type E: TopoDS_Edge &
@@ -153,7 +156,7 @@ class BRepFilletAPI_LocalOperation : public BRepBuilderAPI_MakeShape {
 ") Abscissa;
 		virtual Standard_Real Abscissa (const Standard_Integer IC,const TopoDS_Vertex & V);
 		%feature("compactdefaultargs") RelativeAbscissa;
-		%feature("autodoc", "	* returns the relative abscissa([0.,1.]) of the vertex V on the contour of index IC.
+		%feature("autodoc", "	* returns the relative abscissa--[0.,1.]-- of the vertex V on the contour of index IC.
 
 	:param IC:
 	:type IC: int
@@ -455,7 +458,7 @@ class BRepFilletAPI_MakeChamfer : public BRepFilletAPI_LocalOperation {
 ") Add;
 		void Add (const TopoDS_Edge & E);
 		%feature("compactdefaultargs") Add;
-		%feature("autodoc", "	* Adds edge E to the table of edges used by this algorithm to build chamfers, where the parameters of the chamfer are given by the two distances Dis1 and Dis2; the face F identifies the side where Dis1 is measured. The Add function results in a contour being built by propagation from the edge E (i.e. the contour contains at least this edge). This contour is composed of edges of the shape which are tangential to one another and which delimit two series of tangential faces, with one series of faces being located on either side of the contour. Warning Nothing is done if edge E or the face F does not belong to the initial shape.
+		%feature("autodoc", "	* Adds edge E to the table of edges used by this algorithm to build chamfers, where the parameters of the chamfer are given by the two distances Dis1 and Dis2; the face F identifies the side where Dis1 is measured. The Add function results in a contour being built by propagation from the edge E --i.e. the contour contains at least this edge--. This contour is composed of edges of the shape which are tangential to one another and which delimit two series of tangential faces, with one series of faces being located on either side of the contour. Warning Nothing is done if edge E or the face F does not belong to the initial shape.
 
 	:param Dis:
 	:type Dis: float
@@ -487,7 +490,7 @@ class BRepFilletAPI_MakeChamfer : public BRepFilletAPI_LocalOperation {
 ") GetDist;
 		void GetDist (const Standard_Integer IC,Standard_Real &OutValue);
 		%feature("compactdefaultargs") Add;
-		%feature("autodoc", "	* Adds a fillet contour in the builder (builds a contour of tangent edges to <E> and sets the two distances <Dis1> and <Dis2> ( parameters of the chamfer ) ).
+		%feature("autodoc", "	* Adds a fillet contour in the builder --builds a contour of tangent edges to <E> and sets the two distances <Dis1> and <Dis2> -- parameters of the chamfer -- --.
 
 	:param Dis1:
 	:type Dis1: float
@@ -527,7 +530,7 @@ class BRepFilletAPI_MakeChamfer : public BRepFilletAPI_LocalOperation {
 ") Dists;
 		void Dists (const Standard_Integer IC,Standard_Real &OutValue,Standard_Real &OutValue);
 		%feature("compactdefaultargs") AddDA;
-		%feature("autodoc", "	* Adds a fillet contour in the builder (builds a contour of tangent edges to <E> and sets the distance <Dis1> and angle <Angle> ( parameters of the chamfer ) ).
+		%feature("autodoc", "	* Adds a fillet contour in the builder --builds a contour of tangent edges to <E> and sets the distance <Dis1> and angle <Angle> -- parameters of the chamfer -- --.
 
 	:param Dis:
 	:type Dis: float
@@ -675,7 +678,7 @@ class BRepFilletAPI_MakeChamfer : public BRepFilletAPI_LocalOperation {
 ") Abscissa;
 		Standard_Real Abscissa (const Standard_Integer IC,const TopoDS_Vertex & V);
 		%feature("compactdefaultargs") RelativeAbscissa;
-		%feature("autodoc", "	* Returns the relative curvilinear abscissa (i.e. between 0 and 1) of the vertex V on the contour of index IC in the internal data structure of this algorithm. Warning Returns -1. if: - IC is outside the bounds of the table of contours, or - V is not on the contour of index IC.
+		%feature("autodoc", "	* Returns the relative curvilinear abscissa --i.e. between 0 and 1-- of the vertex V on the contour of index IC in the internal data structure of this algorithm. Warning Returns -1. if: - IC is outside the bounds of the table of contours, or - V is not on the contour of index IC.
 
 	:param IC:
 	:type IC: int
@@ -772,7 +775,7 @@ class BRepFilletAPI_MakeChamfer : public BRepFilletAPI_LocalOperation {
 class BRepFilletAPI_MakeFillet : public BRepFilletAPI_LocalOperation {
 	public:
 		%feature("compactdefaultargs") BRepFilletAPI_MakeFillet;
-		%feature("autodoc", "	* Initializes the computation of the fillets. <FShape> sets the type of fillet surface. The default value is ChFi3d_Rational (classical nurbs representation of circles). ChFi3d_QuasiAngular corresponds to a nurbs representation of circles which parameterisation matches the circle one. ChFi3d_Polynomial corresponds to a polynomial representation of circles.
+		%feature("autodoc", "	* Initializes the computation of the fillets. <FShape> sets the type of fillet surface. The default value is ChFi3d_Rational --classical nurbs representation of circles--. ChFi3d_QuasiAngular corresponds to a nurbs representation of circles which parameterisation matches the circle one. ChFi3d_Polynomial corresponds to a polynomial representation of circles.
 
 	:param S:
 	:type S: TopoDS_Shape &
@@ -798,7 +801,7 @@ class BRepFilletAPI_MakeFillet : public BRepFilletAPI_LocalOperation {
 ") SetParams;
 		void SetParams (const Standard_Real Tang,const Standard_Real Tesp,const Standard_Real T2d,const Standard_Real TApp3d,const Standard_Real TolApp2d,const Standard_Real Fleche);
 		%feature("compactdefaultargs") SetContinuity;
-		%feature("autodoc", "	* Changes the parameters of continiuity InternalContinuity to produce fillet'surfaces with an continuity Ci (i=0,1 or 2). By defaultInternalContinuity = GeomAbs_C1. AngularTolerance is the G1 tolerance between fillet and support'faces.
+		%feature("autodoc", "	* Changes the parameters of continiuity InternalContinuity to produce fillet'surfaces with an continuity Ci --i=0,1 or 2--. By defaultInternalContinuity = GeomAbs_C1. AngularTolerance is the G1 tolerance between fillet and support'faces.
 
 	:param InternalContinuity:
 	:type InternalContinuity: GeomAbs_Shape
@@ -808,7 +811,7 @@ class BRepFilletAPI_MakeFillet : public BRepFilletAPI_LocalOperation {
 ") SetContinuity;
 		void SetContinuity (const GeomAbs_Shape InternalContinuity,const Standard_Real AngularTolerance);
 		%feature("compactdefaultargs") Add;
-		%feature("autodoc", "	* Adds a fillet contour in the builder (builds a contour of tangent edges). The Radius must be set after.
+		%feature("autodoc", "	* Adds a fillet contour in the builder --builds a contour of tangent edges--. The Radius must be set after.
 
 	:param E:
 	:type E: TopoDS_Edge &
@@ -848,7 +851,7 @@ class BRepFilletAPI_MakeFillet : public BRepFilletAPI_LocalOperation {
 ") Add;
 		void Add (const Handle_Law_Function & L,const TopoDS_Edge & E);
 		%feature("compactdefaultargs") Add;
-		%feature("autodoc", "	* Adds a fillet description in the builder - builds a contour of tangent edges, - sets the radius evolution law interpolating the values given in the array UandR : //! p2d.X() = relative parameter on the spine [0,1] p2d.Y() = value of the radius.
+		%feature("autodoc", "	* Adds a fillet description in the builder - builds a contour of tangent edges, - sets the radius evolution law interpolating the values given in the array UandR : //! p2d.X---- = relative parameter on the spine [0,1] p2d.Y---- = value of the radius.
 
 	:param UandR:
 	:type UandR: TColgp_Array1OfPnt2d
@@ -896,7 +899,7 @@ class BRepFilletAPI_MakeFillet : public BRepFilletAPI_LocalOperation {
 ") SetRadius;
 		void SetRadius (const Handle_Law_Function & L,const Standard_Integer IC,const Standard_Integer IinC);
 		%feature("compactdefaultargs") SetRadius;
-		%feature("autodoc", "	* Sets the parameters of the fillet along the contour of index IC generated using the Add function in the internal data structure of this algorithm, where the radius of the fillet evolves according to the evolution law which interpolates the set of parameter and radius pairs given in the array UandR as follows: - the X coordinate of a point in UandR defines a relative parameter on the contour (i.e. a parameter between 0 and 1), - the Y coordinate of a point in UandR gives the corresponding value of the radius, and the radius evolves between the first and last vertices of the contour of index IC.
+		%feature("autodoc", "	* Sets the parameters of the fillet along the contour of index IC generated using the Add function in the internal data structure of this algorithm, where the radius of the fillet evolves according to the evolution law which interpolates the set of parameter and radius pairs given in the array UandR as follows: - the X coordinate of a point in UandR defines a relative parameter on the contour --i.e. a parameter between 0 and 1--, - the Y coordinate of a point in UandR gives the corresponding value of the radius, and the radius evolves between the first and last vertices of the contour of index IC.
 
 	:param UandR:
 	:type UandR: TColgp_Array1OfPnt2d
@@ -1092,7 +1095,7 @@ class BRepFilletAPI_MakeFillet : public BRepFilletAPI_LocalOperation {
 ") Abscissa;
 		Standard_Real Abscissa (const Standard_Integer IC,const TopoDS_Vertex & V);
 		%feature("compactdefaultargs") RelativeAbscissa;
-		%feature("autodoc", "	* Returns the relative curvilinear abscissa (i.e. between 0 and 1) of the vertex V on the contour of index IC in the internal data structure of this algorithm. Warning Returns -1. if: - IC is outside the bounds of the table of contours, or - V is not on the contour of index IC.
+		%feature("autodoc", "	* Returns the relative curvilinear abscissa --i.e. between 0 and 1-- of the vertex V on the contour of index IC in the internal data structure of this algorithm. Warning Returns -1. if: - IC is outside the bounds of the table of contours, or - V is not on the contour of index IC.
 
 	:param IC:
 	:type IC: int
@@ -1198,7 +1201,7 @@ class BRepFilletAPI_MakeFillet : public BRepFilletAPI_LocalOperation {
 ") NbFaultyContours;
 		Standard_Integer NbFaultyContours ();
 		%feature("compactdefaultargs") FaultyContour;
-		%feature("autodoc", "	* for each I in [1.. NbFaultyContours] returns the index IC of the contour where the computation of the fillet failed. the method NbEdges(IC) gives the number of edges in the contour IC the method Edge(IC,ie) gives the edge number ie of the contour IC
+		%feature("autodoc", "	* for each I in [1.. NbFaultyContours] returns the index IC of the contour where the computation of the fillet failed. the method NbEdges--IC-- gives the number of edges in the contour IC the method Edge--IC,ie-- gives the edge number ie of the contour IC
 
 	:param I:
 	:type I: int
@@ -1244,7 +1247,7 @@ class BRepFilletAPI_MakeFillet : public BRepFilletAPI_LocalOperation {
 ") HasResult;
 		Standard_Boolean HasResult ();
 		%feature("compactdefaultargs") BadShape;
-		%feature("autodoc", "	* if (HasResult()) returns the partial result
+		%feature("autodoc", "	* if --HasResult------ returns the partial result
 
 	:rtype: TopoDS_Shape
 ") BadShape;

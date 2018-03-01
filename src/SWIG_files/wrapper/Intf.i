@@ -1,5 +1,5 @@
 /*
-Copyright 2008-2017 Thomas Paviot (tpaviot@gmail.com)
+Copyright 2008-2018 Thomas Paviot (tpaviot@gmail.com)
 
 
 This file is part of pythonOCC.
@@ -56,6 +56,13 @@ def register_handle(handle, base_object):
 /* typedefs */
 /* end typedefs declaration */
 
+/* templates */
+%template(Intf_SeqOfSectionLine) NCollection_Sequence <Intf_SectionLine>;
+%template(Intf_SeqOfSectionPoint) NCollection_Sequence <Intf_SectionPoint>;
+%template(Intf_SeqOfTangentZone) NCollection_Sequence <Intf_TangentZone>;
+%template(Intf_Array1OfLin) NCollection_Array1 <gp_Lin>;
+/* end templates declaration */
+
 /* public enums */
 enum Intf_PIType {
 	Intf_EXTERNAL = 0,
@@ -107,94 +114,8 @@ class Intf {
 	__repr__ = _dumps_object
 	}
 };
-%nodefaultctor Intf_Array1OfLin;
-class Intf_Array1OfLin {
-	public:
-		%feature("compactdefaultargs") Intf_Array1OfLin;
-		%feature("autodoc", "	:param Low:
-	:type Low: int
-	:param Up:
-	:type Up: int
-	:rtype: None
-") Intf_Array1OfLin;
-		 Intf_Array1OfLin (const Standard_Integer Low,const Standard_Integer Up);
-		%feature("compactdefaultargs") Intf_Array1OfLin;
-		%feature("autodoc", "	:param Item:
-	:type Item: gp_Lin
-	:param Low:
-	:type Low: int
-	:param Up:
-	:type Up: int
-	:rtype: None
-") Intf_Array1OfLin;
-		 Intf_Array1OfLin (const gp_Lin & Item,const Standard_Integer Low,const Standard_Integer Up);
-		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	:param V:
-	:type V: gp_Lin
-	:rtype: None
-") Init;
-		void Init (const gp_Lin & V);
-		%feature("compactdefaultargs") Destroy;
-		%feature("autodoc", "	:rtype: None
-") Destroy;
-		void Destroy ();
-		%feature("compactdefaultargs") IsAllocated;
-		%feature("autodoc", "	:rtype: bool
-") IsAllocated;
-		Standard_Boolean IsAllocated ();
-		%feature("compactdefaultargs") Assign;
-		%feature("autodoc", "	:param Other:
-	:type Other: Intf_Array1OfLin &
-	:rtype: Intf_Array1OfLin
-") Assign;
-		const Intf_Array1OfLin & Assign (const Intf_Array1OfLin & Other);
-		%feature("compactdefaultargs") operator =;
-		%feature("autodoc", "	:param Other:
-	:type Other: Intf_Array1OfLin &
-	:rtype: Intf_Array1OfLin
-") operator =;
-		const Intf_Array1OfLin & operator = (const Intf_Array1OfLin & Other);
-		%feature("compactdefaultargs") Length;
-		%feature("autodoc", "	:rtype: int
-") Length;
-		Standard_Integer Length ();
-		%feature("compactdefaultargs") Lower;
-		%feature("autodoc", "	:rtype: int
-") Lower;
-		Standard_Integer Lower ();
-		%feature("compactdefaultargs") Upper;
-		%feature("autodoc", "	:rtype: int
-") Upper;
-		Standard_Integer Upper ();
-		%feature("compactdefaultargs") SetValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param Value:
-	:type Value: gp_Lin
-	:rtype: None
-") SetValue;
-		void SetValue (const Standard_Integer Index,const gp_Lin & Value);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: gp_Lin
-") Value;
-		const gp_Lin  Value (const Standard_Integer Index);
-		%feature("compactdefaultargs") ChangeValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: gp_Lin
-") ChangeValue;
-		gp_Lin  ChangeValue (const Standard_Integer Index);
-};
-
-
-%extend Intf_Array1OfLin {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
 %nodefaultctor Intf_Interference;
+%ignore Intf_Interference::~Intf_Interference();
 class Intf_Interference {
 	public:
 		%feature("compactdefaultargs") NbSectionPoints;
@@ -543,7 +464,7 @@ class Intf_SectionPoint {
 ") InfoSecond;
 		void InfoSecond (Intf_PIType & Dim,Standard_Integer &OutValue,Standard_Real &OutValue);
 		%feature("compactdefaultargs") Incidence;
-		%feature("autodoc", "	* Gives the incidence at this section point. The incidence between the two triangles is given by the cosine. The best incidence is 0. (PI/2). The worst is 1. (null angle).
+		%feature("autodoc", "	* Gives the incidence at this section point. The incidence between the two triangles is given by the cosine. The best incidence is 0. --PI/2--. The worst is 1. --null angle--.
 
 	:rtype: float
 ") Incidence;
@@ -583,7 +504,7 @@ class Intf_SectionPoint {
 ") Intf_SectionPoint;
 		 Intf_SectionPoint ();
 		%feature("compactdefaultargs") Intf_SectionPoint;
-		%feature("autodoc", "	* Builds a SectionPoint with the respective dimensions (vertex edge or face) of the concerned arguments and their addresses in the Topological structure.
+		%feature("autodoc", "	* Builds a SectionPoint with the respective dimensions --vertex edge or face-- of the concerned arguments and their addresses in the Topological structure.
 
 	:param Where:
 	:type Where: gp_Pnt
@@ -609,7 +530,7 @@ class Intf_SectionPoint {
 ") Intf_SectionPoint;
 		 Intf_SectionPoint (const gp_Pnt & Where,const Intf_PIType DimeO,const Standard_Integer AddrO1,const Standard_Integer AddrO2,const Standard_Real ParamO,const Intf_PIType DimeT,const Standard_Integer AddrT1,const Standard_Integer AddrT2,const Standard_Real ParamT,const Standard_Real Incid);
 		%feature("compactdefaultargs") Intf_SectionPoint;
-		%feature("autodoc", "	* Builds a SectionPoint 2d with the respective dimensions (vertex or edge) of the concerned arguments and their addresses in the Topological structure.
+		%feature("autodoc", "	* Builds a SectionPoint 2d with the respective dimensions --vertex or edge-- of the concerned arguments and their addresses in the Topological structure.
 
 	:param Where:
 	:type Where: gp_Pnt2d
@@ -648,648 +569,6 @@ class Intf_SectionPoint {
 
 
 %extend Intf_SectionPoint {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor Intf_SeqOfSectionLine;
-class Intf_SeqOfSectionLine : public TCollection_BaseSequence {
-	public:
-		%feature("compactdefaultargs") Intf_SeqOfSectionLine;
-		%feature("autodoc", "	:rtype: None
-") Intf_SeqOfSectionLine;
-		 Intf_SeqOfSectionLine ();
-		%feature("compactdefaultargs") Intf_SeqOfSectionLine;
-		%feature("autodoc", "	:param Other:
-	:type Other: Intf_SeqOfSectionLine &
-	:rtype: None
-") Intf_SeqOfSectionLine;
-		 Intf_SeqOfSectionLine (const Intf_SeqOfSectionLine & Other);
-		%feature("compactdefaultargs") Clear;
-		%feature("autodoc", "	:rtype: None
-") Clear;
-		void Clear ();
-		%feature("compactdefaultargs") Assign;
-		%feature("autodoc", "	:param Other:
-	:type Other: Intf_SeqOfSectionLine &
-	:rtype: Intf_SeqOfSectionLine
-") Assign;
-		const Intf_SeqOfSectionLine & Assign (const Intf_SeqOfSectionLine & Other);
-		%feature("compactdefaultargs") operator =;
-		%feature("autodoc", "	:param Other:
-	:type Other: Intf_SeqOfSectionLine &
-	:rtype: Intf_SeqOfSectionLine
-") operator =;
-		const Intf_SeqOfSectionLine & operator = (const Intf_SeqOfSectionLine & Other);
-		%feature("compactdefaultargs") Append;
-		%feature("autodoc", "	:param T:
-	:type T: Intf_SectionLine &
-	:rtype: None
-") Append;
-		void Append (const Intf_SectionLine & T);
-		%feature("compactdefaultargs") Append;
-		%feature("autodoc", "	:param S:
-	:type S: Intf_SeqOfSectionLine &
-	:rtype: None
-") Append;
-		void Append (Intf_SeqOfSectionLine & S);
-		%feature("compactdefaultargs") Prepend;
-		%feature("autodoc", "	:param T:
-	:type T: Intf_SectionLine &
-	:rtype: None
-") Prepend;
-		void Prepend (const Intf_SectionLine & T);
-		%feature("compactdefaultargs") Prepend;
-		%feature("autodoc", "	:param S:
-	:type S: Intf_SeqOfSectionLine &
-	:rtype: None
-") Prepend;
-		void Prepend (Intf_SeqOfSectionLine & S);
-		%feature("compactdefaultargs") InsertBefore;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param T:
-	:type T: Intf_SectionLine &
-	:rtype: None
-") InsertBefore;
-		void InsertBefore (const Standard_Integer Index,const Intf_SectionLine & T);
-		%feature("compactdefaultargs") InsertBefore;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param S:
-	:type S: Intf_SeqOfSectionLine &
-	:rtype: None
-") InsertBefore;
-		void InsertBefore (const Standard_Integer Index,Intf_SeqOfSectionLine & S);
-		%feature("compactdefaultargs") InsertAfter;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param T:
-	:type T: Intf_SectionLine &
-	:rtype: None
-") InsertAfter;
-		void InsertAfter (const Standard_Integer Index,const Intf_SectionLine & T);
-		%feature("compactdefaultargs") InsertAfter;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param S:
-	:type S: Intf_SeqOfSectionLine &
-	:rtype: None
-") InsertAfter;
-		void InsertAfter (const Standard_Integer Index,Intf_SeqOfSectionLine & S);
-		%feature("compactdefaultargs") First;
-		%feature("autodoc", "	:rtype: Intf_SectionLine
-") First;
-		const Intf_SectionLine & First ();
-		%feature("compactdefaultargs") Last;
-		%feature("autodoc", "	:rtype: Intf_SectionLine
-") Last;
-		const Intf_SectionLine & Last ();
-		%feature("compactdefaultargs") Split;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param Sub:
-	:type Sub: Intf_SeqOfSectionLine &
-	:rtype: None
-") Split;
-		void Split (const Standard_Integer Index,Intf_SeqOfSectionLine & Sub);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: Intf_SectionLine
-") Value;
-		const Intf_SectionLine & Value (const Standard_Integer Index);
-		%feature("compactdefaultargs") SetValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param I:
-	:type I: Intf_SectionLine &
-	:rtype: None
-") SetValue;
-		void SetValue (const Standard_Integer Index,const Intf_SectionLine & I);
-		%feature("compactdefaultargs") ChangeValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: Intf_SectionLine
-") ChangeValue;
-		Intf_SectionLine & ChangeValue (const Standard_Integer Index);
-		%feature("compactdefaultargs") Remove;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: None
-") Remove;
-		void Remove (const Standard_Integer Index);
-		%feature("compactdefaultargs") Remove;
-		%feature("autodoc", "	:param FromIndex:
-	:type FromIndex: int
-	:param ToIndex:
-	:type ToIndex: int
-	:rtype: None
-") Remove;
-		void Remove (const Standard_Integer FromIndex,const Standard_Integer ToIndex);
-};
-
-
-%extend Intf_SeqOfSectionLine {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor Intf_SeqOfSectionPoint;
-class Intf_SeqOfSectionPoint : public TCollection_BaseSequence {
-	public:
-		%feature("compactdefaultargs") Intf_SeqOfSectionPoint;
-		%feature("autodoc", "	:rtype: None
-") Intf_SeqOfSectionPoint;
-		 Intf_SeqOfSectionPoint ();
-		%feature("compactdefaultargs") Intf_SeqOfSectionPoint;
-		%feature("autodoc", "	:param Other:
-	:type Other: Intf_SeqOfSectionPoint &
-	:rtype: None
-") Intf_SeqOfSectionPoint;
-		 Intf_SeqOfSectionPoint (const Intf_SeqOfSectionPoint & Other);
-		%feature("compactdefaultargs") Clear;
-		%feature("autodoc", "	:rtype: None
-") Clear;
-		void Clear ();
-		%feature("compactdefaultargs") Assign;
-		%feature("autodoc", "	:param Other:
-	:type Other: Intf_SeqOfSectionPoint &
-	:rtype: Intf_SeqOfSectionPoint
-") Assign;
-		const Intf_SeqOfSectionPoint & Assign (const Intf_SeqOfSectionPoint & Other);
-		%feature("compactdefaultargs") operator =;
-		%feature("autodoc", "	:param Other:
-	:type Other: Intf_SeqOfSectionPoint &
-	:rtype: Intf_SeqOfSectionPoint
-") operator =;
-		const Intf_SeqOfSectionPoint & operator = (const Intf_SeqOfSectionPoint & Other);
-		%feature("compactdefaultargs") Append;
-		%feature("autodoc", "	:param T:
-	:type T: Intf_SectionPoint &
-	:rtype: None
-") Append;
-		void Append (const Intf_SectionPoint & T);
-		%feature("compactdefaultargs") Append;
-		%feature("autodoc", "	:param S:
-	:type S: Intf_SeqOfSectionPoint &
-	:rtype: None
-") Append;
-		void Append (Intf_SeqOfSectionPoint & S);
-		%feature("compactdefaultargs") Prepend;
-		%feature("autodoc", "	:param T:
-	:type T: Intf_SectionPoint &
-	:rtype: None
-") Prepend;
-		void Prepend (const Intf_SectionPoint & T);
-		%feature("compactdefaultargs") Prepend;
-		%feature("autodoc", "	:param S:
-	:type S: Intf_SeqOfSectionPoint &
-	:rtype: None
-") Prepend;
-		void Prepend (Intf_SeqOfSectionPoint & S);
-		%feature("compactdefaultargs") InsertBefore;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param T:
-	:type T: Intf_SectionPoint &
-	:rtype: None
-") InsertBefore;
-		void InsertBefore (const Standard_Integer Index,const Intf_SectionPoint & T);
-		%feature("compactdefaultargs") InsertBefore;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param S:
-	:type S: Intf_SeqOfSectionPoint &
-	:rtype: None
-") InsertBefore;
-		void InsertBefore (const Standard_Integer Index,Intf_SeqOfSectionPoint & S);
-		%feature("compactdefaultargs") InsertAfter;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param T:
-	:type T: Intf_SectionPoint &
-	:rtype: None
-") InsertAfter;
-		void InsertAfter (const Standard_Integer Index,const Intf_SectionPoint & T);
-		%feature("compactdefaultargs") InsertAfter;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param S:
-	:type S: Intf_SeqOfSectionPoint &
-	:rtype: None
-") InsertAfter;
-		void InsertAfter (const Standard_Integer Index,Intf_SeqOfSectionPoint & S);
-		%feature("compactdefaultargs") First;
-		%feature("autodoc", "	:rtype: Intf_SectionPoint
-") First;
-		const Intf_SectionPoint & First ();
-		%feature("compactdefaultargs") Last;
-		%feature("autodoc", "	:rtype: Intf_SectionPoint
-") Last;
-		const Intf_SectionPoint & Last ();
-		%feature("compactdefaultargs") Split;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param Sub:
-	:type Sub: Intf_SeqOfSectionPoint &
-	:rtype: None
-") Split;
-		void Split (const Standard_Integer Index,Intf_SeqOfSectionPoint & Sub);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: Intf_SectionPoint
-") Value;
-		const Intf_SectionPoint & Value (const Standard_Integer Index);
-		%feature("compactdefaultargs") SetValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param I:
-	:type I: Intf_SectionPoint &
-	:rtype: None
-") SetValue;
-		void SetValue (const Standard_Integer Index,const Intf_SectionPoint & I);
-		%feature("compactdefaultargs") ChangeValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: Intf_SectionPoint
-") ChangeValue;
-		Intf_SectionPoint & ChangeValue (const Standard_Integer Index);
-		%feature("compactdefaultargs") Remove;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: None
-") Remove;
-		void Remove (const Standard_Integer Index);
-		%feature("compactdefaultargs") Remove;
-		%feature("autodoc", "	:param FromIndex:
-	:type FromIndex: int
-	:param ToIndex:
-	:type ToIndex: int
-	:rtype: None
-") Remove;
-		void Remove (const Standard_Integer FromIndex,const Standard_Integer ToIndex);
-};
-
-
-%extend Intf_SeqOfSectionPoint {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor Intf_SeqOfTangentZone;
-class Intf_SeqOfTangentZone : public TCollection_BaseSequence {
-	public:
-		%feature("compactdefaultargs") Intf_SeqOfTangentZone;
-		%feature("autodoc", "	:rtype: None
-") Intf_SeqOfTangentZone;
-		 Intf_SeqOfTangentZone ();
-		%feature("compactdefaultargs") Intf_SeqOfTangentZone;
-		%feature("autodoc", "	:param Other:
-	:type Other: Intf_SeqOfTangentZone &
-	:rtype: None
-") Intf_SeqOfTangentZone;
-		 Intf_SeqOfTangentZone (const Intf_SeqOfTangentZone & Other);
-		%feature("compactdefaultargs") Clear;
-		%feature("autodoc", "	:rtype: None
-") Clear;
-		void Clear ();
-		%feature("compactdefaultargs") Assign;
-		%feature("autodoc", "	:param Other:
-	:type Other: Intf_SeqOfTangentZone &
-	:rtype: Intf_SeqOfTangentZone
-") Assign;
-		const Intf_SeqOfTangentZone & Assign (const Intf_SeqOfTangentZone & Other);
-		%feature("compactdefaultargs") operator =;
-		%feature("autodoc", "	:param Other:
-	:type Other: Intf_SeqOfTangentZone &
-	:rtype: Intf_SeqOfTangentZone
-") operator =;
-		const Intf_SeqOfTangentZone & operator = (const Intf_SeqOfTangentZone & Other);
-		%feature("compactdefaultargs") Append;
-		%feature("autodoc", "	:param T:
-	:type T: Intf_TangentZone &
-	:rtype: None
-") Append;
-		void Append (const Intf_TangentZone & T);
-		%feature("compactdefaultargs") Append;
-		%feature("autodoc", "	:param S:
-	:type S: Intf_SeqOfTangentZone &
-	:rtype: None
-") Append;
-		void Append (Intf_SeqOfTangentZone & S);
-		%feature("compactdefaultargs") Prepend;
-		%feature("autodoc", "	:param T:
-	:type T: Intf_TangentZone &
-	:rtype: None
-") Prepend;
-		void Prepend (const Intf_TangentZone & T);
-		%feature("compactdefaultargs") Prepend;
-		%feature("autodoc", "	:param S:
-	:type S: Intf_SeqOfTangentZone &
-	:rtype: None
-") Prepend;
-		void Prepend (Intf_SeqOfTangentZone & S);
-		%feature("compactdefaultargs") InsertBefore;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param T:
-	:type T: Intf_TangentZone &
-	:rtype: None
-") InsertBefore;
-		void InsertBefore (const Standard_Integer Index,const Intf_TangentZone & T);
-		%feature("compactdefaultargs") InsertBefore;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param S:
-	:type S: Intf_SeqOfTangentZone &
-	:rtype: None
-") InsertBefore;
-		void InsertBefore (const Standard_Integer Index,Intf_SeqOfTangentZone & S);
-		%feature("compactdefaultargs") InsertAfter;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param T:
-	:type T: Intf_TangentZone &
-	:rtype: None
-") InsertAfter;
-		void InsertAfter (const Standard_Integer Index,const Intf_TangentZone & T);
-		%feature("compactdefaultargs") InsertAfter;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param S:
-	:type S: Intf_SeqOfTangentZone &
-	:rtype: None
-") InsertAfter;
-		void InsertAfter (const Standard_Integer Index,Intf_SeqOfTangentZone & S);
-		%feature("compactdefaultargs") First;
-		%feature("autodoc", "	:rtype: Intf_TangentZone
-") First;
-		const Intf_TangentZone & First ();
-		%feature("compactdefaultargs") Last;
-		%feature("autodoc", "	:rtype: Intf_TangentZone
-") Last;
-		const Intf_TangentZone & Last ();
-		%feature("compactdefaultargs") Split;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param Sub:
-	:type Sub: Intf_SeqOfTangentZone &
-	:rtype: None
-") Split;
-		void Split (const Standard_Integer Index,Intf_SeqOfTangentZone & Sub);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: Intf_TangentZone
-") Value;
-		const Intf_TangentZone & Value (const Standard_Integer Index);
-		%feature("compactdefaultargs") SetValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param I:
-	:type I: Intf_TangentZone &
-	:rtype: None
-") SetValue;
-		void SetValue (const Standard_Integer Index,const Intf_TangentZone & I);
-		%feature("compactdefaultargs") ChangeValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: Intf_TangentZone
-") ChangeValue;
-		Intf_TangentZone & ChangeValue (const Standard_Integer Index);
-		%feature("compactdefaultargs") Remove;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: None
-") Remove;
-		void Remove (const Standard_Integer Index);
-		%feature("compactdefaultargs") Remove;
-		%feature("autodoc", "	:param FromIndex:
-	:type FromIndex: int
-	:param ToIndex:
-	:type ToIndex: int
-	:rtype: None
-") Remove;
-		void Remove (const Standard_Integer FromIndex,const Standard_Integer ToIndex);
-};
-
-
-%extend Intf_SeqOfTangentZone {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor Intf_SequenceNodeOfSeqOfSectionLine;
-class Intf_SequenceNodeOfSeqOfSectionLine : public TCollection_SeqNode {
-	public:
-		%feature("compactdefaultargs") Intf_SequenceNodeOfSeqOfSectionLine;
-		%feature("autodoc", "	:param I:
-	:type I: Intf_SectionLine &
-	:param n:
-	:type n: TCollection_SeqNodePtr &
-	:param p:
-	:type p: TCollection_SeqNodePtr &
-	:rtype: None
-") Intf_SequenceNodeOfSeqOfSectionLine;
-		 Intf_SequenceNodeOfSeqOfSectionLine (const Intf_SectionLine & I,const TCollection_SeqNodePtr & n,const TCollection_SeqNodePtr & p);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:rtype: Intf_SectionLine
-") Value;
-		Intf_SectionLine & Value ();
-};
-
-
-%extend Intf_SequenceNodeOfSeqOfSectionLine {
-	%pythoncode {
-		def GetHandle(self):
-		    try:
-		        return self.thisHandle
-		    except:
-		        self.thisHandle = Handle_Intf_SequenceNodeOfSeqOfSectionLine(self)
-		        self.thisown = False
-		        return self.thisHandle
-	}
-};
-
-%pythonappend Handle_Intf_SequenceNodeOfSeqOfSectionLine::Handle_Intf_SequenceNodeOfSeqOfSectionLine %{
-    # register the handle in the base object
-    if len(args) > 0:
-        register_handle(self, args[0])
-%}
-
-%nodefaultctor Handle_Intf_SequenceNodeOfSeqOfSectionLine;
-class Handle_Intf_SequenceNodeOfSeqOfSectionLine : public Handle_TCollection_SeqNode {
-
-    public:
-        // constructors
-        Handle_Intf_SequenceNodeOfSeqOfSectionLine();
-        Handle_Intf_SequenceNodeOfSeqOfSectionLine(const Handle_Intf_SequenceNodeOfSeqOfSectionLine &aHandle);
-        Handle_Intf_SequenceNodeOfSeqOfSectionLine(const Intf_SequenceNodeOfSeqOfSectionLine *anItem);
-        void Nullify();
-        Standard_Boolean IsNull() const;
-        static const Handle_Intf_SequenceNodeOfSeqOfSectionLine DownCast(const Handle_Standard_Transient &AnObject);
-
-};
-%extend Handle_Intf_SequenceNodeOfSeqOfSectionLine {
-    Intf_SequenceNodeOfSeqOfSectionLine* _get_reference() {
-    return (Intf_SequenceNodeOfSeqOfSectionLine*)$self->Access();
-    }
-};
-
-%extend Handle_Intf_SequenceNodeOfSeqOfSectionLine {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
-};
-
-%extend Intf_SequenceNodeOfSeqOfSectionLine {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor Intf_SequenceNodeOfSeqOfSectionPoint;
-class Intf_SequenceNodeOfSeqOfSectionPoint : public TCollection_SeqNode {
-	public:
-		%feature("compactdefaultargs") Intf_SequenceNodeOfSeqOfSectionPoint;
-		%feature("autodoc", "	:param I:
-	:type I: Intf_SectionPoint &
-	:param n:
-	:type n: TCollection_SeqNodePtr &
-	:param p:
-	:type p: TCollection_SeqNodePtr &
-	:rtype: None
-") Intf_SequenceNodeOfSeqOfSectionPoint;
-		 Intf_SequenceNodeOfSeqOfSectionPoint (const Intf_SectionPoint & I,const TCollection_SeqNodePtr & n,const TCollection_SeqNodePtr & p);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:rtype: Intf_SectionPoint
-") Value;
-		Intf_SectionPoint & Value ();
-};
-
-
-%extend Intf_SequenceNodeOfSeqOfSectionPoint {
-	%pythoncode {
-		def GetHandle(self):
-		    try:
-		        return self.thisHandle
-		    except:
-		        self.thisHandle = Handle_Intf_SequenceNodeOfSeqOfSectionPoint(self)
-		        self.thisown = False
-		        return self.thisHandle
-	}
-};
-
-%pythonappend Handle_Intf_SequenceNodeOfSeqOfSectionPoint::Handle_Intf_SequenceNodeOfSeqOfSectionPoint %{
-    # register the handle in the base object
-    if len(args) > 0:
-        register_handle(self, args[0])
-%}
-
-%nodefaultctor Handle_Intf_SequenceNodeOfSeqOfSectionPoint;
-class Handle_Intf_SequenceNodeOfSeqOfSectionPoint : public Handle_TCollection_SeqNode {
-
-    public:
-        // constructors
-        Handle_Intf_SequenceNodeOfSeqOfSectionPoint();
-        Handle_Intf_SequenceNodeOfSeqOfSectionPoint(const Handle_Intf_SequenceNodeOfSeqOfSectionPoint &aHandle);
-        Handle_Intf_SequenceNodeOfSeqOfSectionPoint(const Intf_SequenceNodeOfSeqOfSectionPoint *anItem);
-        void Nullify();
-        Standard_Boolean IsNull() const;
-        static const Handle_Intf_SequenceNodeOfSeqOfSectionPoint DownCast(const Handle_Standard_Transient &AnObject);
-
-};
-%extend Handle_Intf_SequenceNodeOfSeqOfSectionPoint {
-    Intf_SequenceNodeOfSeqOfSectionPoint* _get_reference() {
-    return (Intf_SequenceNodeOfSeqOfSectionPoint*)$self->Access();
-    }
-};
-
-%extend Handle_Intf_SequenceNodeOfSeqOfSectionPoint {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
-};
-
-%extend Intf_SequenceNodeOfSeqOfSectionPoint {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor Intf_SequenceNodeOfSeqOfTangentZone;
-class Intf_SequenceNodeOfSeqOfTangentZone : public TCollection_SeqNode {
-	public:
-		%feature("compactdefaultargs") Intf_SequenceNodeOfSeqOfTangentZone;
-		%feature("autodoc", "	:param I:
-	:type I: Intf_TangentZone &
-	:param n:
-	:type n: TCollection_SeqNodePtr &
-	:param p:
-	:type p: TCollection_SeqNodePtr &
-	:rtype: None
-") Intf_SequenceNodeOfSeqOfTangentZone;
-		 Intf_SequenceNodeOfSeqOfTangentZone (const Intf_TangentZone & I,const TCollection_SeqNodePtr & n,const TCollection_SeqNodePtr & p);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:rtype: Intf_TangentZone
-") Value;
-		Intf_TangentZone & Value ();
-};
-
-
-%extend Intf_SequenceNodeOfSeqOfTangentZone {
-	%pythoncode {
-		def GetHandle(self):
-		    try:
-		        return self.thisHandle
-		    except:
-		        self.thisHandle = Handle_Intf_SequenceNodeOfSeqOfTangentZone(self)
-		        self.thisown = False
-		        return self.thisHandle
-	}
-};
-
-%pythonappend Handle_Intf_SequenceNodeOfSeqOfTangentZone::Handle_Intf_SequenceNodeOfSeqOfTangentZone %{
-    # register the handle in the base object
-    if len(args) > 0:
-        register_handle(self, args[0])
-%}
-
-%nodefaultctor Handle_Intf_SequenceNodeOfSeqOfTangentZone;
-class Handle_Intf_SequenceNodeOfSeqOfTangentZone : public Handle_TCollection_SeqNode {
-
-    public:
-        // constructors
-        Handle_Intf_SequenceNodeOfSeqOfTangentZone();
-        Handle_Intf_SequenceNodeOfSeqOfTangentZone(const Handle_Intf_SequenceNodeOfSeqOfTangentZone &aHandle);
-        Handle_Intf_SequenceNodeOfSeqOfTangentZone(const Intf_SequenceNodeOfSeqOfTangentZone *anItem);
-        void Nullify();
-        Standard_Boolean IsNull() const;
-        static const Handle_Intf_SequenceNodeOfSeqOfTangentZone DownCast(const Handle_Standard_Transient &AnObject);
-
-};
-%extend Handle_Intf_SequenceNodeOfSeqOfTangentZone {
-    Intf_SequenceNodeOfSeqOfTangentZone* _get_reference() {
-    return (Intf_SequenceNodeOfSeqOfTangentZone*)$self->Access();
-    }
-};
-
-%extend Handle_Intf_SequenceNodeOfSeqOfTangentZone {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
-};
-
-%extend Intf_SequenceNodeOfSeqOfTangentZone {
 	%pythoncode {
 	__repr__ = _dumps_object
 	}
@@ -1341,7 +620,7 @@ class Intf_TangentZone {
 ") Contains;
 		Standard_Boolean Contains (const Intf_SectionPoint & ThePI);
 		%feature("compactdefaultargs") ParamOnFirst;
-		%feature("autodoc", "	* Gives the parameter range of the TangentZone on the first argument of the Interference. (Usable only for polygon)
+		%feature("autodoc", "	* Gives the parameter range of the TangentZone on the first argument of the Interference. --Usable only for polygon--
 
 	:param paraMin:
 	:type paraMin: float &
@@ -1351,7 +630,7 @@ class Intf_TangentZone {
 ") ParamOnFirst;
 		void ParamOnFirst (Standard_Real &OutValue,Standard_Real &OutValue);
 		%feature("compactdefaultargs") ParamOnSecond;
-		%feature("autodoc", "	* Gives the parameter range of the TangentZone on the second argument of the Interference. (Usable only for polygon)
+		%feature("autodoc", "	* Gives the parameter range of the TangentZone on the second argument of the Interference. --Usable only for polygon--
 
 	:param paraMin:
 	:type paraMin: float &
@@ -1361,7 +640,7 @@ class Intf_TangentZone {
 ") ParamOnSecond;
 		void ParamOnSecond (Standard_Real &OutValue,Standard_Real &OutValue);
 		%feature("compactdefaultargs") InfoFirst;
-		%feature("autodoc", "	* Gives information about the first argument of the Interference. (Usable only for polygon)
+		%feature("autodoc", "	* Gives information about the first argument of the Interference. --Usable only for polygon--
 
 	:param segMin:
 	:type segMin: int &
@@ -1375,7 +654,7 @@ class Intf_TangentZone {
 ") InfoFirst;
 		void InfoFirst (Standard_Integer &OutValue,Standard_Real &OutValue,Standard_Integer &OutValue,Standard_Real &OutValue);
 		%feature("compactdefaultargs") InfoSecond;
-		%feature("autodoc", "	* Gives informations about the second argument of the Interference. (Usable only for polygon)
+		%feature("autodoc", "	* Gives informations about the second argument of the Interference. --Usable only for polygon--
 
 	:param segMin:
 	:type segMin: int &

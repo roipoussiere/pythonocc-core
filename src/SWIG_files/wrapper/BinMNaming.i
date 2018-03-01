@@ -1,5 +1,5 @@
 /*
-Copyright 2008-2017 Thomas Paviot (tpaviot@gmail.com)
+Copyright 2008-2018 Thomas Paviot (tpaviot@gmail.com)
 
 
 This file is part of pythonOCC.
@@ -55,6 +55,9 @@ def register_handle(handle, base_object):
 
 /* typedefs */
 /* end typedefs declaration */
+
+/* templates */
+/* end templates declaration */
 
 /* public enums */
 /* end public enums declaration */
@@ -144,6 +147,12 @@ class BinMNaming_NamedShapeDriver : public BinMDF_ADriver {
 	:rtype: None
 ") Clear;
 		void Clear ();
+		%feature("compactdefaultargs") IsWithTriangles;
+		%feature("autodoc", "	* Return true if shape should be stored with triangles.
+
+	:rtype: bool
+") IsWithTriangles;
+		Standard_Boolean IsWithTriangles ();
 		%feature("compactdefaultargs") SetWithTriangles;
 		%feature("autodoc", "	* set whether to store triangulation
 
@@ -153,7 +162,7 @@ class BinMNaming_NamedShapeDriver : public BinMDF_ADriver {
 ") SetWithTriangles;
 		void SetWithTriangles (const Standard_Boolean isWithTriangles);
 		%feature("compactdefaultargs") SetFormatNb;
-		%feature("autodoc", "	* set the format of topology First : does not write CurveOnSurface UV Points into the file on reading calls Check() method. Second: stores CurveOnSurface UV Points.
+		%feature("autodoc", "	* set the format of topology First : does not write CurveOnSurface UV Points into the file on reading calls Check---- method. Second: stores CurveOnSurface UV Points.
 
 	:param theFormat:
 	:type theFormat: int
@@ -206,19 +215,20 @@ class Handle_BinMNaming_NamedShapeDriver : public Handle_BinMDF_ADriver {
         static const Handle_BinMNaming_NamedShapeDriver DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_BinMNaming_NamedShapeDriver {
     BinMNaming_NamedShapeDriver* _get_reference() {
-    return (BinMNaming_NamedShapeDriver*)$self->Access();
+    return (BinMNaming_NamedShapeDriver*)$self->get();
     }
 };
 
 %extend Handle_BinMNaming_NamedShapeDriver {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend BinMNaming_NamedShapeDriver {
@@ -293,19 +303,20 @@ class Handle_BinMNaming_NamingDriver : public Handle_BinMDF_ADriver {
         static const Handle_BinMNaming_NamingDriver DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_BinMNaming_NamingDriver {
     BinMNaming_NamingDriver* _get_reference() {
-    return (BinMNaming_NamingDriver*)$self->Access();
+    return (BinMNaming_NamingDriver*)$self->get();
     }
 };
 
 %extend Handle_BinMNaming_NamingDriver {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend BinMNaming_NamingDriver {

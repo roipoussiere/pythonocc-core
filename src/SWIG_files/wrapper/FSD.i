@@ -1,5 +1,5 @@
 /*
-Copyright 2008-2017 Thomas Paviot (tpaviot@gmail.com)
+Copyright 2008-2018 Thomas Paviot (tpaviot@gmail.com)
 
 
 This file is part of pythonOCC.
@@ -57,6 +57,9 @@ def register_handle(handle, base_object):
 typedef fstream FSD_FStream;
 typedef FILE * FSD_BStream;
 /* end typedefs declaration */
+
+/* templates */
+/* end templates declaration */
 
 /* public enums */
 /* end public enums declaration */

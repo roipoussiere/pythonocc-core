@@ -1,5 +1,5 @@
 /*
-Copyright 2008-2017 Thomas Paviot (tpaviot@gmail.com)
+Copyright 2008-2018 Thomas Paviot (tpaviot@gmail.com)
 
 
 This file is part of pythonOCC.
@@ -56,6 +56,9 @@ def register_handle(handle, base_object):
 /* typedefs */
 /* end typedefs declaration */
 
+/* templates */
+/* end templates declaration */
+
 /* public enums */
 /* end public enums declaration */
 
@@ -63,23 +66,23 @@ def register_handle(handle, base_object):
 class Geom2dAPI_ExtremaCurveCurve {
 	public:
 		%feature("compactdefaultargs") Geom2dAPI_ExtremaCurveCurve;
-		%feature("autodoc", "	* Computes the extrema between - the portion of the curve C1 limited by the two points of parameter (U1min,U1max), and - the portion of the curve C2 limited by the two points of parameter (U2min,U2max). Warning Use the function NbExtrema to obtain the number of solutions. If this algorithm fails, NbExtrema returns 0.
+		%feature("autodoc", "	* Computes the extrema between - the portion of the curve C1 limited by the two points of parameter --U1min,U1max--, and - the portion of the curve C2 limited by the two points of parameter --U2min,U2max--. Warning Use the function NbExtrema to obtain the number of solutions. If this algorithm fails, NbExtrema returns 0.
 
 	:param C1:
 	:type C1: Handle_Geom2d_Curve &
 	:param C2:
 	:type C2: Handle_Geom2d_Curve &
 	:param U1min:
-	:type U1min: Quantity_Parameter
+	:type U1min: float
 	:param U1max:
-	:type U1max: Quantity_Parameter
+	:type U1max: float
 	:param U2min:
-	:type U2min: Quantity_Parameter
+	:type U2min: float
 	:param U2max:
-	:type U2max: Quantity_Parameter
+	:type U2max: float
 	:rtype: None
 ") Geom2dAPI_ExtremaCurveCurve;
-		 Geom2dAPI_ExtremaCurveCurve (const Handle_Geom2d_Curve & C1,const Handle_Geom2d_Curve & C2,const Quantity_Parameter U1min,const Quantity_Parameter U1max,const Quantity_Parameter U2min,const Quantity_Parameter U2max);
+		 Geom2dAPI_ExtremaCurveCurve (const Handle_Geom2d_Curve & C1,const Handle_Geom2d_Curve & C2,const Standard_Real U1min,const Standard_Real U1max,const Standard_Real U2min,const Standard_Real U2max);
 		%feature("compactdefaultargs") NbExtrema;
 		%feature("autodoc", "	* Returns the number of extrema computed by this algorithm. Note: if this algorithm fails, NbExtrema returns 0.
 
@@ -108,9 +111,9 @@ class Geom2dAPI_ExtremaCurveCurve {
 	:param Index:
 	:type Index: int
 	:param U1:
-	:type U1: Quantity_Parameter &
+	:type U1: float &
 	:param U2:
-	:type U2: Quantity_Parameter &
+	:type U2: float &
 	:rtype: None
 ") Parameters;
 		void Parameters (const Standard_Integer Index,Standard_Real &OutValue,Standard_Real &OutValue);
@@ -119,9 +122,9 @@ class Geom2dAPI_ExtremaCurveCurve {
 
 	:param Index:
 	:type Index: int
-	:rtype: Quantity_Length
+	:rtype: float
 ") Distance;
-		Quantity_Length Distance (const Standard_Integer Index);
+		Standard_Real Distance (const Standard_Integer Index);
 		%feature("compactdefaultargs") NearestPoints;
 		%feature("autodoc", "	* Returns the points P1 on the first curve and P2 on the second curve, which are the ends of the shortest extremum computed by this algorithm. Exceptions StdFail_NotDone if this algorithm fails.
 
@@ -136,18 +139,18 @@ class Geom2dAPI_ExtremaCurveCurve {
 		%feature("autodoc", "	* Returns the parameters U1 of the point on the first curve and U2 of the point on the second curve, which are the ends of the shortest extremum computed by this algorithm. Exceptions StdFail_NotDone if this algorithm fails.
 
 	:param U1:
-	:type U1: Quantity_Parameter &
+	:type U1: float &
 	:param U2:
-	:type U2: Quantity_Parameter &
+	:type U2: float &
 	:rtype: None
 ") LowerDistanceParameters;
 		void LowerDistanceParameters (Standard_Real &OutValue,Standard_Real &OutValue);
 		%feature("compactdefaultargs") LowerDistance;
 		%feature("autodoc", "	* Computes the distance between the end points of the shortest extremum computed by this algorithm. Exceptions - StdFail_NotDone if this algorithm fails.
 
-	:rtype: Quantity_Length
+	:rtype: float
 ") LowerDistance;
-		Quantity_Length LowerDistance ();
+		Standard_Real LowerDistance ();
 		%feature("compactdefaultargs") operator Standard_Real;
 		%feature("autodoc", "	:rtype: 
 ") operator Standard_Real;
@@ -186,7 +189,7 @@ class Geom2dAPI_InterCurveCurve {
 ") Geom2dAPI_InterCurveCurve;
 		 Geom2dAPI_InterCurveCurve (const Handle_Geom2d_Curve & C1,const Handle_Geom2d_Curve & C2,const Standard_Real Tol = 1.0e-6);
 		%feature("compactdefaultargs") Geom2dAPI_InterCurveCurve;
-		%feature("autodoc", "	* Creates an object and computes self-intersections of the curve C1. Tolerance value Tol, defaulted to 1.0e-6, defines the precision of computing the intersection points. In case of a tangential intersection, Tol also defines the size of intersection segments (limited portions of the curves) where the distance between all points from two curves (or a curve in case of self-intersection) is less than Tol. Warning Use functions NbPoints and NbSegments to obtain the number of solutions. If the algorithm finds no intersections NbPoints and NbSegments return 0.
+		%feature("autodoc", "	* Creates an object and computes self-intersections of the curve C1. Tolerance value Tol, defaulted to 1.0e-6, defines the precision of computing the intersection points. In case of a tangential intersection, Tol also defines the size of intersection segments --limited portions of the curves-- where the distance between all points from two curves --or a curve in case of self-intersection-- is less than Tol. Warning Use functions NbPoints and NbSegments to obtain the number of solutions. If the algorithm finds no intersections NbPoints and NbSegments return 0.
 
 	:param C1:
 	:type C1: Handle_Geom2d_Curve &
@@ -208,7 +211,7 @@ class Geom2dAPI_InterCurveCurve {
 ") Init;
 		void Init (const Handle_Geom2d_Curve & C1,const Handle_Geom2d_Curve & C2,const Standard_Real Tol = 1.0e-6);
 		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	* Initializes an algorithm with the given arguments and computes the self-intersections of the curve C1. Tolerance value Tol, defaulted to 1.0e-6, defines the precision of computing the intersection points. In case of a tangential intersection, Tol also defines the size of intersection segments (limited portions of the curves) where the distance between all points from two curves (or a curve in case of self-intersection) is less than Tol. Warning Use functions NbPoints and NbSegments to obtain the number of solutions. If the algorithm finds no intersections NbPoints and NbSegments return 0.
+		%feature("autodoc", "	* Initializes an algorithm with the given arguments and computes the self-intersections of the curve C1. Tolerance value Tol, defaulted to 1.0e-6, defines the precision of computing the intersection points. In case of a tangential intersection, Tol also defines the size of intersection segments --limited portions of the curves-- where the distance between all points from two curves --or a curve in case of self-intersection-- is less than Tol. Warning Use functions NbPoints and NbSegments to obtain the number of solutions. If the algorithm finds no intersections NbPoints and NbSegments return 0.
 
 	:param C1:
 	:type C1: Handle_Geom2d_Curve &
@@ -224,7 +227,7 @@ class Geom2dAPI_InterCurveCurve {
 ") NbPoints;
 		Standard_Integer NbPoints ();
 		%feature("compactdefaultargs") Point;
-		%feature("autodoc", "	* Returns the intersection point of index Index. Intersection points are computed in case of cross intersections with a precision equal to the tolerance value assigned at the time of construction or in the function Init (this value is defaulted to 1.0e-6). Exceptions Standard_OutOfRange if index is not in the range [ 1,NbPoints ], where NbPoints is the number of computed intersection points
+		%feature("autodoc", "	* Returns the intersection point of index Index. Intersection points are computed in case of cross intersections with a precision equal to the tolerance value assigned at the time of construction or in the function Init --this value is defaulted to 1.0e-6--. Exceptions Standard_OutOfRange if index is not in the range [ 1,NbPoints ], where NbPoints is the number of computed intersection points
 
 	:param Index:
 	:type Index: int
@@ -238,7 +241,7 @@ class Geom2dAPI_InterCurveCurve {
 ") NbSegments;
 		Standard_Integer NbSegments ();
 		%feature("compactdefaultargs") Segment;
-		%feature("autodoc", "	* Use this syntax only to get solutions of tangential intersection between two curves. Output values Curve1 and Curve2 are the intersection segments on the first curve and on the second curve accordingly. Parameter Index defines a number of computed solution. An intersection segment is a portion of an initial curve limited by two points. The distance from each point of this segment to the other curve is less or equal to the tolerance value assigned at the time of construction or in function Init (this value is defaulted to 1.0e-6). Exceptions Standard_OutOfRange if Index is not in the range [ 1,NbSegments ], where NbSegments is the number of computed tangential intersections. Standard_NullObject if the algorithm is initialized for the computing of self-intersections on a curve.
+		%feature("autodoc", "	* Use this syntax only to get solutions of tangential intersection between two curves. Output values Curve1 and Curve2 are the intersection segments on the first curve and on the second curve accordingly. Parameter Index defines a number of computed solution. An intersection segment is a portion of an initial curve limited by two points. The distance from each point of this segment to the other curve is less or equal to the tolerance value assigned at the time of construction or in function Init --this value is defaulted to 1.0e-6--. Exceptions Standard_OutOfRange if Index is not in the range [ 1,NbSegments ], where NbSegments is the number of computed tangential intersections. Standard_NullObject if the algorithm is initialized for the computing of self-intersections on a curve.
 
 	:param Index:
 	:type Index: int
@@ -249,16 +252,6 @@ class Geom2dAPI_InterCurveCurve {
 	:rtype: None
 ") Segment;
 		void Segment (const Standard_Integer Index,Handle_Geom2d_Curve & Curve1,Handle_Geom2d_Curve & Curve2);
-		%feature("compactdefaultargs") Segment;
-		%feature("autodoc", "	* Use this syntax to get solutions of tangential intersections only in case of a self-intersected curve. Output value Curve1 is the intersection segment of the curve defined by number Index. An intersection segment is a portion of the initial curve limited by two points. The distance between each point of this segment to another portion of the curve is less or equal to the tolerance value assigned at the time of construction or in the function Init (this value is defaulted to 1.0e-6). Exceptions Standard_OutOfRange if Index is not in the range [ 1,NbSegments ], where NbSegments is the number of computed tangential intersections.
-
-	:param Index:
-	:type Index: int
-	:param Curve1:
-	:type Curve1: Handle_Geom2d_Curve &
-	:rtype: None
-") Segment;
-		void Segment (const Standard_Integer Index,Handle_Geom2d_Curve & Curve1);
 		%feature("compactdefaultargs") Intersector;
 		%feature("autodoc", "	* return the algorithmic object from Intersection.
 
@@ -303,25 +296,29 @@ class Geom2dAPI_Interpolate {
 ") Geom2dAPI_Interpolate;
 		 Geom2dAPI_Interpolate (const Handle_TColgp_HArray1OfPnt2d & Points,const Handle_TColStd_HArray1OfReal & Parameters,const Standard_Boolean PeriodicFlag,const Standard_Real Tolerance);
 		%feature("compactdefaultargs") Load;
-		%feature("autodoc", "	* Assigns this constrained BSpline curve to be tangential to vectors InitialTangent and FinalTangent at its first and last points respectively (i.e. the first and last points of the table of points through which the curve passes, as defined at the time of initialization).
+		%feature("autodoc", "	* Assigns this constrained BSpline curve to be tangential to vectors InitialTangent and FinalTangent at its first and last points respectively --i.e. the first and last points of the table of points through which the curve passes, as defined at the time of initialization--. <Scale> - boolean flag defining whether tangent vectors are to be scaled according to derivatives of lagrange interpolation.
 
 	:param InitialTangent:
 	:type InitialTangent: gp_Vec2d
 	:param FinalTangent:
 	:type FinalTangent: gp_Vec2d
+	:param Scale: default value is Standard_True
+	:type Scale: bool
 	:rtype: None
 ") Load;
-		void Load (const gp_Vec2d & InitialTangent,const gp_Vec2d & FinalTangent);
+		void Load (const gp_Vec2d & InitialTangent,const gp_Vec2d & FinalTangent,const Standard_Boolean Scale = Standard_True);
 		%feature("compactdefaultargs") Load;
-		%feature("autodoc", "	* Assigns this constrained BSpline curve to be tangential to vectors defined in the table Tangents, which is parallel to the table of points through which the curve passes, as defined at the time of initialization. Vectors in the table Tangents are defined only if the flag given in the parallel table TangentFlags is true: only these vectors are set as tangency constraints.
+		%feature("autodoc", "	* Assigns this constrained BSpline curve to be tangential to vectors defined in the table Tangents, which is parallel to the table of points through which the curve passes, as defined at the time of initialization. Vectors in the table Tangents are defined only if the flag given in the parallel table TangentFlags is true: only these vectors are set as tangency constraints. <Scale> - boolean flag defining whether tangent vectors are to be scaled according to derivatives of lagrange interpolation.
 
 	:param Tangents:
 	:type Tangents: TColgp_Array1OfVec2d
 	:param TangentFlags:
 	:type TangentFlags: Handle_TColStd_HArray1OfBoolean &
+	:param Scale: default value is Standard_True
+	:type Scale: bool
 	:rtype: None
 ") Load;
-		void Load (const TColgp_Array1OfVec2d & Tangents,const Handle_TColStd_HArray1OfBoolean & TangentFlags);
+		void Load (const TColgp_Array1OfVec2d & Tangents,const Handle_TColStd_HArray1OfBoolean & TangentFlags,const Standard_Boolean Scale = Standard_True);
 		%feature("compactdefaultargs") Perform;
 		%feature("autodoc", "	* Computes the constrained BSpline curve. Use the function IsDone to verify that the computation is successful, and then the function Curve to obtain the result.
 
@@ -374,7 +371,7 @@ class Geom2dAPI_PointsToBSpline {
 ") Geom2dAPI_PointsToBSpline;
 		 Geom2dAPI_PointsToBSpline (const TColgp_Array1OfPnt2d & Points,const Standard_Integer DegMin = 3,const Standard_Integer DegMax = 8,const GeomAbs_Shape Continuity = GeomAbs_C2,const Standard_Real Tol2D = 1.0e-6);
 		%feature("compactdefaultargs") Geom2dAPI_PointsToBSpline;
-		%feature("autodoc", "	* Approximate a BSpline Curve passing through an array of Point. Of coordinates : //! X = X0 + DX * (i-YValues.Lower()) Y = YValues(i) //! With i in the range YValues.Lower(), YValues.Upper() //! The BSpline will be parametrized from t = X0 to X0 + DX * (YValues.Upper() - YValues.Lower()) //! And will satisfy X(t) = t //! The resulting BSpline will have the following properties: 1- his degree will be in the range [Degmin,Degmax] 2- his continuity will be at least <Continuity> 3- the distance from the point <Points> to the BSpline will be lower to Tol2D
+		%feature("autodoc", "	* Approximate a BSpline Curve passing through an array of Point. Of coordinates : //! X = X0 + DX * --i-YValues.Lower------ Y = YValues--i-- //! With i in the range YValues.Lower----, YValues.Upper---- //! The BSpline will be parametrized from t = X0 to X0 + DX * --YValues.Upper---- - YValues.Lower------ //! And will satisfy X--t-- = t //! The resulting BSpline will have the following properties: 1- his degree will be in the range [Degmin,Degmax] 2- his continuity will be at least <Continuity> 3- the distance from the point <Points> to the BSpline will be lower to Tol2D
 
 	:param YValues:
 	:type YValues: TColStd_Array1OfReal &
@@ -466,7 +463,7 @@ class Geom2dAPI_PointsToBSpline {
 ") Init;
 		void Init (const TColgp_Array1OfPnt2d & Points,const Standard_Integer DegMin = 3,const Standard_Integer DegMax = 8,const GeomAbs_Shape Continuity = GeomAbs_C2,const Standard_Real Tol2D = 1.0e-6);
 		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	* Approximate a BSpline Curve passing through an array of Point. Of coordinates : //! X = X0 + DX * (i-YValues.Lower()) Y = YValues(i) //! With i in the range YValues.Lower(), YValues.Upper() //! The BSpline will be parametrized from t = X0 to X0 + DX * (YValues.Upper() - YValues.Lower()) //! And will satisfy X(t) = t //! The resulting BSpline will have the following properties: 1- his degree will be in the range [Degmin,Degmax] 2- his continuity will be at least <Continuity> 3- the distance from the point <Points> to the BSpline will be lower to Tol2D
+		%feature("autodoc", "	* Approximate a BSpline Curve passing through an array of Point. Of coordinates : //! X = X0 + DX * --i-YValues.Lower------ Y = YValues--i-- //! With i in the range YValues.Lower----, YValues.Upper---- //! The BSpline will be parametrized from t = X0 to X0 + DX * --YValues.Upper---- - YValues.Lower------ //! And will satisfy X--t-- = t //! The resulting BSpline will have the following properties: 1- his degree will be in the range [Degmin,Degmax] 2- his continuity will be at least <Continuity> 3- the distance from the point <Points> to the BSpline will be lower to Tol2D
 
 	:param YValues:
 	:type YValues: TColStd_Array1OfReal &
@@ -586,12 +583,12 @@ class Geom2dAPI_ProjectPointOnCurve {
 	:param Curve:
 	:type Curve: Handle_Geom2d_Curve &
 	:param Umin:
-	:type Umin: Quantity_Parameter
+	:type Umin: float
 	:param Usup:
-	:type Usup: Quantity_Parameter
+	:type Usup: float
 	:rtype: None
 ") Geom2dAPI_ProjectPointOnCurve;
-		 Geom2dAPI_ProjectPointOnCurve (const gp_Pnt2d & P,const Handle_Geom2d_Curve & Curve,const Quantity_Parameter Umin,const Quantity_Parameter Usup);
+		 Geom2dAPI_ProjectPointOnCurve (const gp_Pnt2d & P,const Handle_Geom2d_Curve & Curve,const Standard_Real Umin,const Standard_Real Usup);
 		%feature("compactdefaultargs") Init;
 		%feature("autodoc", "	* Initializes this algorithm with the given arguments, and computes the orthogonal projections of a point <P> on a curve <Curve>
 
@@ -610,12 +607,12 @@ class Geom2dAPI_ProjectPointOnCurve {
 	:param Curve:
 	:type Curve: Handle_Geom2d_Curve &
 	:param Umin:
-	:type Umin: Quantity_Parameter
+	:type Umin: float
 	:param Usup:
-	:type Usup: Quantity_Parameter
+	:type Usup: float
 	:rtype: None
 ") Init;
-		void Init (const gp_Pnt2d & P,const Handle_Geom2d_Curve & Curve,const Quantity_Parameter Umin,const Quantity_Parameter Usup);
+		void Init (const gp_Pnt2d & P,const Handle_Geom2d_Curve & Curve,const Standard_Real Umin,const Standard_Real Usup);
 		%feature("compactdefaultargs") NbPoints;
 		%feature("autodoc", "	* return the number of of computed orthogonal projectionn points.
 
@@ -639,16 +636,16 @@ class Geom2dAPI_ProjectPointOnCurve {
 
 	:param Index:
 	:type Index: int
-	:rtype: Quantity_Parameter
+	:rtype: float
 ") Parameter;
-		Quantity_Parameter Parameter (const Standard_Integer Index);
+		Standard_Real Parameter (const Standard_Integer Index);
 		%feature("compactdefaultargs") Parameter;
 		%feature("autodoc", "	* Returns the parameter on the curve of a point which is the orthogonal projection. Index is a number of a computed projected point. Exceptions Standard_OutOfRange if Index is not in the range [ 1,NbPoints ], where NbPoints is the number of solution points
 
 	:param Index:
 	:type Index: int
 	:param U:
-	:type U: Quantity_Parameter &
+	:type U: float &
 	:rtype: None
 ") Parameter;
 		void Parameter (const Standard_Integer Index,Standard_Real &OutValue);
@@ -657,9 +654,9 @@ class Geom2dAPI_ProjectPointOnCurve {
 
 	:param Index:
 	:type Index: int
-	:rtype: Quantity_Length
+	:rtype: float
 ") Distance;
-		Quantity_Length Distance (const Standard_Integer Index);
+		Standard_Real Distance (const Standard_Integer Index);
 		%feature("compactdefaultargs") NearestPoint;
 		%feature("autodoc", "	* Returns the nearest orthogonal projection of the point on the curve. Exceptions StdFail_NotDone if this algorithm fails.
 
@@ -673,15 +670,15 @@ class Geom2dAPI_ProjectPointOnCurve {
 		%feature("compactdefaultargs") LowerDistanceParameter;
 		%feature("autodoc", "	* Returns the parameter on the curve of the nearest orthogonal projection of the point. Exceptions StdFail_NotDone if this algorithm fails.
 
-	:rtype: Quantity_Parameter
+	:rtype: float
 ") LowerDistanceParameter;
-		Quantity_Parameter LowerDistanceParameter ();
+		Standard_Real LowerDistanceParameter ();
 		%feature("compactdefaultargs") LowerDistance;
 		%feature("autodoc", "	* Computes the distance between the point and its nearest orthogonal projection on the curve. Exceptions StdFail_NotDone if this algorithm fails.
 
-	:rtype: Quantity_Length
+	:rtype: float
 ") LowerDistance;
-		Quantity_Length LowerDistance ();
+		Standard_Real LowerDistance ();
 		%feature("compactdefaultargs") operator Standard_Real;
 		%feature("autodoc", "	:rtype: 
 ") operator Standard_Real;

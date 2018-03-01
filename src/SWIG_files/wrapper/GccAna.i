@@ -1,5 +1,5 @@
 /*
-Copyright 2008-2017 Thomas Paviot (tpaviot@gmail.com)
+Copyright 2008-2018 Thomas Paviot (tpaviot@gmail.com)
 
 
 This file is part of pythonOCC.
@@ -55,6 +55,9 @@ def register_handle(handle, base_object):
 
 /* typedefs */
 /* end typedefs declaration */
+
+/* templates */
+/* end templates declaration */
 
 /* public enums */
 /* end public enums declaration */
@@ -231,7 +234,7 @@ class GccAna_Circ2d2TanOn {
 ") GccAna_Circ2d2TanOn;
 		 GccAna_Circ2d2TanOn (const gp_Pnt2d & Point1,const gp_Pnt2d & Point2,const gp_Circ2d & OnCirc,const Standard_Real Tolerance);
 		%feature("compactdefaultargs") IsDone;
-		%feature("autodoc", "	* Returns true if the construction algorithm does not fail (even if it finds no solution). Note: IsDone protects against a failure arising from a more internal intersection algorithm, which has reached its numeric limits.
+		%feature("autodoc", "	* Returns true if the construction algorithm does not fail --even if it finds no solution--. Note: IsDone protects against a failure arising from a more internal intersection algorithm, which has reached its numeric limits.
 
 	:rtype: bool
 ") IsDone;
@@ -251,7 +254,7 @@ class GccAna_Circ2d2TanOn {
 ") ThisSolution;
 		gp_Circ2d ThisSolution (const Standard_Integer Index);
 		%feature("compactdefaultargs") WhichQualifier;
-		%feature("autodoc", "	* Returns the qualifiers Qualif1 and Qualif2 of the tangency arguments for the solution of index Index computed by this algorithm. The returned qualifiers are: - those specified at the start of construction when the solutions are defined as enclosed, enclosing or outside with respect to the arguments, or - those computed during construction (i.e. enclosed, enclosing or outside) when the solutions are defined as unqualified with respect to the arguments, or - GccEnt_noqualifier if the tangency argument is a point. Exceptions Standard_OutOfRange if Index is less than zero or greater than the number of solutions computed by this algorithm. StdFail_NotDone if the construction fails.
+		%feature("autodoc", "	* Returns the qualifiers Qualif1 and Qualif2 of the tangency arguments for the solution of index Index computed by this algorithm. The returned qualifiers are: - those specified at the start of construction when the solutions are defined as enclosed, enclosing or outside with respect to the arguments, or - those computed during construction --i.e. enclosed, enclosing or outside-- when the solutions are defined as unqualified with respect to the arguments, or - GccEnt_noqualifier if the tangency argument is a point. Exceptions Standard_OutOfRange if Index is less than zero or greater than the number of solutions computed by this algorithm. StdFail_NotDone if the construction fails.
 
 	:param Index:
 	:type Index: int
@@ -291,7 +294,7 @@ class GccAna_Circ2d2TanOn {
 ") Tangency2;
 		void Tangency2 (const Standard_Integer Index,Standard_Real &OutValue,Standard_Real &OutValue,gp_Pnt2d & PntSol);
 		%feature("compactdefaultargs") CenterOn3;
-		%feature("autodoc", "	* Returns the informations about the center (on the curv) of the result number Index and the third argument. ParArg is the intrinsic parameter of the point PntArg on the third argument. Exceptions Standard_OutOfRange if Index is less than zero or greater than the number of solutions computed by this algorithm. StdFail_NotDone if the construction fails.
+		%feature("autodoc", "	* Returns the informations about the center --on the curv-- of the result number Index and the third argument. ParArg is the intrinsic parameter of the point PntArg on the third argument. Exceptions Standard_OutOfRange if Index is less than zero or greater than the number of solutions computed by this algorithm. StdFail_NotDone if the construction fails.
 
 	:param Index:
 	:type Index: int
@@ -303,7 +306,7 @@ class GccAna_Circ2d2TanOn {
 ") CenterOn3;
 		void CenterOn3 (const Standard_Integer Index,Standard_Real &OutValue,gp_Pnt2d & PntArg);
 		%feature("compactdefaultargs") IsTheSame1;
-		%feature("autodoc", "	* True if the solution and the first argument are the same (2 circles). If R1 is the radius of the first argument and Rsol the radius of the solution and dist the distance between the two centers, we concider the two circles are identical if R1+dist-Rsol is less than Tolerance. False in the other cases. Raises OutOfRange if Index is greater than the number of solutions and NotDone if IsDone returns false.
+		%feature("autodoc", "	* True if the solution and the first argument are the same --2 circles--. If R1 is the radius of the first argument and Rsol the radius of the solution and dist the distance between the two centers, we concider the two circles are identical if R1+dist-Rsol is less than Tolerance. False in the other cases. Raises OutOfRange if Index is greater than the number of solutions and NotDone if IsDone returns false.
 
 	:param Index:
 	:type Index: int
@@ -311,7 +314,7 @@ class GccAna_Circ2d2TanOn {
 ") IsTheSame1;
 		Standard_Boolean IsTheSame1 (const Standard_Integer Index);
 		%feature("compactdefaultargs") IsTheSame2;
-		%feature("autodoc", "	* True if the solution and the second argument are the same (2 circles). If R2 is the radius of the second argument and Rsol the radius of the solution and dist the distance between the two centers, we concider the two circles are identical if R2+dist-Rsol is less than Tolerance. False in the other cases. Raises OutOfRange if Index is greater than the number of solutions and NotDone if IsDone returns false.
+		%feature("autodoc", "	* True if the solution and the second argument are the same --2 circles--. If R2 is the radius of the second argument and Rsol the radius of the solution and dist the distance between the two centers, we concider the two circles are identical if R2+dist-Rsol is less than Tolerance. False in the other cases. Raises OutOfRange if Index is greater than the number of solutions and NotDone if IsDone returns false.
 
 	:param Index:
 	:type Index: int
@@ -434,7 +437,7 @@ class GccAna_Circ2d2TanRad {
 ") ThisSolution;
 		gp_Circ2d ThisSolution (const Standard_Integer Index);
 		%feature("compactdefaultargs") WhichQualifier;
-		%feature("autodoc", "	* Returns the information about the qualifiers of the tangency arguments concerning the solution number Index. It returns the real qualifiers (the qualifiers given to the constructor method in case of enclosed, enclosing and outside and the qualifiers computedin case of unqualified).
+		%feature("autodoc", "	* Returns the information about the qualifiers of the tangency arguments concerning the solution number Index. It returns the real qualifiers --the qualifiers given to the constructor method in case of enclosed, enclosing and outside and the qualifiers computedin case of unqualified--.
 
 	:param Index:
 	:type Index: int
@@ -661,7 +664,7 @@ class GccAna_Circ2d3Tan {
 ") ThisSolution;
 		gp_Circ2d ThisSolution (const Standard_Integer Index);
 		%feature("compactdefaultargs") WhichQualifier;
-		%feature("autodoc", "	* Returns the informations about the qualifiers of the tangency arguments concerning the solution number Index. It returns the real qualifiers (the qualifiers given to the constructor method in case of enclosed, enclosing and outside and the qualifiers computedin case of unqualified).
+		%feature("autodoc", "	* Returns the informations about the qualifiers of the tangency arguments concerning the solution number Index. It returns the real qualifiers --the qualifiers given to the constructor method in case of enclosed, enclosing and outside and the qualifiers computedin case of unqualified--.
 
 	:param Index:
 	:type Index: int
@@ -815,7 +818,7 @@ class GccAna_Circ2dTanCen {
 ") GccAna_Circ2dTanCen;
 		 GccAna_Circ2dTanCen (const gp_Lin2d & Linetan,const gp_Pnt2d & Pcenter);
 		%feature("compactdefaultargs") GccAna_Circ2dTanCen;
-		%feature("autodoc", "	* This method implements the algorithms used to create 2d circles passing thrue a point and centered on a point. Tolerance is a tolerance criterion used by the algorithm to find a solution when, mathematically, the problem posed does not have a solution, but where there is numeric uncertainty attached to the arguments. In these algorithms Tolerance is only used in very specific cases where the center of the solution is very close to the circle to which it is tangential, and where the solution is therefore a very small circle. Exceptions GccEnt_BadQualifier if a qualifier is inconsistent with the argument it qualifies (for example, enclosing for a line).
+		%feature("autodoc", "	* This method implements the algorithms used to create 2d circles passing thrue a point and centered on a point. Tolerance is a tolerance criterion used by the algorithm to find a solution when, mathematically, the problem posed does not have a solution, but where there is numeric uncertainty attached to the arguments. In these algorithms Tolerance is only used in very specific cases where the center of the solution is very close to the circle to which it is tangential, and where the solution is therefore a very small circle. Exceptions GccEnt_BadQualifier if a qualifier is inconsistent with the argument it qualifies --for example, enclosing for a line--.
 
 	:param Point1:
 	:type Point1: gp_Pnt2d
@@ -845,7 +848,7 @@ class GccAna_Circ2dTanCen {
 ") ThisSolution;
 		gp_Circ2d ThisSolution (const Standard_Integer Index);
 		%feature("compactdefaultargs") WhichQualifier;
-		%feature("autodoc", "	* Returns the qualifier Qualif1 of the tangency argument for the solution of index Index computed by this algorithm. The returned qualifier is: - that specified at the start of construction when the solutions are defined as enclosed, enclosing or It returns the real qualifiers (the qualifiers given to the constructor method in case of enclosed, enclosing and outside and the qualifiers computedin case of unqualified).
+		%feature("autodoc", "	* Returns the qualifier Qualif1 of the tangency argument for the solution of index Index computed by this algorithm. The returned qualifier is: - that specified at the start of construction when the solutions are defined as enclosed, enclosing or It returns the real qualifiers --the qualifiers given to the constructor method in case of enclosed, enclosing and outside and the qualifiers computedin case of unqualified--.
 
 	:param Index:
 	:type Index: int
@@ -888,7 +891,7 @@ class GccAna_Circ2dTanCen {
 class GccAna_Circ2dTanOnRad {
 	public:
 		%feature("compactdefaultargs") GccAna_Circ2dTanOnRad;
-		%feature("autodoc", "	* This methods implements the algorithms used to create 2d Circles tangent to a circle and centered on a 2d Line with a given radius. Tolerance is used to find solution in every limit cases. For example Tolerance is used in the case of EnclosedCirc when Radius-R1+dist is greater Tolerance (dist is the distance between the line and the location of the circ, R1 is the radius of the circ) because there is no solution. raises NegativeValue in case of NegativeRadius.
+		%feature("autodoc", "	* This methods implements the algorithms used to create 2d Circles tangent to a circle and centered on a 2d Line with a given radius. Tolerance is used to find solution in every limit cases. For example Tolerance is used in the case of EnclosedCirc when Radius-R1+dist is greater Tolerance --dist is the distance between the line and the location of the circ, R1 is the radius of the circ-- because there is no solution. raises NegativeValue in case of NegativeRadius.
 
 	:param Qualified1:
 	:type Qualified1: GccEnt_QualifiedCirc &
@@ -972,7 +975,7 @@ class GccAna_Circ2dTanOnRad {
 ") GccAna_Circ2dTanOnRad;
 		 GccAna_Circ2dTanOnRad (const gp_Pnt2d & Point1,const gp_Circ2d & OnCirc,const Standard_Real Radius,const Standard_Real Tolerance);
 		%feature("compactdefaultargs") IsDone;
-		%feature("autodoc", "	* Returns true if the construction algorithm does not fail (even if it finds no solution). Note: IsDone protects against a failure arising from a more internal intersection algorithm, which has reached its numeric limits.
+		%feature("autodoc", "	* Returns true if the construction algorithm does not fail --even if it finds no solution--. Note: IsDone protects against a failure arising from a more internal intersection algorithm, which has reached its numeric limits.
 
 	:rtype: bool
 ") IsDone;
@@ -992,7 +995,7 @@ class GccAna_Circ2dTanOnRad {
 ") ThisSolution;
 		gp_Circ2d ThisSolution (const Standard_Integer Index);
 		%feature("compactdefaultargs") WhichQualifier;
-		%feature("autodoc", "	* Returns the qualifier Qualif1 of the tangency argument for the solution of index Index computed by this algorithm. The returned qualifier is: - that specified at the start of construction when the solutions are defined as enclosed, enclosing or outside with respect to the argument, or - that computed during construction (i.e. enclosed, enclosing or outside) when the solutions are defined as unqualified with respect to the argument, or - GccEnt_noqualifier if the tangency argument is a point. Exceptions Standard_OutOfRange if Index is less than zero or greater than the number of solutions computed by this algorithm. StdFail_NotDone if the construction fails.
+		%feature("autodoc", "	* Returns the qualifier Qualif1 of the tangency argument for the solution of index Index computed by this algorithm. The returned qualifier is: - that specified at the start of construction when the solutions are defined as enclosed, enclosing or outside with respect to the argument, or - that computed during construction --i.e. enclosed, enclosing or outside-- when the solutions are defined as unqualified with respect to the argument, or - GccEnt_noqualifier if the tangency argument is a point. Exceptions Standard_OutOfRange if Index is less than zero or greater than the number of solutions computed by this algorithm. StdFail_NotDone if the construction fails.
 
 	:param Index:
 	:type Index: int
@@ -1016,7 +1019,7 @@ class GccAna_Circ2dTanOnRad {
 ") Tangency1;
 		void Tangency1 (const Standard_Integer Index,Standard_Real &OutValue,Standard_Real &OutValue,gp_Pnt2d & PntSol);
 		%feature("compactdefaultargs") CenterOn3;
-		%feature("autodoc", "	* Returns informations about the center (on the curv) of the result. ParArg is the intrinsic parameter of the point on the argument curv. PntSol is the center point of the solution curv. Raises NotDone if the construction algorithm didn't succeed. It raises OutOfRange if Index is greater than the number of solutions.
+		%feature("autodoc", "	* Returns informations about the center --on the curv-- of the result. ParArg is the intrinsic parameter of the point on the argument curv. PntSol is the center point of the solution curv. Raises NotDone if the construction algorithm didn't succeed. It raises OutOfRange if Index is greater than the number of solutions.
 
 	:param Index:
 	:type Index: int
@@ -1057,7 +1060,7 @@ class GccAna_CircLin2dBisec {
 ") GccAna_CircLin2dBisec;
 		 GccAna_CircLin2dBisec (const gp_Circ2d & Circle,const gp_Lin2d & Line);
 		%feature("compactdefaultargs") IsDone;
-		%feature("autodoc", "	* Returns true (this construction algorithm never fails).
+		%feature("autodoc", "	* Returns true --this construction algorithm never fails--.
 
 	:rtype: bool
 ") IsDone;
@@ -1110,7 +1113,7 @@ class GccAna_CircPnt2dBisec {
 ") GccAna_CircPnt2dBisec;
 		 GccAna_CircPnt2dBisec (const gp_Circ2d & Circle1,const gp_Pnt2d & Point2,const Standard_Real Tolerance);
 		%feature("compactdefaultargs") IsDone;
-		%feature("autodoc", "	* Returns true (this construction algorithm never fails).
+		%feature("autodoc", "	* Returns true --this construction algorithm never fails--.
 
 	:rtype: bool
 ") IsDone;
@@ -1197,7 +1200,7 @@ class GccAna_Lin2d2Tan {
 ") ThisSolution;
 		gp_Lin2d ThisSolution (const Standard_Integer Index);
 		%feature("compactdefaultargs") WhichQualifier;
-		%feature("autodoc", "	* Returns the qualifiers Qualif1 and Qualif2 of the tangency arguments for the solution of index Index computed by this algorithm. The returned qualifiers are: - those specified at the start of construction when the solutions are defined as enclosing or outside with respect to the arguments, or - those computed during construction (i.e. enclosing or outside) when the solutions are defined as unqualified with respect to the arguments, or - GccEnt_noqualifier if the tangency argument is a point. Exceptions Standard_OutOfRange if Index is less than zero or greater than the number of solutions computed by this algorithm. StdFail_NotDone if the construction fails.
+		%feature("autodoc", "	* Returns the qualifiers Qualif1 and Qualif2 of the tangency arguments for the solution of index Index computed by this algorithm. The returned qualifiers are: - those specified at the start of construction when the solutions are defined as enclosing or outside with respect to the arguments, or - those computed during construction --i.e. enclosing or outside-- when the solutions are defined as unqualified with respect to the arguments, or - GccEnt_noqualifier if the tangency argument is a point. Exceptions Standard_OutOfRange if Index is less than zero or greater than the number of solutions computed by this algorithm. StdFail_NotDone if the construction fails.
 
 	:param Index:
 	:type Index: int
@@ -1270,7 +1273,7 @@ class GccAna_Lin2dBisec {
 ") NbSolutions;
 		Standard_Integer NbSolutions ();
 		%feature("compactdefaultargs") ThisSolution;
-		%feature("autodoc", "	* Returns the solution number Index . The first solution is the inside one and the second is the outside one. For the first solution the direction is D1+D2 (D1 is the direction of the first argument and D2 the direction of the second argument). For the second solution the direction is D1-D2. Raises NotDone if the construction algorithm didn't succeed. It raises OutOfRange if Index is greater than the number of solutions.
+		%feature("autodoc", "	* Returns the solution number Index . The first solution is the inside one and the second is the outside one. For the first solution the direction is D1+D2 --D1 is the direction of the first argument and D2 the direction of the second argument--. For the second solution the direction is D1-D2. Raises NotDone if the construction algorithm didn't succeed. It raises OutOfRange if Index is greater than the number of solutions.
 
 	:param Index:
 	:type Index: int
@@ -1329,7 +1332,7 @@ class GccAna_Lin2dTanObl {
 ") GccAna_Lin2dTanObl;
 		 GccAna_Lin2dTanObl (const gp_Pnt2d & ThePoint,const gp_Lin2d & TheLine,const Standard_Real TheAngle);
 		%feature("compactdefaultargs") GccAna_Lin2dTanObl;
-		%feature("autodoc", "	* This class implements the algorithms used to create 2d line tangent to a circle and making an angle with a line. Exceptions GccEnt_BadQualifier if a qualifier is inconsistent with the argument it qualifies (for example, enclosed for a circle).
+		%feature("autodoc", "	* This class implements the algorithms used to create 2d line tangent to a circle and making an angle with a line. Exceptions GccEnt_BadQualifier if a qualifier is inconsistent with the argument it qualifies --for example, enclosed for a circle--.
 
 	:param Qualified1:
 	:type Qualified1: GccEnt_QualifiedCirc &
@@ -1361,7 +1364,7 @@ class GccAna_Lin2dTanObl {
 ") ThisSolution;
 		gp_Lin2d ThisSolution (const Standard_Integer Index);
 		%feature("compactdefaultargs") WhichQualifier;
-		%feature("autodoc", "	* Returns the qualifier Qualif1 of the tangency argument for the solution of index Index computed by this algorithm. The returned qualifier is: - that specified at the start of construction when the solutions are defined as enclosing or outside with respect to the argument, or - that computed during construction (i.e. enclosing or outside) when the solutions are defined as unqualified with respect to the argument, or - GccEnt_noqualifier if the tangency argument is a point. Exceptions Standard_OutOfRange if Index is less than zero or greater than the number of solutions computed by this algorithm. StdFail_NotDone if the construction fails.
+		%feature("autodoc", "	* Returns the qualifier Qualif1 of the tangency argument for the solution of index Index computed by this algorithm. The returned qualifier is: - that specified at the start of construction when the solutions are defined as enclosing or outside with respect to the argument, or - that computed during construction --i.e. enclosing or outside-- when the solutions are defined as unqualified with respect to the argument, or - GccEnt_noqualifier if the tangency argument is a point. Exceptions Standard_OutOfRange if Index is less than zero or greater than the number of solutions computed by this algorithm. StdFail_NotDone if the construction fails.
 
 	:param Index:
 	:type Index: int
@@ -1420,7 +1423,7 @@ class GccAna_Lin2dTanPar {
 ") GccAna_Lin2dTanPar;
 		 GccAna_Lin2dTanPar (const gp_Pnt2d & ThePoint,const gp_Lin2d & Lin1);
 		%feature("compactdefaultargs") GccAna_Lin2dTanPar;
-		%feature("autodoc", "	* This method implements the algorithms used to create a 2d line tangent to a circle and parallel to another line. It raises BadQualifier in case of EnclosedCirc. Exceptions GccEnt_BadQualifier if a qualifier is inconsistent with the argument it qualifies (for example, enclosed for a circle).
+		%feature("autodoc", "	* This method implements the algorithms used to create a 2d line tangent to a circle and parallel to another line. It raises BadQualifier in case of EnclosedCirc. Exceptions GccEnt_BadQualifier if a qualifier is inconsistent with the argument it qualifies --for example, enclosed for a circle--.
 
 	:param Qualified1:
 	:type Qualified1: GccEnt_QualifiedCirc &
@@ -1450,7 +1453,7 @@ class GccAna_Lin2dTanPar {
 ") ThisSolution;
 		gp_Lin2d ThisSolution (const Standard_Integer Index);
 		%feature("compactdefaultargs") WhichQualifier;
-		%feature("autodoc", "	* Returns the informations about the qualifiers of the tangency arguments concerning the solution number Index. It returns the real qualifiers (the qualifiers given to the constructor method in case of enclosed, enclosing and outside and the qualifiers computed in case of unqualified). Raises NotDone if the construction algorithm didn't succeed. It raises OutOfRange if Index is greater than the number of solutions.
+		%feature("autodoc", "	* Returns the informations about the qualifiers of the tangency arguments concerning the solution number Index. It returns the real qualifiers --the qualifiers given to the constructor method in case of enclosed, enclosing and outside and the qualifiers computed in case of unqualified--. Raises NotDone if the construction algorithm didn't succeed. It raises OutOfRange if Index is greater than the number of solutions.
 
 	:param Index:
 	:type Index: int
@@ -1537,7 +1540,7 @@ class GccAna_Lin2dTanPer {
 ") NbSolutions;
 		Standard_Integer NbSolutions ();
 		%feature("compactdefaultargs") WhichQualifier;
-		%feature("autodoc", "	* Returns the qualifier Qualif1 of the tangency argument for the solution of index Index computed by this algorithm. The returned qualifier is: - that specified at the start of construction when the solutions are defined as enclosing or outside with respect to the argument, or - that computed during construction (i.e. enclosing or outside) when the solutions are defined as unqualified with respect to the argument, or - GccEnt_noqualifier if the tangency argument is a point. Exceptions Standard_OutOfRange if Index is less than zero or greater than the number of solutions computed by this algorithm. StdFail_NotDone if the construction fails.
+		%feature("autodoc", "	* Returns the qualifier Qualif1 of the tangency argument for the solution of index Index computed by this algorithm. The returned qualifier is: - that specified at the start of construction when the solutions are defined as enclosing or outside with respect to the argument, or - that computed during construction --i.e. enclosing or outside-- when the solutions are defined as unqualified with respect to the argument, or - GccEnt_noqualifier if the tangency argument is a point. Exceptions Standard_OutOfRange if Index is less than zero or greater than the number of solutions computed by this algorithm. StdFail_NotDone if the construction fails.
 
 	:param Index:
 	:type Index: int
@@ -1637,7 +1640,7 @@ class GccAna_Pnt2dBisec {
 ") GccAna_Pnt2dBisec;
 		 GccAna_Pnt2dBisec (const gp_Pnt2d & Point1,const gp_Pnt2d & Point2);
 		%feature("compactdefaultargs") IsDone;
-		%feature("autodoc", "	* Returns true (this construction algorithm never fails).
+		%feature("autodoc", "	* Returns true --this construction algorithm never fails--.
 
 	:rtype: bool
 ") IsDone;

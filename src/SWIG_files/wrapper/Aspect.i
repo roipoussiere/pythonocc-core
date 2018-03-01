@@ -1,5 +1,5 @@
 /*
-Copyright 2008-2017 Thomas Paviot (tpaviot@gmail.com)
+Copyright 2008-2018 Thomas Paviot (tpaviot@gmail.com)
 
 
 This file is part of pythonOCC.
@@ -57,11 +57,15 @@ def register_handle(handle, base_object):
 typedef void * Aspect_Display;
 typedef unsigned long Aspect_Drawable;
 typedef void * HANDLE;
-typedef int ( * Aspect_GraphicCallbackProc ) ( Aspect_Drawable theWindowID , void * theUserData , Aspect_GraphicCallbackStruct * theCallData );
+typedef void * Aspect_FBConfig;
+typedef struct __GLXFBConfigRec * GLXFBConfig;
 typedef void * Aspect_RenderingContext;
 typedef unsigned long Aspect_Handle;
-typedef CALL_DEF_LAYER Aspect_CLayer2d;
 /* end typedefs declaration */
+
+/* templates */
+%template(Aspect_SequenceOfColor) NCollection_Sequence <Quantity_Color>;
+/* end templates declaration */
 
 /* public enums */
 enum Aspect_TypeOfDeflection {
@@ -70,6 +74,7 @@ enum Aspect_TypeOfDeflection {
 };
 
 enum Aspect_TypeOfLine {
+	Aspect_TOL_EMPTY = - 1,
 	Aspect_TOL_SOLID = 0,
 	Aspect_TOL_DASH = 1,
 	Aspect_TOL_DOT = 2,
@@ -137,6 +142,7 @@ enum Aspect_TypeOfStyleText {
 };
 
 enum Aspect_TypeOfMarker {
+	Aspect_TOM_EMPTY = - 1,
 	Aspect_TOM_POINT = 0,
 	Aspect_TOM_PLUS = 1,
 	Aspect_TOM_STAR = 2,
@@ -173,32 +179,6 @@ enum Aspect_FillMethod {
 	Aspect_FM_STRETCH = 3,
 };
 
-enum Aspect_TypeOfUpdate {
-	Aspect_TOU_ASAP = 0,
-	Aspect_TOU_WAIT = 1,
-};
-
-enum Aspect_TypeOfTriedronEcho {
-	Aspect_TOTE_NONE = 0,
-	Aspect_TOTE_ORIGIN = 1,
-	Aspect_TOTE_AXIS_X = 2,
-	Aspect_TOTE_AXIS_Y = 3,
-	Aspect_TOTE_AXIS_Z = 4,
-	Aspect_TOTE_TEXT_X = 5,
-	Aspect_TOTE_TEXT_Y = 6,
-	Aspect_TOTE_TEXT_Z = 7,
-	Aspect_TOTE_01 = 8,
-	Aspect_TOTE_02 = 9,
-	Aspect_TOTE_03 = 10,
-	Aspect_TOTE_04 = 11,
-	Aspect_TOTE_05 = 12,
-	Aspect_TOTE_06 = 13,
-	Aspect_TOTE_07 = 14,
-	Aspect_TOTE_08 = 15,
-	Aspect_TOTE_09 = 16,
-	Aspect_TOTE_10 = 17,
-};
-
 enum Aspect_TypeOfPrimitive {
 	Aspect_TOP_UNKNOWN = 0,
 	Aspect_TOP_POLYLINE = 1,
@@ -211,18 +191,20 @@ enum Aspect_TypeOfPrimitive {
 };
 
 enum Aspect_HatchStyle {
-	Aspect_HS_HORIZONTAL = 0,
-	Aspect_HS_HORIZONTAL_WIDE = 1,
-	Aspect_HS_VERTICAL = 2,
-	Aspect_HS_VERTICAL_WIDE = 3,
-	Aspect_HS_DIAGONAL_45 = 4,
-	Aspect_HS_DIAGONAL_45_WIDE = 5,
+	Aspect_HS_SOLID = 0,
+	Aspect_HS_HORIZONTAL = 7,
+	Aspect_HS_HORIZONTAL_WIDE = 11,
+	Aspect_HS_VERTICAL = 8,
+	Aspect_HS_VERTICAL_WIDE = 12,
+	Aspect_HS_DIAGONAL_45 = 5,
+	Aspect_HS_DIAGONAL_45_WIDE = 9,
 	Aspect_HS_DIAGONAL_135 = 6,
-	Aspect_HS_DIAGONAL_135_WIDE = 7,
-	Aspect_HS_GRID = 8,
-	Aspect_HS_GRID_WIDE = 9,
-	Aspect_HS_GRID_DIAGONAL = 10,
-	Aspect_HS_GRID_DIAGONAL_WIDE = 11,
+	Aspect_HS_DIAGONAL_135_WIDE = 10,
+	Aspect_HS_GRID = 3,
+	Aspect_HS_GRID_WIDE = 4,
+	Aspect_HS_GRID_DIAGONAL = 1,
+	Aspect_HS_GRID_DIAGONAL_WIDE = 2,
+	Aspect_HS_NB = 13,
 };
 
 enum Aspect_PolygonOffsetMode {
@@ -253,30 +235,19 @@ enum Aspect_XAtom {
 
 enum Aspect_TypeOfTriedronPosition {
 	Aspect_TOTP_CENTER = 0,
-	Aspect_TOTP_LEFT_LOWER = 1,
-	Aspect_TOTP_LEFT_UPPER = 2,
-	Aspect_TOTP_RIGHT_LOWER = 3,
-	Aspect_TOTP_RIGHT_UPPER = 4,
-	Aspect_TOTP_01 = 5,
-	Aspect_TOTP_02 = 6,
-	Aspect_TOTP_03 = 7,
-	Aspect_TOTP_04 = 8,
-	Aspect_TOTP_05 = 9,
-	Aspect_TOTP_06 = 10,
-	Aspect_TOTP_07 = 11,
-	Aspect_TOTP_08 = 12,
-	Aspect_TOTP_09 = 13,
-	Aspect_TOTP_10 = 14,
+	Aspect_TOTP_TOP = 1,
+	Aspect_TOTP_BOTTOM = 2,
+	Aspect_TOTP_LEFT = 4,
+	Aspect_TOTP_RIGHT = 8,
+	Aspect_TOTP_LEFT_LOWER = Aspect_TOTP_BOTTOM | Aspect_TOTP_LEFT,
+	Aspect_TOTP_LEFT_UPPER = Aspect_TOTP_TOP | Aspect_TOTP_LEFT,
+	Aspect_TOTP_RIGHT_LOWER = Aspect_TOTP_BOTTOM | Aspect_TOTP_RIGHT,
+	Aspect_TOTP_RIGHT_UPPER = Aspect_TOTP_TOP | Aspect_TOTP_RIGHT,
 };
 
 enum Aspect_TypeOfLayer {
 	Aspect_TOL_OVERLAY = 0,
 	Aspect_TOL_UNDERLAY = 1,
-};
-
-enum Aspect_PrintAlgo {
-	Aspect_PA_STRETCH = 0,
-	Aspect_PA_TILE = 1,
 };
 
 enum Aspect_GridDrawMode {
@@ -312,343 +283,6 @@ enum Aspect_InteriorStyle {
 
 /* end public enums declaration */
 
-%nodefaultctor Aspect_AspectFillArea;
-class Aspect_AspectFillArea : public MMgt_TShared {
-	public:
-		%feature("compactdefaultargs") SetEdgeColor;
-		%feature("autodoc", "	* Modifies the colour of the edge of the face
-
-	:param AColor:
-	:type AColor: Quantity_Color &
-	:rtype: None
-") SetEdgeColor;
-		void SetEdgeColor (const Quantity_Color & AColor);
-		%feature("compactdefaultargs") SetEdgeLineType;
-		%feature("autodoc", "	* Modifies the edge line type
-
-	:param AType:
-	:type AType: Aspect_TypeOfLine
-	:rtype: None
-") SetEdgeLineType;
-		void SetEdgeLineType (const Aspect_TypeOfLine AType);
-		%feature("compactdefaultargs") SetEdgeWidth;
-		%feature("autodoc", "	* Modifies the edge thickness //! Category: Methods to modify the class definition //! Warning: Raises AspectFillAreaDefinitionError if the width is a negative value.
-
-	:param AWidth:
-	:type AWidth: float
-	:rtype: None
-") SetEdgeWidth;
-		void SetEdgeWidth (const Standard_Real AWidth);
-		%feature("compactdefaultargs") SetHatchStyle;
-		%feature("autodoc", "	* Modifies the hatch type used when InteriorStyle is IS_HATCH
-
-	:param AStyle:
-	:type AStyle: Aspect_HatchStyle
-	:rtype: None
-") SetHatchStyle;
-		void SetHatchStyle (const Aspect_HatchStyle AStyle);
-		%feature("compactdefaultargs") SetInteriorColor;
-		%feature("autodoc", "	* Modifies the colour of the interior of the face
-
-	:param AColor:
-	:type AColor: Quantity_Color &
-	:rtype: None
-") SetInteriorColor;
-		void SetInteriorColor (const Quantity_Color & AColor);
-		%feature("compactdefaultargs") SetBackInteriorColor;
-		%feature("autodoc", "	* Modifies the colour of the interior of the back face
-
-	:param color:
-	:type color: Quantity_Color &
-	:rtype: None
-") SetBackInteriorColor;
-		void SetBackInteriorColor (const Quantity_Color & color);
-		%feature("compactdefaultargs") SetInteriorStyle;
-		%feature("autodoc", "	* Modifies the interior type used for rendering //! InteriorStyle : IS_EMPTY	no interior IS_HOLLOW	display the boundaries of the surface IS_HATCH	display hatching IS_SOLID	display interior entirely filled
-
-	:param AStyle:
-	:type AStyle: Aspect_InteriorStyle
-	:rtype: None
-") SetInteriorStyle;
-		void SetInteriorStyle (const Aspect_InteriorStyle AStyle);
-		%feature("compactdefaultargs") HatchStyle;
-		%feature("autodoc", "	* Returns the hatch type used when InteriorStyle is IS_HATCH
-
-	:rtype: Aspect_HatchStyle
-") HatchStyle;
-		Aspect_HatchStyle HatchStyle ();
-		%feature("compactdefaultargs") Values;
-		%feature("autodoc", "	:param AStyle:
-	:type AStyle: Aspect_InteriorStyle &
-	:param AIntColor:
-	:type AIntColor: Quantity_Color &
-	:param AEdgeColor:
-	:type AEdgeColor: Quantity_Color &
-	:param AType:
-	:type AType: Aspect_TypeOfLine &
-	:param AWidth:
-	:type AWidth: float &
-	:rtype: None
-") Values;
-		void Values (Aspect_InteriorStyle & AStyle,Quantity_Color & AIntColor,Quantity_Color & AEdgeColor,Aspect_TypeOfLine & AType,Standard_Real &OutValue);
-		%feature("compactdefaultargs") Values;
-		%feature("autodoc", "	* Returns the current values of the <self> group.
-
-	:param AStyle:
-	:type AStyle: Aspect_InteriorStyle &
-	:param AIntColor:
-	:type AIntColor: Quantity_Color &
-	:param BackIntColor:
-	:type BackIntColor: Quantity_Color &
-	:param AEdgeColor:
-	:type AEdgeColor: Quantity_Color &
-	:param AType:
-	:type AType: Aspect_TypeOfLine &
-	:param AWidth:
-	:type AWidth: float &
-	:rtype: None
-") Values;
-		void Values (Aspect_InteriorStyle & AStyle,Quantity_Color & AIntColor,Quantity_Color & BackIntColor,Quantity_Color & AEdgeColor,Aspect_TypeOfLine & AType,Standard_Real &OutValue);
-};
-
-
-%extend Aspect_AspectFillArea {
-	%pythoncode {
-		def GetHandle(self):
-		    try:
-		        return self.thisHandle
-		    except:
-		        self.thisHandle = Handle_Aspect_AspectFillArea(self)
-		        self.thisown = False
-		        return self.thisHandle
-	}
-};
-
-%pythonappend Handle_Aspect_AspectFillArea::Handle_Aspect_AspectFillArea %{
-    # register the handle in the base object
-    if len(args) > 0:
-        register_handle(self, args[0])
-%}
-
-%nodefaultctor Handle_Aspect_AspectFillArea;
-class Handle_Aspect_AspectFillArea : public Handle_MMgt_TShared {
-
-    public:
-        // constructors
-        Handle_Aspect_AspectFillArea();
-        Handle_Aspect_AspectFillArea(const Handle_Aspect_AspectFillArea &aHandle);
-        Handle_Aspect_AspectFillArea(const Aspect_AspectFillArea *anItem);
-        void Nullify();
-        Standard_Boolean IsNull() const;
-        static const Handle_Aspect_AspectFillArea DownCast(const Handle_Standard_Transient &AnObject);
-
-};
-%extend Handle_Aspect_AspectFillArea {
-    Aspect_AspectFillArea* _get_reference() {
-    return (Aspect_AspectFillArea*)$self->Access();
-    }
-};
-
-%extend Handle_Aspect_AspectFillArea {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
-};
-
-%extend Aspect_AspectFillArea {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor Aspect_AspectLine;
-class Aspect_AspectLine : public MMgt_TShared {
-	public:
-		%feature("compactdefaultargs") SetColor;
-		%feature("autodoc", "	* Modifies the colour of <self>.
-
-	:param AColor:
-	:type AColor: Quantity_Color &
-	:rtype: None
-") SetColor;
-		void SetColor (const Quantity_Color & AColor);
-		%feature("compactdefaultargs") SetType;
-		%feature("autodoc", "	* Modifies the type of <self>.
-
-	:param AType:
-	:type AType: Aspect_TypeOfLine
-	:rtype: None
-") SetType;
-		void SetType (const Aspect_TypeOfLine AType);
-		%feature("compactdefaultargs") SetWidth;
-		%feature("autodoc", "	* Modifies the thickness of <self>. Category: Methods to modify the class definition Warning: Raises AspectLineDefinitionError if the width is a negative value.
-
-	:param AWidth:
-	:type AWidth: float
-	:rtype: None
-") SetWidth;
-		void SetWidth (const Standard_Real AWidth);
-		%feature("compactdefaultargs") Values;
-		%feature("autodoc", "	* Returns the current values of the group <self>.
-
-	:param AColor:
-	:type AColor: Quantity_Color &
-	:param AType:
-	:type AType: Aspect_TypeOfLine &
-	:param AWidth:
-	:type AWidth: float &
-	:rtype: None
-") Values;
-		void Values (Quantity_Color & AColor,Aspect_TypeOfLine & AType,Standard_Real &OutValue);
-};
-
-
-%extend Aspect_AspectLine {
-	%pythoncode {
-		def GetHandle(self):
-		    try:
-		        return self.thisHandle
-		    except:
-		        self.thisHandle = Handle_Aspect_AspectLine(self)
-		        self.thisown = False
-		        return self.thisHandle
-	}
-};
-
-%pythonappend Handle_Aspect_AspectLine::Handle_Aspect_AspectLine %{
-    # register the handle in the base object
-    if len(args) > 0:
-        register_handle(self, args[0])
-%}
-
-%nodefaultctor Handle_Aspect_AspectLine;
-class Handle_Aspect_AspectLine : public Handle_MMgt_TShared {
-
-    public:
-        // constructors
-        Handle_Aspect_AspectLine();
-        Handle_Aspect_AspectLine(const Handle_Aspect_AspectLine &aHandle);
-        Handle_Aspect_AspectLine(const Aspect_AspectLine *anItem);
-        void Nullify();
-        Standard_Boolean IsNull() const;
-        static const Handle_Aspect_AspectLine DownCast(const Handle_Standard_Transient &AnObject);
-
-};
-%extend Handle_Aspect_AspectLine {
-    Aspect_AspectLine* _get_reference() {
-    return (Aspect_AspectLine*)$self->Access();
-    }
-};
-
-%extend Handle_Aspect_AspectLine {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
-};
-
-%extend Aspect_AspectLine {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor Aspect_AspectMarker;
-class Aspect_AspectMarker : public MMgt_TShared {
-	public:
-		%feature("compactdefaultargs") SetColor;
-		%feature("autodoc", "	* Modifies the colour of <self>.
-
-	:param AColor:
-	:type AColor: Quantity_Color &
-	:rtype: None
-") SetColor;
-		void SetColor (const Quantity_Color & AColor);
-		%feature("compactdefaultargs") SetScale;
-		%feature("autodoc", "	* Modifies the scale factor of <self>. Marker type Aspect_TOM_POINT is not affected by the marker size scale factor. It is always the smallest displayable dot. Warning: Raises AspectMarkerDefinitionError if the scale is a negative value.
-
-	:param AScale:
-	:type AScale: float
-	:rtype: None
-") SetScale;
-		void SetScale (const Standard_Real AScale);
-		%feature("compactdefaultargs") SetType;
-		%feature("autodoc", "	* Modifies the type of marker <self>.
-
-	:param AType:
-	:type AType: Aspect_TypeOfMarker
-	:rtype: None
-") SetType;
-		void SetType (const Aspect_TypeOfMarker AType);
-		%feature("compactdefaultargs") Values;
-		%feature("autodoc", "	* Returns the current values of the group <self>.
-
-	:param AColor:
-	:type AColor: Quantity_Color &
-	:param AType:
-	:type AType: Aspect_TypeOfMarker &
-	:param AScale:
-	:type AScale: float &
-	:rtype: None
-") Values;
-		void Values (Quantity_Color & AColor,Aspect_TypeOfMarker & AType,Standard_Real &OutValue);
-};
-
-
-%extend Aspect_AspectMarker {
-	%pythoncode {
-		def GetHandle(self):
-		    try:
-		        return self.thisHandle
-		    except:
-		        self.thisHandle = Handle_Aspect_AspectMarker(self)
-		        self.thisown = False
-		        return self.thisHandle
-	}
-};
-
-%pythonappend Handle_Aspect_AspectMarker::Handle_Aspect_AspectMarker %{
-    # register the handle in the base object
-    if len(args) > 0:
-        register_handle(self, args[0])
-%}
-
-%nodefaultctor Handle_Aspect_AspectMarker;
-class Handle_Aspect_AspectMarker : public Handle_MMgt_TShared {
-
-    public:
-        // constructors
-        Handle_Aspect_AspectMarker();
-        Handle_Aspect_AspectMarker(const Handle_Aspect_AspectMarker &aHandle);
-        Handle_Aspect_AspectMarker(const Aspect_AspectMarker *anItem);
-        void Nullify();
-        Standard_Boolean IsNull() const;
-        static const Handle_Aspect_AspectMarker DownCast(const Handle_Standard_Transient &AnObject);
-
-};
-%extend Handle_Aspect_AspectMarker {
-    Aspect_AspectMarker* _get_reference() {
-    return (Aspect_AspectMarker*)$self->Access();
-    }
-};
-
-%extend Handle_Aspect_AspectMarker {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
-};
-
-%extend Aspect_AspectMarker {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
 %nodefaultctor Aspect_Background;
 class Aspect_Background {
 	public:
@@ -684,487 +318,6 @@ class Aspect_Background {
 
 
 %extend Aspect_Background {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor Aspect_ColorScale;
-class Aspect_ColorScale : public MMgt_TShared {
-	public:
-		%feature("compactdefaultargs") FindColor;
-		%feature("autodoc", "	* Calculate color according passed value; returns true if value is in range or false, if isn't
-
-	:param theValue:
-	:type theValue: float
-	:param theColor:
-	:type theColor: Quantity_Color &
-	:rtype: bool
-") FindColor;
-		Standard_Boolean FindColor (const Standard_Real theValue,Quantity_Color & theColor);
-		%feature("compactdefaultargs") FindColor;
-		%feature("autodoc", "	:param theValue:
-	:type theValue: float
-	:param theMin:
-	:type theMin: float
-	:param theMax:
-	:type theMax: float
-	:param theColorsCount:
-	:type theColorsCount: int
-	:param theColor:
-	:type theColor: Quantity_Color &
-	:rtype: bool
-") FindColor;
-		static Standard_Boolean FindColor (const Standard_Real theValue,const Standard_Real theMin,const Standard_Real theMax,const Standard_Integer theColorsCount,Quantity_Color & theColor);
-		%feature("compactdefaultargs") GetMin;
-		%feature("autodoc", "	* Returns minimal value of color scale;
-
-	:rtype: float
-") GetMin;
-		Standard_Real GetMin ();
-		%feature("compactdefaultargs") GetMax;
-		%feature("autodoc", "	* Returns maximal value of color scale;
-
-	:rtype: float
-") GetMax;
-		Standard_Real GetMax ();
-		%feature("compactdefaultargs") GetRange;
-		%feature("autodoc", "	* Returns minimal and maximal values of color scale;
-
-	:param theMin:
-	:type theMin: float &
-	:param theMax:
-	:type theMax: float &
-	:rtype: None
-") GetRange;
-		void GetRange (Standard_Real &OutValue,Standard_Real &OutValue);
-		%feature("compactdefaultargs") GetLabelType;
-		%feature("autodoc", "	* Returns the type of labels; Aspect_TOCSD_AUTO - labels as boundary values for intervals Aspect_TOCSD_USER - user specified label is used
-
-	:rtype: Aspect_TypeOfColorScaleData
-") GetLabelType;
-		Aspect_TypeOfColorScaleData GetLabelType ();
-		%feature("compactdefaultargs") GetColorType;
-		%feature("autodoc", "	* Returns the type of colors; Aspect_TOCSD_AUTO - value between Red and Blue Aspect_TOCSD_USER - user specified color from color map
-
-	:rtype: Aspect_TypeOfColorScaleData
-") GetColorType;
-		Aspect_TypeOfColorScaleData GetColorType ();
-		%feature("compactdefaultargs") GetNumberOfIntervals;
-		%feature("autodoc", "	* Returns the number of color scale intervals;
-
-	:rtype: int
-") GetNumberOfIntervals;
-		Standard_Integer GetNumberOfIntervals ();
-		%feature("compactdefaultargs") GetTitle;
-		%feature("autodoc", "	* Returns the color scale title string;
-
-	:rtype: TCollection_ExtendedString
-") GetTitle;
-		TCollection_ExtendedString GetTitle ();
-		%feature("compactdefaultargs") GetFormat;
-		%feature("autodoc", "	* Returns the format for numbers. The same like format for function printf(). Used if GetLabelType() is TOCSD_AUTO;
-
-	:rtype: TCollection_AsciiString
-") GetFormat;
-		TCollection_AsciiString GetFormat ();
-		%feature("compactdefaultargs") GetLabel;
-		%feature("autodoc", "	* Returns the user specified label with index <anIndex>. Returns empty string if label not defined.
-
-	:param theIndex:
-	:type theIndex: int
-	:rtype: TCollection_ExtendedString
-") GetLabel;
-		TCollection_ExtendedString GetLabel (const Standard_Integer theIndex);
-		%feature("compactdefaultargs") GetColor;
-		%feature("autodoc", "	* Returns the user specified color from color map with index <anIndex>. Returns default color if index out of range in color map.
-
-	:param theIndex:
-	:type theIndex: int
-	:rtype: Quantity_Color
-") GetColor;
-		Quantity_Color GetColor (const Standard_Integer theIndex);
-		%feature("compactdefaultargs") GetLabels;
-		%feature("autodoc", "	* Returns the user specified labels.
-
-	:param theLabels:
-	:type theLabels: TColStd_SequenceOfExtendedString &
-	:rtype: None
-") GetLabels;
-		void GetLabels (TColStd_SequenceOfExtendedString & theLabels);
-		%feature("compactdefaultargs") GetColors;
-		%feature("autodoc", "	* Returns the user specified colors.
-
-	:param theColors:
-	:type theColors: Aspect_SequenceOfColor &
-	:rtype: None
-") GetColors;
-		void GetColors (Aspect_SequenceOfColor & theColors);
-		%feature("compactdefaultargs") GetLabelPosition;
-		%feature("autodoc", "	* Returns the position of labels concerning color filled rectangles.
-
-	:rtype: Aspect_TypeOfColorScalePosition
-") GetLabelPosition;
-		Aspect_TypeOfColorScalePosition GetLabelPosition ();
-		%feature("compactdefaultargs") GetTitlePosition;
-		%feature("autodoc", "	* Returns the position of color scale title.
-
-	:rtype: Aspect_TypeOfColorScalePosition
-") GetTitlePosition;
-		Aspect_TypeOfColorScalePosition GetTitlePosition ();
-		%feature("compactdefaultargs") IsReversed;
-		%feature("autodoc", "	* Returns true if the labels and colors used in reversed order.
-
-	:rtype: bool
-") IsReversed;
-		Standard_Boolean IsReversed ();
-		%feature("compactdefaultargs") IsLabelAtBorder;
-		%feature("autodoc", "	* Returns true if the labels placed at border of color filled rectangles.
-
-	:rtype: bool
-") IsLabelAtBorder;
-		Standard_Boolean IsLabelAtBorder ();
-		%feature("compactdefaultargs") SetMin;
-		%feature("autodoc", "	* Sets the minimal value of color scale.
-
-	:param theMin:
-	:type theMin: float
-	:rtype: None
-") SetMin;
-		void SetMin (const Standard_Real theMin);
-		%feature("compactdefaultargs") SetMax;
-		%feature("autodoc", "	* Sets the maximal value of color scale.
-
-	:param theMax:
-	:type theMax: float
-	:rtype: None
-") SetMax;
-		void SetMax (const Standard_Real theMax);
-		%feature("compactdefaultargs") SetRange;
-		%feature("autodoc", "	* Sets the minimal and maximal value of color scale.
-
-	:param theMin:
-	:type theMin: float
-	:param theMax:
-	:type theMax: float
-	:rtype: None
-") SetRange;
-		void SetRange (const Standard_Real theMin,const Standard_Real theMax);
-		%feature("compactdefaultargs") SetLabelType;
-		%feature("autodoc", "	* Sets the type of labels. Aspect_TOCSD_AUTO - labels as boundary values for intervals Aspect_TOCSD_USER - user specified label is used
-
-	:param theType:
-	:type theType: Aspect_TypeOfColorScaleData
-	:rtype: None
-") SetLabelType;
-		void SetLabelType (const Aspect_TypeOfColorScaleData theType);
-		%feature("compactdefaultargs") SetColorType;
-		%feature("autodoc", "	* Sets the type of colors. Aspect_TOCSD_AUTO - value between Red and Blue Aspect_TOCSD_USER - user specified color from color map
-
-	:param theType:
-	:type theType: Aspect_TypeOfColorScaleData
-	:rtype: None
-") SetColorType;
-		void SetColorType (const Aspect_TypeOfColorScaleData theType);
-		%feature("compactdefaultargs") SetNumberOfIntervals;
-		%feature("autodoc", "	* Sets the number of color scale intervals.
-
-	:param theNum:
-	:type theNum: int
-	:rtype: None
-") SetNumberOfIntervals;
-		void SetNumberOfIntervals (const Standard_Integer theNum);
-		%feature("compactdefaultargs") SetTitle;
-		%feature("autodoc", "	* Sets the color scale title string.
-
-	:param theTitle:
-	:type theTitle: TCollection_ExtendedString &
-	:rtype: None
-") SetTitle;
-		void SetTitle (const TCollection_ExtendedString & theTitle);
-		%feature("compactdefaultargs") SetFormat;
-		%feature("autodoc", "	* Sets the color scale auto label format specification.
-
-	:param theFormat:
-	:type theFormat: TCollection_AsciiString &
-	:rtype: None
-") SetFormat;
-		void SetFormat (const TCollection_AsciiString & theFormat);
-		%feature("compactdefaultargs") SetLabel;
-		%feature("autodoc", "	* Sets the color scale label at index. Index started from 1.
-
-	:param theLabel:
-	:type theLabel: TCollection_ExtendedString &
-	:param anIndex: default value is -1
-	:type anIndex: int
-	:rtype: None
-") SetLabel;
-		void SetLabel (const TCollection_ExtendedString & theLabel,const Standard_Integer anIndex = -1);
-		%feature("compactdefaultargs") SetColor;
-		%feature("autodoc", "	* Sets the color scale color at index. Index started from 1.
-
-	:param theColor:
-	:type theColor: Quantity_Color &
-	:param theIndex: default value is -1
-	:type theIndex: int
-	:rtype: None
-") SetColor;
-		void SetColor (const Quantity_Color & theColor,const Standard_Integer theIndex = -1);
-		%feature("compactdefaultargs") SetLabels;
-		%feature("autodoc", "	* Sets the color scale labels.
-
-	:param theSeq:
-	:type theSeq: TColStd_SequenceOfExtendedString &
-	:rtype: None
-") SetLabels;
-		void SetLabels (const TColStd_SequenceOfExtendedString & theSeq);
-		%feature("compactdefaultargs") SetColors;
-		%feature("autodoc", "	* Sets the color scale colors.
-
-	:param theSeq:
-	:type theSeq: Aspect_SequenceOfColor &
-	:rtype: None
-") SetColors;
-		void SetColors (const Aspect_SequenceOfColor & theSeq);
-		%feature("compactdefaultargs") SetLabelPosition;
-		%feature("autodoc", "	* Sets the color scale labels position concerning color filled rectangles.
-
-	:param thePos:
-	:type thePos: Aspect_TypeOfColorScalePosition
-	:rtype: None
-") SetLabelPosition;
-		void SetLabelPosition (const Aspect_TypeOfColorScalePosition thePos);
-		%feature("compactdefaultargs") SetTitlePosition;
-		%feature("autodoc", "	* Sets the color scale title position.
-
-	:param thePos:
-	:type thePos: Aspect_TypeOfColorScalePosition
-	:rtype: None
-") SetTitlePosition;
-		void SetTitlePosition (const Aspect_TypeOfColorScalePosition thePos);
-		%feature("compactdefaultargs") SetReversed;
-		%feature("autodoc", "	* Sets true if the labels and colors used in reversed order.
-
-	:param theReverse:
-	:type theReverse: bool
-	:rtype: None
-") SetReversed;
-		void SetReversed (const Standard_Boolean theReverse);
-		%feature("compactdefaultargs") SetLabelAtBorder;
-		%feature("autodoc", "	* Sets true if the labels placed at border of color filled rectangles.
-
-	:param theOn:
-	:type theOn: bool
-	:rtype: None
-") SetLabelAtBorder;
-		void SetLabelAtBorder (const Standard_Boolean theOn);
-		%feature("compactdefaultargs") GetSize;
-		%feature("autodoc", "	* Returns the size of color scale.
-
-	:param theWidth:
-	:type theWidth: float &
-	:param theHeight:
-	:type theHeight: float &
-	:rtype: None
-") GetSize;
-		void GetSize (Standard_Real &OutValue,Standard_Real &OutValue);
-		%feature("compactdefaultargs") GetWidth;
-		%feature("autodoc", "	* Returns the width of color scale.
-
-	:rtype: float
-") GetWidth;
-		Standard_Real GetWidth ();
-		%feature("compactdefaultargs") GetHeight;
-		%feature("autodoc", "	* Returns the height of color scale.
-
-	:rtype: float
-") GetHeight;
-		Standard_Real GetHeight ();
-		%feature("compactdefaultargs") SetSize;
-		%feature("autodoc", "	* Sets the size of color scale.
-
-	:param theWidth:
-	:type theWidth: float
-	:param theHeight:
-	:type theHeight: float
-	:rtype: None
-") SetSize;
-		void SetSize (const Standard_Real theWidth,const Standard_Real theHeight);
-		%feature("compactdefaultargs") SetWidth;
-		%feature("autodoc", "	* Sets the width of color scale.
-
-	:param theWidth:
-	:type theWidth: float
-	:rtype: None
-") SetWidth;
-		void SetWidth (const Standard_Real theWidth);
-		%feature("compactdefaultargs") SetHeight;
-		%feature("autodoc", "	* Sets the height of color scale.
-
-	:param theHeight:
-	:type theHeight: float
-	:rtype: None
-") SetHeight;
-		void SetHeight (const Standard_Real theHeight);
-		%feature("compactdefaultargs") GetPosition;
-		%feature("autodoc", "	* Returns the position of color scale.
-
-	:param theX:
-	:type theX: float &
-	:param theY:
-	:type theY: float &
-	:rtype: None
-") GetPosition;
-		void GetPosition (Standard_Real &OutValue,Standard_Real &OutValue);
-		%feature("compactdefaultargs") GetXPosition;
-		%feature("autodoc", "	* Returns the X position of color scale.
-
-	:rtype: float
-") GetXPosition;
-		Standard_Real GetXPosition ();
-		%feature("compactdefaultargs") GetYPosition;
-		%feature("autodoc", "	* Returns the height of color scale.
-
-	:rtype: float
-") GetYPosition;
-		Standard_Real GetYPosition ();
-		%feature("compactdefaultargs") SetPosition;
-		%feature("autodoc", "	* Sets the position of color scale.
-
-	:param theX:
-	:type theX: float
-	:param theY:
-	:type theY: float
-	:rtype: None
-") SetPosition;
-		void SetPosition (const Standard_Real theX,const Standard_Real theY);
-		%feature("compactdefaultargs") SetXPosition;
-		%feature("autodoc", "	* Sets the X position of color scale.
-
-	:param theX:
-	:type theX: float
-	:rtype: None
-") SetXPosition;
-		void SetXPosition (const Standard_Real theX);
-		%feature("compactdefaultargs") SetYPosition;
-		%feature("autodoc", "	* Sets the Y position of color scale.
-
-	:param theY:
-	:type theY: float
-	:rtype: None
-") SetYPosition;
-		void SetYPosition (const Standard_Real theY);
-		%feature("compactdefaultargs") GetTextHeight;
-		%feature("autodoc", "	* Returns the height of text of color scale.
-
-	:rtype: int
-") GetTextHeight;
-		Standard_Integer GetTextHeight ();
-		%feature("compactdefaultargs") SetTextHeight;
-		%feature("autodoc", "	* Sets the height of text of color scale.
-
-	:param theHeight:
-	:type theHeight: int
-	:rtype: None
-") SetTextHeight;
-		void SetTextHeight (const Standard_Integer theHeight);
-		%feature("compactdefaultargs") PaintRect;
-		%feature("autodoc", "	* Draws a rectangle. @param theX [in] the X coordinate of rectangle position. @param theY [in] the Y coordinate of rectangle position. @param theWidth [in] the width of rectangle. @param theHeight [in] the height of rectangle. @param theColor [in] the color of rectangle. @param theFilled [in] defines if rectangle must be filled.
-
-	:param theX:
-	:type theX: int
-	:param theY:
-	:type theY: int
-	:param theWidth:
-	:type theWidth: int
-	:param theHeight:
-	:type theHeight: int
-	:param theColor:
-	:type theColor: Quantity_Color &
-	:param theFilled: default value is Standard_False
-	:type theFilled: bool
-	:rtype: void
-") PaintRect;
-		virtual void PaintRect (const Standard_Integer theX,const Standard_Integer theY,const Standard_Integer theWidth,const Standard_Integer theHeight,const Quantity_Color & theColor,const Standard_Boolean theFilled = Standard_False);
-		%feature("compactdefaultargs") PaintText;
-		%feature("autodoc", "	* Draws a text. @param theText [in] the text to draw. @param theX [in] the X coordinate of text position. @param theY [in] the Y coordinate of text position. @param theColor [in] the color of text.
-
-	:param theText:
-	:type theText: TCollection_ExtendedString &
-	:param theX:
-	:type theX: int
-	:param theY:
-	:type theY: int
-	:param theColor:
-	:type theColor: Quantity_Color &
-	:rtype: void
-") PaintText;
-		virtual void PaintText (const TCollection_ExtendedString & theText,const Standard_Integer theX,const Standard_Integer theY,const Quantity_Color & theColor);
-		%feature("compactdefaultargs") TextWidth;
-		%feature("autodoc", "	* Returns the width of text. @param theText [in] the text of which to calculate width.
-
-	:param theText:
-	:type theText: TCollection_ExtendedString &
-	:rtype: int
-") TextWidth;
-		virtual Standard_Integer TextWidth (const TCollection_ExtendedString & theText);
-		%feature("compactdefaultargs") TextHeight;
-		%feature("autodoc", "	* Returns the height of text. @param theText [in] the text of which to calculate height.
-
-	:param theText:
-	:type theText: TCollection_ExtendedString &
-	:rtype: int
-") TextHeight;
-		virtual Standard_Integer TextHeight (const TCollection_ExtendedString & theText);
-};
-
-
-%extend Aspect_ColorScale {
-	%pythoncode {
-		def GetHandle(self):
-		    try:
-		        return self.thisHandle
-		    except:
-		        self.thisHandle = Handle_Aspect_ColorScale(self)
-		        self.thisown = False
-		        return self.thisHandle
-	}
-};
-
-%pythonappend Handle_Aspect_ColorScale::Handle_Aspect_ColorScale %{
-    # register the handle in the base object
-    if len(args) > 0:
-        register_handle(self, args[0])
-%}
-
-%nodefaultctor Handle_Aspect_ColorScale;
-class Handle_Aspect_ColorScale : public Handle_MMgt_TShared {
-
-    public:
-        // constructors
-        Handle_Aspect_ColorScale();
-        Handle_Aspect_ColorScale(const Handle_Aspect_ColorScale &aHandle);
-        Handle_Aspect_ColorScale(const Aspect_ColorScale *anItem);
-        void Nullify();
-        Standard_Boolean IsNull() const;
-        static const Handle_Aspect_ColorScale DownCast(const Handle_Standard_Transient &AnObject);
-
-};
-%extend Handle_Aspect_ColorScale {
-    Aspect_ColorScale* _get_reference() {
-    return (Aspect_ColorScale*)$self->Access();
-    }
-};
-
-%extend Handle_Aspect_ColorScale {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
-};
-
-%extend Aspect_ColorScale {
 	%pythoncode {
 	__repr__ = _dumps_object
 	}
@@ -1240,67 +393,51 @@ class Aspect_GenId {
 	__repr__ = _dumps_object
 	}
 };
-%nodefaultctor Aspect_GraphicCallbackStruct;
-class Aspect_GraphicCallbackStruct {
-	public:
-		int reason;
-		int wsID;
-		int viewID;
-		bool IsCoreProfile;
-		Handle_Standard_Transient glContext;
-};
-
-
-%extend Aspect_GraphicCallbackStruct {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
 %nodefaultctor Aspect_Grid;
-class Aspect_Grid : public MMgt_TShared {
+class Aspect_Grid : public Standard_Transient {
 	public:
 		%feature("compactdefaultargs") SetXOrigin;
 		%feature("autodoc", "	* defines the x Origin of the grid.
 
 	:param anOrigin:
-	:type anOrigin: Quantity_Length
+	:type anOrigin: float
 	:rtype: None
 ") SetXOrigin;
-		void SetXOrigin (const Quantity_Length anOrigin);
+		void SetXOrigin (const Standard_Real anOrigin);
 		%feature("compactdefaultargs") SetYOrigin;
 		%feature("autodoc", "	* defines the y Origin of the grid.
 
 	:param anOrigin:
-	:type anOrigin: Quantity_Length
+	:type anOrigin: float
 	:rtype: None
 ") SetYOrigin;
-		void SetYOrigin (const Quantity_Length anOrigin);
+		void SetYOrigin (const Standard_Real anOrigin);
 		%feature("compactdefaultargs") SetRotationAngle;
-		%feature("autodoc", "	* defines the orientation of the the grid.
+		%feature("autodoc", "	* defines the orientation of the grid.
 
 	:param anAngle:
-	:type anAngle: Quantity_PlaneAngle
+	:type anAngle: float
 	:rtype: None
 ") SetRotationAngle;
-		void SetRotationAngle (const Quantity_PlaneAngle anAngle);
+		void SetRotationAngle (const Standard_Real anAngle);
 		%feature("compactdefaultargs") Rotate;
 		%feature("autodoc", "	* Rotate the grid from a relative angle.
 
 	:param anAngle:
-	:type anAngle: Quantity_PlaneAngle
+	:type anAngle: float
 	:rtype: None
 ") Rotate;
-		void Rotate (const Quantity_PlaneAngle anAngle);
+		void Rotate (const Standard_Real anAngle);
 		%feature("compactdefaultargs") Translate;
 		%feature("autodoc", "	* Translate the grid from a relative distance.
 
 	:param aDx:
-	:type aDx: Quantity_Length
+	:type aDx: float
 	:param aDy:
-	:type aDy: Quantity_Length
+	:type aDy: float
 	:rtype: None
 ") Translate;
-		void Translate (const Quantity_Length aDx,const Quantity_Length aDy);
+		void Translate (const Standard_Real aDx,const Standard_Real aDy);
 		%feature("compactdefaultargs") SetColors;
 		%feature("autodoc", "	* Change the colors of the grid
 
@@ -1315,30 +452,30 @@ class Aspect_Grid : public MMgt_TShared {
 		%feature("autodoc", "	* returns the point of the grid the closest to the point X,Y if the grid is active. If the grid is not active returns X,Y.
 
 	:param X:
-	:type X: Quantity_Length
+	:type X: float
 	:param Y:
-	:type Y: Quantity_Length
+	:type Y: float
 	:param gridX:
-	:type gridX: Quantity_Length &
+	:type gridX: float &
 	:param gridY:
-	:type gridY: Quantity_Length &
+	:type gridY: float &
 	:rtype: None
 ") Hit;
-		void Hit (const Quantity_Length X,const Quantity_Length Y,Standard_Real &OutValue,Standard_Real &OutValue);
+		void Hit (const Standard_Real X,const Standard_Real Y,Standard_Real &OutValue,Standard_Real &OutValue);
 		%feature("compactdefaultargs") Compute;
 		%feature("autodoc", "	* returns the point of the grid the closest to the point X,Y
 
 	:param X:
-	:type X: Quantity_Length
+	:type X: float
 	:param Y:
-	:type Y: Quantity_Length
+	:type Y: float
 	:param gridX:
-	:type gridX: Quantity_Length &
+	:type gridX: float &
 	:param gridY:
-	:type gridY: Quantity_Length &
+	:type gridY: float &
 	:rtype: void
 ") Compute;
-		virtual void Compute (const Quantity_Length X,const Quantity_Length Y,Standard_Real &OutValue,Standard_Real &OutValue);
+		virtual void Compute (const Standard_Real X,const Standard_Real Y,Standard_Real &OutValue,Standard_Real &OutValue);
 		%feature("compactdefaultargs") Activate;
 		%feature("autodoc", "	* activates the grid. The Hit method will return gridx and gridx computed according to the steps of the grid.
 
@@ -1354,21 +491,21 @@ class Aspect_Grid : public MMgt_TShared {
 		%feature("compactdefaultargs") XOrigin;
 		%feature("autodoc", "	* returns the x Origin of the grid.
 
-	:rtype: Quantity_Length
+	:rtype: float
 ") XOrigin;
-		Quantity_Length XOrigin ();
+		Standard_Real XOrigin ();
 		%feature("compactdefaultargs") YOrigin;
 		%feature("autodoc", "	* returns the x Origin of the grid.
 
-	:rtype: Quantity_Length
+	:rtype: float
 ") YOrigin;
-		Quantity_Length YOrigin ();
+		Standard_Real YOrigin ();
 		%feature("compactdefaultargs") RotationAngle;
 		%feature("autodoc", "	* returns the x Angle of the grid.
 
-	:rtype: Quantity_PlaneAngle
+	:rtype: float
 ") RotationAngle;
-		Quantity_PlaneAngle RotationAngle ();
+		Standard_Real RotationAngle ();
 		%feature("compactdefaultargs") IsActive;
 		%feature("autodoc", "	* Returns True when the grid is active.
 
@@ -1443,7 +580,7 @@ class Aspect_Grid : public MMgt_TShared {
 %}
 
 %nodefaultctor Handle_Aspect_Grid;
-class Handle_Aspect_Grid : public Handle_MMgt_TShared {
+class Handle_Aspect_Grid : public Handle_Standard_Transient {
 
     public:
         // constructors
@@ -1455,19 +592,20 @@ class Handle_Aspect_Grid : public Handle_MMgt_TShared {
         static const Handle_Aspect_Grid DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_Aspect_Grid {
     Aspect_Grid* _get_reference() {
-    return (Aspect_Grid*)$self->Access();
+    return (Aspect_Grid*)$self->get();
     }
 };
 
 %extend Handle_Aspect_Grid {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend Aspect_Grid {
@@ -1475,222 +613,8 @@ class Handle_Aspect_Grid : public Handle_MMgt_TShared {
 	__repr__ = _dumps_object
 	}
 };
-%nodefaultctor Aspect_SequenceNodeOfSequenceOfColor;
-class Aspect_SequenceNodeOfSequenceOfColor : public TCollection_SeqNode {
-	public:
-		%feature("compactdefaultargs") Aspect_SequenceNodeOfSequenceOfColor;
-		%feature("autodoc", "	:param I:
-	:type I: Quantity_Color &
-	:param n:
-	:type n: TCollection_SeqNodePtr &
-	:param p:
-	:type p: TCollection_SeqNodePtr &
-	:rtype: None
-") Aspect_SequenceNodeOfSequenceOfColor;
-		 Aspect_SequenceNodeOfSequenceOfColor (const Quantity_Color & I,const TCollection_SeqNodePtr & n,const TCollection_SeqNodePtr & p);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:rtype: Quantity_Color
-") Value;
-		Quantity_Color & Value ();
-};
-
-
-%extend Aspect_SequenceNodeOfSequenceOfColor {
-	%pythoncode {
-		def GetHandle(self):
-		    try:
-		        return self.thisHandle
-		    except:
-		        self.thisHandle = Handle_Aspect_SequenceNodeOfSequenceOfColor(self)
-		        self.thisown = False
-		        return self.thisHandle
-	}
-};
-
-%pythonappend Handle_Aspect_SequenceNodeOfSequenceOfColor::Handle_Aspect_SequenceNodeOfSequenceOfColor %{
-    # register the handle in the base object
-    if len(args) > 0:
-        register_handle(self, args[0])
-%}
-
-%nodefaultctor Handle_Aspect_SequenceNodeOfSequenceOfColor;
-class Handle_Aspect_SequenceNodeOfSequenceOfColor : public Handle_TCollection_SeqNode {
-
-    public:
-        // constructors
-        Handle_Aspect_SequenceNodeOfSequenceOfColor();
-        Handle_Aspect_SequenceNodeOfSequenceOfColor(const Handle_Aspect_SequenceNodeOfSequenceOfColor &aHandle);
-        Handle_Aspect_SequenceNodeOfSequenceOfColor(const Aspect_SequenceNodeOfSequenceOfColor *anItem);
-        void Nullify();
-        Standard_Boolean IsNull() const;
-        static const Handle_Aspect_SequenceNodeOfSequenceOfColor DownCast(const Handle_Standard_Transient &AnObject);
-
-};
-%extend Handle_Aspect_SequenceNodeOfSequenceOfColor {
-    Aspect_SequenceNodeOfSequenceOfColor* _get_reference() {
-    return (Aspect_SequenceNodeOfSequenceOfColor*)$self->Access();
-    }
-};
-
-%extend Handle_Aspect_SequenceNodeOfSequenceOfColor {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
-};
-
-%extend Aspect_SequenceNodeOfSequenceOfColor {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor Aspect_SequenceOfColor;
-class Aspect_SequenceOfColor : public TCollection_BaseSequence {
-	public:
-		%feature("compactdefaultargs") Aspect_SequenceOfColor;
-		%feature("autodoc", "	:rtype: None
-") Aspect_SequenceOfColor;
-		 Aspect_SequenceOfColor ();
-		%feature("compactdefaultargs") Aspect_SequenceOfColor;
-		%feature("autodoc", "	:param Other:
-	:type Other: Aspect_SequenceOfColor &
-	:rtype: None
-") Aspect_SequenceOfColor;
-		 Aspect_SequenceOfColor (const Aspect_SequenceOfColor & Other);
-		%feature("compactdefaultargs") Clear;
-		%feature("autodoc", "	:rtype: None
-") Clear;
-		void Clear ();
-		%feature("compactdefaultargs") Assign;
-		%feature("autodoc", "	:param Other:
-	:type Other: Aspect_SequenceOfColor &
-	:rtype: Aspect_SequenceOfColor
-") Assign;
-		const Aspect_SequenceOfColor & Assign (const Aspect_SequenceOfColor & Other);
-		%feature("compactdefaultargs") operator =;
-		%feature("autodoc", "	:param Other:
-	:type Other: Aspect_SequenceOfColor &
-	:rtype: Aspect_SequenceOfColor
-") operator =;
-		const Aspect_SequenceOfColor & operator = (const Aspect_SequenceOfColor & Other);
-		%feature("compactdefaultargs") Append;
-		%feature("autodoc", "	:param T:
-	:type T: Quantity_Color &
-	:rtype: None
-") Append;
-		void Append (const Quantity_Color & T);
-		%feature("compactdefaultargs") Append;
-		%feature("autodoc", "	:param S:
-	:type S: Aspect_SequenceOfColor &
-	:rtype: None
-") Append;
-		void Append (Aspect_SequenceOfColor & S);
-		%feature("compactdefaultargs") Prepend;
-		%feature("autodoc", "	:param T:
-	:type T: Quantity_Color &
-	:rtype: None
-") Prepend;
-		void Prepend (const Quantity_Color & T);
-		%feature("compactdefaultargs") Prepend;
-		%feature("autodoc", "	:param S:
-	:type S: Aspect_SequenceOfColor &
-	:rtype: None
-") Prepend;
-		void Prepend (Aspect_SequenceOfColor & S);
-		%feature("compactdefaultargs") InsertBefore;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param T:
-	:type T: Quantity_Color &
-	:rtype: None
-") InsertBefore;
-		void InsertBefore (const Standard_Integer Index,const Quantity_Color & T);
-		%feature("compactdefaultargs") InsertBefore;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param S:
-	:type S: Aspect_SequenceOfColor &
-	:rtype: None
-") InsertBefore;
-		void InsertBefore (const Standard_Integer Index,Aspect_SequenceOfColor & S);
-		%feature("compactdefaultargs") InsertAfter;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param T:
-	:type T: Quantity_Color &
-	:rtype: None
-") InsertAfter;
-		void InsertAfter (const Standard_Integer Index,const Quantity_Color & T);
-		%feature("compactdefaultargs") InsertAfter;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param S:
-	:type S: Aspect_SequenceOfColor &
-	:rtype: None
-") InsertAfter;
-		void InsertAfter (const Standard_Integer Index,Aspect_SequenceOfColor & S);
-		%feature("compactdefaultargs") First;
-		%feature("autodoc", "	:rtype: Quantity_Color
-") First;
-		const Quantity_Color & First ();
-		%feature("compactdefaultargs") Last;
-		%feature("autodoc", "	:rtype: Quantity_Color
-") Last;
-		const Quantity_Color & Last ();
-		%feature("compactdefaultargs") Split;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param Sub:
-	:type Sub: Aspect_SequenceOfColor &
-	:rtype: None
-") Split;
-		void Split (const Standard_Integer Index,Aspect_SequenceOfColor & Sub);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: Quantity_Color
-") Value;
-		const Quantity_Color & Value (const Standard_Integer Index);
-		%feature("compactdefaultargs") SetValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param I:
-	:type I: Quantity_Color &
-	:rtype: None
-") SetValue;
-		void SetValue (const Standard_Integer Index,const Quantity_Color & I);
-		%feature("compactdefaultargs") ChangeValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: Quantity_Color
-") ChangeValue;
-		Quantity_Color & ChangeValue (const Standard_Integer Index);
-		%feature("compactdefaultargs") Remove;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: None
-") Remove;
-		void Remove (const Standard_Integer Index);
-		%feature("compactdefaultargs") Remove;
-		%feature("autodoc", "	:param FromIndex:
-	:type FromIndex: int
-	:param ToIndex:
-	:type ToIndex: int
-	:rtype: None
-") Remove;
-		void Remove (const Standard_Integer FromIndex,const Standard_Integer ToIndex);
-};
-
-
-%extend Aspect_SequenceOfColor {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
 %nodefaultctor Aspect_Window;
-class Aspect_Window : public MMgt_TShared {
+class Aspect_Window : public Standard_Transient {
 	public:
 		%feature("compactdefaultargs") SetBackground;
 		%feature("autodoc", "	* Modifies the window background.
@@ -1700,14 +624,6 @@ class Aspect_Window : public MMgt_TShared {
 	:rtype: None
 ") SetBackground;
 		void SetBackground (const Aspect_Background & ABack);
-		%feature("compactdefaultargs") SetBackground;
-		%feature("autodoc", "	* Modifies the window background from a Named Color.
-
-	:param theNameOfColor:
-	:type theNameOfColor: Quantity_NameOfColor
-	:rtype: None
-") SetBackground;
-		void SetBackground (const Quantity_NameOfColor theNameOfColor);
 		%feature("compactdefaultargs") SetBackground;
 		%feature("autodoc", "	* Modifies the window background.
 
@@ -1760,12 +676,6 @@ class Aspect_Window : public MMgt_TShared {
 	:rtype: bool
 ") DoMapping;
 		virtual Standard_Boolean DoMapping ();
-		%feature("compactdefaultargs") Destroy;
-		%feature("autodoc", "	* Destroy the Window
-
-	:rtype: void
-") Destroy;
-		virtual void Destroy ();
 		%feature("compactdefaultargs") Background;
 		%feature("autodoc", "	* Returns the window background.
 
@@ -1807,9 +717,9 @@ class Aspect_Window : public MMgt_TShared {
 		%feature("compactdefaultargs") Ratio;
 		%feature("autodoc", "	* Returns The Window RATIO equal to the physical WIDTH/HEIGHT dimensions
 
-	:rtype: Quantity_Ratio
+	:rtype: float
 ") Ratio;
-		virtual Quantity_Ratio Ratio ();
+		virtual Standard_Real Ratio ();
 		%feature("compactdefaultargs") Position;
 		%feature("autodoc", "	* Returns The Window POSITION in PIXEL
 
@@ -1834,6 +744,12 @@ class Aspect_Window : public MMgt_TShared {
 	:rtype: void
 ") Size;
 		virtual void Size (Standard_Integer &OutValue,Standard_Integer &OutValue);
+		%feature("compactdefaultargs") NativeFBConfig;
+		%feature("autodoc", "	* Returns native Window FB config --GLXFBConfig on Xlib--
+
+	:rtype: Aspect_FBConfig
+") NativeFBConfig;
+		virtual Aspect_FBConfig NativeFBConfig ();
 };
 
 
@@ -1856,7 +772,7 @@ class Aspect_Window : public MMgt_TShared {
 %}
 
 %nodefaultctor Handle_Aspect_Window;
-class Handle_Aspect_Window : public Handle_MMgt_TShared {
+class Handle_Aspect_Window : public Handle_Standard_Transient {
 
     public:
         // constructors
@@ -1868,19 +784,20 @@ class Handle_Aspect_Window : public Handle_MMgt_TShared {
         static const Handle_Aspect_Window DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_Aspect_Window {
     Aspect_Window* _get_reference() {
-    return (Aspect_Window*)$self->Access();
+    return (Aspect_Window*)$self->get();
     }
 };
 
 %extend Handle_Aspect_Window {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend Aspect_Window {
@@ -1895,26 +812,26 @@ class Aspect_CircularGrid : public Aspect_Grid {
 		%feature("autodoc", "	* creates a new grid. By default this grid is not active.
 
 	:param aRadiusStep:
-	:type aRadiusStep: Quantity_Length
+	:type aRadiusStep: float
 	:param aDivisionNumber:
 	:type aDivisionNumber: int
 	:param XOrigin: default value is 0
-	:type XOrigin: Quantity_Length
+	:type XOrigin: float
 	:param anYOrigin: default value is 0
-	:type anYOrigin: Quantity_Length
+	:type anYOrigin: float
 	:param aRotationAngle: default value is 0
-	:type aRotationAngle: Quantity_PlaneAngle
+	:type aRotationAngle: float
 	:rtype: None
 ") Aspect_CircularGrid;
-		 Aspect_CircularGrid (const Quantity_Length aRadiusStep,const Standard_Integer aDivisionNumber,const Quantity_Length XOrigin = 0,const Quantity_Length anYOrigin = 0,const Quantity_PlaneAngle aRotationAngle = 0);
+		 Aspect_CircularGrid (const Standard_Real aRadiusStep,const Standard_Integer aDivisionNumber,const Standard_Real XOrigin = 0,const Standard_Real anYOrigin = 0,const Standard_Real aRotationAngle = 0);
 		%feature("compactdefaultargs") SetRadiusStep;
 		%feature("autodoc", "	* defines the x step of the grid.
 
 	:param aStep:
-	:type aStep: Quantity_Length
+	:type aStep: float
 	:rtype: None
 ") SetRadiusStep;
-		void SetRadiusStep (const Quantity_Length aStep);
+		void SetRadiusStep (const Standard_Real aStep);
 		%feature("compactdefaultargs") SetDivisionNumber;
 		%feature("autodoc", "	* defines the step of the grid.
 
@@ -1925,38 +842,38 @@ class Aspect_CircularGrid : public Aspect_Grid {
 		void SetDivisionNumber (const Standard_Integer aNumber);
 		%feature("compactdefaultargs") SetGridValues;
 		%feature("autodoc", "	:param XOrigin:
-	:type XOrigin: Quantity_Length
+	:type XOrigin: float
 	:param YOrigin:
-	:type YOrigin: Quantity_Length
+	:type YOrigin: float
 	:param RadiusStep:
-	:type RadiusStep: Quantity_Length
+	:type RadiusStep: float
 	:param DivisionNumber:
 	:type DivisionNumber: int
 	:param RotationAngle:
-	:type RotationAngle: Quantity_PlaneAngle
+	:type RotationAngle: float
 	:rtype: None
 ") SetGridValues;
-		void SetGridValues (const Quantity_Length XOrigin,const Quantity_Length YOrigin,const Quantity_Length RadiusStep,const Standard_Integer DivisionNumber,const Quantity_PlaneAngle RotationAngle);
+		void SetGridValues (const Standard_Real XOrigin,const Standard_Real YOrigin,const Standard_Real RadiusStep,const Standard_Integer DivisionNumber,const Standard_Real RotationAngle);
 		%feature("compactdefaultargs") Compute;
 		%feature("autodoc", "	* returns the point of the grid the closest to the point X,Y
 
 	:param X:
-	:type X: Quantity_Length
+	:type X: float
 	:param Y:
-	:type Y: Quantity_Length
+	:type Y: float
 	:param gridX:
-	:type gridX: Quantity_Length &
+	:type gridX: float &
 	:param gridY:
-	:type gridY: Quantity_Length &
-	:rtype: None
+	:type gridY: float &
+	:rtype: void
 ") Compute;
-		void Compute (const Quantity_Length X,const Quantity_Length Y,Standard_Real &OutValue,Standard_Real &OutValue);
+		virtual void Compute (const Standard_Real X,const Standard_Real Y,Standard_Real &OutValue,Standard_Real &OutValue);
 		%feature("compactdefaultargs") RadiusStep;
 		%feature("autodoc", "	* returns the x step of the grid.
 
-	:rtype: Quantity_Length
+	:rtype: float
 ") RadiusStep;
-		Quantity_Length RadiusStep ();
+		Standard_Real RadiusStep ();
 		%feature("compactdefaultargs") DivisionNumber;
 		%feature("autodoc", "	* returns the x step of the grid.
 
@@ -1964,9 +881,9 @@ class Aspect_CircularGrid : public Aspect_Grid {
 ") DivisionNumber;
 		Standard_Integer DivisionNumber ();
 		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	:rtype: None
+		%feature("autodoc", "	:rtype: void
 ") Init;
-		void Init ();
+		virtual void Init ();
 };
 
 
@@ -2001,19 +918,20 @@ class Handle_Aspect_CircularGrid : public Handle_Aspect_Grid {
         static const Handle_Aspect_CircularGrid DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_Aspect_CircularGrid {
     Aspect_CircularGrid* _get_reference() {
-    return (Aspect_CircularGrid*)$self->Access();
+    return (Aspect_CircularGrid*)$self->get();
     }
 };
 
 %extend Handle_Aspect_CircularGrid {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend Aspect_CircularGrid {
@@ -2078,6 +996,184 @@ class Aspect_GradientBackground : public Aspect_Background {
 	__repr__ = _dumps_object
 	}
 };
+%nodefaultctor Aspect_NeutralWindow;
+class Aspect_NeutralWindow : public Aspect_Window {
+	public:
+		return myHandle;
+		return myParentHandle;
+		%feature("compactdefaultargs") Aspect_NeutralWindow;
+		%feature("autodoc", "	* Empty constructor. Note that window is considered 'mapped' by default.
+
+	:rtype: None
+") Aspect_NeutralWindow;
+		 Aspect_NeutralWindow ();
+		%feature("compactdefaultargs") NativeFBConfig;
+		%feature("autodoc", "	* Return FBConfig.
+
+	:rtype: Aspect_FBConfig
+") NativeFBConfig;
+		Aspect_FBConfig NativeFBConfig ();
+		%feature("compactdefaultargs") SetNativeHandles;
+		%feature("autodoc", "	* Set native handles. returns true if definition has been changed
+
+	:param theWindow:
+	:type theWindow: Aspect_Drawable
+	:param theParentWindow:
+	:type theParentWindow: Aspect_Drawable
+	:param theFbConfig:
+	:type theFbConfig: Aspect_FBConfig
+	:rtype: bool
+") SetNativeHandles;
+		Standard_Boolean SetNativeHandles (Aspect_Drawable theWindow,Aspect_Drawable theParentWindow,Aspect_FBConfig theFbConfig);
+		%feature("compactdefaultargs") IsMapped;
+		%feature("autodoc", "	* Return true if window is not hidden.
+
+	:rtype: bool
+") IsMapped;
+		Standard_Boolean IsMapped ();
+		%feature("compactdefaultargs") Map;
+		%feature("autodoc", "	* Change window mapped flag to True.
+
+	:rtype: None
+") Map;
+		void Map ();
+		%feature("compactdefaultargs") Unmap;
+		%feature("autodoc", "	* Change window mapped flag to False.
+
+	:rtype: None
+") Unmap;
+		void Unmap ();
+		%feature("compactdefaultargs") DoResize;
+		%feature("autodoc", "	* Resize window - do nothing.
+
+	:rtype: Aspect_TypeOfResize
+") DoResize;
+		Aspect_TypeOfResize DoResize ();
+		%feature("compactdefaultargs") DoMapping;
+		%feature("autodoc", "	* Map window - do nothing.
+
+	:rtype: bool
+") DoMapping;
+		Standard_Boolean DoMapping ();
+		%feature("compactdefaultargs") Ratio;
+		%feature("autodoc", "	* Returns window ratio equal to the physical width/height dimensions.
+
+	:rtype: float
+") Ratio;
+		Standard_Real Ratio ();
+		%feature("compactdefaultargs") Position;
+		%feature("autodoc", "	* Return the window position.
+
+	:param theX1:
+	:type theX1: int &
+	:param theY1:
+	:type theY1: int &
+	:param theX2:
+	:type theX2: int &
+	:param theY2:
+	:type theY2: int &
+	:rtype: None
+") Position;
+		void Position (Standard_Integer &OutValue,Standard_Integer &OutValue,Standard_Integer &OutValue,Standard_Integer &OutValue);
+		%feature("compactdefaultargs") SetPosition;
+		%feature("autodoc", "	* Set the window position. returns true if position has been changed
+
+	:param theX1:
+	:type theX1: int
+	:param theY1:
+	:type theY1: int
+	:rtype: bool
+") SetPosition;
+		Standard_Boolean SetPosition (Standard_Integer theX1,Standard_Integer theY1);
+		%feature("compactdefaultargs") SetPosition;
+		%feature("autodoc", "	* Set the window position. returns true if position has been changed
+
+	:param theX1:
+	:type theX1: int
+	:param theY1:
+	:type theY1: int
+	:param theX2:
+	:type theX2: int
+	:param theY2:
+	:type theY2: int
+	:rtype: bool
+") SetPosition;
+		Standard_Boolean SetPosition (Standard_Integer theX1,Standard_Integer theY1,Standard_Integer theX2,Standard_Integer theY2);
+		%feature("compactdefaultargs") Size;
+		%feature("autodoc", "	* Return the window size.
+
+	:param theWidth:
+	:type theWidth: int &
+	:param theHeight:
+	:type theHeight: int &
+	:rtype: None
+") Size;
+		void Size (Standard_Integer &OutValue,Standard_Integer &OutValue);
+		%feature("compactdefaultargs") SetSize;
+		%feature("autodoc", "	* Set the window size. returns true if size has been changed
+
+	:param theWidth:
+	:type theWidth: int
+	:param theHeight:
+	:type theHeight: int
+	:rtype: bool
+") SetSize;
+		Standard_Boolean SetSize (const Standard_Integer theWidth,const Standard_Integer theHeight);
+};
+
+
+%extend Aspect_NeutralWindow {
+	%pythoncode {
+		def GetHandle(self):
+		    try:
+		        return self.thisHandle
+		    except:
+		        self.thisHandle = Handle_Aspect_NeutralWindow(self)
+		        self.thisown = False
+		        return self.thisHandle
+	}
+};
+
+%pythonappend Handle_Aspect_NeutralWindow::Handle_Aspect_NeutralWindow %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
+%nodefaultctor Handle_Aspect_NeutralWindow;
+class Handle_Aspect_NeutralWindow : public Handle_Aspect_Window {
+
+    public:
+        // constructors
+        Handle_Aspect_NeutralWindow();
+        Handle_Aspect_NeutralWindow(const Handle_Aspect_NeutralWindow &aHandle);
+        Handle_Aspect_NeutralWindow(const Aspect_NeutralWindow *anItem);
+        void Nullify();
+        Standard_Boolean IsNull() const;
+        static const Handle_Aspect_NeutralWindow DownCast(const Handle_Standard_Transient &AnObject);
+
+};
+
+%extend Handle_Aspect_NeutralWindow {
+    Aspect_NeutralWindow* _get_reference() {
+    return (Aspect_NeutralWindow*)$self->get();
+    }
+};
+
+%extend Handle_Aspect_NeutralWindow {
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
+};
+
+%extend Aspect_NeutralWindow {
+	%pythoncode {
+	__repr__ = _dumps_object
+	}
+};
 %nodefaultctor Aspect_RectangularGrid;
 class Aspect_RectangularGrid : public Aspect_Grid {
 	public:
@@ -2085,104 +1181,104 @@ class Aspect_RectangularGrid : public Aspect_Grid {
 		%feature("autodoc", "	* creates a new grid. By default this grid is not active. The first angle is given relatively to the horizontal. The second angle is given relatively to the vertical.
 
 	:param aXStep:
-	:type aXStep: Quantity_Length
+	:type aXStep: float
 	:param aYStep:
-	:type aYStep: Quantity_Length
+	:type aYStep: float
 	:param anXOrigin: default value is 0
-	:type anXOrigin: Quantity_Length
+	:type anXOrigin: float
 	:param anYOrigin: default value is 0
-	:type anYOrigin: Quantity_Length
+	:type anYOrigin: float
 	:param aFirstAngle: default value is 0
-	:type aFirstAngle: Quantity_PlaneAngle
+	:type aFirstAngle: float
 	:param aSecondAngle: default value is 0
-	:type aSecondAngle: Quantity_PlaneAngle
+	:type aSecondAngle: float
 	:param aRotationAngle: default value is 0
-	:type aRotationAngle: Quantity_PlaneAngle
+	:type aRotationAngle: float
 	:rtype: None
 ") Aspect_RectangularGrid;
-		 Aspect_RectangularGrid (const Quantity_Length aXStep,const Quantity_Length aYStep,const Quantity_Length anXOrigin = 0,const Quantity_Length anYOrigin = 0,const Quantity_PlaneAngle aFirstAngle = 0,const Quantity_PlaneAngle aSecondAngle = 0,const Quantity_PlaneAngle aRotationAngle = 0);
+		 Aspect_RectangularGrid (const Standard_Real aXStep,const Standard_Real aYStep,const Standard_Real anXOrigin = 0,const Standard_Real anYOrigin = 0,const Standard_Real aFirstAngle = 0,const Standard_Real aSecondAngle = 0,const Standard_Real aRotationAngle = 0);
 		%feature("compactdefaultargs") SetXStep;
 		%feature("autodoc", "	* defines the x step of the grid.
 
 	:param aStep:
-	:type aStep: Quantity_Length
+	:type aStep: float
 	:rtype: None
 ") SetXStep;
-		void SetXStep (const Quantity_Length aStep);
+		void SetXStep (const Standard_Real aStep);
 		%feature("compactdefaultargs") SetYStep;
 		%feature("autodoc", "	* defines the y step of the grid.
 
 	:param aStep:
-	:type aStep: Quantity_Length
+	:type aStep: float
 	:rtype: None
 ") SetYStep;
-		void SetYStep (const Quantity_Length aStep);
+		void SetYStep (const Standard_Real aStep);
 		%feature("compactdefaultargs") SetAngle;
 		%feature("autodoc", "	* defines the angle of the second network the fist angle is given relatively to the horizontal. the second angle is given relatively to the vertical.
 
 	:param anAngle1:
-	:type anAngle1: Quantity_PlaneAngle
+	:type anAngle1: float
 	:param anAngle2:
-	:type anAngle2: Quantity_PlaneAngle
+	:type anAngle2: float
 	:rtype: None
 ") SetAngle;
-		void SetAngle (const Quantity_PlaneAngle anAngle1,const Quantity_PlaneAngle anAngle2);
+		void SetAngle (const Standard_Real anAngle1,const Standard_Real anAngle2);
 		%feature("compactdefaultargs") SetGridValues;
 		%feature("autodoc", "	:param XOrigin:
-	:type XOrigin: Quantity_Length
+	:type XOrigin: float
 	:param YOrigin:
-	:type YOrigin: Quantity_Length
+	:type YOrigin: float
 	:param XStep:
-	:type XStep: Quantity_Length
+	:type XStep: float
 	:param YStep:
-	:type YStep: Quantity_Length
+	:type YStep: float
 	:param RotationAngle:
-	:type RotationAngle: Quantity_PlaneAngle
+	:type RotationAngle: float
 	:rtype: None
 ") SetGridValues;
-		void SetGridValues (const Quantity_Length XOrigin,const Quantity_Length YOrigin,const Quantity_Length XStep,const Quantity_Length YStep,const Quantity_PlaneAngle RotationAngle);
+		void SetGridValues (const Standard_Real XOrigin,const Standard_Real YOrigin,const Standard_Real XStep,const Standard_Real YStep,const Standard_Real RotationAngle);
 		%feature("compactdefaultargs") Compute;
 		%feature("autodoc", "	* returns the point of the grid the closest to the point X,Y
 
 	:param X:
-	:type X: Quantity_Length
+	:type X: float
 	:param Y:
-	:type Y: Quantity_Length
+	:type Y: float
 	:param gridX:
-	:type gridX: Quantity_Length &
+	:type gridX: float &
 	:param gridY:
-	:type gridY: Quantity_Length &
-	:rtype: None
+	:type gridY: float &
+	:rtype: void
 ") Compute;
-		void Compute (const Quantity_Length X,const Quantity_Length Y,Standard_Real &OutValue,Standard_Real &OutValue);
+		virtual void Compute (const Standard_Real X,const Standard_Real Y,Standard_Real &OutValue,Standard_Real &OutValue);
 		%feature("compactdefaultargs") XStep;
 		%feature("autodoc", "	* returns the x step of the grid.
 
-	:rtype: Quantity_Length
+	:rtype: float
 ") XStep;
-		Quantity_Length XStep ();
+		Standard_Real XStep ();
 		%feature("compactdefaultargs") YStep;
 		%feature("autodoc", "	* returns the x step of the grid.
 
-	:rtype: Quantity_Length
+	:rtype: float
 ") YStep;
-		Quantity_Length YStep ();
+		Standard_Real YStep ();
 		%feature("compactdefaultargs") FirstAngle;
 		%feature("autodoc", "	* returns the x Angle of the grid, relatively to the horizontal.
 
-	:rtype: Quantity_PlaneAngle
+	:rtype: float
 ") FirstAngle;
-		Quantity_PlaneAngle FirstAngle ();
+		Standard_Real FirstAngle ();
 		%feature("compactdefaultargs") SecondAngle;
 		%feature("autodoc", "	* returns the y Angle of the grid, relatively to the vertical.
 
-	:rtype: Quantity_PlaneAngle
+	:rtype: float
 ") SecondAngle;
-		Quantity_PlaneAngle SecondAngle ();
+		Standard_Real SecondAngle ();
 		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	:rtype: None
+		%feature("autodoc", "	:rtype: void
 ") Init;
-		void Init ();
+		virtual void Init ();
 };
 
 
@@ -2217,19 +1313,20 @@ class Handle_Aspect_RectangularGrid : public Handle_Aspect_Grid {
         static const Handle_Aspect_RectangularGrid DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_Aspect_RectangularGrid {
     Aspect_RectangularGrid* _get_reference() {
-    return (Aspect_RectangularGrid*)$self->Access();
+    return (Aspect_RectangularGrid*)$self->get();
     }
 };
 
 %extend Handle_Aspect_RectangularGrid {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend Aspect_RectangularGrid {

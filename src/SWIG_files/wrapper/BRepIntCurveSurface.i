@@ -1,5 +1,5 @@
 /*
-Copyright 2008-2017 Thomas Paviot (tpaviot@gmail.com)
+Copyright 2008-2018 Thomas Paviot (tpaviot@gmail.com)
 
 
 This file is part of pythonOCC.
@@ -55,6 +55,9 @@ def register_handle(handle, base_object):
 
 /* typedefs */
 /* end typedefs declaration */
+
+/* templates */
+/* end templates declaration */
 
 /* public enums */
 /* end public enums declaration */
@@ -153,13 +156,13 @@ class BRepIntCurveSurface_Inter {
 ") W;
 		Standard_Real W ();
 		%feature("compactdefaultargs") State;
-		%feature("autodoc", "	* returns the current state (IN or ON)
+		%feature("autodoc", "	* returns the current state --IN or ON--
 
 	:rtype: TopAbs_State
 ") State;
 		TopAbs_State State ();
 		%feature("compactdefaultargs") Transition;
-		%feature("autodoc", "	* returns the transition of the line on the surface (IN or OUT or UNKNOWN)
+		%feature("autodoc", "	* returns the transition of the line on the surface --IN or OUT or UNKNOWN--
 
 	:rtype: IntCurveSurface_TransitionOnCurve
 ") Transition;

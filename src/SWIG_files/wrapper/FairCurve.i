@@ -1,5 +1,5 @@
 /*
-Copyright 2008-2017 Thomas Paviot (tpaviot@gmail.com)
+Copyright 2008-2018 Thomas Paviot (tpaviot@gmail.com)
 
 
 This file is part of pythonOCC.
@@ -56,6 +56,9 @@ def register_handle(handle, base_object):
 /* typedefs */
 /* end typedefs declaration */
 
+/* templates */
+/* end templates declaration */
+
 /* public enums */
 enum FairCurve_AnalysisCode {
 	FairCurve_OK = 0,
@@ -70,7 +73,7 @@ enum FairCurve_AnalysisCode {
 class FairCurve_Batten {
 	public:
 		%feature("compactdefaultargs") FairCurve_Batten;
-		%feature("autodoc", "	* Constructor with the two points and the geometrical characteristics of the batten (elastic beam) Height is the height of the deformation, and Slope is the slope value, initialized at 0. The user can then supply the desired slope value by the method, SetSlope. Other parameters are initialized as follow : - FreeSliding = False - ConstraintOrder1 = 1 - ConstraintOrder2 = 1 - Angle1 = 0 - Angle2 = 0 - SlidingFactor = 1 Exceptions NegativeValue if Height is less than or equal to 0. NullValue if the distance between P1 and P2 is less than or equal to the tolerance value for distance in Precision::Confusion: P1.IsEqual(P2, Precision::Confusion()). The function gp_Pnt2d::IsEqual tests to see if this is the case.
+		%feature("autodoc", "	* Constructor with the two points and the geometrical characteristics of the batten --elastic beam-- Height is the height of the deformation, and Slope is the slope value, initialized at 0. The user can then supply the desired slope value by the method, SetSlope. Other parameters are initialized as follow : - FreeSliding = False - ConstraintOrder1 = 1 - ConstraintOrder2 = 1 - Angle1 = 0 - Angle2 = 0 - SlidingFactor = 1 Exceptions NegativeValue if Height is less than or equal to 0. NullValue if the distance between P1 and P2 is less than or equal to the tolerance value for distance in Precision::Confusion: P1.IsEqual--P2, Precision::Confusion------. The function gp_Pnt2d::IsEqual tests to see if this is the case.
 
 	:param P1:
 	:type P1: gp_Pnt2d
@@ -83,10 +86,6 @@ class FairCurve_Batten {
 	:rtype: None
 ") FairCurve_Batten;
 		 FairCurve_Batten (const gp_Pnt2d & P1,const gp_Pnt2d & P2,const Standard_Real Height,const Standard_Real Slope = 0);
-		%feature("compactdefaultargs") Delete;
-		%feature("autodoc", "	:rtype: void
-") Delete;
-		virtual void Delete ();
 		%feature("compactdefaultargs") SetFreeSliding;
 		%feature("autodoc", "	* Freesliding is initialized with the default setting false. When Freesliding is set to true and, as a result, sliding is free, the sliding factor is automatically computed to satisfy the equilibrium of the batten.
 
@@ -112,7 +111,7 @@ class FairCurve_Batten {
 ") SetConstraintOrder2;
 		void SetConstraintOrder2 (const Standard_Integer ConstraintOrder);
 		%feature("compactdefaultargs") SetP1;
-		%feature("autodoc", "	* Allows you to change the location of the point, P1, and in doing so, modify the curve. Warning This method changes the angle as well as the point. Exceptions NullValue if the distance between P1 and P2 is less than or equal to the tolerance value for distance in Precision::Confusion: P1.IsEqual(P2, Precision::Confusion()). The function gp_Pnt2d::IsEqual tests to see if this is the case.
+		%feature("autodoc", "	* Allows you to change the location of the point, P1, and in doing so, modify the curve. Warning This method changes the angle as well as the point. Exceptions NullValue if the distance between P1 and P2 is less than or equal to the tolerance value for distance in Precision::Confusion: P1.IsEqual--P2, Precision::Confusion------. The function gp_Pnt2d::IsEqual tests to see if this is the case.
 
 	:param P1:
 	:type P1: gp_Pnt2d
@@ -120,7 +119,7 @@ class FairCurve_Batten {
 ") SetP1;
 		void SetP1 (const gp_Pnt2d & P1);
 		%feature("compactdefaultargs") SetP2;
-		%feature("autodoc", "	* Allows you to change the location of the point, P1, and in doing so, modify the curve. Warning This method changes the angle as well as the point. Exceptions NullValue if the distance between P1 and P2 is less than or equal to the tolerance value for distance in Precision::Confusion: P1.IsEqual(P2, Precision::Confusion()). The function gp_Pnt2d::IsEqual tests to see if this is the case.
+		%feature("autodoc", "	* Allows you to change the location of the point, P1, and in doing so, modify the curve. Warning This method changes the angle as well as the point. Exceptions NullValue if the distance between P1 and P2 is less than or equal to the tolerance value for distance in Precision::Confusion: P1.IsEqual--P2, Precision::Confusion------. The function gp_Pnt2d::IsEqual tests to see if this is the case.
 
 	:param P2:
 	:type P2: gp_Pnt2d
@@ -180,7 +179,7 @@ class FairCurve_Batten {
 ") Compute;
 		virtual Standard_Boolean Compute (FairCurve_AnalysisCode &OutValue,const Standard_Integer NbIterations = 50,const Standard_Real Tolerance = 1.0e-3);
 		%feature("compactdefaultargs") SlidingOfReference;
-		%feature("autodoc", "	* Computes the real number value for length Sliding of Reference for new constraints. If you want to give a specific length to a batten curve, use the following syntax: b.SetSlidingFactor(L / b.SlidingOfReference()) where b is the name of the batten curve object.
+		%feature("autodoc", "	* Computes the real number value for length Sliding of Reference for new constraints. If you want to give a specific length to a batten curve, use the following syntax: b.SetSlidingFactor--L / b.SlidingOfReference------ where b is the name of the batten curve object.
 
 	:rtype: float
 ") SlidingOfReference;
@@ -434,7 +433,7 @@ class FairCurve_Energy : public math_MultipleVarFunctionWithHessian {
 class FairCurve_Newton : public math_NewtonMinimum {
 	public:
 		%feature("compactdefaultargs") FairCurve_Newton;
-		%feature("autodoc", "	* The tolerance required on the solution is given by Tolerance. Iteration are stopped if (!WithSingularity) and H(F(Xi)) is not definite positive (if the smaller eigenvalue of H < Convexity) or IsConverged() returns True for 2 successives Iterations. Warning: This constructor do not computation
+		%feature("autodoc", "	* The tolerance required on the solution is given by Tolerance. Iteration are stopped if --!WithSingularity-- and H--F--Xi---- is not definite positive --if the smaller eigenvalue of H < Convexity-- or IsConverged---- returns True for 2 successives Iterations. Warning: This constructor do not computation
 
 	:param theFunction:
 	:type theFunction: math_MultipleVarFunctionWithHessian &
@@ -452,7 +451,7 @@ class FairCurve_Newton : public math_NewtonMinimum {
 ") FairCurve_Newton;
 		 FairCurve_Newton (const math_MultipleVarFunctionWithHessian & theFunction,const Standard_Real theSpatialTolerance = 1.0e-7,const Standard_Real theCriteriumTolerance = 1.0e-7,const Standard_Integer theNbIterations = 40,const Standard_Real theConvexity = 1.0e-6,const Standard_Boolean theWithSingularity = Standard_True);
 		%feature("compactdefaultargs") IsConverged;
-		%feature("autodoc", "	* This method is called at the end of each iteration to check the convergence : || Xi+1 - Xi || < SpatialTolerance/100 Or || Xi+1 - Xi || < SpatialTolerance and |F(Xi+1) - F(Xi)| < CriteriumTolerance * |F(xi)| It can be redefined in a sub-class to implement a specific test.
+		%feature("autodoc", "	* This method is called at the end of each iteration to check the convergence : || Xi+1 - Xi || < SpatialTolerance/100 Or || Xi+1 - Xi || < SpatialTolerance and |F--Xi+1-- - F--Xi--| < CriteriumTolerance * |F--xi--| It can be redefined in a sub-class to implement a specific test.
 
 	:rtype: bool
 ") IsConverged;
@@ -712,7 +711,7 @@ class FairCurve_EnergyOfMVC : public FairCurve_Energy {
 class FairCurve_MinimalVariation : public FairCurve_Batten {
 	public:
 		%feature("compactdefaultargs") FairCurve_MinimalVariation;
-		%feature("autodoc", "	* Constructs the two contact points P1 and P2 and the geometrical characteristics of the batten (elastic beam) These include the real number values for height of deformation Height, slope value Slope, and kind of energy PhysicalRatio. The kinds of energy include: - Jerk (0) - Sagging (1). Note that the default setting for Physical Ration is in FairCurve_Batten Other parameters are initialized as follow : - FreeSliding = False - ConstraintOrder1 = 1 - ConstraintOrder2 = 1 - Angle1 = 0 - Angle2 = 0 - Curvature1 = 0 - Curvature2 = 0 - SlidingFactor = 1 Warning If PhysicalRatio equals 1, you cannot impose constraints on curvature. Exceptions NegativeValue if Height is less than or equal to 0. NullValue if the distance between P1 and P2 is less than or equal to the tolerance value for distance in Precision::Confusion: P1.IsEqual(P2, Precision::Confusion()). The function gp_Pnt2d::IsEqual tests to see if this is the case. Definition of the geometricals constraints
+		%feature("autodoc", "	* Constructs the two contact points P1 and P2 and the geometrical characteristics of the batten --elastic beam-- These include the real number values for height of deformation Height, slope value Slope, and kind of energy PhysicalRatio. The kinds of energy include: - Jerk --0-- - Sagging --1--. Note that the default setting for Physical Ration is in FairCurve_Batten Other parameters are initialized as follow : - FreeSliding = False - ConstraintOrder1 = 1 - ConstraintOrder2 = 1 - Angle1 = 0 - Angle2 = 0 - Curvature1 = 0 - Curvature2 = 0 - SlidingFactor = 1 Warning If PhysicalRatio equals 1, you cannot impose constraints on curvature. Exceptions NegativeValue if Height is less than or equal to 0. NullValue if the distance between P1 and P2 is less than or equal to the tolerance value for distance in Precision::Confusion: P1.IsEqual--P2, Precision::Confusion------. The function gp_Pnt2d::IsEqual tests to see if this is the case. Definition of the geometricals constraints
 
 	:param P1:
 	:type P1: gp_Pnt2d

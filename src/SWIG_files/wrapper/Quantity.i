@@ -1,5 +1,5 @@
 /*
-Copyright 2008-2017 Thomas Paviot (tpaviot@gmail.com)
+Copyright 2008-2018 Thomas Paviot (tpaviot@gmail.com)
 
 
 This file is part of pythonOCC.
@@ -58,12 +58,13 @@ typedef Standard_Real Quantity_Resistivity;
 typedef Standard_Real Quantity_Area;
 typedef Standard_Real Quantity_ElectricCapacitance;
 typedef Standard_Real Quantity_Enthalpy;
-typedef Standard_Real Quantity_Length;
+typedef Standard_Real Quantity_LuminousEfficacity;
 typedef Standard_Real Quantity_Admittance;
+typedef Standard_Real Quantity_Speed;
 typedef Standard_Real Quantity_AcousticIntensity;
 typedef Standard_Real Quantity_ElectricPotential;
-typedef Standard_Real Quantity_Work;
 typedef Standard_Real Quantity_Normality;
+typedef Standard_Real Quantity_ElectricCharge;
 typedef Standard_Real Quantity_Inductance;
 typedef Standard_Real Quantity_Luminance;
 typedef Standard_Real Quantity_Force;
@@ -74,10 +75,10 @@ typedef Standard_Real Quantity_Mass;
 typedef Standard_Real Quantity_MagneticFieldStrength;
 typedef Standard_Real Quantity_Frequency;
 typedef Standard_Real Quantity_KinematicViscosity;
-typedef Standard_Real Quantity_Power;
+typedef Standard_Real Quantity_Parameter;
+typedef Standard_Real Quantity_ThermalConductivity;
 typedef Standard_Real Quantity_Temperature;
 typedef Standard_Real Quantity_Rate;
-typedef Standard_Real Quantity_Activity;
 typedef Standard_Real Quantity_Velocity;
 typedef Standard_Real Quantity_Volume;
 typedef Standard_Real Quantity_AbsorbedDose;
@@ -85,55 +86,59 @@ typedef Standard_Real Quantity_DoseEquivalent;
 typedef Standard_Real Quantity_Torque;
 typedef Standard_Real Quantity_Impedance;
 typedef Standard_Real Quantity_Content;
+typedef Standard_Real Quantity_Factor;
 typedef Standard_Real Quantity_MassFlow;
 typedef Standard_Real Quantity_Index;
 typedef Standard_Real Quantity_SpecificHeatCapacity;
 typedef Standard_Real Quantity_MagneticFluxDensity;
 typedef Standard_Real Quantity_Conductivity;
 typedef Standard_Real Quantity_Coefficient;
-typedef Standard_Real Quantity_Parameter;
-typedef Standard_Real Quantity_MolarMass;
+typedef Standard_Real Quantity_Length;
+typedef Standard_Real Quantity_SurfaceTension;
 typedef Standard_Real Quantity_Constant;
 typedef Standard_Real Quantity_MolarVolume;
-typedef Standard_Real Quantity_MagneticFlux;
 typedef Standard_Real Quantity_Quotient;
 typedef Standard_Real Quantity_KineticMoment;
 typedef Standard_Real Quantity_ElectricCurrent;
 typedef Standard_Real Quantity_Capacitance;
 typedef Standard_Real Quantity_PlaneAngle;
+typedef Standard_Real Quantity_Density;
 typedef Standard_Real Quantity_MolarConcentration;
-typedef Standard_Real Quantity_ElectricCharge;
+typedef Standard_Real Quantity_LuminousFlux;
 typedef Standard_Real Quantity_LuminousIntensity;
 typedef Standard_Real Quantity_Molarity;
 typedef Standard_Real Quantity_LuminousExposition;
 typedef Standard_Real Quantity_SolidAngle;
-typedef Standard_Real Quantity_LuminousEfficacity;
+typedef Standard_Real Quantity_MagneticFlux;
+typedef Standard_Real Quantity_Energy;
 typedef Standard_Real Quantity_CoefficientOfExpansion;
 typedef Standard_Real Quantity_Entropy;
-typedef Standard_Real Quantity_SurfaceTension;
-typedef Standard_Real Quantity_LuminousFlux;
+typedef Standard_Real Quantity_Activity;
 typedef Standard_Real Quantity_VolumeFlow;
 typedef Standard_Real Quantity_Viscosity;
 typedef Standard_Real Quantity_Consumption;
 typedef Standard_Real Quantity_Momentum;
 typedef Standard_Real Quantity_Pressure;
-typedef Standard_Real Quantity_AmountOfSubstance;
+typedef Standard_Real Quantity_Power;
 typedef Standard_Real Quantity_Acceleration;
-typedef Standard_Real Quantity_MomentOfInertia;
-typedef Standard_Real Quantity_Energy;
+typedef Standard_Real Quantity_MolarMass;
 typedef Standard_Real Quantity_SoundIntensity;
 typedef Standard_Real Quantity_Illuminance;
 typedef Standard_Real Quantity_AngularVelocity;
 typedef Standard_Real Quantity_Resistance;
 typedef Standard_Real Quantity_MomentOfAForce;
-typedef Standard_Real Quantity_ThermalConductivity;
-typedef Standard_Real Quantity_Scalaire;
+typedef Standard_Real Quantity_MomentOfInertia;
 typedef Standard_Real Quantity_Concentration;
-typedef Standard_Real Quantity_Factor;
+typedef Standard_Real Quantity_Work;
 typedef Standard_Real Quantity_Weight;
-typedef Standard_Real Quantity_Density;
-typedef Standard_Real Quantity_Speed;
+typedef Standard_Real Quantity_AmountOfSubstance;
+typedef Standard_Real Quantity_Scalaire;
 /* end typedefs declaration */
+
+/* templates */
+%template(Quantity_Array1OfColor) NCollection_Array1 <Quantity_Color>;
+%template(Quantity_Array2OfColor) NCollection_Array2 <Quantity_Color>;
+/* end templates declaration */
 
 /* public enums */
 enum Quantity_NameOfColor {
@@ -734,289 +739,6 @@ enum Quantity_PhysicalQuantity {
 
 /* end public enums declaration */
 
-%nodefaultctor Quantity_Array1OfCoefficient;
-class Quantity_Array1OfCoefficient {
-	public:
-		%feature("compactdefaultargs") Quantity_Array1OfCoefficient;
-		%feature("autodoc", "	:param Low:
-	:type Low: int
-	:param Up:
-	:type Up: int
-	:rtype: None
-") Quantity_Array1OfCoefficient;
-		 Quantity_Array1OfCoefficient (const Standard_Integer Low,const Standard_Integer Up);
-		%feature("compactdefaultargs") Quantity_Array1OfCoefficient;
-		%feature("autodoc", "	:param Item:
-	:type Item: Quantity_Coefficient &
-	:param Low:
-	:type Low: int
-	:param Up:
-	:type Up: int
-	:rtype: None
-") Quantity_Array1OfCoefficient;
-		 Quantity_Array1OfCoefficient (const Quantity_Coefficient & Item,const Standard_Integer Low,const Standard_Integer Up);
-		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	:param V:
-	:type V: Quantity_Coefficient &
-	:rtype: None
-") Init;
-		void Init (const Quantity_Coefficient & V);
-		%feature("compactdefaultargs") Destroy;
-		%feature("autodoc", "	:rtype: None
-") Destroy;
-		void Destroy ();
-		%feature("compactdefaultargs") IsAllocated;
-		%feature("autodoc", "	:rtype: bool
-") IsAllocated;
-		Standard_Boolean IsAllocated ();
-		%feature("compactdefaultargs") Assign;
-		%feature("autodoc", "	:param Other:
-	:type Other: Quantity_Array1OfCoefficient &
-	:rtype: Quantity_Array1OfCoefficient
-") Assign;
-		const Quantity_Array1OfCoefficient & Assign (const Quantity_Array1OfCoefficient & Other);
-		%feature("compactdefaultargs") operator =;
-		%feature("autodoc", "	:param Other:
-	:type Other: Quantity_Array1OfCoefficient &
-	:rtype: Quantity_Array1OfCoefficient
-") operator =;
-		const Quantity_Array1OfCoefficient & operator = (const Quantity_Array1OfCoefficient & Other);
-		%feature("compactdefaultargs") Length;
-		%feature("autodoc", "	:rtype: int
-") Length;
-		Standard_Integer Length ();
-		%feature("compactdefaultargs") Lower;
-		%feature("autodoc", "	:rtype: int
-") Lower;
-		Standard_Integer Lower ();
-		%feature("compactdefaultargs") Upper;
-		%feature("autodoc", "	:rtype: int
-") Upper;
-		Standard_Integer Upper ();
-		%feature("compactdefaultargs") SetValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param Value:
-	:type Value: Quantity_Coefficient &
-	:rtype: None
-") SetValue;
-		void SetValue (const Standard_Integer Index,const Quantity_Coefficient & Value);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: Quantity_Coefficient
-") Value;
-		const Quantity_Coefficient & Value (const Standard_Integer Index);
-		%feature("compactdefaultargs") ChangeValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: Quantity_Coefficient
-") ChangeValue;
-		Quantity_Coefficient & ChangeValue (const Standard_Integer Index);
-};
-
-
-%extend Quantity_Array1OfCoefficient {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor Quantity_Array1OfColor;
-class Quantity_Array1OfColor {
-	public:
-		%feature("compactdefaultargs") Quantity_Array1OfColor;
-		%feature("autodoc", "	:param Low:
-	:type Low: int
-	:param Up:
-	:type Up: int
-	:rtype: None
-") Quantity_Array1OfColor;
-		 Quantity_Array1OfColor (const Standard_Integer Low,const Standard_Integer Up);
-		%feature("compactdefaultargs") Quantity_Array1OfColor;
-		%feature("autodoc", "	:param Item:
-	:type Item: Quantity_Color &
-	:param Low:
-	:type Low: int
-	:param Up:
-	:type Up: int
-	:rtype: None
-") Quantity_Array1OfColor;
-		 Quantity_Array1OfColor (const Quantity_Color & Item,const Standard_Integer Low,const Standard_Integer Up);
-		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	:param V:
-	:type V: Quantity_Color &
-	:rtype: None
-") Init;
-		void Init (const Quantity_Color & V);
-		%feature("compactdefaultargs") Destroy;
-		%feature("autodoc", "	:rtype: None
-") Destroy;
-		void Destroy ();
-		%feature("compactdefaultargs") IsAllocated;
-		%feature("autodoc", "	:rtype: bool
-") IsAllocated;
-		Standard_Boolean IsAllocated ();
-		%feature("compactdefaultargs") Assign;
-		%feature("autodoc", "	:param Other:
-	:type Other: Quantity_Array1OfColor &
-	:rtype: Quantity_Array1OfColor
-") Assign;
-		const Quantity_Array1OfColor & Assign (const Quantity_Array1OfColor & Other);
-		%feature("compactdefaultargs") operator =;
-		%feature("autodoc", "	:param Other:
-	:type Other: Quantity_Array1OfColor &
-	:rtype: Quantity_Array1OfColor
-") operator =;
-		const Quantity_Array1OfColor & operator = (const Quantity_Array1OfColor & Other);
-		%feature("compactdefaultargs") Length;
-		%feature("autodoc", "	:rtype: int
-") Length;
-		Standard_Integer Length ();
-		%feature("compactdefaultargs") Lower;
-		%feature("autodoc", "	:rtype: int
-") Lower;
-		Standard_Integer Lower ();
-		%feature("compactdefaultargs") Upper;
-		%feature("autodoc", "	:rtype: int
-") Upper;
-		Standard_Integer Upper ();
-		%feature("compactdefaultargs") SetValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param Value:
-	:type Value: Quantity_Color &
-	:rtype: None
-") SetValue;
-		void SetValue (const Standard_Integer Index,const Quantity_Color & Value);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: Quantity_Color
-") Value;
-		const Quantity_Color & Value (const Standard_Integer Index);
-		%feature("compactdefaultargs") ChangeValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: Quantity_Color
-") ChangeValue;
-		Quantity_Color & ChangeValue (const Standard_Integer Index);
-};
-
-
-%extend Quantity_Array1OfColor {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor Quantity_Array2OfColor;
-class Quantity_Array2OfColor {
-	public:
-		%feature("compactdefaultargs") Quantity_Array2OfColor;
-		%feature("autodoc", "	:param R1:
-	:type R1: int
-	:param R2:
-	:type R2: int
-	:param C1:
-	:type C1: int
-	:param C2:
-	:type C2: int
-	:rtype: None
-") Quantity_Array2OfColor;
-		 Quantity_Array2OfColor (const Standard_Integer R1,const Standard_Integer R2,const Standard_Integer C1,const Standard_Integer C2);
-		%feature("compactdefaultargs") Quantity_Array2OfColor;
-		%feature("autodoc", "	:param Item:
-	:type Item: Quantity_Color &
-	:param R1:
-	:type R1: int
-	:param R2:
-	:type R2: int
-	:param C1:
-	:type C1: int
-	:param C2:
-	:type C2: int
-	:rtype: None
-") Quantity_Array2OfColor;
-		 Quantity_Array2OfColor (const Quantity_Color & Item,const Standard_Integer R1,const Standard_Integer R2,const Standard_Integer C1,const Standard_Integer C2);
-		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	:param V:
-	:type V: Quantity_Color &
-	:rtype: None
-") Init;
-		void Init (const Quantity_Color & V);
-		%feature("compactdefaultargs") Destroy;
-		%feature("autodoc", "	:rtype: None
-") Destroy;
-		void Destroy ();
-		%feature("compactdefaultargs") Assign;
-		%feature("autodoc", "	:param Other:
-	:type Other: Quantity_Array2OfColor &
-	:rtype: Quantity_Array2OfColor
-") Assign;
-		const Quantity_Array2OfColor & Assign (const Quantity_Array2OfColor & Other);
-		%feature("compactdefaultargs") operator =;
-		%feature("autodoc", "	:param Other:
-	:type Other: Quantity_Array2OfColor &
-	:rtype: Quantity_Array2OfColor
-") operator =;
-		const Quantity_Array2OfColor & operator = (const Quantity_Array2OfColor & Other);
-		%feature("compactdefaultargs") ColLength;
-		%feature("autodoc", "	:rtype: int
-") ColLength;
-		Standard_Integer ColLength ();
-		%feature("compactdefaultargs") RowLength;
-		%feature("autodoc", "	:rtype: int
-") RowLength;
-		Standard_Integer RowLength ();
-		%feature("compactdefaultargs") LowerCol;
-		%feature("autodoc", "	:rtype: int
-") LowerCol;
-		Standard_Integer LowerCol ();
-		%feature("compactdefaultargs") LowerRow;
-		%feature("autodoc", "	:rtype: int
-") LowerRow;
-		Standard_Integer LowerRow ();
-		%feature("compactdefaultargs") UpperCol;
-		%feature("autodoc", "	:rtype: int
-") UpperCol;
-		Standard_Integer UpperCol ();
-		%feature("compactdefaultargs") UpperRow;
-		%feature("autodoc", "	:rtype: int
-") UpperRow;
-		Standard_Integer UpperRow ();
-		%feature("compactdefaultargs") SetValue;
-		%feature("autodoc", "	:param Row:
-	:type Row: int
-	:param Col:
-	:type Col: int
-	:param Value:
-	:type Value: Quantity_Color &
-	:rtype: None
-") SetValue;
-		void SetValue (const Standard_Integer Row,const Standard_Integer Col,const Quantity_Color & Value);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:param Row:
-	:type Row: int
-	:param Col:
-	:type Col: int
-	:rtype: Quantity_Color
-") Value;
-		const Quantity_Color & Value (const Standard_Integer Row,const Standard_Integer Col);
-		%feature("compactdefaultargs") ChangeValue;
-		%feature("autodoc", "	:param Row:
-	:type Row: int
-	:param Col:
-	:type Col: int
-	:rtype: Quantity_Color
-") ChangeValue;
-		Quantity_Color & ChangeValue (const Standard_Integer Row,const Standard_Integer Col);
-};
-
-
-%extend Quantity_Array2OfColor {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
 %nodefaultctor Quantity_Color;
 class Quantity_Color {
 	public:
@@ -1035,49 +757,43 @@ class Quantity_Color {
 ") Quantity_Color;
 		 Quantity_Color (const Quantity_NameOfColor AName);
 		%feature("compactdefaultargs") Quantity_Color;
-		%feature("autodoc", "	* Creates a colour according to the definition system TypeOfColor. TOC_RGB : <R1> the value of red between 0. and 1. <R2> the value of green between 0. and 1. <R3> the value of blue between 0. and 1. //! TOC_HLS : <R1> is the hue angle in degrees, 0. being red <R2> is the lightness between 0. and 1. <R3> is the saturation between 0. and 1.
+		%feature("autodoc", "	* Creates a color according to the definition system theType. Quantity_TOC_RGB: - theR1 the value of Red within range [0.0; 1.0] - theR2 the value of Green within range [0.0; 1.0] - theR3 the value of Blue within range [0.0; 1.0] //! Quantity_TOC_HLS: - theR1 is the Hue --H-- angle in degrees within range [0.0; 360.0], 0.0 being Red. Value -1.0 is a special value reserved for grayscale color --S should be 0.0--. - theR2 is the Lightness --L-- within range [0.0; 1.0] - theR3 is the Saturation --S-- within range [0.0; 1.0]
 
-	:param R1:
-	:type R1: Quantity_Parameter
-	:param R2:
-	:type R2: Quantity_Parameter
-	:param R3:
-	:type R3: Quantity_Parameter
-	:param AType:
-	:type AType: Quantity_TypeOfColor
+	:param theR1:
+	:type theR1: float
+	:param theR2:
+	:type theR2: float
+	:param theR3:
+	:type theR3: float
+	:param theType:
+	:type theType: Quantity_TypeOfColor
 	:rtype: None
 ") Quantity_Color;
-		 Quantity_Color (const Quantity_Parameter R1,const Quantity_Parameter R2,const Quantity_Parameter R3,const Quantity_TypeOfColor AType);
-		%feature("compactdefaultargs") Assign;
-		%feature("autodoc", "	* Updates the colour <self> from the definition of the colour <Other>.
+		 Quantity_Color (const Standard_Real theR1,const Standard_Real theR2,const Standard_Real theR3,const Quantity_TypeOfColor theType);
+		%feature("compactdefaultargs") Quantity_Color;
+		%feature("autodoc", "	* Define color from RGB values.
 
-	:param Other:
-	:type Other: Quantity_Color &
-	:rtype: Quantity_Color
-") Assign;
-		Quantity_Color & Assign (const Quantity_Color & Other);
-		%feature("compactdefaultargs") operator =;
-		%feature("autodoc", "	:param Other:
-	:type Other: Quantity_Color &
-	:rtype: Quantity_Color
-") operator =;
-		Quantity_Color & operator = (const Quantity_Color & Other);
+	:param theRgb:
+	:type theRgb: NCollection_Vec3<float> &
+	:rtype: None
+") Quantity_Color;
+		 Quantity_Color (const NCollection_Vec3<float> & theRgb);
 		%feature("compactdefaultargs") ChangeContrast;
 		%feature("autodoc", "	* Increases or decreases the contrast by <ADelta>. <ADelta> is a percentage. Any value greater than zero will increase the contrast. The variation is expressed as a percentage of the current value. It is a variation of the saturation.
 
 	:param ADelta:
-	:type ADelta: Quantity_Rate
+	:type ADelta: float
 	:rtype: None
 ") ChangeContrast;
-		void ChangeContrast (const Quantity_Rate ADelta);
+		void ChangeContrast (const Standard_Real ADelta);
 		%feature("compactdefaultargs") ChangeIntensity;
 		%feature("autodoc", "	* Increases or decreases the intensity by <ADelta>. <ADelta> is a percentage. Any value greater than zero will increase the intensity. The variation is expressed as a percentage of the current value. It is a variation of the lightness.
 
 	:param ADelta:
-	:type ADelta: Quantity_Rate
+	:type ADelta: float
 	:rtype: None
 ") ChangeIntensity;
-		void ChangeIntensity (const Quantity_Rate ADelta);
+		void ChangeIntensity (const Standard_Real ADelta);
 		%feature("compactdefaultargs") SetValues;
 		%feature("autodoc", "	* Updates the colour <self> from the definition of the colour <AName>.
 
@@ -1087,33 +803,33 @@ class Quantity_Color {
 ") SetValues;
 		void SetValues (const Quantity_NameOfColor AName);
 		%feature("compactdefaultargs") SetValues;
-		%feature("autodoc", "	* Updates a colour according to the mode specified by TypeOfColor TOC_RGB : <R1> the value of red between 0. and 1. <R2> the value of green between 0. and 1. <R3> the value of blue between 0. and 1. //! TOC_HLS : <R1> is the hue angle in degrees, 0. being red <R2> is the lightness between 0. and 1. <R3> is the saturation between 0. and 1.
+		%feature("autodoc", "	* Updates a color according to the mode specified by theType. TOC_RGB: - theR1 the value of Red within range [0.0; 1.0] - theR2 the value of Green within range [0.0; 1.0] - theR3 the value of Blue within range [0.0; 1.0] //! TOC_HLS: - theR1 is the Hue --H-- angle in degrees within range [0.0; 360.0], 0.0 being Red. -1.0 is a special value reserved for grayscale color --S should be 0.0--. - theR2 is the Lightness --L-- within range [0.0; 1.0] - theR3 is the Saturation --S-- within range [0.0; 1.0]
 
-	:param R1:
-	:type R1: Quantity_Parameter
-	:param R2:
-	:type R2: Quantity_Parameter
-	:param R3:
-	:type R3: Quantity_Parameter
-	:param AType:
-	:type AType: Quantity_TypeOfColor
+	:param theR1:
+	:type theR1: float
+	:param theR2:
+	:type theR2: float
+	:param theR3:
+	:type theR3: float
+	:param theType:
+	:type theType: Quantity_TypeOfColor
 	:rtype: None
 ") SetValues;
-		void SetValues (const Quantity_Parameter R1,const Quantity_Parameter R2,const Quantity_Parameter R3,const Quantity_TypeOfColor AType);
+		void SetValues (const Standard_Real theR1,const Standard_Real theR2,const Standard_Real theR3,const Quantity_TypeOfColor theType);
 		%feature("compactdefaultargs") Delta;
 		%feature("autodoc", "	* Returns the percentage change of contrast and intensity between <self> and <AColor>. <DC> and <DI> are percentages, either positive or negative. The calculation is with respect to the current value of <self> If <DC> is positive then <self> is more contrasty. If <DI> is positive then <self> is more intense.
 
 	:param AColor:
 	:type AColor: Quantity_Color &
 	:param DC:
-	:type DC: Quantity_Parameter &
+	:type DC: float &
 	:param DI:
-	:type DI: Quantity_Parameter &
+	:type DI: float &
 	:rtype: None
 ") Delta;
 		void Delta (const Quantity_Color & AColor,Standard_Real &OutValue,Standard_Real &OutValue);
 		%feature("compactdefaultargs") Distance;
-		%feature("autodoc", "	* Returns the distance between two colours. It's a value between 0 and the square root of 3 (the black/white distance)
+		%feature("autodoc", "	* Returns the distance between two colours. It's a value between 0 and the square root of 3 --the black/white distance--
 
 	:param AColor:
 	:type AColor: Quantity_Color &
@@ -1129,25 +845,25 @@ class Quantity_Color {
 ") SquareDistance;
 		Standard_Real SquareDistance (const Quantity_Color & AColor);
 		%feature("compactdefaultargs") Blue;
-		%feature("autodoc", "	* Returns the Blue component (quantity of blue) of the color <self>.
+		%feature("autodoc", "	* Returns the Blue component --quantity of blue-- of the color within range [0.0; 1.0].
 
-	:rtype: Quantity_Parameter
+	:rtype: float
 ") Blue;
-		Quantity_Parameter Blue ();
+		Standard_Real Blue ();
 		%feature("compactdefaultargs") Green;
-		%feature("autodoc", "	* Returns the Green component (quantity of green) of the color <self>.
+		%feature("autodoc", "	* Returns the Green component --quantity of green-- of the color within range [0.0; 1.0].
 
-	:rtype: Quantity_Parameter
+	:rtype: float
 ") Green;
-		Quantity_Parameter Green ();
+		Standard_Real Green ();
 		%feature("compactdefaultargs") Hue;
-		%feature("autodoc", "	* Returns the Hue component (hue angle) of the color <self>.
+		%feature("autodoc", "	* Returns the Hue component --hue angle-- of the color in degrees within range [0.0; 360.0], 0.0 being Red. -1.0 is a special value reserved for grayscale color --S should be 0.0--
 
-	:rtype: Quantity_Parameter
+	:rtype: float
 ") Hue;
-		Quantity_Parameter Hue ();
+		Standard_Real Hue ();
 		%feature("compactdefaultargs") IsDifferent;
-		%feature("autodoc", "	* Returns Standard_True if the distance between <self> and <Other> is greater than Epsilon ().
+		%feature("autodoc", "	* Returns Standard_True if the distance between <self> and <Other> is greater than Epsilon ----.
 
 	:param Other:
 	:type Other: Quantity_Color &
@@ -1169,7 +885,7 @@ class Quantity_Color {
                 return True
         }
         		%feature("compactdefaultargs") IsEqual;
-		%feature("autodoc", "	* Returns true if the Other color is - different from, or - equal to this color. Two colors are considered to be equal if their distance is no greater than Epsilon(). These methods are aliases of operator != and operator ==.
+		%feature("autodoc", "	* Returns true if the Other color is - different from, or - equal to this color. Two colors are considered to be equal if their distance is no greater than Epsilon----. These methods are aliases of operator != and operator ==.
 
 	:param Other:
 	:type Other: Quantity_Color &
@@ -1191,11 +907,11 @@ class Quantity_Color {
                 return False
         }
         		%feature("compactdefaultargs") Light;
-		%feature("autodoc", "	* Returns the Light component (value of the lightness) of the color <self>.
+		%feature("autodoc", "	* Returns the Light component --value of the lightness-- of the color within range [0.0; 1.0].
 
-	:rtype: Quantity_Parameter
+	:rtype: float
 ") Light;
-		Quantity_Parameter Light ();
+		Standard_Real Light ();
 		%feature("compactdefaultargs") Name;
 		%feature("autodoc", "	* Returns the name of the color defined by its quantities of red R, green G and blue B; more precisely this is the nearest color from the Quantity_NameOfColor enumeration. Exceptions Standard_OutOfRange if R, G or B is less than 0. or greater than 1.
 
@@ -1203,57 +919,63 @@ class Quantity_Color {
 ") Name;
 		Quantity_NameOfColor Name ();
 		%feature("compactdefaultargs") Red;
-		%feature("autodoc", "	* Returns the Red component (quantity of red) of the color <self>.
+		%feature("autodoc", "	* Returns the Red component --quantity of red-- of the color within range [0.0; 1.0].
 
-	:rtype: Quantity_Parameter
+	:rtype: float
 ") Red;
-		Quantity_Parameter Red ();
+		Standard_Real Red ();
 		%feature("compactdefaultargs") Saturation;
-		%feature("autodoc", "	* Returns the Saturation component (value of the saturation) of the color <self>.
+		%feature("autodoc", "	* Returns the Saturation component --value of the saturation-- of the color within range [0.0; 1.0].
 
-	:rtype: Quantity_Parameter
+	:rtype: float
 ") Saturation;
-		Quantity_Parameter Saturation ();
-		%feature("compactdefaultargs") Values;
-		%feature("autodoc", "	* Returns in R1, R2 and R3 the components of this color according to the color system definition AType. - if AType is Quantity_TOC_RGB R1 is the quantity of red, R2 is the quantity of green and R3 is the quantity of blue in this color. - if AType is Quantity_TOC_HLS R1 is the hue angle in degrees (0 being red), R2 is the lightness and R3 is the saturation of this color.
+		Standard_Real Saturation ();
+		%feature("compactdefaultargs") operator constNCollection_Vec3<float>&;
+		%feature("autodoc", "	* Return the color as vector of 3 float elements.
 
-	:param R1:
-	:type R1: Quantity_Parameter &
-	:param R2:
-	:type R2: Quantity_Parameter &
-	:param R3:
-	:type R3: Quantity_Parameter &
-	:param AType:
-	:type AType: Quantity_TypeOfColor
+	:rtype: None
+") operator constNCollection_Vec3<float>&;
+		 operator constNCollection_Vec3<float>& ();
+		%feature("compactdefaultargs") Values;
+		%feature("autodoc", "	* Returns in theR1, theR2 and theR3 the components of this color according to the color system definition theType. If theType is Quantity_TOC_RGB: - theR1 the value of Red between 0.0 and 1.0 - theR2 the value of Green between 0.0 and 1.0 - theR3 the value of Blue between 0.0 and 1.0 If theType is Quantity_TOC_HLS: - theR1 is the Hue --H-- angle in degrees within range [0.0; 360.0], 0.0 being Red. -1.0 is a special value reserved for grayscale color --S should be 0.0--. - theR2 is the Lightness --L-- within range [0.0; 1.0] - theR3 is the Saturation --S-- within range [0.0; 1.0]
+
+	:param theR1:
+	:type theR1: float &
+	:param theR2:
+	:type theR2: float &
+	:param theR3:
+	:type theR3: float &
+	:param theType:
+	:type theType: Quantity_TypeOfColor
 	:rtype: None
 ") Values;
-		void Values (Standard_Real &OutValue,Standard_Real &OutValue,Standard_Real &OutValue,const Quantity_TypeOfColor AType);
+		void Values (Standard_Real &OutValue,Standard_Real &OutValue,Standard_Real &OutValue,const Quantity_TypeOfColor theType);
 		%feature("compactdefaultargs") SetEpsilon;
 		%feature("autodoc", "	* Sets the specified value used to compare <self> and an other color in IsDifferent and in IsEqual methods. Warning: The default value is 0.0001
 
 	:param AnEpsilon:
-	:type AnEpsilon: Quantity_Parameter
+	:type AnEpsilon: float
 	:rtype: void
 ") SetEpsilon;
-		static void SetEpsilon (const Quantity_Parameter AnEpsilon);
+		static void SetEpsilon (const Standard_Real AnEpsilon);
 		%feature("compactdefaultargs") Epsilon;
 		%feature("autodoc", "	* Returns the specified value used to compare <self> and an other color in IsDifferent and in IsEqual methods.
 
-	:rtype: Quantity_Parameter
+	:rtype: float
 ") Epsilon;
-		static Quantity_Parameter Epsilon ();
+		static Standard_Real Epsilon ();
 		%feature("compactdefaultargs") Name;
 		%feature("autodoc", "	* Returns the name of the colour for which the RGB components are nearest to <R>, <G> and <B>.
 
 	:param R:
-	:type R: Quantity_Parameter
+	:type R: float
 	:param G:
-	:type G: Quantity_Parameter
+	:type G: float
 	:param B:
-	:type B: Quantity_Parameter
+	:type B: float
 	:rtype: Quantity_NameOfColor
 ") Name;
-		static Quantity_NameOfColor Name (const Quantity_Parameter R,const Quantity_Parameter G,const Quantity_Parameter B);
+		static Quantity_NameOfColor Name (const Standard_Real R,const Standard_Real G,const Standard_Real B);
 		%feature("compactdefaultargs") StringName;
 		%feature("autodoc", "	* Returns the name of the color identified by AName in the Quantity_NameOfColor enumeration. For example, the name of the color which corresponds to Quantity_NOC_BLACK is 'BLACK'. Exceptions Standard_OutOfRange if AName in not known in the Quantity_NameOfColor enumeration.
 
@@ -1276,38 +998,38 @@ class Quantity_Color {
 		%feature("autodoc", "	* Converts HLS components into RGB ones.
 
 	:param H:
-	:type H: Quantity_Parameter
+	:type H: float
 	:param L:
-	:type L: Quantity_Parameter
+	:type L: float
 	:param S:
-	:type S: Quantity_Parameter
+	:type S: float
 	:param R:
-	:type R: Quantity_Parameter &
+	:type R: float &
 	:param G:
-	:type G: Quantity_Parameter &
+	:type G: float &
 	:param B:
-	:type B: Quantity_Parameter &
+	:type B: float &
 	:rtype: void
 ") HlsRgb;
-		static void HlsRgb (const Quantity_Parameter H,const Quantity_Parameter L,const Quantity_Parameter S,Standard_Real &OutValue,Standard_Real &OutValue,Standard_Real &OutValue);
+		static void HlsRgb (const Standard_Real H,const Standard_Real L,const Standard_Real S,Standard_Real &OutValue,Standard_Real &OutValue,Standard_Real &OutValue);
 		%feature("compactdefaultargs") RgbHls;
 		%feature("autodoc", "	* Converts RGB components into HLS ones.
 
 	:param R:
-	:type R: Quantity_Parameter
+	:type R: float
 	:param G:
-	:type G: Quantity_Parameter
+	:type G: float
 	:param B:
-	:type B: Quantity_Parameter
+	:type B: float
 	:param H:
-	:type H: Quantity_Parameter &
+	:type H: float &
 	:param L:
-	:type L: Quantity_Parameter &
+	:type L: float &
 	:param S:
-	:type S: Quantity_Parameter &
+	:type S: float &
 	:rtype: void
 ") RgbHls;
-		static void RgbHls (const Quantity_Parameter R,const Quantity_Parameter G,const Quantity_Parameter B,Standard_Real &OutValue,Standard_Real &OutValue,Standard_Real &OutValue);
+		static void RgbHls (const Standard_Real R,const Standard_Real G,const Standard_Real B,Standard_Real &OutValue,Standard_Real &OutValue,Standard_Real &OutValue);
 		%feature("compactdefaultargs") Color2argb;
 		%feature("autodoc", "	* Convert the Color value to ARGB integer value. theARGB has Alpha equal to zero, so the output is formatted as 0x00RRGGBB
 
@@ -1334,36 +1056,6 @@ class Quantity_Color {
 	:rtype: void
 ") Test;
 		static void Test ();
-		%feature("compactdefaultargs") _CSFDB_GetQuantity_ColorMyRed;
-		%feature("autodoc", "	:rtype: Standard_ShortReal
-") _CSFDB_GetQuantity_ColorMyRed;
-		Standard_ShortReal _CSFDB_GetQuantity_ColorMyRed ();
-		%feature("compactdefaultargs") _CSFDB_SetQuantity_ColorMyRed;
-		%feature("autodoc", "	:param p:
-	:type p: Standard_ShortReal
-	:rtype: None
-") _CSFDB_SetQuantity_ColorMyRed;
-		void _CSFDB_SetQuantity_ColorMyRed (const Standard_ShortReal p);
-		%feature("compactdefaultargs") _CSFDB_GetQuantity_ColorMyGreen;
-		%feature("autodoc", "	:rtype: Standard_ShortReal
-") _CSFDB_GetQuantity_ColorMyGreen;
-		Standard_ShortReal _CSFDB_GetQuantity_ColorMyGreen ();
-		%feature("compactdefaultargs") _CSFDB_SetQuantity_ColorMyGreen;
-		%feature("autodoc", "	:param p:
-	:type p: Standard_ShortReal
-	:rtype: None
-") _CSFDB_SetQuantity_ColorMyGreen;
-		void _CSFDB_SetQuantity_ColorMyGreen (const Standard_ShortReal p);
-		%feature("compactdefaultargs") _CSFDB_GetQuantity_ColorMyBlue;
-		%feature("autodoc", "	:rtype: Standard_ShortReal
-") _CSFDB_GetQuantity_ColorMyBlue;
-		Standard_ShortReal _CSFDB_GetQuantity_ColorMyBlue ();
-		%feature("compactdefaultargs") _CSFDB_SetQuantity_ColorMyBlue;
-		%feature("autodoc", "	:param p:
-	:type p: Standard_ShortReal
-	:rtype: None
-") _CSFDB_SetQuantity_ColorMyBlue;
-		void _CSFDB_SetQuantity_ColorMyBlue (const Standard_ShortReal p);
 };
 
 
@@ -1372,59 +1064,219 @@ class Quantity_Color {
 	__repr__ = _dumps_object
 	}
 };
-%nodefaultctor Quantity_Convert;
-class Quantity_Convert {
+%nodefaultctor Quantity_ColorHasher;
+class Quantity_ColorHasher {
 	public:
-		%feature("compactdefaultargs") Quantity_Convert;
-		%feature("autodoc", "	* Creates an object;
+		%feature("compactdefaultargs") HashCode;
+		%feature("autodoc", "	* Returns hash code for the given color.
 
-	:rtype: None
-") Quantity_Convert;
-		 Quantity_Convert ();
-		%feature("compactdefaultargs") SetQuantity;
-		%feature("autodoc", "	* Updates the conversion table (correspondances between Quantities and conversion coefficients).
+	:param theColor:
+	:type theColor: Quantity_Color &
+	:param theUpper:
+	:type theUpper: int
+	:rtype: int
+") HashCode;
+		static Standard_Integer HashCode (const Quantity_Color & theColor,const Standard_Integer theUpper);
+		%feature("compactdefaultargs") IsEqual;
+		%feature("autodoc", "	* Returns true if two colors are equal.
 
-	:param aQuantity:
-	:type aQuantity: Quantity_PhysicalQuantity
-	:param aCoef:
-	:type aCoef: Quantity_Coefficient
-	:rtype: void
-") SetQuantity;
-		static void SetQuantity (const Quantity_PhysicalQuantity aQuantity,const Quantity_Coefficient aCoef);
-		%feature("compactdefaultargs") ConvertUserToSI;
-		%feature("autodoc", "	* Converts, from the conversion table, the value <aVal> from the user system to the SI system.
-
-	:param aQuantity:
-	:type aQuantity: Quantity_PhysicalQuantity
-	:param aVal:
-	:type aVal: float
-	:rtype: float
-") ConvertUserToSI;
-		static Standard_Real ConvertUserToSI (const Quantity_PhysicalQuantity aQuantity,const Standard_Real aVal);
-		%feature("compactdefaultargs") ConvertSIToUser;
-		%feature("autodoc", "	* Converts, from the conversion table, the value <aVal> from the SI system to the user system.
-
-	:param aQuantity:
-	:type aQuantity: Quantity_PhysicalQuantity
-	:param aVal:
-	:type aVal: float
-	:rtype: float
-") ConvertSIToUser;
-		static Standard_Real ConvertSIToUser (const Quantity_PhysicalQuantity aQuantity,const Standard_Real aVal);
-		%feature("compactdefaultargs") IsPhysicalQuantity;
-		%feature("autodoc", "	* if (aType is a physical quantity) returns True and the name of the associated PhysicalQuantity . else returns False.
-
-	:param aTypeName:
-	:type aTypeName: TCollection_AsciiString &
-	:param anEnum:
-	:type anEnum: TCollection_AsciiString &
+	:param theColor1:
+	:type theColor1: Quantity_Color &
+	:param theColor2:
+	:type theColor2: Quantity_Color &
 	:rtype: bool
-") IsPhysicalQuantity;
-		static Standard_Boolean IsPhysicalQuantity (const TCollection_AsciiString & aTypeName,TCollection_AsciiString & anEnum);
+") IsEqual;
+		static Standard_Boolean IsEqual (const Quantity_Color & theColor1,const Quantity_Color & theColor2);
 };
 
 
-%extend Quantity_Convert {
+%extend Quantity_ColorHasher {
+	%pythoncode {
+	__repr__ = _dumps_object
+	}
+};
+%nodefaultctor Quantity_ColorRGBA;
+class Quantity_ColorRGBA {
+	public:
+		%feature("compactdefaultargs") Quantity_ColorRGBA;
+		%feature("autodoc", "	* Creates a color with the default value.
+
+	:rtype: None
+") Quantity_ColorRGBA;
+		 Quantity_ColorRGBA ();
+		%feature("compactdefaultargs") Quantity_ColorRGBA;
+		%feature("autodoc", "	* Creates the color with specified RGB value.
+
+	:param theRgb:
+	:type theRgb: Quantity_Color &
+	:rtype: None
+") Quantity_ColorRGBA;
+		 Quantity_ColorRGBA (const Quantity_Color & theRgb);
+		%feature("compactdefaultargs") Quantity_ColorRGBA;
+		%feature("autodoc", "	* Creates the color with specified RGBA values.
+
+	:param theRgb:
+	:type theRgb: Quantity_Color &
+	:param theAlpha:
+	:type theAlpha: float
+	:rtype: None
+") Quantity_ColorRGBA;
+		 Quantity_ColorRGBA (const Quantity_Color & theRgb,float theAlpha);
+		%feature("compactdefaultargs") Quantity_ColorRGBA;
+		%feature("autodoc", "	* Creates the color from RGBA vector.
+
+	:param theRgba:
+	:type theRgba: NCollection_Vec4<float> &
+	:rtype: None
+") Quantity_ColorRGBA;
+		 Quantity_ColorRGBA (const NCollection_Vec4<float> & theRgba);
+		%feature("compactdefaultargs") Quantity_ColorRGBA;
+		%feature("autodoc", "	* Creates the color from RGBA values.
+
+	:param theRed:
+	:type theRed: float
+	:param theGreen:
+	:type theGreen: float
+	:param theBlue:
+	:type theBlue: float
+	:param theAlpha:
+	:type theAlpha: float
+	:rtype: None
+") Quantity_ColorRGBA;
+		 Quantity_ColorRGBA (float theRed,float theGreen,float theBlue,float theAlpha);
+		%feature("compactdefaultargs") SetValues;
+		%feature("autodoc", "	* Assign new values to the color.
+
+	:param theRed:
+	:type theRed: float
+	:param theGreen:
+	:type theGreen: float
+	:param theBlue:
+	:type theBlue: float
+	:param theAlpha:
+	:type theAlpha: float
+	:rtype: None
+") SetValues;
+		void SetValues (float theRed,float theGreen,float theBlue,float theAlpha);
+		%feature("compactdefaultargs") GetRGB;
+		%feature("autodoc", "	* Return RGB color value.
+
+	:rtype: Quantity_Color
+") GetRGB;
+		const Quantity_Color & GetRGB ();
+		%feature("compactdefaultargs") ChangeRGB;
+		%feature("autodoc", "	* Modify RGB color components without affecting alpha value.
+
+	:rtype: Quantity_Color
+") ChangeRGB;
+		Quantity_Color & ChangeRGB ();
+		%feature("compactdefaultargs") SetRGB;
+		%feature("autodoc", "	* Assign RGB color components without affecting alpha value.
+
+	:param theRgb:
+	:type theRgb: Quantity_Color &
+	:rtype: None
+") SetRGB;
+		void SetRGB (const Quantity_Color & theRgb);
+		%feature("compactdefaultargs") Alpha;
+		%feature("autodoc", "	* Return alpha value --1.0 means opaque, 0.0 means fully transparent--.
+
+	:rtype: Standard_ShortReal
+") Alpha;
+		Standard_ShortReal Alpha ();
+		%feature("compactdefaultargs") SetAlpha;
+		%feature("autodoc", "	* Assign the alpha value.
+
+	:param theAlpha:
+	:type theAlpha: Standard_ShortReal
+	:rtype: None
+") SetAlpha;
+		void SetAlpha (const Standard_ShortReal theAlpha);
+		%feature("compactdefaultargs") operator constNCollection_Vec4<float>&;
+		%feature("autodoc", "	* Return the color as vector of 4 float elements.
+
+	:rtype: None
+") operator constNCollection_Vec4<float>&;
+		 operator constNCollection_Vec4<float>& ();
+		%feature("compactdefaultargs") IsDifferent;
+		%feature("autodoc", "	* Returns true if the distance between colors is greater than Epsilon----.
+
+	:param theOther:
+	:type theOther: Quantity_ColorRGBA &
+	:rtype: bool
+") IsDifferent;
+		bool IsDifferent (const Quantity_ColorRGBA & theOther);
+
+        %extend{
+            bool __ne_wrapper__(const Quantity_ColorRGBA  other) {
+            if (*self!=other) return true;
+            else return false;
+            }
+        }
+        %pythoncode {
+        def __ne__(self,right):
+            try:
+                return self.__ne_wrapper__(right)
+            except:
+                return True
+        }
+        		%feature("compactdefaultargs") IsEqual;
+		%feature("autodoc", "	* Two colors are considered to be equal if their distance is no greater than Epsilon----.
+
+	:param theOther:
+	:type theOther: Quantity_ColorRGBA &
+	:rtype: bool
+") IsEqual;
+		bool IsEqual (const Quantity_ColorRGBA & theOther);
+
+        %extend{
+            bool __eq_wrapper__(const Quantity_ColorRGBA  other) {
+            if (*self==other) return true;
+            else return false;
+            }
+        }
+        %pythoncode {
+        def __eq__(self,right):
+            try:
+                return self.__eq_wrapper__(right)
+            except:
+                return False
+        }
+        };
+
+
+%extend Quantity_ColorRGBA {
+	%pythoncode {
+	__repr__ = _dumps_object
+	}
+};
+%nodefaultctor Quantity_ColorRGBAHasher;
+class Quantity_ColorRGBAHasher {
+	public:
+		%feature("compactdefaultargs") HashCode;
+		%feature("autodoc", "	* Returns hash code for the given color.
+
+	:param theColor:
+	:type theColor: Quantity_ColorRGBA &
+	:param theUpper:
+	:type theUpper: int
+	:rtype: int
+") HashCode;
+		static Standard_Integer HashCode (const Quantity_ColorRGBA & theColor,const Standard_Integer theUpper);
+		%feature("compactdefaultargs") IsEqual;
+		%feature("autodoc", "	* Returns true if two colors are equal.
+
+	:param theColor1:
+	:type theColor1: Quantity_ColorRGBA &
+	:param theColor2:
+	:type theColor2: Quantity_ColorRGBA &
+	:rtype: bool
+") IsEqual;
+		static Standard_Boolean IsEqual (const Quantity_ColorRGBA & theColor1,const Quantity_ColorRGBA & theColor2);
+};
+
+
+%extend Quantity_ColorRGBAHasher {
 	%pythoncode {
 	__repr__ = _dumps_object
 	}
@@ -1433,13 +1285,13 @@ class Quantity_Convert {
 class Quantity_Date {
 	public:
 		%feature("compactdefaultargs") Quantity_Date;
-		%feature("autodoc", "	* Constructs a default date (00:00 GMT, January 1, 1979 (zero hour)); use the function SetValues to define the required date; or
+		%feature("autodoc", "	* Constructs a default date --00:00 GMT, January 1, 1979 --zero hour----; use the function SetValues to define the required date; or
 
 	:rtype: None
 ") Quantity_Date;
 		 Quantity_Date ();
 		%feature("compactdefaultargs") Quantity_Date;
-		%feature("autodoc", "	* Constructs a date from the year yyyy, the month mm, the day dd, the hour hh, the minute mn, the second ss, the millisecond mis (defaulted to 0) and the microsecond mics (defaulted to 0).. With: 1 <= mm <= 12 1 <= dd <= max number of days of <mm> 1979 <= yyyy 0 <= hh <= 23 0 <= mn <= 59 0 <= ss <= 59 0 <= mis <= 999 0 <= mics <= 999 Exceptions Quantity_DateDefinitionError if mm, dd, hh, mn, ss, mis and mics are not the components of the valid date.
+		%feature("autodoc", "	* Constructs a date from the year yyyy, the month mm, the day dd, the hour hh, the minute mn, the second ss, the millisecond mis --defaulted to 0-- and the microsecond mics --defaulted to 0--.. With: 1 <= mm <= 12 1 <= dd <= max number of days of <mm> 1979 <= yyyy 0 <= hh <= 23 0 <= mn <= 59 0 <= ss <= 59 0 <= mis <= 999 0 <= mics <= 999 Exceptions Quantity_DateDefinitionError if mm, dd, hh, mn, ss, mis and mics are not the components of the valid date.
 
 	:param mm:
 	:type mm: int
@@ -1483,7 +1335,7 @@ class Quantity_Date {
 ") Values;
 		void Values (Standard_Integer &OutValue,Standard_Integer &OutValue,Standard_Integer &OutValue,Standard_Integer &OutValue,Standard_Integer &OutValue,Standard_Integer &OutValue,Standard_Integer &OutValue,Standard_Integer &OutValue);
 		%feature("compactdefaultargs") SetValues;
-		%feature("autodoc", "	* Assigns to this date the year yyyy, the month mm, the day dd, the hour hh, the minute mn, the second ss, the millisecond mis (defaulted to 0) and the microsecond mics (defaulted to 0). Exceptions Quantity_DateDefinitionError if mm, dd, hh, mn, ss, mis and mics are not components of a valid date.
+		%feature("autodoc", "	* Assigns to this date the year yyyy, the month mm, the day dd, the hour hh, the minute mn, the second ss, the millisecond mis --defaulted to 0-- and the microsecond mics --defaulted to 0--. Exceptions Quantity_DateDefinitionError if mm, dd, hh, mn, ss, mis and mics are not components of a valid date.
 
 	:param mm:
 	:type mm: int
@@ -1639,7 +1491,7 @@ class Quantity_Date {
 ") operator >;
 		Standard_Boolean operator > (const Quantity_Date & anOther);
 		%feature("compactdefaultargs") IsValid;
-		%feature("autodoc", "	* Checks the validity of a date - returns true if a date defined from the year yyyy, the month mm, the day dd, the hour hh, the minute mn, the second ss, the millisecond mis (defaulted to 0) and the microsecond mics (defaulted to 0) is valid. A date must satisfy the conditions above: - yyyy is greater than or equal to 1979, - mm lies within the range [1, 12] (with 1 corresponding to January and 12 to December), - dd lies within a valid range for the month mm (from 1 to 28, 29, 30 or 31 depending on mm and whether yyyy is a leap year or not), - hh lies within the range [0, 23], - mn lies within the range [0, 59], - ss lies within the range [0, 59], - mis lies within the range [0, 999], - mics lies within the range [0, 999].C
+		%feature("autodoc", "	* Checks the validity of a date - returns true if a date defined from the year yyyy, the month mm, the day dd, the hour hh, the minute mn, the second ss, the millisecond mis --defaulted to 0-- and the microsecond mics --defaulted to 0-- is valid. A date must satisfy the conditions above: - yyyy is greater than or equal to 1979, - mm lies within the range [1, 12] --with 1 corresponding to January and 12 to December--, - dd lies within a valid range for the month mm --from 1 to 28, 29, 30 or 31 depending on mm and whether yyyy is a leap year or not--, - hh lies within the range [0, 23], - mn lies within the range [0, 59], - ss lies within the range [0, 59], - mis lies within the range [0, 999], - mics lies within the range [0, 999].C
 
 	:param mm:
 	:type mm: int
@@ -1668,151 +1520,10 @@ class Quantity_Date {
 	:rtype: bool
 ") IsLeap;
 		static Standard_Boolean IsLeap (const Standard_Integer yy);
-		%feature("compactdefaultargs") _CSFDB_GetQuantity_DatemySec;
-		%feature("autodoc", "	:rtype: int
-") _CSFDB_GetQuantity_DatemySec;
-		Standard_Integer _CSFDB_GetQuantity_DatemySec ();
-		%feature("compactdefaultargs") _CSFDB_SetQuantity_DatemySec;
-		%feature("autodoc", "	:param p:
-	:type p: int
-	:rtype: None
-") _CSFDB_SetQuantity_DatemySec;
-		void _CSFDB_SetQuantity_DatemySec (const Standard_Integer p);
-		%feature("compactdefaultargs") _CSFDB_GetQuantity_DatemyUSec;
-		%feature("autodoc", "	:rtype: int
-") _CSFDB_GetQuantity_DatemyUSec;
-		Standard_Integer _CSFDB_GetQuantity_DatemyUSec ();
-		%feature("compactdefaultargs") _CSFDB_SetQuantity_DatemyUSec;
-		%feature("autodoc", "	:param p:
-	:type p: int
-	:rtype: None
-") _CSFDB_SetQuantity_DatemyUSec;
-		void _CSFDB_SetQuantity_DatemyUSec (const Standard_Integer p);
 };
 
 
 %extend Quantity_Date {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor Quantity_HArray1OfColor;
-class Quantity_HArray1OfColor : public MMgt_TShared {
-	public:
-		%feature("compactdefaultargs") Quantity_HArray1OfColor;
-		%feature("autodoc", "	:param Low:
-	:type Low: int
-	:param Up:
-	:type Up: int
-	:rtype: None
-") Quantity_HArray1OfColor;
-		 Quantity_HArray1OfColor (const Standard_Integer Low,const Standard_Integer Up);
-		%feature("compactdefaultargs") Quantity_HArray1OfColor;
-		%feature("autodoc", "	:param Low:
-	:type Low: int
-	:param Up:
-	:type Up: int
-	:param V:
-	:type V: Quantity_Color &
-	:rtype: None
-") Quantity_HArray1OfColor;
-		 Quantity_HArray1OfColor (const Standard_Integer Low,const Standard_Integer Up,const Quantity_Color & V);
-		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	:param V:
-	:type V: Quantity_Color &
-	:rtype: None
-") Init;
-		void Init (const Quantity_Color & V);
-		%feature("compactdefaultargs") Length;
-		%feature("autodoc", "	:rtype: int
-") Length;
-		Standard_Integer Length ();
-		%feature("compactdefaultargs") Lower;
-		%feature("autodoc", "	:rtype: int
-") Lower;
-		Standard_Integer Lower ();
-		%feature("compactdefaultargs") Upper;
-		%feature("autodoc", "	:rtype: int
-") Upper;
-		Standard_Integer Upper ();
-		%feature("compactdefaultargs") SetValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param Value:
-	:type Value: Quantity_Color &
-	:rtype: None
-") SetValue;
-		void SetValue (const Standard_Integer Index,const Quantity_Color & Value);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: Quantity_Color
-") Value;
-		const Quantity_Color & Value (const Standard_Integer Index);
-		%feature("compactdefaultargs") ChangeValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: Quantity_Color
-") ChangeValue;
-		Quantity_Color & ChangeValue (const Standard_Integer Index);
-		%feature("compactdefaultargs") Array1;
-		%feature("autodoc", "	:rtype: Quantity_Array1OfColor
-") Array1;
-		const Quantity_Array1OfColor & Array1 ();
-		%feature("compactdefaultargs") ChangeArray1;
-		%feature("autodoc", "	:rtype: Quantity_Array1OfColor
-") ChangeArray1;
-		Quantity_Array1OfColor & ChangeArray1 ();
-};
-
-
-%extend Quantity_HArray1OfColor {
-	%pythoncode {
-		def GetHandle(self):
-		    try:
-		        return self.thisHandle
-		    except:
-		        self.thisHandle = Handle_Quantity_HArray1OfColor(self)
-		        self.thisown = False
-		        return self.thisHandle
-	}
-};
-
-%pythonappend Handle_Quantity_HArray1OfColor::Handle_Quantity_HArray1OfColor %{
-    # register the handle in the base object
-    if len(args) > 0:
-        register_handle(self, args[0])
-%}
-
-%nodefaultctor Handle_Quantity_HArray1OfColor;
-class Handle_Quantity_HArray1OfColor : public Handle_MMgt_TShared {
-
-    public:
-        // constructors
-        Handle_Quantity_HArray1OfColor();
-        Handle_Quantity_HArray1OfColor(const Handle_Quantity_HArray1OfColor &aHandle);
-        Handle_Quantity_HArray1OfColor(const Quantity_HArray1OfColor *anItem);
-        void Nullify();
-        Standard_Boolean IsNull() const;
-        static const Handle_Quantity_HArray1OfColor DownCast(const Handle_Standard_Transient &AnObject);
-
-};
-%extend Handle_Quantity_HArray1OfColor {
-    Quantity_HArray1OfColor* _get_reference() {
-    return (Quantity_HArray1OfColor*)$self->Access();
-    }
-};
-
-%extend Handle_Quantity_HArray1OfColor {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
-};
-
-%extend Quantity_HArray1OfColor {
 	%pythoncode {
 	__repr__ = _dumps_object
 	}
@@ -1877,7 +1588,7 @@ class Quantity_Period {
 ") Values;
 		void Values (Standard_Integer &OutValue,Standard_Integer &OutValue);
 		%feature("compactdefaultargs") SetValues;
-		%feature("autodoc", "	* Assigns to this period the time interval defined - with dd days, hh hours, mn minutes, ss seconds, mis (defaulted to 0) milliseconds and mics (defaulted to 0) microseconds; or
+		%feature("autodoc", "	* Assigns to this period the time interval defined - with dd days, hh hours, mn minutes, ss seconds, mis --defaulted to 0-- milliseconds and mics --defaulted to 0-- microseconds; or
 
 	:param dd:
 	:type dd: int
@@ -1895,7 +1606,7 @@ class Quantity_Period {
 ") SetValues;
 		void SetValues (const Standard_Integer dd,const Standard_Integer hh,const Standard_Integer mn,const Standard_Integer ss,const Standard_Integer mis = 0,const Standard_Integer mics = 0);
 		%feature("compactdefaultargs") SetValues;
-		%feature("autodoc", "	* Assigns to this period the time interval defined - with Ss seconds and Mics (defaulted to 0) microseconds. Exceptions Quantity_PeriodDefinitionError: - if the number of seconds expressed either by: - dd days, hh hours, mn minutes and ss seconds, or - Ss is less than 0. - if the number of microseconds expressed either by: - mis milliseconds and mics microseconds, or - Mics is less than 0.
+		%feature("autodoc", "	* Assigns to this period the time interval defined - with Ss seconds and Mics --defaulted to 0-- microseconds. Exceptions Quantity_PeriodDefinitionError: - if the number of seconds expressed either by: - dd days, hh hours, mn minutes and ss seconds, or - Ss is less than 0. - if the number of microseconds expressed either by: - mis milliseconds and mics microseconds, or - Mics is less than 0.
 
 	:param ss:
 	:type ss: int
@@ -1983,7 +1694,7 @@ class Quantity_Period {
 ") operator >;
 		Standard_Boolean operator > (const Quantity_Period & anOther);
 		%feature("compactdefaultargs") IsValid;
-		%feature("autodoc", "	* Checks the validity of a Period in form (dd,hh,mn,ss,mil,mic) With: 0 <= dd 0 <= hh 0 <= mn 0 <= ss 0 <= mis 0 <= mics
+		%feature("autodoc", "	* Checks the validity of a Period in form --dd,hh,mn,ss,mil,mic-- With: 0 <= dd 0 <= hh 0 <= mn 0 <= ss 0 <= mis 0 <= mics
 
 	:param dd:
 	:type dd: int
@@ -2001,7 +1712,7 @@ class Quantity_Period {
 ") IsValid;
 		static Standard_Boolean IsValid (const Standard_Integer dd,const Standard_Integer hh,const Standard_Integer mn,const Standard_Integer ss,const Standard_Integer mis = 0,const Standard_Integer mics = 0);
 		%feature("compactdefaultargs") IsValid;
-		%feature("autodoc", "	* Checks the validity of a Period in form (ss,mic) With: 0 <= ss 0 <= mics
+		%feature("autodoc", "	* Checks the validity of a Period in form --ss,mic-- With: 0 <= ss 0 <= mics
 
 	:param ss:
 	:type ss: int
@@ -2010,30 +1721,6 @@ class Quantity_Period {
 	:rtype: bool
 ") IsValid;
 		static Standard_Boolean IsValid (const Standard_Integer ss,const Standard_Integer mics = 0);
-		%feature("compactdefaultargs") Quantity_Period;
-		%feature("autodoc", "	:rtype: None
-") Quantity_Period;
-		 Quantity_Period ();
-		%feature("compactdefaultargs") _CSFDB_GetQuantity_PeriodmySec;
-		%feature("autodoc", "	:rtype: int
-") _CSFDB_GetQuantity_PeriodmySec;
-		Standard_Integer _CSFDB_GetQuantity_PeriodmySec ();
-		%feature("compactdefaultargs") _CSFDB_SetQuantity_PeriodmySec;
-		%feature("autodoc", "	:param p:
-	:type p: int
-	:rtype: None
-") _CSFDB_SetQuantity_PeriodmySec;
-		void _CSFDB_SetQuantity_PeriodmySec (const Standard_Integer p);
-		%feature("compactdefaultargs") _CSFDB_GetQuantity_PeriodmyUSec;
-		%feature("autodoc", "	:rtype: int
-") _CSFDB_GetQuantity_PeriodmyUSec;
-		Standard_Integer _CSFDB_GetQuantity_PeriodmyUSec ();
-		%feature("compactdefaultargs") _CSFDB_SetQuantity_PeriodmyUSec;
-		%feature("autodoc", "	:param p:
-	:type p: int
-	:rtype: None
-") _CSFDB_SetQuantity_PeriodmyUSec;
-		void _CSFDB_SetQuantity_PeriodmyUSec (const Standard_Integer p);
 };
 
 

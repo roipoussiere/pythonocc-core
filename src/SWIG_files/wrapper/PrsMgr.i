@@ -1,5 +1,5 @@
 /*
-Copyright 2008-2017 Thomas Paviot (tpaviot@gmail.com)
+Copyright 2008-2018 Thomas Paviot (tpaviot@gmail.com)
 
 
 This file is part of pythonOCC.
@@ -58,10 +58,14 @@ typedef Handle_PrsMgr_PresentationManager Handle_PrsMgr_PresentationManager3d;
 typedef PrsMgr_Presentation PrsMgr_Presentation3d;
 typedef PrsMgr_PresentableObject * PrsMgr_PresentableObjectPointer;
 typedef PrsMgr_Presentation * PrsMgr_PresentationPointer;
-typedef NCollection_List <Handle_Prs3d_Presentation> PrsMgr_ListOfPresentations;
 typedef Handle_PrsMgr_Presentation Handle_PrsMgr_Presentation3d;
 typedef PrsMgr_PresentationManager PrsMgr_PresentationManager3d;
 /* end typedefs declaration */
+
+/* templates */
+%template(PrsMgr_Presentations) NCollection_Sequence <PrsMgr_ModedPresentation>;
+%template(PrsMgr_ListOfPresentations) NCollection_List <Handle_Prs3d_Presentation>;
+/* end templates declaration */
 
 /* public enums */
 enum PrsMgr_TypeOfPresentation3d {
@@ -104,7 +108,7 @@ class PrsMgr_ModedPresentation {
 };
 %nodefaultctor PrsMgr_PresentableObject;
 %ignore PrsMgr_PresentableObject::~PrsMgr_PresentableObject();
-class PrsMgr_PresentableObject : public MMgt_TShared {
+class PrsMgr_PresentableObject : public Standard_Transient {
 	public:
 		%feature("compactdefaultargs") Presentations;
 		%feature("autodoc", "	:rtype: PrsMgr_Presentations
@@ -116,24 +120,30 @@ class PrsMgr_PresentableObject : public MMgt_TShared {
 	:rtype: PrsMgr_TypeOfPresentation3d
 ") TypeOfPresentation3d;
 		PrsMgr_TypeOfPresentation3d TypeOfPresentation3d ();
-		%feature("compactdefaultargs") SetTransformPersistence;
-		%feature("autodoc", "	* Sets up Transform Persistence Mode for this object. This function used to lock in object position, rotation and / or zooming relative to camera position. Object will be drawn in the origin setted by APoint parameter (except Graphic3d_TMF_TriedronPers flag - see description later). aFlag should be: - Graphic3d_TMF_None - no persistence attributes (reset); - Graphic3d_TMF_PanPers - object doesn't move; - Graphic3d_TMF_ZoomPers - object doesn't resize; - Graphic3d_TMF_RotatePers - object doesn't rotate; - Graphic3d_TMF_FullPers - pan, zoom and rotate transform persistence; - Graphic3d_TMF_TriedronPers - object behaves like trihedron; - combination (Graphic3d_TMF_PanPers | Graphic3d_TMF_ZoomPers); - combination (Graphic3d_TMF_PanPers | Graphic3d_TMF_RotatePers); - combination (Graphic3d_TMF_ZoomPers | Graphic3d_TMF_RotatePers). If Graphic3d_TMF_TriedronPers or Graphic3d_TMF_2d persistence mode selected APoint coordinates X and Y means: - X = 0.0, Y = 0.0 - center of view window; - X > 0.0, Y > 0.0 - right upper corner of view window; - X > 0.0, Y < 0.0 - right lower corner of view window; - X < 0.0, Y > 0.0 - left upper corner of view window; - X < 0.0, Y < 0.0 - left lower corner of view window. And Z coordinate defines the gap from border of view window (except center position).
+		%feature("compactdefaultargs") TransformPersistence;
+		%feature("autodoc", "	* returns transform persistence of the presentable object.
 
-	:param aFlag:
-	:type aFlag: Graphic3d_TransModeFlags &
-	:param APoint:
-	:type APoint: gp_Pnt
+	:rtype: Handle_Graphic3d_TransformPers
+") TransformPersistence;
+		Handle_Graphic3d_TransformPers TransformPersistence ();
+		%feature("compactdefaultargs") SetTransformPersistence;
+		%feature("autodoc", "	* Sets up Transform Persistence for this object.
+
+	:param theTrsfPers:
+	:type theTrsfPers: Handle_Graphic3d_TransformPers &
 	:rtype: void
 ") SetTransformPersistence;
-		virtual void SetTransformPersistence (const Graphic3d_TransModeFlags & aFlag,const gp_Pnt & APoint);
+		virtual void SetTransformPersistence (const Handle_Graphic3d_TransformPers & theTrsfPers);
 		%feature("compactdefaultargs") SetTransformPersistence;
-		%feature("autodoc", "	* Calls previous method with point (0,0,0)
+		%feature("autodoc", "	* Sets up Transform Persistence Mode for this object. This function used to lock in object position, rotation and / or zooming relative to camera position. Object will be drawn in the origin setted by thePoint parameter --except Graphic3d_TMF_TriedronPers flag - see description later--. theMode should be: - Graphic3d_TMF_None - no persistence attributes --reset--; - Graphic3d_TMF_ZoomPers - object doesn't resize; - Graphic3d_TMF_RotatePers - object doesn't rotate; - Graphic3d_TMF_ZoomRotatePers - object doesn't resize and rotate; - Graphic3d_TMF_RotatePers - object doesn't rotate; - Graphic3d_TMF_TriedronPers - object behaves like trihedron. If Graphic3d_TMF_TriedronPers or Graphic3d_TMF_2d persistence mode selected thePoint coordinates X and Y means: - X = 0.0, Y = 0.0 - center of view window; - X > 0.0, Y > 0.0 - right upper corner of view window; - X > 0.0, Y < 0.0 - right lower corner of view window; - X < 0.0, Y > 0.0 - left upper corner of view window; - X < 0.0, Y < 0.0 - left lower corner of view window. And Z coordinate defines the gap from border of view window --except center position--.
 
-	:param aFlag:
-	:type aFlag: Graphic3d_TransModeFlags &
+	:param theMode:
+	:type theMode: Graphic3d_TransModeFlags
+	:param thePoint: default value is gp_Pnt(0.0,0.0,0.0)
+	:type thePoint: gp_Pnt
 	:rtype: None
 ") SetTransformPersistence;
-		void SetTransformPersistence (const Graphic3d_TransModeFlags & aFlag);
+		void SetTransformPersistence (const Graphic3d_TransModeFlags theMode,const gp_Pnt & thePoint = gp_Pnt(0.0,0.0,0.0));
 		%feature("compactdefaultargs") GetTransformPersistenceMode;
 		%feature("autodoc", "	* Gets Transform Persistence Mode for this object
 
@@ -174,32 +184,56 @@ class PrsMgr_PresentableObject : public MMgt_TShared {
 	:rtype: None
 ") ToBeUpdated;
 		void ToBeUpdated (TColStd_ListOfInteger & ListOfMode);
+		%feature("compactdefaultargs") LocalTransformationGeom;
+		%feature("autodoc", "	* Return the local transformation.
+
+	:rtype: Handle_Geom_Transformation
+") LocalTransformationGeom;
+		Handle_Geom_Transformation LocalTransformationGeom ();
 		%feature("compactdefaultargs") SetLocalTransformation;
 		%feature("autodoc", "	* Sets local transformation to theTransformation.
 
-	:param theTransformation:
-	:type theTransformation: gp_Trsf
-	:rtype: void
+	:param theTrsf:
+	:type theTrsf: gp_Trsf
+	:rtype: None
 ") SetLocalTransformation;
-		virtual void SetLocalTransformation (const gp_Trsf & theTransformation);
+		void SetLocalTransformation (const gp_Trsf & theTrsf);
+		%feature("compactdefaultargs") SetLocalTransformation;
+		%feature("autodoc", "	* Sets local transformation to theTransformation.
+
+	:param theTrsf:
+	:type theTrsf: Handle_Geom_Transformation &
+	:rtype: None
+") SetLocalTransformation;
+		void SetLocalTransformation (const Handle_Geom_Transformation & theTrsf);
 		%feature("compactdefaultargs") HasTransformation;
 		%feature("autodoc", "	* Returns true if object has a transformation that is different from the identity.
 
 	:rtype: bool
 ") HasTransformation;
 		Standard_Boolean HasTransformation ();
+		%feature("compactdefaultargs") TransformationGeom;
+		%feature("autodoc", "	* Return the transformation taking into account transformation of parent object--s--.
+
+	:rtype: Handle_Geom_Transformation
+") TransformationGeom;
+		Handle_Geom_Transformation TransformationGeom ();
 		%feature("compactdefaultargs") LocalTransformation;
-		%feature("autodoc", "	:rtype: gp_Trsf
+		%feature("autodoc", "	* Return the local transformation.
+
+	:rtype: gp_Trsf
 ") LocalTransformation;
 		const gp_Trsf  LocalTransformation ();
 		%feature("compactdefaultargs") Transformation;
-		%feature("autodoc", "	:rtype: gp_Trsf
+		%feature("autodoc", "	* Return the transformation taking into account transformation of parent object--s--.
+
+	:rtype: gp_Trsf
 ") Transformation;
 		const gp_Trsf  Transformation ();
 		%feature("compactdefaultargs") InversedTransformation;
-		%feature("autodoc", "	:rtype: gp_Trsf
+		%feature("autodoc", "	:rtype: gp_GTrsf
 ") InversedTransformation;
-		const gp_Trsf  InversedTransformation ();
+		const gp_GTrsf  InversedTransformation ();
 		%feature("compactdefaultargs") ResetTransformation;
 		%feature("autodoc", "	* resets local transformation to identity.
 
@@ -247,21 +281,27 @@ class PrsMgr_PresentableObject : public MMgt_TShared {
 ") RemoveClipPlane;
 		virtual void RemoveClipPlane (const Handle_Graphic3d_ClipPlane & thePlane);
 		%feature("compactdefaultargs") SetClipPlanes;
-		%feature("autodoc", "	* Set clip planes for graphical clipping for all display mode presentations. The composition of clip planes truncates the rendering space to convex volume. Please be aware that number of supported clip plane is limited. The planes which exceed the limit are ignored. Besides of this, some planes can be already set in view where the object is shown: the number of these planes should be substracted from limit to predict the maximum possible number of object clipping planes.
+		%feature("autodoc", "	* Set clip planes for graphical clipping for all display mode presentations. The composition of clip planes truncates the rendering space to convex volume. Please be aware that number of supported clip plane is limited. The planes which exceed the limit are ignored. Besides of this, some planes can be already set in view where the object is shown: the number of these planes should be subtracted from limit to predict the maximum possible number of object clipping planes.
 
 	:param thePlanes:
-	:type thePlanes: Graphic3d_SequenceOfHClipPlane &
+	:type thePlanes: Handle_Graphic3d_SequenceOfHClipPlane &
 	:rtype: void
 ") SetClipPlanes;
-		virtual void SetClipPlanes (const Graphic3d_SequenceOfHClipPlane & thePlanes);
-		%feature("compactdefaultargs") GetClipPlanes;
+		virtual void SetClipPlanes (const Handle_Graphic3d_SequenceOfHClipPlane & thePlanes);
+		%feature("compactdefaultargs") SetClipPlanes;
+		%feature("autodoc", "	:param thePlanes:
+	:type thePlanes: Graphic3d_SequenceOfHClipPlane &
+	:rtype: None
+") SetClipPlanes;
+		void SetClipPlanes (const Graphic3d_SequenceOfHClipPlane & thePlanes);
+		%feature("compactdefaultargs") ClipPlanes;
 		%feature("autodoc", "	* Get clip planes. returns set of previously added clip planes for all display mode presentations.
 
-	:rtype: Graphic3d_SequenceOfHClipPlane
-") GetClipPlanes;
-		const Graphic3d_SequenceOfHClipPlane & GetClipPlanes ();
+	:rtype: Handle_Graphic3d_SequenceOfHClipPlane
+") ClipPlanes;
+		Handle_Graphic3d_SequenceOfHClipPlane ClipPlanes ();
 		%feature("compactdefaultargs") SetMutable;
-		%feature("autodoc", "	* Sets if the object has mutable nature (content or location will be changed regularly). This method should be called before object displaying to take effect.
+		%feature("autodoc", "	* Sets if the object has mutable nature --content or location will be changed regularly--. This method should be called before object displaying to take effect.
 
 	:param theIsMutable:
 	:type theIsMutable: bool
@@ -269,11 +309,11 @@ class PrsMgr_PresentableObject : public MMgt_TShared {
 ") SetMutable;
 		virtual void SetMutable (const Standard_Boolean theIsMutable);
 		%feature("compactdefaultargs") IsMutable;
-		%feature("autodoc", "	* Returns true if object has mutable nature (content or location are be changed regularly). Mutable object will be managed in different way than static onces (another optimizations).
+		%feature("autodoc", "	* Returns true if object has mutable nature --content or location are be changed regularly--. Mutable object will be managed in different way than static onces --another optimizations--.
 
 	:rtype: bool
 ") IsMutable;
-		const Standard_Boolean IsMutable ();
+		Standard_Boolean IsMutable ();
 		%feature("compactdefaultargs") AddChild;
 		%feature("autodoc", "	* Makes theObject child of current object in scene hierarchy.
 
@@ -301,13 +341,67 @@ class PrsMgr_PresentableObject : public MMgt_TShared {
 
 	:rtype: bool
 ") HasOwnPresentations;
-		const Standard_Boolean HasOwnPresentations ();
+		Standard_Boolean HasOwnPresentations ();
 		%feature("compactdefaultargs") Parent;
 		%feature("autodoc", "	* Returns parent of current object in scene hierarchy.
 
 	:rtype: PrsMgr_PresentableObjectPointer
 ") Parent;
-		const PrsMgr_PresentableObjectPointer Parent ();
+		PrsMgr_PresentableObjectPointer Parent ();
+		%feature("compactdefaultargs") SetAttributes;
+		%feature("autodoc", "	* Initializes the drawing tool theDrawer.
+
+	:param theDrawer:
+	:type theDrawer: Handle_Prs3d_Drawer &
+	:rtype: void
+") SetAttributes;
+		virtual void SetAttributes (const Handle_Prs3d_Drawer & theDrawer);
+		%feature("compactdefaultargs") Attributes;
+		%feature("autodoc", "	* Returns the attributes settings.
+
+	:rtype: Handle_Prs3d_Drawer
+") Attributes;
+		Handle_Prs3d_Drawer Attributes ();
+		%feature("compactdefaultargs") UnsetAttributes;
+		%feature("autodoc", "	* Clears settings provided by the drawing tool theDrawer.
+
+	:rtype: void
+") UnsetAttributes;
+		virtual void UnsetAttributes ();
+		%feature("compactdefaultargs") HilightAttributes;
+		%feature("autodoc", "	* Returns the hilight attributes settings. When not NULL, overrides both Prs3d_TypeOfHighlight_LocalSelected and Prs3d_TypeOfHighlight_Selected defined within AIS_InteractiveContext.
+
+	:rtype: Handle_Prs3d_Drawer
+") HilightAttributes;
+		Handle_Prs3d_Drawer HilightAttributes ();
+		%feature("compactdefaultargs") SetHilightAttributes;
+		%feature("autodoc", "	* Initializes the hilight drawing tool theDrawer.
+
+	:param theDrawer:
+	:type theDrawer: Handle_Prs3d_Drawer &
+	:rtype: None
+") SetHilightAttributes;
+		void SetHilightAttributes (const Handle_Prs3d_Drawer & theDrawer);
+		%feature("compactdefaultargs") DynamicHilightAttributes;
+		%feature("autodoc", "	* Returns the hilight attributes settings. When not NULL, overrides both Prs3d_TypeOfHighlight_LocalDynamic and Prs3d_TypeOfHighlight_Dynamic defined within AIS_InteractiveContext.
+
+	:rtype: Handle_Prs3d_Drawer
+") DynamicHilightAttributes;
+		Handle_Prs3d_Drawer DynamicHilightAttributes ();
+		%feature("compactdefaultargs") SetDynamicHilightAttributes;
+		%feature("autodoc", "	* Initializes the dynamic hilight drawing tool.
+
+	:param theDrawer:
+	:type theDrawer: Handle_Prs3d_Drawer &
+	:rtype: None
+") SetDynamicHilightAttributes;
+		void SetDynamicHilightAttributes (const Handle_Prs3d_Drawer & theDrawer);
+		%feature("compactdefaultargs") UnsetHilightAttributes;
+		%feature("autodoc", "	* Clears settings provided by the hilight drawing tool theDrawer.
+
+	:rtype: None
+") UnsetHilightAttributes;
+		void UnsetHilightAttributes ();
 };
 
 
@@ -330,7 +424,7 @@ class PrsMgr_PresentableObject : public MMgt_TShared {
 %}
 
 %nodefaultctor Handle_PrsMgr_PresentableObject;
-class Handle_PrsMgr_PresentableObject : public Handle_MMgt_TShared {
+class Handle_PrsMgr_PresentableObject : public Handle_Standard_Transient {
 
     public:
         // constructors
@@ -342,19 +436,20 @@ class Handle_PrsMgr_PresentableObject : public Handle_MMgt_TShared {
         static const Handle_PrsMgr_PresentableObject DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_PrsMgr_PresentableObject {
     PrsMgr_PresentableObject* _get_reference() {
-    return (PrsMgr_PresentableObject*)$self->Access();
+    return (PrsMgr_PresentableObject*)$self->get();
     }
 };
 
 %extend Handle_PrsMgr_PresentableObject {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend PrsMgr_PresentableObject {
@@ -363,14 +458,8 @@ class Handle_PrsMgr_PresentableObject : public Handle_MMgt_TShared {
 	}
 };
 %nodefaultctor PrsMgr_Presentation;
-class PrsMgr_Presentation : public MMgt_TShared {
+class PrsMgr_Presentation : public Standard_Transient {
 	public:
-		%feature("compactdefaultargs") Destroy;
-		%feature("autodoc", "	* Destructor
-
-	:rtype: void
-") Destroy;
-		virtual void Destroy ();
 		%feature("compactdefaultargs") Presentation;
 		%feature("autodoc", "	:rtype: Handle_Prs3d_Presentation
 ") Presentation;
@@ -382,11 +471,11 @@ class PrsMgr_Presentation : public MMgt_TShared {
 ") PresentationManager;
 		Handle_PrsMgr_PresentationManager PresentationManager ();
 		%feature("compactdefaultargs") SetUpdateStatus;
-		%feature("autodoc", "	:param theStat:
-	:type theStat: bool
+		%feature("autodoc", "	:param theUpdateStatus:
+	:type theUpdateStatus: bool
 	:rtype: None
 ") SetUpdateStatus;
-		void SetUpdateStatus (const Standard_Boolean theStat);
+		void SetUpdateStatus (const Standard_Boolean theUpdateStatus);
 		%feature("compactdefaultargs") MustBeUpdated;
 		%feature("autodoc", "	:rtype: bool
 ") MustBeUpdated;
@@ -413,7 +502,7 @@ class PrsMgr_Presentation : public MMgt_TShared {
 %}
 
 %nodefaultctor Handle_PrsMgr_Presentation;
-class Handle_PrsMgr_Presentation : public Handle_MMgt_TShared {
+class Handle_PrsMgr_Presentation : public Handle_Standard_Transient {
 
     public:
         // constructors
@@ -425,19 +514,20 @@ class Handle_PrsMgr_Presentation : public Handle_MMgt_TShared {
         static const Handle_PrsMgr_Presentation DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_PrsMgr_Presentation {
     PrsMgr_Presentation* _get_reference() {
-    return (PrsMgr_Presentation*)$self->Access();
+    return (PrsMgr_Presentation*)$self->get();
     }
 };
 
 %extend Handle_PrsMgr_Presentation {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend PrsMgr_Presentation {
@@ -446,16 +536,16 @@ class Handle_PrsMgr_Presentation : public Handle_MMgt_TShared {
 	}
 };
 %nodefaultctor PrsMgr_PresentationManager;
-class PrsMgr_PresentationManager : public MMgt_TShared {
+class PrsMgr_PresentationManager : public Standard_Transient {
 	public:
 		%feature("compactdefaultargs") PrsMgr_PresentationManager;
 		%feature("autodoc", "	* Creates a framework to manage displays and graphic entities with the 3D view theStructureManager.
 
 	:param theStructureManager:
-	:type theStructureManager: Handle_Visual3d_ViewManager &
+	:type theStructureManager: Handle_Graphic3d_StructureManager &
 	:rtype: None
 ") PrsMgr_PresentationManager;
-		 PrsMgr_PresentationManager (const Handle_Visual3d_ViewManager & theStructureManager);
+		 PrsMgr_PresentationManager (const Handle_Graphic3d_StructureManager & theStructureManager);
 		%feature("compactdefaultargs") Display;
 		%feature("autodoc", "	* Displays the presentation of the object in the given Presentation manager with the given mode. The mode should be enumerated by the object which inherits PresentableObject.
 
@@ -467,7 +557,7 @@ class PrsMgr_PresentationManager : public MMgt_TShared {
 ") Display;
 		void Display (const Handle_PrsMgr_PresentableObject & thePrsObject,const Standard_Integer theMode = 0);
 		%feature("compactdefaultargs") Erase;
-		%feature("autodoc", "	* erases the presentation of the object in the given Presentation manager with the given mode.
+		%feature("autodoc", "	* erases the presentation of the object in the given Presentation manager with the given mode. If @theMode is -1, then erases all presentations of the object.
 
 	:param thePrsObject:
 	:type thePrsObject: Handle_PrsMgr_PresentableObject &
@@ -498,26 +588,22 @@ class PrsMgr_PresentationManager : public MMgt_TShared {
 	:rtype: None
 ") SetVisibility;
 		void SetVisibility (const Handle_PrsMgr_PresentableObject & thePrsObject,const Standard_Integer theMode,const Standard_Boolean theValue);
-		%feature("compactdefaultargs") Highlight;
-		%feature("autodoc", "	* Highlights the presentation of the presentable object thePrsObject in this framework with the display mode theMode.
-
-	:param thePrsObject:
-	:type thePrsObject: Handle_PrsMgr_PresentableObject &
-	:param theMode: default value is 0
-	:type theMode: int
-	:rtype: None
-") Highlight;
-		void Highlight (const Handle_PrsMgr_PresentableObject & thePrsObject,const Standard_Integer theMode = 0);
 		%feature("compactdefaultargs") Unhighlight;
-		%feature("autodoc", "	* Removes highlighting from the presentation of the presentable object thePrsObject in this framework with the display mode theMode.
+		%feature("autodoc", "	* Removes highlighting from the presentation of the presentable object.
 
 	:param thePrsObject:
 	:type thePrsObject: Handle_PrsMgr_PresentableObject &
-	:param theMode: default value is 0
+	:rtype: None
+") Unhighlight;
+		void Unhighlight (const Handle_PrsMgr_PresentableObject & thePrsObject);
+		%feature("compactdefaultargs") Unhighlight;
+		%feature("autodoc", "	:param thePrsObject:
+	:type thePrsObject: Handle_PrsMgr_PresentableObject &
+	:param theMode:
 	:type theMode: int
 	:rtype: None
 ") Unhighlight;
-		void Unhighlight (const Handle_PrsMgr_PresentableObject & thePrsObject,const Standard_Integer theMode = 0);
+		void Unhighlight (const Handle_PrsMgr_PresentableObject & thePrsObject,const Standard_Integer theMode);
 		%feature("compactdefaultargs") SetDisplayPriority;
 		%feature("autodoc", "	* Sets the display priority theNewPrior of the presentable object thePrsObject in this framework with the display mode theMode.
 
@@ -587,7 +673,7 @@ class PrsMgr_PresentationManager : public MMgt_TShared {
 ") Update;
 		void Update (const Handle_PrsMgr_PresentableObject & thePrsObject,const Standard_Integer theMode = 0);
 		%feature("compactdefaultargs") BeginImmediateDraw;
-		%feature("autodoc", "	* Resets the transient list of presentations previously displayed in immediate mode and begins accumulation of new list by following AddToImmediateList()/Color()/Highlight() calls.
+		%feature("autodoc", "	* Resets the transient list of presentations previously displayed in immediate mode and begins accumulation of new list by following AddToImmediateList----/Color----/Highlight---- calls.
 
 	:rtype: None
 ") BeginImmediateDraw;
@@ -607,13 +693,21 @@ class PrsMgr_PresentationManager : public MMgt_TShared {
 ") AddToImmediateList;
 		void AddToImmediateList (const Handle_Prs3d_Presentation & thePrs);
 		%feature("compactdefaultargs") EndImmediateDraw;
-		%feature("autodoc", "	* Allows rapid drawing of the view theView by avoiding an update of the whole background.
+		%feature("autodoc", "	* Allows rapid drawing of the each view in theViewer by avoiding an update of the whole background.
 
-	:param theView:
-	:type theView: Handle_V3d_View &
+	:param theViewer:
+	:type theViewer: Handle_V3d_Viewer &
 	:rtype: None
 ") EndImmediateDraw;
-		void EndImmediateDraw (const Handle_V3d_View & theView);
+		void EndImmediateDraw (const Handle_V3d_Viewer & theViewer);
+		%feature("compactdefaultargs") RedrawImmediate;
+		%feature("autodoc", "	* Clears and redisplays immediate structures of the viewer taking into account its affinity.
+
+	:param theViewer:
+	:type theViewer: Handle_V3d_Viewer &
+	:rtype: None
+") RedrawImmediate;
+		void RedrawImmediate (const Handle_V3d_Viewer & theViewer);
 		%feature("compactdefaultargs") IsImmediateModeOn;
 		%feature("autodoc", "	* Returns true if Presentation Manager is accumulating transient list of presentations to be displayed in immediate mode.
 
@@ -625,25 +719,17 @@ class PrsMgr_PresentationManager : public MMgt_TShared {
 
 	:param thePrsObject:
 	:type thePrsObject: Handle_PrsMgr_PresentableObject &
-	:param theColor: default value is Quantity_NOC_YELLOW
-	:type theColor: Quantity_NameOfColor
+	:param theStyle:
+	:type theStyle: Handle_Prs3d_Drawer &
 	:param theMode: default value is 0
 	:type theMode: int
 	:param theSelObj: default value is NULL
 	:type theSelObj: Handle_PrsMgr_PresentableObject &
+	:param theImmediateStructLayerId: default value is Graphic3d_ZLayerId_Topmost
+	:type theImmediateStructLayerId: Graphic3d_ZLayerId
 	:rtype: None
 ") Color;
-		void Color (const Handle_PrsMgr_PresentableObject & thePrsObject,const Quantity_NameOfColor theColor = Quantity_NOC_YELLOW,const Standard_Integer theMode = 0,const Handle_PrsMgr_PresentableObject & theSelObj = NULL);
-		%feature("compactdefaultargs") BoundBox;
-		%feature("autodoc", "	* highlights the boundbox of the presentation
-
-	:param thePrsObject:
-	:type thePrsObject: Handle_PrsMgr_PresentableObject &
-	:param theMode: default value is 0
-	:type theMode: int
-	:rtype: None
-") BoundBox;
-		void BoundBox (const Handle_PrsMgr_PresentableObject & thePrsObject,const Standard_Integer theMode = 0);
+		void Color (const Handle_PrsMgr_PresentableObject & thePrsObject,const Handle_Prs3d_Drawer & theStyle,const Standard_Integer theMode = 0,const Handle_PrsMgr_PresentableObject & theSelObj = NULL,const Graphic3d_ZLayerId theImmediateStructLayerId = Graphic3d_ZLayerId_Topmost);
 		%feature("compactdefaultargs") Connect;
 		%feature("autodoc", "	:param thePrsObject:
 	:type thePrsObject: Handle_PrsMgr_PresentableObject &
@@ -674,32 +760,6 @@ class PrsMgr_PresentationManager : public MMgt_TShared {
 	:rtype: Handle_Graphic3d_StructureManager
 ") StructureManager;
 		Handle_Graphic3d_StructureManager StructureManager ();
-		%feature("compactdefaultargs") SetShadingAspect;
-		%feature("autodoc", "	* this method will change the color and the aspect of the presentations containing shaded structures.
-
-	:param thePrsObject:
-	:type thePrsObject: Handle_PrsMgr_PresentableObject &
-	:param theColor:
-	:type theColor: Quantity_NameOfColor
-	:param theMaterial:
-	:type theMaterial: Graphic3d_NameOfMaterial
-	:param theMode: default value is 0
-	:type theMode: int
-	:rtype: None
-") SetShadingAspect;
-		void SetShadingAspect (const Handle_PrsMgr_PresentableObject & thePrsObject,const Quantity_NameOfColor theColor,const Graphic3d_NameOfMaterial theMaterial,const Standard_Integer theMode = 0);
-		%feature("compactdefaultargs") SetShadingAspect;
-		%feature("autodoc", "	* this method will change the color and the aspect of the presentations containing shaded structures.
-
-	:param thePrsObject:
-	:type thePrsObject: Handle_PrsMgr_PresentableObject &
-	:param theShadingAspect:
-	:type theShadingAspect: Handle_Prs3d_ShadingAspect &
-	:param theMode: default value is 0
-	:type theMode: int
-	:rtype: None
-") SetShadingAspect;
-		void SetShadingAspect (const Handle_PrsMgr_PresentableObject & thePrsObject,const Handle_Prs3d_ShadingAspect & theShadingAspect,const Standard_Integer theMode = 0);
 		%feature("compactdefaultargs") HasPresentation;
 		%feature("autodoc", "	* Returns true if there is a presentation of the presentable object thePrsObject in this framework, thePrsObject having the display mode theMode.
 
@@ -724,6 +784,20 @@ class PrsMgr_PresentationManager : public MMgt_TShared {
 	:rtype: Handle_PrsMgr_Presentation
 ") Presentation;
 		Handle_PrsMgr_Presentation Presentation (const Handle_PrsMgr_PresentableObject & thePrsObject,const Standard_Integer theMode = 0,const Standard_Boolean theToCreate = Standard_False,const Handle_PrsMgr_PresentableObject & theSelObj = NULL);
+		%feature("compactdefaultargs") UpdateHighlightTrsf;
+		%feature("autodoc", "	* Allows to apply location transformation to shadow highlight presentation immediately. @param theObj defines the base object, it local transformation will be applied to corresponding highlight structure @param theMode defines display mode of the base object @param theSelObj defines the object produced after decomposition of the base object for local selection
+
+	:param theViewer:
+	:type theViewer: Handle_V3d_Viewer &
+	:param theObj:
+	:type theObj: Handle_PrsMgr_PresentableObject &
+	:param theMode: default value is 0
+	:type theMode: int
+	:param theSelObj: default value is NULL
+	:type theSelObj: Handle_PrsMgr_PresentableObject &
+	:rtype: None
+") UpdateHighlightTrsf;
+		void UpdateHighlightTrsf (const Handle_V3d_Viewer & theViewer,const Handle_PrsMgr_PresentableObject & theObj,const Standard_Integer theMode = 0,const Handle_PrsMgr_PresentableObject & theSelObj = NULL);
 };
 
 
@@ -746,7 +820,7 @@ class PrsMgr_PresentationManager : public MMgt_TShared {
 %}
 
 %nodefaultctor Handle_PrsMgr_PresentationManager;
-class Handle_PrsMgr_PresentationManager : public Handle_MMgt_TShared {
+class Handle_PrsMgr_PresentationManager : public Handle_Standard_Transient {
 
     public:
         // constructors
@@ -758,165 +832,23 @@ class Handle_PrsMgr_PresentationManager : public Handle_MMgt_TShared {
         static const Handle_PrsMgr_PresentationManager DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_PrsMgr_PresentationManager {
     PrsMgr_PresentationManager* _get_reference() {
-    return (PrsMgr_PresentationManager*)$self->Access();
+    return (PrsMgr_PresentationManager*)$self->get();
     }
 };
 
 %extend Handle_PrsMgr_PresentationManager {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend PrsMgr_PresentationManager {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor PrsMgr_Presentations;
-class PrsMgr_Presentations : public TCollection_BaseSequence {
-	public:
-		%feature("compactdefaultargs") PrsMgr_Presentations;
-		%feature("autodoc", "	:rtype: None
-") PrsMgr_Presentations;
-		 PrsMgr_Presentations ();
-		%feature("compactdefaultargs") PrsMgr_Presentations;
-		%feature("autodoc", "	:param Other:
-	:type Other: PrsMgr_Presentations &
-	:rtype: None
-") PrsMgr_Presentations;
-		 PrsMgr_Presentations (const PrsMgr_Presentations & Other);
-		%feature("compactdefaultargs") Clear;
-		%feature("autodoc", "	:rtype: None
-") Clear;
-		void Clear ();
-		%feature("compactdefaultargs") Assign;
-		%feature("autodoc", "	:param Other:
-	:type Other: PrsMgr_Presentations &
-	:rtype: PrsMgr_Presentations
-") Assign;
-		const PrsMgr_Presentations & Assign (const PrsMgr_Presentations & Other);
-		%feature("compactdefaultargs") operator =;
-		%feature("autodoc", "	:param Other:
-	:type Other: PrsMgr_Presentations &
-	:rtype: PrsMgr_Presentations
-") operator =;
-		const PrsMgr_Presentations & operator = (const PrsMgr_Presentations & Other);
-		%feature("compactdefaultargs") Append;
-		%feature("autodoc", "	:param T:
-	:type T: PrsMgr_ModedPresentation &
-	:rtype: None
-") Append;
-		void Append (const PrsMgr_ModedPresentation & T);
-		%feature("compactdefaultargs") Append;
-		%feature("autodoc", "	:param S:
-	:type S: PrsMgr_Presentations &
-	:rtype: None
-") Append;
-		void Append (PrsMgr_Presentations & S);
-		%feature("compactdefaultargs") Prepend;
-		%feature("autodoc", "	:param T:
-	:type T: PrsMgr_ModedPresentation &
-	:rtype: None
-") Prepend;
-		void Prepend (const PrsMgr_ModedPresentation & T);
-		%feature("compactdefaultargs") Prepend;
-		%feature("autodoc", "	:param S:
-	:type S: PrsMgr_Presentations &
-	:rtype: None
-") Prepend;
-		void Prepend (PrsMgr_Presentations & S);
-		%feature("compactdefaultargs") InsertBefore;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param T:
-	:type T: PrsMgr_ModedPresentation &
-	:rtype: None
-") InsertBefore;
-		void InsertBefore (const Standard_Integer Index,const PrsMgr_ModedPresentation & T);
-		%feature("compactdefaultargs") InsertBefore;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param S:
-	:type S: PrsMgr_Presentations &
-	:rtype: None
-") InsertBefore;
-		void InsertBefore (const Standard_Integer Index,PrsMgr_Presentations & S);
-		%feature("compactdefaultargs") InsertAfter;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param T:
-	:type T: PrsMgr_ModedPresentation &
-	:rtype: None
-") InsertAfter;
-		void InsertAfter (const Standard_Integer Index,const PrsMgr_ModedPresentation & T);
-		%feature("compactdefaultargs") InsertAfter;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param S:
-	:type S: PrsMgr_Presentations &
-	:rtype: None
-") InsertAfter;
-		void InsertAfter (const Standard_Integer Index,PrsMgr_Presentations & S);
-		%feature("compactdefaultargs") First;
-		%feature("autodoc", "	:rtype: PrsMgr_ModedPresentation
-") First;
-		const PrsMgr_ModedPresentation & First ();
-		%feature("compactdefaultargs") Last;
-		%feature("autodoc", "	:rtype: PrsMgr_ModedPresentation
-") Last;
-		const PrsMgr_ModedPresentation & Last ();
-		%feature("compactdefaultargs") Split;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param Sub:
-	:type Sub: PrsMgr_Presentations &
-	:rtype: None
-") Split;
-		void Split (const Standard_Integer Index,PrsMgr_Presentations & Sub);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: PrsMgr_ModedPresentation
-") Value;
-		const PrsMgr_ModedPresentation & Value (const Standard_Integer Index);
-		%feature("compactdefaultargs") SetValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param I:
-	:type I: PrsMgr_ModedPresentation &
-	:rtype: None
-") SetValue;
-		void SetValue (const Standard_Integer Index,const PrsMgr_ModedPresentation & I);
-		%feature("compactdefaultargs") ChangeValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: PrsMgr_ModedPresentation
-") ChangeValue;
-		PrsMgr_ModedPresentation & ChangeValue (const Standard_Integer Index);
-		%feature("compactdefaultargs") Remove;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: None
-") Remove;
-		void Remove (const Standard_Integer Index);
-		%feature("compactdefaultargs") Remove;
-		%feature("autodoc", "	:param FromIndex:
-	:type FromIndex: int
-	:param ToIndex:
-	:type ToIndex: int
-	:rtype: None
-") Remove;
-		void Remove (const Standard_Integer FromIndex,const Standard_Integer ToIndex);
-};
-
-
-%extend PrsMgr_Presentations {
 	%pythoncode {
 	__repr__ = _dumps_object
 	}
@@ -947,13 +879,13 @@ class PrsMgr_Prs : public Prs3d_Presentation {
 		%feature("compactdefaultargs") Compute;
 		%feature("autodoc", "	* the 'degenerated' Structure is displayed with a transformation defined by <AMatrix> which is not a Pure Translation. We have to take in account this Transformation in the computation of hidden line removal... returns a filled Graphic Structure.
 
-	:param aProjector:
-	:type aProjector: Handle_Graphic3d_DataStructureManager &
-	:param AMatrix:
-	:type AMatrix: TColStd_Array2OfReal &
+	:param theProjector:
+	:type theProjector: Handle_Graphic3d_DataStructureManager &
+	:param theTrsf:
+	:type theTrsf: Handle_Geom_Transformation &
 	:rtype: Handle_Graphic3d_Structure
 ") Compute;
-		Handle_Graphic3d_Structure Compute (const Handle_Graphic3d_DataStructureManager & aProjector,const TColStd_Array2OfReal & AMatrix);
+		Handle_Graphic3d_Structure Compute (const Handle_Graphic3d_DataStructureManager & theProjector,const Handle_Geom_Transformation & theTrsf);
 		%feature("compactdefaultargs") Compute;
 		%feature("autodoc", "	* No need to return a structure, just to fill <ComputedStruct> ....
 
@@ -965,17 +897,17 @@ class PrsMgr_Prs : public Prs3d_Presentation {
 ") Compute;
 		void Compute (const Handle_Graphic3d_DataStructureManager & aProjector,Handle_Graphic3d_Structure & ComputedStruct);
 		%feature("compactdefaultargs") Compute;
-		%feature("autodoc", "	* No Need to return a Structure, just to Fill <aStructure>. The Trsf has to be taken in account in the computation (Rotation Part....)
+		%feature("autodoc", "	* No Need to return a Structure, just to Fill <aStructure>. The Trsf has to be taken in account in the computation --Rotation Part....--
 
-	:param aProjector:
-	:type aProjector: Handle_Graphic3d_DataStructureManager &
-	:param AMatrix:
-	:type AMatrix: TColStd_Array2OfReal &
-	:param aStructure:
-	:type aStructure: Handle_Graphic3d_Structure &
+	:param theProjector:
+	:type theProjector: Handle_Graphic3d_DataStructureManager &
+	:param theTrsf:
+	:type theTrsf: Handle_Geom_Transformation &
+	:param theStructure:
+	:type theStructure: Handle_Graphic3d_Structure &
 	:rtype: None
 ") Compute;
-		void Compute (const Handle_Graphic3d_DataStructureManager & aProjector,const TColStd_Array2OfReal & AMatrix,Handle_Graphic3d_Structure & aStructure);
+		void Compute (const Handle_Graphic3d_DataStructureManager & theProjector,const Handle_Geom_Transformation & theTrsf,Handle_Graphic3d_Structure & theStructure);
 };
 
 
@@ -1010,93 +942,23 @@ class Handle_PrsMgr_Prs : public Handle_Prs3d_Presentation {
         static const Handle_PrsMgr_Prs DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_PrsMgr_Prs {
     PrsMgr_Prs* _get_reference() {
-    return (PrsMgr_Prs*)$self->Access();
+    return (PrsMgr_Prs*)$self->get();
     }
 };
 
 %extend Handle_PrsMgr_Prs {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend PrsMgr_Prs {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor PrsMgr_SequenceNodeOfPresentations;
-class PrsMgr_SequenceNodeOfPresentations : public TCollection_SeqNode {
-	public:
-		%feature("compactdefaultargs") PrsMgr_SequenceNodeOfPresentations;
-		%feature("autodoc", "	:param I:
-	:type I: PrsMgr_ModedPresentation &
-	:param n:
-	:type n: TCollection_SeqNodePtr &
-	:param p:
-	:type p: TCollection_SeqNodePtr &
-	:rtype: None
-") PrsMgr_SequenceNodeOfPresentations;
-		 PrsMgr_SequenceNodeOfPresentations (const PrsMgr_ModedPresentation & I,const TCollection_SeqNodePtr & n,const TCollection_SeqNodePtr & p);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:rtype: PrsMgr_ModedPresentation
-") Value;
-		PrsMgr_ModedPresentation & Value ();
-};
-
-
-%extend PrsMgr_SequenceNodeOfPresentations {
-	%pythoncode {
-		def GetHandle(self):
-		    try:
-		        return self.thisHandle
-		    except:
-		        self.thisHandle = Handle_PrsMgr_SequenceNodeOfPresentations(self)
-		        self.thisown = False
-		        return self.thisHandle
-	}
-};
-
-%pythonappend Handle_PrsMgr_SequenceNodeOfPresentations::Handle_PrsMgr_SequenceNodeOfPresentations %{
-    # register the handle in the base object
-    if len(args) > 0:
-        register_handle(self, args[0])
-%}
-
-%nodefaultctor Handle_PrsMgr_SequenceNodeOfPresentations;
-class Handle_PrsMgr_SequenceNodeOfPresentations : public Handle_TCollection_SeqNode {
-
-    public:
-        // constructors
-        Handle_PrsMgr_SequenceNodeOfPresentations();
-        Handle_PrsMgr_SequenceNodeOfPresentations(const Handle_PrsMgr_SequenceNodeOfPresentations &aHandle);
-        Handle_PrsMgr_SequenceNodeOfPresentations(const PrsMgr_SequenceNodeOfPresentations *anItem);
-        void Nullify();
-        Standard_Boolean IsNull() const;
-        static const Handle_PrsMgr_SequenceNodeOfPresentations DownCast(const Handle_Standard_Transient &AnObject);
-
-};
-%extend Handle_PrsMgr_SequenceNodeOfPresentations {
-    PrsMgr_SequenceNodeOfPresentations* _get_reference() {
-    return (PrsMgr_SequenceNodeOfPresentations*)$self->Access();
-    }
-};
-
-%extend Handle_PrsMgr_SequenceNodeOfPresentations {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
-};
-
-%extend PrsMgr_SequenceNodeOfPresentations {
 	%pythoncode {
 	__repr__ = _dumps_object
 	}

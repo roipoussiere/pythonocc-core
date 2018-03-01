@@ -1,5 +1,5 @@
 /*
-Copyright 2008-2017 Thomas Paviot (tpaviot@gmail.com)
+Copyright 2008-2018 Thomas Paviot (tpaviot@gmail.com)
 
 
 This file is part of pythonOCC.
@@ -55,16 +55,19 @@ def register_handle(handle, base_object):
 
 /* typedefs */
 typedef BOPTools_MapOfSet::Iterator BOPTools_MapIteratorOfMapOfSet;
-typedef NCollection_List <BOPTools_CoupleOfShape> BOPTools_ListOfCoupleOfShape;
-typedef NCollection_List <BOPTools_EdgeSet> BOPTools_ListOfEdgeSet;
 typedef BOPTools_ListOfCoupleOfShape::Iterator BOPTools_ListIteratorOfListOfCoupleOfShape;
 typedef BOPTools_ListOfConnexityBlock::Iterator BOPTools_ListIteratorOfListOfConnexityBlock;
 typedef BOPTools_ListOfEdgeSet::Iterator BOPTools_ListIteratorOfListOfEdgeSet;
-typedef NCollection_List <BOPTools_ConnexityBlock> BOPTools_ListOfConnexityBlock;
 typedef BOPTools_ListOfShapeSet::Iterator BOPTools_ListIteratorOfListOfShapeSet;
-typedef NCollection_List <BOPTools_ShapeSet> BOPTools_ListOfShapeSet;
-typedef NCollection_Map <BOPTools_Set , BOPTools_SetMapHasher> BOPTools_MapOfSet;
 /* end typedefs declaration */
+
+/* templates */
+%template(BOPTools_ListOfCoupleOfShape) NCollection_List <BOPTools_CoupleOfShape>;
+%template(BOPTools_ListOfEdgeSet) NCollection_List <BOPTools_EdgeSet>;
+%template(BOPTools_ListOfConnexityBlock) NCollection_List <BOPTools_ConnexityBlock>;
+%template(BOPTools_ListOfShapeSet) NCollection_List <BOPTools_ShapeSet>;
+%template(BOPTools_MapOfSet) NCollection_Map <BOPTools_Set , BOPTools_SetMapHasher>;
+/* end templates declaration */
 
 /* public enums */
 /* end public enums declaration */
@@ -135,9 +138,11 @@ class BOPTools_AlgoTools {
 	:type aV1: TopoDS_Vertex &
 	:param aV2:
 	:type aV2: TopoDS_Vertex &
+	:param theFuzz: default value is Precision::Confusion()
+	:type theFuzz: float
 	:rtype: int
 ") ComputeVV;
-		static Standard_Integer ComputeVV (const TopoDS_Vertex & aV1,const TopoDS_Vertex & aV2);
+		static Standard_Integer ComputeVV (const TopoDS_Vertex & aV1,const TopoDS_Vertex & aV2,const Standard_Real theFuzz = Precision::Confusion());
 		%feature("compactdefaultargs") MakeVertex;
 		%feature("autodoc", "	:param aLV:
 	:type aLV: BOPCol_ListOfShape &
@@ -145,7 +150,7 @@ class BOPTools_AlgoTools {
 	:type aV: TopoDS_Vertex &
 	:rtype: void
 ") MakeVertex;
-		static void MakeVertex (BOPCol_ListOfShape & aLV,TopoDS_Vertex & aV);
+		static void MakeVertex (const BOPCol_ListOfShape & aLV,TopoDS_Vertex & aV);
 		%feature("compactdefaultargs") MakeEdge;
 		%feature("autodoc", "	:param theCurve:
 	:type theCurve: IntTools_Curve &
@@ -165,7 +170,9 @@ class BOPTools_AlgoTools {
 ") MakeEdge;
 		static void MakeEdge (const IntTools_Curve & theCurve,const TopoDS_Vertex & theV1,const Standard_Real theT1,const TopoDS_Vertex & theV2,const Standard_Real theT2,const Standard_Real theTolR3D,TopoDS_Edge & theE);
 		%feature("compactdefaultargs") MakePCurve;
-		%feature("autodoc", "	:param theE:
+		%feature("autodoc", "	* Makes 2d curve of the edge <theE> on the faces <theF1> and <theF2>. <theContext> - storage for caching the geometrical tools
+
+	:param theE:
 	:type theE: TopoDS_Edge &
 	:param theF1:
 	:type theF1: TopoDS_Face &
@@ -177,9 +184,11 @@ class BOPTools_AlgoTools {
 	:type thePC1: bool
 	:param thePC2:
 	:type thePC2: bool
+	:param theContext: default value is Handle_IntTools_Context()
+	:type theContext: Handle_IntTools_Context &
 	:rtype: void
 ") MakePCurve;
-		static void MakePCurve (const TopoDS_Edge & theE,const TopoDS_Face & theF1,const TopoDS_Face & theF2,const IntTools_Curve & theCurve,const Standard_Boolean thePC1,const Standard_Boolean thePC2);
+		static void MakePCurve (const TopoDS_Edge & theE,const TopoDS_Face & theF1,const TopoDS_Face & theF2,const IntTools_Curve & theCurve,const Standard_Boolean thePC1,const Standard_Boolean thePC2,const Handle_IntTools_Context & theContext = Handle_IntTools_Context());
 		%feature("compactdefaultargs") MakeContainer;
 		%feature("autodoc", "	:param theType:
 	:type theType: TopAbs_ShapeEnum
@@ -237,9 +246,11 @@ class BOPTools_AlgoTools {
 	:type theF2: TopoDS_Face &
 	:param theContext:
 	:type theContext: Handle_IntTools_Context &
+	:param theFuzz: default value is Precision::Confusion()
+	:type theFuzz: float
 	:rtype: bool
 ") AreFacesSameDomain;
-		static Standard_Boolean AreFacesSameDomain (const TopoDS_Face & theF1,const TopoDS_Face & theF2,Handle_IntTools_Context & theContext);
+		static Standard_Boolean AreFacesSameDomain (const TopoDS_Face & theF1,const TopoDS_Face & theF2,Handle_IntTools_Context & theContext,const Standard_Real theFuzz = Precision::Confusion());
 		%feature("compactdefaultargs") CheckSameGeom;
 		%feature("autodoc", "	:param theF1:
 	:type theF1: TopoDS_Face &
@@ -251,13 +262,17 @@ class BOPTools_AlgoTools {
 ") CheckSameGeom;
 		static Standard_Boolean CheckSameGeom (const TopoDS_Face & theF1,const TopoDS_Face & theF2,Handle_IntTools_Context & theContext);
 		%feature("compactdefaultargs") Sense;
-		%feature("autodoc", "	:param theF1:
+		%feature("autodoc", "	* Basing on the normals directions of the faces the method Defines whether to reverse the second face or not. <theContext> - storage for caching the geometrical tools
+
+	:param theF1:
 	:type theF1: TopoDS_Face &
 	:param theF2:
 	:type theF2: TopoDS_Face &
+	:param theContext: default value is Handle_IntTools_Context()
+	:type theContext: Handle_IntTools_Context &
 	:rtype: int
 ") Sense;
-		static Standard_Integer Sense (const TopoDS_Face & theF1,const TopoDS_Face & theF2);
+		static Standard_Integer Sense (const TopoDS_Face & theF1,const TopoDS_Face & theF2,const Handle_IntTools_Context & theContext = Handle_IntTools_Context());
 		%feature("compactdefaultargs") GetEdgeOff;
 		%feature("autodoc", "	* Returns True if the face theFace contains the edge theEdge but with opposite orientation. If the method returns True theEdgeOff is the edge founded
 
@@ -287,7 +302,7 @@ class BOPTools_AlgoTools {
 ") GetFaceOff;
 		static Standard_Boolean GetFaceOff (const TopoDS_Edge & theEdge,const TopoDS_Face & theFace,BOPTools_ListOfCoupleOfShape & theLCEF,TopoDS_Face & theFaceOff,Handle_IntTools_Context & theContext);
 		%feature("compactdefaultargs") IsInternalFace;
-		%feature("autodoc", "	* Returns True if the face theFace is inside of the couple of faces theFace1, theFace2. The faces theFace, theFace1, theFace2 must share the edge theEdge
+		%feature("autodoc", "	* Returns True if the face theFace is inside of the couple of faces theFace1, theFace2. The faces theFace, theFace1, theFace2 must share the edge theEdge Return values: * 0 state is not IN * 1 state is IN * 2 state can not be found by the method of angles
 
 	:param theFace:
 	:type theFace: TopoDS_Face &
@@ -303,7 +318,7 @@ class BOPTools_AlgoTools {
 ") IsInternalFace;
 		static Standard_Integer IsInternalFace (const TopoDS_Face & theFace,const TopoDS_Edge & theEdge,const TopoDS_Face & theFace1,const TopoDS_Face & theFace2,Handle_IntTools_Context & theContext);
 		%feature("compactdefaultargs") IsInternalFace;
-		%feature("autodoc", "	* Returns True if the face theFace is inside of the appropriate couple of faces (from the set theLF) . The faces of the set theLF and theFace must share the edge theEdge
+		%feature("autodoc", "	* Returns True if the face theFace is inside of the appropriate couple of faces --from the set theLF-- . The faces of the set theLF and theFace must share the edge theEdge * 0 state is not IN * 1 state is IN * 2 state can not be found by the method of angles
 
 	:param theFace:
 	:type theFace: TopoDS_Face &
@@ -329,9 +344,9 @@ class BOPTools_AlgoTools {
 	:type theTol: float
 	:param theContext:
 	:type theContext: Handle_IntTools_Context &
-	:rtype: int
+	:rtype: bool
 ") IsInternalFace;
-		static Standard_Integer IsInternalFace (const TopoDS_Face & theFace,const TopoDS_Solid & theSolid,BOPCol_IndexedDataMapOfShapeListOfShape & theMEF,const Standard_Real theTol,Handle_IntTools_Context & theContext);
+		static Standard_Boolean IsInternalFace (const TopoDS_Face & theFace,const TopoDS_Solid & theSolid,BOPCol_IndexedDataMapOfShapeListOfShape & theMEF,const Standard_Real theTol,Handle_IntTools_Context & theContext);
 		%feature("compactdefaultargs") GetEdgeOnFace;
 		%feature("autodoc", "	* For the face theFace gets the edge theEdgeOnF that is the same as theEdge Returns True if such edge exists Returns False if there is no such edge
 
@@ -431,7 +446,7 @@ class BOPTools_AlgoTools {
 ") MakeConnexityBlock;
 		static void MakeConnexityBlock (BOPCol_ListOfShape & theLS,BOPCol_IndexedMapOfShape & theMapAvoid,BOPCol_ListOfShape & theLSCB,const BOPCol_BaseAllocator & theAllocator);
 		%feature("compactdefaultargs") MakeConnexityBlocks;
-		%feature("autodoc", "	* For the compound theS build the blocks theLCB (as list of compounds) in terms of connexity by the shapes of theType
+		%feature("autodoc", "	* For the compound theS build the blocks theLCB --as list of compounds-- in terms of connexity by the shapes of theType
 
 	:param theS:
 	:type theS: TopoDS_Shape &
@@ -444,48 +459,64 @@ class BOPTools_AlgoTools {
 	:rtype: void
 ") MakeConnexityBlocks;
 		static void MakeConnexityBlocks (const TopoDS_Shape & theS,const TopAbs_ShapeEnum theType1,const TopAbs_ShapeEnum theType2,BOPCol_ListOfShape & theLCB);
+		%feature("compactdefaultargs") OrientEdgesOnWire;
+		%feature("autodoc", "	* Correctly orients edges on the wire
+
+	:param theWire:
+	:type theWire: TopoDS_Shape &
+	:rtype: void
+") OrientEdgesOnWire;
+		static void OrientEdgesOnWire (TopoDS_Shape & theWire);
 		%feature("compactdefaultargs") OrientFacesOnShell;
-		%feature("autodoc", "	:param theS:
-	:type theS: TopoDS_Shape &
+		%feature("autodoc", "	* Correctly orients faces on the shell
+
+	:param theShell:
+	:type theShell: TopoDS_Shape &
 	:rtype: void
 ") OrientFacesOnShell;
-		static void OrientFacesOnShell (TopoDS_Shape & theS);
+		static void OrientFacesOnShell (TopoDS_Shape & theShell);
 		%feature("compactdefaultargs") CorrectTolerances;
 		%feature("autodoc", "	* Provides valid values of tolerances for the shape <theS> <theTolMax> is max value of the tolerance that can be accepted for correction. If real value of the tolerance will be greater than <aTolMax>, the correction does not perform.
 
 	:param theS:
 	:type theS: TopoDS_Shape &
+	:param theMapToAvoid:
+	:type theMapToAvoid: BOPCol_IndexedMapOfShape &
 	:param theTolMax: default value is 0.0001
 	:type theTolMax: float
 	:param theRunParallel: default value is Standard_False
 	:type theRunParallel: bool
 	:rtype: void
 ") CorrectTolerances;
-		static void CorrectTolerances (const TopoDS_Shape & theS,const Standard_Real theTolMax = 0.0001,const Standard_Boolean theRunParallel = Standard_False);
+		static void CorrectTolerances (const TopoDS_Shape & theS,const BOPCol_IndexedMapOfShape & theMapToAvoid,const Standard_Real theTolMax = 0.0001,const Standard_Boolean theRunParallel = Standard_False);
 		%feature("compactdefaultargs") CorrectCurveOnSurface;
 		%feature("autodoc", "	* Provides valid values of tolerances for the shape <theS> in terms of BRepCheck_InvalidCurveOnSurface.
 
 	:param theS:
 	:type theS: TopoDS_Shape &
+	:param theMapToAvoid:
+	:type theMapToAvoid: BOPCol_IndexedMapOfShape &
 	:param theTolMax: default value is 0.0001
 	:type theTolMax: float
 	:param theRunParallel: default value is Standard_False
 	:type theRunParallel: bool
 	:rtype: void
 ") CorrectCurveOnSurface;
-		static void CorrectCurveOnSurface (const TopoDS_Shape & theS,const Standard_Real theTolMax = 0.0001,const Standard_Boolean theRunParallel = Standard_False);
+		static void CorrectCurveOnSurface (const TopoDS_Shape & theS,const BOPCol_IndexedMapOfShape & theMapToAvoid,const Standard_Real theTolMax = 0.0001,const Standard_Boolean theRunParallel = Standard_False);
 		%feature("compactdefaultargs") CorrectPointOnCurve;
 		%feature("autodoc", "	* Provides valid values of tolerances for the shape <theS> in terms of BRepCheck_InvalidPointOnCurve.
 
 	:param theS:
 	:type theS: TopoDS_Shape &
+	:param theMapToAvoid:
+	:type theMapToAvoid: BOPCol_IndexedMapOfShape &
 	:param theTolMax: default value is 0.0001
 	:type theTolMax: float
 	:param theRunParallel: default value is Standard_False
 	:type theRunParallel: bool
 	:rtype: void
 ") CorrectPointOnCurve;
-		static void CorrectPointOnCurve (const TopoDS_Shape & theS,const Standard_Real theTolMax = 0.0001,const Standard_Boolean theRunParallel = Standard_False);
+		static void CorrectPointOnCurve (const TopoDS_Shape & theS,const BOPCol_IndexedMapOfShape & theMapToAvoid,const Standard_Real theTolMax = 0.0001,const Standard_Boolean theRunParallel = Standard_False);
 		%feature("compactdefaultargs") MakeNewVertex;
 		%feature("autodoc", "	* Make a vertex using 3D-point <aP1> and 3D-tolerance value <aTol>
 
@@ -665,25 +696,29 @@ class BOPTools_AlgoTools {
 ") IsBlockInOnFace;
 		static Standard_Boolean IsBlockInOnFace (const IntTools_Range & aShR,const TopoDS_Face & aF,const TopoDS_Edge & aE,Handle_IntTools_Context & aContext);
 		%feature("compactdefaultargs") IsMicroEdge;
-		%feature("autodoc", "	* Checks if it is possible to compute shrunk range for the edge <aE>.
+		%feature("autodoc", "	* Checks if it is possible to compute shrunk range for the edge <aE> Flag <theCheckSplittable> defines whether to take into account the possiblity to split the edge or not.
 
 	:param theEdge:
 	:type theEdge: TopoDS_Edge &
 	:param theContext:
 	:type theContext: Handle_IntTools_Context &
+	:param theCheckSplittable: default value is Standard_True
+	:type theCheckSplittable: bool
 	:rtype: bool
 ") IsMicroEdge;
-		static Standard_Boolean IsMicroEdge (const TopoDS_Edge & theEdge,const Handle_IntTools_Context & theContext);
+		static Standard_Boolean IsMicroEdge (const TopoDS_Edge & theEdge,const Handle_IntTools_Context & theContext,const Standard_Boolean theCheckSplittable = Standard_True);
 		%feature("compactdefaultargs") CorrectShapeTolerances;
 		%feature("autodoc", "	* Corrects tolerance values of the sub-shapes of the shape <theS> if needed.
 
 	:param theS:
 	:type theS: TopoDS_Shape &
+	:param theMapToAvoid:
+	:type theMapToAvoid: BOPCol_IndexedMapOfShape &
 	:param theRunParallel: default value is Standard_False
 	:type theRunParallel: bool
 	:rtype: void
 ") CorrectShapeTolerances;
-		static void CorrectShapeTolerances (const TopoDS_Shape & theS,const Standard_Boolean theRunParallel = Standard_False);
+		static void CorrectShapeTolerances (const TopoDS_Shape & theS,const BOPCol_IndexedMapOfShape & theMapToAvoid,const Standard_Boolean theRunParallel = Standard_False);
 		%feature("compactdefaultargs") Dimension;
 		%feature("autodoc", "	* Retutns dimension of the shape <theS>.
 
@@ -733,15 +768,17 @@ class BOPTools_AlgoTools {
 class BOPTools_AlgoTools2D {
 	public:
 		%feature("compactdefaultargs") BuildPCurveForEdgeOnFace;
-		%feature("autodoc", "	* Compute P-Curve for the edge <aE> on the face <aF> Raises exception Standard_ConstructionError if projection algorithm fails
+		%feature("autodoc", "	* Compute P-Curve for the edge <aE> on the face <aF>. Raises exception Standard_ConstructionError if projection algorithm fails. <theContext> - storage for caching the geometrical tools
 
 	:param aE:
 	:type aE: TopoDS_Edge &
 	:param aF:
 	:type aF: TopoDS_Face &
+	:param theContext: default value is Handle_IntTools_Context()
+	:type theContext: Handle_IntTools_Context &
 	:rtype: void
 ") BuildPCurveForEdgeOnFace;
-		static void BuildPCurveForEdgeOnFace (const TopoDS_Edge & aE,const TopoDS_Face & aF);
+		static void BuildPCurveForEdgeOnFace (const TopoDS_Edge & aE,const TopoDS_Face & aF,const Handle_IntTools_Context & theContext = Handle_IntTools_Context());
 		%feature("compactdefaultargs") EdgeTangent;
 		%feature("autodoc", "	* Compute tangent for the edge <aE> [in 3D] at parameter <aT>
 
@@ -755,7 +792,7 @@ class BOPTools_AlgoTools2D {
 ") EdgeTangent;
 		static Standard_Boolean EdgeTangent (const TopoDS_Edge & anE,const Standard_Real aT,gp_Vec & Tau);
 		%feature("compactdefaultargs") PointOnSurface;
-		%feature("autodoc", "	* Compute surface parameters <U,V> of the face <aF> for the point from the edge <aE> at parameter <aT>. If <aE> has't pcurve on surface, algorithm tries to get it by projection and can raise exception Standard_ConstructionError if projection algorithm fails
+		%feature("autodoc", "	* Compute surface parameters <U,V> of the face <aF> for the point from the edge <aE> at parameter <aT>. If <aE> has't pcurve on surface, algorithm tries to get it by projection and can raise exception Standard_ConstructionError if projection algorithm fails. <theContext> - storage for caching the geometrical tools
 
 	:param aE:
 	:type aE: TopoDS_Edge &
@@ -767,11 +804,13 @@ class BOPTools_AlgoTools2D {
 	:type U: float &
 	:param V:
 	:type V: float &
+	:param theContext: default value is Handle_IntTools_Context()
+	:type theContext: Handle_IntTools_Context &
 	:rtype: void
 ") PointOnSurface;
-		static void PointOnSurface (const TopoDS_Edge & aE,const TopoDS_Face & aF,const Standard_Real aT,Standard_Real &OutValue,Standard_Real &OutValue);
+		static void PointOnSurface (const TopoDS_Edge & aE,const TopoDS_Face & aF,const Standard_Real aT,Standard_Real &OutValue,Standard_Real &OutValue,const Handle_IntTools_Context & theContext = Handle_IntTools_Context());
 		%feature("compactdefaultargs") HasCurveOnSurface;
-		%feature("autodoc", "	* Returns True if the edge <aE> has P-Curve <aC> on surface <aF> . [aFirst, aLast] - range of the P-Curve [aToler] - reached tolerance If the P-Curve does not exist, aC.IsNull()=True.
+		%feature("autodoc", "	* Returns True if the edge <aE> has P-Curve <aC> on surface <aF> . [aFirst, aLast] - range of the P-Curve [aToler] - reached tolerance If the P-Curve does not exist, aC.IsNull----=True.
 
 	:param aE:
 	:type aE: TopoDS_Edge &
@@ -789,7 +828,7 @@ class BOPTools_AlgoTools2D {
 ") HasCurveOnSurface;
 		static Standard_Boolean HasCurveOnSurface (const TopoDS_Edge & aE,const TopoDS_Face & aF,Handle_Geom2d_Curve & aC,Standard_Real &OutValue,Standard_Real &OutValue,Standard_Real &OutValue);
 		%feature("compactdefaultargs") HasCurveOnSurface;
-		%feature("autodoc", "	* Returns True if the edge <aE> has P-Curve <aC> on surface <aF> . If the P-Curve does not exist, aC.IsNull()=True.
+		%feature("autodoc", "	* Returns True if the edge <aE> has P-Curve <aC> on surface <aF> . If the P-Curve does not exist, aC.IsNull----=True.
 
 	:param aE:
 	:type aE: TopoDS_Edge &
@@ -799,37 +838,41 @@ class BOPTools_AlgoTools2D {
 ") HasCurveOnSurface;
 		static Standard_Boolean HasCurveOnSurface (const TopoDS_Edge & aE,const TopoDS_Face & aF);
 		%feature("compactdefaultargs") AdjustPCurveOnFace;
-		%feature("autodoc", "	* Adjust P-Curve <aC2D> (3D-curve <C3D>) on surface <aF> .
+		%feature("autodoc", "	* Adjust P-Curve <theC2D> --3D-curve <theC3D>-- on surface of the face <theF>. <theContext> - storage for caching the geometrical tools
 
-	:param aF:
-	:type aF: TopoDS_Face &
-	:param C3D:
-	:type C3D: Handle_Geom_Curve &
-	:param aC2D:
-	:type aC2D: Handle_Geom2d_Curve &
-	:param aC2DA:
-	:type aC2DA: Handle_Geom2d_Curve &
+	:param theF:
+	:type theF: TopoDS_Face &
+	:param theC3D:
+	:type theC3D: Handle_Geom_Curve &
+	:param theC2D:
+	:type theC2D: Handle_Geom2d_Curve &
+	:param theC2DA:
+	:type theC2DA: Handle_Geom2d_Curve &
+	:param theContext: default value is Handle_IntTools_Context()
+	:type theContext: Handle_IntTools_Context &
 	:rtype: void
 ") AdjustPCurveOnFace;
-		static void AdjustPCurveOnFace (const TopoDS_Face & aF,const Handle_Geom_Curve & C3D,const Handle_Geom2d_Curve & aC2D,Handle_Geom2d_Curve & aC2DA);
+		static void AdjustPCurveOnFace (const TopoDS_Face & theF,const Handle_Geom_Curve & theC3D,const Handle_Geom2d_Curve & theC2D,Handle_Geom2d_Curve & theC2DA,const Handle_IntTools_Context & theContext = Handle_IntTools_Context());
 		%feature("compactdefaultargs") AdjustPCurveOnFace;
-		%feature("autodoc", "	* Adjust P-Curve <aC2D> (3D-curve <C3D>) on surface <aF> . [aT1, aT2] - range to adjust
+		%feature("autodoc", "	* Adjust P-Curve <aC2D> --3D-curve <C3D>-- on surface <aF> . [aT1, aT2] - range to adjust <theContext> - storage for caching the geometrical tools
 
-	:param aF:
-	:type aF: TopoDS_Face &
-	:param aT1:
-	:type aT1: float
-	:param aT2:
-	:type aT2: float
-	:param aC2D:
-	:type aC2D: Handle_Geom2d_Curve &
-	:param aC2DA:
-	:type aC2DA: Handle_Geom2d_Curve &
+	:param theF:
+	:type theF: TopoDS_Face &
+	:param theFirst:
+	:type theFirst: float
+	:param theLast:
+	:type theLast: float
+	:param theC2D:
+	:type theC2D: Handle_Geom2d_Curve &
+	:param theC2DA:
+	:type theC2DA: Handle_Geom2d_Curve &
+	:param theContext: default value is Handle_IntTools_Context()
+	:type theContext: Handle_IntTools_Context &
 	:rtype: void
 ") AdjustPCurveOnFace;
-		static void AdjustPCurveOnFace (const TopoDS_Face & aF,const Standard_Real aT1,const Standard_Real aT2,const Handle_Geom2d_Curve & aC2D,Handle_Geom2d_Curve & aC2DA);
-		%feature("compactdefaultargs") AdjustPCurveOnFace;
-		%feature("autodoc", "	* Adjust P-Curve <aC2D> (3D-curve <C3D>) on surface <aF> . [aT1, aT2] - range to adjust
+		static void AdjustPCurveOnFace (const TopoDS_Face & theF,const Standard_Real theFirst,const Standard_Real theLast,const Handle_Geom2d_Curve & theC2D,Handle_Geom2d_Curve & theC2DA,const Handle_IntTools_Context & theContext = Handle_IntTools_Context());
+		%feature("compactdefaultargs") AdjustPCurveOnSurf;
+		%feature("autodoc", "	* Adjust P-Curve <aC2D> --3D-curve <C3D>-- on surface <aF> . [aT1, aT2] - range to adjust
 
 	:param aF:
 	:type aF: BRepAdaptor_Surface &
@@ -842,8 +885,8 @@ class BOPTools_AlgoTools2D {
 	:param aC2DA:
 	:type aC2DA: Handle_Geom2d_Curve &
 	:rtype: void
-") AdjustPCurveOnFace;
-		static void AdjustPCurveOnFace (const BRepAdaptor_Surface & aF,const Standard_Real aT1,const Standard_Real aT2,const Handle_Geom2d_Curve & aC2D,Handle_Geom2d_Curve & aC2DA);
+") AdjustPCurveOnSurf;
+		static void AdjustPCurveOnSurf (const BRepAdaptor_Surface & aF,const Standard_Real aT1,const Standard_Real aT2,const Handle_Geom2d_Curve & aC2D,Handle_Geom2d_Curve & aC2DA);
 		%feature("compactdefaultargs") IntermediatePoint;
 		%feature("autodoc", "	* Compute intermediate value in between [aFirst, aLast] .
 
@@ -863,7 +906,9 @@ class BOPTools_AlgoTools2D {
 ") IntermediatePoint;
 		static Standard_Real IntermediatePoint (const TopoDS_Edge & anE);
 		%feature("compactdefaultargs") BuildPCurveForEdgeOnPlane;
-		%feature("autodoc", "	:param theE:
+		%feature("autodoc", "	* Build pcurve of edge on face if the surface is plane, and update the edge.
+
+	:param theE:
 	:type theE: TopoDS_Edge &
 	:param theF:
 	:type theF: TopoDS_Face &
@@ -871,17 +916,19 @@ class BOPTools_AlgoTools2D {
 ") BuildPCurveForEdgeOnPlane;
 		static void BuildPCurveForEdgeOnPlane (const TopoDS_Edge & theE,const TopoDS_Face & theF);
 		%feature("compactdefaultargs") BuildPCurveForEdgeOnPlane;
-		%feature("autodoc", "	:param theE:
+		%feature("autodoc", "	* Build pcurve of edge on face if the surface is plane, but do not update the edge. The output are the pcurve and the flag telling that pcurve was built.
+
+	:param theE:
 	:type theE: TopoDS_Edge &
 	:param theF:
 	:type theF: TopoDS_Face &
-	:param theC2D:
-	:type theC2D: Handle_Geom2d_Curve &
+	:param aC2D:
+	:type aC2D: Handle_Geom2d_Curve &
 	:param bToUpdate:
 	:type bToUpdate: bool
 	:rtype: void
 ") BuildPCurveForEdgeOnPlane;
-		static void BuildPCurveForEdgeOnPlane (const TopoDS_Edge & theE,const TopoDS_Face & theF,Handle_Geom2d_Curve & theC2D,Standard_Boolean &OutValue);
+		static void BuildPCurveForEdgeOnPlane (const TopoDS_Edge & theE,const TopoDS_Face & theF,Handle_Geom2d_Curve & aC2D,Standard_Boolean &OutValue);
 		%feature("compactdefaultargs") BuildPCurveForEdgesOnPlane;
 		%feature("autodoc", "	:param theLE:
 	:type theLE: BOPCol_ListOfShape &
@@ -891,7 +938,7 @@ class BOPTools_AlgoTools2D {
 ") BuildPCurveForEdgesOnPlane;
 		static void BuildPCurveForEdgesOnPlane (const BOPCol_ListOfShape & theLE,const TopoDS_Face & theF);
 		%feature("compactdefaultargs") Make2D;
-		%feature("autodoc", "	* Make P-Curve <aC> for the edge <aE> on surface <aF> . [aFirst, aLast] - range of the P-Curve [aToler] - reached tolerance Raises exception Standard_ConstructionError if algorithm fails
+		%feature("autodoc", "	* Make P-Curve <aC> for the edge <aE> on surface <aF> . [aFirst, aLast] - range of the P-Curve [aToler] - reached tolerance Raises exception Standard_ConstructionError if algorithm fails. <theContext> - storage for caching the geometrical tools
 
 	:param aE:
 	:type aE: TopoDS_Edge &
@@ -905,11 +952,13 @@ class BOPTools_AlgoTools2D {
 	:type aLast: float &
 	:param aToler:
 	:type aToler: float &
+	:param theContext: default value is Handle_IntTools_Context()
+	:type theContext: Handle_IntTools_Context &
 	:rtype: void
 ") Make2D;
-		static void Make2D (const TopoDS_Edge & aE,const TopoDS_Face & aF,Handle_Geom2d_Curve & aC,Standard_Real &OutValue,Standard_Real &OutValue,Standard_Real &OutValue);
+		static void Make2D (const TopoDS_Edge & aE,const TopoDS_Face & aF,Handle_Geom2d_Curve & aC,Standard_Real &OutValue,Standard_Real &OutValue,Standard_Real &OutValue,const Handle_IntTools_Context & theContext = Handle_IntTools_Context());
 		%feature("compactdefaultargs") MakePCurveOnFace;
-		%feature("autodoc", "	* Make P-Curve <aC> for the 3D-curve <C3D> on surface <aF> . [aToler] - reached tolerance Raises exception Standard_ConstructionError if projection algorithm fails
+		%feature("autodoc", "	* Make P-Curve <aC> for the 3D-curve <C3D> on surface <aF> . [aToler] - reached tolerance Raises exception Standard_ConstructionError if projection algorithm fails. <theContext> - storage for caching the geometrical tools
 
 	:param aF:
 	:type aF: TopoDS_Face &
@@ -919,11 +968,13 @@ class BOPTools_AlgoTools2D {
 	:type aC: Handle_Geom2d_Curve &
 	:param aToler:
 	:type aToler: float &
+	:param theContext: default value is Handle_IntTools_Context()
+	:type theContext: Handle_IntTools_Context &
 	:rtype: void
 ") MakePCurveOnFace;
-		static void MakePCurveOnFace (const TopoDS_Face & aF,const Handle_Geom_Curve & C3D,Handle_Geom2d_Curve & aC,Standard_Real &OutValue);
+		static void MakePCurveOnFace (const TopoDS_Face & aF,const Handle_Geom_Curve & C3D,Handle_Geom2d_Curve & aC,Standard_Real &OutValue,const Handle_IntTools_Context & theContext = Handle_IntTools_Context());
 		%feature("compactdefaultargs") MakePCurveOnFace;
-		%feature("autodoc", "	* Make P-Curve <aC> for the 3D-curve <C3D> on surface <aF> . [aT1, aT2] - range to build [aToler] - reached tolerance Raises exception Standard_ConstructionError if projection algorithm fails
+		%feature("autodoc", "	* Make P-Curve <aC> for the 3D-curve <C3D> on surface <aF> . [aT1, aT2] - range to build [aToler] - reached tolerance Raises exception Standard_ConstructionError if projection algorithm fails. <theContext> - storage for caching the geometrical tools
 
 	:param aF:
 	:type aF: TopoDS_Face &
@@ -937,19 +988,11 @@ class BOPTools_AlgoTools2D {
 	:type aC: Handle_Geom2d_Curve &
 	:param aToler:
 	:type aToler: float &
+	:param theContext: default value is Handle_IntTools_Context()
+	:type theContext: Handle_IntTools_Context &
 	:rtype: void
 ") MakePCurveOnFace;
-		static void MakePCurveOnFace (const TopoDS_Face & aF,const Handle_Geom_Curve & C3D,const Standard_Real aT1,const Standard_Real aT2,Handle_Geom2d_Curve & aC,Standard_Real &OutValue);
-		%feature("compactdefaultargs") MakePCurveOfType;
-		%feature("autodoc", "	* Make empty P-Curve <aC> of relevant to <PC> type
-
-	:param PC:
-	:type PC: ProjLib_ProjectedCurve &
-	:param aC:
-	:type aC: Handle_Geom2d_Curve &
-	:rtype: void
-") MakePCurveOfType;
-		static void MakePCurveOfType (const ProjLib_ProjectedCurve & PC,Handle_Geom2d_Curve & aC);
+		static void MakePCurveOnFace (const TopoDS_Face & aF,const Handle_Geom_Curve & C3D,const Standard_Real aT1,const Standard_Real aT2,Handle_Geom2d_Curve & aC,Standard_Real &OutValue,const Handle_IntTools_Context & theContext = Handle_IntTools_Context());
 		%feature("compactdefaultargs") AttachExistingPCurve;
 		%feature("autodoc", "	* Attach P-Curve from the edge <aEold> on surface <aF> to the edge <aEnew> Returns 0 in case of success
 
@@ -964,6 +1007,20 @@ class BOPTools_AlgoTools2D {
 	:rtype: int
 ") AttachExistingPCurve;
 		static Standard_Integer AttachExistingPCurve (const TopoDS_Edge & aEold,const TopoDS_Edge & aEnew,const TopoDS_Face & aF,const Handle_IntTools_Context & aCtx);
+		%feature("compactdefaultargs") IsEdgeIsoline;
+		%feature("autodoc", "	* Checks if CurveOnSurface of theE on theF matches with isoline of theF surface. Sets corresponding values for isTheUIso and isTheVIso variables. ATTENTION!!! This method is based on comparation between direction of surface --which theF is based on-- iso-lines and the direction of the edge p-curve --on theF-- in middle-point of the p-curve. This method should be used carefully --e.g. BRep_Tool::IsClosed--...-- together-- in order to avoid false classification some p-curves as isoline --e.g. circle on a plane--.
+
+	:param theE:
+	:type theE: TopoDS_Edge &
+	:param theF:
+	:type theF: TopoDS_Face &
+	:param isTheUIso:
+	:type isTheUIso: bool
+	:param isTheVIso:
+	:type isTheVIso: bool
+	:rtype: void
+") IsEdgeIsoline;
+		static void IsEdgeIsoline (const TopoDS_Edge & theE,const TopoDS_Face & theF,Standard_Boolean &OutValue,Standard_Boolean &OutValue);
 };
 
 
@@ -985,7 +1042,7 @@ class BOPTools_AlgoTools3D {
 ") DoSplitSEAMOnFace;
 		static void DoSplitSEAMOnFace (const TopoDS_Edge & aSp,const TopoDS_Face & aF);
 		%feature("compactdefaultargs") GetNormalToFaceOnEdge;
-		%feature("autodoc", "	* Computes normal to the face <aF> for the point on the edge <aE> at parameter <aT>
+		%feature("autodoc", "	* Computes normal to the face <aF> for the point on the edge <aE> at parameter <aT>. <theContext> - storage for caching the geometrical tools
 
 	:param aE:
 	:type aE: TopoDS_Edge &
@@ -995,11 +1052,13 @@ class BOPTools_AlgoTools3D {
 	:type aT: float
 	:param aD:
 	:type aD: gp_Dir
+	:param theContext: default value is Handle_IntTools_Context()
+	:type theContext: Handle_IntTools_Context &
 	:rtype: void
 ") GetNormalToFaceOnEdge;
-		static void GetNormalToFaceOnEdge (const TopoDS_Edge & aE,const TopoDS_Face & aF,const Standard_Real aT,gp_Dir & aD);
+		static void GetNormalToFaceOnEdge (const TopoDS_Edge & aE,const TopoDS_Face & aF,const Standard_Real aT,gp_Dir & aD,const Handle_IntTools_Context & theContext = Handle_IntTools_Context());
 		%feature("compactdefaultargs") GetNormalToFaceOnEdge;
-		%feature("autodoc", "	* Computes normal to the face <aF> for the point on the edge <aE> at arbitrary intermediate parameter
+		%feature("autodoc", "	* Computes normal to the face <aF> for the point on the edge <aE> at arbitrary intermediate parameter. <theContext> - storage for caching the geometrical tools
 
 	:param aE:
 	:type aE: TopoDS_Edge &
@@ -1007,11 +1066,13 @@ class BOPTools_AlgoTools3D {
 	:type aF: TopoDS_Face &
 	:param aD:
 	:type aD: gp_Dir
+	:param theContext: default value is Handle_IntTools_Context()
+	:type theContext: Handle_IntTools_Context &
 	:rtype: void
 ") GetNormalToFaceOnEdge;
-		static void GetNormalToFaceOnEdge (const TopoDS_Edge & aE,const TopoDS_Face & aF,gp_Dir & aD);
+		static void GetNormalToFaceOnEdge (const TopoDS_Edge & aE,const TopoDS_Face & aF,gp_Dir & aD,const Handle_IntTools_Context & theContext = Handle_IntTools_Context());
 		%feature("compactdefaultargs") SenseFlag;
-		%feature("autodoc", "	* Returns 1 if scalar product aNF1* aNF2>0. Returns 0 if directions aNF1 aNF2 coinside Returns -1 if scalar product aNF1* aNF2<0.
+		%feature("autodoc", "	* Returns 1 if scalar product aNF1* aNF2>0. Returns 0 if directions aNF1 aNF2 coincide Returns -1 if scalar product aNF1* aNF2<0.
 
 	:param aNF1:
 	:type aNF1: gp_Dir
@@ -1021,7 +1082,7 @@ class BOPTools_AlgoTools3D {
 ") SenseFlag;
 		static Standard_Integer SenseFlag (const gp_Dir & aNF1,const gp_Dir & aNF2);
 		%feature("compactdefaultargs") GetNormalToSurface;
-		%feature("autodoc", "	* Compute normal <aD> to surface <aS> in point (U,V) Returns True if directions aD1U, aD1V coinside
+		%feature("autodoc", "	* Compute normal <aD> to surface <aS> in point --U,V-- Returns True if directions aD1U, aD1V coincide
 
 	:param aS:
 	:type aS: Handle_Geom_Surface &
@@ -1035,7 +1096,7 @@ class BOPTools_AlgoTools3D {
 ") GetNormalToSurface;
 		static Standard_Boolean GetNormalToSurface (const Handle_Geom_Surface & aS,const Standard_Real U,const Standard_Real V,gp_Dir & aD);
 		%feature("compactdefaultargs") GetApproxNormalToFaceOnEdge;
-		%feature("autodoc", "	* Computes normal to the face <aF> for the 3D-point that belonds to the edge <aE> at parameter <aT>. Output: aPx - the 3D-point where the normal computed aD - the normal; //! Warning: The normal is computed not exactly in the point on the edge, but in point that is near to the edge towards to the face material (so, we'll have approx. normal)
+		%feature("autodoc", "	* Computes normal to the face <aF> for the 3D-point that belongs to the edge <aE> at parameter <aT>. Output: aPx - the 3D-point where the normal computed aD - the normal; Warning: The normal is computed not exactly in the point on the edge, but in point that is near to the edge towards to the face material --so, we'll have approx. normal--; The point is computed using PointNearEdge function, with the shifting value BOPTools_AlgoTools3D::MinStepIn2d----, from the edge, but if this value is too big, the point will be computed using Hatcher --PointInFace function--. Returns True in case of success.
 
 	:param aE:
 	:type aE: TopoDS_Edge &
@@ -1049,11 +1110,13 @@ class BOPTools_AlgoTools3D {
 	:type aD: gp_Dir
 	:param theContext:
 	:type theContext: Handle_IntTools_Context &
-	:rtype: void
+	:rtype: bool
 ") GetApproxNormalToFaceOnEdge;
-		static void GetApproxNormalToFaceOnEdge (const TopoDS_Edge & aE,const TopoDS_Face & aF,const Standard_Real aT,gp_Pnt & aPx,gp_Dir & aD,Handle_IntTools_Context & theContext);
+		static Standard_Boolean GetApproxNormalToFaceOnEdge (const TopoDS_Edge & aE,const TopoDS_Face & aF,const Standard_Real aT,gp_Pnt & aPx,gp_Dir & aD,Handle_IntTools_Context & theContext);
 		%feature("compactdefaultargs") GetApproxNormalToFaceOnEdge;
-		%feature("autodoc", "	:param theE:
+		%feature("autodoc", "	* Computes normal to the face <aF> for the 3D-point that belongs to the edge <aE> at parameter <aT>. Output: aPx - the 3D-point where the normal computed aD - the normal; Warning: The normal is computed not exactly in the point on the edge, but in point that is near to the edge towards to the face material --so, we'll have approx. normal--; The point is computed using PointNearEdge function with the shifting value <aDt2D> from the edge; No checks on this value will be done. Returns True in case of success.
+
+	:param theE:
 	:type theE: TopoDS_Edge &
 	:param theF:
 	:type theF: TopoDS_Face &
@@ -1065,11 +1128,31 @@ class BOPTools_AlgoTools3D {
 	:type aDNF: gp_Dir
 	:param aDt2D:
 	:type aDt2D: float
-	:rtype: void
+	:rtype: bool
 ") GetApproxNormalToFaceOnEdge;
-		static void GetApproxNormalToFaceOnEdge (const TopoDS_Edge & theE,const TopoDS_Face & theF,const Standard_Real aT,gp_Pnt & aP,gp_Dir & aDNF,const Standard_Real aDt2D);
+		static Standard_Boolean GetApproxNormalToFaceOnEdge (const TopoDS_Edge & theE,const TopoDS_Face & theF,const Standard_Real aT,gp_Pnt & aP,gp_Dir & aDNF,const Standard_Real aDt2D);
+		%feature("compactdefaultargs") GetApproxNormalToFaceOnEdge;
+		%feature("autodoc", "	* Computes normal to the face <aF> for the 3D-point that belongs to the edge <aE> at parameter <aT>. Output: aPx - the 3D-point where the normal computed aD - the normal; Warning: The normal is computed not exactly in the point on the edge, but in point that is near to the edge towards to the face material --so, we'll have approx. normal--; The point is computed using PointNearEdge function with the shifting value <aDt2D> from the edge, but if this value is too big the point will be computed using Hatcher --PointInFace function--. Returns True in case of success.
+
+	:param theE:
+	:type theE: TopoDS_Edge &
+	:param theF:
+	:type theF: TopoDS_Face &
+	:param aT:
+	:type aT: float
+	:param aDt2D:
+	:type aDt2D: float
+	:param aP:
+	:type aP: gp_Pnt
+	:param aDNF:
+	:type aDNF: gp_Dir
+	:param theContext:
+	:type theContext: Handle_IntTools_Context &
+	:rtype: bool
+") GetApproxNormalToFaceOnEdge;
+		static Standard_Boolean GetApproxNormalToFaceOnEdge (const TopoDS_Edge & theE,const TopoDS_Face & theF,const Standard_Real aT,const Standard_Real aDt2D,gp_Pnt & aP,gp_Dir & aDNF,Handle_IntTools_Context & theContext);
 		%feature("compactdefaultargs") PointNearEdge;
-		%feature("autodoc", "	* Compute the point <aPx>, (<aP2D>) that is near to the edge <aE> at parameter <aT> towards to the material of the face <aF>. The value of shifting in 2D is <aDt2D>
+		%feature("autodoc", "	* Compute the point <aPx>, --<aP2D>-- that is near to the edge <aE> at parameter <aT> towards to the material of the face <aF>. The value of shifting in 2D is <aDt2D> If the value of shifting is too big the point will be computed using Hatcher --PointInFace function--. Returns error status: 0 - in case of success; 1 - <aE> does not have 2d curve on the face <aF>; 2 - the computed point is out of the face.
 
 	:param aE:
 	:type aE: TopoDS_Edge &
@@ -1083,11 +1166,31 @@ class BOPTools_AlgoTools3D {
 	:type aP2D: gp_Pnt2d
 	:param aPx:
 	:type aPx: gp_Pnt
-	:rtype: void
+	:param theContext:
+	:type theContext: Handle_IntTools_Context &
+	:rtype: int
 ") PointNearEdge;
-		static void PointNearEdge (const TopoDS_Edge & aE,const TopoDS_Face & aF,const Standard_Real aT,const Standard_Real aDt2D,gp_Pnt2d & aP2D,gp_Pnt & aPx);
+		static Standard_Integer PointNearEdge (const TopoDS_Edge & aE,const TopoDS_Face & aF,const Standard_Real aT,const Standard_Real aDt2D,gp_Pnt2d & aP2D,gp_Pnt & aPx,Handle_IntTools_Context & theContext);
 		%feature("compactdefaultargs") PointNearEdge;
-		%feature("autodoc", "	* Computes the point <aPx>, (<aP2D>) that is near to the edge <aE> at parameter <aT> towards to the material of the face <aF>. The value of shifting in 2D is dt2D=BOPTools_AlgoTools3D::MinStepIn2d()
+		%feature("autodoc", "	* Compute the point <aPx>, --<aP2D>-- that is near to the edge <aE> at parameter <aT> towards to the material of the face <aF>. The value of shifting in 2D is <aDt2D>. No checks on this value will be done. Returns error status: 0 - in case of success; 1 - <aE> does not have 2d curve on the face <aF>.
+
+	:param aE:
+	:type aE: TopoDS_Edge &
+	:param aF:
+	:type aF: TopoDS_Face &
+	:param aT:
+	:type aT: float
+	:param aDt2D:
+	:type aDt2D: float
+	:param aP2D:
+	:type aP2D: gp_Pnt2d
+	:param aPx:
+	:type aPx: gp_Pnt
+	:rtype: int
+") PointNearEdge;
+		static Standard_Integer PointNearEdge (const TopoDS_Edge & aE,const TopoDS_Face & aF,const Standard_Real aT,const Standard_Real aDt2D,gp_Pnt2d & aP2D,gp_Pnt & aPx);
+		%feature("compactdefaultargs") PointNearEdge;
+		%feature("autodoc", "	* Computes the point <aPx>, --<aP2D>-- that is near to the edge <aE> at parameter <aT> towards to the material of the face <aF>. The value of shifting in 2D is dt2D=BOPTools_AlgoTools3D::MinStepIn2d---- If the value of shifting is too big the point will be computed using Hatcher --PointInFace function--. Returns error status: 0 - in case of success; 1 - <aE> does not have 2d curve on the face <aF>; 2 - the computed point is out of the face.
 
 	:param aE:
 	:type aE: TopoDS_Edge &
@@ -1101,11 +1204,11 @@ class BOPTools_AlgoTools3D {
 	:type aPx: gp_Pnt
 	:param theContext:
 	:type theContext: Handle_IntTools_Context &
-	:rtype: void
+	:rtype: int
 ") PointNearEdge;
-		static void PointNearEdge (const TopoDS_Edge & aE,const TopoDS_Face & aF,const Standard_Real aT,gp_Pnt2d & aP2D,gp_Pnt & aPx,Handle_IntTools_Context & theContext);
+		static Standard_Integer PointNearEdge (const TopoDS_Edge & aE,const TopoDS_Face & aF,const Standard_Real aT,gp_Pnt2d & aP2D,gp_Pnt & aPx,Handle_IntTools_Context & theContext);
 		%feature("compactdefaultargs") PointNearEdge;
-		%feature("autodoc", "	* Compute the point <aPx>, (<aP2D>) that is near to the edge <aE> at arbitrary parameter towards to the material of the face <aF>. The value of shifting in 2D is dt2D=BOPTools_AlgoTools3D::MinStepIn2d()
+		%feature("autodoc", "	* Compute the point <aPx>, --<aP2D>-- that is near to the edge <aE> at arbitrary parameter towards to the material of the face <aF>. The value of shifting in 2D is dt2D=BOPTools_AlgoTools3D::MinStepIn2d----. If the value of shifting is too big the point will be computed using Hatcher --PointInFace function--. Returns error status: 0 - in case of success; 1 - <aE> does not have 2d curve on the face <aF>; 2 - the computed point is out of the face.
 
 	:param aE:
 	:type aE: TopoDS_Edge &
@@ -1117,9 +1220,9 @@ class BOPTools_AlgoTools3D {
 	:type aPx: gp_Pnt
 	:param theContext:
 	:type theContext: Handle_IntTools_Context &
-	:rtype: void
+	:rtype: int
 ") PointNearEdge;
-		static void PointNearEdge (const TopoDS_Edge & aE,const TopoDS_Face & aF,gp_Pnt2d & aP2D,gp_Pnt & aPx,Handle_IntTools_Context & theContext);
+		static Standard_Integer PointNearEdge (const TopoDS_Edge & aE,const TopoDS_Face & aF,gp_Pnt2d & aP2D,gp_Pnt & aPx,Handle_IntTools_Context & theContext);
 		%feature("compactdefaultargs") MinStepIn2d;
 		%feature("autodoc", "	* Returns simple step value that is used in 2D-computations = 1.e-5
 
@@ -1127,7 +1230,7 @@ class BOPTools_AlgoTools3D {
 ") MinStepIn2d;
 		static Standard_Real MinStepIn2d ();
 		%feature("compactdefaultargs") IsEmptyShape;
-		%feature("autodoc", "	* Returns True if the shape <aS> does not contain geometry information (e.g. empty compound)
+		%feature("autodoc", "	* Returns True if the shape <aS> does not contain geometry information --e.g. empty compound--
 
 	:param aS:
 	:type aS: TopoDS_Shape &
@@ -1147,7 +1250,7 @@ class BOPTools_AlgoTools3D {
 ") OrientEdgeOnFace;
 		static void OrientEdgeOnFace (const TopoDS_Edge & aE,const TopoDS_Face & aF,TopoDS_Edge & aER);
 		%feature("compactdefaultargs") PointInFace;
-		%feature("autodoc", "	* Computes a point <theP> inside the face <theF>. <theP2D> - 2D representation of <theP> on the surface of <theF> Returns 0 in case of success.
+		%feature("autodoc", "	* Computes arbitrary point <theP> inside the face <theF>. <theP2D> - 2D representation of <theP> on the surface of <theF> Returns 0 in case of success.
 
 	:param theF:
 	:type theF: TopoDS_Face &
@@ -1160,6 +1263,44 @@ class BOPTools_AlgoTools3D {
 	:rtype: int
 ") PointInFace;
 		static Standard_Integer PointInFace (const TopoDS_Face & theF,gp_Pnt & theP,gp_Pnt2d & theP2D,Handle_IntTools_Context & theContext);
+		%feature("compactdefaultargs") PointInFace;
+		%feature("autodoc", "	* Computes a point <theP> inside the face <theF> using starting point taken by the parameter <theT> from the 2d curve of the edge <theE> on the face <theF> in the direction perpendicular to the tangent vector of the 2d curve of the edge. The point will be distanced on <theDt2D> from the 2d curve. <theP2D> - 2D representation of <theP> on the surface of <theF> Returns 0 in case of success.
+
+	:param theF:
+	:type theF: TopoDS_Face &
+	:param theE:
+	:type theE: TopoDS_Edge &
+	:param theT:
+	:type theT: float
+	:param theDt2D:
+	:type theDt2D: float
+	:param theP:
+	:type theP: gp_Pnt
+	:param theP2D:
+	:type theP2D: gp_Pnt2d
+	:param theContext:
+	:type theContext: Handle_IntTools_Context &
+	:rtype: int
+") PointInFace;
+		static Standard_Integer PointInFace (const TopoDS_Face & theF,const TopoDS_Edge & theE,const Standard_Real theT,const Standard_Real theDt2D,gp_Pnt & theP,gp_Pnt2d & theP2D,Handle_IntTools_Context & theContext);
+		%feature("compactdefaultargs") PointInFace;
+		%feature("autodoc", "	* Computes a point <theP> inside the face <theF> using the line <theL> so that 2D point <theP2D>, 2D representation of <theP> on the surface of <theF>, lies on that line. Returns 0 in case of success.
+
+	:param theF:
+	:type theF: TopoDS_Face &
+	:param theL:
+	:type theL: Handle_Geom2d_Curve &
+	:param theP:
+	:type theP: gp_Pnt
+	:param theP2D:
+	:type theP2D: gp_Pnt2d
+	:param theContext:
+	:type theContext: Handle_IntTools_Context &
+	:param theDt2D: default value is 0.0
+	:type theDt2D: float
+	:rtype: int
+") PointInFace;
+		static Standard_Integer PointInFace (const TopoDS_Face & theF,const Handle_Geom2d_Curve & theL,gp_Pnt & theP,gp_Pnt2d & theP2D,Handle_IntTools_Context & theContext,const Standard_Real theDt2D = 0.0);
 };
 
 

@@ -1,5 +1,5 @@
 /*
-Copyright 2008-2017 Thomas Paviot (tpaviot@gmail.com)
+Copyright 2008-2018 Thomas Paviot (tpaviot@gmail.com)
 
 
 This file is part of pythonOCC.
@@ -55,6 +55,9 @@ def register_handle(handle, base_object):
 
 /* typedefs */
 /* end typedefs declaration */
+
+/* templates */
+/* end templates declaration */
 
 /* public enums */
 /* end public enums declaration */
@@ -147,19 +150,20 @@ class Handle_BinMFunction_FunctionDriver : public Handle_BinMDF_ADriver {
         static const Handle_BinMFunction_FunctionDriver DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_BinMFunction_FunctionDriver {
     BinMFunction_FunctionDriver* _get_reference() {
-    return (BinMFunction_FunctionDriver*)$self->Access();
+    return (BinMFunction_FunctionDriver*)$self->get();
     }
 };
 
 %extend Handle_BinMFunction_FunctionDriver {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend BinMFunction_FunctionDriver {
@@ -234,19 +238,20 @@ class Handle_BinMFunction_GraphNodeDriver : public Handle_BinMDF_ADriver {
         static const Handle_BinMFunction_GraphNodeDriver DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_BinMFunction_GraphNodeDriver {
     BinMFunction_GraphNodeDriver* _get_reference() {
-    return (BinMFunction_GraphNodeDriver*)$self->Access();
+    return (BinMFunction_GraphNodeDriver*)$self->get();
     }
 };
 
 %extend Handle_BinMFunction_GraphNodeDriver {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend BinMFunction_GraphNodeDriver {
@@ -321,19 +326,20 @@ class Handle_BinMFunction_ScopeDriver : public Handle_BinMDF_ADriver {
         static const Handle_BinMFunction_ScopeDriver DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_BinMFunction_ScopeDriver {
     BinMFunction_ScopeDriver* _get_reference() {
-    return (BinMFunction_ScopeDriver*)$self->Access();
+    return (BinMFunction_ScopeDriver*)$self->get();
     }
 };
 
 %extend Handle_BinMFunction_ScopeDriver {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend BinMFunction_ScopeDriver {

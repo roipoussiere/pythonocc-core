@@ -1,5 +1,5 @@
 /*
-Copyright 2008-2017 Thomas Paviot (tpaviot@gmail.com)
+Copyright 2008-2018 Thomas Paviot (tpaviot@gmail.com)
 
 
 This file is part of pythonOCC.
@@ -56,6 +56,9 @@ def register_handle(handle, base_object):
 /* typedefs */
 /* end typedefs declaration */
 
+/* templates */
+/* end templates declaration */
+
 /* public enums */
 /* end public enums declaration */
 
@@ -93,7 +96,7 @@ class RWStepAP203_RWCcDesignApproval {
 ") WriteStep;
 		void WriteStep (StepData_StepWriter & SW,const Handle_StepAP203_CcDesignApproval & ent);
 		%feature("compactdefaultargs") Share;
-		%feature("autodoc", "	* Fills data for graph (shared items)
+		%feature("autodoc", "	* Fills data for graph --shared items--
 
 	:param ent:
 	:type ent: Handle_StepAP203_CcDesignApproval &
@@ -144,7 +147,7 @@ class RWStepAP203_RWCcDesignCertification {
 ") WriteStep;
 		void WriteStep (StepData_StepWriter & SW,const Handle_StepAP203_CcDesignCertification & ent);
 		%feature("compactdefaultargs") Share;
-		%feature("autodoc", "	* Fills data for graph (shared items)
+		%feature("autodoc", "	* Fills data for graph --shared items--
 
 	:param ent:
 	:type ent: Handle_StepAP203_CcDesignCertification &
@@ -195,7 +198,7 @@ class RWStepAP203_RWCcDesignContract {
 ") WriteStep;
 		void WriteStep (StepData_StepWriter & SW,const Handle_StepAP203_CcDesignContract & ent);
 		%feature("compactdefaultargs") Share;
-		%feature("autodoc", "	* Fills data for graph (shared items)
+		%feature("autodoc", "	* Fills data for graph --shared items--
 
 	:param ent:
 	:type ent: Handle_StepAP203_CcDesignContract &
@@ -246,7 +249,7 @@ class RWStepAP203_RWCcDesignDateAndTimeAssignment {
 ") WriteStep;
 		void WriteStep (StepData_StepWriter & SW,const Handle_StepAP203_CcDesignDateAndTimeAssignment & ent);
 		%feature("compactdefaultargs") Share;
-		%feature("autodoc", "	* Fills data for graph (shared items)
+		%feature("autodoc", "	* Fills data for graph --shared items--
 
 	:param ent:
 	:type ent: Handle_StepAP203_CcDesignDateAndTimeAssignment &
@@ -297,7 +300,7 @@ class RWStepAP203_RWCcDesignPersonAndOrganizationAssignment {
 ") WriteStep;
 		void WriteStep (StepData_StepWriter & SW,const Handle_StepAP203_CcDesignPersonAndOrganizationAssignment & ent);
 		%feature("compactdefaultargs") Share;
-		%feature("autodoc", "	* Fills data for graph (shared items)
+		%feature("autodoc", "	* Fills data for graph --shared items--
 
 	:param ent:
 	:type ent: Handle_StepAP203_CcDesignPersonAndOrganizationAssignment &
@@ -348,7 +351,7 @@ class RWStepAP203_RWCcDesignSecurityClassification {
 ") WriteStep;
 		void WriteStep (StepData_StepWriter & SW,const Handle_StepAP203_CcDesignSecurityClassification & ent);
 		%feature("compactdefaultargs") Share;
-		%feature("autodoc", "	* Fills data for graph (shared items)
+		%feature("autodoc", "	* Fills data for graph --shared items--
 
 	:param ent:
 	:type ent: Handle_StepAP203_CcDesignSecurityClassification &
@@ -399,7 +402,7 @@ class RWStepAP203_RWCcDesignSpecificationReference {
 ") WriteStep;
 		void WriteStep (StepData_StepWriter & SW,const Handle_StepAP203_CcDesignSpecificationReference & ent);
 		%feature("compactdefaultargs") Share;
-		%feature("autodoc", "	* Fills data for graph (shared items)
+		%feature("autodoc", "	* Fills data for graph --shared items--
 
 	:param ent:
 	:type ent: Handle_StepAP203_CcDesignSpecificationReference &
@@ -450,7 +453,7 @@ class RWStepAP203_RWChange {
 ") WriteStep;
 		void WriteStep (StepData_StepWriter & SW,const Handle_StepAP203_Change & ent);
 		%feature("compactdefaultargs") Share;
-		%feature("autodoc", "	* Fills data for graph (shared items)
+		%feature("autodoc", "	* Fills data for graph --shared items--
 
 	:param ent:
 	:type ent: Handle_StepAP203_Change &
@@ -501,7 +504,7 @@ class RWStepAP203_RWChangeRequest {
 ") WriteStep;
 		void WriteStep (StepData_StepWriter & SW,const Handle_StepAP203_ChangeRequest & ent);
 		%feature("compactdefaultargs") Share;
-		%feature("autodoc", "	* Fills data for graph (shared items)
+		%feature("autodoc", "	* Fills data for graph --shared items--
 
 	:param ent:
 	:type ent: Handle_StepAP203_ChangeRequest &
@@ -552,7 +555,7 @@ class RWStepAP203_RWStartRequest {
 ") WriteStep;
 		void WriteStep (StepData_StepWriter & SW,const Handle_StepAP203_StartRequest & ent);
 		%feature("compactdefaultargs") Share;
-		%feature("autodoc", "	* Fills data for graph (shared items)
+		%feature("autodoc", "	* Fills data for graph --shared items--
 
 	:param ent:
 	:type ent: Handle_StepAP203_StartRequest &
@@ -603,7 +606,7 @@ class RWStepAP203_RWStartWork {
 ") WriteStep;
 		void WriteStep (StepData_StepWriter & SW,const Handle_StepAP203_StartWork & ent);
 		%feature("compactdefaultargs") Share;
-		%feature("autodoc", "	* Fills data for graph (shared items)
+		%feature("autodoc", "	* Fills data for graph --shared items--
 
 	:param ent:
 	:type ent: Handle_StepAP203_StartWork &

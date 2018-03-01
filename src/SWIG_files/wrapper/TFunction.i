@@ -1,5 +1,5 @@
 /*
-Copyright 2008-2017 Thomas Paviot (tpaviot@gmail.com)
+Copyright 2008-2018 Thomas Paviot (tpaviot@gmail.com)
 
 
 This file is part of pythonOCC.
@@ -56,6 +56,13 @@ def register_handle(handle, base_object):
 /* typedefs */
 /* end typedefs declaration */
 
+/* templates */
+%template(TFunction_Array1OfDataMapOfGUIDDriver) NCollection_Array1 <TFunction_DataMapOfGUIDDriver>;
+%template(TFunction_DataMapOfGUIDDriver) NCollection_DataMap <Standard_GUID , Handle_TFunction_Driver , Standard_GUID>;
+%template(TFunction_DoubleMapOfIntegerLabel) NCollection_DoubleMap <Standard_Integer , TDF_Label , TColStd_MapIntegerHasher , TDF_LabelMapHasher>;
+%template(TFunction_DataMapOfLabelListOfLabel) NCollection_DataMap <TDF_Label , TDF_LabelList , TDF_LabelMapHasher>;
+/* end templates declaration */
+
 /* public enums */
 enum TFunction_ExecutionStatus {
 	TFunction_ES_WrongDefinition = 0,
@@ -67,697 +74,8 @@ enum TFunction_ExecutionStatus {
 
 /* end public enums declaration */
 
-%nodefaultctor TFunction_Array1OfDataMapOfGUIDDriver;
-class TFunction_Array1OfDataMapOfGUIDDriver {
-	public:
-		%feature("compactdefaultargs") TFunction_Array1OfDataMapOfGUIDDriver;
-		%feature("autodoc", "	:param Low:
-	:type Low: int
-	:param Up:
-	:type Up: int
-	:rtype: None
-") TFunction_Array1OfDataMapOfGUIDDriver;
-		 TFunction_Array1OfDataMapOfGUIDDriver (const Standard_Integer Low,const Standard_Integer Up);
-		%feature("compactdefaultargs") TFunction_Array1OfDataMapOfGUIDDriver;
-		%feature("autodoc", "	:param Item:
-	:type Item: TFunction_DataMapOfGUIDDriver &
-	:param Low:
-	:type Low: int
-	:param Up:
-	:type Up: int
-	:rtype: None
-") TFunction_Array1OfDataMapOfGUIDDriver;
-		 TFunction_Array1OfDataMapOfGUIDDriver (const TFunction_DataMapOfGUIDDriver & Item,const Standard_Integer Low,const Standard_Integer Up);
-		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	:param V:
-	:type V: TFunction_DataMapOfGUIDDriver &
-	:rtype: None
-") Init;
-		void Init (const TFunction_DataMapOfGUIDDriver & V);
-		%feature("compactdefaultargs") Destroy;
-		%feature("autodoc", "	:rtype: None
-") Destroy;
-		void Destroy ();
-		%feature("compactdefaultargs") IsAllocated;
-		%feature("autodoc", "	:rtype: bool
-") IsAllocated;
-		Standard_Boolean IsAllocated ();
-		%feature("compactdefaultargs") Assign;
-		%feature("autodoc", "	:param Other:
-	:type Other: TFunction_Array1OfDataMapOfGUIDDriver &
-	:rtype: TFunction_Array1OfDataMapOfGUIDDriver
-") Assign;
-		const TFunction_Array1OfDataMapOfGUIDDriver & Assign (const TFunction_Array1OfDataMapOfGUIDDriver & Other);
-		%feature("compactdefaultargs") operator =;
-		%feature("autodoc", "	:param Other:
-	:type Other: TFunction_Array1OfDataMapOfGUIDDriver &
-	:rtype: TFunction_Array1OfDataMapOfGUIDDriver
-") operator =;
-		const TFunction_Array1OfDataMapOfGUIDDriver & operator = (const TFunction_Array1OfDataMapOfGUIDDriver & Other);
-		%feature("compactdefaultargs") Length;
-		%feature("autodoc", "	:rtype: int
-") Length;
-		Standard_Integer Length ();
-		%feature("compactdefaultargs") Lower;
-		%feature("autodoc", "	:rtype: int
-") Lower;
-		Standard_Integer Lower ();
-		%feature("compactdefaultargs") Upper;
-		%feature("autodoc", "	:rtype: int
-") Upper;
-		Standard_Integer Upper ();
-		%feature("compactdefaultargs") SetValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param Value:
-	:type Value: TFunction_DataMapOfGUIDDriver &
-	:rtype: None
-") SetValue;
-		void SetValue (const Standard_Integer Index,const TFunction_DataMapOfGUIDDriver & Value);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: TFunction_DataMapOfGUIDDriver
-") Value;
-		const TFunction_DataMapOfGUIDDriver & Value (const Standard_Integer Index);
-		%feature("compactdefaultargs") ChangeValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: TFunction_DataMapOfGUIDDriver
-") ChangeValue;
-		TFunction_DataMapOfGUIDDriver & ChangeValue (const Standard_Integer Index);
-};
-
-
-%extend TFunction_Array1OfDataMapOfGUIDDriver {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor TFunction_DataMapIteratorOfDataMapOfGUIDDriver;
-class TFunction_DataMapIteratorOfDataMapOfGUIDDriver : public TCollection_BasicMapIterator {
-	public:
-		%feature("compactdefaultargs") TFunction_DataMapIteratorOfDataMapOfGUIDDriver;
-		%feature("autodoc", "	:rtype: None
-") TFunction_DataMapIteratorOfDataMapOfGUIDDriver;
-		 TFunction_DataMapIteratorOfDataMapOfGUIDDriver ();
-		%feature("compactdefaultargs") TFunction_DataMapIteratorOfDataMapOfGUIDDriver;
-		%feature("autodoc", "	:param aMap:
-	:type aMap: TFunction_DataMapOfGUIDDriver &
-	:rtype: None
-") TFunction_DataMapIteratorOfDataMapOfGUIDDriver;
-		 TFunction_DataMapIteratorOfDataMapOfGUIDDriver (const TFunction_DataMapOfGUIDDriver & aMap);
-		%feature("compactdefaultargs") Initialize;
-		%feature("autodoc", "	:param aMap:
-	:type aMap: TFunction_DataMapOfGUIDDriver &
-	:rtype: None
-") Initialize;
-		void Initialize (const TFunction_DataMapOfGUIDDriver & aMap);
-		%feature("compactdefaultargs") Key;
-		%feature("autodoc", "	:rtype: Standard_GUID
-") Key;
-		const Standard_GUID & Key ();
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:rtype: Handle_TFunction_Driver
-") Value;
-		Handle_TFunction_Driver Value ();
-};
-
-
-%extend TFunction_DataMapIteratorOfDataMapOfGUIDDriver {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor TFunction_DataMapIteratorOfDataMapOfLabelListOfLabel;
-class TFunction_DataMapIteratorOfDataMapOfLabelListOfLabel : public TCollection_BasicMapIterator {
-	public:
-		%feature("compactdefaultargs") TFunction_DataMapIteratorOfDataMapOfLabelListOfLabel;
-		%feature("autodoc", "	:rtype: None
-") TFunction_DataMapIteratorOfDataMapOfLabelListOfLabel;
-		 TFunction_DataMapIteratorOfDataMapOfLabelListOfLabel ();
-		%feature("compactdefaultargs") TFunction_DataMapIteratorOfDataMapOfLabelListOfLabel;
-		%feature("autodoc", "	:param aMap:
-	:type aMap: TFunction_DataMapOfLabelListOfLabel &
-	:rtype: None
-") TFunction_DataMapIteratorOfDataMapOfLabelListOfLabel;
-		 TFunction_DataMapIteratorOfDataMapOfLabelListOfLabel (const TFunction_DataMapOfLabelListOfLabel & aMap);
-		%feature("compactdefaultargs") Initialize;
-		%feature("autodoc", "	:param aMap:
-	:type aMap: TFunction_DataMapOfLabelListOfLabel &
-	:rtype: None
-") Initialize;
-		void Initialize (const TFunction_DataMapOfLabelListOfLabel & aMap);
-		%feature("compactdefaultargs") Key;
-		%feature("autodoc", "	:rtype: TDF_Label
-") Key;
-		const TDF_Label & Key ();
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:rtype: TDF_LabelList
-") Value;
-		const TDF_LabelList & Value ();
-};
-
-
-%extend TFunction_DataMapIteratorOfDataMapOfLabelListOfLabel {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor TFunction_DataMapNodeOfDataMapOfGUIDDriver;
-class TFunction_DataMapNodeOfDataMapOfGUIDDriver : public TCollection_MapNode {
-	public:
-		%feature("compactdefaultargs") TFunction_DataMapNodeOfDataMapOfGUIDDriver;
-		%feature("autodoc", "	:param K:
-	:type K: Standard_GUID &
-	:param I:
-	:type I: Handle_TFunction_Driver &
-	:param n:
-	:type n: TCollection_MapNodePtr &
-	:rtype: None
-") TFunction_DataMapNodeOfDataMapOfGUIDDriver;
-		 TFunction_DataMapNodeOfDataMapOfGUIDDriver (const Standard_GUID & K,const Handle_TFunction_Driver & I,const TCollection_MapNodePtr & n);
-		%feature("compactdefaultargs") Key;
-		%feature("autodoc", "	:rtype: Standard_GUID
-") Key;
-		Standard_GUID & Key ();
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:rtype: Handle_TFunction_Driver
-") Value;
-		Handle_TFunction_Driver Value ();
-};
-
-
-%extend TFunction_DataMapNodeOfDataMapOfGUIDDriver {
-	%pythoncode {
-		def GetHandle(self):
-		    try:
-		        return self.thisHandle
-		    except:
-		        self.thisHandle = Handle_TFunction_DataMapNodeOfDataMapOfGUIDDriver(self)
-		        self.thisown = False
-		        return self.thisHandle
-	}
-};
-
-%pythonappend Handle_TFunction_DataMapNodeOfDataMapOfGUIDDriver::Handle_TFunction_DataMapNodeOfDataMapOfGUIDDriver %{
-    # register the handle in the base object
-    if len(args) > 0:
-        register_handle(self, args[0])
-%}
-
-%nodefaultctor Handle_TFunction_DataMapNodeOfDataMapOfGUIDDriver;
-class Handle_TFunction_DataMapNodeOfDataMapOfGUIDDriver : public Handle_TCollection_MapNode {
-
-    public:
-        // constructors
-        Handle_TFunction_DataMapNodeOfDataMapOfGUIDDriver();
-        Handle_TFunction_DataMapNodeOfDataMapOfGUIDDriver(const Handle_TFunction_DataMapNodeOfDataMapOfGUIDDriver &aHandle);
-        Handle_TFunction_DataMapNodeOfDataMapOfGUIDDriver(const TFunction_DataMapNodeOfDataMapOfGUIDDriver *anItem);
-        void Nullify();
-        Standard_Boolean IsNull() const;
-        static const Handle_TFunction_DataMapNodeOfDataMapOfGUIDDriver DownCast(const Handle_Standard_Transient &AnObject);
-
-};
-%extend Handle_TFunction_DataMapNodeOfDataMapOfGUIDDriver {
-    TFunction_DataMapNodeOfDataMapOfGUIDDriver* _get_reference() {
-    return (TFunction_DataMapNodeOfDataMapOfGUIDDriver*)$self->Access();
-    }
-};
-
-%extend Handle_TFunction_DataMapNodeOfDataMapOfGUIDDriver {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
-};
-
-%extend TFunction_DataMapNodeOfDataMapOfGUIDDriver {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor TFunction_DataMapNodeOfDataMapOfLabelListOfLabel;
-class TFunction_DataMapNodeOfDataMapOfLabelListOfLabel : public TCollection_MapNode {
-	public:
-		%feature("compactdefaultargs") TFunction_DataMapNodeOfDataMapOfLabelListOfLabel;
-		%feature("autodoc", "	:param K:
-	:type K: TDF_Label &
-	:param I:
-	:type I: TDF_LabelList &
-	:param n:
-	:type n: TCollection_MapNodePtr &
-	:rtype: None
-") TFunction_DataMapNodeOfDataMapOfLabelListOfLabel;
-		 TFunction_DataMapNodeOfDataMapOfLabelListOfLabel (const TDF_Label & K,const TDF_LabelList & I,const TCollection_MapNodePtr & n);
-		%feature("compactdefaultargs") Key;
-		%feature("autodoc", "	:rtype: TDF_Label
-") Key;
-		TDF_Label & Key ();
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:rtype: TDF_LabelList
-") Value;
-		TDF_LabelList & Value ();
-};
-
-
-%extend TFunction_DataMapNodeOfDataMapOfLabelListOfLabel {
-	%pythoncode {
-		def GetHandle(self):
-		    try:
-		        return self.thisHandle
-		    except:
-		        self.thisHandle = Handle_TFunction_DataMapNodeOfDataMapOfLabelListOfLabel(self)
-		        self.thisown = False
-		        return self.thisHandle
-	}
-};
-
-%pythonappend Handle_TFunction_DataMapNodeOfDataMapOfLabelListOfLabel::Handle_TFunction_DataMapNodeOfDataMapOfLabelListOfLabel %{
-    # register the handle in the base object
-    if len(args) > 0:
-        register_handle(self, args[0])
-%}
-
-%nodefaultctor Handle_TFunction_DataMapNodeOfDataMapOfLabelListOfLabel;
-class Handle_TFunction_DataMapNodeOfDataMapOfLabelListOfLabel : public Handle_TCollection_MapNode {
-
-    public:
-        // constructors
-        Handle_TFunction_DataMapNodeOfDataMapOfLabelListOfLabel();
-        Handle_TFunction_DataMapNodeOfDataMapOfLabelListOfLabel(const Handle_TFunction_DataMapNodeOfDataMapOfLabelListOfLabel &aHandle);
-        Handle_TFunction_DataMapNodeOfDataMapOfLabelListOfLabel(const TFunction_DataMapNodeOfDataMapOfLabelListOfLabel *anItem);
-        void Nullify();
-        Standard_Boolean IsNull() const;
-        static const Handle_TFunction_DataMapNodeOfDataMapOfLabelListOfLabel DownCast(const Handle_Standard_Transient &AnObject);
-
-};
-%extend Handle_TFunction_DataMapNodeOfDataMapOfLabelListOfLabel {
-    TFunction_DataMapNodeOfDataMapOfLabelListOfLabel* _get_reference() {
-    return (TFunction_DataMapNodeOfDataMapOfLabelListOfLabel*)$self->Access();
-    }
-};
-
-%extend Handle_TFunction_DataMapNodeOfDataMapOfLabelListOfLabel {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
-};
-
-%extend TFunction_DataMapNodeOfDataMapOfLabelListOfLabel {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor TFunction_DataMapOfGUIDDriver;
-class TFunction_DataMapOfGUIDDriver : public TCollection_BasicMap {
-	public:
-		%feature("compactdefaultargs") TFunction_DataMapOfGUIDDriver;
-		%feature("autodoc", "	:param NbBuckets: default value is 1
-	:type NbBuckets: int
-	:rtype: None
-") TFunction_DataMapOfGUIDDriver;
-		 TFunction_DataMapOfGUIDDriver (const Standard_Integer NbBuckets = 1);
-		%feature("compactdefaultargs") Assign;
-		%feature("autodoc", "	:param Other:
-	:type Other: TFunction_DataMapOfGUIDDriver &
-	:rtype: TFunction_DataMapOfGUIDDriver
-") Assign;
-		TFunction_DataMapOfGUIDDriver & Assign (const TFunction_DataMapOfGUIDDriver & Other);
-		%feature("compactdefaultargs") operator =;
-		%feature("autodoc", "	:param Other:
-	:type Other: TFunction_DataMapOfGUIDDriver &
-	:rtype: TFunction_DataMapOfGUIDDriver
-") operator =;
-		TFunction_DataMapOfGUIDDriver & operator = (const TFunction_DataMapOfGUIDDriver & Other);
-		%feature("compactdefaultargs") ReSize;
-		%feature("autodoc", "	:param NbBuckets:
-	:type NbBuckets: int
-	:rtype: None
-") ReSize;
-		void ReSize (const Standard_Integer NbBuckets);
-		%feature("compactdefaultargs") Clear;
-		%feature("autodoc", "	:rtype: None
-") Clear;
-		void Clear ();
-		%feature("compactdefaultargs") Bind;
-		%feature("autodoc", "	:param K:
-	:type K: Standard_GUID &
-	:param I:
-	:type I: Handle_TFunction_Driver &
-	:rtype: bool
-") Bind;
-		Standard_Boolean Bind (const Standard_GUID & K,const Handle_TFunction_Driver & I);
-		%feature("compactdefaultargs") IsBound;
-		%feature("autodoc", "	:param K:
-	:type K: Standard_GUID &
-	:rtype: bool
-") IsBound;
-		Standard_Boolean IsBound (const Standard_GUID & K);
-		%feature("compactdefaultargs") UnBind;
-		%feature("autodoc", "	:param K:
-	:type K: Standard_GUID &
-	:rtype: bool
-") UnBind;
-		Standard_Boolean UnBind (const Standard_GUID & K);
-		%feature("compactdefaultargs") Find;
-		%feature("autodoc", "	:param K:
-	:type K: Standard_GUID &
-	:rtype: Handle_TFunction_Driver
-") Find;
-		Handle_TFunction_Driver Find (const Standard_GUID & K);
-		%feature("compactdefaultargs") ChangeFind;
-		%feature("autodoc", "	:param K:
-	:type K: Standard_GUID &
-	:rtype: Handle_TFunction_Driver
-") ChangeFind;
-		Handle_TFunction_Driver ChangeFind (const Standard_GUID & K);
-		%feature("compactdefaultargs") Find1;
-		%feature("autodoc", "	:param K:
-	:type K: Standard_GUID &
-	:rtype: Standard_Address
-") Find1;
-		Standard_Address Find1 (const Standard_GUID & K);
-		%feature("compactdefaultargs") ChangeFind1;
-		%feature("autodoc", "	:param K:
-	:type K: Standard_GUID &
-	:rtype: Standard_Address
-") ChangeFind1;
-		Standard_Address ChangeFind1 (const Standard_GUID & K);
-};
-
-
-%extend TFunction_DataMapOfGUIDDriver {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor TFunction_DataMapOfLabelListOfLabel;
-class TFunction_DataMapOfLabelListOfLabel : public TCollection_BasicMap {
-	public:
-		%feature("compactdefaultargs") TFunction_DataMapOfLabelListOfLabel;
-		%feature("autodoc", "	:param NbBuckets: default value is 1
-	:type NbBuckets: int
-	:rtype: None
-") TFunction_DataMapOfLabelListOfLabel;
-		 TFunction_DataMapOfLabelListOfLabel (const Standard_Integer NbBuckets = 1);
-		%feature("compactdefaultargs") Assign;
-		%feature("autodoc", "	:param Other:
-	:type Other: TFunction_DataMapOfLabelListOfLabel &
-	:rtype: TFunction_DataMapOfLabelListOfLabel
-") Assign;
-		TFunction_DataMapOfLabelListOfLabel & Assign (const TFunction_DataMapOfLabelListOfLabel & Other);
-		%feature("compactdefaultargs") operator =;
-		%feature("autodoc", "	:param Other:
-	:type Other: TFunction_DataMapOfLabelListOfLabel &
-	:rtype: TFunction_DataMapOfLabelListOfLabel
-") operator =;
-		TFunction_DataMapOfLabelListOfLabel & operator = (const TFunction_DataMapOfLabelListOfLabel & Other);
-		%feature("compactdefaultargs") ReSize;
-		%feature("autodoc", "	:param NbBuckets:
-	:type NbBuckets: int
-	:rtype: None
-") ReSize;
-		void ReSize (const Standard_Integer NbBuckets);
-		%feature("compactdefaultargs") Clear;
-		%feature("autodoc", "	:rtype: None
-") Clear;
-		void Clear ();
-		%feature("compactdefaultargs") Bind;
-		%feature("autodoc", "	:param K:
-	:type K: TDF_Label &
-	:param I:
-	:type I: TDF_LabelList &
-	:rtype: bool
-") Bind;
-		Standard_Boolean Bind (const TDF_Label & K,const TDF_LabelList & I);
-		%feature("compactdefaultargs") IsBound;
-		%feature("autodoc", "	:param K:
-	:type K: TDF_Label &
-	:rtype: bool
-") IsBound;
-		Standard_Boolean IsBound (const TDF_Label & K);
-		%feature("compactdefaultargs") UnBind;
-		%feature("autodoc", "	:param K:
-	:type K: TDF_Label &
-	:rtype: bool
-") UnBind;
-		Standard_Boolean UnBind (const TDF_Label & K);
-		%feature("compactdefaultargs") Find;
-		%feature("autodoc", "	:param K:
-	:type K: TDF_Label &
-	:rtype: TDF_LabelList
-") Find;
-		const TDF_LabelList & Find (const TDF_Label & K);
-		%feature("compactdefaultargs") ChangeFind;
-		%feature("autodoc", "	:param K:
-	:type K: TDF_Label &
-	:rtype: TDF_LabelList
-") ChangeFind;
-		TDF_LabelList & ChangeFind (const TDF_Label & K);
-		%feature("compactdefaultargs") Find1;
-		%feature("autodoc", "	:param K:
-	:type K: TDF_Label &
-	:rtype: Standard_Address
-") Find1;
-		Standard_Address Find1 (const TDF_Label & K);
-		%feature("compactdefaultargs") ChangeFind1;
-		%feature("autodoc", "	:param K:
-	:type K: TDF_Label &
-	:rtype: Standard_Address
-") ChangeFind1;
-		Standard_Address ChangeFind1 (const TDF_Label & K);
-};
-
-
-%extend TFunction_DataMapOfLabelListOfLabel {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor TFunction_DoubleMapIteratorOfDoubleMapOfIntegerLabel;
-class TFunction_DoubleMapIteratorOfDoubleMapOfIntegerLabel : public TCollection_BasicMapIterator {
-	public:
-		%feature("compactdefaultargs") TFunction_DoubleMapIteratorOfDoubleMapOfIntegerLabel;
-		%feature("autodoc", "	:rtype: None
-") TFunction_DoubleMapIteratorOfDoubleMapOfIntegerLabel;
-		 TFunction_DoubleMapIteratorOfDoubleMapOfIntegerLabel ();
-		%feature("compactdefaultargs") TFunction_DoubleMapIteratorOfDoubleMapOfIntegerLabel;
-		%feature("autodoc", "	:param aMap:
-	:type aMap: TFunction_DoubleMapOfIntegerLabel &
-	:rtype: None
-") TFunction_DoubleMapIteratorOfDoubleMapOfIntegerLabel;
-		 TFunction_DoubleMapIteratorOfDoubleMapOfIntegerLabel (const TFunction_DoubleMapOfIntegerLabel & aMap);
-		%feature("compactdefaultargs") Initialize;
-		%feature("autodoc", "	:param aMap:
-	:type aMap: TFunction_DoubleMapOfIntegerLabel &
-	:rtype: None
-") Initialize;
-		void Initialize (const TFunction_DoubleMapOfIntegerLabel & aMap);
-		%feature("compactdefaultargs") Key1;
-		%feature("autodoc", "	:rtype: int
-") Key1;
-		const Standard_Integer & Key1 ();
-		%feature("compactdefaultargs") Key2;
-		%feature("autodoc", "	:rtype: TDF_Label
-") Key2;
-		const TDF_Label & Key2 ();
-};
-
-
-%extend TFunction_DoubleMapIteratorOfDoubleMapOfIntegerLabel {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor TFunction_DoubleMapNodeOfDoubleMapOfIntegerLabel;
-class TFunction_DoubleMapNodeOfDoubleMapOfIntegerLabel : public TCollection_MapNode {
-	public:
-		%feature("compactdefaultargs") TFunction_DoubleMapNodeOfDoubleMapOfIntegerLabel;
-		%feature("autodoc", "	:param K1:
-	:type K1: int &
-	:param K2:
-	:type K2: TDF_Label &
-	:param n1:
-	:type n1: TCollection_MapNodePtr &
-	:param n2:
-	:type n2: TCollection_MapNodePtr &
-	:rtype: None
-") TFunction_DoubleMapNodeOfDoubleMapOfIntegerLabel;
-		 TFunction_DoubleMapNodeOfDoubleMapOfIntegerLabel (const Standard_Integer & K1,const TDF_Label & K2,const TCollection_MapNodePtr & n1,const TCollection_MapNodePtr & n2);
-
-            %feature("autodoc","1");
-            %extend {
-                Standard_Integer GetKey1() {
-                return (Standard_Integer) $self->Key1();
-                }
-            };
-            %feature("autodoc","1");
-            %extend {
-                void SetKey1(Standard_Integer value ) {
-                $self->Key1()=value;
-                }
-            };
-            		%feature("compactdefaultargs") Key2;
-		%feature("autodoc", "	:rtype: TDF_Label
-") Key2;
-		TDF_Label & Key2 ();
-		%feature("compactdefaultargs") Next2;
-		%feature("autodoc", "	:rtype: TCollection_MapNodePtr
-") Next2;
-		TCollection_MapNodePtr & Next2 ();
-};
-
-
-%extend TFunction_DoubleMapNodeOfDoubleMapOfIntegerLabel {
-	%pythoncode {
-		def GetHandle(self):
-		    try:
-		        return self.thisHandle
-		    except:
-		        self.thisHandle = Handle_TFunction_DoubleMapNodeOfDoubleMapOfIntegerLabel(self)
-		        self.thisown = False
-		        return self.thisHandle
-	}
-};
-
-%pythonappend Handle_TFunction_DoubleMapNodeOfDoubleMapOfIntegerLabel::Handle_TFunction_DoubleMapNodeOfDoubleMapOfIntegerLabel %{
-    # register the handle in the base object
-    if len(args) > 0:
-        register_handle(self, args[0])
-%}
-
-%nodefaultctor Handle_TFunction_DoubleMapNodeOfDoubleMapOfIntegerLabel;
-class Handle_TFunction_DoubleMapNodeOfDoubleMapOfIntegerLabel : public Handle_TCollection_MapNode {
-
-    public:
-        // constructors
-        Handle_TFunction_DoubleMapNodeOfDoubleMapOfIntegerLabel();
-        Handle_TFunction_DoubleMapNodeOfDoubleMapOfIntegerLabel(const Handle_TFunction_DoubleMapNodeOfDoubleMapOfIntegerLabel &aHandle);
-        Handle_TFunction_DoubleMapNodeOfDoubleMapOfIntegerLabel(const TFunction_DoubleMapNodeOfDoubleMapOfIntegerLabel *anItem);
-        void Nullify();
-        Standard_Boolean IsNull() const;
-        static const Handle_TFunction_DoubleMapNodeOfDoubleMapOfIntegerLabel DownCast(const Handle_Standard_Transient &AnObject);
-
-};
-%extend Handle_TFunction_DoubleMapNodeOfDoubleMapOfIntegerLabel {
-    TFunction_DoubleMapNodeOfDoubleMapOfIntegerLabel* _get_reference() {
-    return (TFunction_DoubleMapNodeOfDoubleMapOfIntegerLabel*)$self->Access();
-    }
-};
-
-%extend Handle_TFunction_DoubleMapNodeOfDoubleMapOfIntegerLabel {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
-};
-
-%extend TFunction_DoubleMapNodeOfDoubleMapOfIntegerLabel {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor TFunction_DoubleMapOfIntegerLabel;
-class TFunction_DoubleMapOfIntegerLabel : public TCollection_BasicMap {
-	public:
-		%feature("compactdefaultargs") TFunction_DoubleMapOfIntegerLabel;
-		%feature("autodoc", "	:param NbBuckets: default value is 1
-	:type NbBuckets: int
-	:rtype: None
-") TFunction_DoubleMapOfIntegerLabel;
-		 TFunction_DoubleMapOfIntegerLabel (const Standard_Integer NbBuckets = 1);
-		%feature("compactdefaultargs") Assign;
-		%feature("autodoc", "	:param Other:
-	:type Other: TFunction_DoubleMapOfIntegerLabel &
-	:rtype: TFunction_DoubleMapOfIntegerLabel
-") Assign;
-		TFunction_DoubleMapOfIntegerLabel & Assign (const TFunction_DoubleMapOfIntegerLabel & Other);
-		%feature("compactdefaultargs") operator =;
-		%feature("autodoc", "	:param Other:
-	:type Other: TFunction_DoubleMapOfIntegerLabel &
-	:rtype: TFunction_DoubleMapOfIntegerLabel
-") operator =;
-		TFunction_DoubleMapOfIntegerLabel & operator = (const TFunction_DoubleMapOfIntegerLabel & Other);
-		%feature("compactdefaultargs") ReSize;
-		%feature("autodoc", "	:param NbBuckets:
-	:type NbBuckets: int
-	:rtype: None
-") ReSize;
-		void ReSize (const Standard_Integer NbBuckets);
-		%feature("compactdefaultargs") Clear;
-		%feature("autodoc", "	:rtype: None
-") Clear;
-		void Clear ();
-		%feature("compactdefaultargs") Bind;
-		%feature("autodoc", "	:param K1:
-	:type K1: int &
-	:param K2:
-	:type K2: TDF_Label &
-	:rtype: None
-") Bind;
-		void Bind (const Standard_Integer & K1,const TDF_Label & K2);
-		%feature("compactdefaultargs") AreBound;
-		%feature("autodoc", "	:param K1:
-	:type K1: int &
-	:param K2:
-	:type K2: TDF_Label &
-	:rtype: bool
-") AreBound;
-		Standard_Boolean AreBound (const Standard_Integer & K1,const TDF_Label & K2);
-		%feature("compactdefaultargs") IsBound1;
-		%feature("autodoc", "	:param K:
-	:type K: int &
-	:rtype: bool
-") IsBound1;
-		Standard_Boolean IsBound1 (const Standard_Integer & K);
-		%feature("compactdefaultargs") IsBound2;
-		%feature("autodoc", "	:param K:
-	:type K: TDF_Label &
-	:rtype: bool
-") IsBound2;
-		Standard_Boolean IsBound2 (const TDF_Label & K);
-		%feature("compactdefaultargs") Find1;
-		%feature("autodoc", "	:param K:
-	:type K: int &
-	:rtype: TDF_Label
-") Find1;
-		const TDF_Label & Find1 (const Standard_Integer & K);
-		%feature("compactdefaultargs") Find2;
-		%feature("autodoc", "	:param K:
-	:type K: TDF_Label &
-	:rtype: int
-") Find2;
-		const Standard_Integer & Find2 (const TDF_Label & K);
-		%feature("compactdefaultargs") UnBind1;
-		%feature("autodoc", "	:param K:
-	:type K: int &
-	:rtype: bool
-") UnBind1;
-		Standard_Boolean UnBind1 (const Standard_Integer & K);
-		%feature("compactdefaultargs") UnBind2;
-		%feature("autodoc", "	:param K:
-	:type K: TDF_Label &
-	:rtype: bool
-") UnBind2;
-		Standard_Boolean UnBind2 (const TDF_Label & K);
-};
-
-
-%extend TFunction_DoubleMapOfIntegerLabel {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
 %nodefaultctor TFunction_Driver;
-class TFunction_Driver : public MMgt_TShared {
+class TFunction_Driver : public Standard_Transient {
 	public:
 		%feature("compactdefaultargs") Init;
 		%feature("autodoc", "	* Initializes the label L for this function prior to its execution.
@@ -777,26 +95,26 @@ class TFunction_Driver : public MMgt_TShared {
 		%feature("autodoc", "	* Validates labels of a function in <log>. This function is the one initialized in this function driver. Warning In regeneration mode, the solver must call this method even if the function is not executed. execution of function =====================
 
 	:param log:
-	:type log: TFunction_Logbook &
+	:type log: Handle_TFunction_Logbook &
 	:rtype: void
 ") Validate;
-		virtual void Validate (TFunction_Logbook & log);
+		virtual void Validate (Handle_TFunction_Logbook & log);
 		%feature("compactdefaultargs") MustExecute;
 		%feature("autodoc", "	* Analyzes the labels in the logbook log. Returns true if attributes have been modified. If the function label itself has been modified, the function must be executed.
 
 	:param log:
-	:type log: TFunction_Logbook &
+	:type log: Handle_TFunction_Logbook &
 	:rtype: bool
 ") MustExecute;
-		virtual Standard_Boolean MustExecute (const TFunction_Logbook & log);
+		virtual Standard_Boolean MustExecute (const Handle_TFunction_Logbook & log);
 		%feature("compactdefaultargs") Execute;
 		%feature("autodoc", "	* Executes the function in this function driver and puts the impacted labels in the logbook log. arguments & results of functions ================================
 
 	:param log:
-	:type log: TFunction_Logbook &
+	:type log: Handle_TFunction_Logbook &
 	:rtype: int
 ") Execute;
-		virtual Standard_Integer Execute (TFunction_Logbook & log);
+		virtual Standard_Integer Execute (Handle_TFunction_Logbook & log);
 		%feature("compactdefaultargs") Arguments;
 		%feature("autodoc", "	* The method fills-in the list by labels, where the arguments of the function are located.
 
@@ -835,7 +153,7 @@ class TFunction_Driver : public MMgt_TShared {
 %}
 
 %nodefaultctor Handle_TFunction_Driver;
-class Handle_TFunction_Driver : public Handle_MMgt_TShared {
+class Handle_TFunction_Driver : public Handle_Standard_Transient {
 
     public:
         // constructors
@@ -847,19 +165,20 @@ class Handle_TFunction_Driver : public Handle_MMgt_TShared {
         static const Handle_TFunction_Driver DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_TFunction_Driver {
     TFunction_Driver* _get_reference() {
-    return (TFunction_Driver*)$self->Access();
+    return (TFunction_Driver*)$self->get();
     }
 };
 
 %extend Handle_TFunction_Driver {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend TFunction_Driver {
@@ -868,7 +187,7 @@ class Handle_TFunction_Driver : public Handle_MMgt_TShared {
 	}
 };
 %nodefaultctor TFunction_DriverTable;
-class TFunction_DriverTable : public MMgt_TShared {
+class TFunction_DriverTable : public Standard_Transient {
 	public:
 		%feature("compactdefaultargs") Get;
 		%feature("autodoc", "	* Returns the driver table. If a driver does not exist, creates it.
@@ -962,7 +281,7 @@ class TFunction_DriverTable : public MMgt_TShared {
 %}
 
 %nodefaultctor Handle_TFunction_DriverTable;
-class Handle_TFunction_DriverTable : public Handle_MMgt_TShared {
+class Handle_TFunction_DriverTable : public Handle_Standard_Transient {
 
     public:
         // constructors
@@ -974,19 +293,20 @@ class Handle_TFunction_DriverTable : public Handle_MMgt_TShared {
         static const Handle_TFunction_DriverTable DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_TFunction_DriverTable {
     TFunction_DriverTable* _get_reference() {
-    return (TFunction_DriverTable*)$self->Access();
+    return (TFunction_DriverTable*)$self->get();
     }
 };
 
 %extend Handle_TFunction_DriverTable {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend TFunction_DriverTable {
@@ -1129,19 +449,20 @@ class Handle_TFunction_Function : public Handle_TDF_Attribute {
         static const Handle_TFunction_Function DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_TFunction_Function {
     TFunction_Function* _get_reference() {
-    return (TFunction_Function*)$self->Access();
+    return (TFunction_Function*)$self->get();
     }
 };
 
 %extend Handle_TFunction_Function {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend TFunction_Function {
@@ -1161,7 +482,7 @@ class TFunction_GraphNode : public TDF_Attribute {
 ") Set;
 		static Handle_TFunction_GraphNode Set (const TDF_Label & L);
 		%feature("compactdefaultargs") GetID;
-		%feature("autodoc", "	* Returns the GUID for GraphNode attribute. Instant methods =============== Constructor (empty).
+		%feature("autodoc", "	* Returns the GUID for GraphNode attribute. Instant methods =============== Constructor --empty--.
 
 	:rtype: Standard_GUID
 ") GetID;
@@ -1342,143 +663,23 @@ class Handle_TFunction_GraphNode : public Handle_TDF_Attribute {
         static const Handle_TFunction_GraphNode DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_TFunction_GraphNode {
     TFunction_GraphNode* _get_reference() {
-    return (TFunction_GraphNode*)$self->Access();
+    return (TFunction_GraphNode*)$self->get();
     }
 };
 
 %extend Handle_TFunction_GraphNode {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend TFunction_GraphNode {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor TFunction_HArray1OfDataMapOfGUIDDriver;
-class TFunction_HArray1OfDataMapOfGUIDDriver : public MMgt_TShared {
-	public:
-		%feature("compactdefaultargs") TFunction_HArray1OfDataMapOfGUIDDriver;
-		%feature("autodoc", "	:param Low:
-	:type Low: int
-	:param Up:
-	:type Up: int
-	:rtype: None
-") TFunction_HArray1OfDataMapOfGUIDDriver;
-		 TFunction_HArray1OfDataMapOfGUIDDriver (const Standard_Integer Low,const Standard_Integer Up);
-		%feature("compactdefaultargs") TFunction_HArray1OfDataMapOfGUIDDriver;
-		%feature("autodoc", "	:param Low:
-	:type Low: int
-	:param Up:
-	:type Up: int
-	:param V:
-	:type V: TFunction_DataMapOfGUIDDriver &
-	:rtype: None
-") TFunction_HArray1OfDataMapOfGUIDDriver;
-		 TFunction_HArray1OfDataMapOfGUIDDriver (const Standard_Integer Low,const Standard_Integer Up,const TFunction_DataMapOfGUIDDriver & V);
-		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	:param V:
-	:type V: TFunction_DataMapOfGUIDDriver &
-	:rtype: None
-") Init;
-		void Init (const TFunction_DataMapOfGUIDDriver & V);
-		%feature("compactdefaultargs") Length;
-		%feature("autodoc", "	:rtype: int
-") Length;
-		Standard_Integer Length ();
-		%feature("compactdefaultargs") Lower;
-		%feature("autodoc", "	:rtype: int
-") Lower;
-		Standard_Integer Lower ();
-		%feature("compactdefaultargs") Upper;
-		%feature("autodoc", "	:rtype: int
-") Upper;
-		Standard_Integer Upper ();
-		%feature("compactdefaultargs") SetValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param Value:
-	:type Value: TFunction_DataMapOfGUIDDriver &
-	:rtype: None
-") SetValue;
-		void SetValue (const Standard_Integer Index,const TFunction_DataMapOfGUIDDriver & Value);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: TFunction_DataMapOfGUIDDriver
-") Value;
-		const TFunction_DataMapOfGUIDDriver & Value (const Standard_Integer Index);
-		%feature("compactdefaultargs") ChangeValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: TFunction_DataMapOfGUIDDriver
-") ChangeValue;
-		TFunction_DataMapOfGUIDDriver & ChangeValue (const Standard_Integer Index);
-		%feature("compactdefaultargs") Array1;
-		%feature("autodoc", "	:rtype: TFunction_Array1OfDataMapOfGUIDDriver
-") Array1;
-		const TFunction_Array1OfDataMapOfGUIDDriver & Array1 ();
-		%feature("compactdefaultargs") ChangeArray1;
-		%feature("autodoc", "	:rtype: TFunction_Array1OfDataMapOfGUIDDriver
-") ChangeArray1;
-		TFunction_Array1OfDataMapOfGUIDDriver & ChangeArray1 ();
-};
-
-
-%extend TFunction_HArray1OfDataMapOfGUIDDriver {
-	%pythoncode {
-		def GetHandle(self):
-		    try:
-		        return self.thisHandle
-		    except:
-		        self.thisHandle = Handle_TFunction_HArray1OfDataMapOfGUIDDriver(self)
-		        self.thisown = False
-		        return self.thisHandle
-	}
-};
-
-%pythonappend Handle_TFunction_HArray1OfDataMapOfGUIDDriver::Handle_TFunction_HArray1OfDataMapOfGUIDDriver %{
-    # register the handle in the base object
-    if len(args) > 0:
-        register_handle(self, args[0])
-%}
-
-%nodefaultctor Handle_TFunction_HArray1OfDataMapOfGUIDDriver;
-class Handle_TFunction_HArray1OfDataMapOfGUIDDriver : public Handle_MMgt_TShared {
-
-    public:
-        // constructors
-        Handle_TFunction_HArray1OfDataMapOfGUIDDriver();
-        Handle_TFunction_HArray1OfDataMapOfGUIDDriver(const Handle_TFunction_HArray1OfDataMapOfGUIDDriver &aHandle);
-        Handle_TFunction_HArray1OfDataMapOfGUIDDriver(const TFunction_HArray1OfDataMapOfGUIDDriver *anItem);
-        void Nullify();
-        Standard_Boolean IsNull() const;
-        static const Handle_TFunction_HArray1OfDataMapOfGUIDDriver DownCast(const Handle_Standard_Transient &AnObject);
-
-};
-%extend Handle_TFunction_HArray1OfDataMapOfGUIDDriver {
-    TFunction_HArray1OfDataMapOfGUIDDriver* _get_reference() {
-    return (TFunction_HArray1OfDataMapOfGUIDDriver*)$self->Access();
-    }
-};
-
-%extend Handle_TFunction_HArray1OfDataMapOfGUIDDriver {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
-};
-
-%extend TFunction_HArray1OfDataMapOfGUIDDriver {
 	%pythoncode {
 	__repr__ = _dumps_object
 	}
@@ -1598,9 +799,9 @@ class TFunction_IFunction {
 		%feature("compactdefaultargs") GetLogbook;
 		%feature("autodoc", "	* Returns the Logbook - keeper of modifications.
 
-	:rtype: TFunction_Logbook
+	:rtype: Handle_TFunction_Logbook
 ") GetLogbook;
-		TFunction_Logbook & GetLogbook ();
+		Handle_TFunction_Logbook GetLogbook ();
 		%feature("compactdefaultargs") GetDriver;
 		%feature("autodoc", "	* Returns a driver of the function.
 
@@ -1649,7 +850,7 @@ class TFunction_Iterator {
 ") Init;
 		virtual void Init (const TDF_Label & Access);
 		%feature("compactdefaultargs") SetUsageOfExecutionStatus;
-		%feature("autodoc", "	* Defines the mode of iteration - usage or not of the execution status. If the iterator takes into account the execution status, the method ::Current() returns only 'not executed' functions while their status is not changed. If the iterator ignores the execution status, the method ::Current() returns the functions following their dependencies and ignoring the execution status.
+		%feature("autodoc", "	* Defines the mode of iteration - usage or not of the execution status. If the iterator takes into account the execution status, the method ::Current---- returns only 'not executed' functions while their status is not changed. If the iterator ignores the execution status, the method ::Current---- returns the functions following their dependencies and ignoring the execution status.
 
 	:param usage:
 	:type usage: bool
@@ -1687,7 +888,7 @@ class TFunction_Iterator {
 ") Next;
 		virtual void Next ();
 		%feature("compactdefaultargs") GetStatus;
-		%feature("autodoc", "	* A help-function aimed to help the user to check the status of retrurned function. It calls TFunction_GraphNode::GetStatus() inside.
+		%feature("autodoc", "	* A help-function aimed to help the user to check the status of retrurned function. It calls TFunction_GraphNode::GetStatus---- inside.
 
 	:param func:
 	:type func: TDF_Label &
@@ -1695,7 +896,7 @@ class TFunction_Iterator {
 ") GetStatus;
 		TFunction_ExecutionStatus GetStatus (const TDF_Label & func);
 		%feature("compactdefaultargs") SetStatus;
-		%feature("autodoc", "	* A help-function aimed to help the user to change the execution status of a function. It calls TFunction_GraphNode::SetStatus() inside.
+		%feature("autodoc", "	* A help-function aimed to help the user to change the execution status of a function. It calls TFunction_GraphNode::SetStatus---- inside.
 
 	:param func:
 	:type func: TDF_Label &
@@ -1721,10 +922,24 @@ class TFunction_Iterator {
 	}
 };
 %nodefaultctor TFunction_Logbook;
-class TFunction_Logbook {
+class TFunction_Logbook : public TDF_Attribute {
 	public:
+		%feature("compactdefaultargs") Set;
+		%feature("autodoc", "	* Finds or Creates a TFunction_Logbook attribute at the root label accessed by <Access>. Returns the attribute.
+
+	:param Access:
+	:type Access: TDF_Label &
+	:rtype: Handle_TFunction_Logbook
+") Set;
+		static Handle_TFunction_Logbook Set (const TDF_Label & Access);
+		%feature("compactdefaultargs") GetID;
+		%feature("autodoc", "	* Returns the GUID for logbook attribute.
+
+	:rtype: Standard_GUID
+") GetID;
+		static const Standard_GUID & GetID ();
 		%feature("compactdefaultargs") TFunction_Logbook;
-		%feature("autodoc", "	* next methods are solving declaration ===================================
+		%feature("autodoc", "	* The methods manipulating the data --touched, impacted and valid labels-- Constructor --empty--.
 
 	:rtype: None
 ") TFunction_Logbook;
@@ -1767,12 +982,14 @@ class TFunction_Logbook {
 	:rtype: None
 ") SetValid;
 		void SetValid (const TDF_Label & L,const Standard_Boolean WithChildren = Standard_False);
-		%feature("compactdefaultargs") ChangeValid;
-		%feature("autodoc", "	:rtype: TDF_LabelMap
-") ChangeValid;
-		TDF_LabelMap & ChangeValid ();
+		%feature("compactdefaultargs") SetValid;
+		%feature("autodoc", "	:param Ls:
+	:type Ls: TDF_LabelMap &
+	:rtype: None
+") SetValid;
+		void SetValid (const TDF_LabelMap & Ls);
 		%feature("compactdefaultargs") IsModified;
-		%feature("autodoc", "	* Returns True if the label L is touched or impacted. This method is called by <TFunction_FunctionDriver::MustExecute>. If <WithChildren> is set to true, the method checks all the sublabels of <L> too. next method to consult solving result =====================================
+		%feature("autodoc", "	* Returns True if the label L is touched or impacted. This method is called by <TFunction_FunctionDriver::MustExecute>. If <WithChildren> is set to true, the method checks all the sublabels of <L> too.
 
 	:param L:
 	:type L: TDF_Label &
@@ -1799,8 +1016,14 @@ class TFunction_Logbook {
 	:rtype: TDF_LabelMap
 ") GetValid;
 		const TDF_LabelMap & GetValid ();
+		%feature("compactdefaultargs") GetValid;
+		%feature("autodoc", "	:param Ls:
+	:type Ls: TDF_LabelMap &
+	:rtype: None
+") GetValid;
+		void GetValid (TDF_LabelMap & Ls);
 		%feature("compactdefaultargs") Done;
-		%feature("autodoc", "	* Sets if the execution failed
+		%feature("autodoc", "	* Sets status of execution.
 
 	:param status:
 	:type status: bool
@@ -1808,9 +1031,41 @@ class TFunction_Logbook {
 ") Done;
 		void Done (const Standard_Boolean status);
 		%feature("compactdefaultargs") IsDone;
-		%feature("autodoc", "	:rtype: bool
+		%feature("autodoc", "	* Returns status of execution.
+
+	:rtype: bool
 ") IsDone;
 		Standard_Boolean IsDone ();
+		%feature("compactdefaultargs") ID;
+		%feature("autodoc", "	* The methods inherited from TDF_Attribute Returns the ID of the attribute.
+
+	:rtype: Standard_GUID
+") ID;
+		const Standard_GUID & ID ();
+		%feature("compactdefaultargs") Restore;
+		%feature("autodoc", "	* Undos --and redos-- the attribute.
+
+	:param with:
+	:type with: Handle_TDF_Attribute &
+	:rtype: void
+") Restore;
+		virtual void Restore (const Handle_TDF_Attribute & with);
+		%feature("compactdefaultargs") Paste;
+		%feature("autodoc", "	* Pastes the attribute to another label.
+
+	:param into:
+	:type into: Handle_TDF_Attribute &
+	:param RT:
+	:type RT: Handle_TDF_RelocationTable &
+	:rtype: void
+") Paste;
+		virtual void Paste (const Handle_TDF_Attribute & into,const Handle_TDF_RelocationTable & RT);
+		%feature("compactdefaultargs") NewEmpty;
+		%feature("autodoc", "	* Returns a new empty instance of the attribute.
+
+	:rtype: Handle_TDF_Attribute
+") NewEmpty;
+		virtual Handle_TDF_Attribute NewEmpty ();
 
         %feature("autodoc", "1");
         %extend{
@@ -1821,6 +1076,53 @@ class TFunction_Logbook {
         };
         };
 
+
+%extend TFunction_Logbook {
+	%pythoncode {
+		def GetHandle(self):
+		    try:
+		        return self.thisHandle
+		    except:
+		        self.thisHandle = Handle_TFunction_Logbook(self)
+		        self.thisown = False
+		        return self.thisHandle
+	}
+};
+
+%pythonappend Handle_TFunction_Logbook::Handle_TFunction_Logbook %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
+%nodefaultctor Handle_TFunction_Logbook;
+class Handle_TFunction_Logbook : public Handle_TDF_Attribute {
+
+    public:
+        // constructors
+        Handle_TFunction_Logbook();
+        Handle_TFunction_Logbook(const Handle_TFunction_Logbook &aHandle);
+        Handle_TFunction_Logbook(const TFunction_Logbook *anItem);
+        void Nullify();
+        Standard_Boolean IsNull() const;
+        static const Handle_TFunction_Logbook DownCast(const Handle_Standard_Transient &AnObject);
+
+};
+
+%extend Handle_TFunction_Logbook {
+    TFunction_Logbook* _get_reference() {
+    return (TFunction_Logbook*)$self->get();
+    }
+};
+
+%extend Handle_TFunction_Logbook {
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
+};
 
 %extend TFunction_Logbook {
 	%pythoncode {
@@ -1839,7 +1141,7 @@ class TFunction_Scope : public TDF_Attribute {
 ") Set;
 		static Handle_TFunction_Scope Set (const TDF_Label & Access);
 		%feature("compactdefaultargs") GetID;
-		%feature("autodoc", "	* Returns the GUID for Scope attribute. Instant methods =============== Constructor (empty).
+		%feature("autodoc", "	* Returns the GUID for Scope attribute. Instant methods =============== Constructor --empty--.
 
 	:rtype: Standard_GUID
 ") GetID;
@@ -1913,9 +1215,9 @@ class TFunction_Scope : public TDF_Attribute {
 		%feature("compactdefaultargs") GetLogbook;
 		%feature("autodoc", "	* Returns the Logbook used in TFunction_Driver methods. Implementation of Attribute methods ===================================
 
-	:rtype: TFunction_Logbook
+	:rtype: Handle_TFunction_Logbook
 ") GetLogbook;
-		TFunction_Logbook & GetLogbook ();
+		Handle_TFunction_Logbook GetLogbook ();
 		%feature("compactdefaultargs") ID;
 		%feature("autodoc", "	:rtype: Standard_GUID
 ") ID;
@@ -2002,19 +1304,20 @@ class Handle_TFunction_Scope : public Handle_TDF_Attribute {
         static const Handle_TFunction_Scope DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_TFunction_Scope {
     TFunction_Scope* _get_reference() {
-    return (TFunction_Scope*)$self->Access();
+    return (TFunction_Scope*)$self->get();
     }
 };
 
 %extend Handle_TFunction_Scope {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend TFunction_Scope {

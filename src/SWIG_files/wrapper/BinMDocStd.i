@@ -1,5 +1,5 @@
 /*
-Copyright 2008-2017 Thomas Paviot (tpaviot@gmail.com)
+Copyright 2008-2018 Thomas Paviot (tpaviot@gmail.com)
 
 
 This file is part of pythonOCC.
@@ -55,6 +55,9 @@ def register_handle(handle, base_object):
 
 /* typedefs */
 /* end typedefs declaration */
+
+/* templates */
+/* end templates declaration */
 
 /* public enums */
 /* end public enums declaration */
@@ -147,19 +150,20 @@ class Handle_BinMDocStd_XLinkDriver : public Handle_BinMDF_ADriver {
         static const Handle_BinMDocStd_XLinkDriver DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_BinMDocStd_XLinkDriver {
     BinMDocStd_XLinkDriver* _get_reference() {
-    return (BinMDocStd_XLinkDriver*)$self->Access();
+    return (BinMDocStd_XLinkDriver*)$self->get();
     }
 };
 
 %extend Handle_BinMDocStd_XLinkDriver {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend BinMDocStd_XLinkDriver {

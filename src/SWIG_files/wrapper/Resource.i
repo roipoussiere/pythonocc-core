@@ -1,5 +1,5 @@
 /*
-Copyright 2008-2017 Thomas Paviot (tpaviot@gmail.com)
+Copyright 2008-2018 Thomas Paviot (tpaviot@gmail.com)
 
 
 This file is part of pythonOCC.
@@ -56,6 +56,11 @@ def register_handle(handle, base_object):
 /* typedefs */
 /* end typedefs declaration */
 
+/* templates */
+%template(Resource_DataMapOfAsciiStringAsciiString) NCollection_DataMap <TCollection_AsciiString , TCollection_AsciiString , TCollection_AsciiString>;
+%template(Resource_DataMapOfAsciiStringExtendedString) NCollection_DataMap <TCollection_AsciiString , TCollection_ExtendedString , TCollection_AsciiString>;
+/* end templates declaration */
+
 /* public enums */
 enum Resource_FormatType {
 	Resource_SJIS = 0,
@@ -66,392 +71,6 @@ enum Resource_FormatType {
 
 /* end public enums declaration */
 
-%nodefaultctor Resource_DataMapIteratorOfDataMapOfAsciiStringAsciiString;
-class Resource_DataMapIteratorOfDataMapOfAsciiStringAsciiString : public TCollection_BasicMapIterator {
-	public:
-		%feature("compactdefaultargs") Resource_DataMapIteratorOfDataMapOfAsciiStringAsciiString;
-		%feature("autodoc", "	:rtype: None
-") Resource_DataMapIteratorOfDataMapOfAsciiStringAsciiString;
-		 Resource_DataMapIteratorOfDataMapOfAsciiStringAsciiString ();
-		%feature("compactdefaultargs") Resource_DataMapIteratorOfDataMapOfAsciiStringAsciiString;
-		%feature("autodoc", "	:param aMap:
-	:type aMap: Resource_DataMapOfAsciiStringAsciiString &
-	:rtype: None
-") Resource_DataMapIteratorOfDataMapOfAsciiStringAsciiString;
-		 Resource_DataMapIteratorOfDataMapOfAsciiStringAsciiString (const Resource_DataMapOfAsciiStringAsciiString & aMap);
-		%feature("compactdefaultargs") Initialize;
-		%feature("autodoc", "	:param aMap:
-	:type aMap: Resource_DataMapOfAsciiStringAsciiString &
-	:rtype: None
-") Initialize;
-		void Initialize (const Resource_DataMapOfAsciiStringAsciiString & aMap);
-		%feature("compactdefaultargs") Key;
-		%feature("autodoc", "	:rtype: TCollection_AsciiString
-") Key;
-		const TCollection_AsciiString & Key ();
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:rtype: TCollection_AsciiString
-") Value;
-		const TCollection_AsciiString & Value ();
-};
-
-
-%extend Resource_DataMapIteratorOfDataMapOfAsciiStringAsciiString {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor Resource_DataMapIteratorOfDataMapOfAsciiStringExtendedString;
-class Resource_DataMapIteratorOfDataMapOfAsciiStringExtendedString : public TCollection_BasicMapIterator {
-	public:
-		%feature("compactdefaultargs") Resource_DataMapIteratorOfDataMapOfAsciiStringExtendedString;
-		%feature("autodoc", "	:rtype: None
-") Resource_DataMapIteratorOfDataMapOfAsciiStringExtendedString;
-		 Resource_DataMapIteratorOfDataMapOfAsciiStringExtendedString ();
-		%feature("compactdefaultargs") Resource_DataMapIteratorOfDataMapOfAsciiStringExtendedString;
-		%feature("autodoc", "	:param aMap:
-	:type aMap: Resource_DataMapOfAsciiStringExtendedString &
-	:rtype: None
-") Resource_DataMapIteratorOfDataMapOfAsciiStringExtendedString;
-		 Resource_DataMapIteratorOfDataMapOfAsciiStringExtendedString (const Resource_DataMapOfAsciiStringExtendedString & aMap);
-		%feature("compactdefaultargs") Initialize;
-		%feature("autodoc", "	:param aMap:
-	:type aMap: Resource_DataMapOfAsciiStringExtendedString &
-	:rtype: None
-") Initialize;
-		void Initialize (const Resource_DataMapOfAsciiStringExtendedString & aMap);
-		%feature("compactdefaultargs") Key;
-		%feature("autodoc", "	:rtype: TCollection_AsciiString
-") Key;
-		const TCollection_AsciiString & Key ();
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:rtype: TCollection_ExtendedString
-") Value;
-		const TCollection_ExtendedString & Value ();
-};
-
-
-%extend Resource_DataMapIteratorOfDataMapOfAsciiStringExtendedString {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor Resource_DataMapNodeOfDataMapOfAsciiStringAsciiString;
-class Resource_DataMapNodeOfDataMapOfAsciiStringAsciiString : public TCollection_MapNode {
-	public:
-		%feature("compactdefaultargs") Resource_DataMapNodeOfDataMapOfAsciiStringAsciiString;
-		%feature("autodoc", "	:param K:
-	:type K: TCollection_AsciiString &
-	:param I:
-	:type I: TCollection_AsciiString &
-	:param n:
-	:type n: TCollection_MapNodePtr &
-	:rtype: None
-") Resource_DataMapNodeOfDataMapOfAsciiStringAsciiString;
-		 Resource_DataMapNodeOfDataMapOfAsciiStringAsciiString (const TCollection_AsciiString & K,const TCollection_AsciiString & I,const TCollection_MapNodePtr & n);
-		%feature("compactdefaultargs") Key;
-		%feature("autodoc", "	:rtype: TCollection_AsciiString
-") Key;
-		TCollection_AsciiString & Key ();
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:rtype: TCollection_AsciiString
-") Value;
-		TCollection_AsciiString & Value ();
-};
-
-
-%extend Resource_DataMapNodeOfDataMapOfAsciiStringAsciiString {
-	%pythoncode {
-		def GetHandle(self):
-		    try:
-		        return self.thisHandle
-		    except:
-		        self.thisHandle = Handle_Resource_DataMapNodeOfDataMapOfAsciiStringAsciiString(self)
-		        self.thisown = False
-		        return self.thisHandle
-	}
-};
-
-%pythonappend Handle_Resource_DataMapNodeOfDataMapOfAsciiStringAsciiString::Handle_Resource_DataMapNodeOfDataMapOfAsciiStringAsciiString %{
-    # register the handle in the base object
-    if len(args) > 0:
-        register_handle(self, args[0])
-%}
-
-%nodefaultctor Handle_Resource_DataMapNodeOfDataMapOfAsciiStringAsciiString;
-class Handle_Resource_DataMapNodeOfDataMapOfAsciiStringAsciiString : public Handle_TCollection_MapNode {
-
-    public:
-        // constructors
-        Handle_Resource_DataMapNodeOfDataMapOfAsciiStringAsciiString();
-        Handle_Resource_DataMapNodeOfDataMapOfAsciiStringAsciiString(const Handle_Resource_DataMapNodeOfDataMapOfAsciiStringAsciiString &aHandle);
-        Handle_Resource_DataMapNodeOfDataMapOfAsciiStringAsciiString(const Resource_DataMapNodeOfDataMapOfAsciiStringAsciiString *anItem);
-        void Nullify();
-        Standard_Boolean IsNull() const;
-        static const Handle_Resource_DataMapNodeOfDataMapOfAsciiStringAsciiString DownCast(const Handle_Standard_Transient &AnObject);
-
-};
-%extend Handle_Resource_DataMapNodeOfDataMapOfAsciiStringAsciiString {
-    Resource_DataMapNodeOfDataMapOfAsciiStringAsciiString* _get_reference() {
-    return (Resource_DataMapNodeOfDataMapOfAsciiStringAsciiString*)$self->Access();
-    }
-};
-
-%extend Handle_Resource_DataMapNodeOfDataMapOfAsciiStringAsciiString {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
-};
-
-%extend Resource_DataMapNodeOfDataMapOfAsciiStringAsciiString {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor Resource_DataMapNodeOfDataMapOfAsciiStringExtendedString;
-class Resource_DataMapNodeOfDataMapOfAsciiStringExtendedString : public TCollection_MapNode {
-	public:
-		%feature("compactdefaultargs") Resource_DataMapNodeOfDataMapOfAsciiStringExtendedString;
-		%feature("autodoc", "	:param K:
-	:type K: TCollection_AsciiString &
-	:param I:
-	:type I: TCollection_ExtendedString &
-	:param n:
-	:type n: TCollection_MapNodePtr &
-	:rtype: None
-") Resource_DataMapNodeOfDataMapOfAsciiStringExtendedString;
-		 Resource_DataMapNodeOfDataMapOfAsciiStringExtendedString (const TCollection_AsciiString & K,const TCollection_ExtendedString & I,const TCollection_MapNodePtr & n);
-		%feature("compactdefaultargs") Key;
-		%feature("autodoc", "	:rtype: TCollection_AsciiString
-") Key;
-		TCollection_AsciiString & Key ();
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:rtype: TCollection_ExtendedString
-") Value;
-		TCollection_ExtendedString & Value ();
-};
-
-
-%extend Resource_DataMapNodeOfDataMapOfAsciiStringExtendedString {
-	%pythoncode {
-		def GetHandle(self):
-		    try:
-		        return self.thisHandle
-		    except:
-		        self.thisHandle = Handle_Resource_DataMapNodeOfDataMapOfAsciiStringExtendedString(self)
-		        self.thisown = False
-		        return self.thisHandle
-	}
-};
-
-%pythonappend Handle_Resource_DataMapNodeOfDataMapOfAsciiStringExtendedString::Handle_Resource_DataMapNodeOfDataMapOfAsciiStringExtendedString %{
-    # register the handle in the base object
-    if len(args) > 0:
-        register_handle(self, args[0])
-%}
-
-%nodefaultctor Handle_Resource_DataMapNodeOfDataMapOfAsciiStringExtendedString;
-class Handle_Resource_DataMapNodeOfDataMapOfAsciiStringExtendedString : public Handle_TCollection_MapNode {
-
-    public:
-        // constructors
-        Handle_Resource_DataMapNodeOfDataMapOfAsciiStringExtendedString();
-        Handle_Resource_DataMapNodeOfDataMapOfAsciiStringExtendedString(const Handle_Resource_DataMapNodeOfDataMapOfAsciiStringExtendedString &aHandle);
-        Handle_Resource_DataMapNodeOfDataMapOfAsciiStringExtendedString(const Resource_DataMapNodeOfDataMapOfAsciiStringExtendedString *anItem);
-        void Nullify();
-        Standard_Boolean IsNull() const;
-        static const Handle_Resource_DataMapNodeOfDataMapOfAsciiStringExtendedString DownCast(const Handle_Standard_Transient &AnObject);
-
-};
-%extend Handle_Resource_DataMapNodeOfDataMapOfAsciiStringExtendedString {
-    Resource_DataMapNodeOfDataMapOfAsciiStringExtendedString* _get_reference() {
-    return (Resource_DataMapNodeOfDataMapOfAsciiStringExtendedString*)$self->Access();
-    }
-};
-
-%extend Handle_Resource_DataMapNodeOfDataMapOfAsciiStringExtendedString {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
-};
-
-%extend Resource_DataMapNodeOfDataMapOfAsciiStringExtendedString {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor Resource_DataMapOfAsciiStringAsciiString;
-class Resource_DataMapOfAsciiStringAsciiString : public TCollection_BasicMap {
-	public:
-		%feature("compactdefaultargs") Resource_DataMapOfAsciiStringAsciiString;
-		%feature("autodoc", "	:param NbBuckets: default value is 1
-	:type NbBuckets: int
-	:rtype: None
-") Resource_DataMapOfAsciiStringAsciiString;
-		 Resource_DataMapOfAsciiStringAsciiString (const Standard_Integer NbBuckets = 1);
-		%feature("compactdefaultargs") Assign;
-		%feature("autodoc", "	:param Other:
-	:type Other: Resource_DataMapOfAsciiStringAsciiString &
-	:rtype: Resource_DataMapOfAsciiStringAsciiString
-") Assign;
-		Resource_DataMapOfAsciiStringAsciiString & Assign (const Resource_DataMapOfAsciiStringAsciiString & Other);
-		%feature("compactdefaultargs") operator =;
-		%feature("autodoc", "	:param Other:
-	:type Other: Resource_DataMapOfAsciiStringAsciiString &
-	:rtype: Resource_DataMapOfAsciiStringAsciiString
-") operator =;
-		Resource_DataMapOfAsciiStringAsciiString & operator = (const Resource_DataMapOfAsciiStringAsciiString & Other);
-		%feature("compactdefaultargs") ReSize;
-		%feature("autodoc", "	:param NbBuckets:
-	:type NbBuckets: int
-	:rtype: None
-") ReSize;
-		void ReSize (const Standard_Integer NbBuckets);
-		%feature("compactdefaultargs") Clear;
-		%feature("autodoc", "	:rtype: None
-") Clear;
-		void Clear ();
-		%feature("compactdefaultargs") Bind;
-		%feature("autodoc", "	:param K:
-	:type K: TCollection_AsciiString &
-	:param I:
-	:type I: TCollection_AsciiString &
-	:rtype: bool
-") Bind;
-		Standard_Boolean Bind (const TCollection_AsciiString & K,const TCollection_AsciiString & I);
-		%feature("compactdefaultargs") IsBound;
-		%feature("autodoc", "	:param K:
-	:type K: TCollection_AsciiString &
-	:rtype: bool
-") IsBound;
-		Standard_Boolean IsBound (const TCollection_AsciiString & K);
-		%feature("compactdefaultargs") UnBind;
-		%feature("autodoc", "	:param K:
-	:type K: TCollection_AsciiString &
-	:rtype: bool
-") UnBind;
-		Standard_Boolean UnBind (const TCollection_AsciiString & K);
-		%feature("compactdefaultargs") Find;
-		%feature("autodoc", "	:param K:
-	:type K: TCollection_AsciiString &
-	:rtype: TCollection_AsciiString
-") Find;
-		const TCollection_AsciiString & Find (const TCollection_AsciiString & K);
-		%feature("compactdefaultargs") ChangeFind;
-		%feature("autodoc", "	:param K:
-	:type K: TCollection_AsciiString &
-	:rtype: TCollection_AsciiString
-") ChangeFind;
-		TCollection_AsciiString & ChangeFind (const TCollection_AsciiString & K);
-		%feature("compactdefaultargs") Find1;
-		%feature("autodoc", "	:param K:
-	:type K: TCollection_AsciiString &
-	:rtype: Standard_Address
-") Find1;
-		Standard_Address Find1 (const TCollection_AsciiString & K);
-		%feature("compactdefaultargs") ChangeFind1;
-		%feature("autodoc", "	:param K:
-	:type K: TCollection_AsciiString &
-	:rtype: Standard_Address
-") ChangeFind1;
-		Standard_Address ChangeFind1 (const TCollection_AsciiString & K);
-};
-
-
-%extend Resource_DataMapOfAsciiStringAsciiString {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor Resource_DataMapOfAsciiStringExtendedString;
-class Resource_DataMapOfAsciiStringExtendedString : public TCollection_BasicMap {
-	public:
-		%feature("compactdefaultargs") Resource_DataMapOfAsciiStringExtendedString;
-		%feature("autodoc", "	:param NbBuckets: default value is 1
-	:type NbBuckets: int
-	:rtype: None
-") Resource_DataMapOfAsciiStringExtendedString;
-		 Resource_DataMapOfAsciiStringExtendedString (const Standard_Integer NbBuckets = 1);
-		%feature("compactdefaultargs") Assign;
-		%feature("autodoc", "	:param Other:
-	:type Other: Resource_DataMapOfAsciiStringExtendedString &
-	:rtype: Resource_DataMapOfAsciiStringExtendedString
-") Assign;
-		Resource_DataMapOfAsciiStringExtendedString & Assign (const Resource_DataMapOfAsciiStringExtendedString & Other);
-		%feature("compactdefaultargs") operator =;
-		%feature("autodoc", "	:param Other:
-	:type Other: Resource_DataMapOfAsciiStringExtendedString &
-	:rtype: Resource_DataMapOfAsciiStringExtendedString
-") operator =;
-		Resource_DataMapOfAsciiStringExtendedString & operator = (const Resource_DataMapOfAsciiStringExtendedString & Other);
-		%feature("compactdefaultargs") ReSize;
-		%feature("autodoc", "	:param NbBuckets:
-	:type NbBuckets: int
-	:rtype: None
-") ReSize;
-		void ReSize (const Standard_Integer NbBuckets);
-		%feature("compactdefaultargs") Clear;
-		%feature("autodoc", "	:rtype: None
-") Clear;
-		void Clear ();
-		%feature("compactdefaultargs") Bind;
-		%feature("autodoc", "	:param K:
-	:type K: TCollection_AsciiString &
-	:param I:
-	:type I: TCollection_ExtendedString &
-	:rtype: bool
-") Bind;
-		Standard_Boolean Bind (const TCollection_AsciiString & K,const TCollection_ExtendedString & I);
-		%feature("compactdefaultargs") IsBound;
-		%feature("autodoc", "	:param K:
-	:type K: TCollection_AsciiString &
-	:rtype: bool
-") IsBound;
-		Standard_Boolean IsBound (const TCollection_AsciiString & K);
-		%feature("compactdefaultargs") UnBind;
-		%feature("autodoc", "	:param K:
-	:type K: TCollection_AsciiString &
-	:rtype: bool
-") UnBind;
-		Standard_Boolean UnBind (const TCollection_AsciiString & K);
-		%feature("compactdefaultargs") Find;
-		%feature("autodoc", "	:param K:
-	:type K: TCollection_AsciiString &
-	:rtype: TCollection_ExtendedString
-") Find;
-		const TCollection_ExtendedString & Find (const TCollection_AsciiString & K);
-		%feature("compactdefaultargs") ChangeFind;
-		%feature("autodoc", "	:param K:
-	:type K: TCollection_AsciiString &
-	:rtype: TCollection_ExtendedString
-") ChangeFind;
-		TCollection_ExtendedString & ChangeFind (const TCollection_AsciiString & K);
-		%feature("compactdefaultargs") Find1;
-		%feature("autodoc", "	:param K:
-	:type K: TCollection_AsciiString &
-	:rtype: Standard_Address
-") Find1;
-		Standard_Address Find1 (const TCollection_AsciiString & K);
-		%feature("compactdefaultargs") ChangeFind1;
-		%feature("autodoc", "	:param K:
-	:type K: TCollection_AsciiString &
-	:rtype: Standard_Address
-") ChangeFind1;
-		Standard_Address ChangeFind1 (const TCollection_AsciiString & K);
-};
-
-
-%extend Resource_DataMapOfAsciiStringExtendedString {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
 %nodefaultctor Resource_LexicalCompare;
 class Resource_LexicalCompare {
 	public:
@@ -478,7 +97,7 @@ class Resource_LexicalCompare {
 	}
 };
 %nodefaultctor Resource_Manager;
-class Resource_Manager : public MMgt_TShared {
+class Resource_Manager : public Standard_Transient {
 	public:
 		%feature("compactdefaultargs") Resource_Manager;
 		%feature("autodoc", "	* Create a Resource manager. Attempts to find the two following files: $CSF_`aName`Defaults/aName $CSF_`aName`UserDefaults/aName and load them respectively into a reference and a user resource structure. //! If CSF_ResourceVerbose defined, seeked files will be printed. //! FILE SYNTAX The syntax of a resource file is a sequence of resource lines terminated by newline characters or end of file. The syntax of an individual resource line is:
@@ -622,7 +241,7 @@ class Resource_Manager : public MMgt_TShared {
 %}
 
 %nodefaultctor Handle_Resource_Manager;
-class Handle_Resource_Manager : public Handle_MMgt_TShared {
+class Handle_Resource_Manager : public Handle_Standard_Transient {
 
     public:
         // constructors
@@ -634,40 +253,23 @@ class Handle_Resource_Manager : public Handle_MMgt_TShared {
         static const Handle_Resource_Manager DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_Resource_Manager {
     Resource_Manager* _get_reference() {
-    return (Resource_Manager*)$self->Access();
+    return (Resource_Manager*)$self->get();
     }
 };
 
 %extend Handle_Resource_Manager {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend Resource_Manager {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-class Resource_QuickSortOfArray1 {
-	public:
-		%feature("compactdefaultargs") Sort;
-		%feature("autodoc", "	:param TheArray:
-	:type TheArray: TColStd_Array1OfAsciiString &
-	:param Comp:
-	:type Comp: Resource_LexicalCompare &
-	:rtype: void
-") Sort;
-		static void Sort (TColStd_Array1OfAsciiString & TheArray,const Resource_LexicalCompare & Comp);
-};
-
-
-%extend Resource_QuickSortOfArray1 {
 	%pythoncode {
 	__repr__ = _dumps_object
 	}
@@ -771,7 +373,7 @@ class Resource_Unicode {
 ") SetFormat;
 		static void SetFormat (const Resource_FormatType typecode);
 		%feature("compactdefaultargs") GetFormat;
-		%feature("autodoc", "	* Returns the current conversion format (either ANSI, EUC, GB or SJIS). The current converting format must be defined in advance with the SetFormat function.
+		%feature("autodoc", "	* Returns the current conversion format --either ANSI, EUC, GB or SJIS--. The current converting format must be defined in advance with the SetFormat function.
 
 	:rtype: Resource_FormatType
 ") GetFormat;
@@ -783,7 +385,7 @@ class Resource_Unicode {
 ") ReadFormat;
 		static void ReadFormat ();
 		%feature("compactdefaultargs") ConvertFormatToUnicode;
-		%feature("autodoc", "	* Converts the non-ASCII C string fromstr to the Unicode string of extended characters tostr. fromstr is translated according to the format (either ANSI, EUC, GB or SJIS) returned by the function GetFormat.
+		%feature("autodoc", "	* Converts the non-ASCII C string fromstr to the Unicode string of extended characters tostr. fromstr is translated according to the format --either ANSI, EUC, GB or SJIS-- returned by the function GetFormat.
 
 	:param fromstr:
 	:type fromstr: char *
@@ -793,7 +395,7 @@ class Resource_Unicode {
 ") ConvertFormatToUnicode;
 		static void ConvertFormatToUnicode (const char * fromstr,TCollection_ExtendedString & tostr);
 		%feature("compactdefaultargs") ConvertUnicodeToFormat;
-		%feature("autodoc", "	* Converts the Unicode string of extended characters fromstr to the non-ASCII C string tostr according to the format (either ANSI, EUC, GB or SJIS) returned by the function GetFormat. maxsize limits the size of the string tostr to a maximum number of characters. You need more than twice the length of the string fromstr to complete the conversion. The function returns true if conversion is complete, i.e. the maximum number of characters maxsize is not reached by tostr before the end of conversion of fromstr.
+		%feature("autodoc", "	* Converts the Unicode string of extended characters fromstr to the non-ASCII C string tostr according to the format --either ANSI, EUC, GB or SJIS-- returned by the function GetFormat. maxsize limits the size of the string tostr to a maximum number of characters. You need more than twice the length of the string fromstr to complete the conversion. The function returns true if conversion is complete, i.e. the maximum number of characters maxsize is not reached by tostr before the end of conversion of fromstr.
 
 	:param fromstr:
 	:type fromstr: TCollection_ExtendedString &

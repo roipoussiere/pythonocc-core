@@ -1,5 +1,5 @@
 /*
-Copyright 2008-2017 Thomas Paviot (tpaviot@gmail.com)
+Copyright 2008-2018 Thomas Paviot (tpaviot@gmail.com)
 
 
 This file is part of pythonOCC.
@@ -56,18 +56,15 @@ def register_handle(handle, base_object):
 /* typedefs */
 /* end typedefs declaration */
 
+/* templates */
+/* end templates declaration */
+
 /* public enums */
 /* end public enums declaration */
 
 %nodefaultctor XCAFApp_Application;
 class XCAFApp_Application : public TDocStd_Application {
 	public:
-		%feature("compactdefaultargs") Formats;
-		%feature("autodoc", "	:param Formats:
-	:type Formats: TColStd_SequenceOfExtendedString &
-	:rtype: void
-") Formats;
-		virtual void Formats (TColStd_SequenceOfExtendedString & Formats);
 		%feature("compactdefaultargs") ResourcesName;
 		%feature("autodoc", "	* methods from TDocStd_Application ================================
 
@@ -83,7 +80,7 @@ class XCAFApp_Application : public TDocStd_Application {
 ") InitDocument;
 		virtual void InitDocument (const Handle_TDocStd_Document & aDoc);
 		%feature("compactdefaultargs") GetApplication;
-		%feature("autodoc", "	* Initializes (for the first time) and returns the static object (XCAFApp_Application) This is the only valid method to get XCAFApp_Application object, and it should be called at least once before any actions with documents in order to init application
+		%feature("autodoc", "	* Initializes --for the first time-- and returns the static object --XCAFApp_Application-- This is the only valid method to get XCAFApp_Application object, and it should be called at least once before any actions with documents in order to init application
 
 	:rtype: Handle_XCAFApp_Application
 ") GetApplication;
@@ -122,19 +119,20 @@ class Handle_XCAFApp_Application : public Handle_TDocStd_Application {
         static const Handle_XCAFApp_Application DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_XCAFApp_Application {
     XCAFApp_Application* _get_reference() {
-    return (XCAFApp_Application*)$self->Access();
+    return (XCAFApp_Application*)$self->get();
     }
 };
 
 %extend Handle_XCAFApp_Application {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend XCAFApp_Application {

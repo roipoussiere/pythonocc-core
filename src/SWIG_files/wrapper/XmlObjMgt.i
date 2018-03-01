@@ -1,5 +1,5 @@
 /*
-Copyright 2008-2017 Thomas Paviot (tpaviot@gmail.com)
+Copyright 2008-2018 Thomas Paviot (tpaviot@gmail.com)
 
 
 This file is part of pythonOCC.
@@ -61,6 +61,9 @@ typedef LDOM_Document XmlObjMgt_Document;
 typedef TColStd_DataMapOfIntegerTransient XmlObjMgt_RRelocationTable;
 /* end typedefs declaration */
 
+/* templates */
+/* end templates declaration */
+
 /* public enums */
 /* end public enums declaration */
 
@@ -68,7 +71,7 @@ typedef TColStd_DataMapOfIntegerTransient XmlObjMgt_RRelocationTable;
 class XmlObjMgt {
 	public:
 		%feature("compactdefaultargs") IdString;
-		%feature("autodoc", "	* Define the name of XMLattribute 'ID' (to be used everywhere)
+		%feature("autodoc", "	* Define the name of XMLattribute 'ID' --to be used everywhere--
 
 	:rtype: XmlObjMgt_DOMString
 ") IdString;
@@ -102,7 +105,7 @@ class XmlObjMgt {
 ") GetStringValue;
 		static XmlObjMgt_DOMString GetStringValue (const XmlObjMgt_Element & theElement);
 		%feature("compactdefaultargs") SetStringValue;
-		%feature("autodoc", "	* Add theData as the last child text node to theElement isClearText(True) avoids analysis of the string and replacement of characters like '<' and '&' during XML file storage. Do NEVER set isClearText unless you have a hell of a reason
+		%feature("autodoc", "	* Add theData as the last child text node to theElement isClearText--True-- avoids analysis of the string and replacement of characters like '<' and '&' during XML file storage. Do NEVER set isClearText unless you have a hell of a reason
 
 	:param theElement:
 	:type theElement: XmlObjMgt_Element &
@@ -114,7 +117,7 @@ class XmlObjMgt {
 ") SetStringValue;
 		static void SetStringValue (XmlObjMgt_Element & theElement,const XmlObjMgt_DOMString & theData,const Standard_Boolean isClearText = Standard_False);
 		%feature("compactdefaultargs") GetTagEntryString;
-		%feature("autodoc", "	* Convert XPath expression (DOMString) into TagEntry string returns False on Error
+		%feature("autodoc", "	* Convert XPath expression --DOMString-- into TagEntry string returns False on Error
 
 	:param theTarget:
 	:type theTarget: XmlObjMgt_DOMString &
@@ -124,7 +127,7 @@ class XmlObjMgt {
 ") GetTagEntryString;
 		static Standard_Boolean GetTagEntryString (const XmlObjMgt_DOMString & theTarget,TCollection_AsciiString & theTagEntry);
 		%feature("compactdefaultargs") SetTagEntryString;
-		%feature("autodoc", "	* Convert XPath expression (DOMString) into TagEntry string returns False on Error
+		%feature("autodoc", "	* Convert XPath expression --DOMString-- into TagEntry string returns False on Error
 
 	:param theSource:
 	:type theSource: XmlObjMgt_DOMString &

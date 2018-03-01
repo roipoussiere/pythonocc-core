@@ -1,5 +1,5 @@
 /*
-Copyright 2008-2017 Thomas Paviot (tpaviot@gmail.com)
+Copyright 2008-2018 Thomas Paviot (tpaviot@gmail.com)
 
 
 This file is part of pythonOCC.
@@ -56,27 +56,9 @@ def register_handle(handle, base_object):
 /* typedefs */
 /* end typedefs declaration */
 
+/* templates */
+/* end templates declaration */
+
 /* public enums */
 /* end public enums declaration */
 
-%rename(stltransfer) StlTransfer;
-class StlTransfer {
-	public:
-		%feature("compactdefaultargs") RetrieveMesh;
-		%feature("autodoc", "	* Retrieve a Mesh data-structure from the Shape, convert and store it into the Mesh.
-
-	:param Shape:
-	:type Shape: TopoDS_Shape &
-	:param Mesh:
-	:type Mesh: Handle_StlMesh_Mesh &
-	:rtype: void
-") RetrieveMesh;
-		static void RetrieveMesh (const TopoDS_Shape & Shape,const Handle_StlMesh_Mesh & Mesh);
-};
-
-
-%extend StlTransfer {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};

@@ -1,5 +1,5 @@
 /*
-Copyright 2008-2017 Thomas Paviot (tpaviot@gmail.com)
+Copyright 2008-2018 Thomas Paviot (tpaviot@gmail.com)
 
 
 This file is part of pythonOCC.
@@ -55,6 +55,9 @@ def register_handle(handle, base_object):
 
 /* typedefs */
 /* end typedefs declaration */
+
+/* templates */
+/* end templates declaration */
 
 /* public enums */
 /* end public enums declaration */
@@ -347,7 +350,7 @@ class BRepSweep_NumLinearRegularSweep {
 ") DirectSolid;
 		virtual TopAbs_Orientation DirectSolid (const TopoDS_Shape & aGenS,const Sweep_NumShape & aDirS);
 		%feature("compactdefaultargs") GGDShapeIsToAdd;
-		%feature("autodoc", "	* Returns true if aNewSubShape (addressed by aSubGenS and aDirS) must be added in aNewShape (addressed by aGenS and aDirS).
+		%feature("autodoc", "	* Returns true if aNewSubShape --addressed by aSubGenS and aDirS-- must be added in aNewShape --addressed by aGenS and aDirS--.
 
 	:param aNewShape:
 	:type aNewShape: TopoDS_Shape &
@@ -363,7 +366,7 @@ class BRepSweep_NumLinearRegularSweep {
 ") GGDShapeIsToAdd;
 		virtual Standard_Boolean GGDShapeIsToAdd (const TopoDS_Shape & aNewShape,const TopoDS_Shape & aNewSubShape,const TopoDS_Shape & aGenS,const TopoDS_Shape & aSubGenS,const Sweep_NumShape & aDirS);
 		%feature("compactdefaultargs") GDDShapeIsToAdd;
-		%feature("autodoc", "	* Returns true if aNewSubShape (addressed by aGenS and aSubDirS) must be added in aNewShape (addressed by aGenS and aDirS).
+		%feature("autodoc", "	* Returns true if aNewSubShape --addressed by aGenS and aSubDirS-- must be added in aNewShape --addressed by aGenS and aDirS--.
 
 	:param aNewShape:
 	:type aNewShape: TopoDS_Shape &
@@ -526,7 +529,7 @@ class BRepSweep_Prism {
 ") Shape;
 		TopoDS_Shape Shape ();
 		%feature("compactdefaultargs") Shape;
-		%feature("autodoc", "	* Returns the TopoDS Shape generated with aGenS (subShape of the generating shape).
+		%feature("autodoc", "	* Returns the TopoDS Shape generated with aGenS --subShape of the generating shape--.
 
 	:param aGenS:
 	:type aGenS: TopoDS_Shape &
@@ -540,7 +543,7 @@ class BRepSweep_Prism {
 ") FirstShape;
 		TopoDS_Shape FirstShape ();
 		%feature("compactdefaultargs") FirstShape;
-		%feature("autodoc", "	* Returns the TopoDS Shape of the bottom of the prism. generated with aGenS (subShape of the generating shape).
+		%feature("autodoc", "	* Returns the TopoDS Shape of the bottom of the prism. generated with aGenS --subShape of the generating shape--.
 
 	:param aGenS:
 	:type aGenS: TopoDS_Shape &
@@ -554,7 +557,7 @@ class BRepSweep_Prism {
 ") LastShape;
 		TopoDS_Shape LastShape ();
 		%feature("compactdefaultargs") LastShape;
-		%feature("autodoc", "	* Returns the TopoDS Shape of the top of the prism. generated with aGenS (subShape of the generating shape).
+		%feature("autodoc", "	* Returns the TopoDS Shape of the top of the prism. generated with aGenS --subShape of the generating shape--.
 
 	:param aGenS:
 	:type aGenS: TopoDS_Shape &
@@ -586,12 +589,12 @@ class BRepSweep_Revol {
 	:param A:
 	:type A: gp_Ax1
 	:param D:
-	:type D: Quantity_PlaneAngle
+	:type D: float
 	:param C: default value is Standard_False
 	:type C: bool
 	:rtype: None
 ") BRepSweep_Revol;
-		 BRepSweep_Revol (const TopoDS_Shape & S,const gp_Ax1 & A,const Quantity_PlaneAngle D,const Standard_Boolean C = Standard_False);
+		 BRepSweep_Revol (const TopoDS_Shape & S,const gp_Ax1 & A,const Standard_Real D,const Standard_Boolean C = Standard_False);
 		%feature("compactdefaultargs") BRepSweep_Revol;
 		%feature("autodoc", "	* Builds the Revol of meridian S axis A and angle 2*Pi. If C is true S is copied.
 
@@ -611,7 +614,7 @@ class BRepSweep_Revol {
 ") Shape;
 		TopoDS_Shape Shape ();
 		%feature("compactdefaultargs") Shape;
-		%feature("autodoc", "	* Returns the TopoDS Shape generated with aGenS (subShape of the generating shape).
+		%feature("autodoc", "	* Returns the TopoDS Shape generated with aGenS --subShape of the generating shape--.
 
 	:param aGenS:
 	:type aGenS: TopoDS_Shape &
@@ -619,13 +622,13 @@ class BRepSweep_Revol {
 ") Shape;
 		TopoDS_Shape Shape (const TopoDS_Shape & aGenS);
 		%feature("compactdefaultargs") FirstShape;
-		%feature("autodoc", "	* Returns the first shape of the revol (coinciding with the generating shape).
+		%feature("autodoc", "	* Returns the first shape of the revol --coinciding with the generating shape--.
 
 	:rtype: TopoDS_Shape
 ") FirstShape;
 		TopoDS_Shape FirstShape ();
 		%feature("compactdefaultargs") FirstShape;
-		%feature("autodoc", "	* Returns the first shape of the revol (coinciding with the generating shape).
+		%feature("autodoc", "	* Returns the first shape of the revol --coinciding with the generating shape--.
 
 	:param aGenS:
 	:type aGenS: TopoDS_Shape &
@@ -639,7 +642,7 @@ class BRepSweep_Revol {
 ") LastShape;
 		TopoDS_Shape LastShape ();
 		%feature("compactdefaultargs") LastShape;
-		%feature("autodoc", "	* Returns the TopoDS Shape of the top of the prism. generated with aGenS (subShape of the generating shape).
+		%feature("autodoc", "	* Returns the TopoDS Shape of the top of the prism. generated with aGenS --subShape of the generating shape--.
 
 	:param aGenS:
 	:type aGenS: TopoDS_Shape &
@@ -655,9 +658,9 @@ class BRepSweep_Revol {
 		%feature("compactdefaultargs") Angle;
 		%feature("autodoc", "	* returns the angle.
 
-	:rtype: Quantity_PlaneAngle
+	:rtype: float
 ") Angle;
-		Quantity_PlaneAngle Angle ();
+		Standard_Real Angle ();
 };
 
 
@@ -895,7 +898,7 @@ class BRepSweep_Trsf : public BRepSweep_NumLinearRegularSweep {
 ") SetDirectingPCurve;
 		virtual void SetDirectingPCurve (const TopoDS_Shape & aNewFace,TopoDS_Shape & aNewEdge,const TopoDS_Shape & aGenE,const TopoDS_Shape & aGenV,const Sweep_NumShape & aDirE,const TopAbs_Orientation orien);
 		%feature("compactdefaultargs") GGDShapeIsToAdd;
-		%feature("autodoc", "	* Returns true if aNewSubShape (addressed by aSubGenS and aDirS) must be added in aNewShape (addressed by aGenS and aDirS).
+		%feature("autodoc", "	* Returns true if aNewSubShape --addressed by aSubGenS and aDirS-- must be added in aNewShape --addressed by aGenS and aDirS--.
 
 	:param aNewShape:
 	:type aNewShape: TopoDS_Shape &
@@ -911,7 +914,7 @@ class BRepSweep_Trsf : public BRepSweep_NumLinearRegularSweep {
 ") GGDShapeIsToAdd;
 		virtual Standard_Boolean GGDShapeIsToAdd (const TopoDS_Shape & aNewShape,const TopoDS_Shape & aNewSubShape,const TopoDS_Shape & aGenS,const TopoDS_Shape & aSubGenS,const Sweep_NumShape & aDirS);
 		%feature("compactdefaultargs") GDDShapeIsToAdd;
-		%feature("autodoc", "	* Returns true if aNewSubShape (addressed by aGenS and aSubDirS) must be added in aNewShape (addressed by aGenS and aDirS).
+		%feature("autodoc", "	* Returns true if aNewSubShape --addressed by aGenS and aSubDirS-- must be added in aNewShape --addressed by aGenS and aDirS--.
 
 	:param aNewShape:
 	:type aNewShape: TopoDS_Shape &
@@ -993,12 +996,12 @@ class BRepSweep_Rotation : public BRepSweep_Trsf {
 	:param A:
 	:type A: gp_Ax1
 	:param D:
-	:type D: Quantity_PlaneAngle
+	:type D: float
 	:param C:
 	:type C: bool
 	:rtype: None
 ") BRepSweep_Rotation;
-		 BRepSweep_Rotation (const TopoDS_Shape & S,const Sweep_NumShape & N,const TopLoc_Location & L,const gp_Ax1 & A,const Quantity_PlaneAngle D,const Standard_Boolean C);
+		 BRepSweep_Rotation (const TopoDS_Shape & S,const Sweep_NumShape & N,const TopLoc_Location & L,const gp_Ax1 & A,const Standard_Real D,const Standard_Boolean C);
 		%feature("compactdefaultargs") MakeEmptyVertex;
 		%feature("autodoc", "	* Builds the vertex addressed by [aGenV,aDirV], with its geometric part, but without subcomponents.
 
@@ -1152,7 +1155,7 @@ class BRepSweep_Rotation : public BRepSweep_Trsf {
 ") DirectSolid;
 		TopAbs_Orientation DirectSolid (const TopoDS_Shape & aGenS,const Sweep_NumShape & aDirS);
 		%feature("compactdefaultargs") GGDShapeIsToAdd;
-		%feature("autodoc", "	* Returns true if aNewSubShape (addressed by aSubGenS and aDirS) must be added in aNewShape (addressed by aGenS and aDirS).
+		%feature("autodoc", "	* Returns true if aNewSubShape --addressed by aSubGenS and aDirS-- must be added in aNewShape --addressed by aGenS and aDirS--.
 
 	:param aNewShape:
 	:type aNewShape: TopoDS_Shape &
@@ -1168,7 +1171,7 @@ class BRepSweep_Rotation : public BRepSweep_Trsf {
 ") GGDShapeIsToAdd;
 		Standard_Boolean GGDShapeIsToAdd (const TopoDS_Shape & aNewShape,const TopoDS_Shape & aNewSubShape,const TopoDS_Shape & aGenS,const TopoDS_Shape & aSubGenS,const Sweep_NumShape & aDirS);
 		%feature("compactdefaultargs") GDDShapeIsToAdd;
-		%feature("autodoc", "	* Returns true if aNewSubShape (addressed by aGenS and aSubDirS) must be added in aNewShape (addressed by aGenS and aDirS).
+		%feature("autodoc", "	* Returns true if aNewSubShape --addressed by aGenS and aSubDirS-- must be added in aNewShape --addressed by aGenS and aDirS--.
 
 	:param aNewShape:
 	:type aNewShape: TopoDS_Shape &
@@ -1234,9 +1237,9 @@ class BRepSweep_Rotation : public BRepSweep_Trsf {
 		%feature("compactdefaultargs") Angle;
 		%feature("autodoc", "	* returns the angle.
 
-	:rtype: Quantity_PlaneAngle
+	:rtype: float
 ") Angle;
-		Quantity_PlaneAngle Angle ();
+		Standard_Real Angle ();
 };
 
 
@@ -1419,7 +1422,7 @@ class BRepSweep_Translation : public BRepSweep_Trsf {
 ") DirectSolid;
 		TopAbs_Orientation DirectSolid (const TopoDS_Shape & aGenS,const Sweep_NumShape & aDirS);
 		%feature("compactdefaultargs") GGDShapeIsToAdd;
-		%feature("autodoc", "	* Returns true if aNewSubShape (addressed by aSubGenS and aDirS) must be added in aNewShape (addressed by aGenS and aDirS).
+		%feature("autodoc", "	* Returns true if aNewSubShape --addressed by aSubGenS and aDirS-- must be added in aNewShape --addressed by aGenS and aDirS--.
 
 	:param aNewShape:
 	:type aNewShape: TopoDS_Shape &
@@ -1435,7 +1438,7 @@ class BRepSweep_Translation : public BRepSweep_Trsf {
 ") GGDShapeIsToAdd;
 		Standard_Boolean GGDShapeIsToAdd (const TopoDS_Shape & aNewShape,const TopoDS_Shape & aNewSubShape,const TopoDS_Shape & aGenS,const TopoDS_Shape & aSubGenS,const Sweep_NumShape & aDirS);
 		%feature("compactdefaultargs") GDDShapeIsToAdd;
-		%feature("autodoc", "	* Returns true if aNewSubShape (addressed by aGenS and aSubDirS) must be added in aNewShape (addressed by aGenS and aDirS).
+		%feature("autodoc", "	* Returns true if aNewSubShape --addressed by aGenS and aSubDirS-- must be added in aNewShape --addressed by aGenS and aDirS--.
 
 	:param aNewShape:
 	:type aNewShape: TopoDS_Shape &

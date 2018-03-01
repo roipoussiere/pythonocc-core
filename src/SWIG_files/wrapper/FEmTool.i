@@ -1,5 +1,5 @@
 /*
-Copyright 2008-2017 Thomas Paviot (tpaviot@gmail.com)
+Copyright 2008-2018 Thomas Paviot (tpaviot@gmail.com)
 
 
 This file is part of pythonOCC.
@@ -56,6 +56,12 @@ def register_handle(handle, base_object):
 /* typedefs */
 /* end typedefs declaration */
 
+/* templates */
+%template(FEmTool_AssemblyTable) NCollection_Array2 <Handle_TColStd_HArray1OfInteger>;
+%template(FEmTool_SeqOfLinConstr) NCollection_Sequence <FEmTool_ListOfVectors>;
+%template(FEmTool_ListOfVectors) NCollection_List <Handle_TColStd_HArray1OfReal>;
+/* end templates declaration */
+
 /* public enums */
 /* end public enums declaration */
 
@@ -77,7 +83,7 @@ class FEmTool_Assembly {
 ") NullifyMatrix;
 		void NullifyMatrix ();
 		%feature("compactdefaultargs") AddMatrix;
-		%feature("autodoc", "	* Add an elementary Matrix in the assembly Matrix if Dependence(Dimension1,Dimension2) is False
+		%feature("autodoc", "	* Add an elementary Matrix in the assembly Matrix if Dependence--Dimension1,Dimension2-- is False
 
 	:param Element:
 	:type Element: int
@@ -91,13 +97,13 @@ class FEmTool_Assembly {
 ") AddMatrix;
 		void AddMatrix (const Standard_Integer Element,const Standard_Integer Dimension1,const Standard_Integer Dimension2,const math_Matrix & Mat);
 		%feature("compactdefaultargs") NullifyVector;
-		%feature("autodoc", "	* Nullify all Coordinate of assembly Vector (second member)
+		%feature("autodoc", "	* Nullify all Coordinate of assembly Vector --second member--
 
 	:rtype: None
 ") NullifyVector;
 		void NullifyVector ();
 		%feature("compactdefaultargs") AddVector;
-		%feature("autodoc", "	* Add an elementary Vector in the assembly Vector (second member)
+		%feature("autodoc", "	* Add an elementary Vector in the assembly Vector --second member--
 
 	:param Element:
 	:type Element: int
@@ -164,117 +170,8 @@ class FEmTool_Assembly {
 	__repr__ = _dumps_object
 	}
 };
-%nodefaultctor FEmTool_AssemblyTable;
-class FEmTool_AssemblyTable {
-	public:
-		%feature("compactdefaultargs") FEmTool_AssemblyTable;
-		%feature("autodoc", "	:param R1:
-	:type R1: int
-	:param R2:
-	:type R2: int
-	:param C1:
-	:type C1: int
-	:param C2:
-	:type C2: int
-	:rtype: None
-") FEmTool_AssemblyTable;
-		 FEmTool_AssemblyTable (const Standard_Integer R1,const Standard_Integer R2,const Standard_Integer C1,const Standard_Integer C2);
-		%feature("compactdefaultargs") FEmTool_AssemblyTable;
-		%feature("autodoc", "	:param Item:
-	:type Item: Handle_TColStd_HArray1OfInteger &
-	:param R1:
-	:type R1: int
-	:param R2:
-	:type R2: int
-	:param C1:
-	:type C1: int
-	:param C2:
-	:type C2: int
-	:rtype: None
-") FEmTool_AssemblyTable;
-		 FEmTool_AssemblyTable (const Handle_TColStd_HArray1OfInteger & Item,const Standard_Integer R1,const Standard_Integer R2,const Standard_Integer C1,const Standard_Integer C2);
-		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	:param V:
-	:type V: Handle_TColStd_HArray1OfInteger &
-	:rtype: None
-") Init;
-		void Init (const Handle_TColStd_HArray1OfInteger & V);
-		%feature("compactdefaultargs") Destroy;
-		%feature("autodoc", "	:rtype: None
-") Destroy;
-		void Destroy ();
-		%feature("compactdefaultargs") Assign;
-		%feature("autodoc", "	:param Other:
-	:type Other: FEmTool_AssemblyTable &
-	:rtype: FEmTool_AssemblyTable
-") Assign;
-		const FEmTool_AssemblyTable & Assign (const FEmTool_AssemblyTable & Other);
-		%feature("compactdefaultargs") operator =;
-		%feature("autodoc", "	:param Other:
-	:type Other: FEmTool_AssemblyTable &
-	:rtype: FEmTool_AssemblyTable
-") operator =;
-		const FEmTool_AssemblyTable & operator = (const FEmTool_AssemblyTable & Other);
-		%feature("compactdefaultargs") ColLength;
-		%feature("autodoc", "	:rtype: int
-") ColLength;
-		Standard_Integer ColLength ();
-		%feature("compactdefaultargs") RowLength;
-		%feature("autodoc", "	:rtype: int
-") RowLength;
-		Standard_Integer RowLength ();
-		%feature("compactdefaultargs") LowerCol;
-		%feature("autodoc", "	:rtype: int
-") LowerCol;
-		Standard_Integer LowerCol ();
-		%feature("compactdefaultargs") LowerRow;
-		%feature("autodoc", "	:rtype: int
-") LowerRow;
-		Standard_Integer LowerRow ();
-		%feature("compactdefaultargs") UpperCol;
-		%feature("autodoc", "	:rtype: int
-") UpperCol;
-		Standard_Integer UpperCol ();
-		%feature("compactdefaultargs") UpperRow;
-		%feature("autodoc", "	:rtype: int
-") UpperRow;
-		Standard_Integer UpperRow ();
-		%feature("compactdefaultargs") SetValue;
-		%feature("autodoc", "	:param Row:
-	:type Row: int
-	:param Col:
-	:type Col: int
-	:param Value:
-	:type Value: Handle_TColStd_HArray1OfInteger &
-	:rtype: None
-") SetValue;
-		void SetValue (const Standard_Integer Row,const Standard_Integer Col,const Handle_TColStd_HArray1OfInteger & Value);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:param Row:
-	:type Row: int
-	:param Col:
-	:type Col: int
-	:rtype: Handle_TColStd_HArray1OfInteger
-") Value;
-		Handle_TColStd_HArray1OfInteger Value (const Standard_Integer Row,const Standard_Integer Col);
-		%feature("compactdefaultargs") ChangeValue;
-		%feature("autodoc", "	:param Row:
-	:type Row: int
-	:param Col:
-	:type Col: int
-	:rtype: Handle_TColStd_HArray1OfInteger
-") ChangeValue;
-		Handle_TColStd_HArray1OfInteger ChangeValue (const Standard_Integer Row,const Standard_Integer Col);
-};
-
-
-%extend FEmTool_AssemblyTable {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
 %nodefaultctor FEmTool_Curve;
-class FEmTool_Curve : public MMgt_TShared {
+class FEmTool_Curve : public Standard_Transient {
 	public:
 		%feature("compactdefaultargs") FEmTool_Curve;
 		%feature("autodoc", "	:param Dimension:
@@ -410,7 +307,7 @@ class FEmTool_Curve : public MMgt_TShared {
 %}
 
 %nodefaultctor Handle_FEmTool_Curve;
-class Handle_FEmTool_Curve : public Handle_MMgt_TShared {
+class Handle_FEmTool_Curve : public Handle_Standard_Transient {
 
     public:
         // constructors
@@ -422,19 +319,20 @@ class Handle_FEmTool_Curve : public Handle_MMgt_TShared {
         static const Handle_FEmTool_Curve DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_FEmTool_Curve {
     FEmTool_Curve* _get_reference() {
-    return (FEmTool_Curve*)$self->Access();
+    return (FEmTool_Curve*)$self->get();
     }
 };
 
 %extend Handle_FEmTool_Curve {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend FEmTool_Curve {
@@ -443,10 +341,10 @@ class Handle_FEmTool_Curve : public Handle_MMgt_TShared {
 	}
 };
 %nodefaultctor FEmTool_ElementaryCriterion;
-class FEmTool_ElementaryCriterion : public MMgt_TShared {
+class FEmTool_ElementaryCriterion : public Standard_Transient {
 	public:
 		%feature("compactdefaultargs") Set;
-		%feature("autodoc", "	* Set the coefficient of the Element (the Curve)
+		%feature("autodoc", "	* Set the coefficient of the Element --the Curve--
 
 	:param Coeff:
 	:type Coeff: Handle_TColStd_HArray2OfReal &
@@ -470,13 +368,13 @@ class FEmTool_ElementaryCriterion : public MMgt_TShared {
 ") DependenceTable;
 		virtual Handle_TColStd_HArray2OfInteger DependenceTable ();
 		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	* To Compute J(E) where E is the current Element
+		%feature("autodoc", "	* To Compute J--E-- where E is the current Element
 
 	:rtype: float
 ") Value;
 		virtual Standard_Real Value ();
 		%feature("compactdefaultargs") Hessian;
-		%feature("autodoc", "	* To Compute J(E) the coefficients of Hessian matrix of J(E) wich are crossed derivatives in dimensions <Dim1> and <Dim2>. If DependenceTable(Dimension1,Dimension2) is False
+		%feature("autodoc", "	* To Compute J--E-- the coefficients of Hessian matrix of J--E-- wich are crossed derivatives in dimensions <Dim1> and <Dim2>. If DependenceTable--Dimension1,Dimension2-- is False
 
 	:param Dim1:
 	:type Dim1: int
@@ -488,7 +386,7 @@ class FEmTool_ElementaryCriterion : public MMgt_TShared {
 ") Hessian;
 		virtual void Hessian (const Standard_Integer Dim1,const Standard_Integer Dim2,math_Matrix & H);
 		%feature("compactdefaultargs") Gradient;
-		%feature("autodoc", "	* To Compute the coefficients in the dimension <dim> of the J(E)'s Gradient where E is the current Element
+		%feature("autodoc", "	* To Compute the coefficients in the dimension <dim> of the J--E--'s Gradient where E is the current Element
 
 	:param Dim:
 	:type Dim: int
@@ -519,7 +417,7 @@ class FEmTool_ElementaryCriterion : public MMgt_TShared {
 %}
 
 %nodefaultctor Handle_FEmTool_ElementaryCriterion;
-class Handle_FEmTool_ElementaryCriterion : public Handle_MMgt_TShared {
+class Handle_FEmTool_ElementaryCriterion : public Handle_Standard_Transient {
 
     public:
         // constructors
@@ -531,19 +429,20 @@ class Handle_FEmTool_ElementaryCriterion : public Handle_MMgt_TShared {
         static const Handle_FEmTool_ElementaryCriterion DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_FEmTool_ElementaryCriterion {
     FEmTool_ElementaryCriterion* _get_reference() {
-    return (FEmTool_ElementaryCriterion*)$self->Access();
+    return (FEmTool_ElementaryCriterion*)$self->get();
     }
 };
 
 %extend Handle_FEmTool_ElementaryCriterion {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend FEmTool_ElementaryCriterion {
@@ -575,7 +474,7 @@ class FEmTool_ElementsOfRefMatrix : public math_FunctionSet {
 ") NbEquations;
 		Standard_Integer NbEquations ();
 		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	* computes the values <F> of the functions for the variable <X>. returns True if the computation was done successfully, False otherwise. F contains results only for i<=j in following order: P0*P0, P0*P1, P0*P2... P1*P1, P1*P2,... (upper triangle of matrix {PiPj})
+		%feature("autodoc", "	* computes the values <F> of the functions for the variable <X>. returns True if the computation was done successfully, False otherwise. F contains results only for i<=j in following order: P0*P0, P0*P1, P0*P2... P1*P1, P1*P2,... --upper triangle of matrix {PiPj}--
 
 	:param X:
 	:type X: math_Vector &
@@ -592,612 +491,8 @@ class FEmTool_ElementsOfRefMatrix : public math_FunctionSet {
 	__repr__ = _dumps_object
 	}
 };
-%nodefaultctor FEmTool_HAssemblyTable;
-class FEmTool_HAssemblyTable : public MMgt_TShared {
-	public:
-		%feature("compactdefaultargs") FEmTool_HAssemblyTable;
-		%feature("autodoc", "	:param R1:
-	:type R1: int
-	:param R2:
-	:type R2: int
-	:param C1:
-	:type C1: int
-	:param C2:
-	:type C2: int
-	:rtype: None
-") FEmTool_HAssemblyTable;
-		 FEmTool_HAssemblyTable (const Standard_Integer R1,const Standard_Integer R2,const Standard_Integer C1,const Standard_Integer C2);
-		%feature("compactdefaultargs") FEmTool_HAssemblyTable;
-		%feature("autodoc", "	:param R1:
-	:type R1: int
-	:param R2:
-	:type R2: int
-	:param C1:
-	:type C1: int
-	:param C2:
-	:type C2: int
-	:param V:
-	:type V: Handle_TColStd_HArray1OfInteger &
-	:rtype: None
-") FEmTool_HAssemblyTable;
-		 FEmTool_HAssemblyTable (const Standard_Integer R1,const Standard_Integer R2,const Standard_Integer C1,const Standard_Integer C2,const Handle_TColStd_HArray1OfInteger & V);
-		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	:param V:
-	:type V: Handle_TColStd_HArray1OfInteger &
-	:rtype: None
-") Init;
-		void Init (const Handle_TColStd_HArray1OfInteger & V);
-		%feature("compactdefaultargs") ColLength;
-		%feature("autodoc", "	:rtype: int
-") ColLength;
-		Standard_Integer ColLength ();
-		%feature("compactdefaultargs") RowLength;
-		%feature("autodoc", "	:rtype: int
-") RowLength;
-		Standard_Integer RowLength ();
-		%feature("compactdefaultargs") LowerCol;
-		%feature("autodoc", "	:rtype: int
-") LowerCol;
-		Standard_Integer LowerCol ();
-		%feature("compactdefaultargs") LowerRow;
-		%feature("autodoc", "	:rtype: int
-") LowerRow;
-		Standard_Integer LowerRow ();
-		%feature("compactdefaultargs") UpperCol;
-		%feature("autodoc", "	:rtype: int
-") UpperCol;
-		Standard_Integer UpperCol ();
-		%feature("compactdefaultargs") UpperRow;
-		%feature("autodoc", "	:rtype: int
-") UpperRow;
-		Standard_Integer UpperRow ();
-		%feature("compactdefaultargs") SetValue;
-		%feature("autodoc", "	:param Row:
-	:type Row: int
-	:param Col:
-	:type Col: int
-	:param Value:
-	:type Value: Handle_TColStd_HArray1OfInteger &
-	:rtype: None
-") SetValue;
-		void SetValue (const Standard_Integer Row,const Standard_Integer Col,const Handle_TColStd_HArray1OfInteger & Value);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:param Row:
-	:type Row: int
-	:param Col:
-	:type Col: int
-	:rtype: Handle_TColStd_HArray1OfInteger
-") Value;
-		Handle_TColStd_HArray1OfInteger Value (const Standard_Integer Row,const Standard_Integer Col);
-		%feature("compactdefaultargs") ChangeValue;
-		%feature("autodoc", "	:param Row:
-	:type Row: int
-	:param Col:
-	:type Col: int
-	:rtype: Handle_TColStd_HArray1OfInteger
-") ChangeValue;
-		Handle_TColStd_HArray1OfInteger ChangeValue (const Standard_Integer Row,const Standard_Integer Col);
-		%feature("compactdefaultargs") Array2;
-		%feature("autodoc", "	:rtype: FEmTool_AssemblyTable
-") Array2;
-		const FEmTool_AssemblyTable & Array2 ();
-		%feature("compactdefaultargs") ChangeArray2;
-		%feature("autodoc", "	:rtype: FEmTool_AssemblyTable
-") ChangeArray2;
-		FEmTool_AssemblyTable & ChangeArray2 ();
-};
-
-
-%extend FEmTool_HAssemblyTable {
-	%pythoncode {
-		def GetHandle(self):
-		    try:
-		        return self.thisHandle
-		    except:
-		        self.thisHandle = Handle_FEmTool_HAssemblyTable(self)
-		        self.thisown = False
-		        return self.thisHandle
-	}
-};
-
-%pythonappend Handle_FEmTool_HAssemblyTable::Handle_FEmTool_HAssemblyTable %{
-    # register the handle in the base object
-    if len(args) > 0:
-        register_handle(self, args[0])
-%}
-
-%nodefaultctor Handle_FEmTool_HAssemblyTable;
-class Handle_FEmTool_HAssemblyTable : public Handle_MMgt_TShared {
-
-    public:
-        // constructors
-        Handle_FEmTool_HAssemblyTable();
-        Handle_FEmTool_HAssemblyTable(const Handle_FEmTool_HAssemblyTable &aHandle);
-        Handle_FEmTool_HAssemblyTable(const FEmTool_HAssemblyTable *anItem);
-        void Nullify();
-        Standard_Boolean IsNull() const;
-        static const Handle_FEmTool_HAssemblyTable DownCast(const Handle_Standard_Transient &AnObject);
-
-};
-%extend Handle_FEmTool_HAssemblyTable {
-    FEmTool_HAssemblyTable* _get_reference() {
-    return (FEmTool_HAssemblyTable*)$self->Access();
-    }
-};
-
-%extend Handle_FEmTool_HAssemblyTable {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
-};
-
-%extend FEmTool_HAssemblyTable {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor FEmTool_ListIteratorOfListOfVectors;
-class FEmTool_ListIteratorOfListOfVectors {
-	public:
-		%feature("compactdefaultargs") FEmTool_ListIteratorOfListOfVectors;
-		%feature("autodoc", "	:rtype: None
-") FEmTool_ListIteratorOfListOfVectors;
-		 FEmTool_ListIteratorOfListOfVectors ();
-		%feature("compactdefaultargs") FEmTool_ListIteratorOfListOfVectors;
-		%feature("autodoc", "	:param L:
-	:type L: FEmTool_ListOfVectors &
-	:rtype: None
-") FEmTool_ListIteratorOfListOfVectors;
-		 FEmTool_ListIteratorOfListOfVectors (const FEmTool_ListOfVectors & L);
-		%feature("compactdefaultargs") Initialize;
-		%feature("autodoc", "	:param L:
-	:type L: FEmTool_ListOfVectors &
-	:rtype: None
-") Initialize;
-		void Initialize (const FEmTool_ListOfVectors & L);
-		%feature("compactdefaultargs") More;
-		%feature("autodoc", "	:rtype: bool
-") More;
-		Standard_Boolean More ();
-		%feature("compactdefaultargs") Next;
-		%feature("autodoc", "	:rtype: None
-") Next;
-		void Next ();
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:rtype: Handle_TColStd_HArray1OfReal
-") Value;
-		Handle_TColStd_HArray1OfReal Value ();
-};
-
-
-%extend FEmTool_ListIteratorOfListOfVectors {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor FEmTool_ListNodeOfListOfVectors;
-class FEmTool_ListNodeOfListOfVectors : public TCollection_MapNode {
-	public:
-		%feature("compactdefaultargs") FEmTool_ListNodeOfListOfVectors;
-		%feature("autodoc", "	:param I:
-	:type I: Handle_TColStd_HArray1OfReal &
-	:param n:
-	:type n: TCollection_MapNodePtr &
-	:rtype: None
-") FEmTool_ListNodeOfListOfVectors;
-		 FEmTool_ListNodeOfListOfVectors (const Handle_TColStd_HArray1OfReal & I,const TCollection_MapNodePtr & n);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:rtype: Handle_TColStd_HArray1OfReal
-") Value;
-		Handle_TColStd_HArray1OfReal Value ();
-};
-
-
-%extend FEmTool_ListNodeOfListOfVectors {
-	%pythoncode {
-		def GetHandle(self):
-		    try:
-		        return self.thisHandle
-		    except:
-		        self.thisHandle = Handle_FEmTool_ListNodeOfListOfVectors(self)
-		        self.thisown = False
-		        return self.thisHandle
-	}
-};
-
-%pythonappend Handle_FEmTool_ListNodeOfListOfVectors::Handle_FEmTool_ListNodeOfListOfVectors %{
-    # register the handle in the base object
-    if len(args) > 0:
-        register_handle(self, args[0])
-%}
-
-%nodefaultctor Handle_FEmTool_ListNodeOfListOfVectors;
-class Handle_FEmTool_ListNodeOfListOfVectors : public Handle_TCollection_MapNode {
-
-    public:
-        // constructors
-        Handle_FEmTool_ListNodeOfListOfVectors();
-        Handle_FEmTool_ListNodeOfListOfVectors(const Handle_FEmTool_ListNodeOfListOfVectors &aHandle);
-        Handle_FEmTool_ListNodeOfListOfVectors(const FEmTool_ListNodeOfListOfVectors *anItem);
-        void Nullify();
-        Standard_Boolean IsNull() const;
-        static const Handle_FEmTool_ListNodeOfListOfVectors DownCast(const Handle_Standard_Transient &AnObject);
-
-};
-%extend Handle_FEmTool_ListNodeOfListOfVectors {
-    FEmTool_ListNodeOfListOfVectors* _get_reference() {
-    return (FEmTool_ListNodeOfListOfVectors*)$self->Access();
-    }
-};
-
-%extend Handle_FEmTool_ListNodeOfListOfVectors {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
-};
-
-%extend FEmTool_ListNodeOfListOfVectors {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor FEmTool_ListOfVectors;
-class FEmTool_ListOfVectors {
-	public:
-		%feature("compactdefaultargs") FEmTool_ListOfVectors;
-		%feature("autodoc", "	:rtype: None
-") FEmTool_ListOfVectors;
-		 FEmTool_ListOfVectors ();
-		%feature("compactdefaultargs") FEmTool_ListOfVectors;
-		%feature("autodoc", "	:param Other:
-	:type Other: FEmTool_ListOfVectors &
-	:rtype: None
-") FEmTool_ListOfVectors;
-		 FEmTool_ListOfVectors (const FEmTool_ListOfVectors & Other);
-		%feature("compactdefaultargs") Assign;
-		%feature("autodoc", "	:param Other:
-	:type Other: FEmTool_ListOfVectors &
-	:rtype: None
-") Assign;
-		void Assign (const FEmTool_ListOfVectors & Other);
-		%feature("compactdefaultargs") operator =;
-		%feature("autodoc", "	:param Other:
-	:type Other: FEmTool_ListOfVectors &
-	:rtype: None
-") operator =;
-		void operator = (const FEmTool_ListOfVectors & Other);
-		%feature("compactdefaultargs") Extent;
-		%feature("autodoc", "	:rtype: int
-") Extent;
-		Standard_Integer Extent ();
-		%feature("compactdefaultargs") Clear;
-		%feature("autodoc", "	:rtype: None
-") Clear;
-		void Clear ();
-		%feature("compactdefaultargs") IsEmpty;
-		%feature("autodoc", "	:rtype: bool
-") IsEmpty;
-		Standard_Boolean IsEmpty ();
-		%feature("compactdefaultargs") Prepend;
-		%feature("autodoc", "	:param I:
-	:type I: Handle_TColStd_HArray1OfReal &
-	:rtype: None
-") Prepend;
-		void Prepend (const Handle_TColStd_HArray1OfReal & I);
-		%feature("compactdefaultargs") Prepend;
-		%feature("autodoc", "	:param I:
-	:type I: Handle_TColStd_HArray1OfReal &
-	:param theIt:
-	:type theIt: FEmTool_ListIteratorOfListOfVectors &
-	:rtype: None
-") Prepend;
-		void Prepend (const Handle_TColStd_HArray1OfReal & I,FEmTool_ListIteratorOfListOfVectors & theIt);
-		%feature("compactdefaultargs") Prepend;
-		%feature("autodoc", "	:param Other:
-	:type Other: FEmTool_ListOfVectors &
-	:rtype: None
-") Prepend;
-		void Prepend (FEmTool_ListOfVectors & Other);
-		%feature("compactdefaultargs") Append;
-		%feature("autodoc", "	:param I:
-	:type I: Handle_TColStd_HArray1OfReal &
-	:rtype: None
-") Append;
-		void Append (const Handle_TColStd_HArray1OfReal & I);
-		%feature("compactdefaultargs") Append;
-		%feature("autodoc", "	:param I:
-	:type I: Handle_TColStd_HArray1OfReal &
-	:param theIt:
-	:type theIt: FEmTool_ListIteratorOfListOfVectors &
-	:rtype: None
-") Append;
-		void Append (const Handle_TColStd_HArray1OfReal & I,FEmTool_ListIteratorOfListOfVectors & theIt);
-		%feature("compactdefaultargs") Append;
-		%feature("autodoc", "	:param Other:
-	:type Other: FEmTool_ListOfVectors &
-	:rtype: None
-") Append;
-		void Append (FEmTool_ListOfVectors & Other);
-		%feature("compactdefaultargs") First;
-		%feature("autodoc", "	:rtype: Handle_TColStd_HArray1OfReal
-") First;
-		Handle_TColStd_HArray1OfReal First ();
-		%feature("compactdefaultargs") Last;
-		%feature("autodoc", "	:rtype: Handle_TColStd_HArray1OfReal
-") Last;
-		Handle_TColStd_HArray1OfReal Last ();
-		%feature("compactdefaultargs") RemoveFirst;
-		%feature("autodoc", "	:rtype: None
-") RemoveFirst;
-		void RemoveFirst ();
-		%feature("compactdefaultargs") Remove;
-		%feature("autodoc", "	:param It:
-	:type It: FEmTool_ListIteratorOfListOfVectors &
-	:rtype: None
-") Remove;
-		void Remove (FEmTool_ListIteratorOfListOfVectors & It);
-		%feature("compactdefaultargs") InsertBefore;
-		%feature("autodoc", "	:param I:
-	:type I: Handle_TColStd_HArray1OfReal &
-	:param It:
-	:type It: FEmTool_ListIteratorOfListOfVectors &
-	:rtype: None
-") InsertBefore;
-		void InsertBefore (const Handle_TColStd_HArray1OfReal & I,FEmTool_ListIteratorOfListOfVectors & It);
-		%feature("compactdefaultargs") InsertBefore;
-		%feature("autodoc", "	:param Other:
-	:type Other: FEmTool_ListOfVectors &
-	:param It:
-	:type It: FEmTool_ListIteratorOfListOfVectors &
-	:rtype: None
-") InsertBefore;
-		void InsertBefore (FEmTool_ListOfVectors & Other,FEmTool_ListIteratorOfListOfVectors & It);
-		%feature("compactdefaultargs") InsertAfter;
-		%feature("autodoc", "	:param I:
-	:type I: Handle_TColStd_HArray1OfReal &
-	:param It:
-	:type It: FEmTool_ListIteratorOfListOfVectors &
-	:rtype: None
-") InsertAfter;
-		void InsertAfter (const Handle_TColStd_HArray1OfReal & I,FEmTool_ListIteratorOfListOfVectors & It);
-		%feature("compactdefaultargs") InsertAfter;
-		%feature("autodoc", "	:param Other:
-	:type Other: FEmTool_ListOfVectors &
-	:param It:
-	:type It: FEmTool_ListIteratorOfListOfVectors &
-	:rtype: None
-") InsertAfter;
-		void InsertAfter (FEmTool_ListOfVectors & Other,FEmTool_ListIteratorOfListOfVectors & It);
-};
-
-
-%extend FEmTool_ListOfVectors {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor FEmTool_SeqOfLinConstr;
-class FEmTool_SeqOfLinConstr : public TCollection_BaseSequence {
-	public:
-		%feature("compactdefaultargs") FEmTool_SeqOfLinConstr;
-		%feature("autodoc", "	:rtype: None
-") FEmTool_SeqOfLinConstr;
-		 FEmTool_SeqOfLinConstr ();
-		%feature("compactdefaultargs") FEmTool_SeqOfLinConstr;
-		%feature("autodoc", "	:param Other:
-	:type Other: FEmTool_SeqOfLinConstr &
-	:rtype: None
-") FEmTool_SeqOfLinConstr;
-		 FEmTool_SeqOfLinConstr (const FEmTool_SeqOfLinConstr & Other);
-		%feature("compactdefaultargs") Clear;
-		%feature("autodoc", "	:rtype: None
-") Clear;
-		void Clear ();
-		%feature("compactdefaultargs") Assign;
-		%feature("autodoc", "	:param Other:
-	:type Other: FEmTool_SeqOfLinConstr &
-	:rtype: FEmTool_SeqOfLinConstr
-") Assign;
-		const FEmTool_SeqOfLinConstr & Assign (const FEmTool_SeqOfLinConstr & Other);
-		%feature("compactdefaultargs") operator =;
-		%feature("autodoc", "	:param Other:
-	:type Other: FEmTool_SeqOfLinConstr &
-	:rtype: FEmTool_SeqOfLinConstr
-") operator =;
-		const FEmTool_SeqOfLinConstr & operator = (const FEmTool_SeqOfLinConstr & Other);
-		%feature("compactdefaultargs") Append;
-		%feature("autodoc", "	:param T:
-	:type T: FEmTool_ListOfVectors &
-	:rtype: None
-") Append;
-		void Append (const FEmTool_ListOfVectors & T);
-		%feature("compactdefaultargs") Append;
-		%feature("autodoc", "	:param S:
-	:type S: FEmTool_SeqOfLinConstr &
-	:rtype: None
-") Append;
-		void Append (FEmTool_SeqOfLinConstr & S);
-		%feature("compactdefaultargs") Prepend;
-		%feature("autodoc", "	:param T:
-	:type T: FEmTool_ListOfVectors &
-	:rtype: None
-") Prepend;
-		void Prepend (const FEmTool_ListOfVectors & T);
-		%feature("compactdefaultargs") Prepend;
-		%feature("autodoc", "	:param S:
-	:type S: FEmTool_SeqOfLinConstr &
-	:rtype: None
-") Prepend;
-		void Prepend (FEmTool_SeqOfLinConstr & S);
-		%feature("compactdefaultargs") InsertBefore;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param T:
-	:type T: FEmTool_ListOfVectors &
-	:rtype: None
-") InsertBefore;
-		void InsertBefore (const Standard_Integer Index,const FEmTool_ListOfVectors & T);
-		%feature("compactdefaultargs") InsertBefore;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param S:
-	:type S: FEmTool_SeqOfLinConstr &
-	:rtype: None
-") InsertBefore;
-		void InsertBefore (const Standard_Integer Index,FEmTool_SeqOfLinConstr & S);
-		%feature("compactdefaultargs") InsertAfter;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param T:
-	:type T: FEmTool_ListOfVectors &
-	:rtype: None
-") InsertAfter;
-		void InsertAfter (const Standard_Integer Index,const FEmTool_ListOfVectors & T);
-		%feature("compactdefaultargs") InsertAfter;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param S:
-	:type S: FEmTool_SeqOfLinConstr &
-	:rtype: None
-") InsertAfter;
-		void InsertAfter (const Standard_Integer Index,FEmTool_SeqOfLinConstr & S);
-		%feature("compactdefaultargs") First;
-		%feature("autodoc", "	:rtype: FEmTool_ListOfVectors
-") First;
-		const FEmTool_ListOfVectors & First ();
-		%feature("compactdefaultargs") Last;
-		%feature("autodoc", "	:rtype: FEmTool_ListOfVectors
-") Last;
-		const FEmTool_ListOfVectors & Last ();
-		%feature("compactdefaultargs") Split;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param Sub:
-	:type Sub: FEmTool_SeqOfLinConstr &
-	:rtype: None
-") Split;
-		void Split (const Standard_Integer Index,FEmTool_SeqOfLinConstr & Sub);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: FEmTool_ListOfVectors
-") Value;
-		const FEmTool_ListOfVectors & Value (const Standard_Integer Index);
-		%feature("compactdefaultargs") SetValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param I:
-	:type I: FEmTool_ListOfVectors &
-	:rtype: None
-") SetValue;
-		void SetValue (const Standard_Integer Index,const FEmTool_ListOfVectors & I);
-		%feature("compactdefaultargs") ChangeValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: FEmTool_ListOfVectors
-") ChangeValue;
-		FEmTool_ListOfVectors & ChangeValue (const Standard_Integer Index);
-		%feature("compactdefaultargs") Remove;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: None
-") Remove;
-		void Remove (const Standard_Integer Index);
-		%feature("compactdefaultargs") Remove;
-		%feature("autodoc", "	:param FromIndex:
-	:type FromIndex: int
-	:param ToIndex:
-	:type ToIndex: int
-	:rtype: None
-") Remove;
-		void Remove (const Standard_Integer FromIndex,const Standard_Integer ToIndex);
-};
-
-
-%extend FEmTool_SeqOfLinConstr {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor FEmTool_SequenceNodeOfSeqOfLinConstr;
-class FEmTool_SequenceNodeOfSeqOfLinConstr : public TCollection_SeqNode {
-	public:
-		%feature("compactdefaultargs") FEmTool_SequenceNodeOfSeqOfLinConstr;
-		%feature("autodoc", "	:param I:
-	:type I: FEmTool_ListOfVectors &
-	:param n:
-	:type n: TCollection_SeqNodePtr &
-	:param p:
-	:type p: TCollection_SeqNodePtr &
-	:rtype: None
-") FEmTool_SequenceNodeOfSeqOfLinConstr;
-		 FEmTool_SequenceNodeOfSeqOfLinConstr (const FEmTool_ListOfVectors & I,const TCollection_SeqNodePtr & n,const TCollection_SeqNodePtr & p);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:rtype: FEmTool_ListOfVectors
-") Value;
-		FEmTool_ListOfVectors & Value ();
-};
-
-
-%extend FEmTool_SequenceNodeOfSeqOfLinConstr {
-	%pythoncode {
-		def GetHandle(self):
-		    try:
-		        return self.thisHandle
-		    except:
-		        self.thisHandle = Handle_FEmTool_SequenceNodeOfSeqOfLinConstr(self)
-		        self.thisown = False
-		        return self.thisHandle
-	}
-};
-
-%pythonappend Handle_FEmTool_SequenceNodeOfSeqOfLinConstr::Handle_FEmTool_SequenceNodeOfSeqOfLinConstr %{
-    # register the handle in the base object
-    if len(args) > 0:
-        register_handle(self, args[0])
-%}
-
-%nodefaultctor Handle_FEmTool_SequenceNodeOfSeqOfLinConstr;
-class Handle_FEmTool_SequenceNodeOfSeqOfLinConstr : public Handle_TCollection_SeqNode {
-
-    public:
-        // constructors
-        Handle_FEmTool_SequenceNodeOfSeqOfLinConstr();
-        Handle_FEmTool_SequenceNodeOfSeqOfLinConstr(const Handle_FEmTool_SequenceNodeOfSeqOfLinConstr &aHandle);
-        Handle_FEmTool_SequenceNodeOfSeqOfLinConstr(const FEmTool_SequenceNodeOfSeqOfLinConstr *anItem);
-        void Nullify();
-        Standard_Boolean IsNull() const;
-        static const Handle_FEmTool_SequenceNodeOfSeqOfLinConstr DownCast(const Handle_Standard_Transient &AnObject);
-
-};
-%extend Handle_FEmTool_SequenceNodeOfSeqOfLinConstr {
-    FEmTool_SequenceNodeOfSeqOfLinConstr* _get_reference() {
-    return (FEmTool_SequenceNodeOfSeqOfLinConstr*)$self->Access();
-    }
-};
-
-%extend Handle_FEmTool_SequenceNodeOfSeqOfLinConstr {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
-};
-
-%extend FEmTool_SequenceNodeOfSeqOfLinConstr {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
 %nodefaultctor FEmTool_SparseMatrix;
-class FEmTool_SparseMatrix : public MMgt_TShared {
+class FEmTool_SparseMatrix : public Standard_Transient {
 	public:
 		%feature("compactdefaultargs") Init;
 		%feature("autodoc", "	:param Value:
@@ -1297,7 +592,7 @@ class FEmTool_SparseMatrix : public MMgt_TShared {
 %}
 
 %nodefaultctor Handle_FEmTool_SparseMatrix;
-class Handle_FEmTool_SparseMatrix : public Handle_MMgt_TShared {
+class Handle_FEmTool_SparseMatrix : public Handle_Standard_Transient {
 
     public:
         // constructors
@@ -1309,19 +604,20 @@ class Handle_FEmTool_SparseMatrix : public Handle_MMgt_TShared {
         static const Handle_FEmTool_SparseMatrix DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_FEmTool_SparseMatrix {
     FEmTool_SparseMatrix* _get_reference() {
-    return (FEmTool_SparseMatrix*)$self->Access();
+    return (FEmTool_SparseMatrix*)$self->get();
     }
 };
 
 %extend Handle_FEmTool_SparseMatrix {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend FEmTool_SparseMatrix {
@@ -1400,19 +696,20 @@ class Handle_FEmTool_LinearFlexion : public Handle_FEmTool_ElementaryCriterion {
         static const Handle_FEmTool_LinearFlexion DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_FEmTool_LinearFlexion {
     FEmTool_LinearFlexion* _get_reference() {
-    return (FEmTool_LinearFlexion*)$self->Access();
+    return (FEmTool_LinearFlexion*)$self->get();
     }
 };
 
 %extend Handle_FEmTool_LinearFlexion {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend FEmTool_LinearFlexion {
@@ -1491,19 +788,20 @@ class Handle_FEmTool_LinearJerk : public Handle_FEmTool_ElementaryCriterion {
         static const Handle_FEmTool_LinearJerk DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_FEmTool_LinearJerk {
     FEmTool_LinearJerk* _get_reference() {
-    return (FEmTool_LinearJerk*)$self->Access();
+    return (FEmTool_LinearJerk*)$self->get();
     }
 };
 
 %extend Handle_FEmTool_LinearJerk {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend FEmTool_LinearJerk {
@@ -1582,19 +880,20 @@ class Handle_FEmTool_LinearTension : public Handle_FEmTool_ElementaryCriterion {
         static const Handle_FEmTool_LinearTension DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_FEmTool_LinearTension {
     FEmTool_LinearTension* _get_reference() {
-    return (FEmTool_LinearTension*)$self->Access();
+    return (FEmTool_LinearTension*)$self->get();
     }
 };
 
 %extend Handle_FEmTool_LinearTension {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend FEmTool_LinearTension {
@@ -1737,19 +1036,20 @@ class Handle_FEmTool_ProfileMatrix : public Handle_FEmTool_SparseMatrix {
         static const Handle_FEmTool_ProfileMatrix DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_FEmTool_ProfileMatrix {
     FEmTool_ProfileMatrix* _get_reference() {
-    return (FEmTool_ProfileMatrix*)$self->Access();
+    return (FEmTool_ProfileMatrix*)$self->get();
     }
 };
 
 %extend Handle_FEmTool_ProfileMatrix {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend FEmTool_ProfileMatrix {

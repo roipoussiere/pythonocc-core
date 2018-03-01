@@ -1,5 +1,5 @@
 /*
-Copyright 2008-2017 Thomas Paviot (tpaviot@gmail.com)
+Copyright 2008-2018 Thomas Paviot (tpaviot@gmail.com)
 
 
 This file is part of pythonOCC.
@@ -56,6 +56,9 @@ def register_handle(handle, base_object):
 /* typedefs */
 /* end typedefs declaration */
 
+/* templates */
+/* end templates declaration */
+
 /* public enums */
 /* end public enums declaration */
 
@@ -84,6 +87,20 @@ class BRepBndLib {
 	:rtype: void
 ") AddClose;
 		static void AddClose (const TopoDS_Shape & S,Bnd_Box & B);
+		%feature("compactdefaultargs") AddOptimal;
+		%feature("autodoc", "	* Adds the shape S to the bounding box B. This algorith builds precise bounding box, which differs from exact geometry boundaries of shape only on shape entities tolerances Algorithm is the same as for method Add--..--, but uses more precise methods for building boxes for geometry objects. If useShapeTolerance = True, bounding box is enlardged by shape tolerances and these tolerances are used for numerical methods of bounding box size calculations, otherwise bounding box is built according to sizes of uderlined geometrical entities, numerical calculation use tolerance Precision::Confusion----.
+
+	:param S:
+	:type S: TopoDS_Shape &
+	:param B:
+	:type B: Bnd_Box &
+	:param useTriangulation: default value is Standard_True
+	:type useTriangulation: bool
+	:param useShapeTolerance: default value is Standard_False
+	:type useShapeTolerance: bool
+	:rtype: void
+") AddOptimal;
+		static void AddOptimal (const TopoDS_Shape & S,Bnd_Box & B,const Standard_Boolean useTriangulation = Standard_True,const Standard_Boolean useShapeTolerance = Standard_False);
 };
 
 

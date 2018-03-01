@@ -1,5 +1,5 @@
 /*
-Copyright 2008-2017 Thomas Paviot (tpaviot@gmail.com)
+Copyright 2008-2018 Thomas Paviot (tpaviot@gmail.com)
 
 
 This file is part of pythonOCC.
@@ -63,6 +63,14 @@ typedef TopOpeBRep_LineInter * TopOpeBRep_PLineInter;
 typedef TopOpeBRep_EdgesIntersector * TopOpeBRep_PEdgesIntersector;
 /* end typedefs declaration */
 
+/* templates */
+%template(TopOpeBRep_ListOfBipoint) NCollection_List <TopOpeBRep_Bipoint>;
+%template(TopOpeBRep_SequenceOfPoint2d) NCollection_Sequence <TopOpeBRep_Point2d>;
+%template(TopOpeBRep_DataMapOfTopolTool) NCollection_DataMap <TopoDS_Shape , Handle_BRepTopAdaptor_TopolTool , TopTools_ShapeMapHasher>;
+%template(TopOpeBRep_Array1OfVPointInter) NCollection_Array1 <TopOpeBRep_VPointInter>;
+%template(TopOpeBRep_Array1OfLineInter) NCollection_Array1 <TopOpeBRep_LineInter>;
+/* end templates declaration */
+
 /* public enums */
 enum TopOpeBRep_P2Dstatus {
 	TopOpeBRep_P2DUNK = 0,
@@ -107,180 +115,6 @@ class TopOpeBRep {
 	__repr__ = _dumps_object
 	}
 };
-%nodefaultctor TopOpeBRep_Array1OfLineInter;
-class TopOpeBRep_Array1OfLineInter {
-	public:
-		%feature("compactdefaultargs") TopOpeBRep_Array1OfLineInter;
-		%feature("autodoc", "	:param Low:
-	:type Low: int
-	:param Up:
-	:type Up: int
-	:rtype: None
-") TopOpeBRep_Array1OfLineInter;
-		 TopOpeBRep_Array1OfLineInter (const Standard_Integer Low,const Standard_Integer Up);
-		%feature("compactdefaultargs") TopOpeBRep_Array1OfLineInter;
-		%feature("autodoc", "	:param Item:
-	:type Item: TopOpeBRep_LineInter &
-	:param Low:
-	:type Low: int
-	:param Up:
-	:type Up: int
-	:rtype: None
-") TopOpeBRep_Array1OfLineInter;
-		 TopOpeBRep_Array1OfLineInter (const TopOpeBRep_LineInter & Item,const Standard_Integer Low,const Standard_Integer Up);
-		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	:param V:
-	:type V: TopOpeBRep_LineInter &
-	:rtype: None
-") Init;
-		void Init (const TopOpeBRep_LineInter & V);
-		%feature("compactdefaultargs") Destroy;
-		%feature("autodoc", "	:rtype: None
-") Destroy;
-		void Destroy ();
-		%feature("compactdefaultargs") IsAllocated;
-		%feature("autodoc", "	:rtype: bool
-") IsAllocated;
-		Standard_Boolean IsAllocated ();
-		%feature("compactdefaultargs") Assign;
-		%feature("autodoc", "	:param Other:
-	:type Other: TopOpeBRep_Array1OfLineInter &
-	:rtype: TopOpeBRep_Array1OfLineInter
-") Assign;
-		const TopOpeBRep_Array1OfLineInter & Assign (const TopOpeBRep_Array1OfLineInter & Other);
-		%feature("compactdefaultargs") operator =;
-		%feature("autodoc", "	:param Other:
-	:type Other: TopOpeBRep_Array1OfLineInter &
-	:rtype: TopOpeBRep_Array1OfLineInter
-") operator =;
-		const TopOpeBRep_Array1OfLineInter & operator = (const TopOpeBRep_Array1OfLineInter & Other);
-		%feature("compactdefaultargs") Length;
-		%feature("autodoc", "	:rtype: int
-") Length;
-		Standard_Integer Length ();
-		%feature("compactdefaultargs") Lower;
-		%feature("autodoc", "	:rtype: int
-") Lower;
-		Standard_Integer Lower ();
-		%feature("compactdefaultargs") Upper;
-		%feature("autodoc", "	:rtype: int
-") Upper;
-		Standard_Integer Upper ();
-		%feature("compactdefaultargs") SetValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param Value:
-	:type Value: TopOpeBRep_LineInter &
-	:rtype: None
-") SetValue;
-		void SetValue (const Standard_Integer Index,const TopOpeBRep_LineInter & Value);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: TopOpeBRep_LineInter
-") Value;
-		const TopOpeBRep_LineInter & Value (const Standard_Integer Index);
-		%feature("compactdefaultargs") ChangeValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: TopOpeBRep_LineInter
-") ChangeValue;
-		TopOpeBRep_LineInter & ChangeValue (const Standard_Integer Index);
-};
-
-
-%extend TopOpeBRep_Array1OfLineInter {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor TopOpeBRep_Array1OfVPointInter;
-class TopOpeBRep_Array1OfVPointInter {
-	public:
-		%feature("compactdefaultargs") TopOpeBRep_Array1OfVPointInter;
-		%feature("autodoc", "	:param Low:
-	:type Low: int
-	:param Up:
-	:type Up: int
-	:rtype: None
-") TopOpeBRep_Array1OfVPointInter;
-		 TopOpeBRep_Array1OfVPointInter (const Standard_Integer Low,const Standard_Integer Up);
-		%feature("compactdefaultargs") TopOpeBRep_Array1OfVPointInter;
-		%feature("autodoc", "	:param Item:
-	:type Item: TopOpeBRep_VPointInter &
-	:param Low:
-	:type Low: int
-	:param Up:
-	:type Up: int
-	:rtype: None
-") TopOpeBRep_Array1OfVPointInter;
-		 TopOpeBRep_Array1OfVPointInter (const TopOpeBRep_VPointInter & Item,const Standard_Integer Low,const Standard_Integer Up);
-		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	:param V:
-	:type V: TopOpeBRep_VPointInter &
-	:rtype: None
-") Init;
-		void Init (const TopOpeBRep_VPointInter & V);
-		%feature("compactdefaultargs") Destroy;
-		%feature("autodoc", "	:rtype: None
-") Destroy;
-		void Destroy ();
-		%feature("compactdefaultargs") IsAllocated;
-		%feature("autodoc", "	:rtype: bool
-") IsAllocated;
-		Standard_Boolean IsAllocated ();
-		%feature("compactdefaultargs") Assign;
-		%feature("autodoc", "	:param Other:
-	:type Other: TopOpeBRep_Array1OfVPointInter &
-	:rtype: TopOpeBRep_Array1OfVPointInter
-") Assign;
-		const TopOpeBRep_Array1OfVPointInter & Assign (const TopOpeBRep_Array1OfVPointInter & Other);
-		%feature("compactdefaultargs") operator =;
-		%feature("autodoc", "	:param Other:
-	:type Other: TopOpeBRep_Array1OfVPointInter &
-	:rtype: TopOpeBRep_Array1OfVPointInter
-") operator =;
-		const TopOpeBRep_Array1OfVPointInter & operator = (const TopOpeBRep_Array1OfVPointInter & Other);
-		%feature("compactdefaultargs") Length;
-		%feature("autodoc", "	:rtype: int
-") Length;
-		Standard_Integer Length ();
-		%feature("compactdefaultargs") Lower;
-		%feature("autodoc", "	:rtype: int
-") Lower;
-		Standard_Integer Lower ();
-		%feature("compactdefaultargs") Upper;
-		%feature("autodoc", "	:rtype: int
-") Upper;
-		Standard_Integer Upper ();
-		%feature("compactdefaultargs") SetValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param Value:
-	:type Value: TopOpeBRep_VPointInter &
-	:rtype: None
-") SetValue;
-		void SetValue (const Standard_Integer Index,const TopOpeBRep_VPointInter & Value);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: TopOpeBRep_VPointInter
-") Value;
-		const TopOpeBRep_VPointInter & Value (const Standard_Integer Index);
-		%feature("compactdefaultargs") ChangeValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: TopOpeBRep_VPointInter
-") ChangeValue;
-		TopOpeBRep_VPointInter & ChangeValue (const Standard_Integer Index);
-};
-
-
-%extend TopOpeBRep_Array1OfVPointInter {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
 %nodefaultctor TopOpeBRep_Bipoint;
 class TopOpeBRep_Bipoint {
 	public:
@@ -319,10 +153,6 @@ class TopOpeBRep_DSFiller {
 		%feature("autodoc", "	:rtype: None
 ") TopOpeBRep_DSFiller;
 		 TopOpeBRep_DSFiller ();
-		%feature("compactdefaultargs") Destroy;
-		%feature("autodoc", "	:rtype: None
-") Destroy;
-		void Destroy ();
 		%feature("compactdefaultargs") PShapeClassifier;
 		%feature("autodoc", "	* return field myPShapeClassifier. set field myPShapeClassifier.
 
@@ -491,199 +321,6 @@ class TopOpeBRep_DSFiller {
 	__repr__ = _dumps_object
 	}
 };
-%nodefaultctor TopOpeBRep_DataMapIteratorOfDataMapOfTopolTool;
-class TopOpeBRep_DataMapIteratorOfDataMapOfTopolTool : public TCollection_BasicMapIterator {
-	public:
-		%feature("compactdefaultargs") TopOpeBRep_DataMapIteratorOfDataMapOfTopolTool;
-		%feature("autodoc", "	:rtype: None
-") TopOpeBRep_DataMapIteratorOfDataMapOfTopolTool;
-		 TopOpeBRep_DataMapIteratorOfDataMapOfTopolTool ();
-		%feature("compactdefaultargs") TopOpeBRep_DataMapIteratorOfDataMapOfTopolTool;
-		%feature("autodoc", "	:param aMap:
-	:type aMap: TopOpeBRep_DataMapOfTopolTool &
-	:rtype: None
-") TopOpeBRep_DataMapIteratorOfDataMapOfTopolTool;
-		 TopOpeBRep_DataMapIteratorOfDataMapOfTopolTool (const TopOpeBRep_DataMapOfTopolTool & aMap);
-		%feature("compactdefaultargs") Initialize;
-		%feature("autodoc", "	:param aMap:
-	:type aMap: TopOpeBRep_DataMapOfTopolTool &
-	:rtype: None
-") Initialize;
-		void Initialize (const TopOpeBRep_DataMapOfTopolTool & aMap);
-		%feature("compactdefaultargs") Key;
-		%feature("autodoc", "	:rtype: TopoDS_Shape
-") Key;
-		const TopoDS_Shape  Key ();
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:rtype: Handle_BRepTopAdaptor_TopolTool
-") Value;
-		Handle_BRepTopAdaptor_TopolTool Value ();
-};
-
-
-%extend TopOpeBRep_DataMapIteratorOfDataMapOfTopolTool {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor TopOpeBRep_DataMapNodeOfDataMapOfTopolTool;
-class TopOpeBRep_DataMapNodeOfDataMapOfTopolTool : public TCollection_MapNode {
-	public:
-		%feature("compactdefaultargs") TopOpeBRep_DataMapNodeOfDataMapOfTopolTool;
-		%feature("autodoc", "	:param K:
-	:type K: TopoDS_Shape &
-	:param I:
-	:type I: Handle_BRepTopAdaptor_TopolTool &
-	:param n:
-	:type n: TCollection_MapNodePtr &
-	:rtype: None
-") TopOpeBRep_DataMapNodeOfDataMapOfTopolTool;
-		 TopOpeBRep_DataMapNodeOfDataMapOfTopolTool (const TopoDS_Shape & K,const Handle_BRepTopAdaptor_TopolTool & I,const TCollection_MapNodePtr & n);
-		%feature("compactdefaultargs") Key;
-		%feature("autodoc", "	:rtype: TopoDS_Shape
-") Key;
-		TopoDS_Shape  Key ();
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:rtype: Handle_BRepTopAdaptor_TopolTool
-") Value;
-		Handle_BRepTopAdaptor_TopolTool Value ();
-};
-
-
-%extend TopOpeBRep_DataMapNodeOfDataMapOfTopolTool {
-	%pythoncode {
-		def GetHandle(self):
-		    try:
-		        return self.thisHandle
-		    except:
-		        self.thisHandle = Handle_TopOpeBRep_DataMapNodeOfDataMapOfTopolTool(self)
-		        self.thisown = False
-		        return self.thisHandle
-	}
-};
-
-%pythonappend Handle_TopOpeBRep_DataMapNodeOfDataMapOfTopolTool::Handle_TopOpeBRep_DataMapNodeOfDataMapOfTopolTool %{
-    # register the handle in the base object
-    if len(args) > 0:
-        register_handle(self, args[0])
-%}
-
-%nodefaultctor Handle_TopOpeBRep_DataMapNodeOfDataMapOfTopolTool;
-class Handle_TopOpeBRep_DataMapNodeOfDataMapOfTopolTool : public Handle_TCollection_MapNode {
-
-    public:
-        // constructors
-        Handle_TopOpeBRep_DataMapNodeOfDataMapOfTopolTool();
-        Handle_TopOpeBRep_DataMapNodeOfDataMapOfTopolTool(const Handle_TopOpeBRep_DataMapNodeOfDataMapOfTopolTool &aHandle);
-        Handle_TopOpeBRep_DataMapNodeOfDataMapOfTopolTool(const TopOpeBRep_DataMapNodeOfDataMapOfTopolTool *anItem);
-        void Nullify();
-        Standard_Boolean IsNull() const;
-        static const Handle_TopOpeBRep_DataMapNodeOfDataMapOfTopolTool DownCast(const Handle_Standard_Transient &AnObject);
-
-};
-%extend Handle_TopOpeBRep_DataMapNodeOfDataMapOfTopolTool {
-    TopOpeBRep_DataMapNodeOfDataMapOfTopolTool* _get_reference() {
-    return (TopOpeBRep_DataMapNodeOfDataMapOfTopolTool*)$self->Access();
-    }
-};
-
-%extend Handle_TopOpeBRep_DataMapNodeOfDataMapOfTopolTool {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
-};
-
-%extend TopOpeBRep_DataMapNodeOfDataMapOfTopolTool {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor TopOpeBRep_DataMapOfTopolTool;
-class TopOpeBRep_DataMapOfTopolTool : public TCollection_BasicMap {
-	public:
-		%feature("compactdefaultargs") TopOpeBRep_DataMapOfTopolTool;
-		%feature("autodoc", "	:param NbBuckets: default value is 1
-	:type NbBuckets: int
-	:rtype: None
-") TopOpeBRep_DataMapOfTopolTool;
-		 TopOpeBRep_DataMapOfTopolTool (const Standard_Integer NbBuckets = 1);
-		%feature("compactdefaultargs") Assign;
-		%feature("autodoc", "	:param Other:
-	:type Other: TopOpeBRep_DataMapOfTopolTool &
-	:rtype: TopOpeBRep_DataMapOfTopolTool
-") Assign;
-		TopOpeBRep_DataMapOfTopolTool & Assign (const TopOpeBRep_DataMapOfTopolTool & Other);
-		%feature("compactdefaultargs") operator =;
-		%feature("autodoc", "	:param Other:
-	:type Other: TopOpeBRep_DataMapOfTopolTool &
-	:rtype: TopOpeBRep_DataMapOfTopolTool
-") operator =;
-		TopOpeBRep_DataMapOfTopolTool & operator = (const TopOpeBRep_DataMapOfTopolTool & Other);
-		%feature("compactdefaultargs") ReSize;
-		%feature("autodoc", "	:param NbBuckets:
-	:type NbBuckets: int
-	:rtype: None
-") ReSize;
-		void ReSize (const Standard_Integer NbBuckets);
-		%feature("compactdefaultargs") Clear;
-		%feature("autodoc", "	:rtype: None
-") Clear;
-		void Clear ();
-		%feature("compactdefaultargs") Bind;
-		%feature("autodoc", "	:param K:
-	:type K: TopoDS_Shape &
-	:param I:
-	:type I: Handle_BRepTopAdaptor_TopolTool &
-	:rtype: bool
-") Bind;
-		Standard_Boolean Bind (const TopoDS_Shape & K,const Handle_BRepTopAdaptor_TopolTool & I);
-		%feature("compactdefaultargs") IsBound;
-		%feature("autodoc", "	:param K:
-	:type K: TopoDS_Shape &
-	:rtype: bool
-") IsBound;
-		Standard_Boolean IsBound (const TopoDS_Shape & K);
-		%feature("compactdefaultargs") UnBind;
-		%feature("autodoc", "	:param K:
-	:type K: TopoDS_Shape &
-	:rtype: bool
-") UnBind;
-		Standard_Boolean UnBind (const TopoDS_Shape & K);
-		%feature("compactdefaultargs") Find;
-		%feature("autodoc", "	:param K:
-	:type K: TopoDS_Shape &
-	:rtype: Handle_BRepTopAdaptor_TopolTool
-") Find;
-		Handle_BRepTopAdaptor_TopolTool Find (const TopoDS_Shape & K);
-		%feature("compactdefaultargs") ChangeFind;
-		%feature("autodoc", "	:param K:
-	:type K: TopoDS_Shape &
-	:rtype: Handle_BRepTopAdaptor_TopolTool
-") ChangeFind;
-		Handle_BRepTopAdaptor_TopolTool ChangeFind (const TopoDS_Shape & K);
-		%feature("compactdefaultargs") Find1;
-		%feature("autodoc", "	:param K:
-	:type K: TopoDS_Shape &
-	:rtype: Standard_Address
-") Find1;
-		Standard_Address Find1 (const TopoDS_Shape & K);
-		%feature("compactdefaultargs") ChangeFind1;
-		%feature("autodoc", "	:param K:
-	:type K: TopoDS_Shape &
-	:rtype: Standard_Address
-") ChangeFind1;
-		Standard_Address ChangeFind1 (const TopoDS_Shape & K);
-};
-
-
-%extend TopOpeBRep_DataMapOfTopolTool {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
 %nodefaultctor TopOpeBRep_EdgesFiller;
 class TopOpeBRep_EdgesFiller {
 	public:
@@ -732,10 +369,6 @@ class TopOpeBRep_EdgesIntersector {
 		%feature("autodoc", "	:rtype: None
 ") TopOpeBRep_EdgesIntersector;
 		 TopOpeBRep_EdgesIntersector ();
-		%feature("compactdefaultargs") Delete;
-		%feature("autodoc", "	:rtype: void
-") Delete;
-		virtual void Delete ();
 		%feature("compactdefaultargs") SetFaces;
 		%feature("autodoc", "	:param F1:
 	:type F1: TopoDS_Shape &
@@ -915,7 +548,7 @@ class TopOpeBRep_EdgesIntersector {
 	}
 };
 %nodefaultctor TopOpeBRep_FFDumper;
-class TopOpeBRep_FFDumper : public MMgt_TShared {
+class TopOpeBRep_FFDumper : public Standard_Transient {
 	public:
 		%feature("compactdefaultargs") TopOpeBRep_FFDumper;
 		%feature("autodoc", "	:param PFF:
@@ -1001,7 +634,7 @@ class TopOpeBRep_FFDumper : public MMgt_TShared {
 %}
 
 %nodefaultctor Handle_TopOpeBRep_FFDumper;
-class Handle_TopOpeBRep_FFDumper : public Handle_MMgt_TShared {
+class Handle_TopOpeBRep_FFDumper : public Handle_Standard_Transient {
 
     public:
         // constructors
@@ -1013,19 +646,20 @@ class Handle_TopOpeBRep_FFDumper : public Handle_MMgt_TShared {
         static const Handle_TopOpeBRep_FFDumper DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_TopOpeBRep_FFDumper {
     TopOpeBRep_FFDumper* _get_reference() {
-    return (TopOpeBRep_FFDumper*)$self->Access();
+    return (TopOpeBRep_FFDumper*)$self->get();
     }
 };
 
 %extend Handle_TopOpeBRep_FFDumper {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend TopOpeBRep_FFDumper {
@@ -1074,7 +708,7 @@ class TopOpeBRep_FFTransitionTool {
 ") ProcessFaceTransition;
 		static TopOpeBRepDS_Transition ProcessFaceTransition (const TopOpeBRep_LineInter & L,const Standard_Integer Index,const TopAbs_Orientation FaceOrientation);
 		%feature("compactdefaultargs") ProcessEdgeONTransition;
-		%feature("autodoc", "	* compute transition on 'IntPatch_Restriction line' edge <R> when crossing edge <E> of face <F> at point <VP>. VP is given on edge <E> of face <F> of index <Index> (1 or 2). <VP> has been classified by FacesFiller as TopAbs_ON an edge <R> of the other face than <F> of current (face/face) intersection. Transition depends on the orientation of E in F. This method should be provided by IntPatch_Line (NYI)
+		%feature("autodoc", "	* compute transition on 'IntPatch_Restriction line' edge <R> when crossing edge <E> of face <F> at point <VP>. VP is given on edge <E> of face <F> of index <Index> --1 or 2--. <VP> has been classified by FacesFiller as TopAbs_ON an edge <R> of the other face than <F> of current --face/face-- intersection. Transition depends on the orientation of E in F. This method should be provided by IntPatch_Line --NYI--
 
 	:param VP:
 	:type VP: TopOpeBRep_VPointInter &
@@ -1152,7 +786,7 @@ class TopOpeBRep_FaceEdgeIntersector {
 ") Shape;
 		const TopoDS_Shape  Shape (const Standard_Integer Index);
 		%feature("compactdefaultargs") ForceTolerance;
-		%feature("autodoc", "	* Force the tolerance values used by the next Perform(S1,S2) call.
+		%feature("autodoc", "	* Force the tolerance values used by the next Perform--S1,S2-- call.
 
 	:param tol:
 	:type tol: float
@@ -1160,7 +794,7 @@ class TopOpeBRep_FaceEdgeIntersector {
 ") ForceTolerance;
 		void ForceTolerance (const Standard_Real tol);
 		%feature("compactdefaultargs") Tolerance;
-		%feature("autodoc", "	* Return the tolerance value used in the last Perform() call If ForceTolerance() has been called, return the given value. If not, return value extracted from shapes.
+		%feature("autodoc", "	* Return the tolerance value used in the last Perform---- call If ForceTolerance---- has been called, return the given value. If not, return value extracted from shapes.
 
 	:rtype: float
 ") Tolerance;
@@ -1188,13 +822,13 @@ class TopOpeBRep_FaceEdgeIntersector {
 ") Value;
 		gp_Pnt Value ();
 		%feature("compactdefaultargs") Parameter;
-		%feature("autodoc", "	* parametre de Value() sur l'arete
+		%feature("autodoc", "	* parametre de Value---- sur l'arete
 
 	:rtype: float
 ") Parameter;
 		Standard_Real Parameter ();
 		%feature("compactdefaultargs") UVPoint;
-		%feature("autodoc", "	* parametre de Value() sur la face
+		%feature("autodoc", "	* parametre de Value---- sur la face
 
 	:param P:
 	:type P: gp_Pnt2d
@@ -1339,7 +973,7 @@ class TopOpeBRep_FacesFiller {
 ") VP_PositionOnR;
 		void VP_PositionOnR (TopOpeBRep_LineInter & L);
 		%feature("compactdefaultargs") VP_Position;
-		%feature("autodoc", "	* compute position of VP with current faces, according to VP.ShapeIndex() .
+		%feature("autodoc", "	* compute position of VP with current faces, according to VP.ShapeIndex---- .
 
 	:param VP:
 	:type VP: TopOpeBRep_VPointInter &
@@ -1349,7 +983,7 @@ class TopOpeBRep_FacesFiller {
 ") VP_Position;
 		void VP_Position (TopOpeBRep_VPointInter & VP,TopOpeBRep_VPointInterClassifier & VPC);
 		%feature("compactdefaultargs") ProcessLine;
-		%feature("autodoc", "	* Process current intersection line (set by LoadLine)
+		%feature("autodoc", "	* Process current intersection line --set by LoadLine--
 
 	:rtype: None
 ") ProcessLine;
@@ -1413,7 +1047,7 @@ class TopOpeBRep_FacesFiller {
 ") ProcessVPIonR;
 		void ProcessVPIonR (TopOpeBRep_VPointInterIterator & VPI,const TopOpeBRepDS_Transition & trans1,const TopoDS_Shape & F1,const Standard_Integer ShapeIndex);
 		%feature("compactdefaultargs") ProcessVPonR;
-		%feature("autodoc", "	* adds <VP>'s geometric point (if not stored) and computes (curve or edge)/(point or vertex) interference.
+		%feature("autodoc", "	* adds <VP>'s geometric point --if not stored-- and computes --curve or edge--/--point or vertex-- interference.
 
 	:param VP:
 	:type VP: TopOpeBRep_VPointInter &
@@ -1479,7 +1113,7 @@ class TopOpeBRep_FacesFiller {
 ") ProcessVPInotonR;
 		void ProcessVPInotonR (TopOpeBRep_VPointInterIterator & VPI);
 		%feature("compactdefaultargs") ProcessVPnotonR;
-		%feature("autodoc", "	* adds <VP>'s geometrical point to the DS (if not stored) and computes curve point interference.
+		%feature("autodoc", "	* adds <VP>'s geometrical point to the DS --if not stored-- and computes curve point interference.
 
 	:param VP:
 	:type VP: TopOpeBRep_VPointInter &
@@ -1487,7 +1121,7 @@ class TopOpeBRep_FacesFiller {
 ") ProcessVPnotonR;
 		void ProcessVPnotonR (const TopOpeBRep_VPointInter & VP);
 		%feature("compactdefaultargs") GetGeometry;
-		%feature("autodoc", "	* Get the geometry of a DS point <DSP>. Search for it with ScanInterfList (previous method). if found, set <G> to the geometry of the interference found. else, add the point <DSP> in the <DS> and set <G> to the value of the new geometry such created. returns the value of ScanInterfList().
+		%feature("autodoc", "	* Get the geometry of a DS point <DSP>. Search for it with ScanInterfList --previous method--. if found, set <G> to the geometry of the interference found. else, add the point <DSP> in the <DS> and set <G> to the value of the new geometry such created. returns the value of ScanInterfList----.
 
 	:param IT:
 	:type IT: TopOpeBRepDS_ListIteratorOfListOfInterference &
@@ -1519,7 +1153,7 @@ class TopOpeBRep_FacesFiller {
 ") StoreCurveInterference;
 		void StoreCurveInterference (const Handle_TopOpeBRepDS_Interference & I);
 		%feature("compactdefaultargs") GetFFGeometry;
-		%feature("autodoc", "	* search for G = geometry of Point which is identical to <DSP> among the DS Points created in the CURRENT face/face intersection ( current Insert() call).
+		%feature("autodoc", "	* search for G = geometry of Point which is identical to <DSP> among the DS Points created in the CURRENT face/face intersection -- current Insert---- call--.
 
 	:param DSP:
 	:type DSP: TopOpeBRepDS_Point &
@@ -1531,7 +1165,7 @@ class TopOpeBRep_FacesFiller {
 ") GetFFGeometry;
 		Standard_Boolean GetFFGeometry (const TopOpeBRepDS_Point & DSP,TopOpeBRepDS_Kind & K,Standard_Integer &OutValue);
 		%feature("compactdefaultargs") GetFFGeometry;
-		%feature("autodoc", "	* search for G = geometry of Point which is identical to <VP> among the DS Points created in the CURRENT face/face intersection ( current Insert() call).
+		%feature("autodoc", "	* search for G = geometry of Point which is identical to <VP> among the DS Points created in the CURRENT face/face intersection -- current Insert---- call--.
 
 	:param VP:
 	:type VP: TopOpeBRep_VPointInter &
@@ -1720,7 +1354,7 @@ class TopOpeBRep_FacesIntersector {
 ") IsDone;
 		Standard_Boolean IsDone ();
 		%feature("compactdefaultargs") SameDomain;
-		%feature("autodoc", "	* Returns True if Perform() arguments are two faces with the same surface.
+		%feature("autodoc", "	* Returns True if Perform---- arguments are two faces with the same surface.
 
 	:rtype: bool
 ") SameDomain;
@@ -1734,7 +1368,7 @@ class TopOpeBRep_FacesIntersector {
 ") Face;
 		const TopoDS_Shape  Face (const Standard_Integer Index);
 		%feature("compactdefaultargs") SurfacesSameOriented;
-		%feature("autodoc", "	* Returns True if Perform() arguments are two faces SameDomain() and normals on both side. Raise if SameDomain is False
+		%feature("autodoc", "	* Returns True if Perform---- arguments are two faces SameDomain---- and normals on both side. Raise if SameDomain is False
 
 	:rtype: bool
 ") SurfacesSameOriented;
@@ -1792,7 +1426,7 @@ class TopOpeBRep_FacesIntersector {
 ") ChangeLine;
 		TopOpeBRep_LineInter & ChangeLine (const Standard_Integer IL);
 		%feature("compactdefaultargs") ForceTolerances;
-		%feature("autodoc", "	* Force the tolerance values used by the next Perform(S1,S2) call.
+		%feature("autodoc", "	* Force the tolerance values used by the next Perform--S1,S2-- call.
 
 	:param tolarc:
 	:type tolarc: float
@@ -1802,7 +1436,7 @@ class TopOpeBRep_FacesIntersector {
 ") ForceTolerances;
 		void ForceTolerances (const Standard_Real tolarc,const Standard_Real toltang);
 		%feature("compactdefaultargs") GetTolerances;
-		%feature("autodoc", "	* Return the tolerance values used in the last Perform() call If ForceTolerances() has been called, return the given values. If not, return values extracted from shapes.
+		%feature("autodoc", "	* Return the tolerance values used in the last Perform---- call If ForceTolerances---- has been called, return the given values. If not, return values extracted from shapes.
 
 	:param tolarc:
 	:type tolarc: float &
@@ -1877,250 +1511,8 @@ class TopOpeBRep_GeomTool {
 	__repr__ = _dumps_object
 	}
 };
-%nodefaultctor TopOpeBRep_HArray1OfLineInter;
-class TopOpeBRep_HArray1OfLineInter : public MMgt_TShared {
-	public:
-		%feature("compactdefaultargs") TopOpeBRep_HArray1OfLineInter;
-		%feature("autodoc", "	:param Low:
-	:type Low: int
-	:param Up:
-	:type Up: int
-	:rtype: None
-") TopOpeBRep_HArray1OfLineInter;
-		 TopOpeBRep_HArray1OfLineInter (const Standard_Integer Low,const Standard_Integer Up);
-		%feature("compactdefaultargs") TopOpeBRep_HArray1OfLineInter;
-		%feature("autodoc", "	:param Low:
-	:type Low: int
-	:param Up:
-	:type Up: int
-	:param V:
-	:type V: TopOpeBRep_LineInter &
-	:rtype: None
-") TopOpeBRep_HArray1OfLineInter;
-		 TopOpeBRep_HArray1OfLineInter (const Standard_Integer Low,const Standard_Integer Up,const TopOpeBRep_LineInter & V);
-		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	:param V:
-	:type V: TopOpeBRep_LineInter &
-	:rtype: None
-") Init;
-		void Init (const TopOpeBRep_LineInter & V);
-		%feature("compactdefaultargs") Length;
-		%feature("autodoc", "	:rtype: int
-") Length;
-		Standard_Integer Length ();
-		%feature("compactdefaultargs") Lower;
-		%feature("autodoc", "	:rtype: int
-") Lower;
-		Standard_Integer Lower ();
-		%feature("compactdefaultargs") Upper;
-		%feature("autodoc", "	:rtype: int
-") Upper;
-		Standard_Integer Upper ();
-		%feature("compactdefaultargs") SetValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param Value:
-	:type Value: TopOpeBRep_LineInter &
-	:rtype: None
-") SetValue;
-		void SetValue (const Standard_Integer Index,const TopOpeBRep_LineInter & Value);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: TopOpeBRep_LineInter
-") Value;
-		const TopOpeBRep_LineInter & Value (const Standard_Integer Index);
-		%feature("compactdefaultargs") ChangeValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: TopOpeBRep_LineInter
-") ChangeValue;
-		TopOpeBRep_LineInter & ChangeValue (const Standard_Integer Index);
-		%feature("compactdefaultargs") Array1;
-		%feature("autodoc", "	:rtype: TopOpeBRep_Array1OfLineInter
-") Array1;
-		const TopOpeBRep_Array1OfLineInter & Array1 ();
-		%feature("compactdefaultargs") ChangeArray1;
-		%feature("autodoc", "	:rtype: TopOpeBRep_Array1OfLineInter
-") ChangeArray1;
-		TopOpeBRep_Array1OfLineInter & ChangeArray1 ();
-};
-
-
-%extend TopOpeBRep_HArray1OfLineInter {
-	%pythoncode {
-		def GetHandle(self):
-		    try:
-		        return self.thisHandle
-		    except:
-		        self.thisHandle = Handle_TopOpeBRep_HArray1OfLineInter(self)
-		        self.thisown = False
-		        return self.thisHandle
-	}
-};
-
-%pythonappend Handle_TopOpeBRep_HArray1OfLineInter::Handle_TopOpeBRep_HArray1OfLineInter %{
-    # register the handle in the base object
-    if len(args) > 0:
-        register_handle(self, args[0])
-%}
-
-%nodefaultctor Handle_TopOpeBRep_HArray1OfLineInter;
-class Handle_TopOpeBRep_HArray1OfLineInter : public Handle_MMgt_TShared {
-
-    public:
-        // constructors
-        Handle_TopOpeBRep_HArray1OfLineInter();
-        Handle_TopOpeBRep_HArray1OfLineInter(const Handle_TopOpeBRep_HArray1OfLineInter &aHandle);
-        Handle_TopOpeBRep_HArray1OfLineInter(const TopOpeBRep_HArray1OfLineInter *anItem);
-        void Nullify();
-        Standard_Boolean IsNull() const;
-        static const Handle_TopOpeBRep_HArray1OfLineInter DownCast(const Handle_Standard_Transient &AnObject);
-
-};
-%extend Handle_TopOpeBRep_HArray1OfLineInter {
-    TopOpeBRep_HArray1OfLineInter* _get_reference() {
-    return (TopOpeBRep_HArray1OfLineInter*)$self->Access();
-    }
-};
-
-%extend Handle_TopOpeBRep_HArray1OfLineInter {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
-};
-
-%extend TopOpeBRep_HArray1OfLineInter {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor TopOpeBRep_HArray1OfVPointInter;
-class TopOpeBRep_HArray1OfVPointInter : public MMgt_TShared {
-	public:
-		%feature("compactdefaultargs") TopOpeBRep_HArray1OfVPointInter;
-		%feature("autodoc", "	:param Low:
-	:type Low: int
-	:param Up:
-	:type Up: int
-	:rtype: None
-") TopOpeBRep_HArray1OfVPointInter;
-		 TopOpeBRep_HArray1OfVPointInter (const Standard_Integer Low,const Standard_Integer Up);
-		%feature("compactdefaultargs") TopOpeBRep_HArray1OfVPointInter;
-		%feature("autodoc", "	:param Low:
-	:type Low: int
-	:param Up:
-	:type Up: int
-	:param V:
-	:type V: TopOpeBRep_VPointInter &
-	:rtype: None
-") TopOpeBRep_HArray1OfVPointInter;
-		 TopOpeBRep_HArray1OfVPointInter (const Standard_Integer Low,const Standard_Integer Up,const TopOpeBRep_VPointInter & V);
-		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	:param V:
-	:type V: TopOpeBRep_VPointInter &
-	:rtype: None
-") Init;
-		void Init (const TopOpeBRep_VPointInter & V);
-		%feature("compactdefaultargs") Length;
-		%feature("autodoc", "	:rtype: int
-") Length;
-		Standard_Integer Length ();
-		%feature("compactdefaultargs") Lower;
-		%feature("autodoc", "	:rtype: int
-") Lower;
-		Standard_Integer Lower ();
-		%feature("compactdefaultargs") Upper;
-		%feature("autodoc", "	:rtype: int
-") Upper;
-		Standard_Integer Upper ();
-		%feature("compactdefaultargs") SetValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param Value:
-	:type Value: TopOpeBRep_VPointInter &
-	:rtype: None
-") SetValue;
-		void SetValue (const Standard_Integer Index,const TopOpeBRep_VPointInter & Value);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: TopOpeBRep_VPointInter
-") Value;
-		const TopOpeBRep_VPointInter & Value (const Standard_Integer Index);
-		%feature("compactdefaultargs") ChangeValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: TopOpeBRep_VPointInter
-") ChangeValue;
-		TopOpeBRep_VPointInter & ChangeValue (const Standard_Integer Index);
-		%feature("compactdefaultargs") Array1;
-		%feature("autodoc", "	:rtype: TopOpeBRep_Array1OfVPointInter
-") Array1;
-		const TopOpeBRep_Array1OfVPointInter & Array1 ();
-		%feature("compactdefaultargs") ChangeArray1;
-		%feature("autodoc", "	:rtype: TopOpeBRep_Array1OfVPointInter
-") ChangeArray1;
-		TopOpeBRep_Array1OfVPointInter & ChangeArray1 ();
-};
-
-
-%extend TopOpeBRep_HArray1OfVPointInter {
-	%pythoncode {
-		def GetHandle(self):
-		    try:
-		        return self.thisHandle
-		    except:
-		        self.thisHandle = Handle_TopOpeBRep_HArray1OfVPointInter(self)
-		        self.thisown = False
-		        return self.thisHandle
-	}
-};
-
-%pythonappend Handle_TopOpeBRep_HArray1OfVPointInter::Handle_TopOpeBRep_HArray1OfVPointInter %{
-    # register the handle in the base object
-    if len(args) > 0:
-        register_handle(self, args[0])
-%}
-
-%nodefaultctor Handle_TopOpeBRep_HArray1OfVPointInter;
-class Handle_TopOpeBRep_HArray1OfVPointInter : public Handle_MMgt_TShared {
-
-    public:
-        // constructors
-        Handle_TopOpeBRep_HArray1OfVPointInter();
-        Handle_TopOpeBRep_HArray1OfVPointInter(const Handle_TopOpeBRep_HArray1OfVPointInter &aHandle);
-        Handle_TopOpeBRep_HArray1OfVPointInter(const TopOpeBRep_HArray1OfVPointInter *anItem);
-        void Nullify();
-        Standard_Boolean IsNull() const;
-        static const Handle_TopOpeBRep_HArray1OfVPointInter DownCast(const Handle_Standard_Transient &AnObject);
-
-};
-%extend Handle_TopOpeBRep_HArray1OfVPointInter {
-    TopOpeBRep_HArray1OfVPointInter* _get_reference() {
-    return (TopOpeBRep_HArray1OfVPointInter*)$self->Access();
-    }
-};
-
-%extend Handle_TopOpeBRep_HArray1OfVPointInter {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
-};
-
-%extend TopOpeBRep_HArray1OfVPointInter {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
 %nodefaultctor TopOpeBRep_Hctxee2d;
-class TopOpeBRep_Hctxee2d : public MMgt_TShared {
+class TopOpeBRep_Hctxee2d : public Standard_Transient {
 	public:
 		%feature("compactdefaultargs") TopOpeBRep_Hctxee2d;
 		%feature("autodoc", "	:rtype: None
@@ -2178,7 +1570,7 @@ class TopOpeBRep_Hctxee2d : public MMgt_TShared {
 %}
 
 %nodefaultctor Handle_TopOpeBRep_Hctxee2d;
-class Handle_TopOpeBRep_Hctxee2d : public Handle_MMgt_TShared {
+class Handle_TopOpeBRep_Hctxee2d : public Handle_Standard_Transient {
 
     public:
         // constructors
@@ -2190,19 +1582,20 @@ class Handle_TopOpeBRep_Hctxee2d : public Handle_MMgt_TShared {
         static const Handle_TopOpeBRep_Hctxee2d DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_TopOpeBRep_Hctxee2d {
     TopOpeBRep_Hctxee2d* _get_reference() {
-    return (TopOpeBRep_Hctxee2d*)$self->Access();
+    return (TopOpeBRep_Hctxee2d*)$self->get();
     }
 };
 
 %extend Handle_TopOpeBRep_Hctxee2d {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend TopOpeBRep_Hctxee2d {
@@ -2211,7 +1604,7 @@ class Handle_TopOpeBRep_Hctxee2d : public Handle_MMgt_TShared {
 	}
 };
 %nodefaultctor TopOpeBRep_Hctxff2d;
-class TopOpeBRep_Hctxff2d : public MMgt_TShared {
+class TopOpeBRep_Hctxff2d : public Standard_Transient {
 	public:
 		%feature("compactdefaultargs") TopOpeBRep_Hctxff2d;
 		%feature("autodoc", "	:rtype: None
@@ -2301,7 +1694,7 @@ class TopOpeBRep_Hctxff2d : public MMgt_TShared {
 %}
 
 %nodefaultctor Handle_TopOpeBRep_Hctxff2d;
-class Handle_TopOpeBRep_Hctxff2d : public Handle_MMgt_TShared {
+class Handle_TopOpeBRep_Hctxff2d : public Handle_Standard_Transient {
 
     public:
         // constructors
@@ -2313,19 +1706,20 @@ class Handle_TopOpeBRep_Hctxff2d : public Handle_MMgt_TShared {
         static const Handle_TopOpeBRep_Hctxff2d DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_TopOpeBRep_Hctxff2d {
     TopOpeBRep_Hctxff2d* _get_reference() {
-    return (TopOpeBRep_Hctxff2d*)$self->Access();
+    return (TopOpeBRep_Hctxff2d*)$self->get();
     }
 };
 
 %extend Handle_TopOpeBRep_Hctxff2d {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend TopOpeBRep_Hctxff2d {
@@ -2485,13 +1879,13 @@ class TopOpeBRep_LineInter {
 ") Curve;
 		Handle_Geom_Curve Curve (const Standard_Real parmin,const Standard_Real parmax);
 		%feature("compactdefaultargs") Arc;
-		%feature("autodoc", "	* returns the edge of a RESTRICTION line (or a null edge).
+		%feature("autodoc", "	* returns the edge of a RESTRICTION line --or a null edge--.
 
 	:rtype: TopoDS_Shape
 ") Arc;
 		const TopoDS_Shape  Arc ();
 		%feature("compactdefaultargs") ArcIsEdge;
-		%feature("autodoc", "	* returns true if Arc() edge (of a RESTRICTION line) is an edge of the original face <Index> (1 or 2).
+		%feature("autodoc", "	* returns true if Arc---- edge --of a RESTRICTION line-- is an edge of the original face <Index> --1 or 2--.
 
 	:param I:
 	:type I: int
@@ -2590,249 +1984,6 @@ class TopOpeBRep_LineInter {
 
 
 %extend TopOpeBRep_LineInter {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor TopOpeBRep_ListIteratorOfListOfBipoint;
-class TopOpeBRep_ListIteratorOfListOfBipoint {
-	public:
-		%feature("compactdefaultargs") TopOpeBRep_ListIteratorOfListOfBipoint;
-		%feature("autodoc", "	:rtype: None
-") TopOpeBRep_ListIteratorOfListOfBipoint;
-		 TopOpeBRep_ListIteratorOfListOfBipoint ();
-		%feature("compactdefaultargs") TopOpeBRep_ListIteratorOfListOfBipoint;
-		%feature("autodoc", "	:param L:
-	:type L: TopOpeBRep_ListOfBipoint &
-	:rtype: None
-") TopOpeBRep_ListIteratorOfListOfBipoint;
-		 TopOpeBRep_ListIteratorOfListOfBipoint (const TopOpeBRep_ListOfBipoint & L);
-		%feature("compactdefaultargs") Initialize;
-		%feature("autodoc", "	:param L:
-	:type L: TopOpeBRep_ListOfBipoint &
-	:rtype: None
-") Initialize;
-		void Initialize (const TopOpeBRep_ListOfBipoint & L);
-		%feature("compactdefaultargs") More;
-		%feature("autodoc", "	:rtype: bool
-") More;
-		Standard_Boolean More ();
-		%feature("compactdefaultargs") Next;
-		%feature("autodoc", "	:rtype: None
-") Next;
-		void Next ();
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:rtype: TopOpeBRep_Bipoint
-") Value;
-		TopOpeBRep_Bipoint & Value ();
-};
-
-
-%extend TopOpeBRep_ListIteratorOfListOfBipoint {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor TopOpeBRep_ListNodeOfListOfBipoint;
-class TopOpeBRep_ListNodeOfListOfBipoint : public TCollection_MapNode {
-	public:
-		%feature("compactdefaultargs") TopOpeBRep_ListNodeOfListOfBipoint;
-		%feature("autodoc", "	:param I:
-	:type I: TopOpeBRep_Bipoint &
-	:param n:
-	:type n: TCollection_MapNodePtr &
-	:rtype: None
-") TopOpeBRep_ListNodeOfListOfBipoint;
-		 TopOpeBRep_ListNodeOfListOfBipoint (const TopOpeBRep_Bipoint & I,const TCollection_MapNodePtr & n);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:rtype: TopOpeBRep_Bipoint
-") Value;
-		TopOpeBRep_Bipoint & Value ();
-};
-
-
-%extend TopOpeBRep_ListNodeOfListOfBipoint {
-	%pythoncode {
-		def GetHandle(self):
-		    try:
-		        return self.thisHandle
-		    except:
-		        self.thisHandle = Handle_TopOpeBRep_ListNodeOfListOfBipoint(self)
-		        self.thisown = False
-		        return self.thisHandle
-	}
-};
-
-%pythonappend Handle_TopOpeBRep_ListNodeOfListOfBipoint::Handle_TopOpeBRep_ListNodeOfListOfBipoint %{
-    # register the handle in the base object
-    if len(args) > 0:
-        register_handle(self, args[0])
-%}
-
-%nodefaultctor Handle_TopOpeBRep_ListNodeOfListOfBipoint;
-class Handle_TopOpeBRep_ListNodeOfListOfBipoint : public Handle_TCollection_MapNode {
-
-    public:
-        // constructors
-        Handle_TopOpeBRep_ListNodeOfListOfBipoint();
-        Handle_TopOpeBRep_ListNodeOfListOfBipoint(const Handle_TopOpeBRep_ListNodeOfListOfBipoint &aHandle);
-        Handle_TopOpeBRep_ListNodeOfListOfBipoint(const TopOpeBRep_ListNodeOfListOfBipoint *anItem);
-        void Nullify();
-        Standard_Boolean IsNull() const;
-        static const Handle_TopOpeBRep_ListNodeOfListOfBipoint DownCast(const Handle_Standard_Transient &AnObject);
-
-};
-%extend Handle_TopOpeBRep_ListNodeOfListOfBipoint {
-    TopOpeBRep_ListNodeOfListOfBipoint* _get_reference() {
-    return (TopOpeBRep_ListNodeOfListOfBipoint*)$self->Access();
-    }
-};
-
-%extend Handle_TopOpeBRep_ListNodeOfListOfBipoint {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
-};
-
-%extend TopOpeBRep_ListNodeOfListOfBipoint {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor TopOpeBRep_ListOfBipoint;
-class TopOpeBRep_ListOfBipoint {
-	public:
-		%feature("compactdefaultargs") TopOpeBRep_ListOfBipoint;
-		%feature("autodoc", "	:rtype: None
-") TopOpeBRep_ListOfBipoint;
-		 TopOpeBRep_ListOfBipoint ();
-		%feature("compactdefaultargs") TopOpeBRep_ListOfBipoint;
-		%feature("autodoc", "	:param Other:
-	:type Other: TopOpeBRep_ListOfBipoint &
-	:rtype: None
-") TopOpeBRep_ListOfBipoint;
-		 TopOpeBRep_ListOfBipoint (const TopOpeBRep_ListOfBipoint & Other);
-		%feature("compactdefaultargs") Assign;
-		%feature("autodoc", "	:param Other:
-	:type Other: TopOpeBRep_ListOfBipoint &
-	:rtype: None
-") Assign;
-		void Assign (const TopOpeBRep_ListOfBipoint & Other);
-		%feature("compactdefaultargs") operator =;
-		%feature("autodoc", "	:param Other:
-	:type Other: TopOpeBRep_ListOfBipoint &
-	:rtype: None
-") operator =;
-		void operator = (const TopOpeBRep_ListOfBipoint & Other);
-		%feature("compactdefaultargs") Extent;
-		%feature("autodoc", "	:rtype: int
-") Extent;
-		Standard_Integer Extent ();
-		%feature("compactdefaultargs") Clear;
-		%feature("autodoc", "	:rtype: None
-") Clear;
-		void Clear ();
-		%feature("compactdefaultargs") IsEmpty;
-		%feature("autodoc", "	:rtype: bool
-") IsEmpty;
-		Standard_Boolean IsEmpty ();
-		%feature("compactdefaultargs") Prepend;
-		%feature("autodoc", "	:param I:
-	:type I: TopOpeBRep_Bipoint &
-	:rtype: None
-") Prepend;
-		void Prepend (const TopOpeBRep_Bipoint & I);
-		%feature("compactdefaultargs") Prepend;
-		%feature("autodoc", "	:param I:
-	:type I: TopOpeBRep_Bipoint &
-	:param theIt:
-	:type theIt: TopOpeBRep_ListIteratorOfListOfBipoint &
-	:rtype: None
-") Prepend;
-		void Prepend (const TopOpeBRep_Bipoint & I,TopOpeBRep_ListIteratorOfListOfBipoint & theIt);
-		%feature("compactdefaultargs") Prepend;
-		%feature("autodoc", "	:param Other:
-	:type Other: TopOpeBRep_ListOfBipoint &
-	:rtype: None
-") Prepend;
-		void Prepend (TopOpeBRep_ListOfBipoint & Other);
-		%feature("compactdefaultargs") Append;
-		%feature("autodoc", "	:param I:
-	:type I: TopOpeBRep_Bipoint &
-	:rtype: None
-") Append;
-		void Append (const TopOpeBRep_Bipoint & I);
-		%feature("compactdefaultargs") Append;
-		%feature("autodoc", "	:param I:
-	:type I: TopOpeBRep_Bipoint &
-	:param theIt:
-	:type theIt: TopOpeBRep_ListIteratorOfListOfBipoint &
-	:rtype: None
-") Append;
-		void Append (const TopOpeBRep_Bipoint & I,TopOpeBRep_ListIteratorOfListOfBipoint & theIt);
-		%feature("compactdefaultargs") Append;
-		%feature("autodoc", "	:param Other:
-	:type Other: TopOpeBRep_ListOfBipoint &
-	:rtype: None
-") Append;
-		void Append (TopOpeBRep_ListOfBipoint & Other);
-		%feature("compactdefaultargs") First;
-		%feature("autodoc", "	:rtype: TopOpeBRep_Bipoint
-") First;
-		TopOpeBRep_Bipoint & First ();
-		%feature("compactdefaultargs") Last;
-		%feature("autodoc", "	:rtype: TopOpeBRep_Bipoint
-") Last;
-		TopOpeBRep_Bipoint & Last ();
-		%feature("compactdefaultargs") RemoveFirst;
-		%feature("autodoc", "	:rtype: None
-") RemoveFirst;
-		void RemoveFirst ();
-		%feature("compactdefaultargs") Remove;
-		%feature("autodoc", "	:param It:
-	:type It: TopOpeBRep_ListIteratorOfListOfBipoint &
-	:rtype: None
-") Remove;
-		void Remove (TopOpeBRep_ListIteratorOfListOfBipoint & It);
-		%feature("compactdefaultargs") InsertBefore;
-		%feature("autodoc", "	:param I:
-	:type I: TopOpeBRep_Bipoint &
-	:param It:
-	:type It: TopOpeBRep_ListIteratorOfListOfBipoint &
-	:rtype: None
-") InsertBefore;
-		void InsertBefore (const TopOpeBRep_Bipoint & I,TopOpeBRep_ListIteratorOfListOfBipoint & It);
-		%feature("compactdefaultargs") InsertBefore;
-		%feature("autodoc", "	:param Other:
-	:type Other: TopOpeBRep_ListOfBipoint &
-	:param It:
-	:type It: TopOpeBRep_ListIteratorOfListOfBipoint &
-	:rtype: None
-") InsertBefore;
-		void InsertBefore (TopOpeBRep_ListOfBipoint & Other,TopOpeBRep_ListIteratorOfListOfBipoint & It);
-		%feature("compactdefaultargs") InsertAfter;
-		%feature("autodoc", "	:param I:
-	:type I: TopOpeBRep_Bipoint &
-	:param It:
-	:type It: TopOpeBRep_ListIteratorOfListOfBipoint &
-	:rtype: None
-") InsertAfter;
-		void InsertAfter (const TopOpeBRep_Bipoint & I,TopOpeBRep_ListIteratorOfListOfBipoint & It);
-		%feature("compactdefaultargs") InsertAfter;
-		%feature("autodoc", "	:param Other:
-	:type Other: TopOpeBRep_ListOfBipoint &
-	:param It:
-	:type It: TopOpeBRep_ListIteratorOfListOfBipoint &
-	:rtype: None
-") InsertAfter;
-		void InsertAfter (TopOpeBRep_ListOfBipoint & Other,TopOpeBRep_ListIteratorOfListOfBipoint & It);
-};
-
-
-%extend TopOpeBRep_ListOfBipoint {
 	%pythoncode {
 	__repr__ = _dumps_object
 	}
@@ -3135,220 +2286,6 @@ class TopOpeBRep_PointGeomTool {
 	__repr__ = _dumps_object
 	}
 };
-%nodefaultctor TopOpeBRep_SequenceNodeOfSequenceOfPoint2d;
-class TopOpeBRep_SequenceNodeOfSequenceOfPoint2d : public TCollection_SeqNode {
-	public:
-		%feature("compactdefaultargs") TopOpeBRep_SequenceNodeOfSequenceOfPoint2d;
-		%feature("autodoc", "	:param I:
-	:type I: TopOpeBRep_Point2d &
-	:param n:
-	:type n: TCollection_SeqNodePtr &
-	:param p:
-	:type p: TCollection_SeqNodePtr &
-	:rtype: None
-") TopOpeBRep_SequenceNodeOfSequenceOfPoint2d;
-		 TopOpeBRep_SequenceNodeOfSequenceOfPoint2d (const TopOpeBRep_Point2d & I,const TCollection_SeqNodePtr & n,const TCollection_SeqNodePtr & p);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:rtype: TopOpeBRep_Point2d
-") Value;
-		TopOpeBRep_Point2d & Value ();
-};
-
-
-%extend TopOpeBRep_SequenceNodeOfSequenceOfPoint2d {
-	%pythoncode {
-		def GetHandle(self):
-		    try:
-		        return self.thisHandle
-		    except:
-		        self.thisHandle = Handle_TopOpeBRep_SequenceNodeOfSequenceOfPoint2d(self)
-		        self.thisown = False
-		        return self.thisHandle
-	}
-};
-
-%pythonappend Handle_TopOpeBRep_SequenceNodeOfSequenceOfPoint2d::Handle_TopOpeBRep_SequenceNodeOfSequenceOfPoint2d %{
-    # register the handle in the base object
-    if len(args) > 0:
-        register_handle(self, args[0])
-%}
-
-%nodefaultctor Handle_TopOpeBRep_SequenceNodeOfSequenceOfPoint2d;
-class Handle_TopOpeBRep_SequenceNodeOfSequenceOfPoint2d : public Handle_TCollection_SeqNode {
-
-    public:
-        // constructors
-        Handle_TopOpeBRep_SequenceNodeOfSequenceOfPoint2d();
-        Handle_TopOpeBRep_SequenceNodeOfSequenceOfPoint2d(const Handle_TopOpeBRep_SequenceNodeOfSequenceOfPoint2d &aHandle);
-        Handle_TopOpeBRep_SequenceNodeOfSequenceOfPoint2d(const TopOpeBRep_SequenceNodeOfSequenceOfPoint2d *anItem);
-        void Nullify();
-        Standard_Boolean IsNull() const;
-        static const Handle_TopOpeBRep_SequenceNodeOfSequenceOfPoint2d DownCast(const Handle_Standard_Transient &AnObject);
-
-};
-%extend Handle_TopOpeBRep_SequenceNodeOfSequenceOfPoint2d {
-    TopOpeBRep_SequenceNodeOfSequenceOfPoint2d* _get_reference() {
-    return (TopOpeBRep_SequenceNodeOfSequenceOfPoint2d*)$self->Access();
-    }
-};
-
-%extend Handle_TopOpeBRep_SequenceNodeOfSequenceOfPoint2d {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
-};
-
-%extend TopOpeBRep_SequenceNodeOfSequenceOfPoint2d {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor TopOpeBRep_SequenceOfPoint2d;
-class TopOpeBRep_SequenceOfPoint2d : public TCollection_BaseSequence {
-	public:
-		%feature("compactdefaultargs") TopOpeBRep_SequenceOfPoint2d;
-		%feature("autodoc", "	:rtype: None
-") TopOpeBRep_SequenceOfPoint2d;
-		 TopOpeBRep_SequenceOfPoint2d ();
-		%feature("compactdefaultargs") TopOpeBRep_SequenceOfPoint2d;
-		%feature("autodoc", "	:param Other:
-	:type Other: TopOpeBRep_SequenceOfPoint2d &
-	:rtype: None
-") TopOpeBRep_SequenceOfPoint2d;
-		 TopOpeBRep_SequenceOfPoint2d (const TopOpeBRep_SequenceOfPoint2d & Other);
-		%feature("compactdefaultargs") Clear;
-		%feature("autodoc", "	:rtype: None
-") Clear;
-		void Clear ();
-		%feature("compactdefaultargs") Assign;
-		%feature("autodoc", "	:param Other:
-	:type Other: TopOpeBRep_SequenceOfPoint2d &
-	:rtype: TopOpeBRep_SequenceOfPoint2d
-") Assign;
-		const TopOpeBRep_SequenceOfPoint2d & Assign (const TopOpeBRep_SequenceOfPoint2d & Other);
-		%feature("compactdefaultargs") operator =;
-		%feature("autodoc", "	:param Other:
-	:type Other: TopOpeBRep_SequenceOfPoint2d &
-	:rtype: TopOpeBRep_SequenceOfPoint2d
-") operator =;
-		const TopOpeBRep_SequenceOfPoint2d & operator = (const TopOpeBRep_SequenceOfPoint2d & Other);
-		%feature("compactdefaultargs") Append;
-		%feature("autodoc", "	:param T:
-	:type T: TopOpeBRep_Point2d &
-	:rtype: None
-") Append;
-		void Append (const TopOpeBRep_Point2d & T);
-		%feature("compactdefaultargs") Append;
-		%feature("autodoc", "	:param S:
-	:type S: TopOpeBRep_SequenceOfPoint2d &
-	:rtype: None
-") Append;
-		void Append (TopOpeBRep_SequenceOfPoint2d & S);
-		%feature("compactdefaultargs") Prepend;
-		%feature("autodoc", "	:param T:
-	:type T: TopOpeBRep_Point2d &
-	:rtype: None
-") Prepend;
-		void Prepend (const TopOpeBRep_Point2d & T);
-		%feature("compactdefaultargs") Prepend;
-		%feature("autodoc", "	:param S:
-	:type S: TopOpeBRep_SequenceOfPoint2d &
-	:rtype: None
-") Prepend;
-		void Prepend (TopOpeBRep_SequenceOfPoint2d & S);
-		%feature("compactdefaultargs") InsertBefore;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param T:
-	:type T: TopOpeBRep_Point2d &
-	:rtype: None
-") InsertBefore;
-		void InsertBefore (const Standard_Integer Index,const TopOpeBRep_Point2d & T);
-		%feature("compactdefaultargs") InsertBefore;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param S:
-	:type S: TopOpeBRep_SequenceOfPoint2d &
-	:rtype: None
-") InsertBefore;
-		void InsertBefore (const Standard_Integer Index,TopOpeBRep_SequenceOfPoint2d & S);
-		%feature("compactdefaultargs") InsertAfter;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param T:
-	:type T: TopOpeBRep_Point2d &
-	:rtype: None
-") InsertAfter;
-		void InsertAfter (const Standard_Integer Index,const TopOpeBRep_Point2d & T);
-		%feature("compactdefaultargs") InsertAfter;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param S:
-	:type S: TopOpeBRep_SequenceOfPoint2d &
-	:rtype: None
-") InsertAfter;
-		void InsertAfter (const Standard_Integer Index,TopOpeBRep_SequenceOfPoint2d & S);
-		%feature("compactdefaultargs") First;
-		%feature("autodoc", "	:rtype: TopOpeBRep_Point2d
-") First;
-		const TopOpeBRep_Point2d & First ();
-		%feature("compactdefaultargs") Last;
-		%feature("autodoc", "	:rtype: TopOpeBRep_Point2d
-") Last;
-		const TopOpeBRep_Point2d & Last ();
-		%feature("compactdefaultargs") Split;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param Sub:
-	:type Sub: TopOpeBRep_SequenceOfPoint2d &
-	:rtype: None
-") Split;
-		void Split (const Standard_Integer Index,TopOpeBRep_SequenceOfPoint2d & Sub);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: TopOpeBRep_Point2d
-") Value;
-		const TopOpeBRep_Point2d & Value (const Standard_Integer Index);
-		%feature("compactdefaultargs") SetValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param I:
-	:type I: TopOpeBRep_Point2d &
-	:rtype: None
-") SetValue;
-		void SetValue (const Standard_Integer Index,const TopOpeBRep_Point2d & I);
-		%feature("compactdefaultargs") ChangeValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: TopOpeBRep_Point2d
-") ChangeValue;
-		TopOpeBRep_Point2d & ChangeValue (const Standard_Integer Index);
-		%feature("compactdefaultargs") Remove;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: None
-") Remove;
-		void Remove (const Standard_Integer Index);
-		%feature("compactdefaultargs") Remove;
-		%feature("autodoc", "	:param FromIndex:
-	:type FromIndex: int
-	:param ToIndex:
-	:type ToIndex: int
-	:rtype: None
-") Remove;
-		void Remove (const Standard_Integer FromIndex,const Standard_Integer ToIndex);
-};
-
-
-%extend TopOpeBRep_SequenceOfPoint2d {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
 %nodefaultctor TopOpeBRep_ShapeIntersector;
 class TopOpeBRep_ShapeIntersector {
 	public:
@@ -3381,7 +2318,7 @@ class TopOpeBRep_ShapeIntersector {
 ") InitIntersection;
 		void InitIntersection (const TopoDS_Shape & S1,const TopoDS_Shape & S2,const TopoDS_Face & F1,const TopoDS_Face & F2);
 		%feature("compactdefaultargs") Shape;
-		%feature("autodoc", "	* return the shape <Index> ( = 1 or 2) given to InitIntersection(). Index = 1 will return S1, Index = 2 will return S2.
+		%feature("autodoc", "	* return the shape <Index> -- = 1 or 2-- given to InitIntersection----. Index = 1 will return S1, Index = 2 will return S2.
 
 	:param Index:
 	:type Index: int
@@ -3419,7 +2356,7 @@ class TopOpeBRep_ShapeIntersector {
 ") ChangeFaceEdgeIntersector;
 		TopOpeBRep_FaceEdgeIntersector & ChangeFaceEdgeIntersector ();
 		%feature("compactdefaultargs") CurrentGeomShape;
-		%feature("autodoc", "	* return geometric shape <Index> ( = 1 or 2 ) of current intersection.
+		%feature("autodoc", "	* return geometric shape <Index> -- = 1 or 2 -- of current intersection.
 
 	:param Index:
 	:type Index: int
@@ -3484,7 +2421,7 @@ class TopOpeBRep_ShapeIntersector2d {
 ") InitIntersection;
 		void InitIntersection (const TopoDS_Shape & S1,const TopoDS_Shape & S2);
 		%feature("compactdefaultargs") Shape;
-		%feature("autodoc", "	* return the shape <Index> ( = 1 or 2) given to InitIntersection(). Index = 1 will return S1, Index = 2 will return S2.
+		%feature("autodoc", "	* return the shape <Index> -- = 1 or 2-- given to InitIntersection----. Index = 1 will return S1, Index = 2 will return S2.
 
 	:param Index:
 	:type Index: int
@@ -3510,7 +2447,7 @@ class TopOpeBRep_ShapeIntersector2d {
 ") ChangeEdgesIntersector;
 		TopOpeBRep_EdgesIntersector & ChangeEdgesIntersector ();
 		%feature("compactdefaultargs") CurrentGeomShape;
-		%feature("autodoc", "	* return geometric shape <Index> ( = 1 or 2 ) of current intersection.
+		%feature("autodoc", "	* return geometric shape <Index> -- = 1 or 2 -- of current intersection.
 
 	:param Index:
 	:type Index: int
@@ -3742,7 +2679,7 @@ class TopOpeBRep_VPointInter {
 ") IsMultiple;
 		Standard_Boolean IsMultiple ();
 		%feature("compactdefaultargs") State;
-		%feature("autodoc", "	* get state of VPoint within the domain of geometric shape domain <I> (= 1 or 2).
+		%feature("autodoc", "	* get state of VPoint within the domain of geometric shape domain <I> --= 1 or 2--.
 
 	:param I:
 	:type I: int
@@ -3750,7 +2687,7 @@ class TopOpeBRep_VPointInter {
 ") State;
 		TopAbs_State State (const Standard_Integer I);
 		%feature("compactdefaultargs") State;
-		%feature("autodoc", "	* Set the state of VPoint within the domain of the geometric shape <I> (= 1 or 2).
+		%feature("autodoc", "	* Set the state of VPoint within the domain of the geometric shape <I> --= 1 or 2--.
 
 	:param S:
 	:type S: TopAbs_State
@@ -3760,7 +2697,7 @@ class TopOpeBRep_VPointInter {
 ") State;
 		void State (const TopAbs_State S,const Standard_Integer I);
 		%feature("compactdefaultargs") EdgeON;
-		%feature("autodoc", "	* set the shape Eon of shape I (1,2) containing the point, and parameter <Par> of point on <Eon>.
+		%feature("autodoc", "	* set the shape Eon of shape I --1,2-- containing the point, and parameter <Par> of point on <Eon>.
 
 	:param Eon:
 	:type Eon: TopoDS_Shape &
@@ -3772,7 +2709,7 @@ class TopOpeBRep_VPointInter {
 ") EdgeON;
 		void EdgeON (const TopoDS_Shape & Eon,const Standard_Real Par,const Standard_Integer I);
 		%feature("compactdefaultargs") EdgeON;
-		%feature("autodoc", "	* get the edge of shape I (1,2) containing the point.
+		%feature("autodoc", "	* get the edge of shape I --1,2-- containing the point.
 
 	:param I:
 	:type I: int
@@ -3780,7 +2717,7 @@ class TopOpeBRep_VPointInter {
 ") EdgeON;
 		const TopoDS_Shape  EdgeON (const Standard_Integer I);
 		%feature("compactdefaultargs") EdgeONParameter;
-		%feature("autodoc", "	* get the parameter on edge of shape I (1,2) containing the point.
+		%feature("autodoc", "	* get the parameter on edge of shape I --1,2-- containing the point.
 
 	:param I:
 	:type I: int
@@ -3794,7 +2731,7 @@ class TopOpeBRep_VPointInter {
 ") ShapeIndex;
 		Standard_Integer ShapeIndex ();
 		%feature("compactdefaultargs") ShapeIndex;
-		%feature("autodoc", "	* set value of shape supporting me (0,1,2,3).
+		%feature("autodoc", "	* set value of shape supporting me --0,1,2,3--.
 
 	:param I:
 	:type I: int
@@ -3802,7 +2739,7 @@ class TopOpeBRep_VPointInter {
 ") ShapeIndex;
 		void ShapeIndex (const Standard_Integer I);
 		%feature("compactdefaultargs") Edge;
-		%feature("autodoc", "	* get the edge of shape I (1,2) containing the point. Returned shape is null if the VPoint is not on an edge of shape I (1,2).
+		%feature("autodoc", "	* get the edge of shape I --1,2-- containing the point. Returned shape is null if the VPoint is not on an edge of shape I --1,2--.
 
 	:param I:
 	:type I: int
@@ -3810,7 +2747,7 @@ class TopOpeBRep_VPointInter {
 ") Edge;
 		const TopoDS_Shape  Edge (const Standard_Integer I);
 		%feature("compactdefaultargs") EdgeParameter;
-		%feature("autodoc", "	* get the parameter on edge of shape I (1,2) containing the point
+		%feature("autodoc", "	* get the parameter on edge of shape I --1,2-- containing the point
 
 	:param I:
 	:type I: int
@@ -3818,7 +2755,7 @@ class TopOpeBRep_VPointInter {
 ") EdgeParameter;
 		Standard_Real EdgeParameter (const Standard_Integer I);
 		%feature("compactdefaultargs") SurfaceParameters;
-		%feature("autodoc", "	* get the parameter on surface of shape I (1,2) containing the point
+		%feature("autodoc", "	* get the parameter on surface of shape I --1,2-- containing the point
 
 	:param I:
 	:type I: int
@@ -3844,7 +2781,7 @@ class TopOpeBRep_VPointInter {
 ") UpdateKeep;
 		void UpdateKeep ();
 		%feature("compactdefaultargs") Keep;
-		%feature("autodoc", "	* Returns value of myKeep (does not evaluate states) False at creation of VPoint. Updated by State(State from TopAbs,Integer from Standard)
+		%feature("autodoc", "	* Returns value of myKeep --does not evaluate states-- False at creation of VPoint. Updated by State--State from TopAbs,Integer from Standard--
 
 	:rtype: bool
 ") Keep;
@@ -3925,7 +2862,7 @@ class TopOpeBRep_VPointInterClassifier {
 ") TopOpeBRep_VPointInterClassifier;
 		 TopOpeBRep_VPointInterClassifier ();
 		%feature("compactdefaultargs") VPointPosition;
-		%feature("autodoc", "	* compute position of VPoint <VP> regarding with face <F>. <ShapeIndex> (= 1,2) indicates which (u,v) point of <VP> is used. when state is ON, set VP.EdgeON() with the edge containing <VP> and associated parameter. returns state of VP on ShapeIndex.
+		%feature("autodoc", "	* compute position of VPoint <VP> regarding with face <F>. <ShapeIndex> --= 1,2-- indicates which --u,v-- point of <VP> is used. when state is ON, set VP.EdgeON---- with the edge containing <VP> and associated parameter. returns state of VP on ShapeIndex.
 
 	:param F:
 	:type F: TopoDS_Shape &
@@ -3943,13 +2880,13 @@ class TopOpeBRep_VPointInterClassifier {
 ") VPointPosition;
 		TopAbs_State VPointPosition (const TopoDS_Shape & F,TopOpeBRep_VPointInter & VP,const Standard_Integer ShapeIndex,TopOpeBRep_PointClassifier & PC,const Standard_Boolean AssumeINON,const Standard_Real Tol);
 		%feature("compactdefaultargs") Edge;
-		%feature("autodoc", "	* returns the edge containing the VPoint <VP> used in the last VPointPosition() call. Edge is defined if the state previously computed is ON, else Edge is a null shape.
+		%feature("autodoc", "	* returns the edge containing the VPoint <VP> used in the last VPointPosition---- call. Edge is defined if the state previously computed is ON, else Edge is a null shape.
 
 	:rtype: TopoDS_Shape
 ") Edge;
 		const TopoDS_Shape  Edge ();
 		%feature("compactdefaultargs") EdgeParameter;
-		%feature("autodoc", "	* returns the parameter of the VPoint <VP> on Edge()
+		%feature("autodoc", "	* returns the parameter of the VPoint <VP> on Edge----
 
 	:rtype: float
 ") EdgeParameter;

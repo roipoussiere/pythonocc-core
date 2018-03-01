@@ -1,5 +1,5 @@
 /*
-Copyright 2008-2017 Thomas Paviot (tpaviot@gmail.com)
+Copyright 2008-2018 Thomas Paviot (tpaviot@gmail.com)
 
 
 This file is part of pythonOCC.
@@ -55,6 +55,9 @@ def register_handle(handle, base_object):
 
 /* typedefs */
 /* end typedefs declaration */
+
+/* templates */
+/* end templates declaration */
 
 /* public enums */
 /* end public enums declaration */
@@ -147,7 +150,7 @@ class IntCurve_IConicTool {
 ") GradDistance;
 		gp_Vec2d GradDistance (const gp_Pnt2d & P);
 		%feature("compactdefaultargs") FindParameter;
-		%feature("autodoc", "	* Returns the parameter U of the point on the implicit curve corresponding to the point P. The correspondance between P and the point P(U) on the implicit curve must be coherent with the way of determination of the signed distance.
+		%feature("autodoc", "	* Returns the parameter U of the point on the implicit curve corresponding to the point P. The correspondance between P and the point P--U-- on the implicit curve must be coherent with the way of determination of the signed distance.
 
 	:param P:
 	:type P: gp_Pnt2d
@@ -723,11 +726,15 @@ class IntCurve_IntConicConic : public IntRes2d_Intersection {
 class IntCurve_IntImpConicParConic : public IntRes2d_Intersection {
 	public:
 		%feature("compactdefaultargs") IntCurve_IntImpConicParConic;
-		%feature("autodoc", "	:rtype: None
+		%feature("autodoc", "	* Empty constructor.
+
+	:rtype: None
 ") IntCurve_IntImpConicParConic;
 		 IntCurve_IntImpConicParConic ();
 		%feature("compactdefaultargs") IntCurve_IntImpConicParConic;
-		%feature("autodoc", "	:param ITool:
+		%feature("autodoc", "	* Intersection between an implicit curve and a parametrised curve. The exception ConstructionError is raised if the domain of the parametrised curve does not verify HasFirstPoint and HasLastPoint return True.
+
+	:param ITool:
 	:type ITool: IntCurve_IConicTool &
 	:param Dom1:
 	:type Dom1: IntRes2d_Domain &
@@ -743,7 +750,9 @@ class IntCurve_IntImpConicParConic : public IntRes2d_Intersection {
 ") IntCurve_IntImpConicParConic;
 		 IntCurve_IntImpConicParConic (const IntCurve_IConicTool & ITool,const IntRes2d_Domain & Dom1,const IntCurve_PConic & PCurve,const IntRes2d_Domain & Dom2,const Standard_Real TolConf,const Standard_Real Tol);
 		%feature("compactdefaultargs") Perform;
-		%feature("autodoc", "	:param ITool:
+		%feature("autodoc", "	* Intersection between an implicit curve and a parametrised curve. The exception ConstructionError is raised if the domain of the parametrised curve does not verify HasFirstPoint and HasLastPoint return True.
+
+	:param ITool:
 	:type ITool: IntCurve_IConicTool &
 	:param Dom1:
 	:type Dom1: IntRes2d_Domain &
@@ -826,7 +835,9 @@ class IntCurve_IntImpConicParConic : public IntRes2d_Intersection {
 class IntCurve_MyImpParToolOfIntImpConicParConic : public math_FunctionWithDerivative {
 	public:
 		%feature("compactdefaultargs") IntCurve_MyImpParToolOfIntImpConicParConic;
-		%feature("autodoc", "	:param IT:
+		%feature("autodoc", "	* Constructor of the class.
+
+	:param IT:
 	:type IT: IntCurve_IConicTool &
 	:param PC:
 	:type PC: IntCurve_PConic &
@@ -834,7 +845,9 @@ class IntCurve_MyImpParToolOfIntImpConicParConic : public math_FunctionWithDeriv
 ") IntCurve_MyImpParToolOfIntImpConicParConic;
 		 IntCurve_MyImpParToolOfIntImpConicParConic (const IntCurve_IConicTool & IT,const IntCurve_PConic & PC);
 		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:param Param:
+		%feature("autodoc", "	* Computes the value of the signed distance between the implicit curve and the point at parameter Param on the parametrised curve.
+
+	:param Param:
 	:type Param: float
 	:param F:
 	:type F: float &
@@ -842,7 +855,9 @@ class IntCurve_MyImpParToolOfIntImpConicParConic : public math_FunctionWithDeriv
 ") Value;
 		Standard_Boolean Value (const Standard_Real Param,Standard_Real &OutValue);
 		%feature("compactdefaultargs") Derivative;
-		%feature("autodoc", "	:param Param:
+		%feature("autodoc", "	* Computes the derivative of the previous function at parameter Param.
+
+	:param Param:
 	:type Param: float
 	:param D:
 	:type D: float &
@@ -850,7 +865,9 @@ class IntCurve_MyImpParToolOfIntImpConicParConic : public math_FunctionWithDeriv
 ") Derivative;
 		Standard_Boolean Derivative (const Standard_Real Param,Standard_Real &OutValue);
 		%feature("compactdefaultargs") Values;
-		%feature("autodoc", "	:param Param:
+		%feature("autodoc", "	* Computes the value and the derivative of the function.
+
+	:param Param:
 	:type Param: float
 	:param F:
 	:type F: float &
@@ -907,7 +924,7 @@ class IntCurve_PConic {
 ") IntCurve_PConic;
 		 IntCurve_PConic (const gp_Lin2d & L);
 		%feature("compactdefaultargs") SetEpsX;
-		%feature("autodoc", "	* EpsX is a internal tolerance used in math algorithms, usually about 1e-10 (See FunctionAllRoots for more details)
+		%feature("autodoc", "	* EpsX is a internal tolerance used in math algorithms, usually about 1e-10 --See FunctionAllRoots for more details--
 
 	:param EpsDist:
 	:type EpsDist: float
@@ -1025,7 +1042,7 @@ class IntCurve_PConicTool {
 class IntCurve_ProjectOnPConicTool {
 	public:
 		%feature("compactdefaultargs") FindParameter;
-		%feature("autodoc", "	* Returns the parameter V of the point on the parametric curve corresponding to the Point Pnt. The Correspondance between Pnt and the point P(V) on the parametric curve must be coherent with the way of determination of the signed distance between a point and the implicit curve. Tol is the tolerance on the distance between a point and the parametrised curve. In that case, no bounds are given. The research of the rigth parameter has to be made on the natural parametric domain of the curve.
+		%feature("autodoc", "	* Returns the parameter V of the point on the parametric curve corresponding to the Point Pnt. The Correspondance between Pnt and the point P--V-- on the parametric curve must be coherent with the way of determination of the signed distance between a point and the implicit curve. Tol is the tolerance on the distance between a point and the parametrised curve. In that case, no bounds are given. The research of the rigth parameter has to be made on the natural parametric domain of the curve.
 
 	:param C:
 	:type C: IntCurve_PConic &
@@ -1037,7 +1054,7 @@ class IntCurve_ProjectOnPConicTool {
 ") FindParameter;
 		static Standard_Real FindParameter (const IntCurve_PConic & C,const gp_Pnt2d & Pnt,const Standard_Real Tol);
 		%feature("compactdefaultargs") FindParameter;
-		%feature("autodoc", "	* Returns the parameter V of the point on the parametric curve corresponding to the Point Pnt. The Correspondance between Pnt and the point P(V) on the parametric curve must be coherent with the way of determination of the signed distance between a point and the implicit curve. Tol is the tolerance on the distance between a point and the parametrised curve. LowParameter and HighParameter give the boundaries of the interval in wich the parameter certainly lies. These parameters are given to implement a more efficient algoritm. So, it is not necessary to check that the returned value verifies LowParameter <= Value <= HighParameter.
+		%feature("autodoc", "	* Returns the parameter V of the point on the parametric curve corresponding to the Point Pnt. The Correspondance between Pnt and the point P--V-- on the parametric curve must be coherent with the way of determination of the signed distance between a point and the implicit curve. Tol is the tolerance on the distance between a point and the parametrised curve. LowParameter and HighParameter give the boundaries of the interval in wich the parameter certainly lies. These parameters are given to implement a more efficient algoritm. So, it is not necessary to check that the returned value verifies LowParameter <= Value <= HighParameter.
 
 	:param C:
 	:type C: IntCurve_PConic &

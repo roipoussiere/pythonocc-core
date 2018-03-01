@@ -1,5 +1,5 @@
 /*
-Copyright 2008-2017 Thomas Paviot (tpaviot@gmail.com)
+Copyright 2008-2018 Thomas Paviot (tpaviot@gmail.com)
 
 
 This file is part of pythonOCC.
@@ -55,6 +55,24 @@ def register_handle(handle, base_object):
 
 /* typedefs */
 /* end typedefs declaration */
+
+/* templates */
+%template(StepElement_Array1OfHSequenceOfSurfaceElementPurposeMember) NCollection_Array1 <Handle_StepElement_HSequenceOfSurfaceElementPurposeMember>;
+%template(StepElement_SequenceOfSurfaceElementPurposeMember) NCollection_Sequence <Handle_StepElement_SurfaceElementPurposeMember>;
+%template(StepElement_SequenceOfCurveElementPurposeMember) NCollection_Sequence <Handle_StepElement_CurveElementPurposeMember>;
+%template(StepElement_Array1OfVolumeElementPurpose) NCollection_Array1 <StepElement_VolumeElementPurpose>;
+%template(StepElement_Array1OfMeasureOrUnspecifiedValue) NCollection_Array1 <StepElement_MeasureOrUnspecifiedValue>;
+%template(StepElement_Array1OfSurfaceSection) NCollection_Array1 <Handle_StepElement_SurfaceSection>;
+%template(StepElement_Array2OfSurfaceElementPurpose) NCollection_Array2 <StepElement_SurfaceElementPurpose>;
+%template(StepElement_SequenceOfCurveElementSectionDefinition) NCollection_Sequence <Handle_StepElement_CurveElementSectionDefinition>;
+%template(StepElement_Array1OfVolumeElementPurposeMember) NCollection_Array1 <Handle_StepElement_VolumeElementPurposeMember>;
+%template(StepElement_Array1OfHSequenceOfCurveElementPurposeMember) NCollection_Array1 <Handle_StepElement_HSequenceOfCurveElementPurposeMember>;
+%template(StepElement_Array2OfSurfaceElementPurposeMember) NCollection_Array2 <Handle_StepElement_SurfaceElementPurposeMember>;
+%template(StepElement_Array1OfCurveElementSectionDefinition) NCollection_Array1 <Handle_StepElement_CurveElementSectionDefinition>;
+%template(StepElement_SequenceOfElementMaterial) NCollection_Sequence <Handle_StepElement_ElementMaterial>;
+%template(StepElement_Array2OfCurveElementPurposeMember) NCollection_Array2 <Handle_StepElement_CurveElementPurposeMember>;
+%template(StepElement_Array1OfCurveElementEndReleasePacket) NCollection_Array1 <Handle_StepElement_CurveElementEndReleasePacket>;
+/* end templates declaration */
 
 /* public enums */
 enum StepElement_ElementVolume {
@@ -123,7 +141,7 @@ enum StepElement_EnumeratedCurveElementPurpose {
 /* end public enums declaration */
 
 %nodefaultctor StepElement_AnalysisItemWithinRepresentation;
-class StepElement_AnalysisItemWithinRepresentation : public MMgt_TShared {
+class StepElement_AnalysisItemWithinRepresentation : public Standard_Transient {
 	public:
 		%feature("compactdefaultargs") StepElement_AnalysisItemWithinRepresentation;
 		%feature("autodoc", "	* Empty constructor
@@ -132,7 +150,7 @@ class StepElement_AnalysisItemWithinRepresentation : public MMgt_TShared {
 ") StepElement_AnalysisItemWithinRepresentation;
 		 StepElement_AnalysisItemWithinRepresentation ();
 		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	* Initialize all fields (own and inherited)
+		%feature("autodoc", "	* Initialize all fields --own and inherited--
 
 	:param aName:
 	:type aName: Handle_TCollection_HAsciiString &
@@ -223,7 +241,7 @@ class StepElement_AnalysisItemWithinRepresentation : public MMgt_TShared {
 %}
 
 %nodefaultctor Handle_StepElement_AnalysisItemWithinRepresentation;
-class Handle_StepElement_AnalysisItemWithinRepresentation : public Handle_MMgt_TShared {
+class Handle_StepElement_AnalysisItemWithinRepresentation : public Handle_Standard_Transient {
 
     public:
         // constructors
@@ -235,19 +253,20 @@ class Handle_StepElement_AnalysisItemWithinRepresentation : public Handle_MMgt_T
         static const Handle_StepElement_AnalysisItemWithinRepresentation DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_StepElement_AnalysisItemWithinRepresentation {
     StepElement_AnalysisItemWithinRepresentation* _get_reference() {
-    return (StepElement_AnalysisItemWithinRepresentation*)$self->Access();
+    return (StepElement_AnalysisItemWithinRepresentation*)$self->get();
     }
 };
 
 %extend Handle_StepElement_AnalysisItemWithinRepresentation {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend StepElement_AnalysisItemWithinRepresentation {
@@ -255,1031 +274,8 @@ class Handle_StepElement_AnalysisItemWithinRepresentation : public Handle_MMgt_T
 	__repr__ = _dumps_object
 	}
 };
-%nodefaultctor StepElement_Array1OfCurveElementEndReleasePacket;
-class StepElement_Array1OfCurveElementEndReleasePacket {
-	public:
-		%feature("compactdefaultargs") StepElement_Array1OfCurveElementEndReleasePacket;
-		%feature("autodoc", "	:param Low:
-	:type Low: int
-	:param Up:
-	:type Up: int
-	:rtype: None
-") StepElement_Array1OfCurveElementEndReleasePacket;
-		 StepElement_Array1OfCurveElementEndReleasePacket (const Standard_Integer Low,const Standard_Integer Up);
-		%feature("compactdefaultargs") StepElement_Array1OfCurveElementEndReleasePacket;
-		%feature("autodoc", "	:param Item:
-	:type Item: Handle_StepElement_CurveElementEndReleasePacket &
-	:param Low:
-	:type Low: int
-	:param Up:
-	:type Up: int
-	:rtype: None
-") StepElement_Array1OfCurveElementEndReleasePacket;
-		 StepElement_Array1OfCurveElementEndReleasePacket (const Handle_StepElement_CurveElementEndReleasePacket & Item,const Standard_Integer Low,const Standard_Integer Up);
-		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	:param V:
-	:type V: Handle_StepElement_CurveElementEndReleasePacket &
-	:rtype: None
-") Init;
-		void Init (const Handle_StepElement_CurveElementEndReleasePacket & V);
-		%feature("compactdefaultargs") Destroy;
-		%feature("autodoc", "	:rtype: None
-") Destroy;
-		void Destroy ();
-		%feature("compactdefaultargs") IsAllocated;
-		%feature("autodoc", "	:rtype: bool
-") IsAllocated;
-		Standard_Boolean IsAllocated ();
-		%feature("compactdefaultargs") Assign;
-		%feature("autodoc", "	:param Other:
-	:type Other: StepElement_Array1OfCurveElementEndReleasePacket &
-	:rtype: StepElement_Array1OfCurveElementEndReleasePacket
-") Assign;
-		const StepElement_Array1OfCurveElementEndReleasePacket & Assign (const StepElement_Array1OfCurveElementEndReleasePacket & Other);
-		%feature("compactdefaultargs") operator =;
-		%feature("autodoc", "	:param Other:
-	:type Other: StepElement_Array1OfCurveElementEndReleasePacket &
-	:rtype: StepElement_Array1OfCurveElementEndReleasePacket
-") operator =;
-		const StepElement_Array1OfCurveElementEndReleasePacket & operator = (const StepElement_Array1OfCurveElementEndReleasePacket & Other);
-		%feature("compactdefaultargs") Length;
-		%feature("autodoc", "	:rtype: int
-") Length;
-		Standard_Integer Length ();
-		%feature("compactdefaultargs") Lower;
-		%feature("autodoc", "	:rtype: int
-") Lower;
-		Standard_Integer Lower ();
-		%feature("compactdefaultargs") Upper;
-		%feature("autodoc", "	:rtype: int
-") Upper;
-		Standard_Integer Upper ();
-		%feature("compactdefaultargs") SetValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param Value:
-	:type Value: Handle_StepElement_CurveElementEndReleasePacket &
-	:rtype: None
-") SetValue;
-		void SetValue (const Standard_Integer Index,const Handle_StepElement_CurveElementEndReleasePacket & Value);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: Handle_StepElement_CurveElementEndReleasePacket
-") Value;
-		Handle_StepElement_CurveElementEndReleasePacket Value (const Standard_Integer Index);
-		%feature("compactdefaultargs") ChangeValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: Handle_StepElement_CurveElementEndReleasePacket
-") ChangeValue;
-		Handle_StepElement_CurveElementEndReleasePacket ChangeValue (const Standard_Integer Index);
-};
-
-
-%extend StepElement_Array1OfCurveElementEndReleasePacket {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor StepElement_Array1OfCurveElementSectionDefinition;
-class StepElement_Array1OfCurveElementSectionDefinition {
-	public:
-		%feature("compactdefaultargs") StepElement_Array1OfCurveElementSectionDefinition;
-		%feature("autodoc", "	:param Low:
-	:type Low: int
-	:param Up:
-	:type Up: int
-	:rtype: None
-") StepElement_Array1OfCurveElementSectionDefinition;
-		 StepElement_Array1OfCurveElementSectionDefinition (const Standard_Integer Low,const Standard_Integer Up);
-		%feature("compactdefaultargs") StepElement_Array1OfCurveElementSectionDefinition;
-		%feature("autodoc", "	:param Item:
-	:type Item: Handle_StepElement_CurveElementSectionDefinition &
-	:param Low:
-	:type Low: int
-	:param Up:
-	:type Up: int
-	:rtype: None
-") StepElement_Array1OfCurveElementSectionDefinition;
-		 StepElement_Array1OfCurveElementSectionDefinition (const Handle_StepElement_CurveElementSectionDefinition & Item,const Standard_Integer Low,const Standard_Integer Up);
-		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	:param V:
-	:type V: Handle_StepElement_CurveElementSectionDefinition &
-	:rtype: None
-") Init;
-		void Init (const Handle_StepElement_CurveElementSectionDefinition & V);
-		%feature("compactdefaultargs") Destroy;
-		%feature("autodoc", "	:rtype: None
-") Destroy;
-		void Destroy ();
-		%feature("compactdefaultargs") IsAllocated;
-		%feature("autodoc", "	:rtype: bool
-") IsAllocated;
-		Standard_Boolean IsAllocated ();
-		%feature("compactdefaultargs") Assign;
-		%feature("autodoc", "	:param Other:
-	:type Other: StepElement_Array1OfCurveElementSectionDefinition &
-	:rtype: StepElement_Array1OfCurveElementSectionDefinition
-") Assign;
-		const StepElement_Array1OfCurveElementSectionDefinition & Assign (const StepElement_Array1OfCurveElementSectionDefinition & Other);
-		%feature("compactdefaultargs") operator =;
-		%feature("autodoc", "	:param Other:
-	:type Other: StepElement_Array1OfCurveElementSectionDefinition &
-	:rtype: StepElement_Array1OfCurveElementSectionDefinition
-") operator =;
-		const StepElement_Array1OfCurveElementSectionDefinition & operator = (const StepElement_Array1OfCurveElementSectionDefinition & Other);
-		%feature("compactdefaultargs") Length;
-		%feature("autodoc", "	:rtype: int
-") Length;
-		Standard_Integer Length ();
-		%feature("compactdefaultargs") Lower;
-		%feature("autodoc", "	:rtype: int
-") Lower;
-		Standard_Integer Lower ();
-		%feature("compactdefaultargs") Upper;
-		%feature("autodoc", "	:rtype: int
-") Upper;
-		Standard_Integer Upper ();
-		%feature("compactdefaultargs") SetValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param Value:
-	:type Value: Handle_StepElement_CurveElementSectionDefinition &
-	:rtype: None
-") SetValue;
-		void SetValue (const Standard_Integer Index,const Handle_StepElement_CurveElementSectionDefinition & Value);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: Handle_StepElement_CurveElementSectionDefinition
-") Value;
-		Handle_StepElement_CurveElementSectionDefinition Value (const Standard_Integer Index);
-		%feature("compactdefaultargs") ChangeValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: Handle_StepElement_CurveElementSectionDefinition
-") ChangeValue;
-		Handle_StepElement_CurveElementSectionDefinition ChangeValue (const Standard_Integer Index);
-};
-
-
-%extend StepElement_Array1OfCurveElementSectionDefinition {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor StepElement_Array1OfHSequenceOfCurveElementPurposeMember;
-class StepElement_Array1OfHSequenceOfCurveElementPurposeMember {
-	public:
-		%feature("compactdefaultargs") StepElement_Array1OfHSequenceOfCurveElementPurposeMember;
-		%feature("autodoc", "	:param Low:
-	:type Low: int
-	:param Up:
-	:type Up: int
-	:rtype: None
-") StepElement_Array1OfHSequenceOfCurveElementPurposeMember;
-		 StepElement_Array1OfHSequenceOfCurveElementPurposeMember (const Standard_Integer Low,const Standard_Integer Up);
-		%feature("compactdefaultargs") StepElement_Array1OfHSequenceOfCurveElementPurposeMember;
-		%feature("autodoc", "	:param Item:
-	:type Item: Handle_StepElement_HSequenceOfCurveElementPurposeMember &
-	:param Low:
-	:type Low: int
-	:param Up:
-	:type Up: int
-	:rtype: None
-") StepElement_Array1OfHSequenceOfCurveElementPurposeMember;
-		 StepElement_Array1OfHSequenceOfCurveElementPurposeMember (const Handle_StepElement_HSequenceOfCurveElementPurposeMember & Item,const Standard_Integer Low,const Standard_Integer Up);
-		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	:param V:
-	:type V: Handle_StepElement_HSequenceOfCurveElementPurposeMember &
-	:rtype: None
-") Init;
-		void Init (const Handle_StepElement_HSequenceOfCurveElementPurposeMember & V);
-		%feature("compactdefaultargs") Destroy;
-		%feature("autodoc", "	:rtype: None
-") Destroy;
-		void Destroy ();
-		%feature("compactdefaultargs") IsAllocated;
-		%feature("autodoc", "	:rtype: bool
-") IsAllocated;
-		Standard_Boolean IsAllocated ();
-		%feature("compactdefaultargs") Assign;
-		%feature("autodoc", "	:param Other:
-	:type Other: StepElement_Array1OfHSequenceOfCurveElementPurposeMember &
-	:rtype: StepElement_Array1OfHSequenceOfCurveElementPurposeMember
-") Assign;
-		const StepElement_Array1OfHSequenceOfCurveElementPurposeMember & Assign (const StepElement_Array1OfHSequenceOfCurveElementPurposeMember & Other);
-		%feature("compactdefaultargs") operator =;
-		%feature("autodoc", "	:param Other:
-	:type Other: StepElement_Array1OfHSequenceOfCurveElementPurposeMember &
-	:rtype: StepElement_Array1OfHSequenceOfCurveElementPurposeMember
-") operator =;
-		const StepElement_Array1OfHSequenceOfCurveElementPurposeMember & operator = (const StepElement_Array1OfHSequenceOfCurveElementPurposeMember & Other);
-		%feature("compactdefaultargs") Length;
-		%feature("autodoc", "	:rtype: int
-") Length;
-		Standard_Integer Length ();
-		%feature("compactdefaultargs") Lower;
-		%feature("autodoc", "	:rtype: int
-") Lower;
-		Standard_Integer Lower ();
-		%feature("compactdefaultargs") Upper;
-		%feature("autodoc", "	:rtype: int
-") Upper;
-		Standard_Integer Upper ();
-		%feature("compactdefaultargs") SetValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param Value:
-	:type Value: Handle_StepElement_HSequenceOfCurveElementPurposeMember &
-	:rtype: None
-") SetValue;
-		void SetValue (const Standard_Integer Index,const Handle_StepElement_HSequenceOfCurveElementPurposeMember & Value);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: Handle_StepElement_HSequenceOfCurveElementPurposeMember
-") Value;
-		Handle_StepElement_HSequenceOfCurveElementPurposeMember Value (const Standard_Integer Index);
-		%feature("compactdefaultargs") ChangeValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: Handle_StepElement_HSequenceOfCurveElementPurposeMember
-") ChangeValue;
-		Handle_StepElement_HSequenceOfCurveElementPurposeMember ChangeValue (const Standard_Integer Index);
-};
-
-
-%extend StepElement_Array1OfHSequenceOfCurveElementPurposeMember {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor StepElement_Array1OfHSequenceOfSurfaceElementPurposeMember;
-class StepElement_Array1OfHSequenceOfSurfaceElementPurposeMember {
-	public:
-		%feature("compactdefaultargs") StepElement_Array1OfHSequenceOfSurfaceElementPurposeMember;
-		%feature("autodoc", "	:param Low:
-	:type Low: int
-	:param Up:
-	:type Up: int
-	:rtype: None
-") StepElement_Array1OfHSequenceOfSurfaceElementPurposeMember;
-		 StepElement_Array1OfHSequenceOfSurfaceElementPurposeMember (const Standard_Integer Low,const Standard_Integer Up);
-		%feature("compactdefaultargs") StepElement_Array1OfHSequenceOfSurfaceElementPurposeMember;
-		%feature("autodoc", "	:param Item:
-	:type Item: Handle_StepElement_HSequenceOfSurfaceElementPurposeMember &
-	:param Low:
-	:type Low: int
-	:param Up:
-	:type Up: int
-	:rtype: None
-") StepElement_Array1OfHSequenceOfSurfaceElementPurposeMember;
-		 StepElement_Array1OfHSequenceOfSurfaceElementPurposeMember (const Handle_StepElement_HSequenceOfSurfaceElementPurposeMember & Item,const Standard_Integer Low,const Standard_Integer Up);
-		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	:param V:
-	:type V: Handle_StepElement_HSequenceOfSurfaceElementPurposeMember &
-	:rtype: None
-") Init;
-		void Init (const Handle_StepElement_HSequenceOfSurfaceElementPurposeMember & V);
-		%feature("compactdefaultargs") Destroy;
-		%feature("autodoc", "	:rtype: None
-") Destroy;
-		void Destroy ();
-		%feature("compactdefaultargs") IsAllocated;
-		%feature("autodoc", "	:rtype: bool
-") IsAllocated;
-		Standard_Boolean IsAllocated ();
-		%feature("compactdefaultargs") Assign;
-		%feature("autodoc", "	:param Other:
-	:type Other: StepElement_Array1OfHSequenceOfSurfaceElementPurposeMember &
-	:rtype: StepElement_Array1OfHSequenceOfSurfaceElementPurposeMember
-") Assign;
-		const StepElement_Array1OfHSequenceOfSurfaceElementPurposeMember & Assign (const StepElement_Array1OfHSequenceOfSurfaceElementPurposeMember & Other);
-		%feature("compactdefaultargs") operator =;
-		%feature("autodoc", "	:param Other:
-	:type Other: StepElement_Array1OfHSequenceOfSurfaceElementPurposeMember &
-	:rtype: StepElement_Array1OfHSequenceOfSurfaceElementPurposeMember
-") operator =;
-		const StepElement_Array1OfHSequenceOfSurfaceElementPurposeMember & operator = (const StepElement_Array1OfHSequenceOfSurfaceElementPurposeMember & Other);
-		%feature("compactdefaultargs") Length;
-		%feature("autodoc", "	:rtype: int
-") Length;
-		Standard_Integer Length ();
-		%feature("compactdefaultargs") Lower;
-		%feature("autodoc", "	:rtype: int
-") Lower;
-		Standard_Integer Lower ();
-		%feature("compactdefaultargs") Upper;
-		%feature("autodoc", "	:rtype: int
-") Upper;
-		Standard_Integer Upper ();
-		%feature("compactdefaultargs") SetValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param Value:
-	:type Value: Handle_StepElement_HSequenceOfSurfaceElementPurposeMember &
-	:rtype: None
-") SetValue;
-		void SetValue (const Standard_Integer Index,const Handle_StepElement_HSequenceOfSurfaceElementPurposeMember & Value);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: Handle_StepElement_HSequenceOfSurfaceElementPurposeMember
-") Value;
-		Handle_StepElement_HSequenceOfSurfaceElementPurposeMember Value (const Standard_Integer Index);
-		%feature("compactdefaultargs") ChangeValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: Handle_StepElement_HSequenceOfSurfaceElementPurposeMember
-") ChangeValue;
-		Handle_StepElement_HSequenceOfSurfaceElementPurposeMember ChangeValue (const Standard_Integer Index);
-};
-
-
-%extend StepElement_Array1OfHSequenceOfSurfaceElementPurposeMember {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor StepElement_Array1OfMeasureOrUnspecifiedValue;
-class StepElement_Array1OfMeasureOrUnspecifiedValue {
-	public:
-		%feature("compactdefaultargs") StepElement_Array1OfMeasureOrUnspecifiedValue;
-		%feature("autodoc", "	:param Low:
-	:type Low: int
-	:param Up:
-	:type Up: int
-	:rtype: None
-") StepElement_Array1OfMeasureOrUnspecifiedValue;
-		 StepElement_Array1OfMeasureOrUnspecifiedValue (const Standard_Integer Low,const Standard_Integer Up);
-		%feature("compactdefaultargs") StepElement_Array1OfMeasureOrUnspecifiedValue;
-		%feature("autodoc", "	:param Item:
-	:type Item: StepElement_MeasureOrUnspecifiedValue &
-	:param Low:
-	:type Low: int
-	:param Up:
-	:type Up: int
-	:rtype: None
-") StepElement_Array1OfMeasureOrUnspecifiedValue;
-		 StepElement_Array1OfMeasureOrUnspecifiedValue (const StepElement_MeasureOrUnspecifiedValue & Item,const Standard_Integer Low,const Standard_Integer Up);
-		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	:param V:
-	:type V: StepElement_MeasureOrUnspecifiedValue &
-	:rtype: None
-") Init;
-		void Init (const StepElement_MeasureOrUnspecifiedValue & V);
-		%feature("compactdefaultargs") Destroy;
-		%feature("autodoc", "	:rtype: None
-") Destroy;
-		void Destroy ();
-		%feature("compactdefaultargs") IsAllocated;
-		%feature("autodoc", "	:rtype: bool
-") IsAllocated;
-		Standard_Boolean IsAllocated ();
-		%feature("compactdefaultargs") Assign;
-		%feature("autodoc", "	:param Other:
-	:type Other: StepElement_Array1OfMeasureOrUnspecifiedValue &
-	:rtype: StepElement_Array1OfMeasureOrUnspecifiedValue
-") Assign;
-		const StepElement_Array1OfMeasureOrUnspecifiedValue & Assign (const StepElement_Array1OfMeasureOrUnspecifiedValue & Other);
-		%feature("compactdefaultargs") operator =;
-		%feature("autodoc", "	:param Other:
-	:type Other: StepElement_Array1OfMeasureOrUnspecifiedValue &
-	:rtype: StepElement_Array1OfMeasureOrUnspecifiedValue
-") operator =;
-		const StepElement_Array1OfMeasureOrUnspecifiedValue & operator = (const StepElement_Array1OfMeasureOrUnspecifiedValue & Other);
-		%feature("compactdefaultargs") Length;
-		%feature("autodoc", "	:rtype: int
-") Length;
-		Standard_Integer Length ();
-		%feature("compactdefaultargs") Lower;
-		%feature("autodoc", "	:rtype: int
-") Lower;
-		Standard_Integer Lower ();
-		%feature("compactdefaultargs") Upper;
-		%feature("autodoc", "	:rtype: int
-") Upper;
-		Standard_Integer Upper ();
-		%feature("compactdefaultargs") SetValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param Value:
-	:type Value: StepElement_MeasureOrUnspecifiedValue &
-	:rtype: None
-") SetValue;
-		void SetValue (const Standard_Integer Index,const StepElement_MeasureOrUnspecifiedValue & Value);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: StepElement_MeasureOrUnspecifiedValue
-") Value;
-		const StepElement_MeasureOrUnspecifiedValue & Value (const Standard_Integer Index);
-		%feature("compactdefaultargs") ChangeValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: StepElement_MeasureOrUnspecifiedValue
-") ChangeValue;
-		StepElement_MeasureOrUnspecifiedValue & ChangeValue (const Standard_Integer Index);
-};
-
-
-%extend StepElement_Array1OfMeasureOrUnspecifiedValue {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor StepElement_Array1OfSurfaceSection;
-class StepElement_Array1OfSurfaceSection {
-	public:
-		%feature("compactdefaultargs") StepElement_Array1OfSurfaceSection;
-		%feature("autodoc", "	:param Low:
-	:type Low: int
-	:param Up:
-	:type Up: int
-	:rtype: None
-") StepElement_Array1OfSurfaceSection;
-		 StepElement_Array1OfSurfaceSection (const Standard_Integer Low,const Standard_Integer Up);
-		%feature("compactdefaultargs") StepElement_Array1OfSurfaceSection;
-		%feature("autodoc", "	:param Item:
-	:type Item: Handle_StepElement_SurfaceSection &
-	:param Low:
-	:type Low: int
-	:param Up:
-	:type Up: int
-	:rtype: None
-") StepElement_Array1OfSurfaceSection;
-		 StepElement_Array1OfSurfaceSection (const Handle_StepElement_SurfaceSection & Item,const Standard_Integer Low,const Standard_Integer Up);
-		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	:param V:
-	:type V: Handle_StepElement_SurfaceSection &
-	:rtype: None
-") Init;
-		void Init (const Handle_StepElement_SurfaceSection & V);
-		%feature("compactdefaultargs") Destroy;
-		%feature("autodoc", "	:rtype: None
-") Destroy;
-		void Destroy ();
-		%feature("compactdefaultargs") IsAllocated;
-		%feature("autodoc", "	:rtype: bool
-") IsAllocated;
-		Standard_Boolean IsAllocated ();
-		%feature("compactdefaultargs") Assign;
-		%feature("autodoc", "	:param Other:
-	:type Other: StepElement_Array1OfSurfaceSection &
-	:rtype: StepElement_Array1OfSurfaceSection
-") Assign;
-		const StepElement_Array1OfSurfaceSection & Assign (const StepElement_Array1OfSurfaceSection & Other);
-		%feature("compactdefaultargs") operator =;
-		%feature("autodoc", "	:param Other:
-	:type Other: StepElement_Array1OfSurfaceSection &
-	:rtype: StepElement_Array1OfSurfaceSection
-") operator =;
-		const StepElement_Array1OfSurfaceSection & operator = (const StepElement_Array1OfSurfaceSection & Other);
-		%feature("compactdefaultargs") Length;
-		%feature("autodoc", "	:rtype: int
-") Length;
-		Standard_Integer Length ();
-		%feature("compactdefaultargs") Lower;
-		%feature("autodoc", "	:rtype: int
-") Lower;
-		Standard_Integer Lower ();
-		%feature("compactdefaultargs") Upper;
-		%feature("autodoc", "	:rtype: int
-") Upper;
-		Standard_Integer Upper ();
-		%feature("compactdefaultargs") SetValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param Value:
-	:type Value: Handle_StepElement_SurfaceSection &
-	:rtype: None
-") SetValue;
-		void SetValue (const Standard_Integer Index,const Handle_StepElement_SurfaceSection & Value);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: Handle_StepElement_SurfaceSection
-") Value;
-		Handle_StepElement_SurfaceSection Value (const Standard_Integer Index);
-		%feature("compactdefaultargs") ChangeValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: Handle_StepElement_SurfaceSection
-") ChangeValue;
-		Handle_StepElement_SurfaceSection ChangeValue (const Standard_Integer Index);
-};
-
-
-%extend StepElement_Array1OfSurfaceSection {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor StepElement_Array1OfVolumeElementPurpose;
-class StepElement_Array1OfVolumeElementPurpose {
-	public:
-		%feature("compactdefaultargs") StepElement_Array1OfVolumeElementPurpose;
-		%feature("autodoc", "	:param Low:
-	:type Low: int
-	:param Up:
-	:type Up: int
-	:rtype: None
-") StepElement_Array1OfVolumeElementPurpose;
-		 StepElement_Array1OfVolumeElementPurpose (const Standard_Integer Low,const Standard_Integer Up);
-		%feature("compactdefaultargs") StepElement_Array1OfVolumeElementPurpose;
-		%feature("autodoc", "	:param Item:
-	:type Item: StepElement_VolumeElementPurpose &
-	:param Low:
-	:type Low: int
-	:param Up:
-	:type Up: int
-	:rtype: None
-") StepElement_Array1OfVolumeElementPurpose;
-		 StepElement_Array1OfVolumeElementPurpose (const StepElement_VolumeElementPurpose & Item,const Standard_Integer Low,const Standard_Integer Up);
-		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	:param V:
-	:type V: StepElement_VolumeElementPurpose &
-	:rtype: None
-") Init;
-		void Init (const StepElement_VolumeElementPurpose & V);
-		%feature("compactdefaultargs") Destroy;
-		%feature("autodoc", "	:rtype: None
-") Destroy;
-		void Destroy ();
-		%feature("compactdefaultargs") IsAllocated;
-		%feature("autodoc", "	:rtype: bool
-") IsAllocated;
-		Standard_Boolean IsAllocated ();
-		%feature("compactdefaultargs") Assign;
-		%feature("autodoc", "	:param Other:
-	:type Other: StepElement_Array1OfVolumeElementPurpose &
-	:rtype: StepElement_Array1OfVolumeElementPurpose
-") Assign;
-		const StepElement_Array1OfVolumeElementPurpose & Assign (const StepElement_Array1OfVolumeElementPurpose & Other);
-		%feature("compactdefaultargs") operator =;
-		%feature("autodoc", "	:param Other:
-	:type Other: StepElement_Array1OfVolumeElementPurpose &
-	:rtype: StepElement_Array1OfVolumeElementPurpose
-") operator =;
-		const StepElement_Array1OfVolumeElementPurpose & operator = (const StepElement_Array1OfVolumeElementPurpose & Other);
-		%feature("compactdefaultargs") Length;
-		%feature("autodoc", "	:rtype: int
-") Length;
-		Standard_Integer Length ();
-		%feature("compactdefaultargs") Lower;
-		%feature("autodoc", "	:rtype: int
-") Lower;
-		Standard_Integer Lower ();
-		%feature("compactdefaultargs") Upper;
-		%feature("autodoc", "	:rtype: int
-") Upper;
-		Standard_Integer Upper ();
-		%feature("compactdefaultargs") SetValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param Value:
-	:type Value: StepElement_VolumeElementPurpose &
-	:rtype: None
-") SetValue;
-		void SetValue (const Standard_Integer Index,const StepElement_VolumeElementPurpose & Value);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: StepElement_VolumeElementPurpose
-") Value;
-		const StepElement_VolumeElementPurpose & Value (const Standard_Integer Index);
-		%feature("compactdefaultargs") ChangeValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: StepElement_VolumeElementPurpose
-") ChangeValue;
-		StepElement_VolumeElementPurpose & ChangeValue (const Standard_Integer Index);
-};
-
-
-%extend StepElement_Array1OfVolumeElementPurpose {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor StepElement_Array1OfVolumeElementPurposeMember;
-class StepElement_Array1OfVolumeElementPurposeMember {
-	public:
-		%feature("compactdefaultargs") StepElement_Array1OfVolumeElementPurposeMember;
-		%feature("autodoc", "	:param Low:
-	:type Low: int
-	:param Up:
-	:type Up: int
-	:rtype: None
-") StepElement_Array1OfVolumeElementPurposeMember;
-		 StepElement_Array1OfVolumeElementPurposeMember (const Standard_Integer Low,const Standard_Integer Up);
-		%feature("compactdefaultargs") StepElement_Array1OfVolumeElementPurposeMember;
-		%feature("autodoc", "	:param Item:
-	:type Item: Handle_StepElement_VolumeElementPurposeMember &
-	:param Low:
-	:type Low: int
-	:param Up:
-	:type Up: int
-	:rtype: None
-") StepElement_Array1OfVolumeElementPurposeMember;
-		 StepElement_Array1OfVolumeElementPurposeMember (const Handle_StepElement_VolumeElementPurposeMember & Item,const Standard_Integer Low,const Standard_Integer Up);
-		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	:param V:
-	:type V: Handle_StepElement_VolumeElementPurposeMember &
-	:rtype: None
-") Init;
-		void Init (const Handle_StepElement_VolumeElementPurposeMember & V);
-		%feature("compactdefaultargs") Destroy;
-		%feature("autodoc", "	:rtype: None
-") Destroy;
-		void Destroy ();
-		%feature("compactdefaultargs") IsAllocated;
-		%feature("autodoc", "	:rtype: bool
-") IsAllocated;
-		Standard_Boolean IsAllocated ();
-		%feature("compactdefaultargs") Assign;
-		%feature("autodoc", "	:param Other:
-	:type Other: StepElement_Array1OfVolumeElementPurposeMember &
-	:rtype: StepElement_Array1OfVolumeElementPurposeMember
-") Assign;
-		const StepElement_Array1OfVolumeElementPurposeMember & Assign (const StepElement_Array1OfVolumeElementPurposeMember & Other);
-		%feature("compactdefaultargs") operator =;
-		%feature("autodoc", "	:param Other:
-	:type Other: StepElement_Array1OfVolumeElementPurposeMember &
-	:rtype: StepElement_Array1OfVolumeElementPurposeMember
-") operator =;
-		const StepElement_Array1OfVolumeElementPurposeMember & operator = (const StepElement_Array1OfVolumeElementPurposeMember & Other);
-		%feature("compactdefaultargs") Length;
-		%feature("autodoc", "	:rtype: int
-") Length;
-		Standard_Integer Length ();
-		%feature("compactdefaultargs") Lower;
-		%feature("autodoc", "	:rtype: int
-") Lower;
-		Standard_Integer Lower ();
-		%feature("compactdefaultargs") Upper;
-		%feature("autodoc", "	:rtype: int
-") Upper;
-		Standard_Integer Upper ();
-		%feature("compactdefaultargs") SetValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param Value:
-	:type Value: Handle_StepElement_VolumeElementPurposeMember &
-	:rtype: None
-") SetValue;
-		void SetValue (const Standard_Integer Index,const Handle_StepElement_VolumeElementPurposeMember & Value);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: Handle_StepElement_VolumeElementPurposeMember
-") Value;
-		Handle_StepElement_VolumeElementPurposeMember Value (const Standard_Integer Index);
-		%feature("compactdefaultargs") ChangeValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: Handle_StepElement_VolumeElementPurposeMember
-") ChangeValue;
-		Handle_StepElement_VolumeElementPurposeMember ChangeValue (const Standard_Integer Index);
-};
-
-
-%extend StepElement_Array1OfVolumeElementPurposeMember {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor StepElement_Array2OfCurveElementPurposeMember;
-class StepElement_Array2OfCurveElementPurposeMember {
-	public:
-		%feature("compactdefaultargs") StepElement_Array2OfCurveElementPurposeMember;
-		%feature("autodoc", "	:param R1:
-	:type R1: int
-	:param R2:
-	:type R2: int
-	:param C1:
-	:type C1: int
-	:param C2:
-	:type C2: int
-	:rtype: None
-") StepElement_Array2OfCurveElementPurposeMember;
-		 StepElement_Array2OfCurveElementPurposeMember (const Standard_Integer R1,const Standard_Integer R2,const Standard_Integer C1,const Standard_Integer C2);
-		%feature("compactdefaultargs") StepElement_Array2OfCurveElementPurposeMember;
-		%feature("autodoc", "	:param Item:
-	:type Item: Handle_StepElement_CurveElementPurposeMember &
-	:param R1:
-	:type R1: int
-	:param R2:
-	:type R2: int
-	:param C1:
-	:type C1: int
-	:param C2:
-	:type C2: int
-	:rtype: None
-") StepElement_Array2OfCurveElementPurposeMember;
-		 StepElement_Array2OfCurveElementPurposeMember (const Handle_StepElement_CurveElementPurposeMember & Item,const Standard_Integer R1,const Standard_Integer R2,const Standard_Integer C1,const Standard_Integer C2);
-		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	:param V:
-	:type V: Handle_StepElement_CurveElementPurposeMember &
-	:rtype: None
-") Init;
-		void Init (const Handle_StepElement_CurveElementPurposeMember & V);
-		%feature("compactdefaultargs") Destroy;
-		%feature("autodoc", "	:rtype: None
-") Destroy;
-		void Destroy ();
-		%feature("compactdefaultargs") Assign;
-		%feature("autodoc", "	:param Other:
-	:type Other: StepElement_Array2OfCurveElementPurposeMember &
-	:rtype: StepElement_Array2OfCurveElementPurposeMember
-") Assign;
-		const StepElement_Array2OfCurveElementPurposeMember & Assign (const StepElement_Array2OfCurveElementPurposeMember & Other);
-		%feature("compactdefaultargs") operator =;
-		%feature("autodoc", "	:param Other:
-	:type Other: StepElement_Array2OfCurveElementPurposeMember &
-	:rtype: StepElement_Array2OfCurveElementPurposeMember
-") operator =;
-		const StepElement_Array2OfCurveElementPurposeMember & operator = (const StepElement_Array2OfCurveElementPurposeMember & Other);
-		%feature("compactdefaultargs") ColLength;
-		%feature("autodoc", "	:rtype: int
-") ColLength;
-		Standard_Integer ColLength ();
-		%feature("compactdefaultargs") RowLength;
-		%feature("autodoc", "	:rtype: int
-") RowLength;
-		Standard_Integer RowLength ();
-		%feature("compactdefaultargs") LowerCol;
-		%feature("autodoc", "	:rtype: int
-") LowerCol;
-		Standard_Integer LowerCol ();
-		%feature("compactdefaultargs") LowerRow;
-		%feature("autodoc", "	:rtype: int
-") LowerRow;
-		Standard_Integer LowerRow ();
-		%feature("compactdefaultargs") UpperCol;
-		%feature("autodoc", "	:rtype: int
-") UpperCol;
-		Standard_Integer UpperCol ();
-		%feature("compactdefaultargs") UpperRow;
-		%feature("autodoc", "	:rtype: int
-") UpperRow;
-		Standard_Integer UpperRow ();
-		%feature("compactdefaultargs") SetValue;
-		%feature("autodoc", "	:param Row:
-	:type Row: int
-	:param Col:
-	:type Col: int
-	:param Value:
-	:type Value: Handle_StepElement_CurveElementPurposeMember &
-	:rtype: None
-") SetValue;
-		void SetValue (const Standard_Integer Row,const Standard_Integer Col,const Handle_StepElement_CurveElementPurposeMember & Value);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:param Row:
-	:type Row: int
-	:param Col:
-	:type Col: int
-	:rtype: Handle_StepElement_CurveElementPurposeMember
-") Value;
-		Handle_StepElement_CurveElementPurposeMember Value (const Standard_Integer Row,const Standard_Integer Col);
-		%feature("compactdefaultargs") ChangeValue;
-		%feature("autodoc", "	:param Row:
-	:type Row: int
-	:param Col:
-	:type Col: int
-	:rtype: Handle_StepElement_CurveElementPurposeMember
-") ChangeValue;
-		Handle_StepElement_CurveElementPurposeMember ChangeValue (const Standard_Integer Row,const Standard_Integer Col);
-};
-
-
-%extend StepElement_Array2OfCurveElementPurposeMember {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor StepElement_Array2OfSurfaceElementPurpose;
-class StepElement_Array2OfSurfaceElementPurpose {
-	public:
-		%feature("compactdefaultargs") StepElement_Array2OfSurfaceElementPurpose;
-		%feature("autodoc", "	:param R1:
-	:type R1: int
-	:param R2:
-	:type R2: int
-	:param C1:
-	:type C1: int
-	:param C2:
-	:type C2: int
-	:rtype: None
-") StepElement_Array2OfSurfaceElementPurpose;
-		 StepElement_Array2OfSurfaceElementPurpose (const Standard_Integer R1,const Standard_Integer R2,const Standard_Integer C1,const Standard_Integer C2);
-		%feature("compactdefaultargs") StepElement_Array2OfSurfaceElementPurpose;
-		%feature("autodoc", "	:param Item:
-	:type Item: StepElement_SurfaceElementPurpose &
-	:param R1:
-	:type R1: int
-	:param R2:
-	:type R2: int
-	:param C1:
-	:type C1: int
-	:param C2:
-	:type C2: int
-	:rtype: None
-") StepElement_Array2OfSurfaceElementPurpose;
-		 StepElement_Array2OfSurfaceElementPurpose (const StepElement_SurfaceElementPurpose & Item,const Standard_Integer R1,const Standard_Integer R2,const Standard_Integer C1,const Standard_Integer C2);
-		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	:param V:
-	:type V: StepElement_SurfaceElementPurpose &
-	:rtype: None
-") Init;
-		void Init (const StepElement_SurfaceElementPurpose & V);
-		%feature("compactdefaultargs") Destroy;
-		%feature("autodoc", "	:rtype: None
-") Destroy;
-		void Destroy ();
-		%feature("compactdefaultargs") Assign;
-		%feature("autodoc", "	:param Other:
-	:type Other: StepElement_Array2OfSurfaceElementPurpose &
-	:rtype: StepElement_Array2OfSurfaceElementPurpose
-") Assign;
-		const StepElement_Array2OfSurfaceElementPurpose & Assign (const StepElement_Array2OfSurfaceElementPurpose & Other);
-		%feature("compactdefaultargs") operator =;
-		%feature("autodoc", "	:param Other:
-	:type Other: StepElement_Array2OfSurfaceElementPurpose &
-	:rtype: StepElement_Array2OfSurfaceElementPurpose
-") operator =;
-		const StepElement_Array2OfSurfaceElementPurpose & operator = (const StepElement_Array2OfSurfaceElementPurpose & Other);
-		%feature("compactdefaultargs") ColLength;
-		%feature("autodoc", "	:rtype: int
-") ColLength;
-		Standard_Integer ColLength ();
-		%feature("compactdefaultargs") RowLength;
-		%feature("autodoc", "	:rtype: int
-") RowLength;
-		Standard_Integer RowLength ();
-		%feature("compactdefaultargs") LowerCol;
-		%feature("autodoc", "	:rtype: int
-") LowerCol;
-		Standard_Integer LowerCol ();
-		%feature("compactdefaultargs") LowerRow;
-		%feature("autodoc", "	:rtype: int
-") LowerRow;
-		Standard_Integer LowerRow ();
-		%feature("compactdefaultargs") UpperCol;
-		%feature("autodoc", "	:rtype: int
-") UpperCol;
-		Standard_Integer UpperCol ();
-		%feature("compactdefaultargs") UpperRow;
-		%feature("autodoc", "	:rtype: int
-") UpperRow;
-		Standard_Integer UpperRow ();
-		%feature("compactdefaultargs") SetValue;
-		%feature("autodoc", "	:param Row:
-	:type Row: int
-	:param Col:
-	:type Col: int
-	:param Value:
-	:type Value: StepElement_SurfaceElementPurpose &
-	:rtype: None
-") SetValue;
-		void SetValue (const Standard_Integer Row,const Standard_Integer Col,const StepElement_SurfaceElementPurpose & Value);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:param Row:
-	:type Row: int
-	:param Col:
-	:type Col: int
-	:rtype: StepElement_SurfaceElementPurpose
-") Value;
-		const StepElement_SurfaceElementPurpose & Value (const Standard_Integer Row,const Standard_Integer Col);
-		%feature("compactdefaultargs") ChangeValue;
-		%feature("autodoc", "	:param Row:
-	:type Row: int
-	:param Col:
-	:type Col: int
-	:rtype: StepElement_SurfaceElementPurpose
-") ChangeValue;
-		StepElement_SurfaceElementPurpose & ChangeValue (const Standard_Integer Row,const Standard_Integer Col);
-};
-
-
-%extend StepElement_Array2OfSurfaceElementPurpose {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor StepElement_Array2OfSurfaceElementPurposeMember;
-class StepElement_Array2OfSurfaceElementPurposeMember {
-	public:
-		%feature("compactdefaultargs") StepElement_Array2OfSurfaceElementPurposeMember;
-		%feature("autodoc", "	:param R1:
-	:type R1: int
-	:param R2:
-	:type R2: int
-	:param C1:
-	:type C1: int
-	:param C2:
-	:type C2: int
-	:rtype: None
-") StepElement_Array2OfSurfaceElementPurposeMember;
-		 StepElement_Array2OfSurfaceElementPurposeMember (const Standard_Integer R1,const Standard_Integer R2,const Standard_Integer C1,const Standard_Integer C2);
-		%feature("compactdefaultargs") StepElement_Array2OfSurfaceElementPurposeMember;
-		%feature("autodoc", "	:param Item:
-	:type Item: Handle_StepElement_SurfaceElementPurposeMember &
-	:param R1:
-	:type R1: int
-	:param R2:
-	:type R2: int
-	:param C1:
-	:type C1: int
-	:param C2:
-	:type C2: int
-	:rtype: None
-") StepElement_Array2OfSurfaceElementPurposeMember;
-		 StepElement_Array2OfSurfaceElementPurposeMember (const Handle_StepElement_SurfaceElementPurposeMember & Item,const Standard_Integer R1,const Standard_Integer R2,const Standard_Integer C1,const Standard_Integer C2);
-		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	:param V:
-	:type V: Handle_StepElement_SurfaceElementPurposeMember &
-	:rtype: None
-") Init;
-		void Init (const Handle_StepElement_SurfaceElementPurposeMember & V);
-		%feature("compactdefaultargs") Destroy;
-		%feature("autodoc", "	:rtype: None
-") Destroy;
-		void Destroy ();
-		%feature("compactdefaultargs") Assign;
-		%feature("autodoc", "	:param Other:
-	:type Other: StepElement_Array2OfSurfaceElementPurposeMember &
-	:rtype: StepElement_Array2OfSurfaceElementPurposeMember
-") Assign;
-		const StepElement_Array2OfSurfaceElementPurposeMember & Assign (const StepElement_Array2OfSurfaceElementPurposeMember & Other);
-		%feature("compactdefaultargs") operator =;
-		%feature("autodoc", "	:param Other:
-	:type Other: StepElement_Array2OfSurfaceElementPurposeMember &
-	:rtype: StepElement_Array2OfSurfaceElementPurposeMember
-") operator =;
-		const StepElement_Array2OfSurfaceElementPurposeMember & operator = (const StepElement_Array2OfSurfaceElementPurposeMember & Other);
-		%feature("compactdefaultargs") ColLength;
-		%feature("autodoc", "	:rtype: int
-") ColLength;
-		Standard_Integer ColLength ();
-		%feature("compactdefaultargs") RowLength;
-		%feature("autodoc", "	:rtype: int
-") RowLength;
-		Standard_Integer RowLength ();
-		%feature("compactdefaultargs") LowerCol;
-		%feature("autodoc", "	:rtype: int
-") LowerCol;
-		Standard_Integer LowerCol ();
-		%feature("compactdefaultargs") LowerRow;
-		%feature("autodoc", "	:rtype: int
-") LowerRow;
-		Standard_Integer LowerRow ();
-		%feature("compactdefaultargs") UpperCol;
-		%feature("autodoc", "	:rtype: int
-") UpperCol;
-		Standard_Integer UpperCol ();
-		%feature("compactdefaultargs") UpperRow;
-		%feature("autodoc", "	:rtype: int
-") UpperRow;
-		Standard_Integer UpperRow ();
-		%feature("compactdefaultargs") SetValue;
-		%feature("autodoc", "	:param Row:
-	:type Row: int
-	:param Col:
-	:type Col: int
-	:param Value:
-	:type Value: Handle_StepElement_SurfaceElementPurposeMember &
-	:rtype: None
-") SetValue;
-		void SetValue (const Standard_Integer Row,const Standard_Integer Col,const Handle_StepElement_SurfaceElementPurposeMember & Value);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:param Row:
-	:type Row: int
-	:param Col:
-	:type Col: int
-	:rtype: Handle_StepElement_SurfaceElementPurposeMember
-") Value;
-		Handle_StepElement_SurfaceElementPurposeMember Value (const Standard_Integer Row,const Standard_Integer Col);
-		%feature("compactdefaultargs") ChangeValue;
-		%feature("autodoc", "	:param Row:
-	:type Row: int
-	:param Col:
-	:type Col: int
-	:rtype: Handle_StepElement_SurfaceElementPurposeMember
-") ChangeValue;
-		Handle_StepElement_SurfaceElementPurposeMember ChangeValue (const Standard_Integer Row,const Standard_Integer Col);
-};
-
-
-%extend StepElement_Array2OfSurfaceElementPurposeMember {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
 %nodefaultctor StepElement_CurveElementEndReleasePacket;
-class StepElement_CurveElementEndReleasePacket : public MMgt_TShared {
+class StepElement_CurveElementEndReleasePacket : public Standard_Transient {
 	public:
 		%feature("compactdefaultargs") StepElement_CurveElementEndReleasePacket;
 		%feature("autodoc", "	* Empty constructor
@@ -1288,7 +284,7 @@ class StepElement_CurveElementEndReleasePacket : public MMgt_TShared {
 ") StepElement_CurveElementEndReleasePacket;
 		 StepElement_CurveElementEndReleasePacket ();
 		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	* Initialize all fields (own and inherited)
+		%feature("autodoc", "	* Initialize all fields --own and inherited--
 
 	:param aReleaseFreedom:
 	:type aReleaseFreedom: StepElement_CurveElementFreedom &
@@ -1347,7 +343,7 @@ class StepElement_CurveElementEndReleasePacket : public MMgt_TShared {
 %}
 
 %nodefaultctor Handle_StepElement_CurveElementEndReleasePacket;
-class Handle_StepElement_CurveElementEndReleasePacket : public Handle_MMgt_TShared {
+class Handle_StepElement_CurveElementEndReleasePacket : public Handle_Standard_Transient {
 
     public:
         // constructors
@@ -1359,19 +355,20 @@ class Handle_StepElement_CurveElementEndReleasePacket : public Handle_MMgt_TShar
         static const Handle_StepElement_CurveElementEndReleasePacket DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_StepElement_CurveElementEndReleasePacket {
     StepElement_CurveElementEndReleasePacket* _get_reference() {
-    return (StepElement_CurveElementEndReleasePacket*)$self->Access();
+    return (StepElement_CurveElementEndReleasePacket*)$self->get();
     }
 };
 
 %extend Handle_StepElement_CurveElementEndReleasePacket {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend StepElement_CurveElementEndReleasePacket {
@@ -1419,7 +416,7 @@ class StepElement_CurveElementFreedom : public StepData_SelectType {
 ") SetEnumeratedCurveElementFreedom;
 		void SetEnumeratedCurveElementFreedom (const StepElement_EnumeratedCurveElementFreedom aVal);
 		%feature("compactdefaultargs") EnumeratedCurveElementFreedom;
-		%feature("autodoc", "	* Returns Value as EnumeratedCurveElementFreedom (or Null if another type)
+		%feature("autodoc", "	* Returns Value as EnumeratedCurveElementFreedom --or Null if another type--
 
 	:rtype: StepElement_EnumeratedCurveElementFreedom
 ") EnumeratedCurveElementFreedom;
@@ -1433,7 +430,7 @@ class StepElement_CurveElementFreedom : public StepData_SelectType {
 ") SetApplicationDefinedDegreeOfFreedom;
 		void SetApplicationDefinedDegreeOfFreedom (const Handle_TCollection_HAsciiString & aVal);
 		%feature("compactdefaultargs") ApplicationDefinedDegreeOfFreedom;
-		%feature("autodoc", "	* Returns Value as ApplicationDefinedDegreeOfFreedom (or Null if another type)
+		%feature("autodoc", "	* Returns Value as ApplicationDefinedDegreeOfFreedom --or Null if another type--
 
 	:rtype: Handle_TCollection_HAsciiString
 ") ApplicationDefinedDegreeOfFreedom;
@@ -1517,19 +514,20 @@ class Handle_StepElement_CurveElementFreedomMember : public Handle_StepData_Sele
         static const Handle_StepElement_CurveElementFreedomMember DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_StepElement_CurveElementFreedomMember {
     StepElement_CurveElementFreedomMember* _get_reference() {
-    return (StepElement_CurveElementFreedomMember*)$self->Access();
+    return (StepElement_CurveElementFreedomMember*)$self->get();
     }
 };
 
 %extend Handle_StepElement_CurveElementFreedomMember {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend StepElement_CurveElementFreedomMember {
@@ -1577,7 +575,7 @@ class StepElement_CurveElementPurpose : public StepData_SelectType {
 ") SetEnumeratedCurveElementPurpose;
 		void SetEnumeratedCurveElementPurpose (const StepElement_EnumeratedCurveElementPurpose aVal);
 		%feature("compactdefaultargs") EnumeratedCurveElementPurpose;
-		%feature("autodoc", "	* Returns Value as EnumeratedCurveElementPurpose (or Null if another type)
+		%feature("autodoc", "	* Returns Value as EnumeratedCurveElementPurpose --or Null if another type--
 
 	:rtype: StepElement_EnumeratedCurveElementPurpose
 ") EnumeratedCurveElementPurpose;
@@ -1591,7 +589,7 @@ class StepElement_CurveElementPurpose : public StepData_SelectType {
 ") SetApplicationDefinedElementPurpose;
 		void SetApplicationDefinedElementPurpose (const Handle_TCollection_HAsciiString & aVal);
 		%feature("compactdefaultargs") ApplicationDefinedElementPurpose;
-		%feature("autodoc", "	* Returns Value as ApplicationDefinedElementPurpose (or Null if another type)
+		%feature("autodoc", "	* Returns Value as ApplicationDefinedElementPurpose --or Null if another type--
 
 	:rtype: Handle_TCollection_HAsciiString
 ") ApplicationDefinedElementPurpose;
@@ -1675,19 +673,20 @@ class Handle_StepElement_CurveElementPurposeMember : public Handle_StepData_Sele
         static const Handle_StepElement_CurveElementPurposeMember DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_StepElement_CurveElementPurposeMember {
     StepElement_CurveElementPurposeMember* _get_reference() {
-    return (StepElement_CurveElementPurposeMember*)$self->Access();
+    return (StepElement_CurveElementPurposeMember*)$self->get();
     }
 };
 
 %extend Handle_StepElement_CurveElementPurposeMember {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend StepElement_CurveElementPurposeMember {
@@ -1696,7 +695,7 @@ class Handle_StepElement_CurveElementPurposeMember : public Handle_StepData_Sele
 	}
 };
 %nodefaultctor StepElement_CurveElementSectionDefinition;
-class StepElement_CurveElementSectionDefinition : public MMgt_TShared {
+class StepElement_CurveElementSectionDefinition : public Standard_Transient {
 	public:
 		%feature("compactdefaultargs") StepElement_CurveElementSectionDefinition;
 		%feature("autodoc", "	* Empty constructor
@@ -1705,7 +704,7 @@ class StepElement_CurveElementSectionDefinition : public MMgt_TShared {
 ") StepElement_CurveElementSectionDefinition;
 		 StepElement_CurveElementSectionDefinition ();
 		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	* Initialize all fields (own and inherited)
+		%feature("autodoc", "	* Initialize all fields --own and inherited--
 
 	:param aDescription:
 	:type aDescription: Handle_TCollection_HAsciiString &
@@ -1764,7 +763,7 @@ class StepElement_CurveElementSectionDefinition : public MMgt_TShared {
 %}
 
 %nodefaultctor Handle_StepElement_CurveElementSectionDefinition;
-class Handle_StepElement_CurveElementSectionDefinition : public Handle_MMgt_TShared {
+class Handle_StepElement_CurveElementSectionDefinition : public Handle_Standard_Transient {
 
     public:
         // constructors
@@ -1776,19 +775,20 @@ class Handle_StepElement_CurveElementSectionDefinition : public Handle_MMgt_TSha
         static const Handle_StepElement_CurveElementSectionDefinition DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_StepElement_CurveElementSectionDefinition {
     StepElement_CurveElementSectionDefinition* _get_reference() {
-    return (StepElement_CurveElementSectionDefinition*)$self->Access();
+    return (StepElement_CurveElementSectionDefinition*)$self->get();
     }
 };
 
 %extend Handle_StepElement_CurveElementSectionDefinition {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend StepElement_CurveElementSectionDefinition {
@@ -1836,7 +836,7 @@ class StepElement_ElementAspect : public StepData_SelectType {
 ") SetElementVolume;
 		void SetElementVolume (const StepElement_ElementVolume aVal);
 		%feature("compactdefaultargs") ElementVolume;
-		%feature("autodoc", "	* Returns Value as ElementVolume (or Null if another type)
+		%feature("autodoc", "	* Returns Value as ElementVolume --or Null if another type--
 
 	:rtype: StepElement_ElementVolume
 ") ElementVolume;
@@ -1850,7 +850,7 @@ class StepElement_ElementAspect : public StepData_SelectType {
 ") SetVolume3dFace;
 		void SetVolume3dFace (const Standard_Integer aVal);
 		%feature("compactdefaultargs") Volume3dFace;
-		%feature("autodoc", "	* Returns Value as Volume3dFace (or Null if another type)
+		%feature("autodoc", "	* Returns Value as Volume3dFace --or Null if another type--
 
 	:rtype: int
 ") Volume3dFace;
@@ -1864,7 +864,7 @@ class StepElement_ElementAspect : public StepData_SelectType {
 ") SetVolume2dFace;
 		void SetVolume2dFace (const Standard_Integer aVal);
 		%feature("compactdefaultargs") Volume2dFace;
-		%feature("autodoc", "	* Returns Value as Volume2dFace (or Null if another type)
+		%feature("autodoc", "	* Returns Value as Volume2dFace --or Null if another type--
 
 	:rtype: int
 ") Volume2dFace;
@@ -1878,7 +878,7 @@ class StepElement_ElementAspect : public StepData_SelectType {
 ") SetVolume3dEdge;
 		void SetVolume3dEdge (const Standard_Integer aVal);
 		%feature("compactdefaultargs") Volume3dEdge;
-		%feature("autodoc", "	* Returns Value as Volume3dEdge (or Null if another type)
+		%feature("autodoc", "	* Returns Value as Volume3dEdge --or Null if another type--
 
 	:rtype: int
 ") Volume3dEdge;
@@ -1892,7 +892,7 @@ class StepElement_ElementAspect : public StepData_SelectType {
 ") SetVolume2dEdge;
 		void SetVolume2dEdge (const Standard_Integer aVal);
 		%feature("compactdefaultargs") Volume2dEdge;
-		%feature("autodoc", "	* Returns Value as Volume2dEdge (or Null if another type)
+		%feature("autodoc", "	* Returns Value as Volume2dEdge --or Null if another type--
 
 	:rtype: int
 ") Volume2dEdge;
@@ -1906,7 +906,7 @@ class StepElement_ElementAspect : public StepData_SelectType {
 ") SetSurface3dFace;
 		void SetSurface3dFace (const Standard_Integer aVal);
 		%feature("compactdefaultargs") Surface3dFace;
-		%feature("autodoc", "	* Returns Value as Surface3dFace (or Null if another type)
+		%feature("autodoc", "	* Returns Value as Surface3dFace --or Null if another type--
 
 	:rtype: int
 ") Surface3dFace;
@@ -1920,7 +920,7 @@ class StepElement_ElementAspect : public StepData_SelectType {
 ") SetSurface2dFace;
 		void SetSurface2dFace (const Standard_Integer aVal);
 		%feature("compactdefaultargs") Surface2dFace;
-		%feature("autodoc", "	* Returns Value as Surface2dFace (or Null if another type)
+		%feature("autodoc", "	* Returns Value as Surface2dFace --or Null if another type--
 
 	:rtype: int
 ") Surface2dFace;
@@ -1934,7 +934,7 @@ class StepElement_ElementAspect : public StepData_SelectType {
 ") SetSurface3dEdge;
 		void SetSurface3dEdge (const Standard_Integer aVal);
 		%feature("compactdefaultargs") Surface3dEdge;
-		%feature("autodoc", "	* Returns Value as Surface3dEdge (or Null if another type)
+		%feature("autodoc", "	* Returns Value as Surface3dEdge --or Null if another type--
 
 	:rtype: int
 ") Surface3dEdge;
@@ -1948,7 +948,7 @@ class StepElement_ElementAspect : public StepData_SelectType {
 ") SetSurface2dEdge;
 		void SetSurface2dEdge (const Standard_Integer aVal);
 		%feature("compactdefaultargs") Surface2dEdge;
-		%feature("autodoc", "	* Returns Value as Surface2dEdge (or Null if another type)
+		%feature("autodoc", "	* Returns Value as Surface2dEdge --or Null if another type--
 
 	:rtype: int
 ") Surface2dEdge;
@@ -1962,7 +962,7 @@ class StepElement_ElementAspect : public StepData_SelectType {
 ") SetCurveEdge;
 		void SetCurveEdge (const StepElement_CurveEdge aVal);
 		%feature("compactdefaultargs") CurveEdge;
-		%feature("autodoc", "	* Returns Value as CurveEdge (or Null if another type)
+		%feature("autodoc", "	* Returns Value as CurveEdge --or Null if another type--
 
 	:rtype: StepElement_CurveEdge
 ") CurveEdge;
@@ -2046,19 +1046,20 @@ class Handle_StepElement_ElementAspectMember : public Handle_StepData_SelectName
         static const Handle_StepElement_ElementAspectMember DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_StepElement_ElementAspectMember {
     StepElement_ElementAspectMember* _get_reference() {
-    return (StepElement_ElementAspectMember*)$self->Access();
+    return (StepElement_ElementAspectMember*)$self->get();
     }
 };
 
 %extend Handle_StepElement_ElementAspectMember {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend StepElement_ElementAspectMember {
@@ -2067,7 +1068,7 @@ class Handle_StepElement_ElementAspectMember : public Handle_StepData_SelectName
 	}
 };
 %nodefaultctor StepElement_ElementDescriptor;
-class StepElement_ElementDescriptor : public MMgt_TShared {
+class StepElement_ElementDescriptor : public Standard_Transient {
 	public:
 		%feature("compactdefaultargs") StepElement_ElementDescriptor;
 		%feature("autodoc", "	* Empty constructor
@@ -2076,7 +1077,7 @@ class StepElement_ElementDescriptor : public MMgt_TShared {
 ") StepElement_ElementDescriptor;
 		 StepElement_ElementDescriptor ();
 		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	* Initialize all fields (own and inherited)
+		%feature("autodoc", "	* Initialize all fields --own and inherited--
 
 	:param aTopologyOrder:
 	:type aTopologyOrder: StepElement_ElementOrder
@@ -2135,7 +1136,7 @@ class StepElement_ElementDescriptor : public MMgt_TShared {
 %}
 
 %nodefaultctor Handle_StepElement_ElementDescriptor;
-class Handle_StepElement_ElementDescriptor : public Handle_MMgt_TShared {
+class Handle_StepElement_ElementDescriptor : public Handle_Standard_Transient {
 
     public:
         // constructors
@@ -2147,19 +1148,20 @@ class Handle_StepElement_ElementDescriptor : public Handle_MMgt_TShared {
         static const Handle_StepElement_ElementDescriptor DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_StepElement_ElementDescriptor {
     StepElement_ElementDescriptor* _get_reference() {
-    return (StepElement_ElementDescriptor*)$self->Access();
+    return (StepElement_ElementDescriptor*)$self->get();
     }
 };
 
 %extend Handle_StepElement_ElementDescriptor {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend StepElement_ElementDescriptor {
@@ -2168,7 +1170,7 @@ class Handle_StepElement_ElementDescriptor : public Handle_MMgt_TShared {
 	}
 };
 %nodefaultctor StepElement_ElementMaterial;
-class StepElement_ElementMaterial : public MMgt_TShared {
+class StepElement_ElementMaterial : public Standard_Transient {
 	public:
 		%feature("compactdefaultargs") StepElement_ElementMaterial;
 		%feature("autodoc", "	* Empty constructor
@@ -2177,7 +1179,7 @@ class StepElement_ElementMaterial : public MMgt_TShared {
 ") StepElement_ElementMaterial;
 		 StepElement_ElementMaterial ();
 		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	* Initialize all fields (own and inherited)
+		%feature("autodoc", "	* Initialize all fields --own and inherited--
 
 	:param aMaterialId:
 	:type aMaterialId: Handle_TCollection_HAsciiString &
@@ -2252,7 +1254,7 @@ class StepElement_ElementMaterial : public MMgt_TShared {
 %}
 
 %nodefaultctor Handle_StepElement_ElementMaterial;
-class Handle_StepElement_ElementMaterial : public Handle_MMgt_TShared {
+class Handle_StepElement_ElementMaterial : public Handle_Standard_Transient {
 
     public:
         // constructors
@@ -2264,2187 +1266,23 @@ class Handle_StepElement_ElementMaterial : public Handle_MMgt_TShared {
         static const Handle_StepElement_ElementMaterial DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_StepElement_ElementMaterial {
     StepElement_ElementMaterial* _get_reference() {
-    return (StepElement_ElementMaterial*)$self->Access();
+    return (StepElement_ElementMaterial*)$self->get();
     }
 };
 
 %extend Handle_StepElement_ElementMaterial {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend StepElement_ElementMaterial {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor StepElement_HArray1OfCurveElementEndReleasePacket;
-class StepElement_HArray1OfCurveElementEndReleasePacket : public MMgt_TShared {
-	public:
-		%feature("compactdefaultargs") StepElement_HArray1OfCurveElementEndReleasePacket;
-		%feature("autodoc", "	:param Low:
-	:type Low: int
-	:param Up:
-	:type Up: int
-	:rtype: None
-") StepElement_HArray1OfCurveElementEndReleasePacket;
-		 StepElement_HArray1OfCurveElementEndReleasePacket (const Standard_Integer Low,const Standard_Integer Up);
-		%feature("compactdefaultargs") StepElement_HArray1OfCurveElementEndReleasePacket;
-		%feature("autodoc", "	:param Low:
-	:type Low: int
-	:param Up:
-	:type Up: int
-	:param V:
-	:type V: Handle_StepElement_CurveElementEndReleasePacket &
-	:rtype: None
-") StepElement_HArray1OfCurveElementEndReleasePacket;
-		 StepElement_HArray1OfCurveElementEndReleasePacket (const Standard_Integer Low,const Standard_Integer Up,const Handle_StepElement_CurveElementEndReleasePacket & V);
-		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	:param V:
-	:type V: Handle_StepElement_CurveElementEndReleasePacket &
-	:rtype: None
-") Init;
-		void Init (const Handle_StepElement_CurveElementEndReleasePacket & V);
-		%feature("compactdefaultargs") Length;
-		%feature("autodoc", "	:rtype: int
-") Length;
-		Standard_Integer Length ();
-		%feature("compactdefaultargs") Lower;
-		%feature("autodoc", "	:rtype: int
-") Lower;
-		Standard_Integer Lower ();
-		%feature("compactdefaultargs") Upper;
-		%feature("autodoc", "	:rtype: int
-") Upper;
-		Standard_Integer Upper ();
-		%feature("compactdefaultargs") SetValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param Value:
-	:type Value: Handle_StepElement_CurveElementEndReleasePacket &
-	:rtype: None
-") SetValue;
-		void SetValue (const Standard_Integer Index,const Handle_StepElement_CurveElementEndReleasePacket & Value);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: Handle_StepElement_CurveElementEndReleasePacket
-") Value;
-		Handle_StepElement_CurveElementEndReleasePacket Value (const Standard_Integer Index);
-		%feature("compactdefaultargs") ChangeValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: Handle_StepElement_CurveElementEndReleasePacket
-") ChangeValue;
-		Handle_StepElement_CurveElementEndReleasePacket ChangeValue (const Standard_Integer Index);
-		%feature("compactdefaultargs") Array1;
-		%feature("autodoc", "	:rtype: StepElement_Array1OfCurveElementEndReleasePacket
-") Array1;
-		const StepElement_Array1OfCurveElementEndReleasePacket & Array1 ();
-		%feature("compactdefaultargs") ChangeArray1;
-		%feature("autodoc", "	:rtype: StepElement_Array1OfCurveElementEndReleasePacket
-") ChangeArray1;
-		StepElement_Array1OfCurveElementEndReleasePacket & ChangeArray1 ();
-};
-
-
-%extend StepElement_HArray1OfCurveElementEndReleasePacket {
-	%pythoncode {
-		def GetHandle(self):
-		    try:
-		        return self.thisHandle
-		    except:
-		        self.thisHandle = Handle_StepElement_HArray1OfCurveElementEndReleasePacket(self)
-		        self.thisown = False
-		        return self.thisHandle
-	}
-};
-
-%pythonappend Handle_StepElement_HArray1OfCurveElementEndReleasePacket::Handle_StepElement_HArray1OfCurveElementEndReleasePacket %{
-    # register the handle in the base object
-    if len(args) > 0:
-        register_handle(self, args[0])
-%}
-
-%nodefaultctor Handle_StepElement_HArray1OfCurveElementEndReleasePacket;
-class Handle_StepElement_HArray1OfCurveElementEndReleasePacket : public Handle_MMgt_TShared {
-
-    public:
-        // constructors
-        Handle_StepElement_HArray1OfCurveElementEndReleasePacket();
-        Handle_StepElement_HArray1OfCurveElementEndReleasePacket(const Handle_StepElement_HArray1OfCurveElementEndReleasePacket &aHandle);
-        Handle_StepElement_HArray1OfCurveElementEndReleasePacket(const StepElement_HArray1OfCurveElementEndReleasePacket *anItem);
-        void Nullify();
-        Standard_Boolean IsNull() const;
-        static const Handle_StepElement_HArray1OfCurveElementEndReleasePacket DownCast(const Handle_Standard_Transient &AnObject);
-
-};
-%extend Handle_StepElement_HArray1OfCurveElementEndReleasePacket {
-    StepElement_HArray1OfCurveElementEndReleasePacket* _get_reference() {
-    return (StepElement_HArray1OfCurveElementEndReleasePacket*)$self->Access();
-    }
-};
-
-%extend Handle_StepElement_HArray1OfCurveElementEndReleasePacket {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
-};
-
-%extend StepElement_HArray1OfCurveElementEndReleasePacket {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor StepElement_HArray1OfCurveElementSectionDefinition;
-class StepElement_HArray1OfCurveElementSectionDefinition : public MMgt_TShared {
-	public:
-		%feature("compactdefaultargs") StepElement_HArray1OfCurveElementSectionDefinition;
-		%feature("autodoc", "	:param Low:
-	:type Low: int
-	:param Up:
-	:type Up: int
-	:rtype: None
-") StepElement_HArray1OfCurveElementSectionDefinition;
-		 StepElement_HArray1OfCurveElementSectionDefinition (const Standard_Integer Low,const Standard_Integer Up);
-		%feature("compactdefaultargs") StepElement_HArray1OfCurveElementSectionDefinition;
-		%feature("autodoc", "	:param Low:
-	:type Low: int
-	:param Up:
-	:type Up: int
-	:param V:
-	:type V: Handle_StepElement_CurveElementSectionDefinition &
-	:rtype: None
-") StepElement_HArray1OfCurveElementSectionDefinition;
-		 StepElement_HArray1OfCurveElementSectionDefinition (const Standard_Integer Low,const Standard_Integer Up,const Handle_StepElement_CurveElementSectionDefinition & V);
-		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	:param V:
-	:type V: Handle_StepElement_CurveElementSectionDefinition &
-	:rtype: None
-") Init;
-		void Init (const Handle_StepElement_CurveElementSectionDefinition & V);
-		%feature("compactdefaultargs") Length;
-		%feature("autodoc", "	:rtype: int
-") Length;
-		Standard_Integer Length ();
-		%feature("compactdefaultargs") Lower;
-		%feature("autodoc", "	:rtype: int
-") Lower;
-		Standard_Integer Lower ();
-		%feature("compactdefaultargs") Upper;
-		%feature("autodoc", "	:rtype: int
-") Upper;
-		Standard_Integer Upper ();
-		%feature("compactdefaultargs") SetValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param Value:
-	:type Value: Handle_StepElement_CurveElementSectionDefinition &
-	:rtype: None
-") SetValue;
-		void SetValue (const Standard_Integer Index,const Handle_StepElement_CurveElementSectionDefinition & Value);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: Handle_StepElement_CurveElementSectionDefinition
-") Value;
-		Handle_StepElement_CurveElementSectionDefinition Value (const Standard_Integer Index);
-		%feature("compactdefaultargs") ChangeValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: Handle_StepElement_CurveElementSectionDefinition
-") ChangeValue;
-		Handle_StepElement_CurveElementSectionDefinition ChangeValue (const Standard_Integer Index);
-		%feature("compactdefaultargs") Array1;
-		%feature("autodoc", "	:rtype: StepElement_Array1OfCurveElementSectionDefinition
-") Array1;
-		const StepElement_Array1OfCurveElementSectionDefinition & Array1 ();
-		%feature("compactdefaultargs") ChangeArray1;
-		%feature("autodoc", "	:rtype: StepElement_Array1OfCurveElementSectionDefinition
-") ChangeArray1;
-		StepElement_Array1OfCurveElementSectionDefinition & ChangeArray1 ();
-};
-
-
-%extend StepElement_HArray1OfCurveElementSectionDefinition {
-	%pythoncode {
-		def GetHandle(self):
-		    try:
-		        return self.thisHandle
-		    except:
-		        self.thisHandle = Handle_StepElement_HArray1OfCurveElementSectionDefinition(self)
-		        self.thisown = False
-		        return self.thisHandle
-	}
-};
-
-%pythonappend Handle_StepElement_HArray1OfCurveElementSectionDefinition::Handle_StepElement_HArray1OfCurveElementSectionDefinition %{
-    # register the handle in the base object
-    if len(args) > 0:
-        register_handle(self, args[0])
-%}
-
-%nodefaultctor Handle_StepElement_HArray1OfCurveElementSectionDefinition;
-class Handle_StepElement_HArray1OfCurveElementSectionDefinition : public Handle_MMgt_TShared {
-
-    public:
-        // constructors
-        Handle_StepElement_HArray1OfCurveElementSectionDefinition();
-        Handle_StepElement_HArray1OfCurveElementSectionDefinition(const Handle_StepElement_HArray1OfCurveElementSectionDefinition &aHandle);
-        Handle_StepElement_HArray1OfCurveElementSectionDefinition(const StepElement_HArray1OfCurveElementSectionDefinition *anItem);
-        void Nullify();
-        Standard_Boolean IsNull() const;
-        static const Handle_StepElement_HArray1OfCurveElementSectionDefinition DownCast(const Handle_Standard_Transient &AnObject);
-
-};
-%extend Handle_StepElement_HArray1OfCurveElementSectionDefinition {
-    StepElement_HArray1OfCurveElementSectionDefinition* _get_reference() {
-    return (StepElement_HArray1OfCurveElementSectionDefinition*)$self->Access();
-    }
-};
-
-%extend Handle_StepElement_HArray1OfCurveElementSectionDefinition {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
-};
-
-%extend StepElement_HArray1OfCurveElementSectionDefinition {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor StepElement_HArray1OfHSequenceOfCurveElementPurposeMember;
-class StepElement_HArray1OfHSequenceOfCurveElementPurposeMember : public MMgt_TShared {
-	public:
-		%feature("compactdefaultargs") StepElement_HArray1OfHSequenceOfCurveElementPurposeMember;
-		%feature("autodoc", "	:param Low:
-	:type Low: int
-	:param Up:
-	:type Up: int
-	:rtype: None
-") StepElement_HArray1OfHSequenceOfCurveElementPurposeMember;
-		 StepElement_HArray1OfHSequenceOfCurveElementPurposeMember (const Standard_Integer Low,const Standard_Integer Up);
-		%feature("compactdefaultargs") StepElement_HArray1OfHSequenceOfCurveElementPurposeMember;
-		%feature("autodoc", "	:param Low:
-	:type Low: int
-	:param Up:
-	:type Up: int
-	:param V:
-	:type V: Handle_StepElement_HSequenceOfCurveElementPurposeMember &
-	:rtype: None
-") StepElement_HArray1OfHSequenceOfCurveElementPurposeMember;
-		 StepElement_HArray1OfHSequenceOfCurveElementPurposeMember (const Standard_Integer Low,const Standard_Integer Up,const Handle_StepElement_HSequenceOfCurveElementPurposeMember & V);
-		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	:param V:
-	:type V: Handle_StepElement_HSequenceOfCurveElementPurposeMember &
-	:rtype: None
-") Init;
-		void Init (const Handle_StepElement_HSequenceOfCurveElementPurposeMember & V);
-		%feature("compactdefaultargs") Length;
-		%feature("autodoc", "	:rtype: int
-") Length;
-		Standard_Integer Length ();
-		%feature("compactdefaultargs") Lower;
-		%feature("autodoc", "	:rtype: int
-") Lower;
-		Standard_Integer Lower ();
-		%feature("compactdefaultargs") Upper;
-		%feature("autodoc", "	:rtype: int
-") Upper;
-		Standard_Integer Upper ();
-		%feature("compactdefaultargs") SetValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param Value:
-	:type Value: Handle_StepElement_HSequenceOfCurveElementPurposeMember &
-	:rtype: None
-") SetValue;
-		void SetValue (const Standard_Integer Index,const Handle_StepElement_HSequenceOfCurveElementPurposeMember & Value);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: Handle_StepElement_HSequenceOfCurveElementPurposeMember
-") Value;
-		Handle_StepElement_HSequenceOfCurveElementPurposeMember Value (const Standard_Integer Index);
-		%feature("compactdefaultargs") ChangeValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: Handle_StepElement_HSequenceOfCurveElementPurposeMember
-") ChangeValue;
-		Handle_StepElement_HSequenceOfCurveElementPurposeMember ChangeValue (const Standard_Integer Index);
-		%feature("compactdefaultargs") Array1;
-		%feature("autodoc", "	:rtype: StepElement_Array1OfHSequenceOfCurveElementPurposeMember
-") Array1;
-		const StepElement_Array1OfHSequenceOfCurveElementPurposeMember & Array1 ();
-		%feature("compactdefaultargs") ChangeArray1;
-		%feature("autodoc", "	:rtype: StepElement_Array1OfHSequenceOfCurveElementPurposeMember
-") ChangeArray1;
-		StepElement_Array1OfHSequenceOfCurveElementPurposeMember & ChangeArray1 ();
-};
-
-
-%extend StepElement_HArray1OfHSequenceOfCurveElementPurposeMember {
-	%pythoncode {
-		def GetHandle(self):
-		    try:
-		        return self.thisHandle
-		    except:
-		        self.thisHandle = Handle_StepElement_HArray1OfHSequenceOfCurveElementPurposeMember(self)
-		        self.thisown = False
-		        return self.thisHandle
-	}
-};
-
-%pythonappend Handle_StepElement_HArray1OfHSequenceOfCurveElementPurposeMember::Handle_StepElement_HArray1OfHSequenceOfCurveElementPurposeMember %{
-    # register the handle in the base object
-    if len(args) > 0:
-        register_handle(self, args[0])
-%}
-
-%nodefaultctor Handle_StepElement_HArray1OfHSequenceOfCurveElementPurposeMember;
-class Handle_StepElement_HArray1OfHSequenceOfCurveElementPurposeMember : public Handle_MMgt_TShared {
-
-    public:
-        // constructors
-        Handle_StepElement_HArray1OfHSequenceOfCurveElementPurposeMember();
-        Handle_StepElement_HArray1OfHSequenceOfCurveElementPurposeMember(const Handle_StepElement_HArray1OfHSequenceOfCurveElementPurposeMember &aHandle);
-        Handle_StepElement_HArray1OfHSequenceOfCurveElementPurposeMember(const StepElement_HArray1OfHSequenceOfCurveElementPurposeMember *anItem);
-        void Nullify();
-        Standard_Boolean IsNull() const;
-        static const Handle_StepElement_HArray1OfHSequenceOfCurveElementPurposeMember DownCast(const Handle_Standard_Transient &AnObject);
-
-};
-%extend Handle_StepElement_HArray1OfHSequenceOfCurveElementPurposeMember {
-    StepElement_HArray1OfHSequenceOfCurveElementPurposeMember* _get_reference() {
-    return (StepElement_HArray1OfHSequenceOfCurveElementPurposeMember*)$self->Access();
-    }
-};
-
-%extend Handle_StepElement_HArray1OfHSequenceOfCurveElementPurposeMember {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
-};
-
-%extend StepElement_HArray1OfHSequenceOfCurveElementPurposeMember {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor StepElement_HArray1OfHSequenceOfSurfaceElementPurposeMember;
-class StepElement_HArray1OfHSequenceOfSurfaceElementPurposeMember : public MMgt_TShared {
-	public:
-		%feature("compactdefaultargs") StepElement_HArray1OfHSequenceOfSurfaceElementPurposeMember;
-		%feature("autodoc", "	:param Low:
-	:type Low: int
-	:param Up:
-	:type Up: int
-	:rtype: None
-") StepElement_HArray1OfHSequenceOfSurfaceElementPurposeMember;
-		 StepElement_HArray1OfHSequenceOfSurfaceElementPurposeMember (const Standard_Integer Low,const Standard_Integer Up);
-		%feature("compactdefaultargs") StepElement_HArray1OfHSequenceOfSurfaceElementPurposeMember;
-		%feature("autodoc", "	:param Low:
-	:type Low: int
-	:param Up:
-	:type Up: int
-	:param V:
-	:type V: Handle_StepElement_HSequenceOfSurfaceElementPurposeMember &
-	:rtype: None
-") StepElement_HArray1OfHSequenceOfSurfaceElementPurposeMember;
-		 StepElement_HArray1OfHSequenceOfSurfaceElementPurposeMember (const Standard_Integer Low,const Standard_Integer Up,const Handle_StepElement_HSequenceOfSurfaceElementPurposeMember & V);
-		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	:param V:
-	:type V: Handle_StepElement_HSequenceOfSurfaceElementPurposeMember &
-	:rtype: None
-") Init;
-		void Init (const Handle_StepElement_HSequenceOfSurfaceElementPurposeMember & V);
-		%feature("compactdefaultargs") Length;
-		%feature("autodoc", "	:rtype: int
-") Length;
-		Standard_Integer Length ();
-		%feature("compactdefaultargs") Lower;
-		%feature("autodoc", "	:rtype: int
-") Lower;
-		Standard_Integer Lower ();
-		%feature("compactdefaultargs") Upper;
-		%feature("autodoc", "	:rtype: int
-") Upper;
-		Standard_Integer Upper ();
-		%feature("compactdefaultargs") SetValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param Value:
-	:type Value: Handle_StepElement_HSequenceOfSurfaceElementPurposeMember &
-	:rtype: None
-") SetValue;
-		void SetValue (const Standard_Integer Index,const Handle_StepElement_HSequenceOfSurfaceElementPurposeMember & Value);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: Handle_StepElement_HSequenceOfSurfaceElementPurposeMember
-") Value;
-		Handle_StepElement_HSequenceOfSurfaceElementPurposeMember Value (const Standard_Integer Index);
-		%feature("compactdefaultargs") ChangeValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: Handle_StepElement_HSequenceOfSurfaceElementPurposeMember
-") ChangeValue;
-		Handle_StepElement_HSequenceOfSurfaceElementPurposeMember ChangeValue (const Standard_Integer Index);
-		%feature("compactdefaultargs") Array1;
-		%feature("autodoc", "	:rtype: StepElement_Array1OfHSequenceOfSurfaceElementPurposeMember
-") Array1;
-		const StepElement_Array1OfHSequenceOfSurfaceElementPurposeMember & Array1 ();
-		%feature("compactdefaultargs") ChangeArray1;
-		%feature("autodoc", "	:rtype: StepElement_Array1OfHSequenceOfSurfaceElementPurposeMember
-") ChangeArray1;
-		StepElement_Array1OfHSequenceOfSurfaceElementPurposeMember & ChangeArray1 ();
-};
-
-
-%extend StepElement_HArray1OfHSequenceOfSurfaceElementPurposeMember {
-	%pythoncode {
-		def GetHandle(self):
-		    try:
-		        return self.thisHandle
-		    except:
-		        self.thisHandle = Handle_StepElement_HArray1OfHSequenceOfSurfaceElementPurposeMember(self)
-		        self.thisown = False
-		        return self.thisHandle
-	}
-};
-
-%pythonappend Handle_StepElement_HArray1OfHSequenceOfSurfaceElementPurposeMember::Handle_StepElement_HArray1OfHSequenceOfSurfaceElementPurposeMember %{
-    # register the handle in the base object
-    if len(args) > 0:
-        register_handle(self, args[0])
-%}
-
-%nodefaultctor Handle_StepElement_HArray1OfHSequenceOfSurfaceElementPurposeMember;
-class Handle_StepElement_HArray1OfHSequenceOfSurfaceElementPurposeMember : public Handle_MMgt_TShared {
-
-    public:
-        // constructors
-        Handle_StepElement_HArray1OfHSequenceOfSurfaceElementPurposeMember();
-        Handle_StepElement_HArray1OfHSequenceOfSurfaceElementPurposeMember(const Handle_StepElement_HArray1OfHSequenceOfSurfaceElementPurposeMember &aHandle);
-        Handle_StepElement_HArray1OfHSequenceOfSurfaceElementPurposeMember(const StepElement_HArray1OfHSequenceOfSurfaceElementPurposeMember *anItem);
-        void Nullify();
-        Standard_Boolean IsNull() const;
-        static const Handle_StepElement_HArray1OfHSequenceOfSurfaceElementPurposeMember DownCast(const Handle_Standard_Transient &AnObject);
-
-};
-%extend Handle_StepElement_HArray1OfHSequenceOfSurfaceElementPurposeMember {
-    StepElement_HArray1OfHSequenceOfSurfaceElementPurposeMember* _get_reference() {
-    return (StepElement_HArray1OfHSequenceOfSurfaceElementPurposeMember*)$self->Access();
-    }
-};
-
-%extend Handle_StepElement_HArray1OfHSequenceOfSurfaceElementPurposeMember {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
-};
-
-%extend StepElement_HArray1OfHSequenceOfSurfaceElementPurposeMember {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor StepElement_HArray1OfMeasureOrUnspecifiedValue;
-class StepElement_HArray1OfMeasureOrUnspecifiedValue : public MMgt_TShared {
-	public:
-		%feature("compactdefaultargs") StepElement_HArray1OfMeasureOrUnspecifiedValue;
-		%feature("autodoc", "	:param Low:
-	:type Low: int
-	:param Up:
-	:type Up: int
-	:rtype: None
-") StepElement_HArray1OfMeasureOrUnspecifiedValue;
-		 StepElement_HArray1OfMeasureOrUnspecifiedValue (const Standard_Integer Low,const Standard_Integer Up);
-		%feature("compactdefaultargs") StepElement_HArray1OfMeasureOrUnspecifiedValue;
-		%feature("autodoc", "	:param Low:
-	:type Low: int
-	:param Up:
-	:type Up: int
-	:param V:
-	:type V: StepElement_MeasureOrUnspecifiedValue &
-	:rtype: None
-") StepElement_HArray1OfMeasureOrUnspecifiedValue;
-		 StepElement_HArray1OfMeasureOrUnspecifiedValue (const Standard_Integer Low,const Standard_Integer Up,const StepElement_MeasureOrUnspecifiedValue & V);
-		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	:param V:
-	:type V: StepElement_MeasureOrUnspecifiedValue &
-	:rtype: None
-") Init;
-		void Init (const StepElement_MeasureOrUnspecifiedValue & V);
-		%feature("compactdefaultargs") Length;
-		%feature("autodoc", "	:rtype: int
-") Length;
-		Standard_Integer Length ();
-		%feature("compactdefaultargs") Lower;
-		%feature("autodoc", "	:rtype: int
-") Lower;
-		Standard_Integer Lower ();
-		%feature("compactdefaultargs") Upper;
-		%feature("autodoc", "	:rtype: int
-") Upper;
-		Standard_Integer Upper ();
-		%feature("compactdefaultargs") SetValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param Value:
-	:type Value: StepElement_MeasureOrUnspecifiedValue &
-	:rtype: None
-") SetValue;
-		void SetValue (const Standard_Integer Index,const StepElement_MeasureOrUnspecifiedValue & Value);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: StepElement_MeasureOrUnspecifiedValue
-") Value;
-		const StepElement_MeasureOrUnspecifiedValue & Value (const Standard_Integer Index);
-		%feature("compactdefaultargs") ChangeValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: StepElement_MeasureOrUnspecifiedValue
-") ChangeValue;
-		StepElement_MeasureOrUnspecifiedValue & ChangeValue (const Standard_Integer Index);
-		%feature("compactdefaultargs") Array1;
-		%feature("autodoc", "	:rtype: StepElement_Array1OfMeasureOrUnspecifiedValue
-") Array1;
-		const StepElement_Array1OfMeasureOrUnspecifiedValue & Array1 ();
-		%feature("compactdefaultargs") ChangeArray1;
-		%feature("autodoc", "	:rtype: StepElement_Array1OfMeasureOrUnspecifiedValue
-") ChangeArray1;
-		StepElement_Array1OfMeasureOrUnspecifiedValue & ChangeArray1 ();
-};
-
-
-%extend StepElement_HArray1OfMeasureOrUnspecifiedValue {
-	%pythoncode {
-		def GetHandle(self):
-		    try:
-		        return self.thisHandle
-		    except:
-		        self.thisHandle = Handle_StepElement_HArray1OfMeasureOrUnspecifiedValue(self)
-		        self.thisown = False
-		        return self.thisHandle
-	}
-};
-
-%pythonappend Handle_StepElement_HArray1OfMeasureOrUnspecifiedValue::Handle_StepElement_HArray1OfMeasureOrUnspecifiedValue %{
-    # register the handle in the base object
-    if len(args) > 0:
-        register_handle(self, args[0])
-%}
-
-%nodefaultctor Handle_StepElement_HArray1OfMeasureOrUnspecifiedValue;
-class Handle_StepElement_HArray1OfMeasureOrUnspecifiedValue : public Handle_MMgt_TShared {
-
-    public:
-        // constructors
-        Handle_StepElement_HArray1OfMeasureOrUnspecifiedValue();
-        Handle_StepElement_HArray1OfMeasureOrUnspecifiedValue(const Handle_StepElement_HArray1OfMeasureOrUnspecifiedValue &aHandle);
-        Handle_StepElement_HArray1OfMeasureOrUnspecifiedValue(const StepElement_HArray1OfMeasureOrUnspecifiedValue *anItem);
-        void Nullify();
-        Standard_Boolean IsNull() const;
-        static const Handle_StepElement_HArray1OfMeasureOrUnspecifiedValue DownCast(const Handle_Standard_Transient &AnObject);
-
-};
-%extend Handle_StepElement_HArray1OfMeasureOrUnspecifiedValue {
-    StepElement_HArray1OfMeasureOrUnspecifiedValue* _get_reference() {
-    return (StepElement_HArray1OfMeasureOrUnspecifiedValue*)$self->Access();
-    }
-};
-
-%extend Handle_StepElement_HArray1OfMeasureOrUnspecifiedValue {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
-};
-
-%extend StepElement_HArray1OfMeasureOrUnspecifiedValue {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor StepElement_HArray1OfSurfaceSection;
-class StepElement_HArray1OfSurfaceSection : public MMgt_TShared {
-	public:
-		%feature("compactdefaultargs") StepElement_HArray1OfSurfaceSection;
-		%feature("autodoc", "	:param Low:
-	:type Low: int
-	:param Up:
-	:type Up: int
-	:rtype: None
-") StepElement_HArray1OfSurfaceSection;
-		 StepElement_HArray1OfSurfaceSection (const Standard_Integer Low,const Standard_Integer Up);
-		%feature("compactdefaultargs") StepElement_HArray1OfSurfaceSection;
-		%feature("autodoc", "	:param Low:
-	:type Low: int
-	:param Up:
-	:type Up: int
-	:param V:
-	:type V: Handle_StepElement_SurfaceSection &
-	:rtype: None
-") StepElement_HArray1OfSurfaceSection;
-		 StepElement_HArray1OfSurfaceSection (const Standard_Integer Low,const Standard_Integer Up,const Handle_StepElement_SurfaceSection & V);
-		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	:param V:
-	:type V: Handle_StepElement_SurfaceSection &
-	:rtype: None
-") Init;
-		void Init (const Handle_StepElement_SurfaceSection & V);
-		%feature("compactdefaultargs") Length;
-		%feature("autodoc", "	:rtype: int
-") Length;
-		Standard_Integer Length ();
-		%feature("compactdefaultargs") Lower;
-		%feature("autodoc", "	:rtype: int
-") Lower;
-		Standard_Integer Lower ();
-		%feature("compactdefaultargs") Upper;
-		%feature("autodoc", "	:rtype: int
-") Upper;
-		Standard_Integer Upper ();
-		%feature("compactdefaultargs") SetValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param Value:
-	:type Value: Handle_StepElement_SurfaceSection &
-	:rtype: None
-") SetValue;
-		void SetValue (const Standard_Integer Index,const Handle_StepElement_SurfaceSection & Value);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: Handle_StepElement_SurfaceSection
-") Value;
-		Handle_StepElement_SurfaceSection Value (const Standard_Integer Index);
-		%feature("compactdefaultargs") ChangeValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: Handle_StepElement_SurfaceSection
-") ChangeValue;
-		Handle_StepElement_SurfaceSection ChangeValue (const Standard_Integer Index);
-		%feature("compactdefaultargs") Array1;
-		%feature("autodoc", "	:rtype: StepElement_Array1OfSurfaceSection
-") Array1;
-		const StepElement_Array1OfSurfaceSection & Array1 ();
-		%feature("compactdefaultargs") ChangeArray1;
-		%feature("autodoc", "	:rtype: StepElement_Array1OfSurfaceSection
-") ChangeArray1;
-		StepElement_Array1OfSurfaceSection & ChangeArray1 ();
-};
-
-
-%extend StepElement_HArray1OfSurfaceSection {
-	%pythoncode {
-		def GetHandle(self):
-		    try:
-		        return self.thisHandle
-		    except:
-		        self.thisHandle = Handle_StepElement_HArray1OfSurfaceSection(self)
-		        self.thisown = False
-		        return self.thisHandle
-	}
-};
-
-%pythonappend Handle_StepElement_HArray1OfSurfaceSection::Handle_StepElement_HArray1OfSurfaceSection %{
-    # register the handle in the base object
-    if len(args) > 0:
-        register_handle(self, args[0])
-%}
-
-%nodefaultctor Handle_StepElement_HArray1OfSurfaceSection;
-class Handle_StepElement_HArray1OfSurfaceSection : public Handle_MMgt_TShared {
-
-    public:
-        // constructors
-        Handle_StepElement_HArray1OfSurfaceSection();
-        Handle_StepElement_HArray1OfSurfaceSection(const Handle_StepElement_HArray1OfSurfaceSection &aHandle);
-        Handle_StepElement_HArray1OfSurfaceSection(const StepElement_HArray1OfSurfaceSection *anItem);
-        void Nullify();
-        Standard_Boolean IsNull() const;
-        static const Handle_StepElement_HArray1OfSurfaceSection DownCast(const Handle_Standard_Transient &AnObject);
-
-};
-%extend Handle_StepElement_HArray1OfSurfaceSection {
-    StepElement_HArray1OfSurfaceSection* _get_reference() {
-    return (StepElement_HArray1OfSurfaceSection*)$self->Access();
-    }
-};
-
-%extend Handle_StepElement_HArray1OfSurfaceSection {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
-};
-
-%extend StepElement_HArray1OfSurfaceSection {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor StepElement_HArray1OfVolumeElementPurpose;
-class StepElement_HArray1OfVolumeElementPurpose : public MMgt_TShared {
-	public:
-		%feature("compactdefaultargs") StepElement_HArray1OfVolumeElementPurpose;
-		%feature("autodoc", "	:param Low:
-	:type Low: int
-	:param Up:
-	:type Up: int
-	:rtype: None
-") StepElement_HArray1OfVolumeElementPurpose;
-		 StepElement_HArray1OfVolumeElementPurpose (const Standard_Integer Low,const Standard_Integer Up);
-		%feature("compactdefaultargs") StepElement_HArray1OfVolumeElementPurpose;
-		%feature("autodoc", "	:param Low:
-	:type Low: int
-	:param Up:
-	:type Up: int
-	:param V:
-	:type V: StepElement_VolumeElementPurpose &
-	:rtype: None
-") StepElement_HArray1OfVolumeElementPurpose;
-		 StepElement_HArray1OfVolumeElementPurpose (const Standard_Integer Low,const Standard_Integer Up,const StepElement_VolumeElementPurpose & V);
-		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	:param V:
-	:type V: StepElement_VolumeElementPurpose &
-	:rtype: None
-") Init;
-		void Init (const StepElement_VolumeElementPurpose & V);
-		%feature("compactdefaultargs") Length;
-		%feature("autodoc", "	:rtype: int
-") Length;
-		Standard_Integer Length ();
-		%feature("compactdefaultargs") Lower;
-		%feature("autodoc", "	:rtype: int
-") Lower;
-		Standard_Integer Lower ();
-		%feature("compactdefaultargs") Upper;
-		%feature("autodoc", "	:rtype: int
-") Upper;
-		Standard_Integer Upper ();
-		%feature("compactdefaultargs") SetValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param Value:
-	:type Value: StepElement_VolumeElementPurpose &
-	:rtype: None
-") SetValue;
-		void SetValue (const Standard_Integer Index,const StepElement_VolumeElementPurpose & Value);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: StepElement_VolumeElementPurpose
-") Value;
-		const StepElement_VolumeElementPurpose & Value (const Standard_Integer Index);
-		%feature("compactdefaultargs") ChangeValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: StepElement_VolumeElementPurpose
-") ChangeValue;
-		StepElement_VolumeElementPurpose & ChangeValue (const Standard_Integer Index);
-		%feature("compactdefaultargs") Array1;
-		%feature("autodoc", "	:rtype: StepElement_Array1OfVolumeElementPurpose
-") Array1;
-		const StepElement_Array1OfVolumeElementPurpose & Array1 ();
-		%feature("compactdefaultargs") ChangeArray1;
-		%feature("autodoc", "	:rtype: StepElement_Array1OfVolumeElementPurpose
-") ChangeArray1;
-		StepElement_Array1OfVolumeElementPurpose & ChangeArray1 ();
-};
-
-
-%extend StepElement_HArray1OfVolumeElementPurpose {
-	%pythoncode {
-		def GetHandle(self):
-		    try:
-		        return self.thisHandle
-		    except:
-		        self.thisHandle = Handle_StepElement_HArray1OfVolumeElementPurpose(self)
-		        self.thisown = False
-		        return self.thisHandle
-	}
-};
-
-%pythonappend Handle_StepElement_HArray1OfVolumeElementPurpose::Handle_StepElement_HArray1OfVolumeElementPurpose %{
-    # register the handle in the base object
-    if len(args) > 0:
-        register_handle(self, args[0])
-%}
-
-%nodefaultctor Handle_StepElement_HArray1OfVolumeElementPurpose;
-class Handle_StepElement_HArray1OfVolumeElementPurpose : public Handle_MMgt_TShared {
-
-    public:
-        // constructors
-        Handle_StepElement_HArray1OfVolumeElementPurpose();
-        Handle_StepElement_HArray1OfVolumeElementPurpose(const Handle_StepElement_HArray1OfVolumeElementPurpose &aHandle);
-        Handle_StepElement_HArray1OfVolumeElementPurpose(const StepElement_HArray1OfVolumeElementPurpose *anItem);
-        void Nullify();
-        Standard_Boolean IsNull() const;
-        static const Handle_StepElement_HArray1OfVolumeElementPurpose DownCast(const Handle_Standard_Transient &AnObject);
-
-};
-%extend Handle_StepElement_HArray1OfVolumeElementPurpose {
-    StepElement_HArray1OfVolumeElementPurpose* _get_reference() {
-    return (StepElement_HArray1OfVolumeElementPurpose*)$self->Access();
-    }
-};
-
-%extend Handle_StepElement_HArray1OfVolumeElementPurpose {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
-};
-
-%extend StepElement_HArray1OfVolumeElementPurpose {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor StepElement_HArray1OfVolumeElementPurposeMember;
-class StepElement_HArray1OfVolumeElementPurposeMember : public MMgt_TShared {
-	public:
-		%feature("compactdefaultargs") StepElement_HArray1OfVolumeElementPurposeMember;
-		%feature("autodoc", "	:param Low:
-	:type Low: int
-	:param Up:
-	:type Up: int
-	:rtype: None
-") StepElement_HArray1OfVolumeElementPurposeMember;
-		 StepElement_HArray1OfVolumeElementPurposeMember (const Standard_Integer Low,const Standard_Integer Up);
-		%feature("compactdefaultargs") StepElement_HArray1OfVolumeElementPurposeMember;
-		%feature("autodoc", "	:param Low:
-	:type Low: int
-	:param Up:
-	:type Up: int
-	:param V:
-	:type V: Handle_StepElement_VolumeElementPurposeMember &
-	:rtype: None
-") StepElement_HArray1OfVolumeElementPurposeMember;
-		 StepElement_HArray1OfVolumeElementPurposeMember (const Standard_Integer Low,const Standard_Integer Up,const Handle_StepElement_VolumeElementPurposeMember & V);
-		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	:param V:
-	:type V: Handle_StepElement_VolumeElementPurposeMember &
-	:rtype: None
-") Init;
-		void Init (const Handle_StepElement_VolumeElementPurposeMember & V);
-		%feature("compactdefaultargs") Length;
-		%feature("autodoc", "	:rtype: int
-") Length;
-		Standard_Integer Length ();
-		%feature("compactdefaultargs") Lower;
-		%feature("autodoc", "	:rtype: int
-") Lower;
-		Standard_Integer Lower ();
-		%feature("compactdefaultargs") Upper;
-		%feature("autodoc", "	:rtype: int
-") Upper;
-		Standard_Integer Upper ();
-		%feature("compactdefaultargs") SetValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param Value:
-	:type Value: Handle_StepElement_VolumeElementPurposeMember &
-	:rtype: None
-") SetValue;
-		void SetValue (const Standard_Integer Index,const Handle_StepElement_VolumeElementPurposeMember & Value);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: Handle_StepElement_VolumeElementPurposeMember
-") Value;
-		Handle_StepElement_VolumeElementPurposeMember Value (const Standard_Integer Index);
-		%feature("compactdefaultargs") ChangeValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: Handle_StepElement_VolumeElementPurposeMember
-") ChangeValue;
-		Handle_StepElement_VolumeElementPurposeMember ChangeValue (const Standard_Integer Index);
-		%feature("compactdefaultargs") Array1;
-		%feature("autodoc", "	:rtype: StepElement_Array1OfVolumeElementPurposeMember
-") Array1;
-		const StepElement_Array1OfVolumeElementPurposeMember & Array1 ();
-		%feature("compactdefaultargs") ChangeArray1;
-		%feature("autodoc", "	:rtype: StepElement_Array1OfVolumeElementPurposeMember
-") ChangeArray1;
-		StepElement_Array1OfVolumeElementPurposeMember & ChangeArray1 ();
-};
-
-
-%extend StepElement_HArray1OfVolumeElementPurposeMember {
-	%pythoncode {
-		def GetHandle(self):
-		    try:
-		        return self.thisHandle
-		    except:
-		        self.thisHandle = Handle_StepElement_HArray1OfVolumeElementPurposeMember(self)
-		        self.thisown = False
-		        return self.thisHandle
-	}
-};
-
-%pythonappend Handle_StepElement_HArray1OfVolumeElementPurposeMember::Handle_StepElement_HArray1OfVolumeElementPurposeMember %{
-    # register the handle in the base object
-    if len(args) > 0:
-        register_handle(self, args[0])
-%}
-
-%nodefaultctor Handle_StepElement_HArray1OfVolumeElementPurposeMember;
-class Handle_StepElement_HArray1OfVolumeElementPurposeMember : public Handle_MMgt_TShared {
-
-    public:
-        // constructors
-        Handle_StepElement_HArray1OfVolumeElementPurposeMember();
-        Handle_StepElement_HArray1OfVolumeElementPurposeMember(const Handle_StepElement_HArray1OfVolumeElementPurposeMember &aHandle);
-        Handle_StepElement_HArray1OfVolumeElementPurposeMember(const StepElement_HArray1OfVolumeElementPurposeMember *anItem);
-        void Nullify();
-        Standard_Boolean IsNull() const;
-        static const Handle_StepElement_HArray1OfVolumeElementPurposeMember DownCast(const Handle_Standard_Transient &AnObject);
-
-};
-%extend Handle_StepElement_HArray1OfVolumeElementPurposeMember {
-    StepElement_HArray1OfVolumeElementPurposeMember* _get_reference() {
-    return (StepElement_HArray1OfVolumeElementPurposeMember*)$self->Access();
-    }
-};
-
-%extend Handle_StepElement_HArray1OfVolumeElementPurposeMember {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
-};
-
-%extend StepElement_HArray1OfVolumeElementPurposeMember {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor StepElement_HArray2OfCurveElementPurposeMember;
-class StepElement_HArray2OfCurveElementPurposeMember : public MMgt_TShared {
-	public:
-		%feature("compactdefaultargs") StepElement_HArray2OfCurveElementPurposeMember;
-		%feature("autodoc", "	:param R1:
-	:type R1: int
-	:param R2:
-	:type R2: int
-	:param C1:
-	:type C1: int
-	:param C2:
-	:type C2: int
-	:rtype: None
-") StepElement_HArray2OfCurveElementPurposeMember;
-		 StepElement_HArray2OfCurveElementPurposeMember (const Standard_Integer R1,const Standard_Integer R2,const Standard_Integer C1,const Standard_Integer C2);
-		%feature("compactdefaultargs") StepElement_HArray2OfCurveElementPurposeMember;
-		%feature("autodoc", "	:param R1:
-	:type R1: int
-	:param R2:
-	:type R2: int
-	:param C1:
-	:type C1: int
-	:param C2:
-	:type C2: int
-	:param V:
-	:type V: Handle_StepElement_CurveElementPurposeMember &
-	:rtype: None
-") StepElement_HArray2OfCurveElementPurposeMember;
-		 StepElement_HArray2OfCurveElementPurposeMember (const Standard_Integer R1,const Standard_Integer R2,const Standard_Integer C1,const Standard_Integer C2,const Handle_StepElement_CurveElementPurposeMember & V);
-		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	:param V:
-	:type V: Handle_StepElement_CurveElementPurposeMember &
-	:rtype: None
-") Init;
-		void Init (const Handle_StepElement_CurveElementPurposeMember & V);
-		%feature("compactdefaultargs") ColLength;
-		%feature("autodoc", "	:rtype: int
-") ColLength;
-		Standard_Integer ColLength ();
-		%feature("compactdefaultargs") RowLength;
-		%feature("autodoc", "	:rtype: int
-") RowLength;
-		Standard_Integer RowLength ();
-		%feature("compactdefaultargs") LowerCol;
-		%feature("autodoc", "	:rtype: int
-") LowerCol;
-		Standard_Integer LowerCol ();
-		%feature("compactdefaultargs") LowerRow;
-		%feature("autodoc", "	:rtype: int
-") LowerRow;
-		Standard_Integer LowerRow ();
-		%feature("compactdefaultargs") UpperCol;
-		%feature("autodoc", "	:rtype: int
-") UpperCol;
-		Standard_Integer UpperCol ();
-		%feature("compactdefaultargs") UpperRow;
-		%feature("autodoc", "	:rtype: int
-") UpperRow;
-		Standard_Integer UpperRow ();
-		%feature("compactdefaultargs") SetValue;
-		%feature("autodoc", "	:param Row:
-	:type Row: int
-	:param Col:
-	:type Col: int
-	:param Value:
-	:type Value: Handle_StepElement_CurveElementPurposeMember &
-	:rtype: None
-") SetValue;
-		void SetValue (const Standard_Integer Row,const Standard_Integer Col,const Handle_StepElement_CurveElementPurposeMember & Value);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:param Row:
-	:type Row: int
-	:param Col:
-	:type Col: int
-	:rtype: Handle_StepElement_CurveElementPurposeMember
-") Value;
-		Handle_StepElement_CurveElementPurposeMember Value (const Standard_Integer Row,const Standard_Integer Col);
-		%feature("compactdefaultargs") ChangeValue;
-		%feature("autodoc", "	:param Row:
-	:type Row: int
-	:param Col:
-	:type Col: int
-	:rtype: Handle_StepElement_CurveElementPurposeMember
-") ChangeValue;
-		Handle_StepElement_CurveElementPurposeMember ChangeValue (const Standard_Integer Row,const Standard_Integer Col);
-		%feature("compactdefaultargs") Array2;
-		%feature("autodoc", "	:rtype: StepElement_Array2OfCurveElementPurposeMember
-") Array2;
-		const StepElement_Array2OfCurveElementPurposeMember & Array2 ();
-		%feature("compactdefaultargs") ChangeArray2;
-		%feature("autodoc", "	:rtype: StepElement_Array2OfCurveElementPurposeMember
-") ChangeArray2;
-		StepElement_Array2OfCurveElementPurposeMember & ChangeArray2 ();
-};
-
-
-%extend StepElement_HArray2OfCurveElementPurposeMember {
-	%pythoncode {
-		def GetHandle(self):
-		    try:
-		        return self.thisHandle
-		    except:
-		        self.thisHandle = Handle_StepElement_HArray2OfCurveElementPurposeMember(self)
-		        self.thisown = False
-		        return self.thisHandle
-	}
-};
-
-%pythonappend Handle_StepElement_HArray2OfCurveElementPurposeMember::Handle_StepElement_HArray2OfCurveElementPurposeMember %{
-    # register the handle in the base object
-    if len(args) > 0:
-        register_handle(self, args[0])
-%}
-
-%nodefaultctor Handle_StepElement_HArray2OfCurveElementPurposeMember;
-class Handle_StepElement_HArray2OfCurveElementPurposeMember : public Handle_MMgt_TShared {
-
-    public:
-        // constructors
-        Handle_StepElement_HArray2OfCurveElementPurposeMember();
-        Handle_StepElement_HArray2OfCurveElementPurposeMember(const Handle_StepElement_HArray2OfCurveElementPurposeMember &aHandle);
-        Handle_StepElement_HArray2OfCurveElementPurposeMember(const StepElement_HArray2OfCurveElementPurposeMember *anItem);
-        void Nullify();
-        Standard_Boolean IsNull() const;
-        static const Handle_StepElement_HArray2OfCurveElementPurposeMember DownCast(const Handle_Standard_Transient &AnObject);
-
-};
-%extend Handle_StepElement_HArray2OfCurveElementPurposeMember {
-    StepElement_HArray2OfCurveElementPurposeMember* _get_reference() {
-    return (StepElement_HArray2OfCurveElementPurposeMember*)$self->Access();
-    }
-};
-
-%extend Handle_StepElement_HArray2OfCurveElementPurposeMember {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
-};
-
-%extend StepElement_HArray2OfCurveElementPurposeMember {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor StepElement_HArray2OfSurfaceElementPurpose;
-class StepElement_HArray2OfSurfaceElementPurpose : public MMgt_TShared {
-	public:
-		%feature("compactdefaultargs") StepElement_HArray2OfSurfaceElementPurpose;
-		%feature("autodoc", "	:param R1:
-	:type R1: int
-	:param R2:
-	:type R2: int
-	:param C1:
-	:type C1: int
-	:param C2:
-	:type C2: int
-	:rtype: None
-") StepElement_HArray2OfSurfaceElementPurpose;
-		 StepElement_HArray2OfSurfaceElementPurpose (const Standard_Integer R1,const Standard_Integer R2,const Standard_Integer C1,const Standard_Integer C2);
-		%feature("compactdefaultargs") StepElement_HArray2OfSurfaceElementPurpose;
-		%feature("autodoc", "	:param R1:
-	:type R1: int
-	:param R2:
-	:type R2: int
-	:param C1:
-	:type C1: int
-	:param C2:
-	:type C2: int
-	:param V:
-	:type V: StepElement_SurfaceElementPurpose &
-	:rtype: None
-") StepElement_HArray2OfSurfaceElementPurpose;
-		 StepElement_HArray2OfSurfaceElementPurpose (const Standard_Integer R1,const Standard_Integer R2,const Standard_Integer C1,const Standard_Integer C2,const StepElement_SurfaceElementPurpose & V);
-		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	:param V:
-	:type V: StepElement_SurfaceElementPurpose &
-	:rtype: None
-") Init;
-		void Init (const StepElement_SurfaceElementPurpose & V);
-		%feature("compactdefaultargs") ColLength;
-		%feature("autodoc", "	:rtype: int
-") ColLength;
-		Standard_Integer ColLength ();
-		%feature("compactdefaultargs") RowLength;
-		%feature("autodoc", "	:rtype: int
-") RowLength;
-		Standard_Integer RowLength ();
-		%feature("compactdefaultargs") LowerCol;
-		%feature("autodoc", "	:rtype: int
-") LowerCol;
-		Standard_Integer LowerCol ();
-		%feature("compactdefaultargs") LowerRow;
-		%feature("autodoc", "	:rtype: int
-") LowerRow;
-		Standard_Integer LowerRow ();
-		%feature("compactdefaultargs") UpperCol;
-		%feature("autodoc", "	:rtype: int
-") UpperCol;
-		Standard_Integer UpperCol ();
-		%feature("compactdefaultargs") UpperRow;
-		%feature("autodoc", "	:rtype: int
-") UpperRow;
-		Standard_Integer UpperRow ();
-		%feature("compactdefaultargs") SetValue;
-		%feature("autodoc", "	:param Row:
-	:type Row: int
-	:param Col:
-	:type Col: int
-	:param Value:
-	:type Value: StepElement_SurfaceElementPurpose &
-	:rtype: None
-") SetValue;
-		void SetValue (const Standard_Integer Row,const Standard_Integer Col,const StepElement_SurfaceElementPurpose & Value);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:param Row:
-	:type Row: int
-	:param Col:
-	:type Col: int
-	:rtype: StepElement_SurfaceElementPurpose
-") Value;
-		const StepElement_SurfaceElementPurpose & Value (const Standard_Integer Row,const Standard_Integer Col);
-		%feature("compactdefaultargs") ChangeValue;
-		%feature("autodoc", "	:param Row:
-	:type Row: int
-	:param Col:
-	:type Col: int
-	:rtype: StepElement_SurfaceElementPurpose
-") ChangeValue;
-		StepElement_SurfaceElementPurpose & ChangeValue (const Standard_Integer Row,const Standard_Integer Col);
-		%feature("compactdefaultargs") Array2;
-		%feature("autodoc", "	:rtype: StepElement_Array2OfSurfaceElementPurpose
-") Array2;
-		const StepElement_Array2OfSurfaceElementPurpose & Array2 ();
-		%feature("compactdefaultargs") ChangeArray2;
-		%feature("autodoc", "	:rtype: StepElement_Array2OfSurfaceElementPurpose
-") ChangeArray2;
-		StepElement_Array2OfSurfaceElementPurpose & ChangeArray2 ();
-};
-
-
-%extend StepElement_HArray2OfSurfaceElementPurpose {
-	%pythoncode {
-		def GetHandle(self):
-		    try:
-		        return self.thisHandle
-		    except:
-		        self.thisHandle = Handle_StepElement_HArray2OfSurfaceElementPurpose(self)
-		        self.thisown = False
-		        return self.thisHandle
-	}
-};
-
-%pythonappend Handle_StepElement_HArray2OfSurfaceElementPurpose::Handle_StepElement_HArray2OfSurfaceElementPurpose %{
-    # register the handle in the base object
-    if len(args) > 0:
-        register_handle(self, args[0])
-%}
-
-%nodefaultctor Handle_StepElement_HArray2OfSurfaceElementPurpose;
-class Handle_StepElement_HArray2OfSurfaceElementPurpose : public Handle_MMgt_TShared {
-
-    public:
-        // constructors
-        Handle_StepElement_HArray2OfSurfaceElementPurpose();
-        Handle_StepElement_HArray2OfSurfaceElementPurpose(const Handle_StepElement_HArray2OfSurfaceElementPurpose &aHandle);
-        Handle_StepElement_HArray2OfSurfaceElementPurpose(const StepElement_HArray2OfSurfaceElementPurpose *anItem);
-        void Nullify();
-        Standard_Boolean IsNull() const;
-        static const Handle_StepElement_HArray2OfSurfaceElementPurpose DownCast(const Handle_Standard_Transient &AnObject);
-
-};
-%extend Handle_StepElement_HArray2OfSurfaceElementPurpose {
-    StepElement_HArray2OfSurfaceElementPurpose* _get_reference() {
-    return (StepElement_HArray2OfSurfaceElementPurpose*)$self->Access();
-    }
-};
-
-%extend Handle_StepElement_HArray2OfSurfaceElementPurpose {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
-};
-
-%extend StepElement_HArray2OfSurfaceElementPurpose {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor StepElement_HArray2OfSurfaceElementPurposeMember;
-class StepElement_HArray2OfSurfaceElementPurposeMember : public MMgt_TShared {
-	public:
-		%feature("compactdefaultargs") StepElement_HArray2OfSurfaceElementPurposeMember;
-		%feature("autodoc", "	:param R1:
-	:type R1: int
-	:param R2:
-	:type R2: int
-	:param C1:
-	:type C1: int
-	:param C2:
-	:type C2: int
-	:rtype: None
-") StepElement_HArray2OfSurfaceElementPurposeMember;
-		 StepElement_HArray2OfSurfaceElementPurposeMember (const Standard_Integer R1,const Standard_Integer R2,const Standard_Integer C1,const Standard_Integer C2);
-		%feature("compactdefaultargs") StepElement_HArray2OfSurfaceElementPurposeMember;
-		%feature("autodoc", "	:param R1:
-	:type R1: int
-	:param R2:
-	:type R2: int
-	:param C1:
-	:type C1: int
-	:param C2:
-	:type C2: int
-	:param V:
-	:type V: Handle_StepElement_SurfaceElementPurposeMember &
-	:rtype: None
-") StepElement_HArray2OfSurfaceElementPurposeMember;
-		 StepElement_HArray2OfSurfaceElementPurposeMember (const Standard_Integer R1,const Standard_Integer R2,const Standard_Integer C1,const Standard_Integer C2,const Handle_StepElement_SurfaceElementPurposeMember & V);
-		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	:param V:
-	:type V: Handle_StepElement_SurfaceElementPurposeMember &
-	:rtype: None
-") Init;
-		void Init (const Handle_StepElement_SurfaceElementPurposeMember & V);
-		%feature("compactdefaultargs") ColLength;
-		%feature("autodoc", "	:rtype: int
-") ColLength;
-		Standard_Integer ColLength ();
-		%feature("compactdefaultargs") RowLength;
-		%feature("autodoc", "	:rtype: int
-") RowLength;
-		Standard_Integer RowLength ();
-		%feature("compactdefaultargs") LowerCol;
-		%feature("autodoc", "	:rtype: int
-") LowerCol;
-		Standard_Integer LowerCol ();
-		%feature("compactdefaultargs") LowerRow;
-		%feature("autodoc", "	:rtype: int
-") LowerRow;
-		Standard_Integer LowerRow ();
-		%feature("compactdefaultargs") UpperCol;
-		%feature("autodoc", "	:rtype: int
-") UpperCol;
-		Standard_Integer UpperCol ();
-		%feature("compactdefaultargs") UpperRow;
-		%feature("autodoc", "	:rtype: int
-") UpperRow;
-		Standard_Integer UpperRow ();
-		%feature("compactdefaultargs") SetValue;
-		%feature("autodoc", "	:param Row:
-	:type Row: int
-	:param Col:
-	:type Col: int
-	:param Value:
-	:type Value: Handle_StepElement_SurfaceElementPurposeMember &
-	:rtype: None
-") SetValue;
-		void SetValue (const Standard_Integer Row,const Standard_Integer Col,const Handle_StepElement_SurfaceElementPurposeMember & Value);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:param Row:
-	:type Row: int
-	:param Col:
-	:type Col: int
-	:rtype: Handle_StepElement_SurfaceElementPurposeMember
-") Value;
-		Handle_StepElement_SurfaceElementPurposeMember Value (const Standard_Integer Row,const Standard_Integer Col);
-		%feature("compactdefaultargs") ChangeValue;
-		%feature("autodoc", "	:param Row:
-	:type Row: int
-	:param Col:
-	:type Col: int
-	:rtype: Handle_StepElement_SurfaceElementPurposeMember
-") ChangeValue;
-		Handle_StepElement_SurfaceElementPurposeMember ChangeValue (const Standard_Integer Row,const Standard_Integer Col);
-		%feature("compactdefaultargs") Array2;
-		%feature("autodoc", "	:rtype: StepElement_Array2OfSurfaceElementPurposeMember
-") Array2;
-		const StepElement_Array2OfSurfaceElementPurposeMember & Array2 ();
-		%feature("compactdefaultargs") ChangeArray2;
-		%feature("autodoc", "	:rtype: StepElement_Array2OfSurfaceElementPurposeMember
-") ChangeArray2;
-		StepElement_Array2OfSurfaceElementPurposeMember & ChangeArray2 ();
-};
-
-
-%extend StepElement_HArray2OfSurfaceElementPurposeMember {
-	%pythoncode {
-		def GetHandle(self):
-		    try:
-		        return self.thisHandle
-		    except:
-		        self.thisHandle = Handle_StepElement_HArray2OfSurfaceElementPurposeMember(self)
-		        self.thisown = False
-		        return self.thisHandle
-	}
-};
-
-%pythonappend Handle_StepElement_HArray2OfSurfaceElementPurposeMember::Handle_StepElement_HArray2OfSurfaceElementPurposeMember %{
-    # register the handle in the base object
-    if len(args) > 0:
-        register_handle(self, args[0])
-%}
-
-%nodefaultctor Handle_StepElement_HArray2OfSurfaceElementPurposeMember;
-class Handle_StepElement_HArray2OfSurfaceElementPurposeMember : public Handle_MMgt_TShared {
-
-    public:
-        // constructors
-        Handle_StepElement_HArray2OfSurfaceElementPurposeMember();
-        Handle_StepElement_HArray2OfSurfaceElementPurposeMember(const Handle_StepElement_HArray2OfSurfaceElementPurposeMember &aHandle);
-        Handle_StepElement_HArray2OfSurfaceElementPurposeMember(const StepElement_HArray2OfSurfaceElementPurposeMember *anItem);
-        void Nullify();
-        Standard_Boolean IsNull() const;
-        static const Handle_StepElement_HArray2OfSurfaceElementPurposeMember DownCast(const Handle_Standard_Transient &AnObject);
-
-};
-%extend Handle_StepElement_HArray2OfSurfaceElementPurposeMember {
-    StepElement_HArray2OfSurfaceElementPurposeMember* _get_reference() {
-    return (StepElement_HArray2OfSurfaceElementPurposeMember*)$self->Access();
-    }
-};
-
-%extend Handle_StepElement_HArray2OfSurfaceElementPurposeMember {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
-};
-
-%extend StepElement_HArray2OfSurfaceElementPurposeMember {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor StepElement_HSequenceOfCurveElementPurposeMember;
-class StepElement_HSequenceOfCurveElementPurposeMember : public MMgt_TShared {
-	public:
-		%feature("compactdefaultargs") StepElement_HSequenceOfCurveElementPurposeMember;
-		%feature("autodoc", "	:rtype: None
-") StepElement_HSequenceOfCurveElementPurposeMember;
-		 StepElement_HSequenceOfCurveElementPurposeMember ();
-		%feature("compactdefaultargs") IsEmpty;
-		%feature("autodoc", "	:rtype: bool
-") IsEmpty;
-		Standard_Boolean IsEmpty ();
-		%feature("compactdefaultargs") Length;
-		%feature("autodoc", "	:rtype: int
-") Length;
-		Standard_Integer Length ();
-		%feature("compactdefaultargs") Clear;
-		%feature("autodoc", "	:rtype: None
-") Clear;
-		void Clear ();
-		%feature("compactdefaultargs") Append;
-		%feature("autodoc", "	:param anItem:
-	:type anItem: Handle_StepElement_CurveElementPurposeMember &
-	:rtype: None
-") Append;
-		void Append (const Handle_StepElement_CurveElementPurposeMember & anItem);
-		%feature("compactdefaultargs") Append;
-		%feature("autodoc", "	:param aSequence:
-	:type aSequence: Handle_StepElement_HSequenceOfCurveElementPurposeMember &
-	:rtype: None
-") Append;
-		void Append (const Handle_StepElement_HSequenceOfCurveElementPurposeMember & aSequence);
-		%feature("compactdefaultargs") Prepend;
-		%feature("autodoc", "	:param anItem:
-	:type anItem: Handle_StepElement_CurveElementPurposeMember &
-	:rtype: None
-") Prepend;
-		void Prepend (const Handle_StepElement_CurveElementPurposeMember & anItem);
-		%feature("compactdefaultargs") Prepend;
-		%feature("autodoc", "	:param aSequence:
-	:type aSequence: Handle_StepElement_HSequenceOfCurveElementPurposeMember &
-	:rtype: None
-") Prepend;
-		void Prepend (const Handle_StepElement_HSequenceOfCurveElementPurposeMember & aSequence);
-		%feature("compactdefaultargs") Reverse;
-		%feature("autodoc", "	:rtype: None
-") Reverse;
-		void Reverse ();
-		%feature("compactdefaultargs") InsertBefore;
-		%feature("autodoc", "	:param anIndex:
-	:type anIndex: int
-	:param anItem:
-	:type anItem: Handle_StepElement_CurveElementPurposeMember &
-	:rtype: None
-") InsertBefore;
-		void InsertBefore (const Standard_Integer anIndex,const Handle_StepElement_CurveElementPurposeMember & anItem);
-		%feature("compactdefaultargs") InsertBefore;
-		%feature("autodoc", "	:param anIndex:
-	:type anIndex: int
-	:param aSequence:
-	:type aSequence: Handle_StepElement_HSequenceOfCurveElementPurposeMember &
-	:rtype: None
-") InsertBefore;
-		void InsertBefore (const Standard_Integer anIndex,const Handle_StepElement_HSequenceOfCurveElementPurposeMember & aSequence);
-		%feature("compactdefaultargs") InsertAfter;
-		%feature("autodoc", "	:param anIndex:
-	:type anIndex: int
-	:param anItem:
-	:type anItem: Handle_StepElement_CurveElementPurposeMember &
-	:rtype: None
-") InsertAfter;
-		void InsertAfter (const Standard_Integer anIndex,const Handle_StepElement_CurveElementPurposeMember & anItem);
-		%feature("compactdefaultargs") InsertAfter;
-		%feature("autodoc", "	:param anIndex:
-	:type anIndex: int
-	:param aSequence:
-	:type aSequence: Handle_StepElement_HSequenceOfCurveElementPurposeMember &
-	:rtype: None
-") InsertAfter;
-		void InsertAfter (const Standard_Integer anIndex,const Handle_StepElement_HSequenceOfCurveElementPurposeMember & aSequence);
-		%feature("compactdefaultargs") Exchange;
-		%feature("autodoc", "	:param anIndex:
-	:type anIndex: int
-	:param anOtherIndex:
-	:type anOtherIndex: int
-	:rtype: None
-") Exchange;
-		void Exchange (const Standard_Integer anIndex,const Standard_Integer anOtherIndex);
-		%feature("compactdefaultargs") Split;
-		%feature("autodoc", "	:param anIndex:
-	:type anIndex: int
-	:rtype: Handle_StepElement_HSequenceOfCurveElementPurposeMember
-") Split;
-		Handle_StepElement_HSequenceOfCurveElementPurposeMember Split (const Standard_Integer anIndex);
-		%feature("compactdefaultargs") SetValue;
-		%feature("autodoc", "	:param anIndex:
-	:type anIndex: int
-	:param anItem:
-	:type anItem: Handle_StepElement_CurveElementPurposeMember &
-	:rtype: None
-") SetValue;
-		void SetValue (const Standard_Integer anIndex,const Handle_StepElement_CurveElementPurposeMember & anItem);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:param anIndex:
-	:type anIndex: int
-	:rtype: Handle_StepElement_CurveElementPurposeMember
-") Value;
-		Handle_StepElement_CurveElementPurposeMember Value (const Standard_Integer anIndex);
-		%feature("compactdefaultargs") ChangeValue;
-		%feature("autodoc", "	:param anIndex:
-	:type anIndex: int
-	:rtype: Handle_StepElement_CurveElementPurposeMember
-") ChangeValue;
-		Handle_StepElement_CurveElementPurposeMember ChangeValue (const Standard_Integer anIndex);
-		%feature("compactdefaultargs") Remove;
-		%feature("autodoc", "	:param anIndex:
-	:type anIndex: int
-	:rtype: None
-") Remove;
-		void Remove (const Standard_Integer anIndex);
-		%feature("compactdefaultargs") Remove;
-		%feature("autodoc", "	:param fromIndex:
-	:type fromIndex: int
-	:param toIndex:
-	:type toIndex: int
-	:rtype: None
-") Remove;
-		void Remove (const Standard_Integer fromIndex,const Standard_Integer toIndex);
-		%feature("compactdefaultargs") Sequence;
-		%feature("autodoc", "	:rtype: StepElement_SequenceOfCurveElementPurposeMember
-") Sequence;
-		const StepElement_SequenceOfCurveElementPurposeMember & Sequence ();
-		%feature("compactdefaultargs") ChangeSequence;
-		%feature("autodoc", "	:rtype: StepElement_SequenceOfCurveElementPurposeMember
-") ChangeSequence;
-		StepElement_SequenceOfCurveElementPurposeMember & ChangeSequence ();
-};
-
-
-%extend StepElement_HSequenceOfCurveElementPurposeMember {
-	%pythoncode {
-		def GetHandle(self):
-		    try:
-		        return self.thisHandle
-		    except:
-		        self.thisHandle = Handle_StepElement_HSequenceOfCurveElementPurposeMember(self)
-		        self.thisown = False
-		        return self.thisHandle
-	}
-};
-
-%pythonappend Handle_StepElement_HSequenceOfCurveElementPurposeMember::Handle_StepElement_HSequenceOfCurveElementPurposeMember %{
-    # register the handle in the base object
-    if len(args) > 0:
-        register_handle(self, args[0])
-%}
-
-%nodefaultctor Handle_StepElement_HSequenceOfCurveElementPurposeMember;
-class Handle_StepElement_HSequenceOfCurveElementPurposeMember : public Handle_MMgt_TShared {
-
-    public:
-        // constructors
-        Handle_StepElement_HSequenceOfCurveElementPurposeMember();
-        Handle_StepElement_HSequenceOfCurveElementPurposeMember(const Handle_StepElement_HSequenceOfCurveElementPurposeMember &aHandle);
-        Handle_StepElement_HSequenceOfCurveElementPurposeMember(const StepElement_HSequenceOfCurveElementPurposeMember *anItem);
-        void Nullify();
-        Standard_Boolean IsNull() const;
-        static const Handle_StepElement_HSequenceOfCurveElementPurposeMember DownCast(const Handle_Standard_Transient &AnObject);
-
-};
-%extend Handle_StepElement_HSequenceOfCurveElementPurposeMember {
-    StepElement_HSequenceOfCurveElementPurposeMember* _get_reference() {
-    return (StepElement_HSequenceOfCurveElementPurposeMember*)$self->Access();
-    }
-};
-
-%extend Handle_StepElement_HSequenceOfCurveElementPurposeMember {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
-};
-
-%extend StepElement_HSequenceOfCurveElementPurposeMember {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor StepElement_HSequenceOfCurveElementSectionDefinition;
-class StepElement_HSequenceOfCurveElementSectionDefinition : public MMgt_TShared {
-	public:
-		%feature("compactdefaultargs") StepElement_HSequenceOfCurveElementSectionDefinition;
-		%feature("autodoc", "	:rtype: None
-") StepElement_HSequenceOfCurveElementSectionDefinition;
-		 StepElement_HSequenceOfCurveElementSectionDefinition ();
-		%feature("compactdefaultargs") IsEmpty;
-		%feature("autodoc", "	:rtype: bool
-") IsEmpty;
-		Standard_Boolean IsEmpty ();
-		%feature("compactdefaultargs") Length;
-		%feature("autodoc", "	:rtype: int
-") Length;
-		Standard_Integer Length ();
-		%feature("compactdefaultargs") Clear;
-		%feature("autodoc", "	:rtype: None
-") Clear;
-		void Clear ();
-		%feature("compactdefaultargs") Append;
-		%feature("autodoc", "	:param anItem:
-	:type anItem: Handle_StepElement_CurveElementSectionDefinition &
-	:rtype: None
-") Append;
-		void Append (const Handle_StepElement_CurveElementSectionDefinition & anItem);
-		%feature("compactdefaultargs") Append;
-		%feature("autodoc", "	:param aSequence:
-	:type aSequence: Handle_StepElement_HSequenceOfCurveElementSectionDefinition &
-	:rtype: None
-") Append;
-		void Append (const Handle_StepElement_HSequenceOfCurveElementSectionDefinition & aSequence);
-		%feature("compactdefaultargs") Prepend;
-		%feature("autodoc", "	:param anItem:
-	:type anItem: Handle_StepElement_CurveElementSectionDefinition &
-	:rtype: None
-") Prepend;
-		void Prepend (const Handle_StepElement_CurveElementSectionDefinition & anItem);
-		%feature("compactdefaultargs") Prepend;
-		%feature("autodoc", "	:param aSequence:
-	:type aSequence: Handle_StepElement_HSequenceOfCurveElementSectionDefinition &
-	:rtype: None
-") Prepend;
-		void Prepend (const Handle_StepElement_HSequenceOfCurveElementSectionDefinition & aSequence);
-		%feature("compactdefaultargs") Reverse;
-		%feature("autodoc", "	:rtype: None
-") Reverse;
-		void Reverse ();
-		%feature("compactdefaultargs") InsertBefore;
-		%feature("autodoc", "	:param anIndex:
-	:type anIndex: int
-	:param anItem:
-	:type anItem: Handle_StepElement_CurveElementSectionDefinition &
-	:rtype: None
-") InsertBefore;
-		void InsertBefore (const Standard_Integer anIndex,const Handle_StepElement_CurveElementSectionDefinition & anItem);
-		%feature("compactdefaultargs") InsertBefore;
-		%feature("autodoc", "	:param anIndex:
-	:type anIndex: int
-	:param aSequence:
-	:type aSequence: Handle_StepElement_HSequenceOfCurveElementSectionDefinition &
-	:rtype: None
-") InsertBefore;
-		void InsertBefore (const Standard_Integer anIndex,const Handle_StepElement_HSequenceOfCurveElementSectionDefinition & aSequence);
-		%feature("compactdefaultargs") InsertAfter;
-		%feature("autodoc", "	:param anIndex:
-	:type anIndex: int
-	:param anItem:
-	:type anItem: Handle_StepElement_CurveElementSectionDefinition &
-	:rtype: None
-") InsertAfter;
-		void InsertAfter (const Standard_Integer anIndex,const Handle_StepElement_CurveElementSectionDefinition & anItem);
-		%feature("compactdefaultargs") InsertAfter;
-		%feature("autodoc", "	:param anIndex:
-	:type anIndex: int
-	:param aSequence:
-	:type aSequence: Handle_StepElement_HSequenceOfCurveElementSectionDefinition &
-	:rtype: None
-") InsertAfter;
-		void InsertAfter (const Standard_Integer anIndex,const Handle_StepElement_HSequenceOfCurveElementSectionDefinition & aSequence);
-		%feature("compactdefaultargs") Exchange;
-		%feature("autodoc", "	:param anIndex:
-	:type anIndex: int
-	:param anOtherIndex:
-	:type anOtherIndex: int
-	:rtype: None
-") Exchange;
-		void Exchange (const Standard_Integer anIndex,const Standard_Integer anOtherIndex);
-		%feature("compactdefaultargs") Split;
-		%feature("autodoc", "	:param anIndex:
-	:type anIndex: int
-	:rtype: Handle_StepElement_HSequenceOfCurveElementSectionDefinition
-") Split;
-		Handle_StepElement_HSequenceOfCurveElementSectionDefinition Split (const Standard_Integer anIndex);
-		%feature("compactdefaultargs") SetValue;
-		%feature("autodoc", "	:param anIndex:
-	:type anIndex: int
-	:param anItem:
-	:type anItem: Handle_StepElement_CurveElementSectionDefinition &
-	:rtype: None
-") SetValue;
-		void SetValue (const Standard_Integer anIndex,const Handle_StepElement_CurveElementSectionDefinition & anItem);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:param anIndex:
-	:type anIndex: int
-	:rtype: Handle_StepElement_CurveElementSectionDefinition
-") Value;
-		Handle_StepElement_CurveElementSectionDefinition Value (const Standard_Integer anIndex);
-		%feature("compactdefaultargs") ChangeValue;
-		%feature("autodoc", "	:param anIndex:
-	:type anIndex: int
-	:rtype: Handle_StepElement_CurveElementSectionDefinition
-") ChangeValue;
-		Handle_StepElement_CurveElementSectionDefinition ChangeValue (const Standard_Integer anIndex);
-		%feature("compactdefaultargs") Remove;
-		%feature("autodoc", "	:param anIndex:
-	:type anIndex: int
-	:rtype: None
-") Remove;
-		void Remove (const Standard_Integer anIndex);
-		%feature("compactdefaultargs") Remove;
-		%feature("autodoc", "	:param fromIndex:
-	:type fromIndex: int
-	:param toIndex:
-	:type toIndex: int
-	:rtype: None
-") Remove;
-		void Remove (const Standard_Integer fromIndex,const Standard_Integer toIndex);
-		%feature("compactdefaultargs") Sequence;
-		%feature("autodoc", "	:rtype: StepElement_SequenceOfCurveElementSectionDefinition
-") Sequence;
-		const StepElement_SequenceOfCurveElementSectionDefinition & Sequence ();
-		%feature("compactdefaultargs") ChangeSequence;
-		%feature("autodoc", "	:rtype: StepElement_SequenceOfCurveElementSectionDefinition
-") ChangeSequence;
-		StepElement_SequenceOfCurveElementSectionDefinition & ChangeSequence ();
-};
-
-
-%extend StepElement_HSequenceOfCurveElementSectionDefinition {
-	%pythoncode {
-		def GetHandle(self):
-		    try:
-		        return self.thisHandle
-		    except:
-		        self.thisHandle = Handle_StepElement_HSequenceOfCurveElementSectionDefinition(self)
-		        self.thisown = False
-		        return self.thisHandle
-	}
-};
-
-%pythonappend Handle_StepElement_HSequenceOfCurveElementSectionDefinition::Handle_StepElement_HSequenceOfCurveElementSectionDefinition %{
-    # register the handle in the base object
-    if len(args) > 0:
-        register_handle(self, args[0])
-%}
-
-%nodefaultctor Handle_StepElement_HSequenceOfCurveElementSectionDefinition;
-class Handle_StepElement_HSequenceOfCurveElementSectionDefinition : public Handle_MMgt_TShared {
-
-    public:
-        // constructors
-        Handle_StepElement_HSequenceOfCurveElementSectionDefinition();
-        Handle_StepElement_HSequenceOfCurveElementSectionDefinition(const Handle_StepElement_HSequenceOfCurveElementSectionDefinition &aHandle);
-        Handle_StepElement_HSequenceOfCurveElementSectionDefinition(const StepElement_HSequenceOfCurveElementSectionDefinition *anItem);
-        void Nullify();
-        Standard_Boolean IsNull() const;
-        static const Handle_StepElement_HSequenceOfCurveElementSectionDefinition DownCast(const Handle_Standard_Transient &AnObject);
-
-};
-%extend Handle_StepElement_HSequenceOfCurveElementSectionDefinition {
-    StepElement_HSequenceOfCurveElementSectionDefinition* _get_reference() {
-    return (StepElement_HSequenceOfCurveElementSectionDefinition*)$self->Access();
-    }
-};
-
-%extend Handle_StepElement_HSequenceOfCurveElementSectionDefinition {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
-};
-
-%extend StepElement_HSequenceOfCurveElementSectionDefinition {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor StepElement_HSequenceOfElementMaterial;
-class StepElement_HSequenceOfElementMaterial : public MMgt_TShared {
-	public:
-		%feature("compactdefaultargs") StepElement_HSequenceOfElementMaterial;
-		%feature("autodoc", "	:rtype: None
-") StepElement_HSequenceOfElementMaterial;
-		 StepElement_HSequenceOfElementMaterial ();
-		%feature("compactdefaultargs") IsEmpty;
-		%feature("autodoc", "	:rtype: bool
-") IsEmpty;
-		Standard_Boolean IsEmpty ();
-		%feature("compactdefaultargs") Length;
-		%feature("autodoc", "	:rtype: int
-") Length;
-		Standard_Integer Length ();
-		%feature("compactdefaultargs") Clear;
-		%feature("autodoc", "	:rtype: None
-") Clear;
-		void Clear ();
-		%feature("compactdefaultargs") Append;
-		%feature("autodoc", "	:param anItem:
-	:type anItem: Handle_StepElement_ElementMaterial &
-	:rtype: None
-") Append;
-		void Append (const Handle_StepElement_ElementMaterial & anItem);
-		%feature("compactdefaultargs") Append;
-		%feature("autodoc", "	:param aSequence:
-	:type aSequence: Handle_StepElement_HSequenceOfElementMaterial &
-	:rtype: None
-") Append;
-		void Append (const Handle_StepElement_HSequenceOfElementMaterial & aSequence);
-		%feature("compactdefaultargs") Prepend;
-		%feature("autodoc", "	:param anItem:
-	:type anItem: Handle_StepElement_ElementMaterial &
-	:rtype: None
-") Prepend;
-		void Prepend (const Handle_StepElement_ElementMaterial & anItem);
-		%feature("compactdefaultargs") Prepend;
-		%feature("autodoc", "	:param aSequence:
-	:type aSequence: Handle_StepElement_HSequenceOfElementMaterial &
-	:rtype: None
-") Prepend;
-		void Prepend (const Handle_StepElement_HSequenceOfElementMaterial & aSequence);
-		%feature("compactdefaultargs") Reverse;
-		%feature("autodoc", "	:rtype: None
-") Reverse;
-		void Reverse ();
-		%feature("compactdefaultargs") InsertBefore;
-		%feature("autodoc", "	:param anIndex:
-	:type anIndex: int
-	:param anItem:
-	:type anItem: Handle_StepElement_ElementMaterial &
-	:rtype: None
-") InsertBefore;
-		void InsertBefore (const Standard_Integer anIndex,const Handle_StepElement_ElementMaterial & anItem);
-		%feature("compactdefaultargs") InsertBefore;
-		%feature("autodoc", "	:param anIndex:
-	:type anIndex: int
-	:param aSequence:
-	:type aSequence: Handle_StepElement_HSequenceOfElementMaterial &
-	:rtype: None
-") InsertBefore;
-		void InsertBefore (const Standard_Integer anIndex,const Handle_StepElement_HSequenceOfElementMaterial & aSequence);
-		%feature("compactdefaultargs") InsertAfter;
-		%feature("autodoc", "	:param anIndex:
-	:type anIndex: int
-	:param anItem:
-	:type anItem: Handle_StepElement_ElementMaterial &
-	:rtype: None
-") InsertAfter;
-		void InsertAfter (const Standard_Integer anIndex,const Handle_StepElement_ElementMaterial & anItem);
-		%feature("compactdefaultargs") InsertAfter;
-		%feature("autodoc", "	:param anIndex:
-	:type anIndex: int
-	:param aSequence:
-	:type aSequence: Handle_StepElement_HSequenceOfElementMaterial &
-	:rtype: None
-") InsertAfter;
-		void InsertAfter (const Standard_Integer anIndex,const Handle_StepElement_HSequenceOfElementMaterial & aSequence);
-		%feature("compactdefaultargs") Exchange;
-		%feature("autodoc", "	:param anIndex:
-	:type anIndex: int
-	:param anOtherIndex:
-	:type anOtherIndex: int
-	:rtype: None
-") Exchange;
-		void Exchange (const Standard_Integer anIndex,const Standard_Integer anOtherIndex);
-		%feature("compactdefaultargs") Split;
-		%feature("autodoc", "	:param anIndex:
-	:type anIndex: int
-	:rtype: Handle_StepElement_HSequenceOfElementMaterial
-") Split;
-		Handle_StepElement_HSequenceOfElementMaterial Split (const Standard_Integer anIndex);
-		%feature("compactdefaultargs") SetValue;
-		%feature("autodoc", "	:param anIndex:
-	:type anIndex: int
-	:param anItem:
-	:type anItem: Handle_StepElement_ElementMaterial &
-	:rtype: None
-") SetValue;
-		void SetValue (const Standard_Integer anIndex,const Handle_StepElement_ElementMaterial & anItem);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:param anIndex:
-	:type anIndex: int
-	:rtype: Handle_StepElement_ElementMaterial
-") Value;
-		Handle_StepElement_ElementMaterial Value (const Standard_Integer anIndex);
-		%feature("compactdefaultargs") ChangeValue;
-		%feature("autodoc", "	:param anIndex:
-	:type anIndex: int
-	:rtype: Handle_StepElement_ElementMaterial
-") ChangeValue;
-		Handle_StepElement_ElementMaterial ChangeValue (const Standard_Integer anIndex);
-		%feature("compactdefaultargs") Remove;
-		%feature("autodoc", "	:param anIndex:
-	:type anIndex: int
-	:rtype: None
-") Remove;
-		void Remove (const Standard_Integer anIndex);
-		%feature("compactdefaultargs") Remove;
-		%feature("autodoc", "	:param fromIndex:
-	:type fromIndex: int
-	:param toIndex:
-	:type toIndex: int
-	:rtype: None
-") Remove;
-		void Remove (const Standard_Integer fromIndex,const Standard_Integer toIndex);
-		%feature("compactdefaultargs") Sequence;
-		%feature("autodoc", "	:rtype: StepElement_SequenceOfElementMaterial
-") Sequence;
-		const StepElement_SequenceOfElementMaterial & Sequence ();
-		%feature("compactdefaultargs") ChangeSequence;
-		%feature("autodoc", "	:rtype: StepElement_SequenceOfElementMaterial
-") ChangeSequence;
-		StepElement_SequenceOfElementMaterial & ChangeSequence ();
-};
-
-
-%extend StepElement_HSequenceOfElementMaterial {
-	%pythoncode {
-		def GetHandle(self):
-		    try:
-		        return self.thisHandle
-		    except:
-		        self.thisHandle = Handle_StepElement_HSequenceOfElementMaterial(self)
-		        self.thisown = False
-		        return self.thisHandle
-	}
-};
-
-%pythonappend Handle_StepElement_HSequenceOfElementMaterial::Handle_StepElement_HSequenceOfElementMaterial %{
-    # register the handle in the base object
-    if len(args) > 0:
-        register_handle(self, args[0])
-%}
-
-%nodefaultctor Handle_StepElement_HSequenceOfElementMaterial;
-class Handle_StepElement_HSequenceOfElementMaterial : public Handle_MMgt_TShared {
-
-    public:
-        // constructors
-        Handle_StepElement_HSequenceOfElementMaterial();
-        Handle_StepElement_HSequenceOfElementMaterial(const Handle_StepElement_HSequenceOfElementMaterial &aHandle);
-        Handle_StepElement_HSequenceOfElementMaterial(const StepElement_HSequenceOfElementMaterial *anItem);
-        void Nullify();
-        Standard_Boolean IsNull() const;
-        static const Handle_StepElement_HSequenceOfElementMaterial DownCast(const Handle_Standard_Transient &AnObject);
-
-};
-%extend Handle_StepElement_HSequenceOfElementMaterial {
-    StepElement_HSequenceOfElementMaterial* _get_reference() {
-    return (StepElement_HSequenceOfElementMaterial*)$self->Access();
-    }
-};
-
-%extend Handle_StepElement_HSequenceOfElementMaterial {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
-};
-
-%extend StepElement_HSequenceOfElementMaterial {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor StepElement_HSequenceOfSurfaceElementPurposeMember;
-class StepElement_HSequenceOfSurfaceElementPurposeMember : public MMgt_TShared {
-	public:
-		%feature("compactdefaultargs") StepElement_HSequenceOfSurfaceElementPurposeMember;
-		%feature("autodoc", "	:rtype: None
-") StepElement_HSequenceOfSurfaceElementPurposeMember;
-		 StepElement_HSequenceOfSurfaceElementPurposeMember ();
-		%feature("compactdefaultargs") IsEmpty;
-		%feature("autodoc", "	:rtype: bool
-") IsEmpty;
-		Standard_Boolean IsEmpty ();
-		%feature("compactdefaultargs") Length;
-		%feature("autodoc", "	:rtype: int
-") Length;
-		Standard_Integer Length ();
-		%feature("compactdefaultargs") Clear;
-		%feature("autodoc", "	:rtype: None
-") Clear;
-		void Clear ();
-		%feature("compactdefaultargs") Append;
-		%feature("autodoc", "	:param anItem:
-	:type anItem: Handle_StepElement_SurfaceElementPurposeMember &
-	:rtype: None
-") Append;
-		void Append (const Handle_StepElement_SurfaceElementPurposeMember & anItem);
-		%feature("compactdefaultargs") Append;
-		%feature("autodoc", "	:param aSequence:
-	:type aSequence: Handle_StepElement_HSequenceOfSurfaceElementPurposeMember &
-	:rtype: None
-") Append;
-		void Append (const Handle_StepElement_HSequenceOfSurfaceElementPurposeMember & aSequence);
-		%feature("compactdefaultargs") Prepend;
-		%feature("autodoc", "	:param anItem:
-	:type anItem: Handle_StepElement_SurfaceElementPurposeMember &
-	:rtype: None
-") Prepend;
-		void Prepend (const Handle_StepElement_SurfaceElementPurposeMember & anItem);
-		%feature("compactdefaultargs") Prepend;
-		%feature("autodoc", "	:param aSequence:
-	:type aSequence: Handle_StepElement_HSequenceOfSurfaceElementPurposeMember &
-	:rtype: None
-") Prepend;
-		void Prepend (const Handle_StepElement_HSequenceOfSurfaceElementPurposeMember & aSequence);
-		%feature("compactdefaultargs") Reverse;
-		%feature("autodoc", "	:rtype: None
-") Reverse;
-		void Reverse ();
-		%feature("compactdefaultargs") InsertBefore;
-		%feature("autodoc", "	:param anIndex:
-	:type anIndex: int
-	:param anItem:
-	:type anItem: Handle_StepElement_SurfaceElementPurposeMember &
-	:rtype: None
-") InsertBefore;
-		void InsertBefore (const Standard_Integer anIndex,const Handle_StepElement_SurfaceElementPurposeMember & anItem);
-		%feature("compactdefaultargs") InsertBefore;
-		%feature("autodoc", "	:param anIndex:
-	:type anIndex: int
-	:param aSequence:
-	:type aSequence: Handle_StepElement_HSequenceOfSurfaceElementPurposeMember &
-	:rtype: None
-") InsertBefore;
-		void InsertBefore (const Standard_Integer anIndex,const Handle_StepElement_HSequenceOfSurfaceElementPurposeMember & aSequence);
-		%feature("compactdefaultargs") InsertAfter;
-		%feature("autodoc", "	:param anIndex:
-	:type anIndex: int
-	:param anItem:
-	:type anItem: Handle_StepElement_SurfaceElementPurposeMember &
-	:rtype: None
-") InsertAfter;
-		void InsertAfter (const Standard_Integer anIndex,const Handle_StepElement_SurfaceElementPurposeMember & anItem);
-		%feature("compactdefaultargs") InsertAfter;
-		%feature("autodoc", "	:param anIndex:
-	:type anIndex: int
-	:param aSequence:
-	:type aSequence: Handle_StepElement_HSequenceOfSurfaceElementPurposeMember &
-	:rtype: None
-") InsertAfter;
-		void InsertAfter (const Standard_Integer anIndex,const Handle_StepElement_HSequenceOfSurfaceElementPurposeMember & aSequence);
-		%feature("compactdefaultargs") Exchange;
-		%feature("autodoc", "	:param anIndex:
-	:type anIndex: int
-	:param anOtherIndex:
-	:type anOtherIndex: int
-	:rtype: None
-") Exchange;
-		void Exchange (const Standard_Integer anIndex,const Standard_Integer anOtherIndex);
-		%feature("compactdefaultargs") Split;
-		%feature("autodoc", "	:param anIndex:
-	:type anIndex: int
-	:rtype: Handle_StepElement_HSequenceOfSurfaceElementPurposeMember
-") Split;
-		Handle_StepElement_HSequenceOfSurfaceElementPurposeMember Split (const Standard_Integer anIndex);
-		%feature("compactdefaultargs") SetValue;
-		%feature("autodoc", "	:param anIndex:
-	:type anIndex: int
-	:param anItem:
-	:type anItem: Handle_StepElement_SurfaceElementPurposeMember &
-	:rtype: None
-") SetValue;
-		void SetValue (const Standard_Integer anIndex,const Handle_StepElement_SurfaceElementPurposeMember & anItem);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:param anIndex:
-	:type anIndex: int
-	:rtype: Handle_StepElement_SurfaceElementPurposeMember
-") Value;
-		Handle_StepElement_SurfaceElementPurposeMember Value (const Standard_Integer anIndex);
-		%feature("compactdefaultargs") ChangeValue;
-		%feature("autodoc", "	:param anIndex:
-	:type anIndex: int
-	:rtype: Handle_StepElement_SurfaceElementPurposeMember
-") ChangeValue;
-		Handle_StepElement_SurfaceElementPurposeMember ChangeValue (const Standard_Integer anIndex);
-		%feature("compactdefaultargs") Remove;
-		%feature("autodoc", "	:param anIndex:
-	:type anIndex: int
-	:rtype: None
-") Remove;
-		void Remove (const Standard_Integer anIndex);
-		%feature("compactdefaultargs") Remove;
-		%feature("autodoc", "	:param fromIndex:
-	:type fromIndex: int
-	:param toIndex:
-	:type toIndex: int
-	:rtype: None
-") Remove;
-		void Remove (const Standard_Integer fromIndex,const Standard_Integer toIndex);
-		%feature("compactdefaultargs") Sequence;
-		%feature("autodoc", "	:rtype: StepElement_SequenceOfSurfaceElementPurposeMember
-") Sequence;
-		const StepElement_SequenceOfSurfaceElementPurposeMember & Sequence ();
-		%feature("compactdefaultargs") ChangeSequence;
-		%feature("autodoc", "	:rtype: StepElement_SequenceOfSurfaceElementPurposeMember
-") ChangeSequence;
-		StepElement_SequenceOfSurfaceElementPurposeMember & ChangeSequence ();
-};
-
-
-%extend StepElement_HSequenceOfSurfaceElementPurposeMember {
-	%pythoncode {
-		def GetHandle(self):
-		    try:
-		        return self.thisHandle
-		    except:
-		        self.thisHandle = Handle_StepElement_HSequenceOfSurfaceElementPurposeMember(self)
-		        self.thisown = False
-		        return self.thisHandle
-	}
-};
-
-%pythonappend Handle_StepElement_HSequenceOfSurfaceElementPurposeMember::Handle_StepElement_HSequenceOfSurfaceElementPurposeMember %{
-    # register the handle in the base object
-    if len(args) > 0:
-        register_handle(self, args[0])
-%}
-
-%nodefaultctor Handle_StepElement_HSequenceOfSurfaceElementPurposeMember;
-class Handle_StepElement_HSequenceOfSurfaceElementPurposeMember : public Handle_MMgt_TShared {
-
-    public:
-        // constructors
-        Handle_StepElement_HSequenceOfSurfaceElementPurposeMember();
-        Handle_StepElement_HSequenceOfSurfaceElementPurposeMember(const Handle_StepElement_HSequenceOfSurfaceElementPurposeMember &aHandle);
-        Handle_StepElement_HSequenceOfSurfaceElementPurposeMember(const StepElement_HSequenceOfSurfaceElementPurposeMember *anItem);
-        void Nullify();
-        Standard_Boolean IsNull() const;
-        static const Handle_StepElement_HSequenceOfSurfaceElementPurposeMember DownCast(const Handle_Standard_Transient &AnObject);
-
-};
-%extend Handle_StepElement_HSequenceOfSurfaceElementPurposeMember {
-    StepElement_HSequenceOfSurfaceElementPurposeMember* _get_reference() {
-    return (StepElement_HSequenceOfSurfaceElementPurposeMember*)$self->Access();
-    }
-};
-
-%extend Handle_StepElement_HSequenceOfSurfaceElementPurposeMember {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
-};
-
-%extend StepElement_HSequenceOfSurfaceElementPurposeMember {
 	%pythoncode {
 	__repr__ = _dumps_object
 	}
@@ -4489,7 +1327,7 @@ class StepElement_MeasureOrUnspecifiedValue : public StepData_SelectType {
 ") SetContextDependentMeasure;
 		void SetContextDependentMeasure (const Standard_Real aVal);
 		%feature("compactdefaultargs") ContextDependentMeasure;
-		%feature("autodoc", "	* Returns Value as ContextDependentMeasure (or Null if another type)
+		%feature("autodoc", "	* Returns Value as ContextDependentMeasure --or Null if another type--
 
 	:rtype: float
 ") ContextDependentMeasure;
@@ -4503,7 +1341,7 @@ class StepElement_MeasureOrUnspecifiedValue : public StepData_SelectType {
 ") SetUnspecifiedValue;
 		void SetUnspecifiedValue (const StepElement_UnspecifiedValue aVal);
 		%feature("compactdefaultargs") UnspecifiedValue;
-		%feature("autodoc", "	* Returns Value as UnspecifiedValue (or Null if another type)
+		%feature("autodoc", "	* Returns Value as UnspecifiedValue --or Null if another type--
 
 	:rtype: StepElement_UnspecifiedValue
 ") UnspecifiedValue;
@@ -4587,19 +1425,20 @@ class Handle_StepElement_MeasureOrUnspecifiedValueMember : public Handle_StepDat
         static const Handle_StepElement_MeasureOrUnspecifiedValueMember DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_StepElement_MeasureOrUnspecifiedValueMember {
     StepElement_MeasureOrUnspecifiedValueMember* _get_reference() {
-    return (StepElement_MeasureOrUnspecifiedValueMember*)$self->Access();
+    return (StepElement_MeasureOrUnspecifiedValueMember*)$self->get();
     }
 };
 
 %extend Handle_StepElement_MeasureOrUnspecifiedValueMember {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend StepElement_MeasureOrUnspecifiedValueMember {
@@ -4607,864 +1446,8 @@ class Handle_StepElement_MeasureOrUnspecifiedValueMember : public Handle_StepDat
 	__repr__ = _dumps_object
 	}
 };
-%nodefaultctor StepElement_SequenceNodeOfSequenceOfCurveElementPurposeMember;
-class StepElement_SequenceNodeOfSequenceOfCurveElementPurposeMember : public TCollection_SeqNode {
-	public:
-		%feature("compactdefaultargs") StepElement_SequenceNodeOfSequenceOfCurveElementPurposeMember;
-		%feature("autodoc", "	:param I:
-	:type I: Handle_StepElement_CurveElementPurposeMember &
-	:param n:
-	:type n: TCollection_SeqNodePtr &
-	:param p:
-	:type p: TCollection_SeqNodePtr &
-	:rtype: None
-") StepElement_SequenceNodeOfSequenceOfCurveElementPurposeMember;
-		 StepElement_SequenceNodeOfSequenceOfCurveElementPurposeMember (const Handle_StepElement_CurveElementPurposeMember & I,const TCollection_SeqNodePtr & n,const TCollection_SeqNodePtr & p);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:rtype: Handle_StepElement_CurveElementPurposeMember
-") Value;
-		Handle_StepElement_CurveElementPurposeMember Value ();
-};
-
-
-%extend StepElement_SequenceNodeOfSequenceOfCurveElementPurposeMember {
-	%pythoncode {
-		def GetHandle(self):
-		    try:
-		        return self.thisHandle
-		    except:
-		        self.thisHandle = Handle_StepElement_SequenceNodeOfSequenceOfCurveElementPurposeMember(self)
-		        self.thisown = False
-		        return self.thisHandle
-	}
-};
-
-%pythonappend Handle_StepElement_SequenceNodeOfSequenceOfCurveElementPurposeMember::Handle_StepElement_SequenceNodeOfSequenceOfCurveElementPurposeMember %{
-    # register the handle in the base object
-    if len(args) > 0:
-        register_handle(self, args[0])
-%}
-
-%nodefaultctor Handle_StepElement_SequenceNodeOfSequenceOfCurveElementPurposeMember;
-class Handle_StepElement_SequenceNodeOfSequenceOfCurveElementPurposeMember : public Handle_TCollection_SeqNode {
-
-    public:
-        // constructors
-        Handle_StepElement_SequenceNodeOfSequenceOfCurveElementPurposeMember();
-        Handle_StepElement_SequenceNodeOfSequenceOfCurveElementPurposeMember(const Handle_StepElement_SequenceNodeOfSequenceOfCurveElementPurposeMember &aHandle);
-        Handle_StepElement_SequenceNodeOfSequenceOfCurveElementPurposeMember(const StepElement_SequenceNodeOfSequenceOfCurveElementPurposeMember *anItem);
-        void Nullify();
-        Standard_Boolean IsNull() const;
-        static const Handle_StepElement_SequenceNodeOfSequenceOfCurveElementPurposeMember DownCast(const Handle_Standard_Transient &AnObject);
-
-};
-%extend Handle_StepElement_SequenceNodeOfSequenceOfCurveElementPurposeMember {
-    StepElement_SequenceNodeOfSequenceOfCurveElementPurposeMember* _get_reference() {
-    return (StepElement_SequenceNodeOfSequenceOfCurveElementPurposeMember*)$self->Access();
-    }
-};
-
-%extend Handle_StepElement_SequenceNodeOfSequenceOfCurveElementPurposeMember {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
-};
-
-%extend StepElement_SequenceNodeOfSequenceOfCurveElementPurposeMember {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor StepElement_SequenceNodeOfSequenceOfCurveElementSectionDefinition;
-class StepElement_SequenceNodeOfSequenceOfCurveElementSectionDefinition : public TCollection_SeqNode {
-	public:
-		%feature("compactdefaultargs") StepElement_SequenceNodeOfSequenceOfCurveElementSectionDefinition;
-		%feature("autodoc", "	:param I:
-	:type I: Handle_StepElement_CurveElementSectionDefinition &
-	:param n:
-	:type n: TCollection_SeqNodePtr &
-	:param p:
-	:type p: TCollection_SeqNodePtr &
-	:rtype: None
-") StepElement_SequenceNodeOfSequenceOfCurveElementSectionDefinition;
-		 StepElement_SequenceNodeOfSequenceOfCurveElementSectionDefinition (const Handle_StepElement_CurveElementSectionDefinition & I,const TCollection_SeqNodePtr & n,const TCollection_SeqNodePtr & p);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:rtype: Handle_StepElement_CurveElementSectionDefinition
-") Value;
-		Handle_StepElement_CurveElementSectionDefinition Value ();
-};
-
-
-%extend StepElement_SequenceNodeOfSequenceOfCurveElementSectionDefinition {
-	%pythoncode {
-		def GetHandle(self):
-		    try:
-		        return self.thisHandle
-		    except:
-		        self.thisHandle = Handle_StepElement_SequenceNodeOfSequenceOfCurveElementSectionDefinition(self)
-		        self.thisown = False
-		        return self.thisHandle
-	}
-};
-
-%pythonappend Handle_StepElement_SequenceNodeOfSequenceOfCurveElementSectionDefinition::Handle_StepElement_SequenceNodeOfSequenceOfCurveElementSectionDefinition %{
-    # register the handle in the base object
-    if len(args) > 0:
-        register_handle(self, args[0])
-%}
-
-%nodefaultctor Handle_StepElement_SequenceNodeOfSequenceOfCurveElementSectionDefinition;
-class Handle_StepElement_SequenceNodeOfSequenceOfCurveElementSectionDefinition : public Handle_TCollection_SeqNode {
-
-    public:
-        // constructors
-        Handle_StepElement_SequenceNodeOfSequenceOfCurveElementSectionDefinition();
-        Handle_StepElement_SequenceNodeOfSequenceOfCurveElementSectionDefinition(const Handle_StepElement_SequenceNodeOfSequenceOfCurveElementSectionDefinition &aHandle);
-        Handle_StepElement_SequenceNodeOfSequenceOfCurveElementSectionDefinition(const StepElement_SequenceNodeOfSequenceOfCurveElementSectionDefinition *anItem);
-        void Nullify();
-        Standard_Boolean IsNull() const;
-        static const Handle_StepElement_SequenceNodeOfSequenceOfCurveElementSectionDefinition DownCast(const Handle_Standard_Transient &AnObject);
-
-};
-%extend Handle_StepElement_SequenceNodeOfSequenceOfCurveElementSectionDefinition {
-    StepElement_SequenceNodeOfSequenceOfCurveElementSectionDefinition* _get_reference() {
-    return (StepElement_SequenceNodeOfSequenceOfCurveElementSectionDefinition*)$self->Access();
-    }
-};
-
-%extend Handle_StepElement_SequenceNodeOfSequenceOfCurveElementSectionDefinition {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
-};
-
-%extend StepElement_SequenceNodeOfSequenceOfCurveElementSectionDefinition {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor StepElement_SequenceNodeOfSequenceOfElementMaterial;
-class StepElement_SequenceNodeOfSequenceOfElementMaterial : public TCollection_SeqNode {
-	public:
-		%feature("compactdefaultargs") StepElement_SequenceNodeOfSequenceOfElementMaterial;
-		%feature("autodoc", "	:param I:
-	:type I: Handle_StepElement_ElementMaterial &
-	:param n:
-	:type n: TCollection_SeqNodePtr &
-	:param p:
-	:type p: TCollection_SeqNodePtr &
-	:rtype: None
-") StepElement_SequenceNodeOfSequenceOfElementMaterial;
-		 StepElement_SequenceNodeOfSequenceOfElementMaterial (const Handle_StepElement_ElementMaterial & I,const TCollection_SeqNodePtr & n,const TCollection_SeqNodePtr & p);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:rtype: Handle_StepElement_ElementMaterial
-") Value;
-		Handle_StepElement_ElementMaterial Value ();
-};
-
-
-%extend StepElement_SequenceNodeOfSequenceOfElementMaterial {
-	%pythoncode {
-		def GetHandle(self):
-		    try:
-		        return self.thisHandle
-		    except:
-		        self.thisHandle = Handle_StepElement_SequenceNodeOfSequenceOfElementMaterial(self)
-		        self.thisown = False
-		        return self.thisHandle
-	}
-};
-
-%pythonappend Handle_StepElement_SequenceNodeOfSequenceOfElementMaterial::Handle_StepElement_SequenceNodeOfSequenceOfElementMaterial %{
-    # register the handle in the base object
-    if len(args) > 0:
-        register_handle(self, args[0])
-%}
-
-%nodefaultctor Handle_StepElement_SequenceNodeOfSequenceOfElementMaterial;
-class Handle_StepElement_SequenceNodeOfSequenceOfElementMaterial : public Handle_TCollection_SeqNode {
-
-    public:
-        // constructors
-        Handle_StepElement_SequenceNodeOfSequenceOfElementMaterial();
-        Handle_StepElement_SequenceNodeOfSequenceOfElementMaterial(const Handle_StepElement_SequenceNodeOfSequenceOfElementMaterial &aHandle);
-        Handle_StepElement_SequenceNodeOfSequenceOfElementMaterial(const StepElement_SequenceNodeOfSequenceOfElementMaterial *anItem);
-        void Nullify();
-        Standard_Boolean IsNull() const;
-        static const Handle_StepElement_SequenceNodeOfSequenceOfElementMaterial DownCast(const Handle_Standard_Transient &AnObject);
-
-};
-%extend Handle_StepElement_SequenceNodeOfSequenceOfElementMaterial {
-    StepElement_SequenceNodeOfSequenceOfElementMaterial* _get_reference() {
-    return (StepElement_SequenceNodeOfSequenceOfElementMaterial*)$self->Access();
-    }
-};
-
-%extend Handle_StepElement_SequenceNodeOfSequenceOfElementMaterial {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
-};
-
-%extend StepElement_SequenceNodeOfSequenceOfElementMaterial {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor StepElement_SequenceNodeOfSequenceOfSurfaceElementPurposeMember;
-class StepElement_SequenceNodeOfSequenceOfSurfaceElementPurposeMember : public TCollection_SeqNode {
-	public:
-		%feature("compactdefaultargs") StepElement_SequenceNodeOfSequenceOfSurfaceElementPurposeMember;
-		%feature("autodoc", "	:param I:
-	:type I: Handle_StepElement_SurfaceElementPurposeMember &
-	:param n:
-	:type n: TCollection_SeqNodePtr &
-	:param p:
-	:type p: TCollection_SeqNodePtr &
-	:rtype: None
-") StepElement_SequenceNodeOfSequenceOfSurfaceElementPurposeMember;
-		 StepElement_SequenceNodeOfSequenceOfSurfaceElementPurposeMember (const Handle_StepElement_SurfaceElementPurposeMember & I,const TCollection_SeqNodePtr & n,const TCollection_SeqNodePtr & p);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:rtype: Handle_StepElement_SurfaceElementPurposeMember
-") Value;
-		Handle_StepElement_SurfaceElementPurposeMember Value ();
-};
-
-
-%extend StepElement_SequenceNodeOfSequenceOfSurfaceElementPurposeMember {
-	%pythoncode {
-		def GetHandle(self):
-		    try:
-		        return self.thisHandle
-		    except:
-		        self.thisHandle = Handle_StepElement_SequenceNodeOfSequenceOfSurfaceElementPurposeMember(self)
-		        self.thisown = False
-		        return self.thisHandle
-	}
-};
-
-%pythonappend Handle_StepElement_SequenceNodeOfSequenceOfSurfaceElementPurposeMember::Handle_StepElement_SequenceNodeOfSequenceOfSurfaceElementPurposeMember %{
-    # register the handle in the base object
-    if len(args) > 0:
-        register_handle(self, args[0])
-%}
-
-%nodefaultctor Handle_StepElement_SequenceNodeOfSequenceOfSurfaceElementPurposeMember;
-class Handle_StepElement_SequenceNodeOfSequenceOfSurfaceElementPurposeMember : public Handle_TCollection_SeqNode {
-
-    public:
-        // constructors
-        Handle_StepElement_SequenceNodeOfSequenceOfSurfaceElementPurposeMember();
-        Handle_StepElement_SequenceNodeOfSequenceOfSurfaceElementPurposeMember(const Handle_StepElement_SequenceNodeOfSequenceOfSurfaceElementPurposeMember &aHandle);
-        Handle_StepElement_SequenceNodeOfSequenceOfSurfaceElementPurposeMember(const StepElement_SequenceNodeOfSequenceOfSurfaceElementPurposeMember *anItem);
-        void Nullify();
-        Standard_Boolean IsNull() const;
-        static const Handle_StepElement_SequenceNodeOfSequenceOfSurfaceElementPurposeMember DownCast(const Handle_Standard_Transient &AnObject);
-
-};
-%extend Handle_StepElement_SequenceNodeOfSequenceOfSurfaceElementPurposeMember {
-    StepElement_SequenceNodeOfSequenceOfSurfaceElementPurposeMember* _get_reference() {
-    return (StepElement_SequenceNodeOfSequenceOfSurfaceElementPurposeMember*)$self->Access();
-    }
-};
-
-%extend Handle_StepElement_SequenceNodeOfSequenceOfSurfaceElementPurposeMember {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
-};
-
-%extend StepElement_SequenceNodeOfSequenceOfSurfaceElementPurposeMember {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor StepElement_SequenceOfCurveElementPurposeMember;
-class StepElement_SequenceOfCurveElementPurposeMember : public TCollection_BaseSequence {
-	public:
-		%feature("compactdefaultargs") StepElement_SequenceOfCurveElementPurposeMember;
-		%feature("autodoc", "	:rtype: None
-") StepElement_SequenceOfCurveElementPurposeMember;
-		 StepElement_SequenceOfCurveElementPurposeMember ();
-		%feature("compactdefaultargs") StepElement_SequenceOfCurveElementPurposeMember;
-		%feature("autodoc", "	:param Other:
-	:type Other: StepElement_SequenceOfCurveElementPurposeMember &
-	:rtype: None
-") StepElement_SequenceOfCurveElementPurposeMember;
-		 StepElement_SequenceOfCurveElementPurposeMember (const StepElement_SequenceOfCurveElementPurposeMember & Other);
-		%feature("compactdefaultargs") Clear;
-		%feature("autodoc", "	:rtype: None
-") Clear;
-		void Clear ();
-		%feature("compactdefaultargs") Assign;
-		%feature("autodoc", "	:param Other:
-	:type Other: StepElement_SequenceOfCurveElementPurposeMember &
-	:rtype: StepElement_SequenceOfCurveElementPurposeMember
-") Assign;
-		const StepElement_SequenceOfCurveElementPurposeMember & Assign (const StepElement_SequenceOfCurveElementPurposeMember & Other);
-		%feature("compactdefaultargs") operator =;
-		%feature("autodoc", "	:param Other:
-	:type Other: StepElement_SequenceOfCurveElementPurposeMember &
-	:rtype: StepElement_SequenceOfCurveElementPurposeMember
-") operator =;
-		const StepElement_SequenceOfCurveElementPurposeMember & operator = (const StepElement_SequenceOfCurveElementPurposeMember & Other);
-		%feature("compactdefaultargs") Append;
-		%feature("autodoc", "	:param T:
-	:type T: Handle_StepElement_CurveElementPurposeMember &
-	:rtype: None
-") Append;
-		void Append (const Handle_StepElement_CurveElementPurposeMember & T);
-		%feature("compactdefaultargs") Append;
-		%feature("autodoc", "	:param S:
-	:type S: StepElement_SequenceOfCurveElementPurposeMember &
-	:rtype: None
-") Append;
-		void Append (StepElement_SequenceOfCurveElementPurposeMember & S);
-		%feature("compactdefaultargs") Prepend;
-		%feature("autodoc", "	:param T:
-	:type T: Handle_StepElement_CurveElementPurposeMember &
-	:rtype: None
-") Prepend;
-		void Prepend (const Handle_StepElement_CurveElementPurposeMember & T);
-		%feature("compactdefaultargs") Prepend;
-		%feature("autodoc", "	:param S:
-	:type S: StepElement_SequenceOfCurveElementPurposeMember &
-	:rtype: None
-") Prepend;
-		void Prepend (StepElement_SequenceOfCurveElementPurposeMember & S);
-		%feature("compactdefaultargs") InsertBefore;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param T:
-	:type T: Handle_StepElement_CurveElementPurposeMember &
-	:rtype: None
-") InsertBefore;
-		void InsertBefore (const Standard_Integer Index,const Handle_StepElement_CurveElementPurposeMember & T);
-		%feature("compactdefaultargs") InsertBefore;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param S:
-	:type S: StepElement_SequenceOfCurveElementPurposeMember &
-	:rtype: None
-") InsertBefore;
-		void InsertBefore (const Standard_Integer Index,StepElement_SequenceOfCurveElementPurposeMember & S);
-		%feature("compactdefaultargs") InsertAfter;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param T:
-	:type T: Handle_StepElement_CurveElementPurposeMember &
-	:rtype: None
-") InsertAfter;
-		void InsertAfter (const Standard_Integer Index,const Handle_StepElement_CurveElementPurposeMember & T);
-		%feature("compactdefaultargs") InsertAfter;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param S:
-	:type S: StepElement_SequenceOfCurveElementPurposeMember &
-	:rtype: None
-") InsertAfter;
-		void InsertAfter (const Standard_Integer Index,StepElement_SequenceOfCurveElementPurposeMember & S);
-		%feature("compactdefaultargs") First;
-		%feature("autodoc", "	:rtype: Handle_StepElement_CurveElementPurposeMember
-") First;
-		Handle_StepElement_CurveElementPurposeMember First ();
-		%feature("compactdefaultargs") Last;
-		%feature("autodoc", "	:rtype: Handle_StepElement_CurveElementPurposeMember
-") Last;
-		Handle_StepElement_CurveElementPurposeMember Last ();
-		%feature("compactdefaultargs") Split;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param Sub:
-	:type Sub: StepElement_SequenceOfCurveElementPurposeMember &
-	:rtype: None
-") Split;
-		void Split (const Standard_Integer Index,StepElement_SequenceOfCurveElementPurposeMember & Sub);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: Handle_StepElement_CurveElementPurposeMember
-") Value;
-		Handle_StepElement_CurveElementPurposeMember Value (const Standard_Integer Index);
-		%feature("compactdefaultargs") SetValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param I:
-	:type I: Handle_StepElement_CurveElementPurposeMember &
-	:rtype: None
-") SetValue;
-		void SetValue (const Standard_Integer Index,const Handle_StepElement_CurveElementPurposeMember & I);
-		%feature("compactdefaultargs") ChangeValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: Handle_StepElement_CurveElementPurposeMember
-") ChangeValue;
-		Handle_StepElement_CurveElementPurposeMember ChangeValue (const Standard_Integer Index);
-		%feature("compactdefaultargs") Remove;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: None
-") Remove;
-		void Remove (const Standard_Integer Index);
-		%feature("compactdefaultargs") Remove;
-		%feature("autodoc", "	:param FromIndex:
-	:type FromIndex: int
-	:param ToIndex:
-	:type ToIndex: int
-	:rtype: None
-") Remove;
-		void Remove (const Standard_Integer FromIndex,const Standard_Integer ToIndex);
-};
-
-
-%extend StepElement_SequenceOfCurveElementPurposeMember {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor StepElement_SequenceOfCurveElementSectionDefinition;
-class StepElement_SequenceOfCurveElementSectionDefinition : public TCollection_BaseSequence {
-	public:
-		%feature("compactdefaultargs") StepElement_SequenceOfCurveElementSectionDefinition;
-		%feature("autodoc", "	:rtype: None
-") StepElement_SequenceOfCurveElementSectionDefinition;
-		 StepElement_SequenceOfCurveElementSectionDefinition ();
-		%feature("compactdefaultargs") StepElement_SequenceOfCurveElementSectionDefinition;
-		%feature("autodoc", "	:param Other:
-	:type Other: StepElement_SequenceOfCurveElementSectionDefinition &
-	:rtype: None
-") StepElement_SequenceOfCurveElementSectionDefinition;
-		 StepElement_SequenceOfCurveElementSectionDefinition (const StepElement_SequenceOfCurveElementSectionDefinition & Other);
-		%feature("compactdefaultargs") Clear;
-		%feature("autodoc", "	:rtype: None
-") Clear;
-		void Clear ();
-		%feature("compactdefaultargs") Assign;
-		%feature("autodoc", "	:param Other:
-	:type Other: StepElement_SequenceOfCurveElementSectionDefinition &
-	:rtype: StepElement_SequenceOfCurveElementSectionDefinition
-") Assign;
-		const StepElement_SequenceOfCurveElementSectionDefinition & Assign (const StepElement_SequenceOfCurveElementSectionDefinition & Other);
-		%feature("compactdefaultargs") operator =;
-		%feature("autodoc", "	:param Other:
-	:type Other: StepElement_SequenceOfCurveElementSectionDefinition &
-	:rtype: StepElement_SequenceOfCurveElementSectionDefinition
-") operator =;
-		const StepElement_SequenceOfCurveElementSectionDefinition & operator = (const StepElement_SequenceOfCurveElementSectionDefinition & Other);
-		%feature("compactdefaultargs") Append;
-		%feature("autodoc", "	:param T:
-	:type T: Handle_StepElement_CurveElementSectionDefinition &
-	:rtype: None
-") Append;
-		void Append (const Handle_StepElement_CurveElementSectionDefinition & T);
-		%feature("compactdefaultargs") Append;
-		%feature("autodoc", "	:param S:
-	:type S: StepElement_SequenceOfCurveElementSectionDefinition &
-	:rtype: None
-") Append;
-		void Append (StepElement_SequenceOfCurveElementSectionDefinition & S);
-		%feature("compactdefaultargs") Prepend;
-		%feature("autodoc", "	:param T:
-	:type T: Handle_StepElement_CurveElementSectionDefinition &
-	:rtype: None
-") Prepend;
-		void Prepend (const Handle_StepElement_CurveElementSectionDefinition & T);
-		%feature("compactdefaultargs") Prepend;
-		%feature("autodoc", "	:param S:
-	:type S: StepElement_SequenceOfCurveElementSectionDefinition &
-	:rtype: None
-") Prepend;
-		void Prepend (StepElement_SequenceOfCurveElementSectionDefinition & S);
-		%feature("compactdefaultargs") InsertBefore;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param T:
-	:type T: Handle_StepElement_CurveElementSectionDefinition &
-	:rtype: None
-") InsertBefore;
-		void InsertBefore (const Standard_Integer Index,const Handle_StepElement_CurveElementSectionDefinition & T);
-		%feature("compactdefaultargs") InsertBefore;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param S:
-	:type S: StepElement_SequenceOfCurveElementSectionDefinition &
-	:rtype: None
-") InsertBefore;
-		void InsertBefore (const Standard_Integer Index,StepElement_SequenceOfCurveElementSectionDefinition & S);
-		%feature("compactdefaultargs") InsertAfter;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param T:
-	:type T: Handle_StepElement_CurveElementSectionDefinition &
-	:rtype: None
-") InsertAfter;
-		void InsertAfter (const Standard_Integer Index,const Handle_StepElement_CurveElementSectionDefinition & T);
-		%feature("compactdefaultargs") InsertAfter;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param S:
-	:type S: StepElement_SequenceOfCurveElementSectionDefinition &
-	:rtype: None
-") InsertAfter;
-		void InsertAfter (const Standard_Integer Index,StepElement_SequenceOfCurveElementSectionDefinition & S);
-		%feature("compactdefaultargs") First;
-		%feature("autodoc", "	:rtype: Handle_StepElement_CurveElementSectionDefinition
-") First;
-		Handle_StepElement_CurveElementSectionDefinition First ();
-		%feature("compactdefaultargs") Last;
-		%feature("autodoc", "	:rtype: Handle_StepElement_CurveElementSectionDefinition
-") Last;
-		Handle_StepElement_CurveElementSectionDefinition Last ();
-		%feature("compactdefaultargs") Split;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param Sub:
-	:type Sub: StepElement_SequenceOfCurveElementSectionDefinition &
-	:rtype: None
-") Split;
-		void Split (const Standard_Integer Index,StepElement_SequenceOfCurveElementSectionDefinition & Sub);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: Handle_StepElement_CurveElementSectionDefinition
-") Value;
-		Handle_StepElement_CurveElementSectionDefinition Value (const Standard_Integer Index);
-		%feature("compactdefaultargs") SetValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param I:
-	:type I: Handle_StepElement_CurveElementSectionDefinition &
-	:rtype: None
-") SetValue;
-		void SetValue (const Standard_Integer Index,const Handle_StepElement_CurveElementSectionDefinition & I);
-		%feature("compactdefaultargs") ChangeValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: Handle_StepElement_CurveElementSectionDefinition
-") ChangeValue;
-		Handle_StepElement_CurveElementSectionDefinition ChangeValue (const Standard_Integer Index);
-		%feature("compactdefaultargs") Remove;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: None
-") Remove;
-		void Remove (const Standard_Integer Index);
-		%feature("compactdefaultargs") Remove;
-		%feature("autodoc", "	:param FromIndex:
-	:type FromIndex: int
-	:param ToIndex:
-	:type ToIndex: int
-	:rtype: None
-") Remove;
-		void Remove (const Standard_Integer FromIndex,const Standard_Integer ToIndex);
-};
-
-
-%extend StepElement_SequenceOfCurveElementSectionDefinition {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor StepElement_SequenceOfElementMaterial;
-class StepElement_SequenceOfElementMaterial : public TCollection_BaseSequence {
-	public:
-		%feature("compactdefaultargs") StepElement_SequenceOfElementMaterial;
-		%feature("autodoc", "	:rtype: None
-") StepElement_SequenceOfElementMaterial;
-		 StepElement_SequenceOfElementMaterial ();
-		%feature("compactdefaultargs") StepElement_SequenceOfElementMaterial;
-		%feature("autodoc", "	:param Other:
-	:type Other: StepElement_SequenceOfElementMaterial &
-	:rtype: None
-") StepElement_SequenceOfElementMaterial;
-		 StepElement_SequenceOfElementMaterial (const StepElement_SequenceOfElementMaterial & Other);
-		%feature("compactdefaultargs") Clear;
-		%feature("autodoc", "	:rtype: None
-") Clear;
-		void Clear ();
-		%feature("compactdefaultargs") Assign;
-		%feature("autodoc", "	:param Other:
-	:type Other: StepElement_SequenceOfElementMaterial &
-	:rtype: StepElement_SequenceOfElementMaterial
-") Assign;
-		const StepElement_SequenceOfElementMaterial & Assign (const StepElement_SequenceOfElementMaterial & Other);
-		%feature("compactdefaultargs") operator =;
-		%feature("autodoc", "	:param Other:
-	:type Other: StepElement_SequenceOfElementMaterial &
-	:rtype: StepElement_SequenceOfElementMaterial
-") operator =;
-		const StepElement_SequenceOfElementMaterial & operator = (const StepElement_SequenceOfElementMaterial & Other);
-		%feature("compactdefaultargs") Append;
-		%feature("autodoc", "	:param T:
-	:type T: Handle_StepElement_ElementMaterial &
-	:rtype: None
-") Append;
-		void Append (const Handle_StepElement_ElementMaterial & T);
-		%feature("compactdefaultargs") Append;
-		%feature("autodoc", "	:param S:
-	:type S: StepElement_SequenceOfElementMaterial &
-	:rtype: None
-") Append;
-		void Append (StepElement_SequenceOfElementMaterial & S);
-		%feature("compactdefaultargs") Prepend;
-		%feature("autodoc", "	:param T:
-	:type T: Handle_StepElement_ElementMaterial &
-	:rtype: None
-") Prepend;
-		void Prepend (const Handle_StepElement_ElementMaterial & T);
-		%feature("compactdefaultargs") Prepend;
-		%feature("autodoc", "	:param S:
-	:type S: StepElement_SequenceOfElementMaterial &
-	:rtype: None
-") Prepend;
-		void Prepend (StepElement_SequenceOfElementMaterial & S);
-		%feature("compactdefaultargs") InsertBefore;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param T:
-	:type T: Handle_StepElement_ElementMaterial &
-	:rtype: None
-") InsertBefore;
-		void InsertBefore (const Standard_Integer Index,const Handle_StepElement_ElementMaterial & T);
-		%feature("compactdefaultargs") InsertBefore;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param S:
-	:type S: StepElement_SequenceOfElementMaterial &
-	:rtype: None
-") InsertBefore;
-		void InsertBefore (const Standard_Integer Index,StepElement_SequenceOfElementMaterial & S);
-		%feature("compactdefaultargs") InsertAfter;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param T:
-	:type T: Handle_StepElement_ElementMaterial &
-	:rtype: None
-") InsertAfter;
-		void InsertAfter (const Standard_Integer Index,const Handle_StepElement_ElementMaterial & T);
-		%feature("compactdefaultargs") InsertAfter;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param S:
-	:type S: StepElement_SequenceOfElementMaterial &
-	:rtype: None
-") InsertAfter;
-		void InsertAfter (const Standard_Integer Index,StepElement_SequenceOfElementMaterial & S);
-		%feature("compactdefaultargs") First;
-		%feature("autodoc", "	:rtype: Handle_StepElement_ElementMaterial
-") First;
-		Handle_StepElement_ElementMaterial First ();
-		%feature("compactdefaultargs") Last;
-		%feature("autodoc", "	:rtype: Handle_StepElement_ElementMaterial
-") Last;
-		Handle_StepElement_ElementMaterial Last ();
-		%feature("compactdefaultargs") Split;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param Sub:
-	:type Sub: StepElement_SequenceOfElementMaterial &
-	:rtype: None
-") Split;
-		void Split (const Standard_Integer Index,StepElement_SequenceOfElementMaterial & Sub);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: Handle_StepElement_ElementMaterial
-") Value;
-		Handle_StepElement_ElementMaterial Value (const Standard_Integer Index);
-		%feature("compactdefaultargs") SetValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param I:
-	:type I: Handle_StepElement_ElementMaterial &
-	:rtype: None
-") SetValue;
-		void SetValue (const Standard_Integer Index,const Handle_StepElement_ElementMaterial & I);
-		%feature("compactdefaultargs") ChangeValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: Handle_StepElement_ElementMaterial
-") ChangeValue;
-		Handle_StepElement_ElementMaterial ChangeValue (const Standard_Integer Index);
-		%feature("compactdefaultargs") Remove;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: None
-") Remove;
-		void Remove (const Standard_Integer Index);
-		%feature("compactdefaultargs") Remove;
-		%feature("autodoc", "	:param FromIndex:
-	:type FromIndex: int
-	:param ToIndex:
-	:type ToIndex: int
-	:rtype: None
-") Remove;
-		void Remove (const Standard_Integer FromIndex,const Standard_Integer ToIndex);
-};
-
-
-%extend StepElement_SequenceOfElementMaterial {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor StepElement_SequenceOfSurfaceElementPurposeMember;
-class StepElement_SequenceOfSurfaceElementPurposeMember : public TCollection_BaseSequence {
-	public:
-		%feature("compactdefaultargs") StepElement_SequenceOfSurfaceElementPurposeMember;
-		%feature("autodoc", "	:rtype: None
-") StepElement_SequenceOfSurfaceElementPurposeMember;
-		 StepElement_SequenceOfSurfaceElementPurposeMember ();
-		%feature("compactdefaultargs") StepElement_SequenceOfSurfaceElementPurposeMember;
-		%feature("autodoc", "	:param Other:
-	:type Other: StepElement_SequenceOfSurfaceElementPurposeMember &
-	:rtype: None
-") StepElement_SequenceOfSurfaceElementPurposeMember;
-		 StepElement_SequenceOfSurfaceElementPurposeMember (const StepElement_SequenceOfSurfaceElementPurposeMember & Other);
-		%feature("compactdefaultargs") Clear;
-		%feature("autodoc", "	:rtype: None
-") Clear;
-		void Clear ();
-		%feature("compactdefaultargs") Assign;
-		%feature("autodoc", "	:param Other:
-	:type Other: StepElement_SequenceOfSurfaceElementPurposeMember &
-	:rtype: StepElement_SequenceOfSurfaceElementPurposeMember
-") Assign;
-		const StepElement_SequenceOfSurfaceElementPurposeMember & Assign (const StepElement_SequenceOfSurfaceElementPurposeMember & Other);
-		%feature("compactdefaultargs") operator =;
-		%feature("autodoc", "	:param Other:
-	:type Other: StepElement_SequenceOfSurfaceElementPurposeMember &
-	:rtype: StepElement_SequenceOfSurfaceElementPurposeMember
-") operator =;
-		const StepElement_SequenceOfSurfaceElementPurposeMember & operator = (const StepElement_SequenceOfSurfaceElementPurposeMember & Other);
-		%feature("compactdefaultargs") Append;
-		%feature("autodoc", "	:param T:
-	:type T: Handle_StepElement_SurfaceElementPurposeMember &
-	:rtype: None
-") Append;
-		void Append (const Handle_StepElement_SurfaceElementPurposeMember & T);
-		%feature("compactdefaultargs") Append;
-		%feature("autodoc", "	:param S:
-	:type S: StepElement_SequenceOfSurfaceElementPurposeMember &
-	:rtype: None
-") Append;
-		void Append (StepElement_SequenceOfSurfaceElementPurposeMember & S);
-		%feature("compactdefaultargs") Prepend;
-		%feature("autodoc", "	:param T:
-	:type T: Handle_StepElement_SurfaceElementPurposeMember &
-	:rtype: None
-") Prepend;
-		void Prepend (const Handle_StepElement_SurfaceElementPurposeMember & T);
-		%feature("compactdefaultargs") Prepend;
-		%feature("autodoc", "	:param S:
-	:type S: StepElement_SequenceOfSurfaceElementPurposeMember &
-	:rtype: None
-") Prepend;
-		void Prepend (StepElement_SequenceOfSurfaceElementPurposeMember & S);
-		%feature("compactdefaultargs") InsertBefore;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param T:
-	:type T: Handle_StepElement_SurfaceElementPurposeMember &
-	:rtype: None
-") InsertBefore;
-		void InsertBefore (const Standard_Integer Index,const Handle_StepElement_SurfaceElementPurposeMember & T);
-		%feature("compactdefaultargs") InsertBefore;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param S:
-	:type S: StepElement_SequenceOfSurfaceElementPurposeMember &
-	:rtype: None
-") InsertBefore;
-		void InsertBefore (const Standard_Integer Index,StepElement_SequenceOfSurfaceElementPurposeMember & S);
-		%feature("compactdefaultargs") InsertAfter;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param T:
-	:type T: Handle_StepElement_SurfaceElementPurposeMember &
-	:rtype: None
-") InsertAfter;
-		void InsertAfter (const Standard_Integer Index,const Handle_StepElement_SurfaceElementPurposeMember & T);
-		%feature("compactdefaultargs") InsertAfter;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param S:
-	:type S: StepElement_SequenceOfSurfaceElementPurposeMember &
-	:rtype: None
-") InsertAfter;
-		void InsertAfter (const Standard_Integer Index,StepElement_SequenceOfSurfaceElementPurposeMember & S);
-		%feature("compactdefaultargs") First;
-		%feature("autodoc", "	:rtype: Handle_StepElement_SurfaceElementPurposeMember
-") First;
-		Handle_StepElement_SurfaceElementPurposeMember First ();
-		%feature("compactdefaultargs") Last;
-		%feature("autodoc", "	:rtype: Handle_StepElement_SurfaceElementPurposeMember
-") Last;
-		Handle_StepElement_SurfaceElementPurposeMember Last ();
-		%feature("compactdefaultargs") Split;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param Sub:
-	:type Sub: StepElement_SequenceOfSurfaceElementPurposeMember &
-	:rtype: None
-") Split;
-		void Split (const Standard_Integer Index,StepElement_SequenceOfSurfaceElementPurposeMember & Sub);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: Handle_StepElement_SurfaceElementPurposeMember
-") Value;
-		Handle_StepElement_SurfaceElementPurposeMember Value (const Standard_Integer Index);
-		%feature("compactdefaultargs") SetValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param I:
-	:type I: Handle_StepElement_SurfaceElementPurposeMember &
-	:rtype: None
-") SetValue;
-		void SetValue (const Standard_Integer Index,const Handle_StepElement_SurfaceElementPurposeMember & I);
-		%feature("compactdefaultargs") ChangeValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: Handle_StepElement_SurfaceElementPurposeMember
-") ChangeValue;
-		Handle_StepElement_SurfaceElementPurposeMember ChangeValue (const Standard_Integer Index);
-		%feature("compactdefaultargs") Remove;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: None
-") Remove;
-		void Remove (const Standard_Integer Index);
-		%feature("compactdefaultargs") Remove;
-		%feature("autodoc", "	:param FromIndex:
-	:type FromIndex: int
-	:param ToIndex:
-	:type ToIndex: int
-	:rtype: None
-") Remove;
-		void Remove (const Standard_Integer FromIndex,const Standard_Integer ToIndex);
-};
-
-
-%extend StepElement_SequenceOfSurfaceElementPurposeMember {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
 %nodefaultctor StepElement_SurfaceElementProperty;
-class StepElement_SurfaceElementProperty : public MMgt_TShared {
+class StepElement_SurfaceElementProperty : public Standard_Transient {
 	public:
 		%feature("compactdefaultargs") StepElement_SurfaceElementProperty;
 		%feature("autodoc", "	* Empty constructor
@@ -5473,7 +1456,7 @@ class StepElement_SurfaceElementProperty : public MMgt_TShared {
 ") StepElement_SurfaceElementProperty;
 		 StepElement_SurfaceElementProperty ();
 		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	* Initialize all fields (own and inherited)
+		%feature("autodoc", "	* Initialize all fields --own and inherited--
 
 	:param aPropertyId:
 	:type aPropertyId: Handle_TCollection_HAsciiString &
@@ -5548,7 +1531,7 @@ class StepElement_SurfaceElementProperty : public MMgt_TShared {
 %}
 
 %nodefaultctor Handle_StepElement_SurfaceElementProperty;
-class Handle_StepElement_SurfaceElementProperty : public Handle_MMgt_TShared {
+class Handle_StepElement_SurfaceElementProperty : public Handle_Standard_Transient {
 
     public:
         // constructors
@@ -5560,19 +1543,20 @@ class Handle_StepElement_SurfaceElementProperty : public Handle_MMgt_TShared {
         static const Handle_StepElement_SurfaceElementProperty DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_StepElement_SurfaceElementProperty {
     StepElement_SurfaceElementProperty* _get_reference() {
-    return (StepElement_SurfaceElementProperty*)$self->Access();
+    return (StepElement_SurfaceElementProperty*)$self->get();
     }
 };
 
 %extend Handle_StepElement_SurfaceElementProperty {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend StepElement_SurfaceElementProperty {
@@ -5620,7 +1604,7 @@ class StepElement_SurfaceElementPurpose : public StepData_SelectType {
 ") SetEnumeratedSurfaceElementPurpose;
 		void SetEnumeratedSurfaceElementPurpose (const StepElement_EnumeratedSurfaceElementPurpose aVal);
 		%feature("compactdefaultargs") EnumeratedSurfaceElementPurpose;
-		%feature("autodoc", "	* Returns Value as EnumeratedSurfaceElementPurpose (or Null if another type)
+		%feature("autodoc", "	* Returns Value as EnumeratedSurfaceElementPurpose --or Null if another type--
 
 	:rtype: StepElement_EnumeratedSurfaceElementPurpose
 ") EnumeratedSurfaceElementPurpose;
@@ -5634,7 +1618,7 @@ class StepElement_SurfaceElementPurpose : public StepData_SelectType {
 ") SetApplicationDefinedElementPurpose;
 		void SetApplicationDefinedElementPurpose (const Handle_TCollection_HAsciiString & aVal);
 		%feature("compactdefaultargs") ApplicationDefinedElementPurpose;
-		%feature("autodoc", "	* Returns Value as ApplicationDefinedElementPurpose (or Null if another type)
+		%feature("autodoc", "	* Returns Value as ApplicationDefinedElementPurpose --or Null if another type--
 
 	:rtype: Handle_TCollection_HAsciiString
 ") ApplicationDefinedElementPurpose;
@@ -5718,19 +1702,20 @@ class Handle_StepElement_SurfaceElementPurposeMember : public Handle_StepData_Se
         static const Handle_StepElement_SurfaceElementPurposeMember DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_StepElement_SurfaceElementPurposeMember {
     StepElement_SurfaceElementPurposeMember* _get_reference() {
-    return (StepElement_SurfaceElementPurposeMember*)$self->Access();
+    return (StepElement_SurfaceElementPurposeMember*)$self->get();
     }
 };
 
 %extend Handle_StepElement_SurfaceElementPurposeMember {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend StepElement_SurfaceElementPurposeMember {
@@ -5739,7 +1724,7 @@ class Handle_StepElement_SurfaceElementPurposeMember : public Handle_StepData_Se
 	}
 };
 %nodefaultctor StepElement_SurfaceSection;
-class StepElement_SurfaceSection : public MMgt_TShared {
+class StepElement_SurfaceSection : public Standard_Transient {
 	public:
 		%feature("compactdefaultargs") StepElement_SurfaceSection;
 		%feature("autodoc", "	* Empty constructor
@@ -5748,7 +1733,7 @@ class StepElement_SurfaceSection : public MMgt_TShared {
 ") StepElement_SurfaceSection;
 		 StepElement_SurfaceSection ();
 		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	* Initialize all fields (own and inherited)
+		%feature("autodoc", "	* Initialize all fields --own and inherited--
 
 	:param aOffset:
 	:type aOffset: StepElement_MeasureOrUnspecifiedValue &
@@ -5823,7 +1808,7 @@ class StepElement_SurfaceSection : public MMgt_TShared {
 %}
 
 %nodefaultctor Handle_StepElement_SurfaceSection;
-class Handle_StepElement_SurfaceSection : public Handle_MMgt_TShared {
+class Handle_StepElement_SurfaceSection : public Handle_Standard_Transient {
 
     public:
         // constructors
@@ -5835,19 +1820,20 @@ class Handle_StepElement_SurfaceSection : public Handle_MMgt_TShared {
         static const Handle_StepElement_SurfaceSection DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_StepElement_SurfaceSection {
     StepElement_SurfaceSection* _get_reference() {
-    return (StepElement_SurfaceSection*)$self->Access();
+    return (StepElement_SurfaceSection*)$self->get();
     }
 };
 
 %extend Handle_StepElement_SurfaceSection {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend StepElement_SurfaceSection {
@@ -5856,7 +1842,7 @@ class Handle_StepElement_SurfaceSection : public Handle_MMgt_TShared {
 	}
 };
 %nodefaultctor StepElement_SurfaceSectionField;
-class StepElement_SurfaceSectionField : public MMgt_TShared {
+class StepElement_SurfaceSectionField : public Standard_Transient {
 	public:
 		%feature("compactdefaultargs") StepElement_SurfaceSectionField;
 		%feature("autodoc", "	* Empty constructor
@@ -5886,7 +1872,7 @@ class StepElement_SurfaceSectionField : public MMgt_TShared {
 %}
 
 %nodefaultctor Handle_StepElement_SurfaceSectionField;
-class Handle_StepElement_SurfaceSectionField : public Handle_MMgt_TShared {
+class Handle_StepElement_SurfaceSectionField : public Handle_Standard_Transient {
 
     public:
         // constructors
@@ -5898,19 +1884,20 @@ class Handle_StepElement_SurfaceSectionField : public Handle_MMgt_TShared {
         static const Handle_StepElement_SurfaceSectionField DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_StepElement_SurfaceSectionField {
     StepElement_SurfaceSectionField* _get_reference() {
-    return (StepElement_SurfaceSectionField*)$self->Access();
+    return (StepElement_SurfaceSectionField*)$self->get();
     }
 };
 
 %extend Handle_StepElement_SurfaceSectionField {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend StepElement_SurfaceSectionField {
@@ -5958,7 +1945,7 @@ class StepElement_VolumeElementPurpose : public StepData_SelectType {
 ") SetEnumeratedVolumeElementPurpose;
 		void SetEnumeratedVolumeElementPurpose (const StepElement_EnumeratedVolumeElementPurpose aVal);
 		%feature("compactdefaultargs") EnumeratedVolumeElementPurpose;
-		%feature("autodoc", "	* Returns Value as EnumeratedVolumeElementPurpose (or Null if another type)
+		%feature("autodoc", "	* Returns Value as EnumeratedVolumeElementPurpose --or Null if another type--
 
 	:rtype: StepElement_EnumeratedVolumeElementPurpose
 ") EnumeratedVolumeElementPurpose;
@@ -5972,7 +1959,7 @@ class StepElement_VolumeElementPurpose : public StepData_SelectType {
 ") SetApplicationDefinedElementPurpose;
 		void SetApplicationDefinedElementPurpose (const Handle_TCollection_HAsciiString & aVal);
 		%feature("compactdefaultargs") ApplicationDefinedElementPurpose;
-		%feature("autodoc", "	* Returns Value as ApplicationDefinedElementPurpose (or Null if another type)
+		%feature("autodoc", "	* Returns Value as ApplicationDefinedElementPurpose --or Null if another type--
 
 	:rtype: Handle_TCollection_HAsciiString
 ") ApplicationDefinedElementPurpose;
@@ -6056,19 +2043,20 @@ class Handle_StepElement_VolumeElementPurposeMember : public Handle_StepData_Sel
         static const Handle_StepElement_VolumeElementPurposeMember DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_StepElement_VolumeElementPurposeMember {
     StepElement_VolumeElementPurposeMember* _get_reference() {
-    return (StepElement_VolumeElementPurposeMember*)$self->Access();
+    return (StepElement_VolumeElementPurposeMember*)$self->get();
     }
 };
 
 %extend Handle_StepElement_VolumeElementPurposeMember {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend StepElement_VolumeElementPurposeMember {
@@ -6086,7 +2074,7 @@ class StepElement_Curve3dElementDescriptor : public StepElement_ElementDescripto
 ") StepElement_Curve3dElementDescriptor;
 		 StepElement_Curve3dElementDescriptor ();
 		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	* Initialize all fields (own and inherited)
+		%feature("autodoc", "	* Initialize all fields --own and inherited--
 
 	:param aElementDescriptor_TopologyOrder:
 	:type aElementDescriptor_TopologyOrder: StepElement_ElementOrder
@@ -6145,19 +2133,20 @@ class Handle_StepElement_Curve3dElementDescriptor : public Handle_StepElement_El
         static const Handle_StepElement_Curve3dElementDescriptor DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_StepElement_Curve3dElementDescriptor {
     StepElement_Curve3dElementDescriptor* _get_reference() {
-    return (StepElement_Curve3dElementDescriptor*)$self->Access();
+    return (StepElement_Curve3dElementDescriptor*)$self->get();
     }
 };
 
 %extend Handle_StepElement_Curve3dElementDescriptor {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend StepElement_Curve3dElementDescriptor {
@@ -6175,7 +2164,7 @@ class StepElement_CurveElementSectionDerivedDefinitions : public StepElement_Cur
 ") StepElement_CurveElementSectionDerivedDefinitions;
 		 StepElement_CurveElementSectionDerivedDefinitions ();
 		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	* Initialize all fields (own and inherited)
+		%feature("autodoc", "	* Initialize all fields --own and inherited--
 
 	:param aCurveElementSectionDefinition_Description:
 	:type aCurveElementSectionDefinition_Description: Handle_TCollection_HAsciiString &
@@ -6378,19 +2367,20 @@ class Handle_StepElement_CurveElementSectionDerivedDefinitions : public Handle_S
         static const Handle_StepElement_CurveElementSectionDerivedDefinitions DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_StepElement_CurveElementSectionDerivedDefinitions {
     StepElement_CurveElementSectionDerivedDefinitions* _get_reference() {
-    return (StepElement_CurveElementSectionDerivedDefinitions*)$self->Access();
+    return (StepElement_CurveElementSectionDerivedDefinitions*)$self->get();
     }
 };
 
 %extend Handle_StepElement_CurveElementSectionDerivedDefinitions {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend StepElement_CurveElementSectionDerivedDefinitions {
@@ -6408,7 +2398,7 @@ class StepElement_Surface3dElementDescriptor : public StepElement_ElementDescrip
 ") StepElement_Surface3dElementDescriptor;
 		 StepElement_Surface3dElementDescriptor ();
 		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	* Initialize all fields (own and inherited)
+		%feature("autodoc", "	* Initialize all fields --own and inherited--
 
 	:param aElementDescriptor_TopologyOrder:
 	:type aElementDescriptor_TopologyOrder: StepElement_ElementOrder
@@ -6483,19 +2473,20 @@ class Handle_StepElement_Surface3dElementDescriptor : public Handle_StepElement_
         static const Handle_StepElement_Surface3dElementDescriptor DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_StepElement_Surface3dElementDescriptor {
     StepElement_Surface3dElementDescriptor* _get_reference() {
-    return (StepElement_Surface3dElementDescriptor*)$self->Access();
+    return (StepElement_Surface3dElementDescriptor*)$self->get();
     }
 };
 
 %extend Handle_StepElement_Surface3dElementDescriptor {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend StepElement_Surface3dElementDescriptor {
@@ -6513,7 +2504,7 @@ class StepElement_SurfaceSectionFieldConstant : public StepElement_SurfaceSectio
 ") StepElement_SurfaceSectionFieldConstant;
 		 StepElement_SurfaceSectionFieldConstant ();
 		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	* Initialize all fields (own and inherited)
+		%feature("autodoc", "	* Initialize all fields --own and inherited--
 
 	:param aDefinition:
 	:type aDefinition: Handle_StepElement_SurfaceSection &
@@ -6568,19 +2559,20 @@ class Handle_StepElement_SurfaceSectionFieldConstant : public Handle_StepElement
         static const Handle_StepElement_SurfaceSectionFieldConstant DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_StepElement_SurfaceSectionFieldConstant {
     StepElement_SurfaceSectionFieldConstant* _get_reference() {
-    return (StepElement_SurfaceSectionFieldConstant*)$self->Access();
+    return (StepElement_SurfaceSectionFieldConstant*)$self->get();
     }
 };
 
 %extend Handle_StepElement_SurfaceSectionFieldConstant {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend StepElement_SurfaceSectionFieldConstant {
@@ -6598,7 +2590,7 @@ class StepElement_SurfaceSectionFieldVarying : public StepElement_SurfaceSection
 ") StepElement_SurfaceSectionFieldVarying;
 		 StepElement_SurfaceSectionFieldVarying ();
 		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	* Initialize all fields (own and inherited)
+		%feature("autodoc", "	* Initialize all fields --own and inherited--
 
 	:param aDefinitions:
 	:type aDefinitions: Handle_StepElement_HArray1OfSurfaceSection &
@@ -6669,19 +2661,20 @@ class Handle_StepElement_SurfaceSectionFieldVarying : public Handle_StepElement_
         static const Handle_StepElement_SurfaceSectionFieldVarying DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_StepElement_SurfaceSectionFieldVarying {
     StepElement_SurfaceSectionFieldVarying* _get_reference() {
-    return (StepElement_SurfaceSectionFieldVarying*)$self->Access();
+    return (StepElement_SurfaceSectionFieldVarying*)$self->get();
     }
 };
 
 %extend Handle_StepElement_SurfaceSectionFieldVarying {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend StepElement_SurfaceSectionFieldVarying {
@@ -6699,7 +2692,7 @@ class StepElement_UniformSurfaceSection : public StepElement_SurfaceSection {
 ") StepElement_UniformSurfaceSection;
 		 StepElement_UniformSurfaceSection ();
 		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	* Initialize all fields (own and inherited)
+		%feature("autodoc", "	* Initialize all fields --own and inherited--
 
 	:param aSurfaceSection_Offset:
 	:type aSurfaceSection_Offset: StepElement_MeasureOrUnspecifiedValue &
@@ -6792,19 +2785,20 @@ class Handle_StepElement_UniformSurfaceSection : public Handle_StepElement_Surfa
         static const Handle_StepElement_UniformSurfaceSection DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_StepElement_UniformSurfaceSection {
     StepElement_UniformSurfaceSection* _get_reference() {
-    return (StepElement_UniformSurfaceSection*)$self->Access();
+    return (StepElement_UniformSurfaceSection*)$self->get();
     }
 };
 
 %extend Handle_StepElement_UniformSurfaceSection {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend StepElement_UniformSurfaceSection {
@@ -6822,7 +2816,7 @@ class StepElement_Volume3dElementDescriptor : public StepElement_ElementDescript
 ") StepElement_Volume3dElementDescriptor;
 		 StepElement_Volume3dElementDescriptor ();
 		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	* Initialize all fields (own and inherited)
+		%feature("autodoc", "	* Initialize all fields --own and inherited--
 
 	:param aElementDescriptor_TopologyOrder:
 	:type aElementDescriptor_TopologyOrder: StepElement_ElementOrder
@@ -6897,19 +2891,20 @@ class Handle_StepElement_Volume3dElementDescriptor : public Handle_StepElement_E
         static const Handle_StepElement_Volume3dElementDescriptor DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_StepElement_Volume3dElementDescriptor {
     StepElement_Volume3dElementDescriptor* _get_reference() {
-    return (StepElement_Volume3dElementDescriptor*)$self->Access();
+    return (StepElement_Volume3dElementDescriptor*)$self->get();
     }
 };
 
 %extend Handle_StepElement_Volume3dElementDescriptor {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend StepElement_Volume3dElementDescriptor {

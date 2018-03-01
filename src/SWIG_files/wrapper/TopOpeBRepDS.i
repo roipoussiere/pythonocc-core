@@ -1,5 +1,5 @@
 /*
-Copyright 2008-2017 Thomas Paviot (tpaviot@gmail.com)
+Copyright 2008-2018 Thomas Paviot (tpaviot@gmail.com)
 
 
 This file is part of pythonOCC.
@@ -56,6 +56,26 @@ def register_handle(handle, base_object):
 /* typedefs */
 typedef TopOpeBRepDS_DataStructure * TopOpeBRepDS_PDataStructure;
 /* end typedefs declaration */
+
+/* templates */
+%template(TopOpeBRepDS_DataMapOfCheckStatus) NCollection_DataMap <Standard_Integer , TopOpeBRepDS_CheckStatus , TColStd_MapIntegerHasher>;
+%template(TopOpeBRepDS_MapOfPoint) NCollection_DataMap <Standard_Integer , TopOpeBRepDS_PointData , TColStd_MapIntegerHasher>;
+%template(TopOpeBRepDS_IndexedDataMapOfShapeWithState) NCollection_IndexedDataMap <TopoDS_Shape , TopOpeBRepDS_ShapeWithState , TopTools_ShapeMapHasher>;
+%template(TopOpeBRepDS_ShapeSurface) NCollection_DataMap <TopoDS_Shape , Handle_Geom_Surface , TopTools_ShapeMapHasher>;
+%template(TopOpeBRepDS_MapOfSurface) NCollection_DataMap <Standard_Integer , TopOpeBRepDS_SurfaceData , TColStd_MapIntegerHasher>;
+%template(TopOpeBRepDS_DoubleMapOfIntegerShape) NCollection_DoubleMap <Standard_Integer , TopoDS_Shape , TColStd_MapIntegerHasher , TopTools_ShapeMapHasher>;
+%template(TopOpeBRepDS_ListOfInterference) NCollection_List <Handle_TopOpeBRepDS_Interference>;
+%template(TopOpeBRepDS_Array1OfDataMapOfIntegerListOfInterference) NCollection_Array1 <TopOpeBRepDS_DataMapOfIntegerListOfInterference>;
+%template(TopOpeBRepDS_MapOfShapeData) NCollection_IndexedDataMap <TopoDS_Shape , TopOpeBRepDS_ShapeData , TopTools_ShapeMapHasher>;
+%template(TopOpeBRepDS_MapOfIntegerShapeData) NCollection_DataMap <Standard_Integer , TopOpeBRepDS_ShapeData , TColStd_MapIntegerHasher>;
+%template(TopOpeBRepDS_DataMapOfInterferenceShape) NCollection_DataMap <Handle_TopOpeBRepDS_Interference , TopoDS_Shape , TColStd_MapTransientHasher>;
+%template(TopOpeBRepDS_DataMapOfShapeState) NCollection_DataMap <TopoDS_Shape , TopAbs_State , TopTools_ShapeMapHasher>;
+%template(TopOpeBRepDS_MapOfCurve) NCollection_DataMap <Standard_Integer , TopOpeBRepDS_CurveData , TColStd_MapIntegerHasher>;
+%template(TopOpeBRepDS_DataMapOfShapeListOfShapeOn1State) NCollection_DataMap <TopoDS_Shape , TopOpeBRepDS_ListOfShapeOn1State , TopTools_ShapeMapHasher>;
+%template(TopOpeBRepDS_DataMapOfIntegerListOfInterference) NCollection_DataMap <Standard_Integer , TopOpeBRepDS_ListOfInterference , TColStd_MapIntegerHasher>;
+%template(TopOpeBRepDS_DataMapOfInterferenceListOfInterference) NCollection_DataMap <Handle_TopOpeBRepDS_Interference , TopOpeBRepDS_ListOfInterference , TColStd_MapTransientHasher>;
+%template(TopOpeBRepDS_IndexedDataMapOfVertexPoint) NCollection_IndexedDataMap <TopoDS_Shape , TopOpeBRepDS_Point , TopTools_ShapeMapHasher>;
+/* end templates declaration */
 
 /* public enums */
 enum TopOpeBRepDS_Config {
@@ -114,7 +134,7 @@ class TopOpeBRepDS {
 ") SPrint;
 		static TCollection_AsciiString SPrint (const TopOpeBRepDS_Kind K);
 		%feature("compactdefaultargs") SPrint;
-		%feature("autodoc", "	* S1(<K>,<I>)S2
+		%feature("autodoc", "	* S1--<K>,<I>--S2
 
 	:param K:
 	:type K: TopOpeBRepDS_Kind
@@ -156,7 +176,7 @@ class TopOpeBRepDS {
 ") SPrint;
 		static TCollection_AsciiString SPrint (const TopAbs_ShapeEnum T);
 		%feature("compactdefaultargs") SPrint;
-		%feature("autodoc", "	* (<T>,<I>)
+		%feature("autodoc", "	* --<T>,<I>--
 
 	:param T:
 	:type T: TopAbs_ShapeEnum
@@ -227,95 +247,8 @@ class TopOpeBRepDS {
 	__repr__ = _dumps_object
 	}
 };
-%nodefaultctor TopOpeBRepDS_Array1OfDataMapOfIntegerListOfInterference;
-class TopOpeBRepDS_Array1OfDataMapOfIntegerListOfInterference {
-	public:
-		%feature("compactdefaultargs") TopOpeBRepDS_Array1OfDataMapOfIntegerListOfInterference;
-		%feature("autodoc", "	:param Low:
-	:type Low: int
-	:param Up:
-	:type Up: int
-	:rtype: None
-") TopOpeBRepDS_Array1OfDataMapOfIntegerListOfInterference;
-		 TopOpeBRepDS_Array1OfDataMapOfIntegerListOfInterference (const Standard_Integer Low,const Standard_Integer Up);
-		%feature("compactdefaultargs") TopOpeBRepDS_Array1OfDataMapOfIntegerListOfInterference;
-		%feature("autodoc", "	:param Item:
-	:type Item: TopOpeBRepDS_DataMapOfIntegerListOfInterference &
-	:param Low:
-	:type Low: int
-	:param Up:
-	:type Up: int
-	:rtype: None
-") TopOpeBRepDS_Array1OfDataMapOfIntegerListOfInterference;
-		 TopOpeBRepDS_Array1OfDataMapOfIntegerListOfInterference (const TopOpeBRepDS_DataMapOfIntegerListOfInterference & Item,const Standard_Integer Low,const Standard_Integer Up);
-		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	:param V:
-	:type V: TopOpeBRepDS_DataMapOfIntegerListOfInterference &
-	:rtype: None
-") Init;
-		void Init (const TopOpeBRepDS_DataMapOfIntegerListOfInterference & V);
-		%feature("compactdefaultargs") Destroy;
-		%feature("autodoc", "	:rtype: None
-") Destroy;
-		void Destroy ();
-		%feature("compactdefaultargs") IsAllocated;
-		%feature("autodoc", "	:rtype: bool
-") IsAllocated;
-		Standard_Boolean IsAllocated ();
-		%feature("compactdefaultargs") Assign;
-		%feature("autodoc", "	:param Other:
-	:type Other: TopOpeBRepDS_Array1OfDataMapOfIntegerListOfInterference &
-	:rtype: TopOpeBRepDS_Array1OfDataMapOfIntegerListOfInterference
-") Assign;
-		const TopOpeBRepDS_Array1OfDataMapOfIntegerListOfInterference & Assign (const TopOpeBRepDS_Array1OfDataMapOfIntegerListOfInterference & Other);
-		%feature("compactdefaultargs") operator =;
-		%feature("autodoc", "	:param Other:
-	:type Other: TopOpeBRepDS_Array1OfDataMapOfIntegerListOfInterference &
-	:rtype: TopOpeBRepDS_Array1OfDataMapOfIntegerListOfInterference
-") operator =;
-		const TopOpeBRepDS_Array1OfDataMapOfIntegerListOfInterference & operator = (const TopOpeBRepDS_Array1OfDataMapOfIntegerListOfInterference & Other);
-		%feature("compactdefaultargs") Length;
-		%feature("autodoc", "	:rtype: int
-") Length;
-		Standard_Integer Length ();
-		%feature("compactdefaultargs") Lower;
-		%feature("autodoc", "	:rtype: int
-") Lower;
-		Standard_Integer Lower ();
-		%feature("compactdefaultargs") Upper;
-		%feature("autodoc", "	:rtype: int
-") Upper;
-		Standard_Integer Upper ();
-		%feature("compactdefaultargs") SetValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param Value:
-	:type Value: TopOpeBRepDS_DataMapOfIntegerListOfInterference &
-	:rtype: None
-") SetValue;
-		void SetValue (const Standard_Integer Index,const TopOpeBRepDS_DataMapOfIntegerListOfInterference & Value);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: TopOpeBRepDS_DataMapOfIntegerListOfInterference
-") Value;
-		const TopOpeBRepDS_DataMapOfIntegerListOfInterference & Value (const Standard_Integer Index);
-		%feature("compactdefaultargs") ChangeValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: TopOpeBRepDS_DataMapOfIntegerListOfInterference
-") ChangeValue;
-		TopOpeBRepDS_DataMapOfIntegerListOfInterference & ChangeValue (const Standard_Integer Index);
-};
-
-
-%extend TopOpeBRepDS_Array1OfDataMapOfIntegerListOfInterference {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
 %nodefaultctor TopOpeBRepDS_Association;
-class TopOpeBRepDS_Association : public MMgt_TShared {
+class TopOpeBRepDS_Association : public Standard_Transient {
 	public:
 		%feature("compactdefaultargs") TopOpeBRepDS_Association;
 		%feature("autodoc", "	:rtype: None
@@ -379,7 +312,7 @@ class TopOpeBRepDS_Association : public MMgt_TShared {
 %}
 
 %nodefaultctor Handle_TopOpeBRepDS_Association;
-class Handle_TopOpeBRepDS_Association : public Handle_MMgt_TShared {
+class Handle_TopOpeBRepDS_Association : public Handle_Standard_Transient {
 
     public:
         // constructors
@@ -391,19 +324,20 @@ class Handle_TopOpeBRepDS_Association : public Handle_MMgt_TShared {
         static const Handle_TopOpeBRepDS_Association DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_TopOpeBRepDS_Association {
     TopOpeBRepDS_Association* _get_reference() {
-    return (TopOpeBRepDS_Association*)$self->Access();
+    return (TopOpeBRepDS_Association*)$self->get();
     }
 };
 
 %extend Handle_TopOpeBRepDS_Association {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend TopOpeBRepDS_Association {
@@ -823,7 +757,7 @@ class TopOpeBRepDS_BuildTool {
 	}
 };
 %nodefaultctor TopOpeBRepDS_Check;
-class TopOpeBRepDS_Check : public MMgt_TShared {
+class TopOpeBRepDS_Check : public Standard_Transient {
 	public:
 		%feature("compactdefaultargs") TopOpeBRepDS_Check;
 		%feature("autodoc", "	:rtype: None
@@ -842,7 +776,7 @@ class TopOpeBRepDS_Check : public MMgt_TShared {
 ") ChkIntg;
 		Standard_Boolean ChkIntg ();
 		%feature("compactdefaultargs") ChkIntgInterf;
-		%feature("autodoc", "	* Check integrition of interferences (les supports et les geometries de LI)
+		%feature("autodoc", "	* Check integrition of interferences --les supports et les geometries de LI--
 
 	:param LI:
 	:type LI: TopOpeBRepDS_ListOfInterference &
@@ -850,7 +784,7 @@ class TopOpeBRepDS_Check : public MMgt_TShared {
 ") ChkIntgInterf;
 		Standard_Boolean ChkIntgInterf (const TopOpeBRepDS_ListOfInterference & LI);
 		%feature("compactdefaultargs") CheckDS;
-		%feature("autodoc", "	* Verifie que le ieme element de la DS existe, et pour un K de type topologique, verifie qu'il est du bon type (VERTEX, EDGE, WIRE, FACE, SHELL ou SOLID)
+		%feature("autodoc", "	* Verifie que le ieme element de la DS existe, et pour un K de type topologique, verifie qu'il est du bon type --VERTEX, EDGE, WIRE, FACE, SHELL ou SOLID--
 
 	:param i:
 	:type i: int
@@ -947,7 +881,7 @@ class TopOpeBRepDS_Check : public MMgt_TShared {
 %}
 
 %nodefaultctor Handle_TopOpeBRepDS_Check;
-class Handle_TopOpeBRepDS_Check : public Handle_MMgt_TShared {
+class Handle_TopOpeBRepDS_Check : public Handle_Standard_Transient {
 
     public:
         // constructors
@@ -959,19 +893,20 @@ class Handle_TopOpeBRepDS_Check : public Handle_MMgt_TShared {
         static const Handle_TopOpeBRepDS_Check DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_TopOpeBRepDS_Check {
     TopOpeBRepDS_Check* _get_reference() {
-    return (TopOpeBRepDS_Check*)$self->Access();
+    return (TopOpeBRepDS_Check*)$self->get();
     }
 };
 
 %extend Handle_TopOpeBRepDS_Check {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend TopOpeBRepDS_Check {
@@ -1168,16 +1103,6 @@ class TopOpeBRepDS_Curve {
 	:rtype: None
 ") ChangeDSIndex;
 		void ChangeDSIndex (const Standard_Integer I);
-		%feature("compactdefaultargs") Dump;
-		%feature("autodoc", "	:param OS:
-	:type OS: Standard_OStream &
-	:param index:
-	:type index: int
-	:param compact: default value is Standard_True
-	:type compact: bool
-	:rtype: Standard_OStream
-") Dump;
-		Standard_OStream & Dump (Standard_OStream & OS,const Standard_Integer index,const Standard_Boolean compact = Standard_True);
 };
 
 
@@ -1251,1768 +1176,6 @@ class TopOpeBRepDS_CurveExplorer {
 
 
 %extend TopOpeBRepDS_CurveExplorer {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor TopOpeBRepDS_DataMapIteratorOfDataMapOfCheckStatus;
-class TopOpeBRepDS_DataMapIteratorOfDataMapOfCheckStatus : public TCollection_BasicMapIterator {
-	public:
-		%feature("compactdefaultargs") TopOpeBRepDS_DataMapIteratorOfDataMapOfCheckStatus;
-		%feature("autodoc", "	:rtype: None
-") TopOpeBRepDS_DataMapIteratorOfDataMapOfCheckStatus;
-		 TopOpeBRepDS_DataMapIteratorOfDataMapOfCheckStatus ();
-		%feature("compactdefaultargs") TopOpeBRepDS_DataMapIteratorOfDataMapOfCheckStatus;
-		%feature("autodoc", "	:param aMap:
-	:type aMap: TopOpeBRepDS_DataMapOfCheckStatus &
-	:rtype: None
-") TopOpeBRepDS_DataMapIteratorOfDataMapOfCheckStatus;
-		 TopOpeBRepDS_DataMapIteratorOfDataMapOfCheckStatus (const TopOpeBRepDS_DataMapOfCheckStatus & aMap);
-		%feature("compactdefaultargs") Initialize;
-		%feature("autodoc", "	:param aMap:
-	:type aMap: TopOpeBRepDS_DataMapOfCheckStatus &
-	:rtype: None
-") Initialize;
-		void Initialize (const TopOpeBRepDS_DataMapOfCheckStatus & aMap);
-		%feature("compactdefaultargs") Key;
-		%feature("autodoc", "	:rtype: int
-") Key;
-		const Standard_Integer & Key ();
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:rtype: TopOpeBRepDS_CheckStatus
-") Value;
-		const TopOpeBRepDS_CheckStatus  Value ();
-};
-
-
-%extend TopOpeBRepDS_DataMapIteratorOfDataMapOfCheckStatus {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor TopOpeBRepDS_DataMapIteratorOfDataMapOfIntegerListOfInterference;
-class TopOpeBRepDS_DataMapIteratorOfDataMapOfIntegerListOfInterference : public TCollection_BasicMapIterator {
-	public:
-		%feature("compactdefaultargs") TopOpeBRepDS_DataMapIteratorOfDataMapOfIntegerListOfInterference;
-		%feature("autodoc", "	:rtype: None
-") TopOpeBRepDS_DataMapIteratorOfDataMapOfIntegerListOfInterference;
-		 TopOpeBRepDS_DataMapIteratorOfDataMapOfIntegerListOfInterference ();
-		%feature("compactdefaultargs") TopOpeBRepDS_DataMapIteratorOfDataMapOfIntegerListOfInterference;
-		%feature("autodoc", "	:param aMap:
-	:type aMap: TopOpeBRepDS_DataMapOfIntegerListOfInterference &
-	:rtype: None
-") TopOpeBRepDS_DataMapIteratorOfDataMapOfIntegerListOfInterference;
-		 TopOpeBRepDS_DataMapIteratorOfDataMapOfIntegerListOfInterference (const TopOpeBRepDS_DataMapOfIntegerListOfInterference & aMap);
-		%feature("compactdefaultargs") Initialize;
-		%feature("autodoc", "	:param aMap:
-	:type aMap: TopOpeBRepDS_DataMapOfIntegerListOfInterference &
-	:rtype: None
-") Initialize;
-		void Initialize (const TopOpeBRepDS_DataMapOfIntegerListOfInterference & aMap);
-		%feature("compactdefaultargs") Key;
-		%feature("autodoc", "	:rtype: int
-") Key;
-		const Standard_Integer & Key ();
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:rtype: TopOpeBRepDS_ListOfInterference
-") Value;
-		const TopOpeBRepDS_ListOfInterference & Value ();
-};
-
-
-%extend TopOpeBRepDS_DataMapIteratorOfDataMapOfIntegerListOfInterference {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor TopOpeBRepDS_DataMapIteratorOfDataMapOfInterferenceListOfInterference;
-class TopOpeBRepDS_DataMapIteratorOfDataMapOfInterferenceListOfInterference : public TCollection_BasicMapIterator {
-	public:
-		%feature("compactdefaultargs") TopOpeBRepDS_DataMapIteratorOfDataMapOfInterferenceListOfInterference;
-		%feature("autodoc", "	:rtype: None
-") TopOpeBRepDS_DataMapIteratorOfDataMapOfInterferenceListOfInterference;
-		 TopOpeBRepDS_DataMapIteratorOfDataMapOfInterferenceListOfInterference ();
-		%feature("compactdefaultargs") TopOpeBRepDS_DataMapIteratorOfDataMapOfInterferenceListOfInterference;
-		%feature("autodoc", "	:param aMap:
-	:type aMap: TopOpeBRepDS_DataMapOfInterferenceListOfInterference &
-	:rtype: None
-") TopOpeBRepDS_DataMapIteratorOfDataMapOfInterferenceListOfInterference;
-		 TopOpeBRepDS_DataMapIteratorOfDataMapOfInterferenceListOfInterference (const TopOpeBRepDS_DataMapOfInterferenceListOfInterference & aMap);
-		%feature("compactdefaultargs") Initialize;
-		%feature("autodoc", "	:param aMap:
-	:type aMap: TopOpeBRepDS_DataMapOfInterferenceListOfInterference &
-	:rtype: None
-") Initialize;
-		void Initialize (const TopOpeBRepDS_DataMapOfInterferenceListOfInterference & aMap);
-		%feature("compactdefaultargs") Key;
-		%feature("autodoc", "	:rtype: Handle_TopOpeBRepDS_Interference
-") Key;
-		Handle_TopOpeBRepDS_Interference Key ();
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:rtype: TopOpeBRepDS_ListOfInterference
-") Value;
-		const TopOpeBRepDS_ListOfInterference & Value ();
-};
-
-
-%extend TopOpeBRepDS_DataMapIteratorOfDataMapOfInterferenceListOfInterference {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor TopOpeBRepDS_DataMapIteratorOfDataMapOfInterferenceShape;
-class TopOpeBRepDS_DataMapIteratorOfDataMapOfInterferenceShape : public TCollection_BasicMapIterator {
-	public:
-		%feature("compactdefaultargs") TopOpeBRepDS_DataMapIteratorOfDataMapOfInterferenceShape;
-		%feature("autodoc", "	:rtype: None
-") TopOpeBRepDS_DataMapIteratorOfDataMapOfInterferenceShape;
-		 TopOpeBRepDS_DataMapIteratorOfDataMapOfInterferenceShape ();
-		%feature("compactdefaultargs") TopOpeBRepDS_DataMapIteratorOfDataMapOfInterferenceShape;
-		%feature("autodoc", "	:param aMap:
-	:type aMap: TopOpeBRepDS_DataMapOfInterferenceShape &
-	:rtype: None
-") TopOpeBRepDS_DataMapIteratorOfDataMapOfInterferenceShape;
-		 TopOpeBRepDS_DataMapIteratorOfDataMapOfInterferenceShape (const TopOpeBRepDS_DataMapOfInterferenceShape & aMap);
-		%feature("compactdefaultargs") Initialize;
-		%feature("autodoc", "	:param aMap:
-	:type aMap: TopOpeBRepDS_DataMapOfInterferenceShape &
-	:rtype: None
-") Initialize;
-		void Initialize (const TopOpeBRepDS_DataMapOfInterferenceShape & aMap);
-		%feature("compactdefaultargs") Key;
-		%feature("autodoc", "	:rtype: Handle_TopOpeBRepDS_Interference
-") Key;
-		Handle_TopOpeBRepDS_Interference Key ();
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:rtype: TopoDS_Shape
-") Value;
-		const TopoDS_Shape  Value ();
-};
-
-
-%extend TopOpeBRepDS_DataMapIteratorOfDataMapOfInterferenceShape {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor TopOpeBRepDS_DataMapIteratorOfDataMapOfShapeListOfShapeOn1State;
-class TopOpeBRepDS_DataMapIteratorOfDataMapOfShapeListOfShapeOn1State : public TCollection_BasicMapIterator {
-	public:
-		%feature("compactdefaultargs") TopOpeBRepDS_DataMapIteratorOfDataMapOfShapeListOfShapeOn1State;
-		%feature("autodoc", "	:rtype: None
-") TopOpeBRepDS_DataMapIteratorOfDataMapOfShapeListOfShapeOn1State;
-		 TopOpeBRepDS_DataMapIteratorOfDataMapOfShapeListOfShapeOn1State ();
-		%feature("compactdefaultargs") TopOpeBRepDS_DataMapIteratorOfDataMapOfShapeListOfShapeOn1State;
-		%feature("autodoc", "	:param aMap:
-	:type aMap: TopOpeBRepDS_DataMapOfShapeListOfShapeOn1State &
-	:rtype: None
-") TopOpeBRepDS_DataMapIteratorOfDataMapOfShapeListOfShapeOn1State;
-		 TopOpeBRepDS_DataMapIteratorOfDataMapOfShapeListOfShapeOn1State (const TopOpeBRepDS_DataMapOfShapeListOfShapeOn1State & aMap);
-		%feature("compactdefaultargs") Initialize;
-		%feature("autodoc", "	:param aMap:
-	:type aMap: TopOpeBRepDS_DataMapOfShapeListOfShapeOn1State &
-	:rtype: None
-") Initialize;
-		void Initialize (const TopOpeBRepDS_DataMapOfShapeListOfShapeOn1State & aMap);
-		%feature("compactdefaultargs") Key;
-		%feature("autodoc", "	:rtype: TopoDS_Shape
-") Key;
-		const TopoDS_Shape  Key ();
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:rtype: TopOpeBRepDS_ListOfShapeOn1State
-") Value;
-		const TopOpeBRepDS_ListOfShapeOn1State & Value ();
-};
-
-
-%extend TopOpeBRepDS_DataMapIteratorOfDataMapOfShapeListOfShapeOn1State {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor TopOpeBRepDS_DataMapIteratorOfDataMapOfShapeState;
-class TopOpeBRepDS_DataMapIteratorOfDataMapOfShapeState : public TCollection_BasicMapIterator {
-	public:
-		%feature("compactdefaultargs") TopOpeBRepDS_DataMapIteratorOfDataMapOfShapeState;
-		%feature("autodoc", "	:rtype: None
-") TopOpeBRepDS_DataMapIteratorOfDataMapOfShapeState;
-		 TopOpeBRepDS_DataMapIteratorOfDataMapOfShapeState ();
-		%feature("compactdefaultargs") TopOpeBRepDS_DataMapIteratorOfDataMapOfShapeState;
-		%feature("autodoc", "	:param aMap:
-	:type aMap: TopOpeBRepDS_DataMapOfShapeState &
-	:rtype: None
-") TopOpeBRepDS_DataMapIteratorOfDataMapOfShapeState;
-		 TopOpeBRepDS_DataMapIteratorOfDataMapOfShapeState (const TopOpeBRepDS_DataMapOfShapeState & aMap);
-		%feature("compactdefaultargs") Initialize;
-		%feature("autodoc", "	:param aMap:
-	:type aMap: TopOpeBRepDS_DataMapOfShapeState &
-	:rtype: None
-") Initialize;
-		void Initialize (const TopOpeBRepDS_DataMapOfShapeState & aMap);
-		%feature("compactdefaultargs") Key;
-		%feature("autodoc", "	:rtype: TopoDS_Shape
-") Key;
-		const TopoDS_Shape  Key ();
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:rtype: TopAbs_State
-") Value;
-		const TopAbs_State & Value ();
-};
-
-
-%extend TopOpeBRepDS_DataMapIteratorOfDataMapOfShapeState {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor TopOpeBRepDS_DataMapIteratorOfMapOfCurve;
-class TopOpeBRepDS_DataMapIteratorOfMapOfCurve : public TCollection_BasicMapIterator {
-	public:
-		%feature("compactdefaultargs") TopOpeBRepDS_DataMapIteratorOfMapOfCurve;
-		%feature("autodoc", "	:rtype: None
-") TopOpeBRepDS_DataMapIteratorOfMapOfCurve;
-		 TopOpeBRepDS_DataMapIteratorOfMapOfCurve ();
-		%feature("compactdefaultargs") TopOpeBRepDS_DataMapIteratorOfMapOfCurve;
-		%feature("autodoc", "	:param aMap:
-	:type aMap: TopOpeBRepDS_MapOfCurve &
-	:rtype: None
-") TopOpeBRepDS_DataMapIteratorOfMapOfCurve;
-		 TopOpeBRepDS_DataMapIteratorOfMapOfCurve (const TopOpeBRepDS_MapOfCurve & aMap);
-		%feature("compactdefaultargs") Initialize;
-		%feature("autodoc", "	:param aMap:
-	:type aMap: TopOpeBRepDS_MapOfCurve &
-	:rtype: None
-") Initialize;
-		void Initialize (const TopOpeBRepDS_MapOfCurve & aMap);
-		%feature("compactdefaultargs") Key;
-		%feature("autodoc", "	:rtype: int
-") Key;
-		const Standard_Integer & Key ();
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:rtype: TopOpeBRepDS_CurveData
-") Value;
-		const TopOpeBRepDS_CurveData & Value ();
-};
-
-
-%extend TopOpeBRepDS_DataMapIteratorOfMapOfCurve {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor TopOpeBRepDS_DataMapIteratorOfMapOfIntegerShapeData;
-class TopOpeBRepDS_DataMapIteratorOfMapOfIntegerShapeData : public TCollection_BasicMapIterator {
-	public:
-		%feature("compactdefaultargs") TopOpeBRepDS_DataMapIteratorOfMapOfIntegerShapeData;
-		%feature("autodoc", "	:rtype: None
-") TopOpeBRepDS_DataMapIteratorOfMapOfIntegerShapeData;
-		 TopOpeBRepDS_DataMapIteratorOfMapOfIntegerShapeData ();
-		%feature("compactdefaultargs") TopOpeBRepDS_DataMapIteratorOfMapOfIntegerShapeData;
-		%feature("autodoc", "	:param aMap:
-	:type aMap: TopOpeBRepDS_MapOfIntegerShapeData &
-	:rtype: None
-") TopOpeBRepDS_DataMapIteratorOfMapOfIntegerShapeData;
-		 TopOpeBRepDS_DataMapIteratorOfMapOfIntegerShapeData (const TopOpeBRepDS_MapOfIntegerShapeData & aMap);
-		%feature("compactdefaultargs") Initialize;
-		%feature("autodoc", "	:param aMap:
-	:type aMap: TopOpeBRepDS_MapOfIntegerShapeData &
-	:rtype: None
-") Initialize;
-		void Initialize (const TopOpeBRepDS_MapOfIntegerShapeData & aMap);
-		%feature("compactdefaultargs") Key;
-		%feature("autodoc", "	:rtype: int
-") Key;
-		const Standard_Integer & Key ();
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:rtype: TopOpeBRepDS_ShapeData
-") Value;
-		const TopOpeBRepDS_ShapeData & Value ();
-};
-
-
-%extend TopOpeBRepDS_DataMapIteratorOfMapOfIntegerShapeData {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor TopOpeBRepDS_DataMapIteratorOfMapOfPoint;
-class TopOpeBRepDS_DataMapIteratorOfMapOfPoint : public TCollection_BasicMapIterator {
-	public:
-		%feature("compactdefaultargs") TopOpeBRepDS_DataMapIteratorOfMapOfPoint;
-		%feature("autodoc", "	:rtype: None
-") TopOpeBRepDS_DataMapIteratorOfMapOfPoint;
-		 TopOpeBRepDS_DataMapIteratorOfMapOfPoint ();
-		%feature("compactdefaultargs") TopOpeBRepDS_DataMapIteratorOfMapOfPoint;
-		%feature("autodoc", "	:param aMap:
-	:type aMap: TopOpeBRepDS_MapOfPoint &
-	:rtype: None
-") TopOpeBRepDS_DataMapIteratorOfMapOfPoint;
-		 TopOpeBRepDS_DataMapIteratorOfMapOfPoint (const TopOpeBRepDS_MapOfPoint & aMap);
-		%feature("compactdefaultargs") Initialize;
-		%feature("autodoc", "	:param aMap:
-	:type aMap: TopOpeBRepDS_MapOfPoint &
-	:rtype: None
-") Initialize;
-		void Initialize (const TopOpeBRepDS_MapOfPoint & aMap);
-		%feature("compactdefaultargs") Key;
-		%feature("autodoc", "	:rtype: int
-") Key;
-		const Standard_Integer & Key ();
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:rtype: TopOpeBRepDS_PointData
-") Value;
-		const TopOpeBRepDS_PointData & Value ();
-};
-
-
-%extend TopOpeBRepDS_DataMapIteratorOfMapOfPoint {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor TopOpeBRepDS_DataMapIteratorOfMapOfSurface;
-class TopOpeBRepDS_DataMapIteratorOfMapOfSurface : public TCollection_BasicMapIterator {
-	public:
-		%feature("compactdefaultargs") TopOpeBRepDS_DataMapIteratorOfMapOfSurface;
-		%feature("autodoc", "	:rtype: None
-") TopOpeBRepDS_DataMapIteratorOfMapOfSurface;
-		 TopOpeBRepDS_DataMapIteratorOfMapOfSurface ();
-		%feature("compactdefaultargs") TopOpeBRepDS_DataMapIteratorOfMapOfSurface;
-		%feature("autodoc", "	:param aMap:
-	:type aMap: TopOpeBRepDS_MapOfSurface &
-	:rtype: None
-") TopOpeBRepDS_DataMapIteratorOfMapOfSurface;
-		 TopOpeBRepDS_DataMapIteratorOfMapOfSurface (const TopOpeBRepDS_MapOfSurface & aMap);
-		%feature("compactdefaultargs") Initialize;
-		%feature("autodoc", "	:param aMap:
-	:type aMap: TopOpeBRepDS_MapOfSurface &
-	:rtype: None
-") Initialize;
-		void Initialize (const TopOpeBRepDS_MapOfSurface & aMap);
-		%feature("compactdefaultargs") Key;
-		%feature("autodoc", "	:rtype: int
-") Key;
-		const Standard_Integer & Key ();
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:rtype: TopOpeBRepDS_SurfaceData
-") Value;
-		const TopOpeBRepDS_SurfaceData & Value ();
-};
-
-
-%extend TopOpeBRepDS_DataMapIteratorOfMapOfSurface {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor TopOpeBRepDS_DataMapIteratorOfShapeSurface;
-class TopOpeBRepDS_DataMapIteratorOfShapeSurface : public TCollection_BasicMapIterator {
-	public:
-		%feature("compactdefaultargs") TopOpeBRepDS_DataMapIteratorOfShapeSurface;
-		%feature("autodoc", "	:rtype: None
-") TopOpeBRepDS_DataMapIteratorOfShapeSurface;
-		 TopOpeBRepDS_DataMapIteratorOfShapeSurface ();
-		%feature("compactdefaultargs") TopOpeBRepDS_DataMapIteratorOfShapeSurface;
-		%feature("autodoc", "	:param aMap:
-	:type aMap: TopOpeBRepDS_ShapeSurface &
-	:rtype: None
-") TopOpeBRepDS_DataMapIteratorOfShapeSurface;
-		 TopOpeBRepDS_DataMapIteratorOfShapeSurface (const TopOpeBRepDS_ShapeSurface & aMap);
-		%feature("compactdefaultargs") Initialize;
-		%feature("autodoc", "	:param aMap:
-	:type aMap: TopOpeBRepDS_ShapeSurface &
-	:rtype: None
-") Initialize;
-		void Initialize (const TopOpeBRepDS_ShapeSurface & aMap);
-		%feature("compactdefaultargs") Key;
-		%feature("autodoc", "	:rtype: TopoDS_Shape
-") Key;
-		const TopoDS_Shape  Key ();
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:rtype: Handle_Geom_Surface
-") Value;
-		Handle_Geom_Surface Value ();
-};
-
-
-%extend TopOpeBRepDS_DataMapIteratorOfShapeSurface {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor TopOpeBRepDS_DataMapNodeOfDataMapOfCheckStatus;
-class TopOpeBRepDS_DataMapNodeOfDataMapOfCheckStatus : public TCollection_MapNode {
-	public:
-		%feature("compactdefaultargs") TopOpeBRepDS_DataMapNodeOfDataMapOfCheckStatus;
-		%feature("autodoc", "	:param K:
-	:type K: int &
-	:param I:
-	:type I: TopOpeBRepDS_CheckStatus &
-	:param n:
-	:type n: TCollection_MapNodePtr &
-	:rtype: None
-") TopOpeBRepDS_DataMapNodeOfDataMapOfCheckStatus;
-		 TopOpeBRepDS_DataMapNodeOfDataMapOfCheckStatus (const Standard_Integer & K,const TopOpeBRepDS_CheckStatus & I,const TCollection_MapNodePtr & n);
-
-            %feature("autodoc","1");
-            %extend {
-                Standard_Integer GetKey() {
-                return (Standard_Integer) $self->Key();
-                }
-            };
-            %feature("autodoc","1");
-            %extend {
-                void SetKey(Standard_Integer value ) {
-                $self->Key()=value;
-                }
-            };
-            		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:rtype: TopOpeBRepDS_CheckStatus
-") Value;
-		TopOpeBRepDS_CheckStatus  Value ();
-};
-
-
-%extend TopOpeBRepDS_DataMapNodeOfDataMapOfCheckStatus {
-	%pythoncode {
-		def GetHandle(self):
-		    try:
-		        return self.thisHandle
-		    except:
-		        self.thisHandle = Handle_TopOpeBRepDS_DataMapNodeOfDataMapOfCheckStatus(self)
-		        self.thisown = False
-		        return self.thisHandle
-	}
-};
-
-%pythonappend Handle_TopOpeBRepDS_DataMapNodeOfDataMapOfCheckStatus::Handle_TopOpeBRepDS_DataMapNodeOfDataMapOfCheckStatus %{
-    # register the handle in the base object
-    if len(args) > 0:
-        register_handle(self, args[0])
-%}
-
-%nodefaultctor Handle_TopOpeBRepDS_DataMapNodeOfDataMapOfCheckStatus;
-class Handle_TopOpeBRepDS_DataMapNodeOfDataMapOfCheckStatus : public Handle_TCollection_MapNode {
-
-    public:
-        // constructors
-        Handle_TopOpeBRepDS_DataMapNodeOfDataMapOfCheckStatus();
-        Handle_TopOpeBRepDS_DataMapNodeOfDataMapOfCheckStatus(const Handle_TopOpeBRepDS_DataMapNodeOfDataMapOfCheckStatus &aHandle);
-        Handle_TopOpeBRepDS_DataMapNodeOfDataMapOfCheckStatus(const TopOpeBRepDS_DataMapNodeOfDataMapOfCheckStatus *anItem);
-        void Nullify();
-        Standard_Boolean IsNull() const;
-        static const Handle_TopOpeBRepDS_DataMapNodeOfDataMapOfCheckStatus DownCast(const Handle_Standard_Transient &AnObject);
-
-};
-%extend Handle_TopOpeBRepDS_DataMapNodeOfDataMapOfCheckStatus {
-    TopOpeBRepDS_DataMapNodeOfDataMapOfCheckStatus* _get_reference() {
-    return (TopOpeBRepDS_DataMapNodeOfDataMapOfCheckStatus*)$self->Access();
-    }
-};
-
-%extend Handle_TopOpeBRepDS_DataMapNodeOfDataMapOfCheckStatus {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
-};
-
-%extend TopOpeBRepDS_DataMapNodeOfDataMapOfCheckStatus {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor TopOpeBRepDS_DataMapNodeOfDataMapOfIntegerListOfInterference;
-class TopOpeBRepDS_DataMapNodeOfDataMapOfIntegerListOfInterference : public TCollection_MapNode {
-	public:
-		%feature("compactdefaultargs") TopOpeBRepDS_DataMapNodeOfDataMapOfIntegerListOfInterference;
-		%feature("autodoc", "	:param K:
-	:type K: int &
-	:param I:
-	:type I: TopOpeBRepDS_ListOfInterference &
-	:param n:
-	:type n: TCollection_MapNodePtr &
-	:rtype: None
-") TopOpeBRepDS_DataMapNodeOfDataMapOfIntegerListOfInterference;
-		 TopOpeBRepDS_DataMapNodeOfDataMapOfIntegerListOfInterference (const Standard_Integer & K,const TopOpeBRepDS_ListOfInterference & I,const TCollection_MapNodePtr & n);
-
-            %feature("autodoc","1");
-            %extend {
-                Standard_Integer GetKey() {
-                return (Standard_Integer) $self->Key();
-                }
-            };
-            %feature("autodoc","1");
-            %extend {
-                void SetKey(Standard_Integer value ) {
-                $self->Key()=value;
-                }
-            };
-            		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:rtype: TopOpeBRepDS_ListOfInterference
-") Value;
-		TopOpeBRepDS_ListOfInterference & Value ();
-};
-
-
-%extend TopOpeBRepDS_DataMapNodeOfDataMapOfIntegerListOfInterference {
-	%pythoncode {
-		def GetHandle(self):
-		    try:
-		        return self.thisHandle
-		    except:
-		        self.thisHandle = Handle_TopOpeBRepDS_DataMapNodeOfDataMapOfIntegerListOfInterference(self)
-		        self.thisown = False
-		        return self.thisHandle
-	}
-};
-
-%pythonappend Handle_TopOpeBRepDS_DataMapNodeOfDataMapOfIntegerListOfInterference::Handle_TopOpeBRepDS_DataMapNodeOfDataMapOfIntegerListOfInterference %{
-    # register the handle in the base object
-    if len(args) > 0:
-        register_handle(self, args[0])
-%}
-
-%nodefaultctor Handle_TopOpeBRepDS_DataMapNodeOfDataMapOfIntegerListOfInterference;
-class Handle_TopOpeBRepDS_DataMapNodeOfDataMapOfIntegerListOfInterference : public Handle_TCollection_MapNode {
-
-    public:
-        // constructors
-        Handle_TopOpeBRepDS_DataMapNodeOfDataMapOfIntegerListOfInterference();
-        Handle_TopOpeBRepDS_DataMapNodeOfDataMapOfIntegerListOfInterference(const Handle_TopOpeBRepDS_DataMapNodeOfDataMapOfIntegerListOfInterference &aHandle);
-        Handle_TopOpeBRepDS_DataMapNodeOfDataMapOfIntegerListOfInterference(const TopOpeBRepDS_DataMapNodeOfDataMapOfIntegerListOfInterference *anItem);
-        void Nullify();
-        Standard_Boolean IsNull() const;
-        static const Handle_TopOpeBRepDS_DataMapNodeOfDataMapOfIntegerListOfInterference DownCast(const Handle_Standard_Transient &AnObject);
-
-};
-%extend Handle_TopOpeBRepDS_DataMapNodeOfDataMapOfIntegerListOfInterference {
-    TopOpeBRepDS_DataMapNodeOfDataMapOfIntegerListOfInterference* _get_reference() {
-    return (TopOpeBRepDS_DataMapNodeOfDataMapOfIntegerListOfInterference*)$self->Access();
-    }
-};
-
-%extend Handle_TopOpeBRepDS_DataMapNodeOfDataMapOfIntegerListOfInterference {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
-};
-
-%extend TopOpeBRepDS_DataMapNodeOfDataMapOfIntegerListOfInterference {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor TopOpeBRepDS_DataMapNodeOfDataMapOfInterferenceListOfInterference;
-class TopOpeBRepDS_DataMapNodeOfDataMapOfInterferenceListOfInterference : public TCollection_MapNode {
-	public:
-		%feature("compactdefaultargs") TopOpeBRepDS_DataMapNodeOfDataMapOfInterferenceListOfInterference;
-		%feature("autodoc", "	:param K:
-	:type K: Handle_TopOpeBRepDS_Interference &
-	:param I:
-	:type I: TopOpeBRepDS_ListOfInterference &
-	:param n:
-	:type n: TCollection_MapNodePtr &
-	:rtype: None
-") TopOpeBRepDS_DataMapNodeOfDataMapOfInterferenceListOfInterference;
-		 TopOpeBRepDS_DataMapNodeOfDataMapOfInterferenceListOfInterference (const Handle_TopOpeBRepDS_Interference & K,const TopOpeBRepDS_ListOfInterference & I,const TCollection_MapNodePtr & n);
-		%feature("compactdefaultargs") Key;
-		%feature("autodoc", "	:rtype: Handle_TopOpeBRepDS_Interference
-") Key;
-		Handle_TopOpeBRepDS_Interference Key ();
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:rtype: TopOpeBRepDS_ListOfInterference
-") Value;
-		TopOpeBRepDS_ListOfInterference & Value ();
-};
-
-
-%extend TopOpeBRepDS_DataMapNodeOfDataMapOfInterferenceListOfInterference {
-	%pythoncode {
-		def GetHandle(self):
-		    try:
-		        return self.thisHandle
-		    except:
-		        self.thisHandle = Handle_TopOpeBRepDS_DataMapNodeOfDataMapOfInterferenceListOfInterference(self)
-		        self.thisown = False
-		        return self.thisHandle
-	}
-};
-
-%pythonappend Handle_TopOpeBRepDS_DataMapNodeOfDataMapOfInterferenceListOfInterference::Handle_TopOpeBRepDS_DataMapNodeOfDataMapOfInterferenceListOfInterference %{
-    # register the handle in the base object
-    if len(args) > 0:
-        register_handle(self, args[0])
-%}
-
-%nodefaultctor Handle_TopOpeBRepDS_DataMapNodeOfDataMapOfInterferenceListOfInterference;
-class Handle_TopOpeBRepDS_DataMapNodeOfDataMapOfInterferenceListOfInterference : public Handle_TCollection_MapNode {
-
-    public:
-        // constructors
-        Handle_TopOpeBRepDS_DataMapNodeOfDataMapOfInterferenceListOfInterference();
-        Handle_TopOpeBRepDS_DataMapNodeOfDataMapOfInterferenceListOfInterference(const Handle_TopOpeBRepDS_DataMapNodeOfDataMapOfInterferenceListOfInterference &aHandle);
-        Handle_TopOpeBRepDS_DataMapNodeOfDataMapOfInterferenceListOfInterference(const TopOpeBRepDS_DataMapNodeOfDataMapOfInterferenceListOfInterference *anItem);
-        void Nullify();
-        Standard_Boolean IsNull() const;
-        static const Handle_TopOpeBRepDS_DataMapNodeOfDataMapOfInterferenceListOfInterference DownCast(const Handle_Standard_Transient &AnObject);
-
-};
-%extend Handle_TopOpeBRepDS_DataMapNodeOfDataMapOfInterferenceListOfInterference {
-    TopOpeBRepDS_DataMapNodeOfDataMapOfInterferenceListOfInterference* _get_reference() {
-    return (TopOpeBRepDS_DataMapNodeOfDataMapOfInterferenceListOfInterference*)$self->Access();
-    }
-};
-
-%extend Handle_TopOpeBRepDS_DataMapNodeOfDataMapOfInterferenceListOfInterference {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
-};
-
-%extend TopOpeBRepDS_DataMapNodeOfDataMapOfInterferenceListOfInterference {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor TopOpeBRepDS_DataMapNodeOfDataMapOfInterferenceShape;
-class TopOpeBRepDS_DataMapNodeOfDataMapOfInterferenceShape : public TCollection_MapNode {
-	public:
-		%feature("compactdefaultargs") TopOpeBRepDS_DataMapNodeOfDataMapOfInterferenceShape;
-		%feature("autodoc", "	:param K:
-	:type K: Handle_TopOpeBRepDS_Interference &
-	:param I:
-	:type I: TopoDS_Shape &
-	:param n:
-	:type n: TCollection_MapNodePtr &
-	:rtype: None
-") TopOpeBRepDS_DataMapNodeOfDataMapOfInterferenceShape;
-		 TopOpeBRepDS_DataMapNodeOfDataMapOfInterferenceShape (const Handle_TopOpeBRepDS_Interference & K,const TopoDS_Shape & I,const TCollection_MapNodePtr & n);
-		%feature("compactdefaultargs") Key;
-		%feature("autodoc", "	:rtype: Handle_TopOpeBRepDS_Interference
-") Key;
-		Handle_TopOpeBRepDS_Interference Key ();
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:rtype: TopoDS_Shape
-") Value;
-		TopoDS_Shape  Value ();
-};
-
-
-%extend TopOpeBRepDS_DataMapNodeOfDataMapOfInterferenceShape {
-	%pythoncode {
-		def GetHandle(self):
-		    try:
-		        return self.thisHandle
-		    except:
-		        self.thisHandle = Handle_TopOpeBRepDS_DataMapNodeOfDataMapOfInterferenceShape(self)
-		        self.thisown = False
-		        return self.thisHandle
-	}
-};
-
-%pythonappend Handle_TopOpeBRepDS_DataMapNodeOfDataMapOfInterferenceShape::Handle_TopOpeBRepDS_DataMapNodeOfDataMapOfInterferenceShape %{
-    # register the handle in the base object
-    if len(args) > 0:
-        register_handle(self, args[0])
-%}
-
-%nodefaultctor Handle_TopOpeBRepDS_DataMapNodeOfDataMapOfInterferenceShape;
-class Handle_TopOpeBRepDS_DataMapNodeOfDataMapOfInterferenceShape : public Handle_TCollection_MapNode {
-
-    public:
-        // constructors
-        Handle_TopOpeBRepDS_DataMapNodeOfDataMapOfInterferenceShape();
-        Handle_TopOpeBRepDS_DataMapNodeOfDataMapOfInterferenceShape(const Handle_TopOpeBRepDS_DataMapNodeOfDataMapOfInterferenceShape &aHandle);
-        Handle_TopOpeBRepDS_DataMapNodeOfDataMapOfInterferenceShape(const TopOpeBRepDS_DataMapNodeOfDataMapOfInterferenceShape *anItem);
-        void Nullify();
-        Standard_Boolean IsNull() const;
-        static const Handle_TopOpeBRepDS_DataMapNodeOfDataMapOfInterferenceShape DownCast(const Handle_Standard_Transient &AnObject);
-
-};
-%extend Handle_TopOpeBRepDS_DataMapNodeOfDataMapOfInterferenceShape {
-    TopOpeBRepDS_DataMapNodeOfDataMapOfInterferenceShape* _get_reference() {
-    return (TopOpeBRepDS_DataMapNodeOfDataMapOfInterferenceShape*)$self->Access();
-    }
-};
-
-%extend Handle_TopOpeBRepDS_DataMapNodeOfDataMapOfInterferenceShape {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
-};
-
-%extend TopOpeBRepDS_DataMapNodeOfDataMapOfInterferenceShape {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor TopOpeBRepDS_DataMapNodeOfDataMapOfShapeListOfShapeOn1State;
-class TopOpeBRepDS_DataMapNodeOfDataMapOfShapeListOfShapeOn1State : public TCollection_MapNode {
-	public:
-		%feature("compactdefaultargs") TopOpeBRepDS_DataMapNodeOfDataMapOfShapeListOfShapeOn1State;
-		%feature("autodoc", "	:param K:
-	:type K: TopoDS_Shape &
-	:param I:
-	:type I: TopOpeBRepDS_ListOfShapeOn1State &
-	:param n:
-	:type n: TCollection_MapNodePtr &
-	:rtype: None
-") TopOpeBRepDS_DataMapNodeOfDataMapOfShapeListOfShapeOn1State;
-		 TopOpeBRepDS_DataMapNodeOfDataMapOfShapeListOfShapeOn1State (const TopoDS_Shape & K,const TopOpeBRepDS_ListOfShapeOn1State & I,const TCollection_MapNodePtr & n);
-		%feature("compactdefaultargs") Key;
-		%feature("autodoc", "	:rtype: TopoDS_Shape
-") Key;
-		TopoDS_Shape  Key ();
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:rtype: TopOpeBRepDS_ListOfShapeOn1State
-") Value;
-		TopOpeBRepDS_ListOfShapeOn1State & Value ();
-};
-
-
-%extend TopOpeBRepDS_DataMapNodeOfDataMapOfShapeListOfShapeOn1State {
-	%pythoncode {
-		def GetHandle(self):
-		    try:
-		        return self.thisHandle
-		    except:
-		        self.thisHandle = Handle_TopOpeBRepDS_DataMapNodeOfDataMapOfShapeListOfShapeOn1State(self)
-		        self.thisown = False
-		        return self.thisHandle
-	}
-};
-
-%pythonappend Handle_TopOpeBRepDS_DataMapNodeOfDataMapOfShapeListOfShapeOn1State::Handle_TopOpeBRepDS_DataMapNodeOfDataMapOfShapeListOfShapeOn1State %{
-    # register the handle in the base object
-    if len(args) > 0:
-        register_handle(self, args[0])
-%}
-
-%nodefaultctor Handle_TopOpeBRepDS_DataMapNodeOfDataMapOfShapeListOfShapeOn1State;
-class Handle_TopOpeBRepDS_DataMapNodeOfDataMapOfShapeListOfShapeOn1State : public Handle_TCollection_MapNode {
-
-    public:
-        // constructors
-        Handle_TopOpeBRepDS_DataMapNodeOfDataMapOfShapeListOfShapeOn1State();
-        Handle_TopOpeBRepDS_DataMapNodeOfDataMapOfShapeListOfShapeOn1State(const Handle_TopOpeBRepDS_DataMapNodeOfDataMapOfShapeListOfShapeOn1State &aHandle);
-        Handle_TopOpeBRepDS_DataMapNodeOfDataMapOfShapeListOfShapeOn1State(const TopOpeBRepDS_DataMapNodeOfDataMapOfShapeListOfShapeOn1State *anItem);
-        void Nullify();
-        Standard_Boolean IsNull() const;
-        static const Handle_TopOpeBRepDS_DataMapNodeOfDataMapOfShapeListOfShapeOn1State DownCast(const Handle_Standard_Transient &AnObject);
-
-};
-%extend Handle_TopOpeBRepDS_DataMapNodeOfDataMapOfShapeListOfShapeOn1State {
-    TopOpeBRepDS_DataMapNodeOfDataMapOfShapeListOfShapeOn1State* _get_reference() {
-    return (TopOpeBRepDS_DataMapNodeOfDataMapOfShapeListOfShapeOn1State*)$self->Access();
-    }
-};
-
-%extend Handle_TopOpeBRepDS_DataMapNodeOfDataMapOfShapeListOfShapeOn1State {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
-};
-
-%extend TopOpeBRepDS_DataMapNodeOfDataMapOfShapeListOfShapeOn1State {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor TopOpeBRepDS_DataMapNodeOfDataMapOfShapeState;
-class TopOpeBRepDS_DataMapNodeOfDataMapOfShapeState : public TCollection_MapNode {
-	public:
-		%feature("compactdefaultargs") TopOpeBRepDS_DataMapNodeOfDataMapOfShapeState;
-		%feature("autodoc", "	:param K:
-	:type K: TopoDS_Shape &
-	:param I:
-	:type I: TopAbs_State &
-	:param n:
-	:type n: TCollection_MapNodePtr &
-	:rtype: None
-") TopOpeBRepDS_DataMapNodeOfDataMapOfShapeState;
-		 TopOpeBRepDS_DataMapNodeOfDataMapOfShapeState (const TopoDS_Shape & K,const TopAbs_State & I,const TCollection_MapNodePtr & n);
-		%feature("compactdefaultargs") Key;
-		%feature("autodoc", "	:rtype: TopoDS_Shape
-") Key;
-		TopoDS_Shape  Key ();
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:rtype: TopAbs_State
-") Value;
-		TopAbs_State & Value ();
-};
-
-
-%extend TopOpeBRepDS_DataMapNodeOfDataMapOfShapeState {
-	%pythoncode {
-		def GetHandle(self):
-		    try:
-		        return self.thisHandle
-		    except:
-		        self.thisHandle = Handle_TopOpeBRepDS_DataMapNodeOfDataMapOfShapeState(self)
-		        self.thisown = False
-		        return self.thisHandle
-	}
-};
-
-%pythonappend Handle_TopOpeBRepDS_DataMapNodeOfDataMapOfShapeState::Handle_TopOpeBRepDS_DataMapNodeOfDataMapOfShapeState %{
-    # register the handle in the base object
-    if len(args) > 0:
-        register_handle(self, args[0])
-%}
-
-%nodefaultctor Handle_TopOpeBRepDS_DataMapNodeOfDataMapOfShapeState;
-class Handle_TopOpeBRepDS_DataMapNodeOfDataMapOfShapeState : public Handle_TCollection_MapNode {
-
-    public:
-        // constructors
-        Handle_TopOpeBRepDS_DataMapNodeOfDataMapOfShapeState();
-        Handle_TopOpeBRepDS_DataMapNodeOfDataMapOfShapeState(const Handle_TopOpeBRepDS_DataMapNodeOfDataMapOfShapeState &aHandle);
-        Handle_TopOpeBRepDS_DataMapNodeOfDataMapOfShapeState(const TopOpeBRepDS_DataMapNodeOfDataMapOfShapeState *anItem);
-        void Nullify();
-        Standard_Boolean IsNull() const;
-        static const Handle_TopOpeBRepDS_DataMapNodeOfDataMapOfShapeState DownCast(const Handle_Standard_Transient &AnObject);
-
-};
-%extend Handle_TopOpeBRepDS_DataMapNodeOfDataMapOfShapeState {
-    TopOpeBRepDS_DataMapNodeOfDataMapOfShapeState* _get_reference() {
-    return (TopOpeBRepDS_DataMapNodeOfDataMapOfShapeState*)$self->Access();
-    }
-};
-
-%extend Handle_TopOpeBRepDS_DataMapNodeOfDataMapOfShapeState {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
-};
-
-%extend TopOpeBRepDS_DataMapNodeOfDataMapOfShapeState {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor TopOpeBRepDS_DataMapNodeOfMapOfCurve;
-class TopOpeBRepDS_DataMapNodeOfMapOfCurve : public TCollection_MapNode {
-	public:
-		%feature("compactdefaultargs") TopOpeBRepDS_DataMapNodeOfMapOfCurve;
-		%feature("autodoc", "	:param K:
-	:type K: int &
-	:param I:
-	:type I: TopOpeBRepDS_CurveData &
-	:param n:
-	:type n: TCollection_MapNodePtr &
-	:rtype: None
-") TopOpeBRepDS_DataMapNodeOfMapOfCurve;
-		 TopOpeBRepDS_DataMapNodeOfMapOfCurve (const Standard_Integer & K,const TopOpeBRepDS_CurveData & I,const TCollection_MapNodePtr & n);
-
-            %feature("autodoc","1");
-            %extend {
-                Standard_Integer GetKey() {
-                return (Standard_Integer) $self->Key();
-                }
-            };
-            %feature("autodoc","1");
-            %extend {
-                void SetKey(Standard_Integer value ) {
-                $self->Key()=value;
-                }
-            };
-            		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:rtype: TopOpeBRepDS_CurveData
-") Value;
-		TopOpeBRepDS_CurveData & Value ();
-};
-
-
-%extend TopOpeBRepDS_DataMapNodeOfMapOfCurve {
-	%pythoncode {
-		def GetHandle(self):
-		    try:
-		        return self.thisHandle
-		    except:
-		        self.thisHandle = Handle_TopOpeBRepDS_DataMapNodeOfMapOfCurve(self)
-		        self.thisown = False
-		        return self.thisHandle
-	}
-};
-
-%pythonappend Handle_TopOpeBRepDS_DataMapNodeOfMapOfCurve::Handle_TopOpeBRepDS_DataMapNodeOfMapOfCurve %{
-    # register the handle in the base object
-    if len(args) > 0:
-        register_handle(self, args[0])
-%}
-
-%nodefaultctor Handle_TopOpeBRepDS_DataMapNodeOfMapOfCurve;
-class Handle_TopOpeBRepDS_DataMapNodeOfMapOfCurve : public Handle_TCollection_MapNode {
-
-    public:
-        // constructors
-        Handle_TopOpeBRepDS_DataMapNodeOfMapOfCurve();
-        Handle_TopOpeBRepDS_DataMapNodeOfMapOfCurve(const Handle_TopOpeBRepDS_DataMapNodeOfMapOfCurve &aHandle);
-        Handle_TopOpeBRepDS_DataMapNodeOfMapOfCurve(const TopOpeBRepDS_DataMapNodeOfMapOfCurve *anItem);
-        void Nullify();
-        Standard_Boolean IsNull() const;
-        static const Handle_TopOpeBRepDS_DataMapNodeOfMapOfCurve DownCast(const Handle_Standard_Transient &AnObject);
-
-};
-%extend Handle_TopOpeBRepDS_DataMapNodeOfMapOfCurve {
-    TopOpeBRepDS_DataMapNodeOfMapOfCurve* _get_reference() {
-    return (TopOpeBRepDS_DataMapNodeOfMapOfCurve*)$self->Access();
-    }
-};
-
-%extend Handle_TopOpeBRepDS_DataMapNodeOfMapOfCurve {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
-};
-
-%extend TopOpeBRepDS_DataMapNodeOfMapOfCurve {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor TopOpeBRepDS_DataMapNodeOfMapOfIntegerShapeData;
-class TopOpeBRepDS_DataMapNodeOfMapOfIntegerShapeData : public TCollection_MapNode {
-	public:
-		%feature("compactdefaultargs") TopOpeBRepDS_DataMapNodeOfMapOfIntegerShapeData;
-		%feature("autodoc", "	:param K:
-	:type K: int &
-	:param I:
-	:type I: TopOpeBRepDS_ShapeData &
-	:param n:
-	:type n: TCollection_MapNodePtr &
-	:rtype: None
-") TopOpeBRepDS_DataMapNodeOfMapOfIntegerShapeData;
-		 TopOpeBRepDS_DataMapNodeOfMapOfIntegerShapeData (const Standard_Integer & K,const TopOpeBRepDS_ShapeData & I,const TCollection_MapNodePtr & n);
-
-            %feature("autodoc","1");
-            %extend {
-                Standard_Integer GetKey() {
-                return (Standard_Integer) $self->Key();
-                }
-            };
-            %feature("autodoc","1");
-            %extend {
-                void SetKey(Standard_Integer value ) {
-                $self->Key()=value;
-                }
-            };
-            		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:rtype: TopOpeBRepDS_ShapeData
-") Value;
-		TopOpeBRepDS_ShapeData & Value ();
-};
-
-
-%extend TopOpeBRepDS_DataMapNodeOfMapOfIntegerShapeData {
-	%pythoncode {
-		def GetHandle(self):
-		    try:
-		        return self.thisHandle
-		    except:
-		        self.thisHandle = Handle_TopOpeBRepDS_DataMapNodeOfMapOfIntegerShapeData(self)
-		        self.thisown = False
-		        return self.thisHandle
-	}
-};
-
-%pythonappend Handle_TopOpeBRepDS_DataMapNodeOfMapOfIntegerShapeData::Handle_TopOpeBRepDS_DataMapNodeOfMapOfIntegerShapeData %{
-    # register the handle in the base object
-    if len(args) > 0:
-        register_handle(self, args[0])
-%}
-
-%nodefaultctor Handle_TopOpeBRepDS_DataMapNodeOfMapOfIntegerShapeData;
-class Handle_TopOpeBRepDS_DataMapNodeOfMapOfIntegerShapeData : public Handle_TCollection_MapNode {
-
-    public:
-        // constructors
-        Handle_TopOpeBRepDS_DataMapNodeOfMapOfIntegerShapeData();
-        Handle_TopOpeBRepDS_DataMapNodeOfMapOfIntegerShapeData(const Handle_TopOpeBRepDS_DataMapNodeOfMapOfIntegerShapeData &aHandle);
-        Handle_TopOpeBRepDS_DataMapNodeOfMapOfIntegerShapeData(const TopOpeBRepDS_DataMapNodeOfMapOfIntegerShapeData *anItem);
-        void Nullify();
-        Standard_Boolean IsNull() const;
-        static const Handle_TopOpeBRepDS_DataMapNodeOfMapOfIntegerShapeData DownCast(const Handle_Standard_Transient &AnObject);
-
-};
-%extend Handle_TopOpeBRepDS_DataMapNodeOfMapOfIntegerShapeData {
-    TopOpeBRepDS_DataMapNodeOfMapOfIntegerShapeData* _get_reference() {
-    return (TopOpeBRepDS_DataMapNodeOfMapOfIntegerShapeData*)$self->Access();
-    }
-};
-
-%extend Handle_TopOpeBRepDS_DataMapNodeOfMapOfIntegerShapeData {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
-};
-
-%extend TopOpeBRepDS_DataMapNodeOfMapOfIntegerShapeData {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor TopOpeBRepDS_DataMapNodeOfMapOfPoint;
-class TopOpeBRepDS_DataMapNodeOfMapOfPoint : public TCollection_MapNode {
-	public:
-		%feature("compactdefaultargs") TopOpeBRepDS_DataMapNodeOfMapOfPoint;
-		%feature("autodoc", "	:param K:
-	:type K: int &
-	:param I:
-	:type I: TopOpeBRepDS_PointData &
-	:param n:
-	:type n: TCollection_MapNodePtr &
-	:rtype: None
-") TopOpeBRepDS_DataMapNodeOfMapOfPoint;
-		 TopOpeBRepDS_DataMapNodeOfMapOfPoint (const Standard_Integer & K,const TopOpeBRepDS_PointData & I,const TCollection_MapNodePtr & n);
-
-            %feature("autodoc","1");
-            %extend {
-                Standard_Integer GetKey() {
-                return (Standard_Integer) $self->Key();
-                }
-            };
-            %feature("autodoc","1");
-            %extend {
-                void SetKey(Standard_Integer value ) {
-                $self->Key()=value;
-                }
-            };
-            		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:rtype: TopOpeBRepDS_PointData
-") Value;
-		TopOpeBRepDS_PointData & Value ();
-};
-
-
-%extend TopOpeBRepDS_DataMapNodeOfMapOfPoint {
-	%pythoncode {
-		def GetHandle(self):
-		    try:
-		        return self.thisHandle
-		    except:
-		        self.thisHandle = Handle_TopOpeBRepDS_DataMapNodeOfMapOfPoint(self)
-		        self.thisown = False
-		        return self.thisHandle
-	}
-};
-
-%pythonappend Handle_TopOpeBRepDS_DataMapNodeOfMapOfPoint::Handle_TopOpeBRepDS_DataMapNodeOfMapOfPoint %{
-    # register the handle in the base object
-    if len(args) > 0:
-        register_handle(self, args[0])
-%}
-
-%nodefaultctor Handle_TopOpeBRepDS_DataMapNodeOfMapOfPoint;
-class Handle_TopOpeBRepDS_DataMapNodeOfMapOfPoint : public Handle_TCollection_MapNode {
-
-    public:
-        // constructors
-        Handle_TopOpeBRepDS_DataMapNodeOfMapOfPoint();
-        Handle_TopOpeBRepDS_DataMapNodeOfMapOfPoint(const Handle_TopOpeBRepDS_DataMapNodeOfMapOfPoint &aHandle);
-        Handle_TopOpeBRepDS_DataMapNodeOfMapOfPoint(const TopOpeBRepDS_DataMapNodeOfMapOfPoint *anItem);
-        void Nullify();
-        Standard_Boolean IsNull() const;
-        static const Handle_TopOpeBRepDS_DataMapNodeOfMapOfPoint DownCast(const Handle_Standard_Transient &AnObject);
-
-};
-%extend Handle_TopOpeBRepDS_DataMapNodeOfMapOfPoint {
-    TopOpeBRepDS_DataMapNodeOfMapOfPoint* _get_reference() {
-    return (TopOpeBRepDS_DataMapNodeOfMapOfPoint*)$self->Access();
-    }
-};
-
-%extend Handle_TopOpeBRepDS_DataMapNodeOfMapOfPoint {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
-};
-
-%extend TopOpeBRepDS_DataMapNodeOfMapOfPoint {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor TopOpeBRepDS_DataMapNodeOfMapOfSurface;
-class TopOpeBRepDS_DataMapNodeOfMapOfSurface : public TCollection_MapNode {
-	public:
-		%feature("compactdefaultargs") TopOpeBRepDS_DataMapNodeOfMapOfSurface;
-		%feature("autodoc", "	:param K:
-	:type K: int &
-	:param I:
-	:type I: TopOpeBRepDS_SurfaceData &
-	:param n:
-	:type n: TCollection_MapNodePtr &
-	:rtype: None
-") TopOpeBRepDS_DataMapNodeOfMapOfSurface;
-		 TopOpeBRepDS_DataMapNodeOfMapOfSurface (const Standard_Integer & K,const TopOpeBRepDS_SurfaceData & I,const TCollection_MapNodePtr & n);
-
-            %feature("autodoc","1");
-            %extend {
-                Standard_Integer GetKey() {
-                return (Standard_Integer) $self->Key();
-                }
-            };
-            %feature("autodoc","1");
-            %extend {
-                void SetKey(Standard_Integer value ) {
-                $self->Key()=value;
-                }
-            };
-            		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:rtype: TopOpeBRepDS_SurfaceData
-") Value;
-		TopOpeBRepDS_SurfaceData & Value ();
-};
-
-
-%extend TopOpeBRepDS_DataMapNodeOfMapOfSurface {
-	%pythoncode {
-		def GetHandle(self):
-		    try:
-		        return self.thisHandle
-		    except:
-		        self.thisHandle = Handle_TopOpeBRepDS_DataMapNodeOfMapOfSurface(self)
-		        self.thisown = False
-		        return self.thisHandle
-	}
-};
-
-%pythonappend Handle_TopOpeBRepDS_DataMapNodeOfMapOfSurface::Handle_TopOpeBRepDS_DataMapNodeOfMapOfSurface %{
-    # register the handle in the base object
-    if len(args) > 0:
-        register_handle(self, args[0])
-%}
-
-%nodefaultctor Handle_TopOpeBRepDS_DataMapNodeOfMapOfSurface;
-class Handle_TopOpeBRepDS_DataMapNodeOfMapOfSurface : public Handle_TCollection_MapNode {
-
-    public:
-        // constructors
-        Handle_TopOpeBRepDS_DataMapNodeOfMapOfSurface();
-        Handle_TopOpeBRepDS_DataMapNodeOfMapOfSurface(const Handle_TopOpeBRepDS_DataMapNodeOfMapOfSurface &aHandle);
-        Handle_TopOpeBRepDS_DataMapNodeOfMapOfSurface(const TopOpeBRepDS_DataMapNodeOfMapOfSurface *anItem);
-        void Nullify();
-        Standard_Boolean IsNull() const;
-        static const Handle_TopOpeBRepDS_DataMapNodeOfMapOfSurface DownCast(const Handle_Standard_Transient &AnObject);
-
-};
-%extend Handle_TopOpeBRepDS_DataMapNodeOfMapOfSurface {
-    TopOpeBRepDS_DataMapNodeOfMapOfSurface* _get_reference() {
-    return (TopOpeBRepDS_DataMapNodeOfMapOfSurface*)$self->Access();
-    }
-};
-
-%extend Handle_TopOpeBRepDS_DataMapNodeOfMapOfSurface {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
-};
-
-%extend TopOpeBRepDS_DataMapNodeOfMapOfSurface {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor TopOpeBRepDS_DataMapNodeOfShapeSurface;
-class TopOpeBRepDS_DataMapNodeOfShapeSurface : public TCollection_MapNode {
-	public:
-		%feature("compactdefaultargs") TopOpeBRepDS_DataMapNodeOfShapeSurface;
-		%feature("autodoc", "	:param K:
-	:type K: TopoDS_Shape &
-	:param I:
-	:type I: Handle_Geom_Surface &
-	:param n:
-	:type n: TCollection_MapNodePtr &
-	:rtype: None
-") TopOpeBRepDS_DataMapNodeOfShapeSurface;
-		 TopOpeBRepDS_DataMapNodeOfShapeSurface (const TopoDS_Shape & K,const Handle_Geom_Surface & I,const TCollection_MapNodePtr & n);
-		%feature("compactdefaultargs") Key;
-		%feature("autodoc", "	:rtype: TopoDS_Shape
-") Key;
-		TopoDS_Shape  Key ();
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:rtype: Handle_Geom_Surface
-") Value;
-		Handle_Geom_Surface Value ();
-};
-
-
-%extend TopOpeBRepDS_DataMapNodeOfShapeSurface {
-	%pythoncode {
-		def GetHandle(self):
-		    try:
-		        return self.thisHandle
-		    except:
-		        self.thisHandle = Handle_TopOpeBRepDS_DataMapNodeOfShapeSurface(self)
-		        self.thisown = False
-		        return self.thisHandle
-	}
-};
-
-%pythonappend Handle_TopOpeBRepDS_DataMapNodeOfShapeSurface::Handle_TopOpeBRepDS_DataMapNodeOfShapeSurface %{
-    # register the handle in the base object
-    if len(args) > 0:
-        register_handle(self, args[0])
-%}
-
-%nodefaultctor Handle_TopOpeBRepDS_DataMapNodeOfShapeSurface;
-class Handle_TopOpeBRepDS_DataMapNodeOfShapeSurface : public Handle_TCollection_MapNode {
-
-    public:
-        // constructors
-        Handle_TopOpeBRepDS_DataMapNodeOfShapeSurface();
-        Handle_TopOpeBRepDS_DataMapNodeOfShapeSurface(const Handle_TopOpeBRepDS_DataMapNodeOfShapeSurface &aHandle);
-        Handle_TopOpeBRepDS_DataMapNodeOfShapeSurface(const TopOpeBRepDS_DataMapNodeOfShapeSurface *anItem);
-        void Nullify();
-        Standard_Boolean IsNull() const;
-        static const Handle_TopOpeBRepDS_DataMapNodeOfShapeSurface DownCast(const Handle_Standard_Transient &AnObject);
-
-};
-%extend Handle_TopOpeBRepDS_DataMapNodeOfShapeSurface {
-    TopOpeBRepDS_DataMapNodeOfShapeSurface* _get_reference() {
-    return (TopOpeBRepDS_DataMapNodeOfShapeSurface*)$self->Access();
-    }
-};
-
-%extend Handle_TopOpeBRepDS_DataMapNodeOfShapeSurface {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
-};
-
-%extend TopOpeBRepDS_DataMapNodeOfShapeSurface {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor TopOpeBRepDS_DataMapOfCheckStatus;
-class TopOpeBRepDS_DataMapOfCheckStatus : public TCollection_BasicMap {
-	public:
-		%feature("compactdefaultargs") TopOpeBRepDS_DataMapOfCheckStatus;
-		%feature("autodoc", "	:param NbBuckets: default value is 1
-	:type NbBuckets: int
-	:rtype: None
-") TopOpeBRepDS_DataMapOfCheckStatus;
-		 TopOpeBRepDS_DataMapOfCheckStatus (const Standard_Integer NbBuckets = 1);
-		%feature("compactdefaultargs") Assign;
-		%feature("autodoc", "	:param Other:
-	:type Other: TopOpeBRepDS_DataMapOfCheckStatus &
-	:rtype: TopOpeBRepDS_DataMapOfCheckStatus
-") Assign;
-		TopOpeBRepDS_DataMapOfCheckStatus & Assign (const TopOpeBRepDS_DataMapOfCheckStatus & Other);
-		%feature("compactdefaultargs") operator =;
-		%feature("autodoc", "	:param Other:
-	:type Other: TopOpeBRepDS_DataMapOfCheckStatus &
-	:rtype: TopOpeBRepDS_DataMapOfCheckStatus
-") operator =;
-		TopOpeBRepDS_DataMapOfCheckStatus & operator = (const TopOpeBRepDS_DataMapOfCheckStatus & Other);
-		%feature("compactdefaultargs") ReSize;
-		%feature("autodoc", "	:param NbBuckets:
-	:type NbBuckets: int
-	:rtype: None
-") ReSize;
-		void ReSize (const Standard_Integer NbBuckets);
-		%feature("compactdefaultargs") Clear;
-		%feature("autodoc", "	:rtype: None
-") Clear;
-		void Clear ();
-		%feature("compactdefaultargs") Bind;
-		%feature("autodoc", "	:param K:
-	:type K: int &
-	:param I:
-	:type I: TopOpeBRepDS_CheckStatus &
-	:rtype: bool
-") Bind;
-		Standard_Boolean Bind (const Standard_Integer & K,const TopOpeBRepDS_CheckStatus & I);
-		%feature("compactdefaultargs") IsBound;
-		%feature("autodoc", "	:param K:
-	:type K: int &
-	:rtype: bool
-") IsBound;
-		Standard_Boolean IsBound (const Standard_Integer & K);
-		%feature("compactdefaultargs") UnBind;
-		%feature("autodoc", "	:param K:
-	:type K: int &
-	:rtype: bool
-") UnBind;
-		Standard_Boolean UnBind (const Standard_Integer & K);
-		%feature("compactdefaultargs") Find;
-		%feature("autodoc", "	:param K:
-	:type K: int &
-	:rtype: TopOpeBRepDS_CheckStatus
-") Find;
-		const TopOpeBRepDS_CheckStatus  Find (const Standard_Integer & K);
-		%feature("compactdefaultargs") ChangeFind;
-		%feature("autodoc", "	:param K:
-	:type K: int &
-	:rtype: TopOpeBRepDS_CheckStatus
-") ChangeFind;
-		TopOpeBRepDS_CheckStatus  ChangeFind (const Standard_Integer & K);
-		%feature("compactdefaultargs") Find1;
-		%feature("autodoc", "	:param K:
-	:type K: int &
-	:rtype: Standard_Address
-") Find1;
-		Standard_Address Find1 (const Standard_Integer & K);
-		%feature("compactdefaultargs") ChangeFind1;
-		%feature("autodoc", "	:param K:
-	:type K: int &
-	:rtype: Standard_Address
-") ChangeFind1;
-		Standard_Address ChangeFind1 (const Standard_Integer & K);
-};
-
-
-%extend TopOpeBRepDS_DataMapOfCheckStatus {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor TopOpeBRepDS_DataMapOfIntegerListOfInterference;
-class TopOpeBRepDS_DataMapOfIntegerListOfInterference : public TCollection_BasicMap {
-	public:
-		%feature("compactdefaultargs") TopOpeBRepDS_DataMapOfIntegerListOfInterference;
-		%feature("autodoc", "	:param NbBuckets: default value is 1
-	:type NbBuckets: int
-	:rtype: None
-") TopOpeBRepDS_DataMapOfIntegerListOfInterference;
-		 TopOpeBRepDS_DataMapOfIntegerListOfInterference (const Standard_Integer NbBuckets = 1);
-		%feature("compactdefaultargs") Assign;
-		%feature("autodoc", "	:param Other:
-	:type Other: TopOpeBRepDS_DataMapOfIntegerListOfInterference &
-	:rtype: TopOpeBRepDS_DataMapOfIntegerListOfInterference
-") Assign;
-		TopOpeBRepDS_DataMapOfIntegerListOfInterference & Assign (const TopOpeBRepDS_DataMapOfIntegerListOfInterference & Other);
-		%feature("compactdefaultargs") operator =;
-		%feature("autodoc", "	:param Other:
-	:type Other: TopOpeBRepDS_DataMapOfIntegerListOfInterference &
-	:rtype: TopOpeBRepDS_DataMapOfIntegerListOfInterference
-") operator =;
-		TopOpeBRepDS_DataMapOfIntegerListOfInterference & operator = (const TopOpeBRepDS_DataMapOfIntegerListOfInterference & Other);
-		%feature("compactdefaultargs") ReSize;
-		%feature("autodoc", "	:param NbBuckets:
-	:type NbBuckets: int
-	:rtype: None
-") ReSize;
-		void ReSize (const Standard_Integer NbBuckets);
-		%feature("compactdefaultargs") Clear;
-		%feature("autodoc", "	:rtype: None
-") Clear;
-		void Clear ();
-		%feature("compactdefaultargs") Bind;
-		%feature("autodoc", "	:param K:
-	:type K: int &
-	:param I:
-	:type I: TopOpeBRepDS_ListOfInterference &
-	:rtype: bool
-") Bind;
-		Standard_Boolean Bind (const Standard_Integer & K,const TopOpeBRepDS_ListOfInterference & I);
-		%feature("compactdefaultargs") IsBound;
-		%feature("autodoc", "	:param K:
-	:type K: int &
-	:rtype: bool
-") IsBound;
-		Standard_Boolean IsBound (const Standard_Integer & K);
-		%feature("compactdefaultargs") UnBind;
-		%feature("autodoc", "	:param K:
-	:type K: int &
-	:rtype: bool
-") UnBind;
-		Standard_Boolean UnBind (const Standard_Integer & K);
-		%feature("compactdefaultargs") Find;
-		%feature("autodoc", "	:param K:
-	:type K: int &
-	:rtype: TopOpeBRepDS_ListOfInterference
-") Find;
-		const TopOpeBRepDS_ListOfInterference & Find (const Standard_Integer & K);
-		%feature("compactdefaultargs") ChangeFind;
-		%feature("autodoc", "	:param K:
-	:type K: int &
-	:rtype: TopOpeBRepDS_ListOfInterference
-") ChangeFind;
-		TopOpeBRepDS_ListOfInterference & ChangeFind (const Standard_Integer & K);
-		%feature("compactdefaultargs") Find1;
-		%feature("autodoc", "	:param K:
-	:type K: int &
-	:rtype: Standard_Address
-") Find1;
-		Standard_Address Find1 (const Standard_Integer & K);
-		%feature("compactdefaultargs") ChangeFind1;
-		%feature("autodoc", "	:param K:
-	:type K: int &
-	:rtype: Standard_Address
-") ChangeFind1;
-		Standard_Address ChangeFind1 (const Standard_Integer & K);
-};
-
-
-%extend TopOpeBRepDS_DataMapOfIntegerListOfInterference {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor TopOpeBRepDS_DataMapOfInterferenceListOfInterference;
-class TopOpeBRepDS_DataMapOfInterferenceListOfInterference : public TCollection_BasicMap {
-	public:
-		%feature("compactdefaultargs") TopOpeBRepDS_DataMapOfInterferenceListOfInterference;
-		%feature("autodoc", "	:param NbBuckets: default value is 1
-	:type NbBuckets: int
-	:rtype: None
-") TopOpeBRepDS_DataMapOfInterferenceListOfInterference;
-		 TopOpeBRepDS_DataMapOfInterferenceListOfInterference (const Standard_Integer NbBuckets = 1);
-		%feature("compactdefaultargs") Assign;
-		%feature("autodoc", "	:param Other:
-	:type Other: TopOpeBRepDS_DataMapOfInterferenceListOfInterference &
-	:rtype: TopOpeBRepDS_DataMapOfInterferenceListOfInterference
-") Assign;
-		TopOpeBRepDS_DataMapOfInterferenceListOfInterference & Assign (const TopOpeBRepDS_DataMapOfInterferenceListOfInterference & Other);
-		%feature("compactdefaultargs") operator =;
-		%feature("autodoc", "	:param Other:
-	:type Other: TopOpeBRepDS_DataMapOfInterferenceListOfInterference &
-	:rtype: TopOpeBRepDS_DataMapOfInterferenceListOfInterference
-") operator =;
-		TopOpeBRepDS_DataMapOfInterferenceListOfInterference & operator = (const TopOpeBRepDS_DataMapOfInterferenceListOfInterference & Other);
-		%feature("compactdefaultargs") ReSize;
-		%feature("autodoc", "	:param NbBuckets:
-	:type NbBuckets: int
-	:rtype: None
-") ReSize;
-		void ReSize (const Standard_Integer NbBuckets);
-		%feature("compactdefaultargs") Clear;
-		%feature("autodoc", "	:rtype: None
-") Clear;
-		void Clear ();
-		%feature("compactdefaultargs") Bind;
-		%feature("autodoc", "	:param K:
-	:type K: Handle_TopOpeBRepDS_Interference &
-	:param I:
-	:type I: TopOpeBRepDS_ListOfInterference &
-	:rtype: bool
-") Bind;
-		Standard_Boolean Bind (const Handle_TopOpeBRepDS_Interference & K,const TopOpeBRepDS_ListOfInterference & I);
-		%feature("compactdefaultargs") IsBound;
-		%feature("autodoc", "	:param K:
-	:type K: Handle_TopOpeBRepDS_Interference &
-	:rtype: bool
-") IsBound;
-		Standard_Boolean IsBound (const Handle_TopOpeBRepDS_Interference & K);
-		%feature("compactdefaultargs") UnBind;
-		%feature("autodoc", "	:param K:
-	:type K: Handle_TopOpeBRepDS_Interference &
-	:rtype: bool
-") UnBind;
-		Standard_Boolean UnBind (const Handle_TopOpeBRepDS_Interference & K);
-		%feature("compactdefaultargs") Find;
-		%feature("autodoc", "	:param K:
-	:type K: Handle_TopOpeBRepDS_Interference &
-	:rtype: TopOpeBRepDS_ListOfInterference
-") Find;
-		const TopOpeBRepDS_ListOfInterference & Find (const Handle_TopOpeBRepDS_Interference & K);
-		%feature("compactdefaultargs") ChangeFind;
-		%feature("autodoc", "	:param K:
-	:type K: Handle_TopOpeBRepDS_Interference &
-	:rtype: TopOpeBRepDS_ListOfInterference
-") ChangeFind;
-		TopOpeBRepDS_ListOfInterference & ChangeFind (const Handle_TopOpeBRepDS_Interference & K);
-		%feature("compactdefaultargs") Find1;
-		%feature("autodoc", "	:param K:
-	:type K: Handle_TopOpeBRepDS_Interference &
-	:rtype: Standard_Address
-") Find1;
-		Standard_Address Find1 (const Handle_TopOpeBRepDS_Interference & K);
-		%feature("compactdefaultargs") ChangeFind1;
-		%feature("autodoc", "	:param K:
-	:type K: Handle_TopOpeBRepDS_Interference &
-	:rtype: Standard_Address
-") ChangeFind1;
-		Standard_Address ChangeFind1 (const Handle_TopOpeBRepDS_Interference & K);
-};
-
-
-%extend TopOpeBRepDS_DataMapOfInterferenceListOfInterference {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor TopOpeBRepDS_DataMapOfInterferenceShape;
-class TopOpeBRepDS_DataMapOfInterferenceShape : public TCollection_BasicMap {
-	public:
-		%feature("compactdefaultargs") TopOpeBRepDS_DataMapOfInterferenceShape;
-		%feature("autodoc", "	:param NbBuckets: default value is 1
-	:type NbBuckets: int
-	:rtype: None
-") TopOpeBRepDS_DataMapOfInterferenceShape;
-		 TopOpeBRepDS_DataMapOfInterferenceShape (const Standard_Integer NbBuckets = 1);
-		%feature("compactdefaultargs") Assign;
-		%feature("autodoc", "	:param Other:
-	:type Other: TopOpeBRepDS_DataMapOfInterferenceShape &
-	:rtype: TopOpeBRepDS_DataMapOfInterferenceShape
-") Assign;
-		TopOpeBRepDS_DataMapOfInterferenceShape & Assign (const TopOpeBRepDS_DataMapOfInterferenceShape & Other);
-		%feature("compactdefaultargs") operator =;
-		%feature("autodoc", "	:param Other:
-	:type Other: TopOpeBRepDS_DataMapOfInterferenceShape &
-	:rtype: TopOpeBRepDS_DataMapOfInterferenceShape
-") operator =;
-		TopOpeBRepDS_DataMapOfInterferenceShape & operator = (const TopOpeBRepDS_DataMapOfInterferenceShape & Other);
-		%feature("compactdefaultargs") ReSize;
-		%feature("autodoc", "	:param NbBuckets:
-	:type NbBuckets: int
-	:rtype: None
-") ReSize;
-		void ReSize (const Standard_Integer NbBuckets);
-		%feature("compactdefaultargs") Clear;
-		%feature("autodoc", "	:rtype: None
-") Clear;
-		void Clear ();
-		%feature("compactdefaultargs") Bind;
-		%feature("autodoc", "	:param K:
-	:type K: Handle_TopOpeBRepDS_Interference &
-	:param I:
-	:type I: TopoDS_Shape &
-	:rtype: bool
-") Bind;
-		Standard_Boolean Bind (const Handle_TopOpeBRepDS_Interference & K,const TopoDS_Shape & I);
-		%feature("compactdefaultargs") IsBound;
-		%feature("autodoc", "	:param K:
-	:type K: Handle_TopOpeBRepDS_Interference &
-	:rtype: bool
-") IsBound;
-		Standard_Boolean IsBound (const Handle_TopOpeBRepDS_Interference & K);
-		%feature("compactdefaultargs") UnBind;
-		%feature("autodoc", "	:param K:
-	:type K: Handle_TopOpeBRepDS_Interference &
-	:rtype: bool
-") UnBind;
-		Standard_Boolean UnBind (const Handle_TopOpeBRepDS_Interference & K);
-		%feature("compactdefaultargs") Find;
-		%feature("autodoc", "	:param K:
-	:type K: Handle_TopOpeBRepDS_Interference &
-	:rtype: TopoDS_Shape
-") Find;
-		const TopoDS_Shape  Find (const Handle_TopOpeBRepDS_Interference & K);
-		%feature("compactdefaultargs") ChangeFind;
-		%feature("autodoc", "	:param K:
-	:type K: Handle_TopOpeBRepDS_Interference &
-	:rtype: TopoDS_Shape
-") ChangeFind;
-		TopoDS_Shape  ChangeFind (const Handle_TopOpeBRepDS_Interference & K);
-		%feature("compactdefaultargs") Find1;
-		%feature("autodoc", "	:param K:
-	:type K: Handle_TopOpeBRepDS_Interference &
-	:rtype: Standard_Address
-") Find1;
-		Standard_Address Find1 (const Handle_TopOpeBRepDS_Interference & K);
-		%feature("compactdefaultargs") ChangeFind1;
-		%feature("autodoc", "	:param K:
-	:type K: Handle_TopOpeBRepDS_Interference &
-	:rtype: Standard_Address
-") ChangeFind1;
-		Standard_Address ChangeFind1 (const Handle_TopOpeBRepDS_Interference & K);
-};
-
-
-%extend TopOpeBRepDS_DataMapOfInterferenceShape {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor TopOpeBRepDS_DataMapOfShapeListOfShapeOn1State;
-class TopOpeBRepDS_DataMapOfShapeListOfShapeOn1State : public TCollection_BasicMap {
-	public:
-		%feature("compactdefaultargs") TopOpeBRepDS_DataMapOfShapeListOfShapeOn1State;
-		%feature("autodoc", "	:param NbBuckets: default value is 1
-	:type NbBuckets: int
-	:rtype: None
-") TopOpeBRepDS_DataMapOfShapeListOfShapeOn1State;
-		 TopOpeBRepDS_DataMapOfShapeListOfShapeOn1State (const Standard_Integer NbBuckets = 1);
-		%feature("compactdefaultargs") Assign;
-		%feature("autodoc", "	:param Other:
-	:type Other: TopOpeBRepDS_DataMapOfShapeListOfShapeOn1State &
-	:rtype: TopOpeBRepDS_DataMapOfShapeListOfShapeOn1State
-") Assign;
-		TopOpeBRepDS_DataMapOfShapeListOfShapeOn1State & Assign (const TopOpeBRepDS_DataMapOfShapeListOfShapeOn1State & Other);
-		%feature("compactdefaultargs") operator =;
-		%feature("autodoc", "	:param Other:
-	:type Other: TopOpeBRepDS_DataMapOfShapeListOfShapeOn1State &
-	:rtype: TopOpeBRepDS_DataMapOfShapeListOfShapeOn1State
-") operator =;
-		TopOpeBRepDS_DataMapOfShapeListOfShapeOn1State & operator = (const TopOpeBRepDS_DataMapOfShapeListOfShapeOn1State & Other);
-		%feature("compactdefaultargs") ReSize;
-		%feature("autodoc", "	:param NbBuckets:
-	:type NbBuckets: int
-	:rtype: None
-") ReSize;
-		void ReSize (const Standard_Integer NbBuckets);
-		%feature("compactdefaultargs") Clear;
-		%feature("autodoc", "	:rtype: None
-") Clear;
-		void Clear ();
-		%feature("compactdefaultargs") Bind;
-		%feature("autodoc", "	:param K:
-	:type K: TopoDS_Shape &
-	:param I:
-	:type I: TopOpeBRepDS_ListOfShapeOn1State &
-	:rtype: bool
-") Bind;
-		Standard_Boolean Bind (const TopoDS_Shape & K,const TopOpeBRepDS_ListOfShapeOn1State & I);
-		%feature("compactdefaultargs") IsBound;
-		%feature("autodoc", "	:param K:
-	:type K: TopoDS_Shape &
-	:rtype: bool
-") IsBound;
-		Standard_Boolean IsBound (const TopoDS_Shape & K);
-		%feature("compactdefaultargs") UnBind;
-		%feature("autodoc", "	:param K:
-	:type K: TopoDS_Shape &
-	:rtype: bool
-") UnBind;
-		Standard_Boolean UnBind (const TopoDS_Shape & K);
-		%feature("compactdefaultargs") Find;
-		%feature("autodoc", "	:param K:
-	:type K: TopoDS_Shape &
-	:rtype: TopOpeBRepDS_ListOfShapeOn1State
-") Find;
-		const TopOpeBRepDS_ListOfShapeOn1State & Find (const TopoDS_Shape & K);
-		%feature("compactdefaultargs") ChangeFind;
-		%feature("autodoc", "	:param K:
-	:type K: TopoDS_Shape &
-	:rtype: TopOpeBRepDS_ListOfShapeOn1State
-") ChangeFind;
-		TopOpeBRepDS_ListOfShapeOn1State & ChangeFind (const TopoDS_Shape & K);
-		%feature("compactdefaultargs") Find1;
-		%feature("autodoc", "	:param K:
-	:type K: TopoDS_Shape &
-	:rtype: Standard_Address
-") Find1;
-		Standard_Address Find1 (const TopoDS_Shape & K);
-		%feature("compactdefaultargs") ChangeFind1;
-		%feature("autodoc", "	:param K:
-	:type K: TopoDS_Shape &
-	:rtype: Standard_Address
-") ChangeFind1;
-		Standard_Address ChangeFind1 (const TopoDS_Shape & K);
-};
-
-
-%extend TopOpeBRepDS_DataMapOfShapeListOfShapeOn1State {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor TopOpeBRepDS_DataMapOfShapeState;
-class TopOpeBRepDS_DataMapOfShapeState : public TCollection_BasicMap {
-	public:
-		%feature("compactdefaultargs") TopOpeBRepDS_DataMapOfShapeState;
-		%feature("autodoc", "	:param NbBuckets: default value is 1
-	:type NbBuckets: int
-	:rtype: None
-") TopOpeBRepDS_DataMapOfShapeState;
-		 TopOpeBRepDS_DataMapOfShapeState (const Standard_Integer NbBuckets = 1);
-		%feature("compactdefaultargs") Assign;
-		%feature("autodoc", "	:param Other:
-	:type Other: TopOpeBRepDS_DataMapOfShapeState &
-	:rtype: TopOpeBRepDS_DataMapOfShapeState
-") Assign;
-		TopOpeBRepDS_DataMapOfShapeState & Assign (const TopOpeBRepDS_DataMapOfShapeState & Other);
-		%feature("compactdefaultargs") operator =;
-		%feature("autodoc", "	:param Other:
-	:type Other: TopOpeBRepDS_DataMapOfShapeState &
-	:rtype: TopOpeBRepDS_DataMapOfShapeState
-") operator =;
-		TopOpeBRepDS_DataMapOfShapeState & operator = (const TopOpeBRepDS_DataMapOfShapeState & Other);
-		%feature("compactdefaultargs") ReSize;
-		%feature("autodoc", "	:param NbBuckets:
-	:type NbBuckets: int
-	:rtype: None
-") ReSize;
-		void ReSize (const Standard_Integer NbBuckets);
-		%feature("compactdefaultargs") Clear;
-		%feature("autodoc", "	:rtype: None
-") Clear;
-		void Clear ();
-		%feature("compactdefaultargs") Bind;
-		%feature("autodoc", "	:param K:
-	:type K: TopoDS_Shape &
-	:param I:
-	:type I: TopAbs_State &
-	:rtype: bool
-") Bind;
-		Standard_Boolean Bind (const TopoDS_Shape & K,const TopAbs_State & I);
-		%feature("compactdefaultargs") IsBound;
-		%feature("autodoc", "	:param K:
-	:type K: TopoDS_Shape &
-	:rtype: bool
-") IsBound;
-		Standard_Boolean IsBound (const TopoDS_Shape & K);
-		%feature("compactdefaultargs") UnBind;
-		%feature("autodoc", "	:param K:
-	:type K: TopoDS_Shape &
-	:rtype: bool
-") UnBind;
-		Standard_Boolean UnBind (const TopoDS_Shape & K);
-		%feature("compactdefaultargs") Find;
-		%feature("autodoc", "	:param K:
-	:type K: TopoDS_Shape &
-	:rtype: TopAbs_State
-") Find;
-		const TopAbs_State & Find (const TopoDS_Shape & K);
-		%feature("compactdefaultargs") ChangeFind;
-		%feature("autodoc", "	:param K:
-	:type K: TopoDS_Shape &
-	:rtype: TopAbs_State
-") ChangeFind;
-		TopAbs_State & ChangeFind (const TopoDS_Shape & K);
-		%feature("compactdefaultargs") Find1;
-		%feature("autodoc", "	:param K:
-	:type K: TopoDS_Shape &
-	:rtype: Standard_Address
-") Find1;
-		Standard_Address Find1 (const TopoDS_Shape & K);
-		%feature("compactdefaultargs") ChangeFind1;
-		%feature("autodoc", "	:param K:
-	:type K: TopoDS_Shape &
-	:rtype: Standard_Address
-") ChangeFind1;
-		Standard_Address ChangeFind1 (const TopoDS_Shape & K);
-};
-
-
-%extend TopOpeBRepDS_DataMapOfShapeState {
 	%pythoncode {
 	__repr__ = _dumps_object
 	}
@@ -3615,7 +1778,7 @@ class TopOpeBRepDS_DataStructure {
 ") IsSectionEdge;
 		Standard_Boolean IsSectionEdge (const TopoDS_Edge & E,const Standard_Boolean FindKeep = Standard_True);
 		%feature("compactdefaultargs") HasGeometry;
-		%feature("autodoc", "	* Returns True if <S> has new geometries, i.e : True si : HasShape(S) True S a une liste d'interferences non vide. S = SOLID, FACE, EDGE : true/false S = SHELL, WIRE, VERTEX : false.
+		%feature("autodoc", "	* Returns True if <S> has new geometries, i.e : True si : HasShape--S-- True S a une liste d'interferences non vide. S = SOLID, FACE, EDGE : true/false S = SHELL, WIRE, VERTEX : false.
 
 	:param S:
 	:type S: TopoDS_Shape &
@@ -3700,222 +1863,6 @@ class TopOpeBRepDS_DataStructure {
 	__repr__ = _dumps_object
 	}
 };
-%nodefaultctor TopOpeBRepDS_DoubleMapIteratorOfDoubleMapOfIntegerShape;
-class TopOpeBRepDS_DoubleMapIteratorOfDoubleMapOfIntegerShape : public TCollection_BasicMapIterator {
-	public:
-		%feature("compactdefaultargs") TopOpeBRepDS_DoubleMapIteratorOfDoubleMapOfIntegerShape;
-		%feature("autodoc", "	:rtype: None
-") TopOpeBRepDS_DoubleMapIteratorOfDoubleMapOfIntegerShape;
-		 TopOpeBRepDS_DoubleMapIteratorOfDoubleMapOfIntegerShape ();
-		%feature("compactdefaultargs") TopOpeBRepDS_DoubleMapIteratorOfDoubleMapOfIntegerShape;
-		%feature("autodoc", "	:param aMap:
-	:type aMap: TopOpeBRepDS_DoubleMapOfIntegerShape &
-	:rtype: None
-") TopOpeBRepDS_DoubleMapIteratorOfDoubleMapOfIntegerShape;
-		 TopOpeBRepDS_DoubleMapIteratorOfDoubleMapOfIntegerShape (const TopOpeBRepDS_DoubleMapOfIntegerShape & aMap);
-		%feature("compactdefaultargs") Initialize;
-		%feature("autodoc", "	:param aMap:
-	:type aMap: TopOpeBRepDS_DoubleMapOfIntegerShape &
-	:rtype: None
-") Initialize;
-		void Initialize (const TopOpeBRepDS_DoubleMapOfIntegerShape & aMap);
-		%feature("compactdefaultargs") Key1;
-		%feature("autodoc", "	:rtype: int
-") Key1;
-		const Standard_Integer & Key1 ();
-		%feature("compactdefaultargs") Key2;
-		%feature("autodoc", "	:rtype: TopoDS_Shape
-") Key2;
-		const TopoDS_Shape  Key2 ();
-};
-
-
-%extend TopOpeBRepDS_DoubleMapIteratorOfDoubleMapOfIntegerShape {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor TopOpeBRepDS_DoubleMapNodeOfDoubleMapOfIntegerShape;
-class TopOpeBRepDS_DoubleMapNodeOfDoubleMapOfIntegerShape : public TCollection_MapNode {
-	public:
-		%feature("compactdefaultargs") TopOpeBRepDS_DoubleMapNodeOfDoubleMapOfIntegerShape;
-		%feature("autodoc", "	:param K1:
-	:type K1: int &
-	:param K2:
-	:type K2: TopoDS_Shape &
-	:param n1:
-	:type n1: TCollection_MapNodePtr &
-	:param n2:
-	:type n2: TCollection_MapNodePtr &
-	:rtype: None
-") TopOpeBRepDS_DoubleMapNodeOfDoubleMapOfIntegerShape;
-		 TopOpeBRepDS_DoubleMapNodeOfDoubleMapOfIntegerShape (const Standard_Integer & K1,const TopoDS_Shape & K2,const TCollection_MapNodePtr & n1,const TCollection_MapNodePtr & n2);
-
-            %feature("autodoc","1");
-            %extend {
-                Standard_Integer GetKey1() {
-                return (Standard_Integer) $self->Key1();
-                }
-            };
-            %feature("autodoc","1");
-            %extend {
-                void SetKey1(Standard_Integer value ) {
-                $self->Key1()=value;
-                }
-            };
-            		%feature("compactdefaultargs") Key2;
-		%feature("autodoc", "	:rtype: TopoDS_Shape
-") Key2;
-		TopoDS_Shape  Key2 ();
-		%feature("compactdefaultargs") Next2;
-		%feature("autodoc", "	:rtype: TCollection_MapNodePtr
-") Next2;
-		TCollection_MapNodePtr & Next2 ();
-};
-
-
-%extend TopOpeBRepDS_DoubleMapNodeOfDoubleMapOfIntegerShape {
-	%pythoncode {
-		def GetHandle(self):
-		    try:
-		        return self.thisHandle
-		    except:
-		        self.thisHandle = Handle_TopOpeBRepDS_DoubleMapNodeOfDoubleMapOfIntegerShape(self)
-		        self.thisown = False
-		        return self.thisHandle
-	}
-};
-
-%pythonappend Handle_TopOpeBRepDS_DoubleMapNodeOfDoubleMapOfIntegerShape::Handle_TopOpeBRepDS_DoubleMapNodeOfDoubleMapOfIntegerShape %{
-    # register the handle in the base object
-    if len(args) > 0:
-        register_handle(self, args[0])
-%}
-
-%nodefaultctor Handle_TopOpeBRepDS_DoubleMapNodeOfDoubleMapOfIntegerShape;
-class Handle_TopOpeBRepDS_DoubleMapNodeOfDoubleMapOfIntegerShape : public Handle_TCollection_MapNode {
-
-    public:
-        // constructors
-        Handle_TopOpeBRepDS_DoubleMapNodeOfDoubleMapOfIntegerShape();
-        Handle_TopOpeBRepDS_DoubleMapNodeOfDoubleMapOfIntegerShape(const Handle_TopOpeBRepDS_DoubleMapNodeOfDoubleMapOfIntegerShape &aHandle);
-        Handle_TopOpeBRepDS_DoubleMapNodeOfDoubleMapOfIntegerShape(const TopOpeBRepDS_DoubleMapNodeOfDoubleMapOfIntegerShape *anItem);
-        void Nullify();
-        Standard_Boolean IsNull() const;
-        static const Handle_TopOpeBRepDS_DoubleMapNodeOfDoubleMapOfIntegerShape DownCast(const Handle_Standard_Transient &AnObject);
-
-};
-%extend Handle_TopOpeBRepDS_DoubleMapNodeOfDoubleMapOfIntegerShape {
-    TopOpeBRepDS_DoubleMapNodeOfDoubleMapOfIntegerShape* _get_reference() {
-    return (TopOpeBRepDS_DoubleMapNodeOfDoubleMapOfIntegerShape*)$self->Access();
-    }
-};
-
-%extend Handle_TopOpeBRepDS_DoubleMapNodeOfDoubleMapOfIntegerShape {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
-};
-
-%extend TopOpeBRepDS_DoubleMapNodeOfDoubleMapOfIntegerShape {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor TopOpeBRepDS_DoubleMapOfIntegerShape;
-class TopOpeBRepDS_DoubleMapOfIntegerShape : public TCollection_BasicMap {
-	public:
-		%feature("compactdefaultargs") TopOpeBRepDS_DoubleMapOfIntegerShape;
-		%feature("autodoc", "	:param NbBuckets: default value is 1
-	:type NbBuckets: int
-	:rtype: None
-") TopOpeBRepDS_DoubleMapOfIntegerShape;
-		 TopOpeBRepDS_DoubleMapOfIntegerShape (const Standard_Integer NbBuckets = 1);
-		%feature("compactdefaultargs") Assign;
-		%feature("autodoc", "	:param Other:
-	:type Other: TopOpeBRepDS_DoubleMapOfIntegerShape &
-	:rtype: TopOpeBRepDS_DoubleMapOfIntegerShape
-") Assign;
-		TopOpeBRepDS_DoubleMapOfIntegerShape & Assign (const TopOpeBRepDS_DoubleMapOfIntegerShape & Other);
-		%feature("compactdefaultargs") operator =;
-		%feature("autodoc", "	:param Other:
-	:type Other: TopOpeBRepDS_DoubleMapOfIntegerShape &
-	:rtype: TopOpeBRepDS_DoubleMapOfIntegerShape
-") operator =;
-		TopOpeBRepDS_DoubleMapOfIntegerShape & operator = (const TopOpeBRepDS_DoubleMapOfIntegerShape & Other);
-		%feature("compactdefaultargs") ReSize;
-		%feature("autodoc", "	:param NbBuckets:
-	:type NbBuckets: int
-	:rtype: None
-") ReSize;
-		void ReSize (const Standard_Integer NbBuckets);
-		%feature("compactdefaultargs") Clear;
-		%feature("autodoc", "	:rtype: None
-") Clear;
-		void Clear ();
-		%feature("compactdefaultargs") Bind;
-		%feature("autodoc", "	:param K1:
-	:type K1: int &
-	:param K2:
-	:type K2: TopoDS_Shape &
-	:rtype: None
-") Bind;
-		void Bind (const Standard_Integer & K1,const TopoDS_Shape & K2);
-		%feature("compactdefaultargs") AreBound;
-		%feature("autodoc", "	:param K1:
-	:type K1: int &
-	:param K2:
-	:type K2: TopoDS_Shape &
-	:rtype: bool
-") AreBound;
-		Standard_Boolean AreBound (const Standard_Integer & K1,const TopoDS_Shape & K2);
-		%feature("compactdefaultargs") IsBound1;
-		%feature("autodoc", "	:param K:
-	:type K: int &
-	:rtype: bool
-") IsBound1;
-		Standard_Boolean IsBound1 (const Standard_Integer & K);
-		%feature("compactdefaultargs") IsBound2;
-		%feature("autodoc", "	:param K:
-	:type K: TopoDS_Shape &
-	:rtype: bool
-") IsBound2;
-		Standard_Boolean IsBound2 (const TopoDS_Shape & K);
-		%feature("compactdefaultargs") Find1;
-		%feature("autodoc", "	:param K:
-	:type K: int &
-	:rtype: TopoDS_Shape
-") Find1;
-		const TopoDS_Shape  Find1 (const Standard_Integer & K);
-		%feature("compactdefaultargs") Find2;
-		%feature("autodoc", "	:param K:
-	:type K: TopoDS_Shape &
-	:rtype: int
-") Find2;
-		const Standard_Integer & Find2 (const TopoDS_Shape & K);
-		%feature("compactdefaultargs") UnBind1;
-		%feature("autodoc", "	:param K:
-	:type K: int &
-	:rtype: bool
-") UnBind1;
-		Standard_Boolean UnBind1 (const Standard_Integer & K);
-		%feature("compactdefaultargs") UnBind2;
-		%feature("autodoc", "	:param K:
-	:type K: TopoDS_Shape &
-	:rtype: bool
-") UnBind2;
-		Standard_Boolean UnBind2 (const TopoDS_Shape & K);
-};
-
-
-%extend TopOpeBRepDS_DoubleMapOfIntegerShape {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
 %nodefaultctor TopOpeBRepDS_Dumper;
 class TopOpeBRepDS_Dumper {
 	public:
@@ -3925,130 +1872,6 @@ class TopOpeBRepDS_Dumper {
 	:rtype: None
 ") TopOpeBRepDS_Dumper;
 		 TopOpeBRepDS_Dumper (const Handle_TopOpeBRepDS_HDataStructure & HDS);
-		%feature("compactdefaultargs") PrintType;
-		%feature("autodoc", "	:param C:
-	:type C: Handle_Geom_Curve &
-	:param S:
-	:type S: Standard_OStream &
-	:rtype: Standard_OStream
-") PrintType;
-		static Standard_OStream & PrintType (const Handle_Geom_Curve & C,Standard_OStream & S);
-		%feature("compactdefaultargs") PrintType;
-		%feature("autodoc", "	:param C:
-	:type C: Handle_Geom2d_Curve &
-	:param S:
-	:type S: Standard_OStream &
-	:rtype: Standard_OStream
-") PrintType;
-		static Standard_OStream & PrintType (const Handle_Geom2d_Curve & C,Standard_OStream & S);
-		%feature("compactdefaultargs") Dump;
-		%feature("autodoc", "	:param OS:
-	:type OS: Standard_OStream &
-	:param fk: default value is Standard_False
-	:type fk: bool
-	:param ct: default value is Standard_True
-	:type ct: bool
-	:rtype: Standard_OStream
-") Dump;
-		Standard_OStream & Dump (Standard_OStream & OS,const Standard_Boolean fk = Standard_False,const Standard_Boolean ct = Standard_True);
-		%feature("compactdefaultargs") DumpGeometry;
-		%feature("autodoc", "	:param OS:
-	:type OS: Standard_OStream &
-	:param fk: default value is Standard_False
-	:type fk: bool
-	:param ct: default value is Standard_True
-	:type ct: bool
-	:rtype: Standard_OStream
-") DumpGeometry;
-		Standard_OStream & DumpGeometry (Standard_OStream & OS,const Standard_Boolean fk = Standard_False,const Standard_Boolean ct = Standard_True);
-		%feature("compactdefaultargs") DumpGeometry;
-		%feature("autodoc", "	:param K:
-	:type K: TopOpeBRepDS_Kind
-	:param OS:
-	:type OS: Standard_OStream &
-	:param fk: default value is Standard_False
-	:type fk: bool
-	:param ct: default value is Standard_True
-	:type ct: bool
-	:rtype: Standard_OStream
-") DumpGeometry;
-		Standard_OStream & DumpGeometry (const TopOpeBRepDS_Kind K,Standard_OStream & OS,const Standard_Boolean fk = Standard_False,const Standard_Boolean ct = Standard_True);
-		%feature("compactdefaultargs") DumpGeometry;
-		%feature("autodoc", "	:param K:
-	:type K: TopOpeBRepDS_Kind
-	:param I:
-	:type I: int
-	:param OS:
-	:type OS: Standard_OStream &
-	:param fk: default value is Standard_False
-	:type fk: bool
-	:param ct: default value is Standard_True
-	:type ct: bool
-	:rtype: Standard_OStream
-") DumpGeometry;
-		Standard_OStream & DumpGeometry (const TopOpeBRepDS_Kind K,const Standard_Integer I,Standard_OStream & OS,const Standard_Boolean fk = Standard_False,const Standard_Boolean ct = Standard_True);
-
-        %feature("autodoc", "1");
-        %extend{
-            std::string DumpTopologyToString() {
-            std::stringstream s;
-            self->DumpTopology(s);
-            return s.str();}
-        };
-        		%feature("compactdefaultargs") DumpTopology;
-		%feature("autodoc", "	:param K:
-	:type K: TopOpeBRepDS_Kind
-	:param OS:
-	:type OS: Standard_OStream &
-	:rtype: Standard_OStream
-") DumpTopology;
-		Standard_OStream & DumpTopology (const TopOpeBRepDS_Kind K,Standard_OStream & OS);
-		%feature("compactdefaultargs") DumpTopology;
-		%feature("autodoc", "	:param T:
-	:type T: TopAbs_ShapeEnum
-	:param OS:
-	:type OS: Standard_OStream &
-	:rtype: Standard_OStream
-") DumpTopology;
-		Standard_OStream & DumpTopology (const TopAbs_ShapeEnum T,Standard_OStream & OS);
-		%feature("compactdefaultargs") DumpTopology;
-		%feature("autodoc", "	:param K:
-	:type K: TopOpeBRepDS_Kind
-	:param I:
-	:type I: int
-	:param OS:
-	:type OS: Standard_OStream &
-	:rtype: Standard_OStream
-") DumpTopology;
-		Standard_OStream & DumpTopology (const TopOpeBRepDS_Kind K,const Standard_Integer I,Standard_OStream & OS);
-		%feature("compactdefaultargs") DumpTopology;
-		%feature("autodoc", "	:param T:
-	:type T: TopAbs_ShapeEnum
-	:param I:
-	:type I: int
-	:param OS:
-	:type OS: Standard_OStream &
-	:rtype: Standard_OStream
-") DumpTopology;
-		Standard_OStream & DumpTopology (const TopAbs_ShapeEnum T,const Standard_Integer I,Standard_OStream & OS);
-		%feature("compactdefaultargs") DumpSectionEdge;
-		%feature("autodoc", "	:param K:
-	:type K: TopOpeBRepDS_Kind
-	:param OS:
-	:type OS: Standard_OStream &
-	:rtype: Standard_OStream
-") DumpSectionEdge;
-		Standard_OStream & DumpSectionEdge (const TopOpeBRepDS_Kind K,Standard_OStream & OS);
-		%feature("compactdefaultargs") DumpSectionEdge;
-		%feature("autodoc", "	:param K:
-	:type K: TopOpeBRepDS_Kind
-	:param I:
-	:type I: int
-	:param OS:
-	:type OS: Standard_OStream &
-	:rtype: Standard_OStream
-") DumpSectionEdge;
-		Standard_OStream & DumpSectionEdge (const TopOpeBRepDS_Kind K,const Standard_Integer I,Standard_OStream & OS);
 		%feature("compactdefaultargs") SDumpRefOri;
 		%feature("autodoc", "	:param K:
 	:type K: TopOpeBRepDS_Kind
@@ -4063,46 +1886,6 @@ class TopOpeBRepDS_Dumper {
 	:rtype: TCollection_AsciiString
 ") SDumpRefOri;
 		TCollection_AsciiString SDumpRefOri (const TopoDS_Shape & S);
-		%feature("compactdefaultargs") DumpRefOri;
-		%feature("autodoc", "	:param K:
-	:type K: TopOpeBRepDS_Kind
-	:param I:
-	:type I: int
-	:param OS:
-	:type OS: Standard_OStream &
-	:rtype: Standard_OStream
-") DumpRefOri;
-		Standard_OStream & DumpRefOri (const TopOpeBRepDS_Kind K,const Standard_Integer I,Standard_OStream & OS);
-		%feature("compactdefaultargs") DumpRefOri;
-		%feature("autodoc", "	:param S:
-	:type S: TopoDS_Shape &
-	:param OS:
-	:type OS: Standard_OStream &
-	:rtype: Standard_OStream
-") DumpRefOri;
-		Standard_OStream & DumpRefOri (const TopoDS_Shape & S,Standard_OStream & OS);
-		%feature("compactdefaultargs") DumpLOI;
-		%feature("autodoc", "	:param L:
-	:type L: TopOpeBRepDS_ListOfInterference &
-	:param O:
-	:type O: Standard_OStream &
-	:param s:
-	:type s: TCollection_AsciiString &
-	:rtype: Standard_OStream
-") DumpLOI;
-		Standard_OStream & DumpLOI (const TopOpeBRepDS_ListOfInterference & L,Standard_OStream & O,const TCollection_AsciiString & s);
-		%feature("compactdefaultargs") DumpI;
-		%feature("autodoc", "	:param I:
-	:type I: Handle_TopOpeBRepDS_Interference &
-	:param O:
-	:type O: Standard_OStream &
-	:param s1:
-	:type s1: TCollection_AsciiString &
-	:param s2:
-	:type s2: TCollection_AsciiString &
-	:rtype: Standard_OStream
-") DumpI;
-		Standard_OStream & DumpI (const Handle_TopOpeBRepDS_Interference & I,Standard_OStream & O,const TCollection_AsciiString & s1,const TCollection_AsciiString & s2);
 		%feature("compactdefaultargs") SPrintShape;
 		%feature("autodoc", "	:param I:
 	:type I: int
@@ -4376,7 +2159,7 @@ class TopOpeBRepDS_FaceInterferenceTool {
 ") TopOpeBRepDS_FaceInterferenceTool;
 		 TopOpeBRepDS_FaceInterferenceTool (const TopOpeBRepDS_PDataStructure & P);
 		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	* Eisnew = true if E is a new edge built on edge I->Geometry() false if E is shape <=> I->Geometry()
+		%feature("autodoc", "	* Eisnew = true if E is a new edge built on edge I->Geometry---- false if E is shape <=> I->Geometry----
 
 	:param FI:
 	:type FI: TopoDS_Shape &
@@ -4390,7 +2173,7 @@ class TopOpeBRepDS_FaceInterferenceTool {
 ") Init;
 		void Init (const TopoDS_Shape & FI,const TopoDS_Shape & E,const Standard_Boolean Eisnew,const Handle_TopOpeBRepDS_Interference & I);
 		%feature("compactdefaultargs") Add;
-		%feature("autodoc", "	* Eisnew = true if E is a new edge built on edge I->Geometry() false if E is shape <=> I->Geometry()
+		%feature("autodoc", "	* Eisnew = true if E is a new edge built on edge I->Geometry---- false if E is shape <=> I->Geometry----
 
 	:param FI:
 	:type FI: TopoDS_Shape &
@@ -4622,7 +2405,7 @@ class TopOpeBRepDS_GapFiller {
 	}
 };
 %nodefaultctor TopOpeBRepDS_GapTool;
-class TopOpeBRepDS_GapTool : public MMgt_TShared {
+class TopOpeBRepDS_GapTool : public Standard_Transient {
 	public:
 		%feature("compactdefaultargs") TopOpeBRepDS_GapTool;
 		%feature("autodoc", "	:rtype: None
@@ -4736,7 +2519,7 @@ class TopOpeBRepDS_GapTool : public MMgt_TShared {
 %}
 
 %nodefaultctor Handle_TopOpeBRepDS_GapTool;
-class Handle_TopOpeBRepDS_GapTool : public Handle_MMgt_TShared {
+class Handle_TopOpeBRepDS_GapTool : public Handle_Standard_Transient {
 
     public:
         // constructors
@@ -4748,19 +2531,20 @@ class Handle_TopOpeBRepDS_GapTool : public Handle_MMgt_TShared {
         static const Handle_TopOpeBRepDS_GapTool DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_TopOpeBRepDS_GapTool {
     TopOpeBRepDS_GapTool* _get_reference() {
-    return (TopOpeBRepDS_GapTool*)$self->Access();
+    return (TopOpeBRepDS_GapTool*)$self->get();
     }
 };
 
 %extend Handle_TopOpeBRepDS_GapTool {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend TopOpeBRepDS_GapTool {
@@ -4815,647 +2599,8 @@ class TopOpeBRepDS_GeometryData {
 	__repr__ = _dumps_object
 	}
 };
-%nodefaultctor TopOpeBRepDS_HArray1OfDataMapOfIntegerListOfInterference;
-class TopOpeBRepDS_HArray1OfDataMapOfIntegerListOfInterference : public MMgt_TShared {
-	public:
-		%feature("compactdefaultargs") TopOpeBRepDS_HArray1OfDataMapOfIntegerListOfInterference;
-		%feature("autodoc", "	:param Low:
-	:type Low: int
-	:param Up:
-	:type Up: int
-	:rtype: None
-") TopOpeBRepDS_HArray1OfDataMapOfIntegerListOfInterference;
-		 TopOpeBRepDS_HArray1OfDataMapOfIntegerListOfInterference (const Standard_Integer Low,const Standard_Integer Up);
-		%feature("compactdefaultargs") TopOpeBRepDS_HArray1OfDataMapOfIntegerListOfInterference;
-		%feature("autodoc", "	:param Low:
-	:type Low: int
-	:param Up:
-	:type Up: int
-	:param V:
-	:type V: TopOpeBRepDS_DataMapOfIntegerListOfInterference &
-	:rtype: None
-") TopOpeBRepDS_HArray1OfDataMapOfIntegerListOfInterference;
-		 TopOpeBRepDS_HArray1OfDataMapOfIntegerListOfInterference (const Standard_Integer Low,const Standard_Integer Up,const TopOpeBRepDS_DataMapOfIntegerListOfInterference & V);
-		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	:param V:
-	:type V: TopOpeBRepDS_DataMapOfIntegerListOfInterference &
-	:rtype: None
-") Init;
-		void Init (const TopOpeBRepDS_DataMapOfIntegerListOfInterference & V);
-		%feature("compactdefaultargs") Length;
-		%feature("autodoc", "	:rtype: int
-") Length;
-		Standard_Integer Length ();
-		%feature("compactdefaultargs") Lower;
-		%feature("autodoc", "	:rtype: int
-") Lower;
-		Standard_Integer Lower ();
-		%feature("compactdefaultargs") Upper;
-		%feature("autodoc", "	:rtype: int
-") Upper;
-		Standard_Integer Upper ();
-		%feature("compactdefaultargs") SetValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param Value:
-	:type Value: TopOpeBRepDS_DataMapOfIntegerListOfInterference &
-	:rtype: None
-") SetValue;
-		void SetValue (const Standard_Integer Index,const TopOpeBRepDS_DataMapOfIntegerListOfInterference & Value);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: TopOpeBRepDS_DataMapOfIntegerListOfInterference
-") Value;
-		const TopOpeBRepDS_DataMapOfIntegerListOfInterference & Value (const Standard_Integer Index);
-		%feature("compactdefaultargs") ChangeValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: TopOpeBRepDS_DataMapOfIntegerListOfInterference
-") ChangeValue;
-		TopOpeBRepDS_DataMapOfIntegerListOfInterference & ChangeValue (const Standard_Integer Index);
-		%feature("compactdefaultargs") Array1;
-		%feature("autodoc", "	:rtype: TopOpeBRepDS_Array1OfDataMapOfIntegerListOfInterference
-") Array1;
-		const TopOpeBRepDS_Array1OfDataMapOfIntegerListOfInterference & Array1 ();
-		%feature("compactdefaultargs") ChangeArray1;
-		%feature("autodoc", "	:rtype: TopOpeBRepDS_Array1OfDataMapOfIntegerListOfInterference
-") ChangeArray1;
-		TopOpeBRepDS_Array1OfDataMapOfIntegerListOfInterference & ChangeArray1 ();
-};
-
-
-%extend TopOpeBRepDS_HArray1OfDataMapOfIntegerListOfInterference {
-	%pythoncode {
-		def GetHandle(self):
-		    try:
-		        return self.thisHandle
-		    except:
-		        self.thisHandle = Handle_TopOpeBRepDS_HArray1OfDataMapOfIntegerListOfInterference(self)
-		        self.thisown = False
-		        return self.thisHandle
-	}
-};
-
-%pythonappend Handle_TopOpeBRepDS_HArray1OfDataMapOfIntegerListOfInterference::Handle_TopOpeBRepDS_HArray1OfDataMapOfIntegerListOfInterference %{
-    # register the handle in the base object
-    if len(args) > 0:
-        register_handle(self, args[0])
-%}
-
-%nodefaultctor Handle_TopOpeBRepDS_HArray1OfDataMapOfIntegerListOfInterference;
-class Handle_TopOpeBRepDS_HArray1OfDataMapOfIntegerListOfInterference : public Handle_MMgt_TShared {
-
-    public:
-        // constructors
-        Handle_TopOpeBRepDS_HArray1OfDataMapOfIntegerListOfInterference();
-        Handle_TopOpeBRepDS_HArray1OfDataMapOfIntegerListOfInterference(const Handle_TopOpeBRepDS_HArray1OfDataMapOfIntegerListOfInterference &aHandle);
-        Handle_TopOpeBRepDS_HArray1OfDataMapOfIntegerListOfInterference(const TopOpeBRepDS_HArray1OfDataMapOfIntegerListOfInterference *anItem);
-        void Nullify();
-        Standard_Boolean IsNull() const;
-        static const Handle_TopOpeBRepDS_HArray1OfDataMapOfIntegerListOfInterference DownCast(const Handle_Standard_Transient &AnObject);
-
-};
-%extend Handle_TopOpeBRepDS_HArray1OfDataMapOfIntegerListOfInterference {
-    TopOpeBRepDS_HArray1OfDataMapOfIntegerListOfInterference* _get_reference() {
-    return (TopOpeBRepDS_HArray1OfDataMapOfIntegerListOfInterference*)$self->Access();
-    }
-};
-
-%extend Handle_TopOpeBRepDS_HArray1OfDataMapOfIntegerListOfInterference {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
-};
-
-%extend TopOpeBRepDS_HArray1OfDataMapOfIntegerListOfInterference {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor TopOpeBRepDS_IndexedDataMapNodeOfIndexedDataMapOfShapeWithState;
-class TopOpeBRepDS_IndexedDataMapNodeOfIndexedDataMapOfShapeWithState : public TCollection_MapNode {
-	public:
-		%feature("compactdefaultargs") TopOpeBRepDS_IndexedDataMapNodeOfIndexedDataMapOfShapeWithState;
-		%feature("autodoc", "	:param K1:
-	:type K1: TopoDS_Shape &
-	:param K2:
-	:type K2: int
-	:param I:
-	:type I: TopOpeBRepDS_ShapeWithState &
-	:param n1:
-	:type n1: TCollection_MapNodePtr &
-	:param n2:
-	:type n2: TCollection_MapNodePtr &
-	:rtype: None
-") TopOpeBRepDS_IndexedDataMapNodeOfIndexedDataMapOfShapeWithState;
-		 TopOpeBRepDS_IndexedDataMapNodeOfIndexedDataMapOfShapeWithState (const TopoDS_Shape & K1,const Standard_Integer K2,const TopOpeBRepDS_ShapeWithState & I,const TCollection_MapNodePtr & n1,const TCollection_MapNodePtr & n2);
-		%feature("compactdefaultargs") Key1;
-		%feature("autodoc", "	:rtype: TopoDS_Shape
-") Key1;
-		TopoDS_Shape  Key1 ();
-
-            %feature("autodoc","1");
-            %extend {
-                Standard_Integer GetKey2() {
-                return (Standard_Integer) $self->Key2();
-                }
-            };
-            %feature("autodoc","1");
-            %extend {
-                void SetKey2(Standard_Integer value ) {
-                $self->Key2()=value;
-                }
-            };
-            		%feature("compactdefaultargs") Next2;
-		%feature("autodoc", "	:rtype: TCollection_MapNodePtr
-") Next2;
-		TCollection_MapNodePtr & Next2 ();
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:rtype: TopOpeBRepDS_ShapeWithState
-") Value;
-		TopOpeBRepDS_ShapeWithState & Value ();
-};
-
-
-%extend TopOpeBRepDS_IndexedDataMapNodeOfIndexedDataMapOfShapeWithState {
-	%pythoncode {
-		def GetHandle(self):
-		    try:
-		        return self.thisHandle
-		    except:
-		        self.thisHandle = Handle_TopOpeBRepDS_IndexedDataMapNodeOfIndexedDataMapOfShapeWithState(self)
-		        self.thisown = False
-		        return self.thisHandle
-	}
-};
-
-%pythonappend Handle_TopOpeBRepDS_IndexedDataMapNodeOfIndexedDataMapOfShapeWithState::Handle_TopOpeBRepDS_IndexedDataMapNodeOfIndexedDataMapOfShapeWithState %{
-    # register the handle in the base object
-    if len(args) > 0:
-        register_handle(self, args[0])
-%}
-
-%nodefaultctor Handle_TopOpeBRepDS_IndexedDataMapNodeOfIndexedDataMapOfShapeWithState;
-class Handle_TopOpeBRepDS_IndexedDataMapNodeOfIndexedDataMapOfShapeWithState : public Handle_TCollection_MapNode {
-
-    public:
-        // constructors
-        Handle_TopOpeBRepDS_IndexedDataMapNodeOfIndexedDataMapOfShapeWithState();
-        Handle_TopOpeBRepDS_IndexedDataMapNodeOfIndexedDataMapOfShapeWithState(const Handle_TopOpeBRepDS_IndexedDataMapNodeOfIndexedDataMapOfShapeWithState &aHandle);
-        Handle_TopOpeBRepDS_IndexedDataMapNodeOfIndexedDataMapOfShapeWithState(const TopOpeBRepDS_IndexedDataMapNodeOfIndexedDataMapOfShapeWithState *anItem);
-        void Nullify();
-        Standard_Boolean IsNull() const;
-        static const Handle_TopOpeBRepDS_IndexedDataMapNodeOfIndexedDataMapOfShapeWithState DownCast(const Handle_Standard_Transient &AnObject);
-
-};
-%extend Handle_TopOpeBRepDS_IndexedDataMapNodeOfIndexedDataMapOfShapeWithState {
-    TopOpeBRepDS_IndexedDataMapNodeOfIndexedDataMapOfShapeWithState* _get_reference() {
-    return (TopOpeBRepDS_IndexedDataMapNodeOfIndexedDataMapOfShapeWithState*)$self->Access();
-    }
-};
-
-%extend Handle_TopOpeBRepDS_IndexedDataMapNodeOfIndexedDataMapOfShapeWithState {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
-};
-
-%extend TopOpeBRepDS_IndexedDataMapNodeOfIndexedDataMapOfShapeWithState {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor TopOpeBRepDS_IndexedDataMapNodeOfIndexedDataMapOfVertexPoint;
-class TopOpeBRepDS_IndexedDataMapNodeOfIndexedDataMapOfVertexPoint : public TCollection_MapNode {
-	public:
-		%feature("compactdefaultargs") TopOpeBRepDS_IndexedDataMapNodeOfIndexedDataMapOfVertexPoint;
-		%feature("autodoc", "	:param K1:
-	:type K1: TopoDS_Shape &
-	:param K2:
-	:type K2: int
-	:param I:
-	:type I: TopOpeBRepDS_Point &
-	:param n1:
-	:type n1: TCollection_MapNodePtr &
-	:param n2:
-	:type n2: TCollection_MapNodePtr &
-	:rtype: None
-") TopOpeBRepDS_IndexedDataMapNodeOfIndexedDataMapOfVertexPoint;
-		 TopOpeBRepDS_IndexedDataMapNodeOfIndexedDataMapOfVertexPoint (const TopoDS_Shape & K1,const Standard_Integer K2,const TopOpeBRepDS_Point & I,const TCollection_MapNodePtr & n1,const TCollection_MapNodePtr & n2);
-		%feature("compactdefaultargs") Key1;
-		%feature("autodoc", "	:rtype: TopoDS_Shape
-") Key1;
-		TopoDS_Shape  Key1 ();
-
-            %feature("autodoc","1");
-            %extend {
-                Standard_Integer GetKey2() {
-                return (Standard_Integer) $self->Key2();
-                }
-            };
-            %feature("autodoc","1");
-            %extend {
-                void SetKey2(Standard_Integer value ) {
-                $self->Key2()=value;
-                }
-            };
-            		%feature("compactdefaultargs") Next2;
-		%feature("autodoc", "	:rtype: TCollection_MapNodePtr
-") Next2;
-		TCollection_MapNodePtr & Next2 ();
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:rtype: TopOpeBRepDS_Point
-") Value;
-		TopOpeBRepDS_Point & Value ();
-};
-
-
-%extend TopOpeBRepDS_IndexedDataMapNodeOfIndexedDataMapOfVertexPoint {
-	%pythoncode {
-		def GetHandle(self):
-		    try:
-		        return self.thisHandle
-		    except:
-		        self.thisHandle = Handle_TopOpeBRepDS_IndexedDataMapNodeOfIndexedDataMapOfVertexPoint(self)
-		        self.thisown = False
-		        return self.thisHandle
-	}
-};
-
-%pythonappend Handle_TopOpeBRepDS_IndexedDataMapNodeOfIndexedDataMapOfVertexPoint::Handle_TopOpeBRepDS_IndexedDataMapNodeOfIndexedDataMapOfVertexPoint %{
-    # register the handle in the base object
-    if len(args) > 0:
-        register_handle(self, args[0])
-%}
-
-%nodefaultctor Handle_TopOpeBRepDS_IndexedDataMapNodeOfIndexedDataMapOfVertexPoint;
-class Handle_TopOpeBRepDS_IndexedDataMapNodeOfIndexedDataMapOfVertexPoint : public Handle_TCollection_MapNode {
-
-    public:
-        // constructors
-        Handle_TopOpeBRepDS_IndexedDataMapNodeOfIndexedDataMapOfVertexPoint();
-        Handle_TopOpeBRepDS_IndexedDataMapNodeOfIndexedDataMapOfVertexPoint(const Handle_TopOpeBRepDS_IndexedDataMapNodeOfIndexedDataMapOfVertexPoint &aHandle);
-        Handle_TopOpeBRepDS_IndexedDataMapNodeOfIndexedDataMapOfVertexPoint(const TopOpeBRepDS_IndexedDataMapNodeOfIndexedDataMapOfVertexPoint *anItem);
-        void Nullify();
-        Standard_Boolean IsNull() const;
-        static const Handle_TopOpeBRepDS_IndexedDataMapNodeOfIndexedDataMapOfVertexPoint DownCast(const Handle_Standard_Transient &AnObject);
-
-};
-%extend Handle_TopOpeBRepDS_IndexedDataMapNodeOfIndexedDataMapOfVertexPoint {
-    TopOpeBRepDS_IndexedDataMapNodeOfIndexedDataMapOfVertexPoint* _get_reference() {
-    return (TopOpeBRepDS_IndexedDataMapNodeOfIndexedDataMapOfVertexPoint*)$self->Access();
-    }
-};
-
-%extend Handle_TopOpeBRepDS_IndexedDataMapNodeOfIndexedDataMapOfVertexPoint {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
-};
-
-%extend TopOpeBRepDS_IndexedDataMapNodeOfIndexedDataMapOfVertexPoint {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor TopOpeBRepDS_IndexedDataMapNodeOfMapOfShapeData;
-class TopOpeBRepDS_IndexedDataMapNodeOfMapOfShapeData : public TCollection_MapNode {
-	public:
-		%feature("compactdefaultargs") TopOpeBRepDS_IndexedDataMapNodeOfMapOfShapeData;
-		%feature("autodoc", "	:param K1:
-	:type K1: TopoDS_Shape &
-	:param K2:
-	:type K2: int
-	:param I:
-	:type I: TopOpeBRepDS_ShapeData &
-	:param n1:
-	:type n1: TCollection_MapNodePtr &
-	:param n2:
-	:type n2: TCollection_MapNodePtr &
-	:rtype: None
-") TopOpeBRepDS_IndexedDataMapNodeOfMapOfShapeData;
-		 TopOpeBRepDS_IndexedDataMapNodeOfMapOfShapeData (const TopoDS_Shape & K1,const Standard_Integer K2,const TopOpeBRepDS_ShapeData & I,const TCollection_MapNodePtr & n1,const TCollection_MapNodePtr & n2);
-		%feature("compactdefaultargs") Key1;
-		%feature("autodoc", "	:rtype: TopoDS_Shape
-") Key1;
-		TopoDS_Shape  Key1 ();
-
-            %feature("autodoc","1");
-            %extend {
-                Standard_Integer GetKey2() {
-                return (Standard_Integer) $self->Key2();
-                }
-            };
-            %feature("autodoc","1");
-            %extend {
-                void SetKey2(Standard_Integer value ) {
-                $self->Key2()=value;
-                }
-            };
-            		%feature("compactdefaultargs") Next2;
-		%feature("autodoc", "	:rtype: TCollection_MapNodePtr
-") Next2;
-		TCollection_MapNodePtr & Next2 ();
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:rtype: TopOpeBRepDS_ShapeData
-") Value;
-		TopOpeBRepDS_ShapeData & Value ();
-};
-
-
-%extend TopOpeBRepDS_IndexedDataMapNodeOfMapOfShapeData {
-	%pythoncode {
-		def GetHandle(self):
-		    try:
-		        return self.thisHandle
-		    except:
-		        self.thisHandle = Handle_TopOpeBRepDS_IndexedDataMapNodeOfMapOfShapeData(self)
-		        self.thisown = False
-		        return self.thisHandle
-	}
-};
-
-%pythonappend Handle_TopOpeBRepDS_IndexedDataMapNodeOfMapOfShapeData::Handle_TopOpeBRepDS_IndexedDataMapNodeOfMapOfShapeData %{
-    # register the handle in the base object
-    if len(args) > 0:
-        register_handle(self, args[0])
-%}
-
-%nodefaultctor Handle_TopOpeBRepDS_IndexedDataMapNodeOfMapOfShapeData;
-class Handle_TopOpeBRepDS_IndexedDataMapNodeOfMapOfShapeData : public Handle_TCollection_MapNode {
-
-    public:
-        // constructors
-        Handle_TopOpeBRepDS_IndexedDataMapNodeOfMapOfShapeData();
-        Handle_TopOpeBRepDS_IndexedDataMapNodeOfMapOfShapeData(const Handle_TopOpeBRepDS_IndexedDataMapNodeOfMapOfShapeData &aHandle);
-        Handle_TopOpeBRepDS_IndexedDataMapNodeOfMapOfShapeData(const TopOpeBRepDS_IndexedDataMapNodeOfMapOfShapeData *anItem);
-        void Nullify();
-        Standard_Boolean IsNull() const;
-        static const Handle_TopOpeBRepDS_IndexedDataMapNodeOfMapOfShapeData DownCast(const Handle_Standard_Transient &AnObject);
-
-};
-%extend Handle_TopOpeBRepDS_IndexedDataMapNodeOfMapOfShapeData {
-    TopOpeBRepDS_IndexedDataMapNodeOfMapOfShapeData* _get_reference() {
-    return (TopOpeBRepDS_IndexedDataMapNodeOfMapOfShapeData*)$self->Access();
-    }
-};
-
-%extend Handle_TopOpeBRepDS_IndexedDataMapNodeOfMapOfShapeData {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
-};
-
-%extend TopOpeBRepDS_IndexedDataMapNodeOfMapOfShapeData {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor TopOpeBRepDS_IndexedDataMapOfShapeWithState;
-class TopOpeBRepDS_IndexedDataMapOfShapeWithState : public TCollection_BasicMap {
-	public:
-		%feature("compactdefaultargs") TopOpeBRepDS_IndexedDataMapOfShapeWithState;
-		%feature("autodoc", "	:param NbBuckets: default value is 1
-	:type NbBuckets: int
-	:rtype: None
-") TopOpeBRepDS_IndexedDataMapOfShapeWithState;
-		 TopOpeBRepDS_IndexedDataMapOfShapeWithState (const Standard_Integer NbBuckets = 1);
-		%feature("compactdefaultargs") Assign;
-		%feature("autodoc", "	:param Other:
-	:type Other: TopOpeBRepDS_IndexedDataMapOfShapeWithState &
-	:rtype: TopOpeBRepDS_IndexedDataMapOfShapeWithState
-") Assign;
-		TopOpeBRepDS_IndexedDataMapOfShapeWithState & Assign (const TopOpeBRepDS_IndexedDataMapOfShapeWithState & Other);
-		%feature("compactdefaultargs") operator =;
-		%feature("autodoc", "	:param Other:
-	:type Other: TopOpeBRepDS_IndexedDataMapOfShapeWithState &
-	:rtype: TopOpeBRepDS_IndexedDataMapOfShapeWithState
-") operator =;
-		TopOpeBRepDS_IndexedDataMapOfShapeWithState & operator = (const TopOpeBRepDS_IndexedDataMapOfShapeWithState & Other);
-		%feature("compactdefaultargs") ReSize;
-		%feature("autodoc", "	:param NbBuckets:
-	:type NbBuckets: int
-	:rtype: None
-") ReSize;
-		void ReSize (const Standard_Integer NbBuckets);
-		%feature("compactdefaultargs") Clear;
-		%feature("autodoc", "	:rtype: None
-") Clear;
-		void Clear ();
-		%feature("compactdefaultargs") Add;
-		%feature("autodoc", "	:param K:
-	:type K: TopoDS_Shape &
-	:param I:
-	:type I: TopOpeBRepDS_ShapeWithState &
-	:rtype: int
-") Add;
-		Standard_Integer Add (const TopoDS_Shape & K,const TopOpeBRepDS_ShapeWithState & I);
-		%feature("compactdefaultargs") Substitute;
-		%feature("autodoc", "	:param I:
-	:type I: int
-	:param K:
-	:type K: TopoDS_Shape &
-	:param T:
-	:type T: TopOpeBRepDS_ShapeWithState &
-	:rtype: None
-") Substitute;
-		void Substitute (const Standard_Integer I,const TopoDS_Shape & K,const TopOpeBRepDS_ShapeWithState & T);
-		%feature("compactdefaultargs") RemoveLast;
-		%feature("autodoc", "	:rtype: None
-") RemoveLast;
-		void RemoveLast ();
-		%feature("compactdefaultargs") Contains;
-		%feature("autodoc", "	:param K:
-	:type K: TopoDS_Shape &
-	:rtype: bool
-") Contains;
-		Standard_Boolean Contains (const TopoDS_Shape & K);
-		%feature("compactdefaultargs") FindKey;
-		%feature("autodoc", "	:param I:
-	:type I: int
-	:rtype: TopoDS_Shape
-") FindKey;
-		const TopoDS_Shape  FindKey (const Standard_Integer I);
-		%feature("compactdefaultargs") FindFromIndex;
-		%feature("autodoc", "	:param I:
-	:type I: int
-	:rtype: TopOpeBRepDS_ShapeWithState
-") FindFromIndex;
-		const TopOpeBRepDS_ShapeWithState & FindFromIndex (const Standard_Integer I);
-		%feature("compactdefaultargs") ChangeFromIndex;
-		%feature("autodoc", "	:param I:
-	:type I: int
-	:rtype: TopOpeBRepDS_ShapeWithState
-") ChangeFromIndex;
-		TopOpeBRepDS_ShapeWithState & ChangeFromIndex (const Standard_Integer I);
-		%feature("compactdefaultargs") FindIndex;
-		%feature("autodoc", "	:param K:
-	:type K: TopoDS_Shape &
-	:rtype: int
-") FindIndex;
-		Standard_Integer FindIndex (const TopoDS_Shape & K);
-		%feature("compactdefaultargs") FindFromKey;
-		%feature("autodoc", "	:param K:
-	:type K: TopoDS_Shape &
-	:rtype: TopOpeBRepDS_ShapeWithState
-") FindFromKey;
-		const TopOpeBRepDS_ShapeWithState & FindFromKey (const TopoDS_Shape & K);
-		%feature("compactdefaultargs") ChangeFromKey;
-		%feature("autodoc", "	:param K:
-	:type K: TopoDS_Shape &
-	:rtype: TopOpeBRepDS_ShapeWithState
-") ChangeFromKey;
-		TopOpeBRepDS_ShapeWithState & ChangeFromKey (const TopoDS_Shape & K);
-		%feature("compactdefaultargs") FindFromKey1;
-		%feature("autodoc", "	:param K:
-	:type K: TopoDS_Shape &
-	:rtype: Standard_Address
-") FindFromKey1;
-		Standard_Address FindFromKey1 (const TopoDS_Shape & K);
-		%feature("compactdefaultargs") ChangeFromKey1;
-		%feature("autodoc", "	:param K:
-	:type K: TopoDS_Shape &
-	:rtype: Standard_Address
-") ChangeFromKey1;
-		Standard_Address ChangeFromKey1 (const TopoDS_Shape & K);
-};
-
-
-%extend TopOpeBRepDS_IndexedDataMapOfShapeWithState {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor TopOpeBRepDS_IndexedDataMapOfVertexPoint;
-class TopOpeBRepDS_IndexedDataMapOfVertexPoint : public TCollection_BasicMap {
-	public:
-		%feature("compactdefaultargs") TopOpeBRepDS_IndexedDataMapOfVertexPoint;
-		%feature("autodoc", "	:param NbBuckets: default value is 1
-	:type NbBuckets: int
-	:rtype: None
-") TopOpeBRepDS_IndexedDataMapOfVertexPoint;
-		 TopOpeBRepDS_IndexedDataMapOfVertexPoint (const Standard_Integer NbBuckets = 1);
-		%feature("compactdefaultargs") Assign;
-		%feature("autodoc", "	:param Other:
-	:type Other: TopOpeBRepDS_IndexedDataMapOfVertexPoint &
-	:rtype: TopOpeBRepDS_IndexedDataMapOfVertexPoint
-") Assign;
-		TopOpeBRepDS_IndexedDataMapOfVertexPoint & Assign (const TopOpeBRepDS_IndexedDataMapOfVertexPoint & Other);
-		%feature("compactdefaultargs") operator =;
-		%feature("autodoc", "	:param Other:
-	:type Other: TopOpeBRepDS_IndexedDataMapOfVertexPoint &
-	:rtype: TopOpeBRepDS_IndexedDataMapOfVertexPoint
-") operator =;
-		TopOpeBRepDS_IndexedDataMapOfVertexPoint & operator = (const TopOpeBRepDS_IndexedDataMapOfVertexPoint & Other);
-		%feature("compactdefaultargs") ReSize;
-		%feature("autodoc", "	:param NbBuckets:
-	:type NbBuckets: int
-	:rtype: None
-") ReSize;
-		void ReSize (const Standard_Integer NbBuckets);
-		%feature("compactdefaultargs") Clear;
-		%feature("autodoc", "	:rtype: None
-") Clear;
-		void Clear ();
-		%feature("compactdefaultargs") Add;
-		%feature("autodoc", "	:param K:
-	:type K: TopoDS_Shape &
-	:param I:
-	:type I: TopOpeBRepDS_Point &
-	:rtype: int
-") Add;
-		Standard_Integer Add (const TopoDS_Shape & K,const TopOpeBRepDS_Point & I);
-		%feature("compactdefaultargs") Substitute;
-		%feature("autodoc", "	:param I:
-	:type I: int
-	:param K:
-	:type K: TopoDS_Shape &
-	:param T:
-	:type T: TopOpeBRepDS_Point &
-	:rtype: None
-") Substitute;
-		void Substitute (const Standard_Integer I,const TopoDS_Shape & K,const TopOpeBRepDS_Point & T);
-		%feature("compactdefaultargs") RemoveLast;
-		%feature("autodoc", "	:rtype: None
-") RemoveLast;
-		void RemoveLast ();
-		%feature("compactdefaultargs") Contains;
-		%feature("autodoc", "	:param K:
-	:type K: TopoDS_Shape &
-	:rtype: bool
-") Contains;
-		Standard_Boolean Contains (const TopoDS_Shape & K);
-		%feature("compactdefaultargs") FindKey;
-		%feature("autodoc", "	:param I:
-	:type I: int
-	:rtype: TopoDS_Shape
-") FindKey;
-		const TopoDS_Shape  FindKey (const Standard_Integer I);
-		%feature("compactdefaultargs") FindFromIndex;
-		%feature("autodoc", "	:param I:
-	:type I: int
-	:rtype: TopOpeBRepDS_Point
-") FindFromIndex;
-		const TopOpeBRepDS_Point & FindFromIndex (const Standard_Integer I);
-		%feature("compactdefaultargs") ChangeFromIndex;
-		%feature("autodoc", "	:param I:
-	:type I: int
-	:rtype: TopOpeBRepDS_Point
-") ChangeFromIndex;
-		TopOpeBRepDS_Point & ChangeFromIndex (const Standard_Integer I);
-		%feature("compactdefaultargs") FindIndex;
-		%feature("autodoc", "	:param K:
-	:type K: TopoDS_Shape &
-	:rtype: int
-") FindIndex;
-		Standard_Integer FindIndex (const TopoDS_Shape & K);
-		%feature("compactdefaultargs") FindFromKey;
-		%feature("autodoc", "	:param K:
-	:type K: TopoDS_Shape &
-	:rtype: TopOpeBRepDS_Point
-") FindFromKey;
-		const TopOpeBRepDS_Point & FindFromKey (const TopoDS_Shape & K);
-		%feature("compactdefaultargs") ChangeFromKey;
-		%feature("autodoc", "	:param K:
-	:type K: TopoDS_Shape &
-	:rtype: TopOpeBRepDS_Point
-") ChangeFromKey;
-		TopOpeBRepDS_Point & ChangeFromKey (const TopoDS_Shape & K);
-		%feature("compactdefaultargs") FindFromKey1;
-		%feature("autodoc", "	:param K:
-	:type K: TopoDS_Shape &
-	:rtype: Standard_Address
-") FindFromKey1;
-		Standard_Address FindFromKey1 (const TopoDS_Shape & K);
-		%feature("compactdefaultargs") ChangeFromKey1;
-		%feature("autodoc", "	:param K:
-	:type K: TopoDS_Shape &
-	:rtype: Standard_Address
-") ChangeFromKey1;
-		Standard_Address ChangeFromKey1 (const TopoDS_Shape & K);
-};
-
-
-%extend TopOpeBRepDS_IndexedDataMapOfVertexPoint {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
 %nodefaultctor TopOpeBRepDS_Interference;
-class TopOpeBRepDS_Interference : public MMgt_TShared {
+class TopOpeBRepDS_Interference : public Standard_Transient {
 	public:
 		%feature("compactdefaultargs") TopOpeBRepDS_Interference;
 		%feature("autodoc", "	:rtype: None
@@ -5567,40 +2712,6 @@ class TopOpeBRepDS_Interference : public MMgt_TShared {
 	:rtype: bool
 ") HasSameGeometry;
 		Standard_Boolean HasSameGeometry (const Handle_TopOpeBRepDS_Interference & Other);
-
-        %feature("autodoc", "1");
-        %extend{
-            std::string DumpGToString() {
-            std::stringstream s;
-            self->DumpG(s);
-            return s.str();}
-        };
-        
-        %feature("autodoc", "1");
-        %extend{
-            std::string DumpSToString() {
-            std::stringstream s;
-            self->DumpS(s);
-            return s.str();}
-        };
-        
-        %feature("autodoc", "1");
-        %extend{
-            std::string DumpToString() {
-            std::stringstream s;
-            self->Dump(s);
-            return s.str();}
-        };
-        		%feature("compactdefaultargs") Dump;
-		%feature("autodoc", "	:param OS:
-	:type OS: Standard_OStream &
-	:param s1:
-	:type s1: TCollection_AsciiString &
-	:param s2:
-	:type s2: TCollection_AsciiString &
-	:rtype: Standard_OStream
-") Dump;
-		Standard_OStream & Dump (Standard_OStream & OS,const TCollection_AsciiString & s1,const TCollection_AsciiString & s2);
 };
 
 
@@ -5623,7 +2734,7 @@ class TopOpeBRepDS_Interference : public MMgt_TShared {
 %}
 
 %nodefaultctor Handle_TopOpeBRepDS_Interference;
-class Handle_TopOpeBRepDS_Interference : public Handle_MMgt_TShared {
+class Handle_TopOpeBRepDS_Interference : public Handle_Standard_Transient {
 
     public:
         // constructors
@@ -5635,19 +2746,20 @@ class Handle_TopOpeBRepDS_Interference : public Handle_MMgt_TShared {
         static const Handle_TopOpeBRepDS_Interference DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_TopOpeBRepDS_Interference {
     TopOpeBRepDS_Interference* _get_reference() {
-    return (TopOpeBRepDS_Interference*)$self->Access();
+    return (TopOpeBRepDS_Interference*)$self->get();
     }
 };
 
 %extend Handle_TopOpeBRepDS_Interference {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend TopOpeBRepDS_Interference {
@@ -5711,13 +2823,13 @@ class TopOpeBRepDS_InterferenceIterator {
 ") Support;
 		void Support (const Standard_Integer S);
 		%feature("compactdefaultargs") Match;
-		%feature("autodoc", "	* reach for an interference matching the conditions (if defined).
+		%feature("autodoc", "	* reach for an interference matching the conditions --if defined--.
 
 	:rtype: None
 ") Match;
 		void Match ();
 		%feature("compactdefaultargs") MatchInterference;
-		%feature("autodoc", "	* Returns True if the Interference <I> matches the conditions (if defined). If no conditions defined, returns True.
+		%feature("autodoc", "	* Returns True if the Interference <I> matches the conditions --if defined--. If no conditions defined, returns True.
 
 	:param I:
 	:type I: Handle_TopOpeBRepDS_Interference &
@@ -5737,7 +2849,7 @@ class TopOpeBRepDS_InterferenceIterator {
 ") Next;
 		void Next ();
 		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	* Returns the current Interference, matching the conditions (if defined).
+		%feature("autodoc", "	* Returns the current Interference, matching the conditions --if defined--.
 
 	:rtype: Handle_TopOpeBRepDS_Interference
 ") Value;
@@ -5789,7 +2901,7 @@ class TopOpeBRepDS_InterferenceTool {
 ") MakeCurveInterference;
 		static Handle_TopOpeBRepDS_Interference MakeCurveInterference (const TopOpeBRepDS_Transition & T,const TopOpeBRepDS_Kind SK,const Standard_Integer SI,const TopOpeBRepDS_Kind GK,const Standard_Integer GI,const Standard_Real P);
 		%feature("compactdefaultargs") DuplicateCurvePointInterference;
-		%feature("autodoc", "	* duplicate I in a new interference with Complement() transition.
+		%feature("autodoc", "	* duplicate I in a new interference with Complement---- transition.
 
 	:param I:
 	:type I: Handle_TopOpeBRepDS_Interference &
@@ -5870,249 +2982,6 @@ class TopOpeBRepDS_InterferenceTool {
 	__repr__ = _dumps_object
 	}
 };
-%nodefaultctor TopOpeBRepDS_ListIteratorOfListOfInterference;
-class TopOpeBRepDS_ListIteratorOfListOfInterference {
-	public:
-		%feature("compactdefaultargs") TopOpeBRepDS_ListIteratorOfListOfInterference;
-		%feature("autodoc", "	:rtype: None
-") TopOpeBRepDS_ListIteratorOfListOfInterference;
-		 TopOpeBRepDS_ListIteratorOfListOfInterference ();
-		%feature("compactdefaultargs") TopOpeBRepDS_ListIteratorOfListOfInterference;
-		%feature("autodoc", "	:param L:
-	:type L: TopOpeBRepDS_ListOfInterference &
-	:rtype: None
-") TopOpeBRepDS_ListIteratorOfListOfInterference;
-		 TopOpeBRepDS_ListIteratorOfListOfInterference (const TopOpeBRepDS_ListOfInterference & L);
-		%feature("compactdefaultargs") Initialize;
-		%feature("autodoc", "	:param L:
-	:type L: TopOpeBRepDS_ListOfInterference &
-	:rtype: None
-") Initialize;
-		void Initialize (const TopOpeBRepDS_ListOfInterference & L);
-		%feature("compactdefaultargs") More;
-		%feature("autodoc", "	:rtype: bool
-") More;
-		Standard_Boolean More ();
-		%feature("compactdefaultargs") Next;
-		%feature("autodoc", "	:rtype: None
-") Next;
-		void Next ();
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:rtype: Handle_TopOpeBRepDS_Interference
-") Value;
-		Handle_TopOpeBRepDS_Interference Value ();
-};
-
-
-%extend TopOpeBRepDS_ListIteratorOfListOfInterference {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor TopOpeBRepDS_ListNodeOfListOfInterference;
-class TopOpeBRepDS_ListNodeOfListOfInterference : public TCollection_MapNode {
-	public:
-		%feature("compactdefaultargs") TopOpeBRepDS_ListNodeOfListOfInterference;
-		%feature("autodoc", "	:param I:
-	:type I: Handle_TopOpeBRepDS_Interference &
-	:param n:
-	:type n: TCollection_MapNodePtr &
-	:rtype: None
-") TopOpeBRepDS_ListNodeOfListOfInterference;
-		 TopOpeBRepDS_ListNodeOfListOfInterference (const Handle_TopOpeBRepDS_Interference & I,const TCollection_MapNodePtr & n);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:rtype: Handle_TopOpeBRepDS_Interference
-") Value;
-		Handle_TopOpeBRepDS_Interference Value ();
-};
-
-
-%extend TopOpeBRepDS_ListNodeOfListOfInterference {
-	%pythoncode {
-		def GetHandle(self):
-		    try:
-		        return self.thisHandle
-		    except:
-		        self.thisHandle = Handle_TopOpeBRepDS_ListNodeOfListOfInterference(self)
-		        self.thisown = False
-		        return self.thisHandle
-	}
-};
-
-%pythonappend Handle_TopOpeBRepDS_ListNodeOfListOfInterference::Handle_TopOpeBRepDS_ListNodeOfListOfInterference %{
-    # register the handle in the base object
-    if len(args) > 0:
-        register_handle(self, args[0])
-%}
-
-%nodefaultctor Handle_TopOpeBRepDS_ListNodeOfListOfInterference;
-class Handle_TopOpeBRepDS_ListNodeOfListOfInterference : public Handle_TCollection_MapNode {
-
-    public:
-        // constructors
-        Handle_TopOpeBRepDS_ListNodeOfListOfInterference();
-        Handle_TopOpeBRepDS_ListNodeOfListOfInterference(const Handle_TopOpeBRepDS_ListNodeOfListOfInterference &aHandle);
-        Handle_TopOpeBRepDS_ListNodeOfListOfInterference(const TopOpeBRepDS_ListNodeOfListOfInterference *anItem);
-        void Nullify();
-        Standard_Boolean IsNull() const;
-        static const Handle_TopOpeBRepDS_ListNodeOfListOfInterference DownCast(const Handle_Standard_Transient &AnObject);
-
-};
-%extend Handle_TopOpeBRepDS_ListNodeOfListOfInterference {
-    TopOpeBRepDS_ListNodeOfListOfInterference* _get_reference() {
-    return (TopOpeBRepDS_ListNodeOfListOfInterference*)$self->Access();
-    }
-};
-
-%extend Handle_TopOpeBRepDS_ListNodeOfListOfInterference {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
-};
-
-%extend TopOpeBRepDS_ListNodeOfListOfInterference {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor TopOpeBRepDS_ListOfInterference;
-class TopOpeBRepDS_ListOfInterference {
-	public:
-		%feature("compactdefaultargs") TopOpeBRepDS_ListOfInterference;
-		%feature("autodoc", "	:rtype: None
-") TopOpeBRepDS_ListOfInterference;
-		 TopOpeBRepDS_ListOfInterference ();
-		%feature("compactdefaultargs") TopOpeBRepDS_ListOfInterference;
-		%feature("autodoc", "	:param Other:
-	:type Other: TopOpeBRepDS_ListOfInterference &
-	:rtype: None
-") TopOpeBRepDS_ListOfInterference;
-		 TopOpeBRepDS_ListOfInterference (const TopOpeBRepDS_ListOfInterference & Other);
-		%feature("compactdefaultargs") Assign;
-		%feature("autodoc", "	:param Other:
-	:type Other: TopOpeBRepDS_ListOfInterference &
-	:rtype: None
-") Assign;
-		void Assign (const TopOpeBRepDS_ListOfInterference & Other);
-		%feature("compactdefaultargs") operator =;
-		%feature("autodoc", "	:param Other:
-	:type Other: TopOpeBRepDS_ListOfInterference &
-	:rtype: None
-") operator =;
-		void operator = (const TopOpeBRepDS_ListOfInterference & Other);
-		%feature("compactdefaultargs") Extent;
-		%feature("autodoc", "	:rtype: int
-") Extent;
-		Standard_Integer Extent ();
-		%feature("compactdefaultargs") Clear;
-		%feature("autodoc", "	:rtype: None
-") Clear;
-		void Clear ();
-		%feature("compactdefaultargs") IsEmpty;
-		%feature("autodoc", "	:rtype: bool
-") IsEmpty;
-		Standard_Boolean IsEmpty ();
-		%feature("compactdefaultargs") Prepend;
-		%feature("autodoc", "	:param I:
-	:type I: Handle_TopOpeBRepDS_Interference &
-	:rtype: None
-") Prepend;
-		void Prepend (const Handle_TopOpeBRepDS_Interference & I);
-		%feature("compactdefaultargs") Prepend;
-		%feature("autodoc", "	:param I:
-	:type I: Handle_TopOpeBRepDS_Interference &
-	:param theIt:
-	:type theIt: TopOpeBRepDS_ListIteratorOfListOfInterference &
-	:rtype: None
-") Prepend;
-		void Prepend (const Handle_TopOpeBRepDS_Interference & I,TopOpeBRepDS_ListIteratorOfListOfInterference & theIt);
-		%feature("compactdefaultargs") Prepend;
-		%feature("autodoc", "	:param Other:
-	:type Other: TopOpeBRepDS_ListOfInterference &
-	:rtype: None
-") Prepend;
-		void Prepend (TopOpeBRepDS_ListOfInterference & Other);
-		%feature("compactdefaultargs") Append;
-		%feature("autodoc", "	:param I:
-	:type I: Handle_TopOpeBRepDS_Interference &
-	:rtype: None
-") Append;
-		void Append (const Handle_TopOpeBRepDS_Interference & I);
-		%feature("compactdefaultargs") Append;
-		%feature("autodoc", "	:param I:
-	:type I: Handle_TopOpeBRepDS_Interference &
-	:param theIt:
-	:type theIt: TopOpeBRepDS_ListIteratorOfListOfInterference &
-	:rtype: None
-") Append;
-		void Append (const Handle_TopOpeBRepDS_Interference & I,TopOpeBRepDS_ListIteratorOfListOfInterference & theIt);
-		%feature("compactdefaultargs") Append;
-		%feature("autodoc", "	:param Other:
-	:type Other: TopOpeBRepDS_ListOfInterference &
-	:rtype: None
-") Append;
-		void Append (TopOpeBRepDS_ListOfInterference & Other);
-		%feature("compactdefaultargs") First;
-		%feature("autodoc", "	:rtype: Handle_TopOpeBRepDS_Interference
-") First;
-		Handle_TopOpeBRepDS_Interference First ();
-		%feature("compactdefaultargs") Last;
-		%feature("autodoc", "	:rtype: Handle_TopOpeBRepDS_Interference
-") Last;
-		Handle_TopOpeBRepDS_Interference Last ();
-		%feature("compactdefaultargs") RemoveFirst;
-		%feature("autodoc", "	:rtype: None
-") RemoveFirst;
-		void RemoveFirst ();
-		%feature("compactdefaultargs") Remove;
-		%feature("autodoc", "	:param It:
-	:type It: TopOpeBRepDS_ListIteratorOfListOfInterference &
-	:rtype: None
-") Remove;
-		void Remove (TopOpeBRepDS_ListIteratorOfListOfInterference & It);
-		%feature("compactdefaultargs") InsertBefore;
-		%feature("autodoc", "	:param I:
-	:type I: Handle_TopOpeBRepDS_Interference &
-	:param It:
-	:type It: TopOpeBRepDS_ListIteratorOfListOfInterference &
-	:rtype: None
-") InsertBefore;
-		void InsertBefore (const Handle_TopOpeBRepDS_Interference & I,TopOpeBRepDS_ListIteratorOfListOfInterference & It);
-		%feature("compactdefaultargs") InsertBefore;
-		%feature("autodoc", "	:param Other:
-	:type Other: TopOpeBRepDS_ListOfInterference &
-	:param It:
-	:type It: TopOpeBRepDS_ListIteratorOfListOfInterference &
-	:rtype: None
-") InsertBefore;
-		void InsertBefore (TopOpeBRepDS_ListOfInterference & Other,TopOpeBRepDS_ListIteratorOfListOfInterference & It);
-		%feature("compactdefaultargs") InsertAfter;
-		%feature("autodoc", "	:param I:
-	:type I: Handle_TopOpeBRepDS_Interference &
-	:param It:
-	:type It: TopOpeBRepDS_ListIteratorOfListOfInterference &
-	:rtype: None
-") InsertAfter;
-		void InsertAfter (const Handle_TopOpeBRepDS_Interference & I,TopOpeBRepDS_ListIteratorOfListOfInterference & It);
-		%feature("compactdefaultargs") InsertAfter;
-		%feature("autodoc", "	:param Other:
-	:type Other: TopOpeBRepDS_ListOfInterference &
-	:param It:
-	:type It: TopOpeBRepDS_ListIteratorOfListOfInterference &
-	:rtype: None
-") InsertAfter;
-		void InsertAfter (TopOpeBRepDS_ListOfInterference & Other,TopOpeBRepDS_ListIteratorOfListOfInterference & It);
-};
-
-
-%extend TopOpeBRepDS_ListOfInterference {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
 %nodefaultctor TopOpeBRepDS_ListOfShapeOn1State;
 class TopOpeBRepDS_ListOfShapeOn1State {
 	public:
@@ -6150,455 +3019,8 @@ class TopOpeBRepDS_ListOfShapeOn1State {
 	__repr__ = _dumps_object
 	}
 };
-%nodefaultctor TopOpeBRepDS_MapOfCurve;
-class TopOpeBRepDS_MapOfCurve : public TCollection_BasicMap {
-	public:
-		%feature("compactdefaultargs") TopOpeBRepDS_MapOfCurve;
-		%feature("autodoc", "	:param NbBuckets: default value is 1
-	:type NbBuckets: int
-	:rtype: None
-") TopOpeBRepDS_MapOfCurve;
-		 TopOpeBRepDS_MapOfCurve (const Standard_Integer NbBuckets = 1);
-		%feature("compactdefaultargs") Assign;
-		%feature("autodoc", "	:param Other:
-	:type Other: TopOpeBRepDS_MapOfCurve &
-	:rtype: TopOpeBRepDS_MapOfCurve
-") Assign;
-		TopOpeBRepDS_MapOfCurve & Assign (const TopOpeBRepDS_MapOfCurve & Other);
-		%feature("compactdefaultargs") operator =;
-		%feature("autodoc", "	:param Other:
-	:type Other: TopOpeBRepDS_MapOfCurve &
-	:rtype: TopOpeBRepDS_MapOfCurve
-") operator =;
-		TopOpeBRepDS_MapOfCurve & operator = (const TopOpeBRepDS_MapOfCurve & Other);
-		%feature("compactdefaultargs") ReSize;
-		%feature("autodoc", "	:param NbBuckets:
-	:type NbBuckets: int
-	:rtype: None
-") ReSize;
-		void ReSize (const Standard_Integer NbBuckets);
-		%feature("compactdefaultargs") Clear;
-		%feature("autodoc", "	:rtype: None
-") Clear;
-		void Clear ();
-		%feature("compactdefaultargs") Bind;
-		%feature("autodoc", "	:param K:
-	:type K: int &
-	:param I:
-	:type I: TopOpeBRepDS_CurveData &
-	:rtype: bool
-") Bind;
-		Standard_Boolean Bind (const Standard_Integer & K,const TopOpeBRepDS_CurveData & I);
-		%feature("compactdefaultargs") IsBound;
-		%feature("autodoc", "	:param K:
-	:type K: int &
-	:rtype: bool
-") IsBound;
-		Standard_Boolean IsBound (const Standard_Integer & K);
-		%feature("compactdefaultargs") UnBind;
-		%feature("autodoc", "	:param K:
-	:type K: int &
-	:rtype: bool
-") UnBind;
-		Standard_Boolean UnBind (const Standard_Integer & K);
-		%feature("compactdefaultargs") Find;
-		%feature("autodoc", "	:param K:
-	:type K: int &
-	:rtype: TopOpeBRepDS_CurveData
-") Find;
-		const TopOpeBRepDS_CurveData & Find (const Standard_Integer & K);
-		%feature("compactdefaultargs") ChangeFind;
-		%feature("autodoc", "	:param K:
-	:type K: int &
-	:rtype: TopOpeBRepDS_CurveData
-") ChangeFind;
-		TopOpeBRepDS_CurveData & ChangeFind (const Standard_Integer & K);
-		%feature("compactdefaultargs") Find1;
-		%feature("autodoc", "	:param K:
-	:type K: int &
-	:rtype: Standard_Address
-") Find1;
-		Standard_Address Find1 (const Standard_Integer & K);
-		%feature("compactdefaultargs") ChangeFind1;
-		%feature("autodoc", "	:param K:
-	:type K: int &
-	:rtype: Standard_Address
-") ChangeFind1;
-		Standard_Address ChangeFind1 (const Standard_Integer & K);
-};
-
-
-%extend TopOpeBRepDS_MapOfCurve {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor TopOpeBRepDS_MapOfIntegerShapeData;
-class TopOpeBRepDS_MapOfIntegerShapeData : public TCollection_BasicMap {
-	public:
-		%feature("compactdefaultargs") TopOpeBRepDS_MapOfIntegerShapeData;
-		%feature("autodoc", "	:param NbBuckets: default value is 1
-	:type NbBuckets: int
-	:rtype: None
-") TopOpeBRepDS_MapOfIntegerShapeData;
-		 TopOpeBRepDS_MapOfIntegerShapeData (const Standard_Integer NbBuckets = 1);
-		%feature("compactdefaultargs") Assign;
-		%feature("autodoc", "	:param Other:
-	:type Other: TopOpeBRepDS_MapOfIntegerShapeData &
-	:rtype: TopOpeBRepDS_MapOfIntegerShapeData
-") Assign;
-		TopOpeBRepDS_MapOfIntegerShapeData & Assign (const TopOpeBRepDS_MapOfIntegerShapeData & Other);
-		%feature("compactdefaultargs") operator =;
-		%feature("autodoc", "	:param Other:
-	:type Other: TopOpeBRepDS_MapOfIntegerShapeData &
-	:rtype: TopOpeBRepDS_MapOfIntegerShapeData
-") operator =;
-		TopOpeBRepDS_MapOfIntegerShapeData & operator = (const TopOpeBRepDS_MapOfIntegerShapeData & Other);
-		%feature("compactdefaultargs") ReSize;
-		%feature("autodoc", "	:param NbBuckets:
-	:type NbBuckets: int
-	:rtype: None
-") ReSize;
-		void ReSize (const Standard_Integer NbBuckets);
-		%feature("compactdefaultargs") Clear;
-		%feature("autodoc", "	:rtype: None
-") Clear;
-		void Clear ();
-		%feature("compactdefaultargs") Bind;
-		%feature("autodoc", "	:param K:
-	:type K: int &
-	:param I:
-	:type I: TopOpeBRepDS_ShapeData &
-	:rtype: bool
-") Bind;
-		Standard_Boolean Bind (const Standard_Integer & K,const TopOpeBRepDS_ShapeData & I);
-		%feature("compactdefaultargs") IsBound;
-		%feature("autodoc", "	:param K:
-	:type K: int &
-	:rtype: bool
-") IsBound;
-		Standard_Boolean IsBound (const Standard_Integer & K);
-		%feature("compactdefaultargs") UnBind;
-		%feature("autodoc", "	:param K:
-	:type K: int &
-	:rtype: bool
-") UnBind;
-		Standard_Boolean UnBind (const Standard_Integer & K);
-		%feature("compactdefaultargs") Find;
-		%feature("autodoc", "	:param K:
-	:type K: int &
-	:rtype: TopOpeBRepDS_ShapeData
-") Find;
-		const TopOpeBRepDS_ShapeData & Find (const Standard_Integer & K);
-		%feature("compactdefaultargs") ChangeFind;
-		%feature("autodoc", "	:param K:
-	:type K: int &
-	:rtype: TopOpeBRepDS_ShapeData
-") ChangeFind;
-		TopOpeBRepDS_ShapeData & ChangeFind (const Standard_Integer & K);
-		%feature("compactdefaultargs") Find1;
-		%feature("autodoc", "	:param K:
-	:type K: int &
-	:rtype: Standard_Address
-") Find1;
-		Standard_Address Find1 (const Standard_Integer & K);
-		%feature("compactdefaultargs") ChangeFind1;
-		%feature("autodoc", "	:param K:
-	:type K: int &
-	:rtype: Standard_Address
-") ChangeFind1;
-		Standard_Address ChangeFind1 (const Standard_Integer & K);
-};
-
-
-%extend TopOpeBRepDS_MapOfIntegerShapeData {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor TopOpeBRepDS_MapOfPoint;
-class TopOpeBRepDS_MapOfPoint : public TCollection_BasicMap {
-	public:
-		%feature("compactdefaultargs") TopOpeBRepDS_MapOfPoint;
-		%feature("autodoc", "	:param NbBuckets: default value is 1
-	:type NbBuckets: int
-	:rtype: None
-") TopOpeBRepDS_MapOfPoint;
-		 TopOpeBRepDS_MapOfPoint (const Standard_Integer NbBuckets = 1);
-		%feature("compactdefaultargs") Assign;
-		%feature("autodoc", "	:param Other:
-	:type Other: TopOpeBRepDS_MapOfPoint &
-	:rtype: TopOpeBRepDS_MapOfPoint
-") Assign;
-		TopOpeBRepDS_MapOfPoint & Assign (const TopOpeBRepDS_MapOfPoint & Other);
-		%feature("compactdefaultargs") operator =;
-		%feature("autodoc", "	:param Other:
-	:type Other: TopOpeBRepDS_MapOfPoint &
-	:rtype: TopOpeBRepDS_MapOfPoint
-") operator =;
-		TopOpeBRepDS_MapOfPoint & operator = (const TopOpeBRepDS_MapOfPoint & Other);
-		%feature("compactdefaultargs") ReSize;
-		%feature("autodoc", "	:param NbBuckets:
-	:type NbBuckets: int
-	:rtype: None
-") ReSize;
-		void ReSize (const Standard_Integer NbBuckets);
-		%feature("compactdefaultargs") Clear;
-		%feature("autodoc", "	:rtype: None
-") Clear;
-		void Clear ();
-		%feature("compactdefaultargs") Bind;
-		%feature("autodoc", "	:param K:
-	:type K: int &
-	:param I:
-	:type I: TopOpeBRepDS_PointData &
-	:rtype: bool
-") Bind;
-		Standard_Boolean Bind (const Standard_Integer & K,const TopOpeBRepDS_PointData & I);
-		%feature("compactdefaultargs") IsBound;
-		%feature("autodoc", "	:param K:
-	:type K: int &
-	:rtype: bool
-") IsBound;
-		Standard_Boolean IsBound (const Standard_Integer & K);
-		%feature("compactdefaultargs") UnBind;
-		%feature("autodoc", "	:param K:
-	:type K: int &
-	:rtype: bool
-") UnBind;
-		Standard_Boolean UnBind (const Standard_Integer & K);
-		%feature("compactdefaultargs") Find;
-		%feature("autodoc", "	:param K:
-	:type K: int &
-	:rtype: TopOpeBRepDS_PointData
-") Find;
-		const TopOpeBRepDS_PointData & Find (const Standard_Integer & K);
-		%feature("compactdefaultargs") ChangeFind;
-		%feature("autodoc", "	:param K:
-	:type K: int &
-	:rtype: TopOpeBRepDS_PointData
-") ChangeFind;
-		TopOpeBRepDS_PointData & ChangeFind (const Standard_Integer & K);
-		%feature("compactdefaultargs") Find1;
-		%feature("autodoc", "	:param K:
-	:type K: int &
-	:rtype: Standard_Address
-") Find1;
-		Standard_Address Find1 (const Standard_Integer & K);
-		%feature("compactdefaultargs") ChangeFind1;
-		%feature("autodoc", "	:param K:
-	:type K: int &
-	:rtype: Standard_Address
-") ChangeFind1;
-		Standard_Address ChangeFind1 (const Standard_Integer & K);
-};
-
-
-%extend TopOpeBRepDS_MapOfPoint {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor TopOpeBRepDS_MapOfShapeData;
-class TopOpeBRepDS_MapOfShapeData : public TCollection_BasicMap {
-	public:
-		%feature("compactdefaultargs") TopOpeBRepDS_MapOfShapeData;
-		%feature("autodoc", "	:param NbBuckets: default value is 1
-	:type NbBuckets: int
-	:rtype: None
-") TopOpeBRepDS_MapOfShapeData;
-		 TopOpeBRepDS_MapOfShapeData (const Standard_Integer NbBuckets = 1);
-		%feature("compactdefaultargs") Assign;
-		%feature("autodoc", "	:param Other:
-	:type Other: TopOpeBRepDS_MapOfShapeData &
-	:rtype: TopOpeBRepDS_MapOfShapeData
-") Assign;
-		TopOpeBRepDS_MapOfShapeData & Assign (const TopOpeBRepDS_MapOfShapeData & Other);
-		%feature("compactdefaultargs") operator =;
-		%feature("autodoc", "	:param Other:
-	:type Other: TopOpeBRepDS_MapOfShapeData &
-	:rtype: TopOpeBRepDS_MapOfShapeData
-") operator =;
-		TopOpeBRepDS_MapOfShapeData & operator = (const TopOpeBRepDS_MapOfShapeData & Other);
-		%feature("compactdefaultargs") ReSize;
-		%feature("autodoc", "	:param NbBuckets:
-	:type NbBuckets: int
-	:rtype: None
-") ReSize;
-		void ReSize (const Standard_Integer NbBuckets);
-		%feature("compactdefaultargs") Clear;
-		%feature("autodoc", "	:rtype: None
-") Clear;
-		void Clear ();
-		%feature("compactdefaultargs") Add;
-		%feature("autodoc", "	:param K:
-	:type K: TopoDS_Shape &
-	:param I:
-	:type I: TopOpeBRepDS_ShapeData &
-	:rtype: int
-") Add;
-		Standard_Integer Add (const TopoDS_Shape & K,const TopOpeBRepDS_ShapeData & I);
-		%feature("compactdefaultargs") Substitute;
-		%feature("autodoc", "	:param I:
-	:type I: int
-	:param K:
-	:type K: TopoDS_Shape &
-	:param T:
-	:type T: TopOpeBRepDS_ShapeData &
-	:rtype: None
-") Substitute;
-		void Substitute (const Standard_Integer I,const TopoDS_Shape & K,const TopOpeBRepDS_ShapeData & T);
-		%feature("compactdefaultargs") RemoveLast;
-		%feature("autodoc", "	:rtype: None
-") RemoveLast;
-		void RemoveLast ();
-		%feature("compactdefaultargs") Contains;
-		%feature("autodoc", "	:param K:
-	:type K: TopoDS_Shape &
-	:rtype: bool
-") Contains;
-		Standard_Boolean Contains (const TopoDS_Shape & K);
-		%feature("compactdefaultargs") FindKey;
-		%feature("autodoc", "	:param I:
-	:type I: int
-	:rtype: TopoDS_Shape
-") FindKey;
-		const TopoDS_Shape  FindKey (const Standard_Integer I);
-		%feature("compactdefaultargs") FindFromIndex;
-		%feature("autodoc", "	:param I:
-	:type I: int
-	:rtype: TopOpeBRepDS_ShapeData
-") FindFromIndex;
-		const TopOpeBRepDS_ShapeData & FindFromIndex (const Standard_Integer I);
-		%feature("compactdefaultargs") ChangeFromIndex;
-		%feature("autodoc", "	:param I:
-	:type I: int
-	:rtype: TopOpeBRepDS_ShapeData
-") ChangeFromIndex;
-		TopOpeBRepDS_ShapeData & ChangeFromIndex (const Standard_Integer I);
-		%feature("compactdefaultargs") FindIndex;
-		%feature("autodoc", "	:param K:
-	:type K: TopoDS_Shape &
-	:rtype: int
-") FindIndex;
-		Standard_Integer FindIndex (const TopoDS_Shape & K);
-		%feature("compactdefaultargs") FindFromKey;
-		%feature("autodoc", "	:param K:
-	:type K: TopoDS_Shape &
-	:rtype: TopOpeBRepDS_ShapeData
-") FindFromKey;
-		const TopOpeBRepDS_ShapeData & FindFromKey (const TopoDS_Shape & K);
-		%feature("compactdefaultargs") ChangeFromKey;
-		%feature("autodoc", "	:param K:
-	:type K: TopoDS_Shape &
-	:rtype: TopOpeBRepDS_ShapeData
-") ChangeFromKey;
-		TopOpeBRepDS_ShapeData & ChangeFromKey (const TopoDS_Shape & K);
-		%feature("compactdefaultargs") FindFromKey1;
-		%feature("autodoc", "	:param K:
-	:type K: TopoDS_Shape &
-	:rtype: Standard_Address
-") FindFromKey1;
-		Standard_Address FindFromKey1 (const TopoDS_Shape & K);
-		%feature("compactdefaultargs") ChangeFromKey1;
-		%feature("autodoc", "	:param K:
-	:type K: TopoDS_Shape &
-	:rtype: Standard_Address
-") ChangeFromKey1;
-		Standard_Address ChangeFromKey1 (const TopoDS_Shape & K);
-};
-
-
-%extend TopOpeBRepDS_MapOfShapeData {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor TopOpeBRepDS_MapOfSurface;
-class TopOpeBRepDS_MapOfSurface : public TCollection_BasicMap {
-	public:
-		%feature("compactdefaultargs") TopOpeBRepDS_MapOfSurface;
-		%feature("autodoc", "	:param NbBuckets: default value is 1
-	:type NbBuckets: int
-	:rtype: None
-") TopOpeBRepDS_MapOfSurface;
-		 TopOpeBRepDS_MapOfSurface (const Standard_Integer NbBuckets = 1);
-		%feature("compactdefaultargs") Assign;
-		%feature("autodoc", "	:param Other:
-	:type Other: TopOpeBRepDS_MapOfSurface &
-	:rtype: TopOpeBRepDS_MapOfSurface
-") Assign;
-		TopOpeBRepDS_MapOfSurface & Assign (const TopOpeBRepDS_MapOfSurface & Other);
-		%feature("compactdefaultargs") operator =;
-		%feature("autodoc", "	:param Other:
-	:type Other: TopOpeBRepDS_MapOfSurface &
-	:rtype: TopOpeBRepDS_MapOfSurface
-") operator =;
-		TopOpeBRepDS_MapOfSurface & operator = (const TopOpeBRepDS_MapOfSurface & Other);
-		%feature("compactdefaultargs") ReSize;
-		%feature("autodoc", "	:param NbBuckets:
-	:type NbBuckets: int
-	:rtype: None
-") ReSize;
-		void ReSize (const Standard_Integer NbBuckets);
-		%feature("compactdefaultargs") Clear;
-		%feature("autodoc", "	:rtype: None
-") Clear;
-		void Clear ();
-		%feature("compactdefaultargs") Bind;
-		%feature("autodoc", "	:param K:
-	:type K: int &
-	:param I:
-	:type I: TopOpeBRepDS_SurfaceData &
-	:rtype: bool
-") Bind;
-		Standard_Boolean Bind (const Standard_Integer & K,const TopOpeBRepDS_SurfaceData & I);
-		%feature("compactdefaultargs") IsBound;
-		%feature("autodoc", "	:param K:
-	:type K: int &
-	:rtype: bool
-") IsBound;
-		Standard_Boolean IsBound (const Standard_Integer & K);
-		%feature("compactdefaultargs") UnBind;
-		%feature("autodoc", "	:param K:
-	:type K: int &
-	:rtype: bool
-") UnBind;
-		Standard_Boolean UnBind (const Standard_Integer & K);
-		%feature("compactdefaultargs") Find;
-		%feature("autodoc", "	:param K:
-	:type K: int &
-	:rtype: TopOpeBRepDS_SurfaceData
-") Find;
-		const TopOpeBRepDS_SurfaceData & Find (const Standard_Integer & K);
-		%feature("compactdefaultargs") ChangeFind;
-		%feature("autodoc", "	:param K:
-	:type K: int &
-	:rtype: TopOpeBRepDS_SurfaceData
-") ChangeFind;
-		TopOpeBRepDS_SurfaceData & ChangeFind (const Standard_Integer & K);
-		%feature("compactdefaultargs") Find1;
-		%feature("autodoc", "	:param K:
-	:type K: int &
-	:rtype: Standard_Address
-") Find1;
-		Standard_Address Find1 (const Standard_Integer & K);
-		%feature("compactdefaultargs") ChangeFind1;
-		%feature("autodoc", "	:param K:
-	:type K: int &
-	:rtype: Standard_Address
-") ChangeFind1;
-		Standard_Address ChangeFind1 (const Standard_Integer & K);
-};
-
-
-%extend TopOpeBRepDS_MapOfSurface {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
 %nodefaultctor TopOpeBRepDS_Marker;
-class TopOpeBRepDS_Marker : public MMgt_TShared {
+class TopOpeBRepDS_Marker : public Standard_Transient {
 	public:
 		%feature("compactdefaultargs") TopOpeBRepDS_Marker;
 		%feature("autodoc", "	:rtype: None
@@ -6660,7 +3082,7 @@ class TopOpeBRepDS_Marker : public MMgt_TShared {
 %}
 
 %nodefaultctor Handle_TopOpeBRepDS_Marker;
-class Handle_TopOpeBRepDS_Marker : public Handle_MMgt_TShared {
+class Handle_TopOpeBRepDS_Marker : public Handle_Standard_Transient {
 
     public:
         // constructors
@@ -6672,19 +3094,20 @@ class Handle_TopOpeBRepDS_Marker : public Handle_MMgt_TShared {
         static const Handle_TopOpeBRepDS_Marker DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_TopOpeBRepDS_Marker {
     TopOpeBRepDS_Marker* _get_reference() {
-    return (TopOpeBRepDS_Marker*)$self->Access();
+    return (TopOpeBRepDS_Marker*)$self->get();
     }
 };
 
 %extend Handle_TopOpeBRepDS_Marker {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend TopOpeBRepDS_Marker {
@@ -6880,89 +3303,6 @@ class TopOpeBRepDS_ShapeData {
 
 
 %extend TopOpeBRepDS_ShapeData {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor TopOpeBRepDS_ShapeSurface;
-class TopOpeBRepDS_ShapeSurface : public TCollection_BasicMap {
-	public:
-		%feature("compactdefaultargs") TopOpeBRepDS_ShapeSurface;
-		%feature("autodoc", "	:param NbBuckets: default value is 1
-	:type NbBuckets: int
-	:rtype: None
-") TopOpeBRepDS_ShapeSurface;
-		 TopOpeBRepDS_ShapeSurface (const Standard_Integer NbBuckets = 1);
-		%feature("compactdefaultargs") Assign;
-		%feature("autodoc", "	:param Other:
-	:type Other: TopOpeBRepDS_ShapeSurface &
-	:rtype: TopOpeBRepDS_ShapeSurface
-") Assign;
-		TopOpeBRepDS_ShapeSurface & Assign (const TopOpeBRepDS_ShapeSurface & Other);
-		%feature("compactdefaultargs") operator =;
-		%feature("autodoc", "	:param Other:
-	:type Other: TopOpeBRepDS_ShapeSurface &
-	:rtype: TopOpeBRepDS_ShapeSurface
-") operator =;
-		TopOpeBRepDS_ShapeSurface & operator = (const TopOpeBRepDS_ShapeSurface & Other);
-		%feature("compactdefaultargs") ReSize;
-		%feature("autodoc", "	:param NbBuckets:
-	:type NbBuckets: int
-	:rtype: None
-") ReSize;
-		void ReSize (const Standard_Integer NbBuckets);
-		%feature("compactdefaultargs") Clear;
-		%feature("autodoc", "	:rtype: None
-") Clear;
-		void Clear ();
-		%feature("compactdefaultargs") Bind;
-		%feature("autodoc", "	:param K:
-	:type K: TopoDS_Shape &
-	:param I:
-	:type I: Handle_Geom_Surface &
-	:rtype: bool
-") Bind;
-		Standard_Boolean Bind (const TopoDS_Shape & K,const Handle_Geom_Surface & I);
-		%feature("compactdefaultargs") IsBound;
-		%feature("autodoc", "	:param K:
-	:type K: TopoDS_Shape &
-	:rtype: bool
-") IsBound;
-		Standard_Boolean IsBound (const TopoDS_Shape & K);
-		%feature("compactdefaultargs") UnBind;
-		%feature("autodoc", "	:param K:
-	:type K: TopoDS_Shape &
-	:rtype: bool
-") UnBind;
-		Standard_Boolean UnBind (const TopoDS_Shape & K);
-		%feature("compactdefaultargs") Find;
-		%feature("autodoc", "	:param K:
-	:type K: TopoDS_Shape &
-	:rtype: Handle_Geom_Surface
-") Find;
-		Handle_Geom_Surface Find (const TopoDS_Shape & K);
-		%feature("compactdefaultargs") ChangeFind;
-		%feature("autodoc", "	:param K:
-	:type K: TopoDS_Shape &
-	:rtype: Handle_Geom_Surface
-") ChangeFind;
-		Handle_Geom_Surface ChangeFind (const TopoDS_Shape & K);
-		%feature("compactdefaultargs") Find1;
-		%feature("autodoc", "	:param K:
-	:type K: TopoDS_Shape &
-	:rtype: Standard_Address
-") Find1;
-		Standard_Address Find1 (const TopoDS_Shape & K);
-		%feature("compactdefaultargs") ChangeFind1;
-		%feature("autodoc", "	:param K:
-	:type K: TopoDS_Shape &
-	:rtype: Standard_Address
-") ChangeFind1;
-		Standard_Address ChangeFind1 (const TopoDS_Shape & K);
-};
-
-
-%extend TopOpeBRepDS_ShapeSurface {
 	%pythoncode {
 	__repr__ = _dumps_object
 	}
@@ -7233,50 +3573,6 @@ class TopOpeBRepDS_TKI {
 	:rtype: None
 ") Add;
 		void Add (const TopOpeBRepDS_Kind K,const Standard_Integer G,const Handle_TopOpeBRepDS_Interference & HI);
-		%feature("compactdefaultargs") DumpTKI;
-		%feature("autodoc", "	:param s1: default value is ""
-	:type s1: TCollection_AsciiString &
-	:param s2: default value is ""
-	:type s2: TCollection_AsciiString &
-	:rtype: None
-") DumpTKI;
-		void DumpTKI (const TCollection_AsciiString & s1 = "",const TCollection_AsciiString & s2 = "");
-		%feature("compactdefaultargs") DumpTKI;
-		%feature("autodoc", "	:param K:
-	:type K: TopOpeBRepDS_Kind
-	:param s1: default value is ""
-	:type s1: TCollection_AsciiString &
-	:param s2: default value is ""
-	:type s2: TCollection_AsciiString &
-	:rtype: None
-") DumpTKI;
-		void DumpTKI (const TopOpeBRepDS_Kind K,const TCollection_AsciiString & s1 = "",const TCollection_AsciiString & s2 = "");
-		%feature("compactdefaultargs") DumpTKI;
-		%feature("autodoc", "	:param K:
-	:type K: TopOpeBRepDS_Kind
-	:param G:
-	:type G: int
-	:param s1: default value is ""
-	:type s1: TCollection_AsciiString &
-	:param s2: default value is ""
-	:type s2: TCollection_AsciiString &
-	:rtype: None
-") DumpTKI;
-		void DumpTKI (const TopOpeBRepDS_Kind K,const Standard_Integer G,const TCollection_AsciiString & s1 = "",const TCollection_AsciiString & s2 = "");
-		%feature("compactdefaultargs") DumpTKI;
-		%feature("autodoc", "	:param K:
-	:type K: TopOpeBRepDS_Kind
-	:param G:
-	:type G: int
-	:param L:
-	:type L: TopOpeBRepDS_ListOfInterference &
-	:param s1: default value is ""
-	:type s1: TCollection_AsciiString &
-	:param s2: default value is ""
-	:type s2: TCollection_AsciiString &
-	:rtype: None
-") DumpTKI;
-		void DumpTKI (const TopOpeBRepDS_Kind K,const Standard_Integer G,const TopOpeBRepDS_ListOfInterference & L,const TCollection_AsciiString & s1 = "",const TCollection_AsciiString & s2 = "");
 		%feature("compactdefaultargs") DumpTKIIterator;
 		%feature("autodoc", "	:param s1: default value is ""
 	:type s1: TCollection_AsciiString &
@@ -7531,7 +3827,7 @@ class TopOpeBRepDS_Transition {
 ") Set;
 		void Set (const TopAbs_Orientation O);
 		%feature("compactdefaultargs") Orientation;
-		%feature("autodoc", "	* returns the orientation corresponding to state <S> //! Before and After not equal TopAbs_ON : -------------------------------------- Before After Computed orientation //! S not S REVERSED (we leave state S) not S S FORWARD (we enter state S) S S INTERNAL (we stay in state S) not S not S EXTERNAL (we stay outside state S)
+		%feature("autodoc", "	* returns the orientation corresponding to state <S> //! Before and After not equal TopAbs_ON : -------------------------------------- Before After Computed orientation //! S not S REVERSED --we leave state S-- not S S FORWARD --we enter state S-- S S INTERNAL --we stay in state S-- not S not S EXTERNAL --we stay outside state S--
 
 	:param S:
 	:type S: TopAbs_State
@@ -7550,31 +3846,7 @@ class TopOpeBRepDS_Transition {
 	:rtype: bool
 ") IsUnknown;
 		Standard_Boolean IsUnknown ();
-
-        %feature("autodoc", "1");
-        %extend{
-            std::string DumpAToString() {
-            std::stringstream s;
-            self->DumpA(s);
-            return s.str();}
-        };
-        
-        %feature("autodoc", "1");
-        %extend{
-            std::string DumpBToString() {
-            std::stringstream s;
-            self->DumpB(s);
-            return s.str();}
-        };
-        
-        %feature("autodoc", "1");
-        %extend{
-            std::string DumpToString() {
-            std::stringstream s;
-            self->Dump(s);
-            return s.str();}
-        };
-        };
+};
 
 
 %extend TopOpeBRepDS_Transition {
@@ -7615,7 +3887,7 @@ class TopOpeBRepDS_CurveIterator : public TopOpeBRepDS_InterferenceIterator {
 ") TopOpeBRepDS_CurveIterator;
 		 TopOpeBRepDS_CurveIterator (const TopOpeBRepDS_ListOfInterference & L);
 		%feature("compactdefaultargs") MatchInterference;
-		%feature("autodoc", "	* Returns True if the Interference <I> has a GeometryType() TopOpeBRepDS_CURVE returns False else.
+		%feature("autodoc", "	* Returns True if the Interference <I> has a GeometryType---- TopOpeBRepDS_CURVE returns False else.
 
 	:param I:
 	:type I: Handle_TopOpeBRepDS_Interference &
@@ -7675,15 +3947,7 @@ class TopOpeBRepDS_CurvePointInterference : public TopOpeBRepDS_Interference {
 	:rtype: None
 ") Parameter;
 		void Parameter (const Standard_Real P);
-
-        %feature("autodoc", "1");
-        %extend{
-            std::string DumpToString() {
-            std::stringstream s;
-            self->Dump(s);
-            return s.str();}
-        };
-        };
+};
 
 
 %extend TopOpeBRepDS_CurvePointInterference {
@@ -7717,19 +3981,20 @@ class Handle_TopOpeBRepDS_CurvePointInterference : public Handle_TopOpeBRepDS_In
         static const Handle_TopOpeBRepDS_CurvePointInterference DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_TopOpeBRepDS_CurvePointInterference {
     TopOpeBRepDS_CurvePointInterference* _get_reference() {
-    return (TopOpeBRepDS_CurvePointInterference*)$self->Access();
+    return (TopOpeBRepDS_CurvePointInterference*)$self->get();
     }
 };
 
 %extend Handle_TopOpeBRepDS_CurvePointInterference {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend TopOpeBRepDS_CurvePointInterference {
@@ -7796,7 +4061,7 @@ class TopOpeBRepDS_PointIterator : public TopOpeBRepDS_InterferenceIterator {
 ") TopOpeBRepDS_PointIterator;
 		 TopOpeBRepDS_PointIterator (const TopOpeBRepDS_ListOfInterference & L);
 		%feature("compactdefaultargs") MatchInterference;
-		%feature("autodoc", "	* Returns True if the Interference <I> has a GeometryType() TopOpeBRepDS_POINT or TopOpeBRepDS_VERTEX returns False else.
+		%feature("autodoc", "	* Returns True if the Interference <I> has a GeometryType---- TopOpeBRepDS_POINT or TopOpeBRepDS_VERTEX returns False else.
 
 	:param I:
 	:type I: Handle_TopOpeBRepDS_Interference &
@@ -7884,15 +4149,7 @@ class TopOpeBRepDS_ShapeShapeInterference : public TopOpeBRepDS_Interference {
 	:rtype: None
 ") SetGBound;
 		void SetGBound (const Standard_Boolean b);
-
-        %feature("autodoc", "1");
-        %extend{
-            std::string DumpToString() {
-            std::stringstream s;
-            self->Dump(s);
-            return s.str();}
-        };
-        };
+};
 
 
 %extend TopOpeBRepDS_ShapeShapeInterference {
@@ -7926,19 +4183,20 @@ class Handle_TopOpeBRepDS_ShapeShapeInterference : public Handle_TopOpeBRepDS_In
         static const Handle_TopOpeBRepDS_ShapeShapeInterference DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_TopOpeBRepDS_ShapeShapeInterference {
     TopOpeBRepDS_ShapeShapeInterference* _get_reference() {
-    return (TopOpeBRepDS_ShapeShapeInterference*)$self->Access();
+    return (TopOpeBRepDS_ShapeShapeInterference*)$self->get();
     }
 };
 
 %extend Handle_TopOpeBRepDS_ShapeShapeInterference {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend TopOpeBRepDS_ShapeShapeInterference {
@@ -7963,15 +4221,7 @@ class TopOpeBRepDS_SolidSurfaceInterference : public TopOpeBRepDS_Interference {
 	:rtype: None
 ") TopOpeBRepDS_SolidSurfaceInterference;
 		 TopOpeBRepDS_SolidSurfaceInterference (const TopOpeBRepDS_Transition & Transition,const TopOpeBRepDS_Kind SupportType,const Standard_Integer Support,const TopOpeBRepDS_Kind GeometryType,const Standard_Integer Geometry);
-
-        %feature("autodoc", "1");
-        %extend{
-            std::string DumpToString() {
-            std::stringstream s;
-            self->Dump(s);
-            return s.str();}
-        };
-        };
+};
 
 
 %extend TopOpeBRepDS_SolidSurfaceInterference {
@@ -8005,19 +4255,20 @@ class Handle_TopOpeBRepDS_SolidSurfaceInterference : public Handle_TopOpeBRepDS_
         static const Handle_TopOpeBRepDS_SolidSurfaceInterference DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_TopOpeBRepDS_SolidSurfaceInterference {
     TopOpeBRepDS_SolidSurfaceInterference* _get_reference() {
-    return (TopOpeBRepDS_SolidSurfaceInterference*)$self->Access();
+    return (TopOpeBRepDS_SolidSurfaceInterference*)$self->get();
     }
 };
 
 %extend Handle_TopOpeBRepDS_SolidSurfaceInterference {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend TopOpeBRepDS_SolidSurfaceInterference {
@@ -8064,23 +4315,7 @@ class TopOpeBRepDS_SurfaceCurveInterference : public TopOpeBRepDS_Interference {
 	:rtype: None
 ") PCurve;
 		void PCurve (const Handle_Geom2d_Curve & PC);
-		%feature("compactdefaultargs") DumpPCurve;
-		%feature("autodoc", "	:param OS:
-	:type OS: Standard_OStream &
-	:param compact: default value is Standard_True
-	:type compact: bool
-	:rtype: Standard_OStream
-") DumpPCurve;
-		Standard_OStream & DumpPCurve (Standard_OStream & OS,const Standard_Boolean compact = Standard_True);
-
-        %feature("autodoc", "1");
-        %extend{
-            std::string DumpToString() {
-            std::stringstream s;
-            self->Dump(s);
-            return s.str();}
-        };
-        };
+};
 
 
 %extend TopOpeBRepDS_SurfaceCurveInterference {
@@ -8114,19 +4349,20 @@ class Handle_TopOpeBRepDS_SurfaceCurveInterference : public Handle_TopOpeBRepDS_
         static const Handle_TopOpeBRepDS_SurfaceCurveInterference DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_TopOpeBRepDS_SurfaceCurveInterference {
     TopOpeBRepDS_SurfaceCurveInterference* _get_reference() {
-    return (TopOpeBRepDS_SurfaceCurveInterference*)$self->Access();
+    return (TopOpeBRepDS_SurfaceCurveInterference*)$self->get();
     }
 };
 
 %extend Handle_TopOpeBRepDS_SurfaceCurveInterference {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend TopOpeBRepDS_SurfaceCurveInterference {
@@ -8237,15 +4473,7 @@ class TopOpeBRepDS_EdgeVertexInterference : public TopOpeBRepDS_ShapeShapeInterf
 	:rtype: None
 ") Parameter;
 		void Parameter (const Standard_Real P);
-
-        %feature("autodoc", "1");
-        %extend{
-            std::string DumpToString() {
-            std::stringstream s;
-            self->Dump(s);
-            return s.str();}
-        };
-        };
+};
 
 
 %extend TopOpeBRepDS_EdgeVertexInterference {
@@ -8279,19 +4507,20 @@ class Handle_TopOpeBRepDS_EdgeVertexInterference : public Handle_TopOpeBRepDS_Sh
         static const Handle_TopOpeBRepDS_EdgeVertexInterference DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_TopOpeBRepDS_EdgeVertexInterference {
     TopOpeBRepDS_EdgeVertexInterference* _get_reference() {
-    return (TopOpeBRepDS_EdgeVertexInterference*)$self->Access();
+    return (TopOpeBRepDS_EdgeVertexInterference*)$self->get();
     }
 };
 
 %extend Handle_TopOpeBRepDS_EdgeVertexInterference {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend TopOpeBRepDS_EdgeVertexInterference {
@@ -8318,15 +4547,7 @@ class TopOpeBRepDS_FaceEdgeInterference : public TopOpeBRepDS_ShapeShapeInterfer
 	:rtype: None
 ") TopOpeBRepDS_FaceEdgeInterference;
 		 TopOpeBRepDS_FaceEdgeInterference (const TopOpeBRepDS_Transition & T,const Standard_Integer S,const Standard_Integer G,const Standard_Boolean GIsBound,const TopOpeBRepDS_Config C);
-
-        %feature("autodoc", "1");
-        %extend{
-            std::string DumpToString() {
-            std::stringstream s;
-            self->Dump(s);
-            return s.str();}
-        };
-        };
+};
 
 
 %extend TopOpeBRepDS_FaceEdgeInterference {
@@ -8360,19 +4581,20 @@ class Handle_TopOpeBRepDS_FaceEdgeInterference : public Handle_TopOpeBRepDS_Shap
         static const Handle_TopOpeBRepDS_FaceEdgeInterference DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_TopOpeBRepDS_FaceEdgeInterference {
     TopOpeBRepDS_FaceEdgeInterference* _get_reference() {
-    return (TopOpeBRepDS_FaceEdgeInterference*)$self->Access();
+    return (TopOpeBRepDS_FaceEdgeInterference*)$self->get();
     }
 };
 
 %extend Handle_TopOpeBRepDS_FaceEdgeInterference {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend TopOpeBRepDS_FaceEdgeInterference {

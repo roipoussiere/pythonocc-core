@@ -1,5 +1,5 @@
 /*
-Copyright 2008-2017 Thomas Paviot (tpaviot@gmail.com)
+Copyright 2008-2018 Thomas Paviot (tpaviot@gmail.com)
 
 
 This file is part of pythonOCC.
@@ -56,6 +56,9 @@ def register_handle(handle, base_object):
 /* typedefs */
 /* end typedefs declaration */
 
+/* templates */
+/* end templates declaration */
+
 /* public enums */
 enum CDF_TypeOfActivation {
 	CDF_TOA_New = 0,
@@ -86,6 +89,7 @@ enum CDF_StoreSetNameStatus {
 /* end public enums declaration */
 
 %rename(cdf) CDF;
+%nodefaultctor CDF;
 class CDF {
 	public:
 		%feature("compactdefaultargs") GetLicense;
@@ -142,7 +146,7 @@ class CDF_Application : public CDM_Application {
 ") Close;
 		void Close (const Handle_CDM_Document & aDocument);
 		%feature("compactdefaultargs") Retrieve;
-		%feature("autodoc", "	* This method retrieves a document from the database. If the Document references other documents which have been updated, the latest version of these documents will be used if {UseStorageConfiguration} is Standard_True. The content of {aFolder}, {aName} and {aVersion} depends on the Database Manager system. If the DBMS is only based on the OS, {aFolder} is a directory and {aName} is the name of a file. In this case the use of the syntax with {aVersion} has no sense. For example: //! Handle_CDM_Document theDocument=myApplication->Retrieve('/home/cascade','box.dsg'); If the DBMS is EUCLID/Design Manager, {aFolder}, {aName} have the form they have in EUCLID/Design Manager. For example: //! Handle_CDM_Document theDocument=myApplication->Retrieve('|user|cascade','box'); //! Since the version is not specified in this syntax, the latest wil be used. A link is kept with the database through an instance of CDM_MetaData
+		%feature("autodoc", "	* This method retrieves a document from the database. If the Document references other documents which have been updated, the latest version of these documents will be used if {UseStorageConfiguration} is Standard_True. The content of {aFolder}, {aName} and {aVersion} depends on the Database Manager system. If the DBMS is only based on the OS, {aFolder} is a directory and {aName} is the name of a file. In this case the use of the syntax with {aVersion} has no sense. For example: //! Handle_CDM_Document theDocument=myApplication->Retrieve--'/home/cascade','box.dsg'--; If the DBMS is EUCLID/Design Manager, {aFolder}, {aName} have the form they have in EUCLID/Design Manager. For example: //! Handle_CDM_Document theDocument=myApplication->Retrieve--'|user|cascade','box'--; //! Since the version is not specified in this syntax, the latest wil be used. A link is kept with the database through an instance of CDM_MetaData
 
 	:param aFolder:
 	:type aFolder: TCollection_ExtendedString &
@@ -154,7 +158,7 @@ class CDF_Application : public CDM_Application {
 ") Retrieve;
 		Handle_CDM_Document Retrieve (const TCollection_ExtendedString & aFolder,const TCollection_ExtendedString & aName,const Standard_Boolean UseStorageConfiguration = Standard_True);
 		%feature("compactdefaultargs") Retrieve;
-		%feature("autodoc", "	* This method retrieves a document from the database. If the Document references other documents which have been updated, the latest version of these documents will be used if {UseStorageConfiguration} is Standard_True. -- If the DBMS is only based on the OS, this syntax should not be used. //! If the DBMS is EUCLID/Design Manager, {aFolder}, {aName} and {aVersion} have the form they have in EUCLID/Design Manager. For example: //! Handle_CDM_Document theDocument=myApplication->Retrieve('|user|cascade','box','2'); A link is kept with the database through an instance of CDM_MetaData
+		%feature("autodoc", "	* This method retrieves a document from the database. If the Document references other documents which have been updated, the latest version of these documents will be used if {UseStorageConfiguration} is Standard_True. -- If the DBMS is only based on the OS, this syntax should not be used. //! If the DBMS is EUCLID/Design Manager, {aFolder}, {aName} and {aVersion} have the form they have in EUCLID/Design Manager. For example: //! Handle_CDM_Document theDocument=myApplication->Retrieve--'|user|cascade','box','2'--; A link is kept with the database through an instance of CDM_MetaData
 
 	:param aFolder:
 	:type aFolder: TCollection_ExtendedString &
@@ -185,42 +189,35 @@ class CDF_Application : public CDM_Application {
 	:rtype: PCDM_ReaderStatus
 ") CanRetrieve;
 		PCDM_ReaderStatus CanRetrieve (const TCollection_ExtendedString & aFolder,const TCollection_ExtendedString & aName,const TCollection_ExtendedString & aVersion);
-		%feature("compactdefaultargs") Formats;
-		%feature("autodoc", "	:param Formats:
-	:type Formats: TColStd_SequenceOfExtendedString &
-	:rtype: void
-") Formats;
-		virtual void Formats (TColStd_SequenceOfExtendedString & Formats);
 		%feature("compactdefaultargs") GetRetrieveStatus;
 		%feature("autodoc", "	* Checks status after Retrieve
 
 	:rtype: PCDM_ReaderStatus
 ") GetRetrieveStatus;
 		PCDM_ReaderStatus GetRetrieveStatus ();
-		%feature("compactdefaultargs") FindReader;
-		%feature("autodoc", "	:param aFileName:
-	:type aFileName: TCollection_ExtendedString &
-	:rtype: bool
-") FindReader;
-		Standard_Boolean FindReader (const TCollection_ExtendedString & aFileName);
-		%feature("compactdefaultargs") Reader;
-		%feature("autodoc", "	:param aFileName:
-	:type aFileName: TCollection_ExtendedString &
-	:rtype: Handle_PCDM_Reader
-") Reader;
-		Handle_PCDM_Reader Reader (const TCollection_ExtendedString & aFileName);
-		%feature("compactdefaultargs") FindReaderFromFormat;
-		%feature("autodoc", "	:param aFormat:
-	:type aFormat: TCollection_ExtendedString &
-	:rtype: bool
-") FindReaderFromFormat;
-		Standard_Boolean FindReaderFromFormat (const TCollection_ExtendedString & aFormat);
-		%feature("compactdefaultargs") ReaderFromFormat;
-		%feature("autodoc", "	:param aFormat:
+
+        %feature("autodoc", "1");
+        %extend{
+            void ReadFromString(std::string src) {
+            std::stringstream s(src);
+            self->Read(s);}
+        };
+        		%feature("compactdefaultargs") ReaderFromFormat;
+		%feature("autodoc", "	* Returns instance of read driver for specified format. //! Default implementation uses plugin mechanism to load reader dynamically. For this to work, application resources should define GUID of the plugin as value of [Format].RetrievalPlugin, and 'Plugin' resource should define name of plugin library to be loaded as value of [GUID].Location. Plugin library should provide method PLUGINFACTORY returning instance of the reader for the same GUID --see Plugin_Macro.hxx--. //! In case if reader is not available, will raise Standard_NoSuchObject or other exception if raised by plugin loader.
+
+	:param aFormat:
 	:type aFormat: TCollection_ExtendedString &
 	:rtype: Handle_PCDM_Reader
 ") ReaderFromFormat;
-		Handle_PCDM_Reader ReaderFromFormat (const TCollection_ExtendedString & aFormat);
+		virtual Handle_PCDM_Reader ReaderFromFormat (const TCollection_ExtendedString & aFormat);
+		%feature("compactdefaultargs") WriterFromFormat;
+		%feature("autodoc", "	* Returns instance of storage driver for specified format. //! Default implementation uses plugin mechanism to load driver dynamically. For this to work, application resources should define GUID of the plugin as value of [Format].StoragePlugin, and 'Plugin' resource should define name of plugin library to be loaded as value of [GUID].Location. Plugin library should provide method PLUGINFACTORY returning instance of the reader for the same GUID --see Plugin_Macro.hxx--. //! In case if driver is not available, will raise Standard_NoSuchObject or other exception if raised by plugin loader.
+
+	:param aFormat:
+	:type aFormat: TCollection_ExtendedString &
+	:rtype: Handle_PCDM_StorageDriver
+") WriterFromFormat;
+		virtual Handle_PCDM_StorageDriver WriterFromFormat (const TCollection_ExtendedString & aFormat);
 		%feature("compactdefaultargs") Format;
 		%feature("autodoc", "	* try to retrieve a Format directly in the file or in application resource by using extension. returns True if found;
 
@@ -241,10 +238,6 @@ class CDF_Application : public CDM_Application {
 	:rtype: bool
 ") SetDefaultFolder;
 		Standard_Boolean SetDefaultFolder (const Standard_ExtString aFolder);
-		%feature("compactdefaultargs") DefaultExtension;
-		%feature("autodoc", "	:rtype: Standard_ExtString
-") DefaultExtension;
-		Standard_ExtString DefaultExtension ();
 };
 
 
@@ -279,19 +272,20 @@ class Handle_CDF_Application : public Handle_CDM_Application {
         static const Handle_CDF_Application DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_CDF_Application {
     CDF_Application* _get_reference() {
-    return (CDF_Application*)$self->Access();
+    return (CDF_Application*)$self->get();
     }
 };
 
 %extend Handle_CDF_Application {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend CDF_Application {
@@ -333,7 +327,7 @@ class CDF_Directory : public Standard_Transient {
 ") Contains;
 		Standard_Boolean Contains (const Handle_CDM_Document & aDocument);
 		%feature("compactdefaultargs") Last;
-		%feature("autodoc", "	* returns the last document (if any) which has been added in the directory.
+		%feature("autodoc", "	* returns the last document --if any-- which has been added in the directory.
 
 	:rtype: Handle_CDM_Document
 ") Last;
@@ -384,19 +378,20 @@ class Handle_CDF_Directory : public Handle_Standard_Transient {
         static const Handle_CDF_Directory DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_CDF_Directory {
     CDF_Directory* _get_reference() {
-    return (CDF_Directory*)$self->Access();
+    return (CDF_Directory*)$self->get();
     }
 };
 
 %extend Handle_CDF_Directory {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend CDF_Directory {
@@ -426,7 +421,7 @@ class CDF_DirectoryIterator {
 ") MoreDocument;
 		Standard_Boolean MoreDocument ();
 		%feature("compactdefaultargs") NextDocument;
-		%feature("autodoc", "	* Go to the next entry (if there is not, Value will raise an exception)
+		%feature("autodoc", "	* Go to the next entry --if there is not, Value will raise an exception--
 
 	:rtype: None
 ") NextDocument;
@@ -622,19 +617,20 @@ class Handle_CDF_MetaDataDriver : public Handle_Standard_Transient {
         static const Handle_CDF_MetaDataDriver DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_CDF_MetaDataDriver {
     CDF_MetaDataDriver* _get_reference() {
-    return (CDF_MetaDataDriver*)$self->Access();
+    return (CDF_MetaDataDriver*)$self->get();
     }
 };
 
 %extend Handle_CDF_MetaDataDriver {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend CDF_MetaDataDriver {
@@ -683,19 +679,20 @@ class Handle_CDF_MetaDataDriverFactory : public Handle_Standard_Transient {
         static const Handle_CDF_MetaDataDriverFactory DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_CDF_MetaDataDriverFactory {
     CDF_MetaDataDriverFactory* _get_reference() {
-    return (CDF_MetaDataDriverFactory*)$self->Access();
+    return (CDF_MetaDataDriverFactory*)$self->get();
     }
 };
 
 %extend Handle_CDF_MetaDataDriverFactory {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend CDF_MetaDataDriverFactory {
@@ -788,19 +785,20 @@ class Handle_CDF_Session : public Handle_Standard_Transient {
         static const Handle_CDF_Session DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_CDF_Session {
     CDF_Session* _get_reference() {
-    return (CDF_Session*)$self->Access();
+    return (CDF_Session*)$self->get();
     }
 };
 
 %extend Handle_CDF_Session {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend CDF_Session {
@@ -819,18 +817,6 @@ class CDF_Store {
 	:rtype: None
 ") CDF_Store;
 		 CDF_Store (const Handle_CDM_Document & aDocument);
-		%feature("compactdefaultargs") Check;
-		%feature("autodoc", "	* Checks will make the following control. Check must be used before using Create method. Check will not be done twice by Create. //! 1) controls whether there is one document in the current selection. 2) controls whether there is a storage driver for the document. 3) controls whether the applicationdatatype associated with the driver exists as metadata in the metadata manager (Design Manager for example). 4) controls whether there is a storage driver for each subcomponents of the document if there are. If the control fails for a subcomponent, the control stops and name and type of this subcomponent can be get with LastName method 5) controls whether the applicationdatatype associated with the driver of each subcomponent exists as metadata in the metadata manager (Design Manager for example). If the control fails for a subcomponent, the control stops and name and type of this subcomponent can be get with LastName method
-
-	:rtype: CDF_TryStoreStatus
-") Check;
-		CDF_TryStoreStatus Check ();
-		%feature("compactdefaultargs") LastName;
-		%feature("autodoc", "	* in the case of a subcomponent for which no storage driver exists, returns the name of the subcomponent if there is one.
-
-	:rtype: Standard_ExtString
-") LastName;
-		Standard_ExtString LastName ();
 		%feature("compactdefaultargs") Folder;
 		%feature("autodoc", "	* returns the folder in which the current document will be stored.
 
@@ -948,7 +934,7 @@ class CDF_Store {
 ") MoreComponent;
 		Standard_Boolean MoreComponent ();
 		%feature("compactdefaultargs") NextComponent;
-		%feature("autodoc", "	* Go to the next entry (if there is not, Value will raise an exception)
+		%feature("autodoc", "	* Go to the next entry --if there is not, Value will raise an exception--
 
 	:rtype: None
 ") NextComponent;
@@ -1090,53 +1076,23 @@ class Handle_CDF_StoreList : public Handle_Standard_Transient {
         static const Handle_CDF_StoreList DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_CDF_StoreList {
     CDF_StoreList* _get_reference() {
-    return (CDF_StoreList*)$self->Access();
+    return (CDF_StoreList*)$self->get();
     }
 };
 
 %extend Handle_CDF_StoreList {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend CDF_StoreList {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor CDF_Timer;
-class CDF_Timer {
-	public:
-		%feature("compactdefaultargs") CDF_Timer;
-		%feature("autodoc", "	:rtype: None
-") CDF_Timer;
-		 CDF_Timer ();
-		%feature("compactdefaultargs") ShowAndRestart;
-		%feature("autodoc", "	:param aMessage:
-	:type aMessage: char *
-	:rtype: None
-") ShowAndRestart;
-		void ShowAndRestart (const char * aMessage);
-		%feature("compactdefaultargs") ShowAndStop;
-		%feature("autodoc", "	:param aMessage:
-	:type aMessage: char *
-	:rtype: None
-") ShowAndStop;
-		void ShowAndStop (const char * aMessage);
-		%feature("compactdefaultargs") MustShow;
-		%feature("autodoc", "	:rtype: bool
-") MustShow;
-		Standard_Boolean MustShow ();
-};
-
-
-%extend CDF_Timer {
 	%pythoncode {
 	__repr__ = _dumps_object
 	}
@@ -1230,19 +1186,20 @@ class Handle_CDF_FWOSDriver : public Handle_CDF_MetaDataDriver {
         static const Handle_CDF_FWOSDriver DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_CDF_FWOSDriver {
     CDF_FWOSDriver* _get_reference() {
-    return (CDF_FWOSDriver*)$self->Access();
+    return (CDF_FWOSDriver*)$self->get();
     }
 };
 
 %extend Handle_CDF_FWOSDriver {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend CDF_FWOSDriver {

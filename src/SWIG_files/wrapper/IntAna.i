@@ -1,5 +1,5 @@
 /*
-Copyright 2008-2017 Thomas Paviot (tpaviot@gmail.com)
+Copyright 2008-2018 Thomas Paviot (tpaviot@gmail.com)
 
 
 This file is part of pythonOCC.
@@ -55,6 +55,10 @@ def register_handle(handle, base_object):
 
 /* typedefs */
 /* end typedefs declaration */
+
+/* templates */
+%template(IntAna_ListOfCurve) NCollection_List <IntAna_Curve>;
+/* end templates declaration */
 
 /* public enums */
 enum IntAna_ResultType {
@@ -800,7 +804,7 @@ class IntAna_IntQuadQuad {
 ") Point;
 		const gp_Pnt  Point (const Standard_Integer N);
 		%feature("compactdefaultargs") Parameters;
-		%feature("autodoc", "	* Returns the paramaters on the 'explicit quadric' (i.e the cylinder or the cone, the first argument given to the constructor) of the point of range N.
+		%feature("autodoc", "	* Returns the paramaters on the 'explicit quadric' --i.e the cylinder or the cone, the first argument given to the constructor-- of the point of range N.
 
 	:param N:
 	:type N: int
@@ -820,12 +824,12 @@ class IntAna_IntQuadQuad {
 ") HasNextCurve;
 		Standard_Boolean HasNextCurve (const Standard_Integer I);
 		%feature("compactdefaultargs") NextCurve;
-		%feature("autodoc", "	* If HasNextCurve(I) returns True, this function returns the Index J of the curve which has a common bound with the curve I. If Opposite == True , then the last parameter of the curve I, and the last parameter of the curve J give the same point. Else the last parameter of the curve I and the first parameter of the curve J are the same point.
+		%feature("autodoc", "	* If HasNextCurve--I-- returns True, this function returns the Index J of the curve which has a common bound with the curve I. If theOpposite == True , then the last parameter of the curve I, and the last parameter of the curve J give the same point. Else the last parameter of the curve I and the first parameter of the curve J are the same point.
 
 	:param I:
 	:type I: int
-	:param Opposite:
-	:type Opposite: bool
+	:param theOpposite:
+	:type theOpposite: bool
 	:rtype: int
 ") NextCurve;
 		Standard_Integer NextCurve (const Standard_Integer I,Standard_Boolean &OutValue);
@@ -838,12 +842,12 @@ class IntAna_IntQuadQuad {
 ") HasPreviousCurve;
 		Standard_Boolean HasPreviousCurve (const Standard_Integer I);
 		%feature("compactdefaultargs") PreviousCurve;
-		%feature("autodoc", "	* if HasPreviousCurve(I) returns True, this function returns the Index J of the curve which has a common bound with the curve I. If Opposite == True , then the first parameter of the curve I, and the first parameter of the curve J give the same point. Else the first parameter of the curve I and the last parameter of the curve J are the same point.
+		%feature("autodoc", "	* if HasPreviousCurve--I-- returns True, this function returns the Index J of the curve which has a common bound with the curve I. If theOpposite == True , then the first parameter of the curve I, and the first parameter of the curve J give the same point. Else the first parameter of the curve I and the last parameter of the curve J are the same point.
 
 	:param I:
 	:type I: int
-	:param Opposite:
-	:type Opposite: bool
+	:param theOpposite:
+	:type theOpposite: bool
 	:rtype: int
 ") PreviousCurve;
 		Standard_Integer PreviousCurve (const Standard_Integer I,Standard_Boolean &OutValue);
@@ -851,249 +855,6 @@ class IntAna_IntQuadQuad {
 
 
 %extend IntAna_IntQuadQuad {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor IntAna_ListIteratorOfListOfCurve;
-class IntAna_ListIteratorOfListOfCurve {
-	public:
-		%feature("compactdefaultargs") IntAna_ListIteratorOfListOfCurve;
-		%feature("autodoc", "	:rtype: None
-") IntAna_ListIteratorOfListOfCurve;
-		 IntAna_ListIteratorOfListOfCurve ();
-		%feature("compactdefaultargs") IntAna_ListIteratorOfListOfCurve;
-		%feature("autodoc", "	:param L:
-	:type L: IntAna_ListOfCurve &
-	:rtype: None
-") IntAna_ListIteratorOfListOfCurve;
-		 IntAna_ListIteratorOfListOfCurve (const IntAna_ListOfCurve & L);
-		%feature("compactdefaultargs") Initialize;
-		%feature("autodoc", "	:param L:
-	:type L: IntAna_ListOfCurve &
-	:rtype: None
-") Initialize;
-		void Initialize (const IntAna_ListOfCurve & L);
-		%feature("compactdefaultargs") More;
-		%feature("autodoc", "	:rtype: bool
-") More;
-		Standard_Boolean More ();
-		%feature("compactdefaultargs") Next;
-		%feature("autodoc", "	:rtype: None
-") Next;
-		void Next ();
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:rtype: IntAna_Curve
-") Value;
-		IntAna_Curve & Value ();
-};
-
-
-%extend IntAna_ListIteratorOfListOfCurve {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor IntAna_ListNodeOfListOfCurve;
-class IntAna_ListNodeOfListOfCurve : public TCollection_MapNode {
-	public:
-		%feature("compactdefaultargs") IntAna_ListNodeOfListOfCurve;
-		%feature("autodoc", "	:param I:
-	:type I: IntAna_Curve &
-	:param n:
-	:type n: TCollection_MapNodePtr &
-	:rtype: None
-") IntAna_ListNodeOfListOfCurve;
-		 IntAna_ListNodeOfListOfCurve (const IntAna_Curve & I,const TCollection_MapNodePtr & n);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:rtype: IntAna_Curve
-") Value;
-		IntAna_Curve & Value ();
-};
-
-
-%extend IntAna_ListNodeOfListOfCurve {
-	%pythoncode {
-		def GetHandle(self):
-		    try:
-		        return self.thisHandle
-		    except:
-		        self.thisHandle = Handle_IntAna_ListNodeOfListOfCurve(self)
-		        self.thisown = False
-		        return self.thisHandle
-	}
-};
-
-%pythonappend Handle_IntAna_ListNodeOfListOfCurve::Handle_IntAna_ListNodeOfListOfCurve %{
-    # register the handle in the base object
-    if len(args) > 0:
-        register_handle(self, args[0])
-%}
-
-%nodefaultctor Handle_IntAna_ListNodeOfListOfCurve;
-class Handle_IntAna_ListNodeOfListOfCurve : public Handle_TCollection_MapNode {
-
-    public:
-        // constructors
-        Handle_IntAna_ListNodeOfListOfCurve();
-        Handle_IntAna_ListNodeOfListOfCurve(const Handle_IntAna_ListNodeOfListOfCurve &aHandle);
-        Handle_IntAna_ListNodeOfListOfCurve(const IntAna_ListNodeOfListOfCurve *anItem);
-        void Nullify();
-        Standard_Boolean IsNull() const;
-        static const Handle_IntAna_ListNodeOfListOfCurve DownCast(const Handle_Standard_Transient &AnObject);
-
-};
-%extend Handle_IntAna_ListNodeOfListOfCurve {
-    IntAna_ListNodeOfListOfCurve* _get_reference() {
-    return (IntAna_ListNodeOfListOfCurve*)$self->Access();
-    }
-};
-
-%extend Handle_IntAna_ListNodeOfListOfCurve {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
-};
-
-%extend IntAna_ListNodeOfListOfCurve {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor IntAna_ListOfCurve;
-class IntAna_ListOfCurve {
-	public:
-		%feature("compactdefaultargs") IntAna_ListOfCurve;
-		%feature("autodoc", "	:rtype: None
-") IntAna_ListOfCurve;
-		 IntAna_ListOfCurve ();
-		%feature("compactdefaultargs") IntAna_ListOfCurve;
-		%feature("autodoc", "	:param Other:
-	:type Other: IntAna_ListOfCurve &
-	:rtype: None
-") IntAna_ListOfCurve;
-		 IntAna_ListOfCurve (const IntAna_ListOfCurve & Other);
-		%feature("compactdefaultargs") Assign;
-		%feature("autodoc", "	:param Other:
-	:type Other: IntAna_ListOfCurve &
-	:rtype: None
-") Assign;
-		void Assign (const IntAna_ListOfCurve & Other);
-		%feature("compactdefaultargs") operator =;
-		%feature("autodoc", "	:param Other:
-	:type Other: IntAna_ListOfCurve &
-	:rtype: None
-") operator =;
-		void operator = (const IntAna_ListOfCurve & Other);
-		%feature("compactdefaultargs") Extent;
-		%feature("autodoc", "	:rtype: int
-") Extent;
-		Standard_Integer Extent ();
-		%feature("compactdefaultargs") Clear;
-		%feature("autodoc", "	:rtype: None
-") Clear;
-		void Clear ();
-		%feature("compactdefaultargs") IsEmpty;
-		%feature("autodoc", "	:rtype: bool
-") IsEmpty;
-		Standard_Boolean IsEmpty ();
-		%feature("compactdefaultargs") Prepend;
-		%feature("autodoc", "	:param I:
-	:type I: IntAna_Curve &
-	:rtype: None
-") Prepend;
-		void Prepend (const IntAna_Curve & I);
-		%feature("compactdefaultargs") Prepend;
-		%feature("autodoc", "	:param I:
-	:type I: IntAna_Curve &
-	:param theIt:
-	:type theIt: IntAna_ListIteratorOfListOfCurve &
-	:rtype: None
-") Prepend;
-		void Prepend (const IntAna_Curve & I,IntAna_ListIteratorOfListOfCurve & theIt);
-		%feature("compactdefaultargs") Prepend;
-		%feature("autodoc", "	:param Other:
-	:type Other: IntAna_ListOfCurve &
-	:rtype: None
-") Prepend;
-		void Prepend (IntAna_ListOfCurve & Other);
-		%feature("compactdefaultargs") Append;
-		%feature("autodoc", "	:param I:
-	:type I: IntAna_Curve &
-	:rtype: None
-") Append;
-		void Append (const IntAna_Curve & I);
-		%feature("compactdefaultargs") Append;
-		%feature("autodoc", "	:param I:
-	:type I: IntAna_Curve &
-	:param theIt:
-	:type theIt: IntAna_ListIteratorOfListOfCurve &
-	:rtype: None
-") Append;
-		void Append (const IntAna_Curve & I,IntAna_ListIteratorOfListOfCurve & theIt);
-		%feature("compactdefaultargs") Append;
-		%feature("autodoc", "	:param Other:
-	:type Other: IntAna_ListOfCurve &
-	:rtype: None
-") Append;
-		void Append (IntAna_ListOfCurve & Other);
-		%feature("compactdefaultargs") First;
-		%feature("autodoc", "	:rtype: IntAna_Curve
-") First;
-		IntAna_Curve & First ();
-		%feature("compactdefaultargs") Last;
-		%feature("autodoc", "	:rtype: IntAna_Curve
-") Last;
-		IntAna_Curve & Last ();
-		%feature("compactdefaultargs") RemoveFirst;
-		%feature("autodoc", "	:rtype: None
-") RemoveFirst;
-		void RemoveFirst ();
-		%feature("compactdefaultargs") Remove;
-		%feature("autodoc", "	:param It:
-	:type It: IntAna_ListIteratorOfListOfCurve &
-	:rtype: None
-") Remove;
-		void Remove (IntAna_ListIteratorOfListOfCurve & It);
-		%feature("compactdefaultargs") InsertBefore;
-		%feature("autodoc", "	:param I:
-	:type I: IntAna_Curve &
-	:param It:
-	:type It: IntAna_ListIteratorOfListOfCurve &
-	:rtype: None
-") InsertBefore;
-		void InsertBefore (const IntAna_Curve & I,IntAna_ListIteratorOfListOfCurve & It);
-		%feature("compactdefaultargs") InsertBefore;
-		%feature("autodoc", "	:param Other:
-	:type Other: IntAna_ListOfCurve &
-	:param It:
-	:type It: IntAna_ListIteratorOfListOfCurve &
-	:rtype: None
-") InsertBefore;
-		void InsertBefore (IntAna_ListOfCurve & Other,IntAna_ListIteratorOfListOfCurve & It);
-		%feature("compactdefaultargs") InsertAfter;
-		%feature("autodoc", "	:param I:
-	:type I: IntAna_Curve &
-	:param It:
-	:type It: IntAna_ListIteratorOfListOfCurve &
-	:rtype: None
-") InsertAfter;
-		void InsertAfter (const IntAna_Curve & I,IntAna_ListIteratorOfListOfCurve & It);
-		%feature("compactdefaultargs") InsertAfter;
-		%feature("autodoc", "	:param Other:
-	:type Other: IntAna_ListOfCurve &
-	:param It:
-	:type It: IntAna_ListIteratorOfListOfCurve &
-	:rtype: None
-") InsertAfter;
-		void InsertAfter (IntAna_ListOfCurve & Other,IntAna_ListIteratorOfListOfCurve & It);
-};
-
-
-%extend IntAna_ListOfCurve {
 	%pythoncode {
 	__repr__ = _dumps_object
 	}
@@ -1108,7 +869,7 @@ class IntAna_QuadQuadGeo {
 ") IntAna_QuadQuadGeo;
 		 IntAna_QuadQuadGeo ();
 		%feature("compactdefaultargs") IntAna_QuadQuadGeo;
-		%feature("autodoc", "	* Creates the intersection between two planes. TolAng is the angular tolerance used to determine if the planes are parallel. Tol is the tolerance used to determine if the planes are identical (only when they are parallel).
+		%feature("autodoc", "	* Creates the intersection between two planes. TolAng is the angular tolerance used to determine if the planes are parallel. Tol is the tolerance used to determine if the planes are identical --only when they are parallel--.
 
 	:param P1:
 	:type P1: gp_Pln
@@ -1122,7 +883,7 @@ class IntAna_QuadQuadGeo {
 ") IntAna_QuadQuadGeo;
 		 IntAna_QuadQuadGeo (const gp_Pln & P1,const gp_Pln & P2,const Standard_Real TolAng,const Standard_Real Tol);
 		%feature("compactdefaultargs") Perform;
-		%feature("autodoc", "	* Intersects two planes. TolAng is the angular tolerance used to determine if the planes are parallel. Tol is the tolerance used to determine if the planes are identical (only when they are parallel).
+		%feature("autodoc", "	* Intersects two planes. TolAng is the angular tolerance used to determine if the planes are parallel. Tol is the tolerance used to determine if the planes are identical --only when they are parallel--.
 
 	:param P1:
 	:type P1: gp_Pln
@@ -1492,7 +1253,7 @@ class IntAna_QuadQuadGeo {
 ") TypeInter;
 		IntAna_ResultType TypeInter ();
 		%feature("compactdefaultargs") NbSolutions;
-		%feature("autodoc", "	* Returns the number of interesections. The possible intersections are : - 1 point - 1 or 2 line(s) - 1 Point and 1 Line - 1 circle - 1 ellipse - 1 parabola - 1 or 2 hyperbola(s).
+		%feature("autodoc", "	* Returns the number of interesections. The possible intersections are : - 1 point - 1 or 2 line--s-- - 1 Point and 1 Line - 1 circle - 1 ellipse - 1 parabola - 1 or 2 hyperbola--s--.
 
 	:rtype: int
 ") NbSolutions;
@@ -1635,7 +1396,7 @@ class IntAna_Quadric {
 ") SetQuadric;
 		void SetQuadric (const gp_Cylinder & Cyl);
 		%feature("compactdefaultargs") Coefficients;
-		%feature("autodoc", "	* Returns the coefficients of the polynomial equation which define the quadric: xCXX x**2 + xCYY y**2 + xCZZ z**2 + 2 ( xCXY x y + xCXZ x z + xCYZ y z ) + 2 ( xCX x + xCY y + xCZ z ) + xCCte
+		%feature("autodoc", "	* Returns the coefficients of the polynomial equation which define the quadric: xCXX x**2 + xCYY y**2 + xCZZ z**2 + 2 -- xCXY x y + xCXZ x z + xCYZ y z -- + 2 -- xCX x + xCY y + xCZ z -- + xCCte
 
 	:param xCXX:
 	:type xCXX: float &
@@ -1661,7 +1422,7 @@ class IntAna_Quadric {
 ") Coefficients;
 		void Coefficients (Standard_Real &OutValue,Standard_Real &OutValue,Standard_Real &OutValue,Standard_Real &OutValue,Standard_Real &OutValue,Standard_Real &OutValue,Standard_Real &OutValue,Standard_Real &OutValue,Standard_Real &OutValue,Standard_Real &OutValue);
 		%feature("compactdefaultargs") NewCoefficients;
-		%feature("autodoc", "	* Returns the coefficients of the polynomial equation ( written in the natural coordinates system ) in the local coordinates system defined by Axis
+		%feature("autodoc", "	* Returns the coefficients of the polynomial equation -- written in the natural coordinates system -- in the local coordinates system defined by Axis
 
 	:param xCXX:
 	:type xCXX: float &

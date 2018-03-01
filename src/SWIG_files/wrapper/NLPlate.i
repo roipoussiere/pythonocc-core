@@ -1,5 +1,5 @@
 /*
-Copyright 2008-2017 Thomas Paviot (tpaviot@gmail.com)
+Copyright 2008-2018 Thomas Paviot (tpaviot@gmail.com)
 
 
 This file is part of pythonOCC.
@@ -56,11 +56,16 @@ def register_handle(handle, base_object):
 /* typedefs */
 /* end typedefs declaration */
 
+/* templates */
+%template(NLPlate_StackOfPlate) NCollection_List <Plate_Plate>;
+%template(NLPlate_SequenceOfHGPPConstraint) NCollection_Sequence <Handle_NLPlate_HGPPConstraint>;
+/* end templates declaration */
+
 /* public enums */
 /* end public enums declaration */
 
 %nodefaultctor NLPlate_HGPPConstraint;
-class NLPlate_HGPPConstraint : public MMgt_TShared {
+class NLPlate_HGPPConstraint : public Standard_Transient {
 	public:
 		%feature("compactdefaultargs") SetUVFreeSliding;
 		%feature("autodoc", "	:param UVFree:
@@ -194,7 +199,7 @@ class NLPlate_HGPPConstraint : public MMgt_TShared {
 %}
 
 %nodefaultctor Handle_NLPlate_HGPPConstraint;
-class Handle_NLPlate_HGPPConstraint : public Handle_MMgt_TShared {
+class Handle_NLPlate_HGPPConstraint : public Handle_Standard_Transient {
 
     public:
         // constructors
@@ -206,130 +211,23 @@ class Handle_NLPlate_HGPPConstraint : public Handle_MMgt_TShared {
         static const Handle_NLPlate_HGPPConstraint DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_NLPlate_HGPPConstraint {
     NLPlate_HGPPConstraint* _get_reference() {
-    return (NLPlate_HGPPConstraint*)$self->Access();
+    return (NLPlate_HGPPConstraint*)$self->get();
     }
 };
 
 %extend Handle_NLPlate_HGPPConstraint {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend NLPlate_HGPPConstraint {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor NLPlate_ListIteratorOfStackOfPlate;
-class NLPlate_ListIteratorOfStackOfPlate {
-	public:
-		%feature("compactdefaultargs") NLPlate_ListIteratorOfStackOfPlate;
-		%feature("autodoc", "	:rtype: None
-") NLPlate_ListIteratorOfStackOfPlate;
-		 NLPlate_ListIteratorOfStackOfPlate ();
-		%feature("compactdefaultargs") NLPlate_ListIteratorOfStackOfPlate;
-		%feature("autodoc", "	:param L:
-	:type L: NLPlate_StackOfPlate &
-	:rtype: None
-") NLPlate_ListIteratorOfStackOfPlate;
-		 NLPlate_ListIteratorOfStackOfPlate (const NLPlate_StackOfPlate & L);
-		%feature("compactdefaultargs") Initialize;
-		%feature("autodoc", "	:param L:
-	:type L: NLPlate_StackOfPlate &
-	:rtype: None
-") Initialize;
-		void Initialize (const NLPlate_StackOfPlate & L);
-		%feature("compactdefaultargs") More;
-		%feature("autodoc", "	:rtype: bool
-") More;
-		Standard_Boolean More ();
-		%feature("compactdefaultargs") Next;
-		%feature("autodoc", "	:rtype: None
-") Next;
-		void Next ();
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:rtype: Plate_Plate
-") Value;
-		Plate_Plate & Value ();
-};
-
-
-%extend NLPlate_ListIteratorOfStackOfPlate {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor NLPlate_ListNodeOfStackOfPlate;
-class NLPlate_ListNodeOfStackOfPlate : public TCollection_MapNode {
-	public:
-		%feature("compactdefaultargs") NLPlate_ListNodeOfStackOfPlate;
-		%feature("autodoc", "	:param I:
-	:type I: Plate_Plate &
-	:param n:
-	:type n: TCollection_MapNodePtr &
-	:rtype: None
-") NLPlate_ListNodeOfStackOfPlate;
-		 NLPlate_ListNodeOfStackOfPlate (const Plate_Plate & I,const TCollection_MapNodePtr & n);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:rtype: Plate_Plate
-") Value;
-		Plate_Plate & Value ();
-};
-
-
-%extend NLPlate_ListNodeOfStackOfPlate {
-	%pythoncode {
-		def GetHandle(self):
-		    try:
-		        return self.thisHandle
-		    except:
-		        self.thisHandle = Handle_NLPlate_ListNodeOfStackOfPlate(self)
-		        self.thisown = False
-		        return self.thisHandle
-	}
-};
-
-%pythonappend Handle_NLPlate_ListNodeOfStackOfPlate::Handle_NLPlate_ListNodeOfStackOfPlate %{
-    # register the handle in the base object
-    if len(args) > 0:
-        register_handle(self, args[0])
-%}
-
-%nodefaultctor Handle_NLPlate_ListNodeOfStackOfPlate;
-class Handle_NLPlate_ListNodeOfStackOfPlate : public Handle_TCollection_MapNode {
-
-    public:
-        // constructors
-        Handle_NLPlate_ListNodeOfStackOfPlate();
-        Handle_NLPlate_ListNodeOfStackOfPlate(const Handle_NLPlate_ListNodeOfStackOfPlate &aHandle);
-        Handle_NLPlate_ListNodeOfStackOfPlate(const NLPlate_ListNodeOfStackOfPlate *anItem);
-        void Nullify();
-        Standard_Boolean IsNull() const;
-        static const Handle_NLPlate_ListNodeOfStackOfPlate DownCast(const Handle_Standard_Transient &AnObject);
-
-};
-%extend Handle_NLPlate_ListNodeOfStackOfPlate {
-    NLPlate_ListNodeOfStackOfPlate* _get_reference() {
-    return (NLPlate_ListNodeOfStackOfPlate*)$self->Access();
-    }
-};
-
-%extend Handle_NLPlate_ListNodeOfStackOfPlate {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
-};
-
-%extend NLPlate_ListNodeOfStackOfPlate {
 	%pythoncode {
 	__repr__ = _dumps_object
 	}
@@ -388,7 +286,7 @@ class NLPlate_NLPlate {
 ") destroy;
 		void destroy ();
 		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	* reset the Plate in the initial state ( same as after Create((Surface))
+		%feature("autodoc", "	* reset the Plate in the initial state -- same as after Create----Surface----
 
 	:rtype: None
 ") Init;
@@ -427,355 +325,6 @@ class NLPlate_NLPlate {
 
 
 %extend NLPlate_NLPlate {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor NLPlate_SequenceNodeOfSequenceOfHGPPConstraint;
-class NLPlate_SequenceNodeOfSequenceOfHGPPConstraint : public TCollection_SeqNode {
-	public:
-		%feature("compactdefaultargs") NLPlate_SequenceNodeOfSequenceOfHGPPConstraint;
-		%feature("autodoc", "	:param I:
-	:type I: Handle_NLPlate_HGPPConstraint &
-	:param n:
-	:type n: TCollection_SeqNodePtr &
-	:param p:
-	:type p: TCollection_SeqNodePtr &
-	:rtype: None
-") NLPlate_SequenceNodeOfSequenceOfHGPPConstraint;
-		 NLPlate_SequenceNodeOfSequenceOfHGPPConstraint (const Handle_NLPlate_HGPPConstraint & I,const TCollection_SeqNodePtr & n,const TCollection_SeqNodePtr & p);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:rtype: Handle_NLPlate_HGPPConstraint
-") Value;
-		Handle_NLPlate_HGPPConstraint Value ();
-};
-
-
-%extend NLPlate_SequenceNodeOfSequenceOfHGPPConstraint {
-	%pythoncode {
-		def GetHandle(self):
-		    try:
-		        return self.thisHandle
-		    except:
-		        self.thisHandle = Handle_NLPlate_SequenceNodeOfSequenceOfHGPPConstraint(self)
-		        self.thisown = False
-		        return self.thisHandle
-	}
-};
-
-%pythonappend Handle_NLPlate_SequenceNodeOfSequenceOfHGPPConstraint::Handle_NLPlate_SequenceNodeOfSequenceOfHGPPConstraint %{
-    # register the handle in the base object
-    if len(args) > 0:
-        register_handle(self, args[0])
-%}
-
-%nodefaultctor Handle_NLPlate_SequenceNodeOfSequenceOfHGPPConstraint;
-class Handle_NLPlate_SequenceNodeOfSequenceOfHGPPConstraint : public Handle_TCollection_SeqNode {
-
-    public:
-        // constructors
-        Handle_NLPlate_SequenceNodeOfSequenceOfHGPPConstraint();
-        Handle_NLPlate_SequenceNodeOfSequenceOfHGPPConstraint(const Handle_NLPlate_SequenceNodeOfSequenceOfHGPPConstraint &aHandle);
-        Handle_NLPlate_SequenceNodeOfSequenceOfHGPPConstraint(const NLPlate_SequenceNodeOfSequenceOfHGPPConstraint *anItem);
-        void Nullify();
-        Standard_Boolean IsNull() const;
-        static const Handle_NLPlate_SequenceNodeOfSequenceOfHGPPConstraint DownCast(const Handle_Standard_Transient &AnObject);
-
-};
-%extend Handle_NLPlate_SequenceNodeOfSequenceOfHGPPConstraint {
-    NLPlate_SequenceNodeOfSequenceOfHGPPConstraint* _get_reference() {
-    return (NLPlate_SequenceNodeOfSequenceOfHGPPConstraint*)$self->Access();
-    }
-};
-
-%extend Handle_NLPlate_SequenceNodeOfSequenceOfHGPPConstraint {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
-};
-
-%extend NLPlate_SequenceNodeOfSequenceOfHGPPConstraint {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor NLPlate_SequenceOfHGPPConstraint;
-class NLPlate_SequenceOfHGPPConstraint : public TCollection_BaseSequence {
-	public:
-		%feature("compactdefaultargs") NLPlate_SequenceOfHGPPConstraint;
-		%feature("autodoc", "	:rtype: None
-") NLPlate_SequenceOfHGPPConstraint;
-		 NLPlate_SequenceOfHGPPConstraint ();
-		%feature("compactdefaultargs") NLPlate_SequenceOfHGPPConstraint;
-		%feature("autodoc", "	:param Other:
-	:type Other: NLPlate_SequenceOfHGPPConstraint &
-	:rtype: None
-") NLPlate_SequenceOfHGPPConstraint;
-		 NLPlate_SequenceOfHGPPConstraint (const NLPlate_SequenceOfHGPPConstraint & Other);
-		%feature("compactdefaultargs") Clear;
-		%feature("autodoc", "	:rtype: None
-") Clear;
-		void Clear ();
-		%feature("compactdefaultargs") Assign;
-		%feature("autodoc", "	:param Other:
-	:type Other: NLPlate_SequenceOfHGPPConstraint &
-	:rtype: NLPlate_SequenceOfHGPPConstraint
-") Assign;
-		const NLPlate_SequenceOfHGPPConstraint & Assign (const NLPlate_SequenceOfHGPPConstraint & Other);
-		%feature("compactdefaultargs") operator =;
-		%feature("autodoc", "	:param Other:
-	:type Other: NLPlate_SequenceOfHGPPConstraint &
-	:rtype: NLPlate_SequenceOfHGPPConstraint
-") operator =;
-		const NLPlate_SequenceOfHGPPConstraint & operator = (const NLPlate_SequenceOfHGPPConstraint & Other);
-		%feature("compactdefaultargs") Append;
-		%feature("autodoc", "	:param T:
-	:type T: Handle_NLPlate_HGPPConstraint &
-	:rtype: None
-") Append;
-		void Append (const Handle_NLPlate_HGPPConstraint & T);
-		%feature("compactdefaultargs") Append;
-		%feature("autodoc", "	:param S:
-	:type S: NLPlate_SequenceOfHGPPConstraint &
-	:rtype: None
-") Append;
-		void Append (NLPlate_SequenceOfHGPPConstraint & S);
-		%feature("compactdefaultargs") Prepend;
-		%feature("autodoc", "	:param T:
-	:type T: Handle_NLPlate_HGPPConstraint &
-	:rtype: None
-") Prepend;
-		void Prepend (const Handle_NLPlate_HGPPConstraint & T);
-		%feature("compactdefaultargs") Prepend;
-		%feature("autodoc", "	:param S:
-	:type S: NLPlate_SequenceOfHGPPConstraint &
-	:rtype: None
-") Prepend;
-		void Prepend (NLPlate_SequenceOfHGPPConstraint & S);
-		%feature("compactdefaultargs") InsertBefore;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param T:
-	:type T: Handle_NLPlate_HGPPConstraint &
-	:rtype: None
-") InsertBefore;
-		void InsertBefore (const Standard_Integer Index,const Handle_NLPlate_HGPPConstraint & T);
-		%feature("compactdefaultargs") InsertBefore;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param S:
-	:type S: NLPlate_SequenceOfHGPPConstraint &
-	:rtype: None
-") InsertBefore;
-		void InsertBefore (const Standard_Integer Index,NLPlate_SequenceOfHGPPConstraint & S);
-		%feature("compactdefaultargs") InsertAfter;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param T:
-	:type T: Handle_NLPlate_HGPPConstraint &
-	:rtype: None
-") InsertAfter;
-		void InsertAfter (const Standard_Integer Index,const Handle_NLPlate_HGPPConstraint & T);
-		%feature("compactdefaultargs") InsertAfter;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param S:
-	:type S: NLPlate_SequenceOfHGPPConstraint &
-	:rtype: None
-") InsertAfter;
-		void InsertAfter (const Standard_Integer Index,NLPlate_SequenceOfHGPPConstraint & S);
-		%feature("compactdefaultargs") First;
-		%feature("autodoc", "	:rtype: Handle_NLPlate_HGPPConstraint
-") First;
-		Handle_NLPlate_HGPPConstraint First ();
-		%feature("compactdefaultargs") Last;
-		%feature("autodoc", "	:rtype: Handle_NLPlate_HGPPConstraint
-") Last;
-		Handle_NLPlate_HGPPConstraint Last ();
-		%feature("compactdefaultargs") Split;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param Sub:
-	:type Sub: NLPlate_SequenceOfHGPPConstraint &
-	:rtype: None
-") Split;
-		void Split (const Standard_Integer Index,NLPlate_SequenceOfHGPPConstraint & Sub);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: Handle_NLPlate_HGPPConstraint
-") Value;
-		Handle_NLPlate_HGPPConstraint Value (const Standard_Integer Index);
-		%feature("compactdefaultargs") SetValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param I:
-	:type I: Handle_NLPlate_HGPPConstraint &
-	:rtype: None
-") SetValue;
-		void SetValue (const Standard_Integer Index,const Handle_NLPlate_HGPPConstraint & I);
-		%feature("compactdefaultargs") ChangeValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: Handle_NLPlate_HGPPConstraint
-") ChangeValue;
-		Handle_NLPlate_HGPPConstraint ChangeValue (const Standard_Integer Index);
-		%feature("compactdefaultargs") Remove;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: None
-") Remove;
-		void Remove (const Standard_Integer Index);
-		%feature("compactdefaultargs") Remove;
-		%feature("autodoc", "	:param FromIndex:
-	:type FromIndex: int
-	:param ToIndex:
-	:type ToIndex: int
-	:rtype: None
-") Remove;
-		void Remove (const Standard_Integer FromIndex,const Standard_Integer ToIndex);
-};
-
-
-%extend NLPlate_SequenceOfHGPPConstraint {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor NLPlate_StackOfPlate;
-class NLPlate_StackOfPlate {
-	public:
-		%feature("compactdefaultargs") NLPlate_StackOfPlate;
-		%feature("autodoc", "	:rtype: None
-") NLPlate_StackOfPlate;
-		 NLPlate_StackOfPlate ();
-		%feature("compactdefaultargs") NLPlate_StackOfPlate;
-		%feature("autodoc", "	:param Other:
-	:type Other: NLPlate_StackOfPlate &
-	:rtype: None
-") NLPlate_StackOfPlate;
-		 NLPlate_StackOfPlate (const NLPlate_StackOfPlate & Other);
-		%feature("compactdefaultargs") Assign;
-		%feature("autodoc", "	:param Other:
-	:type Other: NLPlate_StackOfPlate &
-	:rtype: None
-") Assign;
-		void Assign (const NLPlate_StackOfPlate & Other);
-		%feature("compactdefaultargs") operator =;
-		%feature("autodoc", "	:param Other:
-	:type Other: NLPlate_StackOfPlate &
-	:rtype: None
-") operator =;
-		void operator = (const NLPlate_StackOfPlate & Other);
-		%feature("compactdefaultargs") Extent;
-		%feature("autodoc", "	:rtype: int
-") Extent;
-		Standard_Integer Extent ();
-		%feature("compactdefaultargs") Clear;
-		%feature("autodoc", "	:rtype: None
-") Clear;
-		void Clear ();
-		%feature("compactdefaultargs") IsEmpty;
-		%feature("autodoc", "	:rtype: bool
-") IsEmpty;
-		Standard_Boolean IsEmpty ();
-		%feature("compactdefaultargs") Prepend;
-		%feature("autodoc", "	:param I:
-	:type I: Plate_Plate &
-	:rtype: None
-") Prepend;
-		void Prepend (const Plate_Plate & I);
-		%feature("compactdefaultargs") Prepend;
-		%feature("autodoc", "	:param I:
-	:type I: Plate_Plate &
-	:param theIt:
-	:type theIt: NLPlate_ListIteratorOfStackOfPlate &
-	:rtype: None
-") Prepend;
-		void Prepend (const Plate_Plate & I,NLPlate_ListIteratorOfStackOfPlate & theIt);
-		%feature("compactdefaultargs") Prepend;
-		%feature("autodoc", "	:param Other:
-	:type Other: NLPlate_StackOfPlate &
-	:rtype: None
-") Prepend;
-		void Prepend (NLPlate_StackOfPlate & Other);
-		%feature("compactdefaultargs") Append;
-		%feature("autodoc", "	:param I:
-	:type I: Plate_Plate &
-	:rtype: None
-") Append;
-		void Append (const Plate_Plate & I);
-		%feature("compactdefaultargs") Append;
-		%feature("autodoc", "	:param I:
-	:type I: Plate_Plate &
-	:param theIt:
-	:type theIt: NLPlate_ListIteratorOfStackOfPlate &
-	:rtype: None
-") Append;
-		void Append (const Plate_Plate & I,NLPlate_ListIteratorOfStackOfPlate & theIt);
-		%feature("compactdefaultargs") Append;
-		%feature("autodoc", "	:param Other:
-	:type Other: NLPlate_StackOfPlate &
-	:rtype: None
-") Append;
-		void Append (NLPlate_StackOfPlate & Other);
-		%feature("compactdefaultargs") First;
-		%feature("autodoc", "	:rtype: Plate_Plate
-") First;
-		Plate_Plate & First ();
-		%feature("compactdefaultargs") Last;
-		%feature("autodoc", "	:rtype: Plate_Plate
-") Last;
-		Plate_Plate & Last ();
-		%feature("compactdefaultargs") RemoveFirst;
-		%feature("autodoc", "	:rtype: None
-") RemoveFirst;
-		void RemoveFirst ();
-		%feature("compactdefaultargs") Remove;
-		%feature("autodoc", "	:param It:
-	:type It: NLPlate_ListIteratorOfStackOfPlate &
-	:rtype: None
-") Remove;
-		void Remove (NLPlate_ListIteratorOfStackOfPlate & It);
-		%feature("compactdefaultargs") InsertBefore;
-		%feature("autodoc", "	:param I:
-	:type I: Plate_Plate &
-	:param It:
-	:type It: NLPlate_ListIteratorOfStackOfPlate &
-	:rtype: None
-") InsertBefore;
-		void InsertBefore (const Plate_Plate & I,NLPlate_ListIteratorOfStackOfPlate & It);
-		%feature("compactdefaultargs") InsertBefore;
-		%feature("autodoc", "	:param Other:
-	:type Other: NLPlate_StackOfPlate &
-	:param It:
-	:type It: NLPlate_ListIteratorOfStackOfPlate &
-	:rtype: None
-") InsertBefore;
-		void InsertBefore (NLPlate_StackOfPlate & Other,NLPlate_ListIteratorOfStackOfPlate & It);
-		%feature("compactdefaultargs") InsertAfter;
-		%feature("autodoc", "	:param I:
-	:type I: Plate_Plate &
-	:param It:
-	:type It: NLPlate_ListIteratorOfStackOfPlate &
-	:rtype: None
-") InsertAfter;
-		void InsertAfter (const Plate_Plate & I,NLPlate_ListIteratorOfStackOfPlate & It);
-		%feature("compactdefaultargs") InsertAfter;
-		%feature("autodoc", "	:param Other:
-	:type Other: NLPlate_StackOfPlate &
-	:param It:
-	:type It: NLPlate_ListIteratorOfStackOfPlate &
-	:rtype: None
-") InsertAfter;
-		void InsertAfter (NLPlate_StackOfPlate & Other,NLPlate_ListIteratorOfStackOfPlate & It);
-};
-
-
-%extend NLPlate_StackOfPlate {
 	%pythoncode {
 	__repr__ = _dumps_object
 	}
@@ -857,19 +406,20 @@ class Handle_NLPlate_HPG0Constraint : public Handle_NLPlate_HGPPConstraint {
         static const Handle_NLPlate_HPG0Constraint DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_NLPlate_HPG0Constraint {
     NLPlate_HPG0Constraint* _get_reference() {
-    return (NLPlate_HPG0Constraint*)$self->Access();
+    return (NLPlate_HPG0Constraint*)$self->get();
     }
 };
 
 %extend Handle_NLPlate_HPG0Constraint {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend NLPlate_HPG0Constraint {
@@ -954,19 +504,20 @@ class Handle_NLPlate_HPG1Constraint : public Handle_NLPlate_HGPPConstraint {
         static const Handle_NLPlate_HPG1Constraint DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_NLPlate_HPG1Constraint {
     NLPlate_HPG1Constraint* _get_reference() {
-    return (NLPlate_HPG1Constraint*)$self->Access();
+    return (NLPlate_HPG1Constraint*)$self->get();
     }
 };
 
 %extend Handle_NLPlate_HPG1Constraint {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend NLPlate_HPG1Constraint {
@@ -1039,19 +590,20 @@ class Handle_NLPlate_HPG0G1Constraint : public Handle_NLPlate_HPG0Constraint {
         static const Handle_NLPlate_HPG0G1Constraint DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_NLPlate_HPG0G1Constraint {
     NLPlate_HPG0G1Constraint* _get_reference() {
-    return (NLPlate_HPG0G1Constraint*)$self->Access();
+    return (NLPlate_HPG0G1Constraint*)$self->get();
     }
 };
 
 %extend Handle_NLPlate_HPG0G1Constraint {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend NLPlate_HPG0G1Constraint {
@@ -1114,19 +666,20 @@ class Handle_NLPlate_HPG2Constraint : public Handle_NLPlate_HPG1Constraint {
         static const Handle_NLPlate_HPG2Constraint DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_NLPlate_HPG2Constraint {
     NLPlate_HPG2Constraint* _get_reference() {
-    return (NLPlate_HPG2Constraint*)$self->Access();
+    return (NLPlate_HPG2Constraint*)$self->get();
     }
 };
 
 %extend Handle_NLPlate_HPG2Constraint {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend NLPlate_HPG2Constraint {
@@ -1191,19 +744,20 @@ class Handle_NLPlate_HPG0G2Constraint : public Handle_NLPlate_HPG0G1Constraint {
         static const Handle_NLPlate_HPG0G2Constraint DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_NLPlate_HPG0G2Constraint {
     NLPlate_HPG0G2Constraint* _get_reference() {
-    return (NLPlate_HPG0G2Constraint*)$self->Access();
+    return (NLPlate_HPG0G2Constraint*)$self->get();
     }
 };
 
 %extend Handle_NLPlate_HPG0G2Constraint {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend NLPlate_HPG0G2Constraint {
@@ -1268,19 +822,20 @@ class Handle_NLPlate_HPG3Constraint : public Handle_NLPlate_HPG2Constraint {
         static const Handle_NLPlate_HPG3Constraint DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_NLPlate_HPG3Constraint {
     NLPlate_HPG3Constraint* _get_reference() {
-    return (NLPlate_HPG3Constraint*)$self->Access();
+    return (NLPlate_HPG3Constraint*)$self->get();
     }
 };
 
 %extend Handle_NLPlate_HPG3Constraint {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend NLPlate_HPG3Constraint {
@@ -1347,19 +902,20 @@ class Handle_NLPlate_HPG0G3Constraint : public Handle_NLPlate_HPG0G2Constraint {
         static const Handle_NLPlate_HPG0G3Constraint DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_NLPlate_HPG0G3Constraint {
     NLPlate_HPG0G3Constraint* _get_reference() {
-    return (NLPlate_HPG0G3Constraint*)$self->Access();
+    return (NLPlate_HPG0G3Constraint*)$self->get();
     }
 };
 
 %extend Handle_NLPlate_HPG0G3Constraint {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend NLPlate_HPG0G3Constraint {

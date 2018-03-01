@@ -1,5 +1,5 @@
 /*
-Copyright 2008-2017 Thomas Paviot (tpaviot@gmail.com)
+Copyright 2008-2018 Thomas Paviot (tpaviot@gmail.com)
 
 
 This file is part of pythonOCC.
@@ -57,7 +57,24 @@ def register_handle(handle, base_object):
 typedef Intf_InterferencePolygon2d IntPatch_SearchPnt;
 /* end typedefs declaration */
 
+/* templates */
+%template(IntPatch_SequenceOfSegmentOfTheSOnBounds) NCollection_Sequence <IntPatch_TheSegmentOfTheSOnBounds>;
+%template(IntPatch_SequenceOfLine) NCollection_Sequence <Handle_IntPatch_Line>;
+%template(IntPatch_SequenceOfPoint) NCollection_Sequence <IntPatch_Point>;
+%template(IntPatch_SequenceOfPathPointOfTheSOnBounds) NCollection_Sequence <IntPatch_ThePathPointOfTheSOnBounds>;
+%template(IntPatch_SequenceOfIWLineOfTheIWalking) NCollection_Sequence <Handle_IntPatch_TheIWLineOfTheIWalking>;
+/* end templates declaration */
+
 /* public enums */
+enum IntPatch_SpecPntType {
+	IntPatch_SPntNone = 0,
+	IntPatch_SPntSeamU = 1,
+	IntPatch_SPntSeamV = 2,
+	IntPatch_SPntSeamUV = 3,
+	IntPatch_SPntPoleSeamU = 4,
+	IntPatch_SPntPole = 5,
+};
+
 enum IntPatch_IType {
 	IntPatch_Lin = 0,
 	IntPatch_Circle = 1,
@@ -75,37 +92,17 @@ enum IntPatch_IType {
 class IntPatch_ALineToWLine {
 	public:
 		%feature("compactdefaultargs") IntPatch_ALineToWLine;
-		%feature("autodoc", "	:param Quad1:
-	:type Quad1: IntSurf_Quadric &
-	:param Quad2:
-	:type Quad2: IntSurf_Quadric &
+		%feature("autodoc", "	* Constructor
+
+	:param theS1:
+	:type theS1: Handle_Adaptor3d_HSurface &
+	:param theS2:
+	:type theS2: Handle_Adaptor3d_HSurface &
+	:param theNbPoints: default value is 200
+	:type theNbPoints: int
 	:rtype: None
 ") IntPatch_ALineToWLine;
-		 IntPatch_ALineToWLine (const IntSurf_Quadric & Quad1,const IntSurf_Quadric & Quad2);
-		%feature("compactdefaultargs") IntPatch_ALineToWLine;
-		%feature("autodoc", "	:param Quad1:
-	:type Quad1: IntSurf_Quadric &
-	:param Quad2:
-	:type Quad2: IntSurf_Quadric &
-	:param Deflection:
-	:type Deflection: float
-	:param PasMaxUV:
-	:type PasMaxUV: float
-	:param NbMaxPoints:
-	:type NbMaxPoints: int
-	:rtype: None
-") IntPatch_ALineToWLine;
-		 IntPatch_ALineToWLine (const IntSurf_Quadric & Quad1,const IntSurf_Quadric & Quad2,const Standard_Real Deflection,const Standard_Real PasMaxUV,const Standard_Integer NbMaxPoints);
-		%feature("compactdefaultargs") SetTolParam;
-		%feature("autodoc", "	:param aT:
-	:type aT: float
-	:rtype: None
-") SetTolParam;
-		void SetTolParam (const Standard_Real aT);
-		%feature("compactdefaultargs") TolParam;
-		%feature("autodoc", "	:rtype: float
-") TolParam;
-		Standard_Real TolParam ();
+		 IntPatch_ALineToWLine (const Handle_Adaptor3d_HSurface & theS1,const Handle_Adaptor3d_HSurface & theS2,const Standard_Integer theNbPoints = 200);
 		%feature("compactdefaultargs") SetTolOpenDomain;
 		%feature("autodoc", "	:param aT:
 	:type aT: float
@@ -136,34 +133,30 @@ class IntPatch_ALineToWLine {
 		%feature("autodoc", "	:rtype: float
 ") Tol3D;
 		Standard_Real Tol3D ();
-		%feature("compactdefaultargs") SetConstantParameter;
-		%feature("autodoc", "	:rtype: None
-") SetConstantParameter;
-		void SetConstantParameter ();
-		%feature("compactdefaultargs") SetUniformAbscissa;
-		%feature("autodoc", "	:rtype: None
-") SetUniformAbscissa;
-		void SetUniformAbscissa ();
-		%feature("compactdefaultargs") SetUniformDeflection;
-		%feature("autodoc", "	:rtype: None
-") SetUniformDeflection;
-		void SetUniformDeflection ();
 		%feature("compactdefaultargs") MakeWLine;
-		%feature("autodoc", "	:param aline:
+		%feature("autodoc", "	* Converts aline to the set of Walking-lines and adds them in theLines.
+
+	:param aline:
 	:type aline: Handle_IntPatch_ALine &
-	:rtype: Handle_IntPatch_WLine
+	:param theLines:
+	:type theLines: IntPatch_SequenceOfLine &
+	:rtype: None
 ") MakeWLine;
-		Handle_IntPatch_WLine MakeWLine (const Handle_IntPatch_ALine & aline);
+		void MakeWLine (const Handle_IntPatch_ALine & aline,IntPatch_SequenceOfLine & theLines);
 		%feature("compactdefaultargs") MakeWLine;
-		%feature("autodoc", "	:param aline:
+		%feature("autodoc", "	* Converts aline --limitted by paraminf and paramsup-- to the set of Walking-lines and adds them in theLines.
+
+	:param aline:
 	:type aline: Handle_IntPatch_ALine &
 	:param paraminf:
 	:type paraminf: float
 	:param paramsup:
 	:type paramsup: float
-	:rtype: Handle_IntPatch_WLine
+	:param theLines:
+	:type theLines: IntPatch_SequenceOfLine &
+	:rtype: None
 ") MakeWLine;
-		Handle_IntPatch_WLine MakeWLine (const Handle_IntPatch_ALine & aline,const Standard_Real paraminf,const Standard_Real paramsup);
+		void MakeWLine (const Handle_IntPatch_ALine & aline,const Standard_Real paraminf,const Standard_Real paramsup,IntPatch_SequenceOfLine & theLines);
 };
 
 
@@ -249,6 +242,12 @@ class IntPatch_ArcFunction : public math_FunctionWithDerivative {
 		%feature("autodoc", "	:rtype: Handle_Adaptor3d_HSurface
 ") Surface;
 		Handle_Adaptor3d_HSurface Surface ();
+		%feature("compactdefaultargs") LastComputedPoint;
+		%feature("autodoc", "	* Returns the point, which has been computed while the last calling Value---- method
+
+	:rtype: gp_Pnt
+") LastComputedPoint;
+		const gp_Pnt  LastComputedPoint ();
 };
 
 
@@ -334,7 +333,9 @@ class IntPatch_CSFunction : public math_FunctionSetWithDerivatives {
 class IntPatch_CurvIntSurf {
 	public:
 		%feature("compactdefaultargs") IntPatch_CurvIntSurf;
-		%feature("autodoc", "	:param U:
+		%feature("autodoc", "	* compute the solution point with the close point MarginCoef is the coefficient for extension of UV bounds. Ex., UFirst -= MarginCoef*--ULast-UFirst--
+
+	:param U:
 	:type U: float
 	:param V:
 	:type V: float
@@ -350,7 +351,9 @@ class IntPatch_CurvIntSurf {
 ") IntPatch_CurvIntSurf;
 		 IntPatch_CurvIntSurf (const Standard_Real U,const Standard_Real V,const Standard_Real W,const IntPatch_CSFunction & F,const Standard_Real TolTangency,const Standard_Real MarginCoef = 0.0);
 		%feature("compactdefaultargs") IntPatch_CurvIntSurf;
-		%feature("autodoc", "	:param F:
+		%feature("autodoc", "	* initialize the parameters to compute the solution
+
+	:param F:
 	:type F: IntPatch_CSFunction &
 	:param TolTangency:
 	:type TolTangency: float
@@ -358,7 +361,9 @@ class IntPatch_CurvIntSurf {
 ") IntPatch_CurvIntSurf;
 		 IntPatch_CurvIntSurf (const IntPatch_CSFunction & F,const Standard_Real TolTangency);
 		%feature("compactdefaultargs") Perform;
-		%feature("autodoc", "	:param U:
+		%feature("autodoc", "	* compute the solution it's possible to write to optimize: IntImp_IntCS inter--S1,C1,Toltangency-- math_FunctionSetRoot rsnld--Inter.function------ while ...{ u=... v=... w=... inter.Perform--u,v,w,rsnld-- } or IntImp_IntCS inter--Toltangency-- inter.SetSurface--S--; math_FunctionSetRoot rsnld--Inter.function------ while ...{ C=... inter.SetCurve--C--; u=... v=... w=... inter.Perform--u,v,w,rsnld-- }
+
+	:param U:
 	:type U: float
 	:param V:
 	:type V: float
@@ -382,7 +387,9 @@ class IntPatch_CurvIntSurf {
 ") Perform;
 		void Perform (const Standard_Real U,const Standard_Real V,const Standard_Real W,math_FunctionSetRoot & Rsnld,const Standard_Real u0,const Standard_Real v0,const Standard_Real u1,const Standard_Real v1,const Standard_Real w0,const Standard_Real w1);
 		%feature("compactdefaultargs") IsDone;
-		%feature("autodoc", "	:rtype: bool
+		%feature("autodoc", "	* Returns True if the creation completed without failure.
+
+	:rtype: bool
 ") IsDone;
 		Standard_Boolean IsDone ();
 		%feature("compactdefaultargs") IsEmpty;
@@ -390,7 +397,9 @@ class IntPatch_CurvIntSurf {
 ") IsEmpty;
 		Standard_Boolean IsEmpty ();
 		%feature("compactdefaultargs") Point;
-		%feature("autodoc", "	:rtype: gp_Pnt
+		%feature("autodoc", "	* returns the intersection point The exception NotDone is raised if IsDone is false. The exception DomainError is raised if IsEmpty is true.
+
+	:rtype: gp_Pnt
 ") Point;
 		const gp_Pnt  Point ();
 		%feature("compactdefaultargs") ParameterOnCurve;
@@ -406,7 +415,9 @@ class IntPatch_CurvIntSurf {
 ") ParameterOnSurface;
 		void ParameterOnSurface (Standard_Real &OutValue,Standard_Real &OutValue);
 		%feature("compactdefaultargs") Function;
-		%feature("autodoc", "	:rtype: IntPatch_CSFunction
+		%feature("autodoc", "	* return the math function which is used to compute the intersection
+
+	:rtype: IntPatch_CSFunction
 ") Function;
 		IntPatch_CSFunction & Function ();
 };
@@ -438,7 +449,7 @@ class IntPatch_HCurve2dTool {
 ") Continuity;
 		static GeomAbs_Shape Continuity (const Handle_Adaptor2d_HCurve2d & C);
 		%feature("compactdefaultargs") NbIntervals;
-		%feature("autodoc", "	* Returns the number of intervals for continuity <S>. May be one if Continuity(myclass) >= <S>
+		%feature("autodoc", "	* Returns the number of intervals for continuity <S>. May be one if Continuity--myclass-- >= <S>
 
 	:param C:
 	:type C: Handle_Adaptor2d_HCurve2d &
@@ -448,7 +459,7 @@ class IntPatch_HCurve2dTool {
 ") NbIntervals;
 		static Standard_Integer NbIntervals (const Handle_Adaptor2d_HCurve2d & C,const GeomAbs_Shape S);
 		%feature("compactdefaultargs") Intervals;
-		%feature("autodoc", "	* Stores in <T> the parameters bounding the intervals of continuity <S>. //! The array must provide enough room to accomodate for the parameters. i.e. T.Length() > NbIntervals()
+		%feature("autodoc", "	* Stores in <T> the parameters bounding the intervals of continuity <S>. //! The array must provide enough room to accomodate for the parameters. i.e. T.Length---- > NbIntervals----
 
 	:param C:
 	:type C: Handle_Adaptor2d_HCurve2d &
@@ -749,7 +760,7 @@ class IntPatch_HInterTool {
 ") Project;
 		static Standard_Boolean Project (const Handle_Adaptor2d_HCurve2d & C,const gp_Pnt2d & P,Standard_Real &OutValue,gp_Pnt2d & Ptproj);
 		%feature("compactdefaultargs") Tolerance;
-		%feature("autodoc", "	* Returns the parametric tolerance used to consider that the vertex and another point meet, i-e if Abs(parameter(Vertex) - parameter(OtherPnt))<= Tolerance, the points are 'merged'.
+		%feature("autodoc", "	* Returns the parametric tolerance used to consider that the vertex and another point meet, i-e if Abs--parameter--Vertex-- - parameter--OtherPnt----<= Tolerance, the points are 'merged'.
 
 	:param V:
 	:type V: Handle_Adaptor3d_HVertex &
@@ -777,7 +788,7 @@ class IntPatch_HInterTool {
 ") NbPoints;
 		static Standard_Integer NbPoints (const Handle_Adaptor2d_HCurve2d & C);
 		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	* Returns the value (Pt), the tolerance (Tol), and the parameter (U) on the arc A , of the intersection point of range Index.
+		%feature("autodoc", "	* Returns the value --Pt--, the tolerance --Tol--, and the parameter --U-- on the arc A , of the intersection point of range Index.
 
 	:param C:
 	:type C: Handle_Adaptor2d_HCurve2d &
@@ -823,7 +834,7 @@ class IntPatch_HInterTool {
 ") NbSegments;
 		static Standard_Integer NbSegments (const Handle_Adaptor2d_HCurve2d & C);
 		%feature("compactdefaultargs") HasFirstPoint;
-		%feature("autodoc", "	* Returns True when the segment of range Index is not open at the left side. In that case, IndFirst is the range in the list intersection points (see NbPoints) of the one which defines the left bound of the segment. Otherwise, the method has to return False, and IndFirst has no meaning.
+		%feature("autodoc", "	* Returns True when the segment of range Index is not open at the left side. In that case, IndFirst is the range in the list intersection points --see NbPoints-- of the one which defines the left bound of the segment. Otherwise, the method has to return False, and IndFirst has no meaning.
 
 	:param C:
 	:type C: Handle_Adaptor2d_HCurve2d &
@@ -835,7 +846,7 @@ class IntPatch_HInterTool {
 ") HasFirstPoint;
 		static Standard_Boolean HasFirstPoint (const Handle_Adaptor2d_HCurve2d & C,const Standard_Integer Index,Standard_Integer &OutValue);
 		%feature("compactdefaultargs") HasLastPoint;
-		%feature("autodoc", "	* Returns True when the segment of range Index is not open at the right side. In that case, IndLast is the range in the list intersection points (see NbPoints) of the one which defines the right bound of the segment. Otherwise, the method has to return False, and IndLast has no meaning.
+		%feature("autodoc", "	* Returns True when the segment of range Index is not open at the right side. In that case, IndLast is the range in the list intersection points --see NbPoints-- of the one which defines the right bound of the segment. Otherwise, the method has to return False, and IndLast has no meaning.
 
 	:param C:
 	:type C: Handle_Adaptor2d_HCurve2d &
@@ -870,7 +881,7 @@ class IntPatch_ImpImpIntersection {
 ") IntPatch_ImpImpIntersection;
 		 IntPatch_ImpImpIntersection ();
 		%feature("compactdefaultargs") IntPatch_ImpImpIntersection;
-		%feature("autodoc", "	* Flag theIsReqToKeepRLine has been enterred only for compatibility with TopOpeBRep package. It shall be deleted after deleting TopOpeBRep. When intersection result returns IntPatch_RLine and another IntPatch_Line (not restriction) we (in case of theIsReqToKeepRLine==True) will always keep both lines even if they are coincided.
+		%feature("autodoc", "	* Flag theIsReqToKeepRLine has been entered only for compatibility with TopOpeBRep package. It shall be deleted after deleting TopOpeBRep. When intersection result returns IntPatch_RLine and another IntPatch_Line --not restriction-- we --in case of theIsReqToKeepRLine==True-- will always keep both lines even if they are coincided.
 
 	:param S1:
 	:type S1: Handle_Adaptor3d_HSurface &
@@ -890,7 +901,7 @@ class IntPatch_ImpImpIntersection {
 ") IntPatch_ImpImpIntersection;
 		 IntPatch_ImpImpIntersection (const Handle_Adaptor3d_HSurface & S1,const Handle_Adaptor3d_TopolTool & D1,const Handle_Adaptor3d_HSurface & S2,const Handle_Adaptor3d_TopolTool & D2,const Standard_Real TolArc,const Standard_Real TolTang,const Standard_Boolean theIsReqToKeepRLine = Standard_False);
 		%feature("compactdefaultargs") Perform;
-		%feature("autodoc", "	* Flag theIsReqToKeepRLine has been enterred only for compatibility with TopOpeBRep package. It shall be deleted after deleting TopOpeBRep. When intersection result returns IntPatch_RLine and another IntPatch_Line (not restriction) we (in case of theIsReqToKeepRLine==True) will always keep both lines even if they are coincided.
+		%feature("autodoc", "	* Flag theIsReqToKeepRLine has been entered only for compatibility with TopOpeBRep package. It shall be deleted after deleting TopOpeBRep. When intersection result returns IntPatch_RLine and another IntPatch_Line --not restriction-- we --in case of theIsReqToKeepRLine==True-- will always keep both lines even if they are coincided.
 
 	:param S1:
 	:type S1: Handle_Adaptor3d_HSurface &
@@ -904,15 +915,13 @@ class IntPatch_ImpImpIntersection {
 	:type TolArc: float
 	:param TolTang:
 	:type TolTang: float
-	:param isTheTrimmed: default value is Standard_False
-	:type isTheTrimmed: bool
 	:param theIsReqToKeepRLine: default value is Standard_False
 	:type theIsReqToKeepRLine: bool
 	:rtype: None
 ") Perform;
-		void Perform (const Handle_Adaptor3d_HSurface & S1,const Handle_Adaptor3d_TopolTool & D1,const Handle_Adaptor3d_HSurface & S2,const Handle_Adaptor3d_TopolTool & D2,const Standard_Real TolArc,const Standard_Real TolTang,const Standard_Boolean isTheTrimmed = Standard_False,const Standard_Boolean theIsReqToKeepRLine = Standard_False);
+		void Perform (const Handle_Adaptor3d_HSurface & S1,const Handle_Adaptor3d_TopolTool & D1,const Handle_Adaptor3d_HSurface & S2,const Handle_Adaptor3d_TopolTool & D2,const Standard_Real TolArc,const Standard_Real TolTang,const Standard_Boolean theIsReqToKeepRLine = Standard_False);
 		%feature("compactdefaultargs") IsDone;
-		%feature("autodoc", "	* Returns True if the calculus was succesfull.
+		%feature("autodoc", "	* Returns True if the calculus was successful.
 
 	:rtype: bool
 ") IsDone;
@@ -924,7 +933,7 @@ class IntPatch_ImpImpIntersection {
 ") IsEmpty;
 		Standard_Boolean IsEmpty ();
 		%feature("compactdefaultargs") TangentFaces;
-		%feature("autodoc", "	* Returns True if the two patches are considered as entierly tangent, i-e every restriction arc of one patch is inside the geometric base of the otehr patch.
+		%feature("autodoc", "	* Returns True if the two patches are considered as entirely tangent, i.e every restriction arc of one patch is inside the geometric base of the other patch.
 
 	:rtype: bool
 ") TangentFaces;
@@ -1179,7 +1188,7 @@ class IntPatch_Intersection {
 ") SetTolerances;
 		void SetTolerances (const Standard_Real TolArc,const Standard_Real TolTang,const Standard_Real UVMaxStep,const Standard_Real Fleche);
 		%feature("compactdefaultargs") Perform;
-		%feature("autodoc", "	* Flag theIsReqToKeepRLine has been enterred only for compatibility with TopOpeBRep package. It shall be deleted after deleting TopOpeBRep. When intersection result returns IntPatch_RLine and another IntPatch_Line (not restriction) we (in case of theIsReqToKeepRLine==True) will always keep both lines even if they are coincided.
+		%feature("autodoc", "	* Flag theIsReqToKeepRLine has been enterred only for compatibility with TopOpeBRep package. It shall be deleted after deleting TopOpeBRep. When intersection result returns IntPatch_RLine and another IntPatch_Line --not restriction-- we --in case of theIsReqToKeepRLine==True-- will always keep both lines even if they are coincided. Flag theIsReqToPostWLProc has been enterred only for compatibility with TopOpeBRep package. It shall be deleted after deleting TopOpeBRep. If theIsReqToPostWLProc == False, then we will work with Walking-line obtained after intersection algorithm directly --wothout any post-processing--.
 
 	:param S1:
 	:type S1: Handle_Adaptor3d_HSurface &
@@ -1197,11 +1206,13 @@ class IntPatch_Intersection {
 	:type isGeomInt: bool
 	:param theIsReqToKeepRLine: default value is Standard_False
 	:type theIsReqToKeepRLine: bool
+	:param theIsReqToPostWLProc: default value is Standard_True
+	:type theIsReqToPostWLProc: bool
 	:rtype: None
 ") Perform;
-		void Perform (const Handle_Adaptor3d_HSurface & S1,const Handle_Adaptor3d_TopolTool & D1,const Handle_Adaptor3d_HSurface & S2,const Handle_Adaptor3d_TopolTool & D2,const Standard_Real TolArc,const Standard_Real TolTang,const Standard_Boolean isGeomInt = Standard_True,const Standard_Boolean theIsReqToKeepRLine = Standard_False);
+		void Perform (const Handle_Adaptor3d_HSurface & S1,const Handle_Adaptor3d_TopolTool & D1,const Handle_Adaptor3d_HSurface & S2,const Handle_Adaptor3d_TopolTool & D2,const Standard_Real TolArc,const Standard_Real TolTang,const Standard_Boolean isGeomInt = Standard_True,const Standard_Boolean theIsReqToKeepRLine = Standard_False,const Standard_Boolean theIsReqToPostWLProc = Standard_True);
 		%feature("compactdefaultargs") Perform;
-		%feature("autodoc", "	* If isGeomInt == Standard_False, then method Param-Param intersection will be used.
+		%feature("autodoc", "	* If isGeomInt == Standard_False, then method Param-Param intersection will be used. Flag theIsReqToKeepRLine has been enterred only for compatibility with TopOpeBRep package. It shall be deleted after deleting TopOpeBRep. When intersection result returns IntPatch_RLine and another IntPatch_Line --not restriction-- we --in case of theIsReqToKeepRLine==True-- will always keep both lines even if they are coincided. Flag theIsReqToPostWLProc has been enterred only for compatibility with TopOpeBRep package. It shall be deleted after deleting TopOpeBRep. If theIsReqToPostWLProc == False, then we will work with Walking-line obtained after intersection algorithm directly --wothout any post-processing--.
 
 	:param S1:
 	:type S1: Handle_Adaptor3d_HSurface &
@@ -1221,11 +1232,17 @@ class IntPatch_Intersection {
 	:type RestrictLine: bool
 	:param isGeomInt: default value is Standard_True
 	:type isGeomInt: bool
+	:param theIsReqToKeepRLine: default value is Standard_False
+	:type theIsReqToKeepRLine: bool
+	:param theIsReqToPostWLProc: default value is Standard_True
+	:type theIsReqToPostWLProc: bool
 	:rtype: None
 ") Perform;
-		void Perform (const Handle_Adaptor3d_HSurface & S1,const Handle_Adaptor3d_TopolTool & D1,const Handle_Adaptor3d_HSurface & S2,const Handle_Adaptor3d_TopolTool & D2,const Standard_Real TolArc,const Standard_Real TolTang,IntSurf_ListOfPntOn2S & LOfPnts,const Standard_Boolean RestrictLine = Standard_True,const Standard_Boolean isGeomInt = Standard_True);
+		void Perform (const Handle_Adaptor3d_HSurface & S1,const Handle_Adaptor3d_TopolTool & D1,const Handle_Adaptor3d_HSurface & S2,const Handle_Adaptor3d_TopolTool & D2,const Standard_Real TolArc,const Standard_Real TolTang,IntSurf_ListOfPntOn2S & LOfPnts,const Standard_Boolean RestrictLine = Standard_True,const Standard_Boolean isGeomInt = Standard_True,const Standard_Boolean theIsReqToKeepRLine = Standard_False,const Standard_Boolean theIsReqToPostWLProc = Standard_True);
 		%feature("compactdefaultargs") Perform;
-		%feature("autodoc", "	:param S1:
+		%feature("autodoc", "	* Perform with start point
+
+	:param S1:
 	:type S1: Handle_Adaptor3d_HSurface &
 	:param D1:
 	:type D1: Handle_Adaptor3d_TopolTool &
@@ -1249,7 +1266,9 @@ class IntPatch_Intersection {
 ") Perform;
 		void Perform (const Handle_Adaptor3d_HSurface & S1,const Handle_Adaptor3d_TopolTool & D1,const Handle_Adaptor3d_HSurface & S2,const Handle_Adaptor3d_TopolTool & D2,const Standard_Real U1,const Standard_Real V1,const Standard_Real U2,const Standard_Real V2,const Standard_Real TolArc,const Standard_Real TolTang);
 		%feature("compactdefaultargs") Perform;
-		%feature("autodoc", "	:param S1:
+		%feature("autodoc", "	* Uses for finding self-intersected surfaces.
+
+	:param S1:
 	:type S1: Handle_Adaptor3d_HSurface &
 	:param D1:
 	:type D1: Handle_Adaptor3d_TopolTool &
@@ -1341,7 +1360,7 @@ class IntPatch_Intersection {
 	}
 };
 %nodefaultctor IntPatch_Line;
-class IntPatch_Line : public MMgt_TShared {
+class IntPatch_Line : public Standard_Transient {
 	public:
 		%feature("compactdefaultargs") SetValue;
 		%feature("autodoc", "	* To set the values returned by IsUIsoS1,.... The default values are False.
@@ -1358,7 +1377,7 @@ class IntPatch_Line : public MMgt_TShared {
 ") SetValue;
 		void SetValue (const Standard_Boolean Uiso1,const Standard_Boolean Viso1,const Standard_Boolean Uiso2,const Standard_Boolean Viso2);
 		%feature("compactdefaultargs") ArcType;
-		%feature("autodoc", "	* Returns the type of geometry 3d (Line, Circle, Parabola, Hyperbola, Ellipse, Analytic, Walking, Restriction)
+		%feature("autodoc", "	* Returns the type of geometry 3d --Line, Circle, Parabola, Hyperbola, Ellipse, Analytic, Walking, Restriction--
 
 	:rtype: IntPatch_IType
 ") ArcType;
@@ -1370,7 +1389,7 @@ class IntPatch_Line : public MMgt_TShared {
 ") IsTangent;
 		Standard_Boolean IsTangent ();
 		%feature("compactdefaultargs") TransitionOnS1;
-		%feature("autodoc", "	* Returns the type of the transition of the line for the first surface. The transition is 'constant' along the line. The transition is IN if the line is oriented in such a way that the system of vector (N1,N2,T) is right-handed, where N1 is the normal to the first surface at a point P, N2 is the normal to the second surface at a point P, T is the tangent to the intersection line at P. If the system of vector is left-handed, the transition is OUT. When N1 and N2 are colinear all along the intersection line, the transition will be - TOUCH, if it is possible to use the 2nd derivatives to determine the position of one surafce compared to the other (see Situation) - UNDECIDED otherwise. //! If one of the transition is TOUCH or UNDECIDED, the other one has got the same value.
+		%feature("autodoc", "	* Returns the type of the transition of the line for the first surface. The transition is 'constant' along the line. The transition is IN if the line is oriented in such a way that the system of vector --N1,N2,T-- is right-handed, where N1 is the normal to the first surface at a point P, N2 is the normal to the second surface at a point P, T is the tangent to the intersection line at P. If the system of vector is left-handed, the transition is OUT. When N1 and N2 are colinear all along the intersection line, the transition will be - TOUCH, if it is possible to use the 2nd derivatives to determine the position of one surafce compared to the other --see Situation-- - UNDECIDED otherwise. //! If one of the transition is TOUCH or UNDECIDED, the other one has got the same value.
 
 	:rtype: IntSurf_TypeTrans
 ") TransitionOnS1;
@@ -1382,13 +1401,13 @@ class IntPatch_Line : public MMgt_TShared {
 ") TransitionOnS2;
 		IntSurf_TypeTrans TransitionOnS2 ();
 		%feature("compactdefaultargs") SituationS1;
-		%feature("autodoc", "	* Returns the situation (INSIDE/OUTSIDE/UNKNOWN) of the first patch compared to the second one, when TransitionOnS1 or TransitionOnS2 returns TOUCH. Otherwise, an exception is raised.
+		%feature("autodoc", "	* Returns the situation --INSIDE/OUTSIDE/UNKNOWN-- of the first patch compared to the second one, when TransitionOnS1 or TransitionOnS2 returns TOUCH. Otherwise, an exception is raised.
 
 	:rtype: IntSurf_Situation
 ") SituationS1;
 		IntSurf_Situation SituationS1 ();
 		%feature("compactdefaultargs") SituationS2;
-		%feature("autodoc", "	* Returns the situation (INSIDE/OUTSIDE/UNKNOWN) of the second patch compared to the first one, when TransitionOnS1 or TransitionOnS2 returns TOUCH. Otherwise, an exception is raised.
+		%feature("autodoc", "	* Returns the situation --INSIDE/OUTSIDE/UNKNOWN-- of the second patch compared to the first one, when TransitionOnS1 or TransitionOnS2 returns TOUCH. Otherwise, an exception is raised.
 
 	:rtype: IntSurf_Situation
 ") SituationS2;
@@ -1439,7 +1458,7 @@ class IntPatch_Line : public MMgt_TShared {
 %}
 
 %nodefaultctor Handle_IntPatch_Line;
-class Handle_IntPatch_Line : public Handle_MMgt_TShared {
+class Handle_IntPatch_Line : public Handle_Standard_Transient {
 
     public:
         // constructors
@@ -1451,19 +1470,20 @@ class Handle_IntPatch_Line : public Handle_MMgt_TShared {
         static const Handle_IntPatch_Line DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_IntPatch_Line {
     IntPatch_Line* _get_reference() {
-    return (IntPatch_Line*)$self->Access();
+    return (IntPatch_Line*)$self->get();
     }
 };
 
 %extend Handle_IntPatch_Line {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend IntPatch_Line {
@@ -1543,6 +1563,14 @@ class IntPatch_Point {
 	:rtype: None
 ") SetValue;
 		void SetValue (const gp_Pnt & Pt);
+		%feature("compactdefaultargs") SetValue;
+		%feature("autodoc", "	* Sets the value of <pt> member
+
+	:param thePOn2S:
+	:type thePOn2S: IntSurf_PntOn2S &
+	:rtype: None
+") SetValue;
+		void SetValue (const IntSurf_PntOn2S & thePOn2S);
 		%feature("compactdefaultargs") SetTolerance;
 		%feature("autodoc", "	:param Tol:
 	:type Tol: float
@@ -1598,7 +1626,7 @@ class IntPatch_Point {
 ") SetArc;
 		void SetArc (const Standard_Boolean OnFirst,const Handle_Adaptor2d_HCurve2d & A,const Standard_Real Param,const IntSurf_Transition & TLine,const IntSurf_Transition & TArc);
 		%feature("compactdefaultargs") SetMultiple;
-		%feature("autodoc", "	* Sets (or unsets) the point as a point on several intersection line.
+		%feature("autodoc", "	* Sets --or unsets-- the point as a point on several intersection line.
 
 	:param IsMult:
 	:type IsMult: bool
@@ -1606,7 +1634,7 @@ class IntPatch_Point {
 ") SetMultiple;
 		void SetMultiple (const Standard_Boolean IsMult);
 		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	* Returns the intersection point (geometric information).
+		%feature("autodoc", "	* Returns the intersection point --geometric information--.
 
 	:rtype: gp_Pnt
 ") Value;
@@ -1624,7 +1652,7 @@ class IntPatch_Point {
 ") Tolerance;
 		Standard_Real Tolerance ();
 		%feature("compactdefaultargs") IsTangencyPoint;
-		%feature("autodoc", "	* Returns True if the Point is a tangency point between the surfaces. If the Point is on one of the domain (IsOnDomS1 returns True or IsOnDomS2 returns True), an exception is raised.
+		%feature("autodoc", "	* Returns True if the Point is a tangency point between the surfaces. If the Point is on one of the domain --IsOnDomS1 returns True or IsOnDomS2 returns True--, an exception is raised.
 
 	:rtype: bool
 ") IsTangencyPoint;
@@ -1686,7 +1714,7 @@ class IntPatch_Point {
 ") TransitionLineArc1;
 		const IntSurf_Transition & TransitionLineArc1 ();
 		%feature("compactdefaultargs") TransitionOnS1;
-		%feature("autodoc", "	* Returns the transition between the intersection line returned by the method Line and the arc on S1 returned by ArcOnS1(). The exception DomainError is raised if IsOnDomS1 returns False.
+		%feature("autodoc", "	* Returns the transition between the intersection line returned by the method Line and the arc on S1 returned by ArcOnS1----. The exception DomainError is raised if IsOnDomS1 returns False.
 
 	:rtype: IntSurf_Transition
 ") TransitionOnS1;
@@ -1740,7 +1768,7 @@ class IntPatch_Point {
 ") ParameterOnArc2;
 		Standard_Real ParameterOnArc2 ();
 		%feature("compactdefaultargs") PntOn2S;
-		%feature("autodoc", "	* Returns the PntOn2S (geometric Point and the parameters)
+		%feature("autodoc", "	* Returns the PntOn2S --geometric Point and the parameters--
 
 	:rtype: IntSurf_PntOn2S
 ") PntOn2S;
@@ -2271,11 +2299,9 @@ class IntPatch_RstInt {
 	:type OnFirst: bool
 	:param Tol:
 	:type Tol: float
-	:param hasBeenAdded: default value is Standard_False
-	:type hasBeenAdded: bool
 	:rtype: void
 ") PutVertexOnLine;
-		static void PutVertexOnLine (Handle_IntPatch_Line & L,const Handle_Adaptor3d_HSurface & Surf,const Handle_Adaptor3d_TopolTool & Domain,const Handle_Adaptor3d_HSurface & OtherSurf,const Standard_Boolean OnFirst,const Standard_Real Tol,const Standard_Boolean hasBeenAdded = Standard_False);
+		static void PutVertexOnLine (const Handle_IntPatch_Line & L,const Handle_Adaptor3d_HSurface & Surf,const Handle_Adaptor3d_TopolTool & Domain,const Handle_Adaptor3d_HSurface & OtherSurf,const Standard_Boolean OnFirst,const Standard_Real Tol);
 };
 
 
@@ -2284,1078 +2310,119 @@ class IntPatch_RstInt {
 	__repr__ = _dumps_object
 	}
 };
-%nodefaultctor IntPatch_SequenceNodeOfSequenceOfIWLineOfTheIWalking;
-class IntPatch_SequenceNodeOfSequenceOfIWLineOfTheIWalking : public TCollection_SeqNode {
+%nodefaultctor IntPatch_SpecialPoints;
+class IntPatch_SpecialPoints {
 	public:
-		%feature("compactdefaultargs") IntPatch_SequenceNodeOfSequenceOfIWLineOfTheIWalking;
-		%feature("autodoc", "	:param I:
-	:type I: Handle_IntPatch_TheIWLineOfTheIWalking &
-	:param n:
-	:type n: TCollection_SeqNodePtr &
-	:param p:
-	:type p: TCollection_SeqNodePtr &
-	:rtype: None
-") IntPatch_SequenceNodeOfSequenceOfIWLineOfTheIWalking;
-		 IntPatch_SequenceNodeOfSequenceOfIWLineOfTheIWalking (const Handle_IntPatch_TheIWLineOfTheIWalking & I,const TCollection_SeqNodePtr & n,const TCollection_SeqNodePtr & p);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:rtype: Handle_IntPatch_TheIWLineOfTheIWalking
-") Value;
-		Handle_IntPatch_TheIWLineOfTheIWalking Value ();
+		%feature("compactdefaultargs") AddCrossUVIsoPoint;
+		%feature("autodoc", "	* Adds the point defined as intersection of two isolines --U = 0 and V = 0-- on theQSurf in theLine. theRefPt is used to correct adjusting parameters. If theIsReversed is True then theQSurf correspond to the second --otherwise, the first-- surface while forming intersection point IntSurf_PntOn2S.
+
+	:param theQSurf:
+	:type theQSurf: Handle_Adaptor3d_HSurface &
+	:param thePSurf:
+	:type thePSurf: Handle_Adaptor3d_HSurface &
+	:param theRefPt:
+	:type theRefPt: IntSurf_PntOn2S &
+	:param theTol3d:
+	:type theTol3d: float
+	:param theAddedPoint:
+	:type theAddedPoint: IntSurf_PntOn2S &
+	:param theIsReversed: default value is Standard_False
+	:type theIsReversed: bool
+	:rtype: bool
+") AddCrossUVIsoPoint;
+		static Standard_Boolean AddCrossUVIsoPoint (const Handle_Adaptor3d_HSurface & theQSurf,const Handle_Adaptor3d_HSurface & thePSurf,const IntSurf_PntOn2S & theRefPt,const Standard_Real theTol3d,IntSurf_PntOn2S & theAddedPoint,const Standard_Boolean theIsReversed = Standard_False);
+		%feature("compactdefaultargs") AddPointOnUorVIso;
+		%feature("autodoc", "	* Adds the point lain strictly in the isoline U = 0 or V = 0 of theQSurf, in theLine. theRefPt is used to correct adjusting parameters. If theIsReversed is True then theQSurf corresponds to the second --otherwise, the first-- surface while forming intersection point IntSurf_PntOn2S.
+
+	:param theQSurf:
+	:type theQSurf: Handle_Adaptor3d_HSurface &
+	:param thePSurf:
+	:type thePSurf: Handle_Adaptor3d_HSurface &
+	:param theRefPt:
+	:type theRefPt: IntSurf_PntOn2S &
+	:param theIsU:
+	:type theIsU: bool
+	:param theToler:
+	:type theToler: math_Vector &
+	:param theInitPoint:
+	:type theInitPoint: math_Vector &
+	:param theInfBound:
+	:type theInfBound: math_Vector &
+	:param theSupBound:
+	:type theSupBound: math_Vector &
+	:param theAddedPoint:
+	:type theAddedPoint: IntSurf_PntOn2S &
+	:param theIsReversed: default value is Standard_False
+	:type theIsReversed: bool
+	:rtype: bool
+") AddPointOnUorVIso;
+		static Standard_Boolean AddPointOnUorVIso (const Handle_Adaptor3d_HSurface & theQSurf,const Handle_Adaptor3d_HSurface & thePSurf,const IntSurf_PntOn2S & theRefPt,const Standard_Boolean theIsU,const math_Vector & theToler,const math_Vector & theInitPoint,const math_Vector & theInfBound,const math_Vector & theSupBound,IntSurf_PntOn2S & theAddedPoint,const Standard_Boolean theIsReversed = Standard_False);
+		%feature("compactdefaultargs") AddSingularPole;
+		%feature("autodoc", "	* Computes the pole of sphere to add it in the intersection line. Stores the result in theAddedPoint variable --does not add in the line--. At that, cone and sphere --with singularity-- must be set in theQSurf parameter. By default --if theIsReversed == False--, theQSurf is the first surface of the Walking line. If it is not, theIsReversed parameter must be set to True. theIsReqRefCheck is True if and only if 3D-point of theRefPt must be pole or apex for check --e.g. if it is vertex--. thePtIso is the reference point for obtaining isoline where must be placed the Apex/Pole. //! ATTENTION!!! theVertex must be initialized before calling the method .
+
+	:param theQSurf:
+	:type theQSurf: Handle_Adaptor3d_HSurface &
+	:param thePSurf:
+	:type thePSurf: Handle_Adaptor3d_HSurface &
+	:param thePtIso:
+	:type thePtIso: IntSurf_PntOn2S &
+	:param theTol3d:
+	:type theTol3d: float
+	:param theVertex:
+	:type theVertex: IntPatch_Point &
+	:param theAddedPoint:
+	:type theAddedPoint: IntSurf_PntOn2S &
+	:param theIsReversed: default value is Standard_False
+	:type theIsReversed: bool
+	:param theIsReqRefCheck: default value is Standard_False
+	:type theIsReqRefCheck: bool
+	:rtype: bool
+") AddSingularPole;
+		static Standard_Boolean AddSingularPole (const Handle_Adaptor3d_HSurface & theQSurf,const Handle_Adaptor3d_HSurface & thePSurf,const IntSurf_PntOn2S & thePtIso,const Standard_Real theTol3d,IntPatch_Point & theVertex,IntSurf_PntOn2S & theAddedPoint,const Standard_Boolean theIsReversed = Standard_False,const Standard_Boolean theIsReqRefCheck = Standard_False);
+		%feature("compactdefaultargs") ContinueAfterSpecialPoint;
+		%feature("autodoc", "	* Special point has already been added in the line. Now, we need in correct prolongation of the line or in start new line. This function returns new point. //! ATTENTION!!! theNewPoint is not only Output parameter. It is Input/Output one. I.e. theNewPoint is reference point together with theRefPt.
+
+	:param theQSurf:
+	:type theQSurf: Handle_Adaptor3d_HSurface &
+	:param thePSurf:
+	:type thePSurf: Handle_Adaptor3d_HSurface &
+	:param theRefPt:
+	:type theRefPt: IntSurf_PntOn2S &
+	:param theSPType:
+	:type theSPType: IntPatch_SpecPntType
+	:param theTol2D:
+	:type theTol2D: float
+	:param theNewPoint:
+	:type theNewPoint: IntSurf_PntOn2S &
+	:param theIsReversed: default value is Standard_False
+	:type theIsReversed: bool
+	:rtype: bool
+") ContinueAfterSpecialPoint;
+		static Standard_Boolean ContinueAfterSpecialPoint (const Handle_Adaptor3d_HSurface & theQSurf,const Handle_Adaptor3d_HSurface & thePSurf,const IntSurf_PntOn2S & theRefPt,const IntPatch_SpecPntType theSPType,const Standard_Real theTol2D,IntSurf_PntOn2S & theNewPoint,const Standard_Boolean theIsReversed = Standard_False);
+		%feature("compactdefaultargs") AdjustPointAndVertex;
+		%feature("autodoc", "	* Sets theNewPoint parameters in 2D-space the closest to theRefPoint with help of adding/subtracting corresponding periods. theArrPeriods must be filled as follows: {<U-period of 1st surface>, <V-period of 1st surface>, <U-period of 2nd surface>, <V-period of 2nd surface>}. If theVertex != 0 then its parameters will be filled as corresponding parameters of theNewPoint. //! ATTENTION!!! theNewPoint is not only Output parameter. It is Input/Output one. I.e. theNewPoint is reference point together with theRefPt.
+
+	:param theRefPoint:
+	:type theRefPoint: IntSurf_PntOn2S &
+	:param theArrPeriods:
+	:type theArrPeriods: float
+	:param theNewPoint:
+	:type theNewPoint: IntSurf_PntOn2S &
+	:param theVertex: default value is 0
+	:type theVertex: IntPatch_Point *
+	:rtype: void
+") AdjustPointAndVertex;
+		static void AdjustPointAndVertex (const IntSurf_PntOn2S & theRefPoint,const Standard_Real theArrPeriods[4],IntSurf_PntOn2S & theNewPoint,IntPatch_Point * const theVertex = 0);
 };
 
 
-%extend IntPatch_SequenceNodeOfSequenceOfIWLineOfTheIWalking {
-	%pythoncode {
-		def GetHandle(self):
-		    try:
-		        return self.thisHandle
-		    except:
-		        self.thisHandle = Handle_IntPatch_SequenceNodeOfSequenceOfIWLineOfTheIWalking(self)
-		        self.thisown = False
-		        return self.thisHandle
-	}
-};
-
-%pythonappend Handle_IntPatch_SequenceNodeOfSequenceOfIWLineOfTheIWalking::Handle_IntPatch_SequenceNodeOfSequenceOfIWLineOfTheIWalking %{
-    # register the handle in the base object
-    if len(args) > 0:
-        register_handle(self, args[0])
-%}
-
-%nodefaultctor Handle_IntPatch_SequenceNodeOfSequenceOfIWLineOfTheIWalking;
-class Handle_IntPatch_SequenceNodeOfSequenceOfIWLineOfTheIWalking : public Handle_TCollection_SeqNode {
-
-    public:
-        // constructors
-        Handle_IntPatch_SequenceNodeOfSequenceOfIWLineOfTheIWalking();
-        Handle_IntPatch_SequenceNodeOfSequenceOfIWLineOfTheIWalking(const Handle_IntPatch_SequenceNodeOfSequenceOfIWLineOfTheIWalking &aHandle);
-        Handle_IntPatch_SequenceNodeOfSequenceOfIWLineOfTheIWalking(const IntPatch_SequenceNodeOfSequenceOfIWLineOfTheIWalking *anItem);
-        void Nullify();
-        Standard_Boolean IsNull() const;
-        static const Handle_IntPatch_SequenceNodeOfSequenceOfIWLineOfTheIWalking DownCast(const Handle_Standard_Transient &AnObject);
-
-};
-%extend Handle_IntPatch_SequenceNodeOfSequenceOfIWLineOfTheIWalking {
-    IntPatch_SequenceNodeOfSequenceOfIWLineOfTheIWalking* _get_reference() {
-    return (IntPatch_SequenceNodeOfSequenceOfIWLineOfTheIWalking*)$self->Access();
-    }
-};
-
-%extend Handle_IntPatch_SequenceNodeOfSequenceOfIWLineOfTheIWalking {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
-};
-
-%extend IntPatch_SequenceNodeOfSequenceOfIWLineOfTheIWalking {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor IntPatch_SequenceNodeOfSequenceOfLine;
-class IntPatch_SequenceNodeOfSequenceOfLine : public TCollection_SeqNode {
-	public:
-		%feature("compactdefaultargs") IntPatch_SequenceNodeOfSequenceOfLine;
-		%feature("autodoc", "	:param I:
-	:type I: Handle_IntPatch_Line &
-	:param n:
-	:type n: TCollection_SeqNodePtr &
-	:param p:
-	:type p: TCollection_SeqNodePtr &
-	:rtype: None
-") IntPatch_SequenceNodeOfSequenceOfLine;
-		 IntPatch_SequenceNodeOfSequenceOfLine (const Handle_IntPatch_Line & I,const TCollection_SeqNodePtr & n,const TCollection_SeqNodePtr & p);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:rtype: Handle_IntPatch_Line
-") Value;
-		Handle_IntPatch_Line Value ();
-};
-
-
-%extend IntPatch_SequenceNodeOfSequenceOfLine {
-	%pythoncode {
-		def GetHandle(self):
-		    try:
-		        return self.thisHandle
-		    except:
-		        self.thisHandle = Handle_IntPatch_SequenceNodeOfSequenceOfLine(self)
-		        self.thisown = False
-		        return self.thisHandle
-	}
-};
-
-%pythonappend Handle_IntPatch_SequenceNodeOfSequenceOfLine::Handle_IntPatch_SequenceNodeOfSequenceOfLine %{
-    # register the handle in the base object
-    if len(args) > 0:
-        register_handle(self, args[0])
-%}
-
-%nodefaultctor Handle_IntPatch_SequenceNodeOfSequenceOfLine;
-class Handle_IntPatch_SequenceNodeOfSequenceOfLine : public Handle_TCollection_SeqNode {
-
-    public:
-        // constructors
-        Handle_IntPatch_SequenceNodeOfSequenceOfLine();
-        Handle_IntPatch_SequenceNodeOfSequenceOfLine(const Handle_IntPatch_SequenceNodeOfSequenceOfLine &aHandle);
-        Handle_IntPatch_SequenceNodeOfSequenceOfLine(const IntPatch_SequenceNodeOfSequenceOfLine *anItem);
-        void Nullify();
-        Standard_Boolean IsNull() const;
-        static const Handle_IntPatch_SequenceNodeOfSequenceOfLine DownCast(const Handle_Standard_Transient &AnObject);
-
-};
-%extend Handle_IntPatch_SequenceNodeOfSequenceOfLine {
-    IntPatch_SequenceNodeOfSequenceOfLine* _get_reference() {
-    return (IntPatch_SequenceNodeOfSequenceOfLine*)$self->Access();
-    }
-};
-
-%extend Handle_IntPatch_SequenceNodeOfSequenceOfLine {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
-};
-
-%extend IntPatch_SequenceNodeOfSequenceOfLine {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor IntPatch_SequenceNodeOfSequenceOfPathPointOfTheSOnBounds;
-class IntPatch_SequenceNodeOfSequenceOfPathPointOfTheSOnBounds : public TCollection_SeqNode {
-	public:
-		%feature("compactdefaultargs") IntPatch_SequenceNodeOfSequenceOfPathPointOfTheSOnBounds;
-		%feature("autodoc", "	:param I:
-	:type I: IntPatch_ThePathPointOfTheSOnBounds &
-	:param n:
-	:type n: TCollection_SeqNodePtr &
-	:param p:
-	:type p: TCollection_SeqNodePtr &
-	:rtype: None
-") IntPatch_SequenceNodeOfSequenceOfPathPointOfTheSOnBounds;
-		 IntPatch_SequenceNodeOfSequenceOfPathPointOfTheSOnBounds (const IntPatch_ThePathPointOfTheSOnBounds & I,const TCollection_SeqNodePtr & n,const TCollection_SeqNodePtr & p);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:rtype: IntPatch_ThePathPointOfTheSOnBounds
-") Value;
-		IntPatch_ThePathPointOfTheSOnBounds & Value ();
-};
-
-
-%extend IntPatch_SequenceNodeOfSequenceOfPathPointOfTheSOnBounds {
-	%pythoncode {
-		def GetHandle(self):
-		    try:
-		        return self.thisHandle
-		    except:
-		        self.thisHandle = Handle_IntPatch_SequenceNodeOfSequenceOfPathPointOfTheSOnBounds(self)
-		        self.thisown = False
-		        return self.thisHandle
-	}
-};
-
-%pythonappend Handle_IntPatch_SequenceNodeOfSequenceOfPathPointOfTheSOnBounds::Handle_IntPatch_SequenceNodeOfSequenceOfPathPointOfTheSOnBounds %{
-    # register the handle in the base object
-    if len(args) > 0:
-        register_handle(self, args[0])
-%}
-
-%nodefaultctor Handle_IntPatch_SequenceNodeOfSequenceOfPathPointOfTheSOnBounds;
-class Handle_IntPatch_SequenceNodeOfSequenceOfPathPointOfTheSOnBounds : public Handle_TCollection_SeqNode {
-
-    public:
-        // constructors
-        Handle_IntPatch_SequenceNodeOfSequenceOfPathPointOfTheSOnBounds();
-        Handle_IntPatch_SequenceNodeOfSequenceOfPathPointOfTheSOnBounds(const Handle_IntPatch_SequenceNodeOfSequenceOfPathPointOfTheSOnBounds &aHandle);
-        Handle_IntPatch_SequenceNodeOfSequenceOfPathPointOfTheSOnBounds(const IntPatch_SequenceNodeOfSequenceOfPathPointOfTheSOnBounds *anItem);
-        void Nullify();
-        Standard_Boolean IsNull() const;
-        static const Handle_IntPatch_SequenceNodeOfSequenceOfPathPointOfTheSOnBounds DownCast(const Handle_Standard_Transient &AnObject);
-
-};
-%extend Handle_IntPatch_SequenceNodeOfSequenceOfPathPointOfTheSOnBounds {
-    IntPatch_SequenceNodeOfSequenceOfPathPointOfTheSOnBounds* _get_reference() {
-    return (IntPatch_SequenceNodeOfSequenceOfPathPointOfTheSOnBounds*)$self->Access();
-    }
-};
-
-%extend Handle_IntPatch_SequenceNodeOfSequenceOfPathPointOfTheSOnBounds {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
-};
-
-%extend IntPatch_SequenceNodeOfSequenceOfPathPointOfTheSOnBounds {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor IntPatch_SequenceNodeOfSequenceOfPoint;
-class IntPatch_SequenceNodeOfSequenceOfPoint : public TCollection_SeqNode {
-	public:
-		%feature("compactdefaultargs") IntPatch_SequenceNodeOfSequenceOfPoint;
-		%feature("autodoc", "	:param I:
-	:type I: IntPatch_Point &
-	:param n:
-	:type n: TCollection_SeqNodePtr &
-	:param p:
-	:type p: TCollection_SeqNodePtr &
-	:rtype: None
-") IntPatch_SequenceNodeOfSequenceOfPoint;
-		 IntPatch_SequenceNodeOfSequenceOfPoint (const IntPatch_Point & I,const TCollection_SeqNodePtr & n,const TCollection_SeqNodePtr & p);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:rtype: IntPatch_Point
-") Value;
-		IntPatch_Point & Value ();
-};
-
-
-%extend IntPatch_SequenceNodeOfSequenceOfPoint {
-	%pythoncode {
-		def GetHandle(self):
-		    try:
-		        return self.thisHandle
-		    except:
-		        self.thisHandle = Handle_IntPatch_SequenceNodeOfSequenceOfPoint(self)
-		        self.thisown = False
-		        return self.thisHandle
-	}
-};
-
-%pythonappend Handle_IntPatch_SequenceNodeOfSequenceOfPoint::Handle_IntPatch_SequenceNodeOfSequenceOfPoint %{
-    # register the handle in the base object
-    if len(args) > 0:
-        register_handle(self, args[0])
-%}
-
-%nodefaultctor Handle_IntPatch_SequenceNodeOfSequenceOfPoint;
-class Handle_IntPatch_SequenceNodeOfSequenceOfPoint : public Handle_TCollection_SeqNode {
-
-    public:
-        // constructors
-        Handle_IntPatch_SequenceNodeOfSequenceOfPoint();
-        Handle_IntPatch_SequenceNodeOfSequenceOfPoint(const Handle_IntPatch_SequenceNodeOfSequenceOfPoint &aHandle);
-        Handle_IntPatch_SequenceNodeOfSequenceOfPoint(const IntPatch_SequenceNodeOfSequenceOfPoint *anItem);
-        void Nullify();
-        Standard_Boolean IsNull() const;
-        static const Handle_IntPatch_SequenceNodeOfSequenceOfPoint DownCast(const Handle_Standard_Transient &AnObject);
-
-};
-%extend Handle_IntPatch_SequenceNodeOfSequenceOfPoint {
-    IntPatch_SequenceNodeOfSequenceOfPoint* _get_reference() {
-    return (IntPatch_SequenceNodeOfSequenceOfPoint*)$self->Access();
-    }
-};
-
-%extend Handle_IntPatch_SequenceNodeOfSequenceOfPoint {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
-};
-
-%extend IntPatch_SequenceNodeOfSequenceOfPoint {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor IntPatch_SequenceNodeOfSequenceOfSegmentOfTheSOnBounds;
-class IntPatch_SequenceNodeOfSequenceOfSegmentOfTheSOnBounds : public TCollection_SeqNode {
-	public:
-		%feature("compactdefaultargs") IntPatch_SequenceNodeOfSequenceOfSegmentOfTheSOnBounds;
-		%feature("autodoc", "	:param I:
-	:type I: IntPatch_TheSegmentOfTheSOnBounds &
-	:param n:
-	:type n: TCollection_SeqNodePtr &
-	:param p:
-	:type p: TCollection_SeqNodePtr &
-	:rtype: None
-") IntPatch_SequenceNodeOfSequenceOfSegmentOfTheSOnBounds;
-		 IntPatch_SequenceNodeOfSequenceOfSegmentOfTheSOnBounds (const IntPatch_TheSegmentOfTheSOnBounds & I,const TCollection_SeqNodePtr & n,const TCollection_SeqNodePtr & p);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:rtype: IntPatch_TheSegmentOfTheSOnBounds
-") Value;
-		IntPatch_TheSegmentOfTheSOnBounds & Value ();
-};
-
-
-%extend IntPatch_SequenceNodeOfSequenceOfSegmentOfTheSOnBounds {
-	%pythoncode {
-		def GetHandle(self):
-		    try:
-		        return self.thisHandle
-		    except:
-		        self.thisHandle = Handle_IntPatch_SequenceNodeOfSequenceOfSegmentOfTheSOnBounds(self)
-		        self.thisown = False
-		        return self.thisHandle
-	}
-};
-
-%pythonappend Handle_IntPatch_SequenceNodeOfSequenceOfSegmentOfTheSOnBounds::Handle_IntPatch_SequenceNodeOfSequenceOfSegmentOfTheSOnBounds %{
-    # register the handle in the base object
-    if len(args) > 0:
-        register_handle(self, args[0])
-%}
-
-%nodefaultctor Handle_IntPatch_SequenceNodeOfSequenceOfSegmentOfTheSOnBounds;
-class Handle_IntPatch_SequenceNodeOfSequenceOfSegmentOfTheSOnBounds : public Handle_TCollection_SeqNode {
-
-    public:
-        // constructors
-        Handle_IntPatch_SequenceNodeOfSequenceOfSegmentOfTheSOnBounds();
-        Handle_IntPatch_SequenceNodeOfSequenceOfSegmentOfTheSOnBounds(const Handle_IntPatch_SequenceNodeOfSequenceOfSegmentOfTheSOnBounds &aHandle);
-        Handle_IntPatch_SequenceNodeOfSequenceOfSegmentOfTheSOnBounds(const IntPatch_SequenceNodeOfSequenceOfSegmentOfTheSOnBounds *anItem);
-        void Nullify();
-        Standard_Boolean IsNull() const;
-        static const Handle_IntPatch_SequenceNodeOfSequenceOfSegmentOfTheSOnBounds DownCast(const Handle_Standard_Transient &AnObject);
-
-};
-%extend Handle_IntPatch_SequenceNodeOfSequenceOfSegmentOfTheSOnBounds {
-    IntPatch_SequenceNodeOfSequenceOfSegmentOfTheSOnBounds* _get_reference() {
-    return (IntPatch_SequenceNodeOfSequenceOfSegmentOfTheSOnBounds*)$self->Access();
-    }
-};
-
-%extend Handle_IntPatch_SequenceNodeOfSequenceOfSegmentOfTheSOnBounds {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
-};
-
-%extend IntPatch_SequenceNodeOfSequenceOfSegmentOfTheSOnBounds {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor IntPatch_SequenceOfIWLineOfTheIWalking;
-class IntPatch_SequenceOfIWLineOfTheIWalking : public TCollection_BaseSequence {
-	public:
-		%feature("compactdefaultargs") IntPatch_SequenceOfIWLineOfTheIWalking;
-		%feature("autodoc", "	:rtype: None
-") IntPatch_SequenceOfIWLineOfTheIWalking;
-		 IntPatch_SequenceOfIWLineOfTheIWalking ();
-		%feature("compactdefaultargs") IntPatch_SequenceOfIWLineOfTheIWalking;
-		%feature("autodoc", "	:param Other:
-	:type Other: IntPatch_SequenceOfIWLineOfTheIWalking &
-	:rtype: None
-") IntPatch_SequenceOfIWLineOfTheIWalking;
-		 IntPatch_SequenceOfIWLineOfTheIWalking (const IntPatch_SequenceOfIWLineOfTheIWalking & Other);
-		%feature("compactdefaultargs") Clear;
-		%feature("autodoc", "	:rtype: None
-") Clear;
-		void Clear ();
-		%feature("compactdefaultargs") Assign;
-		%feature("autodoc", "	:param Other:
-	:type Other: IntPatch_SequenceOfIWLineOfTheIWalking &
-	:rtype: IntPatch_SequenceOfIWLineOfTheIWalking
-") Assign;
-		const IntPatch_SequenceOfIWLineOfTheIWalking & Assign (const IntPatch_SequenceOfIWLineOfTheIWalking & Other);
-		%feature("compactdefaultargs") operator =;
-		%feature("autodoc", "	:param Other:
-	:type Other: IntPatch_SequenceOfIWLineOfTheIWalking &
-	:rtype: IntPatch_SequenceOfIWLineOfTheIWalking
-") operator =;
-		const IntPatch_SequenceOfIWLineOfTheIWalking & operator = (const IntPatch_SequenceOfIWLineOfTheIWalking & Other);
-		%feature("compactdefaultargs") Append;
-		%feature("autodoc", "	:param T:
-	:type T: Handle_IntPatch_TheIWLineOfTheIWalking &
-	:rtype: None
-") Append;
-		void Append (const Handle_IntPatch_TheIWLineOfTheIWalking & T);
-		%feature("compactdefaultargs") Append;
-		%feature("autodoc", "	:param S:
-	:type S: IntPatch_SequenceOfIWLineOfTheIWalking &
-	:rtype: None
-") Append;
-		void Append (IntPatch_SequenceOfIWLineOfTheIWalking & S);
-		%feature("compactdefaultargs") Prepend;
-		%feature("autodoc", "	:param T:
-	:type T: Handle_IntPatch_TheIWLineOfTheIWalking &
-	:rtype: None
-") Prepend;
-		void Prepend (const Handle_IntPatch_TheIWLineOfTheIWalking & T);
-		%feature("compactdefaultargs") Prepend;
-		%feature("autodoc", "	:param S:
-	:type S: IntPatch_SequenceOfIWLineOfTheIWalking &
-	:rtype: None
-") Prepend;
-		void Prepend (IntPatch_SequenceOfIWLineOfTheIWalking & S);
-		%feature("compactdefaultargs") InsertBefore;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param T:
-	:type T: Handle_IntPatch_TheIWLineOfTheIWalking &
-	:rtype: None
-") InsertBefore;
-		void InsertBefore (const Standard_Integer Index,const Handle_IntPatch_TheIWLineOfTheIWalking & T);
-		%feature("compactdefaultargs") InsertBefore;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param S:
-	:type S: IntPatch_SequenceOfIWLineOfTheIWalking &
-	:rtype: None
-") InsertBefore;
-		void InsertBefore (const Standard_Integer Index,IntPatch_SequenceOfIWLineOfTheIWalking & S);
-		%feature("compactdefaultargs") InsertAfter;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param T:
-	:type T: Handle_IntPatch_TheIWLineOfTheIWalking &
-	:rtype: None
-") InsertAfter;
-		void InsertAfter (const Standard_Integer Index,const Handle_IntPatch_TheIWLineOfTheIWalking & T);
-		%feature("compactdefaultargs") InsertAfter;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param S:
-	:type S: IntPatch_SequenceOfIWLineOfTheIWalking &
-	:rtype: None
-") InsertAfter;
-		void InsertAfter (const Standard_Integer Index,IntPatch_SequenceOfIWLineOfTheIWalking & S);
-		%feature("compactdefaultargs") First;
-		%feature("autodoc", "	:rtype: Handle_IntPatch_TheIWLineOfTheIWalking
-") First;
-		Handle_IntPatch_TheIWLineOfTheIWalking First ();
-		%feature("compactdefaultargs") Last;
-		%feature("autodoc", "	:rtype: Handle_IntPatch_TheIWLineOfTheIWalking
-") Last;
-		Handle_IntPatch_TheIWLineOfTheIWalking Last ();
-		%feature("compactdefaultargs") Split;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param Sub:
-	:type Sub: IntPatch_SequenceOfIWLineOfTheIWalking &
-	:rtype: None
-") Split;
-		void Split (const Standard_Integer Index,IntPatch_SequenceOfIWLineOfTheIWalking & Sub);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: Handle_IntPatch_TheIWLineOfTheIWalking
-") Value;
-		Handle_IntPatch_TheIWLineOfTheIWalking Value (const Standard_Integer Index);
-		%feature("compactdefaultargs") SetValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param I:
-	:type I: Handle_IntPatch_TheIWLineOfTheIWalking &
-	:rtype: None
-") SetValue;
-		void SetValue (const Standard_Integer Index,const Handle_IntPatch_TheIWLineOfTheIWalking & I);
-		%feature("compactdefaultargs") ChangeValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: Handle_IntPatch_TheIWLineOfTheIWalking
-") ChangeValue;
-		Handle_IntPatch_TheIWLineOfTheIWalking ChangeValue (const Standard_Integer Index);
-		%feature("compactdefaultargs") Remove;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: None
-") Remove;
-		void Remove (const Standard_Integer Index);
-		%feature("compactdefaultargs") Remove;
-		%feature("autodoc", "	:param FromIndex:
-	:type FromIndex: int
-	:param ToIndex:
-	:type ToIndex: int
-	:rtype: None
-") Remove;
-		void Remove (const Standard_Integer FromIndex,const Standard_Integer ToIndex);
-};
-
-
-%extend IntPatch_SequenceOfIWLineOfTheIWalking {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor IntPatch_SequenceOfLine;
-class IntPatch_SequenceOfLine : public TCollection_BaseSequence {
-	public:
-		%feature("compactdefaultargs") IntPatch_SequenceOfLine;
-		%feature("autodoc", "	:rtype: None
-") IntPatch_SequenceOfLine;
-		 IntPatch_SequenceOfLine ();
-		%feature("compactdefaultargs") IntPatch_SequenceOfLine;
-		%feature("autodoc", "	:param Other:
-	:type Other: IntPatch_SequenceOfLine &
-	:rtype: None
-") IntPatch_SequenceOfLine;
-		 IntPatch_SequenceOfLine (const IntPatch_SequenceOfLine & Other);
-		%feature("compactdefaultargs") Clear;
-		%feature("autodoc", "	:rtype: None
-") Clear;
-		void Clear ();
-		%feature("compactdefaultargs") Assign;
-		%feature("autodoc", "	:param Other:
-	:type Other: IntPatch_SequenceOfLine &
-	:rtype: IntPatch_SequenceOfLine
-") Assign;
-		const IntPatch_SequenceOfLine & Assign (const IntPatch_SequenceOfLine & Other);
-		%feature("compactdefaultargs") operator =;
-		%feature("autodoc", "	:param Other:
-	:type Other: IntPatch_SequenceOfLine &
-	:rtype: IntPatch_SequenceOfLine
-") operator =;
-		const IntPatch_SequenceOfLine & operator = (const IntPatch_SequenceOfLine & Other);
-		%feature("compactdefaultargs") Append;
-		%feature("autodoc", "	:param T:
-	:type T: Handle_IntPatch_Line &
-	:rtype: None
-") Append;
-		void Append (const Handle_IntPatch_Line & T);
-		%feature("compactdefaultargs") Append;
-		%feature("autodoc", "	:param S:
-	:type S: IntPatch_SequenceOfLine &
-	:rtype: None
-") Append;
-		void Append (IntPatch_SequenceOfLine & S);
-		%feature("compactdefaultargs") Prepend;
-		%feature("autodoc", "	:param T:
-	:type T: Handle_IntPatch_Line &
-	:rtype: None
-") Prepend;
-		void Prepend (const Handle_IntPatch_Line & T);
-		%feature("compactdefaultargs") Prepend;
-		%feature("autodoc", "	:param S:
-	:type S: IntPatch_SequenceOfLine &
-	:rtype: None
-") Prepend;
-		void Prepend (IntPatch_SequenceOfLine & S);
-		%feature("compactdefaultargs") InsertBefore;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param T:
-	:type T: Handle_IntPatch_Line &
-	:rtype: None
-") InsertBefore;
-		void InsertBefore (const Standard_Integer Index,const Handle_IntPatch_Line & T);
-		%feature("compactdefaultargs") InsertBefore;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param S:
-	:type S: IntPatch_SequenceOfLine &
-	:rtype: None
-") InsertBefore;
-		void InsertBefore (const Standard_Integer Index,IntPatch_SequenceOfLine & S);
-		%feature("compactdefaultargs") InsertAfter;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param T:
-	:type T: Handle_IntPatch_Line &
-	:rtype: None
-") InsertAfter;
-		void InsertAfter (const Standard_Integer Index,const Handle_IntPatch_Line & T);
-		%feature("compactdefaultargs") InsertAfter;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param S:
-	:type S: IntPatch_SequenceOfLine &
-	:rtype: None
-") InsertAfter;
-		void InsertAfter (const Standard_Integer Index,IntPatch_SequenceOfLine & S);
-		%feature("compactdefaultargs") First;
-		%feature("autodoc", "	:rtype: Handle_IntPatch_Line
-") First;
-		Handle_IntPatch_Line First ();
-		%feature("compactdefaultargs") Last;
-		%feature("autodoc", "	:rtype: Handle_IntPatch_Line
-") Last;
-		Handle_IntPatch_Line Last ();
-		%feature("compactdefaultargs") Split;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param Sub:
-	:type Sub: IntPatch_SequenceOfLine &
-	:rtype: None
-") Split;
-		void Split (const Standard_Integer Index,IntPatch_SequenceOfLine & Sub);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: Handle_IntPatch_Line
-") Value;
-		Handle_IntPatch_Line Value (const Standard_Integer Index);
-		%feature("compactdefaultargs") SetValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param I:
-	:type I: Handle_IntPatch_Line &
-	:rtype: None
-") SetValue;
-		void SetValue (const Standard_Integer Index,const Handle_IntPatch_Line & I);
-		%feature("compactdefaultargs") ChangeValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: Handle_IntPatch_Line
-") ChangeValue;
-		Handle_IntPatch_Line ChangeValue (const Standard_Integer Index);
-		%feature("compactdefaultargs") Remove;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: None
-") Remove;
-		void Remove (const Standard_Integer Index);
-		%feature("compactdefaultargs") Remove;
-		%feature("autodoc", "	:param FromIndex:
-	:type FromIndex: int
-	:param ToIndex:
-	:type ToIndex: int
-	:rtype: None
-") Remove;
-		void Remove (const Standard_Integer FromIndex,const Standard_Integer ToIndex);
-};
-
-
-%extend IntPatch_SequenceOfLine {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor IntPatch_SequenceOfPathPointOfTheSOnBounds;
-class IntPatch_SequenceOfPathPointOfTheSOnBounds : public TCollection_BaseSequence {
-	public:
-		%feature("compactdefaultargs") IntPatch_SequenceOfPathPointOfTheSOnBounds;
-		%feature("autodoc", "	:rtype: None
-") IntPatch_SequenceOfPathPointOfTheSOnBounds;
-		 IntPatch_SequenceOfPathPointOfTheSOnBounds ();
-		%feature("compactdefaultargs") IntPatch_SequenceOfPathPointOfTheSOnBounds;
-		%feature("autodoc", "	:param Other:
-	:type Other: IntPatch_SequenceOfPathPointOfTheSOnBounds &
-	:rtype: None
-") IntPatch_SequenceOfPathPointOfTheSOnBounds;
-		 IntPatch_SequenceOfPathPointOfTheSOnBounds (const IntPatch_SequenceOfPathPointOfTheSOnBounds & Other);
-		%feature("compactdefaultargs") Clear;
-		%feature("autodoc", "	:rtype: None
-") Clear;
-		void Clear ();
-		%feature("compactdefaultargs") Assign;
-		%feature("autodoc", "	:param Other:
-	:type Other: IntPatch_SequenceOfPathPointOfTheSOnBounds &
-	:rtype: IntPatch_SequenceOfPathPointOfTheSOnBounds
-") Assign;
-		const IntPatch_SequenceOfPathPointOfTheSOnBounds & Assign (const IntPatch_SequenceOfPathPointOfTheSOnBounds & Other);
-		%feature("compactdefaultargs") operator =;
-		%feature("autodoc", "	:param Other:
-	:type Other: IntPatch_SequenceOfPathPointOfTheSOnBounds &
-	:rtype: IntPatch_SequenceOfPathPointOfTheSOnBounds
-") operator =;
-		const IntPatch_SequenceOfPathPointOfTheSOnBounds & operator = (const IntPatch_SequenceOfPathPointOfTheSOnBounds & Other);
-		%feature("compactdefaultargs") Append;
-		%feature("autodoc", "	:param T:
-	:type T: IntPatch_ThePathPointOfTheSOnBounds &
-	:rtype: None
-") Append;
-		void Append (const IntPatch_ThePathPointOfTheSOnBounds & T);
-		%feature("compactdefaultargs") Append;
-		%feature("autodoc", "	:param S:
-	:type S: IntPatch_SequenceOfPathPointOfTheSOnBounds &
-	:rtype: None
-") Append;
-		void Append (IntPatch_SequenceOfPathPointOfTheSOnBounds & S);
-		%feature("compactdefaultargs") Prepend;
-		%feature("autodoc", "	:param T:
-	:type T: IntPatch_ThePathPointOfTheSOnBounds &
-	:rtype: None
-") Prepend;
-		void Prepend (const IntPatch_ThePathPointOfTheSOnBounds & T);
-		%feature("compactdefaultargs") Prepend;
-		%feature("autodoc", "	:param S:
-	:type S: IntPatch_SequenceOfPathPointOfTheSOnBounds &
-	:rtype: None
-") Prepend;
-		void Prepend (IntPatch_SequenceOfPathPointOfTheSOnBounds & S);
-		%feature("compactdefaultargs") InsertBefore;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param T:
-	:type T: IntPatch_ThePathPointOfTheSOnBounds &
-	:rtype: None
-") InsertBefore;
-		void InsertBefore (const Standard_Integer Index,const IntPatch_ThePathPointOfTheSOnBounds & T);
-		%feature("compactdefaultargs") InsertBefore;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param S:
-	:type S: IntPatch_SequenceOfPathPointOfTheSOnBounds &
-	:rtype: None
-") InsertBefore;
-		void InsertBefore (const Standard_Integer Index,IntPatch_SequenceOfPathPointOfTheSOnBounds & S);
-		%feature("compactdefaultargs") InsertAfter;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param T:
-	:type T: IntPatch_ThePathPointOfTheSOnBounds &
-	:rtype: None
-") InsertAfter;
-		void InsertAfter (const Standard_Integer Index,const IntPatch_ThePathPointOfTheSOnBounds & T);
-		%feature("compactdefaultargs") InsertAfter;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param S:
-	:type S: IntPatch_SequenceOfPathPointOfTheSOnBounds &
-	:rtype: None
-") InsertAfter;
-		void InsertAfter (const Standard_Integer Index,IntPatch_SequenceOfPathPointOfTheSOnBounds & S);
-		%feature("compactdefaultargs") First;
-		%feature("autodoc", "	:rtype: IntPatch_ThePathPointOfTheSOnBounds
-") First;
-		const IntPatch_ThePathPointOfTheSOnBounds & First ();
-		%feature("compactdefaultargs") Last;
-		%feature("autodoc", "	:rtype: IntPatch_ThePathPointOfTheSOnBounds
-") Last;
-		const IntPatch_ThePathPointOfTheSOnBounds & Last ();
-		%feature("compactdefaultargs") Split;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param Sub:
-	:type Sub: IntPatch_SequenceOfPathPointOfTheSOnBounds &
-	:rtype: None
-") Split;
-		void Split (const Standard_Integer Index,IntPatch_SequenceOfPathPointOfTheSOnBounds & Sub);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: IntPatch_ThePathPointOfTheSOnBounds
-") Value;
-		const IntPatch_ThePathPointOfTheSOnBounds & Value (const Standard_Integer Index);
-		%feature("compactdefaultargs") SetValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param I:
-	:type I: IntPatch_ThePathPointOfTheSOnBounds &
-	:rtype: None
-") SetValue;
-		void SetValue (const Standard_Integer Index,const IntPatch_ThePathPointOfTheSOnBounds & I);
-		%feature("compactdefaultargs") ChangeValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: IntPatch_ThePathPointOfTheSOnBounds
-") ChangeValue;
-		IntPatch_ThePathPointOfTheSOnBounds & ChangeValue (const Standard_Integer Index);
-		%feature("compactdefaultargs") Remove;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: None
-") Remove;
-		void Remove (const Standard_Integer Index);
-		%feature("compactdefaultargs") Remove;
-		%feature("autodoc", "	:param FromIndex:
-	:type FromIndex: int
-	:param ToIndex:
-	:type ToIndex: int
-	:rtype: None
-") Remove;
-		void Remove (const Standard_Integer FromIndex,const Standard_Integer ToIndex);
-};
-
-
-%extend IntPatch_SequenceOfPathPointOfTheSOnBounds {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor IntPatch_SequenceOfPoint;
-class IntPatch_SequenceOfPoint : public TCollection_BaseSequence {
-	public:
-		%feature("compactdefaultargs") IntPatch_SequenceOfPoint;
-		%feature("autodoc", "	:rtype: None
-") IntPatch_SequenceOfPoint;
-		 IntPatch_SequenceOfPoint ();
-		%feature("compactdefaultargs") IntPatch_SequenceOfPoint;
-		%feature("autodoc", "	:param Other:
-	:type Other: IntPatch_SequenceOfPoint &
-	:rtype: None
-") IntPatch_SequenceOfPoint;
-		 IntPatch_SequenceOfPoint (const IntPatch_SequenceOfPoint & Other);
-		%feature("compactdefaultargs") Clear;
-		%feature("autodoc", "	:rtype: None
-") Clear;
-		void Clear ();
-		%feature("compactdefaultargs") Assign;
-		%feature("autodoc", "	:param Other:
-	:type Other: IntPatch_SequenceOfPoint &
-	:rtype: IntPatch_SequenceOfPoint
-") Assign;
-		const IntPatch_SequenceOfPoint & Assign (const IntPatch_SequenceOfPoint & Other);
-		%feature("compactdefaultargs") operator =;
-		%feature("autodoc", "	:param Other:
-	:type Other: IntPatch_SequenceOfPoint &
-	:rtype: IntPatch_SequenceOfPoint
-") operator =;
-		const IntPatch_SequenceOfPoint & operator = (const IntPatch_SequenceOfPoint & Other);
-		%feature("compactdefaultargs") Append;
-		%feature("autodoc", "	:param T:
-	:type T: IntPatch_Point &
-	:rtype: None
-") Append;
-		void Append (const IntPatch_Point & T);
-		%feature("compactdefaultargs") Append;
-		%feature("autodoc", "	:param S:
-	:type S: IntPatch_SequenceOfPoint &
-	:rtype: None
-") Append;
-		void Append (IntPatch_SequenceOfPoint & S);
-		%feature("compactdefaultargs") Prepend;
-		%feature("autodoc", "	:param T:
-	:type T: IntPatch_Point &
-	:rtype: None
-") Prepend;
-		void Prepend (const IntPatch_Point & T);
-		%feature("compactdefaultargs") Prepend;
-		%feature("autodoc", "	:param S:
-	:type S: IntPatch_SequenceOfPoint &
-	:rtype: None
-") Prepend;
-		void Prepend (IntPatch_SequenceOfPoint & S);
-		%feature("compactdefaultargs") InsertBefore;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param T:
-	:type T: IntPatch_Point &
-	:rtype: None
-") InsertBefore;
-		void InsertBefore (const Standard_Integer Index,const IntPatch_Point & T);
-		%feature("compactdefaultargs") InsertBefore;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param S:
-	:type S: IntPatch_SequenceOfPoint &
-	:rtype: None
-") InsertBefore;
-		void InsertBefore (const Standard_Integer Index,IntPatch_SequenceOfPoint & S);
-		%feature("compactdefaultargs") InsertAfter;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param T:
-	:type T: IntPatch_Point &
-	:rtype: None
-") InsertAfter;
-		void InsertAfter (const Standard_Integer Index,const IntPatch_Point & T);
-		%feature("compactdefaultargs") InsertAfter;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param S:
-	:type S: IntPatch_SequenceOfPoint &
-	:rtype: None
-") InsertAfter;
-		void InsertAfter (const Standard_Integer Index,IntPatch_SequenceOfPoint & S);
-		%feature("compactdefaultargs") First;
-		%feature("autodoc", "	:rtype: IntPatch_Point
-") First;
-		const IntPatch_Point & First ();
-		%feature("compactdefaultargs") Last;
-		%feature("autodoc", "	:rtype: IntPatch_Point
-") Last;
-		const IntPatch_Point & Last ();
-		%feature("compactdefaultargs") Split;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param Sub:
-	:type Sub: IntPatch_SequenceOfPoint &
-	:rtype: None
-") Split;
-		void Split (const Standard_Integer Index,IntPatch_SequenceOfPoint & Sub);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: IntPatch_Point
-") Value;
-		const IntPatch_Point & Value (const Standard_Integer Index);
-		%feature("compactdefaultargs") SetValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param I:
-	:type I: IntPatch_Point &
-	:rtype: None
-") SetValue;
-		void SetValue (const Standard_Integer Index,const IntPatch_Point & I);
-		%feature("compactdefaultargs") ChangeValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: IntPatch_Point
-") ChangeValue;
-		IntPatch_Point & ChangeValue (const Standard_Integer Index);
-		%feature("compactdefaultargs") Remove;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: None
-") Remove;
-		void Remove (const Standard_Integer Index);
-		%feature("compactdefaultargs") Remove;
-		%feature("autodoc", "	:param FromIndex:
-	:type FromIndex: int
-	:param ToIndex:
-	:type ToIndex: int
-	:rtype: None
-") Remove;
-		void Remove (const Standard_Integer FromIndex,const Standard_Integer ToIndex);
-};
-
-
-%extend IntPatch_SequenceOfPoint {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor IntPatch_SequenceOfSegmentOfTheSOnBounds;
-class IntPatch_SequenceOfSegmentOfTheSOnBounds : public TCollection_BaseSequence {
-	public:
-		%feature("compactdefaultargs") IntPatch_SequenceOfSegmentOfTheSOnBounds;
-		%feature("autodoc", "	:rtype: None
-") IntPatch_SequenceOfSegmentOfTheSOnBounds;
-		 IntPatch_SequenceOfSegmentOfTheSOnBounds ();
-		%feature("compactdefaultargs") IntPatch_SequenceOfSegmentOfTheSOnBounds;
-		%feature("autodoc", "	:param Other:
-	:type Other: IntPatch_SequenceOfSegmentOfTheSOnBounds &
-	:rtype: None
-") IntPatch_SequenceOfSegmentOfTheSOnBounds;
-		 IntPatch_SequenceOfSegmentOfTheSOnBounds (const IntPatch_SequenceOfSegmentOfTheSOnBounds & Other);
-		%feature("compactdefaultargs") Clear;
-		%feature("autodoc", "	:rtype: None
-") Clear;
-		void Clear ();
-		%feature("compactdefaultargs") Assign;
-		%feature("autodoc", "	:param Other:
-	:type Other: IntPatch_SequenceOfSegmentOfTheSOnBounds &
-	:rtype: IntPatch_SequenceOfSegmentOfTheSOnBounds
-") Assign;
-		const IntPatch_SequenceOfSegmentOfTheSOnBounds & Assign (const IntPatch_SequenceOfSegmentOfTheSOnBounds & Other);
-		%feature("compactdefaultargs") operator =;
-		%feature("autodoc", "	:param Other:
-	:type Other: IntPatch_SequenceOfSegmentOfTheSOnBounds &
-	:rtype: IntPatch_SequenceOfSegmentOfTheSOnBounds
-") operator =;
-		const IntPatch_SequenceOfSegmentOfTheSOnBounds & operator = (const IntPatch_SequenceOfSegmentOfTheSOnBounds & Other);
-		%feature("compactdefaultargs") Append;
-		%feature("autodoc", "	:param T:
-	:type T: IntPatch_TheSegmentOfTheSOnBounds &
-	:rtype: None
-") Append;
-		void Append (const IntPatch_TheSegmentOfTheSOnBounds & T);
-		%feature("compactdefaultargs") Append;
-		%feature("autodoc", "	:param S:
-	:type S: IntPatch_SequenceOfSegmentOfTheSOnBounds &
-	:rtype: None
-") Append;
-		void Append (IntPatch_SequenceOfSegmentOfTheSOnBounds & S);
-		%feature("compactdefaultargs") Prepend;
-		%feature("autodoc", "	:param T:
-	:type T: IntPatch_TheSegmentOfTheSOnBounds &
-	:rtype: None
-") Prepend;
-		void Prepend (const IntPatch_TheSegmentOfTheSOnBounds & T);
-		%feature("compactdefaultargs") Prepend;
-		%feature("autodoc", "	:param S:
-	:type S: IntPatch_SequenceOfSegmentOfTheSOnBounds &
-	:rtype: None
-") Prepend;
-		void Prepend (IntPatch_SequenceOfSegmentOfTheSOnBounds & S);
-		%feature("compactdefaultargs") InsertBefore;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param T:
-	:type T: IntPatch_TheSegmentOfTheSOnBounds &
-	:rtype: None
-") InsertBefore;
-		void InsertBefore (const Standard_Integer Index,const IntPatch_TheSegmentOfTheSOnBounds & T);
-		%feature("compactdefaultargs") InsertBefore;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param S:
-	:type S: IntPatch_SequenceOfSegmentOfTheSOnBounds &
-	:rtype: None
-") InsertBefore;
-		void InsertBefore (const Standard_Integer Index,IntPatch_SequenceOfSegmentOfTheSOnBounds & S);
-		%feature("compactdefaultargs") InsertAfter;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param T:
-	:type T: IntPatch_TheSegmentOfTheSOnBounds &
-	:rtype: None
-") InsertAfter;
-		void InsertAfter (const Standard_Integer Index,const IntPatch_TheSegmentOfTheSOnBounds & T);
-		%feature("compactdefaultargs") InsertAfter;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param S:
-	:type S: IntPatch_SequenceOfSegmentOfTheSOnBounds &
-	:rtype: None
-") InsertAfter;
-		void InsertAfter (const Standard_Integer Index,IntPatch_SequenceOfSegmentOfTheSOnBounds & S);
-		%feature("compactdefaultargs") First;
-		%feature("autodoc", "	:rtype: IntPatch_TheSegmentOfTheSOnBounds
-") First;
-		const IntPatch_TheSegmentOfTheSOnBounds & First ();
-		%feature("compactdefaultargs") Last;
-		%feature("autodoc", "	:rtype: IntPatch_TheSegmentOfTheSOnBounds
-") Last;
-		const IntPatch_TheSegmentOfTheSOnBounds & Last ();
-		%feature("compactdefaultargs") Split;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param Sub:
-	:type Sub: IntPatch_SequenceOfSegmentOfTheSOnBounds &
-	:rtype: None
-") Split;
-		void Split (const Standard_Integer Index,IntPatch_SequenceOfSegmentOfTheSOnBounds & Sub);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: IntPatch_TheSegmentOfTheSOnBounds
-") Value;
-		const IntPatch_TheSegmentOfTheSOnBounds & Value (const Standard_Integer Index);
-		%feature("compactdefaultargs") SetValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param I:
-	:type I: IntPatch_TheSegmentOfTheSOnBounds &
-	:rtype: None
-") SetValue;
-		void SetValue (const Standard_Integer Index,const IntPatch_TheSegmentOfTheSOnBounds & I);
-		%feature("compactdefaultargs") ChangeValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: IntPatch_TheSegmentOfTheSOnBounds
-") ChangeValue;
-		IntPatch_TheSegmentOfTheSOnBounds & ChangeValue (const Standard_Integer Index);
-		%feature("compactdefaultargs") Remove;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: None
-") Remove;
-		void Remove (const Standard_Integer Index);
-		%feature("compactdefaultargs") Remove;
-		%feature("autodoc", "	:param FromIndex:
-	:type FromIndex: int
-	:param ToIndex:
-	:type ToIndex: int
-	:rtype: None
-") Remove;
-		void Remove (const Standard_Integer FromIndex,const Standard_Integer ToIndex);
-};
-
-
-%extend IntPatch_SequenceOfSegmentOfTheSOnBounds {
+%extend IntPatch_SpecialPoints {
 	%pythoncode {
 	__repr__ = _dumps_object
 	}
 };
 %nodefaultctor IntPatch_TheIWLineOfTheIWalking;
-class IntPatch_TheIWLineOfTheIWalking : public MMgt_TShared {
+class IntPatch_TheIWLineOfTheIWalking : public Standard_Transient {
 	public:
 		%feature("compactdefaultargs") IntPatch_TheIWLineOfTheIWalking;
 		%feature("autodoc", "	:param theAllocator: default value is 0
@@ -3364,17 +2431,23 @@ class IntPatch_TheIWLineOfTheIWalking : public MMgt_TShared {
 ") IntPatch_TheIWLineOfTheIWalking;
 		 IntPatch_TheIWLineOfTheIWalking (const IntSurf_Allocator & theAllocator = 0);
 		%feature("compactdefaultargs") Reverse;
-		%feature("autodoc", "	:rtype: None
+		%feature("autodoc", "	* reverse the points in the line. Hasfirst, HasLast are kept.
+
+	:rtype: None
 ") Reverse;
 		void Reverse ();
 		%feature("compactdefaultargs") Cut;
-		%feature("autodoc", "	:param Index:
+		%feature("autodoc", "	* Cut the line at the point of rank Index.
+
+	:param Index:
 	:type Index: int
 	:rtype: None
 ") Cut;
 		void Cut (const Standard_Integer Index);
 		%feature("compactdefaultargs") AddPoint;
-		%feature("autodoc", "	:param P:
+		%feature("autodoc", "	* Add a point in the line.
+
+	:param P:
 	:type P: IntSurf_PntOn2S &
 	:rtype: None
 ") AddPoint;
@@ -3426,7 +2499,9 @@ class IntPatch_TheIWLineOfTheIWalking : public MMgt_TShared {
 ") AddStatusLast;
 		void AddStatusLast (const Standard_Boolean HasLast,const Standard_Integer Index,const IntSurf_PathPoint & P);
 		%feature("compactdefaultargs") AddIndexPassing;
-		%feature("autodoc", "	:param Index:
+		%feature("autodoc", "	* associer a l 'indice du point sur la ligne l'indice du point passant dans l'iterateur de depart
+
+	:param Index:
 	:type Index: int
 	:rtype: None
 ") AddIndexPassing;
@@ -3452,53 +2527,77 @@ class IntPatch_TheIWLineOfTheIWalking : public MMgt_TShared {
 ") SetTangencyAtEnd;
 		void SetTangencyAtEnd (const Standard_Boolean IsTangent);
 		%feature("compactdefaultargs") NbPoints;
-		%feature("autodoc", "	:rtype: int
+		%feature("autodoc", "	* Returns the number of points of the line --including first point and end point : see HasLastPoint and HasFirstPoint--.
+
+	:rtype: int
 ") NbPoints;
 		Standard_Integer NbPoints ();
 		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:param Index:
+		%feature("autodoc", "	* Returns the point of range Index. If index <= 0 or Index > NbPoints, an exception is raised.
+
+	:param Index:
 	:type Index: int
 	:rtype: IntSurf_PntOn2S
 ") Value;
 		const IntSurf_PntOn2S & Value (const Standard_Integer Index);
 		%feature("compactdefaultargs") Line;
-		%feature("autodoc", "	:rtype: Handle_IntSurf_LineOn2S
+		%feature("autodoc", "	* Returns the LineOn2S contained in the walking line.
+
+	:rtype: Handle_IntSurf_LineOn2S
 ") Line;
 		Handle_IntSurf_LineOn2S Line ();
 		%feature("compactdefaultargs") IsClosed;
-		%feature("autodoc", "	:rtype: bool
+		%feature("autodoc", "	* Returns True if the line is closed.
+
+	:rtype: bool
 ") IsClosed;
 		Standard_Boolean IsClosed ();
 		%feature("compactdefaultargs") HasFirstPoint;
-		%feature("autodoc", "	:rtype: bool
+		%feature("autodoc", "	* Returns True if the first point of the line is a marching point . when is HasFirstPoint==False ,the line begins on the natural bound of the surface.the line can be too long
+
+	:rtype: bool
 ") HasFirstPoint;
 		Standard_Boolean HasFirstPoint ();
 		%feature("compactdefaultargs") HasLastPoint;
-		%feature("autodoc", "	:rtype: bool
+		%feature("autodoc", "	* Returns True if the end point of the line is a marching point --Point from IntWS--. when is HasFirstPoint==False ,the line ends on the natural bound of the surface.the line can be too long.
+
+	:rtype: bool
 ") HasLastPoint;
 		Standard_Boolean HasLastPoint ();
 		%feature("compactdefaultargs") FirstPoint;
-		%feature("autodoc", "	:rtype: IntSurf_PathPoint
+		%feature("autodoc", "	* Returns the first point of the line when it is a marching point. An exception is raised if HasFirstPoint returns False.
+
+	:rtype: IntSurf_PathPoint
 ") FirstPoint;
 		const IntSurf_PathPoint & FirstPoint ();
 		%feature("compactdefaultargs") FirstPointIndex;
-		%feature("autodoc", "	:rtype: int
+		%feature("autodoc", "	* Returns the Index of first point of the line when it is a marching point.This index is the index in the PointStartIterator. An exception is raised if HasFirstPoint returns False.
+
+	:rtype: int
 ") FirstPointIndex;
 		Standard_Integer FirstPointIndex ();
 		%feature("compactdefaultargs") LastPoint;
-		%feature("autodoc", "	:rtype: IntSurf_PathPoint
+		%feature("autodoc", "	* Returns the last point of the line when it is a marching point. An exception is raised if HasLastPoint returns False.
+
+	:rtype: IntSurf_PathPoint
 ") LastPoint;
 		const IntSurf_PathPoint & LastPoint ();
 		%feature("compactdefaultargs") LastPointIndex;
-		%feature("autodoc", "	:rtype: int
+		%feature("autodoc", "	* Returns the index of last point of the line when it is a marching point.This index is the index in the PointStartIterator. An exception is raised if HasLastPoint returns False.
+
+	:rtype: int
 ") LastPointIndex;
 		Standard_Integer LastPointIndex ();
 		%feature("compactdefaultargs") NbPassingPoint;
-		%feature("autodoc", "	:rtype: int
+		%feature("autodoc", "	* returns the number of points belonging to Pnts1 which are passing point.
+
+	:rtype: int
 ") NbPassingPoint;
 		Standard_Integer NbPassingPoint ();
 		%feature("compactdefaultargs") PassingPoint;
-		%feature("autodoc", "	:param Index:
+		%feature("autodoc", "	* returns the index of the point belonging to the line which is associated to the passing point belonging to Pnts1 an exception is raised if Index > NbPassingPoint----
+
+	:param Index:
 	:type Index: int
 	:param IndexLine:
 	:type IndexLine: int &
@@ -3543,7 +2642,7 @@ class IntPatch_TheIWLineOfTheIWalking : public MMgt_TShared {
 %}
 
 %nodefaultctor Handle_IntPatch_TheIWLineOfTheIWalking;
-class Handle_IntPatch_TheIWLineOfTheIWalking : public Handle_MMgt_TShared {
+class Handle_IntPatch_TheIWLineOfTheIWalking : public Handle_Standard_Transient {
 
     public:
         // constructors
@@ -3555,19 +2654,20 @@ class Handle_IntPatch_TheIWLineOfTheIWalking : public Handle_MMgt_TShared {
         static const Handle_IntPatch_TheIWLineOfTheIWalking DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_IntPatch_TheIWLineOfTheIWalking {
     IntPatch_TheIWLineOfTheIWalking* _get_reference() {
-    return (IntPatch_TheIWLineOfTheIWalking*)$self->Access();
+    return (IntPatch_TheIWLineOfTheIWalking*)$self->get();
     }
 };
 
 %extend Handle_IntPatch_TheIWLineOfTheIWalking {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend IntPatch_TheIWLineOfTheIWalking {
@@ -3579,17 +2679,23 @@ class Handle_IntPatch_TheIWLineOfTheIWalking : public Handle_MMgt_TShared {
 class IntPatch_TheIWalking {
 	public:
 		%feature("compactdefaultargs") IntPatch_TheIWalking;
-		%feature("autodoc", "	:param Epsilon:
+		%feature("autodoc", "	* Deflection is the maximum deflection admitted between two consecutive points on a resulting polyline. Step is the maximum increment admitted between two consecutive points --in 2d space--. Epsilon is the tolerance beyond which 2 points are confused. theToFillHoles is the flag defining whether possible holes between resulting curves are filled or not in case of IntPatch walking theToFillHoles is False
+
+	:param Epsilon:
 	:type Epsilon: float
 	:param Deflection:
 	:type Deflection: float
 	:param Step:
 	:type Step: float
+	:param theToFillHoles: default value is Standard_False
+	:type theToFillHoles: bool
 	:rtype: None
 ") IntPatch_TheIWalking;
-		 IntPatch_TheIWalking (const Standard_Real Epsilon,const Standard_Real Deflection,const Standard_Real Step);
+		 IntPatch_TheIWalking (const Standard_Real Epsilon,const Standard_Real Deflection,const Standard_Real Step,const Standard_Boolean theToFillHoles = Standard_False);
 		%feature("compactdefaultargs") SetTolerance;
-		%feature("autodoc", "	:param Epsilon:
+		%feature("autodoc", "	* Deflection is the maximum deflection admitted between two consecutive points on a resulting polyline. Step is the maximum increment admitted between two consecutive points --in 2d space--. Epsilon is the tolerance beyond which 2 points are confused
+
+	:param Epsilon:
 	:type Epsilon: float
 	:param Deflection:
 	:type Deflection: float
@@ -3599,7 +2705,9 @@ class IntPatch_TheIWalking {
 ") SetTolerance;
 		void SetTolerance (const Standard_Real Epsilon,const Standard_Real Deflection,const Standard_Real Step);
 		%feature("compactdefaultargs") Perform;
-		%feature("autodoc", "	:param Pnts1:
+		%feature("autodoc", "	* Searches a set of polylines starting on a point of Pnts1 or Pnts2. Each point on a resulting polyline verifies F--u,v--=0
+
+	:param Pnts1:
 	:type Pnts1: IntSurf_SequenceOfPathPoint &
 	:param Pnts2:
 	:type Pnts2: IntSurf_SequenceOfInteriorPoint &
@@ -3613,7 +2721,9 @@ class IntPatch_TheIWalking {
 ") Perform;
 		void Perform (const IntSurf_SequenceOfPathPoint & Pnts1,const IntSurf_SequenceOfInteriorPoint & Pnts2,IntPatch_TheSurfFunction & Func,const Handle_Adaptor3d_HSurface & S,const Standard_Boolean Reversed = Standard_False);
 		%feature("compactdefaultargs") Perform;
-		%feature("autodoc", "	:param Pnts1:
+		%feature("autodoc", "	* Searches a set of polylines starting on a point of Pnts1. Each point on a resulting polyline verifies F--u,v--=0
+
+	:param Pnts1:
 	:type Pnts1: IntSurf_SequenceOfPathPoint &
 	:param Func:
 	:type Func: IntPatch_TheSurfFunction &
@@ -3625,25 +2735,35 @@ class IntPatch_TheIWalking {
 ") Perform;
 		void Perform (const IntSurf_SequenceOfPathPoint & Pnts1,IntPatch_TheSurfFunction & Func,const Handle_Adaptor3d_HSurface & S,const Standard_Boolean Reversed = Standard_False);
 		%feature("compactdefaultargs") IsDone;
-		%feature("autodoc", "	:rtype: bool
+		%feature("autodoc", "	* Returns true if the calculus was successful.
+
+	:rtype: bool
 ") IsDone;
 		Standard_Boolean IsDone ();
 		%feature("compactdefaultargs") NbLines;
-		%feature("autodoc", "	:rtype: int
+		%feature("autodoc", "	* Returns the number of resulting polylines. An exception is raised if IsDone returns False.
+
+	:rtype: int
 ") NbLines;
 		Standard_Integer NbLines ();
 		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:param Index:
+		%feature("autodoc", "	* Returns the polyline of range Index. An exception is raised if IsDone is False. An exception is raised if Index<=0 or Index>NbLines.
+
+	:param Index:
 	:type Index: int
 	:rtype: Handle_IntPatch_TheIWLineOfTheIWalking
 ") Value;
 		Handle_IntPatch_TheIWLineOfTheIWalking Value (const Standard_Integer Index);
 		%feature("compactdefaultargs") NbSinglePnts;
-		%feature("autodoc", "	:rtype: int
+		%feature("autodoc", "	* Returns the number of points belonging to Pnts on which no line starts or ends. An exception is raised if IsDone returns False.
+
+	:rtype: int
 ") NbSinglePnts;
 		Standard_Integer NbSinglePnts ();
 		%feature("compactdefaultargs") SinglePnt;
-		%feature("autodoc", "	:param Index:
+		%feature("autodoc", "	* Returns the point of range Index . An exception is raised if IsDone returns False. An exception is raised if Index<=0 or Index > NbSinglePnts.
+
+	:param Index:
 	:type Index: int
 	:rtype: IntSurf_PathPoint
 ") SinglePnt;
@@ -3751,11 +2871,15 @@ class IntPatch_ThePathPointOfTheSOnBounds {
 class IntPatch_TheSOnBounds {
 	public:
 		%feature("compactdefaultargs") IntPatch_TheSOnBounds;
-		%feature("autodoc", "	:rtype: None
+		%feature("autodoc", "	* Empty constructor.
+
+	:rtype: None
 ") IntPatch_TheSOnBounds;
 		 IntPatch_TheSOnBounds ();
 		%feature("compactdefaultargs") Perform;
-		%feature("autodoc", "	:param F:
+		%feature("autodoc", "	* Algorithm to find the points and parts of curves of Domain --domain of of restriction of a surface-- which verify F = 0. TolBoundary defines if a curve is on Q. TolTangency defines if a point is on Q.
+
+	:param F:
 	:type F: IntPatch_ArcFunction &
 	:param Domain:
 	:type Domain: Handle_Adaptor3d_TopolTool &
@@ -3769,29 +2893,41 @@ class IntPatch_TheSOnBounds {
 ") Perform;
 		void Perform (IntPatch_ArcFunction & F,const Handle_Adaptor3d_TopolTool & Domain,const Standard_Real TolBoundary,const Standard_Real TolTangency,const Standard_Boolean RecheckOnRegularity = Standard_False);
 		%feature("compactdefaultargs") IsDone;
-		%feature("autodoc", "	:rtype: bool
+		%feature("autodoc", "	* Returns True if the calculus was successful.
+
+	:rtype: bool
 ") IsDone;
 		Standard_Boolean IsDone ();
 		%feature("compactdefaultargs") AllArcSolution;
-		%feature("autodoc", "	:rtype: bool
+		%feature("autodoc", "	* Returns true if all arc of the Arcs are solution --inside the surface--. An exception is raised if IsDone returns False.
+
+	:rtype: bool
 ") AllArcSolution;
 		Standard_Boolean AllArcSolution ();
 		%feature("compactdefaultargs") NbPoints;
-		%feature("autodoc", "	:rtype: int
+		%feature("autodoc", "	* Returns the number of resulting points. An exception is raised if IsDone returns False --NotDone--.
+
+	:rtype: int
 ") NbPoints;
 		Standard_Integer NbPoints ();
 		%feature("compactdefaultargs") Point;
-		%feature("autodoc", "	:param Index:
+		%feature("autodoc", "	* Returns the resulting point of range Index. The exception NotDone is raised if IsDone---- returns False. The exception OutOfRange is raised if Index <= 0 or Index > NbPoints.
+
+	:param Index:
 	:type Index: int
 	:rtype: IntPatch_ThePathPointOfTheSOnBounds
 ") Point;
 		const IntPatch_ThePathPointOfTheSOnBounds & Point (const Standard_Integer Index);
 		%feature("compactdefaultargs") NbSegments;
-		%feature("autodoc", "	:rtype: int
+		%feature("autodoc", "	* Returns the number of the resulting segments. An exception is raised if IsDone returns False --NotDone--.
+
+	:rtype: int
 ") NbSegments;
 		Standard_Integer NbSegments ();
 		%feature("compactdefaultargs") Segment;
-		%feature("autodoc", "	:param Index:
+		%feature("autodoc", "	* Returns the resulting segment of range Index. The exception NotDone is raised if IsDone---- returns False. The exception OutOfRange is raised if Index <= 0 or Index > NbPoints.
+
+	:param Index:
 	:type Index: int
 	:rtype: IntPatch_TheSegmentOfTheSOnBounds
 ") Segment;
@@ -3852,11 +2988,15 @@ class IntPatch_TheSearchInside {
 ") IsDone;
 		Standard_Boolean IsDone ();
 		%feature("compactdefaultargs") NbPoints;
-		%feature("autodoc", "	:rtype: int
+		%feature("autodoc", "	* Returns the number of points. The exception NotDone if raised if IsDone returns False.
+
+	:rtype: int
 ") NbPoints;
 		Standard_Integer NbPoints ();
 		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:param Index:
+		%feature("autodoc", "	* Returns the point of range Index. The exception NotDone if raised if IsDone returns False. The exception OutOfRange if raised if Index <= 0 or Index > NbPoints.
+
+	:param Index:
 	:type Index: int
 	:rtype: IntSurf_InteriorPoint
 ") Value;
@@ -3873,17 +3013,23 @@ class IntPatch_TheSearchInside {
 class IntPatch_TheSegmentOfTheSOnBounds {
 	public:
 		%feature("compactdefaultargs") IntPatch_TheSegmentOfTheSOnBounds;
-		%feature("autodoc", "	:rtype: None
+		%feature("autodoc", "	* Empty constructor.
+
+	:rtype: None
 ") IntPatch_TheSegmentOfTheSOnBounds;
 		 IntPatch_TheSegmentOfTheSOnBounds ();
 		%feature("compactdefaultargs") SetValue;
-		%feature("autodoc", "	:param A:
+		%feature("autodoc", "	* Defines the concerned arc.
+
+	:param A:
 	:type A: Handle_Adaptor2d_HCurve2d &
 	:rtype: None
 ") SetValue;
 		void SetValue (const Handle_Adaptor2d_HCurve2d & A);
 		%feature("compactdefaultargs") SetLimitPoint;
-		%feature("autodoc", "	:param V:
+		%feature("autodoc", "	* Defines the first point or the last point, depending on the value of the boolean First.
+
+	:param V:
 	:type V: IntPatch_ThePathPointOfTheSOnBounds &
 	:param First:
 	:type First: bool
@@ -3891,23 +3037,33 @@ class IntPatch_TheSegmentOfTheSOnBounds {
 ") SetLimitPoint;
 		void SetLimitPoint (const IntPatch_ThePathPointOfTheSOnBounds & V,const Standard_Boolean First);
 		%feature("compactdefaultargs") Curve;
-		%feature("autodoc", "	:rtype: Handle_Adaptor2d_HCurve2d
+		%feature("autodoc", "	* Returns the geometric curve on the surface 's domain which is solution.
+
+	:rtype: Handle_Adaptor2d_HCurve2d
 ") Curve;
 		Handle_Adaptor2d_HCurve2d Curve ();
 		%feature("compactdefaultargs") HasFirstPoint;
-		%feature("autodoc", "	:rtype: bool
+		%feature("autodoc", "	* Returns True if there is a vertex --ThePathPoint-- defining the lowest valid parameter on the arc.
+
+	:rtype: bool
 ") HasFirstPoint;
 		Standard_Boolean HasFirstPoint ();
 		%feature("compactdefaultargs") FirstPoint;
-		%feature("autodoc", "	:rtype: IntPatch_ThePathPointOfTheSOnBounds
+		%feature("autodoc", "	* Returns the first point.
+
+	:rtype: IntPatch_ThePathPointOfTheSOnBounds
 ") FirstPoint;
 		const IntPatch_ThePathPointOfTheSOnBounds & FirstPoint ();
 		%feature("compactdefaultargs") HasLastPoint;
-		%feature("autodoc", "	:rtype: bool
+		%feature("autodoc", "	* Returns True if there is a vertex --ThePathPoint-- defining the greatest valid parameter on the arc.
+
+	:rtype: bool
 ") HasLastPoint;
 		Standard_Boolean HasLastPoint ();
 		%feature("compactdefaultargs") LastPoint;
-		%feature("autodoc", "	:rtype: IntPatch_ThePathPointOfTheSOnBounds
+		%feature("autodoc", "	* Returns the last point.
+
+	:rtype: IntPatch_ThePathPointOfTheSOnBounds
 ") LastPoint;
 		const IntPatch_ThePathPointOfTheSOnBounds & LastPoint ();
 };
@@ -3996,7 +3152,9 @@ class IntPatch_TheSurfFunction : public math_FunctionSetWithDerivatives {
 ") Root;
 		Standard_Real Root ();
 		%feature("compactdefaultargs") Tolerance;
-		%feature("autodoc", "	:rtype: float
+		%feature("autodoc", "	* Returns the value Tol so that if Abs--Func.Root------<Tol the function is considered null.
+
+	:rtype: float
 ") Tolerance;
 		Standard_Real Tolerance ();
 		%feature("compactdefaultargs") Point;
@@ -4027,6 +3185,70 @@ class IntPatch_TheSurfFunction : public math_FunctionSetWithDerivatives {
 
 
 %extend IntPatch_TheSurfFunction {
+	%pythoncode {
+	__repr__ = _dumps_object
+	}
+};
+class IntPatch_WLineTool {
+	public:
+		%feature("compactdefaultargs") ComputePurgedWLine;
+		%feature("autodoc", "	* I Removes equal points --leave one of equal points-- from theWLine and recompute vertex parameters. //! II Removes point out of borders in case of non periodic surfaces. This step is done only if theRestrictLine is true. //! III Removes exceed points using tube criteria: delete 7D point if it lies near to expected lines in 2d and 3d. Each task --2d, 2d, 3d-- have its own tolerance and checked separately. //! Returns new WLine or null WLine if the number of the points is less than 2.
+
+	:param theWLine:
+	:type theWLine: Handle_IntPatch_WLine &
+	:param theS1:
+	:type theS1: Handle_Adaptor3d_HSurface &
+	:param theS2:
+	:type theS2: Handle_Adaptor3d_HSurface &
+	:param theDom1:
+	:type theDom1: Handle_Adaptor3d_TopolTool &
+	:param theDom2:
+	:type theDom2: Handle_Adaptor3d_TopolTool &
+	:param theRestrictLine:
+	:type theRestrictLine: bool
+	:rtype: Handle_IntPatch_WLine
+") ComputePurgedWLine;
+		static Handle_IntPatch_WLine ComputePurgedWLine (const Handle_IntPatch_WLine & theWLine,const Handle_Adaptor3d_HSurface & theS1,const Handle_Adaptor3d_HSurface & theS2,const Handle_Adaptor3d_TopolTool & theDom1,const Handle_Adaptor3d_TopolTool & theDom2,const Standard_Boolean theRestrictLine);
+		%feature("compactdefaultargs") JoinWLines;
+		%feature("autodoc", "	* Joins all WLines from theSlin to one if it is possible and records the result into theSlin again. Lines will be kept to be splitted if: a-- they are separated --has no common points--; b-- resulted line --after joining-- go through seam-edges or surface boundaries. //! In addition, if points in theSPnt lies at least in one of the line in theSlin, this point will be deleted.
+
+	:param theSlin:
+	:type theSlin: IntPatch_SequenceOfLine &
+	:param theSPnt:
+	:type theSPnt: IntPatch_SequenceOfPoint &
+	:param theS1:
+	:type theS1: Handle_Adaptor3d_HSurface
+	:param theS2:
+	:type theS2: Handle_Adaptor3d_HSurface
+	:param theTol3D:
+	:type theTol3D: float
+	:rtype: void
+") JoinWLines;
+		static void JoinWLines (IntPatch_SequenceOfLine & theSlin,IntPatch_SequenceOfPoint & theSPnt,Handle_Adaptor3d_HSurface theS1,Handle_Adaptor3d_HSurface theS2,const Standard_Real theTol3D);
+		%feature("compactdefaultargs") ExtendTwoWLines;
+		%feature("autodoc", "	* Extends every line from theSlin --if it is possible-- to be started/finished in strictly determined point --in the place of joint of two lines--. As result, some gaps between two lines will vanish. The Walking lines are supposed --algorithm will do nothing for not-Walking line-- to be computed as a result of intersection. Both theS1 and theS2 must be quadrics. Other cases are not supported. theArrPeriods must be filled as follows --every value must not be negative; if the surface is not periodic the period must be equal to 0.0 strictly--: {<U-period of 1st surface>, <V-period of 1st surface>, <U-period of 2nd surface>, <V-period of 2nd surface>}.
+
+	:param theSlin:
+	:type theSlin: IntPatch_SequenceOfLine &
+	:param theS1:
+	:type theS1: Handle_Adaptor3d_HSurface &
+	:param theS2:
+	:type theS2: Handle_Adaptor3d_HSurface &
+	:param theToler3D:
+	:type theToler3D: float
+	:param theArrPeriods:
+	:type theArrPeriods: float *
+	:param theBoxS1:
+	:type theBoxS1: Bnd_Box2d &
+	:param theBoxS2:
+	:type theBoxS2: Bnd_Box2d &
+	:rtype: void
+") ExtendTwoWLines;
+		static void ExtendTwoWLines (IntPatch_SequenceOfLine & theSlin,const Handle_Adaptor3d_HSurface & theS1,const Handle_Adaptor3d_HSurface & theS2,const Standard_Real theToler3D,const Standard_Real * const theArrPeriods,const Bnd_Box2d & theBoxS1,const Bnd_Box2d & theBoxS2);
+};
+
+
+%extend IntPatch_WLineTool {
 	%pythoncode {
 	__repr__ = _dumps_object
 	}
@@ -4149,13 +3371,13 @@ class IntPatch_ALine : public IntPatch_Line {
 ") FindParameter;
 		Standard_Boolean FindParameter (const gp_Pnt & P,Standard_Real &OutValue);
 		%feature("compactdefaultargs") HasFirstPoint;
-		%feature("autodoc", "	* Returns True if the line has a known First point. This point is given by the method FirstPoint().
+		%feature("autodoc", "	* Returns True if the line has a known First point. This point is given by the method FirstPoint----.
 
 	:rtype: bool
 ") HasFirstPoint;
 		Standard_Boolean HasFirstPoint ();
 		%feature("compactdefaultargs") HasLastPoint;
-		%feature("autodoc", "	* Returns True if the line has a known Last point. This point is given by the method LastPoint().
+		%feature("autodoc", "	* Returns True if the line has a known Last point. This point is given by the method LastPoint----.
 
 	:rtype: bool
 ") HasLastPoint;
@@ -4230,19 +3452,20 @@ class Handle_IntPatch_ALine : public Handle_IntPatch_Line {
         static const Handle_IntPatch_ALine DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_IntPatch_ALine {
     IntPatch_ALine* _get_reference() {
-    return (IntPatch_ALine*)$self->Access();
+    return (IntPatch_ALine*)$self->get();
     }
 };
 
 %extend Handle_IntPatch_ALine {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend IntPatch_ALine {
@@ -4504,13 +3727,13 @@ class IntPatch_GLine : public IntPatch_Line {
 ") Hyperbola;
 		gp_Hypr Hyperbola ();
 		%feature("compactdefaultargs") HasFirstPoint;
-		%feature("autodoc", "	* Returns True if the line has a known First point. This point is given by the method FirstPoint().
+		%feature("autodoc", "	* Returns True if the line has a known First point. This point is given by the method FirstPoint----.
 
 	:rtype: bool
 ") HasFirstPoint;
 		Standard_Boolean HasFirstPoint ();
 		%feature("compactdefaultargs") HasLastPoint;
-		%feature("autodoc", "	* Returns True if the line has a known Last point. This point is given by the method LastPoint().
+		%feature("autodoc", "	* Returns True if the line has a known Last point. This point is given by the method LastPoint----.
 
 	:rtype: bool
 ") HasLastPoint;
@@ -4581,19 +3804,20 @@ class Handle_IntPatch_GLine : public Handle_IntPatch_Line {
         static const Handle_IntPatch_GLine DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_IntPatch_GLine {
     IntPatch_GLine* _get_reference() {
-    return (IntPatch_GLine*)$self->Access();
+    return (IntPatch_GLine*)$self->get();
     }
 };
 
 %extend Handle_IntPatch_GLine {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend IntPatch_GLine {
@@ -4604,12 +3828,28 @@ class Handle_IntPatch_GLine : public Handle_IntPatch_Line {
 %nodefaultctor IntPatch_PointLine;
 class IntPatch_PointLine : public IntPatch_Line {
 	public:
+		%feature("compactdefaultargs") AddVertex;
+		%feature("autodoc", "	* Adds a vertex in the list. If theIsPrepend == True the new vertex will be added before the first element of vertices sequence. Otherwise, to the end of the sequence
+
+	:param Pnt:
+	:type Pnt: IntPatch_Point &
+	:param theIsPrepend: default value is Standard_False
+	:type theIsPrepend: bool
+	:rtype: void
+") AddVertex;
+		virtual void AddVertex (const IntPatch_Point & Pnt,const Standard_Boolean theIsPrepend = Standard_False);
 		%feature("compactdefaultargs") NbPnts;
 		%feature("autodoc", "	* Returns the number of intersection points.
 
 	:rtype: int
 ") NbPnts;
 		virtual Standard_Integer NbPnts ();
+		%feature("compactdefaultargs") NbVertex;
+		%feature("autodoc", "	* Returns number of vertices --IntPatch_Point-- of the line
+
+	:rtype: int
+") NbVertex;
+		virtual Standard_Integer NbVertex ();
 		%feature("compactdefaultargs") Point;
 		%feature("autodoc", "	* Returns the intersection point of range Index.
 
@@ -4618,6 +3858,54 @@ class IntPatch_PointLine : public IntPatch_Line {
 	:rtype: IntSurf_PntOn2S
 ") Point;
 		virtual const IntSurf_PntOn2S & Point (const Standard_Integer Index);
+		%feature("compactdefaultargs") Vertex;
+		%feature("autodoc", "	* Returns the vertex of range Index on the line.
+
+	:param Index:
+	:type Index: int
+	:rtype: IntPatch_Point
+") Vertex;
+		virtual const IntPatch_Point & Vertex (const Standard_Integer Index);
+		%feature("compactdefaultargs") ChangeVertex;
+		%feature("autodoc", "	* Returns the vertex of range Index on the line.
+
+	:param Index:
+	:type Index: int
+	:rtype: IntPatch_Point
+") ChangeVertex;
+		IntPatch_Point & ChangeVertex (const Standard_Integer Index);
+		%feature("compactdefaultargs") ClearVertexes;
+		%feature("autodoc", "	* Removes vertices from the line
+
+	:rtype: void
+") ClearVertexes;
+		virtual void ClearVertexes ();
+		%feature("compactdefaultargs") RemoveVertex;
+		%feature("autodoc", "	* Removes single vertex from the line
+
+	:param theIndex:
+	:type theIndex: int
+	:rtype: void
+") RemoveVertex;
+		virtual void RemoveVertex (const Standard_Integer theIndex);
+		%feature("compactdefaultargs") Curve;
+		%feature("autodoc", "	* Returns set of intersection points
+
+	:rtype: Handle_IntSurf_LineOn2S
+") Curve;
+		virtual Handle_IntSurf_LineOn2S Curve ();
+		%feature("compactdefaultargs") CurvatureRadiusOfIntersLine;
+		%feature("autodoc", "	* Returns the radius of curvature of the intersection line in given point. Returns negative value if computation is not possible.
+
+	:param theS1:
+	:type theS1: Handle_Adaptor3d_HSurface &
+	:param theS2:
+	:type theS2: Handle_Adaptor3d_HSurface &
+	:param theUVPoint:
+	:type theUVPoint: IntSurf_PntOn2S &
+	:rtype: float
+") CurvatureRadiusOfIntersLine;
+		static Standard_Real CurvatureRadiusOfIntersLine (const Handle_Adaptor3d_HSurface & theS1,const Handle_Adaptor3d_HSurface & theS2,const IntSurf_PntOn2S & theUVPoint);
 };
 
 
@@ -4652,19 +3940,20 @@ class Handle_IntPatch_PointLine : public Handle_IntPatch_Line {
         static const Handle_IntPatch_PointLine DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_IntPatch_PointLine {
     IntPatch_PointLine* _get_reference() {
-    return (IntPatch_PointLine*)$self->Access();
+    return (IntPatch_PointLine*)$self->get();
     }
 };
 
 %extend Handle_IntPatch_PointLine {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend IntPatch_PointLine {
@@ -4814,13 +4103,15 @@ class IntPatch_RLine : public IntPatch_PointLine {
 ") IntPatch_RLine;
 		 IntPatch_RLine (const Standard_Boolean Tang);
 		%feature("compactdefaultargs") AddVertex;
-		%feature("autodoc", "	* To add a vertex in the list.
+		%feature("autodoc", "	* Adds a vertex in the list. If theIsPrepend == True the new vertex will be added before the first element of vertices sequence. Otherwise, to the end of the sequence
 
 	:param Pnt:
 	:type Pnt: IntPatch_Point &
+	:param theIsPrepend: default value is Standard_False
+	:type theIsPrepend: bool
 	:rtype: None
 ") AddVertex;
-		void AddVertex (const IntPatch_Point & Pnt);
+		void AddVertex (const IntPatch_Point & Pnt,const Standard_Boolean theIsPrepend = Standard_False);
 		%feature("compactdefaultargs") Replace;
 		%feature("autodoc", "	* Replaces the element of range Index in the list of points.
 
@@ -4902,13 +4193,13 @@ class IntPatch_RLine : public IntPatch_PointLine {
 ") ParamOnS2;
 		void ParamOnS2 (Standard_Real &OutValue,Standard_Real &OutValue);
 		%feature("compactdefaultargs") HasFirstPoint;
-		%feature("autodoc", "	* Returns True if the line has a known First point. This point is given by the method FirstPoint().
+		%feature("autodoc", "	* Returns True if the line has a known First point. This point is given by the method FirstPoint----.
 
 	:rtype: bool
 ") HasFirstPoint;
 		Standard_Boolean HasFirstPoint ();
 		%feature("compactdefaultargs") HasLastPoint;
-		%feature("autodoc", "	* Returns True if the line has a known Last point. This point is given by the method LastPoint().
+		%feature("autodoc", "	* Returns True if the line has a known Last point. This point is given by the method LastPoint----.
 
 	:rtype: bool
 ") HasLastPoint;
@@ -4926,7 +4217,9 @@ class IntPatch_RLine : public IntPatch_PointLine {
 ") LastPoint;
 		const IntPatch_Point & LastPoint ();
 		%feature("compactdefaultargs") NbVertex;
-		%feature("autodoc", "	:rtype: int
+		%feature("autodoc", "	* Returns number of vertices --IntPatch_Point-- of the line
+
+	:rtype: int
 ") NbVertex;
 		Standard_Integer NbVertex ();
 		%feature("compactdefaultargs") Vertex;
@@ -4937,6 +4230,22 @@ class IntPatch_RLine : public IntPatch_PointLine {
 	:rtype: IntPatch_Point
 ") Vertex;
 		const IntPatch_Point & Vertex (const Standard_Integer Index);
+		%feature("compactdefaultargs") ChangeVertex;
+		%feature("autodoc", "	* Returns the vertex of range Index on the line.
+
+	:param Index:
+	:type Index: int
+	:rtype: IntPatch_Point
+") ChangeVertex;
+		IntPatch_Point & ChangeVertex (const Standard_Integer Index);
+		%feature("compactdefaultargs") RemoveVertex;
+		%feature("autodoc", "	* Removes single vertex from the line
+
+	:param theIndex:
+	:type theIndex: int
+	:rtype: None
+") RemoveVertex;
+		void RemoveVertex (const Standard_Integer theIndex);
 		%feature("compactdefaultargs") HasPolygon;
 		%feature("autodoc", "	:rtype: bool
 ") HasPolygon;
@@ -4973,6 +4282,32 @@ class IntPatch_RLine : public IntPatch_PointLine {
 	:rtype: None
 ") ComputeVertexParameters;
 		void ComputeVertexParameters (const Standard_Real Tol);
+		%feature("compactdefaultargs") Curve;
+		%feature("autodoc", "	* Returns set of intersection points
+
+	:rtype: Handle_IntSurf_LineOn2S
+") Curve;
+		virtual Handle_IntSurf_LineOn2S Curve ();
+		%feature("compactdefaultargs") ClearVertexes;
+		%feature("autodoc", "	* Removes vertices from the line --i.e. cleans svtx member--
+
+	:rtype: None
+") ClearVertexes;
+		void ClearVertexes ();
+		%feature("compactdefaultargs") SetCurve;
+		%feature("autodoc", "	:param theNewCurve:
+	:type theNewCurve: Handle_IntSurf_LineOn2S &
+	:rtype: None
+") SetCurve;
+		void SetCurve (const Handle_IntSurf_LineOn2S & theNewCurve);
+		%feature("compactdefaultargs") Dump;
+		%feature("autodoc", "	* if --theMode == 0-- then prints the information about WLine if --theMode == 1-- then prints the list of 3d-points if --theMode == 2-- then prints the list of 2d-points on the 1st surface Otherwise, prints list of 2d-points on the 2nd surface
+
+	:param theMode:
+	:type theMode: int
+	:rtype: None
+") Dump;
+		void Dump (const Standard_Integer theMode);
 };
 
 
@@ -5007,19 +4342,20 @@ class Handle_IntPatch_RLine : public Handle_IntPatch_PointLine {
         static const Handle_IntPatch_RLine DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_IntPatch_RLine {
     IntPatch_RLine* _get_reference() {
-    return (IntPatch_RLine*)$self->Access();
+    return (IntPatch_RLine*)$self->get();
     }
 };
 
 %extend Handle_IntPatch_RLine {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend IntPatch_RLine {
@@ -5069,13 +4405,15 @@ class IntPatch_WLine : public IntPatch_PointLine {
 ") IntPatch_WLine;
 		 IntPatch_WLine (const Handle_IntSurf_LineOn2S & Line,const Standard_Boolean Tang);
 		%feature("compactdefaultargs") AddVertex;
-		%feature("autodoc", "	* Adds a vertex in the list.
+		%feature("autodoc", "	* Adds a vertex in the list. If theIsPrepend == True the new vertex will be added before the first element of vertices sequence. Otherwise, to the end of the sequence
 
 	:param Pnt:
 	:type Pnt: IntPatch_Point &
+	:param theIsPrepend: default value is Standard_False
+	:type theIsPrepend: bool
 	:rtype: None
 ") AddVertex;
-		void AddVertex (const IntPatch_Point & Pnt);
+		void AddVertex (const IntPatch_Point & Pnt,const Standard_Boolean theIsPrepend = Standard_False);
 		%feature("compactdefaultargs") SetPoint;
 		%feature("autodoc", "	* Set the Point of index <Index> in the LineOn2S
 
@@ -5123,13 +4461,13 @@ class IntPatch_WLine : public IntPatch_PointLine {
 ") Point;
 		const IntSurf_PntOn2S & Point (const Standard_Integer Index);
 		%feature("compactdefaultargs") HasFirstPoint;
-		%feature("autodoc", "	* Returns True if the line has a known First point. This point is given by the method FirstPoint().
+		%feature("autodoc", "	* Returns True if the line has a known First point. This point is given by the method FirstPoint----.
 
 	:rtype: bool
 ") HasFirstPoint;
 		Standard_Boolean HasFirstPoint ();
 		%feature("compactdefaultargs") HasLastPoint;
-		%feature("autodoc", "	* Returns True if the line has a known Last point. This point is given by the method LastPoint().
+		%feature("autodoc", "	* Returns True if the line has a known Last point. This point is given by the method LastPoint----.
 
 	:rtype: bool
 ") HasLastPoint;
@@ -5163,7 +4501,9 @@ class IntPatch_WLine : public IntPatch_PointLine {
 ") LastPoint;
 		const IntPatch_Point & LastPoint (Standard_Integer &OutValue);
 		%feature("compactdefaultargs") NbVertex;
-		%feature("autodoc", "	:rtype: int
+		%feature("autodoc", "	* Returns number of vertices --IntPatch_Point-- of the line
+
+	:rtype: int
 ") NbVertex;
 		Standard_Integer NbVertex ();
 		%feature("compactdefaultargs") Vertex;
@@ -5174,20 +4514,28 @@ class IntPatch_WLine : public IntPatch_PointLine {
 	:rtype: IntPatch_Point
 ") Vertex;
 		const IntPatch_Point & Vertex (const Standard_Integer Index);
+		%feature("compactdefaultargs") ChangeVertex;
+		%feature("autodoc", "	* Returns the vertex of range Index on the line.
+
+	:param Index:
+	:type Index: int
+	:rtype: IntPatch_Point
+") ChangeVertex;
+		IntPatch_Point & ChangeVertex (const Standard_Integer Index);
 		%feature("compactdefaultargs") ComputeVertexParameters;
 		%feature("autodoc", "	* Set the parameters of all the vertex on the line. if a vertex is already in the line, its parameter is modified else a new point in the line is inserted.
 
 	:param Tol:
 	:type Tol: float
-	:param hasBeenAdded: default value is Standard_False
-	:type hasBeenAdded: bool
 	:rtype: None
 ") ComputeVertexParameters;
-		void ComputeVertexParameters (const Standard_Real Tol,const Standard_Boolean hasBeenAdded = Standard_False);
+		void ComputeVertexParameters (const Standard_Real Tol);
 		%feature("compactdefaultargs") Curve;
-		%feature("autodoc", "	:rtype: Handle_IntSurf_LineOn2S
+		%feature("autodoc", "	* Returns set of intersection points
+
+	:rtype: Handle_IntSurf_LineOn2S
 ") Curve;
-		Handle_IntSurf_LineOn2S Curve ();
+		virtual Handle_IntSurf_LineOn2S Curve ();
 		%feature("compactdefaultargs") IsOutSurf1Box;
 		%feature("autodoc", "	:param P1:
 	:type P1: gp_Pnt2d
@@ -5263,11 +4611,15 @@ class IntPatch_WLine : public IntPatch_PointLine {
 ") GetArcOnS2;
 		Handle_Adaptor2d_HCurve2d GetArcOnS2 ();
 		%feature("compactdefaultargs") ClearVertexes;
-		%feature("autodoc", "	:rtype: None
+		%feature("autodoc", "	* Removes vertices from the line --i.e. cleans svtx member--
+
+	:rtype: None
 ") ClearVertexes;
 		void ClearVertexes ();
 		%feature("compactdefaultargs") RemoveVertex;
-		%feature("autodoc", "	:param theIndex:
+		%feature("autodoc", "	* Removes single vertex from the line
+
+	:param theIndex:
 	:type theIndex: int
 	:rtype: None
 ") RemoveVertex;
@@ -5281,9 +4633,27 @@ class IntPatch_WLine : public IntPatch_PointLine {
 ") InsertVertexBefore;
 		void InsertVertexBefore (const Standard_Integer theIndex,const IntPatch_Point & thePnt);
 		%feature("compactdefaultargs") Dump;
-		%feature("autodoc", "	:rtype: None
+		%feature("autodoc", "	* if --theMode == 0-- then prints the information about WLine if --theMode == 1-- then prints the list of 3d-points if --theMode == 2-- then prints the list of 2d-points on the 1st surface Otherwise, prints list of 2d-points on the 2nd surface
+
+	:param theMode:
+	:type theMode: int
+	:rtype: None
 ") Dump;
-		void Dump ();
+		void Dump (const Standard_Integer theMode);
+		%feature("compactdefaultargs") EnablePurging;
+		%feature("autodoc", "	* Allows or forbides purging of existing WLine
+
+	:param theIsEnabled:
+	:type theIsEnabled: bool
+	:rtype: None
+") EnablePurging;
+		void EnablePurging (const Standard_Boolean theIsEnabled);
+		%feature("compactdefaultargs") IsPurgingAllowed;
+		%feature("autodoc", "	* Returns True if purging is allowed or forbiden for existing WLine
+
+	:rtype: bool
+") IsPurgingAllowed;
+		Standard_Boolean IsPurgingAllowed ();
 };
 
 
@@ -5318,19 +4688,20 @@ class Handle_IntPatch_WLine : public Handle_IntPatch_PointLine {
         static const Handle_IntPatch_WLine DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_IntPatch_WLine {
     IntPatch_WLine* _get_reference() {
-    return (IntPatch_WLine*)$self->Access();
+    return (IntPatch_WLine*)$self->get();
     }
 };
 
 %extend Handle_IntPatch_WLine {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend IntPatch_WLine {

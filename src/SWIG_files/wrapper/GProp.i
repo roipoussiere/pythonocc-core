@@ -1,5 +1,5 @@
 /*
-Copyright 2008-2017 Thomas Paviot (tpaviot@gmail.com)
+Copyright 2008-2018 Thomas Paviot (tpaviot@gmail.com)
 
 
 This file is part of pythonOCC.
@@ -56,6 +56,9 @@ def register_handle(handle, base_object):
 /* typedefs */
 /* end typedefs declaration */
 
+/* templates */
+/* end templates declaration */
+
 /* public enums */
 enum GProp_EquaType {
 	GProp_Plane = 0,
@@ -85,7 +88,7 @@ enum GProp_ValueType {
 class GProp {
 	public:
 		%feature("compactdefaultargs") HOperator;
-		%feature("autodoc", "	* methods of package Computes the matrix Operator, referred to as the 'Huyghens Operator' of a geometric system at the point Q of the space, using the following data : - Mass, i.e. the mass of the system, - G, the center of mass of the system. The 'Huyghens Operator' is used to compute Inertia/Q, the matrix of inertia of the system at the point Q using Huyghens' theorem : Inertia/Q = Inertia/G + HOperator (Q, G, Mass) where Inertia/G is the matrix of inertia of the system relative to its center of mass as returned by the function MatrixOfInertia on any GProp_GProps object.
+		%feature("autodoc", "	* methods of package Computes the matrix Operator, referred to as the 'Huyghens Operator' of a geometric system at the point Q of the space, using the following data : - Mass, i.e. the mass of the system, - G, the center of mass of the system. The 'Huyghens Operator' is used to compute Inertia/Q, the matrix of inertia of the system at the point Q using Huyghens' theorem : Inertia/Q = Inertia/G + HOperator --Q, G, Mass-- where Inertia/G is the matrix of inertia of the system relative to its center of mass as returned by the function MatrixOfInertia on any GProp_GProps object.
 
 	:param G:
 	:type G: gp_Pnt
@@ -110,7 +113,7 @@ class GProp {
 class GProp_GProps {
 	public:
 		%feature("compactdefaultargs") GProp_GProps;
-		%feature("autodoc", "	* The origin (0, 0, 0) of the absolute cartesian coordinate system is used to compute the global properties.
+		%feature("autodoc", "	* The origin --0, 0, 0-- of the absolute cartesian coordinate system is used to compute the global properties.
 
 	:rtype: None
 ") GProp_GProps;
@@ -124,7 +127,7 @@ class GProp_GProps {
 ") GProp_GProps;
 		 GProp_GProps (const gp_Pnt & SystemLocation);
 		%feature("compactdefaultargs") Add;
-		%feature("autodoc", "	* Either - initializes the global properties retained by this framework from those retained by the framework Item, or - brings together the global properties still retained by this framework with those retained by the framework Item. The value Density, which is 1.0 by default, is used as the density of the system analysed by Item. Sometimes the density will have already been given at the time of construction of the framework Item. This may be the case for example, if Item is a GProp_PGProps framework built to compute the global properties of a set of points ; or another GProp_GProps object which already retains composite global properties. In these cases the real density was perhaps already taken into account at the time of construction of Item. Note that this is not checked: if the density of parts of the system is taken into account two or more times, results of the computation will be false. Notes : - The point relative to which the inertia of Item is computed (i.e. the reference point of Item) may be different from the reference point in this framework. Huygens' theorem is applied automatically to transfer inertia values to the reference point in this framework. - The function Add is used once per component of the system. After that, you use the interrogation functions available to access values computed for the system. - The system whose global properties are already brought together by this framework is referred to as the current system. However, the current system is not retained by this framework, which maintains only its global properties. Exceptions Standard_DomainError if Density is less than or equal to gp::Resolution().
+		%feature("autodoc", "	* Either - initializes the global properties retained by this framework from those retained by the framework Item, or - brings together the global properties still retained by this framework with those retained by the framework Item. The value Density, which is 1.0 by default, is used as the density of the system analysed by Item. Sometimes the density will have already been given at the time of construction of the framework Item. This may be the case for example, if Item is a GProp_PGProps framework built to compute the global properties of a set of points ; or another GProp_GProps object which already retains composite global properties. In these cases the real density was perhaps already taken into account at the time of construction of Item. Note that this is not checked: if the density of parts of the system is taken into account two or more times, results of the computation will be false. Notes : - The point relative to which the inertia of Item is computed --i.e. the reference point of Item-- may be different from the reference point in this framework. Huygens' theorem is applied automatically to transfer inertia values to the reference point in this framework. - The function Add is used once per component of the system. After that, you use the interrogation functions available to access values computed for the system. - The system whose global properties are already brought together by this framework is referred to as the current system. However, the current system is not retained by this framework, which maintains only its global properties. Exceptions Standard_DomainError if Density is less than or equal to gp::Resolution----.
 
 	:param Item:
 	:type Item: GProp_GProps &
@@ -146,7 +149,7 @@ class GProp_GProps {
 ") CentreOfMass;
 		gp_Pnt CentreOfMass ();
 		%feature("compactdefaultargs") MatrixOfInertia;
-		%feature("autodoc", "	* returns the matrix of inertia. It is a symmetrical matrix. The coefficients of the matrix are the quadratic moments of inertia. //! | Ixx Ixy Ixz | matrix = | Ixy Iyy Iyz | | Ixz Iyz Izz | //! The moments of inertia are denoted by Ixx, Iyy, Izz. The products of inertia are denoted by Ixy, Ixz, Iyz. The matrix of inertia is returned in the central coordinate system (G, Gx, Gy, Gz) where G is the centre of mass of the system and Gx, Gy, Gz the directions parallel to the X(1,0,0) Y(0,1,0) Z(0,0,1) directions of the absolute cartesian coordinate system. It is possible to compute the matrix of inertia at another location point using the Huyghens theorem (you can use the method of package GProp : HOperator).
+		%feature("autodoc", "	* returns the matrix of inertia. It is a symmetrical matrix. The coefficients of the matrix are the quadratic moments of inertia. //! | Ixx Ixy Ixz | matrix = | Ixy Iyy Iyz | | Ixz Iyz Izz | //! The moments of inertia are denoted by Ixx, Iyy, Izz. The products of inertia are denoted by Ixy, Ixz, Iyz. The matrix of inertia is returned in the central coordinate system --G, Gx, Gy, Gz-- where G is the centre of mass of the system and Gx, Gy, Gz the directions parallel to the X--1,0,0-- Y--0,1,0-- Z--0,0,1-- directions of the absolute cartesian coordinate system. It is possible to compute the matrix of inertia at another location point using the Huyghens theorem --you can use the method of package GProp : HOperator--.
 
 	:rtype: gp_Mat
 ") MatrixOfInertia;
@@ -172,7 +175,7 @@ class GProp_GProps {
 ") MomentOfInertia;
 		Standard_Real MomentOfInertia (const gp_Ax1 & A);
 		%feature("compactdefaultargs") PrincipalProperties;
-		%feature("autodoc", "	* Computes the principal properties of inertia of the current system. There is always a set of axes for which the products of inertia of a geometric system are equal to 0; i.e. the matrix of inertia of the system is diagonal. These axes are the principal axes of inertia. Their origin is coincident with the center of mass of the system. The associated moments are called the principal moments of inertia. This function computes the eigen values and the eigen vectors of the matrix of inertia of the system. Results are stored by using a presentation framework of principal properties of inertia (GProp_PrincipalProps object) which may be queried to access the value sought.
+		%feature("autodoc", "	* Computes the principal properties of inertia of the current system. There is always a set of axes for which the products of inertia of a geometric system are equal to 0; i.e. the matrix of inertia of the system is diagonal. These axes are the principal axes of inertia. Their origin is coincident with the center of mass of the system. The associated moments are called the principal moments of inertia. This function computes the eigen values and the eigen vectors of the matrix of inertia of the system. Results are stored by using a presentation framework of principal properties of inertia --GProp_PrincipalProps object-- which may be queried to access the value sought.
 
 	:rtype: GProp_PrincipalProps
 ") PrincipalProperties;
@@ -286,7 +289,7 @@ class GProp_PrincipalProps {
 ") HasSymmetryAxis;
 		Standard_Boolean HasSymmetryAxis ();
 		%feature("compactdefaultargs") HasSymmetryAxis;
-		%feature("autodoc", "	* returns true if the geometric system has an axis of symmetry. aTol is relative tolerance for cheking equality of moments If aTol == 0, relative tolerance is ~ 1.e-16 (Epsilon(I))
+		%feature("autodoc", "	* returns true if the geometric system has an axis of symmetry. aTol is relative tolerance for cheking equality of moments If aTol == 0, relative tolerance is ~ 1.e-16 --Epsilon--I----
 
 	:param aTol:
 	:type aTol: float
@@ -300,7 +303,7 @@ class GProp_PrincipalProps {
 ") HasSymmetryPoint;
 		Standard_Boolean HasSymmetryPoint ();
 		%feature("compactdefaultargs") HasSymmetryPoint;
-		%feature("autodoc", "	* returns true if the geometric system has a point of symmetry. aTol is relative tolerance for cheking equality of moments If aTol == 0, relative tolerance is ~ 1.e-16 (Epsilon(I))
+		%feature("autodoc", "	* returns true if the geometric system has a point of symmetry. aTol is relative tolerance for cheking equality of moments If aTol == 0, relative tolerance is ~ 1.e-16 --Epsilon--I----
 
 	:param aTol:
 	:type aTol: float
@@ -434,7 +437,7 @@ class GProp_CelGProps : public GProp_GProps {
 class GProp_PGProps : public GProp_GProps {
 	public:
 		%feature("compactdefaultargs") GProp_PGProps;
-		%feature("autodoc", "	* Initializes a framework to compute global properties on a set of points. The point relative to which the inertia of the system is computed will be the origin (0, 0, 0) of the absolute Cartesian coordinate system. At initialization, the framework is empty, i.e. it retains no dimensional information such as mass and inertia. It is, however, now able to keep global properties of a set of points while new points are added using the AddPoint function. The set of points whose global properties are brought together by this framework will then be referred to as the current system. The current system is, however, not kept by this framework, which only keeps that system's global properties. Note that the current system may be more complex than a set of points.
+		%feature("autodoc", "	* Initializes a framework to compute global properties on a set of points. The point relative to which the inertia of the system is computed will be the origin --0, 0, 0-- of the absolute Cartesian coordinate system. At initialization, the framework is empty, i.e. it retains no dimensional information such as mass and inertia. It is, however, now able to keep global properties of a set of points while new points are added using the AddPoint function. The set of points whose global properties are brought together by this framework will then be referred to as the current system. The current system is, however, not kept by this framework, which only keeps that system's global properties. Note that the current system may be more complex than a set of points.
 
 	:rtype: None
 ") GProp_PGProps;
@@ -448,7 +451,7 @@ class GProp_PGProps : public GProp_GProps {
 ") AddPoint;
 		void AddPoint (const gp_Pnt & P);
 		%feature("compactdefaultargs") AddPoint;
-		%feature("autodoc", "	* Adds a new point P with its density in the system of points Exceptions Standard_DomainError if the mass value Density is less than gp::Resolution().
+		%feature("autodoc", "	* Adds a new point P with its density in the system of points Exceptions Standard_DomainError if the mass value Density is less than gp::Resolution----.
 
 	:param P:
 	:type P: gp_Pnt

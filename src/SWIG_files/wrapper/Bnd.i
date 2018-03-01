@@ -1,5 +1,5 @@
 /*
-Copyright 2008-2017 Thomas Paviot (tpaviot@gmail.com)
+Copyright 2008-2018 Thomas Paviot (tpaviot@gmail.com)
 
 
 This file is part of pythonOCC.
@@ -56,279 +56,29 @@ def register_handle(handle, base_object):
 /* typedefs */
 /* end typedefs declaration */
 
+/* templates */
+%template(Bnd_Array1OfBox) NCollection_Array1 <Bnd_Box>;
+%template(Bnd_Array1OfSphere) NCollection_Array1 <Bnd_Sphere>;
+%template(Bnd_SeqOfBox) NCollection_Sequence <Bnd_Box>;
+%template(Bnd_Array1OfBox2d) NCollection_Array1 <Bnd_Box2d>;
+/* end templates declaration */
+
 /* public enums */
 /* end public enums declaration */
 
-%nodefaultctor Bnd_Array1OfBox;
-class Bnd_Array1OfBox {
-	public:
-		%feature("compactdefaultargs") Bnd_Array1OfBox;
-		%feature("autodoc", "	:param Low:
-	:type Low: int
-	:param Up:
-	:type Up: int
-	:rtype: None
-") Bnd_Array1OfBox;
-		 Bnd_Array1OfBox (const Standard_Integer Low,const Standard_Integer Up);
-		%feature("compactdefaultargs") Bnd_Array1OfBox;
-		%feature("autodoc", "	:param Item:
-	:type Item: Bnd_Box &
-	:param Low:
-	:type Low: int
-	:param Up:
-	:type Up: int
-	:rtype: None
-") Bnd_Array1OfBox;
-		 Bnd_Array1OfBox (const Bnd_Box & Item,const Standard_Integer Low,const Standard_Integer Up);
-		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	:param V:
-	:type V: Bnd_Box &
-	:rtype: None
-") Init;
-		void Init (const Bnd_Box & V);
-		%feature("compactdefaultargs") Destroy;
-		%feature("autodoc", "	:rtype: None
-") Destroy;
-		void Destroy ();
-		%feature("compactdefaultargs") IsAllocated;
-		%feature("autodoc", "	:rtype: bool
-") IsAllocated;
-		Standard_Boolean IsAllocated ();
-		%feature("compactdefaultargs") Assign;
-		%feature("autodoc", "	:param Other:
-	:type Other: Bnd_Array1OfBox &
-	:rtype: Bnd_Array1OfBox
-") Assign;
-		const Bnd_Array1OfBox & Assign (const Bnd_Array1OfBox & Other);
-		%feature("compactdefaultargs") operator =;
-		%feature("autodoc", "	:param Other:
-	:type Other: Bnd_Array1OfBox &
-	:rtype: Bnd_Array1OfBox
-") operator =;
-		const Bnd_Array1OfBox & operator = (const Bnd_Array1OfBox & Other);
-		%feature("compactdefaultargs") Length;
-		%feature("autodoc", "	:rtype: int
-") Length;
-		Standard_Integer Length ();
-		%feature("compactdefaultargs") Lower;
-		%feature("autodoc", "	:rtype: int
-") Lower;
-		Standard_Integer Lower ();
-		%feature("compactdefaultargs") Upper;
-		%feature("autodoc", "	:rtype: int
-") Upper;
-		Standard_Integer Upper ();
-		%feature("compactdefaultargs") SetValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param Value:
-	:type Value: Bnd_Box &
-	:rtype: None
-") SetValue;
-		void SetValue (const Standard_Integer Index,const Bnd_Box & Value);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: Bnd_Box
-") Value;
-		const Bnd_Box & Value (const Standard_Integer Index);
-		%feature("compactdefaultargs") ChangeValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: Bnd_Box
-") ChangeValue;
-		Bnd_Box & ChangeValue (const Standard_Integer Index);
-};
-
-
-%extend Bnd_Array1OfBox {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor Bnd_Array1OfBox2d;
-class Bnd_Array1OfBox2d {
-	public:
-		%feature("compactdefaultargs") Bnd_Array1OfBox2d;
-		%feature("autodoc", "	:param Low:
-	:type Low: int
-	:param Up:
-	:type Up: int
-	:rtype: None
-") Bnd_Array1OfBox2d;
-		 Bnd_Array1OfBox2d (const Standard_Integer Low,const Standard_Integer Up);
-		%feature("compactdefaultargs") Bnd_Array1OfBox2d;
-		%feature("autodoc", "	:param Item:
-	:type Item: Bnd_Box2d &
-	:param Low:
-	:type Low: int
-	:param Up:
-	:type Up: int
-	:rtype: None
-") Bnd_Array1OfBox2d;
-		 Bnd_Array1OfBox2d (const Bnd_Box2d & Item,const Standard_Integer Low,const Standard_Integer Up);
-		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	:param V:
-	:type V: Bnd_Box2d &
-	:rtype: None
-") Init;
-		void Init (const Bnd_Box2d & V);
-		%feature("compactdefaultargs") Destroy;
-		%feature("autodoc", "	:rtype: None
-") Destroy;
-		void Destroy ();
-		%feature("compactdefaultargs") IsAllocated;
-		%feature("autodoc", "	:rtype: bool
-") IsAllocated;
-		Standard_Boolean IsAllocated ();
-		%feature("compactdefaultargs") Assign;
-		%feature("autodoc", "	:param Other:
-	:type Other: Bnd_Array1OfBox2d &
-	:rtype: Bnd_Array1OfBox2d
-") Assign;
-		const Bnd_Array1OfBox2d & Assign (const Bnd_Array1OfBox2d & Other);
-		%feature("compactdefaultargs") operator =;
-		%feature("autodoc", "	:param Other:
-	:type Other: Bnd_Array1OfBox2d &
-	:rtype: Bnd_Array1OfBox2d
-") operator =;
-		const Bnd_Array1OfBox2d & operator = (const Bnd_Array1OfBox2d & Other);
-		%feature("compactdefaultargs") Length;
-		%feature("autodoc", "	:rtype: int
-") Length;
-		Standard_Integer Length ();
-		%feature("compactdefaultargs") Lower;
-		%feature("autodoc", "	:rtype: int
-") Lower;
-		Standard_Integer Lower ();
-		%feature("compactdefaultargs") Upper;
-		%feature("autodoc", "	:rtype: int
-") Upper;
-		Standard_Integer Upper ();
-		%feature("compactdefaultargs") SetValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param Value:
-	:type Value: Bnd_Box2d &
-	:rtype: None
-") SetValue;
-		void SetValue (const Standard_Integer Index,const Bnd_Box2d & Value);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: Bnd_Box2d
-") Value;
-		const Bnd_Box2d & Value (const Standard_Integer Index);
-		%feature("compactdefaultargs") ChangeValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: Bnd_Box2d
-") ChangeValue;
-		Bnd_Box2d & ChangeValue (const Standard_Integer Index);
-};
-
-
-%extend Bnd_Array1OfBox2d {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor Bnd_Array1OfSphere;
-class Bnd_Array1OfSphere {
-	public:
-		%feature("compactdefaultargs") Bnd_Array1OfSphere;
-		%feature("autodoc", "	:param Low:
-	:type Low: int
-	:param Up:
-	:type Up: int
-	:rtype: None
-") Bnd_Array1OfSphere;
-		 Bnd_Array1OfSphere (const Standard_Integer Low,const Standard_Integer Up);
-		%feature("compactdefaultargs") Bnd_Array1OfSphere;
-		%feature("autodoc", "	:param Item:
-	:type Item: Bnd_Sphere &
-	:param Low:
-	:type Low: int
-	:param Up:
-	:type Up: int
-	:rtype: None
-") Bnd_Array1OfSphere;
-		 Bnd_Array1OfSphere (const Bnd_Sphere & Item,const Standard_Integer Low,const Standard_Integer Up);
-		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	:param V:
-	:type V: Bnd_Sphere &
-	:rtype: None
-") Init;
-		void Init (const Bnd_Sphere & V);
-		%feature("compactdefaultargs") Destroy;
-		%feature("autodoc", "	:rtype: None
-") Destroy;
-		void Destroy ();
-		%feature("compactdefaultargs") IsAllocated;
-		%feature("autodoc", "	:rtype: bool
-") IsAllocated;
-		Standard_Boolean IsAllocated ();
-		%feature("compactdefaultargs") Assign;
-		%feature("autodoc", "	:param Other:
-	:type Other: Bnd_Array1OfSphere &
-	:rtype: Bnd_Array1OfSphere
-") Assign;
-		const Bnd_Array1OfSphere & Assign (const Bnd_Array1OfSphere & Other);
-		%feature("compactdefaultargs") operator =;
-		%feature("autodoc", "	:param Other:
-	:type Other: Bnd_Array1OfSphere &
-	:rtype: Bnd_Array1OfSphere
-") operator =;
-		const Bnd_Array1OfSphere & operator = (const Bnd_Array1OfSphere & Other);
-		%feature("compactdefaultargs") Length;
-		%feature("autodoc", "	:rtype: int
-") Length;
-		Standard_Integer Length ();
-		%feature("compactdefaultargs") Lower;
-		%feature("autodoc", "	:rtype: int
-") Lower;
-		Standard_Integer Lower ();
-		%feature("compactdefaultargs") Upper;
-		%feature("autodoc", "	:rtype: int
-") Upper;
-		Standard_Integer Upper ();
-		%feature("compactdefaultargs") SetValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param Value:
-	:type Value: Bnd_Sphere &
-	:rtype: None
-") SetValue;
-		void SetValue (const Standard_Integer Index,const Bnd_Sphere & Value);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: Bnd_Sphere
-") Value;
-		const Bnd_Sphere & Value (const Standard_Integer Index);
-		%feature("compactdefaultargs") ChangeValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: Bnd_Sphere
-") ChangeValue;
-		Bnd_Sphere & ChangeValue (const Standard_Integer Index);
-};
-
-
-%extend Bnd_Array1OfSphere {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
 %nodefaultctor Bnd_B2d;
 class Bnd_B2d {
 	public:
 		%feature("compactdefaultargs") Bnd_B2d;
-		%feature("autodoc", "	:rtype: None
+		%feature("autodoc", "	* Empty constructor.
+
+	:rtype: None
 ") Bnd_B2d;
 		 Bnd_B2d ();
 		%feature("compactdefaultargs") Bnd_B2d;
-		%feature("autodoc", "	:param theCenter:
+		%feature("autodoc", "	* Constructor.
+
+	:param theCenter:
 	:type theCenter: gp_XY
 	:param theHSize:
 	:type theHSize: gp_XY
@@ -336,69 +86,95 @@ class Bnd_B2d {
 ") Bnd_B2d;
 		 Bnd_B2d (const gp_XY & theCenter,const gp_XY & theHSize);
 		%feature("compactdefaultargs") IsVoid;
-		%feature("autodoc", "	:rtype: bool
+		%feature("autodoc", "	* Returns True if the box is void --non-initialized--.
+
+	:rtype: bool
 ") IsVoid;
 		Standard_Boolean IsVoid ();
 		%feature("compactdefaultargs") Clear;
-		%feature("autodoc", "	:rtype: None
+		%feature("autodoc", "	* Reset the box data.
+
+	:rtype: None
 ") Clear;
 		void Clear ();
 		%feature("compactdefaultargs") Add;
-		%feature("autodoc", "	:param thePnt:
+		%feature("autodoc", "	* Update the box by a point.
+
+	:param thePnt:
 	:type thePnt: gp_XY
 	:rtype: None
 ") Add;
 		void Add (const gp_XY & thePnt);
 		%feature("compactdefaultargs") Add;
-		%feature("autodoc", "	:param thePnt:
+		%feature("autodoc", "	* Update the box by a point.
+
+	:param thePnt:
 	:type thePnt: gp_Pnt2d
 	:rtype: None
 ") Add;
 		void Add (const gp_Pnt2d & thePnt);
 		%feature("compactdefaultargs") Add;
-		%feature("autodoc", "	:param theBox:
+		%feature("autodoc", "	* Update the box by another box.
+
+	:param theBox:
 	:type theBox: Bnd_B2d &
 	:rtype: None
 ") Add;
 		void Add (const Bnd_B2d & theBox);
 		%feature("compactdefaultargs") CornerMin;
-		%feature("autodoc", "	:rtype: gp_XY
+		%feature("autodoc", "	* Query a box corner: --Center - HSize--. You must make sure that the box is NOT VOID --see IsVoid------, otherwise the method returns irrelevant result.
+
+	:rtype: gp_XY
 ") CornerMin;
 		gp_XY CornerMin ();
 		%feature("compactdefaultargs") CornerMax;
-		%feature("autodoc", "	:rtype: gp_XY
+		%feature("autodoc", "	* Query a box corner: --Center + HSize--. You must make sure that the box is NOT VOID --see IsVoid------, otherwise the method returns irrelevant result.
+
+	:rtype: gp_XY
 ") CornerMax;
 		gp_XY CornerMax ();
 		%feature("compactdefaultargs") SquareExtent;
-		%feature("autodoc", "	:rtype: float
+		%feature("autodoc", "	* Query the square diagonal. If the box is VOID --see method IsVoid------ then a very big real value is returned.
+
+	:rtype: float
 ") SquareExtent;
 		Standard_Real SquareExtent ();
 		%feature("compactdefaultargs") Enlarge;
-		%feature("autodoc", "	:param theDiff:
+		%feature("autodoc", "	* Extend the Box by the absolute value of theDiff.
+
+	:param theDiff:
 	:type theDiff: float
 	:rtype: None
 ") Enlarge;
 		void Enlarge (const Standard_Real theDiff);
 		%feature("compactdefaultargs") Limit;
-		%feature("autodoc", "	:param theOtherBox:
+		%feature("autodoc", "	* Limit the Box by the internals of theOtherBox. Returns True if the limitation takes place, otherwise False indicating that the boxes do not intersect.
+
+	:param theOtherBox:
 	:type theOtherBox: Bnd_B2d &
 	:rtype: bool
 ") Limit;
 		Standard_Boolean Limit (const Bnd_B2d & theOtherBox);
 		%feature("compactdefaultargs") Transformed;
-		%feature("autodoc", "	:param theTrsf:
+		%feature("autodoc", "	* Transform the bounding box with the given transformation. The resulting box will be larger if theTrsf contains rotation.
+
+	:param theTrsf:
 	:type theTrsf: gp_Trsf2d
 	:rtype: Bnd_B2d
 ") Transformed;
 		Bnd_B2d Transformed (const gp_Trsf2d & theTrsf);
 		%feature("compactdefaultargs") IsOut;
-		%feature("autodoc", "	:param thePnt:
+		%feature("autodoc", "	* Check the given point for the inclusion in the Box. Returns True if the point is outside.
+
+	:param thePnt:
 	:type thePnt: gp_XY
 	:rtype: bool
 ") IsOut;
 		Standard_Boolean IsOut (const gp_XY & thePnt);
 		%feature("compactdefaultargs") IsOut;
-		%feature("autodoc", "	:param theCenter:
+		%feature("autodoc", "	* Check a circle for the intersection with the current box. Returns True if there is no intersection between boxes.
+
+	:param theCenter:
 	:type theCenter: gp_XY
 	:param theRadius:
 	:type theRadius: float
@@ -408,13 +184,17 @@ class Bnd_B2d {
 ") IsOut;
 		Standard_Boolean IsOut (const gp_XY & theCenter,const Standard_Real theRadius,const Standard_Boolean isCircleHollow = Standard_False);
 		%feature("compactdefaultargs") IsOut;
-		%feature("autodoc", "	:param theOtherBox:
+		%feature("autodoc", "	* Check the given box for the intersection with the current box. Returns True if there is no intersection between boxes.
+
+	:param theOtherBox:
 	:type theOtherBox: Bnd_B2d &
 	:rtype: bool
 ") IsOut;
 		Standard_Boolean IsOut (const Bnd_B2d & theOtherBox);
 		%feature("compactdefaultargs") IsOut;
-		%feature("autodoc", "	:param theOtherBox:
+		%feature("autodoc", "	* Check the given box oriented by the given transformation for the intersection with the current box. Returns True if there is no intersection between boxes.
+
+	:param theOtherBox:
 	:type theOtherBox: Bnd_B2d &
 	:param theTrsf:
 	:type theTrsf: gp_Trsf2d
@@ -422,13 +202,17 @@ class Bnd_B2d {
 ") IsOut;
 		Standard_Boolean IsOut (const Bnd_B2d & theOtherBox,const gp_Trsf2d & theTrsf);
 		%feature("compactdefaultargs") IsOut;
-		%feature("autodoc", "	:param theLine:
+		%feature("autodoc", "	* Check the given Line for the intersection with the current box. Returns True if there is no intersection.
+
+	:param theLine:
 	:type theLine: gp_Ax2d
 	:rtype: bool
 ") IsOut;
 		Standard_Boolean IsOut (const gp_Ax2d & theLine);
 		%feature("compactdefaultargs") IsOut;
-		%feature("autodoc", "	:param theP0:
+		%feature("autodoc", "	* Check the Segment defined by the couple of input points for the intersection with the current box. Returns True if there is no intersection.
+
+	:param theP0:
 	:type theP0: gp_XY
 	:param theP1:
 	:type theP1: gp_XY
@@ -436,13 +220,17 @@ class Bnd_B2d {
 ") IsOut;
 		Standard_Boolean IsOut (const gp_XY & theP0,const gp_XY & theP1);
 		%feature("compactdefaultargs") IsIn;
-		%feature("autodoc", "	:param theBox:
+		%feature("autodoc", "	* Check that the box 'this' is inside the given box 'theBox'. Returns True if 'this' box is fully inside 'theBox'.
+
+	:param theBox:
 	:type theBox: Bnd_B2d &
 	:rtype: bool
 ") IsIn;
 		Standard_Boolean IsIn (const Bnd_B2d & theBox);
 		%feature("compactdefaultargs") IsIn;
-		%feature("autodoc", "	:param theBox:
+		%feature("autodoc", "	* Check that the box 'this' is inside the given box 'theBox' transformed by 'theTrsf'. Returns True if 'this' box is fully inside the transformed 'theBox'.
+
+	:param theBox:
 	:type theBox: Bnd_B2d &
 	:param theTrsf:
 	:type theTrsf: gp_Trsf2d
@@ -450,13 +238,17 @@ class Bnd_B2d {
 ") IsIn;
 		Standard_Boolean IsIn (const Bnd_B2d & theBox,const gp_Trsf2d & theTrsf);
 		%feature("compactdefaultargs") SetCenter;
-		%feature("autodoc", "	:param theCenter:
+		%feature("autodoc", "	* Set the Center coordinates
+
+	:param theCenter:
 	:type theCenter: gp_XY
 	:rtype: None
 ") SetCenter;
 		void SetCenter (const gp_XY & theCenter);
 		%feature("compactdefaultargs") SetHSize;
-		%feature("autodoc", "	:param theHSize:
+		%feature("autodoc", "	* Set the HSize --half-diagonal-- coordinates. All components of theHSize must be non-negative.
+
+	:param theHSize:
 	:type theHSize: gp_XY
 	:rtype: None
 ") SetHSize;
@@ -473,11 +265,15 @@ class Bnd_B2d {
 class Bnd_B2f {
 	public:
 		%feature("compactdefaultargs") Bnd_B2f;
-		%feature("autodoc", "	:rtype: None
+		%feature("autodoc", "	* Empty constructor.
+
+	:rtype: None
 ") Bnd_B2f;
 		 Bnd_B2f ();
 		%feature("compactdefaultargs") Bnd_B2f;
-		%feature("autodoc", "	:param theCenter:
+		%feature("autodoc", "	* Constructor.
+
+	:param theCenter:
 	:type theCenter: gp_XY
 	:param theHSize:
 	:type theHSize: gp_XY
@@ -485,69 +281,95 @@ class Bnd_B2f {
 ") Bnd_B2f;
 		 Bnd_B2f (const gp_XY & theCenter,const gp_XY & theHSize);
 		%feature("compactdefaultargs") IsVoid;
-		%feature("autodoc", "	:rtype: bool
+		%feature("autodoc", "	* Returns True if the box is void --non-initialized--.
+
+	:rtype: bool
 ") IsVoid;
 		Standard_Boolean IsVoid ();
 		%feature("compactdefaultargs") Clear;
-		%feature("autodoc", "	:rtype: None
+		%feature("autodoc", "	* Reset the box data.
+
+	:rtype: None
 ") Clear;
 		void Clear ();
 		%feature("compactdefaultargs") Add;
-		%feature("autodoc", "	:param thePnt:
+		%feature("autodoc", "	* Update the box by a point.
+
+	:param thePnt:
 	:type thePnt: gp_XY
 	:rtype: None
 ") Add;
 		void Add (const gp_XY & thePnt);
 		%feature("compactdefaultargs") Add;
-		%feature("autodoc", "	:param thePnt:
+		%feature("autodoc", "	* Update the box by a point.
+
+	:param thePnt:
 	:type thePnt: gp_Pnt2d
 	:rtype: None
 ") Add;
 		void Add (const gp_Pnt2d & thePnt);
 		%feature("compactdefaultargs") Add;
-		%feature("autodoc", "	:param theBox:
+		%feature("autodoc", "	* Update the box by another box.
+
+	:param theBox:
 	:type theBox: Bnd_B2f &
 	:rtype: None
 ") Add;
 		void Add (const Bnd_B2f & theBox);
 		%feature("compactdefaultargs") CornerMin;
-		%feature("autodoc", "	:rtype: gp_XY
+		%feature("autodoc", "	* Query a box corner: --Center - HSize--. You must make sure that the box is NOT VOID --see IsVoid------, otherwise the method returns irrelevant result.
+
+	:rtype: gp_XY
 ") CornerMin;
 		gp_XY CornerMin ();
 		%feature("compactdefaultargs") CornerMax;
-		%feature("autodoc", "	:rtype: gp_XY
+		%feature("autodoc", "	* Query a box corner: --Center + HSize--. You must make sure that the box is NOT VOID --see IsVoid------, otherwise the method returns irrelevant result.
+
+	:rtype: gp_XY
 ") CornerMax;
 		gp_XY CornerMax ();
 		%feature("compactdefaultargs") SquareExtent;
-		%feature("autodoc", "	:rtype: float
+		%feature("autodoc", "	* Query the square diagonal. If the box is VOID --see method IsVoid------ then a very big real value is returned.
+
+	:rtype: float
 ") SquareExtent;
 		Standard_Real SquareExtent ();
 		%feature("compactdefaultargs") Enlarge;
-		%feature("autodoc", "	:param theDiff:
+		%feature("autodoc", "	* Extend the Box by the absolute value of theDiff.
+
+	:param theDiff:
 	:type theDiff: float
 	:rtype: None
 ") Enlarge;
 		void Enlarge (const Standard_Real theDiff);
 		%feature("compactdefaultargs") Limit;
-		%feature("autodoc", "	:param theOtherBox:
+		%feature("autodoc", "	* Limit the Box by the internals of theOtherBox. Returns True if the limitation takes place, otherwise False indicating that the boxes do not intersect.
+
+	:param theOtherBox:
 	:type theOtherBox: Bnd_B2f &
 	:rtype: bool
 ") Limit;
 		Standard_Boolean Limit (const Bnd_B2f & theOtherBox);
 		%feature("compactdefaultargs") Transformed;
-		%feature("autodoc", "	:param theTrsf:
+		%feature("autodoc", "	* Transform the bounding box with the given transformation. The resulting box will be larger if theTrsf contains rotation.
+
+	:param theTrsf:
 	:type theTrsf: gp_Trsf2d
 	:rtype: Bnd_B2f
 ") Transformed;
 		Bnd_B2f Transformed (const gp_Trsf2d & theTrsf);
 		%feature("compactdefaultargs") IsOut;
-		%feature("autodoc", "	:param thePnt:
+		%feature("autodoc", "	* Check the given point for the inclusion in the Box. Returns True if the point is outside.
+
+	:param thePnt:
 	:type thePnt: gp_XY
 	:rtype: bool
 ") IsOut;
 		Standard_Boolean IsOut (const gp_XY & thePnt);
 		%feature("compactdefaultargs") IsOut;
-		%feature("autodoc", "	:param theCenter:
+		%feature("autodoc", "	* Check a circle for the intersection with the current box. Returns True if there is no intersection between boxes.
+
+	:param theCenter:
 	:type theCenter: gp_XY
 	:param theRadius:
 	:type theRadius: float
@@ -557,13 +379,17 @@ class Bnd_B2f {
 ") IsOut;
 		Standard_Boolean IsOut (const gp_XY & theCenter,const Standard_Real theRadius,const Standard_Boolean isCircleHollow = Standard_False);
 		%feature("compactdefaultargs") IsOut;
-		%feature("autodoc", "	:param theOtherBox:
+		%feature("autodoc", "	* Check the given box for the intersection with the current box. Returns True if there is no intersection between boxes.
+
+	:param theOtherBox:
 	:type theOtherBox: Bnd_B2f &
 	:rtype: bool
 ") IsOut;
 		Standard_Boolean IsOut (const Bnd_B2f & theOtherBox);
 		%feature("compactdefaultargs") IsOut;
-		%feature("autodoc", "	:param theOtherBox:
+		%feature("autodoc", "	* Check the given box oriented by the given transformation for the intersection with the current box. Returns True if there is no intersection between boxes.
+
+	:param theOtherBox:
 	:type theOtherBox: Bnd_B2f &
 	:param theTrsf:
 	:type theTrsf: gp_Trsf2d
@@ -571,13 +397,17 @@ class Bnd_B2f {
 ") IsOut;
 		Standard_Boolean IsOut (const Bnd_B2f & theOtherBox,const gp_Trsf2d & theTrsf);
 		%feature("compactdefaultargs") IsOut;
-		%feature("autodoc", "	:param theLine:
+		%feature("autodoc", "	* Check the given Line for the intersection with the current box. Returns True if there is no intersection.
+
+	:param theLine:
 	:type theLine: gp_Ax2d
 	:rtype: bool
 ") IsOut;
 		Standard_Boolean IsOut (const gp_Ax2d & theLine);
 		%feature("compactdefaultargs") IsOut;
-		%feature("autodoc", "	:param theP0:
+		%feature("autodoc", "	* Check the Segment defined by the couple of input points for the intersection with the current box. Returns True if there is no intersection.
+
+	:param theP0:
 	:type theP0: gp_XY
 	:param theP1:
 	:type theP1: gp_XY
@@ -585,13 +415,17 @@ class Bnd_B2f {
 ") IsOut;
 		Standard_Boolean IsOut (const gp_XY & theP0,const gp_XY & theP1);
 		%feature("compactdefaultargs") IsIn;
-		%feature("autodoc", "	:param theBox:
+		%feature("autodoc", "	* Check that the box 'this' is inside the given box 'theBox'. Returns True if 'this' box is fully inside 'theBox'.
+
+	:param theBox:
 	:type theBox: Bnd_B2f &
 	:rtype: bool
 ") IsIn;
 		Standard_Boolean IsIn (const Bnd_B2f & theBox);
 		%feature("compactdefaultargs") IsIn;
-		%feature("autodoc", "	:param theBox:
+		%feature("autodoc", "	* Check that the box 'this' is inside the given box 'theBox' transformed by 'theTrsf'. Returns True if 'this' box is fully inside the transformed 'theBox'.
+
+	:param theBox:
 	:type theBox: Bnd_B2f &
 	:param theTrsf:
 	:type theTrsf: gp_Trsf2d
@@ -599,13 +433,17 @@ class Bnd_B2f {
 ") IsIn;
 		Standard_Boolean IsIn (const Bnd_B2f & theBox,const gp_Trsf2d & theTrsf);
 		%feature("compactdefaultargs") SetCenter;
-		%feature("autodoc", "	:param theCenter:
+		%feature("autodoc", "	* Set the Center coordinates
+
+	:param theCenter:
 	:type theCenter: gp_XY
 	:rtype: None
 ") SetCenter;
 		void SetCenter (const gp_XY & theCenter);
 		%feature("compactdefaultargs") SetHSize;
-		%feature("autodoc", "	:param theHSize:
+		%feature("autodoc", "	* Set the HSize --half-diagonal-- coordinates. All components of theHSize must be non-negative.
+
+	:param theHSize:
 	:type theHSize: gp_XY
 	:rtype: None
 ") SetHSize;
@@ -622,11 +460,15 @@ class Bnd_B2f {
 class Bnd_B3d {
 	public:
 		%feature("compactdefaultargs") Bnd_B3d;
-		%feature("autodoc", "	:rtype: None
+		%feature("autodoc", "	* Empty constructor.
+
+	:rtype: None
 ") Bnd_B3d;
 		 Bnd_B3d ();
 		%feature("compactdefaultargs") Bnd_B3d;
-		%feature("autodoc", "	:param theCenter:
+		%feature("autodoc", "	* Constructor.
+
+	:param theCenter:
 	:type theCenter: gp_XYZ
 	:param theHSize:
 	:type theHSize: gp_XYZ
@@ -634,69 +476,95 @@ class Bnd_B3d {
 ") Bnd_B3d;
 		 Bnd_B3d (const gp_XYZ & theCenter,const gp_XYZ & theHSize);
 		%feature("compactdefaultargs") IsVoid;
-		%feature("autodoc", "	:rtype: bool
+		%feature("autodoc", "	* Returns True if the box is void --non-initialized--.
+
+	:rtype: bool
 ") IsVoid;
 		Standard_Boolean IsVoid ();
 		%feature("compactdefaultargs") Clear;
-		%feature("autodoc", "	:rtype: None
+		%feature("autodoc", "	* Reset the box data.
+
+	:rtype: None
 ") Clear;
 		void Clear ();
 		%feature("compactdefaultargs") Add;
-		%feature("autodoc", "	:param thePnt:
+		%feature("autodoc", "	* Update the box by a point.
+
+	:param thePnt:
 	:type thePnt: gp_XYZ
 	:rtype: None
 ") Add;
 		void Add (const gp_XYZ & thePnt);
 		%feature("compactdefaultargs") Add;
-		%feature("autodoc", "	:param thePnt:
+		%feature("autodoc", "	* Update the box by a point.
+
+	:param thePnt:
 	:type thePnt: gp_Pnt
 	:rtype: None
 ") Add;
 		void Add (const gp_Pnt & thePnt);
 		%feature("compactdefaultargs") Add;
-		%feature("autodoc", "	:param theBox:
+		%feature("autodoc", "	* Update the box by another box.
+
+	:param theBox:
 	:type theBox: Bnd_B3d &
 	:rtype: None
 ") Add;
 		void Add (const Bnd_B3d & theBox);
 		%feature("compactdefaultargs") CornerMin;
-		%feature("autodoc", "	:rtype: gp_XYZ
+		%feature("autodoc", "	* Query the lower corner: --Center - HSize--. You must make sure that the box is NOT VOID --see IsVoid------, otherwise the method returns irrelevant result.
+
+	:rtype: gp_XYZ
 ") CornerMin;
 		gp_XYZ CornerMin ();
 		%feature("compactdefaultargs") CornerMax;
-		%feature("autodoc", "	:rtype: gp_XYZ
+		%feature("autodoc", "	* Query the upper corner: --Center + HSize--. You must make sure that the box is NOT VOID --see IsVoid------, otherwise the method returns irrelevant result.
+
+	:rtype: gp_XYZ
 ") CornerMax;
 		gp_XYZ CornerMax ();
 		%feature("compactdefaultargs") SquareExtent;
-		%feature("autodoc", "	:rtype: float
+		%feature("autodoc", "	* Query the square diagonal. If the box is VOID --see method IsVoid------ then a very big real value is returned.
+
+	:rtype: float
 ") SquareExtent;
 		Standard_Real SquareExtent ();
 		%feature("compactdefaultargs") Enlarge;
-		%feature("autodoc", "	:param theDiff:
+		%feature("autodoc", "	* Extend the Box by the absolute value of theDiff.
+
+	:param theDiff:
 	:type theDiff: float
 	:rtype: None
 ") Enlarge;
 		void Enlarge (const Standard_Real theDiff);
 		%feature("compactdefaultargs") Limit;
-		%feature("autodoc", "	:param theOtherBox:
+		%feature("autodoc", "	* Limit the Box by the internals of theOtherBox. Returns True if the limitation takes place, otherwise False indicating that the boxes do not intersect.
+
+	:param theOtherBox:
 	:type theOtherBox: Bnd_B3d &
 	:rtype: bool
 ") Limit;
 		Standard_Boolean Limit (const Bnd_B3d & theOtherBox);
 		%feature("compactdefaultargs") Transformed;
-		%feature("autodoc", "	:param theTrsf:
+		%feature("autodoc", "	* Transform the bounding box with the given transformation. The resulting box will be larger if theTrsf contains rotation.
+
+	:param theTrsf:
 	:type theTrsf: gp_Trsf
 	:rtype: Bnd_B3d
 ") Transformed;
 		Bnd_B3d Transformed (const gp_Trsf & theTrsf);
 		%feature("compactdefaultargs") IsOut;
-		%feature("autodoc", "	:param thePnt:
+		%feature("autodoc", "	* Check the given point for the inclusion in the Box. Returns True if the point is outside.
+
+	:param thePnt:
 	:type thePnt: gp_XYZ
 	:rtype: bool
 ") IsOut;
 		Standard_Boolean IsOut (const gp_XYZ & thePnt);
 		%feature("compactdefaultargs") IsOut;
-		%feature("autodoc", "	:param theCenter:
+		%feature("autodoc", "	* Check a sphere for the intersection with the current box. Returns True if there is no intersection between boxes. If the parameter 'IsSphereHollow' is True, then the intersection is not reported for a box that is completely inside the sphere --otherwise this method would report an intersection--.
+
+	:param theCenter:
 	:type theCenter: gp_XYZ
 	:param theRadius:
 	:type theRadius: float
@@ -706,13 +574,17 @@ class Bnd_B3d {
 ") IsOut;
 		Standard_Boolean IsOut (const gp_XYZ & theCenter,const Standard_Real theRadius,const Standard_Boolean isSphereHollow = Standard_False);
 		%feature("compactdefaultargs") IsOut;
-		%feature("autodoc", "	:param theOtherBox:
+		%feature("autodoc", "	* Check the given box for the intersection with the current box. Returns True if there is no intersection between boxes.
+
+	:param theOtherBox:
 	:type theOtherBox: Bnd_B3d &
 	:rtype: bool
 ") IsOut;
 		Standard_Boolean IsOut (const Bnd_B3d & theOtherBox);
 		%feature("compactdefaultargs") IsOut;
-		%feature("autodoc", "	:param theOtherBox:
+		%feature("autodoc", "	* Check the given box oriented by the given transformation for the intersection with the current box. Returns True if there is no intersection between boxes.
+
+	:param theOtherBox:
 	:type theOtherBox: Bnd_B3d &
 	:param theTrsf:
 	:type theTrsf: gp_Trsf
@@ -720,7 +592,9 @@ class Bnd_B3d {
 ") IsOut;
 		Standard_Boolean IsOut (const Bnd_B3d & theOtherBox,const gp_Trsf & theTrsf);
 		%feature("compactdefaultargs") IsOut;
-		%feature("autodoc", "	:param theLine:
+		%feature("autodoc", "	* Check the given Line for the intersection with the current box. Returns True if there is no intersection. isRay==True means intersection check with the positive half-line theOverthickness is the addition to the size of the current box --may be negative--. If positive, it can be treated as the thickness of the line 'theLine' or the radius of the cylinder along 'theLine'
+
+	:param theLine:
 	:type theLine: gp_Ax1
 	:param isRay: default value is Standard_False
 	:type isRay: bool
@@ -730,19 +604,25 @@ class Bnd_B3d {
 ") IsOut;
 		Standard_Boolean IsOut (const gp_Ax1 & theLine,const Standard_Boolean isRay = Standard_False,const Standard_Real theOverthickness = 0.0);
 		%feature("compactdefaultargs") IsOut;
-		%feature("autodoc", "	:param thePlane:
+		%feature("autodoc", "	* Check the given Plane for the intersection with the current box. Returns True if there is no intersection.
+
+	:param thePlane:
 	:type thePlane: gp_Ax3
 	:rtype: bool
 ") IsOut;
 		Standard_Boolean IsOut (const gp_Ax3 & thePlane);
 		%feature("compactdefaultargs") IsIn;
-		%feature("autodoc", "	:param theBox:
+		%feature("autodoc", "	* Check that the box 'this' is inside the given box 'theBox'. Returns True if 'this' box is fully inside 'theBox'.
+
+	:param theBox:
 	:type theBox: Bnd_B3d &
 	:rtype: bool
 ") IsIn;
 		Standard_Boolean IsIn (const Bnd_B3d & theBox);
 		%feature("compactdefaultargs") IsIn;
-		%feature("autodoc", "	:param theBox:
+		%feature("autodoc", "	* Check that the box 'this' is inside the given box 'theBox' transformed by 'theTrsf'. Returns True if 'this' box is fully inside the transformed 'theBox'.
+
+	:param theBox:
 	:type theBox: Bnd_B3d &
 	:param theTrsf:
 	:type theTrsf: gp_Trsf
@@ -750,13 +630,17 @@ class Bnd_B3d {
 ") IsIn;
 		Standard_Boolean IsIn (const Bnd_B3d & theBox,const gp_Trsf & theTrsf);
 		%feature("compactdefaultargs") SetCenter;
-		%feature("autodoc", "	:param theCenter:
+		%feature("autodoc", "	* Set the Center coordinates
+
+	:param theCenter:
 	:type theCenter: gp_XYZ
 	:rtype: None
 ") SetCenter;
 		void SetCenter (const gp_XYZ & theCenter);
 		%feature("compactdefaultargs") SetHSize;
-		%feature("autodoc", "	:param theHSize:
+		%feature("autodoc", "	* Set the HSize --half-diagonal-- coordinates. All components of theHSize must be non-negative.
+
+	:param theHSize:
 	:type theHSize: gp_XYZ
 	:rtype: None
 ") SetHSize;
@@ -773,11 +657,15 @@ class Bnd_B3d {
 class Bnd_B3f {
 	public:
 		%feature("compactdefaultargs") Bnd_B3f;
-		%feature("autodoc", "	:rtype: None
+		%feature("autodoc", "	* Empty constructor.
+
+	:rtype: None
 ") Bnd_B3f;
 		 Bnd_B3f ();
 		%feature("compactdefaultargs") Bnd_B3f;
-		%feature("autodoc", "	:param theCenter:
+		%feature("autodoc", "	* Constructor.
+
+	:param theCenter:
 	:type theCenter: gp_XYZ
 	:param theHSize:
 	:type theHSize: gp_XYZ
@@ -785,69 +673,95 @@ class Bnd_B3f {
 ") Bnd_B3f;
 		 Bnd_B3f (const gp_XYZ & theCenter,const gp_XYZ & theHSize);
 		%feature("compactdefaultargs") IsVoid;
-		%feature("autodoc", "	:rtype: bool
+		%feature("autodoc", "	* Returns True if the box is void --non-initialized--.
+
+	:rtype: bool
 ") IsVoid;
 		Standard_Boolean IsVoid ();
 		%feature("compactdefaultargs") Clear;
-		%feature("autodoc", "	:rtype: None
+		%feature("autodoc", "	* Reset the box data.
+
+	:rtype: None
 ") Clear;
 		void Clear ();
 		%feature("compactdefaultargs") Add;
-		%feature("autodoc", "	:param thePnt:
+		%feature("autodoc", "	* Update the box by a point.
+
+	:param thePnt:
 	:type thePnt: gp_XYZ
 	:rtype: None
 ") Add;
 		void Add (const gp_XYZ & thePnt);
 		%feature("compactdefaultargs") Add;
-		%feature("autodoc", "	:param thePnt:
+		%feature("autodoc", "	* Update the box by a point.
+
+	:param thePnt:
 	:type thePnt: gp_Pnt
 	:rtype: None
 ") Add;
 		void Add (const gp_Pnt & thePnt);
 		%feature("compactdefaultargs") Add;
-		%feature("autodoc", "	:param theBox:
+		%feature("autodoc", "	* Update the box by another box.
+
+	:param theBox:
 	:type theBox: Bnd_B3f &
 	:rtype: None
 ") Add;
 		void Add (const Bnd_B3f & theBox);
 		%feature("compactdefaultargs") CornerMin;
-		%feature("autodoc", "	:rtype: gp_XYZ
+		%feature("autodoc", "	* Query the lower corner: --Center - HSize--. You must make sure that the box is NOT VOID --see IsVoid------, otherwise the method returns irrelevant result.
+
+	:rtype: gp_XYZ
 ") CornerMin;
 		gp_XYZ CornerMin ();
 		%feature("compactdefaultargs") CornerMax;
-		%feature("autodoc", "	:rtype: gp_XYZ
+		%feature("autodoc", "	* Query the upper corner: --Center + HSize--. You must make sure that the box is NOT VOID --see IsVoid------, otherwise the method returns irrelevant result.
+
+	:rtype: gp_XYZ
 ") CornerMax;
 		gp_XYZ CornerMax ();
 		%feature("compactdefaultargs") SquareExtent;
-		%feature("autodoc", "	:rtype: float
+		%feature("autodoc", "	* Query the square diagonal. If the box is VOID --see method IsVoid------ then a very big real value is returned.
+
+	:rtype: float
 ") SquareExtent;
 		Standard_Real SquareExtent ();
 		%feature("compactdefaultargs") Enlarge;
-		%feature("autodoc", "	:param theDiff:
+		%feature("autodoc", "	* Extend the Box by the absolute value of theDiff.
+
+	:param theDiff:
 	:type theDiff: float
 	:rtype: None
 ") Enlarge;
 		void Enlarge (const Standard_Real theDiff);
 		%feature("compactdefaultargs") Limit;
-		%feature("autodoc", "	:param theOtherBox:
+		%feature("autodoc", "	* Limit the Box by the internals of theOtherBox. Returns True if the limitation takes place, otherwise False indicating that the boxes do not intersect.
+
+	:param theOtherBox:
 	:type theOtherBox: Bnd_B3f &
 	:rtype: bool
 ") Limit;
 		Standard_Boolean Limit (const Bnd_B3f & theOtherBox);
 		%feature("compactdefaultargs") Transformed;
-		%feature("autodoc", "	:param theTrsf:
+		%feature("autodoc", "	* Transform the bounding box with the given transformation. The resulting box will be larger if theTrsf contains rotation.
+
+	:param theTrsf:
 	:type theTrsf: gp_Trsf
 	:rtype: Bnd_B3f
 ") Transformed;
 		Bnd_B3f Transformed (const gp_Trsf & theTrsf);
 		%feature("compactdefaultargs") IsOut;
-		%feature("autodoc", "	:param thePnt:
+		%feature("autodoc", "	* Check the given point for the inclusion in the Box. Returns True if the point is outside.
+
+	:param thePnt:
 	:type thePnt: gp_XYZ
 	:rtype: bool
 ") IsOut;
 		Standard_Boolean IsOut (const gp_XYZ & thePnt);
 		%feature("compactdefaultargs") IsOut;
-		%feature("autodoc", "	:param theCenter:
+		%feature("autodoc", "	* Check a sphere for the intersection with the current box. Returns True if there is no intersection between boxes. If the parameter 'IsSphereHollow' is True, then the intersection is not reported for a box that is completely inside the sphere --otherwise this method would report an intersection--.
+
+	:param theCenter:
 	:type theCenter: gp_XYZ
 	:param theRadius:
 	:type theRadius: float
@@ -857,13 +771,17 @@ class Bnd_B3f {
 ") IsOut;
 		Standard_Boolean IsOut (const gp_XYZ & theCenter,const Standard_Real theRadius,const Standard_Boolean isSphereHollow = Standard_False);
 		%feature("compactdefaultargs") IsOut;
-		%feature("autodoc", "	:param theOtherBox:
+		%feature("autodoc", "	* Check the given box for the intersection with the current box. Returns True if there is no intersection between boxes.
+
+	:param theOtherBox:
 	:type theOtherBox: Bnd_B3f &
 	:rtype: bool
 ") IsOut;
 		Standard_Boolean IsOut (const Bnd_B3f & theOtherBox);
 		%feature("compactdefaultargs") IsOut;
-		%feature("autodoc", "	:param theOtherBox:
+		%feature("autodoc", "	* Check the given box oriented by the given transformation for the intersection with the current box. Returns True if there is no intersection between boxes.
+
+	:param theOtherBox:
 	:type theOtherBox: Bnd_B3f &
 	:param theTrsf:
 	:type theTrsf: gp_Trsf
@@ -871,7 +789,9 @@ class Bnd_B3f {
 ") IsOut;
 		Standard_Boolean IsOut (const Bnd_B3f & theOtherBox,const gp_Trsf & theTrsf);
 		%feature("compactdefaultargs") IsOut;
-		%feature("autodoc", "	:param theLine:
+		%feature("autodoc", "	* Check the given Line for the intersection with the current box. Returns True if there is no intersection. isRay==True means intersection check with the positive half-line theOverthickness is the addition to the size of the current box --may be negative--. If positive, it can be treated as the thickness of the line 'theLine' or the radius of the cylinder along 'theLine'
+
+	:param theLine:
 	:type theLine: gp_Ax1
 	:param isRay: default value is Standard_False
 	:type isRay: bool
@@ -881,19 +801,25 @@ class Bnd_B3f {
 ") IsOut;
 		Standard_Boolean IsOut (const gp_Ax1 & theLine,const Standard_Boolean isRay = Standard_False,const Standard_Real theOverthickness = 0.0);
 		%feature("compactdefaultargs") IsOut;
-		%feature("autodoc", "	:param thePlane:
+		%feature("autodoc", "	* Check the given Plane for the intersection with the current box. Returns True if there is no intersection.
+
+	:param thePlane:
 	:type thePlane: gp_Ax3
 	:rtype: bool
 ") IsOut;
 		Standard_Boolean IsOut (const gp_Ax3 & thePlane);
 		%feature("compactdefaultargs") IsIn;
-		%feature("autodoc", "	:param theBox:
+		%feature("autodoc", "	* Check that the box 'this' is inside the given box 'theBox'. Returns True if 'this' box is fully inside 'theBox'.
+
+	:param theBox:
 	:type theBox: Bnd_B3f &
 	:rtype: bool
 ") IsIn;
 		Standard_Boolean IsIn (const Bnd_B3f & theBox);
 		%feature("compactdefaultargs") IsIn;
-		%feature("autodoc", "	:param theBox:
+		%feature("autodoc", "	* Check that the box 'this' is inside the given box 'theBox' transformed by 'theTrsf'. Returns True if 'this' box is fully inside the transformed 'theBox'.
+
+	:param theBox:
 	:type theBox: Bnd_B3f &
 	:param theTrsf:
 	:type theTrsf: gp_Trsf
@@ -901,13 +827,17 @@ class Bnd_B3f {
 ") IsIn;
 		Standard_Boolean IsIn (const Bnd_B3f & theBox,const gp_Trsf & theTrsf);
 		%feature("compactdefaultargs") SetCenter;
-		%feature("autodoc", "	:param theCenter:
+		%feature("autodoc", "	* Set the Center coordinates
+
+	:param theCenter:
 	:type theCenter: gp_XYZ
 	:rtype: None
 ") SetCenter;
 		void SetCenter (const gp_XYZ & theCenter);
 		%feature("compactdefaultargs") SetHSize;
-		%feature("autodoc", "	:param theHSize:
+		%feature("autodoc", "	* Set the HSize --half-diagonal-- coordinates. All components of theHSize must be non-negative.
+
+	:param theHSize:
 	:type theHSize: gp_XYZ
 	:rtype: None
 ") SetHSize;
@@ -1124,7 +1054,7 @@ class Bnd_Box {
 ") Update;
 		void Update (const Standard_Real aXmin,const Standard_Real aYmin,const Standard_Real aZmin,const Standard_Real aXmax,const Standard_Real aYmax,const Standard_Real aZmax);
 		%feature("compactdefaultargs") Update;
-		%feature("autodoc", "	* Adds a point of coordinates (X,Y,Z) to this bounding box.
+		%feature("autodoc", "	* Adds a point of coordinates --X,Y,Z-- to this bounding box.
 
 	:param X:
 	:type X: float
@@ -1142,7 +1072,7 @@ class Bnd_Box {
 ") GetGap;
 		Standard_Real GetGap ();
 		%feature("compactdefaultargs") SetGap;
-		%feature("autodoc", "	* Set the gap of this bounding box to abs(Tol).
+		%feature("autodoc", "	* Set the gap of this bounding box to abs--Tol--.
 
 	:param Tol:
 	:type Tol: float
@@ -1150,7 +1080,7 @@ class Bnd_Box {
 ") SetGap;
 		void SetGap (const Standard_Real Tol);
 		%feature("compactdefaultargs") Enlarge;
-		%feature("autodoc", "	* Enlarges the box with a tolerance value. (minvalues-Abs(<tol>) and maxvalues+Abs(<tol>)) This means that the minimum values of its X, Y and Z intervals of definition, when they are finite, are reduced by the absolute value of Tol, while the maximum values are increased by the same amount.
+		%feature("autodoc", "	* Enlarges the box with a tolerance value. --minvalues-Abs--<tol>-- and maxvalues+Abs--<tol>---- This means that the minimum values of its X, Y and Z intervals of definition, when they are finite, are reduced by the absolute value of Tol, while the maximum values are increased by the same amount.
 
 	:param Tol:
 	:type Tol: float
@@ -1158,7 +1088,7 @@ class Bnd_Box {
 ") Enlarge;
 		void Enlarge (const Standard_Real Tol);
 		%feature("compactdefaultargs") Get;
-		%feature("autodoc", "	* Returns the bounds of this bounding box. The gap is included. If this bounding box is infinite (i.e. 'open'), returned values may be equal to +/- Precision::Infinite(). Standard_ConstructionError exception will be thrown if the box is void. if IsVoid()
+		%feature("autodoc", "	* Returns the bounds of this bounding box. The gap is included. If this bounding box is infinite --i.e. 'open'--, returned values may be equal to +/- Precision::Infinite----. Standard_ConstructionError exception will be thrown if the box is void. if IsVoid----
 
 	:param theXmin:
 	:type theXmin: float &
@@ -1176,13 +1106,13 @@ class Bnd_Box {
 ") Get;
 		void Get (Standard_Real &OutValue,Standard_Real &OutValue,Standard_Real &OutValue,Standard_Real &OutValue,Standard_Real &OutValue,Standard_Real &OutValue);
 		%feature("compactdefaultargs") CornerMin;
-		%feature("autodoc", "	* Returns the lower corner of this bounding box. The gap is included. If this bounding box is infinite (i.e. 'open'), returned values may be equal to +/- Precision::Infinite(). Standard_ConstructionError exception will be thrown if the box is void. if IsVoid()
+		%feature("autodoc", "	* Returns the lower corner of this bounding box. The gap is included. If this bounding box is infinite --i.e. 'open'--, returned values may be equal to +/- Precision::Infinite----. Standard_ConstructionError exception will be thrown if the box is void. if IsVoid----
 
 	:rtype: gp_Pnt
 ") CornerMin;
 		gp_Pnt CornerMin ();
 		%feature("compactdefaultargs") CornerMax;
-		%feature("autodoc", "	* Returns the upper corner of this bounding box. The gap is included. If this bounding box is infinite (i.e. 'open'), returned values may be equal to +/- Precision::Infinite(). Standard_ConstructionError exception will be thrown if the box is void. if IsVoid()
+		%feature("autodoc", "	* Returns the upper corner of this bounding box. The gap is included. If this bounding box is infinite --i.e. 'open'--, returned values may be equal to +/- Precision::Infinite----. Standard_ConstructionError exception will be thrown if the box is void. if IsVoid----
 
 	:rtype: gp_Pnt
 ") CornerMax;
@@ -1260,13 +1190,13 @@ class Bnd_Box {
 ") IsOpenZmax;
 		Standard_Boolean IsOpenZmax ();
 		%feature("compactdefaultargs") IsWhole;
-		%feature("autodoc", "	* Returns true if this bounding box is infinite in all 6 directions (WholeSpace flag).
+		%feature("autodoc", "	* Returns true if this bounding box is infinite in all 6 directions --WholeSpace flag--.
 
 	:rtype: bool
 ") IsWhole;
 		Standard_Boolean IsWhole ();
 		%feature("compactdefaultargs") IsVoid;
-		%feature("autodoc", "	* Returns true if this bounding box is empty (Void flag).
+		%feature("autodoc", "	* Returns true if this bounding box is empty --Void flag--.
 
 	:rtype: bool
 ") IsVoid;
@@ -1304,7 +1234,7 @@ class Bnd_Box {
 ") IsThin;
 		Standard_Boolean IsThin (const Standard_Real tol);
 		%feature("compactdefaultargs") Transformed;
-		%feature("autodoc", "	* Returns a bounding box which is the result of applying the transformation T to this bounding box. Warning Applying a geometric transformation (for example, a rotation) to a bounding box generally increases its dimensions. This is not optimal for algorithms which use it.
+		%feature("autodoc", "	* Returns a bounding box which is the result of applying the transformation T to this bounding box. Warning Applying a geometric transformation --for example, a rotation-- to a bounding box generally increases its dimensions. This is not optimal for algorithms which use it.
 
 	:param T:
 	:type T: gp_Trsf
@@ -1461,21 +1391,21 @@ class Bnd_Box2d {
 		%feature("compactdefaultargs") Set;
 		%feature("autodoc", "	* Sets this 2D bounding box so that it bounds the point P. This involves first setting this bounding box to be void and then adding the point PThe rectangle bounds the point <P>.
 
-	:param P:
-	:type P: gp_Pnt2d
+	:param thePnt:
+	:type thePnt: gp_Pnt2d
 	:rtype: None
 ") Set;
-		void Set (const gp_Pnt2d & P);
+		void Set (const gp_Pnt2d & thePnt);
 		%feature("compactdefaultargs") Set;
 		%feature("autodoc", "	* Sets this 2D bounding box so that it bounds the half-line defined by point P and direction D, i.e. all points M defined by M=P+u*D, where u is greater than or equal to 0, are inside the bounding area. This involves first setting this 2D box to be void and then adding the half-line.
 
-	:param P:
-	:type P: gp_Pnt2d
-	:param D:
-	:type D: gp_Dir2d
+	:param thePnt:
+	:type thePnt: gp_Pnt2d
+	:param theDir:
+	:type theDir: gp_Dir2d
 	:rtype: None
 ") Set;
-		void Set (const gp_Pnt2d & P,const gp_Dir2d & D);
+		void Set (const gp_Pnt2d & thePnt,const gp_Dir2d & theDir);
 		%feature("compactdefaultargs") Update;
 		%feature("autodoc", "	* Enlarges this 2D bounding box, if required, so that it contains at least: - interval [ aXmin,aXmax ] in the 'X Direction', - interval [ aYmin,aYmax ] in the 'Y Direction'
 
@@ -1491,7 +1421,7 @@ class Bnd_Box2d {
 ") Update;
 		void Update (const Standard_Real aXmin,const Standard_Real aYmin,const Standard_Real aXmax,const Standard_Real aYmax);
 		%feature("compactdefaultargs") Update;
-		%feature("autodoc", "	* Adds a point of coordinates (X,Y) to this bounding box.
+		%feature("autodoc", "	* Adds a point of coordinates --X,Y-- to this bounding box.
 
 	:param X:
 	:type X: float
@@ -1507,7 +1437,7 @@ class Bnd_Box2d {
 ") GetGap;
 		Standard_Real GetGap ();
 		%feature("compactdefaultargs") SetGap;
-		%feature("autodoc", "	* Set the gap of this 2D bounding box to abs(Tol).
+		%feature("autodoc", "	* Set the gap of this 2D bounding box to abs--Tol--.
 
 	:param Tol:
 	:type Tol: float
@@ -1517,13 +1447,13 @@ class Bnd_Box2d {
 		%feature("compactdefaultargs") Enlarge;
 		%feature("autodoc", "	* Enlarges the box with a tolerance value. This means that the minimum values of its X and Y intervals of definition, when they are finite, are reduced by the absolute value of Tol, while the maximum values are increased by the same amount.
 
-	:param Tol:
-	:type Tol: float
+	:param theTol:
+	:type theTol: float
 	:rtype: None
 ") Enlarge;
-		void Enlarge (const Standard_Real Tol);
+		void Enlarge (const Standard_Real theTol);
 		%feature("compactdefaultargs") Get;
-		%feature("autodoc", "	* Returns the bounds of this 2D bounding box. The gap is included. If this bounding box is infinite (i.e. 'open'), returned values may be equal to +/- Precision::Infinite(). if IsVoid()
+		%feature("autodoc", "	* Returns the bounds of this 2D bounding box. The gap is included. If this bounding box is infinite --i.e. 'open'--, returned values may be equal to +/- Precision::Infinite----. if IsVoid----
 
 	:param aXmin:
 	:type aXmin: float &
@@ -1585,19 +1515,19 @@ class Bnd_Box2d {
 ") IsOpenYmax;
 		Standard_Boolean IsOpenYmax ();
 		%feature("compactdefaultargs") IsWhole;
-		%feature("autodoc", "	* Returns true if this bounding box is infinite in all 4 directions (Whole Space flag).
+		%feature("autodoc", "	* Returns true if this bounding box is infinite in all 4 directions --Whole Space flag--.
 
 	:rtype: bool
 ") IsWhole;
 		Standard_Boolean IsWhole ();
 		%feature("compactdefaultargs") IsVoid;
-		%feature("autodoc", "	* Returns true if this 2D bounding box is empty (Void flag).
+		%feature("autodoc", "	* Returns true if this 2D bounding box is empty --Void flag--.
 
 	:rtype: bool
 ") IsVoid;
 		Standard_Boolean IsVoid ();
 		%feature("compactdefaultargs") Transformed;
-		%feature("autodoc", "	* Returns a bounding box which is the result of applying the transformation T to this bounding box. Warning Applying a geometric transformation (for example, a rotation) to a bounding box generally increases its dimensions. This is not optimal for algorithms which use it.
+		%feature("autodoc", "	* Returns a bounding box which is the result of applying the transformation T to this bounding box. Warning Applying a geometric transformation --for example, a rotation-- to a bounding box generally increases its dimensions. This is not optimal for algorithms which use it.
 
 	:param T:
 	:type T: gp_Trsf2d
@@ -1613,23 +1543,23 @@ class Bnd_Box2d {
 ") Add;
 		void Add (const Bnd_Box2d & Other);
 		%feature("compactdefaultargs") Add;
-		%feature("autodoc", "	* Adds the 2d pnt <P> to <self>.
+		%feature("autodoc", "	* Adds the 2d point.
 
-	:param P:
-	:type P: gp_Pnt2d
+	:param thePnt:
+	:type thePnt: gp_Pnt2d
 	:rtype: None
 ") Add;
-		void Add (const gp_Pnt2d & P);
+		void Add (const gp_Pnt2d & thePnt);
 		%feature("compactdefaultargs") Add;
-		%feature("autodoc", "	* Extends <self> from the Pnt <P> in the direction <D>.
+		%feature("autodoc", "	* Extends bounding box from thePnt in the direction theDir.
 
-	:param P:
-	:type P: gp_Pnt2d
-	:param D:
-	:type D: gp_Dir2d
+	:param thePnt:
+	:type thePnt: gp_Pnt2d
+	:param theDir:
+	:type theDir: gp_Dir2d
 	:rtype: None
 ") Add;
-		void Add (const gp_Pnt2d & P,const gp_Dir2d & D);
+		void Add (const gp_Pnt2d & thePnt,const gp_Dir2d & theDir);
 		%feature("compactdefaultargs") Add;
 		%feature("autodoc", "	* Extends the Box in the given Direction, i.e. adds a half-line. The box may become infinite in 1 or 2 directions.
 
@@ -1657,13 +1587,13 @@ class Bnd_Box2d {
 		%feature("compactdefaultargs") IsOut;
 		%feature("autodoc", "	* Returns True if transformed <Box2d> is out <self>.
 
-	:param Other:
-	:type Other: Bnd_Box2d &
-	:param T:
-	:type T: gp_Trsf2d
+	:param theOther:
+	:type theOther: Bnd_Box2d &
+	:param theTrsf:
+	:type theTrsf: gp_Trsf2d
 	:rtype: bool
 ") IsOut;
-		Standard_Boolean IsOut (const Bnd_Box2d & Other,const gp_Trsf2d & T);
+		Standard_Boolean IsOut (const Bnd_Box2d & theOther,const gp_Trsf2d & theTrsf);
 		%feature("compactdefaultargs") IsOut;
 		%feature("autodoc", "	* Compares a transformed bounding with a transformed bounding. The default implementation is to make a copy of <self> and <Other>, to transform them and to test.
 
@@ -1694,579 +1624,157 @@ class Bnd_Box2d {
 	__repr__ = _dumps_object
 	}
 };
-%nodefaultctor Bnd_HArray1OfBox;
-class Bnd_HArray1OfBox : public MMgt_TShared {
+%nodefaultctor Bnd_Range;
+class Bnd_Range {
 	public:
-		%feature("compactdefaultargs") Bnd_HArray1OfBox;
-		%feature("autodoc", "	:param Low:
-	:type Low: int
-	:param Up:
-	:type Up: int
+		%feature("compactdefaultargs") Bnd_Range;
+		%feature("autodoc", "	* Default constructor. Creates VOID range.
+
 	:rtype: None
-") Bnd_HArray1OfBox;
-		 Bnd_HArray1OfBox (const Standard_Integer Low,const Standard_Integer Up);
-		%feature("compactdefaultargs") Bnd_HArray1OfBox;
-		%feature("autodoc", "	:param Low:
-	:type Low: int
-	:param Up:
-	:type Up: int
-	:param V:
-	:type V: Bnd_Box &
+") Bnd_Range;
+		 Bnd_Range ();
+		%feature("compactdefaultargs") Bnd_Range;
+		%feature("autodoc", "	* Constructor. Never creates VOID range.
+
+	:param theMin:
+	:type theMin: float
+	:param theMax:
+	:type theMax: float
 	:rtype: None
-") Bnd_HArray1OfBox;
-		 Bnd_HArray1OfBox (const Standard_Integer Low,const Standard_Integer Up,const Bnd_Box & V);
-		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	:param V:
-	:type V: Bnd_Box &
+") Bnd_Range;
+		 Bnd_Range (const Standard_Real theMin,const Standard_Real theMax);
+		%feature("compactdefaultargs") Common;
+		%feature("autodoc", "	* Replaces <this> with common-part of <this> and theOther
+
+	:param theOther:
+	:type theOther: Bnd_Range &
 	:rtype: None
-") Init;
-		void Init (const Bnd_Box & V);
-		%feature("compactdefaultargs") Length;
-		%feature("autodoc", "	:rtype: int
-") Length;
-		Standard_Integer Length ();
-		%feature("compactdefaultargs") Lower;
-		%feature("autodoc", "	:rtype: int
-") Lower;
-		Standard_Integer Lower ();
-		%feature("compactdefaultargs") Upper;
-		%feature("autodoc", "	:rtype: int
-") Upper;
-		Standard_Integer Upper ();
-		%feature("compactdefaultargs") SetValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param Value:
-	:type Value: Bnd_Box &
-	:rtype: None
-") SetValue;
-		void SetValue (const Standard_Integer Index,const Bnd_Box & Value);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: Bnd_Box
-") Value;
-		const Bnd_Box & Value (const Standard_Integer Index);
-		%feature("compactdefaultargs") ChangeValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: Bnd_Box
-") ChangeValue;
-		Bnd_Box & ChangeValue (const Standard_Integer Index);
-		%feature("compactdefaultargs") Array1;
-		%feature("autodoc", "	:rtype: Bnd_Array1OfBox
-") Array1;
-		const Bnd_Array1OfBox & Array1 ();
-		%feature("compactdefaultargs") ChangeArray1;
-		%feature("autodoc", "	:rtype: Bnd_Array1OfBox
-") ChangeArray1;
-		Bnd_Array1OfBox & ChangeArray1 ();
-};
+") Common;
+		void Common (const Bnd_Range & theOther);
+		%feature("compactdefaultargs") Union;
+		%feature("autodoc", "	* Joins *this and theOther to one interval. Replaces *this to the result. Returns false if the operation cannot be done --e.g. input arguments are empty or separated--.
 
-
-%extend Bnd_HArray1OfBox {
-	%pythoncode {
-		def GetHandle(self):
-		    try:
-		        return self.thisHandle
-		    except:
-		        self.thisHandle = Handle_Bnd_HArray1OfBox(self)
-		        self.thisown = False
-		        return self.thisHandle
-	}
-};
-
-%pythonappend Handle_Bnd_HArray1OfBox::Handle_Bnd_HArray1OfBox %{
-    # register the handle in the base object
-    if len(args) > 0:
-        register_handle(self, args[0])
-%}
-
-%nodefaultctor Handle_Bnd_HArray1OfBox;
-class Handle_Bnd_HArray1OfBox : public Handle_MMgt_TShared {
-
-    public:
-        // constructors
-        Handle_Bnd_HArray1OfBox();
-        Handle_Bnd_HArray1OfBox(const Handle_Bnd_HArray1OfBox &aHandle);
-        Handle_Bnd_HArray1OfBox(const Bnd_HArray1OfBox *anItem);
-        void Nullify();
-        Standard_Boolean IsNull() const;
-        static const Handle_Bnd_HArray1OfBox DownCast(const Handle_Standard_Transient &AnObject);
-
-};
-%extend Handle_Bnd_HArray1OfBox {
-    Bnd_HArray1OfBox* _get_reference() {
-    return (Bnd_HArray1OfBox*)$self->Access();
-    }
-};
-
-%extend Handle_Bnd_HArray1OfBox {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
-};
-
-%extend Bnd_HArray1OfBox {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor Bnd_HArray1OfBox2d;
-class Bnd_HArray1OfBox2d : public MMgt_TShared {
-	public:
-		%feature("compactdefaultargs") Bnd_HArray1OfBox2d;
-		%feature("autodoc", "	:param Low:
-	:type Low: int
-	:param Up:
-	:type Up: int
-	:rtype: None
-") Bnd_HArray1OfBox2d;
-		 Bnd_HArray1OfBox2d (const Standard_Integer Low,const Standard_Integer Up);
-		%feature("compactdefaultargs") Bnd_HArray1OfBox2d;
-		%feature("autodoc", "	:param Low:
-	:type Low: int
-	:param Up:
-	:type Up: int
-	:param V:
-	:type V: Bnd_Box2d &
-	:rtype: None
-") Bnd_HArray1OfBox2d;
-		 Bnd_HArray1OfBox2d (const Standard_Integer Low,const Standard_Integer Up,const Bnd_Box2d & V);
-		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	:param V:
-	:type V: Bnd_Box2d &
-	:rtype: None
-") Init;
-		void Init (const Bnd_Box2d & V);
-		%feature("compactdefaultargs") Length;
-		%feature("autodoc", "	:rtype: int
-") Length;
-		Standard_Integer Length ();
-		%feature("compactdefaultargs") Lower;
-		%feature("autodoc", "	:rtype: int
-") Lower;
-		Standard_Integer Lower ();
-		%feature("compactdefaultargs") Upper;
-		%feature("autodoc", "	:rtype: int
-") Upper;
-		Standard_Integer Upper ();
-		%feature("compactdefaultargs") SetValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param Value:
-	:type Value: Bnd_Box2d &
-	:rtype: None
-") SetValue;
-		void SetValue (const Standard_Integer Index,const Bnd_Box2d & Value);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: Bnd_Box2d
-") Value;
-		const Bnd_Box2d & Value (const Standard_Integer Index);
-		%feature("compactdefaultargs") ChangeValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: Bnd_Box2d
-") ChangeValue;
-		Bnd_Box2d & ChangeValue (const Standard_Integer Index);
-		%feature("compactdefaultargs") Array1;
-		%feature("autodoc", "	:rtype: Bnd_Array1OfBox2d
-") Array1;
-		const Bnd_Array1OfBox2d & Array1 ();
-		%feature("compactdefaultargs") ChangeArray1;
-		%feature("autodoc", "	:rtype: Bnd_Array1OfBox2d
-") ChangeArray1;
-		Bnd_Array1OfBox2d & ChangeArray1 ();
-};
-
-
-%extend Bnd_HArray1OfBox2d {
-	%pythoncode {
-		def GetHandle(self):
-		    try:
-		        return self.thisHandle
-		    except:
-		        self.thisHandle = Handle_Bnd_HArray1OfBox2d(self)
-		        self.thisown = False
-		        return self.thisHandle
-	}
-};
-
-%pythonappend Handle_Bnd_HArray1OfBox2d::Handle_Bnd_HArray1OfBox2d %{
-    # register the handle in the base object
-    if len(args) > 0:
-        register_handle(self, args[0])
-%}
-
-%nodefaultctor Handle_Bnd_HArray1OfBox2d;
-class Handle_Bnd_HArray1OfBox2d : public Handle_MMgt_TShared {
-
-    public:
-        // constructors
-        Handle_Bnd_HArray1OfBox2d();
-        Handle_Bnd_HArray1OfBox2d(const Handle_Bnd_HArray1OfBox2d &aHandle);
-        Handle_Bnd_HArray1OfBox2d(const Bnd_HArray1OfBox2d *anItem);
-        void Nullify();
-        Standard_Boolean IsNull() const;
-        static const Handle_Bnd_HArray1OfBox2d DownCast(const Handle_Standard_Transient &AnObject);
-
-};
-%extend Handle_Bnd_HArray1OfBox2d {
-    Bnd_HArray1OfBox2d* _get_reference() {
-    return (Bnd_HArray1OfBox2d*)$self->Access();
-    }
-};
-
-%extend Handle_Bnd_HArray1OfBox2d {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
-};
-
-%extend Bnd_HArray1OfBox2d {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor Bnd_HArray1OfSphere;
-class Bnd_HArray1OfSphere : public MMgt_TShared {
-	public:
-		%feature("compactdefaultargs") Bnd_HArray1OfSphere;
-		%feature("autodoc", "	:param Low:
-	:type Low: int
-	:param Up:
-	:type Up: int
-	:rtype: None
-") Bnd_HArray1OfSphere;
-		 Bnd_HArray1OfSphere (const Standard_Integer Low,const Standard_Integer Up);
-		%feature("compactdefaultargs") Bnd_HArray1OfSphere;
-		%feature("autodoc", "	:param Low:
-	:type Low: int
-	:param Up:
-	:type Up: int
-	:param V:
-	:type V: Bnd_Sphere &
-	:rtype: None
-") Bnd_HArray1OfSphere;
-		 Bnd_HArray1OfSphere (const Standard_Integer Low,const Standard_Integer Up,const Bnd_Sphere & V);
-		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	:param V:
-	:type V: Bnd_Sphere &
-	:rtype: None
-") Init;
-		void Init (const Bnd_Sphere & V);
-		%feature("compactdefaultargs") Length;
-		%feature("autodoc", "	:rtype: int
-") Length;
-		Standard_Integer Length ();
-		%feature("compactdefaultargs") Lower;
-		%feature("autodoc", "	:rtype: int
-") Lower;
-		Standard_Integer Lower ();
-		%feature("compactdefaultargs") Upper;
-		%feature("autodoc", "	:rtype: int
-") Upper;
-		Standard_Integer Upper ();
-		%feature("compactdefaultargs") SetValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param Value:
-	:type Value: Bnd_Sphere &
-	:rtype: None
-") SetValue;
-		void SetValue (const Standard_Integer Index,const Bnd_Sphere & Value);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: Bnd_Sphere
-") Value;
-		const Bnd_Sphere & Value (const Standard_Integer Index);
-		%feature("compactdefaultargs") ChangeValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: Bnd_Sphere
-") ChangeValue;
-		Bnd_Sphere & ChangeValue (const Standard_Integer Index);
-		%feature("compactdefaultargs") Array1;
-		%feature("autodoc", "	:rtype: Bnd_Array1OfSphere
-") Array1;
-		const Bnd_Array1OfSphere & Array1 ();
-		%feature("compactdefaultargs") ChangeArray1;
-		%feature("autodoc", "	:rtype: Bnd_Array1OfSphere
-") ChangeArray1;
-		Bnd_Array1OfSphere & ChangeArray1 ();
-};
-
-
-%extend Bnd_HArray1OfSphere {
-	%pythoncode {
-		def GetHandle(self):
-		    try:
-		        return self.thisHandle
-		    except:
-		        self.thisHandle = Handle_Bnd_HArray1OfSphere(self)
-		        self.thisown = False
-		        return self.thisHandle
-	}
-};
-
-%pythonappend Handle_Bnd_HArray1OfSphere::Handle_Bnd_HArray1OfSphere %{
-    # register the handle in the base object
-    if len(args) > 0:
-        register_handle(self, args[0])
-%}
-
-%nodefaultctor Handle_Bnd_HArray1OfSphere;
-class Handle_Bnd_HArray1OfSphere : public Handle_MMgt_TShared {
-
-    public:
-        // constructors
-        Handle_Bnd_HArray1OfSphere();
-        Handle_Bnd_HArray1OfSphere(const Handle_Bnd_HArray1OfSphere &aHandle);
-        Handle_Bnd_HArray1OfSphere(const Bnd_HArray1OfSphere *anItem);
-        void Nullify();
-        Standard_Boolean IsNull() const;
-        static const Handle_Bnd_HArray1OfSphere DownCast(const Handle_Standard_Transient &AnObject);
-
-};
-%extend Handle_Bnd_HArray1OfSphere {
-    Bnd_HArray1OfSphere* _get_reference() {
-    return (Bnd_HArray1OfSphere*)$self->Access();
-    }
-};
-
-%extend Handle_Bnd_HArray1OfSphere {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
-};
-
-%extend Bnd_HArray1OfSphere {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor Bnd_SeqOfBox;
-class Bnd_SeqOfBox : public TCollection_BaseSequence {
-	public:
-		%feature("compactdefaultargs") Bnd_SeqOfBox;
-		%feature("autodoc", "	:rtype: None
-") Bnd_SeqOfBox;
-		 Bnd_SeqOfBox ();
-		%feature("compactdefaultargs") Bnd_SeqOfBox;
-		%feature("autodoc", "	:param Other:
-	:type Other: Bnd_SeqOfBox &
-	:rtype: None
-") Bnd_SeqOfBox;
-		 Bnd_SeqOfBox (const Bnd_SeqOfBox & Other);
-		%feature("compactdefaultargs") Clear;
-		%feature("autodoc", "	:rtype: None
-") Clear;
-		void Clear ();
-		%feature("compactdefaultargs") Assign;
-		%feature("autodoc", "	:param Other:
-	:type Other: Bnd_SeqOfBox &
-	:rtype: Bnd_SeqOfBox
-") Assign;
-		const Bnd_SeqOfBox & Assign (const Bnd_SeqOfBox & Other);
-		%feature("compactdefaultargs") operator =;
-		%feature("autodoc", "	:param Other:
-	:type Other: Bnd_SeqOfBox &
-	:rtype: Bnd_SeqOfBox
-") operator =;
-		const Bnd_SeqOfBox & operator = (const Bnd_SeqOfBox & Other);
-		%feature("compactdefaultargs") Append;
-		%feature("autodoc", "	:param T:
-	:type T: Bnd_Box &
-	:rtype: None
-") Append;
-		void Append (const Bnd_Box & T);
-		%feature("compactdefaultargs") Append;
-		%feature("autodoc", "	:param S:
-	:type S: Bnd_SeqOfBox &
-	:rtype: None
-") Append;
-		void Append (Bnd_SeqOfBox & S);
-		%feature("compactdefaultargs") Prepend;
-		%feature("autodoc", "	:param T:
-	:type T: Bnd_Box &
-	:rtype: None
-") Prepend;
-		void Prepend (const Bnd_Box & T);
-		%feature("compactdefaultargs") Prepend;
-		%feature("autodoc", "	:param S:
-	:type S: Bnd_SeqOfBox &
-	:rtype: None
-") Prepend;
-		void Prepend (Bnd_SeqOfBox & S);
-		%feature("compactdefaultargs") InsertBefore;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param T:
-	:type T: Bnd_Box &
-	:rtype: None
-") InsertBefore;
-		void InsertBefore (const Standard_Integer Index,const Bnd_Box & T);
-		%feature("compactdefaultargs") InsertBefore;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param S:
-	:type S: Bnd_SeqOfBox &
-	:rtype: None
-") InsertBefore;
-		void InsertBefore (const Standard_Integer Index,Bnd_SeqOfBox & S);
-		%feature("compactdefaultargs") InsertAfter;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param T:
-	:type T: Bnd_Box &
-	:rtype: None
-") InsertAfter;
-		void InsertAfter (const Standard_Integer Index,const Bnd_Box & T);
-		%feature("compactdefaultargs") InsertAfter;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param S:
-	:type S: Bnd_SeqOfBox &
-	:rtype: None
-") InsertAfter;
-		void InsertAfter (const Standard_Integer Index,Bnd_SeqOfBox & S);
-		%feature("compactdefaultargs") First;
-		%feature("autodoc", "	:rtype: Bnd_Box
-") First;
-		const Bnd_Box & First ();
-		%feature("compactdefaultargs") Last;
-		%feature("autodoc", "	:rtype: Bnd_Box
-") Last;
-		const Bnd_Box & Last ();
+	:param theOther:
+	:type theOther: Bnd_Range &
+	:rtype: bool
+") Union;
+		Standard_Boolean Union (const Bnd_Range & theOther);
 		%feature("compactdefaultargs") Split;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param Sub:
-	:type Sub: Bnd_SeqOfBox &
+		%feature("autodoc", "	* Splits <this> to several sub-ranges by theVal value --e.g. range [3, 15] will be split by theVal==5 to the two ranges: [3, 5] and [5, 15]--. New ranges will be pushed to theList --theList must be initialized correctly before calling this method--. If thePeriod != 0.0 then at least one boundary of new ranges --if <*this> intersects theVal+k*thePeriod-- will be equal to theVal+thePeriod*k, where k is an integer number --k = 0, +/-1, +/-2, ...--. --let thePeriod in above example be 4 ==> we will obtain four ranges: [3, 5], [5, 9], [9, 13] and [13, 15].
+
+	:param theVal:
+	:type theVal: float
+	:param theList:
+	:type theList: NCollection_List<Bnd_Range> &
+	:param thePeriod: default value is 0.0
+	:type thePeriod: float
 	:rtype: None
 ") Split;
-		void Split (const Standard_Integer Index,Bnd_SeqOfBox & Sub);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: Bnd_Box
-") Value;
-		const Bnd_Box & Value (const Standard_Integer Index);
-		%feature("compactdefaultargs") SetValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param I:
-	:type I: Bnd_Box &
+		void Split (const Standard_Real theVal,NCollection_List<Bnd_Range> & theList,const Standard_Real thePeriod = 0.0);
+		%feature("compactdefaultargs") IsIntersected;
+		%feature("autodoc", "	* Checks if <this> intersects values like theVal+k*thePeriod, where k is an integer number --k = 0, +/-1, +/-2, ...--. Returns: 0 - if <this> does not intersect the theVal+k*thePeriod. 1 - if <this> intersects theVal+k*thePeriod. 2 - if myFirst or/and myLast are equal to theVal+k*thePeriod. //! ATTENTION!!! If --myFirst == myLast-- then this function will return only either 0 or 2.
+
+	:param theVal:
+	:type theVal: float
+	:param thePeriod: default value is 0.0
+	:type thePeriod: float
+	:rtype: int
+") IsIntersected;
+		Standard_Integer IsIntersected (const Standard_Real theVal,const Standard_Real thePeriod = 0.0);
+		%feature("compactdefaultargs") Add;
+		%feature("autodoc", "	* Extends <this> to include theParameter
+
+	:param theParameter:
+	:type theParameter: float
 	:rtype: None
-") SetValue;
-		void SetValue (const Standard_Integer Index,const Bnd_Box & I);
-		%feature("compactdefaultargs") ChangeValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: Bnd_Box
-") ChangeValue;
-		Bnd_Box & ChangeValue (const Standard_Integer Index);
-		%feature("compactdefaultargs") Remove;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
+") Add;
+		void Add (const Standard_Real theParameter);
+		%feature("compactdefaultargs") GetMin;
+		%feature("autodoc", "	* Obtain MIN boundary of <this>. If <this> is VOID the method returns false.
+
+	:param thePar:
+	:type thePar: float &
+	:rtype: bool
+") GetMin;
+		Standard_Boolean GetMin (Standard_Real &OutValue);
+		%feature("compactdefaultargs") GetMAX;
+		%feature("autodoc", "	* Obtain MAX boundary of <this>. If <this> is VOID the method returns false.
+
+	:param thePar:
+	:type thePar: float &
+	:rtype: bool
+") GetMAX;
+		Standard_Boolean GetMAX (Standard_Real &OutValue);
+		%feature("compactdefaultargs") GetBounds;
+		%feature("autodoc", "	* Obtain first and last boundary of <this>. If <this> is VOID the method returns false.
+
+	:param theFirstPar:
+	:type theFirstPar: float &
+	:param theLastPar:
+	:type theLastPar: float &
+	:rtype: bool
+") GetBounds;
+		Standard_Boolean GetBounds (Standard_Real &OutValue,Standard_Real &OutValue);
+		%feature("compactdefaultargs") Delta;
+		%feature("autodoc", "	* Returns range value --MAX-MIN--. Returns negative value for VOID range.
+
+	:rtype: float
+") Delta;
+		Standard_Real Delta ();
+		%feature("compactdefaultargs") IsVoid;
+		%feature("autodoc", "	* Is <this> initialized.
+
+	:rtype: bool
+") IsVoid;
+		Standard_Boolean IsVoid ();
+		%feature("compactdefaultargs") SetVoid;
+		%feature("autodoc", "	* Initializes <this> by default parameters. Makes <this> VOID.
+
 	:rtype: None
-") Remove;
-		void Remove (const Standard_Integer Index);
-		%feature("compactdefaultargs") Remove;
-		%feature("autodoc", "	:param FromIndex:
-	:type FromIndex: int
-	:param ToIndex:
-	:type ToIndex: int
+") SetVoid;
+		void SetVoid ();
+		%feature("compactdefaultargs") Enlarge;
+		%feature("autodoc", "	* Extends this to the given value --in both side--
+
+	:param theDelta:
+	:type theDelta: float
 	:rtype: None
-") Remove;
-		void Remove (const Standard_Integer FromIndex,const Standard_Integer ToIndex);
-};
+") Enlarge;
+		void Enlarge (const Standard_Real theDelta);
+		%feature("compactdefaultargs") Shifted;
+		%feature("autodoc", "	* Returns the copy of <*this> shifted by theVal
 
+	:param theVal:
+	:type theVal: float
+	:rtype: Bnd_Range
+") Shifted;
+		Bnd_Range Shifted (const Standard_Real theVal);
+		%feature("compactdefaultargs") Shift;
+		%feature("autodoc", "	* Shifts <*this> by theVal
 
-%extend Bnd_SeqOfBox {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor Bnd_SequenceNodeOfSeqOfBox;
-class Bnd_SequenceNodeOfSeqOfBox : public TCollection_SeqNode {
-	public:
-		%feature("compactdefaultargs") Bnd_SequenceNodeOfSeqOfBox;
-		%feature("autodoc", "	:param I:
-	:type I: Bnd_Box &
-	:param n:
-	:type n: TCollection_SeqNodePtr &
-	:param p:
-	:type p: TCollection_SeqNodePtr &
+	:param theVal:
+	:type theVal: float
 	:rtype: None
-") Bnd_SequenceNodeOfSeqOfBox;
-		 Bnd_SequenceNodeOfSeqOfBox (const Bnd_Box & I,const TCollection_SeqNodePtr & n,const TCollection_SeqNodePtr & p);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:rtype: Bnd_Box
-") Value;
-		Bnd_Box & Value ();
-};
+") Shift;
+		void Shift (const Standard_Real theVal);
+
+        %extend{
+            bool __eq_wrapper__(const Bnd_Range  other) {
+            if (*self==other) return true;
+            else return false;
+            }
+        }
+        %pythoncode {
+        def __eq__(self,right):
+            try:
+                return self.__eq_wrapper__(right)
+            except:
+                return False
+        }
+        };
 
 
-%extend Bnd_SequenceNodeOfSeqOfBox {
-	%pythoncode {
-		def GetHandle(self):
-		    try:
-		        return self.thisHandle
-		    except:
-		        self.thisHandle = Handle_Bnd_SequenceNodeOfSeqOfBox(self)
-		        self.thisown = False
-		        return self.thisHandle
-	}
-};
-
-%pythonappend Handle_Bnd_SequenceNodeOfSeqOfBox::Handle_Bnd_SequenceNodeOfSeqOfBox %{
-    # register the handle in the base object
-    if len(args) > 0:
-        register_handle(self, args[0])
-%}
-
-%nodefaultctor Handle_Bnd_SequenceNodeOfSeqOfBox;
-class Handle_Bnd_SequenceNodeOfSeqOfBox : public Handle_TCollection_SeqNode {
-
-    public:
-        // constructors
-        Handle_Bnd_SequenceNodeOfSeqOfBox();
-        Handle_Bnd_SequenceNodeOfSeqOfBox(const Handle_Bnd_SequenceNodeOfSeqOfBox &aHandle);
-        Handle_Bnd_SequenceNodeOfSeqOfBox(const Bnd_SequenceNodeOfSeqOfBox *anItem);
-        void Nullify();
-        Standard_Boolean IsNull() const;
-        static const Handle_Bnd_SequenceNodeOfSeqOfBox DownCast(const Handle_Standard_Transient &AnObject);
-
-};
-%extend Handle_Bnd_SequenceNodeOfSeqOfBox {
-    Bnd_SequenceNodeOfSeqOfBox* _get_reference() {
-    return (Bnd_SequenceNodeOfSeqOfBox*)$self->Access();
-    }
-};
-
-%extend Handle_Bnd_SequenceNodeOfSeqOfBox {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
-};
-
-%extend Bnd_SequenceNodeOfSeqOfBox {
+%extend Bnd_Range {
 	%pythoncode {
 	__repr__ = _dumps_object
 	}

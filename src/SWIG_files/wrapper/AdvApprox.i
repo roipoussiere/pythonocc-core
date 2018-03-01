@@ -1,5 +1,5 @@
 /*
-Copyright 2008-2017 Thomas Paviot (tpaviot@gmail.com)
+Copyright 2008-2018 Thomas Paviot (tpaviot@gmail.com)
 
 
 This file is part of pythonOCC.
@@ -56,6 +56,9 @@ def register_handle(handle, base_object):
 /* typedefs */
 /* end typedefs declaration */
 
+/* templates */
+/* end templates declaration */
+
 /* public enums */
 /* end public enums declaration */
 
@@ -63,7 +66,7 @@ def register_handle(handle, base_object):
 class AdvApprox_ApproxAFunction {
 	public:
 		%feature("compactdefaultargs") AdvApprox_ApproxAFunction;
-		%feature("autodoc", "	* Constructs approximator tool. //! Warning: the Func should be valid reference to object of type inherited from class EvaluatorFunction from Approx with life time longer than that of the approximator tool; //! the result should be formatted in the following way : <--Num1DSS--> <--2 * Num2DSS--> <--3 * Num3DSS--> R[0] .... R[Num1DSS].....  R[Dimension-1] //! the order in which each Subspace appears should be consistent with the tolerances given in the create function and the results will be given in that order as well that is : Curve2d(n) will correspond to the nth entry described by Num2DSS, Curve(n) will correspond to the nth entry described by Num3DSS The same type of schema applies to the Poles1d, Poles2d and Poles.
+		%feature("autodoc", "	* Constructs approximator tool. //! Warning: the Func should be valid reference to object of type inherited from class EvaluatorFunction from Approx with life time longer than that of the approximator tool; //! the result should be formatted in the following way : <--Num1DSS--> <--2 * Num2DSS--> <--3 * Num3DSS--> R[0] .... R[Num1DSS].....  R[Dimension-1] //! the order in which each Subspace appears should be consistent with the tolerances given in the create function and the results will be given in that order as well that is : Curve2d--n-- will correspond to the nth entry described by Num2DSS, Curve--n-- will correspond to the nth entry described by Num3DSS The same type of schema applies to the Poles1d, Poles2d and Poles.
 
 	:param Num1DSS:
 	:type Num1DSS: int
@@ -301,10 +304,6 @@ class AdvApprox_ApproxAFunction {
 %nodefaultctor AdvApprox_Cutting;
 class AdvApprox_Cutting {
 	public:
-		%feature("compactdefaultargs") Delete;
-		%feature("autodoc", "	:rtype: void
-") Delete;
-		virtual void Delete ();
 		%feature("compactdefaultargs") Value;
 		%feature("autodoc", "	:param a:
 	:type a: float
@@ -461,7 +460,7 @@ class AdvApprox_PrefAndRec : public AdvApprox_Cutting {
 ") AdvApprox_PrefAndRec;
 		 AdvApprox_PrefAndRec (const TColStd_Array1OfReal & RecomendedCut,const TColStd_Array1OfReal & PrefferedCut,const Standard_Real Weight = 5);
 		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	* cuting value is - the recommended point nerest of (a+b)/2 if pi is in ]a,b[ or else - the preferential point nearest of (a+b) / 2 if pi is in ](r*a+b)/(r+1) , (a+r*b)/(r+1)[ where r = Weight - or (a+b)/2 else.
+		%feature("autodoc", "	* cuting value is - the recommended point nerest of --a+b--/2 if pi is in ]a,b[ or else - the preferential point nearest of --a+b-- / 2 if pi is in ]--r*a+b--/--r+1-- , --a+r*b--/--r+1--[ where r = Weight - or --a+b--/2 else.
 
 	:param a:
 	:type a: float

@@ -1,5 +1,5 @@
 /*
-Copyright 2008-2017 Thomas Paviot (tpaviot@gmail.com)
+Copyright 2008-2018 Thomas Paviot (tpaviot@gmail.com)
 
 
 This file is part of pythonOCC.
@@ -56,6 +56,24 @@ def register_handle(handle, base_object):
 /* typedefs */
 /* end typedefs declaration */
 
+/* templates */
+%template(IntTools_MapOfCurveSample) NCollection_Map <IntTools_CurveRangeSample , IntTools_CurveRangeSampleMapHasher>;
+%template(IntTools_ListOfSurfaceRangeSample) NCollection_List <IntTools_SurfaceRangeSample>;
+%template(IntTools_ListOfBox) NCollection_List <Bnd_Box>;
+%template(IntTools_IndexedDataMapOfTransientAddress) NCollection_IndexedDataMap <Handle_Standard_Transient , Standard_Address , TColStd_MapTransientHasher>;
+%template(IntTools_MapOfSurfaceSample) NCollection_Map <IntTools_SurfaceRangeSample , IntTools_SurfaceRangeSampleMapHasher>;
+%template(IntTools_Array1OfRange) NCollection_Array1 <IntTools_Range>;
+%template(IntTools_SequenceOfRanges) NCollection_Sequence <IntTools_Range>;
+%template(IntTools_SequenceOfPntOn2Faces) NCollection_Sequence <IntTools_PntOn2Faces>;
+%template(IntTools_SequenceOfCurves) NCollection_Sequence <IntTools_Curve>;
+%template(IntTools_ListOfCurveRangeSample) NCollection_List <IntTools_CurveRangeSample>;
+%template(IntTools_SequenceOfCommonPrts) NCollection_Sequence <IntTools_CommonPrt>;
+%template(IntTools_SequenceOfRoots) NCollection_Sequence <IntTools_Root>;
+%template(IntTools_DataMapOfCurveSampleBox) NCollection_DataMap <IntTools_CurveRangeSample , Bnd_Box , IntTools_CurveRangeSampleMapHasher>;
+%template(IntTools_Array1OfRoots) NCollection_Array1 <IntTools_Root>;
+%template(IntTools_DataMapOfSurfaceSampleBox) NCollection_DataMap <IntTools_SurfaceRangeSample , Bnd_Box , IntTools_SurfaceRangeSampleMapHasher>;
+/* end templates declaration */
+
 /* public enums */
 /* end public enums declaration */
 
@@ -91,7 +109,7 @@ class IntTools {
 ") SortRoots;
 		static void SortRoots (IntTools_SequenceOfRoots & aSeq,const Standard_Real anEpsT);
 		%feature("compactdefaultargs") FindRootStates;
-		%feature("autodoc", "	* Find the states (before and after) for each Root from the sequence aSeq
+		%feature("autodoc", "	* Find the states --before and after-- for each Root from the sequence aSeq
 
 	:param aSeq:
 	:type aSeq: IntTools_SequenceOfRoots &
@@ -146,180 +164,6 @@ class IntTools {
 	__repr__ = _dumps_object
 	}
 };
-%nodefaultctor IntTools_Array1OfRange;
-class IntTools_Array1OfRange {
-	public:
-		%feature("compactdefaultargs") IntTools_Array1OfRange;
-		%feature("autodoc", "	:param Low:
-	:type Low: int
-	:param Up:
-	:type Up: int
-	:rtype: None
-") IntTools_Array1OfRange;
-		 IntTools_Array1OfRange (const Standard_Integer Low,const Standard_Integer Up);
-		%feature("compactdefaultargs") IntTools_Array1OfRange;
-		%feature("autodoc", "	:param Item:
-	:type Item: IntTools_Range &
-	:param Low:
-	:type Low: int
-	:param Up:
-	:type Up: int
-	:rtype: None
-") IntTools_Array1OfRange;
-		 IntTools_Array1OfRange (const IntTools_Range & Item,const Standard_Integer Low,const Standard_Integer Up);
-		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	:param V:
-	:type V: IntTools_Range &
-	:rtype: None
-") Init;
-		void Init (const IntTools_Range & V);
-		%feature("compactdefaultargs") Destroy;
-		%feature("autodoc", "	:rtype: None
-") Destroy;
-		void Destroy ();
-		%feature("compactdefaultargs") IsAllocated;
-		%feature("autodoc", "	:rtype: bool
-") IsAllocated;
-		Standard_Boolean IsAllocated ();
-		%feature("compactdefaultargs") Assign;
-		%feature("autodoc", "	:param Other:
-	:type Other: IntTools_Array1OfRange &
-	:rtype: IntTools_Array1OfRange
-") Assign;
-		const IntTools_Array1OfRange & Assign (const IntTools_Array1OfRange & Other);
-		%feature("compactdefaultargs") operator =;
-		%feature("autodoc", "	:param Other:
-	:type Other: IntTools_Array1OfRange &
-	:rtype: IntTools_Array1OfRange
-") operator =;
-		const IntTools_Array1OfRange & operator = (const IntTools_Array1OfRange & Other);
-		%feature("compactdefaultargs") Length;
-		%feature("autodoc", "	:rtype: int
-") Length;
-		Standard_Integer Length ();
-		%feature("compactdefaultargs") Lower;
-		%feature("autodoc", "	:rtype: int
-") Lower;
-		Standard_Integer Lower ();
-		%feature("compactdefaultargs") Upper;
-		%feature("autodoc", "	:rtype: int
-") Upper;
-		Standard_Integer Upper ();
-		%feature("compactdefaultargs") SetValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param Value:
-	:type Value: IntTools_Range &
-	:rtype: None
-") SetValue;
-		void SetValue (const Standard_Integer Index,const IntTools_Range & Value);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: IntTools_Range
-") Value;
-		const IntTools_Range & Value (const Standard_Integer Index);
-		%feature("compactdefaultargs") ChangeValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: IntTools_Range
-") ChangeValue;
-		IntTools_Range & ChangeValue (const Standard_Integer Index);
-};
-
-
-%extend IntTools_Array1OfRange {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor IntTools_Array1OfRoots;
-class IntTools_Array1OfRoots {
-	public:
-		%feature("compactdefaultargs") IntTools_Array1OfRoots;
-		%feature("autodoc", "	:param Low:
-	:type Low: int
-	:param Up:
-	:type Up: int
-	:rtype: None
-") IntTools_Array1OfRoots;
-		 IntTools_Array1OfRoots (const Standard_Integer Low,const Standard_Integer Up);
-		%feature("compactdefaultargs") IntTools_Array1OfRoots;
-		%feature("autodoc", "	:param Item:
-	:type Item: IntTools_Root &
-	:param Low:
-	:type Low: int
-	:param Up:
-	:type Up: int
-	:rtype: None
-") IntTools_Array1OfRoots;
-		 IntTools_Array1OfRoots (const IntTools_Root & Item,const Standard_Integer Low,const Standard_Integer Up);
-		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	:param V:
-	:type V: IntTools_Root &
-	:rtype: None
-") Init;
-		void Init (const IntTools_Root & V);
-		%feature("compactdefaultargs") Destroy;
-		%feature("autodoc", "	:rtype: None
-") Destroy;
-		void Destroy ();
-		%feature("compactdefaultargs") IsAllocated;
-		%feature("autodoc", "	:rtype: bool
-") IsAllocated;
-		Standard_Boolean IsAllocated ();
-		%feature("compactdefaultargs") Assign;
-		%feature("autodoc", "	:param Other:
-	:type Other: IntTools_Array1OfRoots &
-	:rtype: IntTools_Array1OfRoots
-") Assign;
-		const IntTools_Array1OfRoots & Assign (const IntTools_Array1OfRoots & Other);
-		%feature("compactdefaultargs") operator =;
-		%feature("autodoc", "	:param Other:
-	:type Other: IntTools_Array1OfRoots &
-	:rtype: IntTools_Array1OfRoots
-") operator =;
-		const IntTools_Array1OfRoots & operator = (const IntTools_Array1OfRoots & Other);
-		%feature("compactdefaultargs") Length;
-		%feature("autodoc", "	:rtype: int
-") Length;
-		Standard_Integer Length ();
-		%feature("compactdefaultargs") Lower;
-		%feature("autodoc", "	:rtype: int
-") Lower;
-		Standard_Integer Lower ();
-		%feature("compactdefaultargs") Upper;
-		%feature("autodoc", "	:rtype: int
-") Upper;
-		Standard_Integer Upper ();
-		%feature("compactdefaultargs") SetValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param Value:
-	:type Value: IntTools_Root &
-	:rtype: None
-") SetValue;
-		void SetValue (const Standard_Integer Index,const IntTools_Root & Value);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: IntTools_Root
-") Value;
-		const IntTools_Root & Value (const Standard_Integer Index);
-		%feature("compactdefaultargs") ChangeValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: IntTools_Root
-") ChangeValue;
-		IntTools_Root & ChangeValue (const Standard_Integer Index);
-};
-
-
-%extend IntTools_Array1OfRoots {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
 %nodefaultctor IntTools_BaseRangeSample;
 class IntTools_BaseRangeSample {
 	public:
@@ -359,7 +203,7 @@ class IntTools_BeanFaceIntersector {
 ") IntTools_BeanFaceIntersector;
 		 IntTools_BeanFaceIntersector ();
 		%feature("compactdefaultargs") IntTools_BeanFaceIntersector;
-		%feature("autodoc", "	* Initializes the algorithm //! Warning: The parts of the edge which are on the surface of the face and belong to the whole in the face (if there is) is considered as result
+		%feature("autodoc", "	* Initializes the algorithm //! Warning: The parts of the edge which are on the surface of the face and belong to the whole in the face --if there is-- is considered as result
 
 	:param theEdge:
 	:type theEdge: TopoDS_Edge &
@@ -409,7 +253,7 @@ class IntTools_BeanFaceIntersector {
 ") IntTools_BeanFaceIntersector;
 		 IntTools_BeanFaceIntersector (const BRepAdaptor_Curve & theCurve,const BRepAdaptor_Surface & theSurface,const Standard_Real theFirstParOnCurve,const Standard_Real theLastParOnCurve,const Standard_Real theUMinParameter,const Standard_Real theUMaxParameter,const Standard_Real theVMinParameter,const Standard_Real theVMaxParameter,const Standard_Real theBeanTolerance,const Standard_Real theFaceTolerance);
 		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	* Initializes the algorithm //! Warning: The parts of the edge which are on the surface of the face and belong to the whole in the face (if there is) is considered as result
+		%feature("autodoc", "	* Initializes the algorithm //! Warning: The parts of the edge which are on the surface of the face and belong to the whole in the face --if there is-- is considered as result
 
 	:param theEdge:
 	:type theEdge: TopoDS_Edge &
@@ -737,118 +581,8 @@ class IntTools_CommonPrt {
 	__repr__ = _dumps_object
 	}
 };
-%nodefaultctor IntTools_Compare;
-class IntTools_Compare {
-	public:
-		%feature("compactdefaultargs") IntTools_Compare;
-		%feature("autodoc", "	* Empty constructor
-
-	:rtype: None
-") IntTools_Compare;
-		 IntTools_Compare ();
-		%feature("compactdefaultargs") IntTools_Compare;
-		%feature("autodoc", "	* Initializes me by tolerance
-
-	:param aTol:
-	:type aTol: float
-	:rtype: None
-") IntTools_Compare;
-		 IntTools_Compare (const Standard_Real aTol);
-		%feature("compactdefaultargs") IsLower;
-		%feature("autodoc", "	* Returns True if <Left> is lower than <Right>.
-
-	:param Left:
-	:type Left: IntTools_Root &
-	:param Right:
-	:type Right: IntTools_Root &
-	:rtype: bool
-") IsLower;
-		Standard_Boolean IsLower (const IntTools_Root & Left,const IntTools_Root & Right);
-		%feature("compactdefaultargs") IsGreater;
-		%feature("autodoc", "	* Returns True if <Left> is greater than <Right>.
-
-	:param Left:
-	:type Left: IntTools_Root &
-	:param Right:
-	:type Right: IntTools_Root &
-	:rtype: bool
-") IsGreater;
-		Standard_Boolean IsGreater (const IntTools_Root & Left,const IntTools_Root & Right);
-		%feature("compactdefaultargs") IsEqual;
-		%feature("autodoc", "	* Returns True when <Right> and <Left> are equal.
-
-	:param Left:
-	:type Left: IntTools_Root &
-	:param Right:
-	:type Right: IntTools_Root &
-	:rtype: bool
-") IsEqual;
-		Standard_Boolean IsEqual (const IntTools_Root & Left,const IntTools_Root & Right);
-};
-
-
-%extend IntTools_Compare {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor IntTools_CompareRange;
-class IntTools_CompareRange {
-	public:
-		%feature("compactdefaultargs") IntTools_CompareRange;
-		%feature("autodoc", "	* Empty constructor
-
-	:rtype: None
-") IntTools_CompareRange;
-		 IntTools_CompareRange ();
-		%feature("compactdefaultargs") IntTools_CompareRange;
-		%feature("autodoc", "	* Initializes me by tolerance
-
-	:param aTol:
-	:type aTol: float
-	:rtype: None
-") IntTools_CompareRange;
-		 IntTools_CompareRange (const Standard_Real aTol);
-		%feature("compactdefaultargs") IsLower;
-		%feature("autodoc", "	* Returns True if <Left> is lower than <Right>.
-
-	:param Left:
-	:type Left: IntTools_Range &
-	:param Right:
-	:type Right: IntTools_Range &
-	:rtype: bool
-") IsLower;
-		Standard_Boolean IsLower (const IntTools_Range & Left,const IntTools_Range & Right);
-		%feature("compactdefaultargs") IsGreater;
-		%feature("autodoc", "	* Returns True if <Left> is greater than <Right>.
-
-	:param Left:
-	:type Left: IntTools_Range &
-	:param Right:
-	:type Right: IntTools_Range &
-	:rtype: bool
-") IsGreater;
-		Standard_Boolean IsGreater (const IntTools_Range & Left,const IntTools_Range & Right);
-		%feature("compactdefaultargs") IsEqual;
-		%feature("autodoc", "	* Returns True when <Right> and <Left> are equal.
-
-	:param Left:
-	:type Left: IntTools_Range &
-	:param Right:
-	:type Right: IntTools_Range &
-	:rtype: bool
-") IsEqual;
-		Standard_Boolean IsEqual (const IntTools_Range & Left,const IntTools_Range & Right);
-};
-
-
-%extend IntTools_CompareRange {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
 %nodefaultctor IntTools_Context;
-class IntTools_Context : public MMgt_TShared {
+class IntTools_Context : public Standard_Transient {
 	public:
 		%feature("compactdefaultargs") IntTools_Context;
 		%feature("autodoc", "	:rtype: None
@@ -916,8 +650,32 @@ class IntTools_Context : public MMgt_TShared {
 	:rtype: Geom2dHatch_Hatcher
 ") Hatcher;
 		Geom2dHatch_Hatcher & Hatcher (const TopoDS_Face & aF);
+		%feature("compactdefaultargs") SurfaceAdaptor;
+		%feature("autodoc", "	* Returns a reference to surface adaptor for given face
+
+	:param theFace:
+	:type theFace: TopoDS_Face &
+	:rtype: BRepAdaptor_Surface
+") SurfaceAdaptor;
+		BRepAdaptor_Surface & SurfaceAdaptor (const TopoDS_Face & theFace);
+		%feature("compactdefaultargs") UVBounds;
+		%feature("autodoc", "	* Computes the boundaries of the face using surface adaptor
+
+	:param theFace:
+	:type theFace: TopoDS_Face &
+	:param UMin:
+	:type UMin: float &
+	:param UMax:
+	:type UMax: float &
+	:param VMin:
+	:type VMin: float &
+	:param VMax:
+	:type VMax: float &
+	:rtype: None
+") UVBounds;
+		void UVBounds (const TopoDS_Face & theFace,Standard_Real &OutValue,Standard_Real &OutValue,Standard_Real &OutValue,Standard_Real &OutValue);
 		%feature("compactdefaultargs") ComputePE;
-		%feature("autodoc", "	* Computes parameter of the Point theP on the edge aE. Returns zero if the distance between point and edge is less than sum of tolerance value of edge and theTopP, otherwise and for following conditions returns negative value 1. the edge is degenerated (-1) 2. the edge does not contain 3d curve and pcurves (-2) 3. projection algorithm failed (-3)
+		%feature("autodoc", "	* Computes parameter of the Point theP on the edge aE. Returns zero if the distance between point and edge is less than sum of tolerance value of edge and theTopP, otherwise and for following conditions returns negative value 1. the edge is degenerated ---1-- 2. the edge does not contain 3d curve and pcurves ---2-- 3. projection algorithm failed ---3--
 
 	:param theP:
 	:type theP: gp_Pnt
@@ -927,35 +685,45 @@ class IntTools_Context : public MMgt_TShared {
 	:type theE: TopoDS_Edge &
 	:param theT:
 	:type theT: float &
+	:param theDist:
+	:type theDist: float &
 	:rtype: int
 ") ComputePE;
-		Standard_Integer ComputePE (const gp_Pnt & theP,const Standard_Real theTolP,const TopoDS_Edge & theE,Standard_Real &OutValue);
+		Standard_Integer ComputePE (const gp_Pnt & theP,const Standard_Real theTolP,const TopoDS_Edge & theE,Standard_Real &OutValue,Standard_Real &OutValue);
 		%feature("compactdefaultargs") ComputeVE;
-		%feature("autodoc", "	* Computes parameter of the vertex aV on the edge aE. Returns zero if the distance between vertex and edge is less than sum of tolerances, otherwise and for following conditions returns negative value 1. the edge is degenerated (-1) 2. the edge does not contain 3d curve and pcurves (-2) 3. projection algorithm failed (-3)
+		%feature("autodoc", "	* Computes parameter of the vertex aV on the edge aE and correct tolerance value for the vertex on the edge. Returns zero if the distance between vertex and edge is less than sum of tolerances and the fuzzy value, otherwise and for following conditions returns negative value: 1. the edge is degenerated ---1-- 2. the edge does not contain 3d curve and pcurves ---2-- 3. projection algorithm failed ---3--
 
-	:param aV:
-	:type aV: TopoDS_Vertex &
-	:param aE:
-	:type aE: TopoDS_Edge &
-	:param aT:
-	:type aT: float &
+	:param theV:
+	:type theV: TopoDS_Vertex &
+	:param theE:
+	:type theE: TopoDS_Edge &
+	:param theT:
+	:type theT: float &
+	:param theTol:
+	:type theTol: float &
+	:param theFuzz: default value is Precision::Confusion()
+	:type theFuzz: float
 	:rtype: int
 ") ComputeVE;
-		Standard_Integer ComputeVE (const TopoDS_Vertex & aV,const TopoDS_Edge & aE,Standard_Real &OutValue);
+		Standard_Integer ComputeVE (const TopoDS_Vertex & theV,const TopoDS_Edge & theE,Standard_Real &OutValue,Standard_Real &OutValue,const Standard_Real theFuzz = Precision::Confusion());
 		%feature("compactdefaultargs") ComputeVF;
-		%feature("autodoc", "	* Computes UV parameters of the vertex aV on face aF Returns zero if the distance between vertex and face is less than or equal the sum of tolerances and the projection point lays inside boundaries of the face. For following conditions returns negative value 1. projection algorithm failed (-1) 2. distance is more than sum of tolerances (-2) 3. projection point out or on the boundaries of face (-3)
+		%feature("autodoc", "	* Computes UV parameters of the vertex aV on face aF and correct tolerance value for the vertex on the face. Returns zero if the distance between vertex and face is less than or equal the sum of tolerances and the fuzzy value and the projection point lays inside boundaries of the face. For following conditions returns negative value 1. projection algorithm failed ---1-- 2. distance is more than sum of tolerances ---2-- 3. projection point out or on the boundaries of face ---3--
 
-	:param aV:
-	:type aV: TopoDS_Vertex &
-	:param aF:
-	:type aF: TopoDS_Face &
-	:param U:
-	:type U: float &
-	:param V:
-	:type V: float &
+	:param theVertex:
+	:type theVertex: TopoDS_Vertex &
+	:param theFace:
+	:type theFace: TopoDS_Face &
+	:param theU:
+	:type theU: float &
+	:param theV:
+	:type theV: float &
+	:param theTol:
+	:type theTol: float &
+	:param theFuzz: default value is Precision::Confusion()
+	:type theFuzz: float
 	:rtype: int
 ") ComputeVF;
-		Standard_Integer ComputeVF (const TopoDS_Vertex & aV,const TopoDS_Face & aF,Standard_Real &OutValue,Standard_Real &OutValue);
+		Standard_Integer ComputeVF (const TopoDS_Vertex & theVertex,const TopoDS_Face & theFace,Standard_Real &OutValue,Standard_Real &OutValue,Standard_Real &OutValue,const Standard_Real theFuzz = Precision::Confusion());
 		%feature("compactdefaultargs") StatePointFace;
 		%feature("autodoc", "	* Returns the state of the point aP2D relative to face aF
 
@@ -1059,7 +827,7 @@ class IntTools_Context : public MMgt_TShared {
 ") IsValidBlockForFaces;
 		Standard_Boolean IsValidBlockForFaces (const Standard_Real aT1,const Standard_Real aT2,const IntTools_Curve & aIC,const TopoDS_Face & aF1,const TopoDS_Face & aF2,const Standard_Real aTol);
 		%feature("compactdefaultargs") IsVertexOnLine;
-		%feature("autodoc", "	* Computes parameter of the vertex aV on the curve aIC. Returns true if the distance between vertex and curve is less than sum of tolerance of aV and aTolC, otherwise or if projection algorithm failed returns false (in this case aT isn't significant)
+		%feature("autodoc", "	* Computes parameter of the vertex aV on the curve aIC. Returns true if the distance between vertex and curve is less than sum of tolerance of aV and aTolC, otherwise or if projection algorithm failed returns false --in this case aT isn't significant--
 
 	:param aV:
 	:type aV: TopoDS_Vertex &
@@ -1073,7 +841,7 @@ class IntTools_Context : public MMgt_TShared {
 ") IsVertexOnLine;
 		Standard_Boolean IsVertexOnLine (const TopoDS_Vertex & aV,const IntTools_Curve & aIC,const Standard_Real aTolC,Standard_Real &OutValue);
 		%feature("compactdefaultargs") IsVertexOnLine;
-		%feature("autodoc", "	* Computes parameter of the vertex aV on the curve aIC. Returns true if the distance between vertex and curve is less than sum of tolerance of aV and aTolC, otherwise or if projection algorithm failed returns false (in this case aT isn't significant)
+		%feature("autodoc", "	* Computes parameter of the vertex aV on the curve aIC. Returns true if the distance between vertex and curve is less than sum of tolerance of aV and aTolC, otherwise or if projection algorithm failed returns false --in this case aT isn't significant--
 
 	:param aV:
 	:type aV: TopoDS_Vertex &
@@ -1144,7 +912,7 @@ class IntTools_Context : public MMgt_TShared {
 %}
 
 %nodefaultctor Handle_IntTools_Context;
-class Handle_IntTools_Context : public Handle_MMgt_TShared {
+class Handle_IntTools_Context : public Handle_Standard_Transient {
 
     public:
         // constructors
@@ -1156,19 +924,20 @@ class Handle_IntTools_Context : public Handle_MMgt_TShared {
         static const Handle_IntTools_Context DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_IntTools_Context {
     IntTools_Context* _get_reference() {
-    return (IntTools_Context*)$self->Access();
+    return (IntTools_Context*)$self->get();
     }
 };
 
 %extend Handle_IntTools_Context {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend IntTools_Context {
@@ -1186,103 +955,135 @@ class IntTools_Curve {
 ") IntTools_Curve;
 		 IntTools_Curve ();
 		%feature("compactdefaultargs") IntTools_Curve;
-		%feature("autodoc", "	* Initializes me by a 3d curve and two 2d curves
+		%feature("autodoc", "	* Constructor taking 3d curve, two 2d curves and two tolerance values
 
-	:param Curve3d:
-	:type Curve3d: Handle_Geom_Curve &
-	:param FirstCurve2d:
-	:type FirstCurve2d: Handle_Geom2d_Curve &
-	:param SecondCurve2d:
-	:type SecondCurve2d: Handle_Geom2d_Curve &
+	:param the3dCurve3d:
+	:type the3dCurve3d: Handle_Geom_Curve &
+	:param the2dCurve1:
+	:type the2dCurve1: Handle_Geom2d_Curve &
+	:param the2dCurve2:
+	:type the2dCurve2: Handle_Geom2d_Curve &
+	:param theTolerance: default value is 0.0
+	:type theTolerance: float
+	:param theTangentialTolerance: default value is 0.0
+	:type theTangentialTolerance: float
 	:rtype: None
 ") IntTools_Curve;
-		 IntTools_Curve (const Handle_Geom_Curve & Curve3d,const Handle_Geom2d_Curve & FirstCurve2d,const Handle_Geom2d_Curve & SecondCurve2d);
+		 IntTools_Curve (const Handle_Geom_Curve & the3dCurve3d,const Handle_Geom2d_Curve & the2dCurve1,const Handle_Geom2d_Curve & the2dCurve2,const Standard_Real theTolerance = 0.0,const Standard_Real theTangentialTolerance = 0.0);
 		%feature("compactdefaultargs") SetCurves;
-		%feature("autodoc", "	* Modifier
+		%feature("autodoc", "	* Sets the curves
 
-	:param Curve3d:
-	:type Curve3d: Handle_Geom_Curve &
-	:param FirstCurve2d:
-	:type FirstCurve2d: Handle_Geom2d_Curve &
-	:param SecondCurve2d:
-	:type SecondCurve2d: Handle_Geom2d_Curve &
+	:param the3dCurve:
+	:type the3dCurve: Handle_Geom_Curve &
+	:param the2dCurve1:
+	:type the2dCurve1: Handle_Geom2d_Curve &
+	:param the2dCurve2:
+	:type the2dCurve2: Handle_Geom2d_Curve &
 	:rtype: None
 ") SetCurves;
-		void SetCurves (const Handle_Geom_Curve & Curve3d,const Handle_Geom2d_Curve & FirstCurve2d,const Handle_Geom2d_Curve & SecondCurve2d);
+		void SetCurves (const Handle_Geom_Curve & the3dCurve,const Handle_Geom2d_Curve & the2dCurve1,const Handle_Geom2d_Curve & the2dCurve2);
 		%feature("compactdefaultargs") SetCurve;
-		%feature("autodoc", "	* Modifier
+		%feature("autodoc", "	* Sets the 3d curve
 
-	:param Curve3d:
-	:type Curve3d: Handle_Geom_Curve &
+	:param the3dCurve:
+	:type the3dCurve: Handle_Geom_Curve &
 	:rtype: None
 ") SetCurve;
-		void SetCurve (const Handle_Geom_Curve & Curve3d);
+		void SetCurve (const Handle_Geom_Curve & the3dCurve);
 		%feature("compactdefaultargs") SetFirstCurve2d;
-		%feature("autodoc", "	* Modifier
+		%feature("autodoc", "	* Sets the first 2d curve
 
-	:param FirstCurve2d:
-	:type FirstCurve2d: Handle_Geom2d_Curve &
+	:param the2dCurve1:
+	:type the2dCurve1: Handle_Geom2d_Curve &
 	:rtype: None
 ") SetFirstCurve2d;
-		void SetFirstCurve2d (const Handle_Geom2d_Curve & FirstCurve2d);
+		void SetFirstCurve2d (const Handle_Geom2d_Curve & the2dCurve1);
 		%feature("compactdefaultargs") SetSecondCurve2d;
-		%feature("autodoc", "	* Modifier
+		%feature("autodoc", "	* Sets the second 2d curve
 
-	:param SecondCurve2d:
-	:type SecondCurve2d: Handle_Geom2d_Curve &
+	:param the2dCurve2:
+	:type the2dCurve2: Handle_Geom2d_Curve &
 	:rtype: None
 ") SetSecondCurve2d;
-		void SetSecondCurve2d (const Handle_Geom2d_Curve & SecondCurve2d);
+		void SetSecondCurve2d (const Handle_Geom2d_Curve & the2dCurve2);
+		%feature("compactdefaultargs") SetTolerance;
+		%feature("autodoc", "	* Sets the tolerance for the curve
+
+	:param theTolerance:
+	:type theTolerance: float
+	:rtype: None
+") SetTolerance;
+		void SetTolerance (const Standard_Real theTolerance);
+		%feature("compactdefaultargs") SetTangentialTolerance;
+		%feature("autodoc", "	* Sets the tangential tolerance
+
+	:param theTangentialTolerance:
+	:type theTangentialTolerance: float
+	:rtype: None
+") SetTangentialTolerance;
+		void SetTangentialTolerance (const Standard_Real theTangentialTolerance);
 		%feature("compactdefaultargs") Curve;
-		%feature("autodoc", "	* Selector
+		%feature("autodoc", "	* Returns 3d curve
 
 	:rtype: Handle_Geom_Curve
 ") Curve;
 		Handle_Geom_Curve Curve ();
 		%feature("compactdefaultargs") FirstCurve2d;
-		%feature("autodoc", "	* Selector
+		%feature("autodoc", "	* Returns first 2d curve
 
 	:rtype: Handle_Geom2d_Curve
 ") FirstCurve2d;
 		Handle_Geom2d_Curve FirstCurve2d ();
 		%feature("compactdefaultargs") SecondCurve2d;
-		%feature("autodoc", "	* Selector
+		%feature("autodoc", "	* Returns second 2d curve
 
 	:rtype: Handle_Geom2d_Curve
 ") SecondCurve2d;
 		Handle_Geom2d_Curve SecondCurve2d ();
+		%feature("compactdefaultargs") Tolerance;
+		%feature("autodoc", "	* Returns the tolerance
+
+	:rtype: float
+") Tolerance;
+		Standard_Real Tolerance ();
+		%feature("compactdefaultargs") TangentialTolerance;
+		%feature("autodoc", "	* Returns the tangential tolerance
+
+	:rtype: float
+") TangentialTolerance;
+		Standard_Real TangentialTolerance ();
 		%feature("compactdefaultargs") HasBounds;
-		%feature("autodoc", "	* Returns true if 3d curve is BoundedCurve from Geom
+		%feature("autodoc", "	* Returns True if 3d curve is BoundedCurve
 
 	:rtype: bool
 ") HasBounds;
 		Standard_Boolean HasBounds ();
 		%feature("compactdefaultargs") Bounds;
-		%feature("autodoc", "	* Returns boundary parameters and corresponded 3d point. //! Warning: If HasBounds returns false the returned parameters are equal to zero.
+		%feature("autodoc", "	* If the 3d curve is bounded curve the method will return True and modify the output parameters with boundary parameters of the curve and corresponded 3d points. If the curve does not have bounds, the method will return false and the output parameters will stay untouched.
 
-	:param aT1:
-	:type aT1: float &
-	:param aT2:
-	:type aT2: float &
-	:param aP1:
-	:type aP1: gp_Pnt
-	:param aP2:
-	:type aP2: gp_Pnt
-	:rtype: None
+	:param theFirst:
+	:type theFirst: float &
+	:param theLast:
+	:type theLast: float &
+	:param theFirstPnt:
+	:type theFirstPnt: gp_Pnt
+	:param theLastPnt:
+	:type theLastPnt: gp_Pnt
+	:rtype: bool
 ") Bounds;
-		void Bounds (Standard_Real &OutValue,Standard_Real &OutValue,gp_Pnt & aP1,gp_Pnt & aP2);
+		Standard_Boolean Bounds (Standard_Real &OutValue,Standard_Real &OutValue,gp_Pnt & theFirstPnt,gp_Pnt & theLastPnt);
 		%feature("compactdefaultargs") D0;
-		%feature("autodoc", "	* Computes 3d point corresponded to parameter aT1 Returns true if given parameter aT1 is inside the boundaries of the curve
+		%feature("autodoc", "	* Computes 3d point corresponded to the given parameter if this parameter is inside the boundaries of the curve. Returns True in this case. Otherwise, the point will not be computed and the method will return False.
 
-	:param aT1:
-	:type aT1: float &
-	:param aP1:
-	:type aP1: gp_Pnt
+	:param thePar:
+	:type thePar: float &
+	:param thePnt:
+	:type thePnt: gp_Pnt
 	:rtype: bool
 ") D0;
-		Standard_Boolean D0 (Standard_Real &OutValue,gp_Pnt & aP1);
+		Standard_Boolean D0 (const Standard_Real & thePar,gp_Pnt & thePnt);
 		%feature("compactdefaultargs") Type;
-		%feature("autodoc", "	* Returns the type of 3d curve
+		%feature("autodoc", "	* Returns the type of the 3d curve
 
 	:rtype: GeomAbs_CurveType
 ") Type;
@@ -1352,392 +1153,6 @@ class IntTools_CurveRangeLocalizeData {
 
 
 %extend IntTools_CurveRangeLocalizeData {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor IntTools_DataMapIteratorOfDataMapOfCurveSampleBox;
-class IntTools_DataMapIteratorOfDataMapOfCurveSampleBox : public TCollection_BasicMapIterator {
-	public:
-		%feature("compactdefaultargs") IntTools_DataMapIteratorOfDataMapOfCurveSampleBox;
-		%feature("autodoc", "	:rtype: None
-") IntTools_DataMapIteratorOfDataMapOfCurveSampleBox;
-		 IntTools_DataMapIteratorOfDataMapOfCurveSampleBox ();
-		%feature("compactdefaultargs") IntTools_DataMapIteratorOfDataMapOfCurveSampleBox;
-		%feature("autodoc", "	:param aMap:
-	:type aMap: IntTools_DataMapOfCurveSampleBox &
-	:rtype: None
-") IntTools_DataMapIteratorOfDataMapOfCurveSampleBox;
-		 IntTools_DataMapIteratorOfDataMapOfCurveSampleBox (const IntTools_DataMapOfCurveSampleBox & aMap);
-		%feature("compactdefaultargs") Initialize;
-		%feature("autodoc", "	:param aMap:
-	:type aMap: IntTools_DataMapOfCurveSampleBox &
-	:rtype: None
-") Initialize;
-		void Initialize (const IntTools_DataMapOfCurveSampleBox & aMap);
-		%feature("compactdefaultargs") Key;
-		%feature("autodoc", "	:rtype: IntTools_CurveRangeSample
-") Key;
-		const IntTools_CurveRangeSample & Key ();
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:rtype: Bnd_Box
-") Value;
-		const Bnd_Box & Value ();
-};
-
-
-%extend IntTools_DataMapIteratorOfDataMapOfCurveSampleBox {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor IntTools_DataMapIteratorOfDataMapOfSurfaceSampleBox;
-class IntTools_DataMapIteratorOfDataMapOfSurfaceSampleBox : public TCollection_BasicMapIterator {
-	public:
-		%feature("compactdefaultargs") IntTools_DataMapIteratorOfDataMapOfSurfaceSampleBox;
-		%feature("autodoc", "	:rtype: None
-") IntTools_DataMapIteratorOfDataMapOfSurfaceSampleBox;
-		 IntTools_DataMapIteratorOfDataMapOfSurfaceSampleBox ();
-		%feature("compactdefaultargs") IntTools_DataMapIteratorOfDataMapOfSurfaceSampleBox;
-		%feature("autodoc", "	:param aMap:
-	:type aMap: IntTools_DataMapOfSurfaceSampleBox &
-	:rtype: None
-") IntTools_DataMapIteratorOfDataMapOfSurfaceSampleBox;
-		 IntTools_DataMapIteratorOfDataMapOfSurfaceSampleBox (const IntTools_DataMapOfSurfaceSampleBox & aMap);
-		%feature("compactdefaultargs") Initialize;
-		%feature("autodoc", "	:param aMap:
-	:type aMap: IntTools_DataMapOfSurfaceSampleBox &
-	:rtype: None
-") Initialize;
-		void Initialize (const IntTools_DataMapOfSurfaceSampleBox & aMap);
-		%feature("compactdefaultargs") Key;
-		%feature("autodoc", "	:rtype: IntTools_SurfaceRangeSample
-") Key;
-		const IntTools_SurfaceRangeSample & Key ();
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:rtype: Bnd_Box
-") Value;
-		const Bnd_Box & Value ();
-};
-
-
-%extend IntTools_DataMapIteratorOfDataMapOfSurfaceSampleBox {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor IntTools_DataMapNodeOfDataMapOfCurveSampleBox;
-class IntTools_DataMapNodeOfDataMapOfCurveSampleBox : public TCollection_MapNode {
-	public:
-		%feature("compactdefaultargs") IntTools_DataMapNodeOfDataMapOfCurveSampleBox;
-		%feature("autodoc", "	:param K:
-	:type K: IntTools_CurveRangeSample &
-	:param I:
-	:type I: Bnd_Box &
-	:param n:
-	:type n: TCollection_MapNodePtr &
-	:rtype: None
-") IntTools_DataMapNodeOfDataMapOfCurveSampleBox;
-		 IntTools_DataMapNodeOfDataMapOfCurveSampleBox (const IntTools_CurveRangeSample & K,const Bnd_Box & I,const TCollection_MapNodePtr & n);
-		%feature("compactdefaultargs") Key;
-		%feature("autodoc", "	:rtype: IntTools_CurveRangeSample
-") Key;
-		IntTools_CurveRangeSample & Key ();
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:rtype: Bnd_Box
-") Value;
-		Bnd_Box & Value ();
-};
-
-
-%extend IntTools_DataMapNodeOfDataMapOfCurveSampleBox {
-	%pythoncode {
-		def GetHandle(self):
-		    try:
-		        return self.thisHandle
-		    except:
-		        self.thisHandle = Handle_IntTools_DataMapNodeOfDataMapOfCurveSampleBox(self)
-		        self.thisown = False
-		        return self.thisHandle
-	}
-};
-
-%pythonappend Handle_IntTools_DataMapNodeOfDataMapOfCurveSampleBox::Handle_IntTools_DataMapNodeOfDataMapOfCurveSampleBox %{
-    # register the handle in the base object
-    if len(args) > 0:
-        register_handle(self, args[0])
-%}
-
-%nodefaultctor Handle_IntTools_DataMapNodeOfDataMapOfCurveSampleBox;
-class Handle_IntTools_DataMapNodeOfDataMapOfCurveSampleBox : public Handle_TCollection_MapNode {
-
-    public:
-        // constructors
-        Handle_IntTools_DataMapNodeOfDataMapOfCurveSampleBox();
-        Handle_IntTools_DataMapNodeOfDataMapOfCurveSampleBox(const Handle_IntTools_DataMapNodeOfDataMapOfCurveSampleBox &aHandle);
-        Handle_IntTools_DataMapNodeOfDataMapOfCurveSampleBox(const IntTools_DataMapNodeOfDataMapOfCurveSampleBox *anItem);
-        void Nullify();
-        Standard_Boolean IsNull() const;
-        static const Handle_IntTools_DataMapNodeOfDataMapOfCurveSampleBox DownCast(const Handle_Standard_Transient &AnObject);
-
-};
-%extend Handle_IntTools_DataMapNodeOfDataMapOfCurveSampleBox {
-    IntTools_DataMapNodeOfDataMapOfCurveSampleBox* _get_reference() {
-    return (IntTools_DataMapNodeOfDataMapOfCurveSampleBox*)$self->Access();
-    }
-};
-
-%extend Handle_IntTools_DataMapNodeOfDataMapOfCurveSampleBox {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
-};
-
-%extend IntTools_DataMapNodeOfDataMapOfCurveSampleBox {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor IntTools_DataMapNodeOfDataMapOfSurfaceSampleBox;
-class IntTools_DataMapNodeOfDataMapOfSurfaceSampleBox : public TCollection_MapNode {
-	public:
-		%feature("compactdefaultargs") IntTools_DataMapNodeOfDataMapOfSurfaceSampleBox;
-		%feature("autodoc", "	:param K:
-	:type K: IntTools_SurfaceRangeSample &
-	:param I:
-	:type I: Bnd_Box &
-	:param n:
-	:type n: TCollection_MapNodePtr &
-	:rtype: None
-") IntTools_DataMapNodeOfDataMapOfSurfaceSampleBox;
-		 IntTools_DataMapNodeOfDataMapOfSurfaceSampleBox (const IntTools_SurfaceRangeSample & K,const Bnd_Box & I,const TCollection_MapNodePtr & n);
-		%feature("compactdefaultargs") Key;
-		%feature("autodoc", "	:rtype: IntTools_SurfaceRangeSample
-") Key;
-		IntTools_SurfaceRangeSample & Key ();
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:rtype: Bnd_Box
-") Value;
-		Bnd_Box & Value ();
-};
-
-
-%extend IntTools_DataMapNodeOfDataMapOfSurfaceSampleBox {
-	%pythoncode {
-		def GetHandle(self):
-		    try:
-		        return self.thisHandle
-		    except:
-		        self.thisHandle = Handle_IntTools_DataMapNodeOfDataMapOfSurfaceSampleBox(self)
-		        self.thisown = False
-		        return self.thisHandle
-	}
-};
-
-%pythonappend Handle_IntTools_DataMapNodeOfDataMapOfSurfaceSampleBox::Handle_IntTools_DataMapNodeOfDataMapOfSurfaceSampleBox %{
-    # register the handle in the base object
-    if len(args) > 0:
-        register_handle(self, args[0])
-%}
-
-%nodefaultctor Handle_IntTools_DataMapNodeOfDataMapOfSurfaceSampleBox;
-class Handle_IntTools_DataMapNodeOfDataMapOfSurfaceSampleBox : public Handle_TCollection_MapNode {
-
-    public:
-        // constructors
-        Handle_IntTools_DataMapNodeOfDataMapOfSurfaceSampleBox();
-        Handle_IntTools_DataMapNodeOfDataMapOfSurfaceSampleBox(const Handle_IntTools_DataMapNodeOfDataMapOfSurfaceSampleBox &aHandle);
-        Handle_IntTools_DataMapNodeOfDataMapOfSurfaceSampleBox(const IntTools_DataMapNodeOfDataMapOfSurfaceSampleBox *anItem);
-        void Nullify();
-        Standard_Boolean IsNull() const;
-        static const Handle_IntTools_DataMapNodeOfDataMapOfSurfaceSampleBox DownCast(const Handle_Standard_Transient &AnObject);
-
-};
-%extend Handle_IntTools_DataMapNodeOfDataMapOfSurfaceSampleBox {
-    IntTools_DataMapNodeOfDataMapOfSurfaceSampleBox* _get_reference() {
-    return (IntTools_DataMapNodeOfDataMapOfSurfaceSampleBox*)$self->Access();
-    }
-};
-
-%extend Handle_IntTools_DataMapNodeOfDataMapOfSurfaceSampleBox {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
-};
-
-%extend IntTools_DataMapNodeOfDataMapOfSurfaceSampleBox {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor IntTools_DataMapOfCurveSampleBox;
-class IntTools_DataMapOfCurveSampleBox : public TCollection_BasicMap {
-	public:
-		%feature("compactdefaultargs") IntTools_DataMapOfCurveSampleBox;
-		%feature("autodoc", "	:param NbBuckets: default value is 1
-	:type NbBuckets: int
-	:rtype: None
-") IntTools_DataMapOfCurveSampleBox;
-		 IntTools_DataMapOfCurveSampleBox (const Standard_Integer NbBuckets = 1);
-		%feature("compactdefaultargs") Assign;
-		%feature("autodoc", "	:param Other:
-	:type Other: IntTools_DataMapOfCurveSampleBox &
-	:rtype: IntTools_DataMapOfCurveSampleBox
-") Assign;
-		IntTools_DataMapOfCurveSampleBox & Assign (const IntTools_DataMapOfCurveSampleBox & Other);
-		%feature("compactdefaultargs") operator =;
-		%feature("autodoc", "	:param Other:
-	:type Other: IntTools_DataMapOfCurveSampleBox &
-	:rtype: IntTools_DataMapOfCurveSampleBox
-") operator =;
-		IntTools_DataMapOfCurveSampleBox & operator = (const IntTools_DataMapOfCurveSampleBox & Other);
-		%feature("compactdefaultargs") ReSize;
-		%feature("autodoc", "	:param NbBuckets:
-	:type NbBuckets: int
-	:rtype: None
-") ReSize;
-		void ReSize (const Standard_Integer NbBuckets);
-		%feature("compactdefaultargs") Clear;
-		%feature("autodoc", "	:rtype: None
-") Clear;
-		void Clear ();
-		%feature("compactdefaultargs") Bind;
-		%feature("autodoc", "	:param K:
-	:type K: IntTools_CurveRangeSample &
-	:param I:
-	:type I: Bnd_Box &
-	:rtype: bool
-") Bind;
-		Standard_Boolean Bind (const IntTools_CurveRangeSample & K,const Bnd_Box & I);
-		%feature("compactdefaultargs") IsBound;
-		%feature("autodoc", "	:param K:
-	:type K: IntTools_CurveRangeSample &
-	:rtype: bool
-") IsBound;
-		Standard_Boolean IsBound (const IntTools_CurveRangeSample & K);
-		%feature("compactdefaultargs") UnBind;
-		%feature("autodoc", "	:param K:
-	:type K: IntTools_CurveRangeSample &
-	:rtype: bool
-") UnBind;
-		Standard_Boolean UnBind (const IntTools_CurveRangeSample & K);
-		%feature("compactdefaultargs") Find;
-		%feature("autodoc", "	:param K:
-	:type K: IntTools_CurveRangeSample &
-	:rtype: Bnd_Box
-") Find;
-		const Bnd_Box & Find (const IntTools_CurveRangeSample & K);
-		%feature("compactdefaultargs") ChangeFind;
-		%feature("autodoc", "	:param K:
-	:type K: IntTools_CurveRangeSample &
-	:rtype: Bnd_Box
-") ChangeFind;
-		Bnd_Box & ChangeFind (const IntTools_CurveRangeSample & K);
-		%feature("compactdefaultargs") Find1;
-		%feature("autodoc", "	:param K:
-	:type K: IntTools_CurveRangeSample &
-	:rtype: Standard_Address
-") Find1;
-		Standard_Address Find1 (const IntTools_CurveRangeSample & K);
-		%feature("compactdefaultargs") ChangeFind1;
-		%feature("autodoc", "	:param K:
-	:type K: IntTools_CurveRangeSample &
-	:rtype: Standard_Address
-") ChangeFind1;
-		Standard_Address ChangeFind1 (const IntTools_CurveRangeSample & K);
-};
-
-
-%extend IntTools_DataMapOfCurveSampleBox {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor IntTools_DataMapOfSurfaceSampleBox;
-class IntTools_DataMapOfSurfaceSampleBox : public TCollection_BasicMap {
-	public:
-		%feature("compactdefaultargs") IntTools_DataMapOfSurfaceSampleBox;
-		%feature("autodoc", "	:param NbBuckets: default value is 1
-	:type NbBuckets: int
-	:rtype: None
-") IntTools_DataMapOfSurfaceSampleBox;
-		 IntTools_DataMapOfSurfaceSampleBox (const Standard_Integer NbBuckets = 1);
-		%feature("compactdefaultargs") Assign;
-		%feature("autodoc", "	:param Other:
-	:type Other: IntTools_DataMapOfSurfaceSampleBox &
-	:rtype: IntTools_DataMapOfSurfaceSampleBox
-") Assign;
-		IntTools_DataMapOfSurfaceSampleBox & Assign (const IntTools_DataMapOfSurfaceSampleBox & Other);
-		%feature("compactdefaultargs") operator =;
-		%feature("autodoc", "	:param Other:
-	:type Other: IntTools_DataMapOfSurfaceSampleBox &
-	:rtype: IntTools_DataMapOfSurfaceSampleBox
-") operator =;
-		IntTools_DataMapOfSurfaceSampleBox & operator = (const IntTools_DataMapOfSurfaceSampleBox & Other);
-		%feature("compactdefaultargs") ReSize;
-		%feature("autodoc", "	:param NbBuckets:
-	:type NbBuckets: int
-	:rtype: None
-") ReSize;
-		void ReSize (const Standard_Integer NbBuckets);
-		%feature("compactdefaultargs") Clear;
-		%feature("autodoc", "	:rtype: None
-") Clear;
-		void Clear ();
-		%feature("compactdefaultargs") Bind;
-		%feature("autodoc", "	:param K:
-	:type K: IntTools_SurfaceRangeSample &
-	:param I:
-	:type I: Bnd_Box &
-	:rtype: bool
-") Bind;
-		Standard_Boolean Bind (const IntTools_SurfaceRangeSample & K,const Bnd_Box & I);
-		%feature("compactdefaultargs") IsBound;
-		%feature("autodoc", "	:param K:
-	:type K: IntTools_SurfaceRangeSample &
-	:rtype: bool
-") IsBound;
-		Standard_Boolean IsBound (const IntTools_SurfaceRangeSample & K);
-		%feature("compactdefaultargs") UnBind;
-		%feature("autodoc", "	:param K:
-	:type K: IntTools_SurfaceRangeSample &
-	:rtype: bool
-") UnBind;
-		Standard_Boolean UnBind (const IntTools_SurfaceRangeSample & K);
-		%feature("compactdefaultargs") Find;
-		%feature("autodoc", "	:param K:
-	:type K: IntTools_SurfaceRangeSample &
-	:rtype: Bnd_Box
-") Find;
-		const Bnd_Box & Find (const IntTools_SurfaceRangeSample & K);
-		%feature("compactdefaultargs") ChangeFind;
-		%feature("autodoc", "	:param K:
-	:type K: IntTools_SurfaceRangeSample &
-	:rtype: Bnd_Box
-") ChangeFind;
-		Bnd_Box & ChangeFind (const IntTools_SurfaceRangeSample & K);
-		%feature("compactdefaultargs") Find1;
-		%feature("autodoc", "	:param K:
-	:type K: IntTools_SurfaceRangeSample &
-	:rtype: Standard_Address
-") Find1;
-		Standard_Address Find1 (const IntTools_SurfaceRangeSample & K);
-		%feature("compactdefaultargs") ChangeFind1;
-		%feature("autodoc", "	:param K:
-	:type K: IntTools_SurfaceRangeSample &
-	:rtype: Standard_Address
-") ChangeFind1;
-		Standard_Address ChangeFind1 (const IntTools_SurfaceRangeSample & K);
-};
-
-
-%extend IntTools_DataMapOfSurfaceSampleBox {
 	%pythoncode {
 	__repr__ = _dumps_object
 	}
@@ -1855,6 +1270,14 @@ class IntTools_EdgeEdge {
 	:rtype: None
 ") SetRange2;
 		void SetRange2 (const Standard_Real aT1,const Standard_Real aT2);
+		%feature("compactdefaultargs") SetFuzzyValue;
+		%feature("autodoc", "	* Sets the Fuzzy value
+
+	:param theFuzz:
+	:type theFuzz: float
+	:rtype: None
+") SetFuzzyValue;
+		void SetFuzzyValue (const Standard_Real theFuzz);
 		%feature("compactdefaultargs") Perform;
 		%feature("autodoc", "	* Performs the intersection between edges
 
@@ -1862,17 +1285,37 @@ class IntTools_EdgeEdge {
 ") Perform;
 		void Perform ();
 		%feature("compactdefaultargs") IsDone;
-		%feature("autodoc", "	* Returns True if common part(s) is(are) found
+		%feature("autodoc", "	* Returns True if common part--s-- is--are-- found
 
 	:rtype: bool
 ") IsDone;
 		Standard_Boolean IsDone ();
+		%feature("compactdefaultargs") FuzzyValue;
+		%feature("autodoc", "	* Returns Fuzzy value
+
+	:rtype: float
+") FuzzyValue;
+		Standard_Real FuzzyValue ();
 		%feature("compactdefaultargs") CommonParts;
 		%feature("autodoc", "	* Returns common parts
 
 	:rtype: IntTools_SequenceOfCommonPrts
 ") CommonParts;
 		const IntTools_SequenceOfCommonPrts & CommonParts ();
+		%feature("compactdefaultargs") UseQuickCoincidenceCheck;
+		%feature("autodoc", "	* Sets the flag myQuickCoincidenceCheck
+
+	:param bFlag:
+	:type bFlag: bool
+	:rtype: None
+") UseQuickCoincidenceCheck;
+		void UseQuickCoincidenceCheck (const Standard_Boolean bFlag);
+		%feature("compactdefaultargs") IsCoincidenceCheckedQuickly;
+		%feature("autodoc", "	* Returns the flag myQuickCoincidenceCheck
+
+	:rtype: bool
+") IsCoincidenceCheckedQuickly;
+		Standard_Boolean IsCoincidenceCheckedQuickly ();
 };
 
 
@@ -1898,14 +1341,6 @@ class IntTools_EdgeFace {
 	:rtype: None
 ") SetEdge;
 		void SetEdge (const TopoDS_Edge & anEdge);
-		%feature("compactdefaultargs") SetTolE;
-		%feature("autodoc", "	* Initializes algorithm by edge tolerance
-
-	:param aTolEdge1:
-	:type aTolEdge1: float
-	:rtype: None
-") SetTolE;
-		void SetTolE (const Standard_Real aTolEdge1);
 		%feature("compactdefaultargs") SetFace;
 		%feature("autodoc", "	* Initializes algorithm by the face aFace
 
@@ -1914,14 +1349,6 @@ class IntTools_EdgeFace {
 	:rtype: None
 ") SetFace;
 		void SetFace (const TopoDS_Face & aFace);
-		%feature("compactdefaultargs") SetTolF;
-		%feature("autodoc", "	* Initializes algorithm by face tolerance
-
-	:param aTolFace:
-	:type aTolFace: float
-	:rtype: None
-") SetTolF;
-		void SetTolF (const Standard_Real aTolFace);
 		%feature("compactdefaultargs") Edge;
 		%feature("autodoc", "	* Returns edge
 
@@ -1934,18 +1361,6 @@ class IntTools_EdgeFace {
 	:rtype: TopoDS_Face
 ") Face;
 		const TopoDS_Face  Face ();
-		%feature("compactdefaultargs") TolE;
-		%feature("autodoc", "	* Returns tolerance of the edge
-
-	:rtype: float
-") TolE;
-		Standard_Real TolE ();
-		%feature("compactdefaultargs") TolF;
-		%feature("autodoc", "	* Returns tolerance of the face
-
-	:rtype: float
-") TolF;
-		Standard_Real TolF ();
 		%feature("compactdefaultargs") SetDiscretize;
 		%feature("autodoc", "	* Initializes algorithm by discretization value
 
@@ -1970,14 +1385,6 @@ class IntTools_EdgeFace {
 	:rtype: None
 ") SetEpsilonT;
 		void SetEpsilonT (const Standard_Real anEpsT);
-		%feature("compactdefaultargs") SetEpsilonNull;
-		%feature("autodoc", "	* Initializes algorithm by distance tolerance
-
-	:param anEpsNull:
-	:type anEpsNull: float
-	:rtype: None
-") SetEpsilonNull;
-		void SetEpsilonNull (const Standard_Real anEpsNull);
 		%feature("compactdefaultargs") SetRange;
 		%feature("autodoc", "	* Sets boundaries for edge. The algorithm processes edge inside these boundaries.
 
@@ -2010,6 +1417,20 @@ class IntTools_EdgeFace {
 	:rtype: Handle_IntTools_Context
 ") Context;
 		Handle_IntTools_Context Context ();
+		%feature("compactdefaultargs") SetFuzzyValue;
+		%feature("autodoc", "	* Sets the Fuzzy value
+
+	:param theFuzz:
+	:type theFuzz: float
+	:rtype: None
+") SetFuzzyValue;
+		void SetFuzzyValue (const Standard_Real theFuzz);
+		%feature("compactdefaultargs") FuzzyValue;
+		%feature("autodoc", "	* Returns Fuzzy value
+
+	:rtype: float
+") FuzzyValue;
+		Standard_Real FuzzyValue ();
 		%feature("compactdefaultargs") Perform;
 		%feature("autodoc", "	* Launches the process
 
@@ -2040,18 +1461,20 @@ class IntTools_EdgeFace {
 	:rtype: IntTools_Range
 ") Range;
 		const IntTools_Range & Range ();
-		%feature("compactdefaultargs") IsEqDistance;
-		%feature("autodoc", "	:param aP:
-	:type aP: gp_Pnt
-	:param aS:
-	:type aS: BRepAdaptor_Surface &
-	:param aT:
-	:type aT: float
-	:param aD:
-	:type aD: float &
+		%feature("compactdefaultargs") UseQuickCoincidenceCheck;
+		%feature("autodoc", "	* Sets the flag myQuickCoincidenceCheck
+
+	:param bFlag:
+	:type bFlag: bool
+	:rtype: None
+") UseQuickCoincidenceCheck;
+		void UseQuickCoincidenceCheck (const Standard_Boolean bFlag);
+		%feature("compactdefaultargs") IsCoincidenceCheckedQuickly;
+		%feature("autodoc", "	* Returns the flag myQuickCoincidenceCheck
+
 	:rtype: bool
-") IsEqDistance;
-		static Standard_Boolean IsEqDistance (const gp_Pnt & aP,const BRepAdaptor_Surface & aS,const Standard_Real aT,Standard_Real &OutValue);
+") IsCoincidenceCheckedQuickly;
+		Standard_Boolean IsCoincidenceCheckedQuickly ();
 };
 
 
@@ -2090,13 +1513,13 @@ class IntTools_FClass2d {
 ") Init;
 		void Init (const TopoDS_Face & F,const Standard_Real Tol);
 		%feature("compactdefaultargs") PerformInfinitePoint;
-		%feature("autodoc", "	* Returns state of infinite 2d point relatively to (0, 0)
+		%feature("autodoc", "	* Returns state of infinite 2d point relatively to --0, 0--
 
 	:rtype: TopAbs_State
 ") PerformInfinitePoint;
 		TopAbs_State PerformInfinitePoint ();
 		%feature("compactdefaultargs") Perform;
-		%feature("autodoc", "	* Returns state of the 2d point Puv. If RecadreOnPeriodic is true (defalut value), for the periodic surface 2d point, adjusted to period, is classified.
+		%feature("autodoc", "	* Returns state of the 2d point Puv. If RecadreOnPeriodic is true --defalut value--, for the periodic surface 2d point, adjusted to period, is classified.
 
 	:param Puv:
 	:type Puv: gp_Pnt2d
@@ -2112,7 +1535,7 @@ class IntTools_FClass2d {
 ") Destroy;
 		void Destroy ();
 		%feature("compactdefaultargs") TestOnRestriction;
-		%feature("autodoc", "	* Test a point with +- an offset (Tol) and returns On if some points are OUT an some are IN (Caution: Internal use . see the code for more details)
+		%feature("autodoc", "	* Test a point with +- an offset --Tol-- and returns On if some points are OUT an some are IN --Caution: Internal use . see the code for more details--
 
 	:param Puv:
 	:type Puv: gp_Pnt2d
@@ -2186,18 +1609,6 @@ class IntTools_FaceFace {
 	:rtype: IntTools_SequenceOfPntOn2Faces
 ") Points;
 		const IntTools_SequenceOfPntOn2Faces & Points ();
-		%feature("compactdefaultargs") TolReached3d;
-		%feature("autodoc", "	* Returns tolerance reached during approximation. If approximation was not done, returns zero.
-
-	:rtype: float
-") TolReached3d;
-		Standard_Real TolReached3d ();
-		%feature("compactdefaultargs") TolReached2d;
-		%feature("autodoc", "	* Returns tolerance reached during approximation. If approximation was not done, returns zero.
-
-	:rtype: float
-") TolReached2d;
-		Standard_Real TolReached2d ();
 		%feature("compactdefaultargs") Face1;
 		%feature("autodoc", "	* Returns first of processed faces
 
@@ -2238,6 +1649,20 @@ class IntTools_FaceFace {
 	:rtype: None
 ") SetContext;
 		void SetContext (const Handle_IntTools_Context & aContext);
+		%feature("compactdefaultargs") SetFuzzyValue;
+		%feature("autodoc", "	* Sets the Fuzzy value
+
+	:param theFuzz:
+	:type theFuzz: float
+	:rtype: None
+") SetFuzzyValue;
+		void SetFuzzyValue (const Standard_Real theFuzz);
+		%feature("compactdefaultargs") FuzzyValue;
+		%feature("autodoc", "	* Returns Fuzzy value
+
+	:rtype: float
+") FuzzyValue;
+		Standard_Real FuzzyValue ();
 		%feature("compactdefaultargs") Context;
 		%feature("autodoc", "	* Gets the intersecton context
 
@@ -2248,1134 +1673,6 @@ class IntTools_FaceFace {
 
 
 %extend IntTools_FaceFace {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor IntTools_IndexedDataMapNodeOfIndexedDataMapOfTransientAddress;
-class IntTools_IndexedDataMapNodeOfIndexedDataMapOfTransientAddress : public TCollection_MapNode {
-	public:
-		%feature("compactdefaultargs") IntTools_IndexedDataMapNodeOfIndexedDataMapOfTransientAddress;
-		%feature("autodoc", "	:param K1:
-	:type K1: Handle_Standard_Transient &
-	:param K2:
-	:type K2: int
-	:param I:
-	:type I: Standard_Address &
-	:param n1:
-	:type n1: TCollection_MapNodePtr &
-	:param n2:
-	:type n2: TCollection_MapNodePtr &
-	:rtype: None
-") IntTools_IndexedDataMapNodeOfIndexedDataMapOfTransientAddress;
-		 IntTools_IndexedDataMapNodeOfIndexedDataMapOfTransientAddress (const Handle_Standard_Transient & K1,const Standard_Integer K2,const Standard_Address & I,const TCollection_MapNodePtr & n1,const TCollection_MapNodePtr & n2);
-		%feature("compactdefaultargs") Key1;
-		%feature("autodoc", "	:rtype: Handle_Standard_Transient
-") Key1;
-		Handle_Standard_Transient Key1 ();
-
-            %feature("autodoc","1");
-            %extend {
-                Standard_Integer GetKey2() {
-                return (Standard_Integer) $self->Key2();
-                }
-            };
-            %feature("autodoc","1");
-            %extend {
-                void SetKey2(Standard_Integer value ) {
-                $self->Key2()=value;
-                }
-            };
-            		%feature("compactdefaultargs") Next2;
-		%feature("autodoc", "	:rtype: TCollection_MapNodePtr
-") Next2;
-		TCollection_MapNodePtr & Next2 ();
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:rtype: Standard_Address
-") Value;
-		Standard_Address & Value ();
-};
-
-
-%extend IntTools_IndexedDataMapNodeOfIndexedDataMapOfTransientAddress {
-	%pythoncode {
-		def GetHandle(self):
-		    try:
-		        return self.thisHandle
-		    except:
-		        self.thisHandle = Handle_IntTools_IndexedDataMapNodeOfIndexedDataMapOfTransientAddress(self)
-		        self.thisown = False
-		        return self.thisHandle
-	}
-};
-
-%pythonappend Handle_IntTools_IndexedDataMapNodeOfIndexedDataMapOfTransientAddress::Handle_IntTools_IndexedDataMapNodeOfIndexedDataMapOfTransientAddress %{
-    # register the handle in the base object
-    if len(args) > 0:
-        register_handle(self, args[0])
-%}
-
-%nodefaultctor Handle_IntTools_IndexedDataMapNodeOfIndexedDataMapOfTransientAddress;
-class Handle_IntTools_IndexedDataMapNodeOfIndexedDataMapOfTransientAddress : public Handle_TCollection_MapNode {
-
-    public:
-        // constructors
-        Handle_IntTools_IndexedDataMapNodeOfIndexedDataMapOfTransientAddress();
-        Handle_IntTools_IndexedDataMapNodeOfIndexedDataMapOfTransientAddress(const Handle_IntTools_IndexedDataMapNodeOfIndexedDataMapOfTransientAddress &aHandle);
-        Handle_IntTools_IndexedDataMapNodeOfIndexedDataMapOfTransientAddress(const IntTools_IndexedDataMapNodeOfIndexedDataMapOfTransientAddress *anItem);
-        void Nullify();
-        Standard_Boolean IsNull() const;
-        static const Handle_IntTools_IndexedDataMapNodeOfIndexedDataMapOfTransientAddress DownCast(const Handle_Standard_Transient &AnObject);
-
-};
-%extend Handle_IntTools_IndexedDataMapNodeOfIndexedDataMapOfTransientAddress {
-    IntTools_IndexedDataMapNodeOfIndexedDataMapOfTransientAddress* _get_reference() {
-    return (IntTools_IndexedDataMapNodeOfIndexedDataMapOfTransientAddress*)$self->Access();
-    }
-};
-
-%extend Handle_IntTools_IndexedDataMapNodeOfIndexedDataMapOfTransientAddress {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
-};
-
-%extend IntTools_IndexedDataMapNodeOfIndexedDataMapOfTransientAddress {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor IntTools_IndexedDataMapOfTransientAddress;
-class IntTools_IndexedDataMapOfTransientAddress : public TCollection_BasicMap {
-	public:
-		%feature("compactdefaultargs") IntTools_IndexedDataMapOfTransientAddress;
-		%feature("autodoc", "	:param NbBuckets: default value is 1
-	:type NbBuckets: int
-	:rtype: None
-") IntTools_IndexedDataMapOfTransientAddress;
-		 IntTools_IndexedDataMapOfTransientAddress (const Standard_Integer NbBuckets = 1);
-		%feature("compactdefaultargs") Assign;
-		%feature("autodoc", "	:param Other:
-	:type Other: IntTools_IndexedDataMapOfTransientAddress &
-	:rtype: IntTools_IndexedDataMapOfTransientAddress
-") Assign;
-		IntTools_IndexedDataMapOfTransientAddress & Assign (const IntTools_IndexedDataMapOfTransientAddress & Other);
-		%feature("compactdefaultargs") operator =;
-		%feature("autodoc", "	:param Other:
-	:type Other: IntTools_IndexedDataMapOfTransientAddress &
-	:rtype: IntTools_IndexedDataMapOfTransientAddress
-") operator =;
-		IntTools_IndexedDataMapOfTransientAddress & operator = (const IntTools_IndexedDataMapOfTransientAddress & Other);
-		%feature("compactdefaultargs") ReSize;
-		%feature("autodoc", "	:param NbBuckets:
-	:type NbBuckets: int
-	:rtype: None
-") ReSize;
-		void ReSize (const Standard_Integer NbBuckets);
-		%feature("compactdefaultargs") Clear;
-		%feature("autodoc", "	:rtype: None
-") Clear;
-		void Clear ();
-		%feature("compactdefaultargs") Add;
-		%feature("autodoc", "	:param K:
-	:type K: Handle_Standard_Transient &
-	:param I:
-	:type I: Standard_Address &
-	:rtype: int
-") Add;
-		Standard_Integer Add (const Handle_Standard_Transient & K,const Standard_Address & I);
-		%feature("compactdefaultargs") Substitute;
-		%feature("autodoc", "	:param I:
-	:type I: int
-	:param K:
-	:type K: Handle_Standard_Transient &
-	:param T:
-	:type T: Standard_Address &
-	:rtype: None
-") Substitute;
-		void Substitute (const Standard_Integer I,const Handle_Standard_Transient & K,const Standard_Address & T);
-		%feature("compactdefaultargs") RemoveLast;
-		%feature("autodoc", "	:rtype: None
-") RemoveLast;
-		void RemoveLast ();
-		%feature("compactdefaultargs") Contains;
-		%feature("autodoc", "	:param K:
-	:type K: Handle_Standard_Transient &
-	:rtype: bool
-") Contains;
-		Standard_Boolean Contains (const Handle_Standard_Transient & K);
-		%feature("compactdefaultargs") FindKey;
-		%feature("autodoc", "	:param I:
-	:type I: int
-	:rtype: Handle_Standard_Transient
-") FindKey;
-		Handle_Standard_Transient FindKey (const Standard_Integer I);
-		%feature("compactdefaultargs") FindFromIndex;
-		%feature("autodoc", "	:param I:
-	:type I: int
-	:rtype: Standard_Address
-") FindFromIndex;
-		const Standard_Address & FindFromIndex (const Standard_Integer I);
-		%feature("compactdefaultargs") ChangeFromIndex;
-		%feature("autodoc", "	:param I:
-	:type I: int
-	:rtype: Standard_Address
-") ChangeFromIndex;
-		Standard_Address & ChangeFromIndex (const Standard_Integer I);
-		%feature("compactdefaultargs") FindIndex;
-		%feature("autodoc", "	:param K:
-	:type K: Handle_Standard_Transient &
-	:rtype: int
-") FindIndex;
-		Standard_Integer FindIndex (const Handle_Standard_Transient & K);
-		%feature("compactdefaultargs") FindFromKey;
-		%feature("autodoc", "	:param K:
-	:type K: Handle_Standard_Transient &
-	:rtype: Standard_Address
-") FindFromKey;
-		const Standard_Address & FindFromKey (const Handle_Standard_Transient & K);
-		%feature("compactdefaultargs") ChangeFromKey;
-		%feature("autodoc", "	:param K:
-	:type K: Handle_Standard_Transient &
-	:rtype: Standard_Address
-") ChangeFromKey;
-		Standard_Address & ChangeFromKey (const Handle_Standard_Transient & K);
-		%feature("compactdefaultargs") FindFromKey1;
-		%feature("autodoc", "	:param K:
-	:type K: Handle_Standard_Transient &
-	:rtype: Standard_Address
-") FindFromKey1;
-		Standard_Address FindFromKey1 (const Handle_Standard_Transient & K);
-		%feature("compactdefaultargs") ChangeFromKey1;
-		%feature("autodoc", "	:param K:
-	:type K: Handle_Standard_Transient &
-	:rtype: Standard_Address
-") ChangeFromKey1;
-		Standard_Address ChangeFromKey1 (const Handle_Standard_Transient & K);
-};
-
-
-%extend IntTools_IndexedDataMapOfTransientAddress {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor IntTools_ListIteratorOfListOfBox;
-class IntTools_ListIteratorOfListOfBox {
-	public:
-		%feature("compactdefaultargs") IntTools_ListIteratorOfListOfBox;
-		%feature("autodoc", "	:rtype: None
-") IntTools_ListIteratorOfListOfBox;
-		 IntTools_ListIteratorOfListOfBox ();
-		%feature("compactdefaultargs") IntTools_ListIteratorOfListOfBox;
-		%feature("autodoc", "	:param L:
-	:type L: IntTools_ListOfBox &
-	:rtype: None
-") IntTools_ListIteratorOfListOfBox;
-		 IntTools_ListIteratorOfListOfBox (const IntTools_ListOfBox & L);
-		%feature("compactdefaultargs") Initialize;
-		%feature("autodoc", "	:param L:
-	:type L: IntTools_ListOfBox &
-	:rtype: None
-") Initialize;
-		void Initialize (const IntTools_ListOfBox & L);
-		%feature("compactdefaultargs") More;
-		%feature("autodoc", "	:rtype: bool
-") More;
-		Standard_Boolean More ();
-		%feature("compactdefaultargs") Next;
-		%feature("autodoc", "	:rtype: None
-") Next;
-		void Next ();
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:rtype: Bnd_Box
-") Value;
-		Bnd_Box & Value ();
-};
-
-
-%extend IntTools_ListIteratorOfListOfBox {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor IntTools_ListIteratorOfListOfCurveRangeSample;
-class IntTools_ListIteratorOfListOfCurveRangeSample {
-	public:
-		%feature("compactdefaultargs") IntTools_ListIteratorOfListOfCurveRangeSample;
-		%feature("autodoc", "	:rtype: None
-") IntTools_ListIteratorOfListOfCurveRangeSample;
-		 IntTools_ListIteratorOfListOfCurveRangeSample ();
-		%feature("compactdefaultargs") IntTools_ListIteratorOfListOfCurveRangeSample;
-		%feature("autodoc", "	:param L:
-	:type L: IntTools_ListOfCurveRangeSample &
-	:rtype: None
-") IntTools_ListIteratorOfListOfCurveRangeSample;
-		 IntTools_ListIteratorOfListOfCurveRangeSample (const IntTools_ListOfCurveRangeSample & L);
-		%feature("compactdefaultargs") Initialize;
-		%feature("autodoc", "	:param L:
-	:type L: IntTools_ListOfCurveRangeSample &
-	:rtype: None
-") Initialize;
-		void Initialize (const IntTools_ListOfCurveRangeSample & L);
-		%feature("compactdefaultargs") More;
-		%feature("autodoc", "	:rtype: bool
-") More;
-		Standard_Boolean More ();
-		%feature("compactdefaultargs") Next;
-		%feature("autodoc", "	:rtype: None
-") Next;
-		void Next ();
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:rtype: IntTools_CurveRangeSample
-") Value;
-		IntTools_CurveRangeSample & Value ();
-};
-
-
-%extend IntTools_ListIteratorOfListOfCurveRangeSample {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor IntTools_ListIteratorOfListOfSurfaceRangeSample;
-class IntTools_ListIteratorOfListOfSurfaceRangeSample {
-	public:
-		%feature("compactdefaultargs") IntTools_ListIteratorOfListOfSurfaceRangeSample;
-		%feature("autodoc", "	:rtype: None
-") IntTools_ListIteratorOfListOfSurfaceRangeSample;
-		 IntTools_ListIteratorOfListOfSurfaceRangeSample ();
-		%feature("compactdefaultargs") IntTools_ListIteratorOfListOfSurfaceRangeSample;
-		%feature("autodoc", "	:param L:
-	:type L: IntTools_ListOfSurfaceRangeSample &
-	:rtype: None
-") IntTools_ListIteratorOfListOfSurfaceRangeSample;
-		 IntTools_ListIteratorOfListOfSurfaceRangeSample (const IntTools_ListOfSurfaceRangeSample & L);
-		%feature("compactdefaultargs") Initialize;
-		%feature("autodoc", "	:param L:
-	:type L: IntTools_ListOfSurfaceRangeSample &
-	:rtype: None
-") Initialize;
-		void Initialize (const IntTools_ListOfSurfaceRangeSample & L);
-		%feature("compactdefaultargs") More;
-		%feature("autodoc", "	:rtype: bool
-") More;
-		Standard_Boolean More ();
-		%feature("compactdefaultargs") Next;
-		%feature("autodoc", "	:rtype: None
-") Next;
-		void Next ();
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:rtype: IntTools_SurfaceRangeSample
-") Value;
-		IntTools_SurfaceRangeSample & Value ();
-};
-
-
-%extend IntTools_ListIteratorOfListOfSurfaceRangeSample {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor IntTools_ListNodeOfListOfBox;
-class IntTools_ListNodeOfListOfBox : public TCollection_MapNode {
-	public:
-		%feature("compactdefaultargs") IntTools_ListNodeOfListOfBox;
-		%feature("autodoc", "	:param I:
-	:type I: Bnd_Box &
-	:param n:
-	:type n: TCollection_MapNodePtr &
-	:rtype: None
-") IntTools_ListNodeOfListOfBox;
-		 IntTools_ListNodeOfListOfBox (const Bnd_Box & I,const TCollection_MapNodePtr & n);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:rtype: Bnd_Box
-") Value;
-		Bnd_Box & Value ();
-};
-
-
-%extend IntTools_ListNodeOfListOfBox {
-	%pythoncode {
-		def GetHandle(self):
-		    try:
-		        return self.thisHandle
-		    except:
-		        self.thisHandle = Handle_IntTools_ListNodeOfListOfBox(self)
-		        self.thisown = False
-		        return self.thisHandle
-	}
-};
-
-%pythonappend Handle_IntTools_ListNodeOfListOfBox::Handle_IntTools_ListNodeOfListOfBox %{
-    # register the handle in the base object
-    if len(args) > 0:
-        register_handle(self, args[0])
-%}
-
-%nodefaultctor Handle_IntTools_ListNodeOfListOfBox;
-class Handle_IntTools_ListNodeOfListOfBox : public Handle_TCollection_MapNode {
-
-    public:
-        // constructors
-        Handle_IntTools_ListNodeOfListOfBox();
-        Handle_IntTools_ListNodeOfListOfBox(const Handle_IntTools_ListNodeOfListOfBox &aHandle);
-        Handle_IntTools_ListNodeOfListOfBox(const IntTools_ListNodeOfListOfBox *anItem);
-        void Nullify();
-        Standard_Boolean IsNull() const;
-        static const Handle_IntTools_ListNodeOfListOfBox DownCast(const Handle_Standard_Transient &AnObject);
-
-};
-%extend Handle_IntTools_ListNodeOfListOfBox {
-    IntTools_ListNodeOfListOfBox* _get_reference() {
-    return (IntTools_ListNodeOfListOfBox*)$self->Access();
-    }
-};
-
-%extend Handle_IntTools_ListNodeOfListOfBox {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
-};
-
-%extend IntTools_ListNodeOfListOfBox {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor IntTools_ListNodeOfListOfCurveRangeSample;
-class IntTools_ListNodeOfListOfCurveRangeSample : public TCollection_MapNode {
-	public:
-		%feature("compactdefaultargs") IntTools_ListNodeOfListOfCurveRangeSample;
-		%feature("autodoc", "	:param I:
-	:type I: IntTools_CurveRangeSample &
-	:param n:
-	:type n: TCollection_MapNodePtr &
-	:rtype: None
-") IntTools_ListNodeOfListOfCurveRangeSample;
-		 IntTools_ListNodeOfListOfCurveRangeSample (const IntTools_CurveRangeSample & I,const TCollection_MapNodePtr & n);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:rtype: IntTools_CurveRangeSample
-") Value;
-		IntTools_CurveRangeSample & Value ();
-};
-
-
-%extend IntTools_ListNodeOfListOfCurveRangeSample {
-	%pythoncode {
-		def GetHandle(self):
-		    try:
-		        return self.thisHandle
-		    except:
-		        self.thisHandle = Handle_IntTools_ListNodeOfListOfCurveRangeSample(self)
-		        self.thisown = False
-		        return self.thisHandle
-	}
-};
-
-%pythonappend Handle_IntTools_ListNodeOfListOfCurveRangeSample::Handle_IntTools_ListNodeOfListOfCurveRangeSample %{
-    # register the handle in the base object
-    if len(args) > 0:
-        register_handle(self, args[0])
-%}
-
-%nodefaultctor Handle_IntTools_ListNodeOfListOfCurveRangeSample;
-class Handle_IntTools_ListNodeOfListOfCurveRangeSample : public Handle_TCollection_MapNode {
-
-    public:
-        // constructors
-        Handle_IntTools_ListNodeOfListOfCurveRangeSample();
-        Handle_IntTools_ListNodeOfListOfCurveRangeSample(const Handle_IntTools_ListNodeOfListOfCurveRangeSample &aHandle);
-        Handle_IntTools_ListNodeOfListOfCurveRangeSample(const IntTools_ListNodeOfListOfCurveRangeSample *anItem);
-        void Nullify();
-        Standard_Boolean IsNull() const;
-        static const Handle_IntTools_ListNodeOfListOfCurveRangeSample DownCast(const Handle_Standard_Transient &AnObject);
-
-};
-%extend Handle_IntTools_ListNodeOfListOfCurveRangeSample {
-    IntTools_ListNodeOfListOfCurveRangeSample* _get_reference() {
-    return (IntTools_ListNodeOfListOfCurveRangeSample*)$self->Access();
-    }
-};
-
-%extend Handle_IntTools_ListNodeOfListOfCurveRangeSample {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
-};
-
-%extend IntTools_ListNodeOfListOfCurveRangeSample {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor IntTools_ListNodeOfListOfSurfaceRangeSample;
-class IntTools_ListNodeOfListOfSurfaceRangeSample : public TCollection_MapNode {
-	public:
-		%feature("compactdefaultargs") IntTools_ListNodeOfListOfSurfaceRangeSample;
-		%feature("autodoc", "	:param I:
-	:type I: IntTools_SurfaceRangeSample &
-	:param n:
-	:type n: TCollection_MapNodePtr &
-	:rtype: None
-") IntTools_ListNodeOfListOfSurfaceRangeSample;
-		 IntTools_ListNodeOfListOfSurfaceRangeSample (const IntTools_SurfaceRangeSample & I,const TCollection_MapNodePtr & n);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:rtype: IntTools_SurfaceRangeSample
-") Value;
-		IntTools_SurfaceRangeSample & Value ();
-};
-
-
-%extend IntTools_ListNodeOfListOfSurfaceRangeSample {
-	%pythoncode {
-		def GetHandle(self):
-		    try:
-		        return self.thisHandle
-		    except:
-		        self.thisHandle = Handle_IntTools_ListNodeOfListOfSurfaceRangeSample(self)
-		        self.thisown = False
-		        return self.thisHandle
-	}
-};
-
-%pythonappend Handle_IntTools_ListNodeOfListOfSurfaceRangeSample::Handle_IntTools_ListNodeOfListOfSurfaceRangeSample %{
-    # register the handle in the base object
-    if len(args) > 0:
-        register_handle(self, args[0])
-%}
-
-%nodefaultctor Handle_IntTools_ListNodeOfListOfSurfaceRangeSample;
-class Handle_IntTools_ListNodeOfListOfSurfaceRangeSample : public Handle_TCollection_MapNode {
-
-    public:
-        // constructors
-        Handle_IntTools_ListNodeOfListOfSurfaceRangeSample();
-        Handle_IntTools_ListNodeOfListOfSurfaceRangeSample(const Handle_IntTools_ListNodeOfListOfSurfaceRangeSample &aHandle);
-        Handle_IntTools_ListNodeOfListOfSurfaceRangeSample(const IntTools_ListNodeOfListOfSurfaceRangeSample *anItem);
-        void Nullify();
-        Standard_Boolean IsNull() const;
-        static const Handle_IntTools_ListNodeOfListOfSurfaceRangeSample DownCast(const Handle_Standard_Transient &AnObject);
-
-};
-%extend Handle_IntTools_ListNodeOfListOfSurfaceRangeSample {
-    IntTools_ListNodeOfListOfSurfaceRangeSample* _get_reference() {
-    return (IntTools_ListNodeOfListOfSurfaceRangeSample*)$self->Access();
-    }
-};
-
-%extend Handle_IntTools_ListNodeOfListOfSurfaceRangeSample {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
-};
-
-%extend IntTools_ListNodeOfListOfSurfaceRangeSample {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor IntTools_ListOfBox;
-class IntTools_ListOfBox {
-	public:
-		%feature("compactdefaultargs") IntTools_ListOfBox;
-		%feature("autodoc", "	:rtype: None
-") IntTools_ListOfBox;
-		 IntTools_ListOfBox ();
-		%feature("compactdefaultargs") IntTools_ListOfBox;
-		%feature("autodoc", "	:param Other:
-	:type Other: IntTools_ListOfBox &
-	:rtype: None
-") IntTools_ListOfBox;
-		 IntTools_ListOfBox (const IntTools_ListOfBox & Other);
-		%feature("compactdefaultargs") Assign;
-		%feature("autodoc", "	:param Other:
-	:type Other: IntTools_ListOfBox &
-	:rtype: None
-") Assign;
-		void Assign (const IntTools_ListOfBox & Other);
-		%feature("compactdefaultargs") operator =;
-		%feature("autodoc", "	:param Other:
-	:type Other: IntTools_ListOfBox &
-	:rtype: None
-") operator =;
-		void operator = (const IntTools_ListOfBox & Other);
-		%feature("compactdefaultargs") Extent;
-		%feature("autodoc", "	:rtype: int
-") Extent;
-		Standard_Integer Extent ();
-		%feature("compactdefaultargs") Clear;
-		%feature("autodoc", "	:rtype: None
-") Clear;
-		void Clear ();
-		%feature("compactdefaultargs") IsEmpty;
-		%feature("autodoc", "	:rtype: bool
-") IsEmpty;
-		Standard_Boolean IsEmpty ();
-		%feature("compactdefaultargs") Prepend;
-		%feature("autodoc", "	:param I:
-	:type I: Bnd_Box &
-	:rtype: None
-") Prepend;
-		void Prepend (const Bnd_Box & I);
-		%feature("compactdefaultargs") Prepend;
-		%feature("autodoc", "	:param I:
-	:type I: Bnd_Box &
-	:param theIt:
-	:type theIt: IntTools_ListIteratorOfListOfBox &
-	:rtype: None
-") Prepend;
-		void Prepend (const Bnd_Box & I,IntTools_ListIteratorOfListOfBox & theIt);
-		%feature("compactdefaultargs") Prepend;
-		%feature("autodoc", "	:param Other:
-	:type Other: IntTools_ListOfBox &
-	:rtype: None
-") Prepend;
-		void Prepend (IntTools_ListOfBox & Other);
-		%feature("compactdefaultargs") Append;
-		%feature("autodoc", "	:param I:
-	:type I: Bnd_Box &
-	:rtype: None
-") Append;
-		void Append (const Bnd_Box & I);
-		%feature("compactdefaultargs") Append;
-		%feature("autodoc", "	:param I:
-	:type I: Bnd_Box &
-	:param theIt:
-	:type theIt: IntTools_ListIteratorOfListOfBox &
-	:rtype: None
-") Append;
-		void Append (const Bnd_Box & I,IntTools_ListIteratorOfListOfBox & theIt);
-		%feature("compactdefaultargs") Append;
-		%feature("autodoc", "	:param Other:
-	:type Other: IntTools_ListOfBox &
-	:rtype: None
-") Append;
-		void Append (IntTools_ListOfBox & Other);
-		%feature("compactdefaultargs") First;
-		%feature("autodoc", "	:rtype: Bnd_Box
-") First;
-		Bnd_Box & First ();
-		%feature("compactdefaultargs") Last;
-		%feature("autodoc", "	:rtype: Bnd_Box
-") Last;
-		Bnd_Box & Last ();
-		%feature("compactdefaultargs") RemoveFirst;
-		%feature("autodoc", "	:rtype: None
-") RemoveFirst;
-		void RemoveFirst ();
-		%feature("compactdefaultargs") Remove;
-		%feature("autodoc", "	:param It:
-	:type It: IntTools_ListIteratorOfListOfBox &
-	:rtype: None
-") Remove;
-		void Remove (IntTools_ListIteratorOfListOfBox & It);
-		%feature("compactdefaultargs") InsertBefore;
-		%feature("autodoc", "	:param I:
-	:type I: Bnd_Box &
-	:param It:
-	:type It: IntTools_ListIteratorOfListOfBox &
-	:rtype: None
-") InsertBefore;
-		void InsertBefore (const Bnd_Box & I,IntTools_ListIteratorOfListOfBox & It);
-		%feature("compactdefaultargs") InsertBefore;
-		%feature("autodoc", "	:param Other:
-	:type Other: IntTools_ListOfBox &
-	:param It:
-	:type It: IntTools_ListIteratorOfListOfBox &
-	:rtype: None
-") InsertBefore;
-		void InsertBefore (IntTools_ListOfBox & Other,IntTools_ListIteratorOfListOfBox & It);
-		%feature("compactdefaultargs") InsertAfter;
-		%feature("autodoc", "	:param I:
-	:type I: Bnd_Box &
-	:param It:
-	:type It: IntTools_ListIteratorOfListOfBox &
-	:rtype: None
-") InsertAfter;
-		void InsertAfter (const Bnd_Box & I,IntTools_ListIteratorOfListOfBox & It);
-		%feature("compactdefaultargs") InsertAfter;
-		%feature("autodoc", "	:param Other:
-	:type Other: IntTools_ListOfBox &
-	:param It:
-	:type It: IntTools_ListIteratorOfListOfBox &
-	:rtype: None
-") InsertAfter;
-		void InsertAfter (IntTools_ListOfBox & Other,IntTools_ListIteratorOfListOfBox & It);
-};
-
-
-%extend IntTools_ListOfBox {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor IntTools_ListOfCurveRangeSample;
-class IntTools_ListOfCurveRangeSample {
-	public:
-		%feature("compactdefaultargs") IntTools_ListOfCurveRangeSample;
-		%feature("autodoc", "	:rtype: None
-") IntTools_ListOfCurveRangeSample;
-		 IntTools_ListOfCurveRangeSample ();
-		%feature("compactdefaultargs") IntTools_ListOfCurveRangeSample;
-		%feature("autodoc", "	:param Other:
-	:type Other: IntTools_ListOfCurveRangeSample &
-	:rtype: None
-") IntTools_ListOfCurveRangeSample;
-		 IntTools_ListOfCurveRangeSample (const IntTools_ListOfCurveRangeSample & Other);
-		%feature("compactdefaultargs") Assign;
-		%feature("autodoc", "	:param Other:
-	:type Other: IntTools_ListOfCurveRangeSample &
-	:rtype: None
-") Assign;
-		void Assign (const IntTools_ListOfCurveRangeSample & Other);
-		%feature("compactdefaultargs") operator =;
-		%feature("autodoc", "	:param Other:
-	:type Other: IntTools_ListOfCurveRangeSample &
-	:rtype: None
-") operator =;
-		void operator = (const IntTools_ListOfCurveRangeSample & Other);
-		%feature("compactdefaultargs") Extent;
-		%feature("autodoc", "	:rtype: int
-") Extent;
-		Standard_Integer Extent ();
-		%feature("compactdefaultargs") Clear;
-		%feature("autodoc", "	:rtype: None
-") Clear;
-		void Clear ();
-		%feature("compactdefaultargs") IsEmpty;
-		%feature("autodoc", "	:rtype: bool
-") IsEmpty;
-		Standard_Boolean IsEmpty ();
-		%feature("compactdefaultargs") Prepend;
-		%feature("autodoc", "	:param I:
-	:type I: IntTools_CurveRangeSample &
-	:rtype: None
-") Prepend;
-		void Prepend (const IntTools_CurveRangeSample & I);
-		%feature("compactdefaultargs") Prepend;
-		%feature("autodoc", "	:param I:
-	:type I: IntTools_CurveRangeSample &
-	:param theIt:
-	:type theIt: IntTools_ListIteratorOfListOfCurveRangeSample &
-	:rtype: None
-") Prepend;
-		void Prepend (const IntTools_CurveRangeSample & I,IntTools_ListIteratorOfListOfCurveRangeSample & theIt);
-		%feature("compactdefaultargs") Prepend;
-		%feature("autodoc", "	:param Other:
-	:type Other: IntTools_ListOfCurveRangeSample &
-	:rtype: None
-") Prepend;
-		void Prepend (IntTools_ListOfCurveRangeSample & Other);
-		%feature("compactdefaultargs") Append;
-		%feature("autodoc", "	:param I:
-	:type I: IntTools_CurveRangeSample &
-	:rtype: None
-") Append;
-		void Append (const IntTools_CurveRangeSample & I);
-		%feature("compactdefaultargs") Append;
-		%feature("autodoc", "	:param I:
-	:type I: IntTools_CurveRangeSample &
-	:param theIt:
-	:type theIt: IntTools_ListIteratorOfListOfCurveRangeSample &
-	:rtype: None
-") Append;
-		void Append (const IntTools_CurveRangeSample & I,IntTools_ListIteratorOfListOfCurveRangeSample & theIt);
-		%feature("compactdefaultargs") Append;
-		%feature("autodoc", "	:param Other:
-	:type Other: IntTools_ListOfCurveRangeSample &
-	:rtype: None
-") Append;
-		void Append (IntTools_ListOfCurveRangeSample & Other);
-		%feature("compactdefaultargs") First;
-		%feature("autodoc", "	:rtype: IntTools_CurveRangeSample
-") First;
-		IntTools_CurveRangeSample & First ();
-		%feature("compactdefaultargs") Last;
-		%feature("autodoc", "	:rtype: IntTools_CurveRangeSample
-") Last;
-		IntTools_CurveRangeSample & Last ();
-		%feature("compactdefaultargs") RemoveFirst;
-		%feature("autodoc", "	:rtype: None
-") RemoveFirst;
-		void RemoveFirst ();
-		%feature("compactdefaultargs") Remove;
-		%feature("autodoc", "	:param It:
-	:type It: IntTools_ListIteratorOfListOfCurveRangeSample &
-	:rtype: None
-") Remove;
-		void Remove (IntTools_ListIteratorOfListOfCurveRangeSample & It);
-		%feature("compactdefaultargs") InsertBefore;
-		%feature("autodoc", "	:param I:
-	:type I: IntTools_CurveRangeSample &
-	:param It:
-	:type It: IntTools_ListIteratorOfListOfCurveRangeSample &
-	:rtype: None
-") InsertBefore;
-		void InsertBefore (const IntTools_CurveRangeSample & I,IntTools_ListIteratorOfListOfCurveRangeSample & It);
-		%feature("compactdefaultargs") InsertBefore;
-		%feature("autodoc", "	:param Other:
-	:type Other: IntTools_ListOfCurveRangeSample &
-	:param It:
-	:type It: IntTools_ListIteratorOfListOfCurveRangeSample &
-	:rtype: None
-") InsertBefore;
-		void InsertBefore (IntTools_ListOfCurveRangeSample & Other,IntTools_ListIteratorOfListOfCurveRangeSample & It);
-		%feature("compactdefaultargs") InsertAfter;
-		%feature("autodoc", "	:param I:
-	:type I: IntTools_CurveRangeSample &
-	:param It:
-	:type It: IntTools_ListIteratorOfListOfCurveRangeSample &
-	:rtype: None
-") InsertAfter;
-		void InsertAfter (const IntTools_CurveRangeSample & I,IntTools_ListIteratorOfListOfCurveRangeSample & It);
-		%feature("compactdefaultargs") InsertAfter;
-		%feature("autodoc", "	:param Other:
-	:type Other: IntTools_ListOfCurveRangeSample &
-	:param It:
-	:type It: IntTools_ListIteratorOfListOfCurveRangeSample &
-	:rtype: None
-") InsertAfter;
-		void InsertAfter (IntTools_ListOfCurveRangeSample & Other,IntTools_ListIteratorOfListOfCurveRangeSample & It);
-};
-
-
-%extend IntTools_ListOfCurveRangeSample {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor IntTools_ListOfSurfaceRangeSample;
-class IntTools_ListOfSurfaceRangeSample {
-	public:
-		%feature("compactdefaultargs") IntTools_ListOfSurfaceRangeSample;
-		%feature("autodoc", "	:rtype: None
-") IntTools_ListOfSurfaceRangeSample;
-		 IntTools_ListOfSurfaceRangeSample ();
-		%feature("compactdefaultargs") IntTools_ListOfSurfaceRangeSample;
-		%feature("autodoc", "	:param Other:
-	:type Other: IntTools_ListOfSurfaceRangeSample &
-	:rtype: None
-") IntTools_ListOfSurfaceRangeSample;
-		 IntTools_ListOfSurfaceRangeSample (const IntTools_ListOfSurfaceRangeSample & Other);
-		%feature("compactdefaultargs") Assign;
-		%feature("autodoc", "	:param Other:
-	:type Other: IntTools_ListOfSurfaceRangeSample &
-	:rtype: None
-") Assign;
-		void Assign (const IntTools_ListOfSurfaceRangeSample & Other);
-		%feature("compactdefaultargs") operator =;
-		%feature("autodoc", "	:param Other:
-	:type Other: IntTools_ListOfSurfaceRangeSample &
-	:rtype: None
-") operator =;
-		void operator = (const IntTools_ListOfSurfaceRangeSample & Other);
-		%feature("compactdefaultargs") Extent;
-		%feature("autodoc", "	:rtype: int
-") Extent;
-		Standard_Integer Extent ();
-		%feature("compactdefaultargs") Clear;
-		%feature("autodoc", "	:rtype: None
-") Clear;
-		void Clear ();
-		%feature("compactdefaultargs") IsEmpty;
-		%feature("autodoc", "	:rtype: bool
-") IsEmpty;
-		Standard_Boolean IsEmpty ();
-		%feature("compactdefaultargs") Prepend;
-		%feature("autodoc", "	:param I:
-	:type I: IntTools_SurfaceRangeSample &
-	:rtype: None
-") Prepend;
-		void Prepend (const IntTools_SurfaceRangeSample & I);
-		%feature("compactdefaultargs") Prepend;
-		%feature("autodoc", "	:param I:
-	:type I: IntTools_SurfaceRangeSample &
-	:param theIt:
-	:type theIt: IntTools_ListIteratorOfListOfSurfaceRangeSample &
-	:rtype: None
-") Prepend;
-		void Prepend (const IntTools_SurfaceRangeSample & I,IntTools_ListIteratorOfListOfSurfaceRangeSample & theIt);
-		%feature("compactdefaultargs") Prepend;
-		%feature("autodoc", "	:param Other:
-	:type Other: IntTools_ListOfSurfaceRangeSample &
-	:rtype: None
-") Prepend;
-		void Prepend (IntTools_ListOfSurfaceRangeSample & Other);
-		%feature("compactdefaultargs") Append;
-		%feature("autodoc", "	:param I:
-	:type I: IntTools_SurfaceRangeSample &
-	:rtype: None
-") Append;
-		void Append (const IntTools_SurfaceRangeSample & I);
-		%feature("compactdefaultargs") Append;
-		%feature("autodoc", "	:param I:
-	:type I: IntTools_SurfaceRangeSample &
-	:param theIt:
-	:type theIt: IntTools_ListIteratorOfListOfSurfaceRangeSample &
-	:rtype: None
-") Append;
-		void Append (const IntTools_SurfaceRangeSample & I,IntTools_ListIteratorOfListOfSurfaceRangeSample & theIt);
-		%feature("compactdefaultargs") Append;
-		%feature("autodoc", "	:param Other:
-	:type Other: IntTools_ListOfSurfaceRangeSample &
-	:rtype: None
-") Append;
-		void Append (IntTools_ListOfSurfaceRangeSample & Other);
-		%feature("compactdefaultargs") First;
-		%feature("autodoc", "	:rtype: IntTools_SurfaceRangeSample
-") First;
-		IntTools_SurfaceRangeSample & First ();
-		%feature("compactdefaultargs") Last;
-		%feature("autodoc", "	:rtype: IntTools_SurfaceRangeSample
-") Last;
-		IntTools_SurfaceRangeSample & Last ();
-		%feature("compactdefaultargs") RemoveFirst;
-		%feature("autodoc", "	:rtype: None
-") RemoveFirst;
-		void RemoveFirst ();
-		%feature("compactdefaultargs") Remove;
-		%feature("autodoc", "	:param It:
-	:type It: IntTools_ListIteratorOfListOfSurfaceRangeSample &
-	:rtype: None
-") Remove;
-		void Remove (IntTools_ListIteratorOfListOfSurfaceRangeSample & It);
-		%feature("compactdefaultargs") InsertBefore;
-		%feature("autodoc", "	:param I:
-	:type I: IntTools_SurfaceRangeSample &
-	:param It:
-	:type It: IntTools_ListIteratorOfListOfSurfaceRangeSample &
-	:rtype: None
-") InsertBefore;
-		void InsertBefore (const IntTools_SurfaceRangeSample & I,IntTools_ListIteratorOfListOfSurfaceRangeSample & It);
-		%feature("compactdefaultargs") InsertBefore;
-		%feature("autodoc", "	:param Other:
-	:type Other: IntTools_ListOfSurfaceRangeSample &
-	:param It:
-	:type It: IntTools_ListIteratorOfListOfSurfaceRangeSample &
-	:rtype: None
-") InsertBefore;
-		void InsertBefore (IntTools_ListOfSurfaceRangeSample & Other,IntTools_ListIteratorOfListOfSurfaceRangeSample & It);
-		%feature("compactdefaultargs") InsertAfter;
-		%feature("autodoc", "	:param I:
-	:type I: IntTools_SurfaceRangeSample &
-	:param It:
-	:type It: IntTools_ListIteratorOfListOfSurfaceRangeSample &
-	:rtype: None
-") InsertAfter;
-		void InsertAfter (const IntTools_SurfaceRangeSample & I,IntTools_ListIteratorOfListOfSurfaceRangeSample & It);
-		%feature("compactdefaultargs") InsertAfter;
-		%feature("autodoc", "	:param Other:
-	:type Other: IntTools_ListOfSurfaceRangeSample &
-	:param It:
-	:type It: IntTools_ListIteratorOfListOfSurfaceRangeSample &
-	:rtype: None
-") InsertAfter;
-		void InsertAfter (IntTools_ListOfSurfaceRangeSample & Other,IntTools_ListIteratorOfListOfSurfaceRangeSample & It);
-};
-
-
-%extend IntTools_ListOfSurfaceRangeSample {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor IntTools_MapIteratorOfMapOfCurveSample;
-class IntTools_MapIteratorOfMapOfCurveSample : public TCollection_BasicMapIterator {
-	public:
-		%feature("compactdefaultargs") IntTools_MapIteratorOfMapOfCurveSample;
-		%feature("autodoc", "	:rtype: None
-") IntTools_MapIteratorOfMapOfCurveSample;
-		 IntTools_MapIteratorOfMapOfCurveSample ();
-		%feature("compactdefaultargs") IntTools_MapIteratorOfMapOfCurveSample;
-		%feature("autodoc", "	:param aMap:
-	:type aMap: IntTools_MapOfCurveSample &
-	:rtype: None
-") IntTools_MapIteratorOfMapOfCurveSample;
-		 IntTools_MapIteratorOfMapOfCurveSample (const IntTools_MapOfCurveSample & aMap);
-		%feature("compactdefaultargs") Initialize;
-		%feature("autodoc", "	:param aMap:
-	:type aMap: IntTools_MapOfCurveSample &
-	:rtype: None
-") Initialize;
-		void Initialize (const IntTools_MapOfCurveSample & aMap);
-		%feature("compactdefaultargs") Key;
-		%feature("autodoc", "	:rtype: IntTools_CurveRangeSample
-") Key;
-		const IntTools_CurveRangeSample & Key ();
-};
-
-
-%extend IntTools_MapIteratorOfMapOfCurveSample {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor IntTools_MapIteratorOfMapOfSurfaceSample;
-class IntTools_MapIteratorOfMapOfSurfaceSample : public TCollection_BasicMapIterator {
-	public:
-		%feature("compactdefaultargs") IntTools_MapIteratorOfMapOfSurfaceSample;
-		%feature("autodoc", "	:rtype: None
-") IntTools_MapIteratorOfMapOfSurfaceSample;
-		 IntTools_MapIteratorOfMapOfSurfaceSample ();
-		%feature("compactdefaultargs") IntTools_MapIteratorOfMapOfSurfaceSample;
-		%feature("autodoc", "	:param aMap:
-	:type aMap: IntTools_MapOfSurfaceSample &
-	:rtype: None
-") IntTools_MapIteratorOfMapOfSurfaceSample;
-		 IntTools_MapIteratorOfMapOfSurfaceSample (const IntTools_MapOfSurfaceSample & aMap);
-		%feature("compactdefaultargs") Initialize;
-		%feature("autodoc", "	:param aMap:
-	:type aMap: IntTools_MapOfSurfaceSample &
-	:rtype: None
-") Initialize;
-		void Initialize (const IntTools_MapOfSurfaceSample & aMap);
-		%feature("compactdefaultargs") Key;
-		%feature("autodoc", "	:rtype: IntTools_SurfaceRangeSample
-") Key;
-		const IntTools_SurfaceRangeSample & Key ();
-};
-
-
-%extend IntTools_MapIteratorOfMapOfSurfaceSample {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor IntTools_MapOfCurveSample;
-class IntTools_MapOfCurveSample : public TCollection_BasicMap {
-	public:
-		%feature("compactdefaultargs") IntTools_MapOfCurveSample;
-		%feature("autodoc", "	:param NbBuckets: default value is 1
-	:type NbBuckets: int
-	:rtype: None
-") IntTools_MapOfCurveSample;
-		 IntTools_MapOfCurveSample (const Standard_Integer NbBuckets = 1);
-		%feature("compactdefaultargs") IntTools_MapOfCurveSample;
-		%feature("autodoc", "	:param Other:
-	:type Other: IntTools_MapOfCurveSample &
-	:rtype: None
-") IntTools_MapOfCurveSample;
-		 IntTools_MapOfCurveSample (const IntTools_MapOfCurveSample & Other);
-		%feature("compactdefaultargs") Assign;
-		%feature("autodoc", "	:param Other:
-	:type Other: IntTools_MapOfCurveSample &
-	:rtype: IntTools_MapOfCurveSample
-") Assign;
-		IntTools_MapOfCurveSample & Assign (const IntTools_MapOfCurveSample & Other);
-		%feature("compactdefaultargs") operator =;
-		%feature("autodoc", "	:param Other:
-	:type Other: IntTools_MapOfCurveSample &
-	:rtype: IntTools_MapOfCurveSample
-") operator =;
-		IntTools_MapOfCurveSample & operator = (const IntTools_MapOfCurveSample & Other);
-		%feature("compactdefaultargs") ReSize;
-		%feature("autodoc", "	:param NbBuckets:
-	:type NbBuckets: int
-	:rtype: None
-") ReSize;
-		void ReSize (const Standard_Integer NbBuckets);
-		%feature("compactdefaultargs") Clear;
-		%feature("autodoc", "	:rtype: None
-") Clear;
-		void Clear ();
-		%feature("compactdefaultargs") Add;
-		%feature("autodoc", "	:param aKey:
-	:type aKey: IntTools_CurveRangeSample &
-	:rtype: bool
-") Add;
-		Standard_Boolean Add (const IntTools_CurveRangeSample & aKey);
-		%feature("compactdefaultargs") Contains;
-		%feature("autodoc", "	:param aKey:
-	:type aKey: IntTools_CurveRangeSample &
-	:rtype: bool
-") Contains;
-		Standard_Boolean Contains (const IntTools_CurveRangeSample & aKey);
-		%feature("compactdefaultargs") Remove;
-		%feature("autodoc", "	:param aKey:
-	:type aKey: IntTools_CurveRangeSample &
-	:rtype: bool
-") Remove;
-		Standard_Boolean Remove (const IntTools_CurveRangeSample & aKey);
-};
-
-
-%extend IntTools_MapOfCurveSample {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor IntTools_MapOfSurfaceSample;
-class IntTools_MapOfSurfaceSample : public TCollection_BasicMap {
-	public:
-		%feature("compactdefaultargs") IntTools_MapOfSurfaceSample;
-		%feature("autodoc", "	:param NbBuckets: default value is 1
-	:type NbBuckets: int
-	:rtype: None
-") IntTools_MapOfSurfaceSample;
-		 IntTools_MapOfSurfaceSample (const Standard_Integer NbBuckets = 1);
-		%feature("compactdefaultargs") IntTools_MapOfSurfaceSample;
-		%feature("autodoc", "	:param Other:
-	:type Other: IntTools_MapOfSurfaceSample &
-	:rtype: None
-") IntTools_MapOfSurfaceSample;
-		 IntTools_MapOfSurfaceSample (const IntTools_MapOfSurfaceSample & Other);
-		%feature("compactdefaultargs") Assign;
-		%feature("autodoc", "	:param Other:
-	:type Other: IntTools_MapOfSurfaceSample &
-	:rtype: IntTools_MapOfSurfaceSample
-") Assign;
-		IntTools_MapOfSurfaceSample & Assign (const IntTools_MapOfSurfaceSample & Other);
-		%feature("compactdefaultargs") operator =;
-		%feature("autodoc", "	:param Other:
-	:type Other: IntTools_MapOfSurfaceSample &
-	:rtype: IntTools_MapOfSurfaceSample
-") operator =;
-		IntTools_MapOfSurfaceSample & operator = (const IntTools_MapOfSurfaceSample & Other);
-		%feature("compactdefaultargs") ReSize;
-		%feature("autodoc", "	:param NbBuckets:
-	:type NbBuckets: int
-	:rtype: None
-") ReSize;
-		void ReSize (const Standard_Integer NbBuckets);
-		%feature("compactdefaultargs") Clear;
-		%feature("autodoc", "	:rtype: None
-") Clear;
-		void Clear ();
-		%feature("compactdefaultargs") Add;
-		%feature("autodoc", "	:param aKey:
-	:type aKey: IntTools_SurfaceRangeSample &
-	:rtype: bool
-") Add;
-		Standard_Boolean Add (const IntTools_SurfaceRangeSample & aKey);
-		%feature("compactdefaultargs") Contains;
-		%feature("autodoc", "	:param aKey:
-	:type aKey: IntTools_SurfaceRangeSample &
-	:rtype: bool
-") Contains;
-		Standard_Boolean Contains (const IntTools_SurfaceRangeSample & aKey);
-		%feature("compactdefaultargs") Remove;
-		%feature("autodoc", "	:param aKey:
-	:type aKey: IntTools_SurfaceRangeSample &
-	:rtype: bool
-") Remove;
-		Standard_Boolean Remove (const IntTools_SurfaceRangeSample & aKey);
-};
-
-
-%extend IntTools_MapOfSurfaceSample {
 	%pythoncode {
 	__repr__ = _dumps_object
 	}
@@ -3530,7 +1827,7 @@ class IntTools_MarkedRangeSet {
 ") Length;
 		Standard_Integer Length ();
 		%feature("compactdefaultargs") Range;
-		%feature("autodoc", "	* Returns the range with index theIndex. the Index can be from 1 to Length()
+		%feature("autodoc", "	* Returns the range with index theIndex. the Index can be from 1 to Length----
 
 	:param theIndex:
 	:type theIndex: int
@@ -3701,42 +1998,6 @@ class IntTools_PntOnFace {
 	__repr__ = _dumps_object
 	}
 };
-class IntTools_QuickSort {
-	public:
-		%feature("compactdefaultargs") Sort;
-		%feature("autodoc", "	:param TheArray:
-	:type TheArray: IntTools_Array1OfRoots &
-	:param Comp:
-	:type Comp: IntTools_Compare &
-	:rtype: void
-") Sort;
-		static void Sort (IntTools_Array1OfRoots & TheArray,const IntTools_Compare & Comp);
-};
-
-
-%extend IntTools_QuickSort {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-class IntTools_QuickSortRange {
-	public:
-		%feature("compactdefaultargs") Sort;
-		%feature("autodoc", "	:param TheArray:
-	:type TheArray: IntTools_Array1OfRange &
-	:param Comp:
-	:type Comp: IntTools_CompareRange &
-	:rtype: void
-") Sort;
-		static void Sort (IntTools_Array1OfRange & TheArray,const IntTools_CompareRange & Comp);
-};
-
-
-%extend IntTools_QuickSortRange {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
 %nodefaultctor IntTools_Range;
 class IntTools_Range {
 	public:
@@ -3838,7 +2099,7 @@ class IntTools_Root {
 ") SetType;
 		void SetType (const Standard_Integer aType);
 		%feature("compactdefaultargs") SetStateBefore;
-		%feature("autodoc", "	* Set the value of the state before the root (at t=Root-dt)
+		%feature("autodoc", "	* Set the value of the state before the root --at t=Root-dt--
 
 	:param aState:
 	:type aState: TopAbs_State
@@ -3846,7 +2107,7 @@ class IntTools_Root {
 ") SetStateBefore;
 		void SetStateBefore (const TopAbs_State aState);
 		%feature("compactdefaultargs") SetStateAfter;
-		%feature("autodoc", "	* Set the value of the state after the root (at t=Root-dt)
+		%feature("autodoc", "	* Set the value of the state after the root --at t=Root-dt--
 
 	:param aState:
 	:type aState: TopAbs_State
@@ -3862,7 +2123,7 @@ class IntTools_Root {
 ") SetLayerHeight;
 		void SetLayerHeight (const Standard_Real aHeight);
 		%feature("compactdefaultargs") SetInterval;
-		%feature("autodoc", "	* Sets the interval from which the Root was found [t1,t2] and the corresponding values of the function on the bounds f(t1), f(t2).
+		%feature("autodoc", "	* Sets the interval from which the Root was found [t1,t2] and the corresponding values of the function on the bounds f--t1--, f--t2--.
 
 	:param t1:
 	:type t1: float
@@ -3882,7 +2143,7 @@ class IntTools_Root {
 ") Root;
 		Standard_Real Root ();
 		%feature("compactdefaultargs") Type;
-		%feature("autodoc", "	* Returns the type of the root =0 - Simple (was found by bisection method); =2 - Smart when f1=0, f2!=0 or vice versa (was found by Fibbonacci method); =1 - Pure (pure zero for all t [t1,t2] );
+		%feature("autodoc", "	* Returns the type of the root =0 - Simple --was found by bisection method--; =2 - Smart when f1=0, f2!=0 or vice versa --was found by Fibbonacci method--; =1 - Pure --pure zero for all t [t1,t2] --;
 
 	:rtype: int
 ") Type;
@@ -3912,7 +2173,7 @@ class IntTools_Root {
 ") IsValid;
 		Standard_Boolean IsValid ();
 		%feature("compactdefaultargs") Interval;
-		%feature("autodoc", "	* Returns the values of interval from which the Root was found [t1,t2] and the corresponding values of the function on the bounds f(t1), f(t2).
+		%feature("autodoc", "	* Returns the values of interval from which the Root was found [t1,t2] and the corresponding values of the function on the bounds f--t1--, f--t2--.
 
 	:param t1:
 	:type t1: float &
@@ -3929,1076 +2190,6 @@ class IntTools_Root {
 
 
 %extend IntTools_Root {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor IntTools_SequenceNodeOfSequenceOfCommonPrts;
-class IntTools_SequenceNodeOfSequenceOfCommonPrts : public TCollection_SeqNode {
-	public:
-		%feature("compactdefaultargs") IntTools_SequenceNodeOfSequenceOfCommonPrts;
-		%feature("autodoc", "	:param I:
-	:type I: IntTools_CommonPrt &
-	:param n:
-	:type n: TCollection_SeqNodePtr &
-	:param p:
-	:type p: TCollection_SeqNodePtr &
-	:rtype: None
-") IntTools_SequenceNodeOfSequenceOfCommonPrts;
-		 IntTools_SequenceNodeOfSequenceOfCommonPrts (const IntTools_CommonPrt & I,const TCollection_SeqNodePtr & n,const TCollection_SeqNodePtr & p);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:rtype: IntTools_CommonPrt
-") Value;
-		IntTools_CommonPrt & Value ();
-};
-
-
-%extend IntTools_SequenceNodeOfSequenceOfCommonPrts {
-	%pythoncode {
-		def GetHandle(self):
-		    try:
-		        return self.thisHandle
-		    except:
-		        self.thisHandle = Handle_IntTools_SequenceNodeOfSequenceOfCommonPrts(self)
-		        self.thisown = False
-		        return self.thisHandle
-	}
-};
-
-%pythonappend Handle_IntTools_SequenceNodeOfSequenceOfCommonPrts::Handle_IntTools_SequenceNodeOfSequenceOfCommonPrts %{
-    # register the handle in the base object
-    if len(args) > 0:
-        register_handle(self, args[0])
-%}
-
-%nodefaultctor Handle_IntTools_SequenceNodeOfSequenceOfCommonPrts;
-class Handle_IntTools_SequenceNodeOfSequenceOfCommonPrts : public Handle_TCollection_SeqNode {
-
-    public:
-        // constructors
-        Handle_IntTools_SequenceNodeOfSequenceOfCommonPrts();
-        Handle_IntTools_SequenceNodeOfSequenceOfCommonPrts(const Handle_IntTools_SequenceNodeOfSequenceOfCommonPrts &aHandle);
-        Handle_IntTools_SequenceNodeOfSequenceOfCommonPrts(const IntTools_SequenceNodeOfSequenceOfCommonPrts *anItem);
-        void Nullify();
-        Standard_Boolean IsNull() const;
-        static const Handle_IntTools_SequenceNodeOfSequenceOfCommonPrts DownCast(const Handle_Standard_Transient &AnObject);
-
-};
-%extend Handle_IntTools_SequenceNodeOfSequenceOfCommonPrts {
-    IntTools_SequenceNodeOfSequenceOfCommonPrts* _get_reference() {
-    return (IntTools_SequenceNodeOfSequenceOfCommonPrts*)$self->Access();
-    }
-};
-
-%extend Handle_IntTools_SequenceNodeOfSequenceOfCommonPrts {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
-};
-
-%extend IntTools_SequenceNodeOfSequenceOfCommonPrts {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor IntTools_SequenceNodeOfSequenceOfCurves;
-class IntTools_SequenceNodeOfSequenceOfCurves : public TCollection_SeqNode {
-	public:
-		%feature("compactdefaultargs") IntTools_SequenceNodeOfSequenceOfCurves;
-		%feature("autodoc", "	:param I:
-	:type I: IntTools_Curve &
-	:param n:
-	:type n: TCollection_SeqNodePtr &
-	:param p:
-	:type p: TCollection_SeqNodePtr &
-	:rtype: None
-") IntTools_SequenceNodeOfSequenceOfCurves;
-		 IntTools_SequenceNodeOfSequenceOfCurves (const IntTools_Curve & I,const TCollection_SeqNodePtr & n,const TCollection_SeqNodePtr & p);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:rtype: IntTools_Curve
-") Value;
-		IntTools_Curve & Value ();
-};
-
-
-%extend IntTools_SequenceNodeOfSequenceOfCurves {
-	%pythoncode {
-		def GetHandle(self):
-		    try:
-		        return self.thisHandle
-		    except:
-		        self.thisHandle = Handle_IntTools_SequenceNodeOfSequenceOfCurves(self)
-		        self.thisown = False
-		        return self.thisHandle
-	}
-};
-
-%pythonappend Handle_IntTools_SequenceNodeOfSequenceOfCurves::Handle_IntTools_SequenceNodeOfSequenceOfCurves %{
-    # register the handle in the base object
-    if len(args) > 0:
-        register_handle(self, args[0])
-%}
-
-%nodefaultctor Handle_IntTools_SequenceNodeOfSequenceOfCurves;
-class Handle_IntTools_SequenceNodeOfSequenceOfCurves : public Handle_TCollection_SeqNode {
-
-    public:
-        // constructors
-        Handle_IntTools_SequenceNodeOfSequenceOfCurves();
-        Handle_IntTools_SequenceNodeOfSequenceOfCurves(const Handle_IntTools_SequenceNodeOfSequenceOfCurves &aHandle);
-        Handle_IntTools_SequenceNodeOfSequenceOfCurves(const IntTools_SequenceNodeOfSequenceOfCurves *anItem);
-        void Nullify();
-        Standard_Boolean IsNull() const;
-        static const Handle_IntTools_SequenceNodeOfSequenceOfCurves DownCast(const Handle_Standard_Transient &AnObject);
-
-};
-%extend Handle_IntTools_SequenceNodeOfSequenceOfCurves {
-    IntTools_SequenceNodeOfSequenceOfCurves* _get_reference() {
-    return (IntTools_SequenceNodeOfSequenceOfCurves*)$self->Access();
-    }
-};
-
-%extend Handle_IntTools_SequenceNodeOfSequenceOfCurves {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
-};
-
-%extend IntTools_SequenceNodeOfSequenceOfCurves {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor IntTools_SequenceNodeOfSequenceOfPntOn2Faces;
-class IntTools_SequenceNodeOfSequenceOfPntOn2Faces : public TCollection_SeqNode {
-	public:
-		%feature("compactdefaultargs") IntTools_SequenceNodeOfSequenceOfPntOn2Faces;
-		%feature("autodoc", "	:param I:
-	:type I: IntTools_PntOn2Faces &
-	:param n:
-	:type n: TCollection_SeqNodePtr &
-	:param p:
-	:type p: TCollection_SeqNodePtr &
-	:rtype: None
-") IntTools_SequenceNodeOfSequenceOfPntOn2Faces;
-		 IntTools_SequenceNodeOfSequenceOfPntOn2Faces (const IntTools_PntOn2Faces & I,const TCollection_SeqNodePtr & n,const TCollection_SeqNodePtr & p);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:rtype: IntTools_PntOn2Faces
-") Value;
-		IntTools_PntOn2Faces & Value ();
-};
-
-
-%extend IntTools_SequenceNodeOfSequenceOfPntOn2Faces {
-	%pythoncode {
-		def GetHandle(self):
-		    try:
-		        return self.thisHandle
-		    except:
-		        self.thisHandle = Handle_IntTools_SequenceNodeOfSequenceOfPntOn2Faces(self)
-		        self.thisown = False
-		        return self.thisHandle
-	}
-};
-
-%pythonappend Handle_IntTools_SequenceNodeOfSequenceOfPntOn2Faces::Handle_IntTools_SequenceNodeOfSequenceOfPntOn2Faces %{
-    # register the handle in the base object
-    if len(args) > 0:
-        register_handle(self, args[0])
-%}
-
-%nodefaultctor Handle_IntTools_SequenceNodeOfSequenceOfPntOn2Faces;
-class Handle_IntTools_SequenceNodeOfSequenceOfPntOn2Faces : public Handle_TCollection_SeqNode {
-
-    public:
-        // constructors
-        Handle_IntTools_SequenceNodeOfSequenceOfPntOn2Faces();
-        Handle_IntTools_SequenceNodeOfSequenceOfPntOn2Faces(const Handle_IntTools_SequenceNodeOfSequenceOfPntOn2Faces &aHandle);
-        Handle_IntTools_SequenceNodeOfSequenceOfPntOn2Faces(const IntTools_SequenceNodeOfSequenceOfPntOn2Faces *anItem);
-        void Nullify();
-        Standard_Boolean IsNull() const;
-        static const Handle_IntTools_SequenceNodeOfSequenceOfPntOn2Faces DownCast(const Handle_Standard_Transient &AnObject);
-
-};
-%extend Handle_IntTools_SequenceNodeOfSequenceOfPntOn2Faces {
-    IntTools_SequenceNodeOfSequenceOfPntOn2Faces* _get_reference() {
-    return (IntTools_SequenceNodeOfSequenceOfPntOn2Faces*)$self->Access();
-    }
-};
-
-%extend Handle_IntTools_SequenceNodeOfSequenceOfPntOn2Faces {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
-};
-
-%extend IntTools_SequenceNodeOfSequenceOfPntOn2Faces {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor IntTools_SequenceNodeOfSequenceOfRanges;
-class IntTools_SequenceNodeOfSequenceOfRanges : public TCollection_SeqNode {
-	public:
-		%feature("compactdefaultargs") IntTools_SequenceNodeOfSequenceOfRanges;
-		%feature("autodoc", "	:param I:
-	:type I: IntTools_Range &
-	:param n:
-	:type n: TCollection_SeqNodePtr &
-	:param p:
-	:type p: TCollection_SeqNodePtr &
-	:rtype: None
-") IntTools_SequenceNodeOfSequenceOfRanges;
-		 IntTools_SequenceNodeOfSequenceOfRanges (const IntTools_Range & I,const TCollection_SeqNodePtr & n,const TCollection_SeqNodePtr & p);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:rtype: IntTools_Range
-") Value;
-		IntTools_Range & Value ();
-};
-
-
-%extend IntTools_SequenceNodeOfSequenceOfRanges {
-	%pythoncode {
-		def GetHandle(self):
-		    try:
-		        return self.thisHandle
-		    except:
-		        self.thisHandle = Handle_IntTools_SequenceNodeOfSequenceOfRanges(self)
-		        self.thisown = False
-		        return self.thisHandle
-	}
-};
-
-%pythonappend Handle_IntTools_SequenceNodeOfSequenceOfRanges::Handle_IntTools_SequenceNodeOfSequenceOfRanges %{
-    # register the handle in the base object
-    if len(args) > 0:
-        register_handle(self, args[0])
-%}
-
-%nodefaultctor Handle_IntTools_SequenceNodeOfSequenceOfRanges;
-class Handle_IntTools_SequenceNodeOfSequenceOfRanges : public Handle_TCollection_SeqNode {
-
-    public:
-        // constructors
-        Handle_IntTools_SequenceNodeOfSequenceOfRanges();
-        Handle_IntTools_SequenceNodeOfSequenceOfRanges(const Handle_IntTools_SequenceNodeOfSequenceOfRanges &aHandle);
-        Handle_IntTools_SequenceNodeOfSequenceOfRanges(const IntTools_SequenceNodeOfSequenceOfRanges *anItem);
-        void Nullify();
-        Standard_Boolean IsNull() const;
-        static const Handle_IntTools_SequenceNodeOfSequenceOfRanges DownCast(const Handle_Standard_Transient &AnObject);
-
-};
-%extend Handle_IntTools_SequenceNodeOfSequenceOfRanges {
-    IntTools_SequenceNodeOfSequenceOfRanges* _get_reference() {
-    return (IntTools_SequenceNodeOfSequenceOfRanges*)$self->Access();
-    }
-};
-
-%extend Handle_IntTools_SequenceNodeOfSequenceOfRanges {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
-};
-
-%extend IntTools_SequenceNodeOfSequenceOfRanges {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor IntTools_SequenceNodeOfSequenceOfRoots;
-class IntTools_SequenceNodeOfSequenceOfRoots : public TCollection_SeqNode {
-	public:
-		%feature("compactdefaultargs") IntTools_SequenceNodeOfSequenceOfRoots;
-		%feature("autodoc", "	:param I:
-	:type I: IntTools_Root &
-	:param n:
-	:type n: TCollection_SeqNodePtr &
-	:param p:
-	:type p: TCollection_SeqNodePtr &
-	:rtype: None
-") IntTools_SequenceNodeOfSequenceOfRoots;
-		 IntTools_SequenceNodeOfSequenceOfRoots (const IntTools_Root & I,const TCollection_SeqNodePtr & n,const TCollection_SeqNodePtr & p);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:rtype: IntTools_Root
-") Value;
-		IntTools_Root & Value ();
-};
-
-
-%extend IntTools_SequenceNodeOfSequenceOfRoots {
-	%pythoncode {
-		def GetHandle(self):
-		    try:
-		        return self.thisHandle
-		    except:
-		        self.thisHandle = Handle_IntTools_SequenceNodeOfSequenceOfRoots(self)
-		        self.thisown = False
-		        return self.thisHandle
-	}
-};
-
-%pythonappend Handle_IntTools_SequenceNodeOfSequenceOfRoots::Handle_IntTools_SequenceNodeOfSequenceOfRoots %{
-    # register the handle in the base object
-    if len(args) > 0:
-        register_handle(self, args[0])
-%}
-
-%nodefaultctor Handle_IntTools_SequenceNodeOfSequenceOfRoots;
-class Handle_IntTools_SequenceNodeOfSequenceOfRoots : public Handle_TCollection_SeqNode {
-
-    public:
-        // constructors
-        Handle_IntTools_SequenceNodeOfSequenceOfRoots();
-        Handle_IntTools_SequenceNodeOfSequenceOfRoots(const Handle_IntTools_SequenceNodeOfSequenceOfRoots &aHandle);
-        Handle_IntTools_SequenceNodeOfSequenceOfRoots(const IntTools_SequenceNodeOfSequenceOfRoots *anItem);
-        void Nullify();
-        Standard_Boolean IsNull() const;
-        static const Handle_IntTools_SequenceNodeOfSequenceOfRoots DownCast(const Handle_Standard_Transient &AnObject);
-
-};
-%extend Handle_IntTools_SequenceNodeOfSequenceOfRoots {
-    IntTools_SequenceNodeOfSequenceOfRoots* _get_reference() {
-    return (IntTools_SequenceNodeOfSequenceOfRoots*)$self->Access();
-    }
-};
-
-%extend Handle_IntTools_SequenceNodeOfSequenceOfRoots {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
-};
-
-%extend IntTools_SequenceNodeOfSequenceOfRoots {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor IntTools_SequenceOfCommonPrts;
-class IntTools_SequenceOfCommonPrts : public TCollection_BaseSequence {
-	public:
-		%feature("compactdefaultargs") IntTools_SequenceOfCommonPrts;
-		%feature("autodoc", "	:rtype: None
-") IntTools_SequenceOfCommonPrts;
-		 IntTools_SequenceOfCommonPrts ();
-		%feature("compactdefaultargs") IntTools_SequenceOfCommonPrts;
-		%feature("autodoc", "	:param Other:
-	:type Other: IntTools_SequenceOfCommonPrts &
-	:rtype: None
-") IntTools_SequenceOfCommonPrts;
-		 IntTools_SequenceOfCommonPrts (const IntTools_SequenceOfCommonPrts & Other);
-		%feature("compactdefaultargs") Clear;
-		%feature("autodoc", "	:rtype: None
-") Clear;
-		void Clear ();
-		%feature("compactdefaultargs") Assign;
-		%feature("autodoc", "	:param Other:
-	:type Other: IntTools_SequenceOfCommonPrts &
-	:rtype: IntTools_SequenceOfCommonPrts
-") Assign;
-		const IntTools_SequenceOfCommonPrts & Assign (const IntTools_SequenceOfCommonPrts & Other);
-		%feature("compactdefaultargs") operator =;
-		%feature("autodoc", "	:param Other:
-	:type Other: IntTools_SequenceOfCommonPrts &
-	:rtype: IntTools_SequenceOfCommonPrts
-") operator =;
-		const IntTools_SequenceOfCommonPrts & operator = (const IntTools_SequenceOfCommonPrts & Other);
-		%feature("compactdefaultargs") Append;
-		%feature("autodoc", "	:param T:
-	:type T: IntTools_CommonPrt &
-	:rtype: None
-") Append;
-		void Append (const IntTools_CommonPrt & T);
-		%feature("compactdefaultargs") Append;
-		%feature("autodoc", "	:param S:
-	:type S: IntTools_SequenceOfCommonPrts &
-	:rtype: None
-") Append;
-		void Append (IntTools_SequenceOfCommonPrts & S);
-		%feature("compactdefaultargs") Prepend;
-		%feature("autodoc", "	:param T:
-	:type T: IntTools_CommonPrt &
-	:rtype: None
-") Prepend;
-		void Prepend (const IntTools_CommonPrt & T);
-		%feature("compactdefaultargs") Prepend;
-		%feature("autodoc", "	:param S:
-	:type S: IntTools_SequenceOfCommonPrts &
-	:rtype: None
-") Prepend;
-		void Prepend (IntTools_SequenceOfCommonPrts & S);
-		%feature("compactdefaultargs") InsertBefore;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param T:
-	:type T: IntTools_CommonPrt &
-	:rtype: None
-") InsertBefore;
-		void InsertBefore (const Standard_Integer Index,const IntTools_CommonPrt & T);
-		%feature("compactdefaultargs") InsertBefore;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param S:
-	:type S: IntTools_SequenceOfCommonPrts &
-	:rtype: None
-") InsertBefore;
-		void InsertBefore (const Standard_Integer Index,IntTools_SequenceOfCommonPrts & S);
-		%feature("compactdefaultargs") InsertAfter;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param T:
-	:type T: IntTools_CommonPrt &
-	:rtype: None
-") InsertAfter;
-		void InsertAfter (const Standard_Integer Index,const IntTools_CommonPrt & T);
-		%feature("compactdefaultargs") InsertAfter;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param S:
-	:type S: IntTools_SequenceOfCommonPrts &
-	:rtype: None
-") InsertAfter;
-		void InsertAfter (const Standard_Integer Index,IntTools_SequenceOfCommonPrts & S);
-		%feature("compactdefaultargs") First;
-		%feature("autodoc", "	:rtype: IntTools_CommonPrt
-") First;
-		const IntTools_CommonPrt & First ();
-		%feature("compactdefaultargs") Last;
-		%feature("autodoc", "	:rtype: IntTools_CommonPrt
-") Last;
-		const IntTools_CommonPrt & Last ();
-		%feature("compactdefaultargs") Split;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param Sub:
-	:type Sub: IntTools_SequenceOfCommonPrts &
-	:rtype: None
-") Split;
-		void Split (const Standard_Integer Index,IntTools_SequenceOfCommonPrts & Sub);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: IntTools_CommonPrt
-") Value;
-		const IntTools_CommonPrt & Value (const Standard_Integer Index);
-		%feature("compactdefaultargs") SetValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param I:
-	:type I: IntTools_CommonPrt &
-	:rtype: None
-") SetValue;
-		void SetValue (const Standard_Integer Index,const IntTools_CommonPrt & I);
-		%feature("compactdefaultargs") ChangeValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: IntTools_CommonPrt
-") ChangeValue;
-		IntTools_CommonPrt & ChangeValue (const Standard_Integer Index);
-		%feature("compactdefaultargs") Remove;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: None
-") Remove;
-		void Remove (const Standard_Integer Index);
-		%feature("compactdefaultargs") Remove;
-		%feature("autodoc", "	:param FromIndex:
-	:type FromIndex: int
-	:param ToIndex:
-	:type ToIndex: int
-	:rtype: None
-") Remove;
-		void Remove (const Standard_Integer FromIndex,const Standard_Integer ToIndex);
-};
-
-
-%extend IntTools_SequenceOfCommonPrts {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor IntTools_SequenceOfCurves;
-class IntTools_SequenceOfCurves : public TCollection_BaseSequence {
-	public:
-		%feature("compactdefaultargs") IntTools_SequenceOfCurves;
-		%feature("autodoc", "	:rtype: None
-") IntTools_SequenceOfCurves;
-		 IntTools_SequenceOfCurves ();
-		%feature("compactdefaultargs") IntTools_SequenceOfCurves;
-		%feature("autodoc", "	:param Other:
-	:type Other: IntTools_SequenceOfCurves &
-	:rtype: None
-") IntTools_SequenceOfCurves;
-		 IntTools_SequenceOfCurves (const IntTools_SequenceOfCurves & Other);
-		%feature("compactdefaultargs") Clear;
-		%feature("autodoc", "	:rtype: None
-") Clear;
-		void Clear ();
-		%feature("compactdefaultargs") Assign;
-		%feature("autodoc", "	:param Other:
-	:type Other: IntTools_SequenceOfCurves &
-	:rtype: IntTools_SequenceOfCurves
-") Assign;
-		const IntTools_SequenceOfCurves & Assign (const IntTools_SequenceOfCurves & Other);
-		%feature("compactdefaultargs") operator =;
-		%feature("autodoc", "	:param Other:
-	:type Other: IntTools_SequenceOfCurves &
-	:rtype: IntTools_SequenceOfCurves
-") operator =;
-		const IntTools_SequenceOfCurves & operator = (const IntTools_SequenceOfCurves & Other);
-		%feature("compactdefaultargs") Append;
-		%feature("autodoc", "	:param T:
-	:type T: IntTools_Curve &
-	:rtype: None
-") Append;
-		void Append (const IntTools_Curve & T);
-		%feature("compactdefaultargs") Append;
-		%feature("autodoc", "	:param S:
-	:type S: IntTools_SequenceOfCurves &
-	:rtype: None
-") Append;
-		void Append (IntTools_SequenceOfCurves & S);
-		%feature("compactdefaultargs") Prepend;
-		%feature("autodoc", "	:param T:
-	:type T: IntTools_Curve &
-	:rtype: None
-") Prepend;
-		void Prepend (const IntTools_Curve & T);
-		%feature("compactdefaultargs") Prepend;
-		%feature("autodoc", "	:param S:
-	:type S: IntTools_SequenceOfCurves &
-	:rtype: None
-") Prepend;
-		void Prepend (IntTools_SequenceOfCurves & S);
-		%feature("compactdefaultargs") InsertBefore;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param T:
-	:type T: IntTools_Curve &
-	:rtype: None
-") InsertBefore;
-		void InsertBefore (const Standard_Integer Index,const IntTools_Curve & T);
-		%feature("compactdefaultargs") InsertBefore;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param S:
-	:type S: IntTools_SequenceOfCurves &
-	:rtype: None
-") InsertBefore;
-		void InsertBefore (const Standard_Integer Index,IntTools_SequenceOfCurves & S);
-		%feature("compactdefaultargs") InsertAfter;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param T:
-	:type T: IntTools_Curve &
-	:rtype: None
-") InsertAfter;
-		void InsertAfter (const Standard_Integer Index,const IntTools_Curve & T);
-		%feature("compactdefaultargs") InsertAfter;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param S:
-	:type S: IntTools_SequenceOfCurves &
-	:rtype: None
-") InsertAfter;
-		void InsertAfter (const Standard_Integer Index,IntTools_SequenceOfCurves & S);
-		%feature("compactdefaultargs") First;
-		%feature("autodoc", "	:rtype: IntTools_Curve
-") First;
-		const IntTools_Curve & First ();
-		%feature("compactdefaultargs") Last;
-		%feature("autodoc", "	:rtype: IntTools_Curve
-") Last;
-		const IntTools_Curve & Last ();
-		%feature("compactdefaultargs") Split;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param Sub:
-	:type Sub: IntTools_SequenceOfCurves &
-	:rtype: None
-") Split;
-		void Split (const Standard_Integer Index,IntTools_SequenceOfCurves & Sub);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: IntTools_Curve
-") Value;
-		const IntTools_Curve & Value (const Standard_Integer Index);
-		%feature("compactdefaultargs") SetValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param I:
-	:type I: IntTools_Curve &
-	:rtype: None
-") SetValue;
-		void SetValue (const Standard_Integer Index,const IntTools_Curve & I);
-		%feature("compactdefaultargs") ChangeValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: IntTools_Curve
-") ChangeValue;
-		IntTools_Curve & ChangeValue (const Standard_Integer Index);
-		%feature("compactdefaultargs") Remove;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: None
-") Remove;
-		void Remove (const Standard_Integer Index);
-		%feature("compactdefaultargs") Remove;
-		%feature("autodoc", "	:param FromIndex:
-	:type FromIndex: int
-	:param ToIndex:
-	:type ToIndex: int
-	:rtype: None
-") Remove;
-		void Remove (const Standard_Integer FromIndex,const Standard_Integer ToIndex);
-};
-
-
-%extend IntTools_SequenceOfCurves {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor IntTools_SequenceOfPntOn2Faces;
-class IntTools_SequenceOfPntOn2Faces : public TCollection_BaseSequence {
-	public:
-		%feature("compactdefaultargs") IntTools_SequenceOfPntOn2Faces;
-		%feature("autodoc", "	:rtype: None
-") IntTools_SequenceOfPntOn2Faces;
-		 IntTools_SequenceOfPntOn2Faces ();
-		%feature("compactdefaultargs") IntTools_SequenceOfPntOn2Faces;
-		%feature("autodoc", "	:param Other:
-	:type Other: IntTools_SequenceOfPntOn2Faces &
-	:rtype: None
-") IntTools_SequenceOfPntOn2Faces;
-		 IntTools_SequenceOfPntOn2Faces (const IntTools_SequenceOfPntOn2Faces & Other);
-		%feature("compactdefaultargs") Clear;
-		%feature("autodoc", "	:rtype: None
-") Clear;
-		void Clear ();
-		%feature("compactdefaultargs") Assign;
-		%feature("autodoc", "	:param Other:
-	:type Other: IntTools_SequenceOfPntOn2Faces &
-	:rtype: IntTools_SequenceOfPntOn2Faces
-") Assign;
-		const IntTools_SequenceOfPntOn2Faces & Assign (const IntTools_SequenceOfPntOn2Faces & Other);
-		%feature("compactdefaultargs") operator =;
-		%feature("autodoc", "	:param Other:
-	:type Other: IntTools_SequenceOfPntOn2Faces &
-	:rtype: IntTools_SequenceOfPntOn2Faces
-") operator =;
-		const IntTools_SequenceOfPntOn2Faces & operator = (const IntTools_SequenceOfPntOn2Faces & Other);
-		%feature("compactdefaultargs") Append;
-		%feature("autodoc", "	:param T:
-	:type T: IntTools_PntOn2Faces &
-	:rtype: None
-") Append;
-		void Append (const IntTools_PntOn2Faces & T);
-		%feature("compactdefaultargs") Append;
-		%feature("autodoc", "	:param S:
-	:type S: IntTools_SequenceOfPntOn2Faces &
-	:rtype: None
-") Append;
-		void Append (IntTools_SequenceOfPntOn2Faces & S);
-		%feature("compactdefaultargs") Prepend;
-		%feature("autodoc", "	:param T:
-	:type T: IntTools_PntOn2Faces &
-	:rtype: None
-") Prepend;
-		void Prepend (const IntTools_PntOn2Faces & T);
-		%feature("compactdefaultargs") Prepend;
-		%feature("autodoc", "	:param S:
-	:type S: IntTools_SequenceOfPntOn2Faces &
-	:rtype: None
-") Prepend;
-		void Prepend (IntTools_SequenceOfPntOn2Faces & S);
-		%feature("compactdefaultargs") InsertBefore;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param T:
-	:type T: IntTools_PntOn2Faces &
-	:rtype: None
-") InsertBefore;
-		void InsertBefore (const Standard_Integer Index,const IntTools_PntOn2Faces & T);
-		%feature("compactdefaultargs") InsertBefore;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param S:
-	:type S: IntTools_SequenceOfPntOn2Faces &
-	:rtype: None
-") InsertBefore;
-		void InsertBefore (const Standard_Integer Index,IntTools_SequenceOfPntOn2Faces & S);
-		%feature("compactdefaultargs") InsertAfter;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param T:
-	:type T: IntTools_PntOn2Faces &
-	:rtype: None
-") InsertAfter;
-		void InsertAfter (const Standard_Integer Index,const IntTools_PntOn2Faces & T);
-		%feature("compactdefaultargs") InsertAfter;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param S:
-	:type S: IntTools_SequenceOfPntOn2Faces &
-	:rtype: None
-") InsertAfter;
-		void InsertAfter (const Standard_Integer Index,IntTools_SequenceOfPntOn2Faces & S);
-		%feature("compactdefaultargs") First;
-		%feature("autodoc", "	:rtype: IntTools_PntOn2Faces
-") First;
-		const IntTools_PntOn2Faces & First ();
-		%feature("compactdefaultargs") Last;
-		%feature("autodoc", "	:rtype: IntTools_PntOn2Faces
-") Last;
-		const IntTools_PntOn2Faces & Last ();
-		%feature("compactdefaultargs") Split;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param Sub:
-	:type Sub: IntTools_SequenceOfPntOn2Faces &
-	:rtype: None
-") Split;
-		void Split (const Standard_Integer Index,IntTools_SequenceOfPntOn2Faces & Sub);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: IntTools_PntOn2Faces
-") Value;
-		const IntTools_PntOn2Faces & Value (const Standard_Integer Index);
-		%feature("compactdefaultargs") SetValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param I:
-	:type I: IntTools_PntOn2Faces &
-	:rtype: None
-") SetValue;
-		void SetValue (const Standard_Integer Index,const IntTools_PntOn2Faces & I);
-		%feature("compactdefaultargs") ChangeValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: IntTools_PntOn2Faces
-") ChangeValue;
-		IntTools_PntOn2Faces & ChangeValue (const Standard_Integer Index);
-		%feature("compactdefaultargs") Remove;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: None
-") Remove;
-		void Remove (const Standard_Integer Index);
-		%feature("compactdefaultargs") Remove;
-		%feature("autodoc", "	:param FromIndex:
-	:type FromIndex: int
-	:param ToIndex:
-	:type ToIndex: int
-	:rtype: None
-") Remove;
-		void Remove (const Standard_Integer FromIndex,const Standard_Integer ToIndex);
-};
-
-
-%extend IntTools_SequenceOfPntOn2Faces {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor IntTools_SequenceOfRanges;
-class IntTools_SequenceOfRanges : public TCollection_BaseSequence {
-	public:
-		%feature("compactdefaultargs") IntTools_SequenceOfRanges;
-		%feature("autodoc", "	:rtype: None
-") IntTools_SequenceOfRanges;
-		 IntTools_SequenceOfRanges ();
-		%feature("compactdefaultargs") IntTools_SequenceOfRanges;
-		%feature("autodoc", "	:param Other:
-	:type Other: IntTools_SequenceOfRanges &
-	:rtype: None
-") IntTools_SequenceOfRanges;
-		 IntTools_SequenceOfRanges (const IntTools_SequenceOfRanges & Other);
-		%feature("compactdefaultargs") Clear;
-		%feature("autodoc", "	:rtype: None
-") Clear;
-		void Clear ();
-		%feature("compactdefaultargs") Assign;
-		%feature("autodoc", "	:param Other:
-	:type Other: IntTools_SequenceOfRanges &
-	:rtype: IntTools_SequenceOfRanges
-") Assign;
-		const IntTools_SequenceOfRanges & Assign (const IntTools_SequenceOfRanges & Other);
-		%feature("compactdefaultargs") operator =;
-		%feature("autodoc", "	:param Other:
-	:type Other: IntTools_SequenceOfRanges &
-	:rtype: IntTools_SequenceOfRanges
-") operator =;
-		const IntTools_SequenceOfRanges & operator = (const IntTools_SequenceOfRanges & Other);
-		%feature("compactdefaultargs") Append;
-		%feature("autodoc", "	:param T:
-	:type T: IntTools_Range &
-	:rtype: None
-") Append;
-		void Append (const IntTools_Range & T);
-		%feature("compactdefaultargs") Append;
-		%feature("autodoc", "	:param S:
-	:type S: IntTools_SequenceOfRanges &
-	:rtype: None
-") Append;
-		void Append (IntTools_SequenceOfRanges & S);
-		%feature("compactdefaultargs") Prepend;
-		%feature("autodoc", "	:param T:
-	:type T: IntTools_Range &
-	:rtype: None
-") Prepend;
-		void Prepend (const IntTools_Range & T);
-		%feature("compactdefaultargs") Prepend;
-		%feature("autodoc", "	:param S:
-	:type S: IntTools_SequenceOfRanges &
-	:rtype: None
-") Prepend;
-		void Prepend (IntTools_SequenceOfRanges & S);
-		%feature("compactdefaultargs") InsertBefore;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param T:
-	:type T: IntTools_Range &
-	:rtype: None
-") InsertBefore;
-		void InsertBefore (const Standard_Integer Index,const IntTools_Range & T);
-		%feature("compactdefaultargs") InsertBefore;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param S:
-	:type S: IntTools_SequenceOfRanges &
-	:rtype: None
-") InsertBefore;
-		void InsertBefore (const Standard_Integer Index,IntTools_SequenceOfRanges & S);
-		%feature("compactdefaultargs") InsertAfter;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param T:
-	:type T: IntTools_Range &
-	:rtype: None
-") InsertAfter;
-		void InsertAfter (const Standard_Integer Index,const IntTools_Range & T);
-		%feature("compactdefaultargs") InsertAfter;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param S:
-	:type S: IntTools_SequenceOfRanges &
-	:rtype: None
-") InsertAfter;
-		void InsertAfter (const Standard_Integer Index,IntTools_SequenceOfRanges & S);
-		%feature("compactdefaultargs") First;
-		%feature("autodoc", "	:rtype: IntTools_Range
-") First;
-		const IntTools_Range & First ();
-		%feature("compactdefaultargs") Last;
-		%feature("autodoc", "	:rtype: IntTools_Range
-") Last;
-		const IntTools_Range & Last ();
-		%feature("compactdefaultargs") Split;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param Sub:
-	:type Sub: IntTools_SequenceOfRanges &
-	:rtype: None
-") Split;
-		void Split (const Standard_Integer Index,IntTools_SequenceOfRanges & Sub);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: IntTools_Range
-") Value;
-		const IntTools_Range & Value (const Standard_Integer Index);
-		%feature("compactdefaultargs") SetValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param I:
-	:type I: IntTools_Range &
-	:rtype: None
-") SetValue;
-		void SetValue (const Standard_Integer Index,const IntTools_Range & I);
-		%feature("compactdefaultargs") ChangeValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: IntTools_Range
-") ChangeValue;
-		IntTools_Range & ChangeValue (const Standard_Integer Index);
-		%feature("compactdefaultargs") Remove;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: None
-") Remove;
-		void Remove (const Standard_Integer Index);
-		%feature("compactdefaultargs") Remove;
-		%feature("autodoc", "	:param FromIndex:
-	:type FromIndex: int
-	:param ToIndex:
-	:type ToIndex: int
-	:rtype: None
-") Remove;
-		void Remove (const Standard_Integer FromIndex,const Standard_Integer ToIndex);
-};
-
-
-%extend IntTools_SequenceOfRanges {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor IntTools_SequenceOfRoots;
-class IntTools_SequenceOfRoots : public TCollection_BaseSequence {
-	public:
-		%feature("compactdefaultargs") IntTools_SequenceOfRoots;
-		%feature("autodoc", "	:rtype: None
-") IntTools_SequenceOfRoots;
-		 IntTools_SequenceOfRoots ();
-		%feature("compactdefaultargs") IntTools_SequenceOfRoots;
-		%feature("autodoc", "	:param Other:
-	:type Other: IntTools_SequenceOfRoots &
-	:rtype: None
-") IntTools_SequenceOfRoots;
-		 IntTools_SequenceOfRoots (const IntTools_SequenceOfRoots & Other);
-		%feature("compactdefaultargs") Clear;
-		%feature("autodoc", "	:rtype: None
-") Clear;
-		void Clear ();
-		%feature("compactdefaultargs") Assign;
-		%feature("autodoc", "	:param Other:
-	:type Other: IntTools_SequenceOfRoots &
-	:rtype: IntTools_SequenceOfRoots
-") Assign;
-		const IntTools_SequenceOfRoots & Assign (const IntTools_SequenceOfRoots & Other);
-		%feature("compactdefaultargs") operator =;
-		%feature("autodoc", "	:param Other:
-	:type Other: IntTools_SequenceOfRoots &
-	:rtype: IntTools_SequenceOfRoots
-") operator =;
-		const IntTools_SequenceOfRoots & operator = (const IntTools_SequenceOfRoots & Other);
-		%feature("compactdefaultargs") Append;
-		%feature("autodoc", "	:param T:
-	:type T: IntTools_Root &
-	:rtype: None
-") Append;
-		void Append (const IntTools_Root & T);
-		%feature("compactdefaultargs") Append;
-		%feature("autodoc", "	:param S:
-	:type S: IntTools_SequenceOfRoots &
-	:rtype: None
-") Append;
-		void Append (IntTools_SequenceOfRoots & S);
-		%feature("compactdefaultargs") Prepend;
-		%feature("autodoc", "	:param T:
-	:type T: IntTools_Root &
-	:rtype: None
-") Prepend;
-		void Prepend (const IntTools_Root & T);
-		%feature("compactdefaultargs") Prepend;
-		%feature("autodoc", "	:param S:
-	:type S: IntTools_SequenceOfRoots &
-	:rtype: None
-") Prepend;
-		void Prepend (IntTools_SequenceOfRoots & S);
-		%feature("compactdefaultargs") InsertBefore;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param T:
-	:type T: IntTools_Root &
-	:rtype: None
-") InsertBefore;
-		void InsertBefore (const Standard_Integer Index,const IntTools_Root & T);
-		%feature("compactdefaultargs") InsertBefore;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param S:
-	:type S: IntTools_SequenceOfRoots &
-	:rtype: None
-") InsertBefore;
-		void InsertBefore (const Standard_Integer Index,IntTools_SequenceOfRoots & S);
-		%feature("compactdefaultargs") InsertAfter;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param T:
-	:type T: IntTools_Root &
-	:rtype: None
-") InsertAfter;
-		void InsertAfter (const Standard_Integer Index,const IntTools_Root & T);
-		%feature("compactdefaultargs") InsertAfter;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param S:
-	:type S: IntTools_SequenceOfRoots &
-	:rtype: None
-") InsertAfter;
-		void InsertAfter (const Standard_Integer Index,IntTools_SequenceOfRoots & S);
-		%feature("compactdefaultargs") First;
-		%feature("autodoc", "	:rtype: IntTools_Root
-") First;
-		const IntTools_Root & First ();
-		%feature("compactdefaultargs") Last;
-		%feature("autodoc", "	:rtype: IntTools_Root
-") Last;
-		const IntTools_Root & Last ();
-		%feature("compactdefaultargs") Split;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param Sub:
-	:type Sub: IntTools_SequenceOfRoots &
-	:rtype: None
-") Split;
-		void Split (const Standard_Integer Index,IntTools_SequenceOfRoots & Sub);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: IntTools_Root
-") Value;
-		const IntTools_Root & Value (const Standard_Integer Index);
-		%feature("compactdefaultargs") SetValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param I:
-	:type I: IntTools_Root &
-	:rtype: None
-") SetValue;
-		void SetValue (const Standard_Integer Index,const IntTools_Root & I);
-		%feature("compactdefaultargs") ChangeValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: IntTools_Root
-") ChangeValue;
-		IntTools_Root & ChangeValue (const Standard_Integer Index);
-		%feature("compactdefaultargs") Remove;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: None
-") Remove;
-		void Remove (const Standard_Integer Index);
-		%feature("compactdefaultargs") Remove;
-		%feature("autodoc", "	:param FromIndex:
-	:type FromIndex: int
-	:param ToIndex:
-	:type ToIndex: int
-	:rtype: None
-") Remove;
-		void Remove (const Standard_Integer FromIndex,const Standard_Integer ToIndex);
-};
-
-
-%extend IntTools_SequenceOfRoots {
 	%pythoncode {
 	__repr__ = _dumps_object
 	}
@@ -5062,154 +2253,22 @@ class IntTools_ShrunkRange {
 		%feature("autodoc", "	:rtype: None
 ") Perform;
 		void Perform ();
-		%feature("compactdefaultargs") ErrorStatus;
-		%feature("autodoc", "	* Returns code of computing shrunk range completion 0 - means successful completion 1 - nothing has been done 2 - initial range is out of edge's range 3 - first boundary of initial range is more than last boundary 4 - projection of first vertex failed 5 - projection of second vertex failed 6 - shrunk range can not be computed shrunk range is setted to initial range
+		%feature("compactdefaultargs") IsDone;
+		%feature("autodoc", "	* Returns True in case the shrunk range is computed
 
-	:rtype: int
-") ErrorStatus;
-		Standard_Integer ErrorStatus ();
+	:rtype: bool
+") IsDone;
+		Standard_Boolean IsDone ();
+		%feature("compactdefaultargs") IsSplittable;
+		%feature("autodoc", "	* Returns False in case the shrunk range is too short and the edge cannot be split, otherwise returns True
+
+	:rtype: bool
+") IsSplittable;
+		Standard_Boolean IsSplittable ();
 };
 
 
 %extend IntTools_ShrunkRange {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor IntTools_StdMapNodeOfMapOfCurveSample;
-class IntTools_StdMapNodeOfMapOfCurveSample : public TCollection_MapNode {
-	public:
-		%feature("compactdefaultargs") IntTools_StdMapNodeOfMapOfCurveSample;
-		%feature("autodoc", "	:param K:
-	:type K: IntTools_CurveRangeSample &
-	:param n:
-	:type n: TCollection_MapNodePtr &
-	:rtype: None
-") IntTools_StdMapNodeOfMapOfCurveSample;
-		 IntTools_StdMapNodeOfMapOfCurveSample (const IntTools_CurveRangeSample & K,const TCollection_MapNodePtr & n);
-		%feature("compactdefaultargs") Key;
-		%feature("autodoc", "	:rtype: IntTools_CurveRangeSample
-") Key;
-		IntTools_CurveRangeSample & Key ();
-};
-
-
-%extend IntTools_StdMapNodeOfMapOfCurveSample {
-	%pythoncode {
-		def GetHandle(self):
-		    try:
-		        return self.thisHandle
-		    except:
-		        self.thisHandle = Handle_IntTools_StdMapNodeOfMapOfCurveSample(self)
-		        self.thisown = False
-		        return self.thisHandle
-	}
-};
-
-%pythonappend Handle_IntTools_StdMapNodeOfMapOfCurveSample::Handle_IntTools_StdMapNodeOfMapOfCurveSample %{
-    # register the handle in the base object
-    if len(args) > 0:
-        register_handle(self, args[0])
-%}
-
-%nodefaultctor Handle_IntTools_StdMapNodeOfMapOfCurveSample;
-class Handle_IntTools_StdMapNodeOfMapOfCurveSample : public Handle_TCollection_MapNode {
-
-    public:
-        // constructors
-        Handle_IntTools_StdMapNodeOfMapOfCurveSample();
-        Handle_IntTools_StdMapNodeOfMapOfCurveSample(const Handle_IntTools_StdMapNodeOfMapOfCurveSample &aHandle);
-        Handle_IntTools_StdMapNodeOfMapOfCurveSample(const IntTools_StdMapNodeOfMapOfCurveSample *anItem);
-        void Nullify();
-        Standard_Boolean IsNull() const;
-        static const Handle_IntTools_StdMapNodeOfMapOfCurveSample DownCast(const Handle_Standard_Transient &AnObject);
-
-};
-%extend Handle_IntTools_StdMapNodeOfMapOfCurveSample {
-    IntTools_StdMapNodeOfMapOfCurveSample* _get_reference() {
-    return (IntTools_StdMapNodeOfMapOfCurveSample*)$self->Access();
-    }
-};
-
-%extend Handle_IntTools_StdMapNodeOfMapOfCurveSample {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
-};
-
-%extend IntTools_StdMapNodeOfMapOfCurveSample {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor IntTools_StdMapNodeOfMapOfSurfaceSample;
-class IntTools_StdMapNodeOfMapOfSurfaceSample : public TCollection_MapNode {
-	public:
-		%feature("compactdefaultargs") IntTools_StdMapNodeOfMapOfSurfaceSample;
-		%feature("autodoc", "	:param K:
-	:type K: IntTools_SurfaceRangeSample &
-	:param n:
-	:type n: TCollection_MapNodePtr &
-	:rtype: None
-") IntTools_StdMapNodeOfMapOfSurfaceSample;
-		 IntTools_StdMapNodeOfMapOfSurfaceSample (const IntTools_SurfaceRangeSample & K,const TCollection_MapNodePtr & n);
-		%feature("compactdefaultargs") Key;
-		%feature("autodoc", "	:rtype: IntTools_SurfaceRangeSample
-") Key;
-		IntTools_SurfaceRangeSample & Key ();
-};
-
-
-%extend IntTools_StdMapNodeOfMapOfSurfaceSample {
-	%pythoncode {
-		def GetHandle(self):
-		    try:
-		        return self.thisHandle
-		    except:
-		        self.thisHandle = Handle_IntTools_StdMapNodeOfMapOfSurfaceSample(self)
-		        self.thisown = False
-		        return self.thisHandle
-	}
-};
-
-%pythonappend Handle_IntTools_StdMapNodeOfMapOfSurfaceSample::Handle_IntTools_StdMapNodeOfMapOfSurfaceSample %{
-    # register the handle in the base object
-    if len(args) > 0:
-        register_handle(self, args[0])
-%}
-
-%nodefaultctor Handle_IntTools_StdMapNodeOfMapOfSurfaceSample;
-class Handle_IntTools_StdMapNodeOfMapOfSurfaceSample : public Handle_TCollection_MapNode {
-
-    public:
-        // constructors
-        Handle_IntTools_StdMapNodeOfMapOfSurfaceSample();
-        Handle_IntTools_StdMapNodeOfMapOfSurfaceSample(const Handle_IntTools_StdMapNodeOfMapOfSurfaceSample &aHandle);
-        Handle_IntTools_StdMapNodeOfMapOfSurfaceSample(const IntTools_StdMapNodeOfMapOfSurfaceSample *anItem);
-        void Nullify();
-        Standard_Boolean IsNull() const;
-        static const Handle_IntTools_StdMapNodeOfMapOfSurfaceSample DownCast(const Handle_Standard_Transient &AnObject);
-
-};
-%extend Handle_IntTools_StdMapNodeOfMapOfSurfaceSample {
-    IntTools_StdMapNodeOfMapOfSurfaceSample* _get_reference() {
-    return (IntTools_StdMapNodeOfMapOfSurfaceSample*)$self->Access();
-    }
-};
-
-%extend Handle_IntTools_StdMapNodeOfMapOfSurfaceSample {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
-};
-
-%extend IntTools_StdMapNodeOfMapOfSurfaceSample {
 	%pythoncode {
 	__repr__ = _dumps_object
 	}
@@ -5855,15 +2914,15 @@ class IntTools_Tools {
 ") CurveTolerance;
 		static Standard_Real CurveTolerance (const Handle_Geom_Curve & aC,const Standard_Real aTolBase);
 		%feature("compactdefaultargs") CheckCurve;
-		%feature("autodoc", "	:param theC:
-	:type theC: Handle_Geom_Curve &
-	:param theTol:
-	:type theTol: float
+		%feature("autodoc", "	* Checks if the curve is not covered by the default tolerance --confusion--. Builds bounding box for the curve and stores it into <theBox>.
+
+	:param theCurve:
+	:type theCurve: IntTools_Curve &
 	:param theBox:
 	:type theBox: Bnd_Box &
 	:rtype: bool
 ") CheckCurve;
-		static Standard_Boolean CheckCurve (const Handle_Geom_Curve & theC,const Standard_Real theTol,Bnd_Box & theBox);
+		static Standard_Boolean CheckCurve (const IntTools_Curve & theCurve,Bnd_Box & theBox);
 		%feature("compactdefaultargs") IsOnPave;
 		%feature("autodoc", "	:param theT:
 	:type theT: float
@@ -5957,9 +3016,23 @@ class IntTools_Tools {
 	:type theMaxDist: float &
 	:param theMaxPar:
 	:type theMaxPar: float &
+	:param theTolRange: default value is Precision::PConfusion()
+	:type theTolRange: float
 	:rtype: bool
 ") ComputeTolerance;
-		static Standard_Boolean ComputeTolerance (const Handle_Geom_Curve & theCurve3D,const Handle_Geom2d_Curve & theCurve2D,const Handle_Geom_Surface & theSurf,const Standard_Real theFirst,const Standard_Real theLast,Standard_Real &OutValue,Standard_Real &OutValue);
+		static Standard_Boolean ComputeTolerance (const Handle_Geom_Curve & theCurve3D,const Handle_Geom2d_Curve & theCurve2D,const Handle_Geom_Surface & theSurf,const Standard_Real theFirst,const Standard_Real theLast,Standard_Real &OutValue,Standard_Real &OutValue,const Standard_Real theTolRange = Precision::PConfusion());
+		%feature("compactdefaultargs") ComputeIntRange;
+		%feature("autodoc", "	* Computes the correct Intersection range for Line/Line, Line/Plane and Plane/Plane intersections
+
+	:param theTol1:
+	:type theTol1: float
+	:param theTol2:
+	:type theTol2: float
+	:param theAngle:
+	:type theAngle: float
+	:rtype: float
+") ComputeIntRange;
+		static Standard_Real ComputeIntRange (const Standard_Real theTol1,const Standard_Real theTol2,const Standard_Real theAngle);
 };
 
 
@@ -6022,7 +3095,7 @@ class IntTools_TopolTool : public Adaptor3d_TopolTool {
 ") NbSamples;
 		virtual Standard_Integer NbSamples ();
 		%feature("compactdefaultargs") SamplePoint;
-		%feature("autodoc", "	* Returns a 2d point from surface myS and a corresponded 3d point for given index. The index should be from 1 to NbSamples()
+		%feature("autodoc", "	* Returns a 2d point from surface myS and a corresponded 3d point for given index. The index should be from 1 to NbSamples----
 
 	:param Index:
 	:type Index: int
@@ -6034,7 +3107,7 @@ class IntTools_TopolTool : public Adaptor3d_TopolTool {
 ") SamplePoint;
 		virtual void SamplePoint (const Standard_Integer Index,gp_Pnt2d & P2d,gp_Pnt & P3d);
 		%feature("compactdefaultargs") SamplePnts;
-		%feature("autodoc", "	* compute the sample-points for the intersections algorithms by adaptive algorithm for BSpline surfaces. For other surfaces algorithm is the same as in method ComputeSamplePoints(), but only fill arrays of U and V sample parameters; theDefl is a requred deflection theNUmin, theNVmin are minimal nb points for U and V.
+		%feature("autodoc", "	* compute the sample-points for the intersections algorithms by adaptive algorithm for BSpline surfaces. For other surfaces algorithm is the same as in method ComputeSamplePoints----, but only fill arrays of U and V sample parameters; theDefl is a requred deflection theNUmin, theNVmin are minimal nb points for U and V.
 
 	:param theDefl:
 	:type theDefl: float
@@ -6079,22 +3152,73 @@ class Handle_IntTools_TopolTool : public Handle_Adaptor3d_TopolTool {
         static const Handle_IntTools_TopolTool DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_IntTools_TopolTool {
     IntTools_TopolTool* _get_reference() {
-    return (IntTools_TopolTool*)$self->Access();
+    return (IntTools_TopolTool*)$self->get();
     }
 };
 
 %extend Handle_IntTools_TopolTool {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend IntTools_TopolTool {
+	%pythoncode {
+	__repr__ = _dumps_object
+	}
+};
+class IntTools_WLineTool {
+	public:
+		%feature("compactdefaultargs") NotUseSurfacesForApprox;
+		%feature("autodoc", "	:param aF1:
+	:type aF1: TopoDS_Face &
+	:param aF2:
+	:type aF2: TopoDS_Face &
+	:param WL:
+	:type WL: Handle_IntPatch_WLine &
+	:param ifprm:
+	:type ifprm: int
+	:param ilprm:
+	:type ilprm: int
+	:rtype: bool
+") NotUseSurfacesForApprox;
+		static Standard_Boolean NotUseSurfacesForApprox (const TopoDS_Face & aF1,const TopoDS_Face & aF2,const Handle_IntPatch_WLine & WL,const Standard_Integer ifprm,const Standard_Integer ilprm);
+		%feature("compactdefaultargs") DecompositionOfWLine;
+		%feature("autodoc", "	:param theWLine:
+	:type theWLine: Handle_IntPatch_WLine &
+	:param theSurface1:
+	:type theSurface1: Handle_GeomAdaptor_HSurface &
+	:param theSurface2:
+	:type theSurface2: Handle_GeomAdaptor_HSurface &
+	:param theFace1:
+	:type theFace1: TopoDS_Face &
+	:param theFace2:
+	:type theFace2: TopoDS_Face &
+	:param theLConstructor:
+	:type theLConstructor: GeomInt_LineConstructor &
+	:param theAvoidLConstructor:
+	:type theAvoidLConstructor: bool
+	:param theTol:
+	:type theTol: float
+	:param theNewLines:
+	:type theNewLines: IntPatch_SequenceOfLine &
+	:param theReachedTol3d:
+	:type theReachedTol3d: float &
+	:param &:
+	:type &: Handle_IntTools_Context
+	:rtype: bool
+") DecompositionOfWLine;
+		static Standard_Boolean DecompositionOfWLine (const Handle_IntPatch_WLine & theWLine,const Handle_GeomAdaptor_HSurface & theSurface1,const Handle_GeomAdaptor_HSurface & theSurface2,const TopoDS_Face & theFace1,const TopoDS_Face & theFace2,const GeomInt_LineConstructor & theLConstructor,const Standard_Boolean theAvoidLConstructor,const Standard_Real theTol,IntPatch_SequenceOfLine & theNewLines,Standard_Real &OutValue,const Handle_IntTools_Context &);
+};
+
+
+%extend IntTools_WLineTool {
 	%pythoncode {
 	__repr__ = _dumps_object
 	}

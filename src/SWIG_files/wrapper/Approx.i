@@ -1,5 +1,5 @@
 /*
-Copyright 2008-2017 Thomas Paviot (tpaviot@gmail.com)
+Copyright 2008-2018 Thomas Paviot (tpaviot@gmail.com)
 
 
 This file is part of pythonOCC.
@@ -56,6 +56,12 @@ def register_handle(handle, base_object):
 /* typedefs */
 /* end typedefs declaration */
 
+/* templates */
+%template(Approx_SequenceOfHArray1OfReal) NCollection_Sequence <Handle_TColStd_HArray1OfReal>;
+%template(Approx_Array1OfAdHSurface) NCollection_Array1 <Handle_Adaptor3d_HSurface>;
+%template(Approx_Array1OfGTrsf2d) NCollection_Array1 <gp_GTrsf2d>;
+/* end templates declaration */
+
 /* public enums */
 enum Approx_Status {
 	Approx_PointsAdded = 0,
@@ -71,180 +77,6 @@ enum Approx_ParametrizationType {
 
 /* end public enums declaration */
 
-%nodefaultctor Approx_Array1OfAdHSurface;
-class Approx_Array1OfAdHSurface {
-	public:
-		%feature("compactdefaultargs") Approx_Array1OfAdHSurface;
-		%feature("autodoc", "	:param Low:
-	:type Low: int
-	:param Up:
-	:type Up: int
-	:rtype: None
-") Approx_Array1OfAdHSurface;
-		 Approx_Array1OfAdHSurface (const Standard_Integer Low,const Standard_Integer Up);
-		%feature("compactdefaultargs") Approx_Array1OfAdHSurface;
-		%feature("autodoc", "	:param Item:
-	:type Item: Handle_Adaptor3d_HSurface &
-	:param Low:
-	:type Low: int
-	:param Up:
-	:type Up: int
-	:rtype: None
-") Approx_Array1OfAdHSurface;
-		 Approx_Array1OfAdHSurface (const Handle_Adaptor3d_HSurface & Item,const Standard_Integer Low,const Standard_Integer Up);
-		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	:param V:
-	:type V: Handle_Adaptor3d_HSurface &
-	:rtype: None
-") Init;
-		void Init (const Handle_Adaptor3d_HSurface & V);
-		%feature("compactdefaultargs") Destroy;
-		%feature("autodoc", "	:rtype: None
-") Destroy;
-		void Destroy ();
-		%feature("compactdefaultargs") IsAllocated;
-		%feature("autodoc", "	:rtype: bool
-") IsAllocated;
-		Standard_Boolean IsAllocated ();
-		%feature("compactdefaultargs") Assign;
-		%feature("autodoc", "	:param Other:
-	:type Other: Approx_Array1OfAdHSurface &
-	:rtype: Approx_Array1OfAdHSurface
-") Assign;
-		const Approx_Array1OfAdHSurface & Assign (const Approx_Array1OfAdHSurface & Other);
-		%feature("compactdefaultargs") operator =;
-		%feature("autodoc", "	:param Other:
-	:type Other: Approx_Array1OfAdHSurface &
-	:rtype: Approx_Array1OfAdHSurface
-") operator =;
-		const Approx_Array1OfAdHSurface & operator = (const Approx_Array1OfAdHSurface & Other);
-		%feature("compactdefaultargs") Length;
-		%feature("autodoc", "	:rtype: int
-") Length;
-		Standard_Integer Length ();
-		%feature("compactdefaultargs") Lower;
-		%feature("autodoc", "	:rtype: int
-") Lower;
-		Standard_Integer Lower ();
-		%feature("compactdefaultargs") Upper;
-		%feature("autodoc", "	:rtype: int
-") Upper;
-		Standard_Integer Upper ();
-		%feature("compactdefaultargs") SetValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param Value:
-	:type Value: Handle_Adaptor3d_HSurface &
-	:rtype: None
-") SetValue;
-		void SetValue (const Standard_Integer Index,const Handle_Adaptor3d_HSurface & Value);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: Handle_Adaptor3d_HSurface
-") Value;
-		Handle_Adaptor3d_HSurface Value (const Standard_Integer Index);
-		%feature("compactdefaultargs") ChangeValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: Handle_Adaptor3d_HSurface
-") ChangeValue;
-		Handle_Adaptor3d_HSurface ChangeValue (const Standard_Integer Index);
-};
-
-
-%extend Approx_Array1OfAdHSurface {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor Approx_Array1OfGTrsf2d;
-class Approx_Array1OfGTrsf2d {
-	public:
-		%feature("compactdefaultargs") Approx_Array1OfGTrsf2d;
-		%feature("autodoc", "	:param Low:
-	:type Low: int
-	:param Up:
-	:type Up: int
-	:rtype: None
-") Approx_Array1OfGTrsf2d;
-		 Approx_Array1OfGTrsf2d (const Standard_Integer Low,const Standard_Integer Up);
-		%feature("compactdefaultargs") Approx_Array1OfGTrsf2d;
-		%feature("autodoc", "	:param Item:
-	:type Item: gp_GTrsf2d
-	:param Low:
-	:type Low: int
-	:param Up:
-	:type Up: int
-	:rtype: None
-") Approx_Array1OfGTrsf2d;
-		 Approx_Array1OfGTrsf2d (const gp_GTrsf2d & Item,const Standard_Integer Low,const Standard_Integer Up);
-		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	:param V:
-	:type V: gp_GTrsf2d
-	:rtype: None
-") Init;
-		void Init (const gp_GTrsf2d & V);
-		%feature("compactdefaultargs") Destroy;
-		%feature("autodoc", "	:rtype: None
-") Destroy;
-		void Destroy ();
-		%feature("compactdefaultargs") IsAllocated;
-		%feature("autodoc", "	:rtype: bool
-") IsAllocated;
-		Standard_Boolean IsAllocated ();
-		%feature("compactdefaultargs") Assign;
-		%feature("autodoc", "	:param Other:
-	:type Other: Approx_Array1OfGTrsf2d &
-	:rtype: Approx_Array1OfGTrsf2d
-") Assign;
-		const Approx_Array1OfGTrsf2d & Assign (const Approx_Array1OfGTrsf2d & Other);
-		%feature("compactdefaultargs") operator =;
-		%feature("autodoc", "	:param Other:
-	:type Other: Approx_Array1OfGTrsf2d &
-	:rtype: Approx_Array1OfGTrsf2d
-") operator =;
-		const Approx_Array1OfGTrsf2d & operator = (const Approx_Array1OfGTrsf2d & Other);
-		%feature("compactdefaultargs") Length;
-		%feature("autodoc", "	:rtype: int
-") Length;
-		Standard_Integer Length ();
-		%feature("compactdefaultargs") Lower;
-		%feature("autodoc", "	:rtype: int
-") Lower;
-		Standard_Integer Lower ();
-		%feature("compactdefaultargs") Upper;
-		%feature("autodoc", "	:rtype: int
-") Upper;
-		Standard_Integer Upper ();
-		%feature("compactdefaultargs") SetValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param Value:
-	:type Value: gp_GTrsf2d
-	:rtype: None
-") SetValue;
-		void SetValue (const Standard_Integer Index,const gp_GTrsf2d & Value);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: gp_GTrsf2d
-") Value;
-		const gp_GTrsf2d  Value (const Standard_Integer Index);
-		%feature("compactdefaultargs") ChangeValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: gp_GTrsf2d
-") ChangeValue;
-		gp_GTrsf2d  ChangeValue (const Standard_Integer Index);
-};
-
-
-%extend Approx_Array1OfGTrsf2d {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
 %nodefaultctor Approx_Curve2d;
 class Approx_Curve2d {
 	public:
@@ -332,7 +164,7 @@ class Approx_Curve3d {
 ") HasResult;
 		Standard_Boolean HasResult ();
 		%feature("compactdefaultargs") MaxError;
-		%feature("autodoc", "	* returns the Maximum Error (>0 when an approximation has been done, 0 if no approximation)
+		%feature("autodoc", "	* returns the Maximum Error -->0 when an approximation has been done, 0 if no approximation--
 
 	:rtype: float
 ") MaxError;
@@ -498,7 +330,7 @@ class Approx_CurvilinearParameter {
 ") MaxError3d;
 		Standard_Real MaxError3d ();
 		%feature("compactdefaultargs") Curve2d1;
-		%feature("autodoc", "	* returns the BsplineCurve representing the reparametrized 2D curve on the first surface (case of a curve on one or two surfaces)
+		%feature("autodoc", "	* returns the BsplineCurve representing the reparametrized 2D curve on the first surface --case of a curve on one or two surfaces--
 
 	:rtype: Handle_Geom2d_BSplineCurve
 ") Curve2d1;
@@ -510,7 +342,7 @@ class Approx_CurvilinearParameter {
 ") MaxError2d1;
 		Standard_Real MaxError2d1 ();
 		%feature("compactdefaultargs") Curve2d2;
-		%feature("autodoc", "	* returns the BsplineCurve representing the reparametrized 2D curve on the second surface (case of a curve on two surfaces)
+		%feature("autodoc", "	* returns the BsplineCurve representing the reparametrized 2D curve on the second surface --case of a curve on two surfaces--
 
 	:rtype: Handle_Geom2d_BSplineCurve
 ") Curve2d2;
@@ -538,7 +370,7 @@ class Approx_CurvilinearParameter {
 	}
 };
 %nodefaultctor Approx_CurvlinFunc;
-class Approx_CurvlinFunc : public MMgt_TShared {
+class Approx_CurvlinFunc : public Standard_Transient {
 	public:
 		%feature("compactdefaultargs") Approx_CurvlinFunc;
 		%feature("autodoc", "	:param C:
@@ -589,7 +421,7 @@ class Approx_CurvlinFunc : public MMgt_TShared {
 ") LastParameter;
 		Standard_Real LastParameter ();
 		%feature("compactdefaultargs") NbIntervals;
-		%feature("autodoc", "	* Returns the number of intervals for continuity <S>. May be one if Continuity(me) >= <S>
+		%feature("autodoc", "	* Returns the number of intervals for continuity <S>. May be one if Continuity--me-- >= <S>
 
 	:param S:
 	:type S: GeomAbs_Shape
@@ -597,7 +429,7 @@ class Approx_CurvlinFunc : public MMgt_TShared {
 ") NbIntervals;
 		Standard_Integer NbIntervals (const GeomAbs_Shape S);
 		%feature("compactdefaultargs") Intervals;
-		%feature("autodoc", "	* Stores in <T> the parameters bounding the intervals of continuity <S>. //! The array must provide enough room to accomodate for the parameters. i.e. T.Length() > NbIntervals()
+		%feature("autodoc", "	* Stores in <T> the parameters bounding the intervals of continuity <S>. //! The array must provide enough room to accomodate for the parameters. i.e. T.Length---- > NbIntervals----
 
 	:param T:
 	:type T: TColStd_Array1OfReal &
@@ -718,7 +550,7 @@ class Approx_CurvlinFunc : public MMgt_TShared {
 %}
 
 %nodefaultctor Handle_Approx_CurvlinFunc;
-class Handle_Approx_CurvlinFunc : public Handle_MMgt_TShared {
+class Handle_Approx_CurvlinFunc : public Handle_Standard_Transient {
 
     public:
         // constructors
@@ -730,19 +562,20 @@ class Handle_Approx_CurvlinFunc : public Handle_MMgt_TShared {
         static const Handle_Approx_CurvlinFunc DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_Approx_CurvlinFunc {
     Approx_CurvlinFunc* _get_reference() {
-    return (Approx_CurvlinFunc*)$self->Access();
+    return (Approx_CurvlinFunc*)$self->get();
     }
 };
 
 %extend Handle_Approx_CurvlinFunc {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend Approx_CurvlinFunc {
@@ -754,7 +587,9 @@ class Handle_Approx_CurvlinFunc : public Handle_MMgt_TShared {
 class Approx_FitAndDivide {
 	public:
 		%feature("compactdefaultargs") Approx_FitAndDivide;
-		%feature("autodoc", "	:param Line:
+		%feature("autodoc", "	* The MultiLine <Line> will be approximated until tolerances will be reached. The approximation will be done from degreemin to degreemax with a cutting if the corresponding boolean is True.
+
+	:param Line:
 	:type Line: AppCont_Function &
 	:param degreemin: default value is 3
 	:type degreemin: int
@@ -774,7 +609,9 @@ class Approx_FitAndDivide {
 ") Approx_FitAndDivide;
 		 Approx_FitAndDivide (const AppCont_Function & Line,const Standard_Integer degreemin = 3,const Standard_Integer degreemax = 8,const Standard_Real Tolerance3d = 1.0e-5,const Standard_Real Tolerance2d = 1.0e-5,const Standard_Boolean cutting = Standard_False,const AppParCurves_Constraint FirstC = AppParCurves_TangencyPoint,const AppParCurves_Constraint LastC = AppParCurves_TangencyPoint);
 		%feature("compactdefaultargs") Approx_FitAndDivide;
-		%feature("autodoc", "	:param degreemin: default value is 3
+		%feature("autodoc", "	* Initializes the fields of the algorithm.
+
+	:param degreemin: default value is 3
 	:type degreemin: int
 	:param degreemax: default value is 8
 	:type degreemax: int
@@ -792,13 +629,17 @@ class Approx_FitAndDivide {
 ") Approx_FitAndDivide;
 		 Approx_FitAndDivide (const Standard_Integer degreemin = 3,const Standard_Integer degreemax = 8,const Standard_Real Tolerance3d = 1.0e-05,const Standard_Real Tolerance2d = 1.0e-05,const Standard_Boolean cutting = Standard_False,const AppParCurves_Constraint FirstC = AppParCurves_TangencyPoint,const AppParCurves_Constraint LastC = AppParCurves_TangencyPoint);
 		%feature("compactdefaultargs") Perform;
-		%feature("autodoc", "	:param Line:
+		%feature("autodoc", "	* runs the algorithm after having initialized the fields.
+
+	:param Line:
 	:type Line: AppCont_Function &
 	:rtype: None
 ") Perform;
 		void Perform (const AppCont_Function & Line);
 		%feature("compactdefaultargs") SetDegrees;
-		%feature("autodoc", "	:param degreemin:
+		%feature("autodoc", "	* changes the degrees of the approximation.
+
+	:param degreemin:
 	:type degreemin: int
 	:param degreemax:
 	:type degreemax: int
@@ -806,7 +647,9 @@ class Approx_FitAndDivide {
 ") SetDegrees;
 		void SetDegrees (const Standard_Integer degreemin,const Standard_Integer degreemax);
 		%feature("compactdefaultargs") SetTolerances;
-		%feature("autodoc", "	:param Tolerance3d:
+		%feature("autodoc", "	* Changes the tolerances of the approximation.
+
+	:param Tolerance3d:
 	:type Tolerance3d: float
 	:param Tolerance2d:
 	:type Tolerance2d: float
@@ -814,7 +657,9 @@ class Approx_FitAndDivide {
 ") SetTolerances;
 		void SetTolerances (const Standard_Real Tolerance3d,const Standard_Real Tolerance2d);
 		%feature("compactdefaultargs") SetConstraints;
-		%feature("autodoc", "	:param FirstC:
+		%feature("autodoc", "	* Changes the constraints of the approximation.
+
+	:param FirstC:
 	:type FirstC: AppParCurves_Constraint
 	:param LastC:
 	:type LastC: AppParCurves_Constraint
@@ -822,15 +667,21 @@ class Approx_FitAndDivide {
 ") SetConstraints;
 		void SetConstraints (const AppParCurves_Constraint FirstC,const AppParCurves_Constraint LastC);
 		%feature("compactdefaultargs") IsAllApproximated;
-		%feature("autodoc", "	:rtype: bool
+		%feature("autodoc", "	* returns False if at a moment of the approximation, the status NoApproximation has been sent by the user when more points were needed.
+
+	:rtype: bool
 ") IsAllApproximated;
 		Standard_Boolean IsAllApproximated ();
 		%feature("compactdefaultargs") IsToleranceReached;
-		%feature("autodoc", "	:rtype: bool
+		%feature("autodoc", "	* returns False if the status NoPointsAdded has been sent.
+
+	:rtype: bool
 ") IsToleranceReached;
 		Standard_Boolean IsToleranceReached ();
 		%feature("compactdefaultargs") Error;
-		%feature("autodoc", "	:param Index:
+		%feature("autodoc", "	* returns the tolerances 2d and 3d of the <Index> MultiCurve.
+
+	:param Index:
 	:type Index: int
 	:param tol3d:
 	:type tol3d: float &
@@ -840,11 +691,15 @@ class Approx_FitAndDivide {
 ") Error;
 		void Error (const Standard_Integer Index,Standard_Real &OutValue,Standard_Real &OutValue);
 		%feature("compactdefaultargs") NbMultiCurves;
-		%feature("autodoc", "	:rtype: int
+		%feature("autodoc", "	* Returns the number of MultiCurve doing the approximation of the MultiLine.
+
+	:rtype: int
 ") NbMultiCurves;
 		Standard_Integer NbMultiCurves ();
 		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:param Index: default value is 1
+		%feature("autodoc", "	* returns the approximation MultiCurve of range <Index>.
+
+	:param Index: default value is 1
 	:type Index: int
 	:rtype: AppParCurves_MultiCurve
 ") Value;
@@ -871,7 +726,9 @@ class Approx_FitAndDivide {
 class Approx_FitAndDivide2d {
 	public:
 		%feature("compactdefaultargs") Approx_FitAndDivide2d;
-		%feature("autodoc", "	:param Line:
+		%feature("autodoc", "	* The MultiLine <Line> will be approximated until tolerances will be reached. The approximation will be done from degreemin to degreemax with a cutting if the corresponding boolean is True.
+
+	:param Line:
 	:type Line: AppCont_Function &
 	:param degreemin: default value is 3
 	:type degreemin: int
@@ -891,7 +748,9 @@ class Approx_FitAndDivide2d {
 ") Approx_FitAndDivide2d;
 		 Approx_FitAndDivide2d (const AppCont_Function & Line,const Standard_Integer degreemin = 3,const Standard_Integer degreemax = 8,const Standard_Real Tolerance3d = 1.0e-5,const Standard_Real Tolerance2d = 1.0e-5,const Standard_Boolean cutting = Standard_False,const AppParCurves_Constraint FirstC = AppParCurves_TangencyPoint,const AppParCurves_Constraint LastC = AppParCurves_TangencyPoint);
 		%feature("compactdefaultargs") Approx_FitAndDivide2d;
-		%feature("autodoc", "	:param degreemin: default value is 3
+		%feature("autodoc", "	* Initializes the fields of the algorithm.
+
+	:param degreemin: default value is 3
 	:type degreemin: int
 	:param degreemax: default value is 8
 	:type degreemax: int
@@ -909,13 +768,17 @@ class Approx_FitAndDivide2d {
 ") Approx_FitAndDivide2d;
 		 Approx_FitAndDivide2d (const Standard_Integer degreemin = 3,const Standard_Integer degreemax = 8,const Standard_Real Tolerance3d = 1.0e-05,const Standard_Real Tolerance2d = 1.0e-05,const Standard_Boolean cutting = Standard_False,const AppParCurves_Constraint FirstC = AppParCurves_TangencyPoint,const AppParCurves_Constraint LastC = AppParCurves_TangencyPoint);
 		%feature("compactdefaultargs") Perform;
-		%feature("autodoc", "	:param Line:
+		%feature("autodoc", "	* runs the algorithm after having initialized the fields.
+
+	:param Line:
 	:type Line: AppCont_Function &
 	:rtype: None
 ") Perform;
 		void Perform (const AppCont_Function & Line);
 		%feature("compactdefaultargs") SetDegrees;
-		%feature("autodoc", "	:param degreemin:
+		%feature("autodoc", "	* changes the degrees of the approximation.
+
+	:param degreemin:
 	:type degreemin: int
 	:param degreemax:
 	:type degreemax: int
@@ -923,7 +786,9 @@ class Approx_FitAndDivide2d {
 ") SetDegrees;
 		void SetDegrees (const Standard_Integer degreemin,const Standard_Integer degreemax);
 		%feature("compactdefaultargs") SetTolerances;
-		%feature("autodoc", "	:param Tolerance3d:
+		%feature("autodoc", "	* Changes the tolerances of the approximation.
+
+	:param Tolerance3d:
 	:type Tolerance3d: float
 	:param Tolerance2d:
 	:type Tolerance2d: float
@@ -931,7 +796,9 @@ class Approx_FitAndDivide2d {
 ") SetTolerances;
 		void SetTolerances (const Standard_Real Tolerance3d,const Standard_Real Tolerance2d);
 		%feature("compactdefaultargs") SetConstraints;
-		%feature("autodoc", "	:param FirstC:
+		%feature("autodoc", "	* Changes the constraints of the approximation.
+
+	:param FirstC:
 	:type FirstC: AppParCurves_Constraint
 	:param LastC:
 	:type LastC: AppParCurves_Constraint
@@ -939,15 +806,21 @@ class Approx_FitAndDivide2d {
 ") SetConstraints;
 		void SetConstraints (const AppParCurves_Constraint FirstC,const AppParCurves_Constraint LastC);
 		%feature("compactdefaultargs") IsAllApproximated;
-		%feature("autodoc", "	:rtype: bool
+		%feature("autodoc", "	* returns False if at a moment of the approximation, the status NoApproximation has been sent by the user when more points were needed.
+
+	:rtype: bool
 ") IsAllApproximated;
 		Standard_Boolean IsAllApproximated ();
 		%feature("compactdefaultargs") IsToleranceReached;
-		%feature("autodoc", "	:rtype: bool
+		%feature("autodoc", "	* returns False if the status NoPointsAdded has been sent.
+
+	:rtype: bool
 ") IsToleranceReached;
 		Standard_Boolean IsToleranceReached ();
 		%feature("compactdefaultargs") Error;
-		%feature("autodoc", "	:param Index:
+		%feature("autodoc", "	* returns the tolerances 2d and 3d of the <Index> MultiCurve.
+
+	:param Index:
 	:type Index: int
 	:param tol3d:
 	:type tol3d: float &
@@ -957,11 +830,15 @@ class Approx_FitAndDivide2d {
 ") Error;
 		void Error (const Standard_Integer Index,Standard_Real &OutValue,Standard_Real &OutValue);
 		%feature("compactdefaultargs") NbMultiCurves;
-		%feature("autodoc", "	:rtype: int
+		%feature("autodoc", "	* Returns the number of MultiCurve doing the approximation of the MultiLine.
+
+	:rtype: int
 ") NbMultiCurves;
 		Standard_Integer NbMultiCurves ();
 		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:param Index: default value is 1
+		%feature("autodoc", "	* returns the approximation MultiCurve of range <Index>.
+
+	:param Index: default value is 1
 	:type Index: int
 	:rtype: AppParCurves_MultiCurve
 ") Value;
@@ -980,248 +857,6 @@ class Approx_FitAndDivide2d {
 
 
 %extend Approx_FitAndDivide2d {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor Approx_HArray1OfAdHSurface;
-class Approx_HArray1OfAdHSurface : public MMgt_TShared {
-	public:
-		%feature("compactdefaultargs") Approx_HArray1OfAdHSurface;
-		%feature("autodoc", "	:param Low:
-	:type Low: int
-	:param Up:
-	:type Up: int
-	:rtype: None
-") Approx_HArray1OfAdHSurface;
-		 Approx_HArray1OfAdHSurface (const Standard_Integer Low,const Standard_Integer Up);
-		%feature("compactdefaultargs") Approx_HArray1OfAdHSurface;
-		%feature("autodoc", "	:param Low:
-	:type Low: int
-	:param Up:
-	:type Up: int
-	:param V:
-	:type V: Handle_Adaptor3d_HSurface &
-	:rtype: None
-") Approx_HArray1OfAdHSurface;
-		 Approx_HArray1OfAdHSurface (const Standard_Integer Low,const Standard_Integer Up,const Handle_Adaptor3d_HSurface & V);
-		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	:param V:
-	:type V: Handle_Adaptor3d_HSurface &
-	:rtype: None
-") Init;
-		void Init (const Handle_Adaptor3d_HSurface & V);
-		%feature("compactdefaultargs") Length;
-		%feature("autodoc", "	:rtype: int
-") Length;
-		Standard_Integer Length ();
-		%feature("compactdefaultargs") Lower;
-		%feature("autodoc", "	:rtype: int
-") Lower;
-		Standard_Integer Lower ();
-		%feature("compactdefaultargs") Upper;
-		%feature("autodoc", "	:rtype: int
-") Upper;
-		Standard_Integer Upper ();
-		%feature("compactdefaultargs") SetValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param Value:
-	:type Value: Handle_Adaptor3d_HSurface &
-	:rtype: None
-") SetValue;
-		void SetValue (const Standard_Integer Index,const Handle_Adaptor3d_HSurface & Value);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: Handle_Adaptor3d_HSurface
-") Value;
-		Handle_Adaptor3d_HSurface Value (const Standard_Integer Index);
-		%feature("compactdefaultargs") ChangeValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: Handle_Adaptor3d_HSurface
-") ChangeValue;
-		Handle_Adaptor3d_HSurface ChangeValue (const Standard_Integer Index);
-		%feature("compactdefaultargs") Array1;
-		%feature("autodoc", "	:rtype: Approx_Array1OfAdHSurface
-") Array1;
-		const Approx_Array1OfAdHSurface & Array1 ();
-		%feature("compactdefaultargs") ChangeArray1;
-		%feature("autodoc", "	:rtype: Approx_Array1OfAdHSurface
-") ChangeArray1;
-		Approx_Array1OfAdHSurface & ChangeArray1 ();
-};
-
-
-%extend Approx_HArray1OfAdHSurface {
-	%pythoncode {
-		def GetHandle(self):
-		    try:
-		        return self.thisHandle
-		    except:
-		        self.thisHandle = Handle_Approx_HArray1OfAdHSurface(self)
-		        self.thisown = False
-		        return self.thisHandle
-	}
-};
-
-%pythonappend Handle_Approx_HArray1OfAdHSurface::Handle_Approx_HArray1OfAdHSurface %{
-    # register the handle in the base object
-    if len(args) > 0:
-        register_handle(self, args[0])
-%}
-
-%nodefaultctor Handle_Approx_HArray1OfAdHSurface;
-class Handle_Approx_HArray1OfAdHSurface : public Handle_MMgt_TShared {
-
-    public:
-        // constructors
-        Handle_Approx_HArray1OfAdHSurface();
-        Handle_Approx_HArray1OfAdHSurface(const Handle_Approx_HArray1OfAdHSurface &aHandle);
-        Handle_Approx_HArray1OfAdHSurface(const Approx_HArray1OfAdHSurface *anItem);
-        void Nullify();
-        Standard_Boolean IsNull() const;
-        static const Handle_Approx_HArray1OfAdHSurface DownCast(const Handle_Standard_Transient &AnObject);
-
-};
-%extend Handle_Approx_HArray1OfAdHSurface {
-    Approx_HArray1OfAdHSurface* _get_reference() {
-    return (Approx_HArray1OfAdHSurface*)$self->Access();
-    }
-};
-
-%extend Handle_Approx_HArray1OfAdHSurface {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
-};
-
-%extend Approx_HArray1OfAdHSurface {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor Approx_HArray1OfGTrsf2d;
-class Approx_HArray1OfGTrsf2d : public MMgt_TShared {
-	public:
-		%feature("compactdefaultargs") Approx_HArray1OfGTrsf2d;
-		%feature("autodoc", "	:param Low:
-	:type Low: int
-	:param Up:
-	:type Up: int
-	:rtype: None
-") Approx_HArray1OfGTrsf2d;
-		 Approx_HArray1OfGTrsf2d (const Standard_Integer Low,const Standard_Integer Up);
-		%feature("compactdefaultargs") Approx_HArray1OfGTrsf2d;
-		%feature("autodoc", "	:param Low:
-	:type Low: int
-	:param Up:
-	:type Up: int
-	:param V:
-	:type V: gp_GTrsf2d
-	:rtype: None
-") Approx_HArray1OfGTrsf2d;
-		 Approx_HArray1OfGTrsf2d (const Standard_Integer Low,const Standard_Integer Up,const gp_GTrsf2d & V);
-		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	:param V:
-	:type V: gp_GTrsf2d
-	:rtype: None
-") Init;
-		void Init (const gp_GTrsf2d & V);
-		%feature("compactdefaultargs") Length;
-		%feature("autodoc", "	:rtype: int
-") Length;
-		Standard_Integer Length ();
-		%feature("compactdefaultargs") Lower;
-		%feature("autodoc", "	:rtype: int
-") Lower;
-		Standard_Integer Lower ();
-		%feature("compactdefaultargs") Upper;
-		%feature("autodoc", "	:rtype: int
-") Upper;
-		Standard_Integer Upper ();
-		%feature("compactdefaultargs") SetValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param Value:
-	:type Value: gp_GTrsf2d
-	:rtype: None
-") SetValue;
-		void SetValue (const Standard_Integer Index,const gp_GTrsf2d & Value);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: gp_GTrsf2d
-") Value;
-		const gp_GTrsf2d  Value (const Standard_Integer Index);
-		%feature("compactdefaultargs") ChangeValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: gp_GTrsf2d
-") ChangeValue;
-		gp_GTrsf2d  ChangeValue (const Standard_Integer Index);
-		%feature("compactdefaultargs") Array1;
-		%feature("autodoc", "	:rtype: Approx_Array1OfGTrsf2d
-") Array1;
-		const Approx_Array1OfGTrsf2d & Array1 ();
-		%feature("compactdefaultargs") ChangeArray1;
-		%feature("autodoc", "	:rtype: Approx_Array1OfGTrsf2d
-") ChangeArray1;
-		Approx_Array1OfGTrsf2d & ChangeArray1 ();
-};
-
-
-%extend Approx_HArray1OfGTrsf2d {
-	%pythoncode {
-		def GetHandle(self):
-		    try:
-		        return self.thisHandle
-		    except:
-		        self.thisHandle = Handle_Approx_HArray1OfGTrsf2d(self)
-		        self.thisown = False
-		        return self.thisHandle
-	}
-};
-
-%pythonappend Handle_Approx_HArray1OfGTrsf2d::Handle_Approx_HArray1OfGTrsf2d %{
-    # register the handle in the base object
-    if len(args) > 0:
-        register_handle(self, args[0])
-%}
-
-%nodefaultctor Handle_Approx_HArray1OfGTrsf2d;
-class Handle_Approx_HArray1OfGTrsf2d : public Handle_MMgt_TShared {
-
-    public:
-        // constructors
-        Handle_Approx_HArray1OfGTrsf2d();
-        Handle_Approx_HArray1OfGTrsf2d(const Handle_Approx_HArray1OfGTrsf2d &aHandle);
-        Handle_Approx_HArray1OfGTrsf2d(const Approx_HArray1OfGTrsf2d *anItem);
-        void Nullify();
-        Standard_Boolean IsNull() const;
-        static const Handle_Approx_HArray1OfGTrsf2d DownCast(const Handle_Standard_Transient &AnObject);
-
-};
-%extend Handle_Approx_HArray1OfGTrsf2d {
-    Approx_HArray1OfGTrsf2d* _get_reference() {
-    return (Approx_HArray1OfGTrsf2d*)$self->Access();
-    }
-};
-
-%extend Handle_Approx_HArray1OfGTrsf2d {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
-};
-
-%extend Approx_HArray1OfGTrsf2d {
 	%pythoncode {
 	__repr__ = _dumps_object
 	}
@@ -1344,220 +979,6 @@ class Approx_SameParameter {
 	__repr__ = _dumps_object
 	}
 };
-%nodefaultctor Approx_SequenceNodeOfSequenceOfHArray1OfReal;
-class Approx_SequenceNodeOfSequenceOfHArray1OfReal : public TCollection_SeqNode {
-	public:
-		%feature("compactdefaultargs") Approx_SequenceNodeOfSequenceOfHArray1OfReal;
-		%feature("autodoc", "	:param I:
-	:type I: Handle_TColStd_HArray1OfReal &
-	:param n:
-	:type n: TCollection_SeqNodePtr &
-	:param p:
-	:type p: TCollection_SeqNodePtr &
-	:rtype: None
-") Approx_SequenceNodeOfSequenceOfHArray1OfReal;
-		 Approx_SequenceNodeOfSequenceOfHArray1OfReal (const Handle_TColStd_HArray1OfReal & I,const TCollection_SeqNodePtr & n,const TCollection_SeqNodePtr & p);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:rtype: Handle_TColStd_HArray1OfReal
-") Value;
-		Handle_TColStd_HArray1OfReal Value ();
-};
-
-
-%extend Approx_SequenceNodeOfSequenceOfHArray1OfReal {
-	%pythoncode {
-		def GetHandle(self):
-		    try:
-		        return self.thisHandle
-		    except:
-		        self.thisHandle = Handle_Approx_SequenceNodeOfSequenceOfHArray1OfReal(self)
-		        self.thisown = False
-		        return self.thisHandle
-	}
-};
-
-%pythonappend Handle_Approx_SequenceNodeOfSequenceOfHArray1OfReal::Handle_Approx_SequenceNodeOfSequenceOfHArray1OfReal %{
-    # register the handle in the base object
-    if len(args) > 0:
-        register_handle(self, args[0])
-%}
-
-%nodefaultctor Handle_Approx_SequenceNodeOfSequenceOfHArray1OfReal;
-class Handle_Approx_SequenceNodeOfSequenceOfHArray1OfReal : public Handle_TCollection_SeqNode {
-
-    public:
-        // constructors
-        Handle_Approx_SequenceNodeOfSequenceOfHArray1OfReal();
-        Handle_Approx_SequenceNodeOfSequenceOfHArray1OfReal(const Handle_Approx_SequenceNodeOfSequenceOfHArray1OfReal &aHandle);
-        Handle_Approx_SequenceNodeOfSequenceOfHArray1OfReal(const Approx_SequenceNodeOfSequenceOfHArray1OfReal *anItem);
-        void Nullify();
-        Standard_Boolean IsNull() const;
-        static const Handle_Approx_SequenceNodeOfSequenceOfHArray1OfReal DownCast(const Handle_Standard_Transient &AnObject);
-
-};
-%extend Handle_Approx_SequenceNodeOfSequenceOfHArray1OfReal {
-    Approx_SequenceNodeOfSequenceOfHArray1OfReal* _get_reference() {
-    return (Approx_SequenceNodeOfSequenceOfHArray1OfReal*)$self->Access();
-    }
-};
-
-%extend Handle_Approx_SequenceNodeOfSequenceOfHArray1OfReal {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
-};
-
-%extend Approx_SequenceNodeOfSequenceOfHArray1OfReal {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor Approx_SequenceOfHArray1OfReal;
-class Approx_SequenceOfHArray1OfReal : public TCollection_BaseSequence {
-	public:
-		%feature("compactdefaultargs") Approx_SequenceOfHArray1OfReal;
-		%feature("autodoc", "	:rtype: None
-") Approx_SequenceOfHArray1OfReal;
-		 Approx_SequenceOfHArray1OfReal ();
-		%feature("compactdefaultargs") Approx_SequenceOfHArray1OfReal;
-		%feature("autodoc", "	:param Other:
-	:type Other: Approx_SequenceOfHArray1OfReal &
-	:rtype: None
-") Approx_SequenceOfHArray1OfReal;
-		 Approx_SequenceOfHArray1OfReal (const Approx_SequenceOfHArray1OfReal & Other);
-		%feature("compactdefaultargs") Clear;
-		%feature("autodoc", "	:rtype: None
-") Clear;
-		void Clear ();
-		%feature("compactdefaultargs") Assign;
-		%feature("autodoc", "	:param Other:
-	:type Other: Approx_SequenceOfHArray1OfReal &
-	:rtype: Approx_SequenceOfHArray1OfReal
-") Assign;
-		const Approx_SequenceOfHArray1OfReal & Assign (const Approx_SequenceOfHArray1OfReal & Other);
-		%feature("compactdefaultargs") operator =;
-		%feature("autodoc", "	:param Other:
-	:type Other: Approx_SequenceOfHArray1OfReal &
-	:rtype: Approx_SequenceOfHArray1OfReal
-") operator =;
-		const Approx_SequenceOfHArray1OfReal & operator = (const Approx_SequenceOfHArray1OfReal & Other);
-		%feature("compactdefaultargs") Append;
-		%feature("autodoc", "	:param T:
-	:type T: Handle_TColStd_HArray1OfReal &
-	:rtype: None
-") Append;
-		void Append (const Handle_TColStd_HArray1OfReal & T);
-		%feature("compactdefaultargs") Append;
-		%feature("autodoc", "	:param S:
-	:type S: Approx_SequenceOfHArray1OfReal &
-	:rtype: None
-") Append;
-		void Append (Approx_SequenceOfHArray1OfReal & S);
-		%feature("compactdefaultargs") Prepend;
-		%feature("autodoc", "	:param T:
-	:type T: Handle_TColStd_HArray1OfReal &
-	:rtype: None
-") Prepend;
-		void Prepend (const Handle_TColStd_HArray1OfReal & T);
-		%feature("compactdefaultargs") Prepend;
-		%feature("autodoc", "	:param S:
-	:type S: Approx_SequenceOfHArray1OfReal &
-	:rtype: None
-") Prepend;
-		void Prepend (Approx_SequenceOfHArray1OfReal & S);
-		%feature("compactdefaultargs") InsertBefore;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param T:
-	:type T: Handle_TColStd_HArray1OfReal &
-	:rtype: None
-") InsertBefore;
-		void InsertBefore (const Standard_Integer Index,const Handle_TColStd_HArray1OfReal & T);
-		%feature("compactdefaultargs") InsertBefore;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param S:
-	:type S: Approx_SequenceOfHArray1OfReal &
-	:rtype: None
-") InsertBefore;
-		void InsertBefore (const Standard_Integer Index,Approx_SequenceOfHArray1OfReal & S);
-		%feature("compactdefaultargs") InsertAfter;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param T:
-	:type T: Handle_TColStd_HArray1OfReal &
-	:rtype: None
-") InsertAfter;
-		void InsertAfter (const Standard_Integer Index,const Handle_TColStd_HArray1OfReal & T);
-		%feature("compactdefaultargs") InsertAfter;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param S:
-	:type S: Approx_SequenceOfHArray1OfReal &
-	:rtype: None
-") InsertAfter;
-		void InsertAfter (const Standard_Integer Index,Approx_SequenceOfHArray1OfReal & S);
-		%feature("compactdefaultargs") First;
-		%feature("autodoc", "	:rtype: Handle_TColStd_HArray1OfReal
-") First;
-		Handle_TColStd_HArray1OfReal First ();
-		%feature("compactdefaultargs") Last;
-		%feature("autodoc", "	:rtype: Handle_TColStd_HArray1OfReal
-") Last;
-		Handle_TColStd_HArray1OfReal Last ();
-		%feature("compactdefaultargs") Split;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param Sub:
-	:type Sub: Approx_SequenceOfHArray1OfReal &
-	:rtype: None
-") Split;
-		void Split (const Standard_Integer Index,Approx_SequenceOfHArray1OfReal & Sub);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: Handle_TColStd_HArray1OfReal
-") Value;
-		Handle_TColStd_HArray1OfReal Value (const Standard_Integer Index);
-		%feature("compactdefaultargs") SetValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param I:
-	:type I: Handle_TColStd_HArray1OfReal &
-	:rtype: None
-") SetValue;
-		void SetValue (const Standard_Integer Index,const Handle_TColStd_HArray1OfReal & I);
-		%feature("compactdefaultargs") ChangeValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: Handle_TColStd_HArray1OfReal
-") ChangeValue;
-		Handle_TColStd_HArray1OfReal ChangeValue (const Standard_Integer Index);
-		%feature("compactdefaultargs") Remove;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: None
-") Remove;
-		void Remove (const Standard_Integer Index);
-		%feature("compactdefaultargs") Remove;
-		%feature("autodoc", "	:param FromIndex:
-	:type FromIndex: int
-	:param ToIndex:
-	:type ToIndex: int
-	:rtype: None
-") Remove;
-		void Remove (const Standard_Integer FromIndex,const Standard_Integer ToIndex);
-};
-
-
-%extend Approx_SequenceOfHArray1OfReal {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
 %nodefaultctor Approx_SweepApproximation;
 class Approx_SweepApproximation {
 	public:
@@ -1568,7 +989,7 @@ class Approx_SweepApproximation {
 ") Approx_SweepApproximation;
 		 Approx_SweepApproximation (const Handle_Approx_SweepFunction & Func);
 		%feature("compactdefaultargs") Perform;
-		%feature("autodoc", "	* Perform the Approximation [First, Last] : Approx_SweepApproximation.cdl Tol3d : Tolerance to surface approximation Tol2d : Tolerance used to perform curve approximation Normaly the 2d curve are approximated with a tolerance given by the resolution on support surfaces, but if this tolerance is too large Tol2d is used. TolAngular : Tolerance (in radian) to control the angle beetween tangents on the section law and tangent of iso-v on approximed surface Continuity : The continuity in v waiting on the surface Degmax : The maximum degree in v requiered on the surface Segmax : The maximum number of span in v requiered on the surface Warning : The continuity ci can be obtained only if Ft is Ci
+		%feature("autodoc", "	* Perform the Approximation [First, Last] : Approx_SweepApproximation.cdl Tol3d : Tolerance to surface approximation Tol2d : Tolerance used to perform curve approximation Normaly the 2d curve are approximated with a tolerance given by the resolution on support surfaces, but if this tolerance is too large Tol2d is used. TolAngular : Tolerance --in radian-- to control the angle beetween tangents on the section law and tangent of iso-v on approximed surface Continuity : The continuity in v waiting on the surface Degmax : The maximum degree in v requiered on the surface Segmax : The maximum number of span in v requiered on the surface Warning : The continuity ci can be obtained only if Ft is Ci
 
 	:param First:
 	:type First: float
@@ -1774,7 +1195,7 @@ class Approx_SweepApproximation {
 	}
 };
 %nodefaultctor Approx_SweepFunction;
-class Approx_SweepFunction : public MMgt_TShared {
+class Approx_SweepFunction : public Standard_Transient {
 	public:
 		%feature("compactdefaultargs") D0;
 		%feature("autodoc", "	* compute the section for v = param
@@ -1889,7 +1310,7 @@ class Approx_SweepFunction : public MMgt_TShared {
 ") IsRational;
 		virtual Standard_Boolean IsRational ();
 		%feature("compactdefaultargs") NbIntervals;
-		%feature("autodoc", "	* Returns the number of intervals for continuity <S>. May be one if Continuity(me) >= <S>
+		%feature("autodoc", "	* Returns the number of intervals for continuity <S>. May be one if Continuity--me-- >= <S>
 
 	:param S:
 	:type S: GeomAbs_Shape
@@ -1897,7 +1318,7 @@ class Approx_SweepFunction : public MMgt_TShared {
 ") NbIntervals;
 		virtual Standard_Integer NbIntervals (const GeomAbs_Shape S);
 		%feature("compactdefaultargs") Intervals;
-		%feature("autodoc", "	* Stores in <T> the parameters bounding the intervals of continuity <S>. //! The array must provide enough room to accomodate for the parameters. i.e. T.Length() > NbIntervals()
+		%feature("autodoc", "	* Stores in <T> the parameters bounding the intervals of continuity <S>. //! The array must provide enough room to accomodate for the parameters. i.e. T.Length---- > NbIntervals----
 
 	:param T:
 	:type T: TColStd_Array1OfReal &
@@ -1931,7 +1352,7 @@ class Approx_SweepFunction : public MMgt_TShared {
 ") Resolution;
 		virtual void Resolution (const Standard_Integer Index,const Standard_Real Tol,Standard_Real &OutValue,Standard_Real &OutValue);
 		%feature("compactdefaultargs") GetTolerance;
-		%feature("autodoc", "	* Returns the tolerance to reach in approximation to satisfy. BoundTol error at the Boundary AngleTol tangent error at the Boundary (in radian) SurfTol error inside the surface.
+		%feature("autodoc", "	* Returns the tolerance to reach in approximation to satisfy. BoundTol error at the Boundary AngleTol tangent error at the Boundary --in radian-- SurfTol error inside the surface.
 
 	:param BoundTol:
 	:type BoundTol: float
@@ -1945,7 +1366,7 @@ class Approx_SweepFunction : public MMgt_TShared {
 ") GetTolerance;
 		virtual void GetTolerance (const Standard_Real BoundTol,const Standard_Real SurfTol,const Standard_Real AngleTol,TColStd_Array1OfReal & Tol3d);
 		%feature("compactdefaultargs") SetTolerance;
-		%feature("autodoc", "	* Is usefull, if (me) have to run numerical algorithm to perform D0, D1 or D2
+		%feature("autodoc", "	* Is usefull, if --me-- have to run numerical algorithm to perform D0, D1 or D2
 
 	:param Tol3d:
 	:type Tol3d: float
@@ -1996,7 +1417,7 @@ class Approx_SweepFunction : public MMgt_TShared {
 %}
 
 %nodefaultctor Handle_Approx_SweepFunction;
-class Handle_Approx_SweepFunction : public Handle_MMgt_TShared {
+class Handle_Approx_SweepFunction : public Handle_Standard_Transient {
 
     public:
         // constructors
@@ -2008,19 +1429,20 @@ class Handle_Approx_SweepFunction : public Handle_MMgt_TShared {
         static const Handle_Approx_SweepFunction DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_Approx_SweepFunction {
     Approx_SweepFunction* _get_reference() {
-    return (Approx_SweepFunction*)$self->Access();
+    return (Approx_SweepFunction*)$self->get();
     }
 };
 
 %extend Handle_Approx_SweepFunction {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend Approx_SweepFunction {

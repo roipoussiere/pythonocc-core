@@ -1,5 +1,5 @@
 /*
-Copyright 2008-2017 Thomas Paviot (tpaviot@gmail.com)
+Copyright 2008-2018 Thomas Paviot (tpaviot@gmail.com)
 
 
 This file is part of pythonOCC.
@@ -55,6 +55,9 @@ def register_handle(handle, base_object):
 
 /* typedefs */
 /* end typedefs declaration */
+
+/* templates */
+/* end templates declaration */
 
 /* public enums */
 enum BRepFeat_Status {
@@ -237,7 +240,7 @@ class BRepFeat_Builder : public BOPAlgo_BOP {
 ") SetOperation;
 		void SetOperation (const Standard_Integer theFuse);
 		%feature("compactdefaultargs") SetOperation;
-		%feature("autodoc", "	* Sets the operation of local boolean operation. If theFlag = True it means that no selection of parts of the tool is needed, t.e. no second part. In that case if theFuse = 0 than operation is COMMON, otherwise CUT21. If theFlag = False SetOperation(theFuse) function is called.
+		%feature("autodoc", "	* Sets the operation of local boolean operation. If theFlag = True it means that no selection of parts of the tool is needed, t.e. no second part. In that case if theFuse = 0 than operation is COMMON, otherwise CUT21. If theFlag = False SetOperation--theFuse-- function is called.
 
 	:param theFuse:
 	:type theFuse: int
@@ -507,7 +510,7 @@ class BRepFeat_Gluer : public BRepBuilderAPI_MakeShape {
 ") GluedShape;
 		const TopoDS_Shape  GluedShape ();
 		%feature("compactdefaultargs") Build;
-		%feature("autodoc", "	* This is called by Shape(). It does nothing but may be redefined.
+		%feature("autodoc", "	* This is called by Shape----. It does nothing but may be redefined.
 
 	:rtype: void
 ") Build;
@@ -644,6 +647,14 @@ class BRepFeat_SplitShape : public BRepBuilderAPI_MakeShape {
 	:rtype: None
 ") BRepFeat_SplitShape;
 		 BRepFeat_SplitShape (const TopoDS_Shape & S);
+		%feature("compactdefaultargs") Add;
+		%feature("autodoc", "	* Add splitting edges or wires for whole initial shape withot additional specification edge->face, edge->edge This method puts edge on the corresponding faces from initial shape
+
+	:param theEdges:
+	:type theEdges: TopTools_SequenceOfShape &
+	:rtype: bool
+") Add;
+		Standard_Boolean Add (const TopTools_SequenceOfShape & theEdges);
 		%feature("compactdefaultargs") Init;
 		%feature("autodoc", "	* Initializes the process on the shape <S>.
 
@@ -653,7 +664,7 @@ class BRepFeat_SplitShape : public BRepBuilderAPI_MakeShape {
 ") Init;
 		void Init (const TopoDS_Shape & S);
 		%feature("compactdefaultargs") SetCheckInterior;
-		%feature("autodoc", "	* Set the flag of check internal intersections default value is True (to check)
+		%feature("autodoc", "	* Set the flag of check internal intersections default value is True --to check--
 
 	:param ToCheckInterior:
 	:type ToCheckInterior: bool
@@ -707,7 +718,7 @@ class BRepFeat_SplitShape : public BRepBuilderAPI_MakeShape {
 ") DirectLeft;
 		const TopTools_ListOfShape & DirectLeft ();
 		%feature("compactdefaultargs") Left;
-		%feature("autodoc", "	* Returns the faces of the 'left' part on the shape. (It is build from DirectLeft, with the faces connected to this set, and so on...). Raises NotDone if IsDone returns <Standard_False>.
+		%feature("autodoc", "	* Returns the faces of the 'left' part on the shape. --It is build from DirectLeft, with the faces connected to this set, and so on...--. Raises NotDone if IsDone returns <Standard_False>.
 
 	:rtype: TopTools_ListOfShape
 ") Left;
@@ -752,7 +763,7 @@ class BRepFeat_MakeCylindricalHole : public BRepFeat_Builder {
 ") BRepFeat_MakeCylindricalHole;
 		 BRepFeat_MakeCylindricalHole ();
 		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	* Sets the axis of the hole(s).
+		%feature("autodoc", "	* Sets the axis of the hole--s--.
 
 	:param Axis:
 	:type Axis: gp_Ax1
@@ -760,7 +771,7 @@ class BRepFeat_MakeCylindricalHole : public BRepFeat_Builder {
 ") Init;
 		void Init (const gp_Ax1 & Axis);
 		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	* Sets the shape and axis on which hole(s) will be performed.
+		%feature("autodoc", "	* Sets the shape and axis on which hole--s-- will be performed.
 
 	:param S:
 	:type S: TopoDS_Shape &
@@ -830,7 +841,7 @@ class BRepFeat_MakeCylindricalHole : public BRepFeat_Builder {
 ") Status;
 		BRepFeat_Status Status ();
 		%feature("compactdefaultargs") Build;
-		%feature("autodoc", "	* Builds the resulting shape (redefined from MakeShape). Invalidates the given parts of tools if any, and performs the result of the local operation.
+		%feature("autodoc", "	* Builds the resulting shape --redefined from MakeShape--. Invalidates the given parts of tools if any, and performs the result of the local operation.
 
 	:rtype: None
 ") Build;
@@ -996,7 +1007,7 @@ class BRepFeat_MakeLinearForm : public BRepFeat_RibSlot {
 ") BRepFeat_MakeLinearForm;
 		 BRepFeat_MakeLinearForm ();
 		%feature("compactdefaultargs") BRepFeat_MakeLinearForm;
-		%feature("autodoc", "	* contour W, a shape Sbase and a plane P are initialized to serve as the basic elements in the construction of the rib or groove. Direction and Direction1 give The vectors for defining the direction(s) in which thickness will be built up. Fuse offers a choice between: - removing matter with a Boolean cut using the setting 0 in case of the groove - adding matter with Boolean fusion using the setting 1 in case of the rib.
+		%feature("autodoc", "	* contour W, a shape Sbase and a plane P are initialized to serve as the basic elements in the construction of the rib or groove. Direction and Direction1 give The vectors for defining the direction--s-- in which thickness will be built up. Fuse offers a choice between: - removing matter with a Boolean cut using the setting 0 in case of the groove - adding matter with Boolean fusion using the setting 1 in case of the rib.
 
 	:param Sbase:
 	:type Sbase: TopoDS_Shape &
@@ -1016,7 +1027,7 @@ class BRepFeat_MakeLinearForm : public BRepFeat_RibSlot {
 ") BRepFeat_MakeLinearForm;
 		 BRepFeat_MakeLinearForm (const TopoDS_Shape & Sbase,const TopoDS_Wire & W,const Handle_Geom_Plane & P,const gp_Vec & Direction,const gp_Vec & Direction1,const Standard_Integer Fuse,const Standard_Boolean Modify);
 		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	* Initializes this construction algorithm. A contour W, a shape Sbase and a plane P are initialized to serve as the basic elements in the construction of the rib or groove. The vectors for defining the direction(s) in which thickness will be built up are given by Direction and Direction1. Fuse offers a choice between: - removing matter with a Boolean cut using the setting 0 in case of the groove - adding matter with Boolean fusion using the setting 1 in case of the rib.
+		%feature("autodoc", "	* Initializes this construction algorithm. A contour W, a shape Sbase and a plane P are initialized to serve as the basic elements in the construction of the rib or groove. The vectors for defining the direction--s-- in which thickness will be built up are given by Direction and Direction1. Fuse offers a choice between: - removing matter with a Boolean cut using the setting 0 in case of the groove - adding matter with Boolean fusion using the setting 1 in case of the rib.
 
 	:param Sbase:
 	:type Sbase: TopoDS_Shape &

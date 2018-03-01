@@ -1,5 +1,5 @@
 /*
-Copyright 2008-2017 Thomas Paviot (tpaviot@gmail.com)
+Copyright 2008-2018 Thomas Paviot (tpaviot@gmail.com)
 
 
 This file is part of pythonOCC.
@@ -55,6 +55,9 @@ def register_handle(handle, base_object):
 
 /* typedefs */
 /* end typedefs declaration */
+
+/* templates */
+/* end templates declaration */
 
 /* public enums */
 /* end public enums declaration */
@@ -147,19 +150,20 @@ class Handle_XmlMFunction_FunctionDriver : public Handle_XmlMDF_ADriver {
         static const Handle_XmlMFunction_FunctionDriver DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_XmlMFunction_FunctionDriver {
     XmlMFunction_FunctionDriver* _get_reference() {
-    return (XmlMFunction_FunctionDriver*)$self->Access();
+    return (XmlMFunction_FunctionDriver*)$self->get();
     }
 };
 
 %extend Handle_XmlMFunction_FunctionDriver {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend XmlMFunction_FunctionDriver {
@@ -234,19 +238,20 @@ class Handle_XmlMFunction_GraphNodeDriver : public Handle_XmlMDF_ADriver {
         static const Handle_XmlMFunction_GraphNodeDriver DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_XmlMFunction_GraphNodeDriver {
     XmlMFunction_GraphNodeDriver* _get_reference() {
-    return (XmlMFunction_GraphNodeDriver*)$self->Access();
+    return (XmlMFunction_GraphNodeDriver*)$self->get();
     }
 };
 
 %extend Handle_XmlMFunction_GraphNodeDriver {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend XmlMFunction_GraphNodeDriver {
@@ -321,19 +326,20 @@ class Handle_XmlMFunction_ScopeDriver : public Handle_XmlMDF_ADriver {
         static const Handle_XmlMFunction_ScopeDriver DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_XmlMFunction_ScopeDriver {
     XmlMFunction_ScopeDriver* _get_reference() {
-    return (XmlMFunction_ScopeDriver*)$self->Access();
+    return (XmlMFunction_ScopeDriver*)$self->get();
     }
 };
 
 %extend Handle_XmlMFunction_ScopeDriver {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend XmlMFunction_ScopeDriver {

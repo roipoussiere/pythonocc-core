@@ -1,5 +1,5 @@
 /*
-Copyright 2008-2017 Thomas Paviot (tpaviot@gmail.com)
+Copyright 2008-2018 Thomas Paviot (tpaviot@gmail.com)
 
 
 This file is part of pythonOCC.
@@ -56,6 +56,9 @@ def register_handle(handle, base_object):
 /* typedefs */
 /* end typedefs declaration */
 
+/* templates */
+/* end templates declaration */
+
 /* public enums */
 /* end public enums declaration */
 
@@ -63,7 +66,7 @@ def register_handle(handle, base_object):
 class ShapeBuild {
 	public:
 		%feature("compactdefaultargs") PlaneXOY;
-		%feature("autodoc", "	* Rebuilds a shape with substitution of some components Returns a Geom_Surface which is the Plane XOY (Z positive) This allows to consider an UV space homologous to a 3D space, with this support surface
+		%feature("autodoc", "	* Rebuilds a shape with substitution of some components Returns a Geom_Surface which is the Plane XOY --Z positive-- This allows to consider an UV space homologous to a 3D space, with this support surface
 
 	:rtype: Handle_Geom_Plane
 ") PlaneXOY;
@@ -79,7 +82,7 @@ class ShapeBuild {
 class ShapeBuild_Edge {
 	public:
 		%feature("compactdefaultargs") CopyReplaceVertices;
-		%feature("autodoc", "	* Copy edge and replace one or both its vertices to a given one(s). Vertex V1 replaces FORWARD vertex, and V2 - REVERSED, as they are found by TopoDS_Iterator. If V1 or V2 is NULL, the original vertex is taken
+		%feature("autodoc", "	* Copy edge and replace one or both its vertices to a given one--s--. Vertex V1 replaces FORWARD vertex, and V2 - REVERSED, as they are found by TopoDS_Iterator. If V1 or V2 is NULL, the original vertex is taken
 
 	:param edge:
 	:type edge: TopoDS_Edge &
@@ -127,7 +130,7 @@ class ShapeBuild_Edge {
 ") CopyPCurves;
 		void CopyPCurves (const TopoDS_Edge & toedge,const TopoDS_Edge & fromedge);
 		%feature("compactdefaultargs") Copy;
-		%feature("autodoc", "	* Make a copy of <edge> by call to CopyReplaceVertices() (i.e. construct new TEdge with the same pcurves and vertices). If <sharepcurves> is False, pcurves are also replaced by their copies with help of method CopyPCurves
+		%feature("autodoc", "	* Make a copy of <edge> by call to CopyReplaceVertices---- --i.e. construct new TEdge with the same pcurves and vertices--. If <sharepcurves> is False, pcurves are also replaced by their copies with help of method CopyPCurves
 
 	:param edge:
 	:type edge: TopoDS_Edge &
@@ -137,7 +140,7 @@ class ShapeBuild_Edge {
 ") Copy;
 		TopoDS_Edge Copy (const TopoDS_Edge & edge,const Standard_Boolean sharepcurves = Standard_True);
 		%feature("compactdefaultargs") RemovePCurve;
-		%feature("autodoc", "	* Removes the PCurve(s) which could be recorded in an Edge for the given Face
+		%feature("autodoc", "	* Removes the PCurve--s-- which could be recorded in an Edge for the given Face
 
 	:param edge:
 	:type edge: TopoDS_Edge &
@@ -147,7 +150,7 @@ class ShapeBuild_Edge {
 ") RemovePCurve;
 		void RemovePCurve (const TopoDS_Edge & edge,const TopoDS_Face & face);
 		%feature("compactdefaultargs") RemovePCurve;
-		%feature("autodoc", "	* Removes the PCurve(s) which could be recorded in an Edge for the given Surface
+		%feature("autodoc", "	* Removes the PCurve--s-- which could be recorded in an Edge for the given Surface
 
 	:param edge:
 	:type edge: TopoDS_Edge &
@@ -157,7 +160,7 @@ class ShapeBuild_Edge {
 ") RemovePCurve;
 		void RemovePCurve (const TopoDS_Edge & edge,const Handle_Geom_Surface & surf);
 		%feature("compactdefaultargs") RemovePCurve;
-		%feature("autodoc", "	* Removes the PCurve(s) which could be recorded in an Edge for the given Surface, with given Location
+		%feature("autodoc", "	* Removes the PCurve--s-- which could be recorded in an Edge for the given Surface, with given Location
 
 	:param edge:
 	:type edge: TopoDS_Edge &
@@ -330,7 +333,7 @@ class ShapeBuild_ReShape : public BRepTools_ReShape {
 ") ShapeBuild_ReShape;
 		 ShapeBuild_ReShape ();
 		%feature("compactdefaultargs") Apply;
-		%feature("autodoc", "	* Applies the substitutions requests to a shape //! <until> gives the level of type until which requests are taken into account. For subshapes of the type <until> no rebuild and futher exploring are done. ACTUALLY, NOT IMPLEMENTED BELOW TopAbs_FACE //! <buildmode> says how to do on a SOLID,SHELL ... if one of its sub-shapes has been changed: 0: at least one Replace or Remove -> COMPOUND, else as such 1: at least one Remove (Replace are ignored) -> COMPOUND 2: Replace and Remove are both ignored If Replace/Remove are ignored or absent, the result as same type as the starting shape
+		%feature("autodoc", "	* Applies the substitutions requests to a shape //! <until> gives the level of type until which requests are taken into account. For subshapes of the type <until> no rebuild and futher exploring are done. ACTUALLY, NOT IMPLEMENTED BELOW TopAbs_FACE //! <buildmode> says how to do on a SOLID,SHELL ... if one of its sub-shapes has been changed: 0: at least one Replace or Remove -> COMPOUND, else as such 1: at least one Remove --Replace are ignored-- -> COMPOUND 2: Replace and Remove are both ignored If Replace/Remove are ignored or absent, the result as same type as the starting shape
 
 	:param shape:
 	:type shape: TopoDS_Shape &
@@ -342,7 +345,7 @@ class ShapeBuild_ReShape : public BRepTools_ReShape {
 ") Apply;
 		virtual TopoDS_Shape Apply (const TopoDS_Shape & shape,const TopAbs_ShapeEnum until,const Standard_Integer buildmode);
 		%feature("compactdefaultargs") Apply;
-		%feature("autodoc", "	* Applies the substitutions requests to a shape. //! <until> gives the level of type until which requests are taken into account. For subshapes of the type <until> no rebuild and futher exploring are done. //! NOTE: each subshape can be replaced by shape of the same type or by shape containing only shapes of that type (for example, TopoDS_Edge can be replaced by TopoDS_Edge, TopoDS_Wire or TopoDS_Compound containing TopoDS_Edges). If incompatible shape type is encountered, it is ignored and flag FAIL1 is set in Status.
+		%feature("autodoc", "	* Applies the substitutions requests to a shape. //! <until> gives the level of type until which requests are taken into account. For subshapes of the type <until> no rebuild and futher exploring are done. //! NOTE: each subshape can be replaced by shape of the same type or by shape containing only shapes of that type --for example, TopoDS_Edge can be replaced by TopoDS_Edge, TopoDS_Wire or TopoDS_Compound containing TopoDS_Edges--. If incompatible shape type is encountered, it is ignored and flag FAIL1 is set in Status.
 
 	:param shape:
 	:type shape: TopoDS_Shape &
@@ -364,7 +367,7 @@ class ShapeBuild_ReShape : public BRepTools_ReShape {
 ") Status;
 		virtual Standard_Integer Status (const TopoDS_Shape & shape,TopoDS_Shape & newsh,const Standard_Boolean last = Standard_False);
 		%feature("compactdefaultargs") Status;
-		%feature("autodoc", "	* Queries the status of last call to Apply(shape,enum) OK : no (sub)shapes replaced or removed DONE1: source (starting) shape replaced DONE2: source (starting) shape removed DONE3: some subshapes replaced DONE4: some subshapes removed FAIL1: some replacements not done because of bad type of subshape
+		%feature("autodoc", "	* Queries the status of last call to Apply--shape,enum-- OK : no --sub--shapes replaced or removed DONE1: source --starting-- shape replaced DONE2: source --starting-- shape removed DONE3: some subshapes replaced DONE4: some subshapes removed FAIL1: some replacements not done because of bad type of subshape
 
 	:param status:
 	:type status: ShapeExtend_Status
@@ -405,19 +408,20 @@ class Handle_ShapeBuild_ReShape : public Handle_BRepTools_ReShape {
         static const Handle_ShapeBuild_ReShape DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_ShapeBuild_ReShape {
     ShapeBuild_ReShape* _get_reference() {
-    return (ShapeBuild_ReShape*)$self->Access();
+    return (ShapeBuild_ReShape*)$self->get();
     }
 };
 
 %extend Handle_ShapeBuild_ReShape {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend ShapeBuild_ReShape {
@@ -428,7 +432,7 @@ class Handle_ShapeBuild_ReShape : public Handle_BRepTools_ReShape {
 class ShapeBuild_Vertex {
 	public:
 		%feature("compactdefaultargs") CombineVertex;
-		%feature("autodoc", "	* Combines new vertex from two others. This new one is the smallest vertex which comprises both of the source vertices. The function takes into account the positions and tolerances of the source vertices. The tolerance of the new vertex will be equal to the minimal tolerance that is required to comprise source vertices multiplied by tolFactor (in order to avoid errors because of discreteness of calculations).
+		%feature("autodoc", "	* Combines new vertex from two others. This new one is the smallest vertex which comprises both of the source vertices. The function takes into account the positions and tolerances of the source vertices. The tolerance of the new vertex will be equal to the minimal tolerance that is required to comprise source vertices multiplied by tolFactor --in order to avoid errors because of discreteness of calculations--.
 
 	:param V1:
 	:type V1: TopoDS_Vertex &

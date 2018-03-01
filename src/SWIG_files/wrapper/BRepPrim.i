@@ -1,5 +1,5 @@
 /*
-Copyright 2008-2017 Thomas Paviot (tpaviot@gmail.com)
+Copyright 2008-2018 Thomas Paviot (tpaviot@gmail.com)
 
 
 This file is part of pythonOCC.
@@ -55,6 +55,9 @@ def register_handle(handle, base_object):
 
 /* typedefs */
 /* end typedefs declaration */
+
+/* templates */
+/* end templates declaration */
 
 /* public enums */
 enum BRepPrim_Direction {
@@ -763,7 +766,7 @@ class BRepPrim_OneAxis {
 ") MeridianValue;
 		virtual gp_Pnt2d MeridianValue (const Standard_Real V);
 		%feature("compactdefaultargs") MeridianOnAxis;
-		%feature("autodoc", "	* Returns True if the point of parameter <V> on the meridian is on the Axis. Default implementation is Abs(MeridianValue(V).X()) < Precision::Confusion()
+		%feature("autodoc", "	* Returns True if the point of parameter <V> on the meridian is on the Axis. Default implementation is Abs--MeridianValue--V--.X------ < Precision::Confusion----
 
 	:param V:
 	:type V: float
@@ -771,37 +774,37 @@ class BRepPrim_OneAxis {
 ") MeridianOnAxis;
 		virtual Standard_Boolean MeridianOnAxis (const Standard_Real V);
 		%feature("compactdefaultargs") MeridianClosed;
-		%feature("autodoc", "	* Returns True if the meridian is closed. Default implementation  is MeridianValue(VMin).IsEqual(MeridianValue(VMax), Precision::Confusion())
+		%feature("autodoc", "	* Returns True if the meridian is closed. Default implementation  is MeridianValue--VMin--.IsEqual--MeridianValue--VMax--, Precision::Confusion------
 
 	:rtype: bool
 ") MeridianClosed;
 		virtual Standard_Boolean MeridianClosed ();
 		%feature("compactdefaultargs") VMaxInfinite;
-		%feature("autodoc", "	* Returns True if VMax is infinite. Default Precision::IsPositiveInfinite(VMax);
+		%feature("autodoc", "	* Returns True if VMax is infinite. Default Precision::IsPositiveInfinite--VMax--;
 
 	:rtype: bool
 ") VMaxInfinite;
 		virtual Standard_Boolean VMaxInfinite ();
 		%feature("compactdefaultargs") VMinInfinite;
-		%feature("autodoc", "	* Returns True if VMin is infinite. Default Precision::IsNegativeInfinite(VMax);
+		%feature("autodoc", "	* Returns True if VMin is infinite. Default Precision::IsNegativeInfinite--VMax--;
 
 	:rtype: bool
 ") VMinInfinite;
 		virtual Standard_Boolean VMinInfinite ();
 		%feature("compactdefaultargs") HasTop;
-		%feature("autodoc", "	* Returns True if there is a top face. //! That is neither : VMaxInfinite() MeridianClosed() MeridianOnAxis(VMax)
+		%feature("autodoc", "	* Returns True if there is a top face. //! That is neither : VMaxInfinite---- MeridianClosed---- MeridianOnAxis--VMax--
 
 	:rtype: bool
 ") HasTop;
 		virtual Standard_Boolean HasTop ();
 		%feature("compactdefaultargs") HasBottom;
-		%feature("autodoc", "	* Returns True if there is a bottom face. //! That is neither : VMinInfinite() MeridianClosed() MeridianOnAxis(VMin)
+		%feature("autodoc", "	* Returns True if there is a bottom face. //! That is neither : VMinInfinite---- MeridianClosed---- MeridianOnAxis--VMin--
 
 	:rtype: bool
 ") HasBottom;
 		virtual Standard_Boolean HasBottom ();
 		%feature("compactdefaultargs") HasSides;
-		%feature("autodoc", "	* Returns True if there are Start and End faces. //! That is : 2*PI - Angle > Precision::Angular()
+		%feature("autodoc", "	* Returns True if there are Start and End faces. //! That is : 2*PI - Angle > Precision::Angular----
 
 	:rtype: bool
 ") HasSides;
@@ -819,13 +822,13 @@ class BRepPrim_OneAxis {
 ") LateralFace;
 		const TopoDS_Face  LateralFace ();
 		%feature("compactdefaultargs") TopFace;
-		%feature("autodoc", "	* Returns the top planar Face. It is Oriented toward the +Z axis (outside).
+		%feature("autodoc", "	* Returns the top planar Face. It is Oriented toward the +Z axis --outside--.
 
 	:rtype: TopoDS_Face
 ") TopFace;
 		const TopoDS_Face  TopFace ();
 		%feature("compactdefaultargs") BottomFace;
-		%feature("autodoc", "	* Returns the Bottom planar Face. It is Oriented toward the -Z axis (outside).
+		%feature("autodoc", "	* Returns the Bottom planar Face. It is Oriented toward the -Z axis --outside--.
 
 	:rtype: TopoDS_Face
 ") BottomFace;
@@ -909,7 +912,7 @@ class BRepPrim_OneAxis {
 ") StartEdge;
 		const TopoDS_Edge  StartEdge ();
 		%feature("compactdefaultargs") EndEdge;
-		%feature("autodoc", "	* Returns the Edge at angle Angle. If !HasSides() the StartEdge and the EndEdge are the same edge.
+		%feature("autodoc", "	* Returns the Edge at angle Angle. If !HasSides---- the StartEdge and the EndEdge are the same edge.
 
 	:rtype: TopoDS_Edge
 ") EndEdge;
@@ -939,13 +942,13 @@ class BRepPrim_OneAxis {
 ") EndBottomEdge;
 		const TopoDS_Edge  EndBottomEdge ();
 		%feature("compactdefaultargs") TopEdge;
-		%feature("autodoc", "	* Returns the edge at VMax. If MeridianClosed() the TopEdge and the BottomEdge are the same edge.
+		%feature("autodoc", "	* Returns the edge at VMax. If MeridianClosed---- the TopEdge and the BottomEdge are the same edge.
 
 	:rtype: TopoDS_Edge
 ") TopEdge;
 		const TopoDS_Edge  TopEdge ();
 		%feature("compactdefaultargs") BottomEdge;
-		%feature("autodoc", "	* Returns the edge at VMin. If MeridianClosed() the TopEdge and the BottomEdge are the same edge.
+		%feature("autodoc", "	* Returns the edge at VMin. If MeridianClosed---- the TopEdge and the BottomEdge are the same edge.
 
 	:rtype: TopoDS_Edge
 ") BottomEdge;
@@ -963,25 +966,25 @@ class BRepPrim_OneAxis {
 ") AxisBottomVertex;
 		const TopoDS_Vertex  AxisBottomVertex ();
 		%feature("compactdefaultargs") TopStartVertex;
-		%feature("autodoc", "	* Returns the vertex (0,VMax)
+		%feature("autodoc", "	* Returns the vertex --0,VMax--
 
 	:rtype: TopoDS_Vertex
 ") TopStartVertex;
 		const TopoDS_Vertex  TopStartVertex ();
 		%feature("compactdefaultargs") TopEndVertex;
-		%feature("autodoc", "	* Returns the vertex (angle,VMax)
+		%feature("autodoc", "	* Returns the vertex --angle,VMax--
 
 	:rtype: TopoDS_Vertex
 ") TopEndVertex;
 		const TopoDS_Vertex  TopEndVertex ();
 		%feature("compactdefaultargs") BottomStartVertex;
-		%feature("autodoc", "	* Returns the vertex (0,VMin)
+		%feature("autodoc", "	* Returns the vertex --0,VMin--
 
 	:rtype: TopoDS_Vertex
 ") BottomStartVertex;
 		const TopoDS_Vertex  BottomStartVertex ();
 		%feature("compactdefaultargs") BottomEndVertex;
-		%feature("autodoc", "	* Returns the vertex (angle,VMax)
+		%feature("autodoc", "	* Returns the vertex --angle,VMax--
 
 	:rtype: TopoDS_Vertex
 ") BottomEndVertex;
@@ -1168,7 +1171,7 @@ class BRepPrim_Cone : public BRepPrim_Revolution {
 ") BRepPrim_Cone;
 		 BRepPrim_Cone (const Standard_Real Angle,const gp_Ax2 & Axes);
 		%feature("compactdefaultargs") BRepPrim_Cone;
-		%feature("autodoc", "	* create a Cone at origin on Z axis, of height H, radius R1 at Z = 0, R2 at Z = H, X is the origin of angles. If R1 or R2 is 0 there is an apex. Otherwise, it is a truncated cone. //! Error : R1 and R2 < Resolution R1 or R2 negative Abs(R1-R2) < Resolution H < Resolution H negative
+		%feature("autodoc", "	* create a Cone at origin on Z axis, of height H, radius R1 at Z = 0, R2 at Z = H, X is the origin of angles. If R1 or R2 is 0 there is an apex. Otherwise, it is a truncated cone. //! Error : R1 and R2 < Resolution R1 or R2 negative Abs--R1-R2-- < Resolution H < Resolution H negative
 
 	:param R1:
 	:type R1: float

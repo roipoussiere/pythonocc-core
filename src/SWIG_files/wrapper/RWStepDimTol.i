@@ -1,5 +1,5 @@
 /*
-Copyright 2008-2017 Thomas Paviot (tpaviot@gmail.com)
+Copyright 2008-2018 Thomas Paviot (tpaviot@gmail.com)
 
 
 This file is part of pythonOCC.
@@ -56,6 +56,9 @@ def register_handle(handle, base_object):
 /* typedefs */
 /* end typedefs declaration */
 
+/* templates */
+/* end templates declaration */
+
 /* public enums */
 /* end public enums declaration */
 
@@ -93,7 +96,7 @@ class RWStepDimTol_RWAngularityTolerance {
 ") WriteStep;
 		void WriteStep (StepData_StepWriter & SW,const Handle_StepDimTol_AngularityTolerance & ent);
 		%feature("compactdefaultargs") Share;
-		%feature("autodoc", "	* Fills data for graph (shared items)
+		%feature("autodoc", "	* Fills data for graph --shared items--
 
 	:param ent:
 	:type ent: Handle_StepDimTol_AngularityTolerance &
@@ -144,7 +147,7 @@ class RWStepDimTol_RWCircularRunoutTolerance {
 ") WriteStep;
 		void WriteStep (StepData_StepWriter & SW,const Handle_StepDimTol_CircularRunoutTolerance & ent);
 		%feature("compactdefaultargs") Share;
-		%feature("autodoc", "	* Fills data for graph (shared items)
+		%feature("autodoc", "	* Fills data for graph --shared items--
 
 	:param ent:
 	:type ent: Handle_StepDimTol_CircularRunoutTolerance &
@@ -195,7 +198,7 @@ class RWStepDimTol_RWCoaxialityTolerance {
 ") WriteStep;
 		void WriteStep (StepData_StepWriter & SW,const Handle_StepDimTol_CoaxialityTolerance & ent);
 		%feature("compactdefaultargs") Share;
-		%feature("autodoc", "	* Fills data for graph (shared items)
+		%feature("autodoc", "	* Fills data for graph --shared items--
 
 	:param ent:
 	:type ent: Handle_StepDimTol_CoaxialityTolerance &
@@ -246,7 +249,7 @@ class RWStepDimTol_RWCommonDatum {
 ") WriteStep;
 		void WriteStep (StepData_StepWriter & SW,const Handle_StepDimTol_CommonDatum & ent);
 		%feature("compactdefaultargs") Share;
-		%feature("autodoc", "	* Fills data for graph (shared items)
+		%feature("autodoc", "	* Fills data for graph --shared items--
 
 	:param ent:
 	:type ent: Handle_StepDimTol_CommonDatum &
@@ -297,7 +300,7 @@ class RWStepDimTol_RWConcentricityTolerance {
 ") WriteStep;
 		void WriteStep (StepData_StepWriter & SW,const Handle_StepDimTol_ConcentricityTolerance & ent);
 		%feature("compactdefaultargs") Share;
-		%feature("autodoc", "	* Fills data for graph (shared items)
+		%feature("autodoc", "	* Fills data for graph --shared items--
 
 	:param ent:
 	:type ent: Handle_StepDimTol_ConcentricityTolerance &
@@ -348,7 +351,7 @@ class RWStepDimTol_RWCylindricityTolerance {
 ") WriteStep;
 		void WriteStep (StepData_StepWriter & SW,const Handle_StepDimTol_CylindricityTolerance & ent);
 		%feature("compactdefaultargs") Share;
-		%feature("autodoc", "	* Fills data for graph (shared items)
+		%feature("autodoc", "	* Fills data for graph --shared items--
 
 	:param ent:
 	:type ent: Handle_StepDimTol_CylindricityTolerance &
@@ -399,7 +402,7 @@ class RWStepDimTol_RWDatum {
 ") WriteStep;
 		void WriteStep (StepData_StepWriter & SW,const Handle_StepDimTol_Datum & ent);
 		%feature("compactdefaultargs") Share;
-		%feature("autodoc", "	* Fills data for graph (shared items)
+		%feature("autodoc", "	* Fills data for graph --shared items--
 
 	:param ent:
 	:type ent: Handle_StepDimTol_Datum &
@@ -450,7 +453,7 @@ class RWStepDimTol_RWDatumFeature {
 ") WriteStep;
 		void WriteStep (StepData_StepWriter & SW,const Handle_StepDimTol_DatumFeature & ent);
 		%feature("compactdefaultargs") Share;
-		%feature("autodoc", "	* Fills data for graph (shared items)
+		%feature("autodoc", "	* Fills data for graph --shared items--
 
 	:param ent:
 	:type ent: Handle_StepDimTol_DatumFeature &
@@ -501,7 +504,7 @@ class RWStepDimTol_RWDatumReference {
 ") WriteStep;
 		void WriteStep (StepData_StepWriter & SW,const Handle_StepDimTol_DatumReference & ent);
 		%feature("compactdefaultargs") Share;
-		%feature("autodoc", "	* Fills data for graph (shared items)
+		%feature("autodoc", "	* Fills data for graph --shared items--
 
 	:param ent:
 	:type ent: Handle_StepDimTol_DatumReference &
@@ -514,6 +517,200 @@ class RWStepDimTol_RWDatumReference {
 
 
 %extend RWStepDimTol_RWDatumReference {
+	%pythoncode {
+	__repr__ = _dumps_object
+	}
+};
+%nodefaultctor RWStepDimTol_RWDatumReferenceCompartment;
+class RWStepDimTol_RWDatumReferenceCompartment {
+	public:
+		%feature("compactdefaultargs") RWStepDimTol_RWDatumReferenceCompartment;
+		%feature("autodoc", "	* Empty constructor
+
+	:rtype: None
+") RWStepDimTol_RWDatumReferenceCompartment;
+		 RWStepDimTol_RWDatumReferenceCompartment ();
+		%feature("compactdefaultargs") ReadStep;
+		%feature("autodoc", "	* Reads DatumReferenceElement
+
+	:param data:
+	:type data: Handle_StepData_StepReaderData &
+	:param num:
+	:type num: int
+	:param ach:
+	:type ach: Handle_Interface_Check &
+	:param ent:
+	:type ent: Handle_StepDimTol_DatumReferenceCompartment &
+	:rtype: None
+") ReadStep;
+		void ReadStep (const Handle_StepData_StepReaderData & data,const Standard_Integer num,Handle_Interface_Check & ach,const Handle_StepDimTol_DatumReferenceCompartment & ent);
+		%feature("compactdefaultargs") WriteStep;
+		%feature("autodoc", "	* Writes DatumReferenceElement
+
+	:param SW:
+	:type SW: StepData_StepWriter &
+	:param ent:
+	:type ent: Handle_StepDimTol_DatumReferenceCompartment &
+	:rtype: None
+") WriteStep;
+		void WriteStep (StepData_StepWriter & SW,const Handle_StepDimTol_DatumReferenceCompartment & ent);
+		%feature("compactdefaultargs") Share;
+		%feature("autodoc", "	* Fills data for graph --shared items--
+
+	:param ent:
+	:type ent: Handle_StepDimTol_DatumReferenceCompartment &
+	:param iter:
+	:type iter: Interface_EntityIterator &
+	:rtype: None
+") Share;
+		void Share (const Handle_StepDimTol_DatumReferenceCompartment & ent,Interface_EntityIterator & iter);
+};
+
+
+%extend RWStepDimTol_RWDatumReferenceCompartment {
+	%pythoncode {
+	__repr__ = _dumps_object
+	}
+};
+%nodefaultctor RWStepDimTol_RWDatumReferenceElement;
+class RWStepDimTol_RWDatumReferenceElement {
+	public:
+		%feature("compactdefaultargs") RWStepDimTol_RWDatumReferenceElement;
+		%feature("autodoc", "	* Empty constructor
+
+	:rtype: None
+") RWStepDimTol_RWDatumReferenceElement;
+		 RWStepDimTol_RWDatumReferenceElement ();
+		%feature("compactdefaultargs") ReadStep;
+		%feature("autodoc", "	* Reads DatumReferenceElement
+
+	:param data:
+	:type data: Handle_StepData_StepReaderData &
+	:param num:
+	:type num: int
+	:param ach:
+	:type ach: Handle_Interface_Check &
+	:param ent:
+	:type ent: Handle_StepDimTol_DatumReferenceElement &
+	:rtype: None
+") ReadStep;
+		void ReadStep (const Handle_StepData_StepReaderData & data,const Standard_Integer num,Handle_Interface_Check & ach,const Handle_StepDimTol_DatumReferenceElement & ent);
+		%feature("compactdefaultargs") WriteStep;
+		%feature("autodoc", "	* Writes DatumReferenceElement
+
+	:param SW:
+	:type SW: StepData_StepWriter &
+	:param ent:
+	:type ent: Handle_StepDimTol_DatumReferenceElement &
+	:rtype: None
+") WriteStep;
+		void WriteStep (StepData_StepWriter & SW,const Handle_StepDimTol_DatumReferenceElement & ent);
+		%feature("compactdefaultargs") Share;
+		%feature("autodoc", "	* Fills data for graph --shared items--
+
+	:param ent:
+	:type ent: Handle_StepDimTol_DatumReferenceElement &
+	:param iter:
+	:type iter: Interface_EntityIterator &
+	:rtype: None
+") Share;
+		void Share (const Handle_StepDimTol_DatumReferenceElement & ent,Interface_EntityIterator & iter);
+};
+
+
+%extend RWStepDimTol_RWDatumReferenceElement {
+	%pythoncode {
+	__repr__ = _dumps_object
+	}
+};
+%nodefaultctor RWStepDimTol_RWDatumReferenceModifierWithValue;
+class RWStepDimTol_RWDatumReferenceModifierWithValue {
+	public:
+		%feature("compactdefaultargs") RWStepDimTol_RWDatumReferenceModifierWithValue;
+		%feature("autodoc", "	* Empty constructor
+
+	:rtype: None
+") RWStepDimTol_RWDatumReferenceModifierWithValue;
+		 RWStepDimTol_RWDatumReferenceModifierWithValue ();
+		%feature("compactdefaultargs") ReadStep;
+		%feature("autodoc", "	* Reads DatumReferenceModifierWithValue
+
+	:param data:
+	:type data: Handle_StepData_StepReaderData &
+	:param num:
+	:type num: int
+	:param ach:
+	:type ach: Handle_Interface_Check &
+	:param ent:
+	:type ent: Handle_StepDimTol_DatumReferenceModifierWithValue &
+	:rtype: None
+") ReadStep;
+		void ReadStep (const Handle_StepData_StepReaderData & data,const Standard_Integer num,Handle_Interface_Check & ach,const Handle_StepDimTol_DatumReferenceModifierWithValue & ent);
+		%feature("compactdefaultargs") WriteStep;
+		%feature("autodoc", "	* Writes DatumReferenceModifierWithValue
+
+	:param SW:
+	:type SW: StepData_StepWriter &
+	:param ent:
+	:type ent: Handle_StepDimTol_DatumReferenceModifierWithValue &
+	:rtype: None
+") WriteStep;
+		void WriteStep (StepData_StepWriter & SW,const Handle_StepDimTol_DatumReferenceModifierWithValue & ent);
+};
+
+
+%extend RWStepDimTol_RWDatumReferenceModifierWithValue {
+	%pythoncode {
+	__repr__ = _dumps_object
+	}
+};
+%nodefaultctor RWStepDimTol_RWDatumSystem;
+class RWStepDimTol_RWDatumSystem {
+	public:
+		%feature("compactdefaultargs") RWStepDimTol_RWDatumSystem;
+		%feature("autodoc", "	* Empty constructor
+
+	:rtype: None
+") RWStepDimTol_RWDatumSystem;
+		 RWStepDimTol_RWDatumSystem ();
+		%feature("compactdefaultargs") ReadStep;
+		%feature("autodoc", "	* Reads DatumSystem
+
+	:param data:
+	:type data: Handle_StepData_StepReaderData &
+	:param num:
+	:type num: int
+	:param ach:
+	:type ach: Handle_Interface_Check &
+	:param ent:
+	:type ent: Handle_StepDimTol_DatumSystem &
+	:rtype: None
+") ReadStep;
+		void ReadStep (const Handle_StepData_StepReaderData & data,const Standard_Integer num,Handle_Interface_Check & ach,const Handle_StepDimTol_DatumSystem & ent);
+		%feature("compactdefaultargs") WriteStep;
+		%feature("autodoc", "	* Writes DatumSystem
+
+	:param SW:
+	:type SW: StepData_StepWriter &
+	:param ent:
+	:type ent: Handle_StepDimTol_DatumSystem &
+	:rtype: None
+") WriteStep;
+		void WriteStep (StepData_StepWriter & SW,const Handle_StepDimTol_DatumSystem & ent);
+		%feature("compactdefaultargs") Share;
+		%feature("autodoc", "	* Fills data for graph --shared items--
+
+	:param ent:
+	:type ent: Handle_StepDimTol_DatumSystem &
+	:param iter:
+	:type iter: Interface_EntityIterator &
+	:rtype: None
+") Share;
+		void Share (const Handle_StepDimTol_DatumSystem & ent,Interface_EntityIterator & iter);
+};
+
+
+%extend RWStepDimTol_RWDatumSystem {
 	%pythoncode {
 	__repr__ = _dumps_object
 	}
@@ -552,7 +749,7 @@ class RWStepDimTol_RWDatumTarget {
 ") WriteStep;
 		void WriteStep (StepData_StepWriter & SW,const Handle_StepDimTol_DatumTarget & ent);
 		%feature("compactdefaultargs") Share;
-		%feature("autodoc", "	* Fills data for graph (shared items)
+		%feature("autodoc", "	* Fills data for graph --shared items--
 
 	:param ent:
 	:type ent: Handle_StepDimTol_DatumTarget &
@@ -603,7 +800,7 @@ class RWStepDimTol_RWFlatnessTolerance {
 ") WriteStep;
 		void WriteStep (StepData_StepWriter & SW,const Handle_StepDimTol_FlatnessTolerance & ent);
 		%feature("compactdefaultargs") Share;
-		%feature("autodoc", "	* Fills data for graph (shared items)
+		%feature("autodoc", "	* Fills data for graph --shared items--
 
 	:param ent:
 	:type ent: Handle_StepDimTol_FlatnessTolerance &
@@ -616,6 +813,186 @@ class RWStepDimTol_RWFlatnessTolerance {
 
 
 %extend RWStepDimTol_RWFlatnessTolerance {
+	%pythoncode {
+	__repr__ = _dumps_object
+	}
+};
+%nodefaultctor RWStepDimTol_RWGeneralDatumReference;
+class RWStepDimTol_RWGeneralDatumReference {
+	public:
+		%feature("compactdefaultargs") RWStepDimTol_RWGeneralDatumReference;
+		%feature("autodoc", "	* Empty constructor
+
+	:rtype: None
+") RWStepDimTol_RWGeneralDatumReference;
+		 RWStepDimTol_RWGeneralDatumReference ();
+		%feature("compactdefaultargs") ReadStep;
+		%feature("autodoc", "	* Reads GeneralDatumReference
+
+	:param data:
+	:type data: Handle_StepData_StepReaderData &
+	:param num:
+	:type num: int
+	:param ach:
+	:type ach: Handle_Interface_Check &
+	:param ent:
+	:type ent: Handle_StepDimTol_GeneralDatumReference &
+	:rtype: None
+") ReadStep;
+		void ReadStep (const Handle_StepData_StepReaderData & data,const Standard_Integer num,Handle_Interface_Check & ach,const Handle_StepDimTol_GeneralDatumReference & ent);
+		%feature("compactdefaultargs") WriteStep;
+		%feature("autodoc", "	* Writes GeneralDatumReference
+
+	:param SW:
+	:type SW: StepData_StepWriter &
+	:param ent:
+	:type ent: Handle_StepDimTol_GeneralDatumReference &
+	:rtype: None
+") WriteStep;
+		void WriteStep (StepData_StepWriter & SW,const Handle_StepDimTol_GeneralDatumReference & ent);
+		%feature("compactdefaultargs") Share;
+		%feature("autodoc", "	* Fills data for graph --shared items--
+
+	:param ent:
+	:type ent: Handle_StepDimTol_GeneralDatumReference &
+	:param iter:
+	:type iter: Interface_EntityIterator &
+	:rtype: None
+") Share;
+		void Share (const Handle_StepDimTol_GeneralDatumReference & ent,Interface_EntityIterator & iter);
+};
+
+
+%extend RWStepDimTol_RWGeneralDatumReference {
+	%pythoncode {
+	__repr__ = _dumps_object
+	}
+};
+%nodefaultctor RWStepDimTol_RWGeoTolAndGeoTolWthDatRef;
+class RWStepDimTol_RWGeoTolAndGeoTolWthDatRef {
+	public:
+		%feature("compactdefaultargs") RWStepDimTol_RWGeoTolAndGeoTolWthDatRef;
+		%feature("autodoc", "	:rtype: None
+") RWStepDimTol_RWGeoTolAndGeoTolWthDatRef;
+		 RWStepDimTol_RWGeoTolAndGeoTolWthDatRef ();
+		%feature("compactdefaultargs") ReadStep;
+		%feature("autodoc", "	:param data:
+	:type data: Handle_StepData_StepReaderData &
+	:param num:
+	:type num: int
+	:param ach:
+	:type ach: Handle_Interface_Check &
+	:param ent:
+	:type ent: Handle_StepDimTol_GeoTolAndGeoTolWthDatRef &
+	:rtype: None
+") ReadStep;
+		void ReadStep (const Handle_StepData_StepReaderData & data,const Standard_Integer num,Handle_Interface_Check & ach,const Handle_StepDimTol_GeoTolAndGeoTolWthDatRef & ent);
+		%feature("compactdefaultargs") WriteStep;
+		%feature("autodoc", "	:param SW:
+	:type SW: StepData_StepWriter &
+	:param ent:
+	:type ent: Handle_StepDimTol_GeoTolAndGeoTolWthDatRef &
+	:rtype: None
+") WriteStep;
+		void WriteStep (StepData_StepWriter & SW,const Handle_StepDimTol_GeoTolAndGeoTolWthDatRef & ent);
+		%feature("compactdefaultargs") Share;
+		%feature("autodoc", "	:param ent:
+	:type ent: Handle_StepDimTol_GeoTolAndGeoTolWthDatRef &
+	:param iter:
+	:type iter: Interface_EntityIterator &
+	:rtype: None
+") Share;
+		void Share (const Handle_StepDimTol_GeoTolAndGeoTolWthDatRef & ent,Interface_EntityIterator & iter);
+};
+
+
+%extend RWStepDimTol_RWGeoTolAndGeoTolWthDatRef {
+	%pythoncode {
+	__repr__ = _dumps_object
+	}
+};
+%nodefaultctor RWStepDimTol_RWGeoTolAndGeoTolWthDatRefAndGeoTolWthMaxTol;
+class RWStepDimTol_RWGeoTolAndGeoTolWthDatRefAndGeoTolWthMaxTol {
+	public:
+		%feature("compactdefaultargs") RWStepDimTol_RWGeoTolAndGeoTolWthDatRefAndGeoTolWthMaxTol;
+		%feature("autodoc", "	:rtype: None
+") RWStepDimTol_RWGeoTolAndGeoTolWthDatRefAndGeoTolWthMaxTol;
+		 RWStepDimTol_RWGeoTolAndGeoTolWthDatRefAndGeoTolWthMaxTol ();
+		%feature("compactdefaultargs") ReadStep;
+		%feature("autodoc", "	:param data:
+	:type data: Handle_StepData_StepReaderData &
+	:param num:
+	:type num: int
+	:param ach:
+	:type ach: Handle_Interface_Check &
+	:param ent:
+	:type ent: Handle_StepDimTol_GeoTolAndGeoTolWthDatRefAndGeoTolWthMaxTol &
+	:rtype: None
+") ReadStep;
+		void ReadStep (const Handle_StepData_StepReaderData & data,const Standard_Integer num,Handle_Interface_Check & ach,const Handle_StepDimTol_GeoTolAndGeoTolWthDatRefAndGeoTolWthMaxTol & ent);
+		%feature("compactdefaultargs") WriteStep;
+		%feature("autodoc", "	:param SW:
+	:type SW: StepData_StepWriter &
+	:param ent:
+	:type ent: Handle_StepDimTol_GeoTolAndGeoTolWthDatRefAndGeoTolWthMaxTol &
+	:rtype: None
+") WriteStep;
+		void WriteStep (StepData_StepWriter & SW,const Handle_StepDimTol_GeoTolAndGeoTolWthDatRefAndGeoTolWthMaxTol & ent);
+		%feature("compactdefaultargs") Share;
+		%feature("autodoc", "	:param ent:
+	:type ent: Handle_StepDimTol_GeoTolAndGeoTolWthDatRefAndGeoTolWthMaxTol &
+	:param iter:
+	:type iter: Interface_EntityIterator &
+	:rtype: None
+") Share;
+		void Share (const Handle_StepDimTol_GeoTolAndGeoTolWthDatRefAndGeoTolWthMaxTol & ent,Interface_EntityIterator & iter);
+};
+
+
+%extend RWStepDimTol_RWGeoTolAndGeoTolWthDatRefAndGeoTolWthMaxTol {
+	%pythoncode {
+	__repr__ = _dumps_object
+	}
+};
+%nodefaultctor RWStepDimTol_RWGeoTolAndGeoTolWthDatRefAndGeoTolWthMod;
+class RWStepDimTol_RWGeoTolAndGeoTolWthDatRefAndGeoTolWthMod {
+	public:
+		%feature("compactdefaultargs") RWStepDimTol_RWGeoTolAndGeoTolWthDatRefAndGeoTolWthMod;
+		%feature("autodoc", "	:rtype: None
+") RWStepDimTol_RWGeoTolAndGeoTolWthDatRefAndGeoTolWthMod;
+		 RWStepDimTol_RWGeoTolAndGeoTolWthDatRefAndGeoTolWthMod ();
+		%feature("compactdefaultargs") ReadStep;
+		%feature("autodoc", "	:param data:
+	:type data: Handle_StepData_StepReaderData &
+	:param num:
+	:type num: int
+	:param ach:
+	:type ach: Handle_Interface_Check &
+	:param ent:
+	:type ent: Handle_StepDimTol_GeoTolAndGeoTolWthDatRefAndGeoTolWthMod &
+	:rtype: None
+") ReadStep;
+		void ReadStep (const Handle_StepData_StepReaderData & data,const Standard_Integer num,Handle_Interface_Check & ach,const Handle_StepDimTol_GeoTolAndGeoTolWthDatRefAndGeoTolWthMod & ent);
+		%feature("compactdefaultargs") WriteStep;
+		%feature("autodoc", "	:param SW:
+	:type SW: StepData_StepWriter &
+	:param ent:
+	:type ent: Handle_StepDimTol_GeoTolAndGeoTolWthDatRefAndGeoTolWthMod &
+	:rtype: None
+") WriteStep;
+		void WriteStep (StepData_StepWriter & SW,const Handle_StepDimTol_GeoTolAndGeoTolWthDatRefAndGeoTolWthMod & ent);
+		%feature("compactdefaultargs") Share;
+		%feature("autodoc", "	:param ent:
+	:type ent: Handle_StepDimTol_GeoTolAndGeoTolWthDatRefAndGeoTolWthMod &
+	:param iter:
+	:type iter: Interface_EntityIterator &
+	:rtype: None
+") Share;
+		void Share (const Handle_StepDimTol_GeoTolAndGeoTolWthDatRefAndGeoTolWthMod & ent,Interface_EntityIterator & iter);
+};
+
+
+%extend RWStepDimTol_RWGeoTolAndGeoTolWthDatRefAndGeoTolWthMod {
 	%pythoncode {
 	__repr__ = _dumps_object
 	}
@@ -663,6 +1040,135 @@ class RWStepDimTol_RWGeoTolAndGeoTolWthDatRefAndModGeoTolAndPosTol {
 	__repr__ = _dumps_object
 	}
 };
+%nodefaultctor RWStepDimTol_RWGeoTolAndGeoTolWthDatRefAndUneqDisGeoTol;
+class RWStepDimTol_RWGeoTolAndGeoTolWthDatRefAndUneqDisGeoTol {
+	public:
+		%feature("compactdefaultargs") RWStepDimTol_RWGeoTolAndGeoTolWthDatRefAndUneqDisGeoTol;
+		%feature("autodoc", "	:rtype: None
+") RWStepDimTol_RWGeoTolAndGeoTolWthDatRefAndUneqDisGeoTol;
+		 RWStepDimTol_RWGeoTolAndGeoTolWthDatRefAndUneqDisGeoTol ();
+		%feature("compactdefaultargs") ReadStep;
+		%feature("autodoc", "	:param data:
+	:type data: Handle_StepData_StepReaderData &
+	:param num:
+	:type num: int
+	:param ach:
+	:type ach: Handle_Interface_Check &
+	:param ent:
+	:type ent: Handle_StepDimTol_GeoTolAndGeoTolWthDatRefAndUneqDisGeoTol &
+	:rtype: None
+") ReadStep;
+		void ReadStep (const Handle_StepData_StepReaderData & data,const Standard_Integer num,Handle_Interface_Check & ach,const Handle_StepDimTol_GeoTolAndGeoTolWthDatRefAndUneqDisGeoTol & ent);
+		%feature("compactdefaultargs") WriteStep;
+		%feature("autodoc", "	:param SW:
+	:type SW: StepData_StepWriter &
+	:param ent:
+	:type ent: Handle_StepDimTol_GeoTolAndGeoTolWthDatRefAndUneqDisGeoTol &
+	:rtype: None
+") WriteStep;
+		void WriteStep (StepData_StepWriter & SW,const Handle_StepDimTol_GeoTolAndGeoTolWthDatRefAndUneqDisGeoTol & ent);
+		%feature("compactdefaultargs") Share;
+		%feature("autodoc", "	:param ent:
+	:type ent: Handle_StepDimTol_GeoTolAndGeoTolWthDatRefAndUneqDisGeoTol &
+	:param iter:
+	:type iter: Interface_EntityIterator &
+	:rtype: None
+") Share;
+		void Share (const Handle_StepDimTol_GeoTolAndGeoTolWthDatRefAndUneqDisGeoTol & ent,Interface_EntityIterator & iter);
+};
+
+
+%extend RWStepDimTol_RWGeoTolAndGeoTolWthDatRefAndUneqDisGeoTol {
+	%pythoncode {
+	__repr__ = _dumps_object
+	}
+};
+%nodefaultctor RWStepDimTol_RWGeoTolAndGeoTolWthMaxTol;
+class RWStepDimTol_RWGeoTolAndGeoTolWthMaxTol {
+	public:
+		%feature("compactdefaultargs") RWStepDimTol_RWGeoTolAndGeoTolWthMaxTol;
+		%feature("autodoc", "	:rtype: None
+") RWStepDimTol_RWGeoTolAndGeoTolWthMaxTol;
+		 RWStepDimTol_RWGeoTolAndGeoTolWthMaxTol ();
+		%feature("compactdefaultargs") ReadStep;
+		%feature("autodoc", "	:param data:
+	:type data: Handle_StepData_StepReaderData &
+	:param num:
+	:type num: int
+	:param ach:
+	:type ach: Handle_Interface_Check &
+	:param ent:
+	:type ent: Handle_StepDimTol_GeoTolAndGeoTolWthMaxTol &
+	:rtype: None
+") ReadStep;
+		void ReadStep (const Handle_StepData_StepReaderData & data,const Standard_Integer num,Handle_Interface_Check & ach,const Handle_StepDimTol_GeoTolAndGeoTolWthMaxTol & ent);
+		%feature("compactdefaultargs") WriteStep;
+		%feature("autodoc", "	:param SW:
+	:type SW: StepData_StepWriter &
+	:param ent:
+	:type ent: Handle_StepDimTol_GeoTolAndGeoTolWthMaxTol &
+	:rtype: None
+") WriteStep;
+		void WriteStep (StepData_StepWriter & SW,const Handle_StepDimTol_GeoTolAndGeoTolWthMaxTol & ent);
+		%feature("compactdefaultargs") Share;
+		%feature("autodoc", "	:param ent:
+	:type ent: Handle_StepDimTol_GeoTolAndGeoTolWthMaxTol &
+	:param iter:
+	:type iter: Interface_EntityIterator &
+	:rtype: None
+") Share;
+		void Share (const Handle_StepDimTol_GeoTolAndGeoTolWthMaxTol & ent,Interface_EntityIterator & iter);
+};
+
+
+%extend RWStepDimTol_RWGeoTolAndGeoTolWthMaxTol {
+	%pythoncode {
+	__repr__ = _dumps_object
+	}
+};
+%nodefaultctor RWStepDimTol_RWGeoTolAndGeoTolWthMod;
+class RWStepDimTol_RWGeoTolAndGeoTolWthMod {
+	public:
+		%feature("compactdefaultargs") RWStepDimTol_RWGeoTolAndGeoTolWthMod;
+		%feature("autodoc", "	:rtype: None
+") RWStepDimTol_RWGeoTolAndGeoTolWthMod;
+		 RWStepDimTol_RWGeoTolAndGeoTolWthMod ();
+		%feature("compactdefaultargs") ReadStep;
+		%feature("autodoc", "	:param data:
+	:type data: Handle_StepData_StepReaderData &
+	:param num:
+	:type num: int
+	:param ach:
+	:type ach: Handle_Interface_Check &
+	:param ent:
+	:type ent: Handle_StepDimTol_GeoTolAndGeoTolWthMod &
+	:rtype: None
+") ReadStep;
+		void ReadStep (const Handle_StepData_StepReaderData & data,const Standard_Integer num,Handle_Interface_Check & ach,const Handle_StepDimTol_GeoTolAndGeoTolWthMod & ent);
+		%feature("compactdefaultargs") WriteStep;
+		%feature("autodoc", "	:param SW:
+	:type SW: StepData_StepWriter &
+	:param ent:
+	:type ent: Handle_StepDimTol_GeoTolAndGeoTolWthMod &
+	:rtype: None
+") WriteStep;
+		void WriteStep (StepData_StepWriter & SW,const Handle_StepDimTol_GeoTolAndGeoTolWthMod & ent);
+		%feature("compactdefaultargs") Share;
+		%feature("autodoc", "	:param ent:
+	:type ent: Handle_StepDimTol_GeoTolAndGeoTolWthMod &
+	:param iter:
+	:type iter: Interface_EntityIterator &
+	:rtype: None
+") Share;
+		void Share (const Handle_StepDimTol_GeoTolAndGeoTolWthMod & ent,Interface_EntityIterator & iter);
+};
+
+
+%extend RWStepDimTol_RWGeoTolAndGeoTolWthMod {
+	%pythoncode {
+	__repr__ = _dumps_object
+	}
+};
 %nodefaultctor RWStepDimTol_RWGeometricTolerance;
 class RWStepDimTol_RWGeometricTolerance {
 	public:
@@ -697,7 +1203,7 @@ class RWStepDimTol_RWGeometricTolerance {
 ") WriteStep;
 		void WriteStep (StepData_StepWriter & SW,const Handle_StepDimTol_GeometricTolerance & ent);
 		%feature("compactdefaultargs") Share;
-		%feature("autodoc", "	* Fills data for graph (shared items)
+		%feature("autodoc", "	* Fills data for graph --shared items--
 
 	:param ent:
 	:type ent: Handle_StepDimTol_GeometricTolerance &
@@ -748,7 +1254,7 @@ class RWStepDimTol_RWGeometricToleranceRelationship {
 ") WriteStep;
 		void WriteStep (StepData_StepWriter & SW,const Handle_StepDimTol_GeometricToleranceRelationship & ent);
 		%feature("compactdefaultargs") Share;
-		%feature("autodoc", "	* Fills data for graph (shared items)
+		%feature("autodoc", "	* Fills data for graph --shared items--
 
 	:param ent:
 	:type ent: Handle_StepDimTol_GeometricToleranceRelationship &
@@ -799,7 +1305,7 @@ class RWStepDimTol_RWGeometricToleranceWithDatumReference {
 ") WriteStep;
 		void WriteStep (StepData_StepWriter & SW,const Handle_StepDimTol_GeometricToleranceWithDatumReference & ent);
 		%feature("compactdefaultargs") Share;
-		%feature("autodoc", "	* Fills data for graph (shared items)
+		%feature("autodoc", "	* Fills data for graph --shared items--
 
 	:param ent:
 	:type ent: Handle_StepDimTol_GeometricToleranceWithDatumReference &
@@ -812,6 +1318,210 @@ class RWStepDimTol_RWGeometricToleranceWithDatumReference {
 
 
 %extend RWStepDimTol_RWGeometricToleranceWithDatumReference {
+	%pythoncode {
+	__repr__ = _dumps_object
+	}
+};
+%nodefaultctor RWStepDimTol_RWGeometricToleranceWithDefinedAreaUnit;
+class RWStepDimTol_RWGeometricToleranceWithDefinedAreaUnit {
+	public:
+		%feature("compactdefaultargs") RWStepDimTol_RWGeometricToleranceWithDefinedAreaUnit;
+		%feature("autodoc", "	* Empty constructor
+
+	:rtype: None
+") RWStepDimTol_RWGeometricToleranceWithDefinedAreaUnit;
+		 RWStepDimTol_RWGeometricToleranceWithDefinedAreaUnit ();
+		%feature("compactdefaultargs") ReadStep;
+		%feature("autodoc", "	* Reads GeometricToleranceWithDefinedAreaUnit
+
+	:param data:
+	:type data: Handle_StepData_StepReaderData &
+	:param num:
+	:type num: int
+	:param ach:
+	:type ach: Handle_Interface_Check &
+	:param ent:
+	:type ent: Handle_StepDimTol_GeometricToleranceWithDefinedAreaUnit &
+	:rtype: None
+") ReadStep;
+		void ReadStep (const Handle_StepData_StepReaderData & data,const Standard_Integer num,Handle_Interface_Check & ach,const Handle_StepDimTol_GeometricToleranceWithDefinedAreaUnit & ent);
+		%feature("compactdefaultargs") WriteStep;
+		%feature("autodoc", "	* Writes GeometricToleranceWithDefinedAreaUnit
+
+	:param SW:
+	:type SW: StepData_StepWriter &
+	:param ent:
+	:type ent: Handle_StepDimTol_GeometricToleranceWithDefinedAreaUnit &
+	:rtype: None
+") WriteStep;
+		void WriteStep (StepData_StepWriter & SW,const Handle_StepDimTol_GeometricToleranceWithDefinedAreaUnit & ent);
+		%feature("compactdefaultargs") Share;
+		%feature("autodoc", "	* Fills data for graph --shared items--
+
+	:param ent:
+	:type ent: Handle_StepDimTol_GeometricToleranceWithDefinedAreaUnit &
+	:param iter:
+	:type iter: Interface_EntityIterator &
+	:rtype: None
+") Share;
+		void Share (const Handle_StepDimTol_GeometricToleranceWithDefinedAreaUnit & ent,Interface_EntityIterator & iter);
+};
+
+
+%extend RWStepDimTol_RWGeometricToleranceWithDefinedAreaUnit {
+	%pythoncode {
+	__repr__ = _dumps_object
+	}
+};
+%nodefaultctor RWStepDimTol_RWGeometricToleranceWithDefinedUnit;
+class RWStepDimTol_RWGeometricToleranceWithDefinedUnit {
+	public:
+		%feature("compactdefaultargs") RWStepDimTol_RWGeometricToleranceWithDefinedUnit;
+		%feature("autodoc", "	* Empty constructor
+
+	:rtype: None
+") RWStepDimTol_RWGeometricToleranceWithDefinedUnit;
+		 RWStepDimTol_RWGeometricToleranceWithDefinedUnit ();
+		%feature("compactdefaultargs") ReadStep;
+		%feature("autodoc", "	* Reads GeometricToleranceWithDefinedUnit
+
+	:param data:
+	:type data: Handle_StepData_StepReaderData &
+	:param num:
+	:type num: int
+	:param ach:
+	:type ach: Handle_Interface_Check &
+	:param ent:
+	:type ent: Handle_StepDimTol_GeometricToleranceWithDefinedUnit &
+	:rtype: None
+") ReadStep;
+		void ReadStep (const Handle_StepData_StepReaderData & data,const Standard_Integer num,Handle_Interface_Check & ach,const Handle_StepDimTol_GeometricToleranceWithDefinedUnit & ent);
+		%feature("compactdefaultargs") WriteStep;
+		%feature("autodoc", "	* Writes GeometricToleranceWithDefinedUnit
+
+	:param SW:
+	:type SW: StepData_StepWriter &
+	:param ent:
+	:type ent: Handle_StepDimTol_GeometricToleranceWithDefinedUnit &
+	:rtype: None
+") WriteStep;
+		void WriteStep (StepData_StepWriter & SW,const Handle_StepDimTol_GeometricToleranceWithDefinedUnit & ent);
+		%feature("compactdefaultargs") Share;
+		%feature("autodoc", "	* Fills data for graph --shared items--
+
+	:param ent:
+	:type ent: Handle_StepDimTol_GeometricToleranceWithDefinedUnit &
+	:param iter:
+	:type iter: Interface_EntityIterator &
+	:rtype: None
+") Share;
+		void Share (const Handle_StepDimTol_GeometricToleranceWithDefinedUnit & ent,Interface_EntityIterator & iter);
+};
+
+
+%extend RWStepDimTol_RWGeometricToleranceWithDefinedUnit {
+	%pythoncode {
+	__repr__ = _dumps_object
+	}
+};
+%nodefaultctor RWStepDimTol_RWGeometricToleranceWithMaximumTolerance;
+class RWStepDimTol_RWGeometricToleranceWithMaximumTolerance {
+	public:
+		%feature("compactdefaultargs") RWStepDimTol_RWGeometricToleranceWithMaximumTolerance;
+		%feature("autodoc", "	* Empty constructor
+
+	:rtype: None
+") RWStepDimTol_RWGeometricToleranceWithMaximumTolerance;
+		 RWStepDimTol_RWGeometricToleranceWithMaximumTolerance ();
+		%feature("compactdefaultargs") ReadStep;
+		%feature("autodoc", "	* Reads GeometricToleranceWithMaximumTolerance
+
+	:param data:
+	:type data: Handle_StepData_StepReaderData &
+	:param num:
+	:type num: int
+	:param ach:
+	:type ach: Handle_Interface_Check &
+	:param ent:
+	:type ent: Handle_StepDimTol_GeometricToleranceWithMaximumTolerance &
+	:rtype: None
+") ReadStep;
+		void ReadStep (const Handle_StepData_StepReaderData & data,const Standard_Integer num,Handle_Interface_Check & ach,const Handle_StepDimTol_GeometricToleranceWithMaximumTolerance & ent);
+		%feature("compactdefaultargs") WriteStep;
+		%feature("autodoc", "	* Writes GeometricToleranceWithMaximumTolerance
+
+	:param SW:
+	:type SW: StepData_StepWriter &
+	:param ent:
+	:type ent: Handle_StepDimTol_GeometricToleranceWithMaximumTolerance &
+	:rtype: None
+") WriteStep;
+		void WriteStep (StepData_StepWriter & SW,const Handle_StepDimTol_GeometricToleranceWithMaximumTolerance & ent);
+		%feature("compactdefaultargs") Share;
+		%feature("autodoc", "	* Fills data for graph --shared items--
+
+	:param ent:
+	:type ent: Handle_StepDimTol_GeometricToleranceWithMaximumTolerance &
+	:param iter:
+	:type iter: Interface_EntityIterator &
+	:rtype: None
+") Share;
+		void Share (const Handle_StepDimTol_GeometricToleranceWithMaximumTolerance & ent,Interface_EntityIterator & iter);
+};
+
+
+%extend RWStepDimTol_RWGeometricToleranceWithMaximumTolerance {
+	%pythoncode {
+	__repr__ = _dumps_object
+	}
+};
+%nodefaultctor RWStepDimTol_RWGeometricToleranceWithModifiers;
+class RWStepDimTol_RWGeometricToleranceWithModifiers {
+	public:
+		%feature("compactdefaultargs") RWStepDimTol_RWGeometricToleranceWithModifiers;
+		%feature("autodoc", "	* Empty constructor
+
+	:rtype: None
+") RWStepDimTol_RWGeometricToleranceWithModifiers;
+		 RWStepDimTol_RWGeometricToleranceWithModifiers ();
+		%feature("compactdefaultargs") ReadStep;
+		%feature("autodoc", "	* Reads GeometricToleranceWithModifiers
+
+	:param data:
+	:type data: Handle_StepData_StepReaderData &
+	:param num:
+	:type num: int
+	:param ach:
+	:type ach: Handle_Interface_Check &
+	:param ent:
+	:type ent: Handle_StepDimTol_GeometricToleranceWithModifiers &
+	:rtype: None
+") ReadStep;
+		void ReadStep (const Handle_StepData_StepReaderData & data,const Standard_Integer num,Handle_Interface_Check & ach,const Handle_StepDimTol_GeometricToleranceWithModifiers & ent);
+		%feature("compactdefaultargs") WriteStep;
+		%feature("autodoc", "	* Writes GeometricToleranceWithModifiers
+
+	:param SW:
+	:type SW: StepData_StepWriter &
+	:param ent:
+	:type ent: Handle_StepDimTol_GeometricToleranceWithModifiers &
+	:rtype: None
+") WriteStep;
+		void WriteStep (StepData_StepWriter & SW,const Handle_StepDimTol_GeometricToleranceWithModifiers & ent);
+		%feature("compactdefaultargs") Share;
+		%feature("autodoc", "	* Fills data for graph --shared items--
+
+	:param ent:
+	:type ent: Handle_StepDimTol_GeometricToleranceWithModifiers &
+	:param iter:
+	:type iter: Interface_EntityIterator &
+	:rtype: None
+") Share;
+		void Share (const Handle_StepDimTol_GeometricToleranceWithModifiers & ent,Interface_EntityIterator & iter);
+};
+
+
+%extend RWStepDimTol_RWGeometricToleranceWithModifiers {
 	%pythoncode {
 	__repr__ = _dumps_object
 	}
@@ -850,7 +1560,7 @@ class RWStepDimTol_RWLineProfileTolerance {
 ") WriteStep;
 		void WriteStep (StepData_StepWriter & SW,const Handle_StepDimTol_LineProfileTolerance & ent);
 		%feature("compactdefaultargs") Share;
-		%feature("autodoc", "	* Fills data for graph (shared items)
+		%feature("autodoc", "	* Fills data for graph --shared items--
 
 	:param ent:
 	:type ent: Handle_StepDimTol_LineProfileTolerance &
@@ -901,7 +1611,7 @@ class RWStepDimTol_RWModifiedGeometricTolerance {
 ") WriteStep;
 		void WriteStep (StepData_StepWriter & SW,const Handle_StepDimTol_ModifiedGeometricTolerance & ent);
 		%feature("compactdefaultargs") Share;
-		%feature("autodoc", "	* Fills data for graph (shared items)
+		%feature("autodoc", "	* Fills data for graph --shared items--
 
 	:param ent:
 	:type ent: Handle_StepDimTol_ModifiedGeometricTolerance &
@@ -914,6 +1624,57 @@ class RWStepDimTol_RWModifiedGeometricTolerance {
 
 
 %extend RWStepDimTol_RWModifiedGeometricTolerance {
+	%pythoncode {
+	__repr__ = _dumps_object
+	}
+};
+%nodefaultctor RWStepDimTol_RWNonUniformZoneDefinition;
+class RWStepDimTol_RWNonUniformZoneDefinition {
+	public:
+		%feature("compactdefaultargs") RWStepDimTol_RWNonUniformZoneDefinition;
+		%feature("autodoc", "	* Empty constructor
+
+	:rtype: None
+") RWStepDimTol_RWNonUniformZoneDefinition;
+		 RWStepDimTol_RWNonUniformZoneDefinition ();
+		%feature("compactdefaultargs") ReadStep;
+		%feature("autodoc", "	* Reads NonUniformZoneDefinition
+
+	:param data:
+	:type data: Handle_StepData_StepReaderData &
+	:param num:
+	:type num: int
+	:param ach:
+	:type ach: Handle_Interface_Check &
+	:param ent:
+	:type ent: Handle_StepDimTol_NonUniformZoneDefinition &
+	:rtype: None
+") ReadStep;
+		void ReadStep (const Handle_StepData_StepReaderData & data,const Standard_Integer num,Handle_Interface_Check & ach,const Handle_StepDimTol_NonUniformZoneDefinition & ent);
+		%feature("compactdefaultargs") WriteStep;
+		%feature("autodoc", "	* Writes NonUniformZoneDefinition
+
+	:param SW:
+	:type SW: StepData_StepWriter &
+	:param ent:
+	:type ent: Handle_StepDimTol_NonUniformZoneDefinition &
+	:rtype: None
+") WriteStep;
+		void WriteStep (StepData_StepWriter & SW,const Handle_StepDimTol_NonUniformZoneDefinition & ent);
+		%feature("compactdefaultargs") Share;
+		%feature("autodoc", "	* Fills data for graph --shared items--
+
+	:param ent:
+	:type ent: Handle_StepDimTol_NonUniformZoneDefinition &
+	:param iter:
+	:type iter: Interface_EntityIterator &
+	:rtype: None
+") Share;
+		void Share (const Handle_StepDimTol_NonUniformZoneDefinition & ent,Interface_EntityIterator & iter);
+};
+
+
+%extend RWStepDimTol_RWNonUniformZoneDefinition {
 	%pythoncode {
 	__repr__ = _dumps_object
 	}
@@ -952,7 +1713,7 @@ class RWStepDimTol_RWParallelismTolerance {
 ") WriteStep;
 		void WriteStep (StepData_StepWriter & SW,const Handle_StepDimTol_ParallelismTolerance & ent);
 		%feature("compactdefaultargs") Share;
-		%feature("autodoc", "	* Fills data for graph (shared items)
+		%feature("autodoc", "	* Fills data for graph --shared items--
 
 	:param ent:
 	:type ent: Handle_StepDimTol_ParallelismTolerance &
@@ -1003,7 +1764,7 @@ class RWStepDimTol_RWPerpendicularityTolerance {
 ") WriteStep;
 		void WriteStep (StepData_StepWriter & SW,const Handle_StepDimTol_PerpendicularityTolerance & ent);
 		%feature("compactdefaultargs") Share;
-		%feature("autodoc", "	* Fills data for graph (shared items)
+		%feature("autodoc", "	* Fills data for graph --shared items--
 
 	:param ent:
 	:type ent: Handle_StepDimTol_PerpendicularityTolerance &
@@ -1054,7 +1815,7 @@ class RWStepDimTol_RWPlacedDatumTargetFeature {
 ") WriteStep;
 		void WriteStep (StepData_StepWriter & SW,const Handle_StepDimTol_PlacedDatumTargetFeature & ent);
 		%feature("compactdefaultargs") Share;
-		%feature("autodoc", "	* Fills data for graph (shared items)
+		%feature("autodoc", "	* Fills data for graph --shared items--
 
 	:param ent:
 	:type ent: Handle_StepDimTol_PlacedDatumTargetFeature &
@@ -1105,7 +1866,7 @@ class RWStepDimTol_RWPositionTolerance {
 ") WriteStep;
 		void WriteStep (StepData_StepWriter & SW,const Handle_StepDimTol_PositionTolerance & ent);
 		%feature("compactdefaultargs") Share;
-		%feature("autodoc", "	* Fills data for graph (shared items)
+		%feature("autodoc", "	* Fills data for graph --shared items--
 
 	:param ent:
 	:type ent: Handle_StepDimTol_PositionTolerance &
@@ -1118,6 +1879,57 @@ class RWStepDimTol_RWPositionTolerance {
 
 
 %extend RWStepDimTol_RWPositionTolerance {
+	%pythoncode {
+	__repr__ = _dumps_object
+	}
+};
+%nodefaultctor RWStepDimTol_RWProjectedZoneDefinition;
+class RWStepDimTol_RWProjectedZoneDefinition {
+	public:
+		%feature("compactdefaultargs") RWStepDimTol_RWProjectedZoneDefinition;
+		%feature("autodoc", "	* Empty constructor
+
+	:rtype: None
+") RWStepDimTol_RWProjectedZoneDefinition;
+		 RWStepDimTol_RWProjectedZoneDefinition ();
+		%feature("compactdefaultargs") ReadStep;
+		%feature("autodoc", "	* Reads ProjectedZoneDefinition
+
+	:param data:
+	:type data: Handle_StepData_StepReaderData &
+	:param num:
+	:type num: int
+	:param ach:
+	:type ach: Handle_Interface_Check &
+	:param ent:
+	:type ent: Handle_StepDimTol_ProjectedZoneDefinition &
+	:rtype: None
+") ReadStep;
+		void ReadStep (const Handle_StepData_StepReaderData & data,const Standard_Integer num,Handle_Interface_Check & ach,const Handle_StepDimTol_ProjectedZoneDefinition & ent);
+		%feature("compactdefaultargs") WriteStep;
+		%feature("autodoc", "	* Writes ProjectedZoneDefinition
+
+	:param SW:
+	:type SW: StepData_StepWriter &
+	:param ent:
+	:type ent: Handle_StepDimTol_ProjectedZoneDefinition &
+	:rtype: None
+") WriteStep;
+		void WriteStep (StepData_StepWriter & SW,const Handle_StepDimTol_ProjectedZoneDefinition & ent);
+		%feature("compactdefaultargs") Share;
+		%feature("autodoc", "	* Fills data for graph --shared items--
+
+	:param ent:
+	:type ent: Handle_StepDimTol_ProjectedZoneDefinition &
+	:param iter:
+	:type iter: Interface_EntityIterator &
+	:rtype: None
+") Share;
+		void Share (const Handle_StepDimTol_ProjectedZoneDefinition & ent,Interface_EntityIterator & iter);
+};
+
+
+%extend RWStepDimTol_RWProjectedZoneDefinition {
 	%pythoncode {
 	__repr__ = _dumps_object
 	}
@@ -1156,7 +1968,7 @@ class RWStepDimTol_RWRoundnessTolerance {
 ") WriteStep;
 		void WriteStep (StepData_StepWriter & SW,const Handle_StepDimTol_RoundnessTolerance & ent);
 		%feature("compactdefaultargs") Share;
-		%feature("autodoc", "	* Fills data for graph (shared items)
+		%feature("autodoc", "	* Fills data for graph --shared items--
 
 	:param ent:
 	:type ent: Handle_StepDimTol_RoundnessTolerance &
@@ -1169,6 +1981,98 @@ class RWStepDimTol_RWRoundnessTolerance {
 
 
 %extend RWStepDimTol_RWRoundnessTolerance {
+	%pythoncode {
+	__repr__ = _dumps_object
+	}
+};
+%nodefaultctor RWStepDimTol_RWRunoutZoneDefinition;
+class RWStepDimTol_RWRunoutZoneDefinition {
+	public:
+		%feature("compactdefaultargs") RWStepDimTol_RWRunoutZoneDefinition;
+		%feature("autodoc", "	* Empty constructor
+
+	:rtype: None
+") RWStepDimTol_RWRunoutZoneDefinition;
+		 RWStepDimTol_RWRunoutZoneDefinition ();
+		%feature("compactdefaultargs") ReadStep;
+		%feature("autodoc", "	* Reads RunoutZoneDefinition
+
+	:param data:
+	:type data: Handle_StepData_StepReaderData &
+	:param num:
+	:type num: int
+	:param ach:
+	:type ach: Handle_Interface_Check &
+	:param ent:
+	:type ent: Handle_StepDimTol_RunoutZoneDefinition &
+	:rtype: None
+") ReadStep;
+		void ReadStep (const Handle_StepData_StepReaderData & data,const Standard_Integer num,Handle_Interface_Check & ach,const Handle_StepDimTol_RunoutZoneDefinition & ent);
+		%feature("compactdefaultargs") WriteStep;
+		%feature("autodoc", "	* Writes RunoutZoneDefinition
+
+	:param SW:
+	:type SW: StepData_StepWriter &
+	:param ent:
+	:type ent: Handle_StepDimTol_RunoutZoneDefinition &
+	:rtype: None
+") WriteStep;
+		void WriteStep (StepData_StepWriter & SW,const Handle_StepDimTol_RunoutZoneDefinition & ent);
+		%feature("compactdefaultargs") Share;
+		%feature("autodoc", "	* Fills data for graph --shared items--
+
+	:param ent:
+	:type ent: Handle_StepDimTol_RunoutZoneDefinition &
+	:param iter:
+	:type iter: Interface_EntityIterator &
+	:rtype: None
+") Share;
+		void Share (const Handle_StepDimTol_RunoutZoneDefinition & ent,Interface_EntityIterator & iter);
+};
+
+
+%extend RWStepDimTol_RWRunoutZoneDefinition {
+	%pythoncode {
+	__repr__ = _dumps_object
+	}
+};
+%nodefaultctor RWStepDimTol_RWRunoutZoneOrientation;
+class RWStepDimTol_RWRunoutZoneOrientation {
+	public:
+		%feature("compactdefaultargs") RWStepDimTol_RWRunoutZoneOrientation;
+		%feature("autodoc", "	* Empty constructor
+
+	:rtype: None
+") RWStepDimTol_RWRunoutZoneOrientation;
+		 RWStepDimTol_RWRunoutZoneOrientation ();
+		%feature("compactdefaultargs") ReadStep;
+		%feature("autodoc", "	* Reads RunoutZoneOrientation
+
+	:param data:
+	:type data: Handle_StepData_StepReaderData &
+	:param num:
+	:type num: int
+	:param ach:
+	:type ach: Handle_Interface_Check &
+	:param ent:
+	:type ent: Handle_StepDimTol_RunoutZoneOrientation &
+	:rtype: None
+") ReadStep;
+		void ReadStep (const Handle_StepData_StepReaderData & data,const Standard_Integer num,Handle_Interface_Check & ach,const Handle_StepDimTol_RunoutZoneOrientation & ent);
+		%feature("compactdefaultargs") WriteStep;
+		%feature("autodoc", "	* Writes RunoutZoneOrientation
+
+	:param SW:
+	:type SW: StepData_StepWriter &
+	:param ent:
+	:type ent: Handle_StepDimTol_RunoutZoneOrientation &
+	:rtype: None
+") WriteStep;
+		void WriteStep (StepData_StepWriter & SW,const Handle_StepDimTol_RunoutZoneOrientation & ent);
+};
+
+
+%extend RWStepDimTol_RWRunoutZoneOrientation {
 	%pythoncode {
 	__repr__ = _dumps_object
 	}
@@ -1207,7 +2111,7 @@ class RWStepDimTol_RWStraightnessTolerance {
 ") WriteStep;
 		void WriteStep (StepData_StepWriter & SW,const Handle_StepDimTol_StraightnessTolerance & ent);
 		%feature("compactdefaultargs") Share;
-		%feature("autodoc", "	* Fills data for graph (shared items)
+		%feature("autodoc", "	* Fills data for graph --shared items--
 
 	:param ent:
 	:type ent: Handle_StepDimTol_StraightnessTolerance &
@@ -1258,7 +2162,7 @@ class RWStepDimTol_RWSurfaceProfileTolerance {
 ") WriteStep;
 		void WriteStep (StepData_StepWriter & SW,const Handle_StepDimTol_SurfaceProfileTolerance & ent);
 		%feature("compactdefaultargs") Share;
-		%feature("autodoc", "	* Fills data for graph (shared items)
+		%feature("autodoc", "	* Fills data for graph --shared items--
 
 	:param ent:
 	:type ent: Handle_StepDimTol_SurfaceProfileTolerance &
@@ -1309,7 +2213,7 @@ class RWStepDimTol_RWSymmetryTolerance {
 ") WriteStep;
 		void WriteStep (StepData_StepWriter & SW,const Handle_StepDimTol_SymmetryTolerance & ent);
 		%feature("compactdefaultargs") Share;
-		%feature("autodoc", "	* Fills data for graph (shared items)
+		%feature("autodoc", "	* Fills data for graph --shared items--
 
 	:param ent:
 	:type ent: Handle_StepDimTol_SymmetryTolerance &
@@ -1322,6 +2226,149 @@ class RWStepDimTol_RWSymmetryTolerance {
 
 
 %extend RWStepDimTol_RWSymmetryTolerance {
+	%pythoncode {
+	__repr__ = _dumps_object
+	}
+};
+%nodefaultctor RWStepDimTol_RWToleranceZone;
+class RWStepDimTol_RWToleranceZone {
+	public:
+		%feature("compactdefaultargs") RWStepDimTol_RWToleranceZone;
+		%feature("autodoc", "	* Empty constructor
+
+	:rtype: None
+") RWStepDimTol_RWToleranceZone;
+		 RWStepDimTol_RWToleranceZone ();
+		%feature("compactdefaultargs") ReadStep;
+		%feature("autodoc", "	* Reads ToleranceZone
+
+	:param data:
+	:type data: Handle_StepData_StepReaderData &
+	:param num:
+	:type num: int
+	:param ach:
+	:type ach: Handle_Interface_Check &
+	:param ent:
+	:type ent: Handle_StepDimTol_ToleranceZone &
+	:rtype: None
+") ReadStep;
+		void ReadStep (const Handle_StepData_StepReaderData & data,const Standard_Integer num,Handle_Interface_Check & ach,const Handle_StepDimTol_ToleranceZone & ent);
+		%feature("compactdefaultargs") WriteStep;
+		%feature("autodoc", "	* Writes ToleranceZone
+
+	:param SW:
+	:type SW: StepData_StepWriter &
+	:param ent:
+	:type ent: Handle_StepDimTol_ToleranceZone &
+	:rtype: None
+") WriteStep;
+		void WriteStep (StepData_StepWriter & SW,const Handle_StepDimTol_ToleranceZone & ent);
+		%feature("compactdefaultargs") Share;
+		%feature("autodoc", "	* Fills data for graph --shared items--
+
+	:param ent:
+	:type ent: Handle_StepDimTol_ToleranceZone &
+	:param iter:
+	:type iter: Interface_EntityIterator &
+	:rtype: None
+") Share;
+		void Share (const Handle_StepDimTol_ToleranceZone & ent,Interface_EntityIterator & iter);
+};
+
+
+%extend RWStepDimTol_RWToleranceZone {
+	%pythoncode {
+	__repr__ = _dumps_object
+	}
+};
+%nodefaultctor RWStepDimTol_RWToleranceZoneDefinition;
+class RWStepDimTol_RWToleranceZoneDefinition {
+	public:
+		%feature("compactdefaultargs") RWStepDimTol_RWToleranceZoneDefinition;
+		%feature("autodoc", "	* Empty constructor
+
+	:rtype: None
+") RWStepDimTol_RWToleranceZoneDefinition;
+		 RWStepDimTol_RWToleranceZoneDefinition ();
+		%feature("compactdefaultargs") ReadStep;
+		%feature("autodoc", "	* Reads ToleranceZoneDefinition
+
+	:param data:
+	:type data: Handle_StepData_StepReaderData &
+	:param num:
+	:type num: int
+	:param ach:
+	:type ach: Handle_Interface_Check &
+	:param ent:
+	:type ent: Handle_StepDimTol_ToleranceZoneDefinition &
+	:rtype: None
+") ReadStep;
+		void ReadStep (const Handle_StepData_StepReaderData & data,const Standard_Integer num,Handle_Interface_Check & ach,const Handle_StepDimTol_ToleranceZoneDefinition & ent);
+		%feature("compactdefaultargs") WriteStep;
+		%feature("autodoc", "	* Writes ToleranceZoneDefinition
+
+	:param SW:
+	:type SW: StepData_StepWriter &
+	:param ent:
+	:type ent: Handle_StepDimTol_ToleranceZoneDefinition &
+	:rtype: None
+") WriteStep;
+		void WriteStep (StepData_StepWriter & SW,const Handle_StepDimTol_ToleranceZoneDefinition & ent);
+		%feature("compactdefaultargs") Share;
+		%feature("autodoc", "	* Fills data for graph --shared items--
+
+	:param ent:
+	:type ent: Handle_StepDimTol_ToleranceZoneDefinition &
+	:param iter:
+	:type iter: Interface_EntityIterator &
+	:rtype: None
+") Share;
+		void Share (const Handle_StepDimTol_ToleranceZoneDefinition & ent,Interface_EntityIterator & iter);
+};
+
+
+%extend RWStepDimTol_RWToleranceZoneDefinition {
+	%pythoncode {
+	__repr__ = _dumps_object
+	}
+};
+%nodefaultctor RWStepDimTol_RWToleranceZoneForm;
+class RWStepDimTol_RWToleranceZoneForm {
+	public:
+		%feature("compactdefaultargs") RWStepDimTol_RWToleranceZoneForm;
+		%feature("autodoc", "	* Empty constructor
+
+	:rtype: None
+") RWStepDimTol_RWToleranceZoneForm;
+		 RWStepDimTol_RWToleranceZoneForm ();
+		%feature("compactdefaultargs") ReadStep;
+		%feature("autodoc", "	* Reads ToleranceZoneForm
+
+	:param data:
+	:type data: Handle_StepData_StepReaderData &
+	:param num:
+	:type num: int
+	:param ach:
+	:type ach: Handle_Interface_Check &
+	:param ent:
+	:type ent: Handle_StepDimTol_ToleranceZoneForm &
+	:rtype: None
+") ReadStep;
+		void ReadStep (const Handle_StepData_StepReaderData & data,const Standard_Integer num,Handle_Interface_Check & ach,const Handle_StepDimTol_ToleranceZoneForm & ent);
+		%feature("compactdefaultargs") WriteStep;
+		%feature("autodoc", "	* Writes ToleranceZoneForm
+
+	:param SW:
+	:type SW: StepData_StepWriter &
+	:param ent:
+	:type ent: Handle_StepDimTol_ToleranceZoneForm &
+	:rtype: None
+") WriteStep;
+		void WriteStep (StepData_StepWriter & SW,const Handle_StepDimTol_ToleranceZoneForm & ent);
+};
+
+
+%extend RWStepDimTol_RWToleranceZoneForm {
 	%pythoncode {
 	__repr__ = _dumps_object
 	}
@@ -1360,7 +2407,7 @@ class RWStepDimTol_RWTotalRunoutTolerance {
 ") WriteStep;
 		void WriteStep (StepData_StepWriter & SW,const Handle_StepDimTol_TotalRunoutTolerance & ent);
 		%feature("compactdefaultargs") Share;
-		%feature("autodoc", "	* Fills data for graph (shared items)
+		%feature("autodoc", "	* Fills data for graph --shared items--
 
 	:param ent:
 	:type ent: Handle_StepDimTol_TotalRunoutTolerance &
@@ -1373,6 +2420,57 @@ class RWStepDimTol_RWTotalRunoutTolerance {
 
 
 %extend RWStepDimTol_RWTotalRunoutTolerance {
+	%pythoncode {
+	__repr__ = _dumps_object
+	}
+};
+%nodefaultctor RWStepDimTol_RWUnequallyDisposedGeometricTolerance;
+class RWStepDimTol_RWUnequallyDisposedGeometricTolerance {
+	public:
+		%feature("compactdefaultargs") RWStepDimTol_RWUnequallyDisposedGeometricTolerance;
+		%feature("autodoc", "	* Empty constructor
+
+	:rtype: None
+") RWStepDimTol_RWUnequallyDisposedGeometricTolerance;
+		 RWStepDimTol_RWUnequallyDisposedGeometricTolerance ();
+		%feature("compactdefaultargs") ReadStep;
+		%feature("autodoc", "	* Reads UnequallyDisposedGeometricTolerance
+
+	:param data:
+	:type data: Handle_StepData_StepReaderData &
+	:param num:
+	:type num: int
+	:param ach:
+	:type ach: Handle_Interface_Check &
+	:param ent:
+	:type ent: Handle_StepDimTol_UnequallyDisposedGeometricTolerance &
+	:rtype: None
+") ReadStep;
+		void ReadStep (const Handle_StepData_StepReaderData & data,const Standard_Integer num,Handle_Interface_Check & ach,const Handle_StepDimTol_UnequallyDisposedGeometricTolerance & ent);
+		%feature("compactdefaultargs") WriteStep;
+		%feature("autodoc", "	* Writes UnequallyDisposedGeometricTolerance
+
+	:param SW:
+	:type SW: StepData_StepWriter &
+	:param ent:
+	:type ent: Handle_StepDimTol_UnequallyDisposedGeometricTolerance &
+	:rtype: None
+") WriteStep;
+		void WriteStep (StepData_StepWriter & SW,const Handle_StepDimTol_UnequallyDisposedGeometricTolerance & ent);
+		%feature("compactdefaultargs") Share;
+		%feature("autodoc", "	* Fills data for graph --shared items--
+
+	:param ent:
+	:type ent: Handle_StepDimTol_UnequallyDisposedGeometricTolerance &
+	:param iter:
+	:type iter: Interface_EntityIterator &
+	:rtype: None
+") Share;
+		void Share (const Handle_StepDimTol_UnequallyDisposedGeometricTolerance & ent,Interface_EntityIterator & iter);
+};
+
+
+%extend RWStepDimTol_RWUnequallyDisposedGeometricTolerance {
 	%pythoncode {
 	__repr__ = _dumps_object
 	}

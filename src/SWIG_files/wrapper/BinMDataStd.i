@@ -1,5 +1,5 @@
 /*
-Copyright 2008-2017 Thomas Paviot (tpaviot@gmail.com)
+Copyright 2008-2018 Thomas Paviot (tpaviot@gmail.com)
 
 
 This file is part of pythonOCC.
@@ -56,6 +56,9 @@ def register_handle(handle, base_object):
 /* typedefs */
 /* end typedefs declaration */
 
+/* templates */
+/* end templates declaration */
+
 /* public enums */
 /* end public enums declaration */
 
@@ -82,6 +85,14 @@ class BinMDataStd {
 		%feature("autodoc", "	:rtype: int
 ") DocumentVersion;
 		static Standard_Integer DocumentVersion ();
+		%feature("compactdefaultargs") SetAttributeID;
+		%feature("autodoc", "	:param theSource:
+	:type theSource: BinObjMgt_Persistent &
+	:param anAtt:
+	:type anAtt: Handle_T &
+	:rtype: void
+") SetAttributeID;
+		static void SetAttributeID (const BinObjMgt_Persistent & theSource,const Handle_T & anAtt);
 };
 
 
@@ -104,7 +115,7 @@ class BinMDataStd_AsciiStringDriver : public BinMDF_ADriver {
 ") NewEmpty;
 		Handle_TDF_Attribute NewEmpty ();
 		%feature("compactdefaultargs") Paste;
-		%feature("autodoc", "	* persistent -> transient (retrieve)
+		%feature("autodoc", "	* persistent -> transient --retrieve--
 
 	:param Source:
 	:type Source: BinObjMgt_Persistent &
@@ -116,7 +127,7 @@ class BinMDataStd_AsciiStringDriver : public BinMDF_ADriver {
 ") Paste;
 		Standard_Boolean Paste (const BinObjMgt_Persistent & Source,const Handle_TDF_Attribute & Target,BinObjMgt_RRelocationTable & RelocTable);
 		%feature("compactdefaultargs") Paste;
-		%feature("autodoc", "	* transient -> persistent (store)
+		%feature("autodoc", "	* transient -> persistent --store--
 
 	:param Source:
 	:type Source: Handle_TDF_Attribute &
@@ -161,19 +172,20 @@ class Handle_BinMDataStd_AsciiStringDriver : public Handle_BinMDF_ADriver {
         static const Handle_BinMDataStd_AsciiStringDriver DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_BinMDataStd_AsciiStringDriver {
     BinMDataStd_AsciiStringDriver* _get_reference() {
-    return (BinMDataStd_AsciiStringDriver*)$self->Access();
+    return (BinMDataStd_AsciiStringDriver*)$self->get();
     }
 };
 
 %extend Handle_BinMDataStd_AsciiStringDriver {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend BinMDataStd_AsciiStringDriver {
@@ -248,19 +260,20 @@ class Handle_BinMDataStd_BooleanArrayDriver : public Handle_BinMDF_ADriver {
         static const Handle_BinMDataStd_BooleanArrayDriver DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_BinMDataStd_BooleanArrayDriver {
     BinMDataStd_BooleanArrayDriver* _get_reference() {
-    return (BinMDataStd_BooleanArrayDriver*)$self->Access();
+    return (BinMDataStd_BooleanArrayDriver*)$self->get();
     }
 };
 
 %extend Handle_BinMDataStd_BooleanArrayDriver {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend BinMDataStd_BooleanArrayDriver {
@@ -335,19 +348,20 @@ class Handle_BinMDataStd_BooleanListDriver : public Handle_BinMDF_ADriver {
         static const Handle_BinMDataStd_BooleanListDriver DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_BinMDataStd_BooleanListDriver {
     BinMDataStd_BooleanListDriver* _get_reference() {
-    return (BinMDataStd_BooleanListDriver*)$self->Access();
+    return (BinMDataStd_BooleanListDriver*)$self->get();
     }
 };
 
 %extend Handle_BinMDataStd_BooleanListDriver {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend BinMDataStd_BooleanListDriver {
@@ -422,19 +436,20 @@ class Handle_BinMDataStd_ByteArrayDriver : public Handle_BinMDF_ADriver {
         static const Handle_BinMDataStd_ByteArrayDriver DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_BinMDataStd_ByteArrayDriver {
     BinMDataStd_ByteArrayDriver* _get_reference() {
-    return (BinMDataStd_ByteArrayDriver*)$self->Access();
+    return (BinMDataStd_ByteArrayDriver*)$self->get();
     }
 };
 
 %extend Handle_BinMDataStd_ByteArrayDriver {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend BinMDataStd_ByteArrayDriver {
@@ -509,19 +524,20 @@ class Handle_BinMDataStd_CommentDriver : public Handle_BinMDF_ADriver {
         static const Handle_BinMDataStd_CommentDriver DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_BinMDataStd_CommentDriver {
     BinMDataStd_CommentDriver* _get_reference() {
-    return (BinMDataStd_CommentDriver*)$self->Access();
+    return (BinMDataStd_CommentDriver*)$self->get();
     }
 };
 
 %extend Handle_BinMDataStd_CommentDriver {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend BinMDataStd_CommentDriver {
@@ -596,19 +612,20 @@ class Handle_BinMDataStd_DirectoryDriver : public Handle_BinMDF_ADriver {
         static const Handle_BinMDataStd_DirectoryDriver DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_BinMDataStd_DirectoryDriver {
     BinMDataStd_DirectoryDriver* _get_reference() {
-    return (BinMDataStd_DirectoryDriver*)$self->Access();
+    return (BinMDataStd_DirectoryDriver*)$self->get();
     }
 };
 
 %extend Handle_BinMDataStd_DirectoryDriver {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend BinMDataStd_DirectoryDriver {
@@ -683,19 +700,20 @@ class Handle_BinMDataStd_ExpressionDriver : public Handle_BinMDF_ADriver {
         static const Handle_BinMDataStd_ExpressionDriver DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_BinMDataStd_ExpressionDriver {
     BinMDataStd_ExpressionDriver* _get_reference() {
-    return (BinMDataStd_ExpressionDriver*)$self->Access();
+    return (BinMDataStd_ExpressionDriver*)$self->get();
     }
 };
 
 %extend Handle_BinMDataStd_ExpressionDriver {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend BinMDataStd_ExpressionDriver {
@@ -770,19 +788,20 @@ class Handle_BinMDataStd_ExtStringArrayDriver : public Handle_BinMDF_ADriver {
         static const Handle_BinMDataStd_ExtStringArrayDriver DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_BinMDataStd_ExtStringArrayDriver {
     BinMDataStd_ExtStringArrayDriver* _get_reference() {
-    return (BinMDataStd_ExtStringArrayDriver*)$self->Access();
+    return (BinMDataStd_ExtStringArrayDriver*)$self->get();
     }
 };
 
 %extend Handle_BinMDataStd_ExtStringArrayDriver {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend BinMDataStd_ExtStringArrayDriver {
@@ -857,19 +876,20 @@ class Handle_BinMDataStd_ExtStringListDriver : public Handle_BinMDF_ADriver {
         static const Handle_BinMDataStd_ExtStringListDriver DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_BinMDataStd_ExtStringListDriver {
     BinMDataStd_ExtStringListDriver* _get_reference() {
-    return (BinMDataStd_ExtStringListDriver*)$self->Access();
+    return (BinMDataStd_ExtStringListDriver*)$self->get();
     }
 };
 
 %extend Handle_BinMDataStd_ExtStringListDriver {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend BinMDataStd_ExtStringListDriver {
@@ -891,7 +911,7 @@ class BinMDataStd_IntPackedMapDriver : public BinMDF_ADriver {
 ") NewEmpty;
 		Handle_TDF_Attribute NewEmpty ();
 		%feature("compactdefaultargs") Paste;
-		%feature("autodoc", "	* persistent -> transient (retrieve)
+		%feature("autodoc", "	* persistent -> transient --retrieve--
 
 	:param Source:
 	:type Source: BinObjMgt_Persistent &
@@ -903,7 +923,7 @@ class BinMDataStd_IntPackedMapDriver : public BinMDF_ADriver {
 ") Paste;
 		Standard_Boolean Paste (const BinObjMgt_Persistent & Source,const Handle_TDF_Attribute & Target,BinObjMgt_RRelocationTable & RelocTable);
 		%feature("compactdefaultargs") Paste;
-		%feature("autodoc", "	* transient -> persistent (store)
+		%feature("autodoc", "	* transient -> persistent --store--
 
 	:param Source:
 	:type Source: Handle_TDF_Attribute &
@@ -948,19 +968,20 @@ class Handle_BinMDataStd_IntPackedMapDriver : public Handle_BinMDF_ADriver {
         static const Handle_BinMDataStd_IntPackedMapDriver DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_BinMDataStd_IntPackedMapDriver {
     BinMDataStd_IntPackedMapDriver* _get_reference() {
-    return (BinMDataStd_IntPackedMapDriver*)$self->Access();
+    return (BinMDataStd_IntPackedMapDriver*)$self->get();
     }
 };
 
 %extend Handle_BinMDataStd_IntPackedMapDriver {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend BinMDataStd_IntPackedMapDriver {
@@ -1035,19 +1056,20 @@ class Handle_BinMDataStd_IntegerArrayDriver : public Handle_BinMDF_ADriver {
         static const Handle_BinMDataStd_IntegerArrayDriver DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_BinMDataStd_IntegerArrayDriver {
     BinMDataStd_IntegerArrayDriver* _get_reference() {
-    return (BinMDataStd_IntegerArrayDriver*)$self->Access();
+    return (BinMDataStd_IntegerArrayDriver*)$self->get();
     }
 };
 
 %extend Handle_BinMDataStd_IntegerArrayDriver {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend BinMDataStd_IntegerArrayDriver {
@@ -1122,19 +1144,20 @@ class Handle_BinMDataStd_IntegerDriver : public Handle_BinMDF_ADriver {
         static const Handle_BinMDataStd_IntegerDriver DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_BinMDataStd_IntegerDriver {
     BinMDataStd_IntegerDriver* _get_reference() {
-    return (BinMDataStd_IntegerDriver*)$self->Access();
+    return (BinMDataStd_IntegerDriver*)$self->get();
     }
 };
 
 %extend Handle_BinMDataStd_IntegerDriver {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend BinMDataStd_IntegerDriver {
@@ -1209,19 +1232,20 @@ class Handle_BinMDataStd_IntegerListDriver : public Handle_BinMDF_ADriver {
         static const Handle_BinMDataStd_IntegerListDriver DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_BinMDataStd_IntegerListDriver {
     BinMDataStd_IntegerListDriver* _get_reference() {
-    return (BinMDataStd_IntegerListDriver*)$self->Access();
+    return (BinMDataStd_IntegerListDriver*)$self->get();
     }
 };
 
 %extend Handle_BinMDataStd_IntegerListDriver {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend BinMDataStd_IntegerListDriver {
@@ -1243,7 +1267,7 @@ class BinMDataStd_NameDriver : public BinMDF_ADriver {
 ") NewEmpty;
 		Handle_TDF_Attribute NewEmpty ();
 		%feature("compactdefaultargs") Paste;
-		%feature("autodoc", "	* persistent -> transient (retrieve)
+		%feature("autodoc", "	* persistent -> transient --retrieve--
 
 	:param Source:
 	:type Source: BinObjMgt_Persistent &
@@ -1255,7 +1279,7 @@ class BinMDataStd_NameDriver : public BinMDF_ADriver {
 ") Paste;
 		Standard_Boolean Paste (const BinObjMgt_Persistent & Source,const Handle_TDF_Attribute & Target,BinObjMgt_RRelocationTable & RelocTable);
 		%feature("compactdefaultargs") Paste;
-		%feature("autodoc", "	* transient -> persistent (store)
+		%feature("autodoc", "	* transient -> persistent --store--
 
 	:param Source:
 	:type Source: Handle_TDF_Attribute &
@@ -1300,19 +1324,20 @@ class Handle_BinMDataStd_NameDriver : public Handle_BinMDF_ADriver {
         static const Handle_BinMDataStd_NameDriver DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_BinMDataStd_NameDriver {
     BinMDataStd_NameDriver* _get_reference() {
-    return (BinMDataStd_NameDriver*)$self->Access();
+    return (BinMDataStd_NameDriver*)$self->get();
     }
 };
 
 %extend Handle_BinMDataStd_NameDriver {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend BinMDataStd_NameDriver {
@@ -1387,19 +1412,20 @@ class Handle_BinMDataStd_NamedDataDriver : public Handle_BinMDF_ADriver {
         static const Handle_BinMDataStd_NamedDataDriver DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_BinMDataStd_NamedDataDriver {
     BinMDataStd_NamedDataDriver* _get_reference() {
-    return (BinMDataStd_NamedDataDriver*)$self->Access();
+    return (BinMDataStd_NamedDataDriver*)$self->get();
     }
 };
 
 %extend Handle_BinMDataStd_NamedDataDriver {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend BinMDataStd_NamedDataDriver {
@@ -1474,19 +1500,20 @@ class Handle_BinMDataStd_NoteBookDriver : public Handle_BinMDF_ADriver {
         static const Handle_BinMDataStd_NoteBookDriver DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_BinMDataStd_NoteBookDriver {
     BinMDataStd_NoteBookDriver* _get_reference() {
-    return (BinMDataStd_NoteBookDriver*)$self->Access();
+    return (BinMDataStd_NoteBookDriver*)$self->get();
     }
 };
 
 %extend Handle_BinMDataStd_NoteBookDriver {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend BinMDataStd_NoteBookDriver {
@@ -1561,19 +1588,20 @@ class Handle_BinMDataStd_RealArrayDriver : public Handle_BinMDF_ADriver {
         static const Handle_BinMDataStd_RealArrayDriver DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_BinMDataStd_RealArrayDriver {
     BinMDataStd_RealArrayDriver* _get_reference() {
-    return (BinMDataStd_RealArrayDriver*)$self->Access();
+    return (BinMDataStd_RealArrayDriver*)$self->get();
     }
 };
 
 %extend Handle_BinMDataStd_RealArrayDriver {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend BinMDataStd_RealArrayDriver {
@@ -1648,19 +1676,20 @@ class Handle_BinMDataStd_RealDriver : public Handle_BinMDF_ADriver {
         static const Handle_BinMDataStd_RealDriver DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_BinMDataStd_RealDriver {
     BinMDataStd_RealDriver* _get_reference() {
-    return (BinMDataStd_RealDriver*)$self->Access();
+    return (BinMDataStd_RealDriver*)$self->get();
     }
 };
 
 %extend Handle_BinMDataStd_RealDriver {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend BinMDataStd_RealDriver {
@@ -1735,19 +1764,20 @@ class Handle_BinMDataStd_RealListDriver : public Handle_BinMDF_ADriver {
         static const Handle_BinMDataStd_RealListDriver DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_BinMDataStd_RealListDriver {
     BinMDataStd_RealListDriver* _get_reference() {
-    return (BinMDataStd_RealListDriver*)$self->Access();
+    return (BinMDataStd_RealListDriver*)$self->get();
     }
 };
 
 %extend Handle_BinMDataStd_RealListDriver {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend BinMDataStd_RealListDriver {
@@ -1822,19 +1852,20 @@ class Handle_BinMDataStd_ReferenceArrayDriver : public Handle_BinMDF_ADriver {
         static const Handle_BinMDataStd_ReferenceArrayDriver DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_BinMDataStd_ReferenceArrayDriver {
     BinMDataStd_ReferenceArrayDriver* _get_reference() {
-    return (BinMDataStd_ReferenceArrayDriver*)$self->Access();
+    return (BinMDataStd_ReferenceArrayDriver*)$self->get();
     }
 };
 
 %extend Handle_BinMDataStd_ReferenceArrayDriver {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend BinMDataStd_ReferenceArrayDriver {
@@ -1909,19 +1940,20 @@ class Handle_BinMDataStd_ReferenceListDriver : public Handle_BinMDF_ADriver {
         static const Handle_BinMDataStd_ReferenceListDriver DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_BinMDataStd_ReferenceListDriver {
     BinMDataStd_ReferenceListDriver* _get_reference() {
-    return (BinMDataStd_ReferenceListDriver*)$self->Access();
+    return (BinMDataStd_ReferenceListDriver*)$self->get();
     }
 };
 
 %extend Handle_BinMDataStd_ReferenceListDriver {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend BinMDataStd_ReferenceListDriver {
@@ -1996,19 +2028,20 @@ class Handle_BinMDataStd_RelationDriver : public Handle_BinMDF_ADriver {
         static const Handle_BinMDataStd_RelationDriver DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_BinMDataStd_RelationDriver {
     BinMDataStd_RelationDriver* _get_reference() {
-    return (BinMDataStd_RelationDriver*)$self->Access();
+    return (BinMDataStd_RelationDriver*)$self->get();
     }
 };
 
 %extend Handle_BinMDataStd_RelationDriver {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend BinMDataStd_RelationDriver {
@@ -2083,19 +2116,20 @@ class Handle_BinMDataStd_TickDriver : public Handle_BinMDF_ADriver {
         static const Handle_BinMDataStd_TickDriver DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_BinMDataStd_TickDriver {
     BinMDataStd_TickDriver* _get_reference() {
-    return (BinMDataStd_TickDriver*)$self->Access();
+    return (BinMDataStd_TickDriver*)$self->get();
     }
 };
 
 %extend Handle_BinMDataStd_TickDriver {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend BinMDataStd_TickDriver {
@@ -2170,19 +2204,20 @@ class Handle_BinMDataStd_TreeNodeDriver : public Handle_BinMDF_ADriver {
         static const Handle_BinMDataStd_TreeNodeDriver DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_BinMDataStd_TreeNodeDriver {
     BinMDataStd_TreeNodeDriver* _get_reference() {
-    return (BinMDataStd_TreeNodeDriver*)$self->Access();
+    return (BinMDataStd_TreeNodeDriver*)$self->get();
     }
 };
 
 %extend Handle_BinMDataStd_TreeNodeDriver {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend BinMDataStd_TreeNodeDriver {
@@ -2257,19 +2292,20 @@ class Handle_BinMDataStd_UAttributeDriver : public Handle_BinMDF_ADriver {
         static const Handle_BinMDataStd_UAttributeDriver DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_BinMDataStd_UAttributeDriver {
     BinMDataStd_UAttributeDriver* _get_reference() {
-    return (BinMDataStd_UAttributeDriver*)$self->Access();
+    return (BinMDataStd_UAttributeDriver*)$self->get();
     }
 };
 
 %extend Handle_BinMDataStd_UAttributeDriver {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend BinMDataStd_UAttributeDriver {
@@ -2344,19 +2380,20 @@ class Handle_BinMDataStd_VariableDriver : public Handle_BinMDF_ADriver {
         static const Handle_BinMDataStd_VariableDriver DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_BinMDataStd_VariableDriver {
     BinMDataStd_VariableDriver* _get_reference() {
-    return (BinMDataStd_VariableDriver*)$self->Access();
+    return (BinMDataStd_VariableDriver*)$self->get();
     }
 };
 
 %extend Handle_BinMDataStd_VariableDriver {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend BinMDataStd_VariableDriver {

@@ -1,5 +1,5 @@
 /*
-Copyright 2008-2017 Thomas Paviot (tpaviot@gmail.com)
+Copyright 2008-2018 Thomas Paviot (tpaviot@gmail.com)
 
 
 This file is part of pythonOCC.
@@ -55,6 +55,9 @@ def register_handle(handle, base_object):
 
 /* typedefs */
 /* end typedefs declaration */
+
+/* templates */
+/* end templates declaration */
 
 /* public enums */
 /* end public enums declaration */
@@ -146,7 +149,7 @@ class Geom2dAdaptor_Curve : public Adaptor2d_Curve2d {
 ") NbIntervals;
 		Standard_Integer NbIntervals (const GeomAbs_Shape S);
 		%feature("compactdefaultargs") Intervals;
-		%feature("autodoc", "	* Stores in <T> the parameters bounding the intervals of continuity <S>. //! The array must provide enough room to accomodate for the parameters. i.e. T.Length() > NbIntervals()
+		%feature("autodoc", "	* Stores in <T> the parameters bounding the intervals of continuity <S>. //! The array must provide enough room to accomodate for the parameters. i.e. T.Length---- > NbIntervals----
 
 	:param T:
 	:type T: TColStd_Array1OfReal &
@@ -321,27 +324,37 @@ class Geom2dAdaptor_Curve : public Adaptor2d_Curve2d {
 class Geom2dAdaptor_GHCurve : public Adaptor2d_HCurve2d {
 	public:
 		%feature("compactdefaultargs") Geom2dAdaptor_GHCurve;
-		%feature("autodoc", "	:rtype: None
+		%feature("autodoc", "	* Creates an empty GenHCurve2d.
+
+	:rtype: None
 ") Geom2dAdaptor_GHCurve;
 		 Geom2dAdaptor_GHCurve ();
 		%feature("compactdefaultargs") Geom2dAdaptor_GHCurve;
-		%feature("autodoc", "	:param C:
+		%feature("autodoc", "	* Creates a GenHCurve2d from a Curve
+
+	:param C:
 	:type C: Geom2dAdaptor_Curve &
 	:rtype: None
 ") Geom2dAdaptor_GHCurve;
 		 Geom2dAdaptor_GHCurve (const Geom2dAdaptor_Curve & C);
 		%feature("compactdefaultargs") Set;
-		%feature("autodoc", "	:param C:
+		%feature("autodoc", "	* Sets the field of the GenHCurve2d.
+
+	:param C:
 	:type C: Geom2dAdaptor_Curve &
 	:rtype: None
 ") Set;
 		void Set (const Geom2dAdaptor_Curve & C);
 		%feature("compactdefaultargs") Curve2d;
-		%feature("autodoc", "	:rtype: Adaptor2d_Curve2d
+		%feature("autodoc", "	* Returns the curve used to create the GenHCurve2d. This is redefined from HCurve2d, cannot be inline.
+
+	:rtype: Adaptor2d_Curve2d
 ") Curve2d;
 		const Adaptor2d_Curve2d & Curve2d ();
 		%feature("compactdefaultargs") ChangeCurve2d;
-		%feature("autodoc", "	:rtype: Geom2dAdaptor_Curve
+		%feature("autodoc", "	* Returns the curve used to create the GenHCurve.
+
+	:rtype: Geom2dAdaptor_Curve
 ") ChangeCurve2d;
 		Geom2dAdaptor_Curve & ChangeCurve2d ();
 };
@@ -378,19 +391,20 @@ class Handle_Geom2dAdaptor_GHCurve : public Handle_Adaptor2d_HCurve2d {
         static const Handle_Geom2dAdaptor_GHCurve DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_Geom2dAdaptor_GHCurve {
     Geom2dAdaptor_GHCurve* _get_reference() {
-    return (Geom2dAdaptor_GHCurve*)$self->Access();
+    return (Geom2dAdaptor_GHCurve*)$self->get();
     }
 };
 
 %extend Handle_Geom2dAdaptor_GHCurve {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend Geom2dAdaptor_GHCurve {
@@ -463,19 +477,20 @@ class Handle_Geom2dAdaptor_HCurve : public Handle_Geom2dAdaptor_GHCurve {
         static const Handle_Geom2dAdaptor_HCurve DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_Geom2dAdaptor_HCurve {
     Geom2dAdaptor_HCurve* _get_reference() {
-    return (Geom2dAdaptor_HCurve*)$self->Access();
+    return (Geom2dAdaptor_HCurve*)$self->get();
     }
 };
 
 %extend Handle_Geom2dAdaptor_HCurve {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend Geom2dAdaptor_HCurve {

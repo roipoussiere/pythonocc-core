@@ -1,5 +1,5 @@
 /*
-Copyright 2008-2017 Thomas Paviot (tpaviot@gmail.com)
+Copyright 2008-2018 Thomas Paviot (tpaviot@gmail.com)
 
 
 This file is part of pythonOCC.
@@ -55,6 +55,9 @@ def register_handle(handle, base_object):
 
 /* typedefs */
 /* end typedefs declaration */
+
+/* templates */
+/* end templates declaration */
 
 /* public enums */
 /* end public enums declaration */
@@ -112,10 +115,10 @@ class GC_MakeMirror {
 	:rtype: Handle_Geom_Transformation
 ") Value;
 		Handle_Geom_Transformation Value ();
-		%feature("compactdefaultargs") Operator;
-		%feature("autodoc", "	:rtype: Handle_Geom_Transformation
-") Operator;
-		Handle_Geom_Transformation Operator ();
+		%feature("compactdefaultargs") operator constHandle_Geom_Transformation&;
+		%feature("autodoc", "	:rtype: None
+") operator constHandle_Geom_Transformation&;
+		 operator constHandle_Geom_Transformation& ();
 };
 
 
@@ -165,10 +168,10 @@ class GC_MakeRotation {
 	:rtype: Handle_Geom_Transformation
 ") Value;
 		Handle_Geom_Transformation Value ();
-		%feature("compactdefaultargs") Operator;
-		%feature("autodoc", "	:rtype: Handle_Geom_Transformation
-") Operator;
-		Handle_Geom_Transformation Operator ();
+		%feature("compactdefaultargs") operator constHandle_Geom_Transformation&;
+		%feature("autodoc", "	:rtype: None
+") operator constHandle_Geom_Transformation&;
+		 operator constHandle_Geom_Transformation& ();
 };
 
 
@@ -196,10 +199,10 @@ class GC_MakeScale {
 	:rtype: Handle_Geom_Transformation
 ") Value;
 		Handle_Geom_Transformation Value ();
-		%feature("compactdefaultargs") Operator;
-		%feature("autodoc", "	:rtype: Handle_Geom_Transformation
-") Operator;
-		Handle_Geom_Transformation Operator ();
+		%feature("compactdefaultargs") operator constHandle_Geom_Transformation&;
+		%feature("autodoc", "	:rtype: None
+") operator constHandle_Geom_Transformation&;
+		 operator constHandle_Geom_Transformation& ();
 };
 
 
@@ -220,7 +223,7 @@ class GC_MakeTranslation {
 ") GC_MakeTranslation;
 		 GC_MakeTranslation (const gp_Vec & Vect);
 		%feature("compactdefaultargs") GC_MakeTranslation;
-		%feature("autodoc", "	* Constructs a translation along the vector (Point1,Point2) defined from the point Point1 to the point Point2.
+		%feature("autodoc", "	* Constructs a translation along the vector --Point1,Point2-- defined from the point Point1 to the point Point2.
 
 	:param Point1:
 	:type Point1: gp_Pnt
@@ -235,10 +238,10 @@ class GC_MakeTranslation {
 	:rtype: Handle_Geom_Transformation
 ") Value;
 		Handle_Geom_Transformation Value ();
-		%feature("compactdefaultargs") Operator;
-		%feature("autodoc", "	:rtype: Handle_Geom_Transformation
-") Operator;
-		Handle_Geom_Transformation Operator ();
+		%feature("compactdefaultargs") operator constHandle_Geom_Transformation&;
+		%feature("autodoc", "	:rtype: None
+") operator constHandle_Geom_Transformation&;
+		 operator constHandle_Geom_Transformation& ();
 };
 
 
@@ -273,7 +276,7 @@ class GC_Root {
 class GC_MakeArcOfCircle : public GC_Root {
 	public:
 		%feature("compactdefaultargs") GC_MakeArcOfCircle;
-		%feature("autodoc", "	* Make an arc of circle (TrimmedCurve from Geom) from a circle between two angles Alpha1 and Alpha2 given in radiians.
+		%feature("autodoc", "	* Make an arc of circle --TrimmedCurve from Geom-- from a circle between two angles Alpha1 and Alpha2 given in radiians.
 
 	:param Circ:
 	:type Circ: gp_Circ
@@ -287,7 +290,7 @@ class GC_MakeArcOfCircle : public GC_Root {
 ") GC_MakeArcOfCircle;
 		 GC_MakeArcOfCircle (const gp_Circ & Circ,const Standard_Real Alpha1,const Standard_Real Alpha2,const Standard_Boolean Sense);
 		%feature("compactdefaultargs") GC_MakeArcOfCircle;
-		%feature("autodoc", "	* Make an arc of circle (TrimmedCurve from Geom) from a circle between point <P> and the angle Alpha given in radians.
+		%feature("autodoc", "	* Make an arc of circle --TrimmedCurve from Geom-- from a circle between point <P> and the angle Alpha given in radians.
 
 	:param Circ:
 	:type Circ: gp_Circ
@@ -301,7 +304,7 @@ class GC_MakeArcOfCircle : public GC_Root {
 ") GC_MakeArcOfCircle;
 		 GC_MakeArcOfCircle (const gp_Circ & Circ,const gp_Pnt & P,const Standard_Real Alpha,const Standard_Boolean Sense);
 		%feature("compactdefaultargs") GC_MakeArcOfCircle;
-		%feature("autodoc", "	* Make an arc of circle (TrimmedCurve from Geom) from a circle between two points P1 and P2.
+		%feature("autodoc", "	* Make an arc of circle --TrimmedCurve from Geom-- from a circle between two points P1 and P2.
 
 	:param Circ:
 	:type Circ: gp_Circ
@@ -315,7 +318,7 @@ class GC_MakeArcOfCircle : public GC_Root {
 ") GC_MakeArcOfCircle;
 		 GC_MakeArcOfCircle (const gp_Circ & Circ,const gp_Pnt & P1,const gp_Pnt & P2,const Standard_Boolean Sense);
 		%feature("compactdefaultargs") GC_MakeArcOfCircle;
-		%feature("autodoc", "	* Make an arc of circle (TrimmedCurve from Geom) from three points P1,P2,P3 between two points P1 and P2.
+		%feature("autodoc", "	* Make an arc of circle --TrimmedCurve from Geom-- from three points P1,P2,P3 between two points P1 and P2.
 
 	:param P1:
 	:type P1: gp_Pnt
@@ -327,7 +330,7 @@ class GC_MakeArcOfCircle : public GC_Root {
 ") GC_MakeArcOfCircle;
 		 GC_MakeArcOfCircle (const gp_Pnt & P1,const gp_Pnt & P2,const gp_Pnt & P3);
 		%feature("compactdefaultargs") GC_MakeArcOfCircle;
-		%feature("autodoc", "	* Make an arc of circle (TrimmedCurve from Geom) from two points P1,P2 and the tangente to the solution at the point P1. The orientation of the arc is: - the sense determined by the order of the points P1, P3 and P2; - the sense defined by the vector V; or - for other syntaxes: - the sense of Circ if Sense is true, or - the opposite sense if Sense is false. Note: Alpha1, Alpha2 and Alpha are angle values, given in radians. Warning If an error occurs (that is, when IsDone returns false), the Status function returns: - gce_ConfusedPoints if: - any 2 of the 3 points P1, P2 and P3 are coincident, or - P1 and P2 are coincident; or - gce_IntersectionError if: - P1, P2 and P3 are collinear and not coincident, or - the vector defined by the points P1 and P2 is collinear with the vector V.
+		%feature("autodoc", "	* Make an arc of circle --TrimmedCurve from Geom-- from two points P1,P2 and the tangente to the solution at the point P1. The orientation of the arc is: - the sense determined by the order of the points P1, P3 and P2; - the sense defined by the vector V; or - for other syntaxes: - the sense of Circ if Sense is true, or - the opposite sense if Sense is false. Note: Alpha1, Alpha2 and Alpha are angle values, given in radians. Warning If an error occurs --that is, when IsDone returns false--, the Status function returns: - gce_ConfusedPoints if: - any 2 of the 3 points P1, P2 and P3 are coincident, or - P1 and P2 are coincident; or - gce_IntersectionError if: - P1, P2 and P3 are collinear and not coincident, or - the vector defined by the points P1 and P2 is collinear with the vector V.
 
 	:param P1:
 	:type P1: gp_Pnt
@@ -344,10 +347,10 @@ class GC_MakeArcOfCircle : public GC_Root {
 	:rtype: Handle_Geom_TrimmedCurve
 ") Value;
 		Handle_Geom_TrimmedCurve Value ();
-		%feature("compactdefaultargs") Operator;
-		%feature("autodoc", "	:rtype: Handle_Geom_TrimmedCurve
-") Operator;
-		Handle_Geom_TrimmedCurve Operator ();
+		%feature("compactdefaultargs") operator constHandle_Geom_TrimmedCurve&;
+		%feature("autodoc", "	:rtype: None
+") operator constHandle_Geom_TrimmedCurve&;
+		 operator constHandle_Geom_TrimmedCurve& ();
 };
 
 
@@ -360,7 +363,7 @@ class GC_MakeArcOfCircle : public GC_Root {
 class GC_MakeArcOfEllipse : public GC_Root {
 	public:
 		%feature("compactdefaultargs") GC_MakeArcOfEllipse;
-		%feature("autodoc", "	* Constructs an arc of Ellipse (TrimmedCurve from Geom) from a Ellipse between two parameters Alpha1 and Alpha2.
+		%feature("autodoc", "	* Constructs an arc of Ellipse --TrimmedCurve from Geom-- from a Ellipse between two parameters Alpha1 and Alpha2.
 
 	:param Elips:
 	:type Elips: gp_Elips
@@ -374,7 +377,7 @@ class GC_MakeArcOfEllipse : public GC_Root {
 ") GC_MakeArcOfEllipse;
 		 GC_MakeArcOfEllipse (const gp_Elips & Elips,const Standard_Real Alpha1,const Standard_Real Alpha2,const Standard_Boolean Sense);
 		%feature("compactdefaultargs") GC_MakeArcOfEllipse;
-		%feature("autodoc", "	* Constructs an arc of Ellipse (TrimmedCurve from Geom) from a Ellipse between point <P> and the angle Alpha given in radians.
+		%feature("autodoc", "	* Constructs an arc of Ellipse --TrimmedCurve from Geom-- from a Ellipse between point <P> and the angle Alpha given in radians.
 
 	:param Elips:
 	:type Elips: gp_Elips
@@ -388,7 +391,7 @@ class GC_MakeArcOfEllipse : public GC_Root {
 ") GC_MakeArcOfEllipse;
 		 GC_MakeArcOfEllipse (const gp_Elips & Elips,const gp_Pnt & P,const Standard_Real Alpha,const Standard_Boolean Sense);
 		%feature("compactdefaultargs") GC_MakeArcOfEllipse;
-		%feature("autodoc", "	* Constructs an arc of Ellipse (TrimmedCurve from Geom) from a Ellipse between two points P1 and P2. The orientation of the arc of ellipse is: - the sense of Elips if Sense is true, or - the opposite sense if Sense is false. Notes: - Alpha1, Alpha2 and Alpha are angle values, given in radians. - IsDone always returns true.
+		%feature("autodoc", "	* Constructs an arc of Ellipse --TrimmedCurve from Geom-- from a Ellipse between two points P1 and P2. The orientation of the arc of ellipse is: - the sense of Elips if Sense is true, or - the opposite sense if Sense is false. Notes: - Alpha1, Alpha2 and Alpha are angle values, given in radians. - IsDone always returns true.
 
 	:param Elips:
 	:type Elips: gp_Elips
@@ -407,10 +410,10 @@ class GC_MakeArcOfEllipse : public GC_Root {
 	:rtype: Handle_Geom_TrimmedCurve
 ") Value;
 		Handle_Geom_TrimmedCurve Value ();
-		%feature("compactdefaultargs") Operator;
-		%feature("autodoc", "	:rtype: Handle_Geom_TrimmedCurve
-") Operator;
-		Handle_Geom_TrimmedCurve Operator ();
+		%feature("compactdefaultargs") operator constHandle_Geom_TrimmedCurve&;
+		%feature("autodoc", "	:rtype: None
+") operator constHandle_Geom_TrimmedCurve&;
+		 operator constHandle_Geom_TrimmedCurve& ();
 };
 
 
@@ -423,7 +426,7 @@ class GC_MakeArcOfEllipse : public GC_Root {
 class GC_MakeArcOfHyperbola : public GC_Root {
 	public:
 		%feature("compactdefaultargs") GC_MakeArcOfHyperbola;
-		%feature("autodoc", "	* Creates an arc of Hyperbola (TrimmedCurve from Geom) from a Hyperbola between two parameters Alpha1 and Alpha2 (given in radians).
+		%feature("autodoc", "	* Creates an arc of Hyperbola --TrimmedCurve from Geom-- from a Hyperbola between two parameters Alpha1 and Alpha2 --given in radians--.
 
 	:param Hypr:
 	:type Hypr: gp_Hypr
@@ -437,7 +440,7 @@ class GC_MakeArcOfHyperbola : public GC_Root {
 ") GC_MakeArcOfHyperbola;
 		 GC_MakeArcOfHyperbola (const gp_Hypr & Hypr,const Standard_Real Alpha1,const Standard_Real Alpha2,const Standard_Boolean Sense);
 		%feature("compactdefaultargs") GC_MakeArcOfHyperbola;
-		%feature("autodoc", "	* Creates an arc of Hyperbola (TrimmedCurve from Geom) from a Hyperbola between point <P> and the parameter Alpha (given in radians).
+		%feature("autodoc", "	* Creates an arc of Hyperbola --TrimmedCurve from Geom-- from a Hyperbola between point <P> and the parameter Alpha --given in radians--.
 
 	:param Hypr:
 	:type Hypr: gp_Hypr
@@ -451,7 +454,7 @@ class GC_MakeArcOfHyperbola : public GC_Root {
 ") GC_MakeArcOfHyperbola;
 		 GC_MakeArcOfHyperbola (const gp_Hypr & Hypr,const gp_Pnt & P,const Standard_Real Alpha,const Standard_Boolean Sense);
 		%feature("compactdefaultargs") GC_MakeArcOfHyperbola;
-		%feature("autodoc", "	* Creates an arc of Hyperbola (TrimmedCurve from Geom) from a Hyperbola between two points P1 and P2. The orientation of the arc of hyperbola is: - the sense of Hypr if Sense is true, or - the opposite sense if Sense is false.
+		%feature("autodoc", "	* Creates an arc of Hyperbola --TrimmedCurve from Geom-- from a Hyperbola between two points P1 and P2. The orientation of the arc of hyperbola is: - the sense of Hypr if Sense is true, or - the opposite sense if Sense is false.
 
 	:param Hypr:
 	:type Hypr: gp_Hypr
@@ -470,10 +473,10 @@ class GC_MakeArcOfHyperbola : public GC_Root {
 	:rtype: Handle_Geom_TrimmedCurve
 ") Value;
 		Handle_Geom_TrimmedCurve Value ();
-		%feature("compactdefaultargs") Operator;
-		%feature("autodoc", "	:rtype: Handle_Geom_TrimmedCurve
-") Operator;
-		Handle_Geom_TrimmedCurve Operator ();
+		%feature("compactdefaultargs") operator constHandle_Geom_TrimmedCurve&;
+		%feature("autodoc", "	:rtype: None
+") operator constHandle_Geom_TrimmedCurve&;
+		 operator constHandle_Geom_TrimmedCurve& ();
 };
 
 
@@ -486,7 +489,7 @@ class GC_MakeArcOfHyperbola : public GC_Root {
 class GC_MakeArcOfParabola : public GC_Root {
 	public:
 		%feature("compactdefaultargs") GC_MakeArcOfParabola;
-		%feature("autodoc", "	* Creates an arc of Parabola (TrimmedCurve from Geom) from a Parabola between two parameters Alpha1 and Alpha2 (given in radians).
+		%feature("autodoc", "	* Creates an arc of Parabola --TrimmedCurve from Geom-- from a Parabola between two parameters Alpha1 and Alpha2 --given in radians--.
 
 	:param Parab:
 	:type Parab: gp_Parab
@@ -500,7 +503,7 @@ class GC_MakeArcOfParabola : public GC_Root {
 ") GC_MakeArcOfParabola;
 		 GC_MakeArcOfParabola (const gp_Parab & Parab,const Standard_Real Alpha1,const Standard_Real Alpha2,const Standard_Boolean Sense);
 		%feature("compactdefaultargs") GC_MakeArcOfParabola;
-		%feature("autodoc", "	* Creates an arc of Parabola (TrimmedCurve from Geom) from a Parabola between point <P> and the parameter Alpha (given in radians).
+		%feature("autodoc", "	* Creates an arc of Parabola --TrimmedCurve from Geom-- from a Parabola between point <P> and the parameter Alpha --given in radians--.
 
 	:param Parab:
 	:type Parab: gp_Parab
@@ -514,7 +517,7 @@ class GC_MakeArcOfParabola : public GC_Root {
 ") GC_MakeArcOfParabola;
 		 GC_MakeArcOfParabola (const gp_Parab & Parab,const gp_Pnt & P,const Standard_Real Alpha,const Standard_Boolean Sense);
 		%feature("compactdefaultargs") GC_MakeArcOfParabola;
-		%feature("autodoc", "	* Creates an arc of Parabola (TrimmedCurve from Geom) from a Parabola between two points P1 and P2.
+		%feature("autodoc", "	* Creates an arc of Parabola --TrimmedCurve from Geom-- from a Parabola between two points P1 and P2.
 
 	:param Parab:
 	:type Parab: gp_Parab
@@ -533,10 +536,10 @@ class GC_MakeArcOfParabola : public GC_Root {
 	:rtype: Handle_Geom_TrimmedCurve
 ") Value;
 		Handle_Geom_TrimmedCurve Value ();
-		%feature("compactdefaultargs") Operator;
-		%feature("autodoc", "	:rtype: Handle_Geom_TrimmedCurve
-") Operator;
-		Handle_Geom_TrimmedCurve Operator ();
+		%feature("compactdefaultargs") operator constHandle_Geom_TrimmedCurve&;
+		%feature("autodoc", "	:rtype: None
+") operator constHandle_Geom_TrimmedCurve&;
+		 operator constHandle_Geom_TrimmedCurve& ();
 };
 
 
@@ -638,10 +641,10 @@ class GC_MakeCircle : public GC_Root {
 	:rtype: Handle_Geom_Circle
 ") Value;
 		Handle_Geom_Circle Value ();
-		%feature("compactdefaultargs") Operator;
-		%feature("autodoc", "	:rtype: Handle_Geom_Circle
-") Operator;
-		Handle_Geom_Circle Operator ();
+		%feature("compactdefaultargs") operator constHandle_Geom_Circle&;
+		%feature("autodoc", "	:rtype: None
+") operator constHandle_Geom_Circle&;
+		 operator constHandle_Geom_Circle& ();
 };
 
 
@@ -654,7 +657,7 @@ class GC_MakeCircle : public GC_Root {
 class GC_MakeConicalSurface : public GC_Root {
 	public:
 		%feature("compactdefaultargs") GC_MakeConicalSurface;
-		%feature("autodoc", "	* A2 defines the local coordinate system of the conical surface. Ang is the conical surface semi-angle ]0, PI/2[. Radius is the radius of the circle Viso in the placement plane of the conical surface defined with 'XAxis' and 'YAxis'. The 'ZDirection' of A2 defines the direction of the surface's axis of symmetry. If the location point of A2 is the apex of the surface Radius = 0 . At the creation the parametrization of the surface is defined such that the normal Vector (N = D1U ^ D1V) is oriented towards the 'outside region' of the surface. Status is 'NegativeRadius' if Radius < 0.0 or 'BadAngle' if Ang < Resolution from gp or Ang >= PI/ - Resolution
+		%feature("autodoc", "	* A2 defines the local coordinate system of the conical surface. Ang is the conical surface semi-angle ]0, PI/2[. Radius is the radius of the circle Viso in the placement plane of the conical surface defined with 'XAxis' and 'YAxis'. The 'ZDirection' of A2 defines the direction of the surface's axis of symmetry. If the location point of A2 is the apex of the surface Radius = 0 . At the creation the parametrization of the surface is defined such that the normal Vector --N = D1U ^ D1V-- is oriented towards the 'outside region' of the surface. Status is 'NegativeRadius' if Radius < 0.0 or 'BadAngle' if Ang < Resolution from gp or Ang >= PI/ - Resolution
 
 	:param A2:
 	:type A2: gp_Ax2
@@ -674,26 +677,6 @@ class GC_MakeConicalSurface : public GC_Root {
 ") GC_MakeConicalSurface;
 		 GC_MakeConicalSurface (const gp_Cone & C);
 		%feature("compactdefaultargs") GC_MakeConicalSurface;
-		%feature("autodoc", "	* Make a ConicalSurface from Geom <TheCone> parallel to another ConicalSurface <Cone> and passing through a Pnt <Point>.
-
-	:param Cone:
-	:type Cone: gp_Cone
-	:param Point:
-	:type Point: gp_Pnt
-	:rtype: None
-") GC_MakeConicalSurface;
-		 GC_MakeConicalSurface (const gp_Cone & Cone,const gp_Pnt & Point);
-		%feature("compactdefaultargs") GC_MakeConicalSurface;
-		%feature("autodoc", "	* Make a ConicalSurface from Geom <TheCone> parallel to another ConicalSurface <Cone> at the distance <Dist> which can be greater or lower than zero.
-
-	:param Cone:
-	:type Cone: gp_Cone
-	:param Dist:
-	:type Dist: float
-	:rtype: None
-") GC_MakeConicalSurface;
-		 GC_MakeConicalSurface (const gp_Cone & Cone,const Standard_Real Dist);
-		%feature("compactdefaultargs") GC_MakeConicalSurface;
 		%feature("autodoc", "	* Make a ConicalSurface from Geom <TheCone> passing through 3 Pnt <P1>,<P2>,<P3>. Its axis is <P1P2> and the radius of its base is the distance between <P3> and <P1P2>. The distance between <P4> and <P1P2> is the radius of the section passing through <P4>. An error iss raised if <P1>,<P2>,<P3>,<P4> are colinear or if <P3P4> is perpendicular to <P1P2> or <P3P4> is colinear to <P1P2>.
 
 	:param P1:
@@ -707,30 +690,6 @@ class GC_MakeConicalSurface : public GC_Root {
 	:rtype: None
 ") GC_MakeConicalSurface;
 		 GC_MakeConicalSurface (const gp_Pnt & P1,const gp_Pnt & P2,const gp_Pnt & P3,const gp_Pnt & P4);
-		%feature("compactdefaultargs") GC_MakeConicalSurface;
-		%feature("autodoc", "	* Make a ConicalSurface by its axis <Axis> and and two points.
-
-	:param Axis:
-	:type Axis: gp_Ax1
-	:param P1:
-	:type P1: gp_Pnt
-	:param P2:
-	:type P2: gp_Pnt
-	:rtype: None
-") GC_MakeConicalSurface;
-		 GC_MakeConicalSurface (const gp_Ax1 & Axis,const gp_Pnt & P1,const gp_Pnt & P2);
-		%feature("compactdefaultargs") GC_MakeConicalSurface;
-		%feature("autodoc", "	* Make a ConicalSurface by its axis <Axis> and and two points.
-
-	:param Axis:
-	:type Axis: gp_Lin
-	:param P1:
-	:type P1: gp_Pnt
-	:param P2:
-	:type P2: gp_Pnt
-	:rtype: None
-") GC_MakeConicalSurface;
-		 GC_MakeConicalSurface (const gp_Lin & Axis,const gp_Pnt & P1,const gp_Pnt & P2);
 		%feature("compactdefaultargs") GC_MakeConicalSurface;
 		%feature("autodoc", "	* Make a ConicalSurface with two points and two radius. The axis of the solution is the line passing through <P1> and <P2>. <R1> is the radius of the section passing through <P1> and <R2> the radius of the section passing through <P2>.
 
@@ -751,10 +710,10 @@ class GC_MakeConicalSurface : public GC_Root {
 	:rtype: Handle_Geom_ConicalSurface
 ") Value;
 		Handle_Geom_ConicalSurface Value ();
-		%feature("compactdefaultargs") Operator;
-		%feature("autodoc", "	:rtype: Handle_Geom_ConicalSurface
-") Operator;
-		Handle_Geom_ConicalSurface Operator ();
+		%feature("compactdefaultargs") operator constHandle_Geom_ConicalSurface&;
+		%feature("autodoc", "	:rtype: None
+") operator constHandle_Geom_ConicalSurface&;
+		 operator constHandle_Geom_ConicalSurface& ();
 };
 
 
@@ -767,7 +726,7 @@ class GC_MakeConicalSurface : public GC_Root {
 class GC_MakeCylindricalSurface : public GC_Root {
 	public:
 		%feature("compactdefaultargs") GC_MakeCylindricalSurface;
-		%feature("autodoc", "	* A2 defines the local coordinate system of the cylindrical surface. The 'ZDirection' of A2 defines the direction of the surface's axis of symmetry. At the creation the parametrization of the surface is defined such that the normal Vector (N = D1U ^ D1V) is oriented towards the 'outside region' of the surface. Warnings : It is not forbidden to create a cylindrical surface with Radius = 0.0 Status is 'NegativeRadius' if Radius < 0.0
+		%feature("autodoc", "	* A2 defines the local coordinate system of the cylindrical surface. The 'ZDirection' of A2 defines the direction of the surface's axis of symmetry. At the creation the parametrization of the surface is defined such that the normal Vector --N = D1U ^ D1V-- is oriented towards the 'outside region' of the surface. Warnings : It is not forbidden to create a cylindrical surface with Radius = 0.0 Status is 'NegativeRadius' if Radius < 0.0
 
 	:param A2:
 	:type A2: gp_Ax2
@@ -840,10 +799,10 @@ class GC_MakeCylindricalSurface : public GC_Root {
 	:rtype: Handle_Geom_CylindricalSurface
 ") Value;
 		Handle_Geom_CylindricalSurface Value ();
-		%feature("compactdefaultargs") Operator;
-		%feature("autodoc", "	:rtype: Handle_Geom_CylindricalSurface
-") Operator;
-		Handle_Geom_CylindricalSurface Operator ();
+		%feature("compactdefaultargs") operator constHandle_Geom_CylindricalSurface&;
+		%feature("autodoc", "	:rtype: None
+") operator constHandle_Geom_CylindricalSurface&;
+		 operator constHandle_Geom_CylindricalSurface& ();
 };
 
 
@@ -864,7 +823,7 @@ class GC_MakeEllipse : public GC_Root {
 ") GC_MakeEllipse;
 		 GC_MakeEllipse (const gp_Elips & E);
 		%feature("compactdefaultargs") GC_MakeEllipse;
-		%feature("autodoc", "	* Constructs an ellipse with major and minor radii MajorRadius and MinorRadius, and located in the plane defined by the 'X Axis' and 'Y Axis' of the coordinate system A2, where: - its center is the origin of A2, and - its major axis is the 'X Axis' of A2; Warnings : The MakeEllipse class does not prevent the construction of an ellipse where MajorRadius is equal to MinorRadius. If an error occurs (that is, when IsDone returns false), the Status function returns: - gce_InvertRadius if MajorRadius is less than MinorRadius; - gce_NegativeRadius if MinorRadius is less than 0.0; - gce_NullAxis if the points S1 and Center are coincident; or - gce_InvertAxis if: - the major radius computed with Center and S1 is less than the minor radius computed with Center, S1 and S2, or - Center, S1 and S2 are collinear.
+		%feature("autodoc", "	* Constructs an ellipse with major and minor radii MajorRadius and MinorRadius, and located in the plane defined by the 'X Axis' and 'Y Axis' of the coordinate system A2, where: - its center is the origin of A2, and - its major axis is the 'X Axis' of A2; Warnings : The MakeEllipse class does not prevent the construction of an ellipse where MajorRadius is equal to MinorRadius. If an error occurs --that is, when IsDone returns false--, the Status function returns: - gce_InvertRadius if MajorRadius is less than MinorRadius; - gce_NegativeRadius if MinorRadius is less than 0.0; - gce_NullAxis if the points S1 and Center are coincident; or - gce_InvertAxis if: - the major radius computed with Center and S1 is less than the minor radius computed with Center, S1 and S2, or - Center, S1 and S2 are collinear.
 
 	:param A2:
 	:type A2: gp_Ax2
@@ -893,10 +852,10 @@ class GC_MakeEllipse : public GC_Root {
 	:rtype: Handle_Geom_Ellipse
 ") Value;
 		Handle_Geom_Ellipse Value ();
-		%feature("compactdefaultargs") Operator;
-		%feature("autodoc", "	:rtype: Handle_Geom_Ellipse
-") Operator;
-		Handle_Geom_Ellipse Operator ();
+		%feature("compactdefaultargs") operator constHandle_Geom_Ellipse&;
+		%feature("autodoc", "	:rtype: None
+") operator constHandle_Geom_Ellipse&;
+		 operator constHandle_Geom_Ellipse& ();
 };
 
 
@@ -946,10 +905,10 @@ class GC_MakeHyperbola : public GC_Root {
 	:rtype: Handle_Geom_Hyperbola
 ") Value;
 		Handle_Geom_Hyperbola Value ();
-		%feature("compactdefaultargs") Operator;
-		%feature("autodoc", "	:rtype: Handle_Geom_Hyperbola
-") Operator;
-		Handle_Geom_Hyperbola Operator ();
+		%feature("compactdefaultargs") operator constHandle_Geom_Hyperbola&;
+		%feature("autodoc", "	:rtype: None
+") operator constHandle_Geom_Hyperbola&;
+		 operator constHandle_Geom_Hyperbola& ();
 };
 
 
@@ -998,7 +957,7 @@ class GC_MakeLine : public GC_Root {
 ") GC_MakeLine;
 		 GC_MakeLine (const gp_Lin & Lin,const gp_Pnt & Point);
 		%feature("compactdefaultargs") GC_MakeLine;
-		%feature("autodoc", "	* Make a Line from Geom <TheLin> passing through 2 Pnt <P1>,<P2>. It returns false if <p1> and <P2> are confused. Warning If the points P1 and P2 are coincident (that is, when IsDone returns false), the Status function returns gce_ConfusedPoints.
+		%feature("autodoc", "	* Make a Line from Geom <TheLin> passing through 2 Pnt <P1>,<P2>. It returns false if <p1> and <P2> are confused. Warning If the points P1 and P2 are coincident --that is, when IsDone returns false--, the Status function returns gce_ConfusedPoints.
 
 	:param P1:
 	:type P1: gp_Pnt
@@ -1013,10 +972,10 @@ class GC_MakeLine : public GC_Root {
 	:rtype: Handle_Geom_Line
 ") Value;
 		Handle_Geom_Line Value ();
-		%feature("compactdefaultargs") Operator;
-		%feature("autodoc", "	:rtype: Handle_Geom_Line
-") Operator;
-		Handle_Geom_Line Operator ();
+		%feature("compactdefaultargs") operator constHandle_Geom_Line&;
+		%feature("autodoc", "	:rtype: None
+") operator constHandle_Geom_Line&;
+		 operator constHandle_Geom_Line& ();
 };
 
 
@@ -1028,14 +987,6 @@ class GC_MakeLine : public GC_Root {
 %nodefaultctor GC_MakePlane;
 class GC_MakePlane : public GC_Root {
 	public:
-		%feature("compactdefaultargs") GC_MakePlane;
-		%feature("autodoc", "	* Creates a plane located in 3D space with an axis placement two axis. The 'ZDirection' of 'A2' is the direction normal to the plane. The 'Location' point of 'A2' is the origin of the plane. The 'XDirection' and 'YDirection' of 'A2' define the directions of the U isoparametric and V isoparametric curves.
-
-	:param A2:
-	:type A2: gp_Ax2
-	:rtype: None
-") GC_MakePlane;
-		 GC_MakePlane (const gp_Ax2 & A2);
 		%feature("compactdefaultargs") GC_MakePlane;
 		%feature("autodoc", "	* Creates a plane from a non persistent plane from package gp.
 
@@ -1055,7 +1006,7 @@ class GC_MakePlane : public GC_Root {
 ") GC_MakePlane;
 		 GC_MakePlane (const gp_Pnt & P,const gp_Dir & V);
 		%feature("compactdefaultargs") GC_MakePlane;
-		%feature("autodoc", "	* Creates a plane from its cartesian equation : Ax + By + Cz + D = 0.0 Status is 'BadEquation' if Sqrt (A*A + B*B + C*C) <= Resolution from gp
+		%feature("autodoc", "	* Creates a plane from its cartesian equation : Ax + By + Cz + D = 0.0 Status is 'BadEquation' if Sqrt --A*A + B*B + C*C-- <= Resolution from gp
 
 	:param A:
 	:type A: float
@@ -1114,10 +1065,10 @@ class GC_MakePlane : public GC_Root {
 	:rtype: Handle_Geom_Plane
 ") Value;
 		Handle_Geom_Plane Value ();
-		%feature("compactdefaultargs") Operator;
-		%feature("autodoc", "	:rtype: Handle_Geom_Plane
-") Operator;
-		Handle_Geom_Plane Operator ();
+		%feature("compactdefaultargs") operator constHandle_Geom_Plane&;
+		%feature("autodoc", "	:rtype: None
+") operator constHandle_Geom_Plane&;
+		 operator constHandle_Geom_Plane& ();
 };
 
 
@@ -1181,10 +1132,10 @@ class GC_MakeSegment : public GC_Root {
 	:rtype: Handle_Geom_TrimmedCurve
 ") Value;
 		Handle_Geom_TrimmedCurve Value ();
-		%feature("compactdefaultargs") Operator;
-		%feature("autodoc", "	:rtype: Handle_Geom_TrimmedCurve
-") Operator;
-		Handle_Geom_TrimmedCurve Operator ();
+		%feature("compactdefaultargs") operator constHandle_Geom_TrimmedCurve&;
+		%feature("autodoc", "	:rtype: None
+") operator constHandle_Geom_TrimmedCurve&;
+		 operator constHandle_Geom_TrimmedCurve& ();
 };
 
 
@@ -1211,7 +1162,7 @@ class GC_MakeTrimmedCone : public GC_Root {
 ") GC_MakeTrimmedCone;
 		 GC_MakeTrimmedCone (const gp_Pnt & P1,const gp_Pnt & P2,const gp_Pnt & P3,const gp_Pnt & P4);
 		%feature("compactdefaultargs") GC_MakeTrimmedCone;
-		%feature("autodoc", "	* Make a RectangularTrimmedSurface from Geom <TheCone> from a cone and trimmed by two points P1 and P2 and the two radius <R1> and <R2> of the sections passing through <P1> an <P2>. Warning If an error occurs (that is, when IsDone returns false), the Status function returns: - gce_ConfusedPoints if points P1 and P2, or P3 and P4, are coincident; - gce_NullAngle if: - the lines joining P1 to P2 and P3 to P4 are parallel, or - R1 and R2 are equal (i.e. their difference is less than gp::Resolution()); - gce_NullRadius if: - the line joining P1 to P2 is perpendicular to the line joining P3 to P4, or - the points P1, P2, P3 and P4 are collinear; - gce_NegativeRadius if R1 or R2 is negative; or - gce_NullAxis if points P1 and P2 are coincident (2nd syntax only).
+		%feature("autodoc", "	* Make a RectangularTrimmedSurface from Geom <TheCone> from a cone and trimmed by two points P1 and P2 and the two radius <R1> and <R2> of the sections passing through <P1> an <P2>. Warning If an error occurs --that is, when IsDone returns false--, the Status function returns: - gce_ConfusedPoints if points P1 and P2, or P3 and P4, are coincident; - gce_NullAngle if: - the lines joining P1 to P2 and P3 to P4 are parallel, or - R1 and R2 are equal --i.e. their difference is less than gp::Resolution------; - gce_NullRadius if: - the line joining P1 to P2 is perpendicular to the line joining P3 to P4, or - the points P1, P2, P3 and P4 are collinear; - gce_NegativeRadius if R1 or R2 is negative; or - gce_NullAxis if points P1 and P2 are coincident --2nd syntax only--.
 
 	:param P1:
 	:type P1: gp_Pnt
@@ -1230,10 +1181,10 @@ class GC_MakeTrimmedCone : public GC_Root {
 	:rtype: Handle_Geom_RectangularTrimmedSurface
 ") Value;
 		Handle_Geom_RectangularTrimmedSurface Value ();
-		%feature("compactdefaultargs") Operator;
-		%feature("autodoc", "	:rtype: Handle_Geom_RectangularTrimmedSurface
-") Operator;
-		Handle_Geom_RectangularTrimmedSurface Operator ();
+		%feature("compactdefaultargs") operator constHandle_Geom_RectangularTrimmedSurface&;
+		%feature("autodoc", "	:rtype: None
+") operator constHandle_Geom_RectangularTrimmedSurface&;
+		 operator constHandle_Geom_RectangularTrimmedSurface& ();
 };
 
 
@@ -1279,40 +1230,16 @@ class GC_MakeTrimmedCylinder : public GC_Root {
 	:rtype: None
 ") GC_MakeTrimmedCylinder;
 		 GC_MakeTrimmedCylinder (const gp_Ax1 & A1,const Standard_Real Radius,const Standard_Real Height);
-		%feature("compactdefaultargs") GC_MakeTrimmedCylinder;
-		%feature("autodoc", "	* Make a RectangularTrimmedSurface <Cylinder> from gp by a cylinder from gp. It is trimmed by the point <P> and the heigh <Heigh>. <Height> can be greater than zero or lower than zero. in the first case the limit section is in the side of the positives V paramters of <Cyl> and in the other side if <Heigh> is lower than zero.
-
-	:param Cyl:
-	:type Cyl: gp_Cylinder
-	:param P:
-	:type P: gp_Pnt
-	:param Height:
-	:type Height: float
-	:rtype: None
-") GC_MakeTrimmedCylinder;
-		 GC_MakeTrimmedCylinder (const gp_Cylinder & Cyl,const gp_Pnt & P,const Standard_Real Height);
-		%feature("compactdefaultargs") GC_MakeTrimmedCylinder;
-		%feature("autodoc", "	* Make a RectangularTrimmedSurface <Cylinder> from gp by a cylinder from gp. It is trimmed by the two points <P1> and <P2>. Warning If an error occurs (that is, when IsDone returns false), the Status function returns: - gce_NegativeRadius if Radius is less than 0.0, or - gce_ConfusedPoints if the points P1 and P2 are coincident. - gce_ColinearPoints if the points P1, P2 and P3 are collinear.
-
-	:param Cyl:
-	:type Cyl: gp_Cylinder
-	:param P1:
-	:type P1: gp_Pnt
-	:param P2:
-	:type P2: gp_Pnt
-	:rtype: None
-") GC_MakeTrimmedCylinder;
-		 GC_MakeTrimmedCylinder (const gp_Cylinder & Cyl,const gp_Pnt & P1,const gp_Pnt & P2);
 		%feature("compactdefaultargs") Value;
 		%feature("autodoc", "	* Returns the constructed trimmed cylinder. Exceptions StdFail_NotDone if no trimmed cylinder is constructed.
 
 	:rtype: Handle_Geom_RectangularTrimmedSurface
 ") Value;
 		Handle_Geom_RectangularTrimmedSurface Value ();
-		%feature("compactdefaultargs") Operator;
-		%feature("autodoc", "	:rtype: Handle_Geom_RectangularTrimmedSurface
-") Operator;
-		Handle_Geom_RectangularTrimmedSurface Operator ();
+		%feature("compactdefaultargs") operator constHandle_Geom_RectangularTrimmedSurface&;
+		%feature("autodoc", "	:rtype: None
+") operator constHandle_Geom_RectangularTrimmedSurface&;
+		 operator constHandle_Geom_RectangularTrimmedSurface& ();
 };
 
 

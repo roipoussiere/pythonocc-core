@@ -1,5 +1,5 @@
 /*
-Copyright 2008-2017 Thomas Paviot (tpaviot@gmail.com)
+Copyright 2008-2018 Thomas Paviot (tpaviot@gmail.com)
 
 
 This file is part of pythonOCC.
@@ -56,6 +56,9 @@ def register_handle(handle, base_object):
 /* typedefs */
 /* end typedefs declaration */
 
+/* templates */
+/* end templates declaration */
+
 /* public enums */
 /* end public enums declaration */
 
@@ -102,11 +105,15 @@ class BRepClass_Edge {
 class BRepClass_FClass2dOfFClassifier {
 	public:
 		%feature("compactdefaultargs") BRepClass_FClass2dOfFClassifier;
-		%feature("autodoc", "	:rtype: None
+		%feature("autodoc", "	* Creates an undefined classifier.
+
+	:rtype: None
 ") BRepClass_FClass2dOfFClassifier;
 		 BRepClass_FClass2dOfFClassifier ();
 		%feature("compactdefaultargs") Reset;
-		%feature("autodoc", "	:param L:
+		%feature("autodoc", "	* Starts a classification process. The point to classify is the origin of the line <L>. <P> is the original length of the segment on <L> used to compute intersections. <Tol> is the tolerance attached to the line segment in intersections.
+
+	:param L:
 	:type L: gp_Lin2d
 	:param P:
 	:type P: float
@@ -116,7 +123,9 @@ class BRepClass_FClass2dOfFClassifier {
 ") Reset;
 		void Reset (const gp_Lin2d & L,const Standard_Real P,const Standard_Real Tol);
 		%feature("compactdefaultargs") Compare;
-		%feature("autodoc", "	:param E:
+		%feature("autodoc", "	* Updates the classification process with the edge <E> from the boundary.
+
+	:param E:
 	:type E: BRepClass_Edge &
 	:param Or:
 	:type Or: TopAbs_Orientation
@@ -124,23 +133,33 @@ class BRepClass_FClass2dOfFClassifier {
 ") Compare;
 		void Compare (const BRepClass_Edge & E,const TopAbs_Orientation Or);
 		%feature("compactdefaultargs") Parameter;
-		%feature("autodoc", "	:rtype: float
+		%feature("autodoc", "	* Returns the current value of the parameter.
+
+	:rtype: float
 ") Parameter;
 		Standard_Real Parameter ();
 		%feature("compactdefaultargs") Intersector;
-		%feature("autodoc", "	:rtype: BRepClass_Intersector
+		%feature("autodoc", "	* Returns the intersecting algorithm.
+
+	:rtype: BRepClass_Intersector
 ") Intersector;
 		BRepClass_Intersector & Intersector ();
 		%feature("compactdefaultargs") ClosestIntersection;
-		%feature("autodoc", "	:rtype: int
+		%feature("autodoc", "	* Returns 0 if the last compared edge had no relevant intersection. Else returns the index of this intersection in the last intersection algorithm.
+
+	:rtype: int
 ") ClosestIntersection;
 		Standard_Integer ClosestIntersection ();
 		%feature("compactdefaultargs") State;
-		%feature("autodoc", "	:rtype: TopAbs_State
+		%feature("autodoc", "	* Returns the current state of the point.
+
+	:rtype: TopAbs_State
 ") State;
 		TopAbs_State State ();
 		%feature("compactdefaultargs") IsHeadOrEnd;
-		%feature("autodoc", "	:rtype: bool
+		%feature("autodoc", "	* Returns the Standard_True if the closest intersection point represents head or end of the edge. Returns Standard_False otherwise.
+
+	:rtype: bool
 ") IsHeadOrEnd;
 		Standard_Boolean IsHeadOrEnd ();
 };
@@ -155,11 +174,15 @@ class BRepClass_FClass2dOfFClassifier {
 class BRepClass_FClassifier {
 	public:
 		%feature("compactdefaultargs") BRepClass_FClassifier;
-		%feature("autodoc", "	:rtype: None
+		%feature("autodoc", "	* Empty constructor, undefined algorithm.
+
+	:rtype: None
 ") BRepClass_FClassifier;
 		 BRepClass_FClassifier ();
 		%feature("compactdefaultargs") BRepClass_FClassifier;
-		%feature("autodoc", "	:param F:
+		%feature("autodoc", "	* Creates an algorithm to classify the Point P with Tolerance <T> on the face described by <F>.
+
+	:param F:
 	:type F: BRepClass_FaceExplorer &
 	:param P:
 	:type P: gp_Pnt2d
@@ -169,7 +192,9 @@ class BRepClass_FClassifier {
 ") BRepClass_FClassifier;
 		 BRepClass_FClassifier (BRepClass_FaceExplorer & F,const gp_Pnt2d & P,const Standard_Real Tol);
 		%feature("compactdefaultargs") Perform;
-		%feature("autodoc", "	:param F:
+		%feature("autodoc", "	* Classify the Point P with Tolerance <T> on the face described by <F>.
+
+	:param F:
 	:type F: BRepClass_FaceExplorer &
 	:param P:
 	:type P: gp_Pnt2d
@@ -179,27 +204,39 @@ class BRepClass_FClassifier {
 ") Perform;
 		void Perform (BRepClass_FaceExplorer & F,const gp_Pnt2d & P,const Standard_Real Tol);
 		%feature("compactdefaultargs") State;
-		%feature("autodoc", "	:rtype: TopAbs_State
+		%feature("autodoc", "	* Returns the result of the classification.
+
+	:rtype: TopAbs_State
 ") State;
 		TopAbs_State State ();
 		%feature("compactdefaultargs") Rejected;
-		%feature("autodoc", "	:rtype: bool
+		%feature("autodoc", "	* Returns True when the state was computed by a rejection. The state is OUT.
+
+	:rtype: bool
 ") Rejected;
 		Standard_Boolean Rejected ();
 		%feature("compactdefaultargs") NoWires;
-		%feature("autodoc", "	:rtype: bool
+		%feature("autodoc", "	* Returns True if the face contains no wire. The state is IN.
+
+	:rtype: bool
 ") NoWires;
 		Standard_Boolean NoWires ();
 		%feature("compactdefaultargs") Edge;
-		%feature("autodoc", "	:rtype: BRepClass_Edge
+		%feature("autodoc", "	* Returns the Edge used to determine the classification. When the State is ON this is the Edge containing the point.
+
+	:rtype: BRepClass_Edge
 ") Edge;
 		const BRepClass_Edge & Edge ();
 		%feature("compactdefaultargs") EdgeParameter;
-		%feature("autodoc", "	:rtype: float
+		%feature("autodoc", "	* Returns the parameter on Edge---- used to determine the classification.
+
+	:rtype: float
 ") EdgeParameter;
 		Standard_Real EdgeParameter ();
 		%feature("compactdefaultargs") Position;
-		%feature("autodoc", "	:rtype: IntRes2d_Position
+		%feature("autodoc", "	* Returns the position of the point on the edge returned by Edge.
+
+	:rtype: IntRes2d_Position
 ") Position;
 		IntRes2d_Position Position ();
 };
@@ -219,6 +256,14 @@ class BRepClass_FaceExplorer {
 	:rtype: None
 ") BRepClass_FaceExplorer;
 		 BRepClass_FaceExplorer (const TopoDS_Face & F);
+		%feature("compactdefaultargs") CheckPoint;
+		%feature("autodoc", "	* Checks the point and change its coords if it is located too far from the bounding box of the face. New Coordinates of the point will be on the line between the point and the center of the bounding box. Returns True if point was not changed.
+
+	:param thePoint:
+	:type thePoint: gp_Pnt2d
+	:rtype: bool
+") CheckPoint;
+		Standard_Boolean CheckPoint (gp_Pnt2d & thePoint);
 		%feature("compactdefaultargs") Reject;
 		%feature("autodoc", "	* Should return True if the point is outside a bounding volume of the face.
 
@@ -329,11 +374,15 @@ class BRepClass_FaceExplorer {
 class BRepClass_FacePassiveClassifier {
 	public:
 		%feature("compactdefaultargs") BRepClass_FacePassiveClassifier;
-		%feature("autodoc", "	:rtype: None
+		%feature("autodoc", "	* Creates an undefined classifier.
+
+	:rtype: None
 ") BRepClass_FacePassiveClassifier;
 		 BRepClass_FacePassiveClassifier ();
 		%feature("compactdefaultargs") Reset;
-		%feature("autodoc", "	:param L:
+		%feature("autodoc", "	* Starts a classification process. The point to classify is the origin of the line <L>. <P> is the original length of the segment on <L> used to compute intersections. <Tol> is the tolerance attached to the line segment in intersections.
+
+	:param L:
 	:type L: gp_Lin2d
 	:param P:
 	:type P: float
@@ -343,7 +392,9 @@ class BRepClass_FacePassiveClassifier {
 ") Reset;
 		void Reset (const gp_Lin2d & L,const Standard_Real P,const Standard_Real Tol);
 		%feature("compactdefaultargs") Compare;
-		%feature("autodoc", "	:param E:
+		%feature("autodoc", "	* Updates the classification process with the edge <E> from the boundary.
+
+	:param E:
 	:type E: BRepClass_Edge &
 	:param Or:
 	:type Or: TopAbs_Orientation
@@ -351,23 +402,33 @@ class BRepClass_FacePassiveClassifier {
 ") Compare;
 		void Compare (const BRepClass_Edge & E,const TopAbs_Orientation Or);
 		%feature("compactdefaultargs") Parameter;
-		%feature("autodoc", "	:rtype: float
+		%feature("autodoc", "	* Returns the current value of the parameter.
+
+	:rtype: float
 ") Parameter;
 		Standard_Real Parameter ();
 		%feature("compactdefaultargs") Intersector;
-		%feature("autodoc", "	:rtype: BRepClass_Intersector
+		%feature("autodoc", "	* Returns the intersecting algorithm.
+
+	:rtype: BRepClass_Intersector
 ") Intersector;
 		BRepClass_Intersector & Intersector ();
 		%feature("compactdefaultargs") ClosestIntersection;
-		%feature("autodoc", "	:rtype: int
+		%feature("autodoc", "	* Returns 0 if the last compared edge had no relevant intersection. Else returns the index of this intersection in the last intersection algorithm.
+
+	:rtype: int
 ") ClosestIntersection;
 		Standard_Integer ClosestIntersection ();
 		%feature("compactdefaultargs") State;
-		%feature("autodoc", "	:rtype: TopAbs_State
+		%feature("autodoc", "	* Returns the current state of the point.
+
+	:rtype: TopAbs_State
 ") State;
 		TopAbs_State State ();
 		%feature("compactdefaultargs") IsHeadOrEnd;
-		%feature("autodoc", "	:rtype: bool
+		%feature("autodoc", "	* Returns the Standard_True if the closest intersection point represents head or end of the edge. Returns Standard_False otherwise.
+
+	:rtype: bool
 ") IsHeadOrEnd;
 		Standard_Boolean IsHeadOrEnd ();
 };

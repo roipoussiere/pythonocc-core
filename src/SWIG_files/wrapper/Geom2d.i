@@ -1,5 +1,5 @@
 /*
-Copyright 2008-2017 Thomas Paviot (tpaviot@gmail.com)
+Copyright 2008-2018 Thomas Paviot (tpaviot@gmail.com)
 
 
 This file is part of pythonOCC.
@@ -56,11 +56,14 @@ def register_handle(handle, base_object):
 /* typedefs */
 /* end typedefs declaration */
 
+/* templates */
+/* end templates declaration */
+
 /* public enums */
 /* end public enums declaration */
 
 %nodefaultctor Geom2d_Geometry;
-class Geom2d_Geometry : public MMgt_TShared {
+class Geom2d_Geometry : public Standard_Transient {
 	public:
 		%feature("compactdefaultargs") Mirror;
 		%feature("autodoc", "	* Performs the symmetrical transformation of a Geometry with respect to the point P which is the center of the symmetry and assigns the result to this geometric object.
@@ -117,7 +120,7 @@ class Geom2d_Geometry : public MMgt_TShared {
 ") Translate;
 		void Translate (const gp_Pnt2d & P1,const gp_Pnt2d & P2);
 		%feature("compactdefaultargs") Transform;
-		%feature("autodoc", "	* Transformation of a geometric object. This tansformation can be a translation, a rotation, a symmetry, a scaling or a complex transformation obtained by combination of the previous elementaries transformations. (see class Transformation of the package Geom2d). The following transformations have the same properties as the previous ones but they don't modified the object itself. A copy of the object is returned.
+		%feature("autodoc", "	* Transformation of a geometric object. This tansformation can be a translation, a rotation, a symmetry, a scaling or a complex transformation obtained by combination of the previous elementaries transformations. --see class Transformation of the package Geom2d--. The following transformations have the same properties as the previous ones but they don't modified the object itself. A copy of the object is returned.
 
 	:param T:
 	:type T: gp_Trsf2d
@@ -198,7 +201,7 @@ class Geom2d_Geometry : public MMgt_TShared {
 %}
 
 %nodefaultctor Handle_Geom2d_Geometry;
-class Handle_Geom2d_Geometry : public Handle_MMgt_TShared {
+class Handle_Geom2d_Geometry : public Handle_Standard_Transient {
 
     public:
         // constructors
@@ -210,19 +213,20 @@ class Handle_Geom2d_Geometry : public Handle_MMgt_TShared {
         static const Handle_Geom2d_Geometry DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_Geom2d_Geometry {
     Geom2d_Geometry* _get_reference() {
-    return (Geom2d_Geometry*)$self->Access();
+    return (Geom2d_Geometry*)$self->get();
     }
 };
 
 %extend Handle_Geom2d_Geometry {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend Geom2d_Geometry {
@@ -231,7 +235,7 @@ class Handle_Geom2d_Geometry : public Handle_MMgt_TShared {
 	}
 };
 %nodefaultctor Geom2d_Transformation;
-class Geom2d_Transformation : public MMgt_TShared {
+class Geom2d_Transformation : public Standard_Transient {
 	public:
 		%feature("compactdefaultargs") Geom2d_Transformation;
 		%feature("autodoc", "	* Creates an identity transformation.
@@ -264,7 +268,7 @@ class Geom2d_Transformation : public MMgt_TShared {
 ") SetMirror;
 		void SetMirror (const gp_Ax2d & A);
 		%feature("compactdefaultargs") SetRotation;
-		%feature("autodoc", "	* Assigns to this transformation the geometric properties of a rotation at angle Ang (in radians) about point P.
+		%feature("autodoc", "	* Assigns to this transformation the geometric properties of a rotation at angle Ang --in radians-- about point P.
 
 	:param P:
 	:type P: gp_Pnt2d
@@ -294,7 +298,7 @@ class Geom2d_Transformation : public MMgt_TShared {
 ") SetTransformation;
 		void SetTransformation (const gp_Ax2d & FromSystem1,const gp_Ax2d & ToSystem2);
 		%feature("compactdefaultargs") SetTransformation;
-		%feature("autodoc", "	* Makes the transformation allowing passage from the basic coordinate system {P(0.,0.,0.), VX (1.,0.,0.), VY (0.,1.,0.)} to the local coordinate system defined with the Ax2d ToSystem.
+		%feature("autodoc", "	* Makes the transformation allowing passage from the basic coordinate system {P--0.,0.,0.--, VX --1.,0.,0.--, VY --0.,1.,0.--} to the local coordinate system defined with the Ax2d ToSystem.
 
 	:param ToSystem:
 	:type ToSystem: gp_Ax2d
@@ -388,7 +392,7 @@ class Geom2d_Transformation : public MMgt_TShared {
 ") operator *;
 		Handle_Geom2d_Transformation operator * (const Handle_Geom2d_Transformation & Other);
 		%feature("compactdefaultargs") Multiply;
-		%feature("autodoc", "	* Computes the transformation composed with Other and <self> . <self> = <self> * Other. //! Computes the following composition of transformations if N > 0 <self> * <self> * .......* <self>. if N = 0 Identity if N < 0 <self>.Invert() * .........* <self>.Invert()
+		%feature("autodoc", "	* Computes the transformation composed with Other and <self> . <self> = <self> * Other. //! Computes the following composition of transformations if N > 0 <self> * <self> * .......* <self>. if N = 0 Identity if N < 0 <self>.Invert---- * .........* <self>.Invert----
 
 	:param Other:
 	:type Other: Handle_Geom2d_Transformation &
@@ -463,7 +467,7 @@ class Geom2d_Transformation : public MMgt_TShared {
 %}
 
 %nodefaultctor Handle_Geom2d_Transformation;
-class Handle_Geom2d_Transformation : public Handle_MMgt_TShared {
+class Handle_Geom2d_Transformation : public Handle_Standard_Transient {
 
     public:
         // constructors
@@ -475,19 +479,20 @@ class Handle_Geom2d_Transformation : public Handle_MMgt_TShared {
         static const Handle_Geom2d_Transformation DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_Geom2d_Transformation {
     Geom2d_Transformation* _get_reference() {
-    return (Geom2d_Transformation*)$self->Access();
+    return (Geom2d_Transformation*)$self->get();
     }
 };
 
 %extend Handle_Geom2d_Transformation {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend Geom2d_Transformation {
@@ -543,7 +548,7 @@ class Geom2d_AxisPlacement : public Geom2d_Geometry {
 ") SetDirection;
 		void SetDirection (const gp_Dir2d & V);
 		%feature("compactdefaultargs") SetLocation;
-		%feature("autodoc", "	* Changes the 'Location' point (origin) of the axis placement.
+		%feature("autodoc", "	* Changes the 'Location' point --origin-- of the axis placement.
 
 	:param P:
 	:type P: gp_Pnt2d
@@ -571,7 +576,7 @@ class Geom2d_AxisPlacement : public Geom2d_Geometry {
 ") Direction;
 		gp_Dir2d Direction ();
 		%feature("compactdefaultargs") Location;
-		%feature("autodoc", "	* Returns the 'Location' point (origin) of the axis placement. -C++: return const&
+		%feature("autodoc", "	* Returns the 'Location' point --origin-- of the axis placement. -C++: return const&
 
 	:rtype: gp_Pnt2d
 ") Location;
@@ -624,19 +629,20 @@ class Handle_Geom2d_AxisPlacement : public Handle_Geom2d_Geometry {
         static const Handle_Geom2d_AxisPlacement DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_Geom2d_AxisPlacement {
     Geom2d_AxisPlacement* _get_reference() {
-    return (Geom2d_AxisPlacement*)$self->Access();
+    return (Geom2d_AxisPlacement*)$self->get();
     }
 };
 
 %extend Handle_Geom2d_AxisPlacement {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend Geom2d_AxisPlacement {
@@ -654,7 +660,7 @@ class Geom2d_Curve : public Geom2d_Geometry {
 ") Reverse;
 		virtual void Reverse ();
 		%feature("compactdefaultargs") ReversedParameter;
-		%feature("autodoc", "	* Computes the parameter on the reversed curve for the point of parameter U on this curve. Note: The point of parameter U on this curve is identical to the point of parameter ReversedParameter(U) on the reversed curve.
+		%feature("autodoc", "	* Computes the parameter on the reversed curve for the point of parameter U on this curve. Note: The point of parameter U on this curve is identical to the point of parameter ReversedParameter--U-- on the reversed curve.
 
 	:param U:
 	:type U: float
@@ -662,7 +668,7 @@ class Geom2d_Curve : public Geom2d_Geometry {
 ") ReversedParameter;
 		virtual Standard_Real ReversedParameter (const Standard_Real U);
 		%feature("compactdefaultargs") TransformedParameter;
-		%feature("autodoc", "	* Computes the parameter on the curve transformed by T for the point of parameter U on this curve. Note: this function generally returns U but it can be redefined (for example, on a line).
+		%feature("autodoc", "	* Computes the parameter on the curve transformed by T for the point of parameter U on this curve. Note: this function generally returns U but it can be redefined --for example, on a line--.
 
 	:param U:
 	:type U: float
@@ -672,7 +678,7 @@ class Geom2d_Curve : public Geom2d_Geometry {
 ") TransformedParameter;
 		virtual Standard_Real TransformedParameter (const Standard_Real U,const gp_Trsf2d & T);
 		%feature("compactdefaultargs") ParametricTransformation;
-		%feature("autodoc", "	* Returns the coefficient required to compute the parametric transformation of this curve when transformation T is applied. This coefficient is the ratio between the parameter of a point on this curve and the parameter of the transformed point on the new curve transformed by T. Note: this function generally returns 1. but it can be redefined (for example, on a line).
+		%feature("autodoc", "	* Returns the coefficient required to compute the parametric transformation of this curve when transformation T is applied. This coefficient is the ratio between the parameter of a point on this curve and the parameter of the transformed point on the new curve transformed by T. Note: this function generally returns 1. but it can be redefined --for example, on a line--.
 
 	:param T:
 	:type T: gp_Trsf2d
@@ -698,13 +704,13 @@ class Geom2d_Curve : public Geom2d_Geometry {
 ") LastParameter;
 		virtual Standard_Real LastParameter ();
 		%feature("compactdefaultargs") IsClosed;
-		%feature("autodoc", "	* Returns true if the curve is closed. Examples : Some curves such as circle are always closed, others such as line are never closed (by definition). Some Curves such as OffsetCurve can be closed or not. These curves are considered as closed if the distance between the first point and the last point of the curve is lower or equal to the Resolution from package gp wich is a fixed criterion independant of the application.
+		%feature("autodoc", "	* Returns true if the curve is closed. Examples : Some curves such as circle are always closed, others such as line are never closed --by definition--. Some Curves such as OffsetCurve can be closed or not. These curves are considered as closed if the distance between the first point and the last point of the curve is lower or equal to the Resolution from package gp wich is a fixed criterion independant of the application.
 
 	:rtype: bool
 ") IsClosed;
 		virtual Standard_Boolean IsClosed ();
 		%feature("compactdefaultargs") IsPeriodic;
-		%feature("autodoc", "	* Returns true if the parameter of the curve is periodic. It is possible only if the curve is closed and if the following relation is satisfied : for each parametric value U the distance between the point P(u) and the point P (u + T) is lower or equal to Resolution from package gp, T is the period and must be a constant. There are three possibilities : . the curve is never periodic by definition (SegmentLine) . the curve is always periodic by definition (Circle) . the curve can be defined as periodic (BSpline). In this case a function SetPeriodic allows you to give the shape of the curve. The general rule for this case is : if a curve can be periodic or not the default periodicity set is non periodic and you have to turn (explicitly) the curve into a periodic curve if you want the curve to be periodic.
+		%feature("autodoc", "	* Returns true if the parameter of the curve is periodic. It is possible only if the curve is closed and if the following relation is satisfied : for each parametric value U the distance between the point P--u-- and the point P --u + T-- is lower or equal to Resolution from package gp, T is the period and must be a constant. There are three possibilities : . the curve is never periodic by definition --SegmentLine-- . the curve is always periodic by definition --Circle-- . the curve can be defined as periodic --BSpline--. In this case a function SetPeriodic allows you to give the shape of the curve. The general rule for this case is : if a curve can be periodic or not the default periodicity set is non periodic and you have to turn --explicitly-- the curve into a periodic curve if you want the curve to be periodic.
 
 	:rtype: bool
 ") IsPeriodic;
@@ -730,7 +736,7 @@ class Geom2d_Curve : public Geom2d_Geometry {
 ") IsCN;
 		virtual Standard_Boolean IsCN (const Standard_Integer N);
 		%feature("compactdefaultargs") D0;
-		%feature("autodoc", "	* Returns in P the point of parameter U. If the curve is periodic then the returned point is P(U) with U = Ustart + (U - Uend) where Ustart and Uend are the parametric bounds of the curve. //! Raised only for the 'OffsetCurve' if it is not possible to compute the current point. For example when the first derivative on the basis curve and the offset direction are parallel.
+		%feature("autodoc", "	* Returns in P the point of parameter U. If the curve is periodic then the returned point is P--U-- with U = Ustart + --U - Uend-- where Ustart and Uend are the parametric bounds of the curve. //! Raised only for the 'OffsetCurve' if it is not possible to compute the current point. For example when the first derivative on the basis curve and the offset direction are parallel.
 
 	:param U:
 	:type U: float
@@ -782,7 +788,7 @@ class Geom2d_Curve : public Geom2d_Geometry {
 ") D3;
 		virtual void D3 (const Standard_Real U,gp_Pnt2d & P,gp_Vec2d & V1,gp_Vec2d & V2,gp_Vec2d & V3);
 		%feature("compactdefaultargs") DN;
-		%feature("autodoc", "	* For the point of parameter U of this curve, computes the vector corresponding to the Nth derivative. Exceptions StdFail_UndefinedDerivative if: - the continuity of the curve is not 'CN', or - the derivative vector cannot be computed easily; this is the case with specific types of curve (for example, a rational BSpline curve where N is greater than 3). Standard_RangeError if N is less than 1.
+		%feature("autodoc", "	* For the point of parameter U of this curve, computes the vector corresponding to the Nth derivative. Exceptions StdFail_UndefinedDerivative if: - the continuity of the curve is not 'CN', or - the derivative vector cannot be computed easily; this is the case with specific types of curve --for example, a rational BSpline curve where N is greater than 3--. Standard_RangeError if N is less than 1.
 
 	:param U:
 	:type U: float
@@ -792,7 +798,7 @@ class Geom2d_Curve : public Geom2d_Geometry {
 ") DN;
 		virtual gp_Vec2d DN (const Standard_Real U,const Standard_Integer N);
 		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	* Computes the point of parameter U on <self>. If the curve is periodic then the returned point is P(U) with U = Ustart + (U - Uend) where Ustart and Uend are the parametric bounds of the curve. //! it is implemented with D0. //! Raised only for the 'OffsetCurve' if it is not possible to compute the current point. For example when the first derivative on the basis curve and the offset direction are parallel.
+		%feature("autodoc", "	* Computes the point of parameter U on <self>. If the curve is periodic then the returned point is P--U-- with U = Ustart + --U - Uend-- where Ustart and Uend are the parametric bounds of the curve. //! it is implemented with D0. //! Raised only for the 'OffsetCurve' if it is not possible to compute the current point. For example when the first derivative on the basis curve and the offset direction are parallel.
 
 	:param U:
 	:type U: float
@@ -833,19 +839,20 @@ class Handle_Geom2d_Curve : public Handle_Geom2d_Geometry {
         static const Handle_Geom2d_Curve DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_Geom2d_Curve {
     Geom2d_Curve* _get_reference() {
-    return (Geom2d_Curve*)$self->Access();
+    return (Geom2d_Curve*)$self->get();
     }
 };
 
 %extend Handle_Geom2d_Curve {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend Geom2d_Curve {
@@ -934,19 +941,20 @@ class Handle_Geom2d_Point : public Handle_Geom2d_Geometry {
         static const Handle_Geom2d_Point DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_Geom2d_Point {
     Geom2d_Point* _get_reference() {
-    return (Geom2d_Point*)$self->Access();
+    return (Geom2d_Point*)$self->get();
     }
 };
 
 %extend Handle_Geom2d_Point {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend Geom2d_Point {
@@ -1067,19 +1075,20 @@ class Handle_Geom2d_Vector : public Handle_Geom2d_Geometry {
         static const Handle_Geom2d_Vector DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_Geom2d_Vector {
     Geom2d_Vector* _get_reference() {
-    return (Geom2d_Vector*)$self->Access();
+    return (Geom2d_Vector*)$self->get();
     }
 };
 
 %extend Handle_Geom2d_Vector {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend Geom2d_Vector {
@@ -1136,19 +1145,20 @@ class Handle_Geom2d_BoundedCurve : public Handle_Geom2d_Curve {
         static const Handle_Geom2d_BoundedCurve DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_Geom2d_BoundedCurve {
     Geom2d_BoundedCurve* _get_reference() {
-    return (Geom2d_BoundedCurve*)$self->Access();
+    return (Geom2d_BoundedCurve*)$self->get();
     }
 };
 
 %extend Handle_Geom2d_BoundedCurve {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend Geom2d_BoundedCurve {
@@ -1186,7 +1196,7 @@ class Geom2d_CartesianPoint : public Geom2d_Point {
 ") SetCoord;
 		void SetCoord (const Standard_Real X,const Standard_Real Y);
 		%feature("compactdefaultargs") SetPnt2d;
-		%feature("autodoc", "	* Set <self> to P.X(), P.Y() coordinates.
+		%feature("autodoc", "	* Set <self> to P.X----, P.Y---- coordinates.
 
 	:param P:
 	:type P: gp_Pnt2d
@@ -1281,19 +1291,20 @@ class Handle_Geom2d_CartesianPoint : public Handle_Geom2d_Point {
         static const Handle_Geom2d_CartesianPoint DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_Geom2d_CartesianPoint {
     Geom2d_CartesianPoint* _get_reference() {
-    return (Geom2d_CartesianPoint*)$self->Access();
+    return (Geom2d_CartesianPoint*)$self->get();
     }
 };
 
 %extend Handle_Geom2d_CartesianPoint {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend Geom2d_CartesianPoint {
@@ -1319,7 +1330,7 @@ class Geom2d_Conic : public Geom2d_Curve {
 ") SetXAxis;
 		void SetXAxis (const gp_Ax2d & A);
 		%feature("compactdefaultargs") SetYAxis;
-		%feature("autodoc", "	* Assigns the origin and unit vector of axis A to the origin of the local coordinate system of this conic and either: - its 'X Direction', or - its 'Y Direction'. The other unit vector of the local coordinate system of this conic is recomputed normal to A, without changing the orientation of the local coordinate system (right-handed or left-handed).
+		%feature("autodoc", "	* Assigns the origin and unit vector of axis A to the origin of the local coordinate system of this conic and either: - its 'X Direction', or - its 'Y Direction'. The other unit vector of the local coordinate system of this conic is recomputed normal to A, without changing the orientation of the local coordinate system --right-handed or left-handed--.
 
 	:param A:
 	:type A: gp_Ax2d
@@ -1347,7 +1358,7 @@ class Geom2d_Conic : public Geom2d_Curve {
 ") YAxis;
 		gp_Ax2d YAxis ();
 		%feature("compactdefaultargs") Eccentricity;
-		%feature("autodoc", "	* returns the eccentricity value of the conic e. e = 0 for a circle 0 < e < 1 for an ellipse (e = 0 if MajorRadius = MinorRadius) e > 1 for a hyperbola e = 1 for a parabola
+		%feature("autodoc", "	* returns the eccentricity value of the conic e. e = 0 for a circle 0 < e < 1 for an ellipse --e = 0 if MajorRadius = MinorRadius-- e > 1 for a hyperbola e = 1 for a parabola
 
 	:rtype: float
 ") Eccentricity;
@@ -1426,19 +1437,20 @@ class Handle_Geom2d_Conic : public Handle_Geom2d_Curve {
         static const Handle_Geom2d_Conic DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_Geom2d_Conic {
     Geom2d_Conic* _get_reference() {
-    return (Geom2d_Conic*)$self->Access();
+    return (Geom2d_Conic*)$self->get();
     }
 };
 
 %extend Handle_Geom2d_Conic {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend Geom2d_Conic {
@@ -1450,7 +1462,7 @@ class Handle_Geom2d_Conic : public Handle_Geom2d_Curve {
 class Geom2d_Direction : public Geom2d_Vector {
 	public:
 		%feature("compactdefaultargs") Geom2d_Direction;
-		%feature("autodoc", "	* Creates a unit vector with it 2 cartesian coordinates. //! Raised if Sqrt( X*X + Y*Y) <= Resolution from gp.
+		%feature("autodoc", "	* Creates a unit vector with it 2 cartesian coordinates. //! Raised if Sqrt-- X*X + Y*Y-- <= Resolution from gp.
 
 	:param X:
 	:type X: float
@@ -1468,7 +1480,7 @@ class Geom2d_Direction : public Geom2d_Vector {
 ") Geom2d_Direction;
 		 Geom2d_Direction (const gp_Dir2d & V);
 		%feature("compactdefaultargs") SetCoord;
-		%feature("autodoc", "	* Assigns the coordinates X and Y to this unit vector, then normalizes it. Exceptions Standard_ConstructionError if Sqrt(X*X + Y*Y) is less than or equal to gp::Resolution().
+		%feature("autodoc", "	* Assigns the coordinates X and Y to this unit vector, then normalizes it. Exceptions Standard_ConstructionError if Sqrt--X*X + Y*Y-- is less than or equal to gp::Resolution----.
 
 	:param X:
 	:type X: float
@@ -1486,7 +1498,7 @@ class Geom2d_Direction : public Geom2d_Vector {
 ") SetDir2d;
 		void SetDir2d (const gp_Dir2d & V);
 		%feature("compactdefaultargs") SetX;
-		%feature("autodoc", "	* Assigns a value to the X coordinate of this unit vector, then normalizes it. Exceptions Standard_ConstructionError if the value assigned causes the magnitude of the vector to become less than or equal to gp::Resolution().
+		%feature("autodoc", "	* Assigns a value to the X coordinate of this unit vector, then normalizes it. Exceptions Standard_ConstructionError if the value assigned causes the magnitude of the vector to become less than or equal to gp::Resolution----.
 
 	:param X:
 	:type X: float
@@ -1494,7 +1506,7 @@ class Geom2d_Direction : public Geom2d_Vector {
 ") SetX;
 		void SetX (const Standard_Real X);
 		%feature("compactdefaultargs") SetY;
-		%feature("autodoc", "	* Assigns a value to the Y coordinate of this unit vector, then normalizes it. Exceptions Standard_ConstructionError if the value assigned causes the magnitude of the vector to become less than or equal to gp::Resolution().
+		%feature("autodoc", "	* Assigns a value to the Y coordinate of this unit vector, then normalizes it. Exceptions Standard_ConstructionError if the value assigned causes the magnitude of the vector to become less than or equal to gp::Resolution----.
 
 	:param Y:
 	:type Y: float
@@ -1581,19 +1593,20 @@ class Handle_Geom2d_Direction : public Handle_Geom2d_Vector {
         static const Handle_Geom2d_Direction DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_Geom2d_Direction {
     Geom2d_Direction* _get_reference() {
-    return (Geom2d_Direction*)$self->Access();
+    return (Geom2d_Direction*)$self->get();
     }
 };
 
 %extend Handle_Geom2d_Direction {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend Geom2d_Direction {
@@ -1621,7 +1634,7 @@ class Geom2d_Line : public Geom2d_Curve {
 ") Geom2d_Line;
 		 Geom2d_Line (const gp_Lin2d & L);
 		%feature("compactdefaultargs") Geom2d_Line;
-		%feature("autodoc", "	* Constructs a line passing through point P and parallel to vector V (P and V are, respectively, the origin and the unit vector of the positioning axis of the line).
+		%feature("autodoc", "	* Constructs a line passing through point P and parallel to vector V --P and V are, respectively, the origin and the unit vector of the positioning axis of the line--.
 
 	:param P:
 	:type P: gp_Pnt2d
@@ -1653,7 +1666,7 @@ class Geom2d_Line : public Geom2d_Curve {
 ") Direction;
 		const gp_Dir2d  Direction ();
 		%feature("compactdefaultargs") SetLocation;
-		%feature("autodoc", "	* Changes the 'Location' point (origin) of the line.
+		%feature("autodoc", "	* Changes the 'Location' point --origin-- of the line.
 
 	:param P:
 	:type P: gp_Pnt2d
@@ -1661,7 +1674,7 @@ class Geom2d_Line : public Geom2d_Curve {
 ") SetLocation;
 		void SetLocation (const gp_Pnt2d & P);
 		%feature("compactdefaultargs") Location;
-		%feature("autodoc", "	* Changes the 'Location' point (origin) of the line.
+		%feature("autodoc", "	* Changes the 'Location' point --origin-- of the line.
 
 	:rtype: gp_Pnt2d
 ") Location;
@@ -1745,7 +1758,7 @@ class Geom2d_Line : public Geom2d_Curve {
 ") IsCN;
 		Standard_Boolean IsCN (const Standard_Integer N);
 		%feature("compactdefaultargs") D0;
-		%feature("autodoc", "	* Returns in P the point of parameter U. P (U) = O + U * Dir where O is the 'Location' point of the line and Dir the direction of the line.
+		%feature("autodoc", "	* Returns in P the point of parameter U. P --U-- = O + U * Dir where O is the 'Location' point of the line and Dir the direction of the line.
 
 	:param U:
 	:type U: float
@@ -1872,19 +1885,20 @@ class Handle_Geom2d_Line : public Handle_Geom2d_Curve {
         static const Handle_Geom2d_Line DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_Geom2d_Line {
     Geom2d_Line* _get_reference() {
-    return (Geom2d_Line*)$self->Access();
+    return (Geom2d_Line*)$self->get();
     }
 };
 
 %extend Handle_Geom2d_Line {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend Geom2d_Line {
@@ -1946,7 +1960,7 @@ class Geom2d_OffsetCurve : public Geom2d_Curve {
 ") BasisCurve;
 		Handle_Geom2d_Curve BasisCurve ();
 		%feature("compactdefaultargs") Continuity;
-		%feature("autodoc", "	* Continuity of the Offset curve : C0 : only geometric continuity, C1 : continuity of the first derivative all along the Curve, C2 : continuity of the second derivative all along the Curve, C3 : continuity of the third derivative all along the Curve, G1 : tangency continuity all along the Curve, G2 : curvature continuity all along the Curve, CN : the order of continuity is infinite. Warnings : Returns the continuity of the basis curve - 1. The offset curve must have a unique normal direction defined at any point. Value and derivatives //! Warnings : The exception UndefinedValue or UndefinedDerivative is raised if it is not possible to compute a unique offset direction. If T is the first derivative with not null length and Z the direction normal to the plane of the curve, the relation ||T(U) ^ Z|| != 0 must be satisfied to evaluate the offset curve. No check is done at the creation time and we suppose in this package that the offset curve is well defined.
+		%feature("autodoc", "	* Continuity of the Offset curve : C0 : only geometric continuity, C1 : continuity of the first derivative all along the Curve, C2 : continuity of the second derivative all along the Curve, C3 : continuity of the third derivative all along the Curve, G1 : tangency continuity all along the Curve, G2 : curvature continuity all along the Curve, CN : the order of continuity is infinite. Warnings : Returns the continuity of the basis curve - 1. The offset curve must have a unique normal direction defined at any point. Value and derivatives //! Warnings : The exception UndefinedValue or UndefinedDerivative is raised if it is not possible to compute a unique offset direction. If T is the first derivative with not null length and Z the direction normal to the plane of the curve, the relation ||T--U-- ^ Z|| != 0 must be satisfied to evaluate the offset curve. No check is done at the creation time and we suppose in this package that the offset curve is well defined.
 
 	:rtype: GeomAbs_Shape
 ") Continuity;
@@ -2013,66 +2027,14 @@ class Geom2d_OffsetCurve : public Geom2d_Curve {
 	:rtype: gp_Vec2d
 ") DN;
 		gp_Vec2d DN (const Standard_Real U,const Standard_Integer N);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	* Warning! this should not be called if the basis curve is not at least C1. Nevertheless if used on portion where the curve is C1, it is OK
-
-	:param U:
-	:type U: float
-	:param P:
-	:type P: gp_Pnt2d
-	:param Pbasis:
-	:type Pbasis: gp_Pnt2d
-	:param V1basis:
-	:type V1basis: gp_Vec2d
-	:rtype: None
-") Value;
-		void Value (const Standard_Real U,gp_Pnt2d & P,gp_Pnt2d & Pbasis,gp_Vec2d & V1basis);
-		%feature("compactdefaultargs") D1;
-		%feature("autodoc", "	* Warning! this should not be called if the continuity of the basis curve is not C1. Nevertheless, it's OK to use it on portion where the curve is C1
-
-	:param U:
-	:type U: float
-	:param P:
-	:type P: gp_Pnt2d
-	:param Pbasis:
-	:type Pbasis: gp_Pnt2d
-	:param V1:
-	:type V1: gp_Vec2d
-	:param V1basis:
-	:type V1basis: gp_Vec2d
-	:param V2basis:
-	:type V2basis: gp_Vec2d
-	:rtype: None
-") D1;
-		void D1 (const Standard_Real U,gp_Pnt2d & P,gp_Pnt2d & Pbasis,gp_Vec2d & V1,gp_Vec2d & V1basis,gp_Vec2d & V2basis);
-		%feature("compactdefaultargs") D2;
-		%feature("autodoc", "	* Warning! this should not be called if the continuity of the basis curve is not C3. Nevertheless, it's OK to use it on portion where the curve is C3
-
-	:param U:
-	:type U: float
-	:param P:
-	:type P: gp_Pnt2d
-	:param Pbasis:
-	:type Pbasis: gp_Pnt2d
-	:param V1:
-	:type V1: gp_Vec2d
-	:param V2:
-	:type V2: gp_Vec2d
-	:param V1basis:
-	:type V1basis: gp_Vec2d
-	:param V2basis:
-	:type V2basis: gp_Vec2d
-	:param V3basis:
-	:type V3basis: gp_Vec2d
-	:rtype: None
-") D2;
-		void D2 (const Standard_Real U,gp_Pnt2d & P,gp_Pnt2d & Pbasis,gp_Vec2d & V1,gp_Vec2d & V2,gp_Vec2d & V1basis,gp_Vec2d & V2basis,gp_Vec2d & V3basis);
 		%feature("compactdefaultargs") FirstParameter;
-		%feature("autodoc", "	:rtype: float
+		%feature("autodoc", "	* Returns the value of the first parameter of this offset curve. The first parameter corresponds to the start point of the curve. Note: the first and last parameters of this offset curve are also the ones of its basis curve.
+
+	:rtype: float
 ") FirstParameter;
 		Standard_Real FirstParameter ();
 		%feature("compactdefaultargs") LastParameter;
-		%feature("autodoc", "	* Returns the value of the first or last parameter of this offset curve. The first parameter corresponds to the start point of the curve. The last parameter corresponds to the end point. Note: the first and last parameters of this offset curve are also the ones of its basis curve.
+		%feature("autodoc", "	* Returns the value of the last parameter of this offset curve. The last parameter corresponds to the end point. Note: the first and last parameters of this offset curve are also the ones of its basis curve.
 
 	:rtype: float
 ") LastParameter;
@@ -2090,7 +2052,7 @@ class Geom2d_OffsetCurve : public Geom2d_Curve {
 ") IsClosed;
 		Standard_Boolean IsClosed ();
 		%feature("compactdefaultargs") IsCN;
-		%feature("autodoc", "	* Is the order of continuity of the curve N ? Warnings : This method answer True if the continuity of the basis curve is N + 1. We suppose in this class that a normal direction to the basis curve (used to compute the offset curve) is defined at any point on the basis curve. Raised if N < 0.
+		%feature("autodoc", "	* Is the order of continuity of the curve N ? Warnings : This method answer True if the continuity of the basis curve is N + 1. We suppose in this class that a normal direction to the basis curve --used to compute the offset curve-- is defined at any point on the basis curve. Raised if N < 0.
 
 	:param N:
 	:type N: int
@@ -2098,7 +2060,7 @@ class Geom2d_OffsetCurve : public Geom2d_Curve {
 ") IsCN;
 		Standard_Boolean IsCN (const Standard_Integer N);
 		%feature("compactdefaultargs") IsPeriodic;
-		%feature("autodoc", "	* Is the parametrization of a curve is periodic ? If the basis curve is a circle or an ellipse the corresponding OffsetCurve is periodic. If the basis curve can't be periodic (for example BezierCurve) the OffsetCurve can't be periodic.
+		%feature("autodoc", "	* Is the parametrization of a curve is periodic ? If the basis curve is a circle or an ellipse the corresponding OffsetCurve is periodic. If the basis curve can't be periodic --for example BezierCurve-- the OffsetCurve can't be periodic.
 
 	:rtype: bool
 ") IsPeriodic;
@@ -2118,7 +2080,7 @@ class Geom2d_OffsetCurve : public Geom2d_Curve {
 ") Transform;
 		void Transform (const gp_Trsf2d & T);
 		%feature("compactdefaultargs") TransformedParameter;
-		%feature("autodoc", "	* Returns the parameter on the transformed curve for the transform of the point of parameter U on <self>. //! me->Transformed(T)->Value(me->TransformedParameter(U,T)) //! is the same point as //! me->Value(U).Transformed(T) //! This methods calls the basis curve method.
+		%feature("autodoc", "	* Returns the parameter on the transformed curve for the transform of the point of parameter U on <self>. //! me->Transformed--T--->Value--me->TransformedParameter--U,T---- //! is the same point as //! me->Value--U--.Transformed--T-- //! This methods calls the basis curve method.
 
 	:param U:
 	:type U: float
@@ -2128,7 +2090,7 @@ class Geom2d_OffsetCurve : public Geom2d_Curve {
 ") TransformedParameter;
 		virtual Standard_Real TransformedParameter (const Standard_Real U,const gp_Trsf2d & T);
 		%feature("compactdefaultargs") ParametricTransformation;
-		%feature("autodoc", "	* Returns a coefficient to compute the parameter on the transformed curve for the transform of the point on <self>. //! Transformed(T)->Value(U * ParametricTransformation(T)) //! is the same point as //! Value(U).Transformed(T) //! This methods calls the basis curve method.
+		%feature("autodoc", "	* Returns a coefficient to compute the parameter on the transformed curve for the transform of the point on <self>. //! Transformed--T--->Value--U * ParametricTransformation--T---- //! is the same point as //! Value--U--.Transformed--T-- //! This methods calls the basis curve method.
 
 	:param T:
 	:type T: gp_Trsf2d
@@ -2181,19 +2143,20 @@ class Handle_Geom2d_OffsetCurve : public Handle_Geom2d_Curve {
         static const Handle_Geom2d_OffsetCurve DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_Geom2d_OffsetCurve {
     Geom2d_OffsetCurve* _get_reference() {
-    return (Geom2d_OffsetCurve*)$self->Access();
+    return (Geom2d_OffsetCurve*)$self->get();
     }
 };
 
 %extend Handle_Geom2d_OffsetCurve {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend Geom2d_OffsetCurve {
@@ -2456,19 +2419,20 @@ class Handle_Geom2d_VectorWithMagnitude : public Handle_Geom2d_Vector {
         static const Handle_Geom2d_VectorWithMagnitude DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_Geom2d_VectorWithMagnitude {
     Geom2d_VectorWithMagnitude* _get_reference() {
-    return (Geom2d_VectorWithMagnitude*)$self->Access();
+    return (Geom2d_VectorWithMagnitude*)$self->get();
     }
 };
 
 %extend Handle_Geom2d_VectorWithMagnitude {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend Geom2d_VectorWithMagnitude {
@@ -2480,7 +2444,7 @@ class Handle_Geom2d_VectorWithMagnitude : public Handle_Geom2d_Vector {
 class Geom2d_BSplineCurve : public Geom2d_BoundedCurve {
 	public:
 		%feature("compactdefaultargs") Geom2d_BSplineCurve;
-		%feature("autodoc", "	* Creates a non-rational B_spline curve on the basis <Knots, Multiplicities> of degree <Degree>. The following conditions must be verified. 0 < Degree <= MaxDegree. //! Knots.Length() == Mults.Length() >= 2 //! Knots(i) < Knots(i+1) (Knots are increasing) //! 1 <= Mults(i) <= Degree //! On a non periodic curve the first and last multiplicities may be Degree+1 (this is even recommanded if you want the curve to start and finish on the first and last pole). //! On a periodic curve the first and the last multicities must be the same. //! on non-periodic curves //! Poles.Length() == Sum(Mults(i)) - Degree - 1 >= 2 //! on periodic curves //! Poles.Length() == Sum(Mults(i)) except the first or last
+		%feature("autodoc", "	* Creates a non-rational B_spline curve on the basis <Knots, Multiplicities> of degree <Degree>. The following conditions must be verified. 0 < Degree <= MaxDegree. //! Knots.Length---- == Mults.Length---- >= 2 //! Knots--i-- < Knots--i+1-- --Knots are increasing-- //! 1 <= Mults--i-- <= Degree //! On a non periodic curve the first and last multiplicities may be Degree+1 --this is even recommanded if you want the curve to start and finish on the first and last pole--. //! On a periodic curve the first and the last multicities must be the same. //! on non-periodic curves //! Poles.Length---- == Sum--Mults--i---- - Degree - 1 >= 2 //! on periodic curves //! Poles.Length---- == Sum--Mults--i---- except the first or last
 
 	:param Poles:
 	:type Poles: TColgp_Array1OfPnt2d
@@ -2496,7 +2460,7 @@ class Geom2d_BSplineCurve : public Geom2d_BoundedCurve {
 ") Geom2d_BSplineCurve;
 		 Geom2d_BSplineCurve (const TColgp_Array1OfPnt2d & Poles,const TColStd_Array1OfReal & Knots,const TColStd_Array1OfInteger & Multiplicities,const Standard_Integer Degree,const Standard_Boolean Periodic = Standard_False);
 		%feature("compactdefaultargs") Geom2d_BSplineCurve;
-		%feature("autodoc", "	* Creates a rational B_spline curve on the basis <Knots, Multiplicities> of degree <Degree>. The following conditions must be verified. 0 < Degree <= MaxDegree. //! Knots.Length() == Mults.Length() >= 2 //! Knots(i) < Knots(i+1) (Knots are increasing) //! 1 <= Mults(i) <= Degree //! On a non periodic curve the first and last multiplicities may be Degree+1 (this is even recommanded if you want the curve to start and finish on the first and last pole). //! On a periodic curve the first and the last multicities must be the same. //! on non-periodic curves //! Poles.Length() == Sum(Mults(i)) - Degree - 1 >= 2 //! on periodic curves //! Poles.Length() == Sum(Mults(i)) except the first or last
+		%feature("autodoc", "	* Creates a rational B_spline curve on the basis <Knots, Multiplicities> of degree <Degree>. The following conditions must be verified. 0 < Degree <= MaxDegree. //! Knots.Length---- == Mults.Length---- >= 2 //! Knots--i-- < Knots--i+1-- --Knots are increasing-- //! 1 <= Mults--i-- <= Degree //! On a non periodic curve the first and last multiplicities may be Degree+1 --this is even recommanded if you want the curve to start and finish on the first and last pole--. //! On a periodic curve the first and the last multicities must be the same. //! on non-periodic curves //! Poles.Length---- == Sum--Mults--i---- - Degree - 1 >= 2 //! on periodic curves //! Poles.Length---- == Sum--Mults--i---- except the first or last
 
 	:param Poles:
 	:type Poles: TColgp_Array1OfPnt2d
@@ -2514,7 +2478,7 @@ class Geom2d_BSplineCurve : public Geom2d_BoundedCurve {
 ") Geom2d_BSplineCurve;
 		 Geom2d_BSplineCurve (const TColgp_Array1OfPnt2d & Poles,const TColStd_Array1OfReal & Weights,const TColStd_Array1OfReal & Knots,const TColStd_Array1OfInteger & Multiplicities,const Standard_Integer Degree,const Standard_Boolean Periodic = Standard_False);
 		%feature("compactdefaultargs") IncreaseDegree;
-		%feature("autodoc", "	* Increases the degree of this BSpline curve to Degree. As a result, the poles, weights and multiplicities tables are modified; the knots table is not changed. Nothing is done if Degree is less than or equal to the current degree. Exceptions Standard_ConstructionError if Degree is greater than Geom2d_BSplineCurve::MaxDegree().
+		%feature("autodoc", "	* Increases the degree of this BSpline curve to Degree. As a result, the poles, weights and multiplicities tables are modified; the knots table is not changed. Nothing is done if Degree is less than or equal to the current degree. Exceptions Standard_ConstructionError if Degree is greater than Geom2d_BSplineCurve::MaxDegree----.
 
 	:param Degree:
 	:type Degree: int
@@ -2556,7 +2520,7 @@ class Geom2d_BSplineCurve : public Geom2d_BoundedCurve {
 ") IncrementMultiplicity;
 		void IncrementMultiplicity (const Standard_Integer I1,const Standard_Integer I2,const Standard_Integer M);
 		%feature("compactdefaultargs") InsertKnot;
-		%feature("autodoc", "	* Inserts a knot value in the sequence of knots. If <U> is an existing knot the multiplicity is increased by <M>. //! If U is not on the parameter range nothing is done. //! If the multiplicity is negative or null nothing is done. The new multiplicity is limited to the degree. //! The tolerance criterion for knots equality is the max of Epsilon(U) and ParametricTolerance. Warning - If U is less than the first parameter or greater than the last parameter of this BSpline curve, nothing is done. - If M is negative or null, nothing is done. - The multiplicity of a knot is limited to the degree of this BSpline curve.
+		%feature("autodoc", "	* Inserts a knot value in the sequence of knots. If <U> is an existing knot the multiplicity is increased by <M>. //! If U is not on the parameter range nothing is done. //! If the multiplicity is negative or null nothing is done. The new multiplicity is limited to the degree. //! The tolerance criterion for knots equality is the max of Epsilon--U-- and ParametricTolerance. Warning - If U is less than the first parameter or greater than the last parameter of this BSpline curve, nothing is done. - If M is negative or null, nothing is done. - The multiplicity of a knot is limited to the degree of this BSpline curve.
 
 	:param U:
 	:type U: float
@@ -2568,7 +2532,7 @@ class Geom2d_BSplineCurve : public Geom2d_BoundedCurve {
 ") InsertKnot;
 		void InsertKnot (const Standard_Real U,const Standard_Integer M = 1,const Standard_Real ParametricTolerance = 0.0);
 		%feature("compactdefaultargs") InsertKnots;
-		%feature("autodoc", "	* Inserts the values of the array Knots, with the respective multiplicities given by the array Mults, into the knots table of this BSpline curve. If a value of the array Knots is an existing knot, its multiplicity is: - increased by M, if Add is true, or - increased to M, if Add is false (default value). The tolerance criterion used for knot equality is the larger of the values ParametricTolerance (defaulted to 0.) and Standard_Real::Epsilon(U), where U is the current knot value. Warning - For a value of the array Knots which is less than the first parameter or greater than the last parameter of this BSpline curve, nothing is done. - For a value of the array Mults which is negative or null, nothing is done. - The multiplicity of a knot is limited to the degree of this BSpline curve.
+		%feature("autodoc", "	* Inserts the values of the array Knots, with the respective multiplicities given by the array Mults, into the knots table of this BSpline curve. If a value of the array Knots is an existing knot, its multiplicity is: - increased by M, if Add is true, or - increased to M, if Add is false --default value--. The tolerance criterion used for knot equality is the larger of the values ParametricTolerance --defaulted to 0.-- and Standard_Real::Epsilon--U--, where U is the current knot value. Warning - For a value of the array Knots which is less than the first parameter or greater than the last parameter of this BSpline curve, nothing is done. - For a value of the array Mults which is negative or null, nothing is done. - The multiplicity of a knot is limited to the degree of this BSpline curve.
 
 	:param Knots:
 	:type Knots: TColStd_Array1OfReal &
@@ -2640,7 +2604,7 @@ class Geom2d_BSplineCurve : public Geom2d_BoundedCurve {
 ") ReversedParameter;
 		Standard_Real ReversedParameter (const Standard_Real U);
 		%feature("compactdefaultargs") Segment;
-		%feature("autodoc", "	* Modifies this BSpline curve by segmenting it between U1 and U2. Either of these values can be outside the bounds of the curve, but U2 must be greater than U1. All data structure tables of this BSpline curve are modified, but the knots located between U1 and U2 are retained. The degree of the curve is not modified. Warnings : Even if <self> is not closed it can become closed after the segmentation for example if U1 or U2 are out of the bounds of the curve <self> or if the curve makes loop. After the segmentation the length of a curve can be null. - The segmentation of a periodic curve over an interval corresponding to its period generates a non-periodic curve with equivalent geometry. Exceptions Standard_DomainError if U2 is less than U1. raises if U2 < U1.
+		%feature("autodoc", "	* Modifies this BSpline curve by segmenting it between U1 and U2. Either of these values can be outside the bounds of the curve, but U2 must be greater than U1. All data structure tables of this BSpline curve are modified, but the knots located between U1 and U2 are retained. The degree of the curve is not modified. Warnings : Even if <self> is not closed it can become closed after the segmentation for example if U1 or U2 are out of the bounds of the curve <self> or if the curve makes loop. After the segmentation the length of a curve can be null. - The segmentation of a periodic curve over an interval corresponding to its period generates a non-periodic curve with equivalent geometry. Exceptions Standard_DomainError if U2 is less than U1. raises if U2 < U1. Standard_DomainError if U2 - U1 exceeds the period for periodic curves. i.e. ----U2 - U1-- - Period-- > Precision::PConfusion----.
 
 	:param U1:
 	:type U1: float
@@ -2650,7 +2614,7 @@ class Geom2d_BSplineCurve : public Geom2d_BoundedCurve {
 ") Segment;
 		void Segment (const Standard_Real U1,const Standard_Real U2);
 		%feature("compactdefaultargs") SetKnot;
-		%feature("autodoc", "	* Modifies this BSpline curve by assigning the value K to the knot of index Index in the knots table. This is a relatively local modification because K must be such that: Knots(Index - 1) < K < Knots(Index + 1) Exceptions Standard_ConstructionError if: - K is not such that: Knots(Index - 1) < K < Knots(Index + 1) - M is greater than the degree of this BSpline curve or lower than the previous multiplicity of knot of index Index in the knots table. Standard_OutOfRange if Index is outside the bounds of the knots table.
+		%feature("autodoc", "	* Modifies this BSpline curve by assigning the value K to the knot of index Index in the knots table. This is a relatively local modification because K must be such that: Knots--Index - 1-- < K < Knots--Index + 1-- Exceptions Standard_ConstructionError if: - K is not such that: Knots--Index - 1-- < K < Knots--Index + 1-- - M is greater than the degree of this BSpline curve or lower than the previous multiplicity of knot of index Index in the knots table. Standard_OutOfRange if Index is outside the bounds of the knots table.
 
 	:param Index:
 	:type Index: int
@@ -2668,7 +2632,7 @@ class Geom2d_BSplineCurve : public Geom2d_BoundedCurve {
 ") SetKnots;
 		void SetKnots (const TColStd_Array1OfReal & K);
 		%feature("compactdefaultargs") SetKnot;
-		%feature("autodoc", "	* Modifies this BSpline curve by assigning the value K to the knot of index Index in the knots table. This is a relatively local modification because K must be such that: Knots(Index - 1) < K < Knots(Index + 1) The second syntax allows you also to increase the multiplicity of the knot to M (but it is not possible to decrease the multiplicity of the knot with this function). Exceptions Standard_ConstructionError if: - K is not such that: Knots(Index - 1) < K < Knots(Index + 1) - M is greater than the degree of this BSpline curve or lower than the previous multiplicity of knot of index Index in the knots table. Standard_OutOfRange if Index is outside the bounds of the knots table.
+		%feature("autodoc", "	* Modifies this BSpline curve by assigning the value K to the knot of index Index in the knots table. This is a relatively local modification because K must be such that: Knots--Index - 1-- < K < Knots--Index + 1-- The second syntax allows you also to increase the multiplicity of the knot to M --but it is not possible to decrease the multiplicity of the knot with this function--. Exceptions Standard_ConstructionError if: - K is not such that: Knots--Index - 1-- < K < Knots--Index + 1-- - M is greater than the degree of this BSpline curve or lower than the previous multiplicity of knot of index Index in the knots table. Standard_OutOfRange if Index is outside the bounds of the knots table.
 
 	:param Index:
 	:type Index: int
@@ -2688,7 +2652,7 @@ class Geom2d_BSplineCurve : public Geom2d_BoundedCurve {
 ") PeriodicNormalization;
 		void PeriodicNormalization (Standard_Real &OutValue);
 		%feature("compactdefaultargs") SetPeriodic;
-		%feature("autodoc", "	* Changes this BSpline curve into a periodic curve. To become periodic, the curve must first be closed. Next, the knot sequence must be periodic. For this, FirstUKnotIndex and LastUKnotIndex are used to compute I1 and I2, the indexes in the knots array of the knots corresponding to the first and last parameters of this BSpline curve. The period is therefore Knot(I2) - Knot(I1). Consequently, the knots and poles tables are modified. Exceptions Standard_ConstructionError if this BSpline curve is not closed.
+		%feature("autodoc", "	* Changes this BSpline curve into a periodic curve. To become periodic, the curve must first be closed. Next, the knot sequence must be periodic. For this, FirstUKnotIndex and LastUKnotIndex are used to compute I1 and I2, the indexes in the knots array of the knots corresponding to the first and last parameters of this BSpline curve. The period is therefore Knot--I2-- - Knot--I1--. Consequently, the knots and poles tables are modified. Exceptions Standard_ConstructionError if this BSpline curve is not closed.
 
 	:rtype: None
 ") SetPeriodic;
@@ -2786,7 +2750,7 @@ class Geom2d_BSplineCurve : public Geom2d_BoundedCurve {
 ") IsCN;
 		Standard_Boolean IsCN (const Standard_Integer N);
 		%feature("compactdefaultargs") IsG1;
-		%feature("autodoc", "	* Check if curve has at least G1 continuity in interval [theTf, theTl] Returns true if IsCN(1) or angle betweem 'left' and 'right' first derivatives at knots with C0 continuity is less then theAngTol only knots in interval [theTf, theTl] is checked
+		%feature("autodoc", "	* Check if curve has at least G1 continuity in interval [theTf, theTl] Returns true if IsCN--1-- or angle betweem 'left' and 'right' first derivatives at knots with C0 continuity is less then theAngTol only knots in interval [theTf, theTl] is checked
 
 	:param theTf:
 	:type theTf: float
@@ -2878,7 +2842,7 @@ class Geom2d_BSplineCurve : public Geom2d_BoundedCurve {
 ") D3;
 		void D3 (const Standard_Real U,gp_Pnt2d & P,gp_Vec2d & V1,gp_Vec2d & V2,gp_Vec2d & V3);
 		%feature("compactdefaultargs") DN;
-		%feature("autodoc", "	* For the point of parameter U of this BSpline curve, computes the vector corresponding to the Nth derivative. Warning On a point where the continuity of the curve is not the one requested, this function impacts the part defined by the parameter with a value greater than U, i.e. the part of the curve to the 'right' of the singularity. Raises UndefinedDerivative if the continuity of the curve is not CN. RangeError if N < 1. The following functions computes the point of parameter U and the derivatives at this point on the B-spline curve arc defined between the knot FromK1 and the knot ToK2. U can be out of bounds [Knot (FromK1), Knot (ToK2)] but for the computation we only use the definition of the curve between these two knots. This method is useful to compute local derivative, if the order of continuity of the whole curve is not greater enough. Inside the parametric domain Knot (FromK1), Knot (ToK2) the evaluations are the same as if we consider the whole definition of the curve. Of course the evaluations are different outside this parametric domain.
+		%feature("autodoc", "	* For the point of parameter U of this BSpline curve, computes the vector corresponding to the Nth derivative. Warning On a point where the continuity of the curve is not the one requested, this function impacts the part defined by the parameter with a value greater than U, i.e. the part of the curve to the 'right' of the singularity. Raises UndefinedDerivative if the continuity of the curve is not CN. RangeError if N < 1. The following functions computes the point of parameter U and the derivatives at this point on the B-spline curve arc defined between the knot FromK1 and the knot ToK2. U can be out of bounds [Knot --FromK1--, Knot --ToK2--] but for the computation we only use the definition of the curve between these two knots. This method is useful to compute local derivative, if the order of continuity of the whole curve is not greater enough. Inside the parametric domain Knot --FromK1--, Knot --ToK2-- the evaluations are the same as if we consider the whole definition of the curve. Of course the evaluations are different outside this parametric domain.
 
 	:param U:
 	:type U: float
@@ -2888,7 +2852,7 @@ class Geom2d_BSplineCurve : public Geom2d_BoundedCurve {
 ") DN;
 		gp_Vec2d DN (const Standard_Real U,const Standard_Integer N);
 		%feature("compactdefaultargs") LocalValue;
-		%feature("autodoc", "	* Raised if FromK1 = ToK2. //! Raised if FromK1 and ToK2 are not in the range [FirstUKnotIndex, LastUKnotIndex].
+		%feature("autodoc", "	* Raised if FromK1 = ToK2.
 
 	:param U:
 	:type U: float
@@ -2900,7 +2864,9 @@ class Geom2d_BSplineCurve : public Geom2d_BoundedCurve {
 ") LocalValue;
 		gp_Pnt2d LocalValue (const Standard_Real U,const Standard_Integer FromK1,const Standard_Integer ToK2);
 		%feature("compactdefaultargs") LocalD0;
-		%feature("autodoc", "	:param U:
+		%feature("autodoc", "	* Raised if FromK1 = ToK2.
+
+	:param U:
 	:type U: float
 	:param FromK1:
 	:type FromK1: int
@@ -2912,7 +2878,7 @@ class Geom2d_BSplineCurve : public Geom2d_BoundedCurve {
 ") LocalD0;
 		void LocalD0 (const Standard_Real U,const Standard_Integer FromK1,const Standard_Integer ToK2,gp_Pnt2d & P);
 		%feature("compactdefaultargs") LocalD1;
-		%feature("autodoc", "	* Raised if the local continuity of the curve is not C1 between the knot K1 and the knot K2. Raised if FromK1 = ToK2. //! Raised if FromK1 and ToK2 are not in the range [FirstUKnotIndex, LastUKnotIndex].
+		%feature("autodoc", "	* Raised if the local continuity of the curve is not C1 between the knot K1 and the knot K2. Raised if FromK1 = ToK2.
 
 	:param U:
 	:type U: float
@@ -2928,7 +2894,7 @@ class Geom2d_BSplineCurve : public Geom2d_BoundedCurve {
 ") LocalD1;
 		void LocalD1 (const Standard_Real U,const Standard_Integer FromK1,const Standard_Integer ToK2,gp_Pnt2d & P,gp_Vec2d & V1);
 		%feature("compactdefaultargs") LocalD2;
-		%feature("autodoc", "	* Raised if the local continuity of the curve is not C2 between the knot K1 and the knot K2. Raised if FromK1 = ToK2. //! Raised if FromK1 and ToK2 are not in the range [FirstUKnotIndex, LastUKnotIndex].
+		%feature("autodoc", "	* Raised if the local continuity of the curve is not C2 between the knot K1 and the knot K2. Raised if FromK1 = ToK2.
 
 	:param U:
 	:type U: float
@@ -2946,7 +2912,7 @@ class Geom2d_BSplineCurve : public Geom2d_BoundedCurve {
 ") LocalD2;
 		void LocalD2 (const Standard_Real U,const Standard_Integer FromK1,const Standard_Integer ToK2,gp_Pnt2d & P,gp_Vec2d & V1,gp_Vec2d & V2);
 		%feature("compactdefaultargs") LocalD3;
-		%feature("autodoc", "	* Raised if the local continuity of the curve is not C3 between the knot K1 and the knot K2. Raised if FromK1 = ToK2. //! Raised if FromK1 and ToK2 are not in the range [FirstUKnotIndex, LastUKnotIndex].
+		%feature("autodoc", "	* Raised if the local continuity of the curve is not C3 between the knot K1 and the knot K2. Raised if FromK1 = ToK2.
 
 	:param U:
 	:type U: float
@@ -2966,7 +2932,7 @@ class Geom2d_BSplineCurve : public Geom2d_BoundedCurve {
 ") LocalD3;
 		void LocalD3 (const Standard_Real U,const Standard_Integer FromK1,const Standard_Integer ToK2,gp_Pnt2d & P,gp_Vec2d & V1,gp_Vec2d & V2,gp_Vec2d & V3);
 		%feature("compactdefaultargs") LocalDN;
-		%feature("autodoc", "	* Raised if the local continuity of the curve is not CN between the knot K1 and the knot K2. Raised if FromK1 = ToK2. Raised if N < 1. //! Raises if FromK1 and ToK2 are not in the range [FirstUKnotIndex, LastUKnotIndex].
+		%feature("autodoc", "	* Raised if the local continuity of the curve is not CN between the knot K1 and the knot K2. Raised if FromK1 = ToK2. Raised if N < 1.
 
 	:param U:
 	:type U: float
@@ -2986,7 +2952,7 @@ class Geom2d_BSplineCurve : public Geom2d_BoundedCurve {
 ") EndPoint;
 		gp_Pnt2d EndPoint ();
 		%feature("compactdefaultargs") FirstUKnotIndex;
-		%feature("autodoc", "	* For a B-spline curve the first parameter (which gives the start point of the curve) is a knot value but if the multiplicity of the first knot index is lower than Degree + 1 it is not the first knot of the curve. This method computes the index of the knot corresponding to the first parameter.
+		%feature("autodoc", "	* For a B-spline curve the first parameter --which gives the start point of the curve-- is a knot value but if the multiplicity of the first knot index is lower than Degree + 1 it is not the first knot of the curve. This method computes the index of the knot corresponding to the first parameter.
 
 	:rtype: int
 ") FirstUKnotIndex;
@@ -3006,7 +2972,7 @@ class Geom2d_BSplineCurve : public Geom2d_BoundedCurve {
 ") Knot;
 		Standard_Real Knot (const Standard_Integer Index);
 		%feature("compactdefaultargs") Knots;
-		%feature("autodoc", "	* returns the knot values of the B-spline curve; //! Raised if the length of K is not equal to the number of knots.
+		%feature("autodoc", "	* returns the knot values of the B-spline curve; //! Raised K.Lower---- is less than number of first knot or K.Upper---- is more than number of last knot.
 
 	:param K:
 	:type K: TColStd_Array1OfReal &
@@ -3020,7 +2986,7 @@ class Geom2d_BSplineCurve : public Geom2d_BoundedCurve {
 ") Knots;
 		const TColStd_Array1OfReal & Knots ();
 		%feature("compactdefaultargs") KnotSequence;
-		%feature("autodoc", "	* Returns the knots sequence. In this sequence the knots with a multiplicity greater than 1 are repeated. Example : K = {k1, k1, k1, k2, k3, k3, k4, k4, k4} //! Raised if the length of K is not equal to NbPoles + Degree + 1
+		%feature("autodoc", "	* Returns the knots sequence. In this sequence the knots with a multiplicity greater than 1 are repeated. Example : K = {k1, k1, k1, k2, k3, k3, k4, k4, k4} //! Raised if K.Lower---- is less than number of first knot in knot sequence with repetitions or K.Upper---- is more than number of last knot in knot sequence with repetitions.
 
 	:param K:
 	:type K: TColStd_Array1OfReal &
@@ -3040,7 +3006,7 @@ class Geom2d_BSplineCurve : public Geom2d_BoundedCurve {
 ") KnotDistribution;
 		GeomAbs_BSplKnotDistribution KnotDistribution ();
 		%feature("compactdefaultargs") LastUKnotIndex;
-		%feature("autodoc", "	* For a BSpline curve the last parameter (which gives the end point of the curve) is a knot value but if the multiplicity of the last knot index is lower than Degree + 1 it is not the last knot of the curve. This method computes the index of the knot corresponding to the last parameter.
+		%feature("autodoc", "	* For a BSpline curve the last parameter --which gives the end point of the curve-- is a knot value but if the multiplicity of the last knot index is lower than Degree + 1 it is not the last knot of the curve. This method computes the index of the knot corresponding to the last parameter.
 
 	:rtype: int
 ") LastUKnotIndex;
@@ -3052,7 +3018,7 @@ class Geom2d_BSplineCurve : public Geom2d_BoundedCurve {
 ") LastParameter;
 		Standard_Real LastParameter ();
 		%feature("compactdefaultargs") LocateU;
-		%feature("autodoc", "	* Locates the parametric value U in the sequence of knots. If 'WithKnotRepetition' is True we consider the knot's representation with repetition of multiple knot value, otherwise we consider the knot's representation with no repetition of multiple knot values. Knots (I1) <= U <= Knots (I2) . if I1 = I2 U is a knot value (the tolerance criterion ParametricTolerance is used). . if I1 < 1 => U < Knots (1) - Abs(ParametricTolerance) . if I2 > NbKnots => U > Knots (NbKnots) + Abs(ParametricTolerance)
+		%feature("autodoc", "	* Locates the parametric value U in the sequence of knots. If 'WithKnotRepetition' is True we consider the knot's representation with repetition of multiple knot value, otherwise we consider the knot's representation with no repetition of multiple knot values. Knots --I1-- <= U <= Knots --I2-- . if I1 = I2 U is a knot value --the tolerance criterion ParametricTolerance is used--. . if I1 < 1 => U < Knots --1-- - Abs--ParametricTolerance-- . if I2 > NbKnots => U > Knots --NbKnots-- + Abs--ParametricTolerance--
 
 	:param U:
 	:type U: float
@@ -3108,7 +3074,7 @@ class Geom2d_BSplineCurve : public Geom2d_BoundedCurve {
 	:type Index: int
 	:rtype: gp_Pnt2d
 ") Pole;
-		gp_Pnt2d Pole (const Standard_Integer Index);
+		const gp_Pnt2d  Pole (const Standard_Integer Index);
 		%feature("compactdefaultargs") Poles;
 		%feature("autodoc", "	* Returns the poles of the B-spline curve; //! Raised if the length of P is not equal to the number of poles.
 
@@ -3148,9 +3114,9 @@ class Geom2d_BSplineCurve : public Geom2d_BoundedCurve {
 		%feature("compactdefaultargs") Weights;
 		%feature("autodoc", "	* Returns the weights of the B-spline curve;
 
-	:rtype: TColStd_Array1OfReal
+	:rtype: TColStd_Array1OfReal *
 ") Weights;
-		const TColStd_Array1OfReal & Weights ();
+		const TColStd_Array1OfReal * Weights ();
 		%feature("compactdefaultargs") Transform;
 		%feature("autodoc", "	* Applies the transformation T to this BSpline curve.
 
@@ -3166,7 +3132,7 @@ class Geom2d_BSplineCurve : public Geom2d_BoundedCurve {
 ") MaxDegree;
 		static Standard_Integer MaxDegree ();
 		%feature("compactdefaultargs") Resolution;
-		%feature("autodoc", "	* Computes for this BSpline curve the parametric tolerance UTolerance for a given tolerance Tolerance3D (relative to dimensions in the plane). If f(t) is the equation of this BSpline curve, UTolerance ensures that: | t1 - t0| < Utolerance ===> |f(t1) - f(t0)| < ToleranceUV
+		%feature("autodoc", "	* Computes for this BSpline curve the parametric tolerance UTolerance for a given tolerance Tolerance3D --relative to dimensions in the plane--. If f--t-- is the equation of this BSpline curve, UTolerance ensures that: | t1 - t0| < Utolerance ===> |f--t1-- - f--t0--| < ToleranceUV
 
 	:param ToleranceUV:
 	:type ToleranceUV: float
@@ -3215,19 +3181,20 @@ class Handle_Geom2d_BSplineCurve : public Handle_Geom2d_BoundedCurve {
         static const Handle_Geom2d_BSplineCurve DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_Geom2d_BSplineCurve {
     Geom2d_BSplineCurve* _get_reference() {
-    return (Geom2d_BSplineCurve*)$self->Access();
+    return (Geom2d_BSplineCurve*)$self->get();
     }
 };
 
 %extend Handle_Geom2d_BSplineCurve {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend Geom2d_BSplineCurve {
@@ -3297,7 +3264,7 @@ class Geom2d_BezierCurve : public Geom2d_BoundedCurve {
 ") RemovePole;
 		void RemovePole (const Standard_Integer Index);
 		%feature("compactdefaultargs") Reverse;
-		%feature("autodoc", "	* Reverses the direction of parametrization of <self> Value (NewU) = Value (1 - OldU)
+		%feature("autodoc", "	* Reverses the direction of parametrization of <self> Value --NewU-- = Value --1 - OldU--
 
 	:rtype: None
 ") Reverse;
@@ -3475,7 +3442,7 @@ class Geom2d_BezierCurve : public Geom2d_BoundedCurve {
 	:type Index: int
 	:rtype: gp_Pnt2d
 ") Pole;
-		gp_Pnt2d Pole (const Standard_Integer Index);
+		const gp_Pnt2d  Pole (const Standard_Integer Index);
 		%feature("compactdefaultargs") Poles;
 		%feature("autodoc", "	* Returns all the poles of the curve. //! Raised if the length of P is not equal to the number of poles.
 
@@ -3484,8 +3451,14 @@ class Geom2d_BezierCurve : public Geom2d_BoundedCurve {
 	:rtype: None
 ") Poles;
 		void Poles (TColgp_Array1OfPnt2d & P);
+		%feature("compactdefaultargs") Poles;
+		%feature("autodoc", "	* Returns all the poles of the curve.
+
+	:rtype: TColgp_Array1OfPnt2d
+") Poles;
+		const TColgp_Array1OfPnt2d & Poles ();
 		%feature("compactdefaultargs") StartPoint;
-		%feature("autodoc", "	* Returns Value (U=1), it is the first control point of the curve.
+		%feature("autodoc", "	* Returns Value --U=1--, it is the first control point of the curve.
 
 	:rtype: gp_Pnt2d
 ") StartPoint;
@@ -3506,6 +3479,12 @@ class Geom2d_BezierCurve : public Geom2d_BoundedCurve {
 	:rtype: None
 ") Weights;
 		void Weights (TColStd_Array1OfReal & W);
+		%feature("compactdefaultargs") Weights;
+		%feature("autodoc", "	* Returns all the weights of the curve.
+
+	:rtype: TColStd_Array1OfReal *
+") Weights;
+		const TColStd_Array1OfReal * Weights ();
 		%feature("compactdefaultargs") Transform;
 		%feature("autodoc", "	* Applies the transformation T to this Bezier curve.
 
@@ -3521,7 +3500,7 @@ class Geom2d_BezierCurve : public Geom2d_BoundedCurve {
 ") MaxDegree;
 		static Standard_Integer MaxDegree ();
 		%feature("compactdefaultargs") Resolution;
-		%feature("autodoc", "	* Computes for this Bezier curve the parametric tolerance UTolerance for a given tolerance Tolerance3D (relative to dimensions in the plane). If f(t) is the equation of this Bezier curve, UTolerance ensures that | t1 - t0| < Utolerance ===> |f(t1) - f(t0)| < ToleranceUV
+		%feature("autodoc", "	* Computes for this Bezier curve the parametric tolerance UTolerance for a given tolerance Tolerance3D --relative to dimensions in the plane--. If f--t-- is the equation of this Bezier curve, UTolerance ensures that | t1 - t0| < Utolerance ===> |f--t1-- - f--t0--| < ToleranceUV
 
 	:param ToleranceUV:
 	:type ToleranceUV: float
@@ -3570,19 +3549,20 @@ class Handle_Geom2d_BezierCurve : public Handle_Geom2d_BoundedCurve {
         static const Handle_Geom2d_BezierCurve DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_Geom2d_BezierCurve {
     Geom2d_BezierCurve* _get_reference() {
-    return (Geom2d_BezierCurve*)$self->Access();
+    return (Geom2d_BezierCurve*)$self->get();
     }
 };
 
 %extend Handle_Geom2d_BezierCurve {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend Geom2d_BezierCurve {
@@ -3602,7 +3582,7 @@ class Geom2d_Circle : public Geom2d_Conic {
 ") Geom2d_Circle;
 		 Geom2d_Circle (const gp_Circ2d & C);
 		%feature("compactdefaultargs") Geom2d_Circle;
-		%feature("autodoc", "	* Constructs a circle of radius Radius, whose center is the origin of axis A; A is the 'X Axis' of the local coordinate system of the circle; this coordinate system is direct if Sense is true (default value) or indirect if Sense is false. Note: It is possible to create a circle where Radius is equal to 0.0. Exceptions Standard_ConstructionError if Radius is negative.
+		%feature("autodoc", "	* Constructs a circle of radius Radius, whose center is the origin of axis A; A is the 'X Axis' of the local coordinate system of the circle; this coordinate system is direct if Sense is true --default value-- or indirect if Sense is false. Note: It is possible to create a circle where Radius is equal to 0.0. Exceptions Standard_ConstructionError if Radius is negative.
 
 	:param A:
 	:type A: gp_Ax2d
@@ -3614,7 +3594,7 @@ class Geom2d_Circle : public Geom2d_Conic {
 ") Geom2d_Circle;
 		 Geom2d_Circle (const gp_Ax2d & A,const Standard_Real Radius,const Standard_Boolean Sense = Standard_True);
 		%feature("compactdefaultargs") Geom2d_Circle;
-		%feature("autodoc", "	* Constructs a circle of radius Radius, where the coordinate system A locates the circle and defines its orientation in the plane such that: - the center of the circle is the origin of A, - the orientation (direct or indirect) of A gives the orientation of the circle.
+		%feature("autodoc", "	* Constructs a circle of radius Radius, where the coordinate system A locates the circle and defines its orientation in the plane such that: - the center of the circle is the origin of A, - the orientation --direct or indirect-- of A gives the orientation of the circle.
 
 	:param A:
 	:type A: gp_Ax22d
@@ -3688,7 +3668,7 @@ class Geom2d_Circle : public Geom2d_Conic {
 ") IsPeriodic;
 		Standard_Boolean IsPeriodic ();
 		%feature("compactdefaultargs") D0;
-		%feature("autodoc", "	* Returns in P the point of parameter U. P = C + R * Cos (U) * XDir + R * Sin (U) * YDir where C is the center of the circle , XDir the XDirection and YDir the YDirection of the circle's local coordinate system.
+		%feature("autodoc", "	* Returns in P the point of parameter U. P = C + R * Cos --U-- * XDir + R * Sin --U-- * YDir where C is the center of the circle , XDir the XDirection and YDir the YDirection of the circle's local coordinate system.
 
 	:param U:
 	:type U: float
@@ -3797,19 +3777,20 @@ class Handle_Geom2d_Circle : public Handle_Geom2d_Conic {
         static const Handle_Geom2d_Circle DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_Geom2d_Circle {
     Geom2d_Circle* _get_reference() {
-    return (Geom2d_Circle*)$self->Access();
+    return (Geom2d_Circle*)$self->get();
     }
 };
 
 %extend Handle_Geom2d_Circle {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend Geom2d_Circle {
@@ -3829,7 +3810,7 @@ class Geom2d_Ellipse : public Geom2d_Conic {
 ") Geom2d_Ellipse;
 		 Geom2d_Ellipse (const gp_Elips2d & E);
 		%feature("compactdefaultargs") Geom2d_Ellipse;
-		%feature("autodoc", "	* Creates an ellipse defined by its major and minor radii, MajorRadius and MinorRadius, and positioned in the plane by its major axis MajorAxis; the center of the ellipse is the origin of MajorAxis and the unit vector of MajorAxis is the 'X Direction' of the local coordinate system of the ellipse; this coordinate system is direct if Sense is true (default value) or indirect if Sense is false. Warnings : It is not forbidden to create an ellipse with MajorRadius = MinorRadius. Exceptions Standard_ConstructionError if: - MajorRadius is less than MinorRadius, or - MinorRadius is less than 0.
+		%feature("autodoc", "	* Creates an ellipse defined by its major and minor radii, MajorRadius and MinorRadius, and positioned in the plane by its major axis MajorAxis; the center of the ellipse is the origin of MajorAxis and the unit vector of MajorAxis is the 'X Direction' of the local coordinate system of the ellipse; this coordinate system is direct if Sense is true --default value-- or indirect if Sense is false. Warnings : It is not forbidden to create an ellipse with MajorRadius = MinorRadius. Exceptions Standard_ConstructionError if: - MajorRadius is less than MinorRadius, or - MinorRadius is less than 0.
 
 	:param MajorAxis:
 	:type MajorAxis: gp_Ax2d
@@ -3843,7 +3824,7 @@ class Geom2d_Ellipse : public Geom2d_Conic {
 ") Geom2d_Ellipse;
 		 Geom2d_Ellipse (const gp_Ax2d & MajorAxis,const Standard_Real MajorRadius,const Standard_Real MinorRadius,const Standard_Boolean Sense = Standard_True);
 		%feature("compactdefaultargs") Geom2d_Ellipse;
-		%feature("autodoc", "	* Creates an ellipse defined by its major and minor radii, MajorRadius and MinorRadius, where the coordinate system Axis locates the ellipse and defines its orientation in the plane such that: - the center of the ellipse is the origin of Axis, - the 'X Direction' of Axis defines the major axis of the ellipse, - the 'Y Direction' of Axis defines the minor axis of the ellipse, - the orientation of Axis (direct or indirect) gives the orientation of the ellipse. Warnings : It is not forbidden to create an ellipse with MajorRadius = MinorRadius. Exceptions Standard_ConstructionError if: - MajorRadius is less than MinorRadius, or - MinorRadius is less than 0.
+		%feature("autodoc", "	* Creates an ellipse defined by its major and minor radii, MajorRadius and MinorRadius, where the coordinate system Axis locates the ellipse and defines its orientation in the plane such that: - the center of the ellipse is the origin of Axis, - the 'X Direction' of Axis defines the major axis of the ellipse, - the 'Y Direction' of Axis defines the minor axis of the ellipse, - the orientation of Axis --direct or indirect-- gives the orientation of the ellipse. Warnings : It is not forbidden to create an ellipse with MajorRadius = MinorRadius. Exceptions Standard_ConstructionError if: - MajorRadius is less than MinorRadius, or - MinorRadius is less than 0.
 
 	:param Axis:
 	:type Axis: gp_Ax22d
@@ -3893,13 +3874,13 @@ class Geom2d_Ellipse : public Geom2d_Conic {
 ") ReversedParameter;
 		Standard_Real ReversedParameter (const Standard_Real U);
 		%feature("compactdefaultargs") Directrix1;
-		%feature("autodoc", "	* Computes the directrices of this ellipse. This directrix is the line normal to the XAxis of the ellipse in the local plane (Z = 0) at a distance d = MajorRadius / e from the center of the ellipse, where e is the eccentricity of the ellipse. This line is parallel to the 'YAxis'. The intersection point between directrix1 and the 'XAxis' is the 'Location' point of the directrix1. This point is on the positive side of the 'XAxis'. Raises ConstructionError if Eccentricity = 0.0. (The ellipse degenerates into a circle)
+		%feature("autodoc", "	* Computes the directrices of this ellipse. This directrix is the line normal to the XAxis of the ellipse in the local plane --Z = 0-- at a distance d = MajorRadius / e from the center of the ellipse, where e is the eccentricity of the ellipse. This line is parallel to the 'YAxis'. The intersection point between directrix1 and the 'XAxis' is the 'Location' point of the directrix1. This point is on the positive side of the 'XAxis'. Raises ConstructionError if Eccentricity = 0.0. --The ellipse degenerates into a circle--
 
 	:rtype: gp_Ax2d
 ") Directrix1;
 		gp_Ax2d Directrix1 ();
 		%feature("compactdefaultargs") Directrix2;
-		%feature("autodoc", "	* This line is obtained by the symmetrical transformation of 'Directrix1' with respect to the 'YAxis' of the ellipse. Raises ConstructionError if Eccentricity = 0.0. (The ellipse degenerates into a circle).
+		%feature("autodoc", "	* This line is obtained by the symmetrical transformation of 'Directrix1' with respect to the 'YAxis' of the ellipse. Raises ConstructionError if Eccentricity = 0.0. --The ellipse degenerates into a circle--.
 
 	:rtype: gp_Ax2d
 ") Directrix2;
@@ -3941,7 +3922,7 @@ class Geom2d_Ellipse : public Geom2d_Conic {
 ") MinorRadius;
 		Standard_Real MinorRadius ();
 		%feature("compactdefaultargs") Parameter;
-		%feature("autodoc", "	* Computes the parameter of this ellipse. This value is given by the formula p = (1 - e * e) * MajorRadius where e is the eccentricity of the ellipse. Returns 0 if MajorRadius = 0
+		%feature("autodoc", "	* Computes the parameter of this ellipse. This value is given by the formula p = --1 - e * e-- * MajorRadius where e is the eccentricity of the ellipse. Returns 0 if MajorRadius = 0
 
 	:rtype: float
 ") Parameter;
@@ -3971,7 +3952,7 @@ class Geom2d_Ellipse : public Geom2d_Conic {
 ") IsPeriodic;
 		Standard_Boolean IsPeriodic ();
 		%feature("compactdefaultargs") D0;
-		%feature("autodoc", "	* Returns in P the point of parameter U. P = C + MajorRadius * Cos (U) * XDir + MinorRadius * Sin (U) * YDir where C is the center of the ellipse , XDir the direction of the 'XAxis' and 'YDir' the 'YAxis' of the ellipse.
+		%feature("autodoc", "	* Returns in P the point of parameter U. P = C + MajorRadius * Cos --U-- * XDir + MinorRadius * Sin --U-- * YDir where C is the center of the ellipse , XDir the direction of the 'XAxis' and 'YDir' the 'YAxis' of the ellipse.
 
 	:param U:
 	:type U: float
@@ -4078,19 +4059,20 @@ class Handle_Geom2d_Ellipse : public Handle_Geom2d_Conic {
         static const Handle_Geom2d_Ellipse DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_Geom2d_Ellipse {
     Geom2d_Ellipse* _get_reference() {
-    return (Geom2d_Ellipse*)$self->Access();
+    return (Geom2d_Ellipse*)$self->get();
     }
 };
 
 %extend Handle_Geom2d_Ellipse {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend Geom2d_Ellipse {
@@ -4198,13 +4180,13 @@ class Geom2d_Hyperbola : public Geom2d_Conic {
 ") IsPeriodic;
 		Standard_Boolean IsPeriodic ();
 		%feature("compactdefaultargs") Asymptote1;
-		%feature("autodoc", "	* In the local coordinate system of the hyperbola the equation of the hyperbola is (X*X)/(A*A) - (Y*Y)/(B*B) = 1.0 and the equation of the first asymptote is Y = (B/A)*X where A is the major radius of the hyperbola and B is the minor radius of the hyperbola. Raised if MajorRadius = 0.0
+		%feature("autodoc", "	* In the local coordinate system of the hyperbola the equation of the hyperbola is --X*X--/--A*A-- - --Y*Y--/--B*B-- = 1.0 and the equation of the first asymptote is Y = --B/A--*X where A is the major radius of the hyperbola and B is the minor radius of the hyperbola. Raised if MajorRadius = 0.0
 
 	:rtype: gp_Ax2d
 ") Asymptote1;
 		gp_Ax2d Asymptote1 ();
 		%feature("compactdefaultargs") Asymptote2;
-		%feature("autodoc", "	* In the local coordinate system of the hyperbola the equation of the hyperbola is (X*X)/(A*A) - (Y*Y)/(B*B) = 1.0 and the equation of the first asymptote is Y = -(B/A)*X. where A is the major radius of the hyperbola and B is the minor radius of the hyperbola. raised if MajorRadius = 0.0
+		%feature("autodoc", "	* In the local coordinate system of the hyperbola the equation of the hyperbola is --X*X--/--A*A-- - --Y*Y--/--B*B-- = 1.0 and the equation of the first asymptote is Y = ---B/A--*X. where A is the major radius of the hyperbola and B is the minor radius of the hyperbola. raised if MajorRadius = 0.0
 
 	:rtype: gp_Ax2d
 ") Asymptote2;
@@ -4222,7 +4204,7 @@ class Geom2d_Hyperbola : public Geom2d_Conic {
 ") ConjugateBranch2;
 		gp_Hypr2d ConjugateBranch2 ();
 		%feature("compactdefaultargs") Directrix1;
-		%feature("autodoc", "	* This directrix is the line normal to the XAxis of the hyperbola in the local plane (Z = 0) at a distance d = MajorRadius / e from the center of the hyperbola, where e is the eccentricity of the hyperbola. This line is parallel to the 'YAxis'. The intersection point between directrix1 and the 'XAxis' is the location point of the directrix1. This point is on the positive side of the 'XAxis'.
+		%feature("autodoc", "	* This directrix is the line normal to the XAxis of the hyperbola in the local plane --Z = 0-- at a distance d = MajorRadius / e from the center of the hyperbola, where e is the eccentricity of the hyperbola. This line is parallel to the 'YAxis'. The intersection point between directrix1 and the 'XAxis' is the location point of the directrix1. This point is on the positive side of the 'XAxis'.
 
 	:rtype: gp_Ax2d
 ") Directrix1;
@@ -4234,7 +4216,7 @@ class Geom2d_Hyperbola : public Geom2d_Conic {
 ") Directrix2;
 		gp_Ax2d Directrix2 ();
 		%feature("compactdefaultargs") Eccentricity;
-		%feature("autodoc", "	* Returns the excentricity of the hyperbola (e > 1). If f is the distance between the location of the hyperbola and the Focus1 then the eccentricity e = f / MajorRadius. raised if MajorRadius = 0.0
+		%feature("autodoc", "	* Returns the excentricity of the hyperbola --e > 1--. If f is the distance between the location of the hyperbola and the Focus1 then the eccentricity e = f / MajorRadius. raised if MajorRadius = 0.0
 
 	:rtype: float
 ") Eccentricity;
@@ -4258,13 +4240,13 @@ class Geom2d_Hyperbola : public Geom2d_Conic {
 ") Focus2;
 		gp_Pnt2d Focus2 ();
 		%feature("compactdefaultargs") MajorRadius;
-		%feature("autodoc", "	* Returns the major or minor radius of this hyperbola. The major radius is also the distance between the center of the hyperbola and the apex of the main branch (located on the 'X Axis' of the hyperbola).
+		%feature("autodoc", "	* Returns the major or minor radius of this hyperbola. The major radius is also the distance between the center of the hyperbola and the apex of the main branch --located on the 'X Axis' of the hyperbola--.
 
 	:rtype: float
 ") MajorRadius;
 		Standard_Real MajorRadius ();
 		%feature("compactdefaultargs") MinorRadius;
-		%feature("autodoc", "	* Returns the major or minor radius of this hyperbola. The minor radius is also the distance between the center of the hyperbola and the apex of a conjugate branch (located on the 'Y Axis' of the hyperbola).
+		%feature("autodoc", "	* Returns the major or minor radius of this hyperbola. The minor radius is also the distance between the center of the hyperbola and the apex of a conjugate branch --located on the 'Y Axis' of the hyperbola--.
 
 	:rtype: float
 ") MinorRadius;
@@ -4276,13 +4258,13 @@ class Geom2d_Hyperbola : public Geom2d_Conic {
 ") OtherBranch;
 		gp_Hypr2d OtherBranch ();
 		%feature("compactdefaultargs") Parameter;
-		%feature("autodoc", "	* Computes the parameter of this hyperbola. The parameter is: p = (e*e - 1) * MajorRadius where e is the eccentricity of this hyperbola and MajorRadius its major radius. Exceptions Standard_DomainError if the major radius of this hyperbola is null.
+		%feature("autodoc", "	* Computes the parameter of this hyperbola. The parameter is: p = --e*e - 1-- * MajorRadius where e is the eccentricity of this hyperbola and MajorRadius its major radius. Exceptions Standard_DomainError if the major radius of this hyperbola is null.
 
 	:rtype: float
 ") Parameter;
 		Standard_Real Parameter ();
 		%feature("compactdefaultargs") D0;
-		%feature("autodoc", "	* Returns in P the point of parameter U. P = C + MajorRadius * Cosh (U) * XDir + MinorRadius * Sinh (U) * YDir where C is the center of the hyperbola , XDir the XDirection and YDir the YDirection of the hyperbola's local coordinate system.
+		%feature("autodoc", "	* Returns in P the point of parameter U. P = C + MajorRadius * Cosh --U-- * XDir + MinorRadius * Sinh --U-- * YDir where C is the center of the hyperbola , XDir the XDirection and YDir the YDirection of the hyperbola's local coordinate system.
 
 	:param U:
 	:type U: float
@@ -4391,19 +4373,20 @@ class Handle_Geom2d_Hyperbola : public Handle_Geom2d_Conic {
         static const Handle_Geom2d_Hyperbola DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_Geom2d_Hyperbola {
     Geom2d_Hyperbola* _get_reference() {
-    return (Geom2d_Hyperbola*)$self->Access();
+    return (Geom2d_Hyperbola*)$self->get();
     }
 };
 
 %extend Handle_Geom2d_Hyperbola {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend Geom2d_Hyperbola {
@@ -4509,7 +4492,7 @@ class Geom2d_Parabola : public Geom2d_Conic {
 ") IsPeriodic;
 		Standard_Boolean IsPeriodic ();
 		%feature("compactdefaultargs") Directrix;
-		%feature("autodoc", "	* The directrix is parallel to the 'YAxis' of the parabola. The 'Location' point of the directrix is the intersection point between the directrix and the symmetry axis ('XAxis') of the parabola.
+		%feature("autodoc", "	* The directrix is parallel to the 'YAxis' of the parabola. The 'Location' point of the directrix is the intersection point between the directrix and the symmetry axis --'XAxis'-- of the parabola.
 
 	:rtype: gp_Ax2d
 ") Directrix;
@@ -4539,7 +4522,7 @@ class Geom2d_Parabola : public Geom2d_Conic {
 ") Parameter;
 		Standard_Real Parameter ();
 		%feature("compactdefaultargs") D0;
-		%feature("autodoc", "	* Returns in P the point of parameter U. If U = 0 the returned point is the origin of the XAxis and the YAxis of the parabola and it is the vertex of the parabola. P = S + F * (U * U * XDir + * U * YDir) where S is the vertex of the parabola, XDir the XDirection and YDir the YDirection of the parabola's local coordinate system.
+		%feature("autodoc", "	* Returns in P the point of parameter U. If U = 0 the returned point is the origin of the XAxis and the YAxis of the parabola and it is the vertex of the parabola. P = S + F * --U * U * XDir + * U * YDir-- where S is the vertex of the parabola, XDir the XDirection and YDir the YDirection of the parabola's local coordinate system.
 
 	:param U:
 	:type U: float
@@ -4619,7 +4602,7 @@ class Geom2d_Parabola : public Geom2d_Conic {
 ") TransformedParameter;
 		Standard_Real TransformedParameter (const Standard_Real U,const gp_Trsf2d & T);
 		%feature("compactdefaultargs") ParametricTransformation;
-		%feature("autodoc", "	* Returns a coefficient to compute the parameter on the transformed curve for the transform of the point on <self>. //! Transformed(T)->Value(U * ParametricTransformation(T)) //! is the same point as //! Value(U).Transformed(T) //! This methods returns T.ScaleFactor()
+		%feature("autodoc", "	* Returns a coefficient to compute the parameter on the transformed curve for the transform of the point on <self>. //! Transformed--T--->Value--U * ParametricTransformation--T---- //! is the same point as //! Value--U--.Transformed--T-- //! This methods returns T.ScaleFactor----
 
 	:param T:
 	:type T: gp_Trsf2d
@@ -4666,19 +4649,20 @@ class Handle_Geom2d_Parabola : public Handle_Geom2d_Conic {
         static const Handle_Geom2d_Parabola DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_Geom2d_Parabola {
     Geom2d_Parabola* _get_reference() {
-    return (Geom2d_Parabola*)$self->Access();
+    return (Geom2d_Parabola*)$self->get();
     }
 };
 
 %extend Handle_Geom2d_Parabola {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend Geom2d_Parabola {
@@ -4690,7 +4674,7 @@ class Handle_Geom2d_Parabola : public Handle_Geom2d_Conic {
 class Geom2d_TrimmedCurve : public Geom2d_BoundedCurve {
 	public:
 		%feature("compactdefaultargs") Geom2d_TrimmedCurve;
-		%feature("autodoc", "	* Creates a trimmed curve from the basis curve C limited between U1 and U2. //! . U1 can be greater or lower than U2. . The returned curve is oriented from U1 to U2. . If the basis curve C is periodic there is an ambiguity because two parts are available. In this case by default the trimmed curve has the same orientation as the basis curve (Sense = True). If Sense = False then the orientation of the trimmed curve is opposite to the orientation of the basis curve C. If the curve is closed but not periodic it is not possible to keep the part of the curve including the junction point (except if the junction point is at the beginning or at the end of the trimmed curve) because you could lose the fundamental characteristics of the basis curve which are used for example to compute the derivatives of the trimmed curve. So for a closed curve the rules are the same as for a open curve. Warnings : In this package the entities are not shared. The TrimmedCurve is built with a copy of the curve C. So when C is modified the TrimmedCurve is not modified Warnings : If <C> is periodic and <theAdjustPeriodic> is True, parametrics bounds of the TrimmedCurve, can be different to [<U1>;<U2>}, if <U1> or <U2> are not in the principal period. Include : For more explanation see the scheme given with this class. Raises ConstructionError the C is not periodic and U1 or U2 are out of the bounds of C. Raised if U1 = U2.
+		%feature("autodoc", "	* Creates a trimmed curve from the basis curve C limited between U1 and U2. //! . U1 can be greater or lower than U2. . The returned curve is oriented from U1 to U2. . If the basis curve C is periodic there is an ambiguity because two parts are available. In this case by default the trimmed curve has the same orientation as the basis curve --Sense = True--. If Sense = False then the orientation of the trimmed curve is opposite to the orientation of the basis curve C. If the curve is closed but not periodic it is not possible to keep the part of the curve including the junction point --except if the junction point is at the beginning or at the end of the trimmed curve-- because you could lose the fundamental characteristics of the basis curve which are used for example to compute the derivatives of the trimmed curve. So for a closed curve the rules are the same as for a open curve. Warnings : In this package the entities are not shared. The TrimmedCurve is built with a copy of the curve C. So when C is modified the TrimmedCurve is not modified Warnings : If <C> is periodic and <theAdjustPeriodic> is True, parametrics bounds of the TrimmedCurve, can be different to [<U1>;<U2>}, if <U1> or <U2> are not in the principal period. Include : For more explanation see the scheme given with this class. Raises ConstructionError the C is not periodic and U1 or U2 are out of the bounds of C. Raised if U1 = U2.
 
 	:param C:
 	:type C: Handle_Geom2d_Curve &
@@ -4706,7 +4690,7 @@ class Geom2d_TrimmedCurve : public Geom2d_BoundedCurve {
 ") Geom2d_TrimmedCurve;
 		 Geom2d_TrimmedCurve (const Handle_Geom2d_Curve & C,const Standard_Real U1,const Standard_Real U2,const Standard_Boolean Sense = Standard_True,const Standard_Boolean theAdjustPeriodic = Standard_True);
 		%feature("compactdefaultargs") Reverse;
-		%feature("autodoc", "	* Changes the direction of parametrization of <self>. The first and the last parametric values are modified. The 'StartPoint' of the initial curve becomes the 'EndPoint' of the reversed curve and the 'EndPoint' of the initial curve becomes the 'StartPoint' of the reversed curve. Example - If the trimmed curve is defined by: - a basis curve whose parameter range is [ 0.,1. ], and - the two trim values U1 (first parameter) and U2 (last parameter), the reversed trimmed curve is defined by: - the reversed basis curve, whose parameter range is still [ 0.,1. ], and - the two trim values 1. - U2 (first parameter) and 1. - U1 (last parameter).
+		%feature("autodoc", "	* Changes the direction of parametrization of <self>. The first and the last parametric values are modified. The 'StartPoint' of the initial curve becomes the 'EndPoint' of the reversed curve and the 'EndPoint' of the initial curve becomes the 'StartPoint' of the reversed curve. Example - If the trimmed curve is defined by: - a basis curve whose parameter range is [ 0.,1. ], and - the two trim values U1 --first parameter-- and U2 --last parameter--, the reversed trimmed curve is defined by: - the reversed basis curve, whose parameter range is still [ 0.,1. ], and - the two trim values 1. - U2 --first parameter-- and 1. - U1 --last parameter--.
 
 	:rtype: None
 ") Reverse;
@@ -4720,7 +4704,7 @@ class Geom2d_TrimmedCurve : public Geom2d_BoundedCurve {
 ") ReversedParameter;
 		Standard_Real ReversedParameter (const Standard_Real U);
 		%feature("compactdefaultargs") SetTrim;
-		%feature("autodoc", "	* Changes this trimmed curve, by redefining the parameter values U1 and U2, which limit its basis curve. Note: If the basis curve is periodic, the trimmed curve has the same orientation as the basis curve if Sense is true (default value) or the opposite orientation if Sense is false. Warning If the basis curve is periodic and theAdjustPeriodic is True, the bounds of the trimmed curve may be different from U1 and U2 if the parametric origin of the basis curve is within the arc of the trimmed curve. In this case, the modified parameter will be equal to U1 or U2 plus or minus the period. If theAdjustPeriodic is False, parameters U1 and U2 will stay unchanged. Exceptions Standard_ConstructionError if: - the basis curve is not periodic, and either U1 or U2 are outside the bounds of the basis curve, or - U1 is equal to U2.
+		%feature("autodoc", "	* Changes this trimmed curve, by redefining the parameter values U1 and U2, which limit its basis curve. Note: If the basis curve is periodic, the trimmed curve has the same orientation as the basis curve if Sense is true --default value-- or the opposite orientation if Sense is false. Warning If the basis curve is periodic and theAdjustPeriodic is True, the bounds of the trimmed curve may be different from U1 and U2 if the parametric origin of the basis curve is within the arc of the trimmed curve. In this case, the modified parameter will be equal to U1 or U2 plus or minus the period. If theAdjustPeriodic is False, parameters U1 and U2 will stay unchanged. Exceptions Standard_ConstructionError if: - the basis curve is not periodic, and either U1 or U2 are outside the bounds of the basis curve, or - U1 is equal to U2.
 
 	:param U1:
 	:type U1: float
@@ -4772,7 +4756,7 @@ class Geom2d_TrimmedCurve : public Geom2d_BoundedCurve {
 ") IsClosed;
 		Standard_Boolean IsClosed ();
 		%feature("compactdefaultargs") IsPeriodic;
-		%feature("autodoc", "	* Returns true if the basis curve of this trimmed curve is periodic.
+		%feature("autodoc", "	* Always returns False --independently of the type of basis curve--.
 
 	:rtype: bool
 ") IsPeriodic;
@@ -4796,7 +4780,7 @@ class Geom2d_TrimmedCurve : public Geom2d_BoundedCurve {
 ") StartPoint;
 		gp_Pnt2d StartPoint ();
 		%feature("compactdefaultargs") D0;
-		%feature("autodoc", "	* If the basis curve is an OffsetCurve sometimes it is not possible to do the evaluation of the curve at the parameter U (see class OffsetCurve).
+		%feature("autodoc", "	* If the basis curve is an OffsetCurve sometimes it is not possible to do the evaluation of the curve at the parameter U --see class OffsetCurve--.
 
 	:param U:
 	:type U: float
@@ -4866,7 +4850,7 @@ class Geom2d_TrimmedCurve : public Geom2d_BoundedCurve {
 ") Transform;
 		void Transform (const gp_Trsf2d & T);
 		%feature("compactdefaultargs") TransformedParameter;
-		%feature("autodoc", "	* Returns the parameter on the transformed curve for the transform of the point of parameter U on <self>. //! me->Transformed(T)->Value(me->TransformedParameter(U,T)) //! is the same point as //! me->Value(U).Transformed(T) //! This methods calls the basis curve method.
+		%feature("autodoc", "	* Returns the parameter on the transformed curve for the transform of the point of parameter U on <self>. //! me->Transformed--T--->Value--me->TransformedParameter--U,T---- //! is the same point as //! me->Value--U--.Transformed--T-- //! This methods calls the basis curve method.
 
 	:param U:
 	:type U: float
@@ -4876,7 +4860,7 @@ class Geom2d_TrimmedCurve : public Geom2d_BoundedCurve {
 ") TransformedParameter;
 		virtual Standard_Real TransformedParameter (const Standard_Real U,const gp_Trsf2d & T);
 		%feature("compactdefaultargs") ParametricTransformation;
-		%feature("autodoc", "	* Returns a coefficient to compute the parameter on the transformed curve for the transform of the point on <self>. //! Transformed(T)->Value(U * ParametricTransformation(T)) //! is the same point as //! Value(U).Transformed(T) //! This methods calls the basis curve method.
+		%feature("autodoc", "	* Returns a coefficient to compute the parameter on the transformed curve for the transform of the point on <self>. //! Transformed--T--->Value--U * ParametricTransformation--T---- //! is the same point as //! Value--U--.Transformed--T-- //! This methods calls the basis curve method.
 
 	:param T:
 	:type T: gp_Trsf2d
@@ -4923,19 +4907,20 @@ class Handle_Geom2d_TrimmedCurve : public Handle_Geom2d_BoundedCurve {
         static const Handle_Geom2d_TrimmedCurve DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_Geom2d_TrimmedCurve {
     Geom2d_TrimmedCurve* _get_reference() {
-    return (Geom2d_TrimmedCurve*)$self->Access();
+    return (Geom2d_TrimmedCurve*)$self->get();
     }
 };
 
 %extend Handle_Geom2d_TrimmedCurve {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend Geom2d_TrimmedCurve {

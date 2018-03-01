@@ -1,5 +1,5 @@
 /*
-Copyright 2008-2017 Thomas Paviot (tpaviot@gmail.com)
+Copyright 2008-2018 Thomas Paviot (tpaviot@gmail.com)
 
 
 This file is part of pythonOCC.
@@ -56,6 +56,9 @@ def register_handle(handle, base_object):
 /* typedefs */
 /* end typedefs declaration */
 
+/* templates */
+/* end templates declaration */
+
 /* public enums */
 enum GeomAbs_IsoType {
 	GeomAbs_IsoU = 0,
@@ -91,7 +94,8 @@ enum GeomAbs_CurveType {
 	GeomAbs_Parabola = 4,
 	GeomAbs_BezierCurve = 5,
 	GeomAbs_BSplineCurve = 6,
-	GeomAbs_OtherCurve = 7,
+	GeomAbs_OffsetCurve = 7,
+	GeomAbs_OtherCurve = 8,
 };
 
 enum GeomAbs_SurfaceForm {

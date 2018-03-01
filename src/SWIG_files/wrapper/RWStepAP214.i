@@ -1,5 +1,5 @@
 /*
-Copyright 2008-2017 Thomas Paviot (tpaviot@gmail.com)
+Copyright 2008-2018 Thomas Paviot (tpaviot@gmail.com)
 
 
 This file is part of pythonOCC.
@@ -56,6 +56,9 @@ def register_handle(handle, base_object):
 /* typedefs */
 /* end typedefs declaration */
 
+/* templates */
+/* end templates declaration */
+
 /* public enums */
 /* end public enums declaration */
 
@@ -86,7 +89,7 @@ class RWStepAP214_GeneralModule : public StepData_GeneralModule {
 ") RWStepAP214_GeneralModule;
 		 RWStepAP214_GeneralModule ();
 		%feature("compactdefaultargs") FillSharedCase;
-		%feature("autodoc", "	* Specific filling of the list of Entities shared by an Entity <ent>, according to a Case Number <CN> (provided by StepAP214 Protocol).
+		%feature("autodoc", "	* Specific filling of the list of Entities shared by an Entity <ent>, according to a Case Number <CN> --provided by StepAP214 Protocol--.
 
 	:param CN:
 	:type CN: int
@@ -112,7 +115,7 @@ class RWStepAP214_GeneralModule : public StepData_GeneralModule {
 ") CheckCase;
 		void CheckCase (const Standard_Integer CN,const Handle_Standard_Transient & ent,const Interface_ShareTool & shares,Handle_Interface_Check & ach);
 		%feature("compactdefaultargs") CopyCase;
-		%feature("autodoc", "	* Specific Copy ('Deep') from <entfrom> to <entto> (same type) by using a CopyTool which provides its working Map. Use method Transferred from CopyTool to work
+		%feature("autodoc", "	* Specific Copy --'Deep'-- from <entfrom> to <entto> --same type-- by using a CopyTool which provides its working Map. Use method Transferred from CopyTool to work
 
 	:param CN:
 	:type CN: int
@@ -189,19 +192,20 @@ class Handle_RWStepAP214_GeneralModule : public Handle_StepData_GeneralModule {
         static const Handle_RWStepAP214_GeneralModule DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_RWStepAP214_GeneralModule {
     RWStepAP214_GeneralModule* _get_reference() {
-    return (RWStepAP214_GeneralModule*)$self->Access();
+    return (RWStepAP214_GeneralModule*)$self->get();
     }
 };
 
 %extend Handle_RWStepAP214_GeneralModule {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend RWStepAP214_GeneralModule {
@@ -415,7 +419,7 @@ class RWStepAP214_RWAppliedExternalIdentificationAssignment {
 ") WriteStep;
 		void WriteStep (StepData_StepWriter & SW,const Handle_StepAP214_AppliedExternalIdentificationAssignment & ent);
 		%feature("compactdefaultargs") Share;
-		%feature("autodoc", "	* Fills data for graph (shared items)
+		%feature("autodoc", "	* Fills data for graph --shared items--
 
 	:param ent:
 	:type ent: Handle_StepAP214_AppliedExternalIdentificationAssignment &
@@ -466,7 +470,7 @@ class RWStepAP214_RWAppliedGroupAssignment {
 ") WriteStep;
 		void WriteStep (StepData_StepWriter & SW,const Handle_StepAP214_AppliedGroupAssignment & ent);
 		%feature("compactdefaultargs") Share;
-		%feature("autodoc", "	* Fills data for graph (shared items)
+		%feature("autodoc", "	* Fills data for graph --shared items--
 
 	:param ent:
 	:type ent: Handle_StepAP214_AppliedGroupAssignment &
@@ -1205,7 +1209,7 @@ class RWStepAP214_RWClass {
 ") WriteStep;
 		void WriteStep (StepData_StepWriter & SW,const Handle_StepAP214_Class & ent);
 		%feature("compactdefaultargs") Share;
-		%feature("autodoc", "	* Fills data for graph (shared items)
+		%feature("autodoc", "	* Fills data for graph --shared items--
 
 	:param ent:
 	:type ent: Handle_StepAP214_Class &
@@ -1256,7 +1260,7 @@ class RWStepAP214_RWExternallyDefinedClass {
 ") WriteStep;
 		void WriteStep (StepData_StepWriter & SW,const Handle_StepAP214_ExternallyDefinedClass & ent);
 		%feature("compactdefaultargs") Share;
-		%feature("autodoc", "	* Fills data for graph (shared items)
+		%feature("autodoc", "	* Fills data for graph --shared items--
 
 	:param ent:
 	:type ent: Handle_StepAP214_ExternallyDefinedClass &
@@ -1307,7 +1311,7 @@ class RWStepAP214_RWExternallyDefinedGeneralProperty {
 ") WriteStep;
 		void WriteStep (StepData_StepWriter & SW,const Handle_StepAP214_ExternallyDefinedGeneralProperty & ent);
 		%feature("compactdefaultargs") Share;
-		%feature("autodoc", "	* Fills data for graph (shared items)
+		%feature("autodoc", "	* Fills data for graph --shared items--
 
 	:param ent:
 	:type ent: Handle_StepAP214_ExternallyDefinedGeneralProperty &
@@ -1358,7 +1362,7 @@ class RWStepAP214_RWRepItemGroup {
 ") WriteStep;
 		void WriteStep (StepData_StepWriter & SW,const Handle_StepAP214_RepItemGroup & ent);
 		%feature("compactdefaultargs") Share;
-		%feature("autodoc", "	* Fills data for graph (shared items)
+		%feature("autodoc", "	* Fills data for graph --shared items--
 
 	:param ent:
 	:type ent: Handle_StepAP214_RepItemGroup &
@@ -1407,7 +1411,7 @@ class RWStepAP214_ReadWriteModule : public StepData_ReadWriteModule {
 ") IsComplex;
 		virtual Standard_Boolean IsComplex (const Standard_Integer CN);
 		%feature("compactdefaultargs") StepType;
-		%feature("autodoc", "	* returns a StepType (defined in EXPRESS form which belongs to a Type of Entity, identified by its CaseNumber determined by Protocol
+		%feature("autodoc", "	* returns a StepType --defined in EXPRESS form which belongs to a Type of Entity, identified by its CaseNumber determined by Protocol
 
 	:param CN:
 	:type CN: int
@@ -1480,19 +1484,20 @@ class Handle_RWStepAP214_ReadWriteModule : public Handle_StepData_ReadWriteModul
         static const Handle_RWStepAP214_ReadWriteModule DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_RWStepAP214_ReadWriteModule {
     RWStepAP214_ReadWriteModule* _get_reference() {
-    return (RWStepAP214_ReadWriteModule*)$self->Access();
+    return (RWStepAP214_ReadWriteModule*)$self->get();
     }
 };
 
 %extend Handle_RWStepAP214_ReadWriteModule {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend RWStepAP214_ReadWriteModule {

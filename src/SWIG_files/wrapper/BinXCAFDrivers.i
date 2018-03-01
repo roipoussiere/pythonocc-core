@@ -1,5 +1,5 @@
 /*
-Copyright 2008-2017 Thomas Paviot (tpaviot@gmail.com)
+Copyright 2008-2018 Thomas Paviot (tpaviot@gmail.com)
 
 
 This file is part of pythonOCC.
@@ -56,10 +56,14 @@ def register_handle(handle, base_object):
 /* typedefs */
 /* end typedefs declaration */
 
+/* templates */
+/* end templates declaration */
+
 /* public enums */
 /* end public enums declaration */
 
 %rename(binxcafdrivers) BinXCAFDrivers;
+%nodefaultctor BinXCAFDrivers;
 class BinXCAFDrivers {
 	public:
 		%feature("compactdefaultargs") Factory;
@@ -67,7 +71,15 @@ class BinXCAFDrivers {
 	:type theGUID: Standard_GUID &
 	:rtype: Handle_Standard_Transient
 ") Factory;
-		static Handle_Standard_Transient Factory (const Standard_GUID & theGUID);
+		Handle_Standard_Transient Factory (const Standard_GUID & theGUID);
+		%feature("compactdefaultargs") DefineFormat;
+		%feature("autodoc", "	* Defines format 'BinXCAF' and registers its read and write drivers in the specified application
+
+	:param theApp:
+	:type theApp: Handle_TDocStd_Application &
+	:rtype: void
+") DefineFormat;
+		static void DefineFormat (const Handle_TDocStd_Application & theApp);
 		%feature("compactdefaultargs") AttributeDrivers;
 		%feature("autodoc", "	* Creates the table of drivers of types supported
 
@@ -133,19 +145,20 @@ class Handle_BinXCAFDrivers_DocumentRetrievalDriver : public Handle_BinDrivers_D
         static const Handle_BinXCAFDrivers_DocumentRetrievalDriver DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_BinXCAFDrivers_DocumentRetrievalDriver {
     BinXCAFDrivers_DocumentRetrievalDriver* _get_reference() {
-    return (BinXCAFDrivers_DocumentRetrievalDriver*)$self->Access();
+    return (BinXCAFDrivers_DocumentRetrievalDriver*)$self->get();
     }
 };
 
 %extend Handle_BinXCAFDrivers_DocumentRetrievalDriver {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend BinXCAFDrivers_DocumentRetrievalDriver {
@@ -202,19 +215,20 @@ class Handle_BinXCAFDrivers_DocumentStorageDriver : public Handle_BinDrivers_Doc
         static const Handle_BinXCAFDrivers_DocumentStorageDriver DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_BinXCAFDrivers_DocumentStorageDriver {
     BinXCAFDrivers_DocumentStorageDriver* _get_reference() {
-    return (BinXCAFDrivers_DocumentStorageDriver*)$self->Access();
+    return (BinXCAFDrivers_DocumentStorageDriver*)$self->get();
     }
 };
 
 %extend Handle_BinXCAFDrivers_DocumentStorageDriver {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend BinXCAFDrivers_DocumentStorageDriver {

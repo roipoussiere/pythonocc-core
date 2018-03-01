@@ -1,5 +1,5 @@
 /*
-Copyright 2008-2017 Thomas Paviot (tpaviot@gmail.com)
+Copyright 2008-2018 Thomas Paviot (tpaviot@gmail.com)
 
 
 This file is part of pythonOCC.
@@ -55,6 +55,10 @@ def register_handle(handle, base_object):
 
 /* typedefs */
 /* end typedefs declaration */
+
+/* templates */
+%template(BiTgte_DataMapOfShapeBox) NCollection_DataMap <TopoDS_Shape , Bnd_Box , TopTools_ShapeMapHasher>;
+/* end templates declaration */
 
 /* public enums */
 enum BiTgte_ContactType {
@@ -206,7 +210,7 @@ class BiTgte_Blend {
 ") ContactType;
 		BiTgte_ContactType ContactType (const Standard_Integer Index);
 		%feature("compactdefaultargs") SupportShape1;
-		%feature("autodoc", "	* gives the first support shape relative to SurfaceFillet(Index);
+		%feature("autodoc", "	* gives the first support shape relative to SurfaceFillet--Index--;
 
 	:param Index:
 	:type Index: int
@@ -214,7 +218,7 @@ class BiTgte_Blend {
 ") SupportShape1;
 		const TopoDS_Shape  SupportShape1 (const Standard_Integer Index);
 		%feature("compactdefaultargs") SupportShape2;
-		%feature("autodoc", "	* gives the second support shape relative to SurfaceFillet(Index);
+		%feature("autodoc", "	* gives the second support shape relative to SurfaceFillet--Index--;
 
 	:param Index:
 	:type Index: int
@@ -222,7 +226,7 @@ class BiTgte_Blend {
 ") SupportShape2;
 		const TopoDS_Shape  SupportShape2 (const Standard_Integer Index);
 		%feature("compactdefaultargs") CurveOnShape1;
-		%feature("autodoc", "	* gives the 3d curve of SurfaceFillet(Index) on SupportShape1(Index)
+		%feature("autodoc", "	* gives the 3d curve of SurfaceFillet--Index-- on SupportShape1--Index--
 
 	:param Index:
 	:type Index: int
@@ -230,7 +234,7 @@ class BiTgte_Blend {
 ") CurveOnShape1;
 		Handle_Geom_Curve CurveOnShape1 (const Standard_Integer Index);
 		%feature("compactdefaultargs") CurveOnShape2;
-		%feature("autodoc", "	* gives the 3d curve of SurfaceFillet(Index) on SupportShape2(Index)
+		%feature("autodoc", "	* gives the 3d curve of SurfaceFillet--Index-- on SupportShape2--Index--
 
 	:param Index:
 	:type Index: int
@@ -238,7 +242,7 @@ class BiTgte_Blend {
 ") CurveOnShape2;
 		Handle_Geom_Curve CurveOnShape2 (const Standard_Integer Index);
 		%feature("compactdefaultargs") PCurveOnFace1;
-		%feature("autodoc", "	* gives the PCurve associated to CurvOnShape1(Index) on the support face Warning: returns a Null Handle if SupportShape1 is not a Face
+		%feature("autodoc", "	* gives the PCurve associated to CurvOnShape1--Index-- on the support face Warning: returns a Null Handle if SupportShape1 is not a Face
 
 	:param Index:
 	:type Index: int
@@ -246,7 +250,7 @@ class BiTgte_Blend {
 ") PCurveOnFace1;
 		Handle_Geom2d_Curve PCurveOnFace1 (const Standard_Integer Index);
 		%feature("compactdefaultargs") PCurve1OnFillet;
-		%feature("autodoc", "	* gives the PCurve associated to CurveOnShape1(Index) on the Fillet
+		%feature("autodoc", "	* gives the PCurve associated to CurveOnShape1--Index-- on the Fillet
 
 	:param Index:
 	:type Index: int
@@ -254,7 +258,7 @@ class BiTgte_Blend {
 ") PCurve1OnFillet;
 		Handle_Geom2d_Curve PCurve1OnFillet (const Standard_Integer Index);
 		%feature("compactdefaultargs") PCurveOnFace2;
-		%feature("autodoc", "	* gives the PCurve associated to CurveOnShape2(Index) on the support face Warning: returns a Null Handle if SupportShape2 is not a Face
+		%feature("autodoc", "	* gives the PCurve associated to CurveOnShape2--Index-- on the support face Warning: returns a Null Handle if SupportShape2 is not a Face
 
 	:param Index:
 	:type Index: int
@@ -262,7 +266,7 @@ class BiTgte_Blend {
 ") PCurveOnFace2;
 		Handle_Geom2d_Curve PCurveOnFace2 (const Standard_Integer Index);
 		%feature("compactdefaultargs") PCurve2OnFillet;
-		%feature("autodoc", "	* gives the PCurve associated to CurveOnShape2(Index) on the fillet
+		%feature("autodoc", "	* gives the PCurve associated to CurveOnShape2--Index-- on the fillet
 
 	:param Index:
 	:type Index: int
@@ -274,7 +278,7 @@ class BiTgte_Blend {
 ") NbBranches;
 		Standard_Integer NbBranches ();
 		%feature("compactdefaultargs") IndicesOfBranche;
-		%feature("autodoc", "	* Set in <From>,<To> the indices of the faces of the branche <Index>. //! i.e: Branche<Index> = Face(From) + Face(From+1) + ..+ Face(To)
+		%feature("autodoc", "	* Set in <From>,<To> the indices of the faces of the branche <Index>. //! i.e: Branche<Index> = Face--From-- + Face--From+1-- + ..+ Face--To--
 
 	:param Index:
 	:type Index: int
@@ -335,7 +339,7 @@ class BiTgte_CurveOnEdge : public Adaptor3d_Curve {
 ") Continuity;
 		GeomAbs_Shape Continuity ();
 		%feature("compactdefaultargs") NbIntervals;
-		%feature("autodoc", "	* Returns the number of intervals for continuity <S>. May be one if Continuity(me) >= <S>
+		%feature("autodoc", "	* Returns the number of intervals for continuity <S>. May be one if Continuity--me-- >= <S>
 
 	:param S:
 	:type S: GeomAbs_Shape
@@ -343,7 +347,7 @@ class BiTgte_CurveOnEdge : public Adaptor3d_Curve {
 ") NbIntervals;
 		Standard_Integer NbIntervals (const GeomAbs_Shape S);
 		%feature("compactdefaultargs") Intervals;
-		%feature("autodoc", "	* Stores in <T> the parameters bounding the intervals of continuity <S>. //! The array must provide enough room to accomodate for the parameters. i.e. T.Length() > NbIntervals()
+		%feature("autodoc", "	* Stores in <T> the parameters bounding the intervals of continuity <S>. //! The array must provide enough room to accomodate for the parameters. i.e. T.Length---- > NbIntervals----
 
 	:param T:
 	:type T: TColStd_Array1OfReal &
@@ -548,7 +552,7 @@ class BiTgte_CurveOnVertex : public Adaptor3d_Curve {
 ") Continuity;
 		GeomAbs_Shape Continuity ();
 		%feature("compactdefaultargs") NbIntervals;
-		%feature("autodoc", "	* Returns the number of intervals for continuity <S>. May be one if Continuity(me) >= <S>
+		%feature("autodoc", "	* Returns the number of intervals for continuity <S>. May be one if Continuity--me-- >= <S>
 
 	:param S:
 	:type S: GeomAbs_Shape
@@ -556,7 +560,7 @@ class BiTgte_CurveOnVertex : public Adaptor3d_Curve {
 ") NbIntervals;
 		Standard_Integer NbIntervals (const GeomAbs_Shape S);
 		%feature("compactdefaultargs") Intervals;
-		%feature("autodoc", "	* Stores in <T> the parameters bounding the intervals of continuity <S>. //! The array must provide enough room to accomodate for the parameters. i.e. T.Length() > NbIntervals()
+		%feature("autodoc", "	* Stores in <T> the parameters bounding the intervals of continuity <S>. //! The array must provide enough room to accomodate for the parameters. i.e. T.Length---- > NbIntervals----
 
 	:param T:
 	:type T: TColStd_Array1OfReal &
@@ -725,228 +729,47 @@ class BiTgte_CurveOnVertex : public Adaptor3d_Curve {
 	__repr__ = _dumps_object
 	}
 };
-%nodefaultctor BiTgte_DataMapIteratorOfDataMapOfShapeBox;
-class BiTgte_DataMapIteratorOfDataMapOfShapeBox : public TCollection_BasicMapIterator {
-	public:
-		%feature("compactdefaultargs") BiTgte_DataMapIteratorOfDataMapOfShapeBox;
-		%feature("autodoc", "	:rtype: None
-") BiTgte_DataMapIteratorOfDataMapOfShapeBox;
-		 BiTgte_DataMapIteratorOfDataMapOfShapeBox ();
-		%feature("compactdefaultargs") BiTgte_DataMapIteratorOfDataMapOfShapeBox;
-		%feature("autodoc", "	:param aMap:
-	:type aMap: BiTgte_DataMapOfShapeBox &
-	:rtype: None
-") BiTgte_DataMapIteratorOfDataMapOfShapeBox;
-		 BiTgte_DataMapIteratorOfDataMapOfShapeBox (const BiTgte_DataMapOfShapeBox & aMap);
-		%feature("compactdefaultargs") Initialize;
-		%feature("autodoc", "	:param aMap:
-	:type aMap: BiTgte_DataMapOfShapeBox &
-	:rtype: None
-") Initialize;
-		void Initialize (const BiTgte_DataMapOfShapeBox & aMap);
-		%feature("compactdefaultargs") Key;
-		%feature("autodoc", "	:rtype: TopoDS_Shape
-") Key;
-		const TopoDS_Shape  Key ();
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:rtype: Bnd_Box
-") Value;
-		const Bnd_Box & Value ();
-};
-
-
-%extend BiTgte_DataMapIteratorOfDataMapOfShapeBox {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor BiTgte_DataMapNodeOfDataMapOfShapeBox;
-class BiTgte_DataMapNodeOfDataMapOfShapeBox : public TCollection_MapNode {
-	public:
-		%feature("compactdefaultargs") BiTgte_DataMapNodeOfDataMapOfShapeBox;
-		%feature("autodoc", "	:param K:
-	:type K: TopoDS_Shape &
-	:param I:
-	:type I: Bnd_Box &
-	:param n:
-	:type n: TCollection_MapNodePtr &
-	:rtype: None
-") BiTgte_DataMapNodeOfDataMapOfShapeBox;
-		 BiTgte_DataMapNodeOfDataMapOfShapeBox (const TopoDS_Shape & K,const Bnd_Box & I,const TCollection_MapNodePtr & n);
-		%feature("compactdefaultargs") Key;
-		%feature("autodoc", "	:rtype: TopoDS_Shape
-") Key;
-		TopoDS_Shape  Key ();
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:rtype: Bnd_Box
-") Value;
-		Bnd_Box & Value ();
-};
-
-
-%extend BiTgte_DataMapNodeOfDataMapOfShapeBox {
-	%pythoncode {
-		def GetHandle(self):
-		    try:
-		        return self.thisHandle
-		    except:
-		        self.thisHandle = Handle_BiTgte_DataMapNodeOfDataMapOfShapeBox(self)
-		        self.thisown = False
-		        return self.thisHandle
-	}
-};
-
-%pythonappend Handle_BiTgte_DataMapNodeOfDataMapOfShapeBox::Handle_BiTgte_DataMapNodeOfDataMapOfShapeBox %{
-    # register the handle in the base object
-    if len(args) > 0:
-        register_handle(self, args[0])
-%}
-
-%nodefaultctor Handle_BiTgte_DataMapNodeOfDataMapOfShapeBox;
-class Handle_BiTgte_DataMapNodeOfDataMapOfShapeBox : public Handle_TCollection_MapNode {
-
-    public:
-        // constructors
-        Handle_BiTgte_DataMapNodeOfDataMapOfShapeBox();
-        Handle_BiTgte_DataMapNodeOfDataMapOfShapeBox(const Handle_BiTgte_DataMapNodeOfDataMapOfShapeBox &aHandle);
-        Handle_BiTgte_DataMapNodeOfDataMapOfShapeBox(const BiTgte_DataMapNodeOfDataMapOfShapeBox *anItem);
-        void Nullify();
-        Standard_Boolean IsNull() const;
-        static const Handle_BiTgte_DataMapNodeOfDataMapOfShapeBox DownCast(const Handle_Standard_Transient &AnObject);
-
-};
-%extend Handle_BiTgte_DataMapNodeOfDataMapOfShapeBox {
-    BiTgte_DataMapNodeOfDataMapOfShapeBox* _get_reference() {
-    return (BiTgte_DataMapNodeOfDataMapOfShapeBox*)$self->Access();
-    }
-};
-
-%extend Handle_BiTgte_DataMapNodeOfDataMapOfShapeBox {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
-};
-
-%extend BiTgte_DataMapNodeOfDataMapOfShapeBox {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor BiTgte_DataMapOfShapeBox;
-class BiTgte_DataMapOfShapeBox : public TCollection_BasicMap {
-	public:
-		%feature("compactdefaultargs") BiTgte_DataMapOfShapeBox;
-		%feature("autodoc", "	:param NbBuckets: default value is 1
-	:type NbBuckets: int
-	:rtype: None
-") BiTgte_DataMapOfShapeBox;
-		 BiTgte_DataMapOfShapeBox (const Standard_Integer NbBuckets = 1);
-		%feature("compactdefaultargs") Assign;
-		%feature("autodoc", "	:param Other:
-	:type Other: BiTgte_DataMapOfShapeBox &
-	:rtype: BiTgte_DataMapOfShapeBox
-") Assign;
-		BiTgte_DataMapOfShapeBox & Assign (const BiTgte_DataMapOfShapeBox & Other);
-		%feature("compactdefaultargs") operator =;
-		%feature("autodoc", "	:param Other:
-	:type Other: BiTgte_DataMapOfShapeBox &
-	:rtype: BiTgte_DataMapOfShapeBox
-") operator =;
-		BiTgte_DataMapOfShapeBox & operator = (const BiTgte_DataMapOfShapeBox & Other);
-		%feature("compactdefaultargs") ReSize;
-		%feature("autodoc", "	:param NbBuckets:
-	:type NbBuckets: int
-	:rtype: None
-") ReSize;
-		void ReSize (const Standard_Integer NbBuckets);
-		%feature("compactdefaultargs") Clear;
-		%feature("autodoc", "	:rtype: None
-") Clear;
-		void Clear ();
-		%feature("compactdefaultargs") Bind;
-		%feature("autodoc", "	:param K:
-	:type K: TopoDS_Shape &
-	:param I:
-	:type I: Bnd_Box &
-	:rtype: bool
-") Bind;
-		Standard_Boolean Bind (const TopoDS_Shape & K,const Bnd_Box & I);
-		%feature("compactdefaultargs") IsBound;
-		%feature("autodoc", "	:param K:
-	:type K: TopoDS_Shape &
-	:rtype: bool
-") IsBound;
-		Standard_Boolean IsBound (const TopoDS_Shape & K);
-		%feature("compactdefaultargs") UnBind;
-		%feature("autodoc", "	:param K:
-	:type K: TopoDS_Shape &
-	:rtype: bool
-") UnBind;
-		Standard_Boolean UnBind (const TopoDS_Shape & K);
-		%feature("compactdefaultargs") Find;
-		%feature("autodoc", "	:param K:
-	:type K: TopoDS_Shape &
-	:rtype: Bnd_Box
-") Find;
-		const Bnd_Box & Find (const TopoDS_Shape & K);
-		%feature("compactdefaultargs") ChangeFind;
-		%feature("autodoc", "	:param K:
-	:type K: TopoDS_Shape &
-	:rtype: Bnd_Box
-") ChangeFind;
-		Bnd_Box & ChangeFind (const TopoDS_Shape & K);
-		%feature("compactdefaultargs") Find1;
-		%feature("autodoc", "	:param K:
-	:type K: TopoDS_Shape &
-	:rtype: Standard_Address
-") Find1;
-		Standard_Address Find1 (const TopoDS_Shape & K);
-		%feature("compactdefaultargs") ChangeFind1;
-		%feature("autodoc", "	:param K:
-	:type K: TopoDS_Shape &
-	:rtype: Standard_Address
-") ChangeFind1;
-		Standard_Address ChangeFind1 (const TopoDS_Shape & K);
-};
-
-
-%extend BiTgte_DataMapOfShapeBox {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
 %nodefaultctor BiTgte_HCurveOnEdge;
 class BiTgte_HCurveOnEdge : public Adaptor3d_HCurve {
 	public:
 		%feature("compactdefaultargs") BiTgte_HCurveOnEdge;
-		%feature("autodoc", "	:rtype: None
+		%feature("autodoc", "	* Creates an empty GenHCurve.
+
+	:rtype: None
 ") BiTgte_HCurveOnEdge;
 		 BiTgte_HCurveOnEdge ();
 		%feature("compactdefaultargs") BiTgte_HCurveOnEdge;
-		%feature("autodoc", "	:param C:
+		%feature("autodoc", "	* Creates a GenHCurve from a Curve
+
+	:param C:
 	:type C: BiTgte_CurveOnEdge &
 	:rtype: None
 ") BiTgte_HCurveOnEdge;
 		 BiTgte_HCurveOnEdge (const BiTgte_CurveOnEdge & C);
 		%feature("compactdefaultargs") Set;
-		%feature("autodoc", "	:param C:
+		%feature("autodoc", "	* Sets the field of the GenHCurve.
+
+	:param C:
 	:type C: BiTgte_CurveOnEdge &
 	:rtype: None
 ") Set;
 		void Set (const BiTgte_CurveOnEdge & C);
 		%feature("compactdefaultargs") Curve;
-		%feature("autodoc", "	:rtype: Adaptor3d_Curve
+		%feature("autodoc", "	* Returns the curve used to create the GenHCurve. This is redefined from HCurve, cannot be inline.
+
+	:rtype: Adaptor3d_Curve
 ") Curve;
 		const Adaptor3d_Curve & Curve ();
 		%feature("compactdefaultargs") GetCurve;
-		%feature("autodoc", "	:rtype: Adaptor3d_Curve
+		%feature("autodoc", "	* Returns the curve used to create the GenHCurve. This is redefined from HCurve, cannot be inline.
+
+	:rtype: Adaptor3d_Curve
 ") GetCurve;
 		Adaptor3d_Curve & GetCurve ();
 		%feature("compactdefaultargs") ChangeCurve;
-		%feature("autodoc", "	:rtype: BiTgte_CurveOnEdge
+		%feature("autodoc", "	* Returns the curve used to create the GenHCurve.
+
+	:rtype: BiTgte_CurveOnEdge
 ") ChangeCurve;
 		BiTgte_CurveOnEdge & ChangeCurve ();
 };
@@ -983,19 +806,20 @@ class Handle_BiTgte_HCurveOnEdge : public Handle_Adaptor3d_HCurve {
         static const Handle_BiTgte_HCurveOnEdge DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_BiTgte_HCurveOnEdge {
     BiTgte_HCurveOnEdge* _get_reference() {
-    return (BiTgte_HCurveOnEdge*)$self->Access();
+    return (BiTgte_HCurveOnEdge*)$self->get();
     }
 };
 
 %extend Handle_BiTgte_HCurveOnEdge {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend BiTgte_HCurveOnEdge {
@@ -1007,31 +831,43 @@ class Handle_BiTgte_HCurveOnEdge : public Handle_Adaptor3d_HCurve {
 class BiTgte_HCurveOnVertex : public Adaptor3d_HCurve {
 	public:
 		%feature("compactdefaultargs") BiTgte_HCurveOnVertex;
-		%feature("autodoc", "	:rtype: None
+		%feature("autodoc", "	* Creates an empty GenHCurve.
+
+	:rtype: None
 ") BiTgte_HCurveOnVertex;
 		 BiTgte_HCurveOnVertex ();
 		%feature("compactdefaultargs") BiTgte_HCurveOnVertex;
-		%feature("autodoc", "	:param C:
+		%feature("autodoc", "	* Creates a GenHCurve from a Curve
+
+	:param C:
 	:type C: BiTgte_CurveOnVertex &
 	:rtype: None
 ") BiTgte_HCurveOnVertex;
 		 BiTgte_HCurveOnVertex (const BiTgte_CurveOnVertex & C);
 		%feature("compactdefaultargs") Set;
-		%feature("autodoc", "	:param C:
+		%feature("autodoc", "	* Sets the field of the GenHCurve.
+
+	:param C:
 	:type C: BiTgte_CurveOnVertex &
 	:rtype: None
 ") Set;
 		void Set (const BiTgte_CurveOnVertex & C);
 		%feature("compactdefaultargs") Curve;
-		%feature("autodoc", "	:rtype: Adaptor3d_Curve
+		%feature("autodoc", "	* Returns the curve used to create the GenHCurve. This is redefined from HCurve, cannot be inline.
+
+	:rtype: Adaptor3d_Curve
 ") Curve;
 		const Adaptor3d_Curve & Curve ();
 		%feature("compactdefaultargs") GetCurve;
-		%feature("autodoc", "	:rtype: Adaptor3d_Curve
+		%feature("autodoc", "	* Returns the curve used to create the GenHCurve. This is redefined from HCurve, cannot be inline.
+
+	:rtype: Adaptor3d_Curve
 ") GetCurve;
 		Adaptor3d_Curve & GetCurve ();
 		%feature("compactdefaultargs") ChangeCurve;
-		%feature("autodoc", "	:rtype: BiTgte_CurveOnVertex
+		%feature("autodoc", "	* Returns the curve used to create the GenHCurve.
+
+	:rtype: BiTgte_CurveOnVertex
 ") ChangeCurve;
 		BiTgte_CurveOnVertex & ChangeCurve ();
 };
@@ -1068,19 +904,20 @@ class Handle_BiTgte_HCurveOnVertex : public Handle_Adaptor3d_HCurve {
         static const Handle_BiTgte_HCurveOnVertex DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_BiTgte_HCurveOnVertex {
     BiTgte_HCurveOnVertex* _get_reference() {
-    return (BiTgte_HCurveOnVertex*)$self->Access();
+    return (BiTgte_HCurveOnVertex*)$self->get();
     }
 };
 
 %extend Handle_BiTgte_HCurveOnVertex {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend BiTgte_HCurveOnVertex {

@@ -1,5 +1,5 @@
 /*
-Copyright 2008-2017 Thomas Paviot (tpaviot@gmail.com)
+Copyright 2008-2018 Thomas Paviot (tpaviot@gmail.com)
 
 
 This file is part of pythonOCC.
@@ -55,7 +55,7 @@ def register_handle(handle, base_object):
 
 /* typedefs */
 typedef bool Standard_Boolean;
-typedef const char * Standard_CString;
+typedef const Standard_Character * Standard_CString;
 typedef std::istream Standard_IStream;
 typedef Standard_ExtCharacter * Standard_PExtCharacter;
 typedef std::time_t Standard_Time;
@@ -63,8 +63,7 @@ typedef unsigned char Standard_Byte;
 typedef void * Standard_Address;
 typedef Standard_Byte * Standard_PByte;
 typedef GUID Standard_UUID;
-typedef short Standard_ExtCharacter;
-typedef unsigned __int8 uint8_t;
+typedef char16_t Standard_ExtCharacter;
 typedef double Standard_Real;
 typedef Standard_ErrorHandler * Standard_PErrorHandler;
 typedef int Standard_Integer;
@@ -72,59 +71,26 @@ typedef char Standard_Utf8Char;
 typedef Standard_Character * Standard_PCharacter;
 typedef pthread_t Standard_ThreadId;
 typedef float Standard_ShortReal;
+typedef Standard_ErrorHandler::Callback Standard_ErrorHandlerCallback;
 typedef wchar_t Standard_WideChar;
 typedef char Standard_Character;
 typedef unsigned char Standard_Utf8UChar;
-typedef uint32_t Standard_Utf32Char;
+typedef char32_t Standard_Utf32Char;
 typedef std::stringstream Standard_SStream;
-typedef uint16_t Standard_Utf16Char;
-typedef const short * Standard_ExtString;
-typedef unsigned __int32 uint32_t;
+typedef char16_t Standard_Utf16Char;
+typedef const Standard_ExtCharacter * Standard_ExtString;
 typedef size_t Standard_Size;
 typedef std::ostream Standard_OStream;
-typedef unsigned __int64 uint64_t;
-typedef unsigned __int16 uint16_t;
 /* end typedefs declaration */
 
+/* templates */
+/* end templates declaration */
+
 /* public enums */
-enum Standard_KindOfType {
-	Standard_IsUnKnown = 0,
-	Standard_IsClass = 1,
-	Standard_IsEnumeration = 2,
-	Standard_IsPrimitive = 3,
-	Standard_IsImported = 4,
-	Standard_IsPackage = 5,
-};
-
-enum Standard_WayOfLife {
-	Standard_IsNothing = 0,
-	Standard_IsAddress = 1,
-	Standard_IsTransient = 2,
-	Standard_IsPersistent = 3,
-	Standard_IsNotLoaded = 4,
-};
-
 enum Standard_HandlerStatus {
 	Standard_HandlerVoid = 0,
 	Standard_HandlerJumped = 1,
 	Standard_HandlerProcessed = 2,
-};
-
-enum Standard_InternalType {
-	Standard_Void = 0,
-	Standard_Char = 1,
-	Standard_ExtChar = 2,
-	Standard_LongInt = 3,
-	Standard_Bool = 4,
-	Standard_Float = 5,
-	Standard_LongDouble = 6,
-	Standard_String = 7,
-	Standard_EString = 8,
-	Standard_EntryAddress = 9,
-	Standard_DataAddress = 10,
-	Standard_EngineHandle = 11,
-	Standard_Long64 = 12,
-	Standard_Array = 13,
 };
 
 /* end public enums declaration */
@@ -174,11 +140,52 @@ class Standard {
 	__repr__ = _dumps_object
 	}
 };
+%nodefaultctor Standard_ArrayStreamBuffer;
+class Standard_ArrayStreamBuffer : public std::streambuf {
+	public:
+		%feature("compactdefaultargs") Standard_ArrayStreamBuffer;
+		%feature("autodoc", "	* Main constructor. Passed pointer is stored as is --memory is NOT copied nor released with destructor--. @param theBegin pointer to the beggining of pre-allocated buffer @param theSize length of pre-allocated buffer
+
+	:param theBegin:
+	:type theBegin: char *
+	:param theSize:
+	:type theSize: size_t
+	:rtype: None
+") Standard_ArrayStreamBuffer;
+		 Standard_ArrayStreamBuffer (const char * theBegin,const size_t theSize);
+		%feature("compactdefaultargs") Init;
+		%feature("autodoc", "	* --Re---initialize the stream. Passed pointer is stored as is --memory is NOT copied nor released with destructor--. @param theBegin pointer to the beggining of pre-allocated buffer @param theSize length of pre-allocated buffer
+
+	:param theBegin:
+	:type theBegin: char *
+	:param theSize:
+	:type theSize: size_t
+	:rtype: void
+") Init;
+		virtual void Init (const char * theBegin,const size_t theSize);
+		%feature("compactdefaultargs") xsgetn;
+		%feature("autodoc", "	* Read a bunch of bytes at once.
+
+	:param thePtr:
+	:type thePtr: char *
+	:param theCount:
+	:type theCount: std::streamsize
+	:rtype: std::streamsize
+") xsgetn;
+		virtual std::streamsize xsgetn (char * thePtr,std::streamsize theCount);
+};
+
+
+%extend Standard_ArrayStreamBuffer {
+	%pythoncode {
+	__repr__ = _dumps_object
+	}
+};
 %nodefaultctor Standard_ErrorHandler;
 class Standard_ErrorHandler {
 	public:
 		%feature("compactdefaultargs") Standard_ErrorHandler;
-		%feature("autodoc", "	* Create a ErrorHandler (to be used with try{}catch(){}). It uses the 'setjmp' and 'longjmp' routines.
+		%feature("autodoc", "	* Create a ErrorHandler --to be used with try{}catch----{}--. It uses the 'setjmp' and 'longjmp' routines.
 
 	:rtype: None
 ") Standard_ErrorHandler;
@@ -231,23 +238,6 @@ class Standard_ErrorHandler {
 
 
 %extend Standard_ErrorHandler {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor Standard_ErrorHandlerCallback;
-class Standard_ErrorHandlerCallback {
-	public:
-		%feature("compactdefaultargs") DestroyCallback;
-		%feature("autodoc", "	* The callback function to perform necessary callback action. Called by the exception handler when it is being destroyed but still has this callback registered.
-
-	:rtype: void
-") DestroyCallback;
-		virtual void DestroyCallback ();
-};
-
-
-%extend Standard_ErrorHandlerCallback {
 	%pythoncode {
 	__repr__ = _dumps_object
 	}
@@ -439,106 +429,6 @@ class Standard_GUID {
 	:rtype: bool
 ") IsEqual;
 		static Standard_Boolean IsEqual (const Standard_GUID & string1,const Standard_GUID & string2);
-		%feature("compactdefaultargs") _CSFDB_GetStandard_GUIDmy32b;
-		%feature("autodoc", "	:rtype: int
-") _CSFDB_GetStandard_GUIDmy32b;
-		Standard_Integer _CSFDB_GetStandard_GUIDmy32b ();
-		%feature("compactdefaultargs") _CSFDB_SetStandard_GUIDmy32b;
-		%feature("autodoc", "	:param p:
-	:type p: int
-	:rtype: None
-") _CSFDB_SetStandard_GUIDmy32b;
-		void _CSFDB_SetStandard_GUIDmy32b (const Standard_Integer p);
-		%feature("compactdefaultargs") _CSFDB_GetStandard_GUIDmy16b1;
-		%feature("autodoc", "	:rtype: Standard_ExtCharacter
-") _CSFDB_GetStandard_GUIDmy16b1;
-		Standard_ExtCharacter _CSFDB_GetStandard_GUIDmy16b1 ();
-		%feature("compactdefaultargs") _CSFDB_SetStandard_GUIDmy16b1;
-		%feature("autodoc", "	:param p:
-	:type p: Standard_ExtCharacter
-	:rtype: None
-") _CSFDB_SetStandard_GUIDmy16b1;
-		void _CSFDB_SetStandard_GUIDmy16b1 (const Standard_ExtCharacter p);
-		%feature("compactdefaultargs") _CSFDB_GetStandard_GUIDmy16b2;
-		%feature("autodoc", "	:rtype: Standard_ExtCharacter
-") _CSFDB_GetStandard_GUIDmy16b2;
-		Standard_ExtCharacter _CSFDB_GetStandard_GUIDmy16b2 ();
-		%feature("compactdefaultargs") _CSFDB_SetStandard_GUIDmy16b2;
-		%feature("autodoc", "	:param p:
-	:type p: Standard_ExtCharacter
-	:rtype: None
-") _CSFDB_SetStandard_GUIDmy16b2;
-		void _CSFDB_SetStandard_GUIDmy16b2 (const Standard_ExtCharacter p);
-		%feature("compactdefaultargs") _CSFDB_GetStandard_GUIDmy16b3;
-		%feature("autodoc", "	:rtype: Standard_ExtCharacter
-") _CSFDB_GetStandard_GUIDmy16b3;
-		Standard_ExtCharacter _CSFDB_GetStandard_GUIDmy16b3 ();
-		%feature("compactdefaultargs") _CSFDB_SetStandard_GUIDmy16b3;
-		%feature("autodoc", "	:param p:
-	:type p: Standard_ExtCharacter
-	:rtype: None
-") _CSFDB_SetStandard_GUIDmy16b3;
-		void _CSFDB_SetStandard_GUIDmy16b3 (const Standard_ExtCharacter p);
-		%feature("compactdefaultargs") _CSFDB_GetStandard_GUIDmy8b1;
-		%feature("autodoc", "	:rtype: Standard_Byte
-") _CSFDB_GetStandard_GUIDmy8b1;
-		Standard_Byte _CSFDB_GetStandard_GUIDmy8b1 ();
-		%feature("compactdefaultargs") _CSFDB_SetStandard_GUIDmy8b1;
-		%feature("autodoc", "	:param p:
-	:type p: Standard_Byte
-	:rtype: None
-") _CSFDB_SetStandard_GUIDmy8b1;
-		void _CSFDB_SetStandard_GUIDmy8b1 (const Standard_Byte p);
-		%feature("compactdefaultargs") _CSFDB_GetStandard_GUIDmy8b2;
-		%feature("autodoc", "	:rtype: Standard_Byte
-") _CSFDB_GetStandard_GUIDmy8b2;
-		Standard_Byte _CSFDB_GetStandard_GUIDmy8b2 ();
-		%feature("compactdefaultargs") _CSFDB_SetStandard_GUIDmy8b2;
-		%feature("autodoc", "	:param p:
-	:type p: Standard_Byte
-	:rtype: None
-") _CSFDB_SetStandard_GUIDmy8b2;
-		void _CSFDB_SetStandard_GUIDmy8b2 (const Standard_Byte p);
-		%feature("compactdefaultargs") _CSFDB_GetStandard_GUIDmy8b3;
-		%feature("autodoc", "	:rtype: Standard_Byte
-") _CSFDB_GetStandard_GUIDmy8b3;
-		Standard_Byte _CSFDB_GetStandard_GUIDmy8b3 ();
-		%feature("compactdefaultargs") _CSFDB_SetStandard_GUIDmy8b3;
-		%feature("autodoc", "	:param p:
-	:type p: Standard_Byte
-	:rtype: None
-") _CSFDB_SetStandard_GUIDmy8b3;
-		void _CSFDB_SetStandard_GUIDmy8b3 (const Standard_Byte p);
-		%feature("compactdefaultargs") _CSFDB_GetStandard_GUIDmy8b4;
-		%feature("autodoc", "	:rtype: Standard_Byte
-") _CSFDB_GetStandard_GUIDmy8b4;
-		Standard_Byte _CSFDB_GetStandard_GUIDmy8b4 ();
-		%feature("compactdefaultargs") _CSFDB_SetStandard_GUIDmy8b4;
-		%feature("autodoc", "	:param p:
-	:type p: Standard_Byte
-	:rtype: None
-") _CSFDB_SetStandard_GUIDmy8b4;
-		void _CSFDB_SetStandard_GUIDmy8b4 (const Standard_Byte p);
-		%feature("compactdefaultargs") _CSFDB_GetStandard_GUIDmy8b5;
-		%feature("autodoc", "	:rtype: Standard_Byte
-") _CSFDB_GetStandard_GUIDmy8b5;
-		Standard_Byte _CSFDB_GetStandard_GUIDmy8b5 ();
-		%feature("compactdefaultargs") _CSFDB_SetStandard_GUIDmy8b5;
-		%feature("autodoc", "	:param p:
-	:type p: Standard_Byte
-	:rtype: None
-") _CSFDB_SetStandard_GUIDmy8b5;
-		void _CSFDB_SetStandard_GUIDmy8b5 (const Standard_Byte p);
-		%feature("compactdefaultargs") _CSFDB_GetStandard_GUIDmy8b6;
-		%feature("autodoc", "	:rtype: Standard_Byte
-") _CSFDB_GetStandard_GUIDmy8b6;
-		Standard_Byte _CSFDB_GetStandard_GUIDmy8b6 ();
-		%feature("compactdefaultargs") _CSFDB_SetStandard_GUIDmy8b6;
-		%feature("autodoc", "	:param p:
-	:type p: Standard_Byte
-	:rtype: None
-") _CSFDB_SetStandard_GUIDmy8b6;
-		void _CSFDB_SetStandard_GUIDmy8b6 (const Standard_Byte p);
 };
 
 
@@ -551,7 +441,7 @@ class Standard_GUID {
 class Standard_MMgrRoot {
 	public:
 		%feature("compactdefaultargs") Allocate;
-		%feature("autodoc", "	* Allocate specified number of bytes. The actually allocated space should be rounded up to double word size (4 bytes), as this is expected by implementation of some classes in OCC (e.g. TCollection_AsciiString)
+		%feature("autodoc", "	* Allocate specified number of bytes. The actually allocated space should be rounded up to double word size --4 bytes--, as this is expected by implementation of some classes in OCC --e.g. TCollection_AsciiString--
 
 	:param theSize:
 	:type theSize: Standard_Size
@@ -577,7 +467,7 @@ class Standard_MMgrRoot {
 ") Free;
 		virtual void Free (Standard_Address thePtr);
 		%feature("compactdefaultargs") Purge;
-		%feature("autodoc", "	* Purge internally cached unused memory blocks (if any) by releasing them to the operating system. Must return non-zero if some memory has been actually released, or zero otherwise. If option isDestroyed is True, this means that memory manager is not expected to be used any more; note however that in general case it is still possible to have calls to that instance of memory manager after this (e.g. to free memory of static objects in OCC). Thus this option should command the memory manager to release any cached memory to the system and not cache any more, but still remain operable... //! Default implementation does nothing and returns 0.
+		%feature("autodoc", "	* Purge internally cached unused memory blocks --if any-- by releasing them to the operating system. Must return non-zero if some memory has been actually released, or zero otherwise. If option isDestroyed is True, this means that memory manager is not expected to be used any more; note however that in general case it is still possible to have calls to that instance of memory manager after this --e.g. to free memory of static objects in OCC--. Thus this option should command the memory manager to release any cached memory to the system and not cache any more, but still remain operable... //! Default implementation does nothing and returns 0.
 
 	:param isDestroyed: default value is Standard_False
 	:type isDestroyed: bool
@@ -607,67 +497,10 @@ class Standard_Static_Assert<true> {
 	__repr__ = _dumps_object
 	}
 };
-class Standard_Storable {
-	public:
-		%feature("compactdefaultargs") Delete;
-		%feature("autodoc", "	:rtype: void
-") Delete;
-		virtual void Delete ();
-		%feature("compactdefaultargs") HashCode;
-		%feature("autodoc", "	* Returns a hashed value denoting <self>. This value is in the range 1..<Upper>.
-
-	:param Upper:
-	:type Upper: int
-	:rtype: int
-") HashCode;
-		virtual Standard_Integer HashCode (const Standard_Integer Upper);
-
-        %extend {
-            Standard_Integer __hash__() {
-            return $self->HashCode(2147483647);
-            }
-        };
-        		%feature("compactdefaultargs") IsEqual;
-		%feature("autodoc", "	* Returns true if the direct contents of <self> and <Other> are memberwise equal.
-
-	:param Other:
-	:type Other: Standard_Storable &
-	:rtype: bool
-") IsEqual;
-		Standard_Boolean IsEqual (const Standard_Storable & Other);
-
-        %extend{
-            bool __eq_wrapper__(const Standard_Storable  other) {
-            if (*self==other) return true;
-            else return false;
-            }
-        }
-        %pythoncode {
-        def __eq__(self,right):
-            try:
-                return self.__eq_wrapper__(right)
-            except:
-                return False
-        }
-        		%feature("compactdefaultargs") IsSimilar;
-		%feature("autodoc", "	* Returns true if the Deep contents of <self> and <Other> are memberwise equal.
-
-	:param Other:
-	:type Other: Standard_Storable &
-	:rtype: bool
-") IsSimilar;
-		Standard_Boolean IsSimilar (const Standard_Storable & Other);
-};
-
-
-%extend Standard_Storable {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
 %nodefaultctor Standard_Transient;
 class Standard_Transient {
 	public:
+typedef void base_type;
 		%feature("compactdefaultargs") Standard_Transient;
 		%feature("autodoc", "	* Empty constructor
 
@@ -696,20 +529,30 @@ class Standard_Transient {
 	:rtype: void
 ") Delete;
 		virtual void Delete ();
-		%feature("compactdefaultargs") DynamicType;
-		%feature("autodoc", "	* Returns a type information object about this object.
+		%feature("compactdefaultargs") get_type_name;
+		%feature("autodoc", "	:rtype: char *
+") get_type_name;
+		static const char * get_type_name ();
+		%feature("compactdefaultargs") get_type_descriptor;
+		%feature("autodoc", "	* Returns type descriptor of Standard_Transient class
 
-	:rtype: Handle_Standard_Type
+	:rtype: opencascade::handle<Standard_Type>
+") get_type_descriptor;
+		static const opencascade::handle<Standard_Type> & get_type_descriptor ();
+		%feature("compactdefaultargs") DynamicType;
+		%feature("autodoc", "	* Returns a type descriptor about this object.
+
+	:rtype: opencascade::handle<Standard_Type>
 ") DynamicType;
-		Handle_Standard_Type DynamicType ();
+		virtual const opencascade::handle<Standard_Type> & DynamicType ();
 		%feature("compactdefaultargs") IsInstance;
 		%feature("autodoc", "	* Returns a true value if this is an instance of Type.
 
 	:param theType:
-	:type theType: Handle_Standard_Type &
+	:type theType: opencascade::handle<Standard_Type> &
 	:rtype: bool
 ") IsInstance;
-		Standard_Boolean IsInstance (const Handle_Standard_Type & theType);
+		Standard_Boolean IsInstance (const opencascade::handle<Standard_Type> & theType);
 		%feature("compactdefaultargs") IsInstance;
 		%feature("autodoc", "	* Returns a true value if this is an instance of TypeName.
 
@@ -722,10 +565,10 @@ class Standard_Transient {
 		%feature("autodoc", "	* Returns true if this is an instance of Type or an instance of any class that inherits from Type. Note that multiple inheritance is not supported by OCCT RTTI mechanism.
 
 	:param theType:
-	:type theType: Handle_Standard_Type &
+	:type theType: opencascade::handle<Standard_Type> &
 	:rtype: bool
 ") IsKind;
-		Standard_Boolean IsKind (const Handle_Standard_Type & theType);
+		Standard_Boolean IsKind (const opencascade::handle<Standard_Type> & theType);
 		%feature("compactdefaultargs") IsKind;
 		%feature("autodoc", "	* Returns true if this is an instance of TypeName or an instance of any class that inherits from TypeName. Note that multiple inheritance is not supported by OCCT RTTI mechanism.
 
@@ -735,17 +578,29 @@ class Standard_Transient {
 ") IsKind;
 		Standard_Boolean IsKind (const char * theTypeName);
 		%feature("compactdefaultargs") This;
-		%feature("autodoc", "	* Returns a Handle which references this object. Must never be called to objects created in stack.
+		%feature("autodoc", "	* Returns non-const pointer to this object --like const_cast--. For protection against creating handle to objects allocated in stack or call from constructor, it will raise exception Standard_ProgramError if reference counter is zero.
 
-	:rtype: Handle_Standard_Transient
+	:rtype: Standard_Transient *
 ") This;
-		virtual Handle_Standard_Transient This ();
+		Standard_Transient * This ();
 		%feature("compactdefaultargs") GetRefCount;
-		%feature("autodoc", "	* Get the reference counter of this object.
+		%feature("autodoc", "	* //!@name Reference counting, for use by handle<> Get the reference counter of this object
 
 	:rtype: int
 ") GetRefCount;
 		Standard_Integer GetRefCount ();
+		%feature("compactdefaultargs") IncrementRefCounter;
+		%feature("autodoc", "	* Increments the reference counter of this object
+
+	:rtype: None
+") IncrementRefCounter;
+		void IncrementRefCounter ();
+		%feature("compactdefaultargs") DecrementRefCounter;
+		%feature("autodoc", "	* Decrements the reference counter of this object; returns the decremented value
+
+	:rtype: int
+") DecrementRefCounter;
+		Standard_Integer DecrementRefCounter ();
 };
 
 
@@ -803,13 +658,6 @@ class Handle_Standard_Transient {
                 else return false;
             }
         }
-        %extend{
-            std::string DumpToString() {
-            std::stringstream s;
-            self->Dump(s);
-            return s.str();
-            }
-        }
         %pythoncode {
         def __eq__(self,right):
             try:
@@ -826,145 +674,23 @@ class Handle_Standard_Transient {
         }
 
 };
+
 %extend Handle_Standard_Transient {
     Standard_Transient* _get_reference() {
-    return (Standard_Transient*)$self->Access();
+    return (Standard_Transient*)$self->get();
     }
 };
 
 %extend Handle_Standard_Transient {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend Standard_Transient {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor Standard_Failure;
-class Standard_Failure : public Standard_Transient {
-	public:
-		%feature("compactdefaultargs") Standard_Failure;
-		%feature("autodoc", "	* Creates a status object of type 'Failure'.
-
-	:rtype: None
-") Standard_Failure;
-		 Standard_Failure ();
-		%feature("compactdefaultargs") Standard_Failure;
-		%feature("autodoc", "	:param f:
-	:type f: Standard_Failure &
-	:rtype: None
-") Standard_Failure;
-		 Standard_Failure (const Standard_Failure & f);
-		%feature("compactdefaultargs") Standard_Failure;
-		%feature("autodoc", "	* Creates a status object of type 'Failure'.
-
-	:param aString:
-	:type aString: char *
-	:rtype: None
-") Standard_Failure;
-		 Standard_Failure (const char * aString);
-		%feature("compactdefaultargs") Destroy;
-		%feature("autodoc", "	:rtype: None
-") Destroy;
-		void Destroy ();
-
-        %feature("autodoc", "1");
-        %extend{
-            std::string PrintToString() {
-            std::stringstream s;
-            self->Print(s);
-            return s.str();}
-        };
-        		%feature("compactdefaultargs") GetMessageString;
-		%feature("autodoc", "	* Returns error message
-
-	:rtype: char *
-") GetMessageString;
-		const char * GetMessageString ();
-		%feature("compactdefaultargs") SetMessageString;
-		%feature("autodoc", "	* Sets error message
-
-	:param aMessage:
-	:type aMessage: char *
-	:rtype: None
-") SetMessageString;
-		void SetMessageString (const char * aMessage);
-		%feature("compactdefaultargs") NewInstance;
-		%feature("autodoc", "	* Used to construct an instance of the exception object as a handle. Shall be used to protect against possible construction of exception object in C stack -- that is dangerous since some of methods require that object was allocated dynamically.
-
-	:param aMessage:
-	:type aMessage: char *
-	:rtype: Handle_Standard_Failure
-") NewInstance;
-		static Handle_Standard_Failure NewInstance (const char * aMessage);
-		%feature("compactdefaultargs") Jump;
-		%feature("autodoc", "	* Used to throw CASCADE exception from C signal handler. On platforms that do not allow throwing C++ exceptions from this handler (e.g. Linux), uses longjump to get to the current active signal handler, and only then is converted to C++ exception.
-
-	:rtype: None
-") Jump;
-		void Jump ();
-		%feature("compactdefaultargs") Caught;
-		%feature("autodoc", "	* Returns the last caught exception. Needed when exceptions are emulated by C longjumps, in other cases is also provided for compatibility.
-
-	:rtype: Handle_Standard_Failure
-") Caught;
-		static Handle_Standard_Failure Caught ();
-};
-
-
-%extend Standard_Failure {
-	%pythoncode {
-		def GetHandle(self):
-		    try:
-		        return self.thisHandle
-		    except:
-		        self.thisHandle = Handle_Standard_Failure(self)
-		        self.thisown = False
-		        return self.thisHandle
-	}
-};
-
-%pythonappend Handle_Standard_Failure::Handle_Standard_Failure %{
-    # register the handle in the base object
-    if len(args) > 0:
-        register_handle(self, args[0])
-%}
-
-%nodefaultctor Handle_Standard_Failure;
-class Handle_Standard_Failure : public Handle_Standard_Transient {
-
-    public:
-        // constructors
-        Handle_Standard_Failure();
-        Handle_Standard_Failure(const Handle_Standard_Failure &aHandle);
-        Handle_Standard_Failure(const Standard_Failure *anItem);
-        void Nullify();
-        Standard_Boolean IsNull() const;
-        static const Handle_Standard_Failure DownCast(const Handle_Standard_Transient &AnObject);
-
-};
-%extend Handle_Standard_Failure {
-    Standard_Failure* _get_reference() {
-    return (Standard_Failure*)$self->Access();
-    }
-};
-
-%extend Handle_Standard_Failure {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
-};
-
-%extend Standard_Failure {
 	%pythoncode {
 	__repr__ = _dumps_object
 	}
@@ -1007,7 +733,7 @@ class Standard_MMgrOpt : public Standard_MMgrRoot {
 ") Reallocate;
 		virtual Standard_Address Reallocate (Standard_Address thePtr,const Standard_Size theSize);
 		%feature("compactdefaultargs") Free;
-		%feature("autodoc", "	* Free previously allocated block. Note that block can not all blocks are released to the OS by this method (see class description)
+		%feature("autodoc", "	* Free previously allocated block. Note that block can not all blocks are released to the OS by this method --see class description--
 
 	:param thePtr:
 	:type thePtr: Standard_Address
@@ -1121,7 +847,7 @@ class Standard_MMgrTBBalloc : public Standard_MMgrRoot {
 	}
 };
 %nodefaultctor Standard_Mutex;
-class Standard_Mutex : public Standard_ErrorHandlerCallback {
+class Standard_Mutex : public Standard_ErrorHandler::Callback {
 	public:
 		%feature("compactdefaultargs") Standard_Mutex;
 		%feature("autodoc", "	* Constructor: creates a mutex object and initializes it. It is strongly recommended that mutexes were created as static objects whenever possible.
@@ -1155,189 +881,106 @@ class Standard_Mutex : public Standard_ErrorHandlerCallback {
 	__repr__ = _dumps_object
 	}
 };
-%nodefaultctor Standard_Type;
-class Standard_Type : public Standard_Transient {
+%nodefaultctor Standard_OutOfMemory;
+class Standard_OutOfMemory : public Standard_ProgramError {
 	public:
-		%feature("compactdefaultargs") Name;
-		%feature("autodoc", "	* Returns the type name of <self>.
+		%feature("compactdefaultargs") Standard_OutOfMemory;
+		%feature("autodoc", "	* Constructor is kept public for backward compatibility
+
+	:param theMessage: default value is 0
+	:type theMessage: char *
+	:rtype: None
+") Standard_OutOfMemory;
+		 Standard_OutOfMemory (const char * theMessage = 0);
+		%feature("compactdefaultargs") GetMessageString;
+		%feature("autodoc", "	* Returns error message
 
 	:rtype: char *
-") Name;
-		const char * Name ();
-		%feature("compactdefaultargs") Size;
-		%feature("autodoc", "	* Returns the size of <self> in bytes.
+") GetMessageString;
+		const char * GetMessageString ();
+		%feature("compactdefaultargs") SetMessageString;
+		%feature("autodoc", "	* Sets error message
 
-	:rtype: int
-") Size;
-		Standard_Integer Size ();
-		%feature("compactdefaultargs") Standard_Type;
-		%feature("autodoc", "	* The constructor for a imported type.
-
-	:param aName:
-	:type aName: char *
-	:param aSize:
-	:type aSize: int
+	:param aMessage:
+	:type aMessage: char *
 	:rtype: None
-") Standard_Type;
-		 Standard_Type (const char * aName,const Standard_Integer aSize);
-		%feature("compactdefaultargs") Standard_Type;
-		%feature("autodoc", "	* The constructor for a primitive.
+") SetMessageString;
+		void SetMessageString (const char * aMessage);
+		%feature("compactdefaultargs") Raise;
+		%feature("autodoc", "	* Raises exception with specified message string
 
-	:param aName:
-	:type aName: char *
-	:param aSize:
-	:type aSize: int
-	:param aNumberOfParent:
-	:type aNumberOfParent: int
-	:param aAncestors:
-	:type aAncestors: Standard_Address
-	:rtype: None
-") Standard_Type;
-		 Standard_Type (const char * aName,const Standard_Integer aSize,const Standard_Integer aNumberOfParent,const Standard_Address aAncestors);
-		%feature("compactdefaultargs") Standard_Type;
-		%feature("autodoc", "	* The constructor for an enumeration.
+	:param theMessage: default value is ""
+	:type theMessage: char *
+	:rtype: void
+") Raise;
+		static void Raise (const char * theMessage = "");
+		%feature("compactdefaultargs") Raise;
+		%feature("autodoc", "	* Raises exception with specified message string
 
-	:param aName:
-	:type aName: char *
-	:param aSize:
-	:type aSize: int
-	:param aNumberOfElement:
-	:type aNumberOfElement: int
-	:param aNumberOfParent:
-	:type aNumberOfParent: int
-	:param anAncestors:
-	:type anAncestors: Standard_Address
-	:param aElements:
-	:type aElements: Standard_Address
-	:rtype: None
-") Standard_Type;
-		 Standard_Type (const char * aName,const Standard_Integer aSize,const Standard_Integer aNumberOfElement,const Standard_Integer aNumberOfParent,const Standard_Address anAncestors,const Standard_Address aElements);
-		%feature("compactdefaultargs") Standard_Type;
-		%feature("autodoc", "	* The constructor for a class.
+	:param theMessage:
+	:type theMessage: Standard_SStream &
+	:rtype: void
+") Raise;
+		static void Raise (Standard_SStream & theMessage);
+		%feature("compactdefaultargs") NewInstance;
+		%feature("autodoc", "	* Returns global instance of exception
 
-	:param aName:
-	:type aName: char *
-	:param aSize:
-	:type aSize: int
-	:param aNumberOfParent:
-	:type aNumberOfParent: int
-	:param anAncestors:
-	:type anAncestors: Standard_Address
-	:param aFields:
-	:type aFields: Standard_Address
-	:rtype: None
-") Standard_Type;
-		 Standard_Type (const char * aName,const Standard_Integer aSize,const Standard_Integer aNumberOfParent,const Standard_Address anAncestors,const Standard_Address aFields);
-		%feature("compactdefaultargs") SubType;
-		%feature("autodoc", "	* Returns 'True', if <self> is the same as <aOther>, or inherits from <aOther>. Note that multiple inheritance is not supported.
-
-	:param aOther:
-	:type aOther: Handle_Standard_Type &
-	:rtype: bool
-") SubType;
-		Standard_Boolean SubType (const Handle_Standard_Type & aOther);
-		%feature("compactdefaultargs") SubType;
-		%feature("autodoc", "	* Returns 'True', if <self> or one of its ancestors has the name equal to theName. Note that multiple inheritance is not supported.
-
-	:param theName:
-	:type theName: char *
-	:rtype: bool
-") SubType;
-		Standard_Boolean SubType (const char * theName);
-		%feature("compactdefaultargs") IsImported;
-		%feature("autodoc", "	* Returns 'True', if the type is imported.
-
-	:rtype: bool
-") IsImported;
-		Standard_Boolean IsImported ();
-		%feature("compactdefaultargs") IsPrimitive;
-		%feature("autodoc", "	* Returns 'True', if the type is a primitive.
-
-	:rtype: bool
-") IsPrimitive;
-		Standard_Boolean IsPrimitive ();
-		%feature("compactdefaultargs") IsEnumeration;
-		%feature("autodoc", "	* Returns 'True', if the type is an 'Enumeration'.
-
-	:rtype: bool
-") IsEnumeration;
-		Standard_Boolean IsEnumeration ();
-		%feature("compactdefaultargs") IsClass;
-		%feature("autodoc", "	* Returns 'True', if the type is a 'Class'.
-
-	:rtype: bool
-") IsClass;
-		Standard_Boolean IsClass ();
-		%feature("compactdefaultargs") NumberOfParent;
-		%feature("autodoc", "	* Returns the number of direct parents of the class.
-
-	:rtype: int
-") NumberOfParent;
-		Standard_Integer NumberOfParent ();
-		%feature("compactdefaultargs") NumberOfAncestor;
-		%feature("autodoc", "	* Returns the number of ancestors of the class.
-
-	:rtype: int
-") NumberOfAncestor;
-		Standard_Integer NumberOfAncestor ();
-
-        %feature("autodoc", "1");
-        %extend{
-            std::string PrintToString() {
-            std::stringstream s;
-            self->Print(s);
-            return s.str();}
-        };
-        };
+	:param theMessage: default value is ""
+	:type theMessage: char *
+	:rtype: Handle_Standard_OutOfMemory
+") NewInstance;
+		static Handle_Standard_OutOfMemory NewInstance (const char * theMessage = "");
+};
 
 
-%extend Standard_Type {
+%extend Standard_OutOfMemory {
 	%pythoncode {
 		def GetHandle(self):
 		    try:
 		        return self.thisHandle
 		    except:
-		        self.thisHandle = Handle_Standard_Type(self)
+		        self.thisHandle = Handle_Standard_OutOfMemory(self)
 		        self.thisown = False
 		        return self.thisHandle
 	}
 };
 
-%pythonappend Handle_Standard_Type::Handle_Standard_Type %{
+%pythonappend Handle_Standard_OutOfMemory::Handle_Standard_OutOfMemory %{
     # register the handle in the base object
     if len(args) > 0:
         register_handle(self, args[0])
 %}
 
-%nodefaultctor Handle_Standard_Type;
-class Handle_Standard_Type : public Handle_Standard_Transient {
+%nodefaultctor Handle_Standard_OutOfMemory;
+class Handle_Standard_OutOfMemory : public Handle_Standard_ProgramError {
 
     public:
         // constructors
-        Handle_Standard_Type();
-        Handle_Standard_Type(const Handle_Standard_Type &aHandle);
-        Handle_Standard_Type(const Standard_Type *anItem);
+        Handle_Standard_OutOfMemory();
+        Handle_Standard_OutOfMemory(const Handle_Standard_OutOfMemory &aHandle);
+        Handle_Standard_OutOfMemory(const Standard_OutOfMemory *anItem);
         void Nullify();
         Standard_Boolean IsNull() const;
-        static const Handle_Standard_Type DownCast(const Handle_Standard_Transient &AnObject);
+        static const Handle_Standard_OutOfMemory DownCast(const Handle_Standard_Transient &AnObject);
 
 };
-%extend Handle_Standard_Type {
-    Standard_Type* _get_reference() {
-    return (Standard_Type*)$self->Access();
+
+%extend Handle_Standard_OutOfMemory {
+    Standard_OutOfMemory* _get_reference() {
+    return (Standard_OutOfMemory*)$self->get();
     }
 };
 
-%extend Handle_Standard_Type {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+%extend Handle_Standard_OutOfMemory {
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
-%extend Standard_Type {
+%extend Standard_OutOfMemory {
 	%pythoncode {
 	__repr__ = _dumps_object
 	}

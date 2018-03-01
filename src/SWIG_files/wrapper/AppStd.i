@@ -1,5 +1,5 @@
 /*
-Copyright 2008-2017 Thomas Paviot (tpaviot@gmail.com)
+Copyright 2008-2018 Thomas Paviot (tpaviot@gmail.com)
 
 
 This file is part of pythonOCC.
@@ -56,28 +56,15 @@ def register_handle(handle, base_object):
 /* typedefs */
 /* end typedefs declaration */
 
+/* templates */
+/* end templates declaration */
+
 /* public enums */
 /* end public enums declaration */
 
 %nodefaultctor AppStd_Application;
 class AppStd_Application : public TDocStd_Application {
 	public:
-		%feature("compactdefaultargs") AppStd_Application;
-		%feature("autodoc", "	:rtype: None
-") AppStd_Application;
-		 AppStd_Application ();
-		%feature("compactdefaultargs") MessageDriver;
-		%feature("autodoc", "	:rtype: Handle_CDM_MessageDriver
-") MessageDriver;
-		virtual Handle_CDM_MessageDriver MessageDriver ();
-		%feature("compactdefaultargs") Formats;
-		%feature("autodoc", "	* returns supported format for application documents.
-
-	:param theFormats:
-	:type theFormats: TColStd_SequenceOfExtendedString &
-	:rtype: void
-") Formats;
-		virtual void Formats (TColStd_SequenceOfExtendedString & theFormats);
 		%feature("compactdefaultargs") ResourcesName;
 		%feature("autodoc", "	* returns the file name which contains application resources
 
@@ -118,19 +105,20 @@ class Handle_AppStd_Application : public Handle_TDocStd_Application {
         static const Handle_AppStd_Application DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_AppStd_Application {
     AppStd_Application* _get_reference() {
-    return (AppStd_Application*)$self->Access();
+    return (AppStd_Application*)$self->get();
     }
 };
 
 %extend Handle_AppStd_Application {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend AppStd_Application {

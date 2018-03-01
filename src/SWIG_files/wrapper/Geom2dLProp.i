@@ -1,5 +1,5 @@
 /*
-Copyright 2008-2017 Thomas Paviot (tpaviot@gmail.com)
+Copyright 2008-2018 Thomas Paviot (tpaviot@gmail.com)
 
 
 This file is part of pythonOCC.
@@ -56,6 +56,9 @@ def register_handle(handle, base_object):
 /* typedefs */
 /* end typedefs declaration */
 
+/* templates */
+/* end templates declaration */
+
 /* public enums */
 /* end public enums declaration */
 
@@ -63,7 +66,9 @@ def register_handle(handle, base_object):
 class Geom2dLProp_CLProps2d {
 	public:
 		%feature("compactdefaultargs") Geom2dLProp_CLProps2d;
-		%feature("autodoc", "	:param C:
+		%feature("autodoc", "	* Initializes the local properties of the curve <C> The current point and the derivatives are computed at the same time, which allows an optimization of the computation time. <N> indicates the maximum number of derivations to be done --0, 1, 2 or 3--. For example, to compute only the tangent, N should be equal to 1. <Resolution> is the linear tolerance --it is used to test if a vector is null--.
+
+	:param C:
 	:type C: Handle_Geom2d_Curve &
 	:param N:
 	:type N: int
@@ -73,7 +78,9 @@ class Geom2dLProp_CLProps2d {
 ") Geom2dLProp_CLProps2d;
 		 Geom2dLProp_CLProps2d (const Handle_Geom2d_Curve & C,const Standard_Integer N,const Standard_Real Resolution);
 		%feature("compactdefaultargs") Geom2dLProp_CLProps2d;
-		%feature("autodoc", "	:param C:
+		%feature("autodoc", "	* Same as previous constructor but here the parameter is set to the value <U>. All the computations done will be related to <C> and <U>.
+
+	:param C:
 	:type C: Handle_Geom2d_Curve &
 	:param U:
 	:type U: float
@@ -85,7 +92,9 @@ class Geom2dLProp_CLProps2d {
 ") Geom2dLProp_CLProps2d;
 		 Geom2dLProp_CLProps2d (const Handle_Geom2d_Curve & C,const Standard_Real U,const Standard_Integer N,const Standard_Real Resolution);
 		%feature("compactdefaultargs") Geom2dLProp_CLProps2d;
-		%feature("autodoc", "	:param N:
+		%feature("autodoc", "	* Same as previous constructor but here the parameter is set to the value <U> and the curve is set with SetCurve. the curve can have a empty constructor All the computations done will be related to <C> and <U> when the functions 'set' will be done.
+
+	:param N:
 	:type N: int
 	:param Resolution:
 	:type Resolution: float
@@ -93,55 +102,77 @@ class Geom2dLProp_CLProps2d {
 ") Geom2dLProp_CLProps2d;
 		 Geom2dLProp_CLProps2d (const Standard_Integer N,const Standard_Real Resolution);
 		%feature("compactdefaultargs") SetParameter;
-		%feature("autodoc", "	:param U:
+		%feature("autodoc", "	* Initializes the local properties of the curve for the parameter value <U>.
+
+	:param U:
 	:type U: float
 	:rtype: None
 ") SetParameter;
 		void SetParameter (const Standard_Real U);
 		%feature("compactdefaultargs") SetCurve;
-		%feature("autodoc", "	:param C:
+		%feature("autodoc", "	* Initializes the local properties of the curve for the new curve.
+
+	:param C:
 	:type C: Handle_Geom2d_Curve &
 	:rtype: None
 ") SetCurve;
 		void SetCurve (const Handle_Geom2d_Curve & C);
 		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:rtype: gp_Pnt2d
+		%feature("autodoc", "	* Returns the Point.
+
+	:rtype: gp_Pnt2d
 ") Value;
 		const gp_Pnt2d  Value ();
 		%feature("compactdefaultargs") D1;
-		%feature("autodoc", "	:rtype: gp_Vec2d
+		%feature("autodoc", "	* Returns the first derivative. The derivative is computed if it has not been yet.
+
+	:rtype: gp_Vec2d
 ") D1;
 		const gp_Vec2d  D1 ();
 		%feature("compactdefaultargs") D2;
-		%feature("autodoc", "	:rtype: gp_Vec2d
+		%feature("autodoc", "	* Returns the second derivative. The derivative is computed if it has not been yet.
+
+	:rtype: gp_Vec2d
 ") D2;
 		const gp_Vec2d  D2 ();
 		%feature("compactdefaultargs") D3;
-		%feature("autodoc", "	:rtype: gp_Vec2d
+		%feature("autodoc", "	* Returns the third derivative. The derivative is computed if it has not been yet.
+
+	:rtype: gp_Vec2d
 ") D3;
 		const gp_Vec2d  D3 ();
 		%feature("compactdefaultargs") IsTangentDefined;
-		%feature("autodoc", "	:rtype: bool
+		%feature("autodoc", "	* Returns True if the tangent is defined. For example, the tangent is not defined if the three first derivatives are all null.
+
+	:rtype: bool
 ") IsTangentDefined;
 		Standard_Boolean IsTangentDefined ();
 		%feature("compactdefaultargs") Tangent;
-		%feature("autodoc", "	:param D:
+		%feature("autodoc", "	* output the tangent direction <D>
+
+	:param D:
 	:type D: gp_Dir2d
 	:rtype: None
 ") Tangent;
 		void Tangent (gp_Dir2d & D);
 		%feature("compactdefaultargs") Curvature;
-		%feature("autodoc", "	:rtype: float
+		%feature("autodoc", "	* Returns the curvature.
+
+	:rtype: float
 ") Curvature;
 		Standard_Real Curvature ();
 		%feature("compactdefaultargs") Normal;
-		%feature("autodoc", "	:param N:
+		%feature("autodoc", "	* Returns the normal direction <N>.
+
+	:param N:
 	:type N: gp_Dir2d
 	:rtype: None
 ") Normal;
 		void Normal (gp_Dir2d & N);
 		%feature("compactdefaultargs") CentreOfCurvature;
-		%feature("autodoc", "	:param P:
+		%feature("autodoc", "	* Returns the centre of curvature <P>.
+
+	:param P:
 	:type P: gp_Pnt2d
 	:rtype: None
 ") CentreOfCurvature;

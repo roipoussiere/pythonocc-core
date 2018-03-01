@@ -1,5 +1,5 @@
 /*
-Copyright 2008-2017 Thomas Paviot (tpaviot@gmail.com)
+Copyright 2008-2018 Thomas Paviot (tpaviot@gmail.com)
 
 
 This file is part of pythonOCC.
@@ -56,6 +56,9 @@ def register_handle(handle, base_object):
 /* typedefs */
 /* end typedefs declaration */
 
+/* templates */
+/* end templates declaration */
+
 /* public enums */
 enum gp_TrsfForm {
 	gp_Identity = 0,
@@ -104,7 +107,7 @@ enum gp_EulerSequence {
 class gp {
 	public:
 		%feature("compactdefaultargs") Resolution;
-		%feature("autodoc", "	* Method of package gp //! In geometric computations, defines the tolerance criterion used to determine when two numbers can be considered equal. Many class functions use this tolerance criterion, for example, to avoid division by zero in geometric computations. In the documentation, tolerance criterion is always referred to as gp::Resolution().
+		%feature("autodoc", "	* Method of package gp //! In geometric computations, defines the tolerance criterion used to determine when two numbers can be considered equal. Many class functions use this tolerance criterion, for example, to avoid division by zero in geometric computations. In the documentation, tolerance criterion is always referred to as gp::Resolution----.
 
 	:rtype: float
 ") Resolution;
@@ -116,19 +119,19 @@ class gp {
 ") Origin;
 		static const gp_Pnt  Origin ();
 		%feature("compactdefaultargs") DX;
-		%feature("autodoc", "	* Returns a unit vector with the combination (1,0,0)
+		%feature("autodoc", "	* Returns a unit vector with the combination --1,0,0--
 
 	:rtype: gp_Dir
 ") DX;
 		static const gp_Dir  DX ();
 		%feature("compactdefaultargs") DY;
-		%feature("autodoc", "	* Returns a unit vector with the combination (0,1,0)
+		%feature("autodoc", "	* Returns a unit vector with the combination --0,1,0--
 
 	:rtype: gp_Dir
 ") DY;
 		static const gp_Dir  DY ();
 		%feature("compactdefaultargs") DZ;
-		%feature("autodoc", "	* Returns a unit vector with the combination (0,0,1)
+		%feature("autodoc", "	* Returns a unit vector with the combination --0,0,1--
 
 	:rtype: gp_Dir
 ") DZ;
@@ -176,13 +179,13 @@ class gp {
 ") Origin2d;
 		static const gp_Pnt2d  Origin2d ();
 		%feature("compactdefaultargs") DX2d;
-		%feature("autodoc", "	* Returns a unit vector with the combinations (1,0)
+		%feature("autodoc", "	* Returns a unit vector with the combinations --1,0--
 
 	:rtype: gp_Dir2d
 ") DX2d;
 		static const gp_Dir2d  DX2d ();
 		%feature("compactdefaultargs") DY2d;
-		%feature("autodoc", "	* Returns a unit vector with the combinations (0,1)
+		%feature("autodoc", "	* Returns a unit vector with the combinations --0,1--
 
 	:rtype: gp_Dir2d
 ") DY2d;
@@ -255,7 +258,7 @@ class gp_Ax1 {
 ") Location;
 		const gp_Pnt  Location ();
 		%feature("compactdefaultargs") IsCoaxial;
-		%feature("autodoc", "	* Returns True if : . the angle between <self> and <Other> is lower or equal to <AngularTolerance> and . the distance between <self>.Location() and <Other> is lower or equal to <LinearTolerance> and . the distance between <Other>.Location() and <self> is lower or equal to LinearTolerance.
+		%feature("autodoc", "	* Returns True if : . the angle between <self> and <Other> is lower or equal to <AngularTolerance> and . the distance between <self>.Location---- and <Other> is lower or equal to <LinearTolerance> and . the distance between <Other>.Location---- and <self> is lower or equal to LinearTolerance.
 
 	:param Other:
 	:type Other: gp_Ax1
@@ -297,7 +300,7 @@ class gp_Ax1 {
 ") IsParallel;
 		Standard_Boolean IsParallel (const gp_Ax1 & Other,const Standard_Real AngularTolerance);
 		%feature("compactdefaultargs") Angle;
-		%feature("autodoc", "	* Computes the angular value, in radians, between <self>.Direction() and <Other>.Direction(). Returns the angle between 0 and 2*PI radians.
+		%feature("autodoc", "	* Computes the angular value, in radians, between <self>.Direction---- and <Other>.Direction----. Returns the angle between 0 and 2*PI radians.
 
 	:param Other:
 	:type Other: gp_Ax1
@@ -349,7 +352,7 @@ class gp_Ax1 {
 ") Mirrored;
 		gp_Ax1 Mirrored (const gp_Ax1 & A1);
 		%feature("compactdefaultargs") Mirror;
-		%feature("autodoc", "	* Performs the symmetrical transformation of an axis placement with respect to a plane. The axis placement <A2> locates the plane of the symmetry : (Location, XDirection, YDirection) and assigns the result to this axis.
+		%feature("autodoc", "	* Performs the symmetrical transformation of an axis placement with respect to a plane. The axis placement <A2> locates the plane of the symmetry : --Location, XDirection, YDirection-- and assigns the result to this axis.
 
 	:param A2:
 	:type A2: gp_Ax2
@@ -357,7 +360,7 @@ class gp_Ax1 {
 ") Mirror;
 		void Mirror (const gp_Ax2 & A2);
 		%feature("compactdefaultargs") Mirrored;
-		%feature("autodoc", "	* Performs the symmetrical transformation of an axis placement with respect to a plane. The axis placement <A2> locates the plane of the symmetry : (Location, XDirection, YDirection) and creates a new axis.
+		%feature("autodoc", "	* Performs the symmetrical transformation of an axis placement with respect to a plane. The axis placement <A2> locates the plane of the symmetry : --Location, XDirection, YDirection-- and creates a new axis.
 
 	:param A2:
 	:type A2: gp_Ax2
@@ -365,7 +368,7 @@ class gp_Ax1 {
 ") Mirrored;
 		gp_Ax1 Mirrored (const gp_Ax2 & A2);
 		%feature("compactdefaultargs") Rotate;
-		%feature("autodoc", "	* Rotates this axis at an angle Ang (in radians) about the axis A1 and assigns the result to this axis.
+		%feature("autodoc", "	* Rotates this axis at an angle Ang --in radians-- about the axis A1 and assigns the result to this axis.
 
 	:param A1:
 	:type A1: gp_Ax1
@@ -375,7 +378,7 @@ class gp_Ax1 {
 ") Rotate;
 		void Rotate (const gp_Ax1 & A1,const Standard_Real Ang);
 		%feature("compactdefaultargs") Rotated;
-		%feature("autodoc", "	* Rotates this axis at an angle Ang (in radians) about the axis A1 and creates a new one.
+		%feature("autodoc", "	* Rotates this axis at an angle Ang --in radians-- about the axis A1 and creates a new one.
 
 	:param A1:
 	:type A1: gp_Ax1
@@ -437,7 +440,7 @@ class gp_Ax1 {
 ") Translated;
 		gp_Ax1 Translated (const gp_Vec & V);
 		%feature("compactdefaultargs") Translate;
-		%feature("autodoc", "	* Translates this axis by: the vector (P1, P2) defined from point P1 to point P2. and assigns the result to this axis.
+		%feature("autodoc", "	* Translates this axis by: the vector --P1, P2-- defined from point P1 to point P2. and assigns the result to this axis.
 
 	:param P1:
 	:type P1: gp_Pnt
@@ -447,7 +450,7 @@ class gp_Ax1 {
 ") Translate;
 		void Translate (const gp_Pnt & P1,const gp_Pnt & P2);
 		%feature("compactdefaultargs") Translated;
-		%feature("autodoc", "	* Translates this axis by: the vector (P1, P2) defined from point P1 to point P2. and creates a new one.
+		%feature("autodoc", "	* Translates this axis by: the vector --P1, P2-- defined from point P1 to point P2. and creates a new one.
 
 	:param P1:
 	:type P1: gp_Pnt
@@ -456,14 +459,6 @@ class gp_Ax1 {
 	:rtype: gp_Ax1
 ") Translated;
 		gp_Ax1 Translated (const gp_Pnt & P1,const gp_Pnt & P2);
-		%feature("compactdefaultargs") _CSFDB_Getgp_Ax1loc;
-		%feature("autodoc", "	:rtype: gp_Pnt
-") _CSFDB_Getgp_Ax1loc;
-		const gp_Pnt  _CSFDB_Getgp_Ax1loc ();
-		%feature("compactdefaultargs") _CSFDB_Getgp_Ax1vdir;
-		%feature("autodoc", "	:rtype: gp_Dir
-") _CSFDB_Getgp_Ax1vdir;
-		const gp_Dir  _CSFDB_Getgp_Ax1vdir ();
 };
 
 
@@ -476,13 +471,13 @@ class gp_Ax1 {
 class gp_Ax2 {
 	public:
 		%feature("compactdefaultargs") gp_Ax2;
-		%feature("autodoc", "	* Creates an object corresponding to the reference coordinate system (OXYZ).
+		%feature("autodoc", "	* Creates an object corresponding to the reference coordinate system --OXYZ--.
 
 	:rtype: None
 ") gp_Ax2;
 		 gp_Ax2 ();
 		%feature("compactdefaultargs") gp_Ax2;
-		%feature("autodoc", "	* Creates an axis placement with an origin P such that: - N is the Direction, and - the 'X Direction' is normal to N, in the plane defined by the vectors (N, Vx): 'X Direction' = (N ^ Vx) ^ N, Exception: raises ConstructionError if N and Vx are parallel (same or opposite orientation).
+		%feature("autodoc", "	* Creates an axis placement with an origin P such that: - N is the Direction, and - the 'X Direction' is normal to N, in the plane defined by the vectors --N, Vx--: 'X Direction' = --N ^ Vx-- ^ N, Exception: raises ConstructionError if N and Vx are parallel --same or opposite orientation--.
 
 	:param P:
 	:type P: gp_Pnt
@@ -494,7 +489,7 @@ class gp_Ax2 {
 ") gp_Ax2;
 		 gp_Ax2 (const gp_Pnt & P,const gp_Dir & N,const gp_Dir & Vx);
 		%feature("compactdefaultargs") gp_Ax2;
-		%feature("autodoc", "	* Creates - a coordinate system with an origin P, where V gives the 'main Direction' (here, 'X Direction' and 'Y Direction' are defined automatically).
+		%feature("autodoc", "	* Creates - a coordinate system with an origin P, where V gives the 'main Direction' --here, 'X Direction' and 'Y Direction' are defined automatically--.
 
 	:param P:
 	:type P: gp_Pnt
@@ -504,7 +499,7 @@ class gp_Ax2 {
 ") gp_Ax2;
 		 gp_Ax2 (const gp_Pnt & P,const gp_Dir & V);
 		%feature("compactdefaultargs") SetAxis;
-		%feature("autodoc", "	* Assigns the origin and 'main Direction' of the axis A1 to this coordinate system, then recomputes its 'X Direction' and 'Y Direction'. Note: The new 'X Direction' is computed as follows: new 'X Direction' = V1 ^(previous 'X Direction' ^ V) where V is the 'Direction' of A1. Exceptions Standard_ConstructionError if A1 is parallel to the 'X Direction' of this coordinate system.
+		%feature("autodoc", "	* Assigns the origin and 'main Direction' of the axis A1 to this coordinate system, then recomputes its 'X Direction' and 'Y Direction'. Note: The new 'X Direction' is computed as follows: new 'X Direction' = V1 ^--previous 'X Direction' ^ V-- where V is the 'Direction' of A1. Exceptions Standard_ConstructionError if A1 is parallel to the 'X Direction' of this coordinate system.
 
 	:param A1:
 	:type A1: gp_Ax1
@@ -512,7 +507,7 @@ class gp_Ax2 {
 ") SetAxis;
 		void SetAxis (const gp_Ax1 & A1);
 		%feature("compactdefaultargs") SetDirection;
-		%feature("autodoc", "	* Changes the 'main Direction' of this coordinate system, then recomputes its 'X Direction' and 'Y Direction'. Note: the new 'X Direction' is computed as follows: new 'X Direction' = V ^ (previous 'X Direction' ^ V) Exceptions Standard_ConstructionError if V is parallel to the 'X Direction' of this coordinate system.
+		%feature("autodoc", "	* Changes the 'main Direction' of this coordinate system, then recomputes its 'X Direction' and 'Y Direction'. Note: the new 'X Direction' is computed as follows: new 'X Direction' = V ^ --previous 'X Direction' ^ V-- Exceptions Standard_ConstructionError if V is parallel to the 'X Direction' of this coordinate system.
 
 	:param V:
 	:type V: gp_Dir
@@ -520,7 +515,7 @@ class gp_Ax2 {
 ") SetDirection;
 		void SetDirection (const gp_Dir & V);
 		%feature("compactdefaultargs") SetLocation;
-		%feature("autodoc", "	* Changes the 'Location' point (origin) of <self>.
+		%feature("autodoc", "	* Changes the 'Location' point --origin-- of <self>.
 
 	:param P:
 	:type P: gp_Pnt
@@ -528,7 +523,7 @@ class gp_Ax2 {
 ") SetLocation;
 		void SetLocation (const gp_Pnt & P);
 		%feature("compactdefaultargs") SetXDirection;
-		%feature("autodoc", "	* Changes the 'Xdirection' of <self>. The main direction 'Direction' is not modified, the 'Ydirection' is modified. If <Vx> is not normal to the main direction then <XDirection> is computed as follows XDirection = Direction ^ (Vx ^ Direction). Exceptions Standard_ConstructionError if Vx or Vy is parallel to the 'main Direction' of this coordinate system.
+		%feature("autodoc", "	* Changes the 'Xdirection' of <self>. The main direction 'Direction' is not modified, the 'Ydirection' is modified. If <Vx> is not normal to the main direction then <XDirection> is computed as follows XDirection = Direction ^ --Vx ^ Direction--. Exceptions Standard_ConstructionError if Vx or Vy is parallel to the 'main Direction' of this coordinate system.
 
 	:param Vx:
 	:type Vx: gp_Dir
@@ -536,7 +531,7 @@ class gp_Ax2 {
 ") SetXDirection;
 		void SetXDirection (const gp_Dir & Vx);
 		%feature("compactdefaultargs") SetYDirection;
-		%feature("autodoc", "	* Changes the 'Ydirection' of <self>. The main direction is not modified but the 'Xdirection' is changed. If <Vy> is not normal to the main direction then 'YDirection' is computed as follows YDirection = Direction ^ (<Vy> ^ Direction). Exceptions Standard_ConstructionError if Vx or Vy is parallel to the 'main Direction' of this coordinate system.
+		%feature("autodoc", "	* Changes the 'Ydirection' of <self>. The main direction is not modified but the 'Xdirection' is changed. If <Vy> is not normal to the main direction then 'YDirection' is computed as follows YDirection = Direction ^ --<Vy> ^ Direction--. Exceptions Standard_ConstructionError if Vx or Vy is parallel to the 'main Direction' of this coordinate system.
 
 	:param Vy:
 	:type Vy: gp_Dir
@@ -564,7 +559,7 @@ class gp_Ax2 {
 ") Direction;
 		const gp_Dir  Direction ();
 		%feature("compactdefaultargs") Location;
-		%feature("autodoc", "	* Returns the 'Location' point (origin) of <self>.
+		%feature("autodoc", "	* Returns the 'Location' point --origin-- of <self>.
 
 	:rtype: gp_Pnt
 ") Location;
@@ -733,18 +728,6 @@ class gp_Ax2 {
 	:rtype: gp_Ax2
 ") Translated;
 		gp_Ax2 Translated (const gp_Pnt & P1,const gp_Pnt & P2);
-		%feature("compactdefaultargs") _CSFDB_Getgp_Ax2axis;
-		%feature("autodoc", "	:rtype: gp_Ax1
-") _CSFDB_Getgp_Ax2axis;
-		const gp_Ax1  _CSFDB_Getgp_Ax2axis ();
-		%feature("compactdefaultargs") _CSFDB_Getgp_Ax2vydir;
-		%feature("autodoc", "	:rtype: gp_Dir
-") _CSFDB_Getgp_Ax2vydir;
-		const gp_Dir  _CSFDB_Getgp_Ax2vydir ();
-		%feature("compactdefaultargs") _CSFDB_Getgp_Ax2vxdir;
-		%feature("autodoc", "	:rtype: gp_Dir
-") _CSFDB_Getgp_Ax2vxdir;
-		const gp_Dir  _CSFDB_Getgp_Ax2vxdir ();
 };
 
 
@@ -757,13 +740,13 @@ class gp_Ax2 {
 class gp_Ax22d {
 	public:
 		%feature("compactdefaultargs") gp_Ax22d;
-		%feature("autodoc", "	* Creates an object representing the reference co-ordinate system (OXY).
+		%feature("autodoc", "	* Creates an object representing the reference co-ordinate system --OXY--.
 
 	:rtype: None
 ") gp_Ax22d;
 		 gp_Ax22d ();
 		%feature("compactdefaultargs") gp_Ax22d;
-		%feature("autodoc", "	* Creates a coordinate system with origin P and where: - Vx is the 'X Direction', and - the 'Y Direction' is orthogonal to Vx and oriented so that the cross products Vx^'Y Direction' and Vx^Vy have the same sign. Raises ConstructionError if Vx and Vy are parallel (same or opposite orientation).
+		%feature("autodoc", "	* Creates a coordinate system with origin P and where: - Vx is the 'X Direction', and - the 'Y Direction' is orthogonal to Vx and oriented so that the cross products Vx^'Y Direction' and Vx^Vy have the same sign. Raises ConstructionError if Vx and Vy are parallel --same or opposite orientation--.
 
 	:param P:
 	:type P: gp_Pnt2d
@@ -775,7 +758,7 @@ class gp_Ax22d {
 ") gp_Ax22d;
 		 gp_Ax22d (const gp_Pnt2d & P,const gp_Dir2d & Vx,const gp_Dir2d & Vy);
 		%feature("compactdefaultargs") gp_Ax22d;
-		%feature("autodoc", "	* Creates - a coordinate system with origin P and 'X Direction' V, which is: - right-handed if Sense is true (default value), or - left-handed if Sense is false
+		%feature("autodoc", "	* Creates - a coordinate system with origin P and 'X Direction' V, which is: - right-handed if Sense is true --default value--, or - left-handed if Sense is false
 
 	:param P:
 	:type P: gp_Pnt2d
@@ -787,7 +770,7 @@ class gp_Ax22d {
 ") gp_Ax22d;
 		 gp_Ax22d (const gp_Pnt2d & P,const gp_Dir2d & V,const Standard_Boolean Sense = Standard_True);
 		%feature("compactdefaultargs") gp_Ax22d;
-		%feature("autodoc", "	* Creates - a coordinate system where its origin is the origin of A and its 'X Direction' is the unit vector of A, which is: - right-handed if Sense is true (default value), or - left-handed if Sense is false.
+		%feature("autodoc", "	* Creates - a coordinate system where its origin is the origin of A and its 'X Direction' is the unit vector of A, which is: - right-handed if Sense is true --default value--, or - left-handed if Sense is false.
 
 	:param A:
 	:type A: gp_Ax2d
@@ -805,7 +788,7 @@ class gp_Ax22d {
 ") SetAxis;
 		void SetAxis (const gp_Ax22d & A1);
 		%feature("compactdefaultargs") SetXAxis;
-		%feature("autodoc", "	* Changes the XAxis and YAxis ('Location' point and 'Direction') of <self>. The 'YDirection' is recomputed in the same sense as before.
+		%feature("autodoc", "	* Changes the XAxis and YAxis --'Location' point and 'Direction'-- of <self>. The 'YDirection' is recomputed in the same sense as before.
 
 	:param A1:
 	:type A1: gp_Ax2d
@@ -813,7 +796,7 @@ class gp_Ax22d {
 ") SetXAxis;
 		void SetXAxis (const gp_Ax2d & A1);
 		%feature("compactdefaultargs") SetYAxis;
-		%feature("autodoc", "	* Changes the XAxis and YAxis ('Location' point and 'Direction') of <self>. The 'XDirection' is recomputed in the same sense as before.
+		%feature("autodoc", "	* Changes the XAxis and YAxis --'Location' point and 'Direction'-- of <self>. The 'XDirection' is recomputed in the same sense as before.
 
 	:param A1:
 	:type A1: gp_Ax2d
@@ -821,7 +804,7 @@ class gp_Ax22d {
 ") SetYAxis;
 		void SetYAxis (const gp_Ax2d & A1);
 		%feature("compactdefaultargs") SetLocation;
-		%feature("autodoc", "	* Changes the 'Location' point (origin) of <self>.
+		%feature("autodoc", "	* Changes the 'Location' point --origin-- of <self>.
 
 	:param P:
 	:type P: gp_Pnt2d
@@ -829,7 +812,7 @@ class gp_Ax22d {
 ") SetLocation;
 		void SetLocation (const gp_Pnt2d & P);
 		%feature("compactdefaultargs") SetXDirection;
-		%feature("autodoc", "	* Assigns Vx to the 'X Direction' of this coordinate system. The other unit vector of this coordinate system is recomputed, normal to Vx , without modifying the orientation (right-handed or left-handed) of this coordinate system.
+		%feature("autodoc", "	* Assigns Vx to the 'X Direction' of this coordinate system. The other unit vector of this coordinate system is recomputed, normal to Vx , without modifying the orientation --right-handed or left-handed-- of this coordinate system.
 
 	:param Vx:
 	:type Vx: gp_Dir2d
@@ -837,7 +820,7 @@ class gp_Ax22d {
 ") SetXDirection;
 		void SetXDirection (const gp_Dir2d & Vx);
 		%feature("compactdefaultargs") SetYDirection;
-		%feature("autodoc", "	* Assignsr Vy to the 'Y Direction' of this coordinate system. The other unit vector of this coordinate system is recomputed, normal to Vy, without modifying the orientation (right-handed or left-handed) of this coordinate system.
+		%feature("autodoc", "	* Assignsr Vy to the 'Y Direction' of this coordinate system. The other unit vector of this coordinate system is recomputed, normal to Vy, without modifying the orientation --right-handed or left-handed-- of this coordinate system.
 
 	:param Vy:
 	:type Vy: gp_Dir2d
@@ -857,7 +840,7 @@ class gp_Ax22d {
 ") YAxis;
 		gp_Ax2d YAxis ();
 		%feature("compactdefaultargs") Location;
-		%feature("autodoc", "	* Returns the 'Location' point (origin) of <self>.
+		%feature("autodoc", "	* Returns the 'Location' point --origin-- of <self>.
 
 	:rtype: gp_Pnt2d
 ") Location;
@@ -984,18 +967,6 @@ class gp_Ax22d {
 	:rtype: gp_Ax22d
 ") Translated;
 		gp_Ax22d Translated (const gp_Pnt2d & P1,const gp_Pnt2d & P2);
-		%feature("compactdefaultargs") _CSFDB_Getgp_Ax22dpoint;
-		%feature("autodoc", "	:rtype: gp_Pnt2d
-") _CSFDB_Getgp_Ax22dpoint;
-		const gp_Pnt2d  _CSFDB_Getgp_Ax22dpoint ();
-		%feature("compactdefaultargs") _CSFDB_Getgp_Ax22dvydir;
-		%feature("autodoc", "	:rtype: gp_Dir2d
-") _CSFDB_Getgp_Ax22dvydir;
-		const gp_Dir2d  _CSFDB_Getgp_Ax22dvydir ();
-		%feature("compactdefaultargs") _CSFDB_Getgp_Ax22dvxdir;
-		%feature("autodoc", "	:rtype: gp_Dir2d
-") _CSFDB_Getgp_Ax22dvxdir;
-		const gp_Dir2d  _CSFDB_Getgp_Ax22dvxdir ();
 };
 
 
@@ -1024,7 +995,7 @@ class gp_Ax2d {
 ") gp_Ax2d;
 		 gp_Ax2d (const gp_Pnt2d & P,const gp_Dir2d & V);
 		%feature("compactdefaultargs") SetLocation;
-		%feature("autodoc", "	* Changes the 'Location' point (origin) of <self>.
+		%feature("autodoc", "	* Changes the 'Location' point --origin-- of <self>.
 
 	:param Locat:
 	:type Locat: gp_Pnt2d
@@ -1052,7 +1023,7 @@ class gp_Ax2d {
 ") Direction;
 		const gp_Dir2d  Direction ();
 		%feature("compactdefaultargs") IsCoaxial;
-		%feature("autodoc", "	* Returns True if : . the angle between <self> and <Other> is lower or equal to <AngularTolerance> and . the distance between <self>.Location() and <Other> is lower or equal to <LinearTolerance> and . the distance between <Other>.Location() and <self> is lower or equal to LinearTolerance.
+		%feature("autodoc", "	* Returns True if : . the angle between <self> and <Other> is lower or equal to <AngularTolerance> and . the distance between <self>.Location---- and <Other> is lower or equal to <LinearTolerance> and . the distance between <Other>.Location---- and <self> is lower or equal to LinearTolerance.
 
 	:param Other:
 	:type Other: gp_Ax2d
@@ -1223,14 +1194,6 @@ class gp_Ax2d {
 	:rtype: gp_Ax2d
 ") Translated;
 		gp_Ax2d Translated (const gp_Pnt2d & P1,const gp_Pnt2d & P2);
-		%feature("compactdefaultargs") _CSFDB_Getgp_Ax2dloc;
-		%feature("autodoc", "	:rtype: gp_Pnt2d
-") _CSFDB_Getgp_Ax2dloc;
-		const gp_Pnt2d  _CSFDB_Getgp_Ax2dloc ();
-		%feature("compactdefaultargs") _CSFDB_Getgp_Ax2dvdir;
-		%feature("autodoc", "	:rtype: gp_Dir2d
-") _CSFDB_Getgp_Ax2dvdir;
-		const gp_Dir2d  _CSFDB_Getgp_Ax2dvdir ();
 };
 
 
@@ -1243,7 +1206,7 @@ class gp_Ax2d {
 class gp_Ax3 {
 	public:
 		%feature("compactdefaultargs") gp_Ax3;
-		%feature("autodoc", "	* Creates an object corresponding to the reference coordinate system (OXYZ).
+		%feature("autodoc", "	* Creates an object corresponding to the reference coordinate system --OXYZ--.
 
 	:rtype: None
 ") gp_Ax3;
@@ -1257,7 +1220,7 @@ class gp_Ax3 {
 ") gp_Ax3;
 		 gp_Ax3 (const gp_Ax2 & A);
 		%feature("compactdefaultargs") gp_Ax3;
-		%feature("autodoc", "	* Creates a right handed axis placement with the 'Location' point P and two directions, N gives the 'Direction' and Vx gives the 'XDirection'. Raises ConstructionError if N and Vx are parallel (same or opposite orientation).
+		%feature("autodoc", "	* Creates a right handed axis placement with the 'Location' point P and two directions, N gives the 'Direction' and Vx gives the 'XDirection'. Raises ConstructionError if N and Vx are parallel --same or opposite orientation--.
 
 	:param P:
 	:type P: gp_Pnt
@@ -1297,7 +1260,7 @@ class gp_Ax3 {
 ") ZReverse;
 		void ZReverse ();
 		%feature("compactdefaultargs") SetAxis;
-		%feature("autodoc", "	* Assigns the origin and 'main Direction' of the axis A1 to this coordinate system, then recomputes its 'X Direction' and 'Y Direction'. Note: - The new 'X Direction' is computed as follows: new 'X Direction' = V1 ^(previous 'X Direction' ^ V) where V is the 'Direction' of A1. - The orientation of this coordinate system (right-handed or left-handed) is not modified. Raises ConstructionError if the 'Direction' of <A1> and the 'XDirection' of <self> are parallel (same or opposite orientation) because it is impossible to calculate the new 'XDirection' and the new 'YDirection'.
+		%feature("autodoc", "	* Assigns the origin and 'main Direction' of the axis A1 to this coordinate system, then recomputes its 'X Direction' and 'Y Direction'. Note: - The new 'X Direction' is computed as follows: new 'X Direction' = V1 ^--previous 'X Direction' ^ V-- where V is the 'Direction' of A1. - The orientation of this coordinate system --right-handed or left-handed-- is not modified. Raises ConstructionError if the 'Direction' of <A1> and the 'XDirection' of <self> are parallel --same or opposite orientation-- because it is impossible to calculate the new 'XDirection' and the new 'YDirection'.
 
 	:param A1:
 	:type A1: gp_Ax1
@@ -1305,7 +1268,7 @@ class gp_Ax3 {
 ") SetAxis;
 		void SetAxis (const gp_Ax1 & A1);
 		%feature("compactdefaultargs") SetDirection;
-		%feature("autodoc", "	* Changes the main direction of this coordinate system, then recomputes its 'X Direction' and 'Y Direction'. Note: - The new 'X Direction' is computed as follows: new 'X Direction' = V ^ (previous 'X Direction' ^ V). - The orientation of this coordinate system (left- or right-handed) is not modified. Raises ConstructionError if <V< and the previous 'XDirection' are parallel because it is impossible to calculate the new 'XDirection' and the new 'YDirection'.
+		%feature("autodoc", "	* Changes the main direction of this coordinate system, then recomputes its 'X Direction' and 'Y Direction'. Note: - The new 'X Direction' is computed as follows: new 'X Direction' = V ^ --previous 'X Direction' ^ V--. - The orientation of this coordinate system --left- or right-handed-- is not modified. Raises ConstructionError if <V< and the previous 'XDirection' are parallel because it is impossible to calculate the new 'XDirection' and the new 'YDirection'.
 
 	:param V:
 	:type V: gp_Dir
@@ -1313,7 +1276,7 @@ class gp_Ax3 {
 ") SetDirection;
 		void SetDirection (const gp_Dir & V);
 		%feature("compactdefaultargs") SetLocation;
-		%feature("autodoc", "	* Changes the 'Location' point (origin) of <self>.
+		%feature("autodoc", "	* Changes the 'Location' point --origin-- of <self>.
 
 	:param P:
 	:type P: gp_Pnt
@@ -1321,7 +1284,7 @@ class gp_Ax3 {
 ") SetLocation;
 		void SetLocation (const gp_Pnt & P);
 		%feature("compactdefaultargs") SetXDirection;
-		%feature("autodoc", "	* Changes the 'Xdirection' of <self>. The main direction 'Direction' is not modified, the 'Ydirection' is modified. If <Vx> is not normal to the main direction then <XDirection> is computed as follows XDirection = Direction ^ (Vx ^ Direction). Raises ConstructionError if <Vx> is parallel (same or opposite orientation) to the main direction of <self>
+		%feature("autodoc", "	* Changes the 'Xdirection' of <self>. The main direction 'Direction' is not modified, the 'Ydirection' is modified. If <Vx> is not normal to the main direction then <XDirection> is computed as follows XDirection = Direction ^ --Vx ^ Direction--. Raises ConstructionError if <Vx> is parallel --same or opposite orientation-- to the main direction of <self>
 
 	:param Vx:
 	:type Vx: gp_Dir
@@ -1329,7 +1292,7 @@ class gp_Ax3 {
 ") SetXDirection;
 		void SetXDirection (const gp_Dir & Vx);
 		%feature("compactdefaultargs") SetYDirection;
-		%feature("autodoc", "	* Changes the 'Ydirection' of <self>. The main direction is not modified but the 'Xdirection' is changed. If <Vy> is not normal to the main direction then 'YDirection' is computed as follows YDirection = Direction ^ (<Vy> ^ Direction). Raises ConstructionError if <Vy> is parallel to the main direction of <self>
+		%feature("autodoc", "	* Changes the 'Ydirection' of <self>. The main direction is not modified but the 'Xdirection' is changed. If <Vy> is not normal to the main direction then 'YDirection' is computed as follows YDirection = Direction ^ --<Vy> ^ Direction--. Raises ConstructionError if <Vy> is parallel to the main direction of <self>
 
 	:param Vy:
 	:type Vy: gp_Dir
@@ -1363,7 +1326,7 @@ class gp_Ax3 {
 ") Direction;
 		const gp_Dir  Direction ();
 		%feature("compactdefaultargs") Location;
-		%feature("autodoc", "	* Returns the 'Location' point (origin) of <self>.
+		%feature("autodoc", "	* Returns the 'Location' point --origin-- of <self>.
 
 	:rtype: gp_Pnt
 ") Location;
@@ -1381,13 +1344,13 @@ class gp_Ax3 {
 ") YDirection;
 		const gp_Dir  YDirection ();
 		%feature("compactdefaultargs") Direct;
-		%feature("autodoc", "	* Returns True if the coordinate system is right-handed. i.e. XDirection().Crossed(YDirection()).Dot(Direction()) > 0
+		%feature("autodoc", "	* Returns True if the coordinate system is right-handed. i.e. XDirection----.Crossed--YDirection------.Dot--Direction------ > 0
 
 	:rtype: bool
 ") Direct;
 		Standard_Boolean Direct ();
 		%feature("compactdefaultargs") IsCoplanar;
-		%feature("autodoc", "	* Returns True if . the distance between the 'Location' point of <self> and <Other> is lower or equal to LinearTolerance and . the distance between the 'Location' point of <Other> and <self> is lower or equal to LinearTolerance and . the main direction of <self> and the main direction of <Other> are parallel (same or opposite orientation).
+		%feature("autodoc", "	* Returns True if . the distance between the 'Location' point of <self> and <Other> is lower or equal to LinearTolerance and . the distance between the 'Location' point of <Other> and <self> is lower or equal to LinearTolerance and . the main direction of <self> and the main direction of <Other> are parallel --same or opposite orientation--.
 
 	:param Other:
 	:type Other: gp_Ax3
@@ -1445,7 +1408,7 @@ class gp_Ax3 {
 ") Mirror;
 		void Mirror (const gp_Ax2 & A2);
 		%feature("compactdefaultargs") Mirrored;
-		%feature("autodoc", "	* Performs the symmetrical transformation of an axis placement with respect to a plane. The axis placement <A2> locates the plane of the symmetry : (Location, XDirection, YDirection). The transformation is performed on the 'Location' point, on the 'XDirection' and 'YDirection'. The resulting main 'Direction' is the cross product between the 'XDirection' and the 'YDirection' after transformation.
+		%feature("autodoc", "	* Performs the symmetrical transformation of an axis placement with respect to a plane. The axis placement <A2> locates the plane of the symmetry : --Location, XDirection, YDirection--. The transformation is performed on the 'Location' point, on the 'XDirection' and 'YDirection'. The resulting main 'Direction' is the cross product between the 'XDirection' and the 'YDirection' after transformation.
 
 	:param A2:
 	:type A2: gp_Ax2
@@ -1534,18 +1497,6 @@ class gp_Ax3 {
 	:rtype: gp_Ax3
 ") Translated;
 		gp_Ax3 Translated (const gp_Pnt & P1,const gp_Pnt & P2);
-		%feature("compactdefaultargs") _CSFDB_Getgp_Ax3axis;
-		%feature("autodoc", "	:rtype: gp_Ax1
-") _CSFDB_Getgp_Ax3axis;
-		const gp_Ax1  _CSFDB_Getgp_Ax3axis ();
-		%feature("compactdefaultargs") _CSFDB_Getgp_Ax3vydir;
-		%feature("autodoc", "	:rtype: gp_Dir
-") _CSFDB_Getgp_Ax3vydir;
-		const gp_Dir  _CSFDB_Getgp_Ax3vydir ();
-		%feature("compactdefaultargs") _CSFDB_Getgp_Ax3vxdir;
-		%feature("autodoc", "	:rtype: gp_Dir
-") _CSFDB_Getgp_Ax3vxdir;
-		const gp_Dir  _CSFDB_Getgp_Ax3vxdir ();
 };
 
 
@@ -1582,7 +1533,7 @@ class gp_Circ {
 ") SetAxis;
 		void SetAxis (const gp_Ax1 & A1);
 		%feature("compactdefaultargs") SetLocation;
-		%feature("autodoc", "	* Changes the 'Location' point (center) of the circle.
+		%feature("autodoc", "	* Changes the 'Location' point --center-- of the circle.
 
 	:param P:
 	:type P: gp_Pnt
@@ -1612,7 +1563,7 @@ class gp_Circ {
 ") Area;
 		Standard_Real Area ();
 		%feature("compactdefaultargs") Axis;
-		%feature("autodoc", "	* Returns the main axis of the circle. It is the axis perpendicular to the plane of the circle, passing through the 'Location' point (center) of the circle.
+		%feature("autodoc", "	* Returns the main axis of the circle. It is the axis perpendicular to the plane of the circle, passing through the 'Location' point --center-- of the circle.
 
 	:rtype: gp_Ax1
 ") Axis;
@@ -1714,7 +1665,7 @@ class gp_Circ {
 ") Mirror;
 		void Mirror (const gp_Ax2 & A2);
 		%feature("compactdefaultargs") Mirrored;
-		%feature("autodoc", "	* Performs the symmetrical transformation of a circle with respect to a plane. The axis placement A2 locates the plane of the of the symmetry : (Location, XDirection, YDirection).
+		%feature("autodoc", "	* Performs the symmetrical transformation of a circle with respect to a plane. The axis placement A2 locates the plane of the of the symmetry : --Location, XDirection, YDirection--.
 
 	:param A2:
 	:type A2: gp_Ax2
@@ -1803,20 +1754,6 @@ class gp_Circ {
 	:rtype: gp_Circ
 ") Translated;
 		gp_Circ Translated (const gp_Pnt & P1,const gp_Pnt & P2);
-		%feature("compactdefaultargs") _CSFDB_Getgp_Circpos;
-		%feature("autodoc", "	:rtype: gp_Ax2
-") _CSFDB_Getgp_Circpos;
-		const gp_Ax2  _CSFDB_Getgp_Circpos ();
-		%feature("compactdefaultargs") _CSFDB_Getgp_Circradius;
-		%feature("autodoc", "	:rtype: float
-") _CSFDB_Getgp_Circradius;
-		Standard_Real _CSFDB_Getgp_Circradius ();
-		%feature("compactdefaultargs") _CSFDB_Setgp_Circradius;
-		%feature("autodoc", "	:param p:
-	:type p: float
-	:rtype: None
-") _CSFDB_Setgp_Circradius;
-		void _CSFDB_Setgp_Circradius (const Standard_Real p);
 };
 
 
@@ -1857,7 +1794,7 @@ class gp_Circ2d {
 ") gp_Circ2d;
 		 gp_Circ2d (const gp_Ax22d & Axis,const Standard_Real Radius);
 		%feature("compactdefaultargs") SetLocation;
-		%feature("autodoc", "	* Changes the location point (center) of the circle.
+		%feature("autodoc", "	* Changes the location point --center-- of the circle.
 
 	:param P:
 	:type P: gp_Pnt2d
@@ -1903,7 +1840,7 @@ class gp_Circ2d {
 ") Area;
 		Standard_Real Area ();
 		%feature("compactdefaultargs") Coefficients;
-		%feature("autodoc", "	* Returns the normalized coefficients from the implicit equation of the circle : A * (X**2) + B * (Y**2) + 2*C*(X*Y) + 2*D*X + 2*E*Y + F = 0.0
+		%feature("autodoc", "	* Returns the normalized coefficients from the implicit equation of the circle : A * --X**2-- + B * --Y**2-- + 2*C*--X*Y-- + 2*D*X + 2*E*Y + F = 0.0
 
 	:param A:
 	:type A: float &
@@ -1953,7 +1890,7 @@ class gp_Circ2d {
 ") Length;
 		Standard_Real Length ();
 		%feature("compactdefaultargs") Location;
-		%feature("autodoc", "	* Returns the location point (center) of the circle.
+		%feature("autodoc", "	* Returns the location point --center-- of the circle.
 
 	:rtype: gp_Pnt2d
 ") Location;
@@ -1971,7 +1908,7 @@ class gp_Circ2d {
 ") Axis;
 		const gp_Ax22d  Axis ();
 		%feature("compactdefaultargs") Position;
-		%feature("autodoc", "	* returns the position of the circle. Idem Axis(me).
+		%feature("autodoc", "	* returns the position of the circle. Idem Axis--me--.
 
 	:rtype: gp_Ax22d
 ") Position;
@@ -1989,13 +1926,13 @@ class gp_Circ2d {
 ") YAxis;
 		gp_Ax2d YAxis ();
 		%feature("compactdefaultargs") Reverse;
-		%feature("autodoc", "	* Reverses the orientation of the local coordinate system of this circle (the 'Y Direction' is reversed) and therefore changes the implicit orientation of this circle. Reverse assigns the result to this circle,
+		%feature("autodoc", "	* Reverses the orientation of the local coordinate system of this circle --the 'Y Direction' is reversed-- and therefore changes the implicit orientation of this circle. Reverse assigns the result to this circle,
 
 	:rtype: None
 ") Reverse;
 		void Reverse ();
 		%feature("compactdefaultargs") Reversed;
-		%feature("autodoc", "	* Reverses the orientation of the local coordinate system of this circle (the 'Y Direction' is reversed) and therefore changes the implicit orientation of this circle. Reversed creates a new circle.
+		%feature("autodoc", "	* Reverses the orientation of the local coordinate system of this circle --the 'Y Direction' is reversed-- and therefore changes the implicit orientation of this circle. Reversed creates a new circle.
 
 	:rtype: gp_Circ2d
 ") Reversed;
@@ -2116,20 +2053,6 @@ class gp_Circ2d {
 	:rtype: gp_Circ2d
 ") Translated;
 		gp_Circ2d Translated (const gp_Pnt2d & P1,const gp_Pnt2d & P2);
-		%feature("compactdefaultargs") _CSFDB_Getgp_Circ2dpos;
-		%feature("autodoc", "	:rtype: gp_Ax22d
-") _CSFDB_Getgp_Circ2dpos;
-		const gp_Ax22d  _CSFDB_Getgp_Circ2dpos ();
-		%feature("compactdefaultargs") _CSFDB_Getgp_Circ2dradius;
-		%feature("autodoc", "	:rtype: float
-") _CSFDB_Getgp_Circ2dradius;
-		Standard_Real _CSFDB_Getgp_Circ2dradius ();
-		%feature("compactdefaultargs") _CSFDB_Setgp_Circ2dradius;
-		%feature("autodoc", "	:param p:
-	:type p: float
-	:rtype: None
-") _CSFDB_Setgp_Circ2dradius;
-		void _CSFDB_Setgp_Circ2dradius (const Standard_Real p);
 };
 
 
@@ -2148,7 +2071,7 @@ class gp_Cone {
 ") gp_Cone;
 		 gp_Cone ();
 		%feature("compactdefaultargs") gp_Cone;
-		%feature("autodoc", "	* Creates an infinite conical surface. A3 locates the cone in the space and defines the reference plane of the surface. Ang is the conical surface semi-angle between 0 and PI/2 radians. Radius is the radius of the circle in the reference plane of the cone. Raises ConstructionError . if Radius is lower than 0.0 . Ang < Resolution from gp or Ang >= (PI/2) - Resolution.
+		%feature("autodoc", "	* Creates an infinite conical surface. A3 locates the cone in the space and defines the reference plane of the surface. Ang is the conical surface semi-angle between 0 and PI/2 radians. Radius is the radius of the circle in the reference plane of the cone. Raises ConstructionError . if Radius is lower than 0.0 . Ang < Resolution from gp or Ang >= --PI/2-- - Resolution.
 
 	:param A3:
 	:type A3: gp_Ax3
@@ -2230,7 +2153,7 @@ class gp_Cone {
 ") Axis;
 		const gp_Ax1  Axis ();
 		%feature("compactdefaultargs") Coefficients;
-		%feature("autodoc", "	* Computes the coefficients of the implicit equation of the quadric in the absolute cartesian coordinates system : A1.X**2 + A2.Y**2 + A3.Z**2 + 2.(B1.X.Y + B2.X.Z + B3.Y.Z) + 2.(C1.X + C2.Y + C3.Z) + D = 0.0
+		%feature("autodoc", "	* Computes the coefficients of the implicit equation of the quadric in the absolute cartesian coordinates system : A1.X**2 + A2.Y**2 + A3.Z**2 + 2.--B1.X.Y + B2.X.Z + B3.Y.Z-- + 2.--C1.X + C2.Y + C3.Z-- + D = 0.0
 
 	:param A1:
 	:type A1: float &
@@ -2326,7 +2249,7 @@ class gp_Cone {
 ") Mirror;
 		void Mirror (const gp_Ax2 & A2);
 		%feature("compactdefaultargs") Mirrored;
-		%feature("autodoc", "	* Performs the symmetrical transformation of a cone with respect to a plane. The axis placement A2 locates the plane of the of the symmetry : (Location, XDirection, YDirection).
+		%feature("autodoc", "	* Performs the symmetrical transformation of a cone with respect to a plane. The axis placement A2 locates the plane of the of the symmetry : --Location, XDirection, YDirection--.
 
 	:param A2:
 	:type A2: gp_Ax2
@@ -2415,30 +2338,6 @@ class gp_Cone {
 	:rtype: gp_Cone
 ") Translated;
 		gp_Cone Translated (const gp_Pnt & P1,const gp_Pnt & P2);
-		%feature("compactdefaultargs") _CSFDB_Getgp_Conepos;
-		%feature("autodoc", "	:rtype: gp_Ax3
-") _CSFDB_Getgp_Conepos;
-		const gp_Ax3  _CSFDB_Getgp_Conepos ();
-		%feature("compactdefaultargs") _CSFDB_Getgp_Coneradius;
-		%feature("autodoc", "	:rtype: float
-") _CSFDB_Getgp_Coneradius;
-		Standard_Real _CSFDB_Getgp_Coneradius ();
-		%feature("compactdefaultargs") _CSFDB_Setgp_Coneradius;
-		%feature("autodoc", "	:param p:
-	:type p: float
-	:rtype: None
-") _CSFDB_Setgp_Coneradius;
-		void _CSFDB_Setgp_Coneradius (const Standard_Real p);
-		%feature("compactdefaultargs") _CSFDB_Getgp_ConesemiAngle;
-		%feature("autodoc", "	:rtype: float
-") _CSFDB_Getgp_ConesemiAngle;
-		Standard_Real _CSFDB_Getgp_ConesemiAngle ();
-		%feature("compactdefaultargs") _CSFDB_Setgp_ConesemiAngle;
-		%feature("autodoc", "	:param p:
-	:type p: float
-	:rtype: None
-") _CSFDB_Setgp_ConesemiAngle;
-		void _CSFDB_Setgp_ConesemiAngle (const Standard_Real p);
 };
 
 
@@ -2523,7 +2422,7 @@ class gp_Cylinder {
 ") Axis;
 		const gp_Ax1  Axis ();
 		%feature("compactdefaultargs") Coefficients;
-		%feature("autodoc", "	* Computes the coefficients of the implicit equation of the quadric in the absolute cartesian coordinate system : A1.X**2 + A2.Y**2 + A3.Z**2 + 2.(B1.X.Y + B2.X.Z + B3.Y.Z) + 2.(C1.X + C2.Y + C3.Z) + D = 0.0
+		%feature("autodoc", "	* Computes the coefficients of the implicit equation of the quadric in the absolute cartesian coordinate system : A1.X**2 + A2.Y**2 + A3.Z**2 + 2.--B1.X.Y + B2.X.Z + B3.Y.Z-- + 2.--C1.X + C2.Y + C3.Z-- + D = 0.0
 
 	:param A1:
 	:type A1: float &
@@ -2613,7 +2512,7 @@ class gp_Cylinder {
 ") Mirror;
 		void Mirror (const gp_Ax2 & A2);
 		%feature("compactdefaultargs") Mirrored;
-		%feature("autodoc", "	* Performs the symmetrical transformation of a cylinder with respect to a plane. The axis placement A2 locates the plane of the of the symmetry : (Location, XDirection, YDirection).
+		%feature("autodoc", "	* Performs the symmetrical transformation of a cylinder with respect to a plane. The axis placement A2 locates the plane of the of the symmetry : --Location, XDirection, YDirection--.
 
 	:param A2:
 	:type A2: gp_Ax2
@@ -2702,20 +2601,6 @@ class gp_Cylinder {
 	:rtype: gp_Cylinder
 ") Translated;
 		gp_Cylinder Translated (const gp_Pnt & P1,const gp_Pnt & P2);
-		%feature("compactdefaultargs") _CSFDB_Getgp_Cylinderpos;
-		%feature("autodoc", "	:rtype: gp_Ax3
-") _CSFDB_Getgp_Cylinderpos;
-		const gp_Ax3  _CSFDB_Getgp_Cylinderpos ();
-		%feature("compactdefaultargs") _CSFDB_Getgp_Cylinderradius;
-		%feature("autodoc", "	:rtype: float
-") _CSFDB_Getgp_Cylinderradius;
-		Standard_Real _CSFDB_Getgp_Cylinderradius ();
-		%feature("compactdefaultargs") _CSFDB_Setgp_Cylinderradius;
-		%feature("autodoc", "	:param p:
-	:type p: float
-	:rtype: None
-") _CSFDB_Setgp_Cylinderradius;
-		void _CSFDB_Setgp_Cylinderradius (const Standard_Real p);
 };
 
 
@@ -2734,7 +2619,7 @@ class gp_Dir {
 ") gp_Dir;
 		 gp_Dir ();
 		%feature("compactdefaultargs") gp_Dir;
-		%feature("autodoc", "	* Normalizes the vector V and creates a direction. Raises ConstructionError if V.Magnitude() <= Resolution.
+		%feature("autodoc", "	* Normalizes the vector V and creates a direction. Raises ConstructionError if V.Magnitude---- <= Resolution.
 
 	:param V:
 	:type V: gp_Vec
@@ -2742,7 +2627,7 @@ class gp_Dir {
 ") gp_Dir;
 		 gp_Dir (const gp_Vec & V);
 		%feature("compactdefaultargs") gp_Dir;
-		%feature("autodoc", "	* Creates a direction from a triplet of coordinates. Raises ConstructionError if Coord.Modulus() <= Resolution from gp.
+		%feature("autodoc", "	* Creates a direction from a triplet of coordinates. Raises ConstructionError if Coord.Modulus---- <= Resolution from gp.
 
 	:param Coord:
 	:type Coord: gp_XYZ
@@ -2750,7 +2635,7 @@ class gp_Dir {
 ") gp_Dir;
 		 gp_Dir (const gp_XYZ & Coord);
 		%feature("compactdefaultargs") gp_Dir;
-		%feature("autodoc", "	* Creates a direction with its 3 cartesian coordinates. Raises ConstructionError if Sqrt(Xv*Xv + Yv*Yv + Zv*Zv) <= Resolution Modification of the direction's coordinates If Sqrt (X*X + Y*Y + Z*Z) <= Resolution from gp where X, Y ,Z are the new coordinates it is not possible to construct the direction and the method raises the exception ConstructionError.
+		%feature("autodoc", "	* Creates a direction with its 3 cartesian coordinates. Raises ConstructionError if Sqrt--Xv*Xv + Yv*Yv + Zv*Zv-- <= Resolution Modification of the direction's coordinates If Sqrt --X*X + Y*Y + Z*Z-- <= Resolution from gp where X, Y ,Z are the new coordinates it is not possible to construct the direction and the method raises the exception ConstructionError.
 
 	:param Xv:
 	:type Xv: float
@@ -2762,7 +2647,7 @@ class gp_Dir {
 ") gp_Dir;
 		 gp_Dir (const Standard_Real Xv,const Standard_Real Yv,const Standard_Real Zv);
 		%feature("compactdefaultargs") SetCoord;
-		%feature("autodoc", "	* For this unit vector, assigns the value Xi to: - the X coordinate if Index is 1, or - the Y coordinate if Index is 2, or - the Z coordinate if Index is 3, and then normalizes it. Warning Remember that all the coordinates of a unit vector are implicitly modified when any single one is changed directly. Exceptions Standard_OutOfRange if Index is not 1, 2, or 3. Standard_ConstructionError if either of the following is less than or equal to gp::Resolution(): - Sqrt(Xv*Xv + Yv*Yv + Zv*Zv), or - the modulus of the number triple formed by the new value Xi and the two other coordinates of this vector that were not directly modified.
+		%feature("autodoc", "	* For this unit vector, assigns the value Xi to: - the X coordinate if Index is 1, or - the Y coordinate if Index is 2, or - the Z coordinate if Index is 3, and then normalizes it. Warning Remember that all the coordinates of a unit vector are implicitly modified when any single one is changed directly. Exceptions Standard_OutOfRange if Index is not 1, 2, or 3. Standard_ConstructionError if either of the following is less than or equal to gp::Resolution----: - Sqrt--Xv*Xv + Yv*Yv + Zv*Zv--, or - the modulus of the number triple formed by the new value Xi and the two other coordinates of this vector that were not directly modified.
 
 	:param Index:
 	:type Index: int
@@ -2870,7 +2755,7 @@ class gp_Dir {
 ") IsEqual;
 		Standard_Boolean IsEqual (const gp_Dir & Other,const Standard_Real AngularTolerance);
 		%feature("compactdefaultargs") IsNormal;
-		%feature("autodoc", "	* Returns True if the angle between this unit vector and the unit vector Other is equal to Pi/2 (normal).
+		%feature("autodoc", "	* Returns True if the angle between this unit vector and the unit vector Other is equal to Pi/2 --normal--.
 
 	:param Other:
 	:type Other: gp_Dir
@@ -2880,7 +2765,7 @@ class gp_Dir {
 ") IsNormal;
 		Standard_Boolean IsNormal (const gp_Dir & Other,const Standard_Real AngularTolerance);
 		%feature("compactdefaultargs") IsOpposite;
-		%feature("autodoc", "	* Returns True if the angle between this unit vector and the unit vector Other is equal to Pi (opposite).
+		%feature("autodoc", "	* Returns True if the angle between this unit vector and the unit vector Other is equal to Pi --opposite--.
 
 	:param Other:
 	:type Other: gp_Dir
@@ -2908,7 +2793,7 @@ class gp_Dir {
 ") Angle;
 		Standard_Real Angle (const gp_Dir & Other);
 		%feature("compactdefaultargs") AngleWithRef;
-		%feature("autodoc", "	* Computes the angular value between <self> and <Other>. <VRef> is the direction of reference normal to <self> and <Other> and its orientation gives the positive sense of rotation. If the cross product <self> ^ <Other> has the same orientation as <VRef> the angular value is positive else negative. Returns the angular value in the range -PI and PI (in radians). Raises DomainError if <self> and <Other> are not parallel this exception is raised when <VRef> is in the same plane as <self> and <Other> The tolerance criterion is Resolution from package gp.
+		%feature("autodoc", "	* Computes the angular value between <self> and <Other>. <VRef> is the direction of reference normal to <self> and <Other> and its orientation gives the positive sense of rotation. If the cross product <self> ^ <Other> has the same orientation as <VRef> the angular value is positive else negative. Returns the angular value in the range -PI and PI --in radians--. Raises DomainError if <self> and <Other> are not parallel this exception is raised when <VRef> is in the same plane as <self> and <Other> The tolerance criterion is Resolution from package gp.
 
 	:param Other:
 	:type Other: gp_Dir
@@ -2932,7 +2817,7 @@ class gp_Dir {
 ") operator ^=;
 		void operator ^= (const gp_Dir & Right);
 		%feature("compactdefaultargs") Crossed;
-		%feature("autodoc", "	* Computes the triple vector product. <self> ^ (V1 ^ V2) Raises the exception ConstructionError if V1 and V2 are parallel or <self> and (V1^V2) are parallel because the computed vector can't be normalized to create a direction.
+		%feature("autodoc", "	* Computes the triple vector product. <self> ^ --V1 ^ V2-- Raises the exception ConstructionError if V1 and V2 are parallel or <self> and --V1^V2-- are parallel because the computed vector can't be normalized to create a direction.
 
 	:param Right:
 	:type Right: gp_Dir
@@ -2954,7 +2839,7 @@ class gp_Dir {
 ") CrossCross;
 		void CrossCross (const gp_Dir & V1,const gp_Dir & V2);
 		%feature("compactdefaultargs") CrossCrossed;
-		%feature("autodoc", "	* Computes the double vector product this ^ (V1 ^ V2). - CrossCrossed creates a new unit vector. Exceptions Standard_ConstructionError if: - V1 and V2 are parallel, or - this unit vector and (V1 ^ V2) are parallel. This is because, in these conditions, the computed vector is null and cannot be normalized.
+		%feature("autodoc", "	* Computes the double vector product this ^ --V1 ^ V2--. - CrossCrossed creates a new unit vector. Exceptions Standard_ConstructionError if: - V1 and V2 are parallel, or - this unit vector and --V1 ^ V2-- are parallel. This is because, in these conditions, the computed vector is null and cannot be normalized.
 
 	:param V1:
 	:type V1: gp_Dir
@@ -2978,7 +2863,7 @@ class gp_Dir {
 ") operator *;
 		Standard_Real operator * (const gp_Dir & Other);
 		%feature("compactdefaultargs") DotCross;
-		%feature("autodoc", "	* Computes the triple scalar product <self> * (V1 ^ V2). Warnings : The computed vector V1' = V1 ^ V2 is not normalized to create a unitary vector. So this method never raises an exception even if V1 and V2 are parallel.
+		%feature("autodoc", "	* Computes the triple scalar product <self> * --V1 ^ V2--. Warnings : The computed vector V1' = V1 ^ V2 is not normalized to create a unitary vector. So this method never raises an exception even if V1 and V2 are parallel.
 
 	:param V1:
 	:type V1: gp_Dir
@@ -3036,7 +2921,7 @@ class gp_Dir {
 ") Mirror;
 		void Mirror (const gp_Ax2 & A2);
 		%feature("compactdefaultargs") Mirrored;
-		%feature("autodoc", "	* Performs the symmetrical transformation of a direction with respect to a plane. The axis placement A2 locates the plane of the symmetry : (Location, XDirection, YDirection).
+		%feature("autodoc", "	* Performs the symmetrical transformation of a direction with respect to a plane. The axis placement A2 locates the plane of the symmetry : --Location, XDirection, YDirection--.
 
 	:param A2:
 	:type A2: gp_Ax2
@@ -3075,10 +2960,6 @@ class gp_Dir {
 	:rtype: gp_Dir
 ") Transformed;
 		gp_Dir Transformed (const gp_Trsf & T);
-		%feature("compactdefaultargs") _CSFDB_Getgp_Dircoord;
-		%feature("autodoc", "	:rtype: gp_XYZ
-") _CSFDB_Getgp_Dircoord;
-		const gp_XYZ  _CSFDB_Getgp_Dircoord ();
 };
 
 
@@ -3097,7 +2978,7 @@ class gp_Dir2d {
 ") gp_Dir2d;
 		 gp_Dir2d ();
 		%feature("compactdefaultargs") gp_Dir2d;
-		%feature("autodoc", "	* Normalizes the vector V and creates a Direction. Raises ConstructionError if V.Magnitude() <= Resolution from gp.
+		%feature("autodoc", "	* Normalizes the vector V and creates a Direction. Raises ConstructionError if V.Magnitude---- <= Resolution from gp.
 
 	:param V:
 	:type V: gp_Vec2d
@@ -3105,7 +2986,7 @@ class gp_Dir2d {
 ") gp_Dir2d;
 		 gp_Dir2d (const gp_Vec2d & V);
 		%feature("compactdefaultargs") gp_Dir2d;
-		%feature("autodoc", "	* Creates a Direction from a doublet of coordinates. Raises ConstructionError if Coord.Modulus() <= Resolution from gp.
+		%feature("autodoc", "	* Creates a Direction from a doublet of coordinates. Raises ConstructionError if Coord.Modulus---- <= Resolution from gp.
 
 	:param Coord:
 	:type Coord: gp_XY
@@ -3113,7 +2994,7 @@ class gp_Dir2d {
 ") gp_Dir2d;
 		 gp_Dir2d (const gp_XY & Coord);
 		%feature("compactdefaultargs") gp_Dir2d;
-		%feature("autodoc", "	* Creates a Direction with its 2 cartesian coordinates. Raises ConstructionError if Sqrt(Xv*Xv + Yv*Yv) <= Resolution from gp.
+		%feature("autodoc", "	* Creates a Direction with its 2 cartesian coordinates. Raises ConstructionError if Sqrt--Xv*Xv + Yv*Yv-- <= Resolution from gp.
 
 	:param Xv:
 	:type Xv: float
@@ -3123,7 +3004,7 @@ class gp_Dir2d {
 ") gp_Dir2d;
 		 gp_Dir2d (const Standard_Real Xv,const Standard_Real Yv);
 		%feature("compactdefaultargs") SetCoord;
-		%feature("autodoc", "	* For this unit vector, assigns: the value Xi to: - the X coordinate if Index is 1, or - the Y coordinate if Index is 2, and then normalizes it. Warning Remember that all the coordinates of a unit vector are implicitly modified when any single one is changed directly. Exceptions Standard_OutOfRange if Index is not 1 or 2. Standard_ConstructionError if either of the following is less than or equal to gp::Resolution(): - Sqrt(Xv*Xv + Yv*Yv), or - the modulus of the number pair formed by the new value Xi and the other coordinate of this vector that was not directly modified. Raises OutOfRange if Index != {1, 2}.
+		%feature("autodoc", "	* For this unit vector, assigns: the value Xi to: - the X coordinate if Index is 1, or - the Y coordinate if Index is 2, and then normalizes it. Warning Remember that all the coordinates of a unit vector are implicitly modified when any single one is changed directly. Exceptions Standard_OutOfRange if Index is not 1 or 2. Standard_ConstructionError if either of the following is less than or equal to gp::Resolution----: - Sqrt--Xv*Xv + Yv*Yv--, or - the modulus of the number pair formed by the new value Xi and the other coordinate of this vector that was not directly modified. Raises OutOfRange if Index != {1, 2}.
 
 	:param Index:
 	:type Index: int
@@ -3133,7 +3014,7 @@ class gp_Dir2d {
 ") SetCoord;
 		void SetCoord (const Standard_Integer Index,const Standard_Real Xi);
 		%feature("compactdefaultargs") SetCoord;
-		%feature("autodoc", "	* For this unit vector, assigns: - the values Xv and Yv to its two coordinates, Warning Remember that all the coordinates of a unit vector are implicitly modified when any single one is changed directly. Exceptions Standard_OutOfRange if Index is not 1 or 2. Standard_ConstructionError if either of the following is less than or equal to gp::Resolution(): - Sqrt(Xv*Xv + Yv*Yv), or - the modulus of the number pair formed by the new value Xi and the other coordinate of this vector that was not directly modified. Raises OutOfRange if Index != {1, 2}.
+		%feature("autodoc", "	* For this unit vector, assigns: - the values Xv and Yv to its two coordinates, Warning Remember that all the coordinates of a unit vector are implicitly modified when any single one is changed directly. Exceptions Standard_OutOfRange if Index is not 1 or 2. Standard_ConstructionError if either of the following is less than or equal to gp::Resolution----: - Sqrt--Xv*Xv + Yv*Yv--, or - the modulus of the number pair formed by the new value Xi and the other coordinate of this vector that was not directly modified. Raises OutOfRange if Index != {1, 2}.
 
 	:param Xv:
 	:type Xv: float
@@ -3143,7 +3024,7 @@ class gp_Dir2d {
 ") SetCoord;
 		void SetCoord (const Standard_Real Xv,const Standard_Real Yv);
 		%feature("compactdefaultargs") SetX;
-		%feature("autodoc", "	* Assigns the given value to the X coordinate of this unit vector, and then normalizes it. Warning Remember that all the coordinates of a unit vector are implicitly modified when any single one is changed directly. Exceptions Standard_ConstructionError if either of the following is less than or equal to gp::Resolution(): - the modulus of Coord, or - the modulus of the number pair formed from the new X or Y coordinate and the other coordinate of this vector that was not directly modified.
+		%feature("autodoc", "	* Assigns the given value to the X coordinate of this unit vector, and then normalizes it. Warning Remember that all the coordinates of a unit vector are implicitly modified when any single one is changed directly. Exceptions Standard_ConstructionError if either of the following is less than or equal to gp::Resolution----: - the modulus of Coord, or - the modulus of the number pair formed from the new X or Y coordinate and the other coordinate of this vector that was not directly modified.
 
 	:param X:
 	:type X: float
@@ -3151,7 +3032,7 @@ class gp_Dir2d {
 ") SetX;
 		void SetX (const Standard_Real X);
 		%feature("compactdefaultargs") SetY;
-		%feature("autodoc", "	* Assigns the given value to the Y coordinate of this unit vector, and then normalizes it. Warning Remember that all the coordinates of a unit vector are implicitly modified when any single one is changed directly. Exceptions Standard_ConstructionError if either of the following is less than or equal to gp::Resolution(): - the modulus of Coord, or - the modulus of the number pair formed from the new X or Y coordinate and the other coordinate of this vector that was not directly modified.
+		%feature("autodoc", "	* Assigns the given value to the Y coordinate of this unit vector, and then normalizes it. Warning Remember that all the coordinates of a unit vector are implicitly modified when any single one is changed directly. Exceptions Standard_ConstructionError if either of the following is less than or equal to gp::Resolution----: - the modulus of Coord, or - the modulus of the number pair formed from the new X or Y coordinate and the other coordinate of this vector that was not directly modified.
 
 	:param Y:
 	:type Y: float
@@ -3159,7 +3040,7 @@ class gp_Dir2d {
 ") SetY;
 		void SetY (const Standard_Real Y);
 		%feature("compactdefaultargs") SetXY;
-		%feature("autodoc", "	* Assigns: - the two coordinates of Coord to this unit vector, and then normalizes it. Warning Remember that all the coordinates of a unit vector are implicitly modified when any single one is changed directly. Exceptions Standard_ConstructionError if either of the following is less than or equal to gp::Resolution(): - the modulus of Coord, or - the modulus of the number pair formed from the new X or Y coordinate and the other coordinate of this vector that was not directly modified.
+		%feature("autodoc", "	* Assigns: - the two coordinates of Coord to this unit vector, and then normalizes it. Warning Remember that all the coordinates of a unit vector are implicitly modified when any single one is changed directly. Exceptions Standard_ConstructionError if either of the following is less than or equal to gp::Resolution----: - the modulus of Coord, or - the modulus of the number pair formed from the new X or Y coordinate and the other coordinate of this vector that was not directly modified.
 
 	:param Coord:
 	:type Coord: gp_XY
@@ -3213,7 +3094,7 @@ class gp_Dir2d {
 ") IsEqual;
 		Standard_Boolean IsEqual (const gp_Dir2d & Other,const Standard_Real AngularTolerance);
 		%feature("compactdefaultargs") IsNormal;
-		%feature("autodoc", "	* Returns True if the angle between this unit vector and the unit vector Other is equal to Pi/2 or -Pi/2 (normal) i.e. Abs(Abs(<self>.Angle(Other)) - PI/2.) <= AngularTolerance
+		%feature("autodoc", "	* Returns True if the angle between this unit vector and the unit vector Other is equal to Pi/2 or -Pi/2 --normal-- i.e. Abs--Abs--<self>.Angle--Other---- - PI/2.-- <= AngularTolerance
 
 	:param Other:
 	:type Other: gp_Dir2d
@@ -3223,7 +3104,7 @@ class gp_Dir2d {
 ") IsNormal;
 		Standard_Boolean IsNormal (const gp_Dir2d & Other,const Standard_Real AngularTolerance);
 		%feature("compactdefaultargs") IsOpposite;
-		%feature("autodoc", "	* Returns True if the angle between this unit vector and the unit vector Other is equal to Pi or -Pi (opposite). i.e. PI - Abs(<self>.Angle(Other)) <= AngularTolerance
+		%feature("autodoc", "	* Returns True if the angle between this unit vector and the unit vector Other is equal to Pi or -Pi --opposite--. i.e. PI - Abs--<self>.Angle--Other---- <= AngularTolerance
 
 	:param Other:
 	:type Other: gp_Dir2d
@@ -3233,7 +3114,7 @@ class gp_Dir2d {
 ") IsOpposite;
 		Standard_Boolean IsOpposite (const gp_Dir2d & Other,const Standard_Real AngularTolerance);
 		%feature("compactdefaultargs") IsParallel;
-		%feature("autodoc", "	* returns true if if the angle between this unit vector and unit vector Other is equal to 0, Pi or -Pi. i.e. Abs(Angle(<self>, Other)) <= AngularTolerance or PI - Abs(Angle(<self>, Other)) <= AngularTolerance
+		%feature("autodoc", "	* returns true if if the angle between this unit vector and unit vector Other is equal to 0, Pi or -Pi. i.e. Abs--Angle--<self>, Other---- <= AngularTolerance or PI - Abs--Angle--<self>, Other---- <= AngularTolerance
 
 	:param Other:
 	:type Other: gp_Dir2d
@@ -3348,10 +3229,6 @@ class gp_Dir2d {
 	:rtype: gp_Dir2d
 ") Transformed;
 		gp_Dir2d Transformed (const gp_Trsf2d & T);
-		%feature("compactdefaultargs") _CSFDB_Getgp_Dir2dcoord;
-		%feature("autodoc", "	:rtype: gp_XY
-") _CSFDB_Getgp_Dir2dcoord;
-		const gp_XY  _CSFDB_Getgp_Dir2dcoord ();
 };
 
 
@@ -3382,7 +3259,7 @@ class gp_Elips {
 ") gp_Elips;
 		 gp_Elips (const gp_Ax2 & A2,const Standard_Real MajorRadius,const Standard_Real MinorRadius);
 		%feature("compactdefaultargs") SetAxis;
-		%feature("autodoc", "	* Changes the axis normal to the plane of the ellipse. It modifies the definition of this plane. The 'XAxis' and the 'YAxis' are recomputed. The local coordinate system is redefined so that: - its origin and 'main Direction' become those of the axis A1 (the 'X Direction' and 'Y Direction' are then recomputed in the same way as for any gp_Ax2), or Raises ConstructionError if the direction of A1 is parallel to the direction of the 'XAxis' of the ellipse.
+		%feature("autodoc", "	* Changes the axis normal to the plane of the ellipse. It modifies the definition of this plane. The 'XAxis' and the 'YAxis' are recomputed. The local coordinate system is redefined so that: - its origin and 'main Direction' become those of the axis A1 --the 'X Direction' and 'Y Direction' are then recomputed in the same way as for any gp_Ax2--, or Raises ConstructionError if the direction of A1 is parallel to the direction of the 'XAxis' of the ellipse.
 
 	:param A1:
 	:type A1: gp_Ax1
@@ -3398,7 +3275,7 @@ class gp_Elips {
 ") SetLocation;
 		void SetLocation (const gp_Pnt & P);
 		%feature("compactdefaultargs") SetMajorRadius;
-		%feature("autodoc", "	* The major radius of the ellipse is on the 'XAxis' (major axis) of the ellipse. Raises ConstructionError if MajorRadius < MinorRadius.
+		%feature("autodoc", "	* The major radius of the ellipse is on the 'XAxis' --major axis-- of the ellipse. Raises ConstructionError if MajorRadius < MinorRadius.
 
 	:param MajorRadius:
 	:type MajorRadius: float
@@ -3406,7 +3283,7 @@ class gp_Elips {
 ") SetMajorRadius;
 		void SetMajorRadius (const Standard_Real MajorRadius);
 		%feature("compactdefaultargs") SetMinorRadius;
-		%feature("autodoc", "	* The minor radius of the ellipse is on the 'YAxis' (minor axis) of the ellipse. Raises ConstructionError if MinorRadius > MajorRadius or MinorRadius < 0.
+		%feature("autodoc", "	* The minor radius of the ellipse is on the 'YAxis' --minor axis-- of the ellipse. Raises ConstructionError if MinorRadius > MajorRadius or MinorRadius < 0.
 
 	:param MinorRadius:
 	:type MinorRadius: float
@@ -3434,13 +3311,13 @@ class gp_Elips {
 ") Axis;
 		const gp_Ax1  Axis ();
 		%feature("compactdefaultargs") Directrix1;
-		%feature("autodoc", "	* Computes the first or second directrix of this ellipse. These are the lines, in the plane of the ellipse, normal to the major axis, at a distance equal to MajorRadius/e from the center of the ellipse, where e is the eccentricity of the ellipse. The first directrix (Directrix1) is on the positive side of the major axis. The second directrix (Directrix2) is on the negative side. The directrix is returned as an axis (gp_Ax1 object), the origin of which is situated on the 'X Axis' of the local coordinate system of this ellipse. Exceptions Standard_ConstructionError if the eccentricity is null (the ellipse has degenerated into a circle).
+		%feature("autodoc", "	* Computes the first or second directrix of this ellipse. These are the lines, in the plane of the ellipse, normal to the major axis, at a distance equal to MajorRadius/e from the center of the ellipse, where e is the eccentricity of the ellipse. The first directrix --Directrix1-- is on the positive side of the major axis. The second directrix --Directrix2-- is on the negative side. The directrix is returned as an axis --gp_Ax1 object--, the origin of which is situated on the 'X Axis' of the local coordinate system of this ellipse. Exceptions Standard_ConstructionError if the eccentricity is null --the ellipse has degenerated into a circle--.
 
 	:rtype: gp_Ax1
 ") Directrix1;
 		gp_Ax1 Directrix1 ();
 		%feature("compactdefaultargs") Directrix2;
-		%feature("autodoc", "	* This line is obtained by the symmetrical transformation of 'Directrix1' with respect to the 'YAxis' of the ellipse. Exceptions Standard_ConstructionError if the eccentricity is null (the ellipse has degenerated into a circle).
+		%feature("autodoc", "	* This line is obtained by the symmetrical transformation of 'Directrix1' with respect to the 'YAxis' of the ellipse. Exceptions Standard_ConstructionError if the eccentricity is null --the ellipse has degenerated into a circle--.
 
 	:rtype: gp_Ax1
 ") Directrix2;
@@ -3488,7 +3365,7 @@ class gp_Elips {
 ") MinorRadius;
 		Standard_Real MinorRadius ();
 		%feature("compactdefaultargs") Parameter;
-		%feature("autodoc", "	* Returns p = (1 - e * e) * MajorRadius where e is the eccentricity of the ellipse. Returns 0 if MajorRadius = 0
+		%feature("autodoc", "	* Returns p = --1 - e * e-- * MajorRadius where e is the eccentricity of the ellipse. Returns 0 if MajorRadius = 0
 
 	:rtype: float
 ") Parameter;
@@ -3546,7 +3423,7 @@ class gp_Elips {
 ") Mirror;
 		void Mirror (const gp_Ax2 & A2);
 		%feature("compactdefaultargs") Mirrored;
-		%feature("autodoc", "	* Performs the symmetrical transformation of an ellipse with respect to a plane. The axis placement A2 locates the plane of the symmetry (Location, XDirection, YDirection).
+		%feature("autodoc", "	* Performs the symmetrical transformation of an ellipse with respect to a plane. The axis placement A2 locates the plane of the symmetry --Location, XDirection, YDirection--.
 
 	:param A2:
 	:type A2: gp_Ax2
@@ -3635,30 +3512,6 @@ class gp_Elips {
 	:rtype: gp_Elips
 ") Translated;
 		gp_Elips Translated (const gp_Pnt & P1,const gp_Pnt & P2);
-		%feature("compactdefaultargs") _CSFDB_Getgp_Elipspos;
-		%feature("autodoc", "	:rtype: gp_Ax2
-") _CSFDB_Getgp_Elipspos;
-		const gp_Ax2  _CSFDB_Getgp_Elipspos ();
-		%feature("compactdefaultargs") _CSFDB_Getgp_ElipsmajorRadius;
-		%feature("autodoc", "	:rtype: float
-") _CSFDB_Getgp_ElipsmajorRadius;
-		Standard_Real _CSFDB_Getgp_ElipsmajorRadius ();
-		%feature("compactdefaultargs") _CSFDB_Setgp_ElipsmajorRadius;
-		%feature("autodoc", "	:param p:
-	:type p: float
-	:rtype: None
-") _CSFDB_Setgp_ElipsmajorRadius;
-		void _CSFDB_Setgp_ElipsmajorRadius (const Standard_Real p);
-		%feature("compactdefaultargs") _CSFDB_Getgp_ElipsminorRadius;
-		%feature("autodoc", "	:rtype: float
-") _CSFDB_Getgp_ElipsminorRadius;
-		Standard_Real _CSFDB_Getgp_ElipsminorRadius ();
-		%feature("compactdefaultargs") _CSFDB_Setgp_ElipsminorRadius;
-		%feature("autodoc", "	:param p:
-	:type p: float
-	:rtype: None
-") _CSFDB_Setgp_ElipsminorRadius;
-		void _CSFDB_Setgp_ElipsminorRadius (const Standard_Real p);
 };
 
 
@@ -3691,7 +3544,7 @@ class gp_Elips2d {
 ") gp_Elips2d;
 		 gp_Elips2d (const gp_Ax2d & MajorAxis,const Standard_Real MajorRadius,const Standard_Real MinorRadius,const Standard_Boolean Sense = Standard_True);
 		%feature("compactdefaultargs") gp_Elips2d;
-		%feature("autodoc", "	* Creates an ellipse with radii MajorRadius and MinorRadius, positioned in the plane by coordinate system A where: - the origin of A is the center of the ellipse, - the 'X Direction' of A defines the major axis of the ellipse, that is, the major radius MajorRadius is measured along this axis, and - the 'Y Direction' of A defines the minor axis of the ellipse, that is, the minor radius MinorRadius is measured along this axis, and - the orientation (direct or indirect sense) of A gives the orientation of the ellipse. Warnings : It is possible to create an ellipse with MajorRadius = MinorRadius. Raises ConstructionError if MajorRadius < MinorRadius or MinorRadius < 0.0
+		%feature("autodoc", "	* Creates an ellipse with radii MajorRadius and MinorRadius, positioned in the plane by coordinate system A where: - the origin of A is the center of the ellipse, - the 'X Direction' of A defines the major axis of the ellipse, that is, the major radius MajorRadius is measured along this axis, and - the 'Y Direction' of A defines the minor axis of the ellipse, that is, the minor radius MinorRadius is measured along this axis, and - the orientation --direct or indirect sense-- of A gives the orientation of the ellipse. Warnings : It is possible to create an ellipse with MajorRadius = MinorRadius. Raises ConstructionError if MajorRadius < MinorRadius or MinorRadius < 0.0
 
 	:param A:
 	:type A: gp_Ax22d
@@ -3757,7 +3610,7 @@ class gp_Elips2d {
 ") Area;
 		Standard_Real Area ();
 		%feature("compactdefaultargs") Coefficients;
-		%feature("autodoc", "	* Returns the coefficients of the implicit equation of the ellipse. A * (X**2) + B * (Y**2) + 2*C*(X*Y) + 2*D*X + 2*E*Y + F = 0.
+		%feature("autodoc", "	* Returns the coefficients of the implicit equation of the ellipse. A * --X**2-- + B * --Y**2-- + 2*C*--X*Y-- + 2*D*X + 2*E*Y + F = 0.
 
 	:param A:
 	:type A: float &
@@ -3775,13 +3628,13 @@ class gp_Elips2d {
 ") Coefficients;
 		void Coefficients (Standard_Real &OutValue,Standard_Real &OutValue,Standard_Real &OutValue,Standard_Real &OutValue,Standard_Real &OutValue,Standard_Real &OutValue);
 		%feature("compactdefaultargs") Directrix1;
-		%feature("autodoc", "	* This directrix is the line normal to the XAxis of the ellipse in the local plane (Z = 0) at a distance d = MajorRadius / e from the center of the ellipse, where e is the eccentricity of the ellipse. This line is parallel to the 'YAxis'. The intersection point between directrix1 and the 'XAxis' is the location point of the directrix1. This point is on the positive side of the 'XAxis'. //! Raised if Eccentricity = 0.0. (The ellipse degenerates into a circle)
+		%feature("autodoc", "	* This directrix is the line normal to the XAxis of the ellipse in the local plane --Z = 0-- at a distance d = MajorRadius / e from the center of the ellipse, where e is the eccentricity of the ellipse. This line is parallel to the 'YAxis'. The intersection point between directrix1 and the 'XAxis' is the location point of the directrix1. This point is on the positive side of the 'XAxis'. //! Raised if Eccentricity = 0.0. --The ellipse degenerates into a circle--
 
 	:rtype: gp_Ax2d
 ") Directrix1;
 		gp_Ax2d Directrix1 ();
 		%feature("compactdefaultargs") Directrix2;
-		%feature("autodoc", "	* This line is obtained by the symmetrical transformation of 'Directrix1' with respect to the minor axis of the ellipse. //! Raised if Eccentricity = 0.0. (The ellipse degenerates into a circle).
+		%feature("autodoc", "	* This line is obtained by the symmetrical transformation of 'Directrix1' with respect to the minor axis of the ellipse. //! Raised if Eccentricity = 0.0. --The ellipse degenerates into a circle--.
 
 	:rtype: gp_Ax2d
 ") Directrix2;
@@ -3829,7 +3682,7 @@ class gp_Elips2d {
 ") MinorRadius;
 		Standard_Real MinorRadius ();
 		%feature("compactdefaultargs") Parameter;
-		%feature("autodoc", "	* Returns p = (1 - e * e) * MajorRadius where e is the eccentricity of the ellipse. Returns 0 if MajorRadius = 0
+		%feature("autodoc", "	* Returns p = --1 - e * e-- * MajorRadius where e is the eccentricity of the ellipse. Returns 0 if MajorRadius = 0
 
 	:rtype: float
 ") Parameter;
@@ -3974,30 +3827,6 @@ class gp_Elips2d {
 	:rtype: gp_Elips2d
 ") Translated;
 		gp_Elips2d Translated (const gp_Pnt2d & P1,const gp_Pnt2d & P2);
-		%feature("compactdefaultargs") _CSFDB_Getgp_Elips2dpos;
-		%feature("autodoc", "	:rtype: gp_Ax22d
-") _CSFDB_Getgp_Elips2dpos;
-		const gp_Ax22d  _CSFDB_Getgp_Elips2dpos ();
-		%feature("compactdefaultargs") _CSFDB_Getgp_Elips2dmajorRadius;
-		%feature("autodoc", "	:rtype: float
-") _CSFDB_Getgp_Elips2dmajorRadius;
-		Standard_Real _CSFDB_Getgp_Elips2dmajorRadius ();
-		%feature("compactdefaultargs") _CSFDB_Setgp_Elips2dmajorRadius;
-		%feature("autodoc", "	:param p:
-	:type p: float
-	:rtype: None
-") _CSFDB_Setgp_Elips2dmajorRadius;
-		void _CSFDB_Setgp_Elips2dmajorRadius (const Standard_Real p);
-		%feature("compactdefaultargs") _CSFDB_Getgp_Elips2dminorRadius;
-		%feature("autodoc", "	:rtype: float
-") _CSFDB_Getgp_Elips2dminorRadius;
-		Standard_Real _CSFDB_Getgp_Elips2dminorRadius ();
-		%feature("compactdefaultargs") _CSFDB_Setgp_Elips2dminorRadius;
-		%feature("autodoc", "	:param p:
-	:type p: float
-	:rtype: None
-") _CSFDB_Setgp_Elips2dminorRadius;
-		void _CSFDB_Setgp_Elips2dminorRadius (const Standard_Real p);
 };
 
 
@@ -4054,7 +3883,7 @@ class gp_GTrsf {
 ") SetAffinity;
 		void SetAffinity (const gp_Ax2 & A2,const Standard_Real Ratio);
 		%feature("compactdefaultargs") SetValue;
-		%feature("autodoc", "	* Replaces the coefficient (Row, Col) of the matrix representing this transformation by Value. Raises OutOfRange if Row < 1 or Row > 3 or Col < 1 or Col > 4
+		%feature("autodoc", "	* Replaces the coefficient --Row, Col-- of the matrix representing this transformation by Value. Raises OutOfRange if Row < 1 or Row > 3 or Col < 1 or Col > 4
 
 	:param Row:
 	:type Row: int
@@ -4096,19 +3925,19 @@ class gp_GTrsf {
 ") IsNegative;
 		Standard_Boolean IsNegative ();
 		%feature("compactdefaultargs") IsSingular;
-		%feature("autodoc", "	* Returns true if this transformation is singular (and therefore, cannot be inverted). Note: The Gauss LU decomposition is used to invert the transformation matrix. Consequently, the transformation is considered as singular if the largest pivot found is less than or equal to gp::Resolution(). Warning If this transformation is singular, it cannot be inverted.
+		%feature("autodoc", "	* Returns true if this transformation is singular --and therefore, cannot be inverted--. Note: The Gauss LU decomposition is used to invert the transformation matrix. Consequently, the transformation is considered as singular if the largest pivot found is less than or equal to gp::Resolution----. Warning If this transformation is singular, it cannot be inverted.
 
 	:rtype: bool
 ") IsSingular;
 		Standard_Boolean IsSingular ();
 		%feature("compactdefaultargs") Form;
-		%feature("autodoc", "	* Returns the nature of the transformation. It can be an identity transformation, a rotation, a translation, a mirror transformation (relative to a point, an axis or a plane), a scaling transformation, a compound transformation or some other type of transformation.
+		%feature("autodoc", "	* Returns the nature of the transformation. It can be an identity transformation, a rotation, a translation, a mirror transformation --relative to a point, an axis or a plane--, a scaling transformation, a compound transformation or some other type of transformation.
 
 	:rtype: gp_TrsfForm
 ") Form;
 		gp_TrsfForm Form ();
 		%feature("compactdefaultargs") SetForm;
-		%feature("autodoc", "	* verify and set the shape of the GTrsf Other or CompoundTrsf Ex : myGTrsf.SetValue(row1,col1,val1); myGTrsf.SetValue(row2,col2,val2); ... myGTrsf.SetForm();
+		%feature("autodoc", "	* verify and set the shape of the GTrsf Other or CompoundTrsf Ex : myGTrsf.SetValue--row1,col1,val1--; myGTrsf.SetValue--row2,col2,val2--; ... myGTrsf.SetForm----;
 
 	:rtype: None
 ") SetForm;
@@ -4146,7 +3975,7 @@ class gp_GTrsf {
 ") Inverted;
 		gp_GTrsf Inverted ();
 		%feature("compactdefaultargs") Multiplied;
-		%feature("autodoc", "	* Computes the transformation composed from T and <self>. In a C++ implementation you can also write Tcomposed = <self> * T. Example : GTrsf T1, T2, Tcomp; ............... //composition : Tcomp = T2.Multiplied(T1); // or (Tcomp = T2 * T1) // transformation of a point XYZ P(10.,3.,4.); XYZ P1(P); Tcomp.Transforms(P1); //using Tcomp XYZ P2(P); T1.Transforms(P2); //using T1 then T2 T2.Transforms(P2); // P1 = P2 !!!
+		%feature("autodoc", "	* Computes the transformation composed from T and <self>. In a C++ implementation you can also write Tcomposed = <self> * T. Example : GTrsf T1, T2, Tcomp; ............... //composition : Tcomp = T2.Multiplied--T1--; // or --Tcomp = T2 * T1-- // transformation of a point XYZ P--10.,3.,4.--; XYZ P1--P--; Tcomp.Transforms--P1--; //using Tcomp XYZ P2--P--; T1.Transforms--P2--; //using T1 then T2 T2.Transforms--P2--; // P1 = P2 !!!
 
 	:param T:
 	:type T: gp_GTrsf
@@ -4188,7 +4017,7 @@ class gp_GTrsf {
 ") Power;
 		void Power (const Standard_Integer N);
 		%feature("compactdefaultargs") Powered;
-		%feature("autodoc", "	* Computes: - the product of this transformation multiplied by itself N times, if N is positive, or - the product of the inverse of this transformation multiplied by itself |N| times, if N is negative. If N equals zero, the result is equal to the Identity transformation. I.e.: <self> * <self> * .......* <self>, N time. if N =0 <self> = Identity if N < 0 <self> = <self>.Inverse() *...........* <self>.Inverse(). //! Raises an exception if N < 0 and if the matrix of the transformation not inversible.
+		%feature("autodoc", "	* Computes: - the product of this transformation multiplied by itself N times, if N is positive, or - the product of the inverse of this transformation multiplied by itself |N| times, if N is negative. If N equals zero, the result is equal to the Identity transformation. I.e.: <self> * <self> * .......* <self>, N time. if N =0 <self> = Identity if N < 0 <self> = <self>.Inverse---- *...........* <self>.Inverse----. //! Raises an exception if N < 0 and if the matrix of the transformation not inversible.
 
 	:param N:
 	:type N: int
@@ -4217,34 +4046,6 @@ class gp_GTrsf {
 		%feature("autodoc", "	:rtype: gp_Trsf
 ") Trsf;
 		gp_Trsf Trsf ();
-		%feature("compactdefaultargs") _CSFDB_Getgp_GTrsfmatrix;
-		%feature("autodoc", "	:rtype: gp_Mat
-") _CSFDB_Getgp_GTrsfmatrix;
-		const gp_Mat  _CSFDB_Getgp_GTrsfmatrix ();
-		%feature("compactdefaultargs") _CSFDB_Getgp_GTrsfloc;
-		%feature("autodoc", "	:rtype: gp_XYZ
-") _CSFDB_Getgp_GTrsfloc;
-		const gp_XYZ  _CSFDB_Getgp_GTrsfloc ();
-		%feature("compactdefaultargs") _CSFDB_Getgp_GTrsfshape;
-		%feature("autodoc", "	:rtype: gp_TrsfForm
-") _CSFDB_Getgp_GTrsfshape;
-		gp_TrsfForm _CSFDB_Getgp_GTrsfshape ();
-		%feature("compactdefaultargs") _CSFDB_Setgp_GTrsfshape;
-		%feature("autodoc", "	:param p:
-	:type p: gp_TrsfForm
-	:rtype: None
-") _CSFDB_Setgp_GTrsfshape;
-		void _CSFDB_Setgp_GTrsfshape (const gp_TrsfForm p);
-		%feature("compactdefaultargs") _CSFDB_Getgp_GTrsfscale;
-		%feature("autodoc", "	:rtype: float
-") _CSFDB_Getgp_GTrsfscale;
-		Standard_Real _CSFDB_Getgp_GTrsfscale ();
-		%feature("compactdefaultargs") _CSFDB_Setgp_GTrsfscale;
-		%feature("autodoc", "	:param p:
-	:type p: float
-	:rtype: None
-") _CSFDB_Setgp_GTrsfscale;
-		void _CSFDB_Setgp_GTrsfscale (const Standard_Real p);
 };
 
 
@@ -4291,7 +4092,7 @@ class gp_GTrsf2d {
 ") SetAffinity;
 		void SetAffinity (const gp_Ax2d & A,const Standard_Real Ratio);
 		%feature("compactdefaultargs") SetValue;
-		%feature("autodoc", "	* Replaces the coefficient (Row, Col) of the matrix representing this transformation by Value, Raises OutOfRange if Row < 1 or Row > 2 or Col < 1 or Col > 3
+		%feature("autodoc", "	* Replaces the coefficient --Row, Col-- of the matrix representing this transformation by Value, Raises OutOfRange if Row < 1 or Row > 2 or Col < 1 or Col > 3
 
 	:param Row:
 	:type Row: int
@@ -4333,13 +4134,13 @@ class gp_GTrsf2d {
 ") IsNegative;
 		Standard_Boolean IsNegative ();
 		%feature("compactdefaultargs") IsSingular;
-		%feature("autodoc", "	* Returns true if this transformation is singular (and therefore, cannot be inverted). Note: The Gauss LU decomposition is used to invert the transformation matrix. Consequently, the transformation is considered as singular if the largest pivot found is less than or equal to gp::Resolution(). Warning If this transformation is singular, it cannot be inverted.
+		%feature("autodoc", "	* Returns true if this transformation is singular --and therefore, cannot be inverted--. Note: The Gauss LU decomposition is used to invert the transformation matrix. Consequently, the transformation is considered as singular if the largest pivot found is less than or equal to gp::Resolution----. Warning If this transformation is singular, it cannot be inverted.
 
 	:rtype: bool
 ") IsSingular;
 		Standard_Boolean IsSingular ();
 		%feature("compactdefaultargs") Form;
-		%feature("autodoc", "	* Returns the nature of the transformation. It can be an identity transformation, a rotation, a translation, a mirror transformation (relative to a point or axis), a scaling transformation, a compound transformation or some other type of transformation.
+		%feature("autodoc", "	* Returns the nature of the transformation. It can be an identity transformation, a rotation, a translation, a mirror transformation --relative to a point or axis--, a scaling transformation, a compound transformation or some other type of transformation.
 
 	:rtype: gp_TrsfForm
 ") Form;
@@ -4377,7 +4178,7 @@ class gp_GTrsf2d {
 ") Inverted;
 		gp_GTrsf2d Inverted ();
 		%feature("compactdefaultargs") Multiplied;
-		%feature("autodoc", "	* Computes the transformation composed with T and <self>. In a C++ implementation you can also write Tcomposed = <self> * T. Example : GTrsf2d T1, T2, Tcomp; ............... //composition : Tcomp = T2.Multiplied(T1); // or (Tcomp = T2 * T1) // transformation of a point XY P(10.,3.); XY P1(P); Tcomp.Transforms(P1); //using Tcomp XY P2(P); T1.Transforms(P2); //using T1 then T2 T2.Transforms(P2); // P1 = P2 !!!
+		%feature("autodoc", "	* Computes the transformation composed with T and <self>. In a C++ implementation you can also write Tcomposed = <self> * T. Example : GTrsf2d T1, T2, Tcomp; ............... //composition : Tcomp = T2.Multiplied--T1--; // or --Tcomp = T2 * T1-- // transformation of a point XY P--10.,3.--; XY P1--P--; Tcomp.Transforms--P1--; //using Tcomp XY P2--P--; T1.Transforms--P2--; //using T1 then T2 T2.Transforms--P2--; // P1 = P2 !!!
 
 	:param T:
 	:type T: gp_GTrsf2d
@@ -4417,7 +4218,7 @@ class gp_GTrsf2d {
 ") Power;
 		void Power (const Standard_Integer N);
 		%feature("compactdefaultargs") Powered;
-		%feature("autodoc", "	* Computes the following composition of transformations <self> * <self> * .......* <self>, N time. if N = 0 <self> = Identity if N < 0 <self> = <self>.Inverse() *...........* <self>.Inverse(). //! Raises an exception if N < 0 and if the matrix of the transformation is not inversible.
+		%feature("autodoc", "	* Computes the following composition of transformations <self> * <self> * .......* <self>, N time. if N = 0 <self> = Identity if N < 0 <self> = <self>.Inverse---- *...........* <self>.Inverse----. //! Raises an exception if N < 0 and if the matrix of the transformation is not inversible.
 
 	:param N:
 	:type N: int
@@ -4452,34 +4253,6 @@ class gp_GTrsf2d {
 	:rtype: gp_Trsf2d
 ") Trsf2d;
 		gp_Trsf2d Trsf2d ();
-		%feature("compactdefaultargs") _CSFDB_Getgp_GTrsf2dmatrix;
-		%feature("autodoc", "	:rtype: gp_Mat2d
-") _CSFDB_Getgp_GTrsf2dmatrix;
-		const gp_Mat2d  _CSFDB_Getgp_GTrsf2dmatrix ();
-		%feature("compactdefaultargs") _CSFDB_Getgp_GTrsf2dloc;
-		%feature("autodoc", "	:rtype: gp_XY
-") _CSFDB_Getgp_GTrsf2dloc;
-		const gp_XY  _CSFDB_Getgp_GTrsf2dloc ();
-		%feature("compactdefaultargs") _CSFDB_Getgp_GTrsf2dshape;
-		%feature("autodoc", "	:rtype: gp_TrsfForm
-") _CSFDB_Getgp_GTrsf2dshape;
-		gp_TrsfForm _CSFDB_Getgp_GTrsf2dshape ();
-		%feature("compactdefaultargs") _CSFDB_Setgp_GTrsf2dshape;
-		%feature("autodoc", "	:param p:
-	:type p: gp_TrsfForm
-	:rtype: None
-") _CSFDB_Setgp_GTrsf2dshape;
-		void _CSFDB_Setgp_GTrsf2dshape (const gp_TrsfForm p);
-		%feature("compactdefaultargs") _CSFDB_Getgp_GTrsf2dscale;
-		%feature("autodoc", "	:rtype: float
-") _CSFDB_Getgp_GTrsf2dscale;
-		Standard_Real _CSFDB_Getgp_GTrsf2dscale ();
-		%feature("compactdefaultargs") _CSFDB_Setgp_GTrsf2dscale;
-		%feature("autodoc", "	:param p:
-	:type p: float
-	:rtype: None
-") _CSFDB_Setgp_GTrsf2dscale;
-		void _CSFDB_Setgp_GTrsf2dscale (const Standard_Real p);
 };
 
 
@@ -4510,7 +4283,7 @@ class gp_Hypr {
 ") gp_Hypr;
 		 gp_Hypr (const gp_Ax2 & A2,const Standard_Real MajorRadius,const Standard_Real MinorRadius);
 		%feature("compactdefaultargs") SetAxis;
-		%feature("autodoc", "	* Modifies this hyperbola, by redefining its local coordinate system so that: - its origin and 'main Direction' become those of the axis A1 (the 'X Direction' and 'Y Direction' are then recomputed in the same way as for any gp_Ax2). Raises ConstructionError if the direction of A1 is parallel to the direction of the 'XAxis' of the hyperbola.
+		%feature("autodoc", "	* Modifies this hyperbola, by redefining its local coordinate system so that: - its origin and 'main Direction' become those of the axis A1 --the 'X Direction' and 'Y Direction' are then recomputed in the same way as for any gp_Ax2--. Raises ConstructionError if the direction of A1 is parallel to the direction of the 'XAxis' of the hyperbola.
 
 	:param A1:
 	:type A1: gp_Ax1
@@ -4550,13 +4323,13 @@ class gp_Hypr {
 ") SetPosition;
 		void SetPosition (const gp_Ax2 & A2);
 		%feature("compactdefaultargs") Asymptote1;
-		%feature("autodoc", "	* In the local coordinate system of the hyperbola the equation of the hyperbola is (X*X)/(A*A) - (Y*Y)/(B*B) = 1.0 and the equation of the first asymptote is Y = (B/A)*X where A is the major radius and B is the minor radius. Raises ConstructionError if MajorRadius = 0.0
+		%feature("autodoc", "	* In the local coordinate system of the hyperbola the equation of the hyperbola is --X*X--/--A*A-- - --Y*Y--/--B*B-- = 1.0 and the equation of the first asymptote is Y = --B/A--*X where A is the major radius and B is the minor radius. Raises ConstructionError if MajorRadius = 0.0
 
 	:rtype: gp_Ax1
 ") Asymptote1;
 		gp_Ax1 Asymptote1 ();
 		%feature("compactdefaultargs") Asymptote2;
-		%feature("autodoc", "	* In the local coordinate system of the hyperbola the equation of the hyperbola is (X*X)/(A*A) - (Y*Y)/(B*B) = 1.0 and the equation of the first asymptote is Y = -(B/A)*X. where A is the major radius and B is the minor radius. Raises ConstructionError if MajorRadius = 0.0
+		%feature("autodoc", "	* In the local coordinate system of the hyperbola the equation of the hyperbola is --X*X--/--A*A-- - --Y*Y--/--B*B-- = 1.0 and the equation of the first asymptote is Y = ---B/A--*X. where A is the major radius and B is the minor radius. Raises ConstructionError if MajorRadius = 0.0
 
 	:rtype: gp_Ax1
 ") Asymptote2;
@@ -4580,7 +4353,7 @@ class gp_Hypr {
 ") ConjugateBranch2;
 		gp_Hypr ConjugateBranch2 ();
 		%feature("compactdefaultargs") Directrix1;
-		%feature("autodoc", "	* This directrix is the line normal to the XAxis of the hyperbola in the local plane (Z = 0) at a distance d = MajorRadius / e from the center of the hyperbola, where e is the eccentricity of the hyperbola. This line is parallel to the 'YAxis'. The intersection point between the directrix1 and the 'XAxis' is the 'Location' point of the directrix1. This point is on the positive side of the 'XAxis'.
+		%feature("autodoc", "	* This directrix is the line normal to the XAxis of the hyperbola in the local plane --Z = 0-- at a distance d = MajorRadius / e from the center of the hyperbola, where e is the eccentricity of the hyperbola. This line is parallel to the 'YAxis'. The intersection point between the directrix1 and the 'XAxis' is the 'Location' point of the directrix1. This point is on the positive side of the 'XAxis'.
 
 	:rtype: gp_Ax1
 ") Directrix1;
@@ -4592,7 +4365,7 @@ class gp_Hypr {
 ") Directrix2;
 		gp_Ax1 Directrix2 ();
 		%feature("compactdefaultargs") Eccentricity;
-		%feature("autodoc", "	* Returns the excentricity of the hyperbola (e > 1). If f is the distance between the location of the hyperbola and the Focus1 then the eccentricity e = f / MajorRadius. Raises DomainError if MajorRadius = 0.0
+		%feature("autodoc", "	* Returns the excentricity of the hyperbola --e > 1--. If f is the distance between the location of the hyperbola and the Focus1 then the eccentricity e = f / MajorRadius. Raises DomainError if MajorRadius = 0.0
 
 	:rtype: float
 ") Eccentricity;
@@ -4640,7 +4413,7 @@ class gp_Hypr {
 ") OtherBranch;
 		gp_Hypr OtherBranch ();
 		%feature("compactdefaultargs") Parameter;
-		%feature("autodoc", "	* Returns p = (e * e - 1) * MajorRadius where e is the eccentricity of the hyperbola. Raises DomainError if MajorRadius = 0.0
+		%feature("autodoc", "	* Returns p = --e * e - 1-- * MajorRadius where e is the eccentricity of the hyperbola. Raises DomainError if MajorRadius = 0.0
 
 	:rtype: float
 ") Parameter;
@@ -4652,13 +4425,13 @@ class gp_Hypr {
 ") Position;
 		const gp_Ax2  Position ();
 		%feature("compactdefaultargs") XAxis;
-		%feature("autodoc", "	* Computes an axis, whose - the origin is the center of this hyperbola, and - the unit vector is the 'X Direction' of the local coordinate system of this hyperbola. These axes are, the major axis (the 'X Axis') and of this hyperboReturns the 'XAxis' of the hyperbola.
+		%feature("autodoc", "	* Computes an axis, whose - the origin is the center of this hyperbola, and - the unit vector is the 'X Direction' of the local coordinate system of this hyperbola. These axes are, the major axis --the 'X Axis'-- and of this hyperboReturns the 'XAxis' of the hyperbola.
 
 	:rtype: gp_Ax1
 ") XAxis;
 		gp_Ax1 XAxis ();
 		%feature("compactdefaultargs") YAxis;
-		%feature("autodoc", "	* Computes an axis, whose - the origin is the center of this hyperbola, and - the unit vector is the 'Y Direction' of the local coordinate system of this hyperbola. These axes are the minor axis (the 'Y Axis') of this hyperbola
+		%feature("autodoc", "	* Computes an axis, whose - the origin is the center of this hyperbola, and - the unit vector is the 'Y Direction' of the local coordinate system of this hyperbola. These axes are the minor axis --the 'Y Axis'-- of this hyperbola
 
 	:rtype: gp_Ax1
 ") YAxis;
@@ -4698,7 +4471,7 @@ class gp_Hypr {
 ") Mirror;
 		void Mirror (const gp_Ax2 & A2);
 		%feature("compactdefaultargs") Mirrored;
-		%feature("autodoc", "	* Performs the symmetrical transformation of an hyperbola with respect to a plane. The axis placement A2 locates the plane of the symmetry (Location, XDirection, YDirection).
+		%feature("autodoc", "	* Performs the symmetrical transformation of an hyperbola with respect to a plane. The axis placement A2 locates the plane of the symmetry --Location, XDirection, YDirection--.
 
 	:param A2:
 	:type A2: gp_Ax2
@@ -4787,30 +4560,6 @@ class gp_Hypr {
 	:rtype: gp_Hypr
 ") Translated;
 		gp_Hypr Translated (const gp_Pnt & P1,const gp_Pnt & P2);
-		%feature("compactdefaultargs") _CSFDB_Getgp_Hyprpos;
-		%feature("autodoc", "	:rtype: gp_Ax2
-") _CSFDB_Getgp_Hyprpos;
-		const gp_Ax2  _CSFDB_Getgp_Hyprpos ();
-		%feature("compactdefaultargs") _CSFDB_Getgp_HyprmajorRadius;
-		%feature("autodoc", "	:rtype: float
-") _CSFDB_Getgp_HyprmajorRadius;
-		Standard_Real _CSFDB_Getgp_HyprmajorRadius ();
-		%feature("compactdefaultargs") _CSFDB_Setgp_HyprmajorRadius;
-		%feature("autodoc", "	:param p:
-	:type p: float
-	:rtype: None
-") _CSFDB_Setgp_HyprmajorRadius;
-		void _CSFDB_Setgp_HyprmajorRadius (const Standard_Real p);
-		%feature("compactdefaultargs") _CSFDB_Getgp_HyprminorRadius;
-		%feature("autodoc", "	:rtype: float
-") _CSFDB_Getgp_HyprminorRadius;
-		Standard_Real _CSFDB_Getgp_HyprminorRadius ();
-		%feature("compactdefaultargs") _CSFDB_Setgp_HyprminorRadius;
-		%feature("autodoc", "	:param p:
-	:type p: float
-	:rtype: None
-") _CSFDB_Setgp_HyprminorRadius;
-		void _CSFDB_Setgp_HyprminorRadius (const Standard_Real p);
 };
 
 
@@ -4829,7 +4578,7 @@ class gp_Hypr2d {
 ") gp_Hypr2d;
 		 gp_Hypr2d ();
 		%feature("compactdefaultargs") gp_Hypr2d;
-		%feature("autodoc", "	* Creates a hyperbola with radii MajorRadius and MinorRadius, centered on the origin of MajorAxis and where the unit vector of MajorAxis is the 'X Direction' of the local coordinate system of the hyperbola. This coordinate system is direct if Sense is true (the default value), and indirect if Sense is false. Warnings : It is yet possible to create an Hyperbola with MajorRadius <= MinorRadius. Raises ConstructionError if MajorRadius < 0.0 or MinorRadius < 0.0
+		%feature("autodoc", "	* Creates a hyperbola with radii MajorRadius and MinorRadius, centered on the origin of MajorAxis and where the unit vector of MajorAxis is the 'X Direction' of the local coordinate system of the hyperbola. This coordinate system is direct if Sense is true --the default value--, and indirect if Sense is false. Warnings : It is yet possible to create an Hyperbola with MajorRadius <= MinorRadius. Raises ConstructionError if MajorRadius < 0.0 or MinorRadius < 0.0
 
 	:param MajorAxis:
 	:type MajorAxis: gp_Ax2d
@@ -4843,7 +4592,7 @@ class gp_Hypr2d {
 ") gp_Hypr2d;
 		 gp_Hypr2d (const gp_Ax2d & MajorAxis,const Standard_Real MajorRadius,const Standard_Real MinorRadius,const Standard_Boolean Sense = Standard_True);
 		%feature("compactdefaultargs") gp_Hypr2d;
-		%feature("autodoc", "	* a hyperbola with radii MajorRadius and MinorRadius, positioned in the plane by coordinate system A where: - the origin of A is the center of the hyperbola, - the 'X Direction' of A defines the major axis of the hyperbola, that is, the major radius MajorRadius is measured along this axis, and - the 'Y Direction' of A defines the minor axis of the hyperbola, that is, the minor radius MinorRadius is measured along this axis, and - the orientation (direct or indirect sense) of A gives the implicit orientation of the hyperbola. Warnings : It is yet possible to create an Hyperbola with MajorRadius <= MinorRadius. Raises ConstructionError if MajorRadius < 0.0 or MinorRadius < 0.0
+		%feature("autodoc", "	* a hyperbola with radii MajorRadius and MinorRadius, positioned in the plane by coordinate system A where: - the origin of A is the center of the hyperbola, - the 'X Direction' of A defines the major axis of the hyperbola, that is, the major radius MajorRadius is measured along this axis, and - the 'Y Direction' of A defines the minor axis of the hyperbola, that is, the minor radius MinorRadius is measured along this axis, and - the orientation --direct or indirect sense-- of A gives the implicit orientation of the hyperbola. Warnings : It is yet possible to create an Hyperbola with MajorRadius <= MinorRadius. Raises ConstructionError if MajorRadius < 0.0 or MinorRadius < 0.0
 
 	:param A:
 	:type A: gp_Ax22d
@@ -4903,19 +4652,19 @@ class gp_Hypr2d {
 ") SetYAxis;
 		void SetYAxis (const gp_Ax2d & A);
 		%feature("compactdefaultargs") Asymptote1;
-		%feature("autodoc", "	* In the local coordinate system of the hyperbola the equation of the hyperbola is (X*X)/(A*A) - (Y*Y)/(B*B) = 1.0 and the equation of the first asymptote is Y = (B/A)*X where A is the major radius of the hyperbola and B the minor radius of the hyperbola. Raises ConstructionError if MajorRadius = 0.0
+		%feature("autodoc", "	* In the local coordinate system of the hyperbola the equation of the hyperbola is --X*X--/--A*A-- - --Y*Y--/--B*B-- = 1.0 and the equation of the first asymptote is Y = --B/A--*X where A is the major radius of the hyperbola and B the minor radius of the hyperbola. Raises ConstructionError if MajorRadius = 0.0
 
 	:rtype: gp_Ax2d
 ") Asymptote1;
 		gp_Ax2d Asymptote1 ();
 		%feature("compactdefaultargs") Asymptote2;
-		%feature("autodoc", "	* In the local coordinate system of the hyperbola the equation of the hyperbola is (X*X)/(A*A) - (Y*Y)/(B*B) = 1.0 and the equation of the first asymptote is Y = -(B/A)*X where A is the major radius of the hyperbola and B the minor radius of the hyperbola. Raises ConstructionError if MajorRadius = 0.0
+		%feature("autodoc", "	* In the local coordinate system of the hyperbola the equation of the hyperbola is --X*X--/--A*A-- - --Y*Y--/--B*B-- = 1.0 and the equation of the first asymptote is Y = ---B/A--*X where A is the major radius of the hyperbola and B the minor radius of the hyperbola. Raises ConstructionError if MajorRadius = 0.0
 
 	:rtype: gp_Ax2d
 ") Asymptote2;
 		gp_Ax2d Asymptote2 ();
 		%feature("compactdefaultargs") Coefficients;
-		%feature("autodoc", "	* Computes the coefficients of the implicit equation of the hyperbola : A * (X**2) + B * (Y**2) + 2*C*(X*Y) + 2*D*X + 2*E*Y + F = 0.
+		%feature("autodoc", "	* Computes the coefficients of the implicit equation of the hyperbola : A * --X**2-- + B * --Y**2-- + 2*C*--X*Y-- + 2*D*X + 2*E*Y + F = 0.
 
 	:param A:
 	:type A: float &
@@ -4945,7 +4694,7 @@ class gp_Hypr2d {
 ") ConjugateBranch2;
 		gp_Hypr2d ConjugateBranch2 ();
 		%feature("compactdefaultargs") Directrix1;
-		%feature("autodoc", "	* Computes the directrix which is the line normal to the XAxis of the hyperbola in the local plane (Z = 0) at a distance d = MajorRadius / e from the center of the hyperbola, where e is the eccentricity of the hyperbola. This line is parallel to the 'YAxis'. The intersection point between the 'Directrix1' and the 'XAxis' is the 'Location' point of the 'Directrix1'. This point is on the positive side of the 'XAxis'.
+		%feature("autodoc", "	* Computes the directrix which is the line normal to the XAxis of the hyperbola in the local plane --Z = 0-- at a distance d = MajorRadius / e from the center of the hyperbola, where e is the eccentricity of the hyperbola. This line is parallel to the 'YAxis'. The intersection point between the 'Directrix1' and the 'XAxis' is the 'Location' point of the 'Directrix1'. This point is on the positive side of the 'XAxis'.
 
 	:rtype: gp_Ax2d
 ") Directrix1;
@@ -4957,7 +4706,7 @@ class gp_Hypr2d {
 ") Directrix2;
 		gp_Ax2d Directrix2 ();
 		%feature("compactdefaultargs") Eccentricity;
-		%feature("autodoc", "	* Returns the excentricity of the hyperbola (e > 1). If f is the distance between the location of the hyperbola and the Focus1 then the eccentricity e = f / MajorRadius. Raises DomainError if MajorRadius = 0.0.
+		%feature("autodoc", "	* Returns the excentricity of the hyperbola --e > 1--. If f is the distance between the location of the hyperbola and the Focus1 then the eccentricity e = f / MajorRadius. Raises DomainError if MajorRadius = 0.0.
 
 	:rtype: float
 ") Eccentricity;
@@ -4987,13 +4736,13 @@ class gp_Hypr2d {
 ") Location;
 		const gp_Pnt2d  Location ();
 		%feature("compactdefaultargs") MajorRadius;
-		%feature("autodoc", "	* Returns the major radius of the hyperbola (it is the radius corresponding to the 'XAxis' of the hyperbola).
+		%feature("autodoc", "	* Returns the major radius of the hyperbola --it is the radius corresponding to the 'XAxis' of the hyperbola--.
 
 	:rtype: float
 ") MajorRadius;
 		Standard_Real MajorRadius ();
 		%feature("compactdefaultargs") MinorRadius;
-		%feature("autodoc", "	* Returns the minor radius of the hyperbola (it is the radius corresponding to the 'YAxis' of the hyperbola).
+		%feature("autodoc", "	* Returns the minor radius of the hyperbola --it is the radius corresponding to the 'YAxis' of the hyperbola--.
 
 	:rtype: float
 ") MinorRadius;
@@ -5005,7 +4754,7 @@ class gp_Hypr2d {
 ") OtherBranch;
 		gp_Hypr2d OtherBranch ();
 		%feature("compactdefaultargs") Parameter;
-		%feature("autodoc", "	* Returns p = (e * e - 1) * MajorRadius where e is the eccentricity of the hyperbola. Raises DomainError if MajorRadius = 0.0
+		%feature("autodoc", "	* Returns p = --e * e - 1-- * MajorRadius where e is the eccentricity of the hyperbola. Raises DomainError if MajorRadius = 0.0
 
 	:rtype: float
 ") Parameter;
@@ -5033,7 +4782,7 @@ class gp_Hypr2d {
 ") Reverse;
 		void Reverse ();
 		%feature("compactdefaultargs") Reversed;
-		%feature("autodoc", "	* Reverses the orientation of the local coordinate system of this hyperbola (the 'Y Axis' is reversed). Therefore, the implicit orientation of this hyperbola is reversed. Note: - Reverse assigns the result to this hyperbola, while - Reversed creates a new one.
+		%feature("autodoc", "	* Reverses the orientation of the local coordinate system of this hyperbola --the 'Y Axis' is reversed--. Therefore, the implicit orientation of this hyperbola is reversed. Note: - Reverse assigns the result to this hyperbola, while - Reversed creates a new one.
 
 	:rtype: gp_Hypr2d
 ") Reversed;
@@ -5154,30 +4903,6 @@ class gp_Hypr2d {
 	:rtype: gp_Hypr2d
 ") Translated;
 		gp_Hypr2d Translated (const gp_Pnt2d & P1,const gp_Pnt2d & P2);
-		%feature("compactdefaultargs") _CSFDB_Getgp_Hypr2dpos;
-		%feature("autodoc", "	:rtype: gp_Ax22d
-") _CSFDB_Getgp_Hypr2dpos;
-		const gp_Ax22d  _CSFDB_Getgp_Hypr2dpos ();
-		%feature("compactdefaultargs") _CSFDB_Getgp_Hypr2dmajorRadius;
-		%feature("autodoc", "	:rtype: float
-") _CSFDB_Getgp_Hypr2dmajorRadius;
-		Standard_Real _CSFDB_Getgp_Hypr2dmajorRadius ();
-		%feature("compactdefaultargs") _CSFDB_Setgp_Hypr2dmajorRadius;
-		%feature("autodoc", "	:param p:
-	:type p: float
-	:rtype: None
-") _CSFDB_Setgp_Hypr2dmajorRadius;
-		void _CSFDB_Setgp_Hypr2dmajorRadius (const Standard_Real p);
-		%feature("compactdefaultargs") _CSFDB_Getgp_Hypr2dminorRadius;
-		%feature("autodoc", "	:rtype: float
-") _CSFDB_Getgp_Hypr2dminorRadius;
-		Standard_Real _CSFDB_Getgp_Hypr2dminorRadius ();
-		%feature("compactdefaultargs") _CSFDB_Setgp_Hypr2dminorRadius;
-		%feature("autodoc", "	:param p:
-	:type p: float
-	:rtype: None
-") _CSFDB_Setgp_Hypr2dminorRadius;
-		void _CSFDB_Setgp_Hypr2dminorRadius (const Standard_Real p);
 };
 
 
@@ -5204,7 +4929,7 @@ class gp_Lin {
 ") gp_Lin;
 		 gp_Lin (const gp_Ax1 & A1);
 		%feature("compactdefaultargs") gp_Lin;
-		%feature("autodoc", "	* Creates a line passing through point P and parallel to vector V (P and V are, respectively, the origin and the unit vector of the positioning axis of the line).
+		%feature("autodoc", "	* Creates a line passing through point P and parallel to vector V --P and V are, respectively, the origin and the unit vector of the positioning axis of the line--.
 
 	:param P:
 	:type P: gp_Pnt
@@ -5232,7 +4957,7 @@ class gp_Lin {
 ") SetDirection;
 		void SetDirection (const gp_Dir & V);
 		%feature("compactdefaultargs") SetLocation;
-		%feature("autodoc", "	* Changes the location point (origin) of the line.
+		%feature("autodoc", "	* Changes the location point --origin-- of the line.
 
 	:param P:
 	:type P: gp_Pnt
@@ -5254,7 +4979,7 @@ class gp_Lin {
 ") Direction;
 		const gp_Dir  Direction ();
 		%feature("compactdefaultargs") Location;
-		%feature("autodoc", "	* Returns the location point (origin) of the line.
+		%feature("autodoc", "	* Returns the location point --origin-- of the line.
 
 	:rtype: gp_Pnt
 ") Location;
@@ -5358,7 +5083,7 @@ class gp_Lin {
 ") Mirror;
 		void Mirror (const gp_Ax2 & A2);
 		%feature("compactdefaultargs") Mirrored;
-		%feature("autodoc", "	* Performs the symmetrical transformation of a line with respect to a plane. The axis placement <A2> locates the plane of the symmetry : (Location, XDirection, YDirection).
+		%feature("autodoc", "	* Performs the symmetrical transformation of a line with respect to a plane. The axis placement <A2> locates the plane of the symmetry : --Location, XDirection, YDirection--.
 
 	:param A2:
 	:type A2: gp_Ax2
@@ -5392,7 +5117,7 @@ class gp_Lin {
 ") Scale;
 		void Scale (const gp_Pnt & P,const Standard_Real S);
 		%feature("compactdefaultargs") Scaled;
-		%feature("autodoc", "	* Scales a line. S is the scaling value. The 'Location' point (origin) of the line is modified. The 'Direction' is reversed if the scale is negative.
+		%feature("autodoc", "	* Scales a line. S is the scaling value. The 'Location' point --origin-- of the line is modified. The 'Direction' is reversed if the scale is negative.
 
 	:param P:
 	:type P: gp_Pnt
@@ -5447,10 +5172,6 @@ class gp_Lin {
 	:rtype: gp_Lin
 ") Translated;
 		gp_Lin Translated (const gp_Pnt & P1,const gp_Pnt & P2);
-		%feature("compactdefaultargs") _CSFDB_Getgp_Linpos;
-		%feature("autodoc", "	:rtype: gp_Ax1
-") _CSFDB_Getgp_Linpos;
-		const gp_Ax1  _CSFDB_Getgp_Linpos ();
 };
 
 
@@ -5477,7 +5198,7 @@ class gp_Lin2d {
 ") gp_Lin2d;
 		 gp_Lin2d (const gp_Ax2d & A);
 		%feature("compactdefaultargs") gp_Lin2d;
-		%feature("autodoc", "	* <P> is the location point (origin) of the line and <V> is the direction of the line.
+		%feature("autodoc", "	* <P> is the location point --origin-- of the line and <V> is the direction of the line.
 
 	:param P:
 	:type P: gp_Pnt2d
@@ -5487,7 +5208,7 @@ class gp_Lin2d {
 ") gp_Lin2d;
 		 gp_Lin2d (const gp_Pnt2d & P,const gp_Dir2d & V);
 		%feature("compactdefaultargs") gp_Lin2d;
-		%feature("autodoc", "	* Creates the line from the equation A*X + B*Y + C = 0.0 Raises ConstructionError if Sqrt(A*A + B*B) <= Resolution from gp. Raised if Sqrt(A*A + B*B) <= Resolution from gp.
+		%feature("autodoc", "	* Creates the line from the equation A*X + B*Y + C = 0.0 Raises ConstructionError if Sqrt--A*A + B*B-- <= Resolution from gp. Raised if Sqrt--A*A + B*B-- <= Resolution from gp.
 
 	:param A:
 	:type A: float
@@ -5551,7 +5272,7 @@ class gp_Lin2d {
 ") Direction;
 		const gp_Dir2d  Direction ();
 		%feature("compactdefaultargs") Location;
-		%feature("autodoc", "	* Returns the location point (origin) of the line.
+		%feature("autodoc", "	* Returns the location point --origin-- of the line.
 
 	:rtype: gp_Pnt2d
 ") Location;
@@ -5730,10 +5451,6 @@ class gp_Lin2d {
 	:rtype: gp_Lin2d
 ") Translated;
 		gp_Lin2d Translated (const gp_Pnt2d & P1,const gp_Pnt2d & P2);
-		%feature("compactdefaultargs") _CSFDB_Getgp_Lin2dpos;
-		%feature("autodoc", "	:rtype: gp_Ax2d
-") _CSFDB_Getgp_Lin2dpos;
-		const gp_Ax2d  _CSFDB_Getgp_Lin2dpos ();
 };
 
 
@@ -5808,7 +5525,7 @@ class gp_Mat {
 ") SetCols;
 		void SetCols (const gp_XYZ & Col1,const gp_XYZ & Col2,const gp_XYZ & Col3);
 		%feature("compactdefaultargs") SetCross;
-		%feature("autodoc", "	* Modifies the matrix M so that applying it to any number triple (X, Y, Z) produces the same result as the cross product of Ref and the number triple (X, Y, Z): i.e.: M * {X,Y,Z}t = Ref.Cross({X, Y ,Z}) this matrix is anti symmetric. To apply this matrix to the triplet {XYZ} is the same as to do the cross product between the triplet Ref and the triplet {XYZ}. Note: this matrix is anti-symmetric.
+		%feature("autodoc", "	* Modifies the matrix M so that applying it to any number triple --X, Y, Z-- produces the same result as the cross product of Ref and the number triple --X, Y, Z--: i.e.: M * {X,Y,Z}t = Ref.Cross--{X, Y ,Z}-- this matrix is anti symmetric. To apply this matrix to the triplet {XYZ} is the same as to do the cross product between the triplet Ref and the triplet {XYZ}. Note: this matrix is anti-symmetric.
 
 	:param Ref:
 	:type Ref: gp_XYZ
@@ -5816,7 +5533,7 @@ class gp_Mat {
 ") SetCross;
 		void SetCross (const gp_XYZ & Ref);
 		%feature("compactdefaultargs") SetDiagonal;
-		%feature("autodoc", "	* Modifies the main diagonal of the matrix. <self>.Value (1, 1) = X1 <self>.Value (2, 2) = X2 <self>.Value (3, 3) = X3 The other coefficients of the matrix are not modified.
+		%feature("autodoc", "	* Modifies the main diagonal of the matrix. <self>.Value --1, 1-- = X1 <self>.Value --2, 2-- = X2 <self>.Value --3, 3-- = X3 The other coefficients of the matrix are not modified.
 
 	:param X1:
 	:type X1: float
@@ -5828,7 +5545,7 @@ class gp_Mat {
 ") SetDiagonal;
 		void SetDiagonal (const Standard_Real X1,const Standard_Real X2,const Standard_Real X3);
 		%feature("compactdefaultargs") SetDot;
-		%feature("autodoc", "	* Modifies this matrix so that applying it to any number triple (X, Y, Z) produces the same result as the scalar product of Ref and the number triple (X, Y, Z): this * (X,Y,Z) = Ref.(X,Y,Z) Note: this matrix is symmetric.
+		%feature("autodoc", "	* Modifies this matrix so that applying it to any number triple --X, Y, Z-- produces the same result as the scalar product of Ref and the number triple --X, Y, Z--: this * --X,Y,Z-- = Ref.--X,Y,Z-- Note: this matrix is symmetric.
 
 	:param Ref:
 	:type Ref: gp_XYZ
@@ -5842,7 +5559,7 @@ class gp_Mat {
 ") SetIdentity;
 		void SetIdentity ();
 		%feature("compactdefaultargs") SetRotation;
-		%feature("autodoc", "	* Modifies this matrix so that it represents a rotation. Ang is the angular value in radians and the XYZ axis gives the direction of the rotation. Raises ConstructionError if XYZ.Modulus() <= Resolution()
+		%feature("autodoc", "	* Modifies this matrix so that it represents a rotation. Ang is the angular value in radians and the XYZ axis gives the direction of the rotation. Raises ConstructionError if XYZ.Modulus---- <= Resolution----
 
 	:param Axis:
 	:type Axis: gp_XYZ
@@ -5922,7 +5639,7 @@ class gp_Mat {
 ") Row;
 		gp_XYZ Row (const Standard_Integer Row);
 		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	* Returns the coefficient of range (Row, Col) Raises OutOfRange if Row < 1 or Row > 3 or Col < 1 or Col > 3
+		%feature("autodoc", "	* Returns the coefficient of range --Row, Col-- Raises OutOfRange if Row < 1 or Row > 3 or Col < 1 or Col > 3
 
 	:param Row:
 	:type Row: int
@@ -5932,7 +5649,7 @@ class gp_Mat {
 ") Value;
 		const Standard_Real & Value (const Standard_Integer Row,const Standard_Integer Col);
 		%feature("compactdefaultargs") ChangeValue;
-		%feature("autodoc", "	* Returns the coefficient of range (Row, Col) Raises OutOfRange if Row < 1 or Row > 3 or Col < 1 or Col > 3
+		%feature("autodoc", "	* Returns the coefficient of range --Row, Col-- Raises OutOfRange if Row < 1 or Row > 3 or Col < 1 or Col > 3
 
 	:param Row:
 	:type Row: int
@@ -5942,7 +5659,7 @@ class gp_Mat {
 ") ChangeValue;
 		Standard_Real & ChangeValue (const Standard_Integer Row,const Standard_Integer Col);
 		%feature("compactdefaultargs") IsSingular;
-		%feature("autodoc", "	* The Gauss LU decomposition is used to invert the matrix (see Math package) so the matrix is considered as singular if the largest pivot found is lower or equal to Resolution from gp.
+		%feature("autodoc", "	* The Gauss LU decomposition is used to invert the matrix --see Math package-- so the matrix is considered as singular if the largest pivot found is lower or equal to Resolution from gp.
 
 	:rtype: bool
 ") IsSingular;
@@ -5960,7 +5677,7 @@ class gp_Mat {
 ") operator +=;
 		void operator += (const gp_Mat & Other);
 		%feature("compactdefaultargs") Added;
-		%feature("autodoc", "	* Computes the sum of this matrix and the matrix Other for each coefficient of the matrix : <self>.Coef(i,j) + <Other>.Coef(i,j)
+		%feature("autodoc", "	* Computes the sum of this matrix and the matrix Other for each coefficient of the matrix : <self>.Coef--i,j-- + <Other>.Coef--i,j--
 
 	:param Other:
 	:type Other: gp_Mat
@@ -6004,7 +5721,7 @@ class gp_Mat {
 ") Invert;
 		void Invert ();
 		%feature("compactdefaultargs") Inverted;
-		%feature("autodoc", "	* Inverses the matrix and raises if the matrix is singular. - Invert assigns the result to this matrix, while - Inverted creates a new one. Warning The Gauss LU decomposition is used to invert the matrix. Consequently, the matrix is considered as singular if the largest pivot found is less than or equal to gp::Resolution(). Exceptions Standard_ConstructionError if this matrix is singular, and therefore cannot be inverted.
+		%feature("autodoc", "	* Inverses the matrix and raises if the matrix is singular. - Invert assigns the result to this matrix, while - Inverted creates a new one. Warning The Gauss LU decomposition is used to invert the matrix. Consequently, the matrix is considered as singular if the largest pivot found is less than or equal to gp::Resolution----. Exceptions Standard_ConstructionError if this matrix is singular, and therefore cannot be inverted.
 
 	:rtype: gp_Mat
 ") Inverted;
@@ -6076,7 +5793,7 @@ class gp_Mat {
 ") Power;
 		void Power (const Standard_Integer N);
 		%feature("compactdefaultargs") Powered;
-		%feature("autodoc", "	* Computes <self> = <self> * <self> * .......* <self>, N time. if N = 0 <self> = Identity if N < 0 <self> = <self>.Invert() *...........* <self>.Invert(). If N < 0 an exception will be raised if the matrix is not inversible
+		%feature("autodoc", "	* Computes <self> = <self> * <self> * .......* <self>, N time. if N = 0 <self> = Identity if N < 0 <self> = <self>.Invert---- *...........* <self>.Invert----. If N < 0 an exception will be raised if the matrix is not inversible
 
 	:param N:
 	:type N: int
@@ -6096,7 +5813,7 @@ class gp_Mat {
 ") operator -=;
 		void operator -= (const gp_Mat & Other);
 		%feature("compactdefaultargs") Subtracted;
-		%feature("autodoc", "	* cOmputes for each coefficient of the matrix : <self>.Coef(i,j) - <Other>.Coef(i,j)
+		%feature("autodoc", "	* cOmputes for each coefficient of the matrix : <self>.Coef--i,j-- - <Other>.Coef--i,j--
 
 	:param Other:
 	:type Other: gp_Mat
@@ -6114,19 +5831,11 @@ class gp_Mat {
 ") Transpose;
 		void Transpose ();
 		%feature("compactdefaultargs") Transposed;
-		%feature("autodoc", "	* Transposes the matrix. A(j, i) -> A (i, j)
+		%feature("autodoc", "	* Transposes the matrix. A--j, i-- -> A --i, j--
 
 	:rtype: gp_Mat
 ") Transposed;
 		gp_Mat Transposed ();
-		%feature("compactdefaultargs") _CSFDB_Getgp_Matmatrix;
-		%feature("autodoc", "	:param i1:
-	:type i1: int
-	:param i2:
-	:type i2: int
-	:rtype: float
-") _CSFDB_Getgp_Matmatrix;
-		Standard_Real & _CSFDB_Getgp_Matmatrix (const Standard_Integer i1,const Standard_Integer i2);
 };
 
 
@@ -6175,7 +5884,7 @@ class gp_Mat2d {
 ") SetCols;
 		void SetCols (const gp_XY & Col1,const gp_XY & Col2);
 		%feature("compactdefaultargs") SetDiagonal;
-		%feature("autodoc", "	* Modifies the main diagonal of the matrix. <self>.Value (1, 1) = X1 <self>.Value (2, 2) = X2 The other coefficients of the matrix are not modified.
+		%feature("autodoc", "	* Modifies the main diagonal of the matrix. <self>.Value --1, 1-- = X1 <self>.Value --2, 2-- = X2 The other coefficients of the matrix are not modified.
 
 	:param X1:
 	:type X1: float
@@ -6267,7 +5976,7 @@ class gp_Mat2d {
 ") Row;
 		gp_XY Row (const Standard_Integer Row);
 		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	* Returns the coefficient of range (Row, Col) Raises OutOfRange if Row < 1 or Row > 2 or Col < 1 or Col > 2
+		%feature("autodoc", "	* Returns the coefficient of range --Row, Col-- Raises OutOfRange if Row < 1 or Row > 2 or Col < 1 or Col > 2
 
 	:param Row:
 	:type Row: int
@@ -6277,7 +5986,7 @@ class gp_Mat2d {
 ") Value;
 		const Standard_Real & Value (const Standard_Integer Row,const Standard_Integer Col);
 		%feature("compactdefaultargs") ChangeValue;
-		%feature("autodoc", "	* Returns the coefficient of range (Row, Col) Raises OutOfRange if Row < 1 or Row > 2 or Col < 1 or Col > 2
+		%feature("autodoc", "	* Returns the coefficient of range --Row, Col-- Raises OutOfRange if Row < 1 or Row > 2 or Col < 1 or Col > 2
 
 	:param Row:
 	:type Row: int
@@ -6287,7 +5996,7 @@ class gp_Mat2d {
 ") ChangeValue;
 		Standard_Real & ChangeValue (const Standard_Integer Row,const Standard_Integer Col);
 		%feature("compactdefaultargs") IsSingular;
-		%feature("autodoc", "	* Returns true if this matrix is singular (and therefore, cannot be inverted). The Gauss LU decomposition is used to invert the matrix so the matrix is considered as singular if the largest pivot found is lower or equal to Resolution from gp.
+		%feature("autodoc", "	* Returns true if this matrix is singular --and therefore, cannot be inverted--. The Gauss LU decomposition is used to invert the matrix so the matrix is considered as singular if the largest pivot found is lower or equal to Resolution from gp.
 
 	:rtype: bool
 ") IsSingular;
@@ -6305,7 +6014,7 @@ class gp_Mat2d {
 ") operator +=;
 		void operator += (const gp_Mat2d & Other);
 		%feature("compactdefaultargs") Added;
-		%feature("autodoc", "	* Computes the sum of this matrix and the matrix Other.for each coefficient of the matrix : <self>.Coef(i,j) + <Other>.Coef(i,j) Note: - operator += assigns the result to this matrix, while - operator + creates a new one.
+		%feature("autodoc", "	* Computes the sum of this matrix and the matrix Other.for each coefficient of the matrix : <self>.Coef--i,j-- + <Other>.Coef--i,j-- Note: - operator += assigns the result to this matrix, while - operator + creates a new one.
 
 	:param Other:
 	:type Other: gp_Mat2d
@@ -6415,7 +6124,7 @@ class gp_Mat2d {
 ") Power;
 		void Power (const Standard_Integer N);
 		%feature("compactdefaultargs") Powered;
-		%feature("autodoc", "	* computes <self> = <self> * <self> * .......* <self>, N time. if N = 0 <self> = Identity if N < 0 <self> = <self>.Invert() *...........* <self>.Invert(). If N < 0 an exception can be raised if the matrix is not inversible
+		%feature("autodoc", "	* computes <self> = <self> * <self> * .......* <self>, N time. if N = 0 <self> = Identity if N < 0 <self> = <self>.Invert---- *...........* <self>.Invert----. If N < 0 an exception can be raised if the matrix is not inversible
 
 	:param N:
 	:type N: int
@@ -6435,7 +6144,7 @@ class gp_Mat2d {
 ") operator -=;
 		void operator -= (const gp_Mat2d & Other);
 		%feature("compactdefaultargs") Subtracted;
-		%feature("autodoc", "	* Computes for each coefficient of the matrix : <self>.Coef(i,j) - <Other>.Coef(i,j)
+		%feature("autodoc", "	* Computes for each coefficient of the matrix : <self>.Coef--i,j-- - <Other>.Coef--i,j--
 
 	:param Other:
 	:type Other: gp_Mat2d
@@ -6453,19 +6162,11 @@ class gp_Mat2d {
 ") Transpose;
 		void Transpose ();
 		%feature("compactdefaultargs") Transposed;
-		%feature("autodoc", "	* Transposes the matrix. A(j, i) -> A (i, j)
+		%feature("autodoc", "	* Transposes the matrix. A--j, i-- -> A --i, j--
 
 	:rtype: gp_Mat2d
 ") Transposed;
 		gp_Mat2d Transposed ();
-		%feature("compactdefaultargs") _CSFDB_Getgp_Mat2dmatrix;
-		%feature("autodoc", "	:param i1:
-	:type i1: int
-	:param i2:
-	:type i2: int
-	:rtype: float
-") _CSFDB_Getgp_Mat2dmatrix;
-		Standard_Real & _CSFDB_Getgp_Mat2dmatrix (const Standard_Integer i1,const Standard_Integer i2);
 };
 
 
@@ -6494,7 +6195,7 @@ class gp_Parab {
 ") gp_Parab;
 		 gp_Parab (const gp_Ax2 & A2,const Standard_Real Focal);
 		%feature("compactdefaultargs") gp_Parab;
-		%feature("autodoc", "	* D is the directrix of the parabola and F the focus point. The symmetry axis (XAxis) of the parabola is normal to the directrix and pass through the focus point F, but its location point is the vertex of the parabola. The YAxis of the parabola is parallel to D and its location point is the vertex of the parabola. The normal to the plane of the parabola is the cross product between the XAxis and the YAxis.
+		%feature("autodoc", "	* D is the directrix of the parabola and F the focus point. The symmetry axis --XAxis-- of the parabola is normal to the directrix and pass through the focus point F, but its location point is the vertex of the parabola. The YAxis of the parabola is parallel to D and its location point is the vertex of the parabola. The normal to the plane of the parabola is the cross product between the XAxis and the YAxis.
 
 	:param D:
 	:type D: gp_Ax1
@@ -6504,7 +6205,7 @@ class gp_Parab {
 ") gp_Parab;
 		 gp_Parab (const gp_Ax1 & D,const gp_Pnt & F);
 		%feature("compactdefaultargs") SetAxis;
-		%feature("autodoc", "	* Modifies this parabola by redefining its local coordinate system so that - its origin and 'main Direction' become those of the axis A1 (the 'X Direction' and 'Y Direction' are then recomputed in the same way as for any gp_Ax2) Raises ConstructionError if the direction of A1 is parallel to the previous XAxis of the parabola.
+		%feature("autodoc", "	* Modifies this parabola by redefining its local coordinate system so that - its origin and 'main Direction' become those of the axis A1 --the 'X Direction' and 'Y Direction' are then recomputed in the same way as for any gp_Ax2-- Raises ConstructionError if the direction of A1 is parallel to the previous XAxis of the parabola.
 
 	:param A1:
 	:type A1: gp_Ax1
@@ -6542,7 +6243,7 @@ class gp_Parab {
 ") Axis;
 		const gp_Ax1  Axis ();
 		%feature("compactdefaultargs") Directrix;
-		%feature("autodoc", "	* Computes the directrix of this parabola. The directrix is: - a line parallel to the 'Y Direction' of the local coordinate system of this parabola, and - located on the negative side of the axis of symmetry, at a distance from the apex which is equal to the focal length of this parabola. The directrix is returned as an axis (a gp_Ax1 object), the origin of which is situated on the 'X Axis' of this parabola.
+		%feature("autodoc", "	* Computes the directrix of this parabola. The directrix is: - a line parallel to the 'Y Direction' of the local coordinate system of this parabola, and - located on the negative side of the axis of symmetry, at a distance from the apex which is equal to the focal length of this parabola. The directrix is returned as an axis --a gp_Ax1 object--, the origin of which is situated on the 'X Axis' of this parabola.
 
 	:rtype: gp_Ax1
 ") Directrix;
@@ -6624,7 +6325,7 @@ class gp_Parab {
 ") Mirror;
 		void Mirror (const gp_Ax2 & A2);
 		%feature("compactdefaultargs") Mirrored;
-		%feature("autodoc", "	* Performs the symmetrical transformation of a parabola with respect to a plane. The axis placement A2 locates the plane of the symmetry (Location, XDirection, YDirection).
+		%feature("autodoc", "	* Performs the symmetrical transformation of a parabola with respect to a plane. The axis placement A2 locates the plane of the symmetry --Location, XDirection, YDirection--.
 
 	:param A2:
 	:type A2: gp_Ax2
@@ -6713,20 +6414,6 @@ class gp_Parab {
 	:rtype: gp_Parab
 ") Translated;
 		gp_Parab Translated (const gp_Pnt & P1,const gp_Pnt & P2);
-		%feature("compactdefaultargs") _CSFDB_Getgp_Parabpos;
-		%feature("autodoc", "	:rtype: gp_Ax2
-") _CSFDB_Getgp_Parabpos;
-		const gp_Ax2  _CSFDB_Getgp_Parabpos ();
-		%feature("compactdefaultargs") _CSFDB_Getgp_ParabfocalLength;
-		%feature("autodoc", "	:rtype: float
-") _CSFDB_Getgp_ParabfocalLength;
-		Standard_Real _CSFDB_Getgp_ParabfocalLength ();
-		%feature("compactdefaultargs") _CSFDB_Setgp_ParabfocalLength;
-		%feature("autodoc", "	:param p:
-	:type p: float
-	:rtype: None
-") _CSFDB_Setgp_ParabfocalLength;
-		void _CSFDB_Setgp_ParabfocalLength (const Standard_Real p);
 };
 
 
@@ -6745,49 +6432,39 @@ class gp_Parab2d {
 ") gp_Parab2d;
 		 gp_Parab2d ();
 		%feature("compactdefaultargs") gp_Parab2d;
-		%feature("autodoc", "	* Creates a parabola with its vertex point, its axis of symmetry ('XAxis') and its focal length. The sense of parametrization is given by Sense. Warnings : It is possible to have Focal = 0. Raises ConstructionError if Focal < 0.0
+		%feature("autodoc", "	* Creates a parabola with its vertex point, its axis of symmetry --'XAxis'-- and its focal length. The sense of parametrization is given by theSense. If theSense == True --by default-- then right-handed coordinate system is used, otherwise - left-handed. Warnings : It is possible to have FocalLength = 0. In this case, the parabola looks like a line, which is parallel to the symmetry-axis. Raises ConstructionError if FocalLength < 0.0
 
-	:param MirrorAxis:
-	:type MirrorAxis: gp_Ax2d
-	:param Focal:
-	:type Focal: float
-	:param Sense: default value is Standard_True
-	:type Sense: bool
+	:param theMirrorAxis:
+	:type theMirrorAxis: gp_Ax2d
+	:param theFocalLength:
+	:type theFocalLength: float
+	:param theSense: default value is Standard_True
+	:type theSense: bool
 	:rtype: None
 ") gp_Parab2d;
-		 gp_Parab2d (const gp_Ax2d & MirrorAxis,const Standard_Real Focal,const Standard_Boolean Sense = Standard_True);
+		 gp_Parab2d (const gp_Ax2d & theMirrorAxis,const Standard_Real theFocalLength,const Standard_Boolean theSense = Standard_True);
 		%feature("compactdefaultargs") gp_Parab2d;
-		%feature("autodoc", "	* Creates a parabola with its vertex point, its axis of symmetry ('XAxis') and its focal length. The sense of parametrization is given by A. Warnings : It is possible to have Focal = 0. Raises ConstructionError if Focal < 0.0
+		%feature("autodoc", "	* Creates a parabola with its vertex point, its axis of symmetry --'XAxis'--, correspond Y-axis and its focal length. Warnings : It is possible to have FocalLength = 0. In this case, the parabola looks like a line, which is parallel to the symmetry-axis. Raises ConstructionError if Focal < 0.0
 
-	:param A:
-	:type A: gp_Ax22d
-	:param Focal:
-	:type Focal: float
+	:param theAxes:
+	:type theAxes: gp_Ax22d
+	:param theFocalLength:
+	:type theFocalLength: float
 	:rtype: None
 ") gp_Parab2d;
-		 gp_Parab2d (const gp_Ax22d & A,const Standard_Real Focal);
+		 gp_Parab2d (const gp_Ax22d & theAxes,const Standard_Real theFocalLength);
 		%feature("compactdefaultargs") gp_Parab2d;
-		%feature("autodoc", "	* Creates a parabola with the directrix and the focus point. The sense of parametrization is given by Sense.
+		%feature("autodoc", "	* Creates a parabola with the directrix and the focus point. Y-axis of the parabola --in User Coordinate System - UCS-- is the direction of theDirectrix. X-axis always directs from theDirectrix to theFocus point and always comes through theFocus. Apex of the parabola is a middle point between the theFocus and the intersection point of theDirectrix and the X-axis. Warnings : It is possible to have FocalLength = 0 --when theFocus lies in theDirectrix--. In this case, X-direction of the parabola is defined by theSense parameter. If theSense == True --by default-- then right-handed coordinate system is used, otherwise - left-handed. Result parabola will look like a line, which is perpendicular to the directrix.
 
-	:param D:
-	:type D: gp_Ax2d
-	:param F:
-	:type F: gp_Pnt2d
-	:param Sense: default value is Standard_True
-	:type Sense: bool
+	:param theDirectrix:
+	:type theDirectrix: gp_Ax2d
+	:param theFocus:
+	:type theFocus: gp_Pnt2d
+	:param theSense: default value is Standard_True
+	:type theSense: bool
 	:rtype: None
 ") gp_Parab2d;
-		 gp_Parab2d (const gp_Ax2d & D,const gp_Pnt2d & F,const Standard_Boolean Sense = Standard_True);
-		%feature("compactdefaultargs") gp_Parab2d;
-		%feature("autodoc", "	* Creates a parabola with the directrix and the focus point. The Sense of parametrization is given by D.
-
-	:param D:
-	:type D: gp_Ax22d
-	:param F:
-	:type F: gp_Pnt2d
-	:rtype: None
-") gp_Parab2d;
-		 gp_Parab2d (const gp_Ax22d & D,const gp_Pnt2d & F);
+		 gp_Parab2d (const gp_Ax2d & theDirectrix,const gp_Pnt2d & theFocus,const Standard_Boolean theSense = Standard_True);
 		%feature("compactdefaultargs") SetFocal;
 		%feature("autodoc", "	* Changes the focal distance of the parabola Warnings : It is possible to have Focal = 0. Raises ConstructionError if Focal < 0.0
 
@@ -6821,7 +6498,7 @@ class gp_Parab2d {
 ") SetAxis;
 		void SetAxis (const gp_Ax22d & A);
 		%feature("compactdefaultargs") Coefficients;
-		%feature("autodoc", "	* Computes the coefficients of the implicit equation of the parabola. A * (X**2) + B * (Y**2) + 2*C*(X*Y) + 2*D*X + 2*E*Y + F = 0.
+		%feature("autodoc", "	* Computes the coefficients of the implicit equation of the parabola --in WCS - World Coordinate System--. A * --X**2-- + B * --Y**2-- + 2*C*--X*Y-- + 2*D*X + 2*E*Y + F = 0.
 
 	:param A:
 	:type A: float &
@@ -6839,7 +6516,7 @@ class gp_Parab2d {
 ") Coefficients;
 		void Coefficients (Standard_Real &OutValue,Standard_Real &OutValue,Standard_Real &OutValue,Standard_Real &OutValue,Standard_Real &OutValue,Standard_Real &OutValue);
 		%feature("compactdefaultargs") Directrix;
-		%feature("autodoc", "	* Computes the directrix of the parabola. The directrix is: - a line parallel to the 'Y Direction' of the local coordinate system of this parabola, and - located on the negative side of the axis of symmetry, at a distance from the apex which is equal to the focal length of this parabola. The directrix is returned as an axis (a gp_Ax2d object), the origin of which is situated on the 'X Axis' of this parabola.
+		%feature("autodoc", "	* Computes the directrix of the parabola. The directrix is: - a line parallel to the 'Y Direction' of the local coordinate system of this parabola, and - located on the negative side of the axis of symmetry, at a distance from the apex which is equal to the focal length of this parabola. The directrix is returned as an axis --a gp_Ax2d object--, the origin of which is situated on the 'X Axis' of this parabola.
 
 	:rtype: gp_Ax2d
 ") Directrix;
@@ -6885,7 +6562,7 @@ class gp_Parab2d {
 ") Reverse;
 		void Reverse ();
 		%feature("compactdefaultargs") Reversed;
-		%feature("autodoc", "	* Reverses the orientation of the local coordinate system of this parabola (the 'Y Direction' is reversed). Therefore, the implicit orientation of this parabola is reversed. Note: - Reverse assigns the result to this parabola, while - Reversed creates a new one.
+		%feature("autodoc", "	* Reverses the orientation of the local coordinate system of this parabola --the 'Y Direction' is reversed--. Therefore, the implicit orientation of this parabola is reversed. Note: - Reverse assigns the result to this parabola, while - Reversed creates a new one.
 
 	:rtype: gp_Parab2d
 ") Reversed;
@@ -7006,20 +6683,6 @@ class gp_Parab2d {
 	:rtype: gp_Parab2d
 ") Translated;
 		gp_Parab2d Translated (const gp_Pnt2d & P1,const gp_Pnt2d & P2);
-		%feature("compactdefaultargs") _CSFDB_Getgp_Parab2dpos;
-		%feature("autodoc", "	:rtype: gp_Ax22d
-") _CSFDB_Getgp_Parab2dpos;
-		const gp_Ax22d  _CSFDB_Getgp_Parab2dpos ();
-		%feature("compactdefaultargs") _CSFDB_Getgp_Parab2dfocalLength;
-		%feature("autodoc", "	:rtype: float
-") _CSFDB_Getgp_Parab2dfocalLength;
-		Standard_Real _CSFDB_Getgp_Parab2dfocalLength ();
-		%feature("compactdefaultargs") _CSFDB_Setgp_Parab2dfocalLength;
-		%feature("autodoc", "	:param p:
-	:type p: float
-	:rtype: None
-") _CSFDB_Setgp_Parab2dfocalLength;
-		void _CSFDB_Setgp_Parab2dfocalLength (const Standard_Real p);
 };
 
 
@@ -7038,7 +6701,7 @@ class gp_Pln {
 ") gp_Pln;
 		 gp_Pln ();
 		%feature("compactdefaultargs") gp_Pln;
-		%feature("autodoc", "	* The coordinate system of the plane is defined with the axis placement A3. The 'Direction' of A3 defines the normal to the plane. The 'Location' of A3 defines the location (origin) of the plane. The 'XDirection' and 'YDirection' of A3 define the 'XAxis' and the 'YAxis' of the plane used to parametrize the plane.
+		%feature("autodoc", "	* The coordinate system of the plane is defined with the axis placement A3. The 'Direction' of A3 defines the normal to the plane. The 'Location' of A3 defines the location --origin-- of the plane. The 'XDirection' and 'YDirection' of A3 define the 'XAxis' and the 'YAxis' of the plane used to parametrize the plane.
 
 	:param A3:
 	:type A3: gp_Ax3
@@ -7056,7 +6719,7 @@ class gp_Pln {
 ") gp_Pln;
 		 gp_Pln (const gp_Pnt & P,const gp_Dir & V);
 		%feature("compactdefaultargs") gp_Pln;
-		%feature("autodoc", "	* Creates a plane from its cartesian equation : A * X + B * Y + C * Z + D = 0.0 Raises ConstructionError if Sqrt (A*A + B*B + C*C) <= Resolution from gp.
+		%feature("autodoc", "	* Creates a plane from its cartesian equation : A * X + B * Y + C * Z + D = 0.0 Raises ConstructionError if Sqrt --A*A + B*B + C*C-- <= Resolution from gp.
 
 	:param A:
 	:type A: float
@@ -7084,7 +6747,7 @@ class gp_Pln {
 ") Coefficients;
 		void Coefficients (Standard_Real &OutValue,Standard_Real &OutValue,Standard_Real &OutValue,Standard_Real &OutValue);
 		%feature("compactdefaultargs") SetAxis;
-		%feature("autodoc", "	* Modifies this plane, by redefining its local coordinate system so that - its origin and 'main Direction' become those of the axis A1 (the 'X Direction' and 'Y Direction' are then recomputed). Raises ConstructionError if the A1 is parallel to the 'XAxis' of the plane.
+		%feature("autodoc", "	* Modifies this plane, by redefining its local coordinate system so that - its origin and 'main Direction' become those of the axis A1 --the 'X Direction' and 'Y Direction' are then recomputed--. Raises ConstructionError if the A1 is parallel to the 'XAxis' of the plane.
 
 	:param A1:
 	:type A1: gp_Ax1
@@ -7132,7 +6795,7 @@ class gp_Pln {
 ") Axis;
 		const gp_Ax1  Axis ();
 		%feature("compactdefaultargs") Location;
-		%feature("autodoc", "	* Returns the plane's location (origin).
+		%feature("autodoc", "	* Returns the plane's location --origin--.
 
 	:rtype: gp_Pnt
 ") Location;
@@ -7349,10 +7012,6 @@ class gp_Pln {
 	:rtype: gp_Pln
 ") Translated;
 		gp_Pln Translated (const gp_Pnt & P1,const gp_Pnt & P2);
-		%feature("compactdefaultargs") _CSFDB_Getgp_Plnpos;
-		%feature("autodoc", "	:rtype: gp_Ax3
-") _CSFDB_Getgp_Plnpos;
-		const gp_Ax3  _CSFDB_Getgp_Plnpos ();
 };
 
 
@@ -7501,7 +7160,7 @@ class gp_Pnt {
 ") ChangeCoord;
 		gp_XYZ  ChangeCoord ();
 		%feature("compactdefaultargs") BaryCenter;
-		%feature("autodoc", "	* Assigns the result of the following expression to this point (Alpha*this + Beta*P) / (Alpha + Beta)
+		%feature("autodoc", "	* Assigns the result of the following expression to this point --Alpha*this + Beta*P-- / --Alpha + Beta--
 
 	:param Alpha:
 	:type Alpha: float
@@ -7561,7 +7220,7 @@ class gp_Pnt {
 ") Mirror;
 		void Mirror (const gp_Ax1 & A1);
 		%feature("compactdefaultargs") Mirrored;
-		%feature("autodoc", "	* Performs the symmetrical transformation of a point with respect to a plane. The axis placement A2 locates the plane of the symmetry : (Location, XDirection, YDirection).
+		%feature("autodoc", "	* Performs the symmetrical transformation of a point with respect to a plane. The axis placement A2 locates the plane of the symmetry : --Location, XDirection, YDirection--.
 
 	:param A1:
 	:type A1: gp_Ax1
@@ -7662,10 +7321,6 @@ class gp_Pnt {
 	:rtype: gp_Pnt
 ") Translated;
 		gp_Pnt Translated (const gp_Pnt & P1,const gp_Pnt & P2);
-		%feature("compactdefaultargs") _CSFDB_Getgp_Pntcoord;
-		%feature("autodoc", "	:rtype: gp_XYZ
-") _CSFDB_Getgp_Pntcoord;
-		const gp_XYZ  _CSFDB_Getgp_Pntcoord ();
 };
 
 
@@ -7929,10 +7584,6 @@ class gp_Pnt2d {
 	:rtype: gp_Pnt2d
 ") Translated;
 		gp_Pnt2d Translated (const gp_Pnt2d & P1,const gp_Pnt2d & P2);
-		%feature("compactdefaultargs") _CSFDB_Getgp_Pnt2dcoord;
-		%feature("autodoc", "	:rtype: gp_XY
-") _CSFDB_Getgp_Pnt2dcoord;
-		const gp_XY  _CSFDB_Getgp_Pnt2dcoord ();
 };
 
 
@@ -8005,7 +7656,7 @@ class gp_Quaternion {
 ") gp_Quaternion;
 		 gp_Quaternion (const gp_Vec & theAxis,const Standard_Real theAngle);
 		%feature("compactdefaultargs") gp_Quaternion;
-		%feature("autodoc", "	* Creates quaternion from rotation matrix 3*3 (which should be orthonormal skew-symmetric matrix)
+		%feature("autodoc", "	* Creates quaternion from rotation matrix 3*3 --which should be orthonormal skew-symmetric matrix--
 
 	:param theMat:
 	:type theMat: gp_Mat
@@ -8021,7 +7672,7 @@ class gp_Quaternion {
 ") IsEqual;
 		Standard_Boolean IsEqual (const gp_Quaternion & theOther);
 		%feature("compactdefaultargs") SetRotation;
-		%feature("autodoc", "	* Sets quaternion to shortest-arc rotation producing vector theVecTo from vector theVecFrom. If vectors theVecFrom and theVecTo are opposite then rotation axis is computed as theVecFrom ^ (1,0,0) or theVecFrom ^ (0,0,1).
+		%feature("autodoc", "	* Sets quaternion to shortest-arc rotation producing vector theVecTo from vector theVecFrom. If vectors theVecFrom and theVecTo are opposite then rotation axis is computed as theVecFrom ^ --1,0,0-- or theVecFrom ^ --0,0,1--.
 
 	:param theVecFrom:
 	:type theVecFrom: gp_Vec
@@ -8063,7 +7714,7 @@ class gp_Quaternion {
 ") GetVectorAndAngle;
 		void GetVectorAndAngle (gp_Vec & theAxis,Standard_Real &OutValue);
 		%feature("compactdefaultargs") SetMatrix;
-		%feature("autodoc", "	* Create a unit quaternion by rotation matrix matrix must contain only rotation (not scale or shear) //! For numerical stability we find first the greatest component of quaternion and than search others from this one
+		%feature("autodoc", "	* Create a unit quaternion by rotation matrix matrix must contain only rotation --not scale or shear-- //! For numerical stability we find first the greatest component of quaternion and than search others from this one
 
 	:param theMat:
 	:type theMat: gp_Mat
@@ -8139,25 +7790,25 @@ class gp_Quaternion {
 ") W;
 		Standard_Real W ();
 		%feature("compactdefaultargs") SetIdent;
-		%feature("autodoc", "	* Make identity quaternion (zero-rotation)
+		%feature("autodoc", "	* Make identity quaternion --zero-rotation--
 
 	:rtype: None
 ") SetIdent;
 		void SetIdent ();
 		%feature("compactdefaultargs") Reverse;
-		%feature("autodoc", "	* Reverse direction of rotation (conjugate quaternion)
+		%feature("autodoc", "	* Reverse direction of rotation --conjugate quaternion--
 
 	:rtype: None
 ") Reverse;
 		void Reverse ();
 		%feature("compactdefaultargs") Reversed;
-		%feature("autodoc", "	* Return rotation with reversed direction (conjugated quaternion)
+		%feature("autodoc", "	* Return rotation with reversed direction --conjugated quaternion--
 
 	:rtype: gp_Quaternion
 ") Reversed;
 		gp_Quaternion Reversed ();
 		%feature("compactdefaultargs") Invert;
-		%feature("autodoc", "	* Inverts quaternion (both rotation direction and norm)
+		%feature("autodoc", "	* Inverts quaternion --both rotation direction and norm--
 
 	:rtype: None
 ") Invert;
@@ -8181,7 +7832,7 @@ class gp_Quaternion {
 ") Norm;
 		Standard_Real Norm ();
 		%feature("compactdefaultargs") Scale;
-		%feature("autodoc", "	* Scale all components by quaternion by theScale; note that rotation is not changed by this operation (except 0-scaling)
+		%feature("autodoc", "	* Scale all components by quaternion by theScale; note that rotation is not changed by this operation --except 0-scaling--
 
 	:param theScale:
 	:type theScale: float
@@ -8265,7 +7916,7 @@ class gp_Quaternion {
 ") operator -;
 		gp_Quaternion operator - (const gp_Quaternion & theOther);
 		%feature("compactdefaultargs") Multiplied;
-		%feature("autodoc", "	* Multiply function - work the same as Matrices multiplying. qq' = (cross(v,v') + wv' + w'v, ww' - dot(v,v')) Result is rotation combination: q' than q (here q=this, q'=theQ). Notices than: qq' != q'q; qq^-1 = q;
+		%feature("autodoc", "	* Multiply function - work the same as Matrices multiplying. qq' = --cross--v,v'-- + wv' + w'v, ww' - dot--v,v'---- Result is rotation combination: q' than q --here q=this, q'=theQ--. Notices than: qq' != q'q; qq^-1 = q;
 
 	:param theOther:
 	:type theOther: gp_Quaternion
@@ -8359,46 +8010,10 @@ class gp_Quaternion {
 %nodefaultctor gp_QuaternionNLerp;
 class gp_QuaternionNLerp {
 	public:
-		%feature("compactdefaultargs") gp_QuaternionNLerp;
-		%feature("autodoc", "	:rtype: None
-") gp_QuaternionNLerp;
-		 gp_QuaternionNLerp ();
-		%feature("compactdefaultargs") gp_QuaternionNLerp;
-		%feature("autodoc", "	:param theQStart:
-	:type theQStart: gp_Quaternion
-	:param theQEnd:
-	:type theQEnd: gp_Quaternion
-	:rtype: None
-") gp_QuaternionNLerp;
-		 gp_QuaternionNLerp (const gp_Quaternion & theQStart,const gp_Quaternion & theQEnd);
-		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	:param theQStart:
-	:type theQStart: gp_Quaternion
-	:param theQEnd:
-	:type theQEnd: gp_Quaternion
-	:rtype: None
-") Init;
-		void Init (const gp_Quaternion & theQStart,const gp_Quaternion & theQEnd);
-		%feature("compactdefaultargs") InitFromUnit;
-		%feature("autodoc", "	:param theQStart:
-	:type theQStart: gp_Quaternion
-	:param theQEnd:
-	:type theQEnd: gp_Quaternion
-	:rtype: None
-") InitFromUnit;
-		void InitFromUnit (const gp_Quaternion & theQStart,const gp_Quaternion & theQEnd);
 		%feature("compactdefaultargs") Interpolate;
-		%feature("autodoc", "	* Set interpolated quaternion for theT position (from 0.0 to 1.0)
+		%feature("autodoc", "	* Compute interpolated quaternion between two quaternions. @param theStart first quaternion @param theEnd second quaternion @param theT normalized interpolation coefficient within 0..1 range, with 0 pointing to theStart and 1 to theEnd.
 
-	:param theT:
-	:type theT: float
-	:param theResultQ:
-	:type theResultQ: gp_Quaternion
-	:rtype: None
-") Interpolate;
-		void Interpolate (Standard_Real theT,gp_Quaternion & theResultQ);
-		%feature("compactdefaultargs") Interpolate;
-		%feature("autodoc", "	:param theQStart:
+	:param theQStart:
 	:type theQStart: gp_Quaternion
 	:param theQEnd:
 	:type theQEnd: gp_Quaternion
@@ -8407,6 +8022,52 @@ class gp_QuaternionNLerp {
 	:rtype: gp_Quaternion
 ") Interpolate;
 		static gp_Quaternion Interpolate (const gp_Quaternion & theQStart,const gp_Quaternion & theQEnd,Standard_Real theT);
+		%feature("compactdefaultargs") gp_QuaternionNLerp;
+		%feature("autodoc", "	* Empty constructor,
+
+	:rtype: None
+") gp_QuaternionNLerp;
+		 gp_QuaternionNLerp ();
+		%feature("compactdefaultargs") gp_QuaternionNLerp;
+		%feature("autodoc", "	* Constructor with initialization.
+
+	:param theQStart:
+	:type theQStart: gp_Quaternion
+	:param theQEnd:
+	:type theQEnd: gp_Quaternion
+	:rtype: None
+") gp_QuaternionNLerp;
+		 gp_QuaternionNLerp (const gp_Quaternion & theQStart,const gp_Quaternion & theQEnd);
+		%feature("compactdefaultargs") Init;
+		%feature("autodoc", "	* Initialize the tool with Start and End values.
+
+	:param theQStart:
+	:type theQStart: gp_Quaternion
+	:param theQEnd:
+	:type theQEnd: gp_Quaternion
+	:rtype: None
+") Init;
+		void Init (const gp_Quaternion & theQStart,const gp_Quaternion & theQEnd);
+		%feature("compactdefaultargs") InitFromUnit;
+		%feature("autodoc", "	* Initialize the tool with Start and End unit quaternions.
+
+	:param theQStart:
+	:type theQStart: gp_Quaternion
+	:param theQEnd:
+	:type theQEnd: gp_Quaternion
+	:rtype: None
+") InitFromUnit;
+		void InitFromUnit (const gp_Quaternion & theQStart,const gp_Quaternion & theQEnd);
+		%feature("compactdefaultargs") Interpolate;
+		%feature("autodoc", "	* Set interpolated quaternion for theT position --from 0.0 to 1.0--
+
+	:param theT:
+	:type theT: float
+	:param theResultQ:
+	:type theResultQ: gp_Quaternion
+	:rtype: None
+") Interpolate;
+		void Interpolate (Standard_Real theT,gp_Quaternion & theResultQ);
 };
 
 
@@ -8418,12 +8079,28 @@ class gp_QuaternionNLerp {
 %nodefaultctor gp_QuaternionSLerp;
 class gp_QuaternionSLerp {
 	public:
+		%feature("compactdefaultargs") Interpolate;
+		%feature("autodoc", "	* Compute interpolated quaternion between two quaternions. @param theStart first quaternion @param theEnd second quaternion @param theT normalized interpolation coefficient within 0..1 range, with 0 pointing to theStart and 1 to theEnd.
+
+	:param theQStart:
+	:type theQStart: gp_Quaternion
+	:param theQEnd:
+	:type theQEnd: gp_Quaternion
+	:param theT:
+	:type theT: float
+	:rtype: gp_Quaternion
+") Interpolate;
+		static gp_Quaternion Interpolate (const gp_Quaternion & theQStart,const gp_Quaternion & theQEnd,Standard_Real theT);
 		%feature("compactdefaultargs") gp_QuaternionSLerp;
-		%feature("autodoc", "	:rtype: None
+		%feature("autodoc", "	* Empty constructor,
+
+	:rtype: None
 ") gp_QuaternionSLerp;
 		 gp_QuaternionSLerp ();
 		%feature("compactdefaultargs") gp_QuaternionSLerp;
-		%feature("autodoc", "	:param theQStart:
+		%feature("autodoc", "	* Constructor with initialization.
+
+	:param theQStart:
 	:type theQStart: gp_Quaternion
 	:param theQEnd:
 	:type theQEnd: gp_Quaternion
@@ -8431,7 +8108,9 @@ class gp_QuaternionSLerp {
 ") gp_QuaternionSLerp;
 		 gp_QuaternionSLerp (const gp_Quaternion & theQStart,const gp_Quaternion & theQEnd);
 		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	:param theQStart:
+		%feature("autodoc", "	* Initialize the tool with Start and End values.
+
+	:param theQStart:
 	:type theQStart: gp_Quaternion
 	:param theQEnd:
 	:type theQEnd: gp_Quaternion
@@ -8439,7 +8118,9 @@ class gp_QuaternionSLerp {
 ") Init;
 		void Init (const gp_Quaternion & theQStart,const gp_Quaternion & theQEnd);
 		%feature("compactdefaultargs") InitFromUnit;
-		%feature("autodoc", "	:param theQStart:
+		%feature("autodoc", "	* Initialize the tool with Start and End unit quaternions.
+
+	:param theQStart:
 	:type theQStart: gp_Quaternion
 	:param theQEnd:
 	:type theQEnd: gp_Quaternion
@@ -8447,7 +8128,7 @@ class gp_QuaternionSLerp {
 ") InitFromUnit;
 		void InitFromUnit (const gp_Quaternion & theQStart,const gp_Quaternion & theQEnd);
 		%feature("compactdefaultargs") Interpolate;
-		%feature("autodoc", "	* Set interpolated quaternion for theT position (from 0.0 to 1.0)
+		%feature("autodoc", "	* Set interpolated quaternion for theT position --from 0.0 to 1.0--
 
 	:param theT:
 	:type theT: float
@@ -8514,7 +8195,7 @@ class gp_Sphere {
 ") Area;
 		Standard_Real Area ();
 		%feature("compactdefaultargs") Coefficients;
-		%feature("autodoc", "	* Computes the coefficients of the implicit equation of the quadric in the absolute cartesian coordinates system : A1.X**2 + A2.Y**2 + A3.Z**2 + 2.(B1.X.Y + B2.X.Z + B3.Y.Z) + 2.(C1.X + C2.Y + C3.Z) + D = 0.0
+		%feature("autodoc", "	* Computes the coefficients of the implicit equation of the quadric in the absolute cartesian coordinates system : A1.X**2 + A2.Y**2 + A3.Z**2 + 2.--B1.X.Y + B2.X.Z + B3.Y.Z-- + 2.--C1.X + C2.Y + C3.Z-- + D = 0.0
 
 	:param A1:
 	:type A1: float &
@@ -8628,7 +8309,7 @@ class gp_Sphere {
 ") Mirror;
 		void Mirror (const gp_Ax2 & A2);
 		%feature("compactdefaultargs") Mirrored;
-		%feature("autodoc", "	* Performs the symmetrical transformation of a sphere with respect to a plane. The axis placement A2 locates the plane of the of the symmetry : (Location, XDirection, YDirection).
+		%feature("autodoc", "	* Performs the symmetrical transformation of a sphere with respect to a plane. The axis placement A2 locates the plane of the of the symmetry : --Location, XDirection, YDirection--.
 
 	:param A2:
 	:type A2: gp_Ax2
@@ -8717,20 +8398,6 @@ class gp_Sphere {
 	:rtype: gp_Sphere
 ") Translated;
 		gp_Sphere Translated (const gp_Pnt & P1,const gp_Pnt & P2);
-		%feature("compactdefaultargs") _CSFDB_Getgp_Spherepos;
-		%feature("autodoc", "	:rtype: gp_Ax3
-") _CSFDB_Getgp_Spherepos;
-		const gp_Ax3  _CSFDB_Getgp_Spherepos ();
-		%feature("compactdefaultargs") _CSFDB_Getgp_Sphereradius;
-		%feature("autodoc", "	:rtype: float
-") _CSFDB_Getgp_Sphereradius;
-		Standard_Real _CSFDB_Getgp_Sphereradius ();
-		%feature("compactdefaultargs") _CSFDB_Setgp_Sphereradius;
-		%feature("autodoc", "	:param p:
-	:type p: float
-	:rtype: None
-") _CSFDB_Setgp_Sphereradius;
-		void _CSFDB_Setgp_Sphereradius (const Standard_Real p);
 };
 
 
@@ -8761,7 +8428,7 @@ class gp_Torus {
 ") gp_Torus;
 		 gp_Torus (const gp_Ax3 & A3,const Standard_Real MajorRadius,const Standard_Real MinorRadius);
 		%feature("compactdefaultargs") SetAxis;
-		%feature("autodoc", "	* Modifies this torus, by redefining its local coordinate system so that: - its origin and 'main Direction' become those of the axis A1 (the 'X Direction' and 'Y Direction' are then recomputed). Raises ConstructionError if the direction of A1 is parallel to the 'XDirection' of the coordinate system of the toroidal surface.
+		%feature("autodoc", "	* Modifies this torus, by redefining its local coordinate system so that: - its origin and 'main Direction' become those of the axis A1 --the 'X Direction' and 'Y Direction' are then recomputed--. Raises ConstructionError if the direction of A1 is parallel to the 'XDirection' of the coordinate system of the toroidal surface.
 
 	:param A1:
 	:type A1: gp_Ax1
@@ -8777,7 +8444,7 @@ class gp_Torus {
 ") SetLocation;
 		void SetLocation (const gp_Pnt & Loc);
 		%feature("compactdefaultargs") SetMajorRadius;
-		%feature("autodoc", "	* Assigns value to the major radius of this torus. Raises ConstructionError if MajorRadius - MinorRadius <= Resolution()
+		%feature("autodoc", "	* Assigns value to the major radius of this torus. Raises ConstructionError if MajorRadius - MinorRadius <= Resolution----
 
 	:param MajorRadius:
 	:type MajorRadius: float
@@ -8907,7 +8574,7 @@ class gp_Torus {
 ") Mirror;
 		void Mirror (const gp_Ax2 & A2);
 		%feature("compactdefaultargs") Mirrored;
-		%feature("autodoc", "	* Performs the symmetrical transformation of a torus with respect to a plane. The axis placement A2 locates the plane of the of the symmetry : (Location, XDirection, YDirection).
+		%feature("autodoc", "	* Performs the symmetrical transformation of a torus with respect to a plane. The axis placement A2 locates the plane of the of the symmetry : --Location, XDirection, YDirection--.
 
 	:param A2:
 	:type A2: gp_Ax2
@@ -8996,30 +8663,6 @@ class gp_Torus {
 	:rtype: gp_Torus
 ") Translated;
 		gp_Torus Translated (const gp_Pnt & P1,const gp_Pnt & P2);
-		%feature("compactdefaultargs") _CSFDB_Getgp_Toruspos;
-		%feature("autodoc", "	:rtype: gp_Ax3
-") _CSFDB_Getgp_Toruspos;
-		const gp_Ax3  _CSFDB_Getgp_Toruspos ();
-		%feature("compactdefaultargs") _CSFDB_Getgp_TorusmajorRadius;
-		%feature("autodoc", "	:rtype: float
-") _CSFDB_Getgp_TorusmajorRadius;
-		Standard_Real _CSFDB_Getgp_TorusmajorRadius ();
-		%feature("compactdefaultargs") _CSFDB_Setgp_TorusmajorRadius;
-		%feature("autodoc", "	:param p:
-	:type p: float
-	:rtype: None
-") _CSFDB_Setgp_TorusmajorRadius;
-		void _CSFDB_Setgp_TorusmajorRadius (const Standard_Real p);
-		%feature("compactdefaultargs") _CSFDB_Getgp_TorusminorRadius;
-		%feature("autodoc", "	:rtype: float
-") _CSFDB_Getgp_TorusminorRadius;
-		Standard_Real _CSFDB_Getgp_TorusminorRadius ();
-		%feature("compactdefaultargs") _CSFDB_Setgp_TorusminorRadius;
-		%feature("autodoc", "	:param p:
-	:type p: float
-	:rtype: None
-") _CSFDB_Setgp_TorusminorRadius;
-		void _CSFDB_Setgp_TorusminorRadius (const Standard_Real p);
 };
 
 
@@ -9038,7 +8681,7 @@ class gp_Trsf {
 ") gp_Trsf;
 		 gp_Trsf ();
 		%feature("compactdefaultargs") gp_Trsf;
-		%feature("autodoc", "	* Creates a 3D transformation from the 2D transformation T. The resulting transformation has a homogeneous vectorial part, V3, and a translation part, T3, built from T: a11 a12 0 a13 V3 = a21 a22 0 T3 = a23 0 0 1. 0 It also has the same scale factor as T. This guarantees (by projection) that the transformation which would be performed by T in a plane (2D space) is performed by the resulting transformation in the xOy plane of the 3D space, (i.e. in the plane defined by the origin (0., 0., 0.) and the vectors DX (1., 0., 0.), and DY (0., 1., 0.)). The scale factor is applied to the entire space.
+		%feature("autodoc", "	* Creates a 3D transformation from the 2D transformation T. The resulting transformation has a homogeneous vectorial part, V3, and a translation part, T3, built from T: a11 a12 0 a13 V3 = a21 a22 0 T3 = a23 0 0 1. 0 It also has the same scale factor as T. This guarantees --by projection-- that the transformation which would be performed by T in a plane --2D space-- is performed by the resulting transformation in the xOy plane of the 3D space, --i.e. in the plane defined by the origin --0., 0., 0.-- and the vectors DX --1., 0., 0.--, and DY --0., 1., 0.----. The scale factor is applied to the entire space.
 
 	:param T:
 	:type T: gp_Trsf2d
@@ -9108,7 +8751,7 @@ class gp_Trsf {
 ") SetDisplacement;
 		void SetDisplacement (const gp_Ax3 & FromSystem1,const gp_Ax3 & ToSystem2);
 		%feature("compactdefaultargs") SetTransformation;
-		%feature("autodoc", "	* Modifies this transformation so that it transforms the coordinates of any point, (x, y, z), relative to a source coordinate system into the coordinates (x', y', z') which are relative to a target coordinate system, but which represent the same point The transformation is from the coordinate system 'FromSystem1' to the coordinate system 'ToSystem2'. Example : In a C++ implementation : Real x1, y1, z1; // are the coordinates of a point in the // local system FromSystem1 Real x2, y2, z2; // are the coordinates of a point in the // local system ToSystem2 gp_Pnt P1 (x1, y1, z1) Trsf T; T.SetTransformation (FromSystem1, ToSystem2); gp_Pnt P2 = P1.Transformed (T); P2.Coord (x2, y2, z2);
+		%feature("autodoc", "	* Modifies this transformation so that it transforms the coordinates of any point, --x, y, z--, relative to a source coordinate system into the coordinates --x', y', z'-- which are relative to a target coordinate system, but which represent the same point The transformation is from the coordinate system 'FromSystem1' to the coordinate system 'ToSystem2'. Example : In a C++ implementation : Real x1, y1, z1; // are the coordinates of a point in the // local system FromSystem1 Real x2, y2, z2; // are the coordinates of a point in the // local system ToSystem2 gp_Pnt P1 --x1, y1, z1-- Trsf T; T.SetTransformation --FromSystem1, ToSystem2--; gp_Pnt P2 = P1.Transformed --T--; P2.Coord --x2, y2, z2--;
 
 	:param FromSystem1:
 	:type FromSystem1: gp_Ax3
@@ -9118,7 +8761,7 @@ class gp_Trsf {
 ") SetTransformation;
 		void SetTransformation (const gp_Ax3 & FromSystem1,const gp_Ax3 & ToSystem2);
 		%feature("compactdefaultargs") SetTransformation;
-		%feature("autodoc", "	* Modifies this transformation so that it transforms the coordinates of any point, (x, y, z), relative to a source coordinate system into the coordinates (x', y', z') which are relative to a target coordinate system, but which represent the same point The transformation is from the default coordinate system {P(0.,0.,0.), VX (1.,0.,0.), VY (0.,1.,0.), VZ (0., 0. ,1.) } to the local coordinate system defined with the Ax3 ToSystem. Use in the same way as the previous method. FromSystem1 is defaulted to the absolute coordinate system.
+		%feature("autodoc", "	* Modifies this transformation so that it transforms the coordinates of any point, --x, y, z--, relative to a source coordinate system into the coordinates --x', y', z'-- which are relative to a target coordinate system, but which represent the same point The transformation is from the default coordinate system {P--0.,0.,0.--, VX --1.,0.,0.--, VY --0.,1.,0.--, VZ --0., 0. ,1.-- } to the local coordinate system defined with the Ax3 ToSystem. Use in the same way as the previous method. FromSystem1 is defaulted to the absolute coordinate system.
 
 	:param ToSystem:
 	:type ToSystem: gp_Ax3
@@ -9144,7 +8787,7 @@ class gp_Trsf {
 ") SetTranslation;
 		void SetTranslation (const gp_Vec & V);
 		%feature("compactdefaultargs") SetTranslation;
-		%feature("autodoc", "	* Makes the transformation into a translation where the translation vector is the vector (P1, P2) defined from point P1 to point P2.
+		%feature("autodoc", "	* Makes the transformation into a translation where the translation vector is the vector --P1, P2-- defined from point P1 to point P2.
 
 	:param P1:
 	:type P1: gp_Pnt
@@ -9169,8 +8812,14 @@ class gp_Trsf {
 	:rtype: None
 ") SetScaleFactor;
 		void SetScaleFactor (const Standard_Real S);
+		%feature("compactdefaultargs") SetForm;
+		%feature("autodoc", "	:param P:
+	:type P: gp_TrsfForm
+	:rtype: None
+") SetForm;
+		void SetForm (const gp_TrsfForm P);
 		%feature("compactdefaultargs") SetValues;
-		%feature("autodoc", "	* Sets the coefficients of the transformation. The transformation of the point x,y,z is the point x',y',z' with : //! x' = a11 x + a12 y + a13 z + a14 y' = a21 x + a22 y + a23 z + a24 z' = a31 x + a32 y + a33 z + a34 //! The method Value(i,j) will return aij. Raises ConstructionError if the determinant of the aij is null. The matrix is orthogonalized before future using.
+		%feature("autodoc", "	* Sets the coefficients of the transformation. The transformation of the point x,y,z is the point x',y',z' with : //! x' = a11 x + a12 y + a13 z + a14 y' = a21 x + a22 y + a23 z + a24 z' = a31 x + a32 y + a33 z + a34 //! The method Value--i,j-- will return aij. Raises ConstructionError if the determinant of the aij is null. The matrix is orthogonalized before future using.
 
 	:param a11:
 	:type a11: float
@@ -9206,7 +8855,7 @@ class gp_Trsf {
 ") IsNegative;
 		Standard_Boolean IsNegative ();
 		%feature("compactdefaultargs") Form;
-		%feature("autodoc", "	* Returns the nature of the transformation. It can be: an identity transformation, a rotation, a translation, a mirror transformation (relative to a point, an axis or a plane), a scaling transformation, or a compound transformation.
+		%feature("autodoc", "	* Returns the nature of the transformation. It can be: an identity transformation, a rotation, a translation, a mirror transformation --relative to a point, an axis or a plane--, a scaling transformation, or a compound transformation.
 
 	:rtype: gp_TrsfForm
 ") Form;
@@ -9224,7 +8873,7 @@ class gp_Trsf {
 ") TranslationPart;
 		const gp_XYZ  TranslationPart ();
 		%feature("compactdefaultargs") GetRotation;
-		%feature("autodoc", "	* Returns the boolean True if there is non-zero rotation. In the presence of rotation, the output parameters store the axis and the angle of rotation. The method always returns positive value 'theAngle', i.e., 0. < theAngle <= PI. Note that this rotation is defined only by the vectorial part of the transformation; generally you would need to check also the translational part to obtain the axis (gp_Ax1) of rotation.
+		%feature("autodoc", "	* Returns the boolean True if there is non-zero rotation. In the presence of rotation, the output parameters store the axis and the angle of rotation. The method always returns positive value 'theAngle', i.e., 0. < theAngle <= PI. Note that this rotation is defined only by the vectorial part of the transformation; generally you would need to check also the translational part to obtain the axis --gp_Ax1-- of rotation.
 
 	:param theAxis:
 	:type theAxis: gp_XYZ
@@ -9266,7 +8915,7 @@ class gp_Trsf {
 ") Invert;
 		void Invert ();
 		%feature("compactdefaultargs") Inverted;
-		%feature("autodoc", "	* Computes the reverse transformation Raises an exception if the matrix of the transformation is not inversible, it means that the scale factor is lower or equal to Resolution from package gp. Computes the transformation composed with T and <self>. In a C++ implementation you can also write Tcomposed = <self> * T. Example : Trsf T1, T2, Tcomp; ............... Tcomp = T2.Multiplied(T1); // or (Tcomp = T2 * T1) Pnt P1(10.,3.,4.); Pnt P2 = P1.Transformed(Tcomp); //using Tcomp Pnt P3 = P1.Transformed(T1); //using T1 then T2 P3.Transform(T2); // P3 = P2 !!!
+		%feature("autodoc", "	* Computes the reverse transformation Raises an exception if the matrix of the transformation is not inversible, it means that the scale factor is lower or equal to Resolution from package gp. Computes the transformation composed with T and <self>. In a C++ implementation you can also write Tcomposed = <self> * T. Example : Trsf T1, T2, Tcomp; ............... Tcomp = T2.Multiplied--T1--; // or --Tcomp = T2 * T1-- Pnt P1--10.,3.,4.--; Pnt P2 = P1.Transformed--Tcomp--; //using Tcomp Pnt P3 = P1.Transformed--T1--; //using T1 then T2 P3.Transform--T2--; // P3 = P2 !!!
 
 	:rtype: gp_Trsf
 ") Inverted;
@@ -9312,7 +8961,7 @@ class gp_Trsf {
 ") Power;
 		void Power (const Standard_Integer N);
 		%feature("compactdefaultargs") Powered;
-		%feature("autodoc", "	* Computes the following composition of transformations <self> * <self> * .......* <self>, N time. if N = 0 <self> = Identity if N < 0 <self> = <self>.Inverse() *...........* <self>.Inverse(). //! Raises if N < 0 and if the matrix of the transformation not inversible.
+		%feature("autodoc", "	* Computes the following composition of transformations <self> * <self> * .......* <self>, N time. if N = 0 <self> = Identity if N < 0 <self> = <self>.Inverse---- *...........* <self>.Inverse----. //! Raises if N < 0 and if the matrix of the transformation not inversible.
 
 	:param N:
 	:type N: int
@@ -9337,34 +8986,6 @@ class gp_Trsf {
 	:rtype: None
 ") Transforms;
 		void Transforms (gp_XYZ & Coord);
-		%feature("compactdefaultargs") _CSFDB_Getgp_Trsfscale;
-		%feature("autodoc", "	:rtype: float
-") _CSFDB_Getgp_Trsfscale;
-		Standard_Real _CSFDB_Getgp_Trsfscale ();
-		%feature("compactdefaultargs") _CSFDB_Setgp_Trsfscale;
-		%feature("autodoc", "	:param p:
-	:type p: float
-	:rtype: None
-") _CSFDB_Setgp_Trsfscale;
-		void _CSFDB_Setgp_Trsfscale (const Standard_Real p);
-		%feature("compactdefaultargs") _CSFDB_Getgp_Trsfshape;
-		%feature("autodoc", "	:rtype: gp_TrsfForm
-") _CSFDB_Getgp_Trsfshape;
-		gp_TrsfForm _CSFDB_Getgp_Trsfshape ();
-		%feature("compactdefaultargs") _CSFDB_Setgp_Trsfshape;
-		%feature("autodoc", "	:param p:
-	:type p: gp_TrsfForm
-	:rtype: None
-") _CSFDB_Setgp_Trsfshape;
-		void _CSFDB_Setgp_Trsfshape (const gp_TrsfForm p);
-		%feature("compactdefaultargs") _CSFDB_Getgp_Trsfmatrix;
-		%feature("autodoc", "	:rtype: gp_Mat
-") _CSFDB_Getgp_Trsfmatrix;
-		const gp_Mat  _CSFDB_Getgp_Trsfmatrix ();
-		%feature("compactdefaultargs") _CSFDB_Getgp_Trsfloc;
-		%feature("autodoc", "	:rtype: gp_XYZ
-") _CSFDB_Getgp_Trsfloc;
-		const gp_XYZ  _CSFDB_Getgp_Trsfloc ();
 };
 
 
@@ -9437,7 +9058,7 @@ class gp_Trsf2d {
 ") SetTransformation;
 		void SetTransformation (const gp_Ax2d & FromSystem1,const gp_Ax2d & ToSystem2);
 		%feature("compactdefaultargs") SetTransformation;
-		%feature("autodoc", "	* Changes the transformation allowing passage from the basic coordinate system {P(0.,0.,0.), VX (1.,0.,0.), VY (0.,1.,0.)} to the local coordinate system defined with the Ax2d ToSystem.
+		%feature("autodoc", "	* Changes the transformation allowing passage from the basic coordinate system {P--0.,0.,0.--, VX --1.,0.,0.--, VY --0.,1.,0.--} to the local coordinate system defined with the Ax2d ToSystem.
 
 	:param ToSystem:
 	:type ToSystem: gp_Ax2d
@@ -9485,7 +9106,7 @@ class gp_Trsf2d {
 ") IsNegative;
 		Standard_Boolean IsNegative ();
 		%feature("compactdefaultargs") Form;
-		%feature("autodoc", "	* Returns the nature of the transformation. It can be an identity transformation, a rotation, a translation, a mirror (relative to a point or an axis), a scaling transformation, or a compound transformation.
+		%feature("autodoc", "	* Returns the nature of the transformation. It can be an identity transformation, a rotation, a translation, a mirror --relative to a point or an axis--, a scaling transformation, or a compound transformation.
 
 	:rtype: gp_TrsfForm
 ") Form;
@@ -9515,7 +9136,7 @@ class gp_Trsf2d {
 ") HVectorialPart;
 		const gp_Mat2d  HVectorialPart ();
 		%feature("compactdefaultargs") RotationPart;
-		%feature("autodoc", "	* Returns the angle corresponding to the rotational component of the transformation matrix (operation opposite to SetRotation()).
+		%feature("autodoc", "	* Returns the angle corresponding to the rotational component of the transformation matrix --operation opposite to SetRotation------.
 
 	:rtype: float
 ") RotationPart;
@@ -9581,7 +9202,7 @@ class gp_Trsf2d {
 ") Power;
 		void Power (const Standard_Integer N);
 		%feature("compactdefaultargs") Powered;
-		%feature("autodoc", "	* Computes the following composition of transformations <self> * <self> * .......* <self>, N time. if N = 0 <self> = Identity if N < 0 <self> = <self>.Inverse() *...........* <self>.Inverse(). //! Raises if N < 0 and if the matrix of the transformation not inversible.
+		%feature("autodoc", "	* Computes the following composition of transformations <self> * <self> * .......* <self>, N time. if N = 0 <self> = Identity if N < 0 <self> = <self>.Inverse---- *...........* <self>.Inverse----. //! Raises if N < 0 and if the matrix of the transformation not inversible.
 
 	:param N:
 	:type N: int
@@ -9605,7 +9226,7 @@ class gp_Trsf2d {
 ") Transforms;
 		void Transforms (gp_XY & Coord);
 		%feature("compactdefaultargs") SetValues;
-		%feature("autodoc", "	* Sets the coefficients of the transformation. The transformation of the point x,y is the point x',y' with : //! x' = a11 x + a12 y + a13 y' = a21 x + a22 y + a23 //! The method Value(i,j) will return aij. Raises ConstructionError if the determinant of the aij is null. If the matrix as not a uniform scale it will be orthogonalized before future using.
+		%feature("autodoc", "	* Sets the coefficients of the transformation. The transformation of the point x,y is the point x',y' with : //! x' = a11 x + a12 y + a13 y' = a21 x + a22 y + a23 //! The method Value--i,j-- will return aij. Raises ConstructionError if the determinant of the aij is null. If the matrix as not a uniform scale it will be orthogonalized before future using.
 
 	:param a11:
 	:type a11: float
@@ -9622,34 +9243,6 @@ class gp_Trsf2d {
 	:rtype: None
 ") SetValues;
 		void SetValues (const Standard_Real a11,const Standard_Real a12,const Standard_Real a13,const Standard_Real a21,const Standard_Real a22,const Standard_Real a23);
-		%feature("compactdefaultargs") _CSFDB_Getgp_Trsf2dscale;
-		%feature("autodoc", "	:rtype: float
-") _CSFDB_Getgp_Trsf2dscale;
-		Standard_Real _CSFDB_Getgp_Trsf2dscale ();
-		%feature("compactdefaultargs") _CSFDB_Setgp_Trsf2dscale;
-		%feature("autodoc", "	:param p:
-	:type p: float
-	:rtype: None
-") _CSFDB_Setgp_Trsf2dscale;
-		void _CSFDB_Setgp_Trsf2dscale (const Standard_Real p);
-		%feature("compactdefaultargs") _CSFDB_Getgp_Trsf2dshape;
-		%feature("autodoc", "	:rtype: gp_TrsfForm
-") _CSFDB_Getgp_Trsf2dshape;
-		gp_TrsfForm _CSFDB_Getgp_Trsf2dshape ();
-		%feature("compactdefaultargs") _CSFDB_Setgp_Trsf2dshape;
-		%feature("autodoc", "	:param p:
-	:type p: gp_TrsfForm
-	:rtype: None
-") _CSFDB_Setgp_Trsf2dshape;
-		void _CSFDB_Setgp_Trsf2dshape (const gp_TrsfForm p);
-		%feature("compactdefaultargs") _CSFDB_Getgp_Trsf2dmatrix;
-		%feature("autodoc", "	:rtype: gp_Mat2d
-") _CSFDB_Getgp_Trsf2dmatrix;
-		const gp_Mat2d  _CSFDB_Getgp_Trsf2dmatrix ();
-		%feature("compactdefaultargs") _CSFDB_Getgp_Trsf2dloc;
-		%feature("autodoc", "	:rtype: gp_XY
-") _CSFDB_Getgp_Trsf2dloc;
-		const gp_XY  _CSFDB_Getgp_Trsf2dloc ();
 };
 
 
@@ -9816,7 +9409,7 @@ class gp_Vec {
 ") IsEqual;
 		Standard_Boolean IsEqual (const gp_Vec & Other,const Standard_Real LinearTolerance,const Standard_Real AngularTolerance);
 		%feature("compactdefaultargs") IsNormal;
-		%feature("autodoc", "	* Returns True if abs(<self>.Angle(Other) - PI/2.) <= AngularTolerance Raises VectorWithNullMagnitude if <self>.Magnitude() <= Resolution or Other.Magnitude() <= Resolution from gp
+		%feature("autodoc", "	* Returns True if abs--<self>.Angle--Other-- - PI/2.-- <= AngularTolerance Raises VectorWithNullMagnitude if <self>.Magnitude---- <= Resolution or Other.Magnitude---- <= Resolution from gp
 
 	:param Other:
 	:type Other: gp_Vec
@@ -9826,7 +9419,7 @@ class gp_Vec {
 ") IsNormal;
 		Standard_Boolean IsNormal (const gp_Vec & Other,const Standard_Real AngularTolerance);
 		%feature("compactdefaultargs") IsOpposite;
-		%feature("autodoc", "	* Returns True if PI - <self>.Angle(Other) <= AngularTolerance Raises VectorWithNullMagnitude if <self>.Magnitude() <= Resolution or Other.Magnitude() <= Resolution from gp
+		%feature("autodoc", "	* Returns True if PI - <self>.Angle--Other-- <= AngularTolerance Raises VectorWithNullMagnitude if <self>.Magnitude---- <= Resolution or Other.Magnitude---- <= Resolution from gp
 
 	:param Other:
 	:type Other: gp_Vec
@@ -9836,7 +9429,7 @@ class gp_Vec {
 ") IsOpposite;
 		Standard_Boolean IsOpposite (const gp_Vec & Other,const Standard_Real AngularTolerance);
 		%feature("compactdefaultargs") IsParallel;
-		%feature("autodoc", "	* Returns True if Angle(<self>, Other) <= AngularTolerance or PI - Angle(<self>, Other) <= AngularTolerance This definition means that two parallel vectors cannot define a plane but two vectors with opposite directions are considered as parallel. Raises VectorWithNullMagnitude if <self>.Magnitude() <= Resolution or Other.Magnitude() <= Resolution from gp
+		%feature("autodoc", "	* Returns True if Angle--<self>, Other-- <= AngularTolerance or PI - Angle--<self>, Other-- <= AngularTolerance This definition means that two parallel vectors cannot define a plane but two vectors with opposite directions are considered as parallel. Raises VectorWithNullMagnitude if <self>.Magnitude---- <= Resolution or Other.Magnitude---- <= Resolution from gp
 
 	:param Other:
 	:type Other: gp_Vec
@@ -9846,7 +9439,7 @@ class gp_Vec {
 ") IsParallel;
 		Standard_Boolean IsParallel (const gp_Vec & Other,const Standard_Real AngularTolerance);
 		%feature("compactdefaultargs") Angle;
-		%feature("autodoc", "	* Computes the angular value between <self> and <Other> Returns the angle value between 0 and PI in radian. Raises VectorWithNullMagnitude if <self>.Magnitude() <= Resolution from gp or Other.Magnitude() <= Resolution because the angular value is indefinite if one of the vectors has a null magnitude.
+		%feature("autodoc", "	* Computes the angular value between <self> and <Other> Returns the angle value between 0 and PI in radian. Raises VectorWithNullMagnitude if <self>.Magnitude---- <= Resolution from gp or Other.Magnitude---- <= Resolution because the angular value is indefinite if one of the vectors has a null magnitude.
 
 	:param Other:
 	:type Other: gp_Vec
@@ -9854,7 +9447,7 @@ class gp_Vec {
 ") Angle;
 		Standard_Real Angle (const gp_Vec & Other);
 		%feature("compactdefaultargs") AngleWithRef;
-		%feature("autodoc", "	* Computes the angle, in radians, between this vector and vector Other. The result is a value between -Pi and Pi. For this, VRef defines the positive sense of rotation: the angular value is positive, if the cross product this ^ Other has the same orientation as VRef relative to the plane defined by the vectors this and Other. Otherwise, the angular value is negative. Exceptions gp_VectorWithNullMagnitude if the magnitude of this vector, the vector Other, or the vector VRef is less than or equal to gp::Resolution(). Standard_DomainError if this vector, the vector Other, and the vector VRef are coplanar, unless this vector and the vector Other are parallel.
+		%feature("autodoc", "	* Computes the angle, in radians, between this vector and vector Other. The result is a value between -Pi and Pi. For this, VRef defines the positive sense of rotation: the angular value is positive, if the cross product this ^ Other has the same orientation as VRef relative to the plane defined by the vectors this and Other. Otherwise, the angular value is negative. Exceptions gp_VectorWithNullMagnitude if the magnitude of this vector, the vector Other, or the vector VRef is less than or equal to gp::Resolution----. Standard_DomainError if this vector, the vector Other, and the vector VRef are coplanar, unless this vector and the vector Other are parallel.
 
 	:param Other:
 	:type Other: gp_Vec
@@ -10032,7 +9625,7 @@ class gp_Vec {
 ") CrossSquareMagnitude;
 		Standard_Real CrossSquareMagnitude (const gp_Vec & Right);
 		%feature("compactdefaultargs") CrossCross;
-		%feature("autodoc", "	* Computes the triple vector product. <self> ^= (V1 ^ V2)
+		%feature("autodoc", "	* Computes the triple vector product. <self> ^= --V1 ^ V2--
 
 	:param V1:
 	:type V1: gp_Vec
@@ -10042,7 +9635,7 @@ class gp_Vec {
 ") CrossCross;
 		void CrossCross (const gp_Vec & V1,const gp_Vec & V2);
 		%feature("compactdefaultargs") CrossCrossed;
-		%feature("autodoc", "	* Computes the triple vector product. <self> ^ (V1 ^ V2)
+		%feature("autodoc", "	* Computes the triple vector product. <self> ^ --V1 ^ V2--
 
 	:param V1:
 	:type V1: gp_Vec
@@ -10066,7 +9659,7 @@ class gp_Vec {
 ") operator *;
 		Standard_Real operator * (const gp_Vec & Other);
 		%feature("compactdefaultargs") DotCross;
-		%feature("autodoc", "	* Computes the triple scalar product <self> * (V1 ^ V2).
+		%feature("autodoc", "	* Computes the triple scalar product <self> * --V1 ^ V2--.
 
 	:param V1:
 	:type V1: gp_Vec
@@ -10228,7 +9821,7 @@ class gp_Vec {
 ") Mirror;
 		void Mirror (const gp_Ax2 & A2);
 		%feature("compactdefaultargs") Mirrored;
-		%feature("autodoc", "	* Performs the symmetrical transformation of a vector with respect to a plane. The axis placement A2 locates the plane of the symmetry : (Location, XDirection, YDirection).
+		%feature("autodoc", "	* Performs the symmetrical transformation of a vector with respect to a plane. The axis placement A2 locates the plane of the symmetry : --Location, XDirection, YDirection--.
 
 	:param A2:
 	:type A2: gp_Ax2
@@ -10283,10 +9876,6 @@ class gp_Vec {
 	:rtype: gp_Vec
 ") Transformed;
 		gp_Vec Transformed (const gp_Trsf & T);
-		%feature("compactdefaultargs") _CSFDB_Getgp_Veccoord;
-		%feature("autodoc", "	:rtype: gp_XYZ
-") _CSFDB_Getgp_Veccoord;
-		const gp_XYZ  _CSFDB_Getgp_Veccoord ();
 };
 
 
@@ -10433,7 +10022,7 @@ class gp_Vec2d {
 ") IsEqual;
 		Standard_Boolean IsEqual (const gp_Vec2d & Other,const Standard_Real LinearTolerance,const Standard_Real AngularTolerance);
 		%feature("compactdefaultargs") IsNormal;
-		%feature("autodoc", "	* Returns True if abs(Abs(<self>.Angle(Other)) - PI/2.) <= AngularTolerance Raises VectorWithNullMagnitude if <self>.Magnitude() <= Resolution or Other.Magnitude() <= Resolution from gp.
+		%feature("autodoc", "	* Returns True if abs--Abs--<self>.Angle--Other---- - PI/2.-- <= AngularTolerance Raises VectorWithNullMagnitude if <self>.Magnitude---- <= Resolution or Other.Magnitude---- <= Resolution from gp.
 
 	:param Other:
 	:type Other: gp_Vec2d
@@ -10443,7 +10032,7 @@ class gp_Vec2d {
 ") IsNormal;
 		Standard_Boolean IsNormal (const gp_Vec2d & Other,const Standard_Real AngularTolerance);
 		%feature("compactdefaultargs") IsOpposite;
-		%feature("autodoc", "	* Returns True if PI - Abs(<self>.Angle(Other)) <= AngularTolerance Raises VectorWithNullMagnitude if <self>.Magnitude() <= Resolution or Other.Magnitude() <= Resolution from gp.
+		%feature("autodoc", "	* Returns True if PI - Abs--<self>.Angle--Other---- <= AngularTolerance Raises VectorWithNullMagnitude if <self>.Magnitude---- <= Resolution or Other.Magnitude---- <= Resolution from gp.
 
 	:param Other:
 	:type Other: gp_Vec2d
@@ -10453,7 +10042,7 @@ class gp_Vec2d {
 ") IsOpposite;
 		Standard_Boolean IsOpposite (const gp_Vec2d & Other,const Standard_Real AngularTolerance);
 		%feature("compactdefaultargs") IsParallel;
-		%feature("autodoc", "	* Returns true if Abs(Angle(<self>, Other)) <= AngularTolerance or PI - Abs(Angle(<self>, Other)) <= AngularTolerance Two vectors with opposite directions are considered as parallel. Raises VectorWithNullMagnitude if <self>.Magnitude() <= Resolution or Other.Magnitude() <= Resolution from gp
+		%feature("autodoc", "	* Returns true if Abs--Angle--<self>, Other---- <= AngularTolerance or PI - Abs--Angle--<self>, Other---- <= AngularTolerance Two vectors with opposite directions are considered as parallel. Raises VectorWithNullMagnitude if <self>.Magnitude---- <= Resolution or Other.Magnitude---- <= Resolution from gp
 
 	:param Other:
 	:type Other: gp_Vec2d
@@ -10463,7 +10052,7 @@ class gp_Vec2d {
 ") IsParallel;
 		Standard_Boolean IsParallel (const gp_Vec2d & Other,const Standard_Real AngularTolerance);
 		%feature("compactdefaultargs") Angle;
-		%feature("autodoc", "	* Computes the angular value between <self> and <Other> returns the angle value between -PI and PI in radian. The orientation is from <self> to Other. The positive sense is the trigonometric sense. Raises VectorWithNullMagnitude if <self>.Magnitude() <= Resolution from gp or Other.Magnitude() <= Resolution because the angular value is indefinite if one of the vectors has a null magnitude.
+		%feature("autodoc", "	* Computes the angular value between <self> and <Other> returns the angle value between -PI and PI in radian. The orientation is from <self> to Other. The positive sense is the trigonometric sense. Raises VectorWithNullMagnitude if <self>.Magnitude---- <= Resolution from gp or Other.Magnitude---- <= Resolution because the angular value is indefinite if one of the vectors has a null magnitude.
 
 	:param Other:
 	:type Other: gp_Vec2d
@@ -10786,10 +10375,6 @@ class gp_Vec2d {
 	:rtype: gp_Vec2d
 ") Transformed;
 		gp_Vec2d Transformed (const gp_Trsf2d & T);
-		%feature("compactdefaultargs") _CSFDB_Getgp_Vec2dcoord;
-		%feature("autodoc", "	:rtype: gp_XY
-") _CSFDB_Getgp_Vec2dcoord;
-		const gp_XY  _CSFDB_Getgp_Vec2dcoord ();
 };
 
 
@@ -10802,7 +10387,7 @@ class gp_Vec2d {
 class gp_XY {
 	public:
 		%feature("compactdefaultargs") gp_XY;
-		%feature("autodoc", "	* Creates XY object with zero coordinates (0,0).
+		%feature("autodoc", "	* Creates XY object with zero coordinates --0,0--.
 
 	:rtype: None
 ") gp_XY;
@@ -10890,7 +10475,7 @@ class gp_XY {
 ") Y;
 		Standard_Real Y ();
 		%feature("compactdefaultargs") Modulus;
-		%feature("autodoc", "	* Computes Sqrt (X*X + Y*Y) where X and Y are the two coordinates of this number pair.
+		%feature("autodoc", "	* Computes Sqrt --X*X + Y*Y-- where X and Y are the two coordinates of this number pair.
 
 	:rtype: float
 ") Modulus;
@@ -10902,7 +10487,7 @@ class gp_XY {
 ") SquareModulus;
 		Standard_Real SquareModulus ();
 		%feature("compactdefaultargs") IsEqual;
-		%feature("autodoc", "	* Returns true if the coordinates of this number pair are equal to the respective coordinates of the number pair Other, within the specified tolerance Tolerance. I.e.: abs(<self>.X() - Other.X()) <= Tolerance and abs(<self>.Y() - Other.Y()) <= Tolerance and computations
+		%feature("autodoc", "	* Returns true if the coordinates of this number pair are equal to the respective coordinates of the number pair Other, within the specified tolerance Tolerance. I.e.: abs--<self>.X---- - Other.X------ <= Tolerance and abs--<self>.Y---- - Other.Y------ <= Tolerance and computations
 
 	:param Other:
 	:type Other: gp_XY
@@ -10912,7 +10497,7 @@ class gp_XY {
 ") IsEqual;
 		Standard_Boolean IsEqual (const gp_XY & Other,const Standard_Real Tolerance);
 		%feature("compactdefaultargs") Add;
-		%feature("autodoc", "	* Computes the sum of this number pair and number pair Other <self>.X() = <self>.X() + Other.X() <self>.Y() = <self>.Y() + Other.Y()
+		%feature("autodoc", "	* Computes the sum of this number pair and number pair Other <self>.X---- = <self>.X---- + Other.X---- <self>.Y---- = <self>.Y---- + Other.Y----
 
 	:param Other:
 	:type Other: gp_XY
@@ -10926,7 +10511,7 @@ class gp_XY {
 ") operator +=;
 		void operator += (const gp_XY & Other);
 		%feature("compactdefaultargs") Added;
-		%feature("autodoc", "	* Computes the sum of this number pair and number pair Other new.X() = <self>.X() + Other.X() new.Y() = <self>.Y() + Other.Y()
+		%feature("autodoc", "	* Computes the sum of this number pair and number pair Other new.X---- = <self>.X---- + Other.X---- new.Y---- = <self>.Y---- + Other.Y----
 
 	:param Other:
 	:type Other: gp_XY
@@ -10940,7 +10525,7 @@ class gp_XY {
 ") operator +;
 		gp_XY operator + (const gp_XY & Other);
 		%feature("compactdefaultargs") Crossed;
-		%feature("autodoc", "	* Real D = <self>.X() * Other.Y() - <self>.Y() * Other.X()
+		%feature("autodoc", "	* Real D = <self>.X---- * Other.Y---- - <self>.Y---- * Other.X----
 
 	:param Right:
 	:type Right: gp_XY
@@ -11012,7 +10597,7 @@ class gp_XY {
 ") operator *;
 		Standard_Real operator * (const gp_XY & Other);
 		%feature("compactdefaultargs") Multiply;
-		%feature("autodoc", "	* <self>.X() = <self>.X() * Scalar; <self>.Y() = <self>.Y() * Scalar;
+		%feature("autodoc", "	* <self>.X---- = <self>.X---- * Scalar; <self>.Y---- = <self>.Y---- * Scalar;
 
 	:param Scalar:
 	:type Scalar: float
@@ -11026,7 +10611,7 @@ class gp_XY {
 ") operator *=;
 		void operator *= (const Standard_Real Scalar);
 		%feature("compactdefaultargs") Multiply;
-		%feature("autodoc", "	* <self>.X() = <self>.X() * Other.X(); <self>.Y() = <self>.Y() * Other.Y();
+		%feature("autodoc", "	* <self>.X---- = <self>.X---- * Other.X----; <self>.Y---- = <self>.Y---- * Other.Y----;
 
 	:param Other:
 	:type Other: gp_XY
@@ -11054,7 +10639,7 @@ class gp_XY {
 ") operator *=;
 		void operator *= (const gp_Mat2d & Matrix);
 		%feature("compactdefaultargs") Multiplied;
-		%feature("autodoc", "	* New.X() = <self>.X() * Scalar; New.Y() = <self>.Y() * Scalar;
+		%feature("autodoc", "	* New.X---- = <self>.X---- * Scalar; New.Y---- = <self>.Y---- * Scalar;
 
 	:param Scalar:
 	:type Scalar: float
@@ -11068,7 +10653,7 @@ class gp_XY {
 ") operator *;
 		gp_XY operator * (const Standard_Real Scalar);
 		%feature("compactdefaultargs") Multiplied;
-		%feature("autodoc", "	* new.X() = <self>.X() * Other.X(); new.Y() = <self>.Y() * Other.Y();
+		%feature("autodoc", "	* new.X---- = <self>.X---- * Other.X----; new.Y---- = <self>.Y---- * Other.Y----;
 
 	:param Other:
 	:type Other: gp_XY
@@ -11090,25 +10675,25 @@ class gp_XY {
 ") operator *;
 		gp_XY operator * (const gp_Mat2d & Matrix);
 		%feature("compactdefaultargs") Normalize;
-		%feature("autodoc", "	* <self>.X() = <self>.X()/ <self>.Modulus() <self>.Y() = <self>.Y()/ <self>.Modulus() Raises ConstructionError if <self>.Modulus() <= Resolution from gp
+		%feature("autodoc", "	* <self>.X---- = <self>.X----/ <self>.Modulus---- <self>.Y---- = <self>.Y----/ <self>.Modulus---- Raises ConstructionError if <self>.Modulus---- <= Resolution from gp
 
 	:rtype: None
 ") Normalize;
 		void Normalize ();
 		%feature("compactdefaultargs") Normalized;
-		%feature("autodoc", "	* New.X() = <self>.X()/ <self>.Modulus() New.Y() = <self>.Y()/ <self>.Modulus() Raises ConstructionError if <self>.Modulus() <= Resolution from gp
+		%feature("autodoc", "	* New.X---- = <self>.X----/ <self>.Modulus---- New.Y---- = <self>.Y----/ <self>.Modulus---- Raises ConstructionError if <self>.Modulus---- <= Resolution from gp
 
 	:rtype: gp_XY
 ") Normalized;
 		gp_XY Normalized ();
 		%feature("compactdefaultargs") Reverse;
-		%feature("autodoc", "	* <self>.X() = -<self>.X() <self>.Y() = -<self>.Y()
+		%feature("autodoc", "	* <self>.X---- = -<self>.X---- <self>.Y---- = -<self>.Y----
 
 	:rtype: None
 ") Reverse;
 		void Reverse ();
 		%feature("compactdefaultargs") Reversed;
-		%feature("autodoc", "	* New.X() = -<self>.X() New.Y() = -<self>.Y()
+		%feature("autodoc", "	* New.X---- = -<self>.X---- New.Y---- = -<self>.Y----
 
 	:rtype: gp_XY
 ") Reversed;
@@ -11170,7 +10755,7 @@ class gp_XY {
 ") SetLinearForm;
 		void SetLinearForm (const gp_XY & XY1,const gp_XY & XY2);
 		%feature("compactdefaultargs") Subtract;
-		%feature("autodoc", "	* <self>.X() = <self>.X() - Other.X() <self>.Y() = <self>.Y() - Other.Y()
+		%feature("autodoc", "	* <self>.X---- = <self>.X---- - Other.X---- <self>.Y---- = <self>.Y---- - Other.Y----
 
 	:param Right:
 	:type Right: gp_XY
@@ -11184,7 +10769,7 @@ class gp_XY {
 ") operator -=;
 		void operator -= (const gp_XY & Right);
 		%feature("compactdefaultargs") Subtracted;
-		%feature("autodoc", "	* new.X() = <self>.X() - Other.X() new.Y() = <self>.Y() - Other.Y()
+		%feature("autodoc", "	* new.X---- = <self>.X---- - Other.X---- new.Y---- = <self>.Y---- - Other.Y----
 
 	:param Right:
 	:type Right: gp_XY
@@ -11197,26 +10782,6 @@ class gp_XY {
 	:rtype: gp_XY
 ") operator -;
 		gp_XY operator - (const gp_XY & Right);
-		%feature("compactdefaultargs") _CSFDB_Getgp_XYx;
-		%feature("autodoc", "	:rtype: float
-") _CSFDB_Getgp_XYx;
-		Standard_Real _CSFDB_Getgp_XYx ();
-		%feature("compactdefaultargs") _CSFDB_Setgp_XYx;
-		%feature("autodoc", "	:param p:
-	:type p: float
-	:rtype: None
-") _CSFDB_Setgp_XYx;
-		void _CSFDB_Setgp_XYx (const Standard_Real p);
-		%feature("compactdefaultargs") _CSFDB_Getgp_XYy;
-		%feature("autodoc", "	:rtype: float
-") _CSFDB_Getgp_XYy;
-		Standard_Real _CSFDB_Getgp_XYy ();
-		%feature("compactdefaultargs") _CSFDB_Setgp_XYy;
-		%feature("autodoc", "	:param p:
-	:type p: float
-	:rtype: None
-") _CSFDB_Setgp_XYy;
-		void _CSFDB_Setgp_XYy (const Standard_Real p);
 };
 
 
@@ -11229,7 +10794,7 @@ class gp_XY {
 class gp_XYZ {
 	public:
 		%feature("compactdefaultargs") gp_XYZ;
-		%feature("autodoc", "	* Creates an XYZ object with zero co-ordinates (0,0,0)
+		%feature("autodoc", "	* Creates an XYZ object with zero co-ordinates --0,0,0--
 
 	:rtype: None
 ") gp_XYZ;
@@ -11316,6 +10881,18 @@ class gp_XYZ {
 	:rtype: None
 ") Coord;
 		void Coord (Standard_Real &OutValue,Standard_Real &OutValue,Standard_Real &OutValue);
+		%feature("compactdefaultargs") GetData;
+		%feature("autodoc", "	* Returns a const ptr to coordinates location. Is useful for algorithms, but DOES NOT PERFORM ANY CHECKS!
+
+	:rtype: inline  float *
+") GetData;
+		inline const Standard_Real * GetData ();
+		%feature("compactdefaultargs") ChangeData;
+		%feature("autodoc", "	* Returns a ptr to coordinates location. Is useful for algorithms, but DOES NOT PERFORM ANY CHECKS!
+
+	:rtype: inline float *
+") ChangeData;
+		inline Standard_Real * ChangeData ();
 		%feature("compactdefaultargs") X;
 		%feature("autodoc", "	* Returns the X coordinate
 
@@ -11334,20 +10911,8 @@ class gp_XYZ {
 	:rtype: float
 ") Z;
 		Standard_Real Z ();
-		%feature("compactdefaultargs") GetData;
-		%feature("autodoc", "	* Returns a const ptr to coordinates location. Is useful for algorithms, but DOES NOT PERFORM ANY CHECKS!
-
-	:rtype: float *
-") GetData;
-		const Standard_Real * GetData ();
-		%feature("compactdefaultargs") ChangeData;
-		%feature("autodoc", "	* Returns a ptr to coordinates location. Is useful for algorithms, but DOES NOT PERFORM ANY CHECKS!
-
-	:rtype: float *
-") ChangeData;
-		Standard_Real * ChangeData ();
 		%feature("compactdefaultargs") Modulus;
-		%feature("autodoc", "	* computes Sqrt (X*X + Y*Y + Z*Z) where X, Y and Z are the three coordinates of this XYZ object.
+		%feature("autodoc", "	* computes Sqrt --X*X + Y*Y + Z*Z-- where X, Y and Z are the three coordinates of this XYZ object.
 
 	:rtype: float
 ") Modulus;
@@ -11359,7 +10924,7 @@ class gp_XYZ {
 ") SquareModulus;
 		Standard_Real SquareModulus ();
 		%feature("compactdefaultargs") IsEqual;
-		%feature("autodoc", "	* Returns True if he coordinates of this XYZ object are equal to the respective coordinates Other, within the specified tolerance Tolerance. I.e.: abs(<self>.X() - Other.X()) <= Tolerance and abs(<self>.Y() - Other.Y()) <= Tolerance and abs(<self>.Z() - Other.Z()) <= Tolerance.
+		%feature("autodoc", "	* Returns True if he coordinates of this XYZ object are equal to the respective coordinates Other, within the specified tolerance Tolerance. I.e.: abs--<self>.X---- - Other.X------ <= Tolerance and abs--<self>.Y---- - Other.Y------ <= Tolerance and abs--<self>.Z---- - Other.Z------ <= Tolerance.
 
 	:param Other:
 	:type Other: gp_XYZ
@@ -11369,7 +10934,7 @@ class gp_XYZ {
 ") IsEqual;
 		Standard_Boolean IsEqual (const gp_XYZ & Other,const Standard_Real Tolerance);
 		%feature("compactdefaultargs") Add;
-		%feature("autodoc", "	* <self>.X() = <self>.X() + Other.X() <self>.Y() = <self>.Y() + Other.Y() <self>.Z() = <self>.Z() + Other.Z()
+		%feature("autodoc", "	* <self>.X---- = <self>.X---- + Other.X---- <self>.Y---- = <self>.Y---- + Other.Y---- <self>.Z---- = <self>.Z---- + Other.Z----
 
 	:param Other:
 	:type Other: gp_XYZ
@@ -11383,7 +10948,7 @@ class gp_XYZ {
 ") operator +=;
 		void operator += (const gp_XYZ & Other);
 		%feature("compactdefaultargs") Added;
-		%feature("autodoc", "	* new.X() = <self>.X() + Other.X() new.Y() = <self>.Y() + Other.Y() new.Z() = <self>.Z() + Other.Z()
+		%feature("autodoc", "	* new.X---- = <self>.X---- + Other.X---- new.Y---- = <self>.Y---- + Other.Y---- new.Z---- = <self>.Z---- + Other.Z----
 
 	:param Other:
 	:type Other: gp_XYZ
@@ -11397,7 +10962,7 @@ class gp_XYZ {
 ") operator +;
 		gp_XYZ operator + (const gp_XYZ & Other);
 		%feature("compactdefaultargs") Cross;
-		%feature("autodoc", "	* <self>.X() = <self>.Y() * Other.Z() - <self>.Z() * Other.Y() <self>.Y() = <self>.Z() * Other.X() - <self>.X() * Other.Z() <self>.Z() = <self>.X() * Other.Y() - <self>.Y() * Other.X()
+		%feature("autodoc", "	* <self>.X---- = <self>.Y---- * Other.Z---- - <self>.Z---- * Other.Y---- <self>.Y---- = <self>.Z---- * Other.X---- - <self>.X---- * Other.Z---- <self>.Z---- = <self>.X---- * Other.Y---- - <self>.Y---- * Other.X----
 
 	:param Right:
 	:type Right: gp_XYZ
@@ -11411,7 +10976,7 @@ class gp_XYZ {
 ") operator ^=;
 		void operator ^= (const gp_XYZ & Right);
 		%feature("compactdefaultargs") Crossed;
-		%feature("autodoc", "	* new.X() = <self>.Y() * Other.Z() - <self>.Z() * Other.Y() new.Y() = <self>.Z() * Other.X() - <self>.X() * Other.Z() new.Z() = <self>.X() * Other.Y() - <self>.Y() * Other.X()
+		%feature("autodoc", "	* new.X---- = <self>.Y---- * Other.Z---- - <self>.Z---- * Other.Y---- new.Y---- = <self>.Z---- * Other.X---- - <self>.X---- * Other.Z---- new.Z---- = <self>.X---- * Other.Y---- - <self>.Y---- * Other.X----
 
 	:param Right:
 	:type Right: gp_XYZ
@@ -11441,7 +11006,7 @@ class gp_XYZ {
 ") CrossSquareMagnitude;
 		Standard_Real CrossSquareMagnitude (const gp_XYZ & Right);
 		%feature("compactdefaultargs") CrossCross;
-		%feature("autodoc", "	* Triple vector product Computes <self> = <self>.Cross(Coord1.Cross(Coord2))
+		%feature("autodoc", "	* Triple vector product Computes <self> = <self>.Cross--Coord1.Cross--Coord2----
 
 	:param Coord1:
 	:type Coord1: gp_XYZ
@@ -11451,7 +11016,7 @@ class gp_XYZ {
 ") CrossCross;
 		void CrossCross (const gp_XYZ & Coord1,const gp_XYZ & Coord2);
 		%feature("compactdefaultargs") CrossCrossed;
-		%feature("autodoc", "	* Triple vector product computes New = <self>.Cross(Coord1.Cross(Coord2))
+		%feature("autodoc", "	* Triple vector product computes New = <self>.Cross--Coord1.Cross--Coord2----
 
 	:param Coord1:
 	:type Coord1: gp_XYZ
@@ -11513,7 +11078,7 @@ class gp_XYZ {
 ") DotCross;
 		Standard_Real DotCross (const gp_XYZ & Coord1,const gp_XYZ & Coord2);
 		%feature("compactdefaultargs") Multiply;
-		%feature("autodoc", "	* <self>.X() = <self>.X() * Scalar; <self>.Y() = <self>.Y() * Scalar; <self>.Z() = <self>.Z() * Scalar;
+		%feature("autodoc", "	* <self>.X---- = <self>.X---- * Scalar; <self>.Y---- = <self>.Y---- * Scalar; <self>.Z---- = <self>.Z---- * Scalar;
 
 	:param Scalar:
 	:type Scalar: float
@@ -11527,7 +11092,7 @@ class gp_XYZ {
 ") operator *=;
 		void operator *= (const Standard_Real Scalar);
 		%feature("compactdefaultargs") Multiply;
-		%feature("autodoc", "	* <self>.X() = <self>.X() * Other.X(); <self>.Y() = <self>.Y() * Other.Y(); <self>.Z() = <self>.Z() * Other.Z();
+		%feature("autodoc", "	* <self>.X---- = <self>.X---- * Other.X----; <self>.Y---- = <self>.Y---- * Other.Y----; <self>.Z---- = <self>.Z---- * Other.Z----;
 
 	:param Other:
 	:type Other: gp_XYZ
@@ -11555,7 +11120,7 @@ class gp_XYZ {
 ") operator *=;
 		void operator *= (const gp_Mat & Matrix);
 		%feature("compactdefaultargs") Multiplied;
-		%feature("autodoc", "	* New.X() = <self>.X() * Scalar; New.Y() = <self>.Y() * Scalar; New.Z() = <self>.Z() * Scalar;
+		%feature("autodoc", "	* New.X---- = <self>.X---- * Scalar; New.Y---- = <self>.Y---- * Scalar; New.Z---- = <self>.Z---- * Scalar;
 
 	:param Scalar:
 	:type Scalar: float
@@ -11569,7 +11134,7 @@ class gp_XYZ {
 ") operator *;
 		gp_XYZ operator * (const Standard_Real Scalar);
 		%feature("compactdefaultargs") Multiplied;
-		%feature("autodoc", "	* new.X() = <self>.X() * Other.X(); new.Y() = <self>.Y() * Other.Y(); new.Z() = <self>.Z() * Other.Z();
+		%feature("autodoc", "	* new.X---- = <self>.X---- * Other.X----; new.Y---- = <self>.Y---- * Other.Y----; new.Z---- = <self>.Z---- * Other.Z----;
 
 	:param Other:
 	:type Other: gp_XYZ
@@ -11591,31 +11156,31 @@ class gp_XYZ {
 ") operator *;
 		gp_XYZ operator * (const gp_Mat & Matrix);
 		%feature("compactdefaultargs") Normalize;
-		%feature("autodoc", "	* <self>.X() = <self>.X()/ <self>.Modulus() <self>.Y() = <self>.Y()/ <self>.Modulus() <self>.Z() = <self>.Z()/ <self>.Modulus() Raised if <self>.Modulus() <= Resolution from gp
+		%feature("autodoc", "	* <self>.X---- = <self>.X----/ <self>.Modulus---- <self>.Y---- = <self>.Y----/ <self>.Modulus---- <self>.Z---- = <self>.Z----/ <self>.Modulus---- Raised if <self>.Modulus---- <= Resolution from gp
 
 	:rtype: None
 ") Normalize;
 		void Normalize ();
 		%feature("compactdefaultargs") Normalized;
-		%feature("autodoc", "	* New.X() = <self>.X()/ <self>.Modulus() New.Y() = <self>.Y()/ <self>.Modulus() New.Z() = <self>.Z()/ <self>.Modulus() Raised if <self>.Modulus() <= Resolution from gp
+		%feature("autodoc", "	* New.X---- = <self>.X----/ <self>.Modulus---- New.Y---- = <self>.Y----/ <self>.Modulus---- New.Z---- = <self>.Z----/ <self>.Modulus---- Raised if <self>.Modulus---- <= Resolution from gp
 
 	:rtype: gp_XYZ
 ") Normalized;
 		gp_XYZ Normalized ();
 		%feature("compactdefaultargs") Reverse;
-		%feature("autodoc", "	* <self>.X() = -<self>.X() <self>.Y() = -<self>.Y() <self>.Z() = -<self>.Z()
+		%feature("autodoc", "	* <self>.X---- = -<self>.X---- <self>.Y---- = -<self>.Y---- <self>.Z---- = -<self>.Z----
 
 	:rtype: None
 ") Reverse;
 		void Reverse ();
 		%feature("compactdefaultargs") Reversed;
-		%feature("autodoc", "	* New.X() = -<self>.X() New.Y() = -<self>.Y() New.Z() = -<self>.Z()
+		%feature("autodoc", "	* New.X---- = -<self>.X---- New.Y---- = -<self>.Y---- New.Z---- = -<self>.Z----
 
 	:rtype: gp_XYZ
 ") Reversed;
 		gp_XYZ Reversed ();
 		%feature("compactdefaultargs") Subtract;
-		%feature("autodoc", "	* <self>.X() = <self>.X() - Other.X() <self>.Y() = <self>.Y() - Other.Y() <self>.Z() = <self>.Z() - Other.Z()
+		%feature("autodoc", "	* <self>.X---- = <self>.X---- - Other.X---- <self>.Y---- = <self>.Y---- - Other.Y---- <self>.Z---- = <self>.Z---- - Other.Z----
 
 	:param Right:
 	:type Right: gp_XYZ
@@ -11629,7 +11194,7 @@ class gp_XYZ {
 ") operator -=;
 		void operator -= (const gp_XYZ & Right);
 		%feature("compactdefaultargs") Subtracted;
-		%feature("autodoc", "	* new.X() = <self>.X() - Other.X() new.Y() = <self>.Y() - Other.Y() new.Z() = <self>.Z() - Other.Z()
+		%feature("autodoc", "	* new.X---- = <self>.X---- - Other.X---- new.Y---- = <self>.Y---- - Other.Y---- new.Z---- = <self>.Z---- - Other.Z----
 
 	:param Right:
 	:type Right: gp_XYZ
@@ -11732,36 +11297,6 @@ class gp_XYZ {
 	:rtype: None
 ") SetLinearForm;
 		void SetLinearForm (const gp_XYZ & XYZ1,const gp_XYZ & XYZ2);
-		%feature("compactdefaultargs") _CSFDB_Getgp_XYZx;
-		%feature("autodoc", "	:rtype: float
-") _CSFDB_Getgp_XYZx;
-		Standard_Real _CSFDB_Getgp_XYZx ();
-		%feature("compactdefaultargs") _CSFDB_Setgp_XYZx;
-		%feature("autodoc", "	:param p:
-	:type p: float
-	:rtype: None
-") _CSFDB_Setgp_XYZx;
-		void _CSFDB_Setgp_XYZx (const Standard_Real p);
-		%feature("compactdefaultargs") _CSFDB_Getgp_XYZy;
-		%feature("autodoc", "	:rtype: float
-") _CSFDB_Getgp_XYZy;
-		Standard_Real _CSFDB_Getgp_XYZy ();
-		%feature("compactdefaultargs") _CSFDB_Setgp_XYZy;
-		%feature("autodoc", "	:param p:
-	:type p: float
-	:rtype: None
-") _CSFDB_Setgp_XYZy;
-		void _CSFDB_Setgp_XYZy (const Standard_Real p);
-		%feature("compactdefaultargs") _CSFDB_Getgp_XYZz;
-		%feature("autodoc", "	:rtype: float
-") _CSFDB_Getgp_XYZz;
-		Standard_Real _CSFDB_Getgp_XYZz ();
-		%feature("compactdefaultargs") _CSFDB_Setgp_XYZz;
-		%feature("autodoc", "	:param p:
-	:type p: float
-	:rtype: None
-") _CSFDB_Setgp_XYZz;
-		void _CSFDB_Setgp_XYZz (const Standard_Real p);
 };
 
 

@@ -1,5 +1,5 @@
 /*
-Copyright 2008-2017 Thomas Paviot (tpaviot@gmail.com)
+Copyright 2008-2018 Thomas Paviot (tpaviot@gmail.com)
 
 
 This file is part of pythonOCC.
@@ -56,6 +56,12 @@ def register_handle(handle, base_object):
 /* typedefs */
 /* end typedefs declaration */
 
+/* templates */
+%template(Draft_IndexedDataMapOfEdgeEdgeInfo) NCollection_IndexedDataMap <TopoDS_Edge , Draft_EdgeInfo , TopTools_ShapeMapHasher>;
+%template(Draft_IndexedDataMapOfVertexVertexInfo) NCollection_IndexedDataMap <TopoDS_Vertex , Draft_VertexInfo , TopTools_ShapeMapHasher>;
+%template(Draft_IndexedDataMapOfFaceFaceInfo) NCollection_IndexedDataMap <TopoDS_Face , Draft_FaceInfo , TopTools_ShapeMapHasher>;
+/* end templates declaration */
+
 /* public enums */
 enum Draft_ErrorStatus {
 	Draft_NoError = 0,
@@ -83,585 +89,6 @@ class Draft {
 
 
 %extend Draft {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor Draft_DataMapIteratorOfDataMapOfEdgeEdgeInfo;
-class Draft_DataMapIteratorOfDataMapOfEdgeEdgeInfo : public TCollection_BasicMapIterator {
-	public:
-		%feature("compactdefaultargs") Draft_DataMapIteratorOfDataMapOfEdgeEdgeInfo;
-		%feature("autodoc", "	:rtype: None
-") Draft_DataMapIteratorOfDataMapOfEdgeEdgeInfo;
-		 Draft_DataMapIteratorOfDataMapOfEdgeEdgeInfo ();
-		%feature("compactdefaultargs") Draft_DataMapIteratorOfDataMapOfEdgeEdgeInfo;
-		%feature("autodoc", "	:param aMap:
-	:type aMap: Draft_DataMapOfEdgeEdgeInfo &
-	:rtype: None
-") Draft_DataMapIteratorOfDataMapOfEdgeEdgeInfo;
-		 Draft_DataMapIteratorOfDataMapOfEdgeEdgeInfo (const Draft_DataMapOfEdgeEdgeInfo & aMap);
-		%feature("compactdefaultargs") Initialize;
-		%feature("autodoc", "	:param aMap:
-	:type aMap: Draft_DataMapOfEdgeEdgeInfo &
-	:rtype: None
-") Initialize;
-		void Initialize (const Draft_DataMapOfEdgeEdgeInfo & aMap);
-		%feature("compactdefaultargs") Key;
-		%feature("autodoc", "	:rtype: TopoDS_Edge
-") Key;
-		const TopoDS_Edge  Key ();
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:rtype: Draft_EdgeInfo
-") Value;
-		const Draft_EdgeInfo & Value ();
-};
-
-
-%extend Draft_DataMapIteratorOfDataMapOfEdgeEdgeInfo {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor Draft_DataMapIteratorOfDataMapOfFaceFaceInfo;
-class Draft_DataMapIteratorOfDataMapOfFaceFaceInfo : public TCollection_BasicMapIterator {
-	public:
-		%feature("compactdefaultargs") Draft_DataMapIteratorOfDataMapOfFaceFaceInfo;
-		%feature("autodoc", "	:rtype: None
-") Draft_DataMapIteratorOfDataMapOfFaceFaceInfo;
-		 Draft_DataMapIteratorOfDataMapOfFaceFaceInfo ();
-		%feature("compactdefaultargs") Draft_DataMapIteratorOfDataMapOfFaceFaceInfo;
-		%feature("autodoc", "	:param aMap:
-	:type aMap: Draft_DataMapOfFaceFaceInfo &
-	:rtype: None
-") Draft_DataMapIteratorOfDataMapOfFaceFaceInfo;
-		 Draft_DataMapIteratorOfDataMapOfFaceFaceInfo (const Draft_DataMapOfFaceFaceInfo & aMap);
-		%feature("compactdefaultargs") Initialize;
-		%feature("autodoc", "	:param aMap:
-	:type aMap: Draft_DataMapOfFaceFaceInfo &
-	:rtype: None
-") Initialize;
-		void Initialize (const Draft_DataMapOfFaceFaceInfo & aMap);
-		%feature("compactdefaultargs") Key;
-		%feature("autodoc", "	:rtype: TopoDS_Face
-") Key;
-		const TopoDS_Face  Key ();
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:rtype: Draft_FaceInfo
-") Value;
-		const Draft_FaceInfo & Value ();
-};
-
-
-%extend Draft_DataMapIteratorOfDataMapOfFaceFaceInfo {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor Draft_DataMapIteratorOfDataMapOfVertexVertexInfo;
-class Draft_DataMapIteratorOfDataMapOfVertexVertexInfo : public TCollection_BasicMapIterator {
-	public:
-		%feature("compactdefaultargs") Draft_DataMapIteratorOfDataMapOfVertexVertexInfo;
-		%feature("autodoc", "	:rtype: None
-") Draft_DataMapIteratorOfDataMapOfVertexVertexInfo;
-		 Draft_DataMapIteratorOfDataMapOfVertexVertexInfo ();
-		%feature("compactdefaultargs") Draft_DataMapIteratorOfDataMapOfVertexVertexInfo;
-		%feature("autodoc", "	:param aMap:
-	:type aMap: Draft_DataMapOfVertexVertexInfo &
-	:rtype: None
-") Draft_DataMapIteratorOfDataMapOfVertexVertexInfo;
-		 Draft_DataMapIteratorOfDataMapOfVertexVertexInfo (const Draft_DataMapOfVertexVertexInfo & aMap);
-		%feature("compactdefaultargs") Initialize;
-		%feature("autodoc", "	:param aMap:
-	:type aMap: Draft_DataMapOfVertexVertexInfo &
-	:rtype: None
-") Initialize;
-		void Initialize (const Draft_DataMapOfVertexVertexInfo & aMap);
-		%feature("compactdefaultargs") Key;
-		%feature("autodoc", "	:rtype: TopoDS_Vertex
-") Key;
-		const TopoDS_Vertex  Key ();
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:rtype: Draft_VertexInfo
-") Value;
-		const Draft_VertexInfo & Value ();
-};
-
-
-%extend Draft_DataMapIteratorOfDataMapOfVertexVertexInfo {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor Draft_DataMapNodeOfDataMapOfEdgeEdgeInfo;
-class Draft_DataMapNodeOfDataMapOfEdgeEdgeInfo : public TCollection_MapNode {
-	public:
-		%feature("compactdefaultargs") Draft_DataMapNodeOfDataMapOfEdgeEdgeInfo;
-		%feature("autodoc", "	:param K:
-	:type K: TopoDS_Edge &
-	:param I:
-	:type I: Draft_EdgeInfo &
-	:param n:
-	:type n: TCollection_MapNodePtr &
-	:rtype: None
-") Draft_DataMapNodeOfDataMapOfEdgeEdgeInfo;
-		 Draft_DataMapNodeOfDataMapOfEdgeEdgeInfo (const TopoDS_Edge & K,const Draft_EdgeInfo & I,const TCollection_MapNodePtr & n);
-		%feature("compactdefaultargs") Key;
-		%feature("autodoc", "	:rtype: TopoDS_Edge
-") Key;
-		TopoDS_Edge  Key ();
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:rtype: Draft_EdgeInfo
-") Value;
-		Draft_EdgeInfo & Value ();
-};
-
-
-%extend Draft_DataMapNodeOfDataMapOfEdgeEdgeInfo {
-	%pythoncode {
-		def GetHandle(self):
-		    try:
-		        return self.thisHandle
-		    except:
-		        self.thisHandle = Handle_Draft_DataMapNodeOfDataMapOfEdgeEdgeInfo(self)
-		        self.thisown = False
-		        return self.thisHandle
-	}
-};
-
-%pythonappend Handle_Draft_DataMapNodeOfDataMapOfEdgeEdgeInfo::Handle_Draft_DataMapNodeOfDataMapOfEdgeEdgeInfo %{
-    # register the handle in the base object
-    if len(args) > 0:
-        register_handle(self, args[0])
-%}
-
-%nodefaultctor Handle_Draft_DataMapNodeOfDataMapOfEdgeEdgeInfo;
-class Handle_Draft_DataMapNodeOfDataMapOfEdgeEdgeInfo : public Handle_TCollection_MapNode {
-
-    public:
-        // constructors
-        Handle_Draft_DataMapNodeOfDataMapOfEdgeEdgeInfo();
-        Handle_Draft_DataMapNodeOfDataMapOfEdgeEdgeInfo(const Handle_Draft_DataMapNodeOfDataMapOfEdgeEdgeInfo &aHandle);
-        Handle_Draft_DataMapNodeOfDataMapOfEdgeEdgeInfo(const Draft_DataMapNodeOfDataMapOfEdgeEdgeInfo *anItem);
-        void Nullify();
-        Standard_Boolean IsNull() const;
-        static const Handle_Draft_DataMapNodeOfDataMapOfEdgeEdgeInfo DownCast(const Handle_Standard_Transient &AnObject);
-
-};
-%extend Handle_Draft_DataMapNodeOfDataMapOfEdgeEdgeInfo {
-    Draft_DataMapNodeOfDataMapOfEdgeEdgeInfo* _get_reference() {
-    return (Draft_DataMapNodeOfDataMapOfEdgeEdgeInfo*)$self->Access();
-    }
-};
-
-%extend Handle_Draft_DataMapNodeOfDataMapOfEdgeEdgeInfo {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
-};
-
-%extend Draft_DataMapNodeOfDataMapOfEdgeEdgeInfo {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor Draft_DataMapNodeOfDataMapOfFaceFaceInfo;
-class Draft_DataMapNodeOfDataMapOfFaceFaceInfo : public TCollection_MapNode {
-	public:
-		%feature("compactdefaultargs") Draft_DataMapNodeOfDataMapOfFaceFaceInfo;
-		%feature("autodoc", "	:param K:
-	:type K: TopoDS_Face &
-	:param I:
-	:type I: Draft_FaceInfo &
-	:param n:
-	:type n: TCollection_MapNodePtr &
-	:rtype: None
-") Draft_DataMapNodeOfDataMapOfFaceFaceInfo;
-		 Draft_DataMapNodeOfDataMapOfFaceFaceInfo (const TopoDS_Face & K,const Draft_FaceInfo & I,const TCollection_MapNodePtr & n);
-		%feature("compactdefaultargs") Key;
-		%feature("autodoc", "	:rtype: TopoDS_Face
-") Key;
-		TopoDS_Face  Key ();
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:rtype: Draft_FaceInfo
-") Value;
-		Draft_FaceInfo & Value ();
-};
-
-
-%extend Draft_DataMapNodeOfDataMapOfFaceFaceInfo {
-	%pythoncode {
-		def GetHandle(self):
-		    try:
-		        return self.thisHandle
-		    except:
-		        self.thisHandle = Handle_Draft_DataMapNodeOfDataMapOfFaceFaceInfo(self)
-		        self.thisown = False
-		        return self.thisHandle
-	}
-};
-
-%pythonappend Handle_Draft_DataMapNodeOfDataMapOfFaceFaceInfo::Handle_Draft_DataMapNodeOfDataMapOfFaceFaceInfo %{
-    # register the handle in the base object
-    if len(args) > 0:
-        register_handle(self, args[0])
-%}
-
-%nodefaultctor Handle_Draft_DataMapNodeOfDataMapOfFaceFaceInfo;
-class Handle_Draft_DataMapNodeOfDataMapOfFaceFaceInfo : public Handle_TCollection_MapNode {
-
-    public:
-        // constructors
-        Handle_Draft_DataMapNodeOfDataMapOfFaceFaceInfo();
-        Handle_Draft_DataMapNodeOfDataMapOfFaceFaceInfo(const Handle_Draft_DataMapNodeOfDataMapOfFaceFaceInfo &aHandle);
-        Handle_Draft_DataMapNodeOfDataMapOfFaceFaceInfo(const Draft_DataMapNodeOfDataMapOfFaceFaceInfo *anItem);
-        void Nullify();
-        Standard_Boolean IsNull() const;
-        static const Handle_Draft_DataMapNodeOfDataMapOfFaceFaceInfo DownCast(const Handle_Standard_Transient &AnObject);
-
-};
-%extend Handle_Draft_DataMapNodeOfDataMapOfFaceFaceInfo {
-    Draft_DataMapNodeOfDataMapOfFaceFaceInfo* _get_reference() {
-    return (Draft_DataMapNodeOfDataMapOfFaceFaceInfo*)$self->Access();
-    }
-};
-
-%extend Handle_Draft_DataMapNodeOfDataMapOfFaceFaceInfo {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
-};
-
-%extend Draft_DataMapNodeOfDataMapOfFaceFaceInfo {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor Draft_DataMapNodeOfDataMapOfVertexVertexInfo;
-class Draft_DataMapNodeOfDataMapOfVertexVertexInfo : public TCollection_MapNode {
-	public:
-		%feature("compactdefaultargs") Draft_DataMapNodeOfDataMapOfVertexVertexInfo;
-		%feature("autodoc", "	:param K:
-	:type K: TopoDS_Vertex &
-	:param I:
-	:type I: Draft_VertexInfo &
-	:param n:
-	:type n: TCollection_MapNodePtr &
-	:rtype: None
-") Draft_DataMapNodeOfDataMapOfVertexVertexInfo;
-		 Draft_DataMapNodeOfDataMapOfVertexVertexInfo (const TopoDS_Vertex & K,const Draft_VertexInfo & I,const TCollection_MapNodePtr & n);
-		%feature("compactdefaultargs") Key;
-		%feature("autodoc", "	:rtype: TopoDS_Vertex
-") Key;
-		TopoDS_Vertex  Key ();
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:rtype: Draft_VertexInfo
-") Value;
-		Draft_VertexInfo & Value ();
-};
-
-
-%extend Draft_DataMapNodeOfDataMapOfVertexVertexInfo {
-	%pythoncode {
-		def GetHandle(self):
-		    try:
-		        return self.thisHandle
-		    except:
-		        self.thisHandle = Handle_Draft_DataMapNodeOfDataMapOfVertexVertexInfo(self)
-		        self.thisown = False
-		        return self.thisHandle
-	}
-};
-
-%pythonappend Handle_Draft_DataMapNodeOfDataMapOfVertexVertexInfo::Handle_Draft_DataMapNodeOfDataMapOfVertexVertexInfo %{
-    # register the handle in the base object
-    if len(args) > 0:
-        register_handle(self, args[0])
-%}
-
-%nodefaultctor Handle_Draft_DataMapNodeOfDataMapOfVertexVertexInfo;
-class Handle_Draft_DataMapNodeOfDataMapOfVertexVertexInfo : public Handle_TCollection_MapNode {
-
-    public:
-        // constructors
-        Handle_Draft_DataMapNodeOfDataMapOfVertexVertexInfo();
-        Handle_Draft_DataMapNodeOfDataMapOfVertexVertexInfo(const Handle_Draft_DataMapNodeOfDataMapOfVertexVertexInfo &aHandle);
-        Handle_Draft_DataMapNodeOfDataMapOfVertexVertexInfo(const Draft_DataMapNodeOfDataMapOfVertexVertexInfo *anItem);
-        void Nullify();
-        Standard_Boolean IsNull() const;
-        static const Handle_Draft_DataMapNodeOfDataMapOfVertexVertexInfo DownCast(const Handle_Standard_Transient &AnObject);
-
-};
-%extend Handle_Draft_DataMapNodeOfDataMapOfVertexVertexInfo {
-    Draft_DataMapNodeOfDataMapOfVertexVertexInfo* _get_reference() {
-    return (Draft_DataMapNodeOfDataMapOfVertexVertexInfo*)$self->Access();
-    }
-};
-
-%extend Handle_Draft_DataMapNodeOfDataMapOfVertexVertexInfo {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
-};
-
-%extend Draft_DataMapNodeOfDataMapOfVertexVertexInfo {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor Draft_DataMapOfEdgeEdgeInfo;
-class Draft_DataMapOfEdgeEdgeInfo : public TCollection_BasicMap {
-	public:
-		%feature("compactdefaultargs") Draft_DataMapOfEdgeEdgeInfo;
-		%feature("autodoc", "	:param NbBuckets: default value is 1
-	:type NbBuckets: int
-	:rtype: None
-") Draft_DataMapOfEdgeEdgeInfo;
-		 Draft_DataMapOfEdgeEdgeInfo (const Standard_Integer NbBuckets = 1);
-		%feature("compactdefaultargs") Assign;
-		%feature("autodoc", "	:param Other:
-	:type Other: Draft_DataMapOfEdgeEdgeInfo &
-	:rtype: Draft_DataMapOfEdgeEdgeInfo
-") Assign;
-		Draft_DataMapOfEdgeEdgeInfo & Assign (const Draft_DataMapOfEdgeEdgeInfo & Other);
-		%feature("compactdefaultargs") operator =;
-		%feature("autodoc", "	:param Other:
-	:type Other: Draft_DataMapOfEdgeEdgeInfo &
-	:rtype: Draft_DataMapOfEdgeEdgeInfo
-") operator =;
-		Draft_DataMapOfEdgeEdgeInfo & operator = (const Draft_DataMapOfEdgeEdgeInfo & Other);
-		%feature("compactdefaultargs") ReSize;
-		%feature("autodoc", "	:param NbBuckets:
-	:type NbBuckets: int
-	:rtype: None
-") ReSize;
-		void ReSize (const Standard_Integer NbBuckets);
-		%feature("compactdefaultargs") Clear;
-		%feature("autodoc", "	:rtype: None
-") Clear;
-		void Clear ();
-		%feature("compactdefaultargs") Bind;
-		%feature("autodoc", "	:param K:
-	:type K: TopoDS_Edge &
-	:param I:
-	:type I: Draft_EdgeInfo &
-	:rtype: bool
-") Bind;
-		Standard_Boolean Bind (const TopoDS_Edge & K,const Draft_EdgeInfo & I);
-		%feature("compactdefaultargs") IsBound;
-		%feature("autodoc", "	:param K:
-	:type K: TopoDS_Edge &
-	:rtype: bool
-") IsBound;
-		Standard_Boolean IsBound (const TopoDS_Edge & K);
-		%feature("compactdefaultargs") UnBind;
-		%feature("autodoc", "	:param K:
-	:type K: TopoDS_Edge &
-	:rtype: bool
-") UnBind;
-		Standard_Boolean UnBind (const TopoDS_Edge & K);
-		%feature("compactdefaultargs") Find;
-		%feature("autodoc", "	:param K:
-	:type K: TopoDS_Edge &
-	:rtype: Draft_EdgeInfo
-") Find;
-		const Draft_EdgeInfo & Find (const TopoDS_Edge & K);
-		%feature("compactdefaultargs") ChangeFind;
-		%feature("autodoc", "	:param K:
-	:type K: TopoDS_Edge &
-	:rtype: Draft_EdgeInfo
-") ChangeFind;
-		Draft_EdgeInfo & ChangeFind (const TopoDS_Edge & K);
-		%feature("compactdefaultargs") Find1;
-		%feature("autodoc", "	:param K:
-	:type K: TopoDS_Edge &
-	:rtype: Standard_Address
-") Find1;
-		Standard_Address Find1 (const TopoDS_Edge & K);
-		%feature("compactdefaultargs") ChangeFind1;
-		%feature("autodoc", "	:param K:
-	:type K: TopoDS_Edge &
-	:rtype: Standard_Address
-") ChangeFind1;
-		Standard_Address ChangeFind1 (const TopoDS_Edge & K);
-};
-
-
-%extend Draft_DataMapOfEdgeEdgeInfo {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor Draft_DataMapOfFaceFaceInfo;
-class Draft_DataMapOfFaceFaceInfo : public TCollection_BasicMap {
-	public:
-		%feature("compactdefaultargs") Draft_DataMapOfFaceFaceInfo;
-		%feature("autodoc", "	:param NbBuckets: default value is 1
-	:type NbBuckets: int
-	:rtype: None
-") Draft_DataMapOfFaceFaceInfo;
-		 Draft_DataMapOfFaceFaceInfo (const Standard_Integer NbBuckets = 1);
-		%feature("compactdefaultargs") Assign;
-		%feature("autodoc", "	:param Other:
-	:type Other: Draft_DataMapOfFaceFaceInfo &
-	:rtype: Draft_DataMapOfFaceFaceInfo
-") Assign;
-		Draft_DataMapOfFaceFaceInfo & Assign (const Draft_DataMapOfFaceFaceInfo & Other);
-		%feature("compactdefaultargs") operator =;
-		%feature("autodoc", "	:param Other:
-	:type Other: Draft_DataMapOfFaceFaceInfo &
-	:rtype: Draft_DataMapOfFaceFaceInfo
-") operator =;
-		Draft_DataMapOfFaceFaceInfo & operator = (const Draft_DataMapOfFaceFaceInfo & Other);
-		%feature("compactdefaultargs") ReSize;
-		%feature("autodoc", "	:param NbBuckets:
-	:type NbBuckets: int
-	:rtype: None
-") ReSize;
-		void ReSize (const Standard_Integer NbBuckets);
-		%feature("compactdefaultargs") Clear;
-		%feature("autodoc", "	:rtype: None
-") Clear;
-		void Clear ();
-		%feature("compactdefaultargs") Bind;
-		%feature("autodoc", "	:param K:
-	:type K: TopoDS_Face &
-	:param I:
-	:type I: Draft_FaceInfo &
-	:rtype: bool
-") Bind;
-		Standard_Boolean Bind (const TopoDS_Face & K,const Draft_FaceInfo & I);
-		%feature("compactdefaultargs") IsBound;
-		%feature("autodoc", "	:param K:
-	:type K: TopoDS_Face &
-	:rtype: bool
-") IsBound;
-		Standard_Boolean IsBound (const TopoDS_Face & K);
-		%feature("compactdefaultargs") UnBind;
-		%feature("autodoc", "	:param K:
-	:type K: TopoDS_Face &
-	:rtype: bool
-") UnBind;
-		Standard_Boolean UnBind (const TopoDS_Face & K);
-		%feature("compactdefaultargs") Find;
-		%feature("autodoc", "	:param K:
-	:type K: TopoDS_Face &
-	:rtype: Draft_FaceInfo
-") Find;
-		const Draft_FaceInfo & Find (const TopoDS_Face & K);
-		%feature("compactdefaultargs") ChangeFind;
-		%feature("autodoc", "	:param K:
-	:type K: TopoDS_Face &
-	:rtype: Draft_FaceInfo
-") ChangeFind;
-		Draft_FaceInfo & ChangeFind (const TopoDS_Face & K);
-		%feature("compactdefaultargs") Find1;
-		%feature("autodoc", "	:param K:
-	:type K: TopoDS_Face &
-	:rtype: Standard_Address
-") Find1;
-		Standard_Address Find1 (const TopoDS_Face & K);
-		%feature("compactdefaultargs") ChangeFind1;
-		%feature("autodoc", "	:param K:
-	:type K: TopoDS_Face &
-	:rtype: Standard_Address
-") ChangeFind1;
-		Standard_Address ChangeFind1 (const TopoDS_Face & K);
-};
-
-
-%extend Draft_DataMapOfFaceFaceInfo {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor Draft_DataMapOfVertexVertexInfo;
-class Draft_DataMapOfVertexVertexInfo : public TCollection_BasicMap {
-	public:
-		%feature("compactdefaultargs") Draft_DataMapOfVertexVertexInfo;
-		%feature("autodoc", "	:param NbBuckets: default value is 1
-	:type NbBuckets: int
-	:rtype: None
-") Draft_DataMapOfVertexVertexInfo;
-		 Draft_DataMapOfVertexVertexInfo (const Standard_Integer NbBuckets = 1);
-		%feature("compactdefaultargs") Assign;
-		%feature("autodoc", "	:param Other:
-	:type Other: Draft_DataMapOfVertexVertexInfo &
-	:rtype: Draft_DataMapOfVertexVertexInfo
-") Assign;
-		Draft_DataMapOfVertexVertexInfo & Assign (const Draft_DataMapOfVertexVertexInfo & Other);
-		%feature("compactdefaultargs") operator =;
-		%feature("autodoc", "	:param Other:
-	:type Other: Draft_DataMapOfVertexVertexInfo &
-	:rtype: Draft_DataMapOfVertexVertexInfo
-") operator =;
-		Draft_DataMapOfVertexVertexInfo & operator = (const Draft_DataMapOfVertexVertexInfo & Other);
-		%feature("compactdefaultargs") ReSize;
-		%feature("autodoc", "	:param NbBuckets:
-	:type NbBuckets: int
-	:rtype: None
-") ReSize;
-		void ReSize (const Standard_Integer NbBuckets);
-		%feature("compactdefaultargs") Clear;
-		%feature("autodoc", "	:rtype: None
-") Clear;
-		void Clear ();
-		%feature("compactdefaultargs") Bind;
-		%feature("autodoc", "	:param K:
-	:type K: TopoDS_Vertex &
-	:param I:
-	:type I: Draft_VertexInfo &
-	:rtype: bool
-") Bind;
-		Standard_Boolean Bind (const TopoDS_Vertex & K,const Draft_VertexInfo & I);
-		%feature("compactdefaultargs") IsBound;
-		%feature("autodoc", "	:param K:
-	:type K: TopoDS_Vertex &
-	:rtype: bool
-") IsBound;
-		Standard_Boolean IsBound (const TopoDS_Vertex & K);
-		%feature("compactdefaultargs") UnBind;
-		%feature("autodoc", "	:param K:
-	:type K: TopoDS_Vertex &
-	:rtype: bool
-") UnBind;
-		Standard_Boolean UnBind (const TopoDS_Vertex & K);
-		%feature("compactdefaultargs") Find;
-		%feature("autodoc", "	:param K:
-	:type K: TopoDS_Vertex &
-	:rtype: Draft_VertexInfo
-") Find;
-		const Draft_VertexInfo & Find (const TopoDS_Vertex & K);
-		%feature("compactdefaultargs") ChangeFind;
-		%feature("autodoc", "	:param K:
-	:type K: TopoDS_Vertex &
-	:rtype: Draft_VertexInfo
-") ChangeFind;
-		Draft_VertexInfo & ChangeFind (const TopoDS_Vertex & K);
-		%feature("compactdefaultargs") Find1;
-		%feature("autodoc", "	:param K:
-	:type K: TopoDS_Vertex &
-	:rtype: Standard_Address
-") Find1;
-		Standard_Address Find1 (const TopoDS_Vertex & K);
-		%feature("compactdefaultargs") ChangeFind1;
-		%feature("autodoc", "	:param K:
-	:type K: TopoDS_Vertex &
-	:rtype: Standard_Address
-") ChangeFind1;
-		Standard_Address ChangeFind1 (const TopoDS_Vertex & K);
-};
-
-
-%extend Draft_DataMapOfVertexVertexInfo {
 	%pythoncode {
 	__repr__ = _dumps_object
 	}
@@ -888,7 +315,7 @@ class Draft_Modification : public BRepTools_Modification {
 ") Perform;
 		void Perform ();
 		%feature("compactdefaultargs") IsDone;
-		%feature("autodoc", "	* Returns True if Perform has been succesfully called. Otherwise more information can be obtained using the methods Error() and ProblematicShape().
+		%feature("autodoc", "	* Returns True if Perform has been succesfully called. Otherwise more information can be obtained using the methods Error---- and ProblematicShape----.
 
 	:rtype: bool
 ") IsDone;
@@ -898,7 +325,7 @@ class Draft_Modification : public BRepTools_Modification {
 ") Error;
 		Draft_ErrorStatus Error ();
 		%feature("compactdefaultargs") ProblematicShape;
-		%feature("autodoc", "	* Returns the shape (Face, Edge or Vertex) on which an error occured.
+		%feature("autodoc", "	* Returns the shape --Face, Edge or Vertex-- on which an error occured.
 
 	:rtype: TopoDS_Shape
 ") ProblematicShape;
@@ -918,7 +345,7 @@ class Draft_Modification : public BRepTools_Modification {
 ") ModifiedFaces;
 		const TopTools_ListOfShape & ModifiedFaces ();
 		%feature("compactdefaultargs") NewSurface;
-		%feature("autodoc", "	* Returns Standard_True if the face <F> has been modified. In this case, <S> is the new geometric support of the face, <L> the new location,<Tol> the new tolerance.<RevWires> has to be set to Standard_True when the modification reverses the normal of the surface.(the wires have to be reversed). <RevFace> has to be set to Standard_True if the orientation of the modified face changes in the shells which contain it. Here it will be set to Standard_False. //! Otherwise, returns Standard_False, and <S>, <L>, <Tol> , <RevWires> ,<RevFace> are not significant.
+		%feature("autodoc", "	* Returns Standard_True if the face <F> has been modified. In this case, <S> is the new geometric support of the face, <L> the new location,<Tol> the new tolerance.<RevWires> has to be set to Standard_True when the modification reverses the normal of the surface.--the wires have to be reversed--. <RevFace> has to be set to Standard_True if the orientation of the modified face changes in the shells which contain it. Here it will be set to Standard_False. //! Otherwise, returns Standard_False, and <S>, <L>, <Tol> , <RevWires> ,<RevFace> are not significant.
 
 	:param F:
 	:type F: TopoDS_Face &
@@ -994,7 +421,7 @@ class Draft_Modification : public BRepTools_Modification {
 ") NewParameter;
 		Standard_Boolean NewParameter (const TopoDS_Vertex & V,const TopoDS_Edge & E,Standard_Real &OutValue,Standard_Real &OutValue);
 		%feature("compactdefaultargs") Continuity;
-		%feature("autodoc", "	* Returns the continuity of <NewE> between <NewF1> and <NewF2>. //! <NewE> is the new edge created from <E>. <NewF1> (resp. <NewF2>) is the new face created from <F1> (resp. <F2>).
+		%feature("autodoc", "	* Returns the continuity of <NewE> between <NewF1> and <NewF2>. //! <NewE> is the new edge created from <E>. <NewF1> --resp. <NewF2>-- is the new face created from <F1> --resp. <F2>--.
 
 	:param E:
 	:type E: TopoDS_Edge &
@@ -1045,19 +472,20 @@ class Handle_Draft_Modification : public Handle_BRepTools_Modification {
         static const Handle_Draft_Modification DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_Draft_Modification {
     Draft_Modification* _get_reference() {
-    return (Draft_Modification*)$self->Access();
+    return (Draft_Modification*)$self->get();
     }
 };
 
 %extend Handle_Draft_Modification {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend Draft_Modification {

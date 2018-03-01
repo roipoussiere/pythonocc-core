@@ -1,5 +1,5 @@
 /*
-Copyright 2008-2017 Thomas Paviot (tpaviot@gmail.com)
+Copyright 2008-2018 Thomas Paviot (tpaviot@gmail.com)
 
 
 This file is part of pythonOCC.
@@ -56,96 +56,13 @@ def register_handle(handle, base_object):
 /* typedefs */
 /* end typedefs declaration */
 
+/* templates */
+%template(BRepAdaptor_Array1OfCurve) NCollection_Array1 <BRepAdaptor_Curve>;
+/* end templates declaration */
+
 /* public enums */
 /* end public enums declaration */
 
-%nodefaultctor BRepAdaptor_Array1OfCurve;
-class BRepAdaptor_Array1OfCurve {
-	public:
-		%feature("compactdefaultargs") BRepAdaptor_Array1OfCurve;
-		%feature("autodoc", "	:param Low:
-	:type Low: int
-	:param Up:
-	:type Up: int
-	:rtype: None
-") BRepAdaptor_Array1OfCurve;
-		 BRepAdaptor_Array1OfCurve (const Standard_Integer Low,const Standard_Integer Up);
-		%feature("compactdefaultargs") BRepAdaptor_Array1OfCurve;
-		%feature("autodoc", "	:param Item:
-	:type Item: BRepAdaptor_Curve &
-	:param Low:
-	:type Low: int
-	:param Up:
-	:type Up: int
-	:rtype: None
-") BRepAdaptor_Array1OfCurve;
-		 BRepAdaptor_Array1OfCurve (const BRepAdaptor_Curve & Item,const Standard_Integer Low,const Standard_Integer Up);
-		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	:param V:
-	:type V: BRepAdaptor_Curve &
-	:rtype: None
-") Init;
-		void Init (const BRepAdaptor_Curve & V);
-		%feature("compactdefaultargs") Destroy;
-		%feature("autodoc", "	:rtype: None
-") Destroy;
-		void Destroy ();
-		%feature("compactdefaultargs") IsAllocated;
-		%feature("autodoc", "	:rtype: bool
-") IsAllocated;
-		Standard_Boolean IsAllocated ();
-		%feature("compactdefaultargs") Assign;
-		%feature("autodoc", "	:param Other:
-	:type Other: BRepAdaptor_Array1OfCurve &
-	:rtype: BRepAdaptor_Array1OfCurve
-") Assign;
-		const BRepAdaptor_Array1OfCurve & Assign (const BRepAdaptor_Array1OfCurve & Other);
-		%feature("compactdefaultargs") operator =;
-		%feature("autodoc", "	:param Other:
-	:type Other: BRepAdaptor_Array1OfCurve &
-	:rtype: BRepAdaptor_Array1OfCurve
-") operator =;
-		const BRepAdaptor_Array1OfCurve & operator = (const BRepAdaptor_Array1OfCurve & Other);
-		%feature("compactdefaultargs") Length;
-		%feature("autodoc", "	:rtype: int
-") Length;
-		Standard_Integer Length ();
-		%feature("compactdefaultargs") Lower;
-		%feature("autodoc", "	:rtype: int
-") Lower;
-		Standard_Integer Lower ();
-		%feature("compactdefaultargs") Upper;
-		%feature("autodoc", "	:rtype: int
-") Upper;
-		Standard_Integer Upper ();
-		%feature("compactdefaultargs") SetValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param Value:
-	:type Value: BRepAdaptor_Curve &
-	:rtype: None
-") SetValue;
-		void SetValue (const Standard_Integer Index,const BRepAdaptor_Curve & Value);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: BRepAdaptor_Curve
-") Value;
-		const BRepAdaptor_Curve & Value (const Standard_Integer Index);
-		%feature("compactdefaultargs") ChangeValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: BRepAdaptor_Curve
-") ChangeValue;
-		BRepAdaptor_Curve & ChangeValue (const Standard_Integer Index);
-};
-
-
-%extend BRepAdaptor_Array1OfCurve {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
 %nodefaultctor BRepAdaptor_CompCurve;
 class BRepAdaptor_CompCurve : public Adaptor3d_Curve {
 	public:
@@ -244,7 +161,7 @@ class BRepAdaptor_CompCurve : public Adaptor3d_Curve {
 ") Continuity;
 		GeomAbs_Shape Continuity ();
 		%feature("compactdefaultargs") NbIntervals;
-		%feature("autodoc", "	* Returns the number of intervals for continuity <S>. May be one if Continuity(me) >= <S>
+		%feature("autodoc", "	* Returns the number of intervals for continuity <S>. May be one if Continuity--me-- >= <S>
 
 	:param S:
 	:type S: GeomAbs_Shape
@@ -252,7 +169,7 @@ class BRepAdaptor_CompCurve : public Adaptor3d_Curve {
 ") NbIntervals;
 		Standard_Integer NbIntervals (const GeomAbs_Shape S);
 		%feature("compactdefaultargs") Intervals;
-		%feature("autodoc", "	* Stores in <T> the parameters bounding the intervals of continuity <S>. //! The array must provide enough room to accomodate for the parameters. i.e. T.Length() > NbIntervals()
+		%feature("autodoc", "	* Stores in <T> the parameters bounding the intervals of continuity <S>. //! The array must provide enough room to accomodate for the parameters. i.e. T.Length---- > NbIntervals----
 
 	:param T:
 	:type T: TColStd_Array1OfReal &
@@ -519,7 +436,7 @@ class BRepAdaptor_Curve : public Adaptor3d_Curve {
 ") Continuity;
 		GeomAbs_Shape Continuity ();
 		%feature("compactdefaultargs") NbIntervals;
-		%feature("autodoc", "	* Returns the number of intervals for continuity <S>. May be one if Continuity(me) >= <S>
+		%feature("autodoc", "	* Returns the number of intervals for continuity <S>. May be one if Continuity--me-- >= <S>
 
 	:param S:
 	:type S: GeomAbs_Shape
@@ -527,7 +444,7 @@ class BRepAdaptor_Curve : public Adaptor3d_Curve {
 ") NbIntervals;
 		Standard_Integer NbIntervals (const GeomAbs_Shape S);
 		%feature("compactdefaultargs") Intervals;
-		%feature("autodoc", "	* Stores in <T> the parameters bounding the intervals of continuity <S>. //! The array must provide enough room to accomodate for the parameters. i.e. T.Length() > NbIntervals()
+		%feature("autodoc", "	* Stores in <T> the parameters bounding the intervals of continuity <S>. //! The array must provide enough room to accomodate for the parameters. i.e. T.Length---- > NbIntervals----
 
 	:param T:
 	:type T: TColStd_Array1OfReal &
@@ -690,6 +607,10 @@ class BRepAdaptor_Curve : public Adaptor3d_Curve {
 	:rtype: Handle_Geom_BSplineCurve
 ") BSpline;
 		Handle_Geom_BSplineCurve BSpline ();
+		%feature("compactdefaultargs") OffsetCurve;
+		%feature("autodoc", "	:rtype: Handle_Geom_OffsetCurve
+") OffsetCurve;
+		Handle_Geom_OffsetCurve OffsetCurve ();
 };
 
 
@@ -747,156 +668,47 @@ class BRepAdaptor_Curve2d : public Geom2dAdaptor_Curve {
 	__repr__ = _dumps_object
 	}
 };
-%nodefaultctor BRepAdaptor_HArray1OfCurve;
-class BRepAdaptor_HArray1OfCurve : public MMgt_TShared {
-	public:
-		%feature("compactdefaultargs") BRepAdaptor_HArray1OfCurve;
-		%feature("autodoc", "	:param Low:
-	:type Low: int
-	:param Up:
-	:type Up: int
-	:rtype: None
-") BRepAdaptor_HArray1OfCurve;
-		 BRepAdaptor_HArray1OfCurve (const Standard_Integer Low,const Standard_Integer Up);
-		%feature("compactdefaultargs") BRepAdaptor_HArray1OfCurve;
-		%feature("autodoc", "	:param Low:
-	:type Low: int
-	:param Up:
-	:type Up: int
-	:param V:
-	:type V: BRepAdaptor_Curve &
-	:rtype: None
-") BRepAdaptor_HArray1OfCurve;
-		 BRepAdaptor_HArray1OfCurve (const Standard_Integer Low,const Standard_Integer Up,const BRepAdaptor_Curve & V);
-		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	:param V:
-	:type V: BRepAdaptor_Curve &
-	:rtype: None
-") Init;
-		void Init (const BRepAdaptor_Curve & V);
-		%feature("compactdefaultargs") Length;
-		%feature("autodoc", "	:rtype: int
-") Length;
-		Standard_Integer Length ();
-		%feature("compactdefaultargs") Lower;
-		%feature("autodoc", "	:rtype: int
-") Lower;
-		Standard_Integer Lower ();
-		%feature("compactdefaultargs") Upper;
-		%feature("autodoc", "	:rtype: int
-") Upper;
-		Standard_Integer Upper ();
-		%feature("compactdefaultargs") SetValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param Value:
-	:type Value: BRepAdaptor_Curve &
-	:rtype: None
-") SetValue;
-		void SetValue (const Standard_Integer Index,const BRepAdaptor_Curve & Value);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: BRepAdaptor_Curve
-") Value;
-		const BRepAdaptor_Curve & Value (const Standard_Integer Index);
-		%feature("compactdefaultargs") ChangeValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: BRepAdaptor_Curve
-") ChangeValue;
-		BRepAdaptor_Curve & ChangeValue (const Standard_Integer Index);
-		%feature("compactdefaultargs") Array1;
-		%feature("autodoc", "	:rtype: BRepAdaptor_Array1OfCurve
-") Array1;
-		const BRepAdaptor_Array1OfCurve & Array1 ();
-		%feature("compactdefaultargs") ChangeArray1;
-		%feature("autodoc", "	:rtype: BRepAdaptor_Array1OfCurve
-") ChangeArray1;
-		BRepAdaptor_Array1OfCurve & ChangeArray1 ();
-};
-
-
-%extend BRepAdaptor_HArray1OfCurve {
-	%pythoncode {
-		def GetHandle(self):
-		    try:
-		        return self.thisHandle
-		    except:
-		        self.thisHandle = Handle_BRepAdaptor_HArray1OfCurve(self)
-		        self.thisown = False
-		        return self.thisHandle
-	}
-};
-
-%pythonappend Handle_BRepAdaptor_HArray1OfCurve::Handle_BRepAdaptor_HArray1OfCurve %{
-    # register the handle in the base object
-    if len(args) > 0:
-        register_handle(self, args[0])
-%}
-
-%nodefaultctor Handle_BRepAdaptor_HArray1OfCurve;
-class Handle_BRepAdaptor_HArray1OfCurve : public Handle_MMgt_TShared {
-
-    public:
-        // constructors
-        Handle_BRepAdaptor_HArray1OfCurve();
-        Handle_BRepAdaptor_HArray1OfCurve(const Handle_BRepAdaptor_HArray1OfCurve &aHandle);
-        Handle_BRepAdaptor_HArray1OfCurve(const BRepAdaptor_HArray1OfCurve *anItem);
-        void Nullify();
-        Standard_Boolean IsNull() const;
-        static const Handle_BRepAdaptor_HArray1OfCurve DownCast(const Handle_Standard_Transient &AnObject);
-
-};
-%extend Handle_BRepAdaptor_HArray1OfCurve {
-    BRepAdaptor_HArray1OfCurve* _get_reference() {
-    return (BRepAdaptor_HArray1OfCurve*)$self->Access();
-    }
-};
-
-%extend Handle_BRepAdaptor_HArray1OfCurve {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
-};
-
-%extend BRepAdaptor_HArray1OfCurve {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
 %nodefaultctor BRepAdaptor_HCompCurve;
 class BRepAdaptor_HCompCurve : public Adaptor3d_HCurve {
 	public:
 		%feature("compactdefaultargs") BRepAdaptor_HCompCurve;
-		%feature("autodoc", "	:rtype: None
+		%feature("autodoc", "	* Creates an empty GenHCurve.
+
+	:rtype: None
 ") BRepAdaptor_HCompCurve;
 		 BRepAdaptor_HCompCurve ();
 		%feature("compactdefaultargs") BRepAdaptor_HCompCurve;
-		%feature("autodoc", "	:param C:
+		%feature("autodoc", "	* Creates a GenHCurve from a Curve
+
+	:param C:
 	:type C: BRepAdaptor_CompCurve &
 	:rtype: None
 ") BRepAdaptor_HCompCurve;
 		 BRepAdaptor_HCompCurve (const BRepAdaptor_CompCurve & C);
 		%feature("compactdefaultargs") Set;
-		%feature("autodoc", "	:param C:
+		%feature("autodoc", "	* Sets the field of the GenHCurve.
+
+	:param C:
 	:type C: BRepAdaptor_CompCurve &
 	:rtype: None
 ") Set;
 		void Set (const BRepAdaptor_CompCurve & C);
 		%feature("compactdefaultargs") Curve;
-		%feature("autodoc", "	:rtype: Adaptor3d_Curve
+		%feature("autodoc", "	* Returns the curve used to create the GenHCurve. This is redefined from HCurve, cannot be inline.
+
+	:rtype: Adaptor3d_Curve
 ") Curve;
 		const Adaptor3d_Curve & Curve ();
 		%feature("compactdefaultargs") GetCurve;
-		%feature("autodoc", "	:rtype: Adaptor3d_Curve
+		%feature("autodoc", "	* Returns the curve used to create the GenHCurve. This is redefined from HCurve, cannot be inline.
+
+	:rtype: Adaptor3d_Curve
 ") GetCurve;
 		Adaptor3d_Curve & GetCurve ();
 		%feature("compactdefaultargs") ChangeCurve;
-		%feature("autodoc", "	:rtype: BRepAdaptor_CompCurve
+		%feature("autodoc", "	* Returns the curve used to create the GenHCurve.
+
+	:rtype: BRepAdaptor_CompCurve
 ") ChangeCurve;
 		BRepAdaptor_CompCurve & ChangeCurve ();
 };
@@ -933,19 +745,20 @@ class Handle_BRepAdaptor_HCompCurve : public Handle_Adaptor3d_HCurve {
         static const Handle_BRepAdaptor_HCompCurve DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_BRepAdaptor_HCompCurve {
     BRepAdaptor_HCompCurve* _get_reference() {
-    return (BRepAdaptor_HCompCurve*)$self->Access();
+    return (BRepAdaptor_HCompCurve*)$self->get();
     }
 };
 
 %extend Handle_BRepAdaptor_HCompCurve {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend BRepAdaptor_HCompCurve {
@@ -957,31 +770,43 @@ class Handle_BRepAdaptor_HCompCurve : public Handle_Adaptor3d_HCurve {
 class BRepAdaptor_HCurve : public Adaptor3d_HCurve {
 	public:
 		%feature("compactdefaultargs") BRepAdaptor_HCurve;
-		%feature("autodoc", "	:rtype: None
+		%feature("autodoc", "	* Creates an empty GenHCurve.
+
+	:rtype: None
 ") BRepAdaptor_HCurve;
 		 BRepAdaptor_HCurve ();
 		%feature("compactdefaultargs") BRepAdaptor_HCurve;
-		%feature("autodoc", "	:param C:
+		%feature("autodoc", "	* Creates a GenHCurve from a Curve
+
+	:param C:
 	:type C: BRepAdaptor_Curve &
 	:rtype: None
 ") BRepAdaptor_HCurve;
 		 BRepAdaptor_HCurve (const BRepAdaptor_Curve & C);
 		%feature("compactdefaultargs") Set;
-		%feature("autodoc", "	:param C:
+		%feature("autodoc", "	* Sets the field of the GenHCurve.
+
+	:param C:
 	:type C: BRepAdaptor_Curve &
 	:rtype: None
 ") Set;
 		void Set (const BRepAdaptor_Curve & C);
 		%feature("compactdefaultargs") Curve;
-		%feature("autodoc", "	:rtype: Adaptor3d_Curve
+		%feature("autodoc", "	* Returns the curve used to create the GenHCurve. This is redefined from HCurve, cannot be inline.
+
+	:rtype: Adaptor3d_Curve
 ") Curve;
 		const Adaptor3d_Curve & Curve ();
 		%feature("compactdefaultargs") GetCurve;
-		%feature("autodoc", "	:rtype: Adaptor3d_Curve
+		%feature("autodoc", "	* Returns the curve used to create the GenHCurve. This is redefined from HCurve, cannot be inline.
+
+	:rtype: Adaptor3d_Curve
 ") GetCurve;
 		Adaptor3d_Curve & GetCurve ();
 		%feature("compactdefaultargs") ChangeCurve;
-		%feature("autodoc", "	:rtype: BRepAdaptor_Curve
+		%feature("autodoc", "	* Returns the curve used to create the GenHCurve.
+
+	:rtype: BRepAdaptor_Curve
 ") ChangeCurve;
 		BRepAdaptor_Curve & ChangeCurve ();
 };
@@ -1018,19 +843,20 @@ class Handle_BRepAdaptor_HCurve : public Handle_Adaptor3d_HCurve {
         static const Handle_BRepAdaptor_HCurve DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_BRepAdaptor_HCurve {
     BRepAdaptor_HCurve* _get_reference() {
-    return (BRepAdaptor_HCurve*)$self->Access();
+    return (BRepAdaptor_HCurve*)$self->get();
     }
 };
 
 %extend Handle_BRepAdaptor_HCurve {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend BRepAdaptor_HCurve {
@@ -1042,27 +868,37 @@ class Handle_BRepAdaptor_HCurve : public Handle_Adaptor3d_HCurve {
 class BRepAdaptor_HCurve2d : public Adaptor2d_HCurve2d {
 	public:
 		%feature("compactdefaultargs") BRepAdaptor_HCurve2d;
-		%feature("autodoc", "	:rtype: None
+		%feature("autodoc", "	* Creates an empty GenHCurve2d.
+
+	:rtype: None
 ") BRepAdaptor_HCurve2d;
 		 BRepAdaptor_HCurve2d ();
 		%feature("compactdefaultargs") BRepAdaptor_HCurve2d;
-		%feature("autodoc", "	:param C:
+		%feature("autodoc", "	* Creates a GenHCurve2d from a Curve
+
+	:param C:
 	:type C: BRepAdaptor_Curve2d &
 	:rtype: None
 ") BRepAdaptor_HCurve2d;
 		 BRepAdaptor_HCurve2d (const BRepAdaptor_Curve2d & C);
 		%feature("compactdefaultargs") Set;
-		%feature("autodoc", "	:param C:
+		%feature("autodoc", "	* Sets the field of the GenHCurve2d.
+
+	:param C:
 	:type C: BRepAdaptor_Curve2d &
 	:rtype: None
 ") Set;
 		void Set (const BRepAdaptor_Curve2d & C);
 		%feature("compactdefaultargs") Curve2d;
-		%feature("autodoc", "	:rtype: Adaptor2d_Curve2d
+		%feature("autodoc", "	* Returns the curve used to create the GenHCurve2d. This is redefined from HCurve2d, cannot be inline.
+
+	:rtype: Adaptor2d_Curve2d
 ") Curve2d;
 		const Adaptor2d_Curve2d & Curve2d ();
 		%feature("compactdefaultargs") ChangeCurve2d;
-		%feature("autodoc", "	:rtype: BRepAdaptor_Curve2d
+		%feature("autodoc", "	* Returns the curve used to create the GenHCurve.
+
+	:rtype: BRepAdaptor_Curve2d
 ") ChangeCurve2d;
 		BRepAdaptor_Curve2d & ChangeCurve2d ();
 };
@@ -1099,19 +935,20 @@ class Handle_BRepAdaptor_HCurve2d : public Handle_Adaptor2d_HCurve2d {
         static const Handle_BRepAdaptor_HCurve2d DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_BRepAdaptor_HCurve2d {
     BRepAdaptor_HCurve2d* _get_reference() {
-    return (BRepAdaptor_HCurve2d*)$self->Access();
+    return (BRepAdaptor_HCurve2d*)$self->get();
     }
 };
 
 %extend Handle_BRepAdaptor_HCurve2d {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend BRepAdaptor_HCurve2d {
@@ -1123,27 +960,37 @@ class Handle_BRepAdaptor_HCurve2d : public Handle_Adaptor2d_HCurve2d {
 class BRepAdaptor_HSurface : public Adaptor3d_HSurface {
 	public:
 		%feature("compactdefaultargs") BRepAdaptor_HSurface;
-		%feature("autodoc", "	:rtype: None
+		%feature("autodoc", "	* Creates an empty GenHSurface.
+
+	:rtype: None
 ") BRepAdaptor_HSurface;
 		 BRepAdaptor_HSurface ();
 		%feature("compactdefaultargs") BRepAdaptor_HSurface;
-		%feature("autodoc", "	:param S:
+		%feature("autodoc", "	* Creates a GenHSurface from a Surface.
+
+	:param S:
 	:type S: BRepAdaptor_Surface &
 	:rtype: None
 ") BRepAdaptor_HSurface;
 		 BRepAdaptor_HSurface (const BRepAdaptor_Surface & S);
 		%feature("compactdefaultargs") Set;
-		%feature("autodoc", "	:param S:
+		%feature("autodoc", "	* Sets the field of the GenHSurface.
+
+	:param S:
 	:type S: BRepAdaptor_Surface &
 	:rtype: None
 ") Set;
 		void Set (const BRepAdaptor_Surface & S);
 		%feature("compactdefaultargs") Surface;
-		%feature("autodoc", "	:rtype: Adaptor3d_Surface
+		%feature("autodoc", "	* Returns a reference to the Surface inside the HSurface. This is redefined from HSurface, cannot be inline.
+
+	:rtype: Adaptor3d_Surface
 ") Surface;
 		const Adaptor3d_Surface & Surface ();
 		%feature("compactdefaultargs") ChangeSurface;
-		%feature("autodoc", "	:rtype: BRepAdaptor_Surface
+		%feature("autodoc", "	* Returns the surface used to create the GenHSurface.
+
+	:rtype: BRepAdaptor_Surface
 ") ChangeSurface;
 		BRepAdaptor_Surface & ChangeSurface ();
 };
@@ -1180,19 +1027,20 @@ class Handle_BRepAdaptor_HSurface : public Handle_Adaptor3d_HSurface {
         static const Handle_BRepAdaptor_HSurface DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_BRepAdaptor_HSurface {
     BRepAdaptor_HSurface* _get_reference() {
-    return (BRepAdaptor_HSurface*)$self->Access();
+    return (BRepAdaptor_HSurface*)$self->get();
     }
 };
 
 %extend Handle_BRepAdaptor_HSurface {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend BRepAdaptor_HSurface {
@@ -1458,7 +1306,7 @@ class BRepAdaptor_Surface : public Adaptor3d_Surface {
 ") D3;
 		void D3 (const Standard_Real U,const Standard_Real V,gp_Pnt & P,gp_Vec & D1U,gp_Vec & D1V,gp_Vec & D2U,gp_Vec & D2V,gp_Vec & D2UV,gp_Vec & D3U,gp_Vec & D3V,gp_Vec & D3UUV,gp_Vec & D3UVV);
 		%feature("compactdefaultargs") DN;
-		%feature("autodoc", "	* Computes the derivative of order Nu in the direction U and Nv in the direction V at the point P(U, V). Raised if the current U interval is not not CNu and the current V interval is not CNv. Raised if Nu + Nv < 1 or Nu < 0 or Nv < 0.
+		%feature("autodoc", "	* Computes the derivative of order Nu in the direction U and Nv in the direction V at the point P--U, V--. Raised if the current U interval is not not CNu and the current V interval is not CNv. Raised if Nu + Nv < 1 or Nu < 0 or Nv < 0.
 
 	:param U:
 	:type U: float

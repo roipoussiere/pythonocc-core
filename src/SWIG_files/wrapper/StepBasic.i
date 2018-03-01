@@ -1,5 +1,5 @@
 /*
-Copyright 2008-2017 Thomas Paviot (tpaviot@gmail.com)
+Copyright 2008-2018 Thomas Paviot (tpaviot@gmail.com)
 
 
 This file is part of pythonOCC.
@@ -55,6 +55,19 @@ def register_handle(handle, base_object):
 
 /* typedefs */
 /* end typedefs declaration */
+
+/* templates */
+%template(StepBasic_Array1OfDocument) NCollection_Array1 <Handle_StepBasic_Document>;
+%template(StepBasic_Array1OfOrganization) NCollection_Array1 <Handle_StepBasic_Organization>;
+%template(StepBasic_Array1OfProduct) NCollection_Array1 <Handle_StepBasic_Product>;
+%template(StepBasic_Array1OfUncertaintyMeasureWithUnit) NCollection_Array1 <Handle_StepBasic_UncertaintyMeasureWithUnit>;
+%template(StepBasic_Array1OfProductDefinition) NCollection_Array1 <Handle_StepBasic_ProductDefinition>;
+%template(StepBasic_Array1OfDerivedUnitElement) NCollection_Array1 <Handle_StepBasic_DerivedUnitElement>;
+%template(StepBasic_Array1OfPerson) NCollection_Array1 <Handle_StepBasic_Person>;
+%template(StepBasic_Array1OfProductContext) NCollection_Array1 <Handle_StepBasic_ProductContext>;
+%template(StepBasic_Array1OfApproval) NCollection_Array1 <Handle_StepBasic_Approval>;
+%template(StepBasic_Array1OfNamedUnit) NCollection_Array1 <Handle_StepBasic_NamedUnit>;
+/* end templates declaration */
 
 /* public enums */
 enum StepBasic_Source {
@@ -122,7 +135,7 @@ enum StepBasic_SiPrefix {
 /* end public enums declaration */
 
 %nodefaultctor StepBasic_Action;
-class StepBasic_Action : public MMgt_TShared {
+class StepBasic_Action : public Standard_Transient {
 	public:
 		%feature("compactdefaultargs") StepBasic_Action;
 		%feature("autodoc", "	* Empty constructor
@@ -131,7 +144,7 @@ class StepBasic_Action : public MMgt_TShared {
 ") StepBasic_Action;
 		 StepBasic_Action ();
 		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	* Initialize all fields (own and inherited)
+		%feature("autodoc", "	* Initialize all fields --own and inherited--
 
 	:param aName:
 	:type aName: Handle_TCollection_HAsciiString &
@@ -214,7 +227,7 @@ class StepBasic_Action : public MMgt_TShared {
 %}
 
 %nodefaultctor Handle_StepBasic_Action;
-class Handle_StepBasic_Action : public Handle_MMgt_TShared {
+class Handle_StepBasic_Action : public Handle_Standard_Transient {
 
     public:
         // constructors
@@ -226,19 +239,20 @@ class Handle_StepBasic_Action : public Handle_MMgt_TShared {
         static const Handle_StepBasic_Action DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_StepBasic_Action {
     StepBasic_Action* _get_reference() {
-    return (StepBasic_Action*)$self->Access();
+    return (StepBasic_Action*)$self->get();
     }
 };
 
 %extend Handle_StepBasic_Action {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend StepBasic_Action {
@@ -247,7 +261,7 @@ class Handle_StepBasic_Action : public Handle_MMgt_TShared {
 	}
 };
 %nodefaultctor StepBasic_ActionAssignment;
-class StepBasic_ActionAssignment : public MMgt_TShared {
+class StepBasic_ActionAssignment : public Standard_Transient {
 	public:
 		%feature("compactdefaultargs") StepBasic_ActionAssignment;
 		%feature("autodoc", "	* Empty constructor
@@ -256,7 +270,7 @@ class StepBasic_ActionAssignment : public MMgt_TShared {
 ") StepBasic_ActionAssignment;
 		 StepBasic_ActionAssignment ();
 		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	* Initialize all fields (own and inherited)
+		%feature("autodoc", "	* Initialize all fields --own and inherited--
 
 	:param aAssignedAction:
 	:type aAssignedAction: Handle_StepBasic_Action &
@@ -299,7 +313,7 @@ class StepBasic_ActionAssignment : public MMgt_TShared {
 %}
 
 %nodefaultctor Handle_StepBasic_ActionAssignment;
-class Handle_StepBasic_ActionAssignment : public Handle_MMgt_TShared {
+class Handle_StepBasic_ActionAssignment : public Handle_Standard_Transient {
 
     public:
         // constructors
@@ -311,19 +325,20 @@ class Handle_StepBasic_ActionAssignment : public Handle_MMgt_TShared {
         static const Handle_StepBasic_ActionAssignment DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_StepBasic_ActionAssignment {
     StepBasic_ActionAssignment* _get_reference() {
-    return (StepBasic_ActionAssignment*)$self->Access();
+    return (StepBasic_ActionAssignment*)$self->get();
     }
 };
 
 %extend Handle_StepBasic_ActionAssignment {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend StepBasic_ActionAssignment {
@@ -332,7 +347,7 @@ class Handle_StepBasic_ActionAssignment : public Handle_MMgt_TShared {
 	}
 };
 %nodefaultctor StepBasic_ActionMethod;
-class StepBasic_ActionMethod : public MMgt_TShared {
+class StepBasic_ActionMethod : public Standard_Transient {
 	public:
 		%feature("compactdefaultargs") StepBasic_ActionMethod;
 		%feature("autodoc", "	* Empty constructor
@@ -341,7 +356,7 @@ class StepBasic_ActionMethod : public MMgt_TShared {
 ") StepBasic_ActionMethod;
 		 StepBasic_ActionMethod ();
 		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	* Initialize all fields (own and inherited)
+		%feature("autodoc", "	* Initialize all fields --own and inherited--
 
 	:param aName:
 	:type aName: Handle_TCollection_HAsciiString &
@@ -440,7 +455,7 @@ class StepBasic_ActionMethod : public MMgt_TShared {
 %}
 
 %nodefaultctor Handle_StepBasic_ActionMethod;
-class Handle_StepBasic_ActionMethod : public Handle_MMgt_TShared {
+class Handle_StepBasic_ActionMethod : public Handle_Standard_Transient {
 
     public:
         // constructors
@@ -452,19 +467,20 @@ class Handle_StepBasic_ActionMethod : public Handle_MMgt_TShared {
         static const Handle_StepBasic_ActionMethod DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_StepBasic_ActionMethod {
     StepBasic_ActionMethod* _get_reference() {
-    return (StepBasic_ActionMethod*)$self->Access();
+    return (StepBasic_ActionMethod*)$self->get();
     }
 };
 
 %extend Handle_StepBasic_ActionMethod {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend StepBasic_ActionMethod {
@@ -473,7 +489,7 @@ class Handle_StepBasic_ActionMethod : public Handle_MMgt_TShared {
 	}
 };
 %nodefaultctor StepBasic_ActionRequestAssignment;
-class StepBasic_ActionRequestAssignment : public MMgt_TShared {
+class StepBasic_ActionRequestAssignment : public Standard_Transient {
 	public:
 		%feature("compactdefaultargs") StepBasic_ActionRequestAssignment;
 		%feature("autodoc", "	* Empty constructor
@@ -482,7 +498,7 @@ class StepBasic_ActionRequestAssignment : public MMgt_TShared {
 ") StepBasic_ActionRequestAssignment;
 		 StepBasic_ActionRequestAssignment ();
 		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	* Initialize all fields (own and inherited)
+		%feature("autodoc", "	* Initialize all fields --own and inherited--
 
 	:param aAssignedActionRequest:
 	:type aAssignedActionRequest: Handle_StepBasic_VersionedActionRequest &
@@ -525,7 +541,7 @@ class StepBasic_ActionRequestAssignment : public MMgt_TShared {
 %}
 
 %nodefaultctor Handle_StepBasic_ActionRequestAssignment;
-class Handle_StepBasic_ActionRequestAssignment : public Handle_MMgt_TShared {
+class Handle_StepBasic_ActionRequestAssignment : public Handle_Standard_Transient {
 
     public:
         // constructors
@@ -537,19 +553,20 @@ class Handle_StepBasic_ActionRequestAssignment : public Handle_MMgt_TShared {
         static const Handle_StepBasic_ActionRequestAssignment DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_StepBasic_ActionRequestAssignment {
     StepBasic_ActionRequestAssignment* _get_reference() {
-    return (StepBasic_ActionRequestAssignment*)$self->Access();
+    return (StepBasic_ActionRequestAssignment*)$self->get();
     }
 };
 
 %extend Handle_StepBasic_ActionRequestAssignment {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend StepBasic_ActionRequestAssignment {
@@ -558,7 +575,7 @@ class Handle_StepBasic_ActionRequestAssignment : public Handle_MMgt_TShared {
 	}
 };
 %nodefaultctor StepBasic_ActionRequestSolution;
-class StepBasic_ActionRequestSolution : public MMgt_TShared {
+class StepBasic_ActionRequestSolution : public Standard_Transient {
 	public:
 		%feature("compactdefaultargs") StepBasic_ActionRequestSolution;
 		%feature("autodoc", "	* Empty constructor
@@ -567,7 +584,7 @@ class StepBasic_ActionRequestSolution : public MMgt_TShared {
 ") StepBasic_ActionRequestSolution;
 		 StepBasic_ActionRequestSolution ();
 		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	* Initialize all fields (own and inherited)
+		%feature("autodoc", "	* Initialize all fields --own and inherited--
 
 	:param aMethod:
 	:type aMethod: Handle_StepBasic_ActionMethod &
@@ -626,7 +643,7 @@ class StepBasic_ActionRequestSolution : public MMgt_TShared {
 %}
 
 %nodefaultctor Handle_StepBasic_ActionRequestSolution;
-class Handle_StepBasic_ActionRequestSolution : public Handle_MMgt_TShared {
+class Handle_StepBasic_ActionRequestSolution : public Handle_Standard_Transient {
 
     public:
         // constructors
@@ -638,19 +655,20 @@ class Handle_StepBasic_ActionRequestSolution : public Handle_MMgt_TShared {
         static const Handle_StepBasic_ActionRequestSolution DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_StepBasic_ActionRequestSolution {
     StepBasic_ActionRequestSolution* _get_reference() {
-    return (StepBasic_ActionRequestSolution*)$self->Access();
+    return (StepBasic_ActionRequestSolution*)$self->get();
     }
 };
 
 %extend Handle_StepBasic_ActionRequestSolution {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend StepBasic_ActionRequestSolution {
@@ -659,7 +677,7 @@ class Handle_StepBasic_ActionRequestSolution : public Handle_MMgt_TShared {
 	}
 };
 %nodefaultctor StepBasic_Address;
-class StepBasic_Address : public MMgt_TShared {
+class StepBasic_Address : public Standard_Transient {
 	public:
 		%feature("compactdefaultargs") StepBasic_Address;
 		%feature("autodoc", "	* Returns a Address
@@ -716,9 +734,9 @@ class StepBasic_Address : public MMgt_TShared {
 	:type hasAtelexNumber: bool
 	:param aTelexNumber:
 	:type aTelexNumber: Handle_TCollection_HAsciiString &
-	:rtype: void
+	:rtype: None
 ") Init;
-		virtual void Init (const Standard_Boolean hasAinternalLocation,const Handle_TCollection_HAsciiString & aInternalLocation,const Standard_Boolean hasAstreetNumber,const Handle_TCollection_HAsciiString & aStreetNumber,const Standard_Boolean hasAstreet,const Handle_TCollection_HAsciiString & aStreet,const Standard_Boolean hasApostalBox,const Handle_TCollection_HAsciiString & aPostalBox,const Standard_Boolean hasAtown,const Handle_TCollection_HAsciiString & aTown,const Standard_Boolean hasAregion,const Handle_TCollection_HAsciiString & aRegion,const Standard_Boolean hasApostalCode,const Handle_TCollection_HAsciiString & aPostalCode,const Standard_Boolean hasAcountry,const Handle_TCollection_HAsciiString & aCountry,const Standard_Boolean hasAfacsimileNumber,const Handle_TCollection_HAsciiString & aFacsimileNumber,const Standard_Boolean hasAtelephoneNumber,const Handle_TCollection_HAsciiString & aTelephoneNumber,const Standard_Boolean hasAelectronicMailAddress,const Handle_TCollection_HAsciiString & aElectronicMailAddress,const Standard_Boolean hasAtelexNumber,const Handle_TCollection_HAsciiString & aTelexNumber);
+		void Init (const Standard_Boolean hasAinternalLocation,const Handle_TCollection_HAsciiString & aInternalLocation,const Standard_Boolean hasAstreetNumber,const Handle_TCollection_HAsciiString & aStreetNumber,const Standard_Boolean hasAstreet,const Handle_TCollection_HAsciiString & aStreet,const Standard_Boolean hasApostalBox,const Handle_TCollection_HAsciiString & aPostalBox,const Standard_Boolean hasAtown,const Handle_TCollection_HAsciiString & aTown,const Standard_Boolean hasAregion,const Handle_TCollection_HAsciiString & aRegion,const Standard_Boolean hasApostalCode,const Handle_TCollection_HAsciiString & aPostalCode,const Standard_Boolean hasAcountry,const Handle_TCollection_HAsciiString & aCountry,const Standard_Boolean hasAfacsimileNumber,const Handle_TCollection_HAsciiString & aFacsimileNumber,const Standard_Boolean hasAtelephoneNumber,const Handle_TCollection_HAsciiString & aTelephoneNumber,const Standard_Boolean hasAelectronicMailAddress,const Handle_TCollection_HAsciiString & aElectronicMailAddress,const Standard_Boolean hasAtelexNumber,const Handle_TCollection_HAsciiString & aTelexNumber);
 		%feature("compactdefaultargs") SetInternalLocation;
 		%feature("autodoc", "	:param aInternalLocation:
 	:type aInternalLocation: Handle_TCollection_HAsciiString &
@@ -957,7 +975,7 @@ class StepBasic_Address : public MMgt_TShared {
 %}
 
 %nodefaultctor Handle_StepBasic_Address;
-class Handle_StepBasic_Address : public Handle_MMgt_TShared {
+class Handle_StepBasic_Address : public Handle_Standard_Transient {
 
     public:
         // constructors
@@ -969,19 +987,20 @@ class Handle_StepBasic_Address : public Handle_MMgt_TShared {
         static const Handle_StepBasic_Address DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_StepBasic_Address {
     StepBasic_Address* _get_reference() {
-    return (StepBasic_Address*)$self->Access();
+    return (StepBasic_Address*)$self->get();
     }
 };
 
 %extend Handle_StepBasic_Address {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend StepBasic_Address {
@@ -990,7 +1009,7 @@ class Handle_StepBasic_Address : public Handle_MMgt_TShared {
 	}
 };
 %nodefaultctor StepBasic_ApplicationContext;
-class StepBasic_ApplicationContext : public MMgt_TShared {
+class StepBasic_ApplicationContext : public Standard_Transient {
 	public:
 		%feature("compactdefaultargs") StepBasic_ApplicationContext;
 		%feature("autodoc", "	* Returns a ApplicationContext
@@ -1001,9 +1020,9 @@ class StepBasic_ApplicationContext : public MMgt_TShared {
 		%feature("compactdefaultargs") Init;
 		%feature("autodoc", "	:param aApplication:
 	:type aApplication: Handle_TCollection_HAsciiString &
-	:rtype: void
+	:rtype: None
 ") Init;
-		virtual void Init (const Handle_TCollection_HAsciiString & aApplication);
+		void Init (const Handle_TCollection_HAsciiString & aApplication);
 		%feature("compactdefaultargs") SetApplication;
 		%feature("autodoc", "	:param aApplication:
 	:type aApplication: Handle_TCollection_HAsciiString &
@@ -1036,7 +1055,7 @@ class StepBasic_ApplicationContext : public MMgt_TShared {
 %}
 
 %nodefaultctor Handle_StepBasic_ApplicationContext;
-class Handle_StepBasic_ApplicationContext : public Handle_MMgt_TShared {
+class Handle_StepBasic_ApplicationContext : public Handle_Standard_Transient {
 
     public:
         // constructors
@@ -1048,19 +1067,20 @@ class Handle_StepBasic_ApplicationContext : public Handle_MMgt_TShared {
         static const Handle_StepBasic_ApplicationContext DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_StepBasic_ApplicationContext {
     StepBasic_ApplicationContext* _get_reference() {
-    return (StepBasic_ApplicationContext*)$self->Access();
+    return (StepBasic_ApplicationContext*)$self->get();
     }
 };
 
 %extend Handle_StepBasic_ApplicationContext {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend StepBasic_ApplicationContext {
@@ -1069,7 +1089,7 @@ class Handle_StepBasic_ApplicationContext : public Handle_MMgt_TShared {
 	}
 };
 %nodefaultctor StepBasic_ApplicationContextElement;
-class StepBasic_ApplicationContextElement : public MMgt_TShared {
+class StepBasic_ApplicationContextElement : public Standard_Transient {
 	public:
 		%feature("compactdefaultargs") StepBasic_ApplicationContextElement;
 		%feature("autodoc", "	* Returns a ApplicationContextElement
@@ -1082,9 +1102,9 @@ class StepBasic_ApplicationContextElement : public MMgt_TShared {
 	:type aName: Handle_TCollection_HAsciiString &
 	:param aFrameOfReference:
 	:type aFrameOfReference: Handle_StepBasic_ApplicationContext &
-	:rtype: void
+	:rtype: None
 ") Init;
-		virtual void Init (const Handle_TCollection_HAsciiString & aName,const Handle_StepBasic_ApplicationContext & aFrameOfReference);
+		void Init (const Handle_TCollection_HAsciiString & aName,const Handle_StepBasic_ApplicationContext & aFrameOfReference);
 		%feature("compactdefaultargs") SetName;
 		%feature("autodoc", "	:param aName:
 	:type aName: Handle_TCollection_HAsciiString &
@@ -1127,7 +1147,7 @@ class StepBasic_ApplicationContextElement : public MMgt_TShared {
 %}
 
 %nodefaultctor Handle_StepBasic_ApplicationContextElement;
-class Handle_StepBasic_ApplicationContextElement : public Handle_MMgt_TShared {
+class Handle_StepBasic_ApplicationContextElement : public Handle_Standard_Transient {
 
     public:
         // constructors
@@ -1139,19 +1159,20 @@ class Handle_StepBasic_ApplicationContextElement : public Handle_MMgt_TShared {
         static const Handle_StepBasic_ApplicationContextElement DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_StepBasic_ApplicationContextElement {
     StepBasic_ApplicationContextElement* _get_reference() {
-    return (StepBasic_ApplicationContextElement*)$self->Access();
+    return (StepBasic_ApplicationContextElement*)$self->get();
     }
 };
 
 %extend Handle_StepBasic_ApplicationContextElement {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend StepBasic_ApplicationContextElement {
@@ -1160,7 +1181,7 @@ class Handle_StepBasic_ApplicationContextElement : public Handle_MMgt_TShared {
 	}
 };
 %nodefaultctor StepBasic_ApplicationProtocolDefinition;
-class StepBasic_ApplicationProtocolDefinition : public MMgt_TShared {
+class StepBasic_ApplicationProtocolDefinition : public Standard_Transient {
 	public:
 		%feature("compactdefaultargs") StepBasic_ApplicationProtocolDefinition;
 		%feature("autodoc", "	* Returns a ApplicationProtocolDefinition
@@ -1177,9 +1198,9 @@ class StepBasic_ApplicationProtocolDefinition : public MMgt_TShared {
 	:type aApplicationProtocolYear: int
 	:param aApplication:
 	:type aApplication: Handle_StepBasic_ApplicationContext &
-	:rtype: void
+	:rtype: None
 ") Init;
-		virtual void Init (const Handle_TCollection_HAsciiString & aStatus,const Handle_TCollection_HAsciiString & aApplicationInterpretedModelSchemaName,const Standard_Integer aApplicationProtocolYear,const Handle_StepBasic_ApplicationContext & aApplication);
+		void Init (const Handle_TCollection_HAsciiString & aStatus,const Handle_TCollection_HAsciiString & aApplicationInterpretedModelSchemaName,const Standard_Integer aApplicationProtocolYear,const Handle_StepBasic_ApplicationContext & aApplication);
 		%feature("compactdefaultargs") SetStatus;
 		%feature("autodoc", "	:param aStatus:
 	:type aStatus: Handle_TCollection_HAsciiString &
@@ -1242,7 +1263,7 @@ class StepBasic_ApplicationProtocolDefinition : public MMgt_TShared {
 %}
 
 %nodefaultctor Handle_StepBasic_ApplicationProtocolDefinition;
-class Handle_StepBasic_ApplicationProtocolDefinition : public Handle_MMgt_TShared {
+class Handle_StepBasic_ApplicationProtocolDefinition : public Handle_Standard_Transient {
 
     public:
         // constructors
@@ -1254,19 +1275,20 @@ class Handle_StepBasic_ApplicationProtocolDefinition : public Handle_MMgt_TShare
         static const Handle_StepBasic_ApplicationProtocolDefinition DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_StepBasic_ApplicationProtocolDefinition {
     StepBasic_ApplicationProtocolDefinition* _get_reference() {
-    return (StepBasic_ApplicationProtocolDefinition*)$self->Access();
+    return (StepBasic_ApplicationProtocolDefinition*)$self->get();
     }
 };
 
 %extend Handle_StepBasic_ApplicationProtocolDefinition {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend StepBasic_ApplicationProtocolDefinition {
@@ -1275,7 +1297,7 @@ class Handle_StepBasic_ApplicationProtocolDefinition : public Handle_MMgt_TShare
 	}
 };
 %nodefaultctor StepBasic_Approval;
-class StepBasic_Approval : public MMgt_TShared {
+class StepBasic_Approval : public Standard_Transient {
 	public:
 		%feature("compactdefaultargs") StepBasic_Approval;
 		%feature("autodoc", "	* Returns a Approval
@@ -1288,9 +1310,9 @@ class StepBasic_Approval : public MMgt_TShared {
 	:type aStatus: Handle_StepBasic_ApprovalStatus &
 	:param aLevel:
 	:type aLevel: Handle_TCollection_HAsciiString &
-	:rtype: void
+	:rtype: None
 ") Init;
-		virtual void Init (const Handle_StepBasic_ApprovalStatus & aStatus,const Handle_TCollection_HAsciiString & aLevel);
+		void Init (const Handle_StepBasic_ApprovalStatus & aStatus,const Handle_TCollection_HAsciiString & aLevel);
 		%feature("compactdefaultargs") SetStatus;
 		%feature("autodoc", "	:param aStatus:
 	:type aStatus: Handle_StepBasic_ApprovalStatus &
@@ -1333,7 +1355,7 @@ class StepBasic_Approval : public MMgt_TShared {
 %}
 
 %nodefaultctor Handle_StepBasic_Approval;
-class Handle_StepBasic_Approval : public Handle_MMgt_TShared {
+class Handle_StepBasic_Approval : public Handle_Standard_Transient {
 
     public:
         // constructors
@@ -1345,19 +1367,20 @@ class Handle_StepBasic_Approval : public Handle_MMgt_TShared {
         static const Handle_StepBasic_Approval DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_StepBasic_Approval {
     StepBasic_Approval* _get_reference() {
-    return (StepBasic_Approval*)$self->Access();
+    return (StepBasic_Approval*)$self->get();
     }
 };
 
 %extend Handle_StepBasic_Approval {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend StepBasic_Approval {
@@ -1366,14 +1389,14 @@ class Handle_StepBasic_Approval : public Handle_MMgt_TShared {
 	}
 };
 %nodefaultctor StepBasic_ApprovalAssignment;
-class StepBasic_ApprovalAssignment : public MMgt_TShared {
+class StepBasic_ApprovalAssignment : public Standard_Transient {
 	public:
 		%feature("compactdefaultargs") Init;
 		%feature("autodoc", "	:param aAssignedApproval:
 	:type aAssignedApproval: Handle_StepBasic_Approval &
-	:rtype: void
+	:rtype: None
 ") Init;
-		virtual void Init (const Handle_StepBasic_Approval & aAssignedApproval);
+		void Init (const Handle_StepBasic_Approval & aAssignedApproval);
 		%feature("compactdefaultargs") SetAssignedApproval;
 		%feature("autodoc", "	:param aAssignedApproval:
 	:type aAssignedApproval: Handle_StepBasic_Approval &
@@ -1406,7 +1429,7 @@ class StepBasic_ApprovalAssignment : public MMgt_TShared {
 %}
 
 %nodefaultctor Handle_StepBasic_ApprovalAssignment;
-class Handle_StepBasic_ApprovalAssignment : public Handle_MMgt_TShared {
+class Handle_StepBasic_ApprovalAssignment : public Handle_Standard_Transient {
 
     public:
         // constructors
@@ -1418,19 +1441,20 @@ class Handle_StepBasic_ApprovalAssignment : public Handle_MMgt_TShared {
         static const Handle_StepBasic_ApprovalAssignment DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_StepBasic_ApprovalAssignment {
     StepBasic_ApprovalAssignment* _get_reference() {
-    return (StepBasic_ApprovalAssignment*)$self->Access();
+    return (StepBasic_ApprovalAssignment*)$self->get();
     }
 };
 
 %extend Handle_StepBasic_ApprovalAssignment {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend StepBasic_ApprovalAssignment {
@@ -1439,7 +1463,7 @@ class Handle_StepBasic_ApprovalAssignment : public Handle_MMgt_TShared {
 	}
 };
 %nodefaultctor StepBasic_ApprovalDateTime;
-class StepBasic_ApprovalDateTime : public MMgt_TShared {
+class StepBasic_ApprovalDateTime : public Standard_Transient {
 	public:
 		%feature("compactdefaultargs") StepBasic_ApprovalDateTime;
 		%feature("autodoc", "	:rtype: None
@@ -1495,7 +1519,7 @@ class StepBasic_ApprovalDateTime : public MMgt_TShared {
 %}
 
 %nodefaultctor Handle_StepBasic_ApprovalDateTime;
-class Handle_StepBasic_ApprovalDateTime : public Handle_MMgt_TShared {
+class Handle_StepBasic_ApprovalDateTime : public Handle_Standard_Transient {
 
     public:
         // constructors
@@ -1507,19 +1531,20 @@ class Handle_StepBasic_ApprovalDateTime : public Handle_MMgt_TShared {
         static const Handle_StepBasic_ApprovalDateTime DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_StepBasic_ApprovalDateTime {
     StepBasic_ApprovalDateTime* _get_reference() {
-    return (StepBasic_ApprovalDateTime*)$self->Access();
+    return (StepBasic_ApprovalDateTime*)$self->get();
     }
 };
 
 %extend Handle_StepBasic_ApprovalDateTime {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend StepBasic_ApprovalDateTime {
@@ -1528,7 +1553,7 @@ class Handle_StepBasic_ApprovalDateTime : public Handle_MMgt_TShared {
 	}
 };
 %nodefaultctor StepBasic_ApprovalPersonOrganization;
-class StepBasic_ApprovalPersonOrganization : public MMgt_TShared {
+class StepBasic_ApprovalPersonOrganization : public Standard_Transient {
 	public:
 		%feature("compactdefaultargs") StepBasic_ApprovalPersonOrganization;
 		%feature("autodoc", "	* Returns a ApprovalPersonOrganization
@@ -1543,9 +1568,9 @@ class StepBasic_ApprovalPersonOrganization : public MMgt_TShared {
 	:type aAuthorizedApproval: Handle_StepBasic_Approval &
 	:param aRole:
 	:type aRole: Handle_StepBasic_ApprovalRole &
-	:rtype: void
+	:rtype: None
 ") Init;
-		virtual void Init (const StepBasic_PersonOrganizationSelect & aPersonOrganization,const Handle_StepBasic_Approval & aAuthorizedApproval,const Handle_StepBasic_ApprovalRole & aRole);
+		void Init (const StepBasic_PersonOrganizationSelect & aPersonOrganization,const Handle_StepBasic_Approval & aAuthorizedApproval,const Handle_StepBasic_ApprovalRole & aRole);
 		%feature("compactdefaultargs") SetPersonOrganization;
 		%feature("autodoc", "	:param aPersonOrganization:
 	:type aPersonOrganization: StepBasic_PersonOrganizationSelect &
@@ -1598,7 +1623,7 @@ class StepBasic_ApprovalPersonOrganization : public MMgt_TShared {
 %}
 
 %nodefaultctor Handle_StepBasic_ApprovalPersonOrganization;
-class Handle_StepBasic_ApprovalPersonOrganization : public Handle_MMgt_TShared {
+class Handle_StepBasic_ApprovalPersonOrganization : public Handle_Standard_Transient {
 
     public:
         // constructors
@@ -1610,19 +1635,20 @@ class Handle_StepBasic_ApprovalPersonOrganization : public Handle_MMgt_TShared {
         static const Handle_StepBasic_ApprovalPersonOrganization DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_StepBasic_ApprovalPersonOrganization {
     StepBasic_ApprovalPersonOrganization* _get_reference() {
-    return (StepBasic_ApprovalPersonOrganization*)$self->Access();
+    return (StepBasic_ApprovalPersonOrganization*)$self->get();
     }
 };
 
 %extend Handle_StepBasic_ApprovalPersonOrganization {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend StepBasic_ApprovalPersonOrganization {
@@ -1631,7 +1657,7 @@ class Handle_StepBasic_ApprovalPersonOrganization : public Handle_MMgt_TShared {
 	}
 };
 %nodefaultctor StepBasic_ApprovalRelationship;
-class StepBasic_ApprovalRelationship : public MMgt_TShared {
+class StepBasic_ApprovalRelationship : public Standard_Transient {
 	public:
 		%feature("compactdefaultargs") StepBasic_ApprovalRelationship;
 		%feature("autodoc", "	* Returns a ApprovalRelationship
@@ -1648,9 +1674,9 @@ class StepBasic_ApprovalRelationship : public MMgt_TShared {
 	:type aRelatingApproval: Handle_StepBasic_Approval &
 	:param aRelatedApproval:
 	:type aRelatedApproval: Handle_StepBasic_Approval &
-	:rtype: void
+	:rtype: None
 ") Init;
-		virtual void Init (const Handle_TCollection_HAsciiString & aName,const Handle_TCollection_HAsciiString & aDescription,const Handle_StepBasic_Approval & aRelatingApproval,const Handle_StepBasic_Approval & aRelatedApproval);
+		void Init (const Handle_TCollection_HAsciiString & aName,const Handle_TCollection_HAsciiString & aDescription,const Handle_StepBasic_Approval & aRelatingApproval,const Handle_StepBasic_Approval & aRelatedApproval);
 		%feature("compactdefaultargs") SetName;
 		%feature("autodoc", "	:param aName:
 	:type aName: Handle_TCollection_HAsciiString &
@@ -1713,7 +1739,7 @@ class StepBasic_ApprovalRelationship : public MMgt_TShared {
 %}
 
 %nodefaultctor Handle_StepBasic_ApprovalRelationship;
-class Handle_StepBasic_ApprovalRelationship : public Handle_MMgt_TShared {
+class Handle_StepBasic_ApprovalRelationship : public Handle_Standard_Transient {
 
     public:
         // constructors
@@ -1725,19 +1751,20 @@ class Handle_StepBasic_ApprovalRelationship : public Handle_MMgt_TShared {
         static const Handle_StepBasic_ApprovalRelationship DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_StepBasic_ApprovalRelationship {
     StepBasic_ApprovalRelationship* _get_reference() {
-    return (StepBasic_ApprovalRelationship*)$self->Access();
+    return (StepBasic_ApprovalRelationship*)$self->get();
     }
 };
 
 %extend Handle_StepBasic_ApprovalRelationship {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend StepBasic_ApprovalRelationship {
@@ -1746,7 +1773,7 @@ class Handle_StepBasic_ApprovalRelationship : public Handle_MMgt_TShared {
 	}
 };
 %nodefaultctor StepBasic_ApprovalRole;
-class StepBasic_ApprovalRole : public MMgt_TShared {
+class StepBasic_ApprovalRole : public Standard_Transient {
 	public:
 		%feature("compactdefaultargs") StepBasic_ApprovalRole;
 		%feature("autodoc", "	* Returns a ApprovalRole
@@ -1757,9 +1784,9 @@ class StepBasic_ApprovalRole : public MMgt_TShared {
 		%feature("compactdefaultargs") Init;
 		%feature("autodoc", "	:param aRole:
 	:type aRole: Handle_TCollection_HAsciiString &
-	:rtype: void
+	:rtype: None
 ") Init;
-		virtual void Init (const Handle_TCollection_HAsciiString & aRole);
+		void Init (const Handle_TCollection_HAsciiString & aRole);
 		%feature("compactdefaultargs") SetRole;
 		%feature("autodoc", "	:param aRole:
 	:type aRole: Handle_TCollection_HAsciiString &
@@ -1792,7 +1819,7 @@ class StepBasic_ApprovalRole : public MMgt_TShared {
 %}
 
 %nodefaultctor Handle_StepBasic_ApprovalRole;
-class Handle_StepBasic_ApprovalRole : public Handle_MMgt_TShared {
+class Handle_StepBasic_ApprovalRole : public Handle_Standard_Transient {
 
     public:
         // constructors
@@ -1804,19 +1831,20 @@ class Handle_StepBasic_ApprovalRole : public Handle_MMgt_TShared {
         static const Handle_StepBasic_ApprovalRole DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_StepBasic_ApprovalRole {
     StepBasic_ApprovalRole* _get_reference() {
-    return (StepBasic_ApprovalRole*)$self->Access();
+    return (StepBasic_ApprovalRole*)$self->get();
     }
 };
 
 %extend Handle_StepBasic_ApprovalRole {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend StepBasic_ApprovalRole {
@@ -1825,7 +1853,7 @@ class Handle_StepBasic_ApprovalRole : public Handle_MMgt_TShared {
 	}
 };
 %nodefaultctor StepBasic_ApprovalStatus;
-class StepBasic_ApprovalStatus : public MMgt_TShared {
+class StepBasic_ApprovalStatus : public Standard_Transient {
 	public:
 		%feature("compactdefaultargs") StepBasic_ApprovalStatus;
 		%feature("autodoc", "	* Returns a ApprovalStatus
@@ -1836,9 +1864,9 @@ class StepBasic_ApprovalStatus : public MMgt_TShared {
 		%feature("compactdefaultargs") Init;
 		%feature("autodoc", "	:param aName:
 	:type aName: Handle_TCollection_HAsciiString &
-	:rtype: void
+	:rtype: None
 ") Init;
-		virtual void Init (const Handle_TCollection_HAsciiString & aName);
+		void Init (const Handle_TCollection_HAsciiString & aName);
 		%feature("compactdefaultargs") SetName;
 		%feature("autodoc", "	:param aName:
 	:type aName: Handle_TCollection_HAsciiString &
@@ -1871,7 +1899,7 @@ class StepBasic_ApprovalStatus : public MMgt_TShared {
 %}
 
 %nodefaultctor Handle_StepBasic_ApprovalStatus;
-class Handle_StepBasic_ApprovalStatus : public Handle_MMgt_TShared {
+class Handle_StepBasic_ApprovalStatus : public Handle_Standard_Transient {
 
     public:
         // constructors
@@ -1883,19 +1911,20 @@ class Handle_StepBasic_ApprovalStatus : public Handle_MMgt_TShared {
         static const Handle_StepBasic_ApprovalStatus DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_StepBasic_ApprovalStatus {
     StepBasic_ApprovalStatus* _get_reference() {
-    return (StepBasic_ApprovalStatus*)$self->Access();
+    return (StepBasic_ApprovalStatus*)$self->get();
     }
 };
 
 %extend Handle_StepBasic_ApprovalStatus {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend StepBasic_ApprovalStatus {
@@ -1903,878 +1932,8 @@ class Handle_StepBasic_ApprovalStatus : public Handle_MMgt_TShared {
 	__repr__ = _dumps_object
 	}
 };
-%nodefaultctor StepBasic_Array1OfApproval;
-class StepBasic_Array1OfApproval {
-	public:
-		%feature("compactdefaultargs") StepBasic_Array1OfApproval;
-		%feature("autodoc", "	:param Low:
-	:type Low: int
-	:param Up:
-	:type Up: int
-	:rtype: None
-") StepBasic_Array1OfApproval;
-		 StepBasic_Array1OfApproval (const Standard_Integer Low,const Standard_Integer Up);
-		%feature("compactdefaultargs") StepBasic_Array1OfApproval;
-		%feature("autodoc", "	:param Item:
-	:type Item: Handle_StepBasic_Approval &
-	:param Low:
-	:type Low: int
-	:param Up:
-	:type Up: int
-	:rtype: None
-") StepBasic_Array1OfApproval;
-		 StepBasic_Array1OfApproval (const Handle_StepBasic_Approval & Item,const Standard_Integer Low,const Standard_Integer Up);
-		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	:param V:
-	:type V: Handle_StepBasic_Approval &
-	:rtype: None
-") Init;
-		void Init (const Handle_StepBasic_Approval & V);
-		%feature("compactdefaultargs") Destroy;
-		%feature("autodoc", "	:rtype: None
-") Destroy;
-		void Destroy ();
-		%feature("compactdefaultargs") IsAllocated;
-		%feature("autodoc", "	:rtype: bool
-") IsAllocated;
-		Standard_Boolean IsAllocated ();
-		%feature("compactdefaultargs") Assign;
-		%feature("autodoc", "	:param Other:
-	:type Other: StepBasic_Array1OfApproval &
-	:rtype: StepBasic_Array1OfApproval
-") Assign;
-		const StepBasic_Array1OfApproval & Assign (const StepBasic_Array1OfApproval & Other);
-		%feature("compactdefaultargs") operator =;
-		%feature("autodoc", "	:param Other:
-	:type Other: StepBasic_Array1OfApproval &
-	:rtype: StepBasic_Array1OfApproval
-") operator =;
-		const StepBasic_Array1OfApproval & operator = (const StepBasic_Array1OfApproval & Other);
-		%feature("compactdefaultargs") Length;
-		%feature("autodoc", "	:rtype: int
-") Length;
-		Standard_Integer Length ();
-		%feature("compactdefaultargs") Lower;
-		%feature("autodoc", "	:rtype: int
-") Lower;
-		Standard_Integer Lower ();
-		%feature("compactdefaultargs") Upper;
-		%feature("autodoc", "	:rtype: int
-") Upper;
-		Standard_Integer Upper ();
-		%feature("compactdefaultargs") SetValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param Value:
-	:type Value: Handle_StepBasic_Approval &
-	:rtype: None
-") SetValue;
-		void SetValue (const Standard_Integer Index,const Handle_StepBasic_Approval & Value);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: Handle_StepBasic_Approval
-") Value;
-		Handle_StepBasic_Approval Value (const Standard_Integer Index);
-		%feature("compactdefaultargs") ChangeValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: Handle_StepBasic_Approval
-") ChangeValue;
-		Handle_StepBasic_Approval ChangeValue (const Standard_Integer Index);
-};
-
-
-%extend StepBasic_Array1OfApproval {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor StepBasic_Array1OfDerivedUnitElement;
-class StepBasic_Array1OfDerivedUnitElement {
-	public:
-		%feature("compactdefaultargs") StepBasic_Array1OfDerivedUnitElement;
-		%feature("autodoc", "	:param Low:
-	:type Low: int
-	:param Up:
-	:type Up: int
-	:rtype: None
-") StepBasic_Array1OfDerivedUnitElement;
-		 StepBasic_Array1OfDerivedUnitElement (const Standard_Integer Low,const Standard_Integer Up);
-		%feature("compactdefaultargs") StepBasic_Array1OfDerivedUnitElement;
-		%feature("autodoc", "	:param Item:
-	:type Item: Handle_StepBasic_DerivedUnitElement &
-	:param Low:
-	:type Low: int
-	:param Up:
-	:type Up: int
-	:rtype: None
-") StepBasic_Array1OfDerivedUnitElement;
-		 StepBasic_Array1OfDerivedUnitElement (const Handle_StepBasic_DerivedUnitElement & Item,const Standard_Integer Low,const Standard_Integer Up);
-		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	:param V:
-	:type V: Handle_StepBasic_DerivedUnitElement &
-	:rtype: None
-") Init;
-		void Init (const Handle_StepBasic_DerivedUnitElement & V);
-		%feature("compactdefaultargs") Destroy;
-		%feature("autodoc", "	:rtype: None
-") Destroy;
-		void Destroy ();
-		%feature("compactdefaultargs") IsAllocated;
-		%feature("autodoc", "	:rtype: bool
-") IsAllocated;
-		Standard_Boolean IsAllocated ();
-		%feature("compactdefaultargs") Assign;
-		%feature("autodoc", "	:param Other:
-	:type Other: StepBasic_Array1OfDerivedUnitElement &
-	:rtype: StepBasic_Array1OfDerivedUnitElement
-") Assign;
-		const StepBasic_Array1OfDerivedUnitElement & Assign (const StepBasic_Array1OfDerivedUnitElement & Other);
-		%feature("compactdefaultargs") operator =;
-		%feature("autodoc", "	:param Other:
-	:type Other: StepBasic_Array1OfDerivedUnitElement &
-	:rtype: StepBasic_Array1OfDerivedUnitElement
-") operator =;
-		const StepBasic_Array1OfDerivedUnitElement & operator = (const StepBasic_Array1OfDerivedUnitElement & Other);
-		%feature("compactdefaultargs") Length;
-		%feature("autodoc", "	:rtype: int
-") Length;
-		Standard_Integer Length ();
-		%feature("compactdefaultargs") Lower;
-		%feature("autodoc", "	:rtype: int
-") Lower;
-		Standard_Integer Lower ();
-		%feature("compactdefaultargs") Upper;
-		%feature("autodoc", "	:rtype: int
-") Upper;
-		Standard_Integer Upper ();
-		%feature("compactdefaultargs") SetValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param Value:
-	:type Value: Handle_StepBasic_DerivedUnitElement &
-	:rtype: None
-") SetValue;
-		void SetValue (const Standard_Integer Index,const Handle_StepBasic_DerivedUnitElement & Value);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: Handle_StepBasic_DerivedUnitElement
-") Value;
-		Handle_StepBasic_DerivedUnitElement Value (const Standard_Integer Index);
-		%feature("compactdefaultargs") ChangeValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: Handle_StepBasic_DerivedUnitElement
-") ChangeValue;
-		Handle_StepBasic_DerivedUnitElement ChangeValue (const Standard_Integer Index);
-};
-
-
-%extend StepBasic_Array1OfDerivedUnitElement {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor StepBasic_Array1OfDocument;
-class StepBasic_Array1OfDocument {
-	public:
-		%feature("compactdefaultargs") StepBasic_Array1OfDocument;
-		%feature("autodoc", "	:param Low:
-	:type Low: int
-	:param Up:
-	:type Up: int
-	:rtype: None
-") StepBasic_Array1OfDocument;
-		 StepBasic_Array1OfDocument (const Standard_Integer Low,const Standard_Integer Up);
-		%feature("compactdefaultargs") StepBasic_Array1OfDocument;
-		%feature("autodoc", "	:param Item:
-	:type Item: Handle_StepBasic_Document &
-	:param Low:
-	:type Low: int
-	:param Up:
-	:type Up: int
-	:rtype: None
-") StepBasic_Array1OfDocument;
-		 StepBasic_Array1OfDocument (const Handle_StepBasic_Document & Item,const Standard_Integer Low,const Standard_Integer Up);
-		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	:param V:
-	:type V: Handle_StepBasic_Document &
-	:rtype: None
-") Init;
-		void Init (const Handle_StepBasic_Document & V);
-		%feature("compactdefaultargs") Destroy;
-		%feature("autodoc", "	:rtype: None
-") Destroy;
-		void Destroy ();
-		%feature("compactdefaultargs") IsAllocated;
-		%feature("autodoc", "	:rtype: bool
-") IsAllocated;
-		Standard_Boolean IsAllocated ();
-		%feature("compactdefaultargs") Assign;
-		%feature("autodoc", "	:param Other:
-	:type Other: StepBasic_Array1OfDocument &
-	:rtype: StepBasic_Array1OfDocument
-") Assign;
-		const StepBasic_Array1OfDocument & Assign (const StepBasic_Array1OfDocument & Other);
-		%feature("compactdefaultargs") operator =;
-		%feature("autodoc", "	:param Other:
-	:type Other: StepBasic_Array1OfDocument &
-	:rtype: StepBasic_Array1OfDocument
-") operator =;
-		const StepBasic_Array1OfDocument & operator = (const StepBasic_Array1OfDocument & Other);
-		%feature("compactdefaultargs") Length;
-		%feature("autodoc", "	:rtype: int
-") Length;
-		Standard_Integer Length ();
-		%feature("compactdefaultargs") Lower;
-		%feature("autodoc", "	:rtype: int
-") Lower;
-		Standard_Integer Lower ();
-		%feature("compactdefaultargs") Upper;
-		%feature("autodoc", "	:rtype: int
-") Upper;
-		Standard_Integer Upper ();
-		%feature("compactdefaultargs") SetValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param Value:
-	:type Value: Handle_StepBasic_Document &
-	:rtype: None
-") SetValue;
-		void SetValue (const Standard_Integer Index,const Handle_StepBasic_Document & Value);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: Handle_StepBasic_Document
-") Value;
-		Handle_StepBasic_Document Value (const Standard_Integer Index);
-		%feature("compactdefaultargs") ChangeValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: Handle_StepBasic_Document
-") ChangeValue;
-		Handle_StepBasic_Document ChangeValue (const Standard_Integer Index);
-};
-
-
-%extend StepBasic_Array1OfDocument {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor StepBasic_Array1OfNamedUnit;
-class StepBasic_Array1OfNamedUnit {
-	public:
-		%feature("compactdefaultargs") StepBasic_Array1OfNamedUnit;
-		%feature("autodoc", "	:param Low:
-	:type Low: int
-	:param Up:
-	:type Up: int
-	:rtype: None
-") StepBasic_Array1OfNamedUnit;
-		 StepBasic_Array1OfNamedUnit (const Standard_Integer Low,const Standard_Integer Up);
-		%feature("compactdefaultargs") StepBasic_Array1OfNamedUnit;
-		%feature("autodoc", "	:param Item:
-	:type Item: Handle_StepBasic_NamedUnit &
-	:param Low:
-	:type Low: int
-	:param Up:
-	:type Up: int
-	:rtype: None
-") StepBasic_Array1OfNamedUnit;
-		 StepBasic_Array1OfNamedUnit (const Handle_StepBasic_NamedUnit & Item,const Standard_Integer Low,const Standard_Integer Up);
-		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	:param V:
-	:type V: Handle_StepBasic_NamedUnit &
-	:rtype: None
-") Init;
-		void Init (const Handle_StepBasic_NamedUnit & V);
-		%feature("compactdefaultargs") Destroy;
-		%feature("autodoc", "	:rtype: None
-") Destroy;
-		void Destroy ();
-		%feature("compactdefaultargs") IsAllocated;
-		%feature("autodoc", "	:rtype: bool
-") IsAllocated;
-		Standard_Boolean IsAllocated ();
-		%feature("compactdefaultargs") Assign;
-		%feature("autodoc", "	:param Other:
-	:type Other: StepBasic_Array1OfNamedUnit &
-	:rtype: StepBasic_Array1OfNamedUnit
-") Assign;
-		const StepBasic_Array1OfNamedUnit & Assign (const StepBasic_Array1OfNamedUnit & Other);
-		%feature("compactdefaultargs") operator =;
-		%feature("autodoc", "	:param Other:
-	:type Other: StepBasic_Array1OfNamedUnit &
-	:rtype: StepBasic_Array1OfNamedUnit
-") operator =;
-		const StepBasic_Array1OfNamedUnit & operator = (const StepBasic_Array1OfNamedUnit & Other);
-		%feature("compactdefaultargs") Length;
-		%feature("autodoc", "	:rtype: int
-") Length;
-		Standard_Integer Length ();
-		%feature("compactdefaultargs") Lower;
-		%feature("autodoc", "	:rtype: int
-") Lower;
-		Standard_Integer Lower ();
-		%feature("compactdefaultargs") Upper;
-		%feature("autodoc", "	:rtype: int
-") Upper;
-		Standard_Integer Upper ();
-		%feature("compactdefaultargs") SetValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param Value:
-	:type Value: Handle_StepBasic_NamedUnit &
-	:rtype: None
-") SetValue;
-		void SetValue (const Standard_Integer Index,const Handle_StepBasic_NamedUnit & Value);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: Handle_StepBasic_NamedUnit
-") Value;
-		Handle_StepBasic_NamedUnit Value (const Standard_Integer Index);
-		%feature("compactdefaultargs") ChangeValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: Handle_StepBasic_NamedUnit
-") ChangeValue;
-		Handle_StepBasic_NamedUnit ChangeValue (const Standard_Integer Index);
-};
-
-
-%extend StepBasic_Array1OfNamedUnit {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor StepBasic_Array1OfOrganization;
-class StepBasic_Array1OfOrganization {
-	public:
-		%feature("compactdefaultargs") StepBasic_Array1OfOrganization;
-		%feature("autodoc", "	:param Low:
-	:type Low: int
-	:param Up:
-	:type Up: int
-	:rtype: None
-") StepBasic_Array1OfOrganization;
-		 StepBasic_Array1OfOrganization (const Standard_Integer Low,const Standard_Integer Up);
-		%feature("compactdefaultargs") StepBasic_Array1OfOrganization;
-		%feature("autodoc", "	:param Item:
-	:type Item: Handle_StepBasic_Organization &
-	:param Low:
-	:type Low: int
-	:param Up:
-	:type Up: int
-	:rtype: None
-") StepBasic_Array1OfOrganization;
-		 StepBasic_Array1OfOrganization (const Handle_StepBasic_Organization & Item,const Standard_Integer Low,const Standard_Integer Up);
-		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	:param V:
-	:type V: Handle_StepBasic_Organization &
-	:rtype: None
-") Init;
-		void Init (const Handle_StepBasic_Organization & V);
-		%feature("compactdefaultargs") Destroy;
-		%feature("autodoc", "	:rtype: None
-") Destroy;
-		void Destroy ();
-		%feature("compactdefaultargs") IsAllocated;
-		%feature("autodoc", "	:rtype: bool
-") IsAllocated;
-		Standard_Boolean IsAllocated ();
-		%feature("compactdefaultargs") Assign;
-		%feature("autodoc", "	:param Other:
-	:type Other: StepBasic_Array1OfOrganization &
-	:rtype: StepBasic_Array1OfOrganization
-") Assign;
-		const StepBasic_Array1OfOrganization & Assign (const StepBasic_Array1OfOrganization & Other);
-		%feature("compactdefaultargs") operator =;
-		%feature("autodoc", "	:param Other:
-	:type Other: StepBasic_Array1OfOrganization &
-	:rtype: StepBasic_Array1OfOrganization
-") operator =;
-		const StepBasic_Array1OfOrganization & operator = (const StepBasic_Array1OfOrganization & Other);
-		%feature("compactdefaultargs") Length;
-		%feature("autodoc", "	:rtype: int
-") Length;
-		Standard_Integer Length ();
-		%feature("compactdefaultargs") Lower;
-		%feature("autodoc", "	:rtype: int
-") Lower;
-		Standard_Integer Lower ();
-		%feature("compactdefaultargs") Upper;
-		%feature("autodoc", "	:rtype: int
-") Upper;
-		Standard_Integer Upper ();
-		%feature("compactdefaultargs") SetValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param Value:
-	:type Value: Handle_StepBasic_Organization &
-	:rtype: None
-") SetValue;
-		void SetValue (const Standard_Integer Index,const Handle_StepBasic_Organization & Value);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: Handle_StepBasic_Organization
-") Value;
-		Handle_StepBasic_Organization Value (const Standard_Integer Index);
-		%feature("compactdefaultargs") ChangeValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: Handle_StepBasic_Organization
-") ChangeValue;
-		Handle_StepBasic_Organization ChangeValue (const Standard_Integer Index);
-};
-
-
-%extend StepBasic_Array1OfOrganization {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor StepBasic_Array1OfPerson;
-class StepBasic_Array1OfPerson {
-	public:
-		%feature("compactdefaultargs") StepBasic_Array1OfPerson;
-		%feature("autodoc", "	:param Low:
-	:type Low: int
-	:param Up:
-	:type Up: int
-	:rtype: None
-") StepBasic_Array1OfPerson;
-		 StepBasic_Array1OfPerson (const Standard_Integer Low,const Standard_Integer Up);
-		%feature("compactdefaultargs") StepBasic_Array1OfPerson;
-		%feature("autodoc", "	:param Item:
-	:type Item: Handle_StepBasic_Person &
-	:param Low:
-	:type Low: int
-	:param Up:
-	:type Up: int
-	:rtype: None
-") StepBasic_Array1OfPerson;
-		 StepBasic_Array1OfPerson (const Handle_StepBasic_Person & Item,const Standard_Integer Low,const Standard_Integer Up);
-		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	:param V:
-	:type V: Handle_StepBasic_Person &
-	:rtype: None
-") Init;
-		void Init (const Handle_StepBasic_Person & V);
-		%feature("compactdefaultargs") Destroy;
-		%feature("autodoc", "	:rtype: None
-") Destroy;
-		void Destroy ();
-		%feature("compactdefaultargs") IsAllocated;
-		%feature("autodoc", "	:rtype: bool
-") IsAllocated;
-		Standard_Boolean IsAllocated ();
-		%feature("compactdefaultargs") Assign;
-		%feature("autodoc", "	:param Other:
-	:type Other: StepBasic_Array1OfPerson &
-	:rtype: StepBasic_Array1OfPerson
-") Assign;
-		const StepBasic_Array1OfPerson & Assign (const StepBasic_Array1OfPerson & Other);
-		%feature("compactdefaultargs") operator =;
-		%feature("autodoc", "	:param Other:
-	:type Other: StepBasic_Array1OfPerson &
-	:rtype: StepBasic_Array1OfPerson
-") operator =;
-		const StepBasic_Array1OfPerson & operator = (const StepBasic_Array1OfPerson & Other);
-		%feature("compactdefaultargs") Length;
-		%feature("autodoc", "	:rtype: int
-") Length;
-		Standard_Integer Length ();
-		%feature("compactdefaultargs") Lower;
-		%feature("autodoc", "	:rtype: int
-") Lower;
-		Standard_Integer Lower ();
-		%feature("compactdefaultargs") Upper;
-		%feature("autodoc", "	:rtype: int
-") Upper;
-		Standard_Integer Upper ();
-		%feature("compactdefaultargs") SetValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param Value:
-	:type Value: Handle_StepBasic_Person &
-	:rtype: None
-") SetValue;
-		void SetValue (const Standard_Integer Index,const Handle_StepBasic_Person & Value);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: Handle_StepBasic_Person
-") Value;
-		Handle_StepBasic_Person Value (const Standard_Integer Index);
-		%feature("compactdefaultargs") ChangeValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: Handle_StepBasic_Person
-") ChangeValue;
-		Handle_StepBasic_Person ChangeValue (const Standard_Integer Index);
-};
-
-
-%extend StepBasic_Array1OfPerson {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor StepBasic_Array1OfProduct;
-class StepBasic_Array1OfProduct {
-	public:
-		%feature("compactdefaultargs") StepBasic_Array1OfProduct;
-		%feature("autodoc", "	:param Low:
-	:type Low: int
-	:param Up:
-	:type Up: int
-	:rtype: None
-") StepBasic_Array1OfProduct;
-		 StepBasic_Array1OfProduct (const Standard_Integer Low,const Standard_Integer Up);
-		%feature("compactdefaultargs") StepBasic_Array1OfProduct;
-		%feature("autodoc", "	:param Item:
-	:type Item: Handle_StepBasic_Product &
-	:param Low:
-	:type Low: int
-	:param Up:
-	:type Up: int
-	:rtype: None
-") StepBasic_Array1OfProduct;
-		 StepBasic_Array1OfProduct (const Handle_StepBasic_Product & Item,const Standard_Integer Low,const Standard_Integer Up);
-		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	:param V:
-	:type V: Handle_StepBasic_Product &
-	:rtype: None
-") Init;
-		void Init (const Handle_StepBasic_Product & V);
-		%feature("compactdefaultargs") Destroy;
-		%feature("autodoc", "	:rtype: None
-") Destroy;
-		void Destroy ();
-		%feature("compactdefaultargs") IsAllocated;
-		%feature("autodoc", "	:rtype: bool
-") IsAllocated;
-		Standard_Boolean IsAllocated ();
-		%feature("compactdefaultargs") Assign;
-		%feature("autodoc", "	:param Other:
-	:type Other: StepBasic_Array1OfProduct &
-	:rtype: StepBasic_Array1OfProduct
-") Assign;
-		const StepBasic_Array1OfProduct & Assign (const StepBasic_Array1OfProduct & Other);
-		%feature("compactdefaultargs") operator =;
-		%feature("autodoc", "	:param Other:
-	:type Other: StepBasic_Array1OfProduct &
-	:rtype: StepBasic_Array1OfProduct
-") operator =;
-		const StepBasic_Array1OfProduct & operator = (const StepBasic_Array1OfProduct & Other);
-		%feature("compactdefaultargs") Length;
-		%feature("autodoc", "	:rtype: int
-") Length;
-		Standard_Integer Length ();
-		%feature("compactdefaultargs") Lower;
-		%feature("autodoc", "	:rtype: int
-") Lower;
-		Standard_Integer Lower ();
-		%feature("compactdefaultargs") Upper;
-		%feature("autodoc", "	:rtype: int
-") Upper;
-		Standard_Integer Upper ();
-		%feature("compactdefaultargs") SetValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param Value:
-	:type Value: Handle_StepBasic_Product &
-	:rtype: None
-") SetValue;
-		void SetValue (const Standard_Integer Index,const Handle_StepBasic_Product & Value);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: Handle_StepBasic_Product
-") Value;
-		Handle_StepBasic_Product Value (const Standard_Integer Index);
-		%feature("compactdefaultargs") ChangeValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: Handle_StepBasic_Product
-") ChangeValue;
-		Handle_StepBasic_Product ChangeValue (const Standard_Integer Index);
-};
-
-
-%extend StepBasic_Array1OfProduct {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor StepBasic_Array1OfProductContext;
-class StepBasic_Array1OfProductContext {
-	public:
-		%feature("compactdefaultargs") StepBasic_Array1OfProductContext;
-		%feature("autodoc", "	:param Low:
-	:type Low: int
-	:param Up:
-	:type Up: int
-	:rtype: None
-") StepBasic_Array1OfProductContext;
-		 StepBasic_Array1OfProductContext (const Standard_Integer Low,const Standard_Integer Up);
-		%feature("compactdefaultargs") StepBasic_Array1OfProductContext;
-		%feature("autodoc", "	:param Item:
-	:type Item: Handle_StepBasic_ProductContext &
-	:param Low:
-	:type Low: int
-	:param Up:
-	:type Up: int
-	:rtype: None
-") StepBasic_Array1OfProductContext;
-		 StepBasic_Array1OfProductContext (const Handle_StepBasic_ProductContext & Item,const Standard_Integer Low,const Standard_Integer Up);
-		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	:param V:
-	:type V: Handle_StepBasic_ProductContext &
-	:rtype: None
-") Init;
-		void Init (const Handle_StepBasic_ProductContext & V);
-		%feature("compactdefaultargs") Destroy;
-		%feature("autodoc", "	:rtype: None
-") Destroy;
-		void Destroy ();
-		%feature("compactdefaultargs") IsAllocated;
-		%feature("autodoc", "	:rtype: bool
-") IsAllocated;
-		Standard_Boolean IsAllocated ();
-		%feature("compactdefaultargs") Assign;
-		%feature("autodoc", "	:param Other:
-	:type Other: StepBasic_Array1OfProductContext &
-	:rtype: StepBasic_Array1OfProductContext
-") Assign;
-		const StepBasic_Array1OfProductContext & Assign (const StepBasic_Array1OfProductContext & Other);
-		%feature("compactdefaultargs") operator =;
-		%feature("autodoc", "	:param Other:
-	:type Other: StepBasic_Array1OfProductContext &
-	:rtype: StepBasic_Array1OfProductContext
-") operator =;
-		const StepBasic_Array1OfProductContext & operator = (const StepBasic_Array1OfProductContext & Other);
-		%feature("compactdefaultargs") Length;
-		%feature("autodoc", "	:rtype: int
-") Length;
-		Standard_Integer Length ();
-		%feature("compactdefaultargs") Lower;
-		%feature("autodoc", "	:rtype: int
-") Lower;
-		Standard_Integer Lower ();
-		%feature("compactdefaultargs") Upper;
-		%feature("autodoc", "	:rtype: int
-") Upper;
-		Standard_Integer Upper ();
-		%feature("compactdefaultargs") SetValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param Value:
-	:type Value: Handle_StepBasic_ProductContext &
-	:rtype: None
-") SetValue;
-		void SetValue (const Standard_Integer Index,const Handle_StepBasic_ProductContext & Value);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: Handle_StepBasic_ProductContext
-") Value;
-		Handle_StepBasic_ProductContext Value (const Standard_Integer Index);
-		%feature("compactdefaultargs") ChangeValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: Handle_StepBasic_ProductContext
-") ChangeValue;
-		Handle_StepBasic_ProductContext ChangeValue (const Standard_Integer Index);
-};
-
-
-%extend StepBasic_Array1OfProductContext {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor StepBasic_Array1OfProductDefinition;
-class StepBasic_Array1OfProductDefinition {
-	public:
-		%feature("compactdefaultargs") StepBasic_Array1OfProductDefinition;
-		%feature("autodoc", "	:param Low:
-	:type Low: int
-	:param Up:
-	:type Up: int
-	:rtype: None
-") StepBasic_Array1OfProductDefinition;
-		 StepBasic_Array1OfProductDefinition (const Standard_Integer Low,const Standard_Integer Up);
-		%feature("compactdefaultargs") StepBasic_Array1OfProductDefinition;
-		%feature("autodoc", "	:param Item:
-	:type Item: Handle_StepBasic_ProductDefinition &
-	:param Low:
-	:type Low: int
-	:param Up:
-	:type Up: int
-	:rtype: None
-") StepBasic_Array1OfProductDefinition;
-		 StepBasic_Array1OfProductDefinition (const Handle_StepBasic_ProductDefinition & Item,const Standard_Integer Low,const Standard_Integer Up);
-		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	:param V:
-	:type V: Handle_StepBasic_ProductDefinition &
-	:rtype: None
-") Init;
-		void Init (const Handle_StepBasic_ProductDefinition & V);
-		%feature("compactdefaultargs") Destroy;
-		%feature("autodoc", "	:rtype: None
-") Destroy;
-		void Destroy ();
-		%feature("compactdefaultargs") IsAllocated;
-		%feature("autodoc", "	:rtype: bool
-") IsAllocated;
-		Standard_Boolean IsAllocated ();
-		%feature("compactdefaultargs") Assign;
-		%feature("autodoc", "	:param Other:
-	:type Other: StepBasic_Array1OfProductDefinition &
-	:rtype: StepBasic_Array1OfProductDefinition
-") Assign;
-		const StepBasic_Array1OfProductDefinition & Assign (const StepBasic_Array1OfProductDefinition & Other);
-		%feature("compactdefaultargs") operator =;
-		%feature("autodoc", "	:param Other:
-	:type Other: StepBasic_Array1OfProductDefinition &
-	:rtype: StepBasic_Array1OfProductDefinition
-") operator =;
-		const StepBasic_Array1OfProductDefinition & operator = (const StepBasic_Array1OfProductDefinition & Other);
-		%feature("compactdefaultargs") Length;
-		%feature("autodoc", "	:rtype: int
-") Length;
-		Standard_Integer Length ();
-		%feature("compactdefaultargs") Lower;
-		%feature("autodoc", "	:rtype: int
-") Lower;
-		Standard_Integer Lower ();
-		%feature("compactdefaultargs") Upper;
-		%feature("autodoc", "	:rtype: int
-") Upper;
-		Standard_Integer Upper ();
-		%feature("compactdefaultargs") SetValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param Value:
-	:type Value: Handle_StepBasic_ProductDefinition &
-	:rtype: None
-") SetValue;
-		void SetValue (const Standard_Integer Index,const Handle_StepBasic_ProductDefinition & Value);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: Handle_StepBasic_ProductDefinition
-") Value;
-		Handle_StepBasic_ProductDefinition Value (const Standard_Integer Index);
-		%feature("compactdefaultargs") ChangeValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: Handle_StepBasic_ProductDefinition
-") ChangeValue;
-		Handle_StepBasic_ProductDefinition ChangeValue (const Standard_Integer Index);
-};
-
-
-%extend StepBasic_Array1OfProductDefinition {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor StepBasic_Array1OfUncertaintyMeasureWithUnit;
-class StepBasic_Array1OfUncertaintyMeasureWithUnit {
-	public:
-		%feature("compactdefaultargs") StepBasic_Array1OfUncertaintyMeasureWithUnit;
-		%feature("autodoc", "	:param Low:
-	:type Low: int
-	:param Up:
-	:type Up: int
-	:rtype: None
-") StepBasic_Array1OfUncertaintyMeasureWithUnit;
-		 StepBasic_Array1OfUncertaintyMeasureWithUnit (const Standard_Integer Low,const Standard_Integer Up);
-		%feature("compactdefaultargs") StepBasic_Array1OfUncertaintyMeasureWithUnit;
-		%feature("autodoc", "	:param Item:
-	:type Item: Handle_StepBasic_UncertaintyMeasureWithUnit &
-	:param Low:
-	:type Low: int
-	:param Up:
-	:type Up: int
-	:rtype: None
-") StepBasic_Array1OfUncertaintyMeasureWithUnit;
-		 StepBasic_Array1OfUncertaintyMeasureWithUnit (const Handle_StepBasic_UncertaintyMeasureWithUnit & Item,const Standard_Integer Low,const Standard_Integer Up);
-		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	:param V:
-	:type V: Handle_StepBasic_UncertaintyMeasureWithUnit &
-	:rtype: None
-") Init;
-		void Init (const Handle_StepBasic_UncertaintyMeasureWithUnit & V);
-		%feature("compactdefaultargs") Destroy;
-		%feature("autodoc", "	:rtype: None
-") Destroy;
-		void Destroy ();
-		%feature("compactdefaultargs") IsAllocated;
-		%feature("autodoc", "	:rtype: bool
-") IsAllocated;
-		Standard_Boolean IsAllocated ();
-		%feature("compactdefaultargs") Assign;
-		%feature("autodoc", "	:param Other:
-	:type Other: StepBasic_Array1OfUncertaintyMeasureWithUnit &
-	:rtype: StepBasic_Array1OfUncertaintyMeasureWithUnit
-") Assign;
-		const StepBasic_Array1OfUncertaintyMeasureWithUnit & Assign (const StepBasic_Array1OfUncertaintyMeasureWithUnit & Other);
-		%feature("compactdefaultargs") operator =;
-		%feature("autodoc", "	:param Other:
-	:type Other: StepBasic_Array1OfUncertaintyMeasureWithUnit &
-	:rtype: StepBasic_Array1OfUncertaintyMeasureWithUnit
-") operator =;
-		const StepBasic_Array1OfUncertaintyMeasureWithUnit & operator = (const StepBasic_Array1OfUncertaintyMeasureWithUnit & Other);
-		%feature("compactdefaultargs") Length;
-		%feature("autodoc", "	:rtype: int
-") Length;
-		Standard_Integer Length ();
-		%feature("compactdefaultargs") Lower;
-		%feature("autodoc", "	:rtype: int
-") Lower;
-		Standard_Integer Lower ();
-		%feature("compactdefaultargs") Upper;
-		%feature("autodoc", "	:rtype: int
-") Upper;
-		Standard_Integer Upper ();
-		%feature("compactdefaultargs") SetValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param Value:
-	:type Value: Handle_StepBasic_UncertaintyMeasureWithUnit &
-	:rtype: None
-") SetValue;
-		void SetValue (const Standard_Integer Index,const Handle_StepBasic_UncertaintyMeasureWithUnit & Value);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: Handle_StepBasic_UncertaintyMeasureWithUnit
-") Value;
-		Handle_StepBasic_UncertaintyMeasureWithUnit Value (const Standard_Integer Index);
-		%feature("compactdefaultargs") ChangeValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: Handle_StepBasic_UncertaintyMeasureWithUnit
-") ChangeValue;
-		Handle_StepBasic_UncertaintyMeasureWithUnit ChangeValue (const Standard_Integer Index);
-};
-
-
-%extend StepBasic_Array1OfUncertaintyMeasureWithUnit {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
 %nodefaultctor StepBasic_Certification;
-class StepBasic_Certification : public MMgt_TShared {
+class StepBasic_Certification : public Standard_Transient {
 	public:
 		%feature("compactdefaultargs") StepBasic_Certification;
 		%feature("autodoc", "	* Empty constructor
@@ -2783,7 +1942,7 @@ class StepBasic_Certification : public MMgt_TShared {
 ") StepBasic_Certification;
 		 StepBasic_Certification ();
 		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	* Initialize all fields (own and inherited)
+		%feature("autodoc", "	* Initialize all fields --own and inherited--
 
 	:param aName:
 	:type aName: Handle_TCollection_HAsciiString &
@@ -2858,7 +2017,7 @@ class StepBasic_Certification : public MMgt_TShared {
 %}
 
 %nodefaultctor Handle_StepBasic_Certification;
-class Handle_StepBasic_Certification : public Handle_MMgt_TShared {
+class Handle_StepBasic_Certification : public Handle_Standard_Transient {
 
     public:
         // constructors
@@ -2870,19 +2029,20 @@ class Handle_StepBasic_Certification : public Handle_MMgt_TShared {
         static const Handle_StepBasic_Certification DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_StepBasic_Certification {
     StepBasic_Certification* _get_reference() {
-    return (StepBasic_Certification*)$self->Access();
+    return (StepBasic_Certification*)$self->get();
     }
 };
 
 %extend Handle_StepBasic_Certification {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend StepBasic_Certification {
@@ -2891,7 +2051,7 @@ class Handle_StepBasic_Certification : public Handle_MMgt_TShared {
 	}
 };
 %nodefaultctor StepBasic_CertificationAssignment;
-class StepBasic_CertificationAssignment : public MMgt_TShared {
+class StepBasic_CertificationAssignment : public Standard_Transient {
 	public:
 		%feature("compactdefaultargs") StepBasic_CertificationAssignment;
 		%feature("autodoc", "	* Empty constructor
@@ -2900,7 +2060,7 @@ class StepBasic_CertificationAssignment : public MMgt_TShared {
 ") StepBasic_CertificationAssignment;
 		 StepBasic_CertificationAssignment ();
 		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	* Initialize all fields (own and inherited)
+		%feature("autodoc", "	* Initialize all fields --own and inherited--
 
 	:param aAssignedCertification:
 	:type aAssignedCertification: Handle_StepBasic_Certification &
@@ -2943,7 +2103,7 @@ class StepBasic_CertificationAssignment : public MMgt_TShared {
 %}
 
 %nodefaultctor Handle_StepBasic_CertificationAssignment;
-class Handle_StepBasic_CertificationAssignment : public Handle_MMgt_TShared {
+class Handle_StepBasic_CertificationAssignment : public Handle_Standard_Transient {
 
     public:
         // constructors
@@ -2955,19 +2115,20 @@ class Handle_StepBasic_CertificationAssignment : public Handle_MMgt_TShared {
         static const Handle_StepBasic_CertificationAssignment DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_StepBasic_CertificationAssignment {
     StepBasic_CertificationAssignment* _get_reference() {
-    return (StepBasic_CertificationAssignment*)$self->Access();
+    return (StepBasic_CertificationAssignment*)$self->get();
     }
 };
 
 %extend Handle_StepBasic_CertificationAssignment {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend StepBasic_CertificationAssignment {
@@ -2976,7 +2137,7 @@ class Handle_StepBasic_CertificationAssignment : public Handle_MMgt_TShared {
 	}
 };
 %nodefaultctor StepBasic_CertificationType;
-class StepBasic_CertificationType : public MMgt_TShared {
+class StepBasic_CertificationType : public Standard_Transient {
 	public:
 		%feature("compactdefaultargs") StepBasic_CertificationType;
 		%feature("autodoc", "	* Empty constructor
@@ -2985,7 +2146,7 @@ class StepBasic_CertificationType : public MMgt_TShared {
 ") StepBasic_CertificationType;
 		 StepBasic_CertificationType ();
 		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	* Initialize all fields (own and inherited)
+		%feature("autodoc", "	* Initialize all fields --own and inherited--
 
 	:param aDescription:
 	:type aDescription: Handle_TCollection_HAsciiString &
@@ -3028,7 +2189,7 @@ class StepBasic_CertificationType : public MMgt_TShared {
 %}
 
 %nodefaultctor Handle_StepBasic_CertificationType;
-class Handle_StepBasic_CertificationType : public Handle_MMgt_TShared {
+class Handle_StepBasic_CertificationType : public Handle_Standard_Transient {
 
     public:
         // constructors
@@ -3040,19 +2201,20 @@ class Handle_StepBasic_CertificationType : public Handle_MMgt_TShared {
         static const Handle_StepBasic_CertificationType DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_StepBasic_CertificationType {
     StepBasic_CertificationType* _get_reference() {
-    return (StepBasic_CertificationType*)$self->Access();
+    return (StepBasic_CertificationType*)$self->get();
     }
 };
 
 %extend Handle_StepBasic_CertificationType {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend StepBasic_CertificationType {
@@ -3061,7 +2223,7 @@ class Handle_StepBasic_CertificationType : public Handle_MMgt_TShared {
 	}
 };
 %nodefaultctor StepBasic_CharacterizedObject;
-class StepBasic_CharacterizedObject : public MMgt_TShared {
+class StepBasic_CharacterizedObject : public Standard_Transient {
 	public:
 		%feature("compactdefaultargs") StepBasic_CharacterizedObject;
 		%feature("autodoc", "	* Empty constructor
@@ -3070,7 +2232,7 @@ class StepBasic_CharacterizedObject : public MMgt_TShared {
 ") StepBasic_CharacterizedObject;
 		 StepBasic_CharacterizedObject ();
 		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	* Initialize all fields (own and inherited)
+		%feature("autodoc", "	* Initialize all fields --own and inherited--
 
 	:param aName:
 	:type aName: Handle_TCollection_HAsciiString &
@@ -3137,7 +2299,7 @@ class StepBasic_CharacterizedObject : public MMgt_TShared {
 %}
 
 %nodefaultctor Handle_StepBasic_CharacterizedObject;
-class Handle_StepBasic_CharacterizedObject : public Handle_MMgt_TShared {
+class Handle_StepBasic_CharacterizedObject : public Handle_Standard_Transient {
 
     public:
         // constructors
@@ -3149,19 +2311,20 @@ class Handle_StepBasic_CharacterizedObject : public Handle_MMgt_TShared {
         static const Handle_StepBasic_CharacterizedObject DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_StepBasic_CharacterizedObject {
     StepBasic_CharacterizedObject* _get_reference() {
-    return (StepBasic_CharacterizedObject*)$self->Access();
+    return (StepBasic_CharacterizedObject*)$self->get();
     }
 };
 
 %extend Handle_StepBasic_CharacterizedObject {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend StepBasic_CharacterizedObject {
@@ -3170,7 +2333,7 @@ class Handle_StepBasic_CharacterizedObject : public Handle_MMgt_TShared {
 	}
 };
 %nodefaultctor StepBasic_Contract;
-class StepBasic_Contract : public MMgt_TShared {
+class StepBasic_Contract : public Standard_Transient {
 	public:
 		%feature("compactdefaultargs") StepBasic_Contract;
 		%feature("autodoc", "	* Empty constructor
@@ -3179,7 +2342,7 @@ class StepBasic_Contract : public MMgt_TShared {
 ") StepBasic_Contract;
 		 StepBasic_Contract ();
 		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	* Initialize all fields (own and inherited)
+		%feature("autodoc", "	* Initialize all fields --own and inherited--
 
 	:param aName:
 	:type aName: Handle_TCollection_HAsciiString &
@@ -3254,7 +2417,7 @@ class StepBasic_Contract : public MMgt_TShared {
 %}
 
 %nodefaultctor Handle_StepBasic_Contract;
-class Handle_StepBasic_Contract : public Handle_MMgt_TShared {
+class Handle_StepBasic_Contract : public Handle_Standard_Transient {
 
     public:
         // constructors
@@ -3266,19 +2429,20 @@ class Handle_StepBasic_Contract : public Handle_MMgt_TShared {
         static const Handle_StepBasic_Contract DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_StepBasic_Contract {
     StepBasic_Contract* _get_reference() {
-    return (StepBasic_Contract*)$self->Access();
+    return (StepBasic_Contract*)$self->get();
     }
 };
 
 %extend Handle_StepBasic_Contract {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend StepBasic_Contract {
@@ -3287,7 +2451,7 @@ class Handle_StepBasic_Contract : public Handle_MMgt_TShared {
 	}
 };
 %nodefaultctor StepBasic_ContractAssignment;
-class StepBasic_ContractAssignment : public MMgt_TShared {
+class StepBasic_ContractAssignment : public Standard_Transient {
 	public:
 		%feature("compactdefaultargs") StepBasic_ContractAssignment;
 		%feature("autodoc", "	* Empty constructor
@@ -3296,7 +2460,7 @@ class StepBasic_ContractAssignment : public MMgt_TShared {
 ") StepBasic_ContractAssignment;
 		 StepBasic_ContractAssignment ();
 		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	* Initialize all fields (own and inherited)
+		%feature("autodoc", "	* Initialize all fields --own and inherited--
 
 	:param aAssignedContract:
 	:type aAssignedContract: Handle_StepBasic_Contract &
@@ -3339,7 +2503,7 @@ class StepBasic_ContractAssignment : public MMgt_TShared {
 %}
 
 %nodefaultctor Handle_StepBasic_ContractAssignment;
-class Handle_StepBasic_ContractAssignment : public Handle_MMgt_TShared {
+class Handle_StepBasic_ContractAssignment : public Handle_Standard_Transient {
 
     public:
         // constructors
@@ -3351,19 +2515,20 @@ class Handle_StepBasic_ContractAssignment : public Handle_MMgt_TShared {
         static const Handle_StepBasic_ContractAssignment DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_StepBasic_ContractAssignment {
     StepBasic_ContractAssignment* _get_reference() {
-    return (StepBasic_ContractAssignment*)$self->Access();
+    return (StepBasic_ContractAssignment*)$self->get();
     }
 };
 
 %extend Handle_StepBasic_ContractAssignment {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend StepBasic_ContractAssignment {
@@ -3372,7 +2537,7 @@ class Handle_StepBasic_ContractAssignment : public Handle_MMgt_TShared {
 	}
 };
 %nodefaultctor StepBasic_ContractType;
-class StepBasic_ContractType : public MMgt_TShared {
+class StepBasic_ContractType : public Standard_Transient {
 	public:
 		%feature("compactdefaultargs") StepBasic_ContractType;
 		%feature("autodoc", "	* Empty constructor
@@ -3381,7 +2546,7 @@ class StepBasic_ContractType : public MMgt_TShared {
 ") StepBasic_ContractType;
 		 StepBasic_ContractType ();
 		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	* Initialize all fields (own and inherited)
+		%feature("autodoc", "	* Initialize all fields --own and inherited--
 
 	:param aDescription:
 	:type aDescription: Handle_TCollection_HAsciiString &
@@ -3424,7 +2589,7 @@ class StepBasic_ContractType : public MMgt_TShared {
 %}
 
 %nodefaultctor Handle_StepBasic_ContractType;
-class Handle_StepBasic_ContractType : public Handle_MMgt_TShared {
+class Handle_StepBasic_ContractType : public Handle_Standard_Transient {
 
     public:
         // constructors
@@ -3436,19 +2601,20 @@ class Handle_StepBasic_ContractType : public Handle_MMgt_TShared {
         static const Handle_StepBasic_ContractType DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_StepBasic_ContractType {
     StepBasic_ContractType* _get_reference() {
-    return (StepBasic_ContractType*)$self->Access();
+    return (StepBasic_ContractType*)$self->get();
     }
 };
 
 %extend Handle_StepBasic_ContractType {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend StepBasic_ContractType {
@@ -3457,7 +2623,7 @@ class Handle_StepBasic_ContractType : public Handle_MMgt_TShared {
 	}
 };
 %nodefaultctor StepBasic_CoordinatedUniversalTimeOffset;
-class StepBasic_CoordinatedUniversalTimeOffset : public MMgt_TShared {
+class StepBasic_CoordinatedUniversalTimeOffset : public Standard_Transient {
 	public:
 		%feature("compactdefaultargs") StepBasic_CoordinatedUniversalTimeOffset;
 		%feature("autodoc", "	* Returns a CoordinatedUniversalTimeOffset
@@ -3474,9 +2640,9 @@ class StepBasic_CoordinatedUniversalTimeOffset : public MMgt_TShared {
 	:type aMinuteOffset: int
 	:param aSense:
 	:type aSense: StepBasic_AheadOrBehind
-	:rtype: void
+	:rtype: None
 ") Init;
-		virtual void Init (const Standard_Integer aHourOffset,const Standard_Boolean hasAminuteOffset,const Standard_Integer aMinuteOffset,const StepBasic_AheadOrBehind aSense);
+		void Init (const Standard_Integer aHourOffset,const Standard_Boolean hasAminuteOffset,const Standard_Integer aMinuteOffset,const StepBasic_AheadOrBehind aSense);
 		%feature("compactdefaultargs") SetHourOffset;
 		%feature("autodoc", "	:param aHourOffset:
 	:type aHourOffset: int
@@ -3537,7 +2703,7 @@ class StepBasic_CoordinatedUniversalTimeOffset : public MMgt_TShared {
 %}
 
 %nodefaultctor Handle_StepBasic_CoordinatedUniversalTimeOffset;
-class Handle_StepBasic_CoordinatedUniversalTimeOffset : public Handle_MMgt_TShared {
+class Handle_StepBasic_CoordinatedUniversalTimeOffset : public Handle_Standard_Transient {
 
     public:
         // constructors
@@ -3549,19 +2715,20 @@ class Handle_StepBasic_CoordinatedUniversalTimeOffset : public Handle_MMgt_TShar
         static const Handle_StepBasic_CoordinatedUniversalTimeOffset DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_StepBasic_CoordinatedUniversalTimeOffset {
     StepBasic_CoordinatedUniversalTimeOffset* _get_reference() {
-    return (StepBasic_CoordinatedUniversalTimeOffset*)$self->Access();
+    return (StepBasic_CoordinatedUniversalTimeOffset*)$self->get();
     }
 };
 
 %extend Handle_StepBasic_CoordinatedUniversalTimeOffset {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend StepBasic_CoordinatedUniversalTimeOffset {
@@ -3570,7 +2737,7 @@ class Handle_StepBasic_CoordinatedUniversalTimeOffset : public Handle_MMgt_TShar
 	}
 };
 %nodefaultctor StepBasic_Date;
-class StepBasic_Date : public MMgt_TShared {
+class StepBasic_Date : public Standard_Transient {
 	public:
 		%feature("compactdefaultargs") StepBasic_Date;
 		%feature("autodoc", "	* Returns a Date
@@ -3581,9 +2748,9 @@ class StepBasic_Date : public MMgt_TShared {
 		%feature("compactdefaultargs") Init;
 		%feature("autodoc", "	:param aYearComponent:
 	:type aYearComponent: int
-	:rtype: void
+	:rtype: None
 ") Init;
-		virtual void Init (const Standard_Integer aYearComponent);
+		void Init (const Standard_Integer aYearComponent);
 		%feature("compactdefaultargs") SetYearComponent;
 		%feature("autodoc", "	:param aYearComponent:
 	:type aYearComponent: int
@@ -3616,7 +2783,7 @@ class StepBasic_Date : public MMgt_TShared {
 %}
 
 %nodefaultctor Handle_StepBasic_Date;
-class Handle_StepBasic_Date : public Handle_MMgt_TShared {
+class Handle_StepBasic_Date : public Handle_Standard_Transient {
 
     public:
         // constructors
@@ -3628,19 +2795,20 @@ class Handle_StepBasic_Date : public Handle_MMgt_TShared {
         static const Handle_StepBasic_Date DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_StepBasic_Date {
     StepBasic_Date* _get_reference() {
-    return (StepBasic_Date*)$self->Access();
+    return (StepBasic_Date*)$self->get();
     }
 };
 
 %extend Handle_StepBasic_Date {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend StepBasic_Date {
@@ -3649,7 +2817,7 @@ class Handle_StepBasic_Date : public Handle_MMgt_TShared {
 	}
 };
 %nodefaultctor StepBasic_DateAndTime;
-class StepBasic_DateAndTime : public MMgt_TShared {
+class StepBasic_DateAndTime : public Standard_Transient {
 	public:
 		%feature("compactdefaultargs") StepBasic_DateAndTime;
 		%feature("autodoc", "	* Returns a DateAndTime
@@ -3662,9 +2830,9 @@ class StepBasic_DateAndTime : public MMgt_TShared {
 	:type aDateComponent: Handle_StepBasic_Date &
 	:param aTimeComponent:
 	:type aTimeComponent: Handle_StepBasic_LocalTime &
-	:rtype: void
+	:rtype: None
 ") Init;
-		virtual void Init (const Handle_StepBasic_Date & aDateComponent,const Handle_StepBasic_LocalTime & aTimeComponent);
+		void Init (const Handle_StepBasic_Date & aDateComponent,const Handle_StepBasic_LocalTime & aTimeComponent);
 		%feature("compactdefaultargs") SetDateComponent;
 		%feature("autodoc", "	:param aDateComponent:
 	:type aDateComponent: Handle_StepBasic_Date &
@@ -3707,7 +2875,7 @@ class StepBasic_DateAndTime : public MMgt_TShared {
 %}
 
 %nodefaultctor Handle_StepBasic_DateAndTime;
-class Handle_StepBasic_DateAndTime : public Handle_MMgt_TShared {
+class Handle_StepBasic_DateAndTime : public Handle_Standard_Transient {
 
     public:
         // constructors
@@ -3719,19 +2887,20 @@ class Handle_StepBasic_DateAndTime : public Handle_MMgt_TShared {
         static const Handle_StepBasic_DateAndTime DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_StepBasic_DateAndTime {
     StepBasic_DateAndTime* _get_reference() {
-    return (StepBasic_DateAndTime*)$self->Access();
+    return (StepBasic_DateAndTime*)$self->get();
     }
 };
 
 %extend Handle_StepBasic_DateAndTime {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend StepBasic_DateAndTime {
@@ -3740,16 +2909,16 @@ class Handle_StepBasic_DateAndTime : public Handle_MMgt_TShared {
 	}
 };
 %nodefaultctor StepBasic_DateAndTimeAssignment;
-class StepBasic_DateAndTimeAssignment : public MMgt_TShared {
+class StepBasic_DateAndTimeAssignment : public Standard_Transient {
 	public:
 		%feature("compactdefaultargs") Init;
 		%feature("autodoc", "	:param aAssignedDateAndTime:
 	:type aAssignedDateAndTime: Handle_StepBasic_DateAndTime &
 	:param aRole:
 	:type aRole: Handle_StepBasic_DateTimeRole &
-	:rtype: void
+	:rtype: None
 ") Init;
-		virtual void Init (const Handle_StepBasic_DateAndTime & aAssignedDateAndTime,const Handle_StepBasic_DateTimeRole & aRole);
+		void Init (const Handle_StepBasic_DateAndTime & aAssignedDateAndTime,const Handle_StepBasic_DateTimeRole & aRole);
 		%feature("compactdefaultargs") SetAssignedDateAndTime;
 		%feature("autodoc", "	:param aAssignedDateAndTime:
 	:type aAssignedDateAndTime: Handle_StepBasic_DateAndTime &
@@ -3792,7 +2961,7 @@ class StepBasic_DateAndTimeAssignment : public MMgt_TShared {
 %}
 
 %nodefaultctor Handle_StepBasic_DateAndTimeAssignment;
-class Handle_StepBasic_DateAndTimeAssignment : public Handle_MMgt_TShared {
+class Handle_StepBasic_DateAndTimeAssignment : public Handle_Standard_Transient {
 
     public:
         // constructors
@@ -3804,19 +2973,20 @@ class Handle_StepBasic_DateAndTimeAssignment : public Handle_MMgt_TShared {
         static const Handle_StepBasic_DateAndTimeAssignment DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_StepBasic_DateAndTimeAssignment {
     StepBasic_DateAndTimeAssignment* _get_reference() {
-    return (StepBasic_DateAndTimeAssignment*)$self->Access();
+    return (StepBasic_DateAndTimeAssignment*)$self->get();
     }
 };
 
 %extend Handle_StepBasic_DateAndTimeAssignment {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend StepBasic_DateAndTimeAssignment {
@@ -3825,16 +2995,16 @@ class Handle_StepBasic_DateAndTimeAssignment : public Handle_MMgt_TShared {
 	}
 };
 %nodefaultctor StepBasic_DateAssignment;
-class StepBasic_DateAssignment : public MMgt_TShared {
+class StepBasic_DateAssignment : public Standard_Transient {
 	public:
 		%feature("compactdefaultargs") Init;
 		%feature("autodoc", "	:param aAssignedDate:
 	:type aAssignedDate: Handle_StepBasic_Date &
 	:param aRole:
 	:type aRole: Handle_StepBasic_DateRole &
-	:rtype: void
+	:rtype: None
 ") Init;
-		virtual void Init (const Handle_StepBasic_Date & aAssignedDate,const Handle_StepBasic_DateRole & aRole);
+		void Init (const Handle_StepBasic_Date & aAssignedDate,const Handle_StepBasic_DateRole & aRole);
 		%feature("compactdefaultargs") SetAssignedDate;
 		%feature("autodoc", "	:param aAssignedDate:
 	:type aAssignedDate: Handle_StepBasic_Date &
@@ -3877,7 +3047,7 @@ class StepBasic_DateAssignment : public MMgt_TShared {
 %}
 
 %nodefaultctor Handle_StepBasic_DateAssignment;
-class Handle_StepBasic_DateAssignment : public Handle_MMgt_TShared {
+class Handle_StepBasic_DateAssignment : public Handle_Standard_Transient {
 
     public:
         // constructors
@@ -3889,19 +3059,20 @@ class Handle_StepBasic_DateAssignment : public Handle_MMgt_TShared {
         static const Handle_StepBasic_DateAssignment DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_StepBasic_DateAssignment {
     StepBasic_DateAssignment* _get_reference() {
-    return (StepBasic_DateAssignment*)$self->Access();
+    return (StepBasic_DateAssignment*)$self->get();
     }
 };
 
 %extend Handle_StepBasic_DateAssignment {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend StepBasic_DateAssignment {
@@ -3910,7 +3081,7 @@ class Handle_StepBasic_DateAssignment : public Handle_MMgt_TShared {
 	}
 };
 %nodefaultctor StepBasic_DateRole;
-class StepBasic_DateRole : public MMgt_TShared {
+class StepBasic_DateRole : public Standard_Transient {
 	public:
 		%feature("compactdefaultargs") StepBasic_DateRole;
 		%feature("autodoc", "	* Returns a DateRole
@@ -3921,9 +3092,9 @@ class StepBasic_DateRole : public MMgt_TShared {
 		%feature("compactdefaultargs") Init;
 		%feature("autodoc", "	:param aName:
 	:type aName: Handle_TCollection_HAsciiString &
-	:rtype: void
+	:rtype: None
 ") Init;
-		virtual void Init (const Handle_TCollection_HAsciiString & aName);
+		void Init (const Handle_TCollection_HAsciiString & aName);
 		%feature("compactdefaultargs") SetName;
 		%feature("autodoc", "	:param aName:
 	:type aName: Handle_TCollection_HAsciiString &
@@ -3956,7 +3127,7 @@ class StepBasic_DateRole : public MMgt_TShared {
 %}
 
 %nodefaultctor Handle_StepBasic_DateRole;
-class Handle_StepBasic_DateRole : public Handle_MMgt_TShared {
+class Handle_StepBasic_DateRole : public Handle_Standard_Transient {
 
     public:
         // constructors
@@ -3968,19 +3139,20 @@ class Handle_StepBasic_DateRole : public Handle_MMgt_TShared {
         static const Handle_StepBasic_DateRole DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_StepBasic_DateRole {
     StepBasic_DateRole* _get_reference() {
-    return (StepBasic_DateRole*)$self->Access();
+    return (StepBasic_DateRole*)$self->get();
     }
 };
 
 %extend Handle_StepBasic_DateRole {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend StepBasic_DateRole {
@@ -3989,7 +3161,7 @@ class Handle_StepBasic_DateRole : public Handle_MMgt_TShared {
 	}
 };
 %nodefaultctor StepBasic_DateTimeRole;
-class StepBasic_DateTimeRole : public MMgt_TShared {
+class StepBasic_DateTimeRole : public Standard_Transient {
 	public:
 		%feature("compactdefaultargs") StepBasic_DateTimeRole;
 		%feature("autodoc", "	* Returns a DateTimeRole
@@ -4000,9 +3172,9 @@ class StepBasic_DateTimeRole : public MMgt_TShared {
 		%feature("compactdefaultargs") Init;
 		%feature("autodoc", "	:param aName:
 	:type aName: Handle_TCollection_HAsciiString &
-	:rtype: void
+	:rtype: None
 ") Init;
-		virtual void Init (const Handle_TCollection_HAsciiString & aName);
+		void Init (const Handle_TCollection_HAsciiString & aName);
 		%feature("compactdefaultargs") SetName;
 		%feature("autodoc", "	:param aName:
 	:type aName: Handle_TCollection_HAsciiString &
@@ -4035,7 +3207,7 @@ class StepBasic_DateTimeRole : public MMgt_TShared {
 %}
 
 %nodefaultctor Handle_StepBasic_DateTimeRole;
-class Handle_StepBasic_DateTimeRole : public Handle_MMgt_TShared {
+class Handle_StepBasic_DateTimeRole : public Handle_Standard_Transient {
 
     public:
         // constructors
@@ -4047,19 +3219,20 @@ class Handle_StepBasic_DateTimeRole : public Handle_MMgt_TShared {
         static const Handle_StepBasic_DateTimeRole DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_StepBasic_DateTimeRole {
     StepBasic_DateTimeRole* _get_reference() {
-    return (StepBasic_DateTimeRole*)$self->Access();
+    return (StepBasic_DateTimeRole*)$self->get();
     }
 };
 
 %extend Handle_StepBasic_DateTimeRole {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend StepBasic_DateTimeRole {
@@ -4085,19 +3258,19 @@ class StepBasic_DateTimeSelect : public StepData_SelectType {
 ") CaseNum;
 		Standard_Integer CaseNum (const Handle_Standard_Transient & ent);
 		%feature("compactdefaultargs") Date;
-		%feature("autodoc", "	* returns Value as a Date (Null if another type)
+		%feature("autodoc", "	* returns Value as a Date --Null if another type--
 
 	:rtype: Handle_StepBasic_Date
 ") Date;
 		Handle_StepBasic_Date Date ();
 		%feature("compactdefaultargs") LocalTime;
-		%feature("autodoc", "	* returns Value as a LocalTime (Null if another type)
+		%feature("autodoc", "	* returns Value as a LocalTime --Null if another type--
 
 	:rtype: Handle_StepBasic_LocalTime
 ") LocalTime;
 		Handle_StepBasic_LocalTime LocalTime ();
 		%feature("compactdefaultargs") DateAndTime;
-		%feature("autodoc", "	* returns Value as a DateAndTime (Null if another type)
+		%feature("autodoc", "	* returns Value as a DateAndTime --Null if another type--
 
 	:rtype: Handle_StepBasic_DateAndTime
 ") DateAndTime;
@@ -4111,7 +3284,7 @@ class StepBasic_DateTimeSelect : public StepData_SelectType {
 	}
 };
 %nodefaultctor StepBasic_DerivedUnit;
-class StepBasic_DerivedUnit : public MMgt_TShared {
+class StepBasic_DerivedUnit : public Standard_Transient {
 	public:
 		%feature("compactdefaultargs") StepBasic_DerivedUnit;
 		%feature("autodoc", "	:rtype: None
@@ -4165,7 +3338,7 @@ class StepBasic_DerivedUnit : public MMgt_TShared {
 %}
 
 %nodefaultctor Handle_StepBasic_DerivedUnit;
-class Handle_StepBasic_DerivedUnit : public Handle_MMgt_TShared {
+class Handle_StepBasic_DerivedUnit : public Handle_Standard_Transient {
 
     public:
         // constructors
@@ -4177,19 +3350,20 @@ class Handle_StepBasic_DerivedUnit : public Handle_MMgt_TShared {
         static const Handle_StepBasic_DerivedUnit DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_StepBasic_DerivedUnit {
     StepBasic_DerivedUnit* _get_reference() {
-    return (StepBasic_DerivedUnit*)$self->Access();
+    return (StepBasic_DerivedUnit*)$self->get();
     }
 };
 
 %extend Handle_StepBasic_DerivedUnit {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend StepBasic_DerivedUnit {
@@ -4198,7 +3372,7 @@ class Handle_StepBasic_DerivedUnit : public Handle_MMgt_TShared {
 	}
 };
 %nodefaultctor StepBasic_DerivedUnitElement;
-class StepBasic_DerivedUnitElement : public MMgt_TShared {
+class StepBasic_DerivedUnitElement : public Standard_Transient {
 	public:
 		%feature("compactdefaultargs") StepBasic_DerivedUnitElement;
 		%feature("autodoc", "	:rtype: None
@@ -4254,7 +3428,7 @@ class StepBasic_DerivedUnitElement : public MMgt_TShared {
 %}
 
 %nodefaultctor Handle_StepBasic_DerivedUnitElement;
-class Handle_StepBasic_DerivedUnitElement : public Handle_MMgt_TShared {
+class Handle_StepBasic_DerivedUnitElement : public Handle_Standard_Transient {
 
     public:
         // constructors
@@ -4266,19 +3440,20 @@ class Handle_StepBasic_DerivedUnitElement : public Handle_MMgt_TShared {
         static const Handle_StepBasic_DerivedUnitElement DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_StepBasic_DerivedUnitElement {
     StepBasic_DerivedUnitElement* _get_reference() {
-    return (StepBasic_DerivedUnitElement*)$self->Access();
+    return (StepBasic_DerivedUnitElement*)$self->get();
     }
 };
 
 %extend Handle_StepBasic_DerivedUnitElement {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend StepBasic_DerivedUnitElement {
@@ -4287,7 +3462,7 @@ class Handle_StepBasic_DerivedUnitElement : public Handle_MMgt_TShared {
 	}
 };
 %nodefaultctor StepBasic_DimensionalExponents;
-class StepBasic_DimensionalExponents : public MMgt_TShared {
+class StepBasic_DimensionalExponents : public Standard_Transient {
 	public:
 		%feature("compactdefaultargs") StepBasic_DimensionalExponents;
 		%feature("autodoc", "	* Returns a DimensionalExponents
@@ -4310,9 +3485,9 @@ class StepBasic_DimensionalExponents : public MMgt_TShared {
 	:type aAmountOfSubstanceExponent: float
 	:param aLuminousIntensityExponent:
 	:type aLuminousIntensityExponent: float
-	:rtype: void
+	:rtype: None
 ") Init;
-		virtual void Init (const Standard_Real aLengthExponent,const Standard_Real aMassExponent,const Standard_Real aTimeExponent,const Standard_Real aElectricCurrentExponent,const Standard_Real aThermodynamicTemperatureExponent,const Standard_Real aAmountOfSubstanceExponent,const Standard_Real aLuminousIntensityExponent);
+		void Init (const Standard_Real aLengthExponent,const Standard_Real aMassExponent,const Standard_Real aTimeExponent,const Standard_Real aElectricCurrentExponent,const Standard_Real aThermodynamicTemperatureExponent,const Standard_Real aAmountOfSubstanceExponent,const Standard_Real aLuminousIntensityExponent);
 		%feature("compactdefaultargs") SetLengthExponent;
 		%feature("autodoc", "	:param aLengthExponent:
 	:type aLengthExponent: float
@@ -4405,7 +3580,7 @@ class StepBasic_DimensionalExponents : public MMgt_TShared {
 %}
 
 %nodefaultctor Handle_StepBasic_DimensionalExponents;
-class Handle_StepBasic_DimensionalExponents : public Handle_MMgt_TShared {
+class Handle_StepBasic_DimensionalExponents : public Handle_Standard_Transient {
 
     public:
         // constructors
@@ -4417,19 +3592,20 @@ class Handle_StepBasic_DimensionalExponents : public Handle_MMgt_TShared {
         static const Handle_StepBasic_DimensionalExponents DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_StepBasic_DimensionalExponents {
     StepBasic_DimensionalExponents* _get_reference() {
-    return (StepBasic_DimensionalExponents*)$self->Access();
+    return (StepBasic_DimensionalExponents*)$self->get();
     }
 };
 
 %extend Handle_StepBasic_DimensionalExponents {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend StepBasic_DimensionalExponents {
@@ -4438,7 +3614,7 @@ class Handle_StepBasic_DimensionalExponents : public Handle_MMgt_TShared {
 	}
 };
 %nodefaultctor StepBasic_Document;
-class StepBasic_Document : public MMgt_TShared {
+class StepBasic_Document : public Standard_Transient {
 	public:
 		%feature("compactdefaultargs") StepBasic_Document;
 		%feature("autodoc", "	* Empty constructor
@@ -4447,7 +3623,7 @@ class StepBasic_Document : public MMgt_TShared {
 ") StepBasic_Document;
 		 StepBasic_Document ();
 		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	* Initialize all fields (own and inherited)
+		%feature("autodoc", "	* Initialize all fields --own and inherited--
 
 	:param aId:
 	:type aId: Handle_TCollection_HAsciiString &
@@ -4546,7 +3722,7 @@ class StepBasic_Document : public MMgt_TShared {
 %}
 
 %nodefaultctor Handle_StepBasic_Document;
-class Handle_StepBasic_Document : public Handle_MMgt_TShared {
+class Handle_StepBasic_Document : public Handle_Standard_Transient {
 
     public:
         // constructors
@@ -4558,19 +3734,20 @@ class Handle_StepBasic_Document : public Handle_MMgt_TShared {
         static const Handle_StepBasic_Document DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_StepBasic_Document {
     StepBasic_Document* _get_reference() {
-    return (StepBasic_Document*)$self->Access();
+    return (StepBasic_Document*)$self->get();
     }
 };
 
 %extend Handle_StepBasic_Document {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend StepBasic_Document {
@@ -4579,7 +3756,7 @@ class Handle_StepBasic_Document : public Handle_MMgt_TShared {
 	}
 };
 %nodefaultctor StepBasic_DocumentProductAssociation;
-class StepBasic_DocumentProductAssociation : public MMgt_TShared {
+class StepBasic_DocumentProductAssociation : public Standard_Transient {
 	public:
 		%feature("compactdefaultargs") StepBasic_DocumentProductAssociation;
 		%feature("autodoc", "	* Empty constructor
@@ -4588,7 +3765,7 @@ class StepBasic_DocumentProductAssociation : public MMgt_TShared {
 ") StepBasic_DocumentProductAssociation;
 		 StepBasic_DocumentProductAssociation ();
 		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	* Initialize all fields (own and inherited)
+		%feature("autodoc", "	* Initialize all fields --own and inherited--
 
 	:param aName:
 	:type aName: Handle_TCollection_HAsciiString &
@@ -4687,7 +3864,7 @@ class StepBasic_DocumentProductAssociation : public MMgt_TShared {
 %}
 
 %nodefaultctor Handle_StepBasic_DocumentProductAssociation;
-class Handle_StepBasic_DocumentProductAssociation : public Handle_MMgt_TShared {
+class Handle_StepBasic_DocumentProductAssociation : public Handle_Standard_Transient {
 
     public:
         // constructors
@@ -4699,19 +3876,20 @@ class Handle_StepBasic_DocumentProductAssociation : public Handle_MMgt_TShared {
         static const Handle_StepBasic_DocumentProductAssociation DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_StepBasic_DocumentProductAssociation {
     StepBasic_DocumentProductAssociation* _get_reference() {
-    return (StepBasic_DocumentProductAssociation*)$self->Access();
+    return (StepBasic_DocumentProductAssociation*)$self->get();
     }
 };
 
 %extend Handle_StepBasic_DocumentProductAssociation {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend StepBasic_DocumentProductAssociation {
@@ -4720,7 +3898,7 @@ class Handle_StepBasic_DocumentProductAssociation : public Handle_MMgt_TShared {
 	}
 };
 %nodefaultctor StepBasic_DocumentReference;
-class StepBasic_DocumentReference : public MMgt_TShared {
+class StepBasic_DocumentReference : public Standard_Transient {
 	public:
 		%feature("compactdefaultargs") Init0;
 		%feature("autodoc", "	:param aAssignedDocument:
@@ -4772,7 +3950,7 @@ class StepBasic_DocumentReference : public MMgt_TShared {
 %}
 
 %nodefaultctor Handle_StepBasic_DocumentReference;
-class Handle_StepBasic_DocumentReference : public Handle_MMgt_TShared {
+class Handle_StepBasic_DocumentReference : public Handle_Standard_Transient {
 
     public:
         // constructors
@@ -4784,19 +3962,20 @@ class Handle_StepBasic_DocumentReference : public Handle_MMgt_TShared {
         static const Handle_StepBasic_DocumentReference DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_StepBasic_DocumentReference {
     StepBasic_DocumentReference* _get_reference() {
-    return (StepBasic_DocumentReference*)$self->Access();
+    return (StepBasic_DocumentReference*)$self->get();
     }
 };
 
 %extend Handle_StepBasic_DocumentReference {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend StepBasic_DocumentReference {
@@ -4805,7 +3984,7 @@ class Handle_StepBasic_DocumentReference : public Handle_MMgt_TShared {
 	}
 };
 %nodefaultctor StepBasic_DocumentRelationship;
-class StepBasic_DocumentRelationship : public MMgt_TShared {
+class StepBasic_DocumentRelationship : public Standard_Transient {
 	public:
 		%feature("compactdefaultargs") StepBasic_DocumentRelationship;
 		%feature("autodoc", "	:rtype: None
@@ -4885,7 +4064,7 @@ class StepBasic_DocumentRelationship : public MMgt_TShared {
 %}
 
 %nodefaultctor Handle_StepBasic_DocumentRelationship;
-class Handle_StepBasic_DocumentRelationship : public Handle_MMgt_TShared {
+class Handle_StepBasic_DocumentRelationship : public Handle_Standard_Transient {
 
     public:
         // constructors
@@ -4897,19 +4076,20 @@ class Handle_StepBasic_DocumentRelationship : public Handle_MMgt_TShared {
         static const Handle_StepBasic_DocumentRelationship DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_StepBasic_DocumentRelationship {
     StepBasic_DocumentRelationship* _get_reference() {
-    return (StepBasic_DocumentRelationship*)$self->Access();
+    return (StepBasic_DocumentRelationship*)$self->get();
     }
 };
 
 %extend Handle_StepBasic_DocumentRelationship {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend StepBasic_DocumentRelationship {
@@ -4918,7 +4098,7 @@ class Handle_StepBasic_DocumentRelationship : public Handle_MMgt_TShared {
 	}
 };
 %nodefaultctor StepBasic_DocumentRepresentationType;
-class StepBasic_DocumentRepresentationType : public MMgt_TShared {
+class StepBasic_DocumentRepresentationType : public Standard_Transient {
 	public:
 		%feature("compactdefaultargs") StepBasic_DocumentRepresentationType;
 		%feature("autodoc", "	* Empty constructor
@@ -4927,7 +4107,7 @@ class StepBasic_DocumentRepresentationType : public MMgt_TShared {
 ") StepBasic_DocumentRepresentationType;
 		 StepBasic_DocumentRepresentationType ();
 		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	* Initialize all fields (own and inherited)
+		%feature("autodoc", "	* Initialize all fields --own and inherited--
 
 	:param aName:
 	:type aName: Handle_TCollection_HAsciiString &
@@ -4986,7 +4166,7 @@ class StepBasic_DocumentRepresentationType : public MMgt_TShared {
 %}
 
 %nodefaultctor Handle_StepBasic_DocumentRepresentationType;
-class Handle_StepBasic_DocumentRepresentationType : public Handle_MMgt_TShared {
+class Handle_StepBasic_DocumentRepresentationType : public Handle_Standard_Transient {
 
     public:
         // constructors
@@ -4998,19 +4178,20 @@ class Handle_StepBasic_DocumentRepresentationType : public Handle_MMgt_TShared {
         static const Handle_StepBasic_DocumentRepresentationType DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_StepBasic_DocumentRepresentationType {
     StepBasic_DocumentRepresentationType* _get_reference() {
-    return (StepBasic_DocumentRepresentationType*)$self->Access();
+    return (StepBasic_DocumentRepresentationType*)$self->get();
     }
 };
 
 %extend Handle_StepBasic_DocumentRepresentationType {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend StepBasic_DocumentRepresentationType {
@@ -5019,7 +4200,7 @@ class Handle_StepBasic_DocumentRepresentationType : public Handle_MMgt_TShared {
 	}
 };
 %nodefaultctor StepBasic_DocumentType;
-class StepBasic_DocumentType : public MMgt_TShared {
+class StepBasic_DocumentType : public Standard_Transient {
 	public:
 		%feature("compactdefaultargs") StepBasic_DocumentType;
 		%feature("autodoc", "	:rtype: None
@@ -5063,7 +4244,7 @@ class StepBasic_DocumentType : public MMgt_TShared {
 %}
 
 %nodefaultctor Handle_StepBasic_DocumentType;
-class Handle_StepBasic_DocumentType : public Handle_MMgt_TShared {
+class Handle_StepBasic_DocumentType : public Handle_Standard_Transient {
 
     public:
         // constructors
@@ -5075,19 +4256,20 @@ class Handle_StepBasic_DocumentType : public Handle_MMgt_TShared {
         static const Handle_StepBasic_DocumentType DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_StepBasic_DocumentType {
     StepBasic_DocumentType* _get_reference() {
-    return (StepBasic_DocumentType*)$self->Access();
+    return (StepBasic_DocumentType*)$self->get();
     }
 };
 
 %extend Handle_StepBasic_DocumentType {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend StepBasic_DocumentType {
@@ -5096,7 +4278,7 @@ class Handle_StepBasic_DocumentType : public Handle_MMgt_TShared {
 	}
 };
 %nodefaultctor StepBasic_DocumentUsageConstraint;
-class StepBasic_DocumentUsageConstraint : public MMgt_TShared {
+class StepBasic_DocumentUsageConstraint : public Standard_Transient {
 	public:
 		%feature("compactdefaultargs") StepBasic_DocumentUsageConstraint;
 		%feature("autodoc", "	:rtype: None
@@ -5164,7 +4346,7 @@ class StepBasic_DocumentUsageConstraint : public MMgt_TShared {
 %}
 
 %nodefaultctor Handle_StepBasic_DocumentUsageConstraint;
-class Handle_StepBasic_DocumentUsageConstraint : public Handle_MMgt_TShared {
+class Handle_StepBasic_DocumentUsageConstraint : public Handle_Standard_Transient {
 
     public:
         // constructors
@@ -5176,19 +4358,20 @@ class Handle_StepBasic_DocumentUsageConstraint : public Handle_MMgt_TShared {
         static const Handle_StepBasic_DocumentUsageConstraint DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_StepBasic_DocumentUsageConstraint {
     StepBasic_DocumentUsageConstraint* _get_reference() {
-    return (StepBasic_DocumentUsageConstraint*)$self->Access();
+    return (StepBasic_DocumentUsageConstraint*)$self->get();
     }
 };
 
 %extend Handle_StepBasic_DocumentUsageConstraint {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend StepBasic_DocumentUsageConstraint {
@@ -5197,7 +4380,7 @@ class Handle_StepBasic_DocumentUsageConstraint : public Handle_MMgt_TShared {
 	}
 };
 %nodefaultctor StepBasic_Effectivity;
-class StepBasic_Effectivity : public MMgt_TShared {
+class StepBasic_Effectivity : public Standard_Transient {
 	public:
 		%feature("compactdefaultargs") StepBasic_Effectivity;
 		%feature("autodoc", "	:rtype: None
@@ -5241,7 +4424,7 @@ class StepBasic_Effectivity : public MMgt_TShared {
 %}
 
 %nodefaultctor Handle_StepBasic_Effectivity;
-class Handle_StepBasic_Effectivity : public Handle_MMgt_TShared {
+class Handle_StepBasic_Effectivity : public Handle_Standard_Transient {
 
     public:
         // constructors
@@ -5253,19 +4436,20 @@ class Handle_StepBasic_Effectivity : public Handle_MMgt_TShared {
         static const Handle_StepBasic_Effectivity DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_StepBasic_Effectivity {
     StepBasic_Effectivity* _get_reference() {
-    return (StepBasic_Effectivity*)$self->Access();
+    return (StepBasic_Effectivity*)$self->get();
     }
 };
 
 %extend Handle_StepBasic_Effectivity {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend StepBasic_Effectivity {
@@ -5274,7 +4458,7 @@ class Handle_StepBasic_Effectivity : public Handle_MMgt_TShared {
 	}
 };
 %nodefaultctor StepBasic_EffectivityAssignment;
-class StepBasic_EffectivityAssignment : public MMgt_TShared {
+class StepBasic_EffectivityAssignment : public Standard_Transient {
 	public:
 		%feature("compactdefaultargs") StepBasic_EffectivityAssignment;
 		%feature("autodoc", "	* Empty constructor
@@ -5283,7 +4467,7 @@ class StepBasic_EffectivityAssignment : public MMgt_TShared {
 ") StepBasic_EffectivityAssignment;
 		 StepBasic_EffectivityAssignment ();
 		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	* Initialize all fields (own and inherited)
+		%feature("autodoc", "	* Initialize all fields --own and inherited--
 
 	:param aAssignedEffectivity:
 	:type aAssignedEffectivity: Handle_StepBasic_Effectivity &
@@ -5326,7 +4510,7 @@ class StepBasic_EffectivityAssignment : public MMgt_TShared {
 %}
 
 %nodefaultctor Handle_StepBasic_EffectivityAssignment;
-class Handle_StepBasic_EffectivityAssignment : public Handle_MMgt_TShared {
+class Handle_StepBasic_EffectivityAssignment : public Handle_Standard_Transient {
 
     public:
         // constructors
@@ -5338,19 +4522,20 @@ class Handle_StepBasic_EffectivityAssignment : public Handle_MMgt_TShared {
         static const Handle_StepBasic_EffectivityAssignment DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_StepBasic_EffectivityAssignment {
     StepBasic_EffectivityAssignment* _get_reference() {
-    return (StepBasic_EffectivityAssignment*)$self->Access();
+    return (StepBasic_EffectivityAssignment*)$self->get();
     }
 };
 
 %extend Handle_StepBasic_EffectivityAssignment {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend StepBasic_EffectivityAssignment {
@@ -5359,7 +4544,7 @@ class Handle_StepBasic_EffectivityAssignment : public Handle_MMgt_TShared {
 	}
 };
 %nodefaultctor StepBasic_EulerAngles;
-class StepBasic_EulerAngles : public MMgt_TShared {
+class StepBasic_EulerAngles : public Standard_Transient {
 	public:
 		%feature("compactdefaultargs") StepBasic_EulerAngles;
 		%feature("autodoc", "	* Empty constructor
@@ -5368,7 +4553,7 @@ class StepBasic_EulerAngles : public MMgt_TShared {
 ") StepBasic_EulerAngles;
 		 StepBasic_EulerAngles ();
 		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	* Initialize all fields (own and inherited)
+		%feature("autodoc", "	* Initialize all fields --own and inherited--
 
 	:param aAngles:
 	:type aAngles: Handle_TColStd_HArray1OfReal &
@@ -5411,7 +4596,7 @@ class StepBasic_EulerAngles : public MMgt_TShared {
 %}
 
 %nodefaultctor Handle_StepBasic_EulerAngles;
-class Handle_StepBasic_EulerAngles : public Handle_MMgt_TShared {
+class Handle_StepBasic_EulerAngles : public Handle_Standard_Transient {
 
     public:
         // constructors
@@ -5423,19 +4608,20 @@ class Handle_StepBasic_EulerAngles : public Handle_MMgt_TShared {
         static const Handle_StepBasic_EulerAngles DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_StepBasic_EulerAngles {
     StepBasic_EulerAngles* _get_reference() {
-    return (StepBasic_EulerAngles*)$self->Access();
+    return (StepBasic_EulerAngles*)$self->get();
     }
 };
 
 %extend Handle_StepBasic_EulerAngles {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend StepBasic_EulerAngles {
@@ -5444,7 +4630,7 @@ class Handle_StepBasic_EulerAngles : public Handle_MMgt_TShared {
 	}
 };
 %nodefaultctor StepBasic_ExternalSource;
-class StepBasic_ExternalSource : public MMgt_TShared {
+class StepBasic_ExternalSource : public Standard_Transient {
 	public:
 		%feature("compactdefaultargs") StepBasic_ExternalSource;
 		%feature("autodoc", "	* Empty constructor
@@ -5453,7 +4639,7 @@ class StepBasic_ExternalSource : public MMgt_TShared {
 ") StepBasic_ExternalSource;
 		 StepBasic_ExternalSource ();
 		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	* Initialize all fields (own and inherited)
+		%feature("autodoc", "	* Initialize all fields --own and inherited--
 
 	:param aSourceId:
 	:type aSourceId: StepBasic_SourceItem &
@@ -5496,7 +4682,7 @@ class StepBasic_ExternalSource : public MMgt_TShared {
 %}
 
 %nodefaultctor Handle_StepBasic_ExternalSource;
-class Handle_StepBasic_ExternalSource : public Handle_MMgt_TShared {
+class Handle_StepBasic_ExternalSource : public Handle_Standard_Transient {
 
     public:
         // constructors
@@ -5508,19 +4694,20 @@ class Handle_StepBasic_ExternalSource : public Handle_MMgt_TShared {
         static const Handle_StepBasic_ExternalSource DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_StepBasic_ExternalSource {
     StepBasic_ExternalSource* _get_reference() {
-    return (StepBasic_ExternalSource*)$self->Access();
+    return (StepBasic_ExternalSource*)$self->get();
     }
 };
 
 %extend Handle_StepBasic_ExternalSource {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend StepBasic_ExternalSource {
@@ -5529,7 +4716,7 @@ class Handle_StepBasic_ExternalSource : public Handle_MMgt_TShared {
 	}
 };
 %nodefaultctor StepBasic_ExternallyDefinedItem;
-class StepBasic_ExternallyDefinedItem : public MMgt_TShared {
+class StepBasic_ExternallyDefinedItem : public Standard_Transient {
 	public:
 		%feature("compactdefaultargs") StepBasic_ExternallyDefinedItem;
 		%feature("autodoc", "	* Empty constructor
@@ -5538,7 +4725,7 @@ class StepBasic_ExternallyDefinedItem : public MMgt_TShared {
 ") StepBasic_ExternallyDefinedItem;
 		 StepBasic_ExternallyDefinedItem ();
 		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	* Initialize all fields (own and inherited)
+		%feature("autodoc", "	* Initialize all fields --own and inherited--
 
 	:param aItemId:
 	:type aItemId: StepBasic_SourceItem &
@@ -5597,7 +4784,7 @@ class StepBasic_ExternallyDefinedItem : public MMgt_TShared {
 %}
 
 %nodefaultctor Handle_StepBasic_ExternallyDefinedItem;
-class Handle_StepBasic_ExternallyDefinedItem : public Handle_MMgt_TShared {
+class Handle_StepBasic_ExternallyDefinedItem : public Handle_Standard_Transient {
 
     public:
         // constructors
@@ -5609,19 +4796,20 @@ class Handle_StepBasic_ExternallyDefinedItem : public Handle_MMgt_TShared {
         static const Handle_StepBasic_ExternallyDefinedItem DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_StepBasic_ExternallyDefinedItem {
     StepBasic_ExternallyDefinedItem* _get_reference() {
-    return (StepBasic_ExternallyDefinedItem*)$self->Access();
+    return (StepBasic_ExternallyDefinedItem*)$self->get();
     }
 };
 
 %extend Handle_StepBasic_ExternallyDefinedItem {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend StepBasic_ExternallyDefinedItem {
@@ -5630,7 +4818,7 @@ class Handle_StepBasic_ExternallyDefinedItem : public Handle_MMgt_TShared {
 	}
 };
 %nodefaultctor StepBasic_GeneralProperty;
-class StepBasic_GeneralProperty : public MMgt_TShared {
+class StepBasic_GeneralProperty : public Standard_Transient {
 	public:
 		%feature("compactdefaultargs") StepBasic_GeneralProperty;
 		%feature("autodoc", "	* Empty constructor
@@ -5639,7 +4827,7 @@ class StepBasic_GeneralProperty : public MMgt_TShared {
 ") StepBasic_GeneralProperty;
 		 StepBasic_GeneralProperty ();
 		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	* Initialize all fields (own and inherited)
+		%feature("autodoc", "	* Initialize all fields --own and inherited--
 
 	:param aId:
 	:type aId: Handle_TCollection_HAsciiString &
@@ -5722,7 +4910,7 @@ class StepBasic_GeneralProperty : public MMgt_TShared {
 %}
 
 %nodefaultctor Handle_StepBasic_GeneralProperty;
-class Handle_StepBasic_GeneralProperty : public Handle_MMgt_TShared {
+class Handle_StepBasic_GeneralProperty : public Handle_Standard_Transient {
 
     public:
         // constructors
@@ -5734,19 +4922,20 @@ class Handle_StepBasic_GeneralProperty : public Handle_MMgt_TShared {
         static const Handle_StepBasic_GeneralProperty DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_StepBasic_GeneralProperty {
     StepBasic_GeneralProperty* _get_reference() {
-    return (StepBasic_GeneralProperty*)$self->Access();
+    return (StepBasic_GeneralProperty*)$self->get();
     }
 };
 
 %extend Handle_StepBasic_GeneralProperty {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend StepBasic_GeneralProperty {
@@ -5755,7 +4944,7 @@ class Handle_StepBasic_GeneralProperty : public Handle_MMgt_TShared {
 	}
 };
 %nodefaultctor StepBasic_Group;
-class StepBasic_Group : public MMgt_TShared {
+class StepBasic_Group : public Standard_Transient {
 	public:
 		%feature("compactdefaultargs") StepBasic_Group;
 		%feature("autodoc", "	* Empty constructor
@@ -5764,7 +4953,7 @@ class StepBasic_Group : public MMgt_TShared {
 ") StepBasic_Group;
 		 StepBasic_Group ();
 		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	* Initialize all fields (own and inherited)
+		%feature("autodoc", "	* Initialize all fields --own and inherited--
 
 	:param aName:
 	:type aName: Handle_TCollection_HAsciiString &
@@ -5831,7 +5020,7 @@ class StepBasic_Group : public MMgt_TShared {
 %}
 
 %nodefaultctor Handle_StepBasic_Group;
-class Handle_StepBasic_Group : public Handle_MMgt_TShared {
+class Handle_StepBasic_Group : public Handle_Standard_Transient {
 
     public:
         // constructors
@@ -5843,19 +5032,20 @@ class Handle_StepBasic_Group : public Handle_MMgt_TShared {
         static const Handle_StepBasic_Group DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_StepBasic_Group {
     StepBasic_Group* _get_reference() {
-    return (StepBasic_Group*)$self->Access();
+    return (StepBasic_Group*)$self->get();
     }
 };
 
 %extend Handle_StepBasic_Group {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend StepBasic_Group {
@@ -5864,7 +5054,7 @@ class Handle_StepBasic_Group : public Handle_MMgt_TShared {
 	}
 };
 %nodefaultctor StepBasic_GroupAssignment;
-class StepBasic_GroupAssignment : public MMgt_TShared {
+class StepBasic_GroupAssignment : public Standard_Transient {
 	public:
 		%feature("compactdefaultargs") StepBasic_GroupAssignment;
 		%feature("autodoc", "	* Empty constructor
@@ -5873,7 +5063,7 @@ class StepBasic_GroupAssignment : public MMgt_TShared {
 ") StepBasic_GroupAssignment;
 		 StepBasic_GroupAssignment ();
 		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	* Initialize all fields (own and inherited)
+		%feature("autodoc", "	* Initialize all fields --own and inherited--
 
 	:param aAssignedGroup:
 	:type aAssignedGroup: Handle_StepBasic_Group &
@@ -5916,7 +5106,7 @@ class StepBasic_GroupAssignment : public MMgt_TShared {
 %}
 
 %nodefaultctor Handle_StepBasic_GroupAssignment;
-class Handle_StepBasic_GroupAssignment : public Handle_MMgt_TShared {
+class Handle_StepBasic_GroupAssignment : public Handle_Standard_Transient {
 
     public:
         // constructors
@@ -5928,19 +5118,20 @@ class Handle_StepBasic_GroupAssignment : public Handle_MMgt_TShared {
         static const Handle_StepBasic_GroupAssignment DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_StepBasic_GroupAssignment {
     StepBasic_GroupAssignment* _get_reference() {
-    return (StepBasic_GroupAssignment*)$self->Access();
+    return (StepBasic_GroupAssignment*)$self->get();
     }
 };
 
 %extend Handle_StepBasic_GroupAssignment {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend StepBasic_GroupAssignment {
@@ -5949,7 +5140,7 @@ class Handle_StepBasic_GroupAssignment : public Handle_MMgt_TShared {
 	}
 };
 %nodefaultctor StepBasic_GroupRelationship;
-class StepBasic_GroupRelationship : public MMgt_TShared {
+class StepBasic_GroupRelationship : public Standard_Transient {
 	public:
 		%feature("compactdefaultargs") StepBasic_GroupRelationship;
 		%feature("autodoc", "	* Empty constructor
@@ -5958,7 +5149,7 @@ class StepBasic_GroupRelationship : public MMgt_TShared {
 ") StepBasic_GroupRelationship;
 		 StepBasic_GroupRelationship ();
 		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	* Initialize all fields (own and inherited)
+		%feature("autodoc", "	* Initialize all fields --own and inherited--
 
 	:param aName:
 	:type aName: Handle_TCollection_HAsciiString &
@@ -6057,7 +5248,7 @@ class StepBasic_GroupRelationship : public MMgt_TShared {
 %}
 
 %nodefaultctor Handle_StepBasic_GroupRelationship;
-class Handle_StepBasic_GroupRelationship : public Handle_MMgt_TShared {
+class Handle_StepBasic_GroupRelationship : public Handle_Standard_Transient {
 
     public:
         // constructors
@@ -6069,19 +5260,20 @@ class Handle_StepBasic_GroupRelationship : public Handle_MMgt_TShared {
         static const Handle_StepBasic_GroupRelationship DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_StepBasic_GroupRelationship {
     StepBasic_GroupRelationship* _get_reference() {
-    return (StepBasic_GroupRelationship*)$self->Access();
+    return (StepBasic_GroupRelationship*)$self->get();
     }
 };
 
 %extend Handle_StepBasic_GroupRelationship {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend StepBasic_GroupRelationship {
@@ -6089,1218 +5281,8 @@ class Handle_StepBasic_GroupRelationship : public Handle_MMgt_TShared {
 	__repr__ = _dumps_object
 	}
 };
-%nodefaultctor StepBasic_HArray1OfApproval;
-class StepBasic_HArray1OfApproval : public MMgt_TShared {
-	public:
-		%feature("compactdefaultargs") StepBasic_HArray1OfApproval;
-		%feature("autodoc", "	:param Low:
-	:type Low: int
-	:param Up:
-	:type Up: int
-	:rtype: None
-") StepBasic_HArray1OfApproval;
-		 StepBasic_HArray1OfApproval (const Standard_Integer Low,const Standard_Integer Up);
-		%feature("compactdefaultargs") StepBasic_HArray1OfApproval;
-		%feature("autodoc", "	:param Low:
-	:type Low: int
-	:param Up:
-	:type Up: int
-	:param V:
-	:type V: Handle_StepBasic_Approval &
-	:rtype: None
-") StepBasic_HArray1OfApproval;
-		 StepBasic_HArray1OfApproval (const Standard_Integer Low,const Standard_Integer Up,const Handle_StepBasic_Approval & V);
-		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	:param V:
-	:type V: Handle_StepBasic_Approval &
-	:rtype: None
-") Init;
-		void Init (const Handle_StepBasic_Approval & V);
-		%feature("compactdefaultargs") Length;
-		%feature("autodoc", "	:rtype: int
-") Length;
-		Standard_Integer Length ();
-		%feature("compactdefaultargs") Lower;
-		%feature("autodoc", "	:rtype: int
-") Lower;
-		Standard_Integer Lower ();
-		%feature("compactdefaultargs") Upper;
-		%feature("autodoc", "	:rtype: int
-") Upper;
-		Standard_Integer Upper ();
-		%feature("compactdefaultargs") SetValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param Value:
-	:type Value: Handle_StepBasic_Approval &
-	:rtype: None
-") SetValue;
-		void SetValue (const Standard_Integer Index,const Handle_StepBasic_Approval & Value);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: Handle_StepBasic_Approval
-") Value;
-		Handle_StepBasic_Approval Value (const Standard_Integer Index);
-		%feature("compactdefaultargs") ChangeValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: Handle_StepBasic_Approval
-") ChangeValue;
-		Handle_StepBasic_Approval ChangeValue (const Standard_Integer Index);
-		%feature("compactdefaultargs") Array1;
-		%feature("autodoc", "	:rtype: StepBasic_Array1OfApproval
-") Array1;
-		const StepBasic_Array1OfApproval & Array1 ();
-		%feature("compactdefaultargs") ChangeArray1;
-		%feature("autodoc", "	:rtype: StepBasic_Array1OfApproval
-") ChangeArray1;
-		StepBasic_Array1OfApproval & ChangeArray1 ();
-};
-
-
-%extend StepBasic_HArray1OfApproval {
-	%pythoncode {
-		def GetHandle(self):
-		    try:
-		        return self.thisHandle
-		    except:
-		        self.thisHandle = Handle_StepBasic_HArray1OfApproval(self)
-		        self.thisown = False
-		        return self.thisHandle
-	}
-};
-
-%pythonappend Handle_StepBasic_HArray1OfApproval::Handle_StepBasic_HArray1OfApproval %{
-    # register the handle in the base object
-    if len(args) > 0:
-        register_handle(self, args[0])
-%}
-
-%nodefaultctor Handle_StepBasic_HArray1OfApproval;
-class Handle_StepBasic_HArray1OfApproval : public Handle_MMgt_TShared {
-
-    public:
-        // constructors
-        Handle_StepBasic_HArray1OfApproval();
-        Handle_StepBasic_HArray1OfApproval(const Handle_StepBasic_HArray1OfApproval &aHandle);
-        Handle_StepBasic_HArray1OfApproval(const StepBasic_HArray1OfApproval *anItem);
-        void Nullify();
-        Standard_Boolean IsNull() const;
-        static const Handle_StepBasic_HArray1OfApproval DownCast(const Handle_Standard_Transient &AnObject);
-
-};
-%extend Handle_StepBasic_HArray1OfApproval {
-    StepBasic_HArray1OfApproval* _get_reference() {
-    return (StepBasic_HArray1OfApproval*)$self->Access();
-    }
-};
-
-%extend Handle_StepBasic_HArray1OfApproval {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
-};
-
-%extend StepBasic_HArray1OfApproval {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor StepBasic_HArray1OfDerivedUnitElement;
-class StepBasic_HArray1OfDerivedUnitElement : public MMgt_TShared {
-	public:
-		%feature("compactdefaultargs") StepBasic_HArray1OfDerivedUnitElement;
-		%feature("autodoc", "	:param Low:
-	:type Low: int
-	:param Up:
-	:type Up: int
-	:rtype: None
-") StepBasic_HArray1OfDerivedUnitElement;
-		 StepBasic_HArray1OfDerivedUnitElement (const Standard_Integer Low,const Standard_Integer Up);
-		%feature("compactdefaultargs") StepBasic_HArray1OfDerivedUnitElement;
-		%feature("autodoc", "	:param Low:
-	:type Low: int
-	:param Up:
-	:type Up: int
-	:param V:
-	:type V: Handle_StepBasic_DerivedUnitElement &
-	:rtype: None
-") StepBasic_HArray1OfDerivedUnitElement;
-		 StepBasic_HArray1OfDerivedUnitElement (const Standard_Integer Low,const Standard_Integer Up,const Handle_StepBasic_DerivedUnitElement & V);
-		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	:param V:
-	:type V: Handle_StepBasic_DerivedUnitElement &
-	:rtype: None
-") Init;
-		void Init (const Handle_StepBasic_DerivedUnitElement & V);
-		%feature("compactdefaultargs") Length;
-		%feature("autodoc", "	:rtype: int
-") Length;
-		Standard_Integer Length ();
-		%feature("compactdefaultargs") Lower;
-		%feature("autodoc", "	:rtype: int
-") Lower;
-		Standard_Integer Lower ();
-		%feature("compactdefaultargs") Upper;
-		%feature("autodoc", "	:rtype: int
-") Upper;
-		Standard_Integer Upper ();
-		%feature("compactdefaultargs") SetValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param Value:
-	:type Value: Handle_StepBasic_DerivedUnitElement &
-	:rtype: None
-") SetValue;
-		void SetValue (const Standard_Integer Index,const Handle_StepBasic_DerivedUnitElement & Value);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: Handle_StepBasic_DerivedUnitElement
-") Value;
-		Handle_StepBasic_DerivedUnitElement Value (const Standard_Integer Index);
-		%feature("compactdefaultargs") ChangeValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: Handle_StepBasic_DerivedUnitElement
-") ChangeValue;
-		Handle_StepBasic_DerivedUnitElement ChangeValue (const Standard_Integer Index);
-		%feature("compactdefaultargs") Array1;
-		%feature("autodoc", "	:rtype: StepBasic_Array1OfDerivedUnitElement
-") Array1;
-		const StepBasic_Array1OfDerivedUnitElement & Array1 ();
-		%feature("compactdefaultargs") ChangeArray1;
-		%feature("autodoc", "	:rtype: StepBasic_Array1OfDerivedUnitElement
-") ChangeArray1;
-		StepBasic_Array1OfDerivedUnitElement & ChangeArray1 ();
-};
-
-
-%extend StepBasic_HArray1OfDerivedUnitElement {
-	%pythoncode {
-		def GetHandle(self):
-		    try:
-		        return self.thisHandle
-		    except:
-		        self.thisHandle = Handle_StepBasic_HArray1OfDerivedUnitElement(self)
-		        self.thisown = False
-		        return self.thisHandle
-	}
-};
-
-%pythonappend Handle_StepBasic_HArray1OfDerivedUnitElement::Handle_StepBasic_HArray1OfDerivedUnitElement %{
-    # register the handle in the base object
-    if len(args) > 0:
-        register_handle(self, args[0])
-%}
-
-%nodefaultctor Handle_StepBasic_HArray1OfDerivedUnitElement;
-class Handle_StepBasic_HArray1OfDerivedUnitElement : public Handle_MMgt_TShared {
-
-    public:
-        // constructors
-        Handle_StepBasic_HArray1OfDerivedUnitElement();
-        Handle_StepBasic_HArray1OfDerivedUnitElement(const Handle_StepBasic_HArray1OfDerivedUnitElement &aHandle);
-        Handle_StepBasic_HArray1OfDerivedUnitElement(const StepBasic_HArray1OfDerivedUnitElement *anItem);
-        void Nullify();
-        Standard_Boolean IsNull() const;
-        static const Handle_StepBasic_HArray1OfDerivedUnitElement DownCast(const Handle_Standard_Transient &AnObject);
-
-};
-%extend Handle_StepBasic_HArray1OfDerivedUnitElement {
-    StepBasic_HArray1OfDerivedUnitElement* _get_reference() {
-    return (StepBasic_HArray1OfDerivedUnitElement*)$self->Access();
-    }
-};
-
-%extend Handle_StepBasic_HArray1OfDerivedUnitElement {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
-};
-
-%extend StepBasic_HArray1OfDerivedUnitElement {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor StepBasic_HArray1OfDocument;
-class StepBasic_HArray1OfDocument : public MMgt_TShared {
-	public:
-		%feature("compactdefaultargs") StepBasic_HArray1OfDocument;
-		%feature("autodoc", "	:param Low:
-	:type Low: int
-	:param Up:
-	:type Up: int
-	:rtype: None
-") StepBasic_HArray1OfDocument;
-		 StepBasic_HArray1OfDocument (const Standard_Integer Low,const Standard_Integer Up);
-		%feature("compactdefaultargs") StepBasic_HArray1OfDocument;
-		%feature("autodoc", "	:param Low:
-	:type Low: int
-	:param Up:
-	:type Up: int
-	:param V:
-	:type V: Handle_StepBasic_Document &
-	:rtype: None
-") StepBasic_HArray1OfDocument;
-		 StepBasic_HArray1OfDocument (const Standard_Integer Low,const Standard_Integer Up,const Handle_StepBasic_Document & V);
-		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	:param V:
-	:type V: Handle_StepBasic_Document &
-	:rtype: None
-") Init;
-		void Init (const Handle_StepBasic_Document & V);
-		%feature("compactdefaultargs") Length;
-		%feature("autodoc", "	:rtype: int
-") Length;
-		Standard_Integer Length ();
-		%feature("compactdefaultargs") Lower;
-		%feature("autodoc", "	:rtype: int
-") Lower;
-		Standard_Integer Lower ();
-		%feature("compactdefaultargs") Upper;
-		%feature("autodoc", "	:rtype: int
-") Upper;
-		Standard_Integer Upper ();
-		%feature("compactdefaultargs") SetValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param Value:
-	:type Value: Handle_StepBasic_Document &
-	:rtype: None
-") SetValue;
-		void SetValue (const Standard_Integer Index,const Handle_StepBasic_Document & Value);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: Handle_StepBasic_Document
-") Value;
-		Handle_StepBasic_Document Value (const Standard_Integer Index);
-		%feature("compactdefaultargs") ChangeValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: Handle_StepBasic_Document
-") ChangeValue;
-		Handle_StepBasic_Document ChangeValue (const Standard_Integer Index);
-		%feature("compactdefaultargs") Array1;
-		%feature("autodoc", "	:rtype: StepBasic_Array1OfDocument
-") Array1;
-		const StepBasic_Array1OfDocument & Array1 ();
-		%feature("compactdefaultargs") ChangeArray1;
-		%feature("autodoc", "	:rtype: StepBasic_Array1OfDocument
-") ChangeArray1;
-		StepBasic_Array1OfDocument & ChangeArray1 ();
-};
-
-
-%extend StepBasic_HArray1OfDocument {
-	%pythoncode {
-		def GetHandle(self):
-		    try:
-		        return self.thisHandle
-		    except:
-		        self.thisHandle = Handle_StepBasic_HArray1OfDocument(self)
-		        self.thisown = False
-		        return self.thisHandle
-	}
-};
-
-%pythonappend Handle_StepBasic_HArray1OfDocument::Handle_StepBasic_HArray1OfDocument %{
-    # register the handle in the base object
-    if len(args) > 0:
-        register_handle(self, args[0])
-%}
-
-%nodefaultctor Handle_StepBasic_HArray1OfDocument;
-class Handle_StepBasic_HArray1OfDocument : public Handle_MMgt_TShared {
-
-    public:
-        // constructors
-        Handle_StepBasic_HArray1OfDocument();
-        Handle_StepBasic_HArray1OfDocument(const Handle_StepBasic_HArray1OfDocument &aHandle);
-        Handle_StepBasic_HArray1OfDocument(const StepBasic_HArray1OfDocument *anItem);
-        void Nullify();
-        Standard_Boolean IsNull() const;
-        static const Handle_StepBasic_HArray1OfDocument DownCast(const Handle_Standard_Transient &AnObject);
-
-};
-%extend Handle_StepBasic_HArray1OfDocument {
-    StepBasic_HArray1OfDocument* _get_reference() {
-    return (StepBasic_HArray1OfDocument*)$self->Access();
-    }
-};
-
-%extend Handle_StepBasic_HArray1OfDocument {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
-};
-
-%extend StepBasic_HArray1OfDocument {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor StepBasic_HArray1OfNamedUnit;
-class StepBasic_HArray1OfNamedUnit : public MMgt_TShared {
-	public:
-		%feature("compactdefaultargs") StepBasic_HArray1OfNamedUnit;
-		%feature("autodoc", "	:param Low:
-	:type Low: int
-	:param Up:
-	:type Up: int
-	:rtype: None
-") StepBasic_HArray1OfNamedUnit;
-		 StepBasic_HArray1OfNamedUnit (const Standard_Integer Low,const Standard_Integer Up);
-		%feature("compactdefaultargs") StepBasic_HArray1OfNamedUnit;
-		%feature("autodoc", "	:param Low:
-	:type Low: int
-	:param Up:
-	:type Up: int
-	:param V:
-	:type V: Handle_StepBasic_NamedUnit &
-	:rtype: None
-") StepBasic_HArray1OfNamedUnit;
-		 StepBasic_HArray1OfNamedUnit (const Standard_Integer Low,const Standard_Integer Up,const Handle_StepBasic_NamedUnit & V);
-		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	:param V:
-	:type V: Handle_StepBasic_NamedUnit &
-	:rtype: None
-") Init;
-		void Init (const Handle_StepBasic_NamedUnit & V);
-		%feature("compactdefaultargs") Length;
-		%feature("autodoc", "	:rtype: int
-") Length;
-		Standard_Integer Length ();
-		%feature("compactdefaultargs") Lower;
-		%feature("autodoc", "	:rtype: int
-") Lower;
-		Standard_Integer Lower ();
-		%feature("compactdefaultargs") Upper;
-		%feature("autodoc", "	:rtype: int
-") Upper;
-		Standard_Integer Upper ();
-		%feature("compactdefaultargs") SetValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param Value:
-	:type Value: Handle_StepBasic_NamedUnit &
-	:rtype: None
-") SetValue;
-		void SetValue (const Standard_Integer Index,const Handle_StepBasic_NamedUnit & Value);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: Handle_StepBasic_NamedUnit
-") Value;
-		Handle_StepBasic_NamedUnit Value (const Standard_Integer Index);
-		%feature("compactdefaultargs") ChangeValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: Handle_StepBasic_NamedUnit
-") ChangeValue;
-		Handle_StepBasic_NamedUnit ChangeValue (const Standard_Integer Index);
-		%feature("compactdefaultargs") Array1;
-		%feature("autodoc", "	:rtype: StepBasic_Array1OfNamedUnit
-") Array1;
-		const StepBasic_Array1OfNamedUnit & Array1 ();
-		%feature("compactdefaultargs") ChangeArray1;
-		%feature("autodoc", "	:rtype: StepBasic_Array1OfNamedUnit
-") ChangeArray1;
-		StepBasic_Array1OfNamedUnit & ChangeArray1 ();
-};
-
-
-%extend StepBasic_HArray1OfNamedUnit {
-	%pythoncode {
-		def GetHandle(self):
-		    try:
-		        return self.thisHandle
-		    except:
-		        self.thisHandle = Handle_StepBasic_HArray1OfNamedUnit(self)
-		        self.thisown = False
-		        return self.thisHandle
-	}
-};
-
-%pythonappend Handle_StepBasic_HArray1OfNamedUnit::Handle_StepBasic_HArray1OfNamedUnit %{
-    # register the handle in the base object
-    if len(args) > 0:
-        register_handle(self, args[0])
-%}
-
-%nodefaultctor Handle_StepBasic_HArray1OfNamedUnit;
-class Handle_StepBasic_HArray1OfNamedUnit : public Handle_MMgt_TShared {
-
-    public:
-        // constructors
-        Handle_StepBasic_HArray1OfNamedUnit();
-        Handle_StepBasic_HArray1OfNamedUnit(const Handle_StepBasic_HArray1OfNamedUnit &aHandle);
-        Handle_StepBasic_HArray1OfNamedUnit(const StepBasic_HArray1OfNamedUnit *anItem);
-        void Nullify();
-        Standard_Boolean IsNull() const;
-        static const Handle_StepBasic_HArray1OfNamedUnit DownCast(const Handle_Standard_Transient &AnObject);
-
-};
-%extend Handle_StepBasic_HArray1OfNamedUnit {
-    StepBasic_HArray1OfNamedUnit* _get_reference() {
-    return (StepBasic_HArray1OfNamedUnit*)$self->Access();
-    }
-};
-
-%extend Handle_StepBasic_HArray1OfNamedUnit {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
-};
-
-%extend StepBasic_HArray1OfNamedUnit {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor StepBasic_HArray1OfOrganization;
-class StepBasic_HArray1OfOrganization : public MMgt_TShared {
-	public:
-		%feature("compactdefaultargs") StepBasic_HArray1OfOrganization;
-		%feature("autodoc", "	:param Low:
-	:type Low: int
-	:param Up:
-	:type Up: int
-	:rtype: None
-") StepBasic_HArray1OfOrganization;
-		 StepBasic_HArray1OfOrganization (const Standard_Integer Low,const Standard_Integer Up);
-		%feature("compactdefaultargs") StepBasic_HArray1OfOrganization;
-		%feature("autodoc", "	:param Low:
-	:type Low: int
-	:param Up:
-	:type Up: int
-	:param V:
-	:type V: Handle_StepBasic_Organization &
-	:rtype: None
-") StepBasic_HArray1OfOrganization;
-		 StepBasic_HArray1OfOrganization (const Standard_Integer Low,const Standard_Integer Up,const Handle_StepBasic_Organization & V);
-		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	:param V:
-	:type V: Handle_StepBasic_Organization &
-	:rtype: None
-") Init;
-		void Init (const Handle_StepBasic_Organization & V);
-		%feature("compactdefaultargs") Length;
-		%feature("autodoc", "	:rtype: int
-") Length;
-		Standard_Integer Length ();
-		%feature("compactdefaultargs") Lower;
-		%feature("autodoc", "	:rtype: int
-") Lower;
-		Standard_Integer Lower ();
-		%feature("compactdefaultargs") Upper;
-		%feature("autodoc", "	:rtype: int
-") Upper;
-		Standard_Integer Upper ();
-		%feature("compactdefaultargs") SetValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param Value:
-	:type Value: Handle_StepBasic_Organization &
-	:rtype: None
-") SetValue;
-		void SetValue (const Standard_Integer Index,const Handle_StepBasic_Organization & Value);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: Handle_StepBasic_Organization
-") Value;
-		Handle_StepBasic_Organization Value (const Standard_Integer Index);
-		%feature("compactdefaultargs") ChangeValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: Handle_StepBasic_Organization
-") ChangeValue;
-		Handle_StepBasic_Organization ChangeValue (const Standard_Integer Index);
-		%feature("compactdefaultargs") Array1;
-		%feature("autodoc", "	:rtype: StepBasic_Array1OfOrganization
-") Array1;
-		const StepBasic_Array1OfOrganization & Array1 ();
-		%feature("compactdefaultargs") ChangeArray1;
-		%feature("autodoc", "	:rtype: StepBasic_Array1OfOrganization
-") ChangeArray1;
-		StepBasic_Array1OfOrganization & ChangeArray1 ();
-};
-
-
-%extend StepBasic_HArray1OfOrganization {
-	%pythoncode {
-		def GetHandle(self):
-		    try:
-		        return self.thisHandle
-		    except:
-		        self.thisHandle = Handle_StepBasic_HArray1OfOrganization(self)
-		        self.thisown = False
-		        return self.thisHandle
-	}
-};
-
-%pythonappend Handle_StepBasic_HArray1OfOrganization::Handle_StepBasic_HArray1OfOrganization %{
-    # register the handle in the base object
-    if len(args) > 0:
-        register_handle(self, args[0])
-%}
-
-%nodefaultctor Handle_StepBasic_HArray1OfOrganization;
-class Handle_StepBasic_HArray1OfOrganization : public Handle_MMgt_TShared {
-
-    public:
-        // constructors
-        Handle_StepBasic_HArray1OfOrganization();
-        Handle_StepBasic_HArray1OfOrganization(const Handle_StepBasic_HArray1OfOrganization &aHandle);
-        Handle_StepBasic_HArray1OfOrganization(const StepBasic_HArray1OfOrganization *anItem);
-        void Nullify();
-        Standard_Boolean IsNull() const;
-        static const Handle_StepBasic_HArray1OfOrganization DownCast(const Handle_Standard_Transient &AnObject);
-
-};
-%extend Handle_StepBasic_HArray1OfOrganization {
-    StepBasic_HArray1OfOrganization* _get_reference() {
-    return (StepBasic_HArray1OfOrganization*)$self->Access();
-    }
-};
-
-%extend Handle_StepBasic_HArray1OfOrganization {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
-};
-
-%extend StepBasic_HArray1OfOrganization {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor StepBasic_HArray1OfPerson;
-class StepBasic_HArray1OfPerson : public MMgt_TShared {
-	public:
-		%feature("compactdefaultargs") StepBasic_HArray1OfPerson;
-		%feature("autodoc", "	:param Low:
-	:type Low: int
-	:param Up:
-	:type Up: int
-	:rtype: None
-") StepBasic_HArray1OfPerson;
-		 StepBasic_HArray1OfPerson (const Standard_Integer Low,const Standard_Integer Up);
-		%feature("compactdefaultargs") StepBasic_HArray1OfPerson;
-		%feature("autodoc", "	:param Low:
-	:type Low: int
-	:param Up:
-	:type Up: int
-	:param V:
-	:type V: Handle_StepBasic_Person &
-	:rtype: None
-") StepBasic_HArray1OfPerson;
-		 StepBasic_HArray1OfPerson (const Standard_Integer Low,const Standard_Integer Up,const Handle_StepBasic_Person & V);
-		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	:param V:
-	:type V: Handle_StepBasic_Person &
-	:rtype: None
-") Init;
-		void Init (const Handle_StepBasic_Person & V);
-		%feature("compactdefaultargs") Length;
-		%feature("autodoc", "	:rtype: int
-") Length;
-		Standard_Integer Length ();
-		%feature("compactdefaultargs") Lower;
-		%feature("autodoc", "	:rtype: int
-") Lower;
-		Standard_Integer Lower ();
-		%feature("compactdefaultargs") Upper;
-		%feature("autodoc", "	:rtype: int
-") Upper;
-		Standard_Integer Upper ();
-		%feature("compactdefaultargs") SetValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param Value:
-	:type Value: Handle_StepBasic_Person &
-	:rtype: None
-") SetValue;
-		void SetValue (const Standard_Integer Index,const Handle_StepBasic_Person & Value);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: Handle_StepBasic_Person
-") Value;
-		Handle_StepBasic_Person Value (const Standard_Integer Index);
-		%feature("compactdefaultargs") ChangeValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: Handle_StepBasic_Person
-") ChangeValue;
-		Handle_StepBasic_Person ChangeValue (const Standard_Integer Index);
-		%feature("compactdefaultargs") Array1;
-		%feature("autodoc", "	:rtype: StepBasic_Array1OfPerson
-") Array1;
-		const StepBasic_Array1OfPerson & Array1 ();
-		%feature("compactdefaultargs") ChangeArray1;
-		%feature("autodoc", "	:rtype: StepBasic_Array1OfPerson
-") ChangeArray1;
-		StepBasic_Array1OfPerson & ChangeArray1 ();
-};
-
-
-%extend StepBasic_HArray1OfPerson {
-	%pythoncode {
-		def GetHandle(self):
-		    try:
-		        return self.thisHandle
-		    except:
-		        self.thisHandle = Handle_StepBasic_HArray1OfPerson(self)
-		        self.thisown = False
-		        return self.thisHandle
-	}
-};
-
-%pythonappend Handle_StepBasic_HArray1OfPerson::Handle_StepBasic_HArray1OfPerson %{
-    # register the handle in the base object
-    if len(args) > 0:
-        register_handle(self, args[0])
-%}
-
-%nodefaultctor Handle_StepBasic_HArray1OfPerson;
-class Handle_StepBasic_HArray1OfPerson : public Handle_MMgt_TShared {
-
-    public:
-        // constructors
-        Handle_StepBasic_HArray1OfPerson();
-        Handle_StepBasic_HArray1OfPerson(const Handle_StepBasic_HArray1OfPerson &aHandle);
-        Handle_StepBasic_HArray1OfPerson(const StepBasic_HArray1OfPerson *anItem);
-        void Nullify();
-        Standard_Boolean IsNull() const;
-        static const Handle_StepBasic_HArray1OfPerson DownCast(const Handle_Standard_Transient &AnObject);
-
-};
-%extend Handle_StepBasic_HArray1OfPerson {
-    StepBasic_HArray1OfPerson* _get_reference() {
-    return (StepBasic_HArray1OfPerson*)$self->Access();
-    }
-};
-
-%extend Handle_StepBasic_HArray1OfPerson {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
-};
-
-%extend StepBasic_HArray1OfPerson {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor StepBasic_HArray1OfProduct;
-class StepBasic_HArray1OfProduct : public MMgt_TShared {
-	public:
-		%feature("compactdefaultargs") StepBasic_HArray1OfProduct;
-		%feature("autodoc", "	:param Low:
-	:type Low: int
-	:param Up:
-	:type Up: int
-	:rtype: None
-") StepBasic_HArray1OfProduct;
-		 StepBasic_HArray1OfProduct (const Standard_Integer Low,const Standard_Integer Up);
-		%feature("compactdefaultargs") StepBasic_HArray1OfProduct;
-		%feature("autodoc", "	:param Low:
-	:type Low: int
-	:param Up:
-	:type Up: int
-	:param V:
-	:type V: Handle_StepBasic_Product &
-	:rtype: None
-") StepBasic_HArray1OfProduct;
-		 StepBasic_HArray1OfProduct (const Standard_Integer Low,const Standard_Integer Up,const Handle_StepBasic_Product & V);
-		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	:param V:
-	:type V: Handle_StepBasic_Product &
-	:rtype: None
-") Init;
-		void Init (const Handle_StepBasic_Product & V);
-		%feature("compactdefaultargs") Length;
-		%feature("autodoc", "	:rtype: int
-") Length;
-		Standard_Integer Length ();
-		%feature("compactdefaultargs") Lower;
-		%feature("autodoc", "	:rtype: int
-") Lower;
-		Standard_Integer Lower ();
-		%feature("compactdefaultargs") Upper;
-		%feature("autodoc", "	:rtype: int
-") Upper;
-		Standard_Integer Upper ();
-		%feature("compactdefaultargs") SetValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param Value:
-	:type Value: Handle_StepBasic_Product &
-	:rtype: None
-") SetValue;
-		void SetValue (const Standard_Integer Index,const Handle_StepBasic_Product & Value);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: Handle_StepBasic_Product
-") Value;
-		Handle_StepBasic_Product Value (const Standard_Integer Index);
-		%feature("compactdefaultargs") ChangeValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: Handle_StepBasic_Product
-") ChangeValue;
-		Handle_StepBasic_Product ChangeValue (const Standard_Integer Index);
-		%feature("compactdefaultargs") Array1;
-		%feature("autodoc", "	:rtype: StepBasic_Array1OfProduct
-") Array1;
-		const StepBasic_Array1OfProduct & Array1 ();
-		%feature("compactdefaultargs") ChangeArray1;
-		%feature("autodoc", "	:rtype: StepBasic_Array1OfProduct
-") ChangeArray1;
-		StepBasic_Array1OfProduct & ChangeArray1 ();
-};
-
-
-%extend StepBasic_HArray1OfProduct {
-	%pythoncode {
-		def GetHandle(self):
-		    try:
-		        return self.thisHandle
-		    except:
-		        self.thisHandle = Handle_StepBasic_HArray1OfProduct(self)
-		        self.thisown = False
-		        return self.thisHandle
-	}
-};
-
-%pythonappend Handle_StepBasic_HArray1OfProduct::Handle_StepBasic_HArray1OfProduct %{
-    # register the handle in the base object
-    if len(args) > 0:
-        register_handle(self, args[0])
-%}
-
-%nodefaultctor Handle_StepBasic_HArray1OfProduct;
-class Handle_StepBasic_HArray1OfProduct : public Handle_MMgt_TShared {
-
-    public:
-        // constructors
-        Handle_StepBasic_HArray1OfProduct();
-        Handle_StepBasic_HArray1OfProduct(const Handle_StepBasic_HArray1OfProduct &aHandle);
-        Handle_StepBasic_HArray1OfProduct(const StepBasic_HArray1OfProduct *anItem);
-        void Nullify();
-        Standard_Boolean IsNull() const;
-        static const Handle_StepBasic_HArray1OfProduct DownCast(const Handle_Standard_Transient &AnObject);
-
-};
-%extend Handle_StepBasic_HArray1OfProduct {
-    StepBasic_HArray1OfProduct* _get_reference() {
-    return (StepBasic_HArray1OfProduct*)$self->Access();
-    }
-};
-
-%extend Handle_StepBasic_HArray1OfProduct {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
-};
-
-%extend StepBasic_HArray1OfProduct {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor StepBasic_HArray1OfProductContext;
-class StepBasic_HArray1OfProductContext : public MMgt_TShared {
-	public:
-		%feature("compactdefaultargs") StepBasic_HArray1OfProductContext;
-		%feature("autodoc", "	:param Low:
-	:type Low: int
-	:param Up:
-	:type Up: int
-	:rtype: None
-") StepBasic_HArray1OfProductContext;
-		 StepBasic_HArray1OfProductContext (const Standard_Integer Low,const Standard_Integer Up);
-		%feature("compactdefaultargs") StepBasic_HArray1OfProductContext;
-		%feature("autodoc", "	:param Low:
-	:type Low: int
-	:param Up:
-	:type Up: int
-	:param V:
-	:type V: Handle_StepBasic_ProductContext &
-	:rtype: None
-") StepBasic_HArray1OfProductContext;
-		 StepBasic_HArray1OfProductContext (const Standard_Integer Low,const Standard_Integer Up,const Handle_StepBasic_ProductContext & V);
-		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	:param V:
-	:type V: Handle_StepBasic_ProductContext &
-	:rtype: None
-") Init;
-		void Init (const Handle_StepBasic_ProductContext & V);
-		%feature("compactdefaultargs") Length;
-		%feature("autodoc", "	:rtype: int
-") Length;
-		Standard_Integer Length ();
-		%feature("compactdefaultargs") Lower;
-		%feature("autodoc", "	:rtype: int
-") Lower;
-		Standard_Integer Lower ();
-		%feature("compactdefaultargs") Upper;
-		%feature("autodoc", "	:rtype: int
-") Upper;
-		Standard_Integer Upper ();
-		%feature("compactdefaultargs") SetValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param Value:
-	:type Value: Handle_StepBasic_ProductContext &
-	:rtype: None
-") SetValue;
-		void SetValue (const Standard_Integer Index,const Handle_StepBasic_ProductContext & Value);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: Handle_StepBasic_ProductContext
-") Value;
-		Handle_StepBasic_ProductContext Value (const Standard_Integer Index);
-		%feature("compactdefaultargs") ChangeValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: Handle_StepBasic_ProductContext
-") ChangeValue;
-		Handle_StepBasic_ProductContext ChangeValue (const Standard_Integer Index);
-		%feature("compactdefaultargs") Array1;
-		%feature("autodoc", "	:rtype: StepBasic_Array1OfProductContext
-") Array1;
-		const StepBasic_Array1OfProductContext & Array1 ();
-		%feature("compactdefaultargs") ChangeArray1;
-		%feature("autodoc", "	:rtype: StepBasic_Array1OfProductContext
-") ChangeArray1;
-		StepBasic_Array1OfProductContext & ChangeArray1 ();
-};
-
-
-%extend StepBasic_HArray1OfProductContext {
-	%pythoncode {
-		def GetHandle(self):
-		    try:
-		        return self.thisHandle
-		    except:
-		        self.thisHandle = Handle_StepBasic_HArray1OfProductContext(self)
-		        self.thisown = False
-		        return self.thisHandle
-	}
-};
-
-%pythonappend Handle_StepBasic_HArray1OfProductContext::Handle_StepBasic_HArray1OfProductContext %{
-    # register the handle in the base object
-    if len(args) > 0:
-        register_handle(self, args[0])
-%}
-
-%nodefaultctor Handle_StepBasic_HArray1OfProductContext;
-class Handle_StepBasic_HArray1OfProductContext : public Handle_MMgt_TShared {
-
-    public:
-        // constructors
-        Handle_StepBasic_HArray1OfProductContext();
-        Handle_StepBasic_HArray1OfProductContext(const Handle_StepBasic_HArray1OfProductContext &aHandle);
-        Handle_StepBasic_HArray1OfProductContext(const StepBasic_HArray1OfProductContext *anItem);
-        void Nullify();
-        Standard_Boolean IsNull() const;
-        static const Handle_StepBasic_HArray1OfProductContext DownCast(const Handle_Standard_Transient &AnObject);
-
-};
-%extend Handle_StepBasic_HArray1OfProductContext {
-    StepBasic_HArray1OfProductContext* _get_reference() {
-    return (StepBasic_HArray1OfProductContext*)$self->Access();
-    }
-};
-
-%extend Handle_StepBasic_HArray1OfProductContext {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
-};
-
-%extend StepBasic_HArray1OfProductContext {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor StepBasic_HArray1OfProductDefinition;
-class StepBasic_HArray1OfProductDefinition : public MMgt_TShared {
-	public:
-		%feature("compactdefaultargs") StepBasic_HArray1OfProductDefinition;
-		%feature("autodoc", "	:param Low:
-	:type Low: int
-	:param Up:
-	:type Up: int
-	:rtype: None
-") StepBasic_HArray1OfProductDefinition;
-		 StepBasic_HArray1OfProductDefinition (const Standard_Integer Low,const Standard_Integer Up);
-		%feature("compactdefaultargs") StepBasic_HArray1OfProductDefinition;
-		%feature("autodoc", "	:param Low:
-	:type Low: int
-	:param Up:
-	:type Up: int
-	:param V:
-	:type V: Handle_StepBasic_ProductDefinition &
-	:rtype: None
-") StepBasic_HArray1OfProductDefinition;
-		 StepBasic_HArray1OfProductDefinition (const Standard_Integer Low,const Standard_Integer Up,const Handle_StepBasic_ProductDefinition & V);
-		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	:param V:
-	:type V: Handle_StepBasic_ProductDefinition &
-	:rtype: None
-") Init;
-		void Init (const Handle_StepBasic_ProductDefinition & V);
-		%feature("compactdefaultargs") Length;
-		%feature("autodoc", "	:rtype: int
-") Length;
-		Standard_Integer Length ();
-		%feature("compactdefaultargs") Lower;
-		%feature("autodoc", "	:rtype: int
-") Lower;
-		Standard_Integer Lower ();
-		%feature("compactdefaultargs") Upper;
-		%feature("autodoc", "	:rtype: int
-") Upper;
-		Standard_Integer Upper ();
-		%feature("compactdefaultargs") SetValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param Value:
-	:type Value: Handle_StepBasic_ProductDefinition &
-	:rtype: None
-") SetValue;
-		void SetValue (const Standard_Integer Index,const Handle_StepBasic_ProductDefinition & Value);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: Handle_StepBasic_ProductDefinition
-") Value;
-		Handle_StepBasic_ProductDefinition Value (const Standard_Integer Index);
-		%feature("compactdefaultargs") ChangeValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: Handle_StepBasic_ProductDefinition
-") ChangeValue;
-		Handle_StepBasic_ProductDefinition ChangeValue (const Standard_Integer Index);
-		%feature("compactdefaultargs") Array1;
-		%feature("autodoc", "	:rtype: StepBasic_Array1OfProductDefinition
-") Array1;
-		const StepBasic_Array1OfProductDefinition & Array1 ();
-		%feature("compactdefaultargs") ChangeArray1;
-		%feature("autodoc", "	:rtype: StepBasic_Array1OfProductDefinition
-") ChangeArray1;
-		StepBasic_Array1OfProductDefinition & ChangeArray1 ();
-};
-
-
-%extend StepBasic_HArray1OfProductDefinition {
-	%pythoncode {
-		def GetHandle(self):
-		    try:
-		        return self.thisHandle
-		    except:
-		        self.thisHandle = Handle_StepBasic_HArray1OfProductDefinition(self)
-		        self.thisown = False
-		        return self.thisHandle
-	}
-};
-
-%pythonappend Handle_StepBasic_HArray1OfProductDefinition::Handle_StepBasic_HArray1OfProductDefinition %{
-    # register the handle in the base object
-    if len(args) > 0:
-        register_handle(self, args[0])
-%}
-
-%nodefaultctor Handle_StepBasic_HArray1OfProductDefinition;
-class Handle_StepBasic_HArray1OfProductDefinition : public Handle_MMgt_TShared {
-
-    public:
-        // constructors
-        Handle_StepBasic_HArray1OfProductDefinition();
-        Handle_StepBasic_HArray1OfProductDefinition(const Handle_StepBasic_HArray1OfProductDefinition &aHandle);
-        Handle_StepBasic_HArray1OfProductDefinition(const StepBasic_HArray1OfProductDefinition *anItem);
-        void Nullify();
-        Standard_Boolean IsNull() const;
-        static const Handle_StepBasic_HArray1OfProductDefinition DownCast(const Handle_Standard_Transient &AnObject);
-
-};
-%extend Handle_StepBasic_HArray1OfProductDefinition {
-    StepBasic_HArray1OfProductDefinition* _get_reference() {
-    return (StepBasic_HArray1OfProductDefinition*)$self->Access();
-    }
-};
-
-%extend Handle_StepBasic_HArray1OfProductDefinition {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
-};
-
-%extend StepBasic_HArray1OfProductDefinition {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor StepBasic_HArray1OfUncertaintyMeasureWithUnit;
-class StepBasic_HArray1OfUncertaintyMeasureWithUnit : public MMgt_TShared {
-	public:
-		%feature("compactdefaultargs") StepBasic_HArray1OfUncertaintyMeasureWithUnit;
-		%feature("autodoc", "	:param Low:
-	:type Low: int
-	:param Up:
-	:type Up: int
-	:rtype: None
-") StepBasic_HArray1OfUncertaintyMeasureWithUnit;
-		 StepBasic_HArray1OfUncertaintyMeasureWithUnit (const Standard_Integer Low,const Standard_Integer Up);
-		%feature("compactdefaultargs") StepBasic_HArray1OfUncertaintyMeasureWithUnit;
-		%feature("autodoc", "	:param Low:
-	:type Low: int
-	:param Up:
-	:type Up: int
-	:param V:
-	:type V: Handle_StepBasic_UncertaintyMeasureWithUnit &
-	:rtype: None
-") StepBasic_HArray1OfUncertaintyMeasureWithUnit;
-		 StepBasic_HArray1OfUncertaintyMeasureWithUnit (const Standard_Integer Low,const Standard_Integer Up,const Handle_StepBasic_UncertaintyMeasureWithUnit & V);
-		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	:param V:
-	:type V: Handle_StepBasic_UncertaintyMeasureWithUnit &
-	:rtype: None
-") Init;
-		void Init (const Handle_StepBasic_UncertaintyMeasureWithUnit & V);
-		%feature("compactdefaultargs") Length;
-		%feature("autodoc", "	:rtype: int
-") Length;
-		Standard_Integer Length ();
-		%feature("compactdefaultargs") Lower;
-		%feature("autodoc", "	:rtype: int
-") Lower;
-		Standard_Integer Lower ();
-		%feature("compactdefaultargs") Upper;
-		%feature("autodoc", "	:rtype: int
-") Upper;
-		Standard_Integer Upper ();
-		%feature("compactdefaultargs") SetValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param Value:
-	:type Value: Handle_StepBasic_UncertaintyMeasureWithUnit &
-	:rtype: None
-") SetValue;
-		void SetValue (const Standard_Integer Index,const Handle_StepBasic_UncertaintyMeasureWithUnit & Value);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: Handle_StepBasic_UncertaintyMeasureWithUnit
-") Value;
-		Handle_StepBasic_UncertaintyMeasureWithUnit Value (const Standard_Integer Index);
-		%feature("compactdefaultargs") ChangeValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: Handle_StepBasic_UncertaintyMeasureWithUnit
-") ChangeValue;
-		Handle_StepBasic_UncertaintyMeasureWithUnit ChangeValue (const Standard_Integer Index);
-		%feature("compactdefaultargs") Array1;
-		%feature("autodoc", "	:rtype: StepBasic_Array1OfUncertaintyMeasureWithUnit
-") Array1;
-		const StepBasic_Array1OfUncertaintyMeasureWithUnit & Array1 ();
-		%feature("compactdefaultargs") ChangeArray1;
-		%feature("autodoc", "	:rtype: StepBasic_Array1OfUncertaintyMeasureWithUnit
-") ChangeArray1;
-		StepBasic_Array1OfUncertaintyMeasureWithUnit & ChangeArray1 ();
-};
-
-
-%extend StepBasic_HArray1OfUncertaintyMeasureWithUnit {
-	%pythoncode {
-		def GetHandle(self):
-		    try:
-		        return self.thisHandle
-		    except:
-		        self.thisHandle = Handle_StepBasic_HArray1OfUncertaintyMeasureWithUnit(self)
-		        self.thisown = False
-		        return self.thisHandle
-	}
-};
-
-%pythonappend Handle_StepBasic_HArray1OfUncertaintyMeasureWithUnit::Handle_StepBasic_HArray1OfUncertaintyMeasureWithUnit %{
-    # register the handle in the base object
-    if len(args) > 0:
-        register_handle(self, args[0])
-%}
-
-%nodefaultctor Handle_StepBasic_HArray1OfUncertaintyMeasureWithUnit;
-class Handle_StepBasic_HArray1OfUncertaintyMeasureWithUnit : public Handle_MMgt_TShared {
-
-    public:
-        // constructors
-        Handle_StepBasic_HArray1OfUncertaintyMeasureWithUnit();
-        Handle_StepBasic_HArray1OfUncertaintyMeasureWithUnit(const Handle_StepBasic_HArray1OfUncertaintyMeasureWithUnit &aHandle);
-        Handle_StepBasic_HArray1OfUncertaintyMeasureWithUnit(const StepBasic_HArray1OfUncertaintyMeasureWithUnit *anItem);
-        void Nullify();
-        Standard_Boolean IsNull() const;
-        static const Handle_StepBasic_HArray1OfUncertaintyMeasureWithUnit DownCast(const Handle_Standard_Transient &AnObject);
-
-};
-%extend Handle_StepBasic_HArray1OfUncertaintyMeasureWithUnit {
-    StepBasic_HArray1OfUncertaintyMeasureWithUnit* _get_reference() {
-    return (StepBasic_HArray1OfUncertaintyMeasureWithUnit*)$self->Access();
-    }
-};
-
-%extend Handle_StepBasic_HArray1OfUncertaintyMeasureWithUnit {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
-};
-
-%extend StepBasic_HArray1OfUncertaintyMeasureWithUnit {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
 %nodefaultctor StepBasic_IdentificationAssignment;
-class StepBasic_IdentificationAssignment : public MMgt_TShared {
+class StepBasic_IdentificationAssignment : public Standard_Transient {
 	public:
 		%feature("compactdefaultargs") StepBasic_IdentificationAssignment;
 		%feature("autodoc", "	* Empty constructor
@@ -7309,7 +5291,7 @@ class StepBasic_IdentificationAssignment : public MMgt_TShared {
 ") StepBasic_IdentificationAssignment;
 		 StepBasic_IdentificationAssignment ();
 		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	* Initialize all fields (own and inherited)
+		%feature("autodoc", "	* Initialize all fields --own and inherited--
 
 	:param aAssignedId:
 	:type aAssignedId: Handle_TCollection_HAsciiString &
@@ -7368,7 +5350,7 @@ class StepBasic_IdentificationAssignment : public MMgt_TShared {
 %}
 
 %nodefaultctor Handle_StepBasic_IdentificationAssignment;
-class Handle_StepBasic_IdentificationAssignment : public Handle_MMgt_TShared {
+class Handle_StepBasic_IdentificationAssignment : public Handle_Standard_Transient {
 
     public:
         // constructors
@@ -7380,19 +5362,20 @@ class Handle_StepBasic_IdentificationAssignment : public Handle_MMgt_TShared {
         static const Handle_StepBasic_IdentificationAssignment DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_StepBasic_IdentificationAssignment {
     StepBasic_IdentificationAssignment* _get_reference() {
-    return (StepBasic_IdentificationAssignment*)$self->Access();
+    return (StepBasic_IdentificationAssignment*)$self->get();
     }
 };
 
 %extend Handle_StepBasic_IdentificationAssignment {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend StepBasic_IdentificationAssignment {
@@ -7401,7 +5384,7 @@ class Handle_StepBasic_IdentificationAssignment : public Handle_MMgt_TShared {
 	}
 };
 %nodefaultctor StepBasic_IdentificationRole;
-class StepBasic_IdentificationRole : public MMgt_TShared {
+class StepBasic_IdentificationRole : public Standard_Transient {
 	public:
 		%feature("compactdefaultargs") StepBasic_IdentificationRole;
 		%feature("autodoc", "	* Empty constructor
@@ -7410,7 +5393,7 @@ class StepBasic_IdentificationRole : public MMgt_TShared {
 ") StepBasic_IdentificationRole;
 		 StepBasic_IdentificationRole ();
 		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	* Initialize all fields (own and inherited)
+		%feature("autodoc", "	* Initialize all fields --own and inherited--
 
 	:param aName:
 	:type aName: Handle_TCollection_HAsciiString &
@@ -7477,7 +5460,7 @@ class StepBasic_IdentificationRole : public MMgt_TShared {
 %}
 
 %nodefaultctor Handle_StepBasic_IdentificationRole;
-class Handle_StepBasic_IdentificationRole : public Handle_MMgt_TShared {
+class Handle_StepBasic_IdentificationRole : public Handle_Standard_Transient {
 
     public:
         // constructors
@@ -7489,19 +5472,20 @@ class Handle_StepBasic_IdentificationRole : public Handle_MMgt_TShared {
         static const Handle_StepBasic_IdentificationRole DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_StepBasic_IdentificationRole {
     StepBasic_IdentificationRole* _get_reference() {
-    return (StepBasic_IdentificationRole*)$self->Access();
+    return (StepBasic_IdentificationRole*)$self->get();
     }
 };
 
 %extend Handle_StepBasic_IdentificationRole {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend StepBasic_IdentificationRole {
@@ -7510,7 +5494,7 @@ class Handle_StepBasic_IdentificationRole : public Handle_MMgt_TShared {
 	}
 };
 %nodefaultctor StepBasic_LocalTime;
-class StepBasic_LocalTime : public MMgt_TShared {
+class StepBasic_LocalTime : public Standard_Transient {
 	public:
 		%feature("compactdefaultargs") StepBasic_LocalTime;
 		%feature("autodoc", "	* Returns a LocalTime
@@ -7531,9 +5515,9 @@ class StepBasic_LocalTime : public MMgt_TShared {
 	:type aSecondComponent: float
 	:param aZone:
 	:type aZone: Handle_StepBasic_CoordinatedUniversalTimeOffset &
-	:rtype: void
+	:rtype: None
 ") Init;
-		virtual void Init (const Standard_Integer aHourComponent,const Standard_Boolean hasAminuteComponent,const Standard_Integer aMinuteComponent,const Standard_Boolean hasAsecondComponent,const Standard_Real aSecondComponent,const Handle_StepBasic_CoordinatedUniversalTimeOffset & aZone);
+		void Init (const Standard_Integer aHourComponent,const Standard_Boolean hasAminuteComponent,const Standard_Integer aMinuteComponent,const Standard_Boolean hasAsecondComponent,const Standard_Real aSecondComponent,const Handle_StepBasic_CoordinatedUniversalTimeOffset & aZone);
 		%feature("compactdefaultargs") SetHourComponent;
 		%feature("autodoc", "	:param aHourComponent:
 	:type aHourComponent: int
@@ -7612,7 +5596,7 @@ class StepBasic_LocalTime : public MMgt_TShared {
 %}
 
 %nodefaultctor Handle_StepBasic_LocalTime;
-class Handle_StepBasic_LocalTime : public Handle_MMgt_TShared {
+class Handle_StepBasic_LocalTime : public Handle_Standard_Transient {
 
     public:
         // constructors
@@ -7624,19 +5608,20 @@ class Handle_StepBasic_LocalTime : public Handle_MMgt_TShared {
         static const Handle_StepBasic_LocalTime DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_StepBasic_LocalTime {
     StepBasic_LocalTime* _get_reference() {
-    return (StepBasic_LocalTime*)$self->Access();
+    return (StepBasic_LocalTime*)$self->get();
     }
 };
 
 %extend Handle_StepBasic_LocalTime {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend StepBasic_LocalTime {
@@ -7699,19 +5684,20 @@ class Handle_StepBasic_MeasureValueMember : public Handle_StepData_SelectReal {
         static const Handle_StepBasic_MeasureValueMember DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_StepBasic_MeasureValueMember {
     StepBasic_MeasureValueMember* _get_reference() {
-    return (StepBasic_MeasureValueMember*)$self->Access();
+    return (StepBasic_MeasureValueMember*)$self->get();
     }
 };
 
 %extend Handle_StepBasic_MeasureValueMember {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend StepBasic_MeasureValueMember {
@@ -7720,7 +5706,7 @@ class Handle_StepBasic_MeasureValueMember : public Handle_StepData_SelectReal {
 	}
 };
 %nodefaultctor StepBasic_MeasureWithUnit;
-class StepBasic_MeasureWithUnit : public MMgt_TShared {
+class StepBasic_MeasureWithUnit : public Standard_Transient {
 	public:
 		%feature("compactdefaultargs") StepBasic_MeasureWithUnit;
 		%feature("autodoc", "	* Returns a MeasureWithUnit
@@ -7733,9 +5719,9 @@ class StepBasic_MeasureWithUnit : public MMgt_TShared {
 	:type aValueComponent: Handle_StepBasic_MeasureValueMember &
 	:param aUnitComponent:
 	:type aUnitComponent: StepBasic_Unit &
-	:rtype: void
+	:rtype: None
 ") Init;
-		virtual void Init (const Handle_StepBasic_MeasureValueMember & aValueComponent,const StepBasic_Unit & aUnitComponent);
+		void Init (const Handle_StepBasic_MeasureValueMember & aValueComponent,const StepBasic_Unit & aUnitComponent);
 		%feature("compactdefaultargs") SetValueComponent;
 		%feature("autodoc", "	:param aValueComponent:
 	:type aValueComponent: float
@@ -7788,7 +5774,7 @@ class StepBasic_MeasureWithUnit : public MMgt_TShared {
 %}
 
 %nodefaultctor Handle_StepBasic_MeasureWithUnit;
-class Handle_StepBasic_MeasureWithUnit : public Handle_MMgt_TShared {
+class Handle_StepBasic_MeasureWithUnit : public Handle_Standard_Transient {
 
     public:
         // constructors
@@ -7800,19 +5786,20 @@ class Handle_StepBasic_MeasureWithUnit : public Handle_MMgt_TShared {
         static const Handle_StepBasic_MeasureWithUnit DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_StepBasic_MeasureWithUnit {
     StepBasic_MeasureWithUnit* _get_reference() {
-    return (StepBasic_MeasureWithUnit*)$self->Access();
+    return (StepBasic_MeasureWithUnit*)$self->get();
     }
 };
 
 %extend Handle_StepBasic_MeasureWithUnit {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend StepBasic_MeasureWithUnit {
@@ -7821,7 +5808,7 @@ class Handle_StepBasic_MeasureWithUnit : public Handle_MMgt_TShared {
 	}
 };
 %nodefaultctor StepBasic_NameAssignment;
-class StepBasic_NameAssignment : public MMgt_TShared {
+class StepBasic_NameAssignment : public Standard_Transient {
 	public:
 		%feature("compactdefaultargs") StepBasic_NameAssignment;
 		%feature("autodoc", "	* Empty constructor
@@ -7830,7 +5817,7 @@ class StepBasic_NameAssignment : public MMgt_TShared {
 ") StepBasic_NameAssignment;
 		 StepBasic_NameAssignment ();
 		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	* Initialize all fields (own and inherited)
+		%feature("autodoc", "	* Initialize all fields --own and inherited--
 
 	:param aAssignedName:
 	:type aAssignedName: Handle_TCollection_HAsciiString &
@@ -7873,7 +5860,7 @@ class StepBasic_NameAssignment : public MMgt_TShared {
 %}
 
 %nodefaultctor Handle_StepBasic_NameAssignment;
-class Handle_StepBasic_NameAssignment : public Handle_MMgt_TShared {
+class Handle_StepBasic_NameAssignment : public Handle_Standard_Transient {
 
     public:
         // constructors
@@ -7885,19 +5872,20 @@ class Handle_StepBasic_NameAssignment : public Handle_MMgt_TShared {
         static const Handle_StepBasic_NameAssignment DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_StepBasic_NameAssignment {
     StepBasic_NameAssignment* _get_reference() {
-    return (StepBasic_NameAssignment*)$self->Access();
+    return (StepBasic_NameAssignment*)$self->get();
     }
 };
 
 %extend Handle_StepBasic_NameAssignment {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend StepBasic_NameAssignment {
@@ -7906,7 +5894,7 @@ class Handle_StepBasic_NameAssignment : public Handle_MMgt_TShared {
 	}
 };
 %nodefaultctor StepBasic_NamedUnit;
-class StepBasic_NamedUnit : public MMgt_TShared {
+class StepBasic_NamedUnit : public Standard_Transient {
 	public:
 		%feature("compactdefaultargs") StepBasic_NamedUnit;
 		%feature("autodoc", "	* Returns a NamedUnit
@@ -7917,9 +5905,9 @@ class StepBasic_NamedUnit : public MMgt_TShared {
 		%feature("compactdefaultargs") Init;
 		%feature("autodoc", "	:param aDimensions:
 	:type aDimensions: Handle_StepBasic_DimensionalExponents &
-	:rtype: void
+	:rtype: None
 ") Init;
-		virtual void Init (const Handle_StepBasic_DimensionalExponents & aDimensions);
+		void Init (const Handle_StepBasic_DimensionalExponents & aDimensions);
 		%feature("compactdefaultargs") SetDimensions;
 		%feature("autodoc", "	:param aDimensions:
 	:type aDimensions: Handle_StepBasic_DimensionalExponents &
@@ -7952,7 +5940,7 @@ class StepBasic_NamedUnit : public MMgt_TShared {
 %}
 
 %nodefaultctor Handle_StepBasic_NamedUnit;
-class Handle_StepBasic_NamedUnit : public Handle_MMgt_TShared {
+class Handle_StepBasic_NamedUnit : public Handle_Standard_Transient {
 
     public:
         // constructors
@@ -7964,19 +5952,20 @@ class Handle_StepBasic_NamedUnit : public Handle_MMgt_TShared {
         static const Handle_StepBasic_NamedUnit DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_StepBasic_NamedUnit {
     StepBasic_NamedUnit* _get_reference() {
-    return (StepBasic_NamedUnit*)$self->Access();
+    return (StepBasic_NamedUnit*)$self->get();
     }
 };
 
 %extend Handle_StepBasic_NamedUnit {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend StepBasic_NamedUnit {
@@ -7985,7 +5974,7 @@ class Handle_StepBasic_NamedUnit : public Handle_MMgt_TShared {
 	}
 };
 %nodefaultctor StepBasic_ObjectRole;
-class StepBasic_ObjectRole : public MMgt_TShared {
+class StepBasic_ObjectRole : public Standard_Transient {
 	public:
 		%feature("compactdefaultargs") StepBasic_ObjectRole;
 		%feature("autodoc", "	* Empty constructor
@@ -7994,7 +5983,7 @@ class StepBasic_ObjectRole : public MMgt_TShared {
 ") StepBasic_ObjectRole;
 		 StepBasic_ObjectRole ();
 		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	* Initialize all fields (own and inherited)
+		%feature("autodoc", "	* Initialize all fields --own and inherited--
 
 	:param aName:
 	:type aName: Handle_TCollection_HAsciiString &
@@ -8061,7 +6050,7 @@ class StepBasic_ObjectRole : public MMgt_TShared {
 %}
 
 %nodefaultctor Handle_StepBasic_ObjectRole;
-class Handle_StepBasic_ObjectRole : public Handle_MMgt_TShared {
+class Handle_StepBasic_ObjectRole : public Handle_Standard_Transient {
 
     public:
         // constructors
@@ -8073,19 +6062,20 @@ class Handle_StepBasic_ObjectRole : public Handle_MMgt_TShared {
         static const Handle_StepBasic_ObjectRole DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_StepBasic_ObjectRole {
     StepBasic_ObjectRole* _get_reference() {
-    return (StepBasic_ObjectRole*)$self->Access();
+    return (StepBasic_ObjectRole*)$self->get();
     }
 };
 
 %extend Handle_StepBasic_ObjectRole {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend StepBasic_ObjectRole {
@@ -8094,7 +6084,7 @@ class Handle_StepBasic_ObjectRole : public Handle_MMgt_TShared {
 	}
 };
 %nodefaultctor StepBasic_Organization;
-class StepBasic_Organization : public MMgt_TShared {
+class StepBasic_Organization : public Standard_Transient {
 	public:
 		%feature("compactdefaultargs") StepBasic_Organization;
 		%feature("autodoc", "	* Returns a Organization
@@ -8111,9 +6101,9 @@ class StepBasic_Organization : public MMgt_TShared {
 	:type aName: Handle_TCollection_HAsciiString &
 	:param aDescription:
 	:type aDescription: Handle_TCollection_HAsciiString &
-	:rtype: void
+	:rtype: None
 ") Init;
-		virtual void Init (const Standard_Boolean hasAid,const Handle_TCollection_HAsciiString & aId,const Handle_TCollection_HAsciiString & aName,const Handle_TCollection_HAsciiString & aDescription);
+		void Init (const Standard_Boolean hasAid,const Handle_TCollection_HAsciiString & aId,const Handle_TCollection_HAsciiString & aName,const Handle_TCollection_HAsciiString & aDescription);
 		%feature("compactdefaultargs") SetId;
 		%feature("autodoc", "	:param aId:
 	:type aId: Handle_TCollection_HAsciiString &
@@ -8174,7 +6164,7 @@ class StepBasic_Organization : public MMgt_TShared {
 %}
 
 %nodefaultctor Handle_StepBasic_Organization;
-class Handle_StepBasic_Organization : public Handle_MMgt_TShared {
+class Handle_StepBasic_Organization : public Handle_Standard_Transient {
 
     public:
         // constructors
@@ -8186,19 +6176,20 @@ class Handle_StepBasic_Organization : public Handle_MMgt_TShared {
         static const Handle_StepBasic_Organization DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_StepBasic_Organization {
     StepBasic_Organization* _get_reference() {
-    return (StepBasic_Organization*)$self->Access();
+    return (StepBasic_Organization*)$self->get();
     }
 };
 
 %extend Handle_StepBasic_Organization {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend StepBasic_Organization {
@@ -8207,16 +6198,16 @@ class Handle_StepBasic_Organization : public Handle_MMgt_TShared {
 	}
 };
 %nodefaultctor StepBasic_OrganizationAssignment;
-class StepBasic_OrganizationAssignment : public MMgt_TShared {
+class StepBasic_OrganizationAssignment : public Standard_Transient {
 	public:
 		%feature("compactdefaultargs") Init;
 		%feature("autodoc", "	:param aAssignedOrganization:
 	:type aAssignedOrganization: Handle_StepBasic_Organization &
 	:param aRole:
 	:type aRole: Handle_StepBasic_OrganizationRole &
-	:rtype: void
+	:rtype: None
 ") Init;
-		virtual void Init (const Handle_StepBasic_Organization & aAssignedOrganization,const Handle_StepBasic_OrganizationRole & aRole);
+		void Init (const Handle_StepBasic_Organization & aAssignedOrganization,const Handle_StepBasic_OrganizationRole & aRole);
 		%feature("compactdefaultargs") SetAssignedOrganization;
 		%feature("autodoc", "	:param aAssignedOrganization:
 	:type aAssignedOrganization: Handle_StepBasic_Organization &
@@ -8259,7 +6250,7 @@ class StepBasic_OrganizationAssignment : public MMgt_TShared {
 %}
 
 %nodefaultctor Handle_StepBasic_OrganizationAssignment;
-class Handle_StepBasic_OrganizationAssignment : public Handle_MMgt_TShared {
+class Handle_StepBasic_OrganizationAssignment : public Handle_Standard_Transient {
 
     public:
         // constructors
@@ -8271,19 +6262,20 @@ class Handle_StepBasic_OrganizationAssignment : public Handle_MMgt_TShared {
         static const Handle_StepBasic_OrganizationAssignment DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_StepBasic_OrganizationAssignment {
     StepBasic_OrganizationAssignment* _get_reference() {
-    return (StepBasic_OrganizationAssignment*)$self->Access();
+    return (StepBasic_OrganizationAssignment*)$self->get();
     }
 };
 
 %extend Handle_StepBasic_OrganizationAssignment {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend StepBasic_OrganizationAssignment {
@@ -8292,7 +6284,7 @@ class Handle_StepBasic_OrganizationAssignment : public Handle_MMgt_TShared {
 	}
 };
 %nodefaultctor StepBasic_OrganizationRole;
-class StepBasic_OrganizationRole : public MMgt_TShared {
+class StepBasic_OrganizationRole : public Standard_Transient {
 	public:
 		%feature("compactdefaultargs") StepBasic_OrganizationRole;
 		%feature("autodoc", "	* Returns a OrganizationRole
@@ -8303,9 +6295,9 @@ class StepBasic_OrganizationRole : public MMgt_TShared {
 		%feature("compactdefaultargs") Init;
 		%feature("autodoc", "	:param aName:
 	:type aName: Handle_TCollection_HAsciiString &
-	:rtype: void
+	:rtype: None
 ") Init;
-		virtual void Init (const Handle_TCollection_HAsciiString & aName);
+		void Init (const Handle_TCollection_HAsciiString & aName);
 		%feature("compactdefaultargs") SetName;
 		%feature("autodoc", "	:param aName:
 	:type aName: Handle_TCollection_HAsciiString &
@@ -8338,7 +6330,7 @@ class StepBasic_OrganizationRole : public MMgt_TShared {
 %}
 
 %nodefaultctor Handle_StepBasic_OrganizationRole;
-class Handle_StepBasic_OrganizationRole : public Handle_MMgt_TShared {
+class Handle_StepBasic_OrganizationRole : public Handle_Standard_Transient {
 
     public:
         // constructors
@@ -8350,19 +6342,20 @@ class Handle_StepBasic_OrganizationRole : public Handle_MMgt_TShared {
         static const Handle_StepBasic_OrganizationRole DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_StepBasic_OrganizationRole {
     StepBasic_OrganizationRole* _get_reference() {
-    return (StepBasic_OrganizationRole*)$self->Access();
+    return (StepBasic_OrganizationRole*)$self->get();
     }
 };
 
 %extend Handle_StepBasic_OrganizationRole {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend StepBasic_OrganizationRole {
@@ -8371,7 +6364,7 @@ class Handle_StepBasic_OrganizationRole : public Handle_MMgt_TShared {
 	}
 };
 %nodefaultctor StepBasic_Person;
-class StepBasic_Person : public MMgt_TShared {
+class StepBasic_Person : public Standard_Transient {
 	public:
 		%feature("compactdefaultargs") StepBasic_Person;
 		%feature("autodoc", "	* Returns a Person
@@ -8402,9 +6395,9 @@ class StepBasic_Person : public MMgt_TShared {
 	:type hasAsuffixTitles: bool
 	:param aSuffixTitles:
 	:type aSuffixTitles: Handle_Interface_HArray1OfHAsciiString &
-	:rtype: void
+	:rtype: None
 ") Init;
-		virtual void Init (const Handle_TCollection_HAsciiString & aId,const Standard_Boolean hasAlastName,const Handle_TCollection_HAsciiString & aLastName,const Standard_Boolean hasAfirstName,const Handle_TCollection_HAsciiString & aFirstName,const Standard_Boolean hasAmiddleNames,const Handle_Interface_HArray1OfHAsciiString & aMiddleNames,const Standard_Boolean hasAprefixTitles,const Handle_Interface_HArray1OfHAsciiString & aPrefixTitles,const Standard_Boolean hasAsuffixTitles,const Handle_Interface_HArray1OfHAsciiString & aSuffixTitles);
+		void Init (const Handle_TCollection_HAsciiString & aId,const Standard_Boolean hasAlastName,const Handle_TCollection_HAsciiString & aLastName,const Standard_Boolean hasAfirstName,const Handle_TCollection_HAsciiString & aFirstName,const Standard_Boolean hasAmiddleNames,const Handle_Interface_HArray1OfHAsciiString & aMiddleNames,const Standard_Boolean hasAprefixTitles,const Handle_Interface_HArray1OfHAsciiString & aPrefixTitles,const Standard_Boolean hasAsuffixTitles,const Handle_Interface_HArray1OfHAsciiString & aSuffixTitles);
 		%feature("compactdefaultargs") SetId;
 		%feature("autodoc", "	:param aId:
 	:type aId: Handle_TCollection_HAsciiString &
@@ -8557,7 +6550,7 @@ class StepBasic_Person : public MMgt_TShared {
 %}
 
 %nodefaultctor Handle_StepBasic_Person;
-class Handle_StepBasic_Person : public Handle_MMgt_TShared {
+class Handle_StepBasic_Person : public Handle_Standard_Transient {
 
     public:
         // constructors
@@ -8569,19 +6562,20 @@ class Handle_StepBasic_Person : public Handle_MMgt_TShared {
         static const Handle_StepBasic_Person DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_StepBasic_Person {
     StepBasic_Person* _get_reference() {
-    return (StepBasic_Person*)$self->Access();
+    return (StepBasic_Person*)$self->get();
     }
 };
 
 %extend Handle_StepBasic_Person {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend StepBasic_Person {
@@ -8590,7 +6584,7 @@ class Handle_StepBasic_Person : public Handle_MMgt_TShared {
 	}
 };
 %nodefaultctor StepBasic_PersonAndOrganization;
-class StepBasic_PersonAndOrganization : public MMgt_TShared {
+class StepBasic_PersonAndOrganization : public Standard_Transient {
 	public:
 		%feature("compactdefaultargs") StepBasic_PersonAndOrganization;
 		%feature("autodoc", "	* Returns a PersonAndOrganization
@@ -8603,9 +6597,9 @@ class StepBasic_PersonAndOrganization : public MMgt_TShared {
 	:type aThePerson: Handle_StepBasic_Person &
 	:param aTheOrganization:
 	:type aTheOrganization: Handle_StepBasic_Organization &
-	:rtype: void
+	:rtype: None
 ") Init;
-		virtual void Init (const Handle_StepBasic_Person & aThePerson,const Handle_StepBasic_Organization & aTheOrganization);
+		void Init (const Handle_StepBasic_Person & aThePerson,const Handle_StepBasic_Organization & aTheOrganization);
 		%feature("compactdefaultargs") SetThePerson;
 		%feature("autodoc", "	:param aThePerson:
 	:type aThePerson: Handle_StepBasic_Person &
@@ -8648,7 +6642,7 @@ class StepBasic_PersonAndOrganization : public MMgt_TShared {
 %}
 
 %nodefaultctor Handle_StepBasic_PersonAndOrganization;
-class Handle_StepBasic_PersonAndOrganization : public Handle_MMgt_TShared {
+class Handle_StepBasic_PersonAndOrganization : public Handle_Standard_Transient {
 
     public:
         // constructors
@@ -8660,19 +6654,20 @@ class Handle_StepBasic_PersonAndOrganization : public Handle_MMgt_TShared {
         static const Handle_StepBasic_PersonAndOrganization DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_StepBasic_PersonAndOrganization {
     StepBasic_PersonAndOrganization* _get_reference() {
-    return (StepBasic_PersonAndOrganization*)$self->Access();
+    return (StepBasic_PersonAndOrganization*)$self->get();
     }
 };
 
 %extend Handle_StepBasic_PersonAndOrganization {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend StepBasic_PersonAndOrganization {
@@ -8681,16 +6676,16 @@ class Handle_StepBasic_PersonAndOrganization : public Handle_MMgt_TShared {
 	}
 };
 %nodefaultctor StepBasic_PersonAndOrganizationAssignment;
-class StepBasic_PersonAndOrganizationAssignment : public MMgt_TShared {
+class StepBasic_PersonAndOrganizationAssignment : public Standard_Transient {
 	public:
 		%feature("compactdefaultargs") Init;
 		%feature("autodoc", "	:param aAssignedPersonAndOrganization:
 	:type aAssignedPersonAndOrganization: Handle_StepBasic_PersonAndOrganization &
 	:param aRole:
 	:type aRole: Handle_StepBasic_PersonAndOrganizationRole &
-	:rtype: void
+	:rtype: None
 ") Init;
-		virtual void Init (const Handle_StepBasic_PersonAndOrganization & aAssignedPersonAndOrganization,const Handle_StepBasic_PersonAndOrganizationRole & aRole);
+		void Init (const Handle_StepBasic_PersonAndOrganization & aAssignedPersonAndOrganization,const Handle_StepBasic_PersonAndOrganizationRole & aRole);
 		%feature("compactdefaultargs") SetAssignedPersonAndOrganization;
 		%feature("autodoc", "	:param aAssignedPersonAndOrganization:
 	:type aAssignedPersonAndOrganization: Handle_StepBasic_PersonAndOrganization &
@@ -8733,7 +6728,7 @@ class StepBasic_PersonAndOrganizationAssignment : public MMgt_TShared {
 %}
 
 %nodefaultctor Handle_StepBasic_PersonAndOrganizationAssignment;
-class Handle_StepBasic_PersonAndOrganizationAssignment : public Handle_MMgt_TShared {
+class Handle_StepBasic_PersonAndOrganizationAssignment : public Handle_Standard_Transient {
 
     public:
         // constructors
@@ -8745,19 +6740,20 @@ class Handle_StepBasic_PersonAndOrganizationAssignment : public Handle_MMgt_TSha
         static const Handle_StepBasic_PersonAndOrganizationAssignment DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_StepBasic_PersonAndOrganizationAssignment {
     StepBasic_PersonAndOrganizationAssignment* _get_reference() {
-    return (StepBasic_PersonAndOrganizationAssignment*)$self->Access();
+    return (StepBasic_PersonAndOrganizationAssignment*)$self->get();
     }
 };
 
 %extend Handle_StepBasic_PersonAndOrganizationAssignment {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend StepBasic_PersonAndOrganizationAssignment {
@@ -8766,7 +6762,7 @@ class Handle_StepBasic_PersonAndOrganizationAssignment : public Handle_MMgt_TSha
 	}
 };
 %nodefaultctor StepBasic_PersonAndOrganizationRole;
-class StepBasic_PersonAndOrganizationRole : public MMgt_TShared {
+class StepBasic_PersonAndOrganizationRole : public Standard_Transient {
 	public:
 		%feature("compactdefaultargs") StepBasic_PersonAndOrganizationRole;
 		%feature("autodoc", "	* Returns a PersonAndOrganizationRole
@@ -8777,9 +6773,9 @@ class StepBasic_PersonAndOrganizationRole : public MMgt_TShared {
 		%feature("compactdefaultargs") Init;
 		%feature("autodoc", "	:param aName:
 	:type aName: Handle_TCollection_HAsciiString &
-	:rtype: void
+	:rtype: None
 ") Init;
-		virtual void Init (const Handle_TCollection_HAsciiString & aName);
+		void Init (const Handle_TCollection_HAsciiString & aName);
 		%feature("compactdefaultargs") SetName;
 		%feature("autodoc", "	:param aName:
 	:type aName: Handle_TCollection_HAsciiString &
@@ -8812,7 +6808,7 @@ class StepBasic_PersonAndOrganizationRole : public MMgt_TShared {
 %}
 
 %nodefaultctor Handle_StepBasic_PersonAndOrganizationRole;
-class Handle_StepBasic_PersonAndOrganizationRole : public Handle_MMgt_TShared {
+class Handle_StepBasic_PersonAndOrganizationRole : public Handle_Standard_Transient {
 
     public:
         // constructors
@@ -8824,19 +6820,20 @@ class Handle_StepBasic_PersonAndOrganizationRole : public Handle_MMgt_TShared {
         static const Handle_StepBasic_PersonAndOrganizationRole DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_StepBasic_PersonAndOrganizationRole {
     StepBasic_PersonAndOrganizationRole* _get_reference() {
-    return (StepBasic_PersonAndOrganizationRole*)$self->Access();
+    return (StepBasic_PersonAndOrganizationRole*)$self->get();
     }
 };
 
 %extend Handle_StepBasic_PersonAndOrganizationRole {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend StepBasic_PersonAndOrganizationRole {
@@ -8862,19 +6859,19 @@ class StepBasic_PersonOrganizationSelect : public StepData_SelectType {
 ") CaseNum;
 		Standard_Integer CaseNum (const Handle_Standard_Transient & ent);
 		%feature("compactdefaultargs") Person;
-		%feature("autodoc", "	* returns Value as a Person (Null if another type)
+		%feature("autodoc", "	* returns Value as a Person --Null if another type--
 
 	:rtype: Handle_StepBasic_Person
 ") Person;
 		Handle_StepBasic_Person Person ();
 		%feature("compactdefaultargs") Organization;
-		%feature("autodoc", "	* returns Value as a Organization (Null if another type)
+		%feature("autodoc", "	* returns Value as a Organization --Null if another type--
 
 	:rtype: Handle_StepBasic_Organization
 ") Organization;
 		Handle_StepBasic_Organization Organization ();
 		%feature("compactdefaultargs") PersonAndOrganization;
-		%feature("autodoc", "	* returns Value as a PersonAndOrganization (Null if another type)
+		%feature("autodoc", "	* returns Value as a PersonAndOrganization --Null if another type--
 
 	:rtype: Handle_StepBasic_PersonAndOrganization
 ") PersonAndOrganization;
@@ -8888,7 +6885,7 @@ class StepBasic_PersonOrganizationSelect : public StepData_SelectType {
 	}
 };
 %nodefaultctor StepBasic_Product;
-class StepBasic_Product : public MMgt_TShared {
+class StepBasic_Product : public Standard_Transient {
 	public:
 		%feature("compactdefaultargs") StepBasic_Product;
 		%feature("autodoc", "	* Returns a Product
@@ -8905,9 +6902,9 @@ class StepBasic_Product : public MMgt_TShared {
 	:type aDescription: Handle_TCollection_HAsciiString &
 	:param aFrameOfReference:
 	:type aFrameOfReference: Handle_StepBasic_HArray1OfProductContext &
-	:rtype: void
+	:rtype: None
 ") Init;
-		virtual void Init (const Handle_TCollection_HAsciiString & aId,const Handle_TCollection_HAsciiString & aName,const Handle_TCollection_HAsciiString & aDescription,const Handle_StepBasic_HArray1OfProductContext & aFrameOfReference);
+		void Init (const Handle_TCollection_HAsciiString & aId,const Handle_TCollection_HAsciiString & aName,const Handle_TCollection_HAsciiString & aDescription,const Handle_StepBasic_HArray1OfProductContext & aFrameOfReference);
 		%feature("compactdefaultargs") SetId;
 		%feature("autodoc", "	:param aId:
 	:type aId: Handle_TCollection_HAsciiString &
@@ -8980,7 +6977,7 @@ class StepBasic_Product : public MMgt_TShared {
 %}
 
 %nodefaultctor Handle_StepBasic_Product;
-class Handle_StepBasic_Product : public Handle_MMgt_TShared {
+class Handle_StepBasic_Product : public Handle_Standard_Transient {
 
     public:
         // constructors
@@ -8992,19 +6989,20 @@ class Handle_StepBasic_Product : public Handle_MMgt_TShared {
         static const Handle_StepBasic_Product DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_StepBasic_Product {
     StepBasic_Product* _get_reference() {
-    return (StepBasic_Product*)$self->Access();
+    return (StepBasic_Product*)$self->get();
     }
 };
 
 %extend Handle_StepBasic_Product {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend StepBasic_Product {
@@ -9013,7 +7011,7 @@ class Handle_StepBasic_Product : public Handle_MMgt_TShared {
 	}
 };
 %nodefaultctor StepBasic_ProductCategory;
-class StepBasic_ProductCategory : public MMgt_TShared {
+class StepBasic_ProductCategory : public Standard_Transient {
 	public:
 		%feature("compactdefaultargs") StepBasic_ProductCategory;
 		%feature("autodoc", "	* Returns a ProductCategory
@@ -9028,9 +7026,9 @@ class StepBasic_ProductCategory : public MMgt_TShared {
 	:type hasAdescription: bool
 	:param aDescription:
 	:type aDescription: Handle_TCollection_HAsciiString &
-	:rtype: void
+	:rtype: None
 ") Init;
-		virtual void Init (const Handle_TCollection_HAsciiString & aName,const Standard_Boolean hasAdescription,const Handle_TCollection_HAsciiString & aDescription);
+		void Init (const Handle_TCollection_HAsciiString & aName,const Standard_Boolean hasAdescription,const Handle_TCollection_HAsciiString & aDescription);
 		%feature("compactdefaultargs") SetName;
 		%feature("autodoc", "	:param aName:
 	:type aName: Handle_TCollection_HAsciiString &
@@ -9081,7 +7079,7 @@ class StepBasic_ProductCategory : public MMgt_TShared {
 %}
 
 %nodefaultctor Handle_StepBasic_ProductCategory;
-class Handle_StepBasic_ProductCategory : public Handle_MMgt_TShared {
+class Handle_StepBasic_ProductCategory : public Handle_Standard_Transient {
 
     public:
         // constructors
@@ -9093,19 +7091,20 @@ class Handle_StepBasic_ProductCategory : public Handle_MMgt_TShared {
         static const Handle_StepBasic_ProductCategory DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_StepBasic_ProductCategory {
     StepBasic_ProductCategory* _get_reference() {
-    return (StepBasic_ProductCategory*)$self->Access();
+    return (StepBasic_ProductCategory*)$self->get();
     }
 };
 
 %extend Handle_StepBasic_ProductCategory {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend StepBasic_ProductCategory {
@@ -9114,7 +7113,7 @@ class Handle_StepBasic_ProductCategory : public Handle_MMgt_TShared {
 	}
 };
 %nodefaultctor StepBasic_ProductCategoryRelationship;
-class StepBasic_ProductCategoryRelationship : public MMgt_TShared {
+class StepBasic_ProductCategoryRelationship : public Standard_Transient {
 	public:
 		%feature("compactdefaultargs") StepBasic_ProductCategoryRelationship;
 		%feature("autodoc", "	* Empty constructor
@@ -9123,7 +7122,7 @@ class StepBasic_ProductCategoryRelationship : public MMgt_TShared {
 ") StepBasic_ProductCategoryRelationship;
 		 StepBasic_ProductCategoryRelationship ();
 		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	* Initialize all fields (own and inherited)
+		%feature("autodoc", "	* Initialize all fields --own and inherited--
 
 	:param aName:
 	:type aName: Handle_TCollection_HAsciiString &
@@ -9222,7 +7221,7 @@ class StepBasic_ProductCategoryRelationship : public MMgt_TShared {
 %}
 
 %nodefaultctor Handle_StepBasic_ProductCategoryRelationship;
-class Handle_StepBasic_ProductCategoryRelationship : public Handle_MMgt_TShared {
+class Handle_StepBasic_ProductCategoryRelationship : public Handle_Standard_Transient {
 
     public:
         // constructors
@@ -9234,19 +7233,20 @@ class Handle_StepBasic_ProductCategoryRelationship : public Handle_MMgt_TShared 
         static const Handle_StepBasic_ProductCategoryRelationship DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_StepBasic_ProductCategoryRelationship {
     StepBasic_ProductCategoryRelationship* _get_reference() {
-    return (StepBasic_ProductCategoryRelationship*)$self->Access();
+    return (StepBasic_ProductCategoryRelationship*)$self->get();
     }
 };
 
 %extend Handle_StepBasic_ProductCategoryRelationship {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend StepBasic_ProductCategoryRelationship {
@@ -9255,7 +7255,7 @@ class Handle_StepBasic_ProductCategoryRelationship : public Handle_MMgt_TShared 
 	}
 };
 %nodefaultctor StepBasic_ProductDefinition;
-class StepBasic_ProductDefinition : public MMgt_TShared {
+class StepBasic_ProductDefinition : public Standard_Transient {
 	public:
 		%feature("compactdefaultargs") StepBasic_ProductDefinition;
 		%feature("autodoc", "	* Returns a ProductDefinition
@@ -9272,9 +7272,9 @@ class StepBasic_ProductDefinition : public MMgt_TShared {
 	:type aFormation: Handle_StepBasic_ProductDefinitionFormation &
 	:param aFrameOfReference:
 	:type aFrameOfReference: Handle_StepBasic_ProductDefinitionContext &
-	:rtype: void
+	:rtype: None
 ") Init;
-		virtual void Init (const Handle_TCollection_HAsciiString & aId,const Handle_TCollection_HAsciiString & aDescription,const Handle_StepBasic_ProductDefinitionFormation & aFormation,const Handle_StepBasic_ProductDefinitionContext & aFrameOfReference);
+		void Init (const Handle_TCollection_HAsciiString & aId,const Handle_TCollection_HAsciiString & aDescription,const Handle_StepBasic_ProductDefinitionFormation & aFormation,const Handle_StepBasic_ProductDefinitionContext & aFrameOfReference);
 		%feature("compactdefaultargs") SetId;
 		%feature("autodoc", "	:param aId:
 	:type aId: Handle_TCollection_HAsciiString &
@@ -9337,7 +7337,7 @@ class StepBasic_ProductDefinition : public MMgt_TShared {
 %}
 
 %nodefaultctor Handle_StepBasic_ProductDefinition;
-class Handle_StepBasic_ProductDefinition : public Handle_MMgt_TShared {
+class Handle_StepBasic_ProductDefinition : public Handle_Standard_Transient {
 
     public:
         // constructors
@@ -9349,19 +7349,20 @@ class Handle_StepBasic_ProductDefinition : public Handle_MMgt_TShared {
         static const Handle_StepBasic_ProductDefinition DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_StepBasic_ProductDefinition {
     StepBasic_ProductDefinition* _get_reference() {
-    return (StepBasic_ProductDefinition*)$self->Access();
+    return (StepBasic_ProductDefinition*)$self->get();
     }
 };
 
 %extend Handle_StepBasic_ProductDefinition {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend StepBasic_ProductDefinition {
@@ -9370,7 +7371,7 @@ class Handle_StepBasic_ProductDefinition : public Handle_MMgt_TShared {
 	}
 };
 %nodefaultctor StepBasic_ProductDefinitionFormation;
-class StepBasic_ProductDefinitionFormation : public MMgt_TShared {
+class StepBasic_ProductDefinitionFormation : public Standard_Transient {
 	public:
 		%feature("compactdefaultargs") StepBasic_ProductDefinitionFormation;
 		%feature("autodoc", "	* Returns a ProductDefinitionFormation
@@ -9385,9 +7386,9 @@ class StepBasic_ProductDefinitionFormation : public MMgt_TShared {
 	:type aDescription: Handle_TCollection_HAsciiString &
 	:param aOfProduct:
 	:type aOfProduct: Handle_StepBasic_Product &
-	:rtype: void
+	:rtype: None
 ") Init;
-		virtual void Init (const Handle_TCollection_HAsciiString & aId,const Handle_TCollection_HAsciiString & aDescription,const Handle_StepBasic_Product & aOfProduct);
+		void Init (const Handle_TCollection_HAsciiString & aId,const Handle_TCollection_HAsciiString & aDescription,const Handle_StepBasic_Product & aOfProduct);
 		%feature("compactdefaultargs") SetId;
 		%feature("autodoc", "	:param aId:
 	:type aId: Handle_TCollection_HAsciiString &
@@ -9440,7 +7441,7 @@ class StepBasic_ProductDefinitionFormation : public MMgt_TShared {
 %}
 
 %nodefaultctor Handle_StepBasic_ProductDefinitionFormation;
-class Handle_StepBasic_ProductDefinitionFormation : public Handle_MMgt_TShared {
+class Handle_StepBasic_ProductDefinitionFormation : public Handle_Standard_Transient {
 
     public:
         // constructors
@@ -9452,19 +7453,20 @@ class Handle_StepBasic_ProductDefinitionFormation : public Handle_MMgt_TShared {
         static const Handle_StepBasic_ProductDefinitionFormation DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_StepBasic_ProductDefinitionFormation {
     StepBasic_ProductDefinitionFormation* _get_reference() {
-    return (StepBasic_ProductDefinitionFormation*)$self->Access();
+    return (StepBasic_ProductDefinitionFormation*)$self->get();
     }
 };
 
 %extend Handle_StepBasic_ProductDefinitionFormation {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend StepBasic_ProductDefinitionFormation {
@@ -9473,7 +7475,7 @@ class Handle_StepBasic_ProductDefinitionFormation : public Handle_MMgt_TShared {
 	}
 };
 %nodefaultctor StepBasic_ProductDefinitionFormationRelationship;
-class StepBasic_ProductDefinitionFormationRelationship : public MMgt_TShared {
+class StepBasic_ProductDefinitionFormationRelationship : public Standard_Transient {
 	public:
 		%feature("compactdefaultargs") StepBasic_ProductDefinitionFormationRelationship;
 		%feature("autodoc", "	* Empty constructor
@@ -9482,7 +7484,7 @@ class StepBasic_ProductDefinitionFormationRelationship : public MMgt_TShared {
 ") StepBasic_ProductDefinitionFormationRelationship;
 		 StepBasic_ProductDefinitionFormationRelationship ();
 		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	* Initialize all fields (own and inherited)
+		%feature("autodoc", "	* Initialize all fields --own and inherited--
 
 	:param aId:
 	:type aId: Handle_TCollection_HAsciiString &
@@ -9589,7 +7591,7 @@ class StepBasic_ProductDefinitionFormationRelationship : public MMgt_TShared {
 %}
 
 %nodefaultctor Handle_StepBasic_ProductDefinitionFormationRelationship;
-class Handle_StepBasic_ProductDefinitionFormationRelationship : public Handle_MMgt_TShared {
+class Handle_StepBasic_ProductDefinitionFormationRelationship : public Handle_Standard_Transient {
 
     public:
         // constructors
@@ -9601,19 +7603,20 @@ class Handle_StepBasic_ProductDefinitionFormationRelationship : public Handle_MM
         static const Handle_StepBasic_ProductDefinitionFormationRelationship DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_StepBasic_ProductDefinitionFormationRelationship {
     StepBasic_ProductDefinitionFormationRelationship* _get_reference() {
-    return (StepBasic_ProductDefinitionFormationRelationship*)$self->Access();
+    return (StepBasic_ProductDefinitionFormationRelationship*)$self->get();
     }
 };
 
 %extend Handle_StepBasic_ProductDefinitionFormationRelationship {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend StepBasic_ProductDefinitionFormationRelationship {
@@ -9621,8 +7624,221 @@ class Handle_StepBasic_ProductDefinitionFormationRelationship : public Handle_MM
 	__repr__ = _dumps_object
 	}
 };
+%nodefaultctor StepBasic_ProductDefinitionOrReference;
+class StepBasic_ProductDefinitionOrReference : public StepData_SelectType {
+	public:
+		%feature("compactdefaultargs") StepBasic_ProductDefinitionOrReference;
+		%feature("autodoc", "	* Returns a ProductDefinitionOrReference SelectType
+
+	:rtype: None
+") StepBasic_ProductDefinitionOrReference;
+		 StepBasic_ProductDefinitionOrReference ();
+		%feature("compactdefaultargs") CaseNum;
+		%feature("autodoc", "	* Recognizes a ProductDefinitionOrReference Kind Entity that is : 1 -> ProductDefinition 2 -> ProductDefinitionReference 3 -> ProductDefinitionReferenceWithLocalPresentation 0 else
+
+	:param ent:
+	:type ent: Handle_Standard_Transient &
+	:rtype: int
+") CaseNum;
+		Standard_Integer CaseNum (const Handle_Standard_Transient & ent);
+		%feature("compactdefaultargs") ProductDefinition;
+		%feature("autodoc", "	* returns Value as a ProductDefinition --Null if another type--
+
+	:rtype: Handle_StepBasic_ProductDefinition
+") ProductDefinition;
+		Handle_StepBasic_ProductDefinition ProductDefinition ();
+		%feature("compactdefaultargs") ProductDefinitionReference;
+		%feature("autodoc", "	* returns Value as a ProductDefinitionReference --Null if another type--
+
+	:rtype: Handle_StepBasic_ProductDefinitionReference
+") ProductDefinitionReference;
+		Handle_StepBasic_ProductDefinitionReference ProductDefinitionReference ();
+		%feature("compactdefaultargs") ProductDefinitionReferenceWithLocalRepresentation;
+		%feature("autodoc", "	* returns Value as a ProductDefinitionReferenceWithLocalRepresentation --Null if another type--
+
+	:rtype: Handle_StepBasic_ProductDefinitionReferenceWithLocalRepresentation
+") ProductDefinitionReferenceWithLocalRepresentation;
+		Handle_StepBasic_ProductDefinitionReferenceWithLocalRepresentation ProductDefinitionReferenceWithLocalRepresentation ();
+};
+
+
+%extend StepBasic_ProductDefinitionOrReference {
+	%pythoncode {
+	__repr__ = _dumps_object
+	}
+};
+%nodefaultctor StepBasic_ProductDefinitionReference;
+class StepBasic_ProductDefinitionReference : public Standard_Transient {
+	public:
+		%feature("compactdefaultargs") StepBasic_ProductDefinitionReference;
+		%feature("autodoc", "	* Empty constructor
+
+	:rtype: None
+") StepBasic_ProductDefinitionReference;
+		 StepBasic_ProductDefinitionReference ();
+		%feature("compactdefaultargs") Init;
+		%feature("autodoc", "	* Initialize all fields --own and inherited--
+
+	:param theSource:
+	:type theSource: Handle_StepBasic_ExternalSource &
+	:param theProductId:
+	:type theProductId: Handle_TCollection_HAsciiString &
+	:param theProductDefinitionFormationId:
+	:type theProductDefinitionFormationId: Handle_TCollection_HAsciiString &
+	:param theProductDefinitionId:
+	:type theProductDefinitionId: Handle_TCollection_HAsciiString &
+	:param theIdOwningOrganizationName:
+	:type theIdOwningOrganizationName: Handle_TCollection_HAsciiString &
+	:rtype: None
+") Init;
+		void Init (const Handle_StepBasic_ExternalSource & theSource,const Handle_TCollection_HAsciiString & theProductId,const Handle_TCollection_HAsciiString & theProductDefinitionFormationId,const Handle_TCollection_HAsciiString & theProductDefinitionId,const Handle_TCollection_HAsciiString & theIdOwningOrganizationName);
+		%feature("compactdefaultargs") Init;
+		%feature("autodoc", "	* Initialize all fields --own and inherited--
+
+	:param theSource:
+	:type theSource: Handle_StepBasic_ExternalSource &
+	:param theProductId:
+	:type theProductId: Handle_TCollection_HAsciiString &
+	:param theProductDefinitionFormationId:
+	:type theProductDefinitionFormationId: Handle_TCollection_HAsciiString &
+	:param theProductDefinitionId:
+	:type theProductDefinitionId: Handle_TCollection_HAsciiString &
+	:rtype: None
+") Init;
+		void Init (const Handle_StepBasic_ExternalSource & theSource,const Handle_TCollection_HAsciiString & theProductId,const Handle_TCollection_HAsciiString & theProductDefinitionFormationId,const Handle_TCollection_HAsciiString & theProductDefinitionId);
+		%feature("compactdefaultargs") Source;
+		%feature("autodoc", "	* Returns field Source
+
+	:rtype: inline Handle_StepBasic_ExternalSource
+") Source;
+		inline Handle_StepBasic_ExternalSource Source ();
+		%feature("compactdefaultargs") SetSource;
+		%feature("autodoc", "	* Set field Source
+
+	:param theSource:
+	:type theSource: Handle_StepBasic_ExternalSource &
+	:rtype: inline void
+") SetSource;
+		inline void SetSource (const Handle_StepBasic_ExternalSource & theSource);
+		%feature("compactdefaultargs") ProductId;
+		%feature("autodoc", "	* Returns field ProductId
+
+	:rtype: inline Handle_TCollection_HAsciiString
+") ProductId;
+		inline Handle_TCollection_HAsciiString ProductId ();
+		%feature("compactdefaultargs") SetProductId;
+		%feature("autodoc", "	* Set field ProductId
+
+	:param theProductId:
+	:type theProductId: Handle_TCollection_HAsciiString &
+	:rtype: inline void
+") SetProductId;
+		inline void SetProductId (const Handle_TCollection_HAsciiString & theProductId);
+		%feature("compactdefaultargs") ProductDefinitionFormationId;
+		%feature("autodoc", "	* Returns field ProductDefinitionFormationId
+
+	:rtype: inline Handle_TCollection_HAsciiString
+") ProductDefinitionFormationId;
+		inline Handle_TCollection_HAsciiString ProductDefinitionFormationId ();
+		%feature("compactdefaultargs") SetProductDefinitionFormationId;
+		%feature("autodoc", "	* Set field ProductDefinitionFormationId
+
+	:param theProductDefinitionFormationId:
+	:type theProductDefinitionFormationId: Handle_TCollection_HAsciiString &
+	:rtype: inline void
+") SetProductDefinitionFormationId;
+		inline void SetProductDefinitionFormationId (const Handle_TCollection_HAsciiString & theProductDefinitionFormationId);
+		%feature("compactdefaultargs") ProductDefinitionId;
+		%feature("autodoc", "	* Returns field ProductDefinitionId
+
+	:rtype: inline Handle_TCollection_HAsciiString
+") ProductDefinitionId;
+		inline Handle_TCollection_HAsciiString ProductDefinitionId ();
+		%feature("compactdefaultargs") SetProductDefinitionId;
+		%feature("autodoc", "	* Set field ProductDefinitionId
+
+	:param theProductDefinitionId:
+	:type theProductDefinitionId: Handle_TCollection_HAsciiString &
+	:rtype: inline void
+") SetProductDefinitionId;
+		inline void SetProductDefinitionId (const Handle_TCollection_HAsciiString & theProductDefinitionId);
+		%feature("compactdefaultargs") IdOwningOrganizationName;
+		%feature("autodoc", "	* Returns field IdOwningOrganizationName
+
+	:rtype: inline Handle_TCollection_HAsciiString
+") IdOwningOrganizationName;
+		inline Handle_TCollection_HAsciiString IdOwningOrganizationName ();
+		%feature("compactdefaultargs") SetIdOwningOrganizationName;
+		%feature("autodoc", "	* Set field IdOwningOrganizationName
+
+	:param theIdOwningOrganizationName:
+	:type theIdOwningOrganizationName: Handle_TCollection_HAsciiString &
+	:rtype: inline void
+") SetIdOwningOrganizationName;
+		inline void SetIdOwningOrganizationName (const Handle_TCollection_HAsciiString & theIdOwningOrganizationName);
+		%feature("compactdefaultargs") HasIdOwningOrganizationName;
+		%feature("autodoc", "	* Returns true if IdOwningOrganizationName exists
+
+	:rtype: inline bool
+") HasIdOwningOrganizationName;
+		inline Standard_Boolean HasIdOwningOrganizationName ();
+};
+
+
+%extend StepBasic_ProductDefinitionReference {
+	%pythoncode {
+		def GetHandle(self):
+		    try:
+		        return self.thisHandle
+		    except:
+		        self.thisHandle = Handle_StepBasic_ProductDefinitionReference(self)
+		        self.thisown = False
+		        return self.thisHandle
+	}
+};
+
+%pythonappend Handle_StepBasic_ProductDefinitionReference::Handle_StepBasic_ProductDefinitionReference %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
+%nodefaultctor Handle_StepBasic_ProductDefinitionReference;
+class Handle_StepBasic_ProductDefinitionReference : public Handle_Standard_Transient {
+
+    public:
+        // constructors
+        Handle_StepBasic_ProductDefinitionReference();
+        Handle_StepBasic_ProductDefinitionReference(const Handle_StepBasic_ProductDefinitionReference &aHandle);
+        Handle_StepBasic_ProductDefinitionReference(const StepBasic_ProductDefinitionReference *anItem);
+        void Nullify();
+        Standard_Boolean IsNull() const;
+        static const Handle_StepBasic_ProductDefinitionReference DownCast(const Handle_Standard_Transient &AnObject);
+
+};
+
+%extend Handle_StepBasic_ProductDefinitionReference {
+    StepBasic_ProductDefinitionReference* _get_reference() {
+    return (StepBasic_ProductDefinitionReference*)$self->get();
+    }
+};
+
+%extend Handle_StepBasic_ProductDefinitionReference {
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
+};
+
+%extend StepBasic_ProductDefinitionReference {
+	%pythoncode {
+	__repr__ = _dumps_object
+	}
+};
 %nodefaultctor StepBasic_ProductDefinitionRelationship;
-class StepBasic_ProductDefinitionRelationship : public MMgt_TShared {
+class StepBasic_ProductDefinitionRelationship : public Standard_Transient {
 	public:
 		%feature("compactdefaultargs") StepBasic_ProductDefinitionRelationship;
 		%feature("autodoc", "	* Empty constructor
@@ -9631,7 +7847,7 @@ class StepBasic_ProductDefinitionRelationship : public MMgt_TShared {
 ") StepBasic_ProductDefinitionRelationship;
 		 StepBasic_ProductDefinitionRelationship ();
 		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	* Initialize all fields (own and inherited)
+		%feature("autodoc", "	* Initialize all fields --own and inherited--
 
 	:param aId:
 	:type aId: Handle_TCollection_HAsciiString &
@@ -9648,6 +7864,24 @@ class StepBasic_ProductDefinitionRelationship : public MMgt_TShared {
 	:rtype: None
 ") Init;
 		void Init (const Handle_TCollection_HAsciiString & aId,const Handle_TCollection_HAsciiString & aName,const Standard_Boolean hasDescription,const Handle_TCollection_HAsciiString & aDescription,const Handle_StepBasic_ProductDefinition & aRelatingProductDefinition,const Handle_StepBasic_ProductDefinition & aRelatedProductDefinition);
+		%feature("compactdefaultargs") Init;
+		%feature("autodoc", "	* Initialize all fields --own and inherited--
+
+	:param aId:
+	:type aId: Handle_TCollection_HAsciiString &
+	:param aName:
+	:type aName: Handle_TCollection_HAsciiString &
+	:param hasDescription:
+	:type hasDescription: bool
+	:param aDescription:
+	:type aDescription: Handle_TCollection_HAsciiString &
+	:param aRelatingProductDefinition:
+	:type aRelatingProductDefinition: StepBasic_ProductDefinitionOrReference &
+	:param aRelatedProductDefinition:
+	:type aRelatedProductDefinition: StepBasic_ProductDefinitionOrReference &
+	:rtype: None
+") Init;
+		void Init (const Handle_TCollection_HAsciiString & aId,const Handle_TCollection_HAsciiString & aName,const Standard_Boolean hasDescription,const Handle_TCollection_HAsciiString & aDescription,const StepBasic_ProductDefinitionOrReference & aRelatingProductDefinition,const StepBasic_ProductDefinitionOrReference & aRelatedProductDefinition);
 		%feature("compactdefaultargs") Id;
 		%feature("autodoc", "	* Returns field Id
 
@@ -9702,6 +7936,12 @@ class StepBasic_ProductDefinitionRelationship : public MMgt_TShared {
 	:rtype: Handle_StepBasic_ProductDefinition
 ") RelatingProductDefinition;
 		Handle_StepBasic_ProductDefinition RelatingProductDefinition ();
+		%feature("compactdefaultargs") RelatingProductDefinitionAP242;
+		%feature("autodoc", "	* Returns field RelatingProductDefinition in AP242
+
+	:rtype: StepBasic_ProductDefinitionOrReference
+") RelatingProductDefinitionAP242;
+		StepBasic_ProductDefinitionOrReference RelatingProductDefinitionAP242 ();
 		%feature("compactdefaultargs") SetRelatingProductDefinition;
 		%feature("autodoc", "	* Set field RelatingProductDefinition
 
@@ -9710,12 +7950,26 @@ class StepBasic_ProductDefinitionRelationship : public MMgt_TShared {
 	:rtype: None
 ") SetRelatingProductDefinition;
 		void SetRelatingProductDefinition (const Handle_StepBasic_ProductDefinition & RelatingProductDefinition);
+		%feature("compactdefaultargs") SetRelatingProductDefinition;
+		%feature("autodoc", "	* Set field RelatingProductDefinition in AP242
+
+	:param RelatingProductDefinition:
+	:type RelatingProductDefinition: StepBasic_ProductDefinitionOrReference &
+	:rtype: None
+") SetRelatingProductDefinition;
+		void SetRelatingProductDefinition (const StepBasic_ProductDefinitionOrReference & RelatingProductDefinition);
 		%feature("compactdefaultargs") RelatedProductDefinition;
 		%feature("autodoc", "	* Returns field RelatedProductDefinition
 
 	:rtype: Handle_StepBasic_ProductDefinition
 ") RelatedProductDefinition;
 		Handle_StepBasic_ProductDefinition RelatedProductDefinition ();
+		%feature("compactdefaultargs") RelatedProductDefinitionAP242;
+		%feature("autodoc", "	* Returns field RelatedProductDefinition in AP242
+
+	:rtype: StepBasic_ProductDefinitionOrReference
+") RelatedProductDefinitionAP242;
+		StepBasic_ProductDefinitionOrReference RelatedProductDefinitionAP242 ();
 		%feature("compactdefaultargs") SetRelatedProductDefinition;
 		%feature("autodoc", "	* Set field RelatedProductDefinition
 
@@ -9724,6 +7978,14 @@ class StepBasic_ProductDefinitionRelationship : public MMgt_TShared {
 	:rtype: None
 ") SetRelatedProductDefinition;
 		void SetRelatedProductDefinition (const Handle_StepBasic_ProductDefinition & RelatedProductDefinition);
+		%feature("compactdefaultargs") SetRelatedProductDefinition;
+		%feature("autodoc", "	* Set field RelatedProductDefinition in AP242
+
+	:param RelatedProductDefinition:
+	:type RelatedProductDefinition: StepBasic_ProductDefinitionOrReference &
+	:rtype: None
+") SetRelatedProductDefinition;
+		void SetRelatedProductDefinition (const StepBasic_ProductDefinitionOrReference & RelatedProductDefinition);
 };
 
 
@@ -9746,7 +8008,7 @@ class StepBasic_ProductDefinitionRelationship : public MMgt_TShared {
 %}
 
 %nodefaultctor Handle_StepBasic_ProductDefinitionRelationship;
-class Handle_StepBasic_ProductDefinitionRelationship : public Handle_MMgt_TShared {
+class Handle_StepBasic_ProductDefinitionRelationship : public Handle_Standard_Transient {
 
     public:
         // constructors
@@ -9758,19 +8020,20 @@ class Handle_StepBasic_ProductDefinitionRelationship : public Handle_MMgt_TShare
         static const Handle_StepBasic_ProductDefinitionRelationship DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_StepBasic_ProductDefinitionRelationship {
     StepBasic_ProductDefinitionRelationship* _get_reference() {
-    return (StepBasic_ProductDefinitionRelationship*)$self->Access();
+    return (StepBasic_ProductDefinitionRelationship*)$self->get();
     }
 };
 
 %extend Handle_StepBasic_ProductDefinitionRelationship {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend StepBasic_ProductDefinitionRelationship {
@@ -9796,19 +8059,19 @@ class StepBasic_ProductOrFormationOrDefinition : public StepData_SelectType {
 ") CaseNum;
 		Standard_Integer CaseNum (const Handle_Standard_Transient & ent);
 		%feature("compactdefaultargs") Product;
-		%feature("autodoc", "	* Returns Value as Product (or Null if another type)
+		%feature("autodoc", "	* Returns Value as Product --or Null if another type--
 
 	:rtype: Handle_StepBasic_Product
 ") Product;
 		Handle_StepBasic_Product Product ();
 		%feature("compactdefaultargs") ProductDefinitionFormation;
-		%feature("autodoc", "	* Returns Value as ProductDefinitionFormation (or Null if another type)
+		%feature("autodoc", "	* Returns Value as ProductDefinitionFormation --or Null if another type--
 
 	:rtype: Handle_StepBasic_ProductDefinitionFormation
 ") ProductDefinitionFormation;
 		Handle_StepBasic_ProductDefinitionFormation ProductDefinitionFormation ();
 		%feature("compactdefaultargs") ProductDefinition;
-		%feature("autodoc", "	* Returns Value as ProductDefinition (or Null if another type)
+		%feature("autodoc", "	* Returns Value as ProductDefinition --or Null if another type--
 
 	:rtype: Handle_StepBasic_ProductDefinition
 ") ProductDefinition;
@@ -9822,7 +8085,7 @@ class StepBasic_ProductOrFormationOrDefinition : public StepData_SelectType {
 	}
 };
 %nodefaultctor StepBasic_RoleAssociation;
-class StepBasic_RoleAssociation : public MMgt_TShared {
+class StepBasic_RoleAssociation : public Standard_Transient {
 	public:
 		%feature("compactdefaultargs") StepBasic_RoleAssociation;
 		%feature("autodoc", "	* Empty constructor
@@ -9831,7 +8094,7 @@ class StepBasic_RoleAssociation : public MMgt_TShared {
 ") StepBasic_RoleAssociation;
 		 StepBasic_RoleAssociation ();
 		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	* Initialize all fields (own and inherited)
+		%feature("autodoc", "	* Initialize all fields --own and inherited--
 
 	:param aRole:
 	:type aRole: Handle_StepBasic_ObjectRole &
@@ -9890,7 +8153,7 @@ class StepBasic_RoleAssociation : public MMgt_TShared {
 %}
 
 %nodefaultctor Handle_StepBasic_RoleAssociation;
-class Handle_StepBasic_RoleAssociation : public Handle_MMgt_TShared {
+class Handle_StepBasic_RoleAssociation : public Handle_Standard_Transient {
 
     public:
         // constructors
@@ -9902,19 +8165,20 @@ class Handle_StepBasic_RoleAssociation : public Handle_MMgt_TShared {
         static const Handle_StepBasic_RoleAssociation DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_StepBasic_RoleAssociation {
     StepBasic_RoleAssociation* _get_reference() {
-    return (StepBasic_RoleAssociation*)$self->Access();
+    return (StepBasic_RoleAssociation*)$self->get();
     }
 };
 
 %extend Handle_StepBasic_RoleAssociation {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend StepBasic_RoleAssociation {
@@ -9940,67 +8204,67 @@ class StepBasic_RoleSelect : public StepData_SelectType {
 ") CaseNum;
 		Standard_Integer CaseNum (const Handle_Standard_Transient & ent);
 		%feature("compactdefaultargs") ActionAssignment;
-		%feature("autodoc", "	* Returns Value as ActionAssignment (or Null if another type)
+		%feature("autodoc", "	* Returns Value as ActionAssignment --or Null if another type--
 
 	:rtype: Handle_StepBasic_ActionAssignment
 ") ActionAssignment;
 		Handle_StepBasic_ActionAssignment ActionAssignment ();
 		%feature("compactdefaultargs") ActionRequestAssignment;
-		%feature("autodoc", "	* Returns Value as ActionRequestAssignment (or Null if another type)
+		%feature("autodoc", "	* Returns Value as ActionRequestAssignment --or Null if another type--
 
 	:rtype: Handle_StepBasic_ActionRequestAssignment
 ") ActionRequestAssignment;
 		Handle_StepBasic_ActionRequestAssignment ActionRequestAssignment ();
 		%feature("compactdefaultargs") ApprovalAssignment;
-		%feature("autodoc", "	* Returns Value as ApprovalAssignment (or Null if another type)
+		%feature("autodoc", "	* Returns Value as ApprovalAssignment --or Null if another type--
 
 	:rtype: Handle_StepBasic_ApprovalAssignment
 ") ApprovalAssignment;
 		Handle_StepBasic_ApprovalAssignment ApprovalAssignment ();
 		%feature("compactdefaultargs") ApprovalDateTime;
-		%feature("autodoc", "	* Returns Value as ApprovalDateTime (or Null if another type)
+		%feature("autodoc", "	* Returns Value as ApprovalDateTime --or Null if another type--
 
 	:rtype: Handle_StepBasic_ApprovalDateTime
 ") ApprovalDateTime;
 		Handle_StepBasic_ApprovalDateTime ApprovalDateTime ();
 		%feature("compactdefaultargs") CertificationAssignment;
-		%feature("autodoc", "	* Returns Value as CertificationAssignment (or Null if another type)
+		%feature("autodoc", "	* Returns Value as CertificationAssignment --or Null if another type--
 
 	:rtype: Handle_StepBasic_CertificationAssignment
 ") CertificationAssignment;
 		Handle_StepBasic_CertificationAssignment CertificationAssignment ();
 		%feature("compactdefaultargs") ContractAssignment;
-		%feature("autodoc", "	* Returns Value as ContractAssignment (or Null if another type)
+		%feature("autodoc", "	* Returns Value as ContractAssignment --or Null if another type--
 
 	:rtype: Handle_StepBasic_ContractAssignment
 ") ContractAssignment;
 		Handle_StepBasic_ContractAssignment ContractAssignment ();
 		%feature("compactdefaultargs") DocumentReference;
-		%feature("autodoc", "	* Returns Value as DocumentReference (or Null if another type)
+		%feature("autodoc", "	* Returns Value as DocumentReference --or Null if another type--
 
 	:rtype: Handle_StepBasic_DocumentReference
 ") DocumentReference;
 		Handle_StepBasic_DocumentReference DocumentReference ();
 		%feature("compactdefaultargs") EffectivityAssignment;
-		%feature("autodoc", "	* Returns Value as EffectivityAssignment (or Null if another type)
+		%feature("autodoc", "	* Returns Value as EffectivityAssignment --or Null if another type--
 
 	:rtype: Handle_StepBasic_EffectivityAssignment
 ") EffectivityAssignment;
 		Handle_StepBasic_EffectivityAssignment EffectivityAssignment ();
 		%feature("compactdefaultargs") GroupAssignment;
-		%feature("autodoc", "	* Returns Value as GroupAssignment (or Null if another type)
+		%feature("autodoc", "	* Returns Value as GroupAssignment --or Null if another type--
 
 	:rtype: Handle_StepBasic_GroupAssignment
 ") GroupAssignment;
 		Handle_StepBasic_GroupAssignment GroupAssignment ();
 		%feature("compactdefaultargs") NameAssignment;
-		%feature("autodoc", "	* Returns Value as NameAssignment (or Null if another type)
+		%feature("autodoc", "	* Returns Value as NameAssignment --or Null if another type--
 
 	:rtype: Handle_StepBasic_NameAssignment
 ") NameAssignment;
 		Handle_StepBasic_NameAssignment NameAssignment ();
 		%feature("compactdefaultargs") SecurityClassificationAssignment;
-		%feature("autodoc", "	* Returns Value as SecurityClassificationAssignment (or Null if another type)
+		%feature("autodoc", "	* Returns Value as SecurityClassificationAssignment --or Null if another type--
 
 	:rtype: Handle_StepBasic_SecurityClassificationAssignment
 ") SecurityClassificationAssignment;
@@ -10014,7 +8278,7 @@ class StepBasic_RoleSelect : public StepData_SelectType {
 	}
 };
 %nodefaultctor StepBasic_SecurityClassification;
-class StepBasic_SecurityClassification : public MMgt_TShared {
+class StepBasic_SecurityClassification : public Standard_Transient {
 	public:
 		%feature("compactdefaultargs") StepBasic_SecurityClassification;
 		%feature("autodoc", "	* Returns a SecurityClassification
@@ -10029,9 +8293,9 @@ class StepBasic_SecurityClassification : public MMgt_TShared {
 	:type aPurpose: Handle_TCollection_HAsciiString &
 	:param aSecurityLevel:
 	:type aSecurityLevel: Handle_StepBasic_SecurityClassificationLevel &
-	:rtype: void
+	:rtype: None
 ") Init;
-		virtual void Init (const Handle_TCollection_HAsciiString & aName,const Handle_TCollection_HAsciiString & aPurpose,const Handle_StepBasic_SecurityClassificationLevel & aSecurityLevel);
+		void Init (const Handle_TCollection_HAsciiString & aName,const Handle_TCollection_HAsciiString & aPurpose,const Handle_StepBasic_SecurityClassificationLevel & aSecurityLevel);
 		%feature("compactdefaultargs") SetName;
 		%feature("autodoc", "	:param aName:
 	:type aName: Handle_TCollection_HAsciiString &
@@ -10084,7 +8348,7 @@ class StepBasic_SecurityClassification : public MMgt_TShared {
 %}
 
 %nodefaultctor Handle_StepBasic_SecurityClassification;
-class Handle_StepBasic_SecurityClassification : public Handle_MMgt_TShared {
+class Handle_StepBasic_SecurityClassification : public Handle_Standard_Transient {
 
     public:
         // constructors
@@ -10096,19 +8360,20 @@ class Handle_StepBasic_SecurityClassification : public Handle_MMgt_TShared {
         static const Handle_StepBasic_SecurityClassification DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_StepBasic_SecurityClassification {
     StepBasic_SecurityClassification* _get_reference() {
-    return (StepBasic_SecurityClassification*)$self->Access();
+    return (StepBasic_SecurityClassification*)$self->get();
     }
 };
 
 %extend Handle_StepBasic_SecurityClassification {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend StepBasic_SecurityClassification {
@@ -10117,14 +8382,14 @@ class Handle_StepBasic_SecurityClassification : public Handle_MMgt_TShared {
 	}
 };
 %nodefaultctor StepBasic_SecurityClassificationAssignment;
-class StepBasic_SecurityClassificationAssignment : public MMgt_TShared {
+class StepBasic_SecurityClassificationAssignment : public Standard_Transient {
 	public:
 		%feature("compactdefaultargs") Init;
 		%feature("autodoc", "	:param aAssignedSecurityClassification:
 	:type aAssignedSecurityClassification: Handle_StepBasic_SecurityClassification &
-	:rtype: void
+	:rtype: None
 ") Init;
-		virtual void Init (const Handle_StepBasic_SecurityClassification & aAssignedSecurityClassification);
+		void Init (const Handle_StepBasic_SecurityClassification & aAssignedSecurityClassification);
 		%feature("compactdefaultargs") SetAssignedSecurityClassification;
 		%feature("autodoc", "	:param aAssignedSecurityClassification:
 	:type aAssignedSecurityClassification: Handle_StepBasic_SecurityClassification &
@@ -10157,7 +8422,7 @@ class StepBasic_SecurityClassificationAssignment : public MMgt_TShared {
 %}
 
 %nodefaultctor Handle_StepBasic_SecurityClassificationAssignment;
-class Handle_StepBasic_SecurityClassificationAssignment : public Handle_MMgt_TShared {
+class Handle_StepBasic_SecurityClassificationAssignment : public Handle_Standard_Transient {
 
     public:
         // constructors
@@ -10169,19 +8434,20 @@ class Handle_StepBasic_SecurityClassificationAssignment : public Handle_MMgt_TSh
         static const Handle_StepBasic_SecurityClassificationAssignment DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_StepBasic_SecurityClassificationAssignment {
     StepBasic_SecurityClassificationAssignment* _get_reference() {
-    return (StepBasic_SecurityClassificationAssignment*)$self->Access();
+    return (StepBasic_SecurityClassificationAssignment*)$self->get();
     }
 };
 
 %extend Handle_StepBasic_SecurityClassificationAssignment {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend StepBasic_SecurityClassificationAssignment {
@@ -10190,7 +8456,7 @@ class Handle_StepBasic_SecurityClassificationAssignment : public Handle_MMgt_TSh
 	}
 };
 %nodefaultctor StepBasic_SecurityClassificationLevel;
-class StepBasic_SecurityClassificationLevel : public MMgt_TShared {
+class StepBasic_SecurityClassificationLevel : public Standard_Transient {
 	public:
 		%feature("compactdefaultargs") StepBasic_SecurityClassificationLevel;
 		%feature("autodoc", "	* Returns a SecurityClassificationLevel
@@ -10201,9 +8467,9 @@ class StepBasic_SecurityClassificationLevel : public MMgt_TShared {
 		%feature("compactdefaultargs") Init;
 		%feature("autodoc", "	:param aName:
 	:type aName: Handle_TCollection_HAsciiString &
-	:rtype: void
+	:rtype: None
 ") Init;
-		virtual void Init (const Handle_TCollection_HAsciiString & aName);
+		void Init (const Handle_TCollection_HAsciiString & aName);
 		%feature("compactdefaultargs") SetName;
 		%feature("autodoc", "	:param aName:
 	:type aName: Handle_TCollection_HAsciiString &
@@ -10236,7 +8502,7 @@ class StepBasic_SecurityClassificationLevel : public MMgt_TShared {
 %}
 
 %nodefaultctor Handle_StepBasic_SecurityClassificationLevel;
-class Handle_StepBasic_SecurityClassificationLevel : public Handle_MMgt_TShared {
+class Handle_StepBasic_SecurityClassificationLevel : public Handle_Standard_Transient {
 
     public:
         // constructors
@@ -10248,19 +8514,20 @@ class Handle_StepBasic_SecurityClassificationLevel : public Handle_MMgt_TShared 
         static const Handle_StepBasic_SecurityClassificationLevel DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_StepBasic_SecurityClassificationLevel {
     StepBasic_SecurityClassificationLevel* _get_reference() {
-    return (StepBasic_SecurityClassificationLevel*)$self->Access();
+    return (StepBasic_SecurityClassificationLevel*)$self->get();
     }
 };
 
 %extend Handle_StepBasic_SecurityClassificationLevel {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend StepBasic_SecurityClassificationLevel {
@@ -10323,19 +8590,20 @@ class Handle_StepBasic_SizeMember : public Handle_StepData_SelectReal {
         static const Handle_StepBasic_SizeMember DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_StepBasic_SizeMember {
     StepBasic_SizeMember* _get_reference() {
-    return (StepBasic_SizeMember*)$self->Access();
+    return (StepBasic_SizeMember*)$self->get();
     }
 };
 
 %extend Handle_StepBasic_SizeMember {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend StepBasic_SizeMember {
@@ -10353,7 +8621,7 @@ class StepBasic_SizeSelect : public StepData_SelectType {
 ") StepBasic_SizeSelect;
 		 StepBasic_SizeSelect ();
 		%feature("compactdefaultargs") CaseNum;
-		%feature("autodoc", "	* Recognizes a TrimmingSelect Kind Entity that is : 1 -> SizeMember 0 else (i.e. Real)
+		%feature("autodoc", "	* Recognizes a TrimmingSelect Kind Entity that is : 1 -> SizeMember 0 else --i.e. Real--
 
 	:param ent:
 	:type ent: Handle_Standard_Transient &
@@ -10361,13 +8629,13 @@ class StepBasic_SizeSelect : public StepData_SelectType {
 ") CaseNum;
 		Standard_Integer CaseNum (const Handle_Standard_Transient & ent);
 		%feature("compactdefaultargs") NewMember;
-		%feature("autodoc", "	* Returns a SizeMember (POSITIVE_LENGTH_MEASURE) as preferred
+		%feature("autodoc", "	* Returns a SizeMember --POSITIVE_LENGTH_MEASURE-- as preferred
 
 	:rtype: Handle_StepData_SelectMember
 ") NewMember;
 		virtual Handle_StepData_SelectMember NewMember ();
 		%feature("compactdefaultargs") CaseMem;
-		%feature("autodoc", "	* Recognizes a SelectMember as Real, named as PARAMETER_VALUE 1 -> PositiveLengthMeasure i.e. Real 0 else (i.e. Entity)
+		%feature("autodoc", "	* Recognizes a SelectMember as Real, named as PARAMETER_VALUE 1 -> PositiveLengthMeasure i.e. Real 0 else --i.e. Entity--
 
 	:param ent:
 	:type ent: Handle_StepData_SelectMember &
@@ -10381,7 +8649,7 @@ class StepBasic_SizeSelect : public StepData_SelectType {
 ") SetRealValue;
 		void SetRealValue (const Standard_Real aReal);
 		%feature("compactdefaultargs") RealValue;
-		%feature("autodoc", "	* returns Value as a Real (Null if another type)
+		%feature("autodoc", "	* returns Value as a Real --Null if another type--
 
 	:rtype: float
 ") RealValue;
@@ -10416,7 +8684,7 @@ class StepBasic_SourceItem : public StepData_SelectType {
 ") NewMember;
 		virtual Handle_StepData_SelectMember NewMember ();
 		%feature("compactdefaultargs") Identifier;
-		%feature("autodoc", "	* Returns Value as Identifier (or Null if another type)
+		%feature("autodoc", "	* Returns Value as Identifier --or Null if another type--
 
 	:rtype: Handle_TCollection_HAsciiString
 ") Identifier;
@@ -10447,13 +8715,13 @@ class StepBasic_Unit : public StepData_SelectType {
 ") CaseNum;
 		Standard_Integer CaseNum (const Handle_Standard_Transient & ent);
 		%feature("compactdefaultargs") NamedUnit;
-		%feature("autodoc", "	* returns Value as a NamedUnit (Null if another type)
+		%feature("autodoc", "	* returns Value as a NamedUnit --Null if another type--
 
 	:rtype: Handle_StepBasic_NamedUnit
 ") NamedUnit;
 		Handle_StepBasic_NamedUnit NamedUnit ();
 		%feature("compactdefaultargs") DerivedUnit;
-		%feature("autodoc", "	* returns Value as a DerivedUnit (Null if another type)
+		%feature("autodoc", "	* returns Value as a DerivedUnit --Null if another type--
 
 	:rtype: Handle_StepBasic_DerivedUnit
 ") DerivedUnit;
@@ -10467,7 +8735,7 @@ class StepBasic_Unit : public StepData_SelectType {
 	}
 };
 %nodefaultctor StepBasic_VersionedActionRequest;
-class StepBasic_VersionedActionRequest : public MMgt_TShared {
+class StepBasic_VersionedActionRequest : public Standard_Transient {
 	public:
 		%feature("compactdefaultargs") StepBasic_VersionedActionRequest;
 		%feature("autodoc", "	* Empty constructor
@@ -10476,7 +8744,7 @@ class StepBasic_VersionedActionRequest : public MMgt_TShared {
 ") StepBasic_VersionedActionRequest;
 		 StepBasic_VersionedActionRequest ();
 		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	* Initialize all fields (own and inherited)
+		%feature("autodoc", "	* Initialize all fields --own and inherited--
 
 	:param aId:
 	:type aId: Handle_TCollection_HAsciiString &
@@ -10575,7 +8843,7 @@ class StepBasic_VersionedActionRequest : public MMgt_TShared {
 %}
 
 %nodefaultctor Handle_StepBasic_VersionedActionRequest;
-class Handle_StepBasic_VersionedActionRequest : public Handle_MMgt_TShared {
+class Handle_StepBasic_VersionedActionRequest : public Handle_Standard_Transient {
 
     public:
         // constructors
@@ -10587,19 +8855,20 @@ class Handle_StepBasic_VersionedActionRequest : public Handle_MMgt_TShared {
         static const Handle_StepBasic_VersionedActionRequest DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_StepBasic_VersionedActionRequest {
     StepBasic_VersionedActionRequest* _get_reference() {
-    return (StepBasic_VersionedActionRequest*)$self->Access();
+    return (StepBasic_VersionedActionRequest*)$self->get();
     }
 };
 
 %extend Handle_StepBasic_VersionedActionRequest {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend StepBasic_VersionedActionRequest {
@@ -10648,19 +8917,20 @@ class Handle_StepBasic_AreaUnit : public Handle_StepBasic_NamedUnit {
         static const Handle_StepBasic_AreaUnit DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_StepBasic_AreaUnit {
     StepBasic_AreaUnit* _get_reference() {
-    return (StepBasic_AreaUnit*)$self->Access();
+    return (StepBasic_AreaUnit*)$self->get();
     }
 };
 
 %extend Handle_StepBasic_AreaUnit {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend StepBasic_AreaUnit {
@@ -10680,19 +8950,13 @@ class StepBasic_CalendarDate : public StepBasic_Date {
 		%feature("compactdefaultargs") Init;
 		%feature("autodoc", "	:param aYearComponent:
 	:type aYearComponent: int
-	:rtype: void
-") Init;
-		virtual void Init (const Standard_Integer aYearComponent);
-		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	:param aYearComponent:
-	:type aYearComponent: int
 	:param aDayComponent:
 	:type aDayComponent: int
 	:param aMonthComponent:
 	:type aMonthComponent: int
-	:rtype: void
+	:rtype: None
 ") Init;
-		virtual void Init (const Standard_Integer aYearComponent,const Standard_Integer aDayComponent,const Standard_Integer aMonthComponent);
+		void Init (const Standard_Integer aYearComponent,const Standard_Integer aDayComponent,const Standard_Integer aMonthComponent);
 		%feature("compactdefaultargs") SetDayComponent;
 		%feature("autodoc", "	:param aDayComponent:
 	:type aDayComponent: int
@@ -10747,19 +9011,20 @@ class Handle_StepBasic_CalendarDate : public Handle_StepBasic_Date {
         static const Handle_StepBasic_CalendarDate DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_StepBasic_CalendarDate {
     StepBasic_CalendarDate* _get_reference() {
-    return (StepBasic_CalendarDate*)$self->Access();
+    return (StepBasic_CalendarDate*)$self->get();
     }
 };
 
 %extend Handle_StepBasic_CalendarDate {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend StepBasic_CalendarDate {
@@ -10779,19 +9044,13 @@ class StepBasic_ConversionBasedUnit : public StepBasic_NamedUnit {
 		%feature("compactdefaultargs") Init;
 		%feature("autodoc", "	:param aDimensions:
 	:type aDimensions: Handle_StepBasic_DimensionalExponents &
-	:rtype: void
-") Init;
-		virtual void Init (const Handle_StepBasic_DimensionalExponents & aDimensions);
-		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	:param aDimensions:
-	:type aDimensions: Handle_StepBasic_DimensionalExponents &
 	:param aName:
 	:type aName: Handle_TCollection_HAsciiString &
 	:param aConversionFactor:
 	:type aConversionFactor: Handle_StepBasic_MeasureWithUnit &
-	:rtype: void
+	:rtype: None
 ") Init;
-		virtual void Init (const Handle_StepBasic_DimensionalExponents & aDimensions,const Handle_TCollection_HAsciiString & aName,const Handle_StepBasic_MeasureWithUnit & aConversionFactor);
+		void Init (const Handle_StepBasic_DimensionalExponents & aDimensions,const Handle_TCollection_HAsciiString & aName,const Handle_StepBasic_MeasureWithUnit & aConversionFactor);
 		%feature("compactdefaultargs") SetName;
 		%feature("autodoc", "	:param aName:
 	:type aName: Handle_TCollection_HAsciiString &
@@ -10846,19 +9105,20 @@ class Handle_StepBasic_ConversionBasedUnit : public Handle_StepBasic_NamedUnit {
         static const Handle_StepBasic_ConversionBasedUnit DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_StepBasic_ConversionBasedUnit {
     StepBasic_ConversionBasedUnit* _get_reference() {
-    return (StepBasic_ConversionBasedUnit*)$self->Access();
+    return (StepBasic_ConversionBasedUnit*)$self->get();
     }
 };
 
 %extend Handle_StepBasic_ConversionBasedUnit {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend StepBasic_ConversionBasedUnit {
@@ -10907,19 +9167,20 @@ class Handle_StepBasic_DigitalDocument : public Handle_StepBasic_Document {
         static const Handle_StepBasic_DigitalDocument DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_StepBasic_DigitalDocument {
     StepBasic_DigitalDocument* _get_reference() {
-    return (StepBasic_DigitalDocument*)$self->Access();
+    return (StepBasic_DigitalDocument*)$self->get();
     }
 };
 
 %extend Handle_StepBasic_DigitalDocument {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend StepBasic_DigitalDocument {
@@ -10937,7 +9198,7 @@ class StepBasic_DocumentFile : public StepBasic_Document {
 ") StepBasic_DocumentFile;
 		 StepBasic_DocumentFile ();
 		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	* Initialize all fields (own and inherited)
+		%feature("autodoc", "	* Initialize all fields --own and inherited--
 
 	:param aDocument_Id:
 	:type aDocument_Id: Handle_TCollection_HAsciiString &
@@ -11006,19 +9267,20 @@ class Handle_StepBasic_DocumentFile : public Handle_StepBasic_Document {
         static const Handle_StepBasic_DocumentFile DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_StepBasic_DocumentFile {
     StepBasic_DocumentFile* _get_reference() {
-    return (StepBasic_DocumentFile*)$self->Access();
+    return (StepBasic_DocumentFile*)$self->get();
     }
 };
 
 %extend Handle_StepBasic_DocumentFile {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend StepBasic_DocumentFile {
@@ -11069,19 +9331,20 @@ class Handle_StepBasic_DocumentProductEquivalence : public Handle_StepBasic_Docu
         static const Handle_StepBasic_DocumentProductEquivalence DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_StepBasic_DocumentProductEquivalence {
     StepBasic_DocumentProductEquivalence* _get_reference() {
-    return (StepBasic_DocumentProductEquivalence*)$self->Access();
+    return (StepBasic_DocumentProductEquivalence*)$self->get();
     }
 };
 
 %extend Handle_StepBasic_DocumentProductEquivalence {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend StepBasic_DocumentProductEquivalence {
@@ -11099,7 +9362,7 @@ class StepBasic_ExternalIdentificationAssignment : public StepBasic_Identificati
 ") StepBasic_ExternalIdentificationAssignment;
 		 StepBasic_ExternalIdentificationAssignment ();
 		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	* Initialize all fields (own and inherited)
+		%feature("autodoc", "	* Initialize all fields --own and inherited--
 
 	:param aIdentificationAssignment_AssignedId:
 	:type aIdentificationAssignment_AssignedId: Handle_TCollection_HAsciiString &
@@ -11158,19 +9421,20 @@ class Handle_StepBasic_ExternalIdentificationAssignment : public Handle_StepBasi
         static const Handle_StepBasic_ExternalIdentificationAssignment DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_StepBasic_ExternalIdentificationAssignment {
     StepBasic_ExternalIdentificationAssignment* _get_reference() {
-    return (StepBasic_ExternalIdentificationAssignment*)$self->Access();
+    return (StepBasic_ExternalIdentificationAssignment*)$self->get();
     }
 };
 
 %extend Handle_StepBasic_ExternalIdentificationAssignment {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend StepBasic_ExternalIdentificationAssignment {
@@ -11221,19 +9485,20 @@ class Handle_StepBasic_LengthMeasureWithUnit : public Handle_StepBasic_MeasureWi
         static const Handle_StepBasic_LengthMeasureWithUnit DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_StepBasic_LengthMeasureWithUnit {
     StepBasic_LengthMeasureWithUnit* _get_reference() {
-    return (StepBasic_LengthMeasureWithUnit*)$self->Access();
+    return (StepBasic_LengthMeasureWithUnit*)$self->get();
     }
 };
 
 %extend Handle_StepBasic_LengthMeasureWithUnit {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend StepBasic_LengthMeasureWithUnit {
@@ -11284,19 +9549,20 @@ class Handle_StepBasic_LengthUnit : public Handle_StepBasic_NamedUnit {
         static const Handle_StepBasic_LengthUnit DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_StepBasic_LengthUnit {
     StepBasic_LengthUnit* _get_reference() {
-    return (StepBasic_LengthUnit*)$self->Access();
+    return (StepBasic_LengthUnit*)$self->get();
     }
 };
 
 %extend Handle_StepBasic_LengthUnit {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend StepBasic_LengthUnit {
@@ -11347,19 +9613,20 @@ class Handle_StepBasic_MassMeasureWithUnit : public Handle_StepBasic_MeasureWith
         static const Handle_StepBasic_MassMeasureWithUnit DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_StepBasic_MassMeasureWithUnit {
     StepBasic_MassMeasureWithUnit* _get_reference() {
-    return (StepBasic_MassMeasureWithUnit*)$self->Access();
+    return (StepBasic_MassMeasureWithUnit*)$self->get();
     }
 };
 
 %extend Handle_StepBasic_MassMeasureWithUnit {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend StepBasic_MassMeasureWithUnit {
@@ -11410,19 +9677,20 @@ class Handle_StepBasic_MassUnit : public Handle_StepBasic_NamedUnit {
         static const Handle_StepBasic_MassUnit DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_StepBasic_MassUnit {
     StepBasic_MassUnit* _get_reference() {
-    return (StepBasic_MassUnit*)$self->Access();
+    return (StepBasic_MassUnit*)$self->get();
     }
 };
 
 %extend Handle_StepBasic_MassUnit {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend StepBasic_MassUnit {
@@ -11442,17 +9710,11 @@ class StepBasic_OrdinalDate : public StepBasic_Date {
 		%feature("compactdefaultargs") Init;
 		%feature("autodoc", "	:param aYearComponent:
 	:type aYearComponent: int
-	:rtype: void
-") Init;
-		virtual void Init (const Standard_Integer aYearComponent);
-		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	:param aYearComponent:
-	:type aYearComponent: int
 	:param aDayComponent:
 	:type aDayComponent: int
-	:rtype: void
+	:rtype: None
 ") Init;
-		virtual void Init (const Standard_Integer aYearComponent,const Standard_Integer aDayComponent);
+		void Init (const Standard_Integer aYearComponent,const Standard_Integer aDayComponent);
 		%feature("compactdefaultargs") SetDayComponent;
 		%feature("autodoc", "	:param aDayComponent:
 	:type aDayComponent: int
@@ -11497,19 +9759,20 @@ class Handle_StepBasic_OrdinalDate : public Handle_StepBasic_Date {
         static const Handle_StepBasic_OrdinalDate DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_StepBasic_OrdinalDate {
     StepBasic_OrdinalDate* _get_reference() {
-    return (StepBasic_OrdinalDate*)$self->Access();
+    return (StepBasic_OrdinalDate*)$self->get();
     }
 };
 
 %extend Handle_StepBasic_OrdinalDate {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend StepBasic_OrdinalDate {
@@ -11575,65 +9838,13 @@ class StepBasic_OrganizationalAddress : public StepBasic_Address {
 	:type hasAtelexNumber: bool
 	:param aTelexNumber:
 	:type aTelexNumber: Handle_TCollection_HAsciiString &
-	:rtype: void
-") Init;
-		virtual void Init (const Standard_Boolean hasAinternalLocation,const Handle_TCollection_HAsciiString & aInternalLocation,const Standard_Boolean hasAstreetNumber,const Handle_TCollection_HAsciiString & aStreetNumber,const Standard_Boolean hasAstreet,const Handle_TCollection_HAsciiString & aStreet,const Standard_Boolean hasApostalBox,const Handle_TCollection_HAsciiString & aPostalBox,const Standard_Boolean hasAtown,const Handle_TCollection_HAsciiString & aTown,const Standard_Boolean hasAregion,const Handle_TCollection_HAsciiString & aRegion,const Standard_Boolean hasApostalCode,const Handle_TCollection_HAsciiString & aPostalCode,const Standard_Boolean hasAcountry,const Handle_TCollection_HAsciiString & aCountry,const Standard_Boolean hasAfacsimileNumber,const Handle_TCollection_HAsciiString & aFacsimileNumber,const Standard_Boolean hasAtelephoneNumber,const Handle_TCollection_HAsciiString & aTelephoneNumber,const Standard_Boolean hasAelectronicMailAddress,const Handle_TCollection_HAsciiString & aElectronicMailAddress,const Standard_Boolean hasAtelexNumber,const Handle_TCollection_HAsciiString & aTelexNumber);
-		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	:param hasAinternalLocation:
-	:type hasAinternalLocation: bool
-	:param aInternalLocation:
-	:type aInternalLocation: Handle_TCollection_HAsciiString &
-	:param hasAstreetNumber:
-	:type hasAstreetNumber: bool
-	:param aStreetNumber:
-	:type aStreetNumber: Handle_TCollection_HAsciiString &
-	:param hasAstreet:
-	:type hasAstreet: bool
-	:param aStreet:
-	:type aStreet: Handle_TCollection_HAsciiString &
-	:param hasApostalBox:
-	:type hasApostalBox: bool
-	:param aPostalBox:
-	:type aPostalBox: Handle_TCollection_HAsciiString &
-	:param hasAtown:
-	:type hasAtown: bool
-	:param aTown:
-	:type aTown: Handle_TCollection_HAsciiString &
-	:param hasAregion:
-	:type hasAregion: bool
-	:param aRegion:
-	:type aRegion: Handle_TCollection_HAsciiString &
-	:param hasApostalCode:
-	:type hasApostalCode: bool
-	:param aPostalCode:
-	:type aPostalCode: Handle_TCollection_HAsciiString &
-	:param hasAcountry:
-	:type hasAcountry: bool
-	:param aCountry:
-	:type aCountry: Handle_TCollection_HAsciiString &
-	:param hasAfacsimileNumber:
-	:type hasAfacsimileNumber: bool
-	:param aFacsimileNumber:
-	:type aFacsimileNumber: Handle_TCollection_HAsciiString &
-	:param hasAtelephoneNumber:
-	:type hasAtelephoneNumber: bool
-	:param aTelephoneNumber:
-	:type aTelephoneNumber: Handle_TCollection_HAsciiString &
-	:param hasAelectronicMailAddress:
-	:type hasAelectronicMailAddress: bool
-	:param aElectronicMailAddress:
-	:type aElectronicMailAddress: Handle_TCollection_HAsciiString &
-	:param hasAtelexNumber:
-	:type hasAtelexNumber: bool
-	:param aTelexNumber:
-	:type aTelexNumber: Handle_TCollection_HAsciiString &
 	:param aOrganizations:
 	:type aOrganizations: Handle_StepBasic_HArray1OfOrganization &
 	:param aDescription:
 	:type aDescription: Handle_TCollection_HAsciiString &
-	:rtype: void
+	:rtype: None
 ") Init;
-		virtual void Init (const Standard_Boolean hasAinternalLocation,const Handle_TCollection_HAsciiString & aInternalLocation,const Standard_Boolean hasAstreetNumber,const Handle_TCollection_HAsciiString & aStreetNumber,const Standard_Boolean hasAstreet,const Handle_TCollection_HAsciiString & aStreet,const Standard_Boolean hasApostalBox,const Handle_TCollection_HAsciiString & aPostalBox,const Standard_Boolean hasAtown,const Handle_TCollection_HAsciiString & aTown,const Standard_Boolean hasAregion,const Handle_TCollection_HAsciiString & aRegion,const Standard_Boolean hasApostalCode,const Handle_TCollection_HAsciiString & aPostalCode,const Standard_Boolean hasAcountry,const Handle_TCollection_HAsciiString & aCountry,const Standard_Boolean hasAfacsimileNumber,const Handle_TCollection_HAsciiString & aFacsimileNumber,const Standard_Boolean hasAtelephoneNumber,const Handle_TCollection_HAsciiString & aTelephoneNumber,const Standard_Boolean hasAelectronicMailAddress,const Handle_TCollection_HAsciiString & aElectronicMailAddress,const Standard_Boolean hasAtelexNumber,const Handle_TCollection_HAsciiString & aTelexNumber,const Handle_StepBasic_HArray1OfOrganization & aOrganizations,const Handle_TCollection_HAsciiString & aDescription);
+		void Init (const Standard_Boolean hasAinternalLocation,const Handle_TCollection_HAsciiString & aInternalLocation,const Standard_Boolean hasAstreetNumber,const Handle_TCollection_HAsciiString & aStreetNumber,const Standard_Boolean hasAstreet,const Handle_TCollection_HAsciiString & aStreet,const Standard_Boolean hasApostalBox,const Handle_TCollection_HAsciiString & aPostalBox,const Standard_Boolean hasAtown,const Handle_TCollection_HAsciiString & aTown,const Standard_Boolean hasAregion,const Handle_TCollection_HAsciiString & aRegion,const Standard_Boolean hasApostalCode,const Handle_TCollection_HAsciiString & aPostalCode,const Standard_Boolean hasAcountry,const Handle_TCollection_HAsciiString & aCountry,const Standard_Boolean hasAfacsimileNumber,const Handle_TCollection_HAsciiString & aFacsimileNumber,const Standard_Boolean hasAtelephoneNumber,const Handle_TCollection_HAsciiString & aTelephoneNumber,const Standard_Boolean hasAelectronicMailAddress,const Handle_TCollection_HAsciiString & aElectronicMailAddress,const Standard_Boolean hasAtelexNumber,const Handle_TCollection_HAsciiString & aTelexNumber,const Handle_StepBasic_HArray1OfOrganization & aOrganizations,const Handle_TCollection_HAsciiString & aDescription);
 		%feature("compactdefaultargs") SetOrganizations;
 		%feature("autodoc", "	:param aOrganizations:
 	:type aOrganizations: Handle_StepBasic_HArray1OfOrganization &
@@ -11698,19 +9909,20 @@ class Handle_StepBasic_OrganizationalAddress : public Handle_StepBasic_Address {
         static const Handle_StepBasic_OrganizationalAddress DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_StepBasic_OrganizationalAddress {
     StepBasic_OrganizationalAddress* _get_reference() {
-    return (StepBasic_OrganizationalAddress*)$self->Access();
+    return (StepBasic_OrganizationalAddress*)$self->get();
     }
 };
 
 %extend Handle_StepBasic_OrganizationalAddress {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend StepBasic_OrganizationalAddress {
@@ -11776,65 +9988,13 @@ class StepBasic_PersonalAddress : public StepBasic_Address {
 	:type hasAtelexNumber: bool
 	:param aTelexNumber:
 	:type aTelexNumber: Handle_TCollection_HAsciiString &
-	:rtype: void
-") Init;
-		virtual void Init (const Standard_Boolean hasAinternalLocation,const Handle_TCollection_HAsciiString & aInternalLocation,const Standard_Boolean hasAstreetNumber,const Handle_TCollection_HAsciiString & aStreetNumber,const Standard_Boolean hasAstreet,const Handle_TCollection_HAsciiString & aStreet,const Standard_Boolean hasApostalBox,const Handle_TCollection_HAsciiString & aPostalBox,const Standard_Boolean hasAtown,const Handle_TCollection_HAsciiString & aTown,const Standard_Boolean hasAregion,const Handle_TCollection_HAsciiString & aRegion,const Standard_Boolean hasApostalCode,const Handle_TCollection_HAsciiString & aPostalCode,const Standard_Boolean hasAcountry,const Handle_TCollection_HAsciiString & aCountry,const Standard_Boolean hasAfacsimileNumber,const Handle_TCollection_HAsciiString & aFacsimileNumber,const Standard_Boolean hasAtelephoneNumber,const Handle_TCollection_HAsciiString & aTelephoneNumber,const Standard_Boolean hasAelectronicMailAddress,const Handle_TCollection_HAsciiString & aElectronicMailAddress,const Standard_Boolean hasAtelexNumber,const Handle_TCollection_HAsciiString & aTelexNumber);
-		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	:param hasAinternalLocation:
-	:type hasAinternalLocation: bool
-	:param aInternalLocation:
-	:type aInternalLocation: Handle_TCollection_HAsciiString &
-	:param hasAstreetNumber:
-	:type hasAstreetNumber: bool
-	:param aStreetNumber:
-	:type aStreetNumber: Handle_TCollection_HAsciiString &
-	:param hasAstreet:
-	:type hasAstreet: bool
-	:param aStreet:
-	:type aStreet: Handle_TCollection_HAsciiString &
-	:param hasApostalBox:
-	:type hasApostalBox: bool
-	:param aPostalBox:
-	:type aPostalBox: Handle_TCollection_HAsciiString &
-	:param hasAtown:
-	:type hasAtown: bool
-	:param aTown:
-	:type aTown: Handle_TCollection_HAsciiString &
-	:param hasAregion:
-	:type hasAregion: bool
-	:param aRegion:
-	:type aRegion: Handle_TCollection_HAsciiString &
-	:param hasApostalCode:
-	:type hasApostalCode: bool
-	:param aPostalCode:
-	:type aPostalCode: Handle_TCollection_HAsciiString &
-	:param hasAcountry:
-	:type hasAcountry: bool
-	:param aCountry:
-	:type aCountry: Handle_TCollection_HAsciiString &
-	:param hasAfacsimileNumber:
-	:type hasAfacsimileNumber: bool
-	:param aFacsimileNumber:
-	:type aFacsimileNumber: Handle_TCollection_HAsciiString &
-	:param hasAtelephoneNumber:
-	:type hasAtelephoneNumber: bool
-	:param aTelephoneNumber:
-	:type aTelephoneNumber: Handle_TCollection_HAsciiString &
-	:param hasAelectronicMailAddress:
-	:type hasAelectronicMailAddress: bool
-	:param aElectronicMailAddress:
-	:type aElectronicMailAddress: Handle_TCollection_HAsciiString &
-	:param hasAtelexNumber:
-	:type hasAtelexNumber: bool
-	:param aTelexNumber:
-	:type aTelexNumber: Handle_TCollection_HAsciiString &
 	:param aPeople:
 	:type aPeople: Handle_StepBasic_HArray1OfPerson &
 	:param aDescription:
 	:type aDescription: Handle_TCollection_HAsciiString &
-	:rtype: void
+	:rtype: None
 ") Init;
-		virtual void Init (const Standard_Boolean hasAinternalLocation,const Handle_TCollection_HAsciiString & aInternalLocation,const Standard_Boolean hasAstreetNumber,const Handle_TCollection_HAsciiString & aStreetNumber,const Standard_Boolean hasAstreet,const Handle_TCollection_HAsciiString & aStreet,const Standard_Boolean hasApostalBox,const Handle_TCollection_HAsciiString & aPostalBox,const Standard_Boolean hasAtown,const Handle_TCollection_HAsciiString & aTown,const Standard_Boolean hasAregion,const Handle_TCollection_HAsciiString & aRegion,const Standard_Boolean hasApostalCode,const Handle_TCollection_HAsciiString & aPostalCode,const Standard_Boolean hasAcountry,const Handle_TCollection_HAsciiString & aCountry,const Standard_Boolean hasAfacsimileNumber,const Handle_TCollection_HAsciiString & aFacsimileNumber,const Standard_Boolean hasAtelephoneNumber,const Handle_TCollection_HAsciiString & aTelephoneNumber,const Standard_Boolean hasAelectronicMailAddress,const Handle_TCollection_HAsciiString & aElectronicMailAddress,const Standard_Boolean hasAtelexNumber,const Handle_TCollection_HAsciiString & aTelexNumber,const Handle_StepBasic_HArray1OfPerson & aPeople,const Handle_TCollection_HAsciiString & aDescription);
+		void Init (const Standard_Boolean hasAinternalLocation,const Handle_TCollection_HAsciiString & aInternalLocation,const Standard_Boolean hasAstreetNumber,const Handle_TCollection_HAsciiString & aStreetNumber,const Standard_Boolean hasAstreet,const Handle_TCollection_HAsciiString & aStreet,const Standard_Boolean hasApostalBox,const Handle_TCollection_HAsciiString & aPostalBox,const Standard_Boolean hasAtown,const Handle_TCollection_HAsciiString & aTown,const Standard_Boolean hasAregion,const Handle_TCollection_HAsciiString & aRegion,const Standard_Boolean hasApostalCode,const Handle_TCollection_HAsciiString & aPostalCode,const Standard_Boolean hasAcountry,const Handle_TCollection_HAsciiString & aCountry,const Standard_Boolean hasAfacsimileNumber,const Handle_TCollection_HAsciiString & aFacsimileNumber,const Standard_Boolean hasAtelephoneNumber,const Handle_TCollection_HAsciiString & aTelephoneNumber,const Standard_Boolean hasAelectronicMailAddress,const Handle_TCollection_HAsciiString & aElectronicMailAddress,const Standard_Boolean hasAtelexNumber,const Handle_TCollection_HAsciiString & aTelexNumber,const Handle_StepBasic_HArray1OfPerson & aPeople,const Handle_TCollection_HAsciiString & aDescription);
 		%feature("compactdefaultargs") SetPeople;
 		%feature("autodoc", "	:param aPeople:
 	:type aPeople: Handle_StepBasic_HArray1OfPerson &
@@ -11899,19 +10059,20 @@ class Handle_StepBasic_PersonalAddress : public Handle_StepBasic_Address {
         static const Handle_StepBasic_PersonalAddress DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_StepBasic_PersonalAddress {
     StepBasic_PersonalAddress* _get_reference() {
-    return (StepBasic_PersonalAddress*)$self->Access();
+    return (StepBasic_PersonalAddress*)$self->get();
     }
 };
 
 %extend Handle_StepBasic_PersonalAddress {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend StepBasic_PersonalAddress {
@@ -11960,19 +10121,20 @@ class Handle_StepBasic_PhysicallyModeledProductDefinition : public Handle_StepBa
         static const Handle_StepBasic_PhysicallyModeledProductDefinition DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_StepBasic_PhysicallyModeledProductDefinition {
     StepBasic_PhysicallyModeledProductDefinition* _get_reference() {
-    return (StepBasic_PhysicallyModeledProductDefinition*)$self->Access();
+    return (StepBasic_PhysicallyModeledProductDefinition*)$self->get();
     }
 };
 
 %extend Handle_StepBasic_PhysicallyModeledProductDefinition {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend StepBasic_PhysicallyModeledProductDefinition {
@@ -12023,19 +10185,20 @@ class Handle_StepBasic_PlaneAngleMeasureWithUnit : public Handle_StepBasic_Measu
         static const Handle_StepBasic_PlaneAngleMeasureWithUnit DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_StepBasic_PlaneAngleMeasureWithUnit {
     StepBasic_PlaneAngleMeasureWithUnit* _get_reference() {
-    return (StepBasic_PlaneAngleMeasureWithUnit*)$self->Access();
+    return (StepBasic_PlaneAngleMeasureWithUnit*)$self->get();
     }
 };
 
 %extend Handle_StepBasic_PlaneAngleMeasureWithUnit {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend StepBasic_PlaneAngleMeasureWithUnit {
@@ -12086,19 +10249,20 @@ class Handle_StepBasic_PlaneAngleUnit : public Handle_StepBasic_NamedUnit {
         static const Handle_StepBasic_PlaneAngleUnit DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_StepBasic_PlaneAngleUnit {
     StepBasic_PlaneAngleUnit* _get_reference() {
-    return (StepBasic_PlaneAngleUnit*)$self->Access();
+    return (StepBasic_PlaneAngleUnit*)$self->get();
     }
 };
 
 %extend Handle_StepBasic_PlaneAngleUnit {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend StepBasic_PlaneAngleUnit {
@@ -12116,7 +10280,7 @@ class StepBasic_ProductConceptContext : public StepBasic_ApplicationContextEleme
 ") StepBasic_ProductConceptContext;
 		 StepBasic_ProductConceptContext ();
 		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	* Initialize all fields (own and inherited)
+		%feature("autodoc", "	* Initialize all fields --own and inherited--
 
 	:param aApplicationContextElement_Name:
 	:type aApplicationContextElement_Name: Handle_TCollection_HAsciiString &
@@ -12175,19 +10339,20 @@ class Handle_StepBasic_ProductConceptContext : public Handle_StepBasic_Applicati
         static const Handle_StepBasic_ProductConceptContext DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_StepBasic_ProductConceptContext {
     StepBasic_ProductConceptContext* _get_reference() {
-    return (StepBasic_ProductConceptContext*)$self->Access();
+    return (StepBasic_ProductConceptContext*)$self->get();
     }
 };
 
 %extend Handle_StepBasic_ProductConceptContext {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend StepBasic_ProductConceptContext {
@@ -12209,19 +10374,11 @@ class StepBasic_ProductContext : public StepBasic_ApplicationContextElement {
 	:type aName: Handle_TCollection_HAsciiString &
 	:param aFrameOfReference:
 	:type aFrameOfReference: Handle_StepBasic_ApplicationContext &
-	:rtype: void
-") Init;
-		virtual void Init (const Handle_TCollection_HAsciiString & aName,const Handle_StepBasic_ApplicationContext & aFrameOfReference);
-		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	:param aName:
-	:type aName: Handle_TCollection_HAsciiString &
-	:param aFrameOfReference:
-	:type aFrameOfReference: Handle_StepBasic_ApplicationContext &
 	:param aDisciplineType:
 	:type aDisciplineType: Handle_TCollection_HAsciiString &
-	:rtype: void
+	:rtype: None
 ") Init;
-		virtual void Init (const Handle_TCollection_HAsciiString & aName,const Handle_StepBasic_ApplicationContext & aFrameOfReference,const Handle_TCollection_HAsciiString & aDisciplineType);
+		void Init (const Handle_TCollection_HAsciiString & aName,const Handle_StepBasic_ApplicationContext & aFrameOfReference,const Handle_TCollection_HAsciiString & aDisciplineType);
 		%feature("compactdefaultargs") SetDisciplineType;
 		%feature("autodoc", "	:param aDisciplineType:
 	:type aDisciplineType: Handle_TCollection_HAsciiString &
@@ -12266,19 +10423,20 @@ class Handle_StepBasic_ProductContext : public Handle_StepBasic_ApplicationConte
         static const Handle_StepBasic_ProductContext DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_StepBasic_ProductContext {
     StepBasic_ProductContext* _get_reference() {
-    return (StepBasic_ProductContext*)$self->Access();
+    return (StepBasic_ProductContext*)$self->get();
     }
 };
 
 %extend Handle_StepBasic_ProductContext {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend StepBasic_ProductContext {
@@ -12300,19 +10458,11 @@ class StepBasic_ProductDefinitionContext : public StepBasic_ApplicationContextEl
 	:type aName: Handle_TCollection_HAsciiString &
 	:param aFrameOfReference:
 	:type aFrameOfReference: Handle_StepBasic_ApplicationContext &
-	:rtype: void
-") Init;
-		virtual void Init (const Handle_TCollection_HAsciiString & aName,const Handle_StepBasic_ApplicationContext & aFrameOfReference);
-		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	:param aName:
-	:type aName: Handle_TCollection_HAsciiString &
-	:param aFrameOfReference:
-	:type aFrameOfReference: Handle_StepBasic_ApplicationContext &
 	:param aLifeCycleStage:
 	:type aLifeCycleStage: Handle_TCollection_HAsciiString &
-	:rtype: void
+	:rtype: None
 ") Init;
-		virtual void Init (const Handle_TCollection_HAsciiString & aName,const Handle_StepBasic_ApplicationContext & aFrameOfReference,const Handle_TCollection_HAsciiString & aLifeCycleStage);
+		void Init (const Handle_TCollection_HAsciiString & aName,const Handle_StepBasic_ApplicationContext & aFrameOfReference,const Handle_TCollection_HAsciiString & aLifeCycleStage);
 		%feature("compactdefaultargs") SetLifeCycleStage;
 		%feature("autodoc", "	:param aLifeCycleStage:
 	:type aLifeCycleStage: Handle_TCollection_HAsciiString &
@@ -12357,19 +10507,20 @@ class Handle_StepBasic_ProductDefinitionContext : public Handle_StepBasic_Applic
         static const Handle_StepBasic_ProductDefinitionContext DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_StepBasic_ProductDefinitionContext {
     StepBasic_ProductDefinitionContext* _get_reference() {
-    return (StepBasic_ProductDefinitionContext*)$self->Access();
+    return (StepBasic_ProductDefinitionContext*)$self->get();
     }
 };
 
 %extend Handle_StepBasic_ProductDefinitionContext {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend StepBasic_ProductDefinitionContext {
@@ -12436,19 +10587,20 @@ class Handle_StepBasic_ProductDefinitionEffectivity : public Handle_StepBasic_Ef
         static const Handle_StepBasic_ProductDefinitionEffectivity DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_StepBasic_ProductDefinitionEffectivity {
     StepBasic_ProductDefinitionEffectivity* _get_reference() {
-    return (StepBasic_ProductDefinitionEffectivity*)$self->Access();
+    return (StepBasic_ProductDefinitionEffectivity*)$self->get();
     }
 };
 
 %extend Handle_StepBasic_ProductDefinitionEffectivity {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend StepBasic_ProductDefinitionEffectivity {
@@ -12472,21 +10624,11 @@ class StepBasic_ProductDefinitionFormationWithSpecifiedSource : public StepBasic
 	:type aDescription: Handle_TCollection_HAsciiString &
 	:param aOfProduct:
 	:type aOfProduct: Handle_StepBasic_Product &
-	:rtype: void
-") Init;
-		virtual void Init (const Handle_TCollection_HAsciiString & aId,const Handle_TCollection_HAsciiString & aDescription,const Handle_StepBasic_Product & aOfProduct);
-		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	:param aId:
-	:type aId: Handle_TCollection_HAsciiString &
-	:param aDescription:
-	:type aDescription: Handle_TCollection_HAsciiString &
-	:param aOfProduct:
-	:type aOfProduct: Handle_StepBasic_Product &
 	:param aMakeOrBuy:
 	:type aMakeOrBuy: StepBasic_Source
-	:rtype: void
+	:rtype: None
 ") Init;
-		virtual void Init (const Handle_TCollection_HAsciiString & aId,const Handle_TCollection_HAsciiString & aDescription,const Handle_StepBasic_Product & aOfProduct,const StepBasic_Source aMakeOrBuy);
+		void Init (const Handle_TCollection_HAsciiString & aId,const Handle_TCollection_HAsciiString & aDescription,const Handle_StepBasic_Product & aOfProduct,const StepBasic_Source aMakeOrBuy);
 		%feature("compactdefaultargs") SetMakeOrBuy;
 		%feature("autodoc", "	:param aMakeOrBuy:
 	:type aMakeOrBuy: StepBasic_Source
@@ -12531,22 +10673,115 @@ class Handle_StepBasic_ProductDefinitionFormationWithSpecifiedSource : public Ha
         static const Handle_StepBasic_ProductDefinitionFormationWithSpecifiedSource DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_StepBasic_ProductDefinitionFormationWithSpecifiedSource {
     StepBasic_ProductDefinitionFormationWithSpecifiedSource* _get_reference() {
-    return (StepBasic_ProductDefinitionFormationWithSpecifiedSource*)$self->Access();
+    return (StepBasic_ProductDefinitionFormationWithSpecifiedSource*)$self->get();
     }
 };
 
 %extend Handle_StepBasic_ProductDefinitionFormationWithSpecifiedSource {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend StepBasic_ProductDefinitionFormationWithSpecifiedSource {
+	%pythoncode {
+	__repr__ = _dumps_object
+	}
+};
+%nodefaultctor StepBasic_ProductDefinitionReferenceWithLocalRepresentation;
+class StepBasic_ProductDefinitionReferenceWithLocalRepresentation : public StepBasic_ProductDefinition {
+	public:
+		%feature("compactdefaultargs") StepBasic_ProductDefinitionReferenceWithLocalRepresentation;
+		%feature("autodoc", "	* Returns a ProductDefinitionReferenceWithLocalRepresentation
+
+	:rtype: None
+") StepBasic_ProductDefinitionReferenceWithLocalRepresentation;
+		 StepBasic_ProductDefinitionReferenceWithLocalRepresentation ();
+		%feature("compactdefaultargs") Init;
+		%feature("autodoc", "	:param theSource:
+	:type theSource: Handle_StepBasic_ExternalSource &
+	:param theId:
+	:type theId: Handle_TCollection_HAsciiString &
+	:param theDescription:
+	:type theDescription: Handle_TCollection_HAsciiString &
+	:param theFormation:
+	:type theFormation: Handle_StepBasic_ProductDefinitionFormation &
+	:param theFrameOfReference:
+	:type theFrameOfReference: Handle_StepBasic_ProductDefinitionContext &
+	:rtype: None
+") Init;
+		void Init (const Handle_StepBasic_ExternalSource & theSource,const Handle_TCollection_HAsciiString & theId,const Handle_TCollection_HAsciiString & theDescription,const Handle_StepBasic_ProductDefinitionFormation & theFormation,const Handle_StepBasic_ProductDefinitionContext & theFrameOfReference);
+		%feature("compactdefaultargs") Source;
+		%feature("autodoc", "	* Returns field Source
+
+	:rtype: inline Handle_StepBasic_ExternalSource
+") Source;
+		inline Handle_StepBasic_ExternalSource Source ();
+		%feature("compactdefaultargs") SetSource;
+		%feature("autodoc", "	* Set field Source
+
+	:param theSource:
+	:type theSource: Handle_StepBasic_ExternalSource &
+	:rtype: inline void
+") SetSource;
+		inline void SetSource (const Handle_StepBasic_ExternalSource & theSource);
+};
+
+
+%extend StepBasic_ProductDefinitionReferenceWithLocalRepresentation {
+	%pythoncode {
+		def GetHandle(self):
+		    try:
+		        return self.thisHandle
+		    except:
+		        self.thisHandle = Handle_StepBasic_ProductDefinitionReferenceWithLocalRepresentation(self)
+		        self.thisown = False
+		        return self.thisHandle
+	}
+};
+
+%pythonappend Handle_StepBasic_ProductDefinitionReferenceWithLocalRepresentation::Handle_StepBasic_ProductDefinitionReferenceWithLocalRepresentation %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
+%nodefaultctor Handle_StepBasic_ProductDefinitionReferenceWithLocalRepresentation;
+class Handle_StepBasic_ProductDefinitionReferenceWithLocalRepresentation : public Handle_StepBasic_ProductDefinition {
+
+    public:
+        // constructors
+        Handle_StepBasic_ProductDefinitionReferenceWithLocalRepresentation();
+        Handle_StepBasic_ProductDefinitionReferenceWithLocalRepresentation(const Handle_StepBasic_ProductDefinitionReferenceWithLocalRepresentation &aHandle);
+        Handle_StepBasic_ProductDefinitionReferenceWithLocalRepresentation(const StepBasic_ProductDefinitionReferenceWithLocalRepresentation *anItem);
+        void Nullify();
+        Standard_Boolean IsNull() const;
+        static const Handle_StepBasic_ProductDefinitionReferenceWithLocalRepresentation DownCast(const Handle_Standard_Transient &AnObject);
+
+};
+
+%extend Handle_StepBasic_ProductDefinitionReferenceWithLocalRepresentation {
+    StepBasic_ProductDefinitionReferenceWithLocalRepresentation* _get_reference() {
+    return (StepBasic_ProductDefinitionReferenceWithLocalRepresentation*)$self->get();
+    }
+};
+
+%extend Handle_StepBasic_ProductDefinitionReferenceWithLocalRepresentation {
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
+};
+
+%extend StepBasic_ProductDefinitionReferenceWithLocalRepresentation {
 	%pythoncode {
 	__repr__ = _dumps_object
 	}
@@ -12634,19 +10869,20 @@ class Handle_StepBasic_ProductDefinitionWithAssociatedDocuments : public Handle_
         static const Handle_StepBasic_ProductDefinitionWithAssociatedDocuments DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_StepBasic_ProductDefinitionWithAssociatedDocuments {
     StepBasic_ProductDefinitionWithAssociatedDocuments* _get_reference() {
-    return (StepBasic_ProductDefinitionWithAssociatedDocuments*)$self->Access();
+    return (StepBasic_ProductDefinitionWithAssociatedDocuments*)$self->get();
     }
 };
 
 %extend Handle_StepBasic_ProductDefinitionWithAssociatedDocuments {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend StepBasic_ProductDefinitionWithAssociatedDocuments {
@@ -12670,21 +10906,11 @@ class StepBasic_ProductRelatedProductCategory : public StepBasic_ProductCategory
 	:type hasAdescription: bool
 	:param aDescription:
 	:type aDescription: Handle_TCollection_HAsciiString &
-	:rtype: void
-") Init;
-		virtual void Init (const Handle_TCollection_HAsciiString & aName,const Standard_Boolean hasAdescription,const Handle_TCollection_HAsciiString & aDescription);
-		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	:param aName:
-	:type aName: Handle_TCollection_HAsciiString &
-	:param hasAdescription:
-	:type hasAdescription: bool
-	:param aDescription:
-	:type aDescription: Handle_TCollection_HAsciiString &
 	:param aProducts:
 	:type aProducts: Handle_StepBasic_HArray1OfProduct &
-	:rtype: void
+	:rtype: None
 ") Init;
-		virtual void Init (const Handle_TCollection_HAsciiString & aName,const Standard_Boolean hasAdescription,const Handle_TCollection_HAsciiString & aDescription,const Handle_StepBasic_HArray1OfProduct & aProducts);
+		void Init (const Handle_TCollection_HAsciiString & aName,const Standard_Boolean hasAdescription,const Handle_TCollection_HAsciiString & aDescription,const Handle_StepBasic_HArray1OfProduct & aProducts);
 		%feature("compactdefaultargs") SetProducts;
 		%feature("autodoc", "	:param aProducts:
 	:type aProducts: Handle_StepBasic_HArray1OfProduct &
@@ -12739,19 +10965,20 @@ class Handle_StepBasic_ProductRelatedProductCategory : public Handle_StepBasic_P
         static const Handle_StepBasic_ProductRelatedProductCategory DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_StepBasic_ProductRelatedProductCategory {
     StepBasic_ProductRelatedProductCategory* _get_reference() {
-    return (StepBasic_ProductRelatedProductCategory*)$self->Access();
+    return (StepBasic_ProductRelatedProductCategory*)$self->get();
     }
 };
 
 %extend Handle_StepBasic_ProductRelatedProductCategory {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend StepBasic_ProductRelatedProductCategory {
@@ -12802,19 +11029,20 @@ class Handle_StepBasic_RatioMeasureWithUnit : public Handle_StepBasic_MeasureWit
         static const Handle_StepBasic_RatioMeasureWithUnit DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_StepBasic_RatioMeasureWithUnit {
     StepBasic_RatioMeasureWithUnit* _get_reference() {
-    return (StepBasic_RatioMeasureWithUnit*)$self->Access();
+    return (StepBasic_RatioMeasureWithUnit*)$self->get();
     }
 };
 
 %extend Handle_StepBasic_RatioMeasureWithUnit {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend StepBasic_RatioMeasureWithUnit {
@@ -12865,19 +11093,20 @@ class Handle_StepBasic_RatioUnit : public Handle_StepBasic_NamedUnit {
         static const Handle_StepBasic_RatioUnit DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_StepBasic_RatioUnit {
     StepBasic_RatioUnit* _get_reference() {
-    return (StepBasic_RatioUnit*)$self->Access();
+    return (StepBasic_RatioUnit*)$self->get();
     }
 };
 
 %extend Handle_StepBasic_RatioUnit {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend StepBasic_RatioUnit {
@@ -12895,21 +11124,15 @@ class StepBasic_SiUnit : public StepBasic_NamedUnit {
 ") StepBasic_SiUnit;
 		 StepBasic_SiUnit ();
 		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	:param aDimensions:
-	:type aDimensions: Handle_StepBasic_DimensionalExponents &
-	:rtype: void
-") Init;
-		virtual void Init (const Handle_StepBasic_DimensionalExponents & aDimensions);
-		%feature("compactdefaultargs") Init;
 		%feature("autodoc", "	:param hasAprefix:
 	:type hasAprefix: bool
 	:param aPrefix:
 	:type aPrefix: StepBasic_SiPrefix
 	:param aName:
 	:type aName: StepBasic_SiUnitName
-	:rtype: void
+	:rtype: None
 ") Init;
-		virtual void Init (const Standard_Boolean hasAprefix,const StepBasic_SiPrefix aPrefix,const StepBasic_SiUnitName aName);
+		void Init (const Standard_Boolean hasAprefix,const StepBasic_SiPrefix aPrefix,const StepBasic_SiUnitName aName);
 		%feature("compactdefaultargs") SetPrefix;
 		%feature("autodoc", "	:param aPrefix:
 	:type aPrefix: StepBasic_SiPrefix
@@ -12982,19 +11205,20 @@ class Handle_StepBasic_SiUnit : public Handle_StepBasic_NamedUnit {
         static const Handle_StepBasic_SiUnit DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_StepBasic_SiUnit {
     StepBasic_SiUnit* _get_reference() {
-    return (StepBasic_SiUnit*)$self->Access();
+    return (StepBasic_SiUnit*)$self->get();
     }
 };
 
 %extend Handle_StepBasic_SiUnit {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend StepBasic_SiUnit {
@@ -13045,19 +11269,20 @@ class Handle_StepBasic_SolidAngleMeasureWithUnit : public Handle_StepBasic_Measu
         static const Handle_StepBasic_SolidAngleMeasureWithUnit DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_StepBasic_SolidAngleMeasureWithUnit {
     StepBasic_SolidAngleMeasureWithUnit* _get_reference() {
-    return (StepBasic_SolidAngleMeasureWithUnit*)$self->Access();
+    return (StepBasic_SolidAngleMeasureWithUnit*)$self->get();
     }
 };
 
 %extend Handle_StepBasic_SolidAngleMeasureWithUnit {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend StepBasic_SolidAngleMeasureWithUnit {
@@ -13108,19 +11333,20 @@ class Handle_StepBasic_SolidAngleUnit : public Handle_StepBasic_NamedUnit {
         static const Handle_StepBasic_SolidAngleUnit DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_StepBasic_SolidAngleUnit {
     StepBasic_SolidAngleUnit* _get_reference() {
-    return (StepBasic_SolidAngleUnit*)$self->Access();
+    return (StepBasic_SolidAngleUnit*)$self->get();
     }
 };
 
 %extend Handle_StepBasic_SolidAngleUnit {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend StepBasic_SolidAngleUnit {
@@ -13171,19 +11397,20 @@ class Handle_StepBasic_ThermodynamicTemperatureUnit : public Handle_StepBasic_Na
         static const Handle_StepBasic_ThermodynamicTemperatureUnit DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_StepBasic_ThermodynamicTemperatureUnit {
     StepBasic_ThermodynamicTemperatureUnit* _get_reference() {
-    return (StepBasic_ThermodynamicTemperatureUnit*)$self->Access();
+    return (StepBasic_ThermodynamicTemperatureUnit*)$self->get();
     }
 };
 
 %extend Handle_StepBasic_ThermodynamicTemperatureUnit {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend StepBasic_ThermodynamicTemperatureUnit {
@@ -13234,19 +11461,20 @@ class Handle_StepBasic_TimeMeasureWithUnit : public Handle_StepBasic_MeasureWith
         static const Handle_StepBasic_TimeMeasureWithUnit DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_StepBasic_TimeMeasureWithUnit {
     StepBasic_TimeMeasureWithUnit* _get_reference() {
-    return (StepBasic_TimeMeasureWithUnit*)$self->Access();
+    return (StepBasic_TimeMeasureWithUnit*)$self->get();
     }
 };
 
 %extend Handle_StepBasic_TimeMeasureWithUnit {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend StepBasic_TimeMeasureWithUnit {
@@ -13297,19 +11525,20 @@ class Handle_StepBasic_TimeUnit : public Handle_StepBasic_NamedUnit {
         static const Handle_StepBasic_TimeUnit DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_StepBasic_TimeUnit {
     StepBasic_TimeUnit* _get_reference() {
-    return (StepBasic_TimeUnit*)$self->Access();
+    return (StepBasic_TimeUnit*)$self->get();
     }
 };
 
 %extend Handle_StepBasic_TimeUnit {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend StepBasic_TimeUnit {
@@ -13331,21 +11560,13 @@ class StepBasic_UncertaintyMeasureWithUnit : public StepBasic_MeasureWithUnit {
 	:type aValueComponent: Handle_StepBasic_MeasureValueMember &
 	:param aUnitComponent:
 	:type aUnitComponent: StepBasic_Unit &
-	:rtype: void
-") Init;
-		virtual void Init (const Handle_StepBasic_MeasureValueMember & aValueComponent,const StepBasic_Unit & aUnitComponent);
-		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	:param aValueComponent:
-	:type aValueComponent: Handle_StepBasic_MeasureValueMember &
-	:param aUnitComponent:
-	:type aUnitComponent: StepBasic_Unit &
 	:param aName:
 	:type aName: Handle_TCollection_HAsciiString &
 	:param aDescription:
 	:type aDescription: Handle_TCollection_HAsciiString &
-	:rtype: void
+	:rtype: None
 ") Init;
-		virtual void Init (const Handle_StepBasic_MeasureValueMember & aValueComponent,const StepBasic_Unit & aUnitComponent,const Handle_TCollection_HAsciiString & aName,const Handle_TCollection_HAsciiString & aDescription);
+		void Init (const Handle_StepBasic_MeasureValueMember & aValueComponent,const StepBasic_Unit & aUnitComponent,const Handle_TCollection_HAsciiString & aName,const Handle_TCollection_HAsciiString & aDescription);
 		%feature("compactdefaultargs") SetName;
 		%feature("autodoc", "	:param aName:
 	:type aName: Handle_TCollection_HAsciiString &
@@ -13400,19 +11621,20 @@ class Handle_StepBasic_UncertaintyMeasureWithUnit : public Handle_StepBasic_Meas
         static const Handle_StepBasic_UncertaintyMeasureWithUnit DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_StepBasic_UncertaintyMeasureWithUnit {
     StepBasic_UncertaintyMeasureWithUnit* _get_reference() {
-    return (StepBasic_UncertaintyMeasureWithUnit*)$self->Access();
+    return (StepBasic_UncertaintyMeasureWithUnit*)$self->get();
     }
 };
 
 %extend Handle_StepBasic_UncertaintyMeasureWithUnit {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend StepBasic_UncertaintyMeasureWithUnit {
@@ -13461,19 +11683,20 @@ class Handle_StepBasic_VolumeUnit : public Handle_StepBasic_NamedUnit {
         static const Handle_StepBasic_VolumeUnit DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_StepBasic_VolumeUnit {
     StepBasic_VolumeUnit* _get_reference() {
-    return (StepBasic_VolumeUnit*)$self->Access();
+    return (StepBasic_VolumeUnit*)$self->get();
     }
 };
 
 %extend Handle_StepBasic_VolumeUnit {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend StepBasic_VolumeUnit {
@@ -13493,21 +11716,15 @@ class StepBasic_WeekOfYearAndDayDate : public StepBasic_Date {
 		%feature("compactdefaultargs") Init;
 		%feature("autodoc", "	:param aYearComponent:
 	:type aYearComponent: int
-	:rtype: void
-") Init;
-		virtual void Init (const Standard_Integer aYearComponent);
-		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	:param aYearComponent:
-	:type aYearComponent: int
 	:param aWeekComponent:
 	:type aWeekComponent: int
 	:param hasAdayComponent:
 	:type hasAdayComponent: bool
 	:param aDayComponent:
 	:type aDayComponent: int
-	:rtype: void
+	:rtype: None
 ") Init;
-		virtual void Init (const Standard_Integer aYearComponent,const Standard_Integer aWeekComponent,const Standard_Boolean hasAdayComponent,const Standard_Integer aDayComponent);
+		void Init (const Standard_Integer aYearComponent,const Standard_Integer aWeekComponent,const Standard_Boolean hasAdayComponent,const Standard_Integer aDayComponent);
 		%feature("compactdefaultargs") SetWeekComponent;
 		%feature("autodoc", "	:param aWeekComponent:
 	:type aWeekComponent: int
@@ -13570,19 +11787,20 @@ class Handle_StepBasic_WeekOfYearAndDayDate : public Handle_StepBasic_Date {
         static const Handle_StepBasic_WeekOfYearAndDayDate DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_StepBasic_WeekOfYearAndDayDate {
     StepBasic_WeekOfYearAndDayDate* _get_reference() {
-    return (StepBasic_WeekOfYearAndDayDate*)$self->Access();
+    return (StepBasic_WeekOfYearAndDayDate*)$self->get();
     }
 };
 
 %extend Handle_StepBasic_WeekOfYearAndDayDate {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend StepBasic_WeekOfYearAndDayDate {
@@ -13643,19 +11861,20 @@ class Handle_StepBasic_ConversionBasedUnitAndAreaUnit : public Handle_StepBasic_
         static const Handle_StepBasic_ConversionBasedUnitAndAreaUnit DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_StepBasic_ConversionBasedUnitAndAreaUnit {
     StepBasic_ConversionBasedUnitAndAreaUnit* _get_reference() {
-    return (StepBasic_ConversionBasedUnitAndAreaUnit*)$self->Access();
+    return (StepBasic_ConversionBasedUnitAndAreaUnit*)$self->get();
     }
 };
 
 %extend Handle_StepBasic_ConversionBasedUnitAndAreaUnit {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend StepBasic_ConversionBasedUnitAndAreaUnit {
@@ -13675,19 +11894,13 @@ class StepBasic_ConversionBasedUnitAndLengthUnit : public StepBasic_ConversionBa
 		%feature("compactdefaultargs") Init;
 		%feature("autodoc", "	:param aDimensions:
 	:type aDimensions: Handle_StepBasic_DimensionalExponents &
-	:rtype: void
-") Init;
-		virtual void Init (const Handle_StepBasic_DimensionalExponents & aDimensions);
-		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	:param aDimensions:
-	:type aDimensions: Handle_StepBasic_DimensionalExponents &
 	:param aName:
 	:type aName: Handle_TCollection_HAsciiString &
 	:param aConversionFactor:
 	:type aConversionFactor: Handle_StepBasic_MeasureWithUnit &
-	:rtype: void
+	:rtype: None
 ") Init;
-		virtual void Init (const Handle_StepBasic_DimensionalExponents & aDimensions,const Handle_TCollection_HAsciiString & aName,const Handle_StepBasic_MeasureWithUnit & aConversionFactor);
+		void Init (const Handle_StepBasic_DimensionalExponents & aDimensions,const Handle_TCollection_HAsciiString & aName,const Handle_StepBasic_MeasureWithUnit & aConversionFactor);
 		%feature("compactdefaultargs") SetLengthUnit;
 		%feature("autodoc", "	:param aLengthUnit:
 	:type aLengthUnit: Handle_StepBasic_LengthUnit &
@@ -13732,19 +11945,20 @@ class Handle_StepBasic_ConversionBasedUnitAndLengthUnit : public Handle_StepBasi
         static const Handle_StepBasic_ConversionBasedUnitAndLengthUnit DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_StepBasic_ConversionBasedUnitAndLengthUnit {
     StepBasic_ConversionBasedUnitAndLengthUnit* _get_reference() {
-    return (StepBasic_ConversionBasedUnitAndLengthUnit*)$self->Access();
+    return (StepBasic_ConversionBasedUnitAndLengthUnit*)$self->get();
     }
 };
 
 %extend Handle_StepBasic_ConversionBasedUnitAndLengthUnit {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend StepBasic_ConversionBasedUnitAndLengthUnit {
@@ -13764,19 +11978,13 @@ class StepBasic_ConversionBasedUnitAndMassUnit : public StepBasic_ConversionBase
 		%feature("compactdefaultargs") Init;
 		%feature("autodoc", "	:param aDimensions:
 	:type aDimensions: Handle_StepBasic_DimensionalExponents &
-	:rtype: void
-") Init;
-		virtual void Init (const Handle_StepBasic_DimensionalExponents & aDimensions);
-		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	:param aDimensions:
-	:type aDimensions: Handle_StepBasic_DimensionalExponents &
 	:param aName:
 	:type aName: Handle_TCollection_HAsciiString &
 	:param aConversionFactor:
 	:type aConversionFactor: Handle_StepBasic_MeasureWithUnit &
-	:rtype: void
+	:rtype: None
 ") Init;
-		virtual void Init (const Handle_StepBasic_DimensionalExponents & aDimensions,const Handle_TCollection_HAsciiString & aName,const Handle_StepBasic_MeasureWithUnit & aConversionFactor);
+		void Init (const Handle_StepBasic_DimensionalExponents & aDimensions,const Handle_TCollection_HAsciiString & aName,const Handle_StepBasic_MeasureWithUnit & aConversionFactor);
 		%feature("compactdefaultargs") SetMassUnit;
 		%feature("autodoc", "	:param aMassUnit:
 	:type aMassUnit: Handle_StepBasic_MassUnit &
@@ -13821,19 +12029,20 @@ class Handle_StepBasic_ConversionBasedUnitAndMassUnit : public Handle_StepBasic_
         static const Handle_StepBasic_ConversionBasedUnitAndMassUnit DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_StepBasic_ConversionBasedUnitAndMassUnit {
     StepBasic_ConversionBasedUnitAndMassUnit* _get_reference() {
-    return (StepBasic_ConversionBasedUnitAndMassUnit*)$self->Access();
+    return (StepBasic_ConversionBasedUnitAndMassUnit*)$self->get();
     }
 };
 
 %extend Handle_StepBasic_ConversionBasedUnitAndMassUnit {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend StepBasic_ConversionBasedUnitAndMassUnit {
@@ -13853,19 +12062,13 @@ class StepBasic_ConversionBasedUnitAndPlaneAngleUnit : public StepBasic_Conversi
 		%feature("compactdefaultargs") Init;
 		%feature("autodoc", "	:param aDimensions:
 	:type aDimensions: Handle_StepBasic_DimensionalExponents &
-	:rtype: void
-") Init;
-		virtual void Init (const Handle_StepBasic_DimensionalExponents & aDimensions);
-		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	:param aDimensions:
-	:type aDimensions: Handle_StepBasic_DimensionalExponents &
 	:param aName:
 	:type aName: Handle_TCollection_HAsciiString &
 	:param aConversionFactor:
 	:type aConversionFactor: Handle_StepBasic_MeasureWithUnit &
-	:rtype: void
+	:rtype: None
 ") Init;
-		virtual void Init (const Handle_StepBasic_DimensionalExponents & aDimensions,const Handle_TCollection_HAsciiString & aName,const Handle_StepBasic_MeasureWithUnit & aConversionFactor);
+		void Init (const Handle_StepBasic_DimensionalExponents & aDimensions,const Handle_TCollection_HAsciiString & aName,const Handle_StepBasic_MeasureWithUnit & aConversionFactor);
 		%feature("compactdefaultargs") SetPlaneAngleUnit;
 		%feature("autodoc", "	:param aPlaneAngleUnit:
 	:type aPlaneAngleUnit: Handle_StepBasic_PlaneAngleUnit &
@@ -13910,19 +12113,20 @@ class Handle_StepBasic_ConversionBasedUnitAndPlaneAngleUnit : public Handle_Step
         static const Handle_StepBasic_ConversionBasedUnitAndPlaneAngleUnit DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_StepBasic_ConversionBasedUnitAndPlaneAngleUnit {
     StepBasic_ConversionBasedUnitAndPlaneAngleUnit* _get_reference() {
-    return (StepBasic_ConversionBasedUnitAndPlaneAngleUnit*)$self->Access();
+    return (StepBasic_ConversionBasedUnitAndPlaneAngleUnit*)$self->get();
     }
 };
 
 %extend Handle_StepBasic_ConversionBasedUnitAndPlaneAngleUnit {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend StepBasic_ConversionBasedUnitAndPlaneAngleUnit {
@@ -13942,19 +12146,13 @@ class StepBasic_ConversionBasedUnitAndRatioUnit : public StepBasic_ConversionBas
 		%feature("compactdefaultargs") Init;
 		%feature("autodoc", "	:param aDimensions:
 	:type aDimensions: Handle_StepBasic_DimensionalExponents &
-	:rtype: void
-") Init;
-		virtual void Init (const Handle_StepBasic_DimensionalExponents & aDimensions);
-		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	:param aDimensions:
-	:type aDimensions: Handle_StepBasic_DimensionalExponents &
 	:param aName:
 	:type aName: Handle_TCollection_HAsciiString &
 	:param aConversionFactor:
 	:type aConversionFactor: Handle_StepBasic_MeasureWithUnit &
-	:rtype: void
+	:rtype: None
 ") Init;
-		virtual void Init (const Handle_StepBasic_DimensionalExponents & aDimensions,const Handle_TCollection_HAsciiString & aName,const Handle_StepBasic_MeasureWithUnit & aConversionFactor);
+		void Init (const Handle_StepBasic_DimensionalExponents & aDimensions,const Handle_TCollection_HAsciiString & aName,const Handle_StepBasic_MeasureWithUnit & aConversionFactor);
 		%feature("compactdefaultargs") SetRatioUnit;
 		%feature("autodoc", "	:param aRatioUnit:
 	:type aRatioUnit: Handle_StepBasic_RatioUnit &
@@ -13999,19 +12197,20 @@ class Handle_StepBasic_ConversionBasedUnitAndRatioUnit : public Handle_StepBasic
         static const Handle_StepBasic_ConversionBasedUnitAndRatioUnit DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_StepBasic_ConversionBasedUnitAndRatioUnit {
     StepBasic_ConversionBasedUnitAndRatioUnit* _get_reference() {
-    return (StepBasic_ConversionBasedUnitAndRatioUnit*)$self->Access();
+    return (StepBasic_ConversionBasedUnitAndRatioUnit*)$self->get();
     }
 };
 
 %extend Handle_StepBasic_ConversionBasedUnitAndRatioUnit {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend StepBasic_ConversionBasedUnitAndRatioUnit {
@@ -14031,19 +12230,13 @@ class StepBasic_ConversionBasedUnitAndSolidAngleUnit : public StepBasic_Conversi
 		%feature("compactdefaultargs") Init;
 		%feature("autodoc", "	:param aDimensions:
 	:type aDimensions: Handle_StepBasic_DimensionalExponents &
-	:rtype: void
-") Init;
-		virtual void Init (const Handle_StepBasic_DimensionalExponents & aDimensions);
-		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	:param aDimensions:
-	:type aDimensions: Handle_StepBasic_DimensionalExponents &
 	:param aName:
 	:type aName: Handle_TCollection_HAsciiString &
 	:param aConversionFactor:
 	:type aConversionFactor: Handle_StepBasic_MeasureWithUnit &
-	:rtype: void
+	:rtype: None
 ") Init;
-		virtual void Init (const Handle_StepBasic_DimensionalExponents & aDimensions,const Handle_TCollection_HAsciiString & aName,const Handle_StepBasic_MeasureWithUnit & aConversionFactor);
+		void Init (const Handle_StepBasic_DimensionalExponents & aDimensions,const Handle_TCollection_HAsciiString & aName,const Handle_StepBasic_MeasureWithUnit & aConversionFactor);
 		%feature("compactdefaultargs") SetSolidAngleUnit;
 		%feature("autodoc", "	:param aSolidAngleUnit:
 	:type aSolidAngleUnit: Handle_StepBasic_SolidAngleUnit &
@@ -14088,19 +12281,20 @@ class Handle_StepBasic_ConversionBasedUnitAndSolidAngleUnit : public Handle_Step
         static const Handle_StepBasic_ConversionBasedUnitAndSolidAngleUnit DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_StepBasic_ConversionBasedUnitAndSolidAngleUnit {
     StepBasic_ConversionBasedUnitAndSolidAngleUnit* _get_reference() {
-    return (StepBasic_ConversionBasedUnitAndSolidAngleUnit*)$self->Access();
+    return (StepBasic_ConversionBasedUnitAndSolidAngleUnit*)$self->get();
     }
 };
 
 %extend Handle_StepBasic_ConversionBasedUnitAndSolidAngleUnit {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend StepBasic_ConversionBasedUnitAndSolidAngleUnit {
@@ -14120,19 +12314,13 @@ class StepBasic_ConversionBasedUnitAndTimeUnit : public StepBasic_ConversionBase
 		%feature("compactdefaultargs") Init;
 		%feature("autodoc", "	:param aDimensions:
 	:type aDimensions: Handle_StepBasic_DimensionalExponents &
-	:rtype: void
-") Init;
-		virtual void Init (const Handle_StepBasic_DimensionalExponents & aDimensions);
-		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	:param aDimensions:
-	:type aDimensions: Handle_StepBasic_DimensionalExponents &
 	:param aName:
 	:type aName: Handle_TCollection_HAsciiString &
 	:param aConversionFactor:
 	:type aConversionFactor: Handle_StepBasic_MeasureWithUnit &
-	:rtype: void
+	:rtype: None
 ") Init;
-		virtual void Init (const Handle_StepBasic_DimensionalExponents & aDimensions,const Handle_TCollection_HAsciiString & aName,const Handle_StepBasic_MeasureWithUnit & aConversionFactor);
+		void Init (const Handle_StepBasic_DimensionalExponents & aDimensions,const Handle_TCollection_HAsciiString & aName,const Handle_StepBasic_MeasureWithUnit & aConversionFactor);
 		%feature("compactdefaultargs") SetTimeUnit;
 		%feature("autodoc", "	:param aTimeUnit:
 	:type aTimeUnit: Handle_StepBasic_TimeUnit &
@@ -14177,19 +12365,20 @@ class Handle_StepBasic_ConversionBasedUnitAndTimeUnit : public Handle_StepBasic_
         static const Handle_StepBasic_ConversionBasedUnitAndTimeUnit DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_StepBasic_ConversionBasedUnitAndTimeUnit {
     StepBasic_ConversionBasedUnitAndTimeUnit* _get_reference() {
-    return (StepBasic_ConversionBasedUnitAndTimeUnit*)$self->Access();
+    return (StepBasic_ConversionBasedUnitAndTimeUnit*)$self->get();
     }
 };
 
 %extend Handle_StepBasic_ConversionBasedUnitAndTimeUnit {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend StepBasic_ConversionBasedUnitAndTimeUnit {
@@ -14250,19 +12439,20 @@ class Handle_StepBasic_ConversionBasedUnitAndVolumeUnit : public Handle_StepBasi
         static const Handle_StepBasic_ConversionBasedUnitAndVolumeUnit DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_StepBasic_ConversionBasedUnitAndVolumeUnit {
     StepBasic_ConversionBasedUnitAndVolumeUnit* _get_reference() {
-    return (StepBasic_ConversionBasedUnitAndVolumeUnit*)$self->Access();
+    return (StepBasic_ConversionBasedUnitAndVolumeUnit*)$self->get();
     }
 };
 
 %extend Handle_StepBasic_ConversionBasedUnitAndVolumeUnit {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend StepBasic_ConversionBasedUnitAndVolumeUnit {
@@ -14311,19 +12501,20 @@ class Handle_StepBasic_DesignContext : public Handle_StepBasic_ProductDefinition
         static const Handle_StepBasic_DesignContext DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_StepBasic_DesignContext {
     StepBasic_DesignContext* _get_reference() {
-    return (StepBasic_DesignContext*)$self->Access();
+    return (StepBasic_DesignContext*)$self->get();
     }
 };
 
 %extend Handle_StepBasic_DesignContext {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend StepBasic_DesignContext {
@@ -14374,19 +12565,20 @@ class Handle_StepBasic_MechanicalContext : public Handle_StepBasic_ProductContex
         static const Handle_StepBasic_MechanicalContext DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_StepBasic_MechanicalContext {
     StepBasic_MechanicalContext* _get_reference() {
-    return (StepBasic_MechanicalContext*)$self->Access();
+    return (StepBasic_MechanicalContext*)$self->get();
     }
 };
 
 %extend Handle_StepBasic_MechanicalContext {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend StepBasic_MechanicalContext {
@@ -14437,19 +12629,20 @@ class Handle_StepBasic_ProductType : public Handle_StepBasic_ProductRelatedProdu
         static const Handle_StepBasic_ProductType DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_StepBasic_ProductType {
     StepBasic_ProductType* _get_reference() {
-    return (StepBasic_ProductType*)$self->Access();
+    return (StepBasic_ProductType*)$self->get();
     }
 };
 
 %extend Handle_StepBasic_ProductType {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend StepBasic_ProductType {
@@ -14476,16 +12669,6 @@ class StepBasic_SiUnitAndAreaUnit : public StepBasic_SiUnit {
 		%feature("autodoc", "	:rtype: Handle_StepBasic_AreaUnit
 ") AreaUnit;
 		Handle_StepBasic_AreaUnit AreaUnit ();
-		%feature("compactdefaultargs") SetDimensions;
-		%feature("autodoc", "	:param aDimensions:
-	:type aDimensions: Handle_StepBasic_DimensionalExponents &
-	:rtype: void
-") SetDimensions;
-		virtual void SetDimensions (const Handle_StepBasic_DimensionalExponents & aDimensions);
-		%feature("compactdefaultargs") Dimensions;
-		%feature("autodoc", "	:rtype: Handle_StepBasic_DimensionalExponents
-") Dimensions;
-		virtual Handle_StepBasic_DimensionalExponents Dimensions ();
 };
 
 
@@ -14520,19 +12703,20 @@ class Handle_StepBasic_SiUnitAndAreaUnit : public Handle_StepBasic_SiUnit {
         static const Handle_StepBasic_SiUnitAndAreaUnit DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_StepBasic_SiUnitAndAreaUnit {
     StepBasic_SiUnitAndAreaUnit* _get_reference() {
-    return (StepBasic_SiUnitAndAreaUnit*)$self->Access();
+    return (StepBasic_SiUnitAndAreaUnit*)$self->get();
     }
 };
 
 %extend Handle_StepBasic_SiUnitAndAreaUnit {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend StepBasic_SiUnitAndAreaUnit {
@@ -14550,21 +12734,15 @@ class StepBasic_SiUnitAndLengthUnit : public StepBasic_SiUnit {
 ") StepBasic_SiUnitAndLengthUnit;
 		 StepBasic_SiUnitAndLengthUnit ();
 		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	:param aDimensions:
-	:type aDimensions: Handle_StepBasic_DimensionalExponents &
-	:rtype: void
-") Init;
-		virtual void Init (const Handle_StepBasic_DimensionalExponents & aDimensions);
-		%feature("compactdefaultargs") Init;
 		%feature("autodoc", "	:param hasAprefix:
 	:type hasAprefix: bool
 	:param aPrefix:
 	:type aPrefix: StepBasic_SiPrefix
 	:param aName:
 	:type aName: StepBasic_SiUnitName
-	:rtype: void
+	:rtype: None
 ") Init;
-		virtual void Init (const Standard_Boolean hasAprefix,const StepBasic_SiPrefix aPrefix,const StepBasic_SiUnitName aName);
+		void Init (const Standard_Boolean hasAprefix,const StepBasic_SiPrefix aPrefix,const StepBasic_SiUnitName aName);
 		%feature("compactdefaultargs") SetLengthUnit;
 		%feature("autodoc", "	:param aLengthUnit:
 	:type aLengthUnit: Handle_StepBasic_LengthUnit &
@@ -14609,19 +12787,20 @@ class Handle_StepBasic_SiUnitAndLengthUnit : public Handle_StepBasic_SiUnit {
         static const Handle_StepBasic_SiUnitAndLengthUnit DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_StepBasic_SiUnitAndLengthUnit {
     StepBasic_SiUnitAndLengthUnit* _get_reference() {
-    return (StepBasic_SiUnitAndLengthUnit*)$self->Access();
+    return (StepBasic_SiUnitAndLengthUnit*)$self->get();
     }
 };
 
 %extend Handle_StepBasic_SiUnitAndLengthUnit {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend StepBasic_SiUnitAndLengthUnit {
@@ -14639,21 +12818,15 @@ class StepBasic_SiUnitAndMassUnit : public StepBasic_SiUnit {
 ") StepBasic_SiUnitAndMassUnit;
 		 StepBasic_SiUnitAndMassUnit ();
 		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	:param aDimensions:
-	:type aDimensions: Handle_StepBasic_DimensionalExponents &
-	:rtype: void
-") Init;
-		virtual void Init (const Handle_StepBasic_DimensionalExponents & aDimensions);
-		%feature("compactdefaultargs") Init;
 		%feature("autodoc", "	:param hasAprefix:
 	:type hasAprefix: bool
 	:param aPrefix:
 	:type aPrefix: StepBasic_SiPrefix
 	:param aName:
 	:type aName: StepBasic_SiUnitName
-	:rtype: void
+	:rtype: None
 ") Init;
-		virtual void Init (const Standard_Boolean hasAprefix,const StepBasic_SiPrefix aPrefix,const StepBasic_SiUnitName aName);
+		void Init (const Standard_Boolean hasAprefix,const StepBasic_SiPrefix aPrefix,const StepBasic_SiUnitName aName);
 		%feature("compactdefaultargs") SetMassUnit;
 		%feature("autodoc", "	:param aMassUnit:
 	:type aMassUnit: Handle_StepBasic_MassUnit &
@@ -14698,19 +12871,20 @@ class Handle_StepBasic_SiUnitAndMassUnit : public Handle_StepBasic_SiUnit {
         static const Handle_StepBasic_SiUnitAndMassUnit DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_StepBasic_SiUnitAndMassUnit {
     StepBasic_SiUnitAndMassUnit* _get_reference() {
-    return (StepBasic_SiUnitAndMassUnit*)$self->Access();
+    return (StepBasic_SiUnitAndMassUnit*)$self->get();
     }
 };
 
 %extend Handle_StepBasic_SiUnitAndMassUnit {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend StepBasic_SiUnitAndMassUnit {
@@ -14728,21 +12902,15 @@ class StepBasic_SiUnitAndPlaneAngleUnit : public StepBasic_SiUnit {
 ") StepBasic_SiUnitAndPlaneAngleUnit;
 		 StepBasic_SiUnitAndPlaneAngleUnit ();
 		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	:param aDimensions:
-	:type aDimensions: Handle_StepBasic_DimensionalExponents &
-	:rtype: void
-") Init;
-		virtual void Init (const Handle_StepBasic_DimensionalExponents & aDimensions);
-		%feature("compactdefaultargs") Init;
 		%feature("autodoc", "	:param hasAprefix:
 	:type hasAprefix: bool
 	:param aPrefix:
 	:type aPrefix: StepBasic_SiPrefix
 	:param aName:
 	:type aName: StepBasic_SiUnitName
-	:rtype: void
+	:rtype: None
 ") Init;
-		virtual void Init (const Standard_Boolean hasAprefix,const StepBasic_SiPrefix aPrefix,const StepBasic_SiUnitName aName);
+		void Init (const Standard_Boolean hasAprefix,const StepBasic_SiPrefix aPrefix,const StepBasic_SiUnitName aName);
 		%feature("compactdefaultargs") SetPlaneAngleUnit;
 		%feature("autodoc", "	:param aPlaneAngleUnit:
 	:type aPlaneAngleUnit: Handle_StepBasic_PlaneAngleUnit &
@@ -14787,19 +12955,20 @@ class Handle_StepBasic_SiUnitAndPlaneAngleUnit : public Handle_StepBasic_SiUnit 
         static const Handle_StepBasic_SiUnitAndPlaneAngleUnit DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_StepBasic_SiUnitAndPlaneAngleUnit {
     StepBasic_SiUnitAndPlaneAngleUnit* _get_reference() {
-    return (StepBasic_SiUnitAndPlaneAngleUnit*)$self->Access();
+    return (StepBasic_SiUnitAndPlaneAngleUnit*)$self->get();
     }
 };
 
 %extend Handle_StepBasic_SiUnitAndPlaneAngleUnit {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend StepBasic_SiUnitAndPlaneAngleUnit {
@@ -14817,21 +12986,15 @@ class StepBasic_SiUnitAndRatioUnit : public StepBasic_SiUnit {
 ") StepBasic_SiUnitAndRatioUnit;
 		 StepBasic_SiUnitAndRatioUnit ();
 		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	:param aDimensions:
-	:type aDimensions: Handle_StepBasic_DimensionalExponents &
-	:rtype: void
-") Init;
-		virtual void Init (const Handle_StepBasic_DimensionalExponents & aDimensions);
-		%feature("compactdefaultargs") Init;
 		%feature("autodoc", "	:param hasAprefix:
 	:type hasAprefix: bool
 	:param aPrefix:
 	:type aPrefix: StepBasic_SiPrefix
 	:param aName:
 	:type aName: StepBasic_SiUnitName
-	:rtype: void
+	:rtype: None
 ") Init;
-		virtual void Init (const Standard_Boolean hasAprefix,const StepBasic_SiPrefix aPrefix,const StepBasic_SiUnitName aName);
+		void Init (const Standard_Boolean hasAprefix,const StepBasic_SiPrefix aPrefix,const StepBasic_SiUnitName aName);
 		%feature("compactdefaultargs") SetRatioUnit;
 		%feature("autodoc", "	:param aRatioUnit:
 	:type aRatioUnit: Handle_StepBasic_RatioUnit &
@@ -14876,19 +13039,20 @@ class Handle_StepBasic_SiUnitAndRatioUnit : public Handle_StepBasic_SiUnit {
         static const Handle_StepBasic_SiUnitAndRatioUnit DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_StepBasic_SiUnitAndRatioUnit {
     StepBasic_SiUnitAndRatioUnit* _get_reference() {
-    return (StepBasic_SiUnitAndRatioUnit*)$self->Access();
+    return (StepBasic_SiUnitAndRatioUnit*)$self->get();
     }
 };
 
 %extend Handle_StepBasic_SiUnitAndRatioUnit {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend StepBasic_SiUnitAndRatioUnit {
@@ -14906,21 +13070,15 @@ class StepBasic_SiUnitAndSolidAngleUnit : public StepBasic_SiUnit {
 ") StepBasic_SiUnitAndSolidAngleUnit;
 		 StepBasic_SiUnitAndSolidAngleUnit ();
 		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	:param aDimensions:
-	:type aDimensions: Handle_StepBasic_DimensionalExponents &
-	:rtype: void
-") Init;
-		virtual void Init (const Handle_StepBasic_DimensionalExponents & aDimensions);
-		%feature("compactdefaultargs") Init;
 		%feature("autodoc", "	:param hasAprefix:
 	:type hasAprefix: bool
 	:param aPrefix:
 	:type aPrefix: StepBasic_SiPrefix
 	:param aName:
 	:type aName: StepBasic_SiUnitName
-	:rtype: void
+	:rtype: None
 ") Init;
-		virtual void Init (const Standard_Boolean hasAprefix,const StepBasic_SiPrefix aPrefix,const StepBasic_SiUnitName aName);
+		void Init (const Standard_Boolean hasAprefix,const StepBasic_SiPrefix aPrefix,const StepBasic_SiUnitName aName);
 		%feature("compactdefaultargs") SetSolidAngleUnit;
 		%feature("autodoc", "	:param aSolidAngleUnit:
 	:type aSolidAngleUnit: Handle_StepBasic_SolidAngleUnit &
@@ -14965,19 +13123,20 @@ class Handle_StepBasic_SiUnitAndSolidAngleUnit : public Handle_StepBasic_SiUnit 
         static const Handle_StepBasic_SiUnitAndSolidAngleUnit DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_StepBasic_SiUnitAndSolidAngleUnit {
     StepBasic_SiUnitAndSolidAngleUnit* _get_reference() {
-    return (StepBasic_SiUnitAndSolidAngleUnit*)$self->Access();
+    return (StepBasic_SiUnitAndSolidAngleUnit*)$self->get();
     }
 };
 
 %extend Handle_StepBasic_SiUnitAndSolidAngleUnit {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend StepBasic_SiUnitAndSolidAngleUnit {
@@ -14995,21 +13154,15 @@ class StepBasic_SiUnitAndThermodynamicTemperatureUnit : public StepBasic_SiUnit 
 ") StepBasic_SiUnitAndThermodynamicTemperatureUnit;
 		 StepBasic_SiUnitAndThermodynamicTemperatureUnit ();
 		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	:param aDimensions:
-	:type aDimensions: Handle_StepBasic_DimensionalExponents &
-	:rtype: void
-") Init;
-		virtual void Init (const Handle_StepBasic_DimensionalExponents & aDimensions);
-		%feature("compactdefaultargs") Init;
 		%feature("autodoc", "	:param hasAprefix:
 	:type hasAprefix: bool
 	:param aPrefix:
 	:type aPrefix: StepBasic_SiPrefix
 	:param aName:
 	:type aName: StepBasic_SiUnitName
-	:rtype: void
+	:rtype: None
 ") Init;
-		virtual void Init (const Standard_Boolean hasAprefix,const StepBasic_SiPrefix aPrefix,const StepBasic_SiUnitName aName);
+		void Init (const Standard_Boolean hasAprefix,const StepBasic_SiPrefix aPrefix,const StepBasic_SiUnitName aName);
 		%feature("compactdefaultargs") SetThermodynamicTemperatureUnit;
 		%feature("autodoc", "	:param aThermodynamicTemperatureUnit:
 	:type aThermodynamicTemperatureUnit: Handle_StepBasic_ThermodynamicTemperatureUnit &
@@ -15054,19 +13207,20 @@ class Handle_StepBasic_SiUnitAndThermodynamicTemperatureUnit : public Handle_Ste
         static const Handle_StepBasic_SiUnitAndThermodynamicTemperatureUnit DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_StepBasic_SiUnitAndThermodynamicTemperatureUnit {
     StepBasic_SiUnitAndThermodynamicTemperatureUnit* _get_reference() {
-    return (StepBasic_SiUnitAndThermodynamicTemperatureUnit*)$self->Access();
+    return (StepBasic_SiUnitAndThermodynamicTemperatureUnit*)$self->get();
     }
 };
 
 %extend Handle_StepBasic_SiUnitAndThermodynamicTemperatureUnit {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend StepBasic_SiUnitAndThermodynamicTemperatureUnit {
@@ -15084,21 +13238,15 @@ class StepBasic_SiUnitAndTimeUnit : public StepBasic_SiUnit {
 ") StepBasic_SiUnitAndTimeUnit;
 		 StepBasic_SiUnitAndTimeUnit ();
 		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	:param aDimensions:
-	:type aDimensions: Handle_StepBasic_DimensionalExponents &
-	:rtype: void
-") Init;
-		virtual void Init (const Handle_StepBasic_DimensionalExponents & aDimensions);
-		%feature("compactdefaultargs") Init;
 		%feature("autodoc", "	:param hasAprefix:
 	:type hasAprefix: bool
 	:param aPrefix:
 	:type aPrefix: StepBasic_SiPrefix
 	:param aName:
 	:type aName: StepBasic_SiUnitName
-	:rtype: void
+	:rtype: None
 ") Init;
-		virtual void Init (const Standard_Boolean hasAprefix,const StepBasic_SiPrefix aPrefix,const StepBasic_SiUnitName aName);
+		void Init (const Standard_Boolean hasAprefix,const StepBasic_SiPrefix aPrefix,const StepBasic_SiUnitName aName);
 		%feature("compactdefaultargs") SetTimeUnit;
 		%feature("autodoc", "	:param aTimeUnit:
 	:type aTimeUnit: Handle_StepBasic_TimeUnit &
@@ -15143,19 +13291,20 @@ class Handle_StepBasic_SiUnitAndTimeUnit : public Handle_StepBasic_SiUnit {
         static const Handle_StepBasic_SiUnitAndTimeUnit DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_StepBasic_SiUnitAndTimeUnit {
     StepBasic_SiUnitAndTimeUnit* _get_reference() {
-    return (StepBasic_SiUnitAndTimeUnit*)$self->Access();
+    return (StepBasic_SiUnitAndTimeUnit*)$self->get();
     }
 };
 
 %extend Handle_StepBasic_SiUnitAndTimeUnit {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend StepBasic_SiUnitAndTimeUnit {
@@ -15182,16 +13331,6 @@ class StepBasic_SiUnitAndVolumeUnit : public StepBasic_SiUnit {
 		%feature("autodoc", "	:rtype: Handle_StepBasic_VolumeUnit
 ") VolumeUnit;
 		Handle_StepBasic_VolumeUnit VolumeUnit ();
-		%feature("compactdefaultargs") SetDimensions;
-		%feature("autodoc", "	:param aDimensions:
-	:type aDimensions: Handle_StepBasic_DimensionalExponents &
-	:rtype: void
-") SetDimensions;
-		virtual void SetDimensions (const Handle_StepBasic_DimensionalExponents & aDimensions);
-		%feature("compactdefaultargs") Dimensions;
-		%feature("autodoc", "	:rtype: Handle_StepBasic_DimensionalExponents
-") Dimensions;
-		virtual Handle_StepBasic_DimensionalExponents Dimensions ();
 };
 
 
@@ -15226,19 +13365,20 @@ class Handle_StepBasic_SiUnitAndVolumeUnit : public Handle_StepBasic_SiUnit {
         static const Handle_StepBasic_SiUnitAndVolumeUnit DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_StepBasic_SiUnitAndVolumeUnit {
     StepBasic_SiUnitAndVolumeUnit* _get_reference() {
-    return (StepBasic_SiUnitAndVolumeUnit*)$self->Access();
+    return (StepBasic_SiUnitAndVolumeUnit*)$self->get();
     }
 };
 
 %extend Handle_StepBasic_SiUnitAndVolumeUnit {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend StepBasic_SiUnitAndVolumeUnit {

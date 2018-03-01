@@ -1,5 +1,5 @@
 /*
-Copyright 2008-2017 Thomas Paviot (tpaviot@gmail.com)
+Copyright 2008-2018 Thomas Paviot (tpaviot@gmail.com)
 
 
 This file is part of pythonOCC.
@@ -57,6 +57,28 @@ def register_handle(handle, base_object):
 typedef Handle_NCollection_BaseAllocator TDF_HAllocator;
 typedef TDF_LabelNode * TDF_LabelNodePtr;
 /* end typedefs declaration */
+
+/* templates */
+%template(TDF_AttributeList) NCollection_List <Handle_TDF_Attribute>;
+%template(TDF_IDMap) NCollection_Map <Standard_GUID , Standard_GUID>;
+%template(TDF_LabelSequence) NCollection_Sequence <TDF_Label>;
+%template(TDF_LabelDoubleMap) NCollection_DoubleMap <TDF_Label , TDF_Label , TDF_LabelMapHasher , TDF_LabelMapHasher>;
+%template(TDF_LabelList) NCollection_List <TDF_Label>;
+%template(TDF_AttributeDoubleMap) NCollection_DoubleMap <Handle_TDF_Attribute , Handle_TDF_Attribute , TColStd_MapTransientHasher , TColStd_MapTransientHasher>;
+%template(TDF_DeltaList) NCollection_List <Handle_TDF_Delta>;
+%template(TDF_AttributeSequence) NCollection_Sequence <Handle_TDF_Attribute>;
+%template(TDF_AttributeMap) NCollection_Map <Handle_TDF_Attribute , TColStd_MapTransientHasher>;
+%template(TDF_GUIDProgIDMap) NCollection_DoubleMap <Standard_GUID , TCollection_ExtendedString , Standard_GUID , TCollection_ExtendedString>;
+%template(TDF_LabelDataMap) NCollection_DataMap <TDF_Label , TDF_Label , TDF_LabelMapHasher>;
+%template(TDF_AttributeDataMap) NCollection_DataMap <Handle_TDF_Attribute , Handle_TDF_Attribute , TColStd_MapTransientHasher>;
+%template(TDF_AttributeArray1) NCollection_Array1 <Handle_TDF_Attribute>;
+%template(TDF_LabelIntegerMap) NCollection_DataMap <TDF_Label , Standard_Integer , TDF_LabelMapHasher>;
+%template(TDF_IDList) NCollection_List <Standard_GUID>;
+%template(TDF_LabelIndexedMap) NCollection_IndexedMap <TDF_Label , TDF_LabelMapHasher>;
+%template(TDF_LabelMap) NCollection_Map <TDF_Label , TDF_LabelMapHasher>;
+%template(TDF_AttributeDeltaList) NCollection_List <Handle_TDF_AttributeDelta>;
+%template(TDF_AttributeIndexedMap) NCollection_IndexedMap <Handle_TDF_Attribute , TColStd_MapTransientHasher>;
+/* end templates declaration */
 
 /* public enums */
 enum  {
@@ -122,7 +144,7 @@ class TDF {
 	}
 };
 %nodefaultctor TDF_Attribute;
-class TDF_Attribute : public MMgt_TShared {
+class TDF_Attribute : public Standard_Transient {
 	public:
 		%feature("compactdefaultargs") ID;
 		%feature("autodoc", "	* Returns the ID of the attribute.
@@ -130,6 +152,20 @@ class TDF_Attribute : public MMgt_TShared {
 	:rtype: Standard_GUID
 ") ID;
 		virtual const Standard_GUID & ID ();
+		%feature("compactdefaultargs") SetID;
+		%feature("autodoc", "	* Sets specific ID of the attribute --supports several attributes of one type at the same label feature--.
+
+	:param theGuid:
+	:type theGuid: Standard_GUID &
+	:rtype: void
+") SetID;
+		virtual void SetID (const Standard_GUID & theGuid);
+		%feature("compactdefaultargs") SetID;
+		%feature("autodoc", "	* Sets default ID defined in nested class --to be used for attributes having User ID feature--.
+
+	:rtype: void
+") SetID;
+		virtual void SetID ();
 		%feature("compactdefaultargs") Label;
 		%feature("autodoc", "	* Returns the label to which the attribute is attached. If the label is not included in a DF, the label is null. See Label. Warning If the label is not included in a data framework, it is null. This function should not be redefined inline.
 
@@ -184,6 +220,16 @@ class TDF_Attribute : public MMgt_TShared {
 	:rtype: bool
 ") FindAttribute;
 		Standard_Boolean FindAttribute (const Standard_GUID & anID,Handle_TDF_Attribute & anAttribute);
+		%feature("compactdefaultargs") FindAttribute;
+		%feature("autodoc", "	* Safe variant for arbitrary type of argument
+
+	:param theID:
+	:type theID: Standard_GUID &
+	:param theAttr:
+	:type theAttr: Handle_T &
+	:rtype: bool
+") FindAttribute;
+		Standard_Boolean FindAttribute (const Standard_GUID & theID,Handle_T & theAttr);
 		%feature("compactdefaultargs") AddAttribute;
 		%feature("autodoc", "	* Adds an Attribute <other> to the label of <self>.Raises if there is already one of the same GUID fhan <other>.
 
@@ -233,7 +279,7 @@ class TDF_Attribute : public MMgt_TShared {
 ") AfterResume;
 		virtual void AfterResume ();
 		%feature("compactdefaultargs") AfterRetrieval;
-		%feature("autodoc", "	* Something to do AFTER creation of an attribute by persistent-transient translation. The returned status says if AfterUndo has been performed (true) or if this callback must be called once again further (false). If <forceIt> is set to true, the method MUST perform and return true. Does nothing by default and returns true.
+		%feature("autodoc", "	* Something to do AFTER creation of an attribute by persistent-transient translation. The returned status says if AfterUndo has been performed --true-- or if this callback must be called once again further --false--. If <forceIt> is set to true, the method MUST perform and return true. Does nothing by default and returns true.
 
 	:param forceIt: default value is Standard_False
 	:type forceIt: bool
@@ -241,7 +287,7 @@ class TDF_Attribute : public MMgt_TShared {
 ") AfterRetrieval;
 		virtual Standard_Boolean AfterRetrieval (const Standard_Boolean forceIt = Standard_False);
 		%feature("compactdefaultargs") BeforeUndo;
-		%feature("autodoc", "	* Something to do before applying <anAttDelta>. The returned status says if AfterUndo has been performed (true) or if this callback must be called once again further (false). If <forceIt> is set to true, the method MUST perform and return true. Does nothing by default and returns true.
+		%feature("autodoc", "	* Something to do before applying <anAttDelta>. The returned status says if AfterUndo has been performed --true-- or if this callback must be called once again further --false--. If <forceIt> is set to true, the method MUST perform and return true. Does nothing by default and returns true.
 
 	:param anAttDelta:
 	:type anAttDelta: Handle_TDF_AttributeDelta &
@@ -251,7 +297,7 @@ class TDF_Attribute : public MMgt_TShared {
 ") BeforeUndo;
 		virtual Standard_Boolean BeforeUndo (const Handle_TDF_AttributeDelta & anAttDelta,const Standard_Boolean forceIt = Standard_False);
 		%feature("compactdefaultargs") AfterUndo;
-		%feature("autodoc", "	* Something to do after applying <anAttDelta>. The returned status says if AfterUndo has been performed (true) or if this callback must be called once again further (false). If <forceIt> is set to true, the method MUST perform and return true. Does nothing by default and returns true.
+		%feature("autodoc", "	* Something to do after applying <anAttDelta>. The returned status says if AfterUndo has been performed --true-- or if this callback must be called once again further --false--. If <forceIt> is set to true, the method MUST perform and return true. Does nothing by default and returns true.
 
 	:param anAttDelta:
 	:type anAttDelta: Handle_TDF_AttributeDelta &
@@ -261,25 +307,25 @@ class TDF_Attribute : public MMgt_TShared {
 ") AfterUndo;
 		virtual Standard_Boolean AfterUndo (const Handle_TDF_AttributeDelta & anAttDelta,const Standard_Boolean forceIt = Standard_False);
 		%feature("compactdefaultargs") BeforeCommitTransaction;
-		%feature("autodoc", "	* A callback. By default does nothing. It is called by TDF_Data::CommitTransaction() method.
+		%feature("autodoc", "	* A callback. By default does nothing. It is called by TDF_Data::CommitTransaction---- method.
 
 	:rtype: void
 ") BeforeCommitTransaction;
 		virtual void BeforeCommitTransaction ();
 		%feature("compactdefaultargs") Backup;
-		%feature("autodoc", "	* Backups the attribute. The backuped attribute is flagged 'Backuped' and not 'Valid'. //! The method does nothing: //! 1) If the attribute transaction number is equal to the current transaction number (the attribute has already been backuped). //! 2) If the attribute is not attached to a label.
+		%feature("autodoc", "	* Backups the attribute. The backuped attribute is flagged 'Backuped' and not 'Valid'. //! The method does nothing: //! 1-- If the attribute transaction number is equal to the current transaction number --the attribute has already been backuped--. //! 2-- If the attribute is not attached to a label.
 
 	:rtype: None
 ") Backup;
 		void Backup ();
 		%feature("compactdefaultargs") IsBackuped;
-		%feature("autodoc", "	* Returns true if the attribute backup status is set. This status is set/unset by the Backup() method.
+		%feature("autodoc", "	* Returns true if the attribute backup status is set. This status is set/unset by the Backup---- method.
 
 	:rtype: bool
 ") IsBackuped;
 		Standard_Boolean IsBackuped ();
 		%feature("compactdefaultargs") BackupCopy;
-		%feature("autodoc", "	* Copies the attribute contents into a new other attribute. It is used by Backup().
+		%feature("autodoc", "	* Copies the attribute contents into a new other attribute. It is used by Backup----.
 
 	:rtype: Handle_TDF_Attribute
 ") BackupCopy;
@@ -293,7 +339,7 @@ class TDF_Attribute : public MMgt_TShared {
 ") Restore;
 		virtual void Restore (const Handle_TDF_Attribute & anAttribute);
 		%feature("compactdefaultargs") DeltaOnAddition;
-		%feature("autodoc", "	* Makes an AttributeDelta because <self> appeared. The only known use of a redefinition of this method is to return a null handle (no delta).
+		%feature("autodoc", "	* Makes an AttributeDelta because <self> appeared. The only known use of a redefinition of this method is to return a null handle --no delta--.
 
 	:rtype: Handle_TDF_DeltaOnAddition
 ") DeltaOnAddition;
@@ -377,7 +423,7 @@ class TDF_Attribute : public MMgt_TShared {
 ") ExtendedDump;
 		virtual void ExtendedDump (Standard_OStream & anOS,const TDF_IDFilter & aFilter,TDF_AttributeIndexedMap & aMap);
 		%feature("compactdefaultargs") Forget;
-		%feature("autodoc", "	* Forgets the attribute. <aTransaction> is the current transaction in which the forget is done. A forgotten attribute is also flagged not 'Valid'. //! A forgotten attribute is invisible. Set also the 'Valid' status to False. Obvioulsy, DF cannot empty an attribute (this has a semantic signification), but can remove it from the structure. So, a forgotten attribute is NOT an empty one, but a soon DEAD one. //! Should be private.
+		%feature("autodoc", "	* Forgets the attribute. <aTransaction> is the current transaction in which the forget is done. A forgotten attribute is also flagged not 'Valid'. //! A forgotten attribute is invisible. Set also the 'Valid' status to False. Obvioulsy, DF cannot empty an attribute --this has a semantic signification--, but can remove it from the structure. So, a forgotten attribute is NOT an empty one, but a soon DEAD one. //! Should be private.
 
 	:param aTransaction:
 	:type aTransaction: int
@@ -406,7 +452,7 @@ class TDF_Attribute : public MMgt_TShared {
 %}
 
 %nodefaultctor Handle_TDF_Attribute;
-class Handle_TDF_Attribute : public Handle_MMgt_TShared {
+class Handle_TDF_Attribute : public Handle_Standard_Transient {
 
     public:
         // constructors
@@ -418,19 +464,20 @@ class Handle_TDF_Attribute : public Handle_MMgt_TShared {
         static const Handle_TDF_Attribute DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_TDF_Attribute {
     TDF_Attribute* _get_reference() {
-    return (TDF_Attribute*)$self->Access();
+    return (TDF_Attribute*)$self->get();
     }
 };
 
 %extend Handle_TDF_Attribute {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend TDF_Attribute {
@@ -438,178 +485,8 @@ class Handle_TDF_Attribute : public Handle_MMgt_TShared {
 	__repr__ = _dumps_object
 	}
 };
-%nodefaultctor TDF_AttributeArray1;
-class TDF_AttributeArray1 {
-	public:
-		%feature("compactdefaultargs") TDF_AttributeArray1;
-		%feature("autodoc", "	:param Low:
-	:type Low: int
-	:param Up:
-	:type Up: int
-	:rtype: None
-") TDF_AttributeArray1;
-		 TDF_AttributeArray1 (const Standard_Integer Low,const Standard_Integer Up);
-		%feature("compactdefaultargs") TDF_AttributeArray1;
-		%feature("autodoc", "	:param Item:
-	:type Item: Handle_TDF_Attribute &
-	:param Low:
-	:type Low: int
-	:param Up:
-	:type Up: int
-	:rtype: None
-") TDF_AttributeArray1;
-		 TDF_AttributeArray1 (const Handle_TDF_Attribute & Item,const Standard_Integer Low,const Standard_Integer Up);
-		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	:param V:
-	:type V: Handle_TDF_Attribute &
-	:rtype: None
-") Init;
-		void Init (const Handle_TDF_Attribute & V);
-		%feature("compactdefaultargs") Destroy;
-		%feature("autodoc", "	:rtype: None
-") Destroy;
-		void Destroy ();
-		%feature("compactdefaultargs") IsAllocated;
-		%feature("autodoc", "	:rtype: bool
-") IsAllocated;
-		Standard_Boolean IsAllocated ();
-		%feature("compactdefaultargs") Assign;
-		%feature("autodoc", "	:param Other:
-	:type Other: TDF_AttributeArray1 &
-	:rtype: TDF_AttributeArray1
-") Assign;
-		const TDF_AttributeArray1 & Assign (const TDF_AttributeArray1 & Other);
-		%feature("compactdefaultargs") operator =;
-		%feature("autodoc", "	:param Other:
-	:type Other: TDF_AttributeArray1 &
-	:rtype: TDF_AttributeArray1
-") operator =;
-		const TDF_AttributeArray1 & operator = (const TDF_AttributeArray1 & Other);
-		%feature("compactdefaultargs") Length;
-		%feature("autodoc", "	:rtype: int
-") Length;
-		Standard_Integer Length ();
-		%feature("compactdefaultargs") Lower;
-		%feature("autodoc", "	:rtype: int
-") Lower;
-		Standard_Integer Lower ();
-		%feature("compactdefaultargs") Upper;
-		%feature("autodoc", "	:rtype: int
-") Upper;
-		Standard_Integer Upper ();
-		%feature("compactdefaultargs") SetValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param Value:
-	:type Value: Handle_TDF_Attribute &
-	:rtype: None
-") SetValue;
-		void SetValue (const Standard_Integer Index,const Handle_TDF_Attribute & Value);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: Handle_TDF_Attribute
-") Value;
-		Handle_TDF_Attribute Value (const Standard_Integer Index);
-		%feature("compactdefaultargs") ChangeValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: Handle_TDF_Attribute
-") ChangeValue;
-		Handle_TDF_Attribute ChangeValue (const Standard_Integer Index);
-};
-
-
-%extend TDF_AttributeArray1 {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor TDF_AttributeDataMap;
-class TDF_AttributeDataMap : public TCollection_BasicMap {
-	public:
-		%feature("compactdefaultargs") TDF_AttributeDataMap;
-		%feature("autodoc", "	:param NbBuckets: default value is 1
-	:type NbBuckets: int
-	:rtype: None
-") TDF_AttributeDataMap;
-		 TDF_AttributeDataMap (const Standard_Integer NbBuckets = 1);
-		%feature("compactdefaultargs") Assign;
-		%feature("autodoc", "	:param Other:
-	:type Other: TDF_AttributeDataMap &
-	:rtype: TDF_AttributeDataMap
-") Assign;
-		TDF_AttributeDataMap & Assign (const TDF_AttributeDataMap & Other);
-		%feature("compactdefaultargs") operator =;
-		%feature("autodoc", "	:param Other:
-	:type Other: TDF_AttributeDataMap &
-	:rtype: TDF_AttributeDataMap
-") operator =;
-		TDF_AttributeDataMap & operator = (const TDF_AttributeDataMap & Other);
-		%feature("compactdefaultargs") ReSize;
-		%feature("autodoc", "	:param NbBuckets:
-	:type NbBuckets: int
-	:rtype: None
-") ReSize;
-		void ReSize (const Standard_Integer NbBuckets);
-		%feature("compactdefaultargs") Clear;
-		%feature("autodoc", "	:rtype: None
-") Clear;
-		void Clear ();
-		%feature("compactdefaultargs") Bind;
-		%feature("autodoc", "	:param K:
-	:type K: Handle_TDF_Attribute &
-	:param I:
-	:type I: Handle_TDF_Attribute &
-	:rtype: bool
-") Bind;
-		Standard_Boolean Bind (const Handle_TDF_Attribute & K,const Handle_TDF_Attribute & I);
-		%feature("compactdefaultargs") IsBound;
-		%feature("autodoc", "	:param K:
-	:type K: Handle_TDF_Attribute &
-	:rtype: bool
-") IsBound;
-		Standard_Boolean IsBound (const Handle_TDF_Attribute & K);
-		%feature("compactdefaultargs") UnBind;
-		%feature("autodoc", "	:param K:
-	:type K: Handle_TDF_Attribute &
-	:rtype: bool
-") UnBind;
-		Standard_Boolean UnBind (const Handle_TDF_Attribute & K);
-		%feature("compactdefaultargs") Find;
-		%feature("autodoc", "	:param K:
-	:type K: Handle_TDF_Attribute &
-	:rtype: Handle_TDF_Attribute
-") Find;
-		Handle_TDF_Attribute Find (const Handle_TDF_Attribute & K);
-		%feature("compactdefaultargs") ChangeFind;
-		%feature("autodoc", "	:param K:
-	:type K: Handle_TDF_Attribute &
-	:rtype: Handle_TDF_Attribute
-") ChangeFind;
-		Handle_TDF_Attribute ChangeFind (const Handle_TDF_Attribute & K);
-		%feature("compactdefaultargs") Find1;
-		%feature("autodoc", "	:param K:
-	:type K: Handle_TDF_Attribute &
-	:rtype: Standard_Address
-") Find1;
-		Standard_Address Find1 (const Handle_TDF_Attribute & K);
-		%feature("compactdefaultargs") ChangeFind1;
-		%feature("autodoc", "	:param K:
-	:type K: Handle_TDF_Attribute &
-	:rtype: Standard_Address
-") ChangeFind1;
-		Standard_Address ChangeFind1 (const Handle_TDF_Attribute & K);
-};
-
-
-%extend TDF_AttributeDataMap {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
 %nodefaultctor TDF_AttributeDelta;
-class TDF_AttributeDelta : public MMgt_TShared {
+class TDF_AttributeDelta : public Standard_Transient {
 	public:
 		%feature("compactdefaultargs") Apply;
 		%feature("autodoc", "	* Applies the delta to the attribute.
@@ -665,7 +542,7 @@ class TDF_AttributeDelta : public MMgt_TShared {
 %}
 
 %nodefaultctor Handle_TDF_AttributeDelta;
-class Handle_TDF_AttributeDelta : public Handle_MMgt_TShared {
+class Handle_TDF_AttributeDelta : public Handle_Standard_Transient {
 
     public:
         // constructors
@@ -677,329 +554,23 @@ class Handle_TDF_AttributeDelta : public Handle_MMgt_TShared {
         static const Handle_TDF_AttributeDelta DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_TDF_AttributeDelta {
     TDF_AttributeDelta* _get_reference() {
-    return (TDF_AttributeDelta*)$self->Access();
+    return (TDF_AttributeDelta*)$self->get();
     }
 };
 
 %extend Handle_TDF_AttributeDelta {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend TDF_AttributeDelta {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor TDF_AttributeDeltaList;
-class TDF_AttributeDeltaList {
-	public:
-		%feature("compactdefaultargs") TDF_AttributeDeltaList;
-		%feature("autodoc", "	:rtype: None
-") TDF_AttributeDeltaList;
-		 TDF_AttributeDeltaList ();
-		%feature("compactdefaultargs") TDF_AttributeDeltaList;
-		%feature("autodoc", "	:param Other:
-	:type Other: TDF_AttributeDeltaList &
-	:rtype: None
-") TDF_AttributeDeltaList;
-		 TDF_AttributeDeltaList (const TDF_AttributeDeltaList & Other);
-		%feature("compactdefaultargs") Assign;
-		%feature("autodoc", "	:param Other:
-	:type Other: TDF_AttributeDeltaList &
-	:rtype: None
-") Assign;
-		void Assign (const TDF_AttributeDeltaList & Other);
-		%feature("compactdefaultargs") operator =;
-		%feature("autodoc", "	:param Other:
-	:type Other: TDF_AttributeDeltaList &
-	:rtype: None
-") operator =;
-		void operator = (const TDF_AttributeDeltaList & Other);
-		%feature("compactdefaultargs") Extent;
-		%feature("autodoc", "	:rtype: int
-") Extent;
-		Standard_Integer Extent ();
-		%feature("compactdefaultargs") Clear;
-		%feature("autodoc", "	:rtype: None
-") Clear;
-		void Clear ();
-		%feature("compactdefaultargs") IsEmpty;
-		%feature("autodoc", "	:rtype: bool
-") IsEmpty;
-		Standard_Boolean IsEmpty ();
-		%feature("compactdefaultargs") Prepend;
-		%feature("autodoc", "	:param I:
-	:type I: Handle_TDF_AttributeDelta &
-	:rtype: None
-") Prepend;
-		void Prepend (const Handle_TDF_AttributeDelta & I);
-		%feature("compactdefaultargs") Prepend;
-		%feature("autodoc", "	:param I:
-	:type I: Handle_TDF_AttributeDelta &
-	:param theIt:
-	:type theIt: TDF_ListIteratorOfAttributeDeltaList &
-	:rtype: None
-") Prepend;
-		void Prepend (const Handle_TDF_AttributeDelta & I,TDF_ListIteratorOfAttributeDeltaList & theIt);
-		%feature("compactdefaultargs") Prepend;
-		%feature("autodoc", "	:param Other:
-	:type Other: TDF_AttributeDeltaList &
-	:rtype: None
-") Prepend;
-		void Prepend (TDF_AttributeDeltaList & Other);
-		%feature("compactdefaultargs") Append;
-		%feature("autodoc", "	:param I:
-	:type I: Handle_TDF_AttributeDelta &
-	:rtype: None
-") Append;
-		void Append (const Handle_TDF_AttributeDelta & I);
-		%feature("compactdefaultargs") Append;
-		%feature("autodoc", "	:param I:
-	:type I: Handle_TDF_AttributeDelta &
-	:param theIt:
-	:type theIt: TDF_ListIteratorOfAttributeDeltaList &
-	:rtype: None
-") Append;
-		void Append (const Handle_TDF_AttributeDelta & I,TDF_ListIteratorOfAttributeDeltaList & theIt);
-		%feature("compactdefaultargs") Append;
-		%feature("autodoc", "	:param Other:
-	:type Other: TDF_AttributeDeltaList &
-	:rtype: None
-") Append;
-		void Append (TDF_AttributeDeltaList & Other);
-		%feature("compactdefaultargs") First;
-		%feature("autodoc", "	:rtype: Handle_TDF_AttributeDelta
-") First;
-		Handle_TDF_AttributeDelta First ();
-		%feature("compactdefaultargs") Last;
-		%feature("autodoc", "	:rtype: Handle_TDF_AttributeDelta
-") Last;
-		Handle_TDF_AttributeDelta Last ();
-		%feature("compactdefaultargs") RemoveFirst;
-		%feature("autodoc", "	:rtype: None
-") RemoveFirst;
-		void RemoveFirst ();
-		%feature("compactdefaultargs") Remove;
-		%feature("autodoc", "	:param It:
-	:type It: TDF_ListIteratorOfAttributeDeltaList &
-	:rtype: None
-") Remove;
-		void Remove (TDF_ListIteratorOfAttributeDeltaList & It);
-		%feature("compactdefaultargs") InsertBefore;
-		%feature("autodoc", "	:param I:
-	:type I: Handle_TDF_AttributeDelta &
-	:param It:
-	:type It: TDF_ListIteratorOfAttributeDeltaList &
-	:rtype: None
-") InsertBefore;
-		void InsertBefore (const Handle_TDF_AttributeDelta & I,TDF_ListIteratorOfAttributeDeltaList & It);
-		%feature("compactdefaultargs") InsertBefore;
-		%feature("autodoc", "	:param Other:
-	:type Other: TDF_AttributeDeltaList &
-	:param It:
-	:type It: TDF_ListIteratorOfAttributeDeltaList &
-	:rtype: None
-") InsertBefore;
-		void InsertBefore (TDF_AttributeDeltaList & Other,TDF_ListIteratorOfAttributeDeltaList & It);
-		%feature("compactdefaultargs") InsertAfter;
-		%feature("autodoc", "	:param I:
-	:type I: Handle_TDF_AttributeDelta &
-	:param It:
-	:type It: TDF_ListIteratorOfAttributeDeltaList &
-	:rtype: None
-") InsertAfter;
-		void InsertAfter (const Handle_TDF_AttributeDelta & I,TDF_ListIteratorOfAttributeDeltaList & It);
-		%feature("compactdefaultargs") InsertAfter;
-		%feature("autodoc", "	:param Other:
-	:type Other: TDF_AttributeDeltaList &
-	:param It:
-	:type It: TDF_ListIteratorOfAttributeDeltaList &
-	:rtype: None
-") InsertAfter;
-		void InsertAfter (TDF_AttributeDeltaList & Other,TDF_ListIteratorOfAttributeDeltaList & It);
-};
-
-
-%extend TDF_AttributeDeltaList {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor TDF_AttributeDoubleMap;
-class TDF_AttributeDoubleMap : public TCollection_BasicMap {
-	public:
-		%feature("compactdefaultargs") TDF_AttributeDoubleMap;
-		%feature("autodoc", "	:param NbBuckets: default value is 1
-	:type NbBuckets: int
-	:rtype: None
-") TDF_AttributeDoubleMap;
-		 TDF_AttributeDoubleMap (const Standard_Integer NbBuckets = 1);
-		%feature("compactdefaultargs") Assign;
-		%feature("autodoc", "	:param Other:
-	:type Other: TDF_AttributeDoubleMap &
-	:rtype: TDF_AttributeDoubleMap
-") Assign;
-		TDF_AttributeDoubleMap & Assign (const TDF_AttributeDoubleMap & Other);
-		%feature("compactdefaultargs") operator =;
-		%feature("autodoc", "	:param Other:
-	:type Other: TDF_AttributeDoubleMap &
-	:rtype: TDF_AttributeDoubleMap
-") operator =;
-		TDF_AttributeDoubleMap & operator = (const TDF_AttributeDoubleMap & Other);
-		%feature("compactdefaultargs") ReSize;
-		%feature("autodoc", "	:param NbBuckets:
-	:type NbBuckets: int
-	:rtype: None
-") ReSize;
-		void ReSize (const Standard_Integer NbBuckets);
-		%feature("compactdefaultargs") Clear;
-		%feature("autodoc", "	:rtype: None
-") Clear;
-		void Clear ();
-		%feature("compactdefaultargs") Bind;
-		%feature("autodoc", "	:param K1:
-	:type K1: Handle_TDF_Attribute &
-	:param K2:
-	:type K2: Handle_TDF_Attribute &
-	:rtype: None
-") Bind;
-		void Bind (const Handle_TDF_Attribute & K1,const Handle_TDF_Attribute & K2);
-		%feature("compactdefaultargs") AreBound;
-		%feature("autodoc", "	:param K1:
-	:type K1: Handle_TDF_Attribute &
-	:param K2:
-	:type K2: Handle_TDF_Attribute &
-	:rtype: bool
-") AreBound;
-		Standard_Boolean AreBound (const Handle_TDF_Attribute & K1,const Handle_TDF_Attribute & K2);
-		%feature("compactdefaultargs") IsBound1;
-		%feature("autodoc", "	:param K:
-	:type K: Handle_TDF_Attribute &
-	:rtype: bool
-") IsBound1;
-		Standard_Boolean IsBound1 (const Handle_TDF_Attribute & K);
-		%feature("compactdefaultargs") IsBound2;
-		%feature("autodoc", "	:param K:
-	:type K: Handle_TDF_Attribute &
-	:rtype: bool
-") IsBound2;
-		Standard_Boolean IsBound2 (const Handle_TDF_Attribute & K);
-		%feature("compactdefaultargs") Find1;
-		%feature("autodoc", "	:param K:
-	:type K: Handle_TDF_Attribute &
-	:rtype: Handle_TDF_Attribute
-") Find1;
-		Handle_TDF_Attribute Find1 (const Handle_TDF_Attribute & K);
-		%feature("compactdefaultargs") Find2;
-		%feature("autodoc", "	:param K:
-	:type K: Handle_TDF_Attribute &
-	:rtype: Handle_TDF_Attribute
-") Find2;
-		Handle_TDF_Attribute Find2 (const Handle_TDF_Attribute & K);
-		%feature("compactdefaultargs") UnBind1;
-		%feature("autodoc", "	:param K:
-	:type K: Handle_TDF_Attribute &
-	:rtype: bool
-") UnBind1;
-		Standard_Boolean UnBind1 (const Handle_TDF_Attribute & K);
-		%feature("compactdefaultargs") UnBind2;
-		%feature("autodoc", "	:param K:
-	:type K: Handle_TDF_Attribute &
-	:rtype: bool
-") UnBind2;
-		Standard_Boolean UnBind2 (const Handle_TDF_Attribute & K);
-};
-
-
-%extend TDF_AttributeDoubleMap {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor TDF_AttributeIndexedMap;
-class TDF_AttributeIndexedMap : public TCollection_BasicMap {
-	public:
-		%feature("compactdefaultargs") TDF_AttributeIndexedMap;
-		%feature("autodoc", "	:param NbBuckets: default value is 1
-	:type NbBuckets: int
-	:rtype: None
-") TDF_AttributeIndexedMap;
-		 TDF_AttributeIndexedMap (const Standard_Integer NbBuckets = 1);
-		%feature("compactdefaultargs") TDF_AttributeIndexedMap;
-		%feature("autodoc", "	:param Other:
-	:type Other: TDF_AttributeIndexedMap &
-	:rtype: None
-") TDF_AttributeIndexedMap;
-		 TDF_AttributeIndexedMap (const TDF_AttributeIndexedMap & Other);
-		%feature("compactdefaultargs") Assign;
-		%feature("autodoc", "	:param Other:
-	:type Other: TDF_AttributeIndexedMap &
-	:rtype: TDF_AttributeIndexedMap
-") Assign;
-		TDF_AttributeIndexedMap & Assign (const TDF_AttributeIndexedMap & Other);
-		%feature("compactdefaultargs") operator =;
-		%feature("autodoc", "	:param Other:
-	:type Other: TDF_AttributeIndexedMap &
-	:rtype: TDF_AttributeIndexedMap
-") operator =;
-		TDF_AttributeIndexedMap & operator = (const TDF_AttributeIndexedMap & Other);
-		%feature("compactdefaultargs") ReSize;
-		%feature("autodoc", "	:param NbBuckets:
-	:type NbBuckets: int
-	:rtype: None
-") ReSize;
-		void ReSize (const Standard_Integer NbBuckets);
-		%feature("compactdefaultargs") Clear;
-		%feature("autodoc", "	:rtype: None
-") Clear;
-		void Clear ();
-		%feature("compactdefaultargs") Add;
-		%feature("autodoc", "	:param K:
-	:type K: Handle_TDF_Attribute &
-	:rtype: int
-") Add;
-		Standard_Integer Add (const Handle_TDF_Attribute & K);
-		%feature("compactdefaultargs") Substitute;
-		%feature("autodoc", "	:param I:
-	:type I: int
-	:param K:
-	:type K: Handle_TDF_Attribute &
-	:rtype: None
-") Substitute;
-		void Substitute (const Standard_Integer I,const Handle_TDF_Attribute & K);
-		%feature("compactdefaultargs") RemoveLast;
-		%feature("autodoc", "	:rtype: None
-") RemoveLast;
-		void RemoveLast ();
-		%feature("compactdefaultargs") Contains;
-		%feature("autodoc", "	:param K:
-	:type K: Handle_TDF_Attribute &
-	:rtype: bool
-") Contains;
-		Standard_Boolean Contains (const Handle_TDF_Attribute & K);
-		%feature("compactdefaultargs") FindKey;
-		%feature("autodoc", "	:param I:
-	:type I: int
-	:rtype: Handle_TDF_Attribute
-") FindKey;
-		Handle_TDF_Attribute FindKey (const Standard_Integer I);
-		%feature("compactdefaultargs") FindIndex;
-		%feature("autodoc", "	:param K:
-	:type K: Handle_TDF_Attribute &
-	:rtype: int
-") FindIndex;
-		Standard_Integer FindIndex (const Handle_TDF_Attribute & K);
-};
-
-
-%extend TDF_AttributeIndexedMap {
 	%pythoncode {
 	__repr__ = _dumps_object
 	}
@@ -1044,354 +615,13 @@ class TDF_AttributeIterator {
 ") Next;
 		void Next ();
 		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:rtype: inline TDF_Attribute *
+		%feature("autodoc", "	:rtype: inline Handle_TDF_Attribute
 ") Value;
-		inline TDF_Attribute * Value ();
+		inline Handle_TDF_Attribute Value ();
 };
 
 
 %extend TDF_AttributeIterator {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor TDF_AttributeList;
-class TDF_AttributeList {
-	public:
-		%feature("compactdefaultargs") TDF_AttributeList;
-		%feature("autodoc", "	:rtype: None
-") TDF_AttributeList;
-		 TDF_AttributeList ();
-		%feature("compactdefaultargs") TDF_AttributeList;
-		%feature("autodoc", "	:param Other:
-	:type Other: TDF_AttributeList &
-	:rtype: None
-") TDF_AttributeList;
-		 TDF_AttributeList (const TDF_AttributeList & Other);
-		%feature("compactdefaultargs") Assign;
-		%feature("autodoc", "	:param Other:
-	:type Other: TDF_AttributeList &
-	:rtype: None
-") Assign;
-		void Assign (const TDF_AttributeList & Other);
-		%feature("compactdefaultargs") operator =;
-		%feature("autodoc", "	:param Other:
-	:type Other: TDF_AttributeList &
-	:rtype: None
-") operator =;
-		void operator = (const TDF_AttributeList & Other);
-		%feature("compactdefaultargs") Extent;
-		%feature("autodoc", "	:rtype: int
-") Extent;
-		Standard_Integer Extent ();
-		%feature("compactdefaultargs") Clear;
-		%feature("autodoc", "	:rtype: None
-") Clear;
-		void Clear ();
-		%feature("compactdefaultargs") IsEmpty;
-		%feature("autodoc", "	:rtype: bool
-") IsEmpty;
-		Standard_Boolean IsEmpty ();
-		%feature("compactdefaultargs") Prepend;
-		%feature("autodoc", "	:param I:
-	:type I: Handle_TDF_Attribute &
-	:rtype: None
-") Prepend;
-		void Prepend (const Handle_TDF_Attribute & I);
-		%feature("compactdefaultargs") Prepend;
-		%feature("autodoc", "	:param I:
-	:type I: Handle_TDF_Attribute &
-	:param theIt:
-	:type theIt: TDF_ListIteratorOfAttributeList &
-	:rtype: None
-") Prepend;
-		void Prepend (const Handle_TDF_Attribute & I,TDF_ListIteratorOfAttributeList & theIt);
-		%feature("compactdefaultargs") Prepend;
-		%feature("autodoc", "	:param Other:
-	:type Other: TDF_AttributeList &
-	:rtype: None
-") Prepend;
-		void Prepend (TDF_AttributeList & Other);
-		%feature("compactdefaultargs") Append;
-		%feature("autodoc", "	:param I:
-	:type I: Handle_TDF_Attribute &
-	:rtype: None
-") Append;
-		void Append (const Handle_TDF_Attribute & I);
-		%feature("compactdefaultargs") Append;
-		%feature("autodoc", "	:param I:
-	:type I: Handle_TDF_Attribute &
-	:param theIt:
-	:type theIt: TDF_ListIteratorOfAttributeList &
-	:rtype: None
-") Append;
-		void Append (const Handle_TDF_Attribute & I,TDF_ListIteratorOfAttributeList & theIt);
-		%feature("compactdefaultargs") Append;
-		%feature("autodoc", "	:param Other:
-	:type Other: TDF_AttributeList &
-	:rtype: None
-") Append;
-		void Append (TDF_AttributeList & Other);
-		%feature("compactdefaultargs") First;
-		%feature("autodoc", "	:rtype: Handle_TDF_Attribute
-") First;
-		Handle_TDF_Attribute First ();
-		%feature("compactdefaultargs") Last;
-		%feature("autodoc", "	:rtype: Handle_TDF_Attribute
-") Last;
-		Handle_TDF_Attribute Last ();
-		%feature("compactdefaultargs") RemoveFirst;
-		%feature("autodoc", "	:rtype: None
-") RemoveFirst;
-		void RemoveFirst ();
-		%feature("compactdefaultargs") Remove;
-		%feature("autodoc", "	:param It:
-	:type It: TDF_ListIteratorOfAttributeList &
-	:rtype: None
-") Remove;
-		void Remove (TDF_ListIteratorOfAttributeList & It);
-		%feature("compactdefaultargs") InsertBefore;
-		%feature("autodoc", "	:param I:
-	:type I: Handle_TDF_Attribute &
-	:param It:
-	:type It: TDF_ListIteratorOfAttributeList &
-	:rtype: None
-") InsertBefore;
-		void InsertBefore (const Handle_TDF_Attribute & I,TDF_ListIteratorOfAttributeList & It);
-		%feature("compactdefaultargs") InsertBefore;
-		%feature("autodoc", "	:param Other:
-	:type Other: TDF_AttributeList &
-	:param It:
-	:type It: TDF_ListIteratorOfAttributeList &
-	:rtype: None
-") InsertBefore;
-		void InsertBefore (TDF_AttributeList & Other,TDF_ListIteratorOfAttributeList & It);
-		%feature("compactdefaultargs") InsertAfter;
-		%feature("autodoc", "	:param I:
-	:type I: Handle_TDF_Attribute &
-	:param It:
-	:type It: TDF_ListIteratorOfAttributeList &
-	:rtype: None
-") InsertAfter;
-		void InsertAfter (const Handle_TDF_Attribute & I,TDF_ListIteratorOfAttributeList & It);
-		%feature("compactdefaultargs") InsertAfter;
-		%feature("autodoc", "	:param Other:
-	:type Other: TDF_AttributeList &
-	:param It:
-	:type It: TDF_ListIteratorOfAttributeList &
-	:rtype: None
-") InsertAfter;
-		void InsertAfter (TDF_AttributeList & Other,TDF_ListIteratorOfAttributeList & It);
-};
-
-
-%extend TDF_AttributeList {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor TDF_AttributeMap;
-class TDF_AttributeMap : public TCollection_BasicMap {
-	public:
-		%feature("compactdefaultargs") TDF_AttributeMap;
-		%feature("autodoc", "	:param NbBuckets: default value is 1
-	:type NbBuckets: int
-	:rtype: None
-") TDF_AttributeMap;
-		 TDF_AttributeMap (const Standard_Integer NbBuckets = 1);
-		%feature("compactdefaultargs") TDF_AttributeMap;
-		%feature("autodoc", "	:param Other:
-	:type Other: TDF_AttributeMap &
-	:rtype: None
-") TDF_AttributeMap;
-		 TDF_AttributeMap (const TDF_AttributeMap & Other);
-		%feature("compactdefaultargs") Assign;
-		%feature("autodoc", "	:param Other:
-	:type Other: TDF_AttributeMap &
-	:rtype: TDF_AttributeMap
-") Assign;
-		TDF_AttributeMap & Assign (const TDF_AttributeMap & Other);
-		%feature("compactdefaultargs") operator =;
-		%feature("autodoc", "	:param Other:
-	:type Other: TDF_AttributeMap &
-	:rtype: TDF_AttributeMap
-") operator =;
-		TDF_AttributeMap & operator = (const TDF_AttributeMap & Other);
-		%feature("compactdefaultargs") ReSize;
-		%feature("autodoc", "	:param NbBuckets:
-	:type NbBuckets: int
-	:rtype: None
-") ReSize;
-		void ReSize (const Standard_Integer NbBuckets);
-		%feature("compactdefaultargs") Clear;
-		%feature("autodoc", "	:rtype: None
-") Clear;
-		void Clear ();
-		%feature("compactdefaultargs") Add;
-		%feature("autodoc", "	:param aKey:
-	:type aKey: Handle_TDF_Attribute &
-	:rtype: bool
-") Add;
-		Standard_Boolean Add (const Handle_TDF_Attribute & aKey);
-		%feature("compactdefaultargs") Contains;
-		%feature("autodoc", "	:param aKey:
-	:type aKey: Handle_TDF_Attribute &
-	:rtype: bool
-") Contains;
-		Standard_Boolean Contains (const Handle_TDF_Attribute & aKey);
-		%feature("compactdefaultargs") Remove;
-		%feature("autodoc", "	:param aKey:
-	:type aKey: Handle_TDF_Attribute &
-	:rtype: bool
-") Remove;
-		Standard_Boolean Remove (const Handle_TDF_Attribute & aKey);
-};
-
-
-%extend TDF_AttributeMap {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor TDF_AttributeSequence;
-class TDF_AttributeSequence : public TCollection_BaseSequence {
-	public:
-		%feature("compactdefaultargs") TDF_AttributeSequence;
-		%feature("autodoc", "	:rtype: None
-") TDF_AttributeSequence;
-		 TDF_AttributeSequence ();
-		%feature("compactdefaultargs") TDF_AttributeSequence;
-		%feature("autodoc", "	:param Other:
-	:type Other: TDF_AttributeSequence &
-	:rtype: None
-") TDF_AttributeSequence;
-		 TDF_AttributeSequence (const TDF_AttributeSequence & Other);
-		%feature("compactdefaultargs") Clear;
-		%feature("autodoc", "	:rtype: None
-") Clear;
-		void Clear ();
-		%feature("compactdefaultargs") Assign;
-		%feature("autodoc", "	:param Other:
-	:type Other: TDF_AttributeSequence &
-	:rtype: TDF_AttributeSequence
-") Assign;
-		const TDF_AttributeSequence & Assign (const TDF_AttributeSequence & Other);
-		%feature("compactdefaultargs") operator =;
-		%feature("autodoc", "	:param Other:
-	:type Other: TDF_AttributeSequence &
-	:rtype: TDF_AttributeSequence
-") operator =;
-		const TDF_AttributeSequence & operator = (const TDF_AttributeSequence & Other);
-		%feature("compactdefaultargs") Append;
-		%feature("autodoc", "	:param T:
-	:type T: Handle_TDF_Attribute &
-	:rtype: None
-") Append;
-		void Append (const Handle_TDF_Attribute & T);
-		%feature("compactdefaultargs") Append;
-		%feature("autodoc", "	:param S:
-	:type S: TDF_AttributeSequence &
-	:rtype: None
-") Append;
-		void Append (TDF_AttributeSequence & S);
-		%feature("compactdefaultargs") Prepend;
-		%feature("autodoc", "	:param T:
-	:type T: Handle_TDF_Attribute &
-	:rtype: None
-") Prepend;
-		void Prepend (const Handle_TDF_Attribute & T);
-		%feature("compactdefaultargs") Prepend;
-		%feature("autodoc", "	:param S:
-	:type S: TDF_AttributeSequence &
-	:rtype: None
-") Prepend;
-		void Prepend (TDF_AttributeSequence & S);
-		%feature("compactdefaultargs") InsertBefore;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param T:
-	:type T: Handle_TDF_Attribute &
-	:rtype: None
-") InsertBefore;
-		void InsertBefore (const Standard_Integer Index,const Handle_TDF_Attribute & T);
-		%feature("compactdefaultargs") InsertBefore;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param S:
-	:type S: TDF_AttributeSequence &
-	:rtype: None
-") InsertBefore;
-		void InsertBefore (const Standard_Integer Index,TDF_AttributeSequence & S);
-		%feature("compactdefaultargs") InsertAfter;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param T:
-	:type T: Handle_TDF_Attribute &
-	:rtype: None
-") InsertAfter;
-		void InsertAfter (const Standard_Integer Index,const Handle_TDF_Attribute & T);
-		%feature("compactdefaultargs") InsertAfter;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param S:
-	:type S: TDF_AttributeSequence &
-	:rtype: None
-") InsertAfter;
-		void InsertAfter (const Standard_Integer Index,TDF_AttributeSequence & S);
-		%feature("compactdefaultargs") First;
-		%feature("autodoc", "	:rtype: Handle_TDF_Attribute
-") First;
-		Handle_TDF_Attribute First ();
-		%feature("compactdefaultargs") Last;
-		%feature("autodoc", "	:rtype: Handle_TDF_Attribute
-") Last;
-		Handle_TDF_Attribute Last ();
-		%feature("compactdefaultargs") Split;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param Sub:
-	:type Sub: TDF_AttributeSequence &
-	:rtype: None
-") Split;
-		void Split (const Standard_Integer Index,TDF_AttributeSequence & Sub);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: Handle_TDF_Attribute
-") Value;
-		Handle_TDF_Attribute Value (const Standard_Integer Index);
-		%feature("compactdefaultargs") SetValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param I:
-	:type I: Handle_TDF_Attribute &
-	:rtype: None
-") SetValue;
-		void SetValue (const Standard_Integer Index,const Handle_TDF_Attribute & I);
-		%feature("compactdefaultargs") ChangeValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: Handle_TDF_Attribute
-") ChangeValue;
-		Handle_TDF_Attribute ChangeValue (const Standard_Integer Index);
-		%feature("compactdefaultargs") Remove;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: None
-") Remove;
-		void Remove (const Standard_Integer Index);
-		%feature("compactdefaultargs") Remove;
-		%feature("autodoc", "	:param FromIndex:
-	:type FromIndex: int
-	:param ToIndex:
-	:type ToIndex: int
-	:rtype: None
-") Remove;
-		void Remove (const Standard_Integer FromIndex,const Standard_Integer ToIndex);
-};
-
-
-%extend TDF_AttributeSequence {
 	%pythoncode {
 	__repr__ = _dumps_object
 	}
@@ -1481,7 +711,7 @@ class TDF_ChildIterator {
 ") TDF_ChildIterator;
 		 TDF_ChildIterator (const TDF_Label & aLabel,const Standard_Boolean allLevels = Standard_False);
 		%feature("compactdefaultargs") Initialize;
-		%feature("autodoc", "	* Initializes the iteration on the children of the given label. If <allLevels> option is set to true, it explores not only the first, but all the sub label levels. If allLevels is false, only the first level of child labels is explored. In the example below, the label is iterated using Initialize, More and Next and its child labels dumped using TDF_Tool::Entry. Example void DumpChildren(const TDF_Label& aLabel) { TDF_ChildIterator it; TCollection_AsciiString es; for (it.Initialize(aLabel,Standard_True); it.More(); it.Next()){ TDF_Tool::Entry(it.Value(),es); cout << as.ToCString() << endl; } }
+		%feature("autodoc", "	* Initializes the iteration on the children of the given label. If <allLevels> option is set to true, it explores not only the first, but all the sub label levels. If allLevels is false, only the first level of child labels is explored. In the example below, the label is iterated using Initialize, More and Next and its child labels dumped using TDF_Tool::Entry. Example void DumpChildren--const TDF_Label& aLabel-- { TDF_ChildIterator it; TCollection_AsciiString es; for --it.Initialize--aLabel,Standard_True--; it.More----; it.Next------{ TDF_Tool::Entry--it.Value----,es--; cout << as.ToCString---- << endl; } }
 
 	:param aLabel:
 	:type aLabel: TDF_Label &
@@ -1548,7 +778,7 @@ class TDF_ClosureMode {
 ") Descendants;
 		Standard_Boolean Descendants ();
 		%feature("compactdefaultargs") References;
-		%feature("autodoc", "	* Sets the mode 'References' to <aStatus>. //! 'References' mode means we add to the data set the descendants of an attribute, by calling the attribute method Descendants().
+		%feature("autodoc", "	* Sets the mode 'References' to <aStatus>. //! 'References' mode means we add to the data set the descendants of an attribute, by calling the attribute method Descendants----.
 
 	:param aStatus:
 	:type aStatus: bool
@@ -1632,7 +862,7 @@ class TDF_ComparisonTool {
 ") Compare;
 		static void Compare (const Handle_TDF_DataSet & aSourceDataSet,const Handle_TDF_DataSet & aTargetDataSet,const TDF_IDFilter & aFilter,const Handle_TDF_RelocationTable & aRelocationTable);
 		%feature("compactdefaultargs") SourceUnbound;
-		%feature("autodoc", "	* Finds from <aRefDataSet> all the keys not bound into <aRelocationTable> and put them into <aDiffDataSet>. Returns True if the difference contains at least one key. (A key is a source object). //! <anOption> may take the following values: 1 : labels treatment only; 2 : attributes treatment only (default value); 3 : both labels & attributes treatment.
+		%feature("autodoc", "	* Finds from <aRefDataSet> all the keys not bound into <aRelocationTable> and put them into <aDiffDataSet>. Returns True if the difference contains at least one key. --A key is a source object--. //! <anOption> may take the following values: 1 : labels treatment only; 2 : attributes treatment only --default value--; 3 : both labels & attributes treatment.
 
 	:param aRefDataSet:
 	:type aRefDataSet: Handle_TDF_DataSet &
@@ -1648,7 +878,7 @@ class TDF_ComparisonTool {
 ") SourceUnbound;
 		static Standard_Boolean SourceUnbound (const Handle_TDF_DataSet & aRefDataSet,const Handle_TDF_RelocationTable & aRelocationTable,const TDF_IDFilter & aFilter,const Handle_TDF_DataSet & aDiffDataSet,const Standard_Integer anOption = 2);
 		%feature("compactdefaultargs") TargetUnbound;
-		%feature("autodoc", "	* Substracts from <aRefDataSet> all the items bound into <aRelocationTable>. The result is put into <aDiffDataSet>. Returns True if the difference contains at least one item. (An item is a target object). //! <anOption> may take the following values: 1 : labels treatment only; 2 : attributes treatment only(default value); 3 : both labels & attributes treatment.
+		%feature("autodoc", "	* Substracts from <aRefDataSet> all the items bound into <aRelocationTable>. The result is put into <aDiffDataSet>. Returns True if the difference contains at least one item. --An item is a target object--. //! <anOption> may take the following values: 1 : labels treatment only; 2 : attributes treatment only--default value--; 3 : both labels & attributes treatment.
 
 	:param aRefDataSet:
 	:type aRefDataSet: Handle_TDF_DataSet &
@@ -1827,7 +1057,7 @@ class TDF_CopyTool {
 	}
 };
 %nodefaultctor TDF_Data;
-class TDF_Data : public MMgt_TShared {
+class TDF_Data : public Standard_Transient {
 	public:
 		%feature("compactdefaultargs") TDF_Data;
 		%feature("autodoc", "	* A new and empty Data structure.
@@ -1862,7 +1092,7 @@ class TDF_Data : public MMgt_TShared {
 ") IsApplicable;
 		Standard_Boolean IsApplicable (const Handle_TDF_Delta & aDelta);
 		%feature("compactdefaultargs") Undo;
-		%feature("autodoc", "	* Apply <aDelta> to undo a set of attribute modifications. //! Optionnal <withDelta> set to True indiquates a Delta Set must be generated. (See above)
+		%feature("autodoc", "	* Apply <aDelta> to undo a set of attribute modifications. //! Optionnal <withDelta> set to True indiquates a Delta Set must be generated. --See above--
 
 	:param aDelta:
 	:type aDelta: Handle_TDF_Delta &
@@ -1904,7 +1134,7 @@ class TDF_Data : public MMgt_TShared {
 ") IsModificationAllowed;
 		Standard_Boolean IsModificationAllowed ();
 		%feature("compactdefaultargs") LabelNodeAllocator;
-		%feature("autodoc", "	* Returns TDF_HAllocator, which is an incremental allocator used by TDF_LabelNode. This allocator is used to manage TDF_LabelNode objects, but it can also be used for allocating memory to application-specific data (be careful because this allocator does not release the memory). The benefits of this allocation scheme are noticeable when dealing with large OCAF documents, due to: 1. Very quick allocation of objects (memory heap is not used, the algorithm that replaces it is very simple). 2. Very quick destruction of objects (memory is released not by destructors of TDF_LabelNode, but rather by the destructor of TDF_Data). 3. TDF_LabelNode objects do not fragmentize the memory; they are kept compactly in a number of arrays of 16K each. 4. Swapping is reduced on large data, because each document now occupies a smaller number of memory pages.
+		%feature("autodoc", "	* Returns TDF_HAllocator, which is an incremental allocator used by TDF_LabelNode. This allocator is used to manage TDF_LabelNode objects, but it can also be used for allocating memory to application-specific data --be careful because this allocator does not release the memory--. The benefits of this allocation scheme are noticeable when dealing with large OCAF documents, due to: 1. Very quick allocation of objects --memory heap is not used, the algorithm that replaces it is very simple--. 2. Very quick destruction of objects --memory is released not by destructors of TDF_LabelNode, but rather by the destructor of TDF_Data--. 3. TDF_LabelNode objects do not fragmentize the memory; they are kept compactly in a number of arrays of 16K each. 4. Swapping is reduced on large data, because each document now occupies a smaller number of memory pages.
 
 	:rtype: TDF_HAllocator
 ") LabelNodeAllocator;
@@ -1931,7 +1161,7 @@ class TDF_Data : public MMgt_TShared {
 %}
 
 %nodefaultctor Handle_TDF_Data;
-class Handle_TDF_Data : public Handle_MMgt_TShared {
+class Handle_TDF_Data : public Handle_Standard_Transient {
 
     public:
         // constructors
@@ -1943,19 +1173,20 @@ class Handle_TDF_Data : public Handle_MMgt_TShared {
         static const Handle_TDF_Data DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_TDF_Data {
     TDF_Data* _get_reference() {
-    return (TDF_Data*)$self->Access();
+    return (TDF_Data*)$self->get();
     }
 };
 
 %extend Handle_TDF_Data {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend TDF_Data {
@@ -1963,347 +1194,8 @@ class Handle_TDF_Data : public Handle_MMgt_TShared {
 	__repr__ = _dumps_object
 	}
 };
-%nodefaultctor TDF_DataMapIteratorOfAttributeDataMap;
-class TDF_DataMapIteratorOfAttributeDataMap : public TCollection_BasicMapIterator {
-	public:
-		%feature("compactdefaultargs") TDF_DataMapIteratorOfAttributeDataMap;
-		%feature("autodoc", "	:rtype: None
-") TDF_DataMapIteratorOfAttributeDataMap;
-		 TDF_DataMapIteratorOfAttributeDataMap ();
-		%feature("compactdefaultargs") TDF_DataMapIteratorOfAttributeDataMap;
-		%feature("autodoc", "	:param aMap:
-	:type aMap: TDF_AttributeDataMap &
-	:rtype: None
-") TDF_DataMapIteratorOfAttributeDataMap;
-		 TDF_DataMapIteratorOfAttributeDataMap (const TDF_AttributeDataMap & aMap);
-		%feature("compactdefaultargs") Initialize;
-		%feature("autodoc", "	:param aMap:
-	:type aMap: TDF_AttributeDataMap &
-	:rtype: None
-") Initialize;
-		void Initialize (const TDF_AttributeDataMap & aMap);
-		%feature("compactdefaultargs") Key;
-		%feature("autodoc", "	:rtype: Handle_TDF_Attribute
-") Key;
-		Handle_TDF_Attribute Key ();
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:rtype: Handle_TDF_Attribute
-") Value;
-		Handle_TDF_Attribute Value ();
-};
-
-
-%extend TDF_DataMapIteratorOfAttributeDataMap {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor TDF_DataMapIteratorOfLabelDataMap;
-class TDF_DataMapIteratorOfLabelDataMap : public TCollection_BasicMapIterator {
-	public:
-		%feature("compactdefaultargs") TDF_DataMapIteratorOfLabelDataMap;
-		%feature("autodoc", "	:rtype: None
-") TDF_DataMapIteratorOfLabelDataMap;
-		 TDF_DataMapIteratorOfLabelDataMap ();
-		%feature("compactdefaultargs") TDF_DataMapIteratorOfLabelDataMap;
-		%feature("autodoc", "	:param aMap:
-	:type aMap: TDF_LabelDataMap &
-	:rtype: None
-") TDF_DataMapIteratorOfLabelDataMap;
-		 TDF_DataMapIteratorOfLabelDataMap (const TDF_LabelDataMap & aMap);
-		%feature("compactdefaultargs") Initialize;
-		%feature("autodoc", "	:param aMap:
-	:type aMap: TDF_LabelDataMap &
-	:rtype: None
-") Initialize;
-		void Initialize (const TDF_LabelDataMap & aMap);
-		%feature("compactdefaultargs") Key;
-		%feature("autodoc", "	:rtype: TDF_Label
-") Key;
-		const TDF_Label & Key ();
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:rtype: TDF_Label
-") Value;
-		const TDF_Label & Value ();
-};
-
-
-%extend TDF_DataMapIteratorOfLabelDataMap {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor TDF_DataMapIteratorOfLabelIntegerMap;
-class TDF_DataMapIteratorOfLabelIntegerMap : public TCollection_BasicMapIterator {
-	public:
-		%feature("compactdefaultargs") TDF_DataMapIteratorOfLabelIntegerMap;
-		%feature("autodoc", "	:rtype: None
-") TDF_DataMapIteratorOfLabelIntegerMap;
-		 TDF_DataMapIteratorOfLabelIntegerMap ();
-		%feature("compactdefaultargs") TDF_DataMapIteratorOfLabelIntegerMap;
-		%feature("autodoc", "	:param aMap:
-	:type aMap: TDF_LabelIntegerMap &
-	:rtype: None
-") TDF_DataMapIteratorOfLabelIntegerMap;
-		 TDF_DataMapIteratorOfLabelIntegerMap (const TDF_LabelIntegerMap & aMap);
-		%feature("compactdefaultargs") Initialize;
-		%feature("autodoc", "	:param aMap:
-	:type aMap: TDF_LabelIntegerMap &
-	:rtype: None
-") Initialize;
-		void Initialize (const TDF_LabelIntegerMap & aMap);
-		%feature("compactdefaultargs") Key;
-		%feature("autodoc", "	:rtype: TDF_Label
-") Key;
-		const TDF_Label & Key ();
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:rtype: int
-") Value;
-		const Standard_Integer & Value ();
-};
-
-
-%extend TDF_DataMapIteratorOfLabelIntegerMap {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor TDF_DataMapNodeOfAttributeDataMap;
-class TDF_DataMapNodeOfAttributeDataMap : public TCollection_MapNode {
-	public:
-		%feature("compactdefaultargs") TDF_DataMapNodeOfAttributeDataMap;
-		%feature("autodoc", "	:param K:
-	:type K: Handle_TDF_Attribute &
-	:param I:
-	:type I: Handle_TDF_Attribute &
-	:param n:
-	:type n: TCollection_MapNodePtr &
-	:rtype: None
-") TDF_DataMapNodeOfAttributeDataMap;
-		 TDF_DataMapNodeOfAttributeDataMap (const Handle_TDF_Attribute & K,const Handle_TDF_Attribute & I,const TCollection_MapNodePtr & n);
-		%feature("compactdefaultargs") Key;
-		%feature("autodoc", "	:rtype: Handle_TDF_Attribute
-") Key;
-		Handle_TDF_Attribute Key ();
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:rtype: Handle_TDF_Attribute
-") Value;
-		Handle_TDF_Attribute Value ();
-};
-
-
-%extend TDF_DataMapNodeOfAttributeDataMap {
-	%pythoncode {
-		def GetHandle(self):
-		    try:
-		        return self.thisHandle
-		    except:
-		        self.thisHandle = Handle_TDF_DataMapNodeOfAttributeDataMap(self)
-		        self.thisown = False
-		        return self.thisHandle
-	}
-};
-
-%pythonappend Handle_TDF_DataMapNodeOfAttributeDataMap::Handle_TDF_DataMapNodeOfAttributeDataMap %{
-    # register the handle in the base object
-    if len(args) > 0:
-        register_handle(self, args[0])
-%}
-
-%nodefaultctor Handle_TDF_DataMapNodeOfAttributeDataMap;
-class Handle_TDF_DataMapNodeOfAttributeDataMap : public Handle_TCollection_MapNode {
-
-    public:
-        // constructors
-        Handle_TDF_DataMapNodeOfAttributeDataMap();
-        Handle_TDF_DataMapNodeOfAttributeDataMap(const Handle_TDF_DataMapNodeOfAttributeDataMap &aHandle);
-        Handle_TDF_DataMapNodeOfAttributeDataMap(const TDF_DataMapNodeOfAttributeDataMap *anItem);
-        void Nullify();
-        Standard_Boolean IsNull() const;
-        static const Handle_TDF_DataMapNodeOfAttributeDataMap DownCast(const Handle_Standard_Transient &AnObject);
-
-};
-%extend Handle_TDF_DataMapNodeOfAttributeDataMap {
-    TDF_DataMapNodeOfAttributeDataMap* _get_reference() {
-    return (TDF_DataMapNodeOfAttributeDataMap*)$self->Access();
-    }
-};
-
-%extend Handle_TDF_DataMapNodeOfAttributeDataMap {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
-};
-
-%extend TDF_DataMapNodeOfAttributeDataMap {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor TDF_DataMapNodeOfLabelDataMap;
-class TDF_DataMapNodeOfLabelDataMap : public TCollection_MapNode {
-	public:
-		%feature("compactdefaultargs") TDF_DataMapNodeOfLabelDataMap;
-		%feature("autodoc", "	:param K:
-	:type K: TDF_Label &
-	:param I:
-	:type I: TDF_Label &
-	:param n:
-	:type n: TCollection_MapNodePtr &
-	:rtype: None
-") TDF_DataMapNodeOfLabelDataMap;
-		 TDF_DataMapNodeOfLabelDataMap (const TDF_Label & K,const TDF_Label & I,const TCollection_MapNodePtr & n);
-		%feature("compactdefaultargs") Key;
-		%feature("autodoc", "	:rtype: TDF_Label
-") Key;
-		TDF_Label & Key ();
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:rtype: TDF_Label
-") Value;
-		TDF_Label & Value ();
-};
-
-
-%extend TDF_DataMapNodeOfLabelDataMap {
-	%pythoncode {
-		def GetHandle(self):
-		    try:
-		        return self.thisHandle
-		    except:
-		        self.thisHandle = Handle_TDF_DataMapNodeOfLabelDataMap(self)
-		        self.thisown = False
-		        return self.thisHandle
-	}
-};
-
-%pythonappend Handle_TDF_DataMapNodeOfLabelDataMap::Handle_TDF_DataMapNodeOfLabelDataMap %{
-    # register the handle in the base object
-    if len(args) > 0:
-        register_handle(self, args[0])
-%}
-
-%nodefaultctor Handle_TDF_DataMapNodeOfLabelDataMap;
-class Handle_TDF_DataMapNodeOfLabelDataMap : public Handle_TCollection_MapNode {
-
-    public:
-        // constructors
-        Handle_TDF_DataMapNodeOfLabelDataMap();
-        Handle_TDF_DataMapNodeOfLabelDataMap(const Handle_TDF_DataMapNodeOfLabelDataMap &aHandle);
-        Handle_TDF_DataMapNodeOfLabelDataMap(const TDF_DataMapNodeOfLabelDataMap *anItem);
-        void Nullify();
-        Standard_Boolean IsNull() const;
-        static const Handle_TDF_DataMapNodeOfLabelDataMap DownCast(const Handle_Standard_Transient &AnObject);
-
-};
-%extend Handle_TDF_DataMapNodeOfLabelDataMap {
-    TDF_DataMapNodeOfLabelDataMap* _get_reference() {
-    return (TDF_DataMapNodeOfLabelDataMap*)$self->Access();
-    }
-};
-
-%extend Handle_TDF_DataMapNodeOfLabelDataMap {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
-};
-
-%extend TDF_DataMapNodeOfLabelDataMap {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor TDF_DataMapNodeOfLabelIntegerMap;
-class TDF_DataMapNodeOfLabelIntegerMap : public TCollection_MapNode {
-	public:
-		%feature("compactdefaultargs") TDF_DataMapNodeOfLabelIntegerMap;
-		%feature("autodoc", "	:param K:
-	:type K: TDF_Label &
-	:param I:
-	:type I: int &
-	:param n:
-	:type n: TCollection_MapNodePtr &
-	:rtype: None
-") TDF_DataMapNodeOfLabelIntegerMap;
-		 TDF_DataMapNodeOfLabelIntegerMap (const TDF_Label & K,const Standard_Integer & I,const TCollection_MapNodePtr & n);
-		%feature("compactdefaultargs") Key;
-		%feature("autodoc", "	:rtype: TDF_Label
-") Key;
-		TDF_Label & Key ();
-
-            %feature("autodoc","1");
-            %extend {
-                Standard_Integer GetValue() {
-                return (Standard_Integer) $self->Value();
-                }
-            };
-            %feature("autodoc","1");
-            %extend {
-                void SetValue(Standard_Integer value ) {
-                $self->Value()=value;
-                }
-            };
-            };
-
-
-%extend TDF_DataMapNodeOfLabelIntegerMap {
-	%pythoncode {
-		def GetHandle(self):
-		    try:
-		        return self.thisHandle
-		    except:
-		        self.thisHandle = Handle_TDF_DataMapNodeOfLabelIntegerMap(self)
-		        self.thisown = False
-		        return self.thisHandle
-	}
-};
-
-%pythonappend Handle_TDF_DataMapNodeOfLabelIntegerMap::Handle_TDF_DataMapNodeOfLabelIntegerMap %{
-    # register the handle in the base object
-    if len(args) > 0:
-        register_handle(self, args[0])
-%}
-
-%nodefaultctor Handle_TDF_DataMapNodeOfLabelIntegerMap;
-class Handle_TDF_DataMapNodeOfLabelIntegerMap : public Handle_TCollection_MapNode {
-
-    public:
-        // constructors
-        Handle_TDF_DataMapNodeOfLabelIntegerMap();
-        Handle_TDF_DataMapNodeOfLabelIntegerMap(const Handle_TDF_DataMapNodeOfLabelIntegerMap &aHandle);
-        Handle_TDF_DataMapNodeOfLabelIntegerMap(const TDF_DataMapNodeOfLabelIntegerMap *anItem);
-        void Nullify();
-        Standard_Boolean IsNull() const;
-        static const Handle_TDF_DataMapNodeOfLabelIntegerMap DownCast(const Handle_Standard_Transient &AnObject);
-
-};
-%extend Handle_TDF_DataMapNodeOfLabelIntegerMap {
-    TDF_DataMapNodeOfLabelIntegerMap* _get_reference() {
-    return (TDF_DataMapNodeOfLabelIntegerMap*)$self->Access();
-    }
-};
-
-%extend Handle_TDF_DataMapNodeOfLabelIntegerMap {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
-};
-
-%extend TDF_DataMapNodeOfLabelIntegerMap {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
 %nodefaultctor TDF_DataSet;
-class TDF_DataSet : public MMgt_TShared {
+class TDF_DataSet : public Standard_Transient {
 	public:
 		%feature("compactdefaultargs") TDF_DataSet;
 		%feature("autodoc", "	* Creates an empty DataSet object.
@@ -2411,7 +1303,7 @@ class TDF_DataSet : public MMgt_TShared {
 %}
 
 %nodefaultctor Handle_TDF_DataSet;
-class Handle_TDF_DataSet : public Handle_MMgt_TShared {
+class Handle_TDF_DataSet : public Handle_Standard_Transient {
 
     public:
         // constructors
@@ -2423,19 +1315,20 @@ class Handle_TDF_DataSet : public Handle_MMgt_TShared {
         static const Handle_TDF_DataSet DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_TDF_DataSet {
     TDF_DataSet* _get_reference() {
-    return (TDF_DataSet*)$self->Access();
+    return (TDF_DataSet*)$self->get();
     }
 };
 
 %extend Handle_TDF_DataSet {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend TDF_DataSet {
@@ -2444,7 +1337,7 @@ class Handle_TDF_DataSet : public Handle_MMgt_TShared {
 	}
 };
 %nodefaultctor TDF_Delta;
-class TDF_Delta : public MMgt_TShared {
+class TDF_Delta : public Standard_Transient {
 	public:
 		%feature("compactdefaultargs") TDF_Delta;
 		%feature("autodoc", "	* Creates a delta.
@@ -2536,7 +1429,7 @@ class TDF_Delta : public MMgt_TShared {
 %}
 
 %nodefaultctor Handle_TDF_Delta;
-class Handle_TDF_Delta : public Handle_MMgt_TShared {
+class Handle_TDF_Delta : public Handle_Standard_Transient {
 
     public:
         // constructors
@@ -2548,717 +1441,23 @@ class Handle_TDF_Delta : public Handle_MMgt_TShared {
         static const Handle_TDF_Delta DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_TDF_Delta {
     TDF_Delta* _get_reference() {
-    return (TDF_Delta*)$self->Access();
+    return (TDF_Delta*)$self->get();
     }
 };
 
 %extend Handle_TDF_Delta {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend TDF_Delta {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor TDF_DeltaList;
-class TDF_DeltaList {
-	public:
-		%feature("compactdefaultargs") TDF_DeltaList;
-		%feature("autodoc", "	:rtype: None
-") TDF_DeltaList;
-		 TDF_DeltaList ();
-		%feature("compactdefaultargs") TDF_DeltaList;
-		%feature("autodoc", "	:param Other:
-	:type Other: TDF_DeltaList &
-	:rtype: None
-") TDF_DeltaList;
-		 TDF_DeltaList (const TDF_DeltaList & Other);
-		%feature("compactdefaultargs") Assign;
-		%feature("autodoc", "	:param Other:
-	:type Other: TDF_DeltaList &
-	:rtype: None
-") Assign;
-		void Assign (const TDF_DeltaList & Other);
-		%feature("compactdefaultargs") operator =;
-		%feature("autodoc", "	:param Other:
-	:type Other: TDF_DeltaList &
-	:rtype: None
-") operator =;
-		void operator = (const TDF_DeltaList & Other);
-		%feature("compactdefaultargs") Extent;
-		%feature("autodoc", "	:rtype: int
-") Extent;
-		Standard_Integer Extent ();
-		%feature("compactdefaultargs") Clear;
-		%feature("autodoc", "	:rtype: None
-") Clear;
-		void Clear ();
-		%feature("compactdefaultargs") IsEmpty;
-		%feature("autodoc", "	:rtype: bool
-") IsEmpty;
-		Standard_Boolean IsEmpty ();
-		%feature("compactdefaultargs") Prepend;
-		%feature("autodoc", "	:param I:
-	:type I: Handle_TDF_Delta &
-	:rtype: None
-") Prepend;
-		void Prepend (const Handle_TDF_Delta & I);
-		%feature("compactdefaultargs") Prepend;
-		%feature("autodoc", "	:param I:
-	:type I: Handle_TDF_Delta &
-	:param theIt:
-	:type theIt: TDF_ListIteratorOfDeltaList &
-	:rtype: None
-") Prepend;
-		void Prepend (const Handle_TDF_Delta & I,TDF_ListIteratorOfDeltaList & theIt);
-		%feature("compactdefaultargs") Prepend;
-		%feature("autodoc", "	:param Other:
-	:type Other: TDF_DeltaList &
-	:rtype: None
-") Prepend;
-		void Prepend (TDF_DeltaList & Other);
-		%feature("compactdefaultargs") Append;
-		%feature("autodoc", "	:param I:
-	:type I: Handle_TDF_Delta &
-	:rtype: None
-") Append;
-		void Append (const Handle_TDF_Delta & I);
-		%feature("compactdefaultargs") Append;
-		%feature("autodoc", "	:param I:
-	:type I: Handle_TDF_Delta &
-	:param theIt:
-	:type theIt: TDF_ListIteratorOfDeltaList &
-	:rtype: None
-") Append;
-		void Append (const Handle_TDF_Delta & I,TDF_ListIteratorOfDeltaList & theIt);
-		%feature("compactdefaultargs") Append;
-		%feature("autodoc", "	:param Other:
-	:type Other: TDF_DeltaList &
-	:rtype: None
-") Append;
-		void Append (TDF_DeltaList & Other);
-		%feature("compactdefaultargs") First;
-		%feature("autodoc", "	:rtype: Handle_TDF_Delta
-") First;
-		Handle_TDF_Delta First ();
-		%feature("compactdefaultargs") Last;
-		%feature("autodoc", "	:rtype: Handle_TDF_Delta
-") Last;
-		Handle_TDF_Delta Last ();
-		%feature("compactdefaultargs") RemoveFirst;
-		%feature("autodoc", "	:rtype: None
-") RemoveFirst;
-		void RemoveFirst ();
-		%feature("compactdefaultargs") Remove;
-		%feature("autodoc", "	:param It:
-	:type It: TDF_ListIteratorOfDeltaList &
-	:rtype: None
-") Remove;
-		void Remove (TDF_ListIteratorOfDeltaList & It);
-		%feature("compactdefaultargs") InsertBefore;
-		%feature("autodoc", "	:param I:
-	:type I: Handle_TDF_Delta &
-	:param It:
-	:type It: TDF_ListIteratorOfDeltaList &
-	:rtype: None
-") InsertBefore;
-		void InsertBefore (const Handle_TDF_Delta & I,TDF_ListIteratorOfDeltaList & It);
-		%feature("compactdefaultargs") InsertBefore;
-		%feature("autodoc", "	:param Other:
-	:type Other: TDF_DeltaList &
-	:param It:
-	:type It: TDF_ListIteratorOfDeltaList &
-	:rtype: None
-") InsertBefore;
-		void InsertBefore (TDF_DeltaList & Other,TDF_ListIteratorOfDeltaList & It);
-		%feature("compactdefaultargs") InsertAfter;
-		%feature("autodoc", "	:param I:
-	:type I: Handle_TDF_Delta &
-	:param It:
-	:type It: TDF_ListIteratorOfDeltaList &
-	:rtype: None
-") InsertAfter;
-		void InsertAfter (const Handle_TDF_Delta & I,TDF_ListIteratorOfDeltaList & It);
-		%feature("compactdefaultargs") InsertAfter;
-		%feature("autodoc", "	:param Other:
-	:type Other: TDF_DeltaList &
-	:param It:
-	:type It: TDF_ListIteratorOfDeltaList &
-	:rtype: None
-") InsertAfter;
-		void InsertAfter (TDF_DeltaList & Other,TDF_ListIteratorOfDeltaList & It);
-};
-
-
-%extend TDF_DeltaList {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor TDF_DoubleMapIteratorOfAttributeDoubleMap;
-class TDF_DoubleMapIteratorOfAttributeDoubleMap : public TCollection_BasicMapIterator {
-	public:
-		%feature("compactdefaultargs") TDF_DoubleMapIteratorOfAttributeDoubleMap;
-		%feature("autodoc", "	:rtype: None
-") TDF_DoubleMapIteratorOfAttributeDoubleMap;
-		 TDF_DoubleMapIteratorOfAttributeDoubleMap ();
-		%feature("compactdefaultargs") TDF_DoubleMapIteratorOfAttributeDoubleMap;
-		%feature("autodoc", "	:param aMap:
-	:type aMap: TDF_AttributeDoubleMap &
-	:rtype: None
-") TDF_DoubleMapIteratorOfAttributeDoubleMap;
-		 TDF_DoubleMapIteratorOfAttributeDoubleMap (const TDF_AttributeDoubleMap & aMap);
-		%feature("compactdefaultargs") Initialize;
-		%feature("autodoc", "	:param aMap:
-	:type aMap: TDF_AttributeDoubleMap &
-	:rtype: None
-") Initialize;
-		void Initialize (const TDF_AttributeDoubleMap & aMap);
-		%feature("compactdefaultargs") Key1;
-		%feature("autodoc", "	:rtype: Handle_TDF_Attribute
-") Key1;
-		Handle_TDF_Attribute Key1 ();
-		%feature("compactdefaultargs") Key2;
-		%feature("autodoc", "	:rtype: Handle_TDF_Attribute
-") Key2;
-		Handle_TDF_Attribute Key2 ();
-};
-
-
-%extend TDF_DoubleMapIteratorOfAttributeDoubleMap {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor TDF_DoubleMapIteratorOfGUIDProgIDMap;
-class TDF_DoubleMapIteratorOfGUIDProgIDMap : public TCollection_BasicMapIterator {
-	public:
-		%feature("compactdefaultargs") TDF_DoubleMapIteratorOfGUIDProgIDMap;
-		%feature("autodoc", "	:rtype: None
-") TDF_DoubleMapIteratorOfGUIDProgIDMap;
-		 TDF_DoubleMapIteratorOfGUIDProgIDMap ();
-		%feature("compactdefaultargs") TDF_DoubleMapIteratorOfGUIDProgIDMap;
-		%feature("autodoc", "	:param aMap:
-	:type aMap: TDF_GUIDProgIDMap &
-	:rtype: None
-") TDF_DoubleMapIteratorOfGUIDProgIDMap;
-		 TDF_DoubleMapIteratorOfGUIDProgIDMap (const TDF_GUIDProgIDMap & aMap);
-		%feature("compactdefaultargs") Initialize;
-		%feature("autodoc", "	:param aMap:
-	:type aMap: TDF_GUIDProgIDMap &
-	:rtype: None
-") Initialize;
-		void Initialize (const TDF_GUIDProgIDMap & aMap);
-		%feature("compactdefaultargs") Key1;
-		%feature("autodoc", "	:rtype: Standard_GUID
-") Key1;
-		const Standard_GUID & Key1 ();
-		%feature("compactdefaultargs") Key2;
-		%feature("autodoc", "	:rtype: TCollection_ExtendedString
-") Key2;
-		const TCollection_ExtendedString & Key2 ();
-};
-
-
-%extend TDF_DoubleMapIteratorOfGUIDProgIDMap {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor TDF_DoubleMapIteratorOfLabelDoubleMap;
-class TDF_DoubleMapIteratorOfLabelDoubleMap : public TCollection_BasicMapIterator {
-	public:
-		%feature("compactdefaultargs") TDF_DoubleMapIteratorOfLabelDoubleMap;
-		%feature("autodoc", "	:rtype: None
-") TDF_DoubleMapIteratorOfLabelDoubleMap;
-		 TDF_DoubleMapIteratorOfLabelDoubleMap ();
-		%feature("compactdefaultargs") TDF_DoubleMapIteratorOfLabelDoubleMap;
-		%feature("autodoc", "	:param aMap:
-	:type aMap: TDF_LabelDoubleMap &
-	:rtype: None
-") TDF_DoubleMapIteratorOfLabelDoubleMap;
-		 TDF_DoubleMapIteratorOfLabelDoubleMap (const TDF_LabelDoubleMap & aMap);
-		%feature("compactdefaultargs") Initialize;
-		%feature("autodoc", "	:param aMap:
-	:type aMap: TDF_LabelDoubleMap &
-	:rtype: None
-") Initialize;
-		void Initialize (const TDF_LabelDoubleMap & aMap);
-		%feature("compactdefaultargs") Key1;
-		%feature("autodoc", "	:rtype: TDF_Label
-") Key1;
-		const TDF_Label & Key1 ();
-		%feature("compactdefaultargs") Key2;
-		%feature("autodoc", "	:rtype: TDF_Label
-") Key2;
-		const TDF_Label & Key2 ();
-};
-
-
-%extend TDF_DoubleMapIteratorOfLabelDoubleMap {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor TDF_DoubleMapNodeOfAttributeDoubleMap;
-class TDF_DoubleMapNodeOfAttributeDoubleMap : public TCollection_MapNode {
-	public:
-		%feature("compactdefaultargs") TDF_DoubleMapNodeOfAttributeDoubleMap;
-		%feature("autodoc", "	:param K1:
-	:type K1: Handle_TDF_Attribute &
-	:param K2:
-	:type K2: Handle_TDF_Attribute &
-	:param n1:
-	:type n1: TCollection_MapNodePtr &
-	:param n2:
-	:type n2: TCollection_MapNodePtr &
-	:rtype: None
-") TDF_DoubleMapNodeOfAttributeDoubleMap;
-		 TDF_DoubleMapNodeOfAttributeDoubleMap (const Handle_TDF_Attribute & K1,const Handle_TDF_Attribute & K2,const TCollection_MapNodePtr & n1,const TCollection_MapNodePtr & n2);
-		%feature("compactdefaultargs") Key1;
-		%feature("autodoc", "	:rtype: Handle_TDF_Attribute
-") Key1;
-		Handle_TDF_Attribute Key1 ();
-		%feature("compactdefaultargs") Key2;
-		%feature("autodoc", "	:rtype: Handle_TDF_Attribute
-") Key2;
-		Handle_TDF_Attribute Key2 ();
-		%feature("compactdefaultargs") Next2;
-		%feature("autodoc", "	:rtype: TCollection_MapNodePtr
-") Next2;
-		TCollection_MapNodePtr & Next2 ();
-};
-
-
-%extend TDF_DoubleMapNodeOfAttributeDoubleMap {
-	%pythoncode {
-		def GetHandle(self):
-		    try:
-		        return self.thisHandle
-		    except:
-		        self.thisHandle = Handle_TDF_DoubleMapNodeOfAttributeDoubleMap(self)
-		        self.thisown = False
-		        return self.thisHandle
-	}
-};
-
-%pythonappend Handle_TDF_DoubleMapNodeOfAttributeDoubleMap::Handle_TDF_DoubleMapNodeOfAttributeDoubleMap %{
-    # register the handle in the base object
-    if len(args) > 0:
-        register_handle(self, args[0])
-%}
-
-%nodefaultctor Handle_TDF_DoubleMapNodeOfAttributeDoubleMap;
-class Handle_TDF_DoubleMapNodeOfAttributeDoubleMap : public Handle_TCollection_MapNode {
-
-    public:
-        // constructors
-        Handle_TDF_DoubleMapNodeOfAttributeDoubleMap();
-        Handle_TDF_DoubleMapNodeOfAttributeDoubleMap(const Handle_TDF_DoubleMapNodeOfAttributeDoubleMap &aHandle);
-        Handle_TDF_DoubleMapNodeOfAttributeDoubleMap(const TDF_DoubleMapNodeOfAttributeDoubleMap *anItem);
-        void Nullify();
-        Standard_Boolean IsNull() const;
-        static const Handle_TDF_DoubleMapNodeOfAttributeDoubleMap DownCast(const Handle_Standard_Transient &AnObject);
-
-};
-%extend Handle_TDF_DoubleMapNodeOfAttributeDoubleMap {
-    TDF_DoubleMapNodeOfAttributeDoubleMap* _get_reference() {
-    return (TDF_DoubleMapNodeOfAttributeDoubleMap*)$self->Access();
-    }
-};
-
-%extend Handle_TDF_DoubleMapNodeOfAttributeDoubleMap {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
-};
-
-%extend TDF_DoubleMapNodeOfAttributeDoubleMap {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor TDF_DoubleMapNodeOfGUIDProgIDMap;
-class TDF_DoubleMapNodeOfGUIDProgIDMap : public TCollection_MapNode {
-	public:
-		%feature("compactdefaultargs") TDF_DoubleMapNodeOfGUIDProgIDMap;
-		%feature("autodoc", "	:param K1:
-	:type K1: Standard_GUID &
-	:param K2:
-	:type K2: TCollection_ExtendedString &
-	:param n1:
-	:type n1: TCollection_MapNodePtr &
-	:param n2:
-	:type n2: TCollection_MapNodePtr &
-	:rtype: None
-") TDF_DoubleMapNodeOfGUIDProgIDMap;
-		 TDF_DoubleMapNodeOfGUIDProgIDMap (const Standard_GUID & K1,const TCollection_ExtendedString & K2,const TCollection_MapNodePtr & n1,const TCollection_MapNodePtr & n2);
-		%feature("compactdefaultargs") Key1;
-		%feature("autodoc", "	:rtype: Standard_GUID
-") Key1;
-		Standard_GUID & Key1 ();
-		%feature("compactdefaultargs") Key2;
-		%feature("autodoc", "	:rtype: TCollection_ExtendedString
-") Key2;
-		TCollection_ExtendedString & Key2 ();
-		%feature("compactdefaultargs") Next2;
-		%feature("autodoc", "	:rtype: TCollection_MapNodePtr
-") Next2;
-		TCollection_MapNodePtr & Next2 ();
-};
-
-
-%extend TDF_DoubleMapNodeOfGUIDProgIDMap {
-	%pythoncode {
-		def GetHandle(self):
-		    try:
-		        return self.thisHandle
-		    except:
-		        self.thisHandle = Handle_TDF_DoubleMapNodeOfGUIDProgIDMap(self)
-		        self.thisown = False
-		        return self.thisHandle
-	}
-};
-
-%pythonappend Handle_TDF_DoubleMapNodeOfGUIDProgIDMap::Handle_TDF_DoubleMapNodeOfGUIDProgIDMap %{
-    # register the handle in the base object
-    if len(args) > 0:
-        register_handle(self, args[0])
-%}
-
-%nodefaultctor Handle_TDF_DoubleMapNodeOfGUIDProgIDMap;
-class Handle_TDF_DoubleMapNodeOfGUIDProgIDMap : public Handle_TCollection_MapNode {
-
-    public:
-        // constructors
-        Handle_TDF_DoubleMapNodeOfGUIDProgIDMap();
-        Handle_TDF_DoubleMapNodeOfGUIDProgIDMap(const Handle_TDF_DoubleMapNodeOfGUIDProgIDMap &aHandle);
-        Handle_TDF_DoubleMapNodeOfGUIDProgIDMap(const TDF_DoubleMapNodeOfGUIDProgIDMap *anItem);
-        void Nullify();
-        Standard_Boolean IsNull() const;
-        static const Handle_TDF_DoubleMapNodeOfGUIDProgIDMap DownCast(const Handle_Standard_Transient &AnObject);
-
-};
-%extend Handle_TDF_DoubleMapNodeOfGUIDProgIDMap {
-    TDF_DoubleMapNodeOfGUIDProgIDMap* _get_reference() {
-    return (TDF_DoubleMapNodeOfGUIDProgIDMap*)$self->Access();
-    }
-};
-
-%extend Handle_TDF_DoubleMapNodeOfGUIDProgIDMap {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
-};
-
-%extend TDF_DoubleMapNodeOfGUIDProgIDMap {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor TDF_DoubleMapNodeOfLabelDoubleMap;
-class TDF_DoubleMapNodeOfLabelDoubleMap : public TCollection_MapNode {
-	public:
-		%feature("compactdefaultargs") TDF_DoubleMapNodeOfLabelDoubleMap;
-		%feature("autodoc", "	:param K1:
-	:type K1: TDF_Label &
-	:param K2:
-	:type K2: TDF_Label &
-	:param n1:
-	:type n1: TCollection_MapNodePtr &
-	:param n2:
-	:type n2: TCollection_MapNodePtr &
-	:rtype: None
-") TDF_DoubleMapNodeOfLabelDoubleMap;
-		 TDF_DoubleMapNodeOfLabelDoubleMap (const TDF_Label & K1,const TDF_Label & K2,const TCollection_MapNodePtr & n1,const TCollection_MapNodePtr & n2);
-		%feature("compactdefaultargs") Key1;
-		%feature("autodoc", "	:rtype: TDF_Label
-") Key1;
-		TDF_Label & Key1 ();
-		%feature("compactdefaultargs") Key2;
-		%feature("autodoc", "	:rtype: TDF_Label
-") Key2;
-		TDF_Label & Key2 ();
-		%feature("compactdefaultargs") Next2;
-		%feature("autodoc", "	:rtype: TCollection_MapNodePtr
-") Next2;
-		TCollection_MapNodePtr & Next2 ();
-};
-
-
-%extend TDF_DoubleMapNodeOfLabelDoubleMap {
-	%pythoncode {
-		def GetHandle(self):
-		    try:
-		        return self.thisHandle
-		    except:
-		        self.thisHandle = Handle_TDF_DoubleMapNodeOfLabelDoubleMap(self)
-		        self.thisown = False
-		        return self.thisHandle
-	}
-};
-
-%pythonappend Handle_TDF_DoubleMapNodeOfLabelDoubleMap::Handle_TDF_DoubleMapNodeOfLabelDoubleMap %{
-    # register the handle in the base object
-    if len(args) > 0:
-        register_handle(self, args[0])
-%}
-
-%nodefaultctor Handle_TDF_DoubleMapNodeOfLabelDoubleMap;
-class Handle_TDF_DoubleMapNodeOfLabelDoubleMap : public Handle_TCollection_MapNode {
-
-    public:
-        // constructors
-        Handle_TDF_DoubleMapNodeOfLabelDoubleMap();
-        Handle_TDF_DoubleMapNodeOfLabelDoubleMap(const Handle_TDF_DoubleMapNodeOfLabelDoubleMap &aHandle);
-        Handle_TDF_DoubleMapNodeOfLabelDoubleMap(const TDF_DoubleMapNodeOfLabelDoubleMap *anItem);
-        void Nullify();
-        Standard_Boolean IsNull() const;
-        static const Handle_TDF_DoubleMapNodeOfLabelDoubleMap DownCast(const Handle_Standard_Transient &AnObject);
-
-};
-%extend Handle_TDF_DoubleMapNodeOfLabelDoubleMap {
-    TDF_DoubleMapNodeOfLabelDoubleMap* _get_reference() {
-    return (TDF_DoubleMapNodeOfLabelDoubleMap*)$self->Access();
-    }
-};
-
-%extend Handle_TDF_DoubleMapNodeOfLabelDoubleMap {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
-};
-
-%extend TDF_DoubleMapNodeOfLabelDoubleMap {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor TDF_GUIDProgIDMap;
-class TDF_GUIDProgIDMap : public TCollection_BasicMap {
-	public:
-		%feature("compactdefaultargs") TDF_GUIDProgIDMap;
-		%feature("autodoc", "	:param NbBuckets: default value is 1
-	:type NbBuckets: int
-	:rtype: None
-") TDF_GUIDProgIDMap;
-		 TDF_GUIDProgIDMap (const Standard_Integer NbBuckets = 1);
-		%feature("compactdefaultargs") Assign;
-		%feature("autodoc", "	:param Other:
-	:type Other: TDF_GUIDProgIDMap &
-	:rtype: TDF_GUIDProgIDMap
-") Assign;
-		TDF_GUIDProgIDMap & Assign (const TDF_GUIDProgIDMap & Other);
-		%feature("compactdefaultargs") operator =;
-		%feature("autodoc", "	:param Other:
-	:type Other: TDF_GUIDProgIDMap &
-	:rtype: TDF_GUIDProgIDMap
-") operator =;
-		TDF_GUIDProgIDMap & operator = (const TDF_GUIDProgIDMap & Other);
-		%feature("compactdefaultargs") ReSize;
-		%feature("autodoc", "	:param NbBuckets:
-	:type NbBuckets: int
-	:rtype: None
-") ReSize;
-		void ReSize (const Standard_Integer NbBuckets);
-		%feature("compactdefaultargs") Clear;
-		%feature("autodoc", "	:rtype: None
-") Clear;
-		void Clear ();
-		%feature("compactdefaultargs") Bind;
-		%feature("autodoc", "	:param K1:
-	:type K1: Standard_GUID &
-	:param K2:
-	:type K2: TCollection_ExtendedString &
-	:rtype: None
-") Bind;
-		void Bind (const Standard_GUID & K1,const TCollection_ExtendedString & K2);
-		%feature("compactdefaultargs") AreBound;
-		%feature("autodoc", "	:param K1:
-	:type K1: Standard_GUID &
-	:param K2:
-	:type K2: TCollection_ExtendedString &
-	:rtype: bool
-") AreBound;
-		Standard_Boolean AreBound (const Standard_GUID & K1,const TCollection_ExtendedString & K2);
-		%feature("compactdefaultargs") IsBound1;
-		%feature("autodoc", "	:param K:
-	:type K: Standard_GUID &
-	:rtype: bool
-") IsBound1;
-		Standard_Boolean IsBound1 (const Standard_GUID & K);
-		%feature("compactdefaultargs") IsBound2;
-		%feature("autodoc", "	:param K:
-	:type K: TCollection_ExtendedString &
-	:rtype: bool
-") IsBound2;
-		Standard_Boolean IsBound2 (const TCollection_ExtendedString & K);
-		%feature("compactdefaultargs") Find1;
-		%feature("autodoc", "	:param K:
-	:type K: Standard_GUID &
-	:rtype: TCollection_ExtendedString
-") Find1;
-		const TCollection_ExtendedString & Find1 (const Standard_GUID & K);
-		%feature("compactdefaultargs") Find2;
-		%feature("autodoc", "	:param K:
-	:type K: TCollection_ExtendedString &
-	:rtype: Standard_GUID
-") Find2;
-		const Standard_GUID & Find2 (const TCollection_ExtendedString & K);
-		%feature("compactdefaultargs") UnBind1;
-		%feature("autodoc", "	:param K:
-	:type K: Standard_GUID &
-	:rtype: bool
-") UnBind1;
-		Standard_Boolean UnBind1 (const Standard_GUID & K);
-		%feature("compactdefaultargs") UnBind2;
-		%feature("autodoc", "	:param K:
-	:type K: TCollection_ExtendedString &
-	:rtype: bool
-") UnBind2;
-		Standard_Boolean UnBind2 (const TCollection_ExtendedString & K);
-};
-
-
-%extend TDF_GUIDProgIDMap {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor TDF_HAttributeArray1;
-class TDF_HAttributeArray1 : public MMgt_TShared {
-	public:
-		%feature("compactdefaultargs") TDF_HAttributeArray1;
-		%feature("autodoc", "	:param Low:
-	:type Low: int
-	:param Up:
-	:type Up: int
-	:rtype: None
-") TDF_HAttributeArray1;
-		 TDF_HAttributeArray1 (const Standard_Integer Low,const Standard_Integer Up);
-		%feature("compactdefaultargs") TDF_HAttributeArray1;
-		%feature("autodoc", "	:param Low:
-	:type Low: int
-	:param Up:
-	:type Up: int
-	:param V:
-	:type V: Handle_TDF_Attribute &
-	:rtype: None
-") TDF_HAttributeArray1;
-		 TDF_HAttributeArray1 (const Standard_Integer Low,const Standard_Integer Up,const Handle_TDF_Attribute & V);
-		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	:param V:
-	:type V: Handle_TDF_Attribute &
-	:rtype: None
-") Init;
-		void Init (const Handle_TDF_Attribute & V);
-		%feature("compactdefaultargs") Length;
-		%feature("autodoc", "	:rtype: int
-") Length;
-		Standard_Integer Length ();
-		%feature("compactdefaultargs") Lower;
-		%feature("autodoc", "	:rtype: int
-") Lower;
-		Standard_Integer Lower ();
-		%feature("compactdefaultargs") Upper;
-		%feature("autodoc", "	:rtype: int
-") Upper;
-		Standard_Integer Upper ();
-		%feature("compactdefaultargs") SetValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param Value:
-	:type Value: Handle_TDF_Attribute &
-	:rtype: None
-") SetValue;
-		void SetValue (const Standard_Integer Index,const Handle_TDF_Attribute & Value);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: Handle_TDF_Attribute
-") Value;
-		Handle_TDF_Attribute Value (const Standard_Integer Index);
-		%feature("compactdefaultargs") ChangeValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: Handle_TDF_Attribute
-") ChangeValue;
-		Handle_TDF_Attribute ChangeValue (const Standard_Integer Index);
-		%feature("compactdefaultargs") Array1;
-		%feature("autodoc", "	:rtype: TDF_AttributeArray1
-") Array1;
-		const TDF_AttributeArray1 & Array1 ();
-		%feature("compactdefaultargs") ChangeArray1;
-		%feature("autodoc", "	:rtype: TDF_AttributeArray1
-") ChangeArray1;
-		TDF_AttributeArray1 & ChangeArray1 ();
-};
-
-
-%extend TDF_HAttributeArray1 {
-	%pythoncode {
-		def GetHandle(self):
-		    try:
-		        return self.thisHandle
-		    except:
-		        self.thisHandle = Handle_TDF_HAttributeArray1(self)
-		        self.thisown = False
-		        return self.thisHandle
-	}
-};
-
-%pythonappend Handle_TDF_HAttributeArray1::Handle_TDF_HAttributeArray1 %{
-    # register the handle in the base object
-    if len(args) > 0:
-        register_handle(self, args[0])
-%}
-
-%nodefaultctor Handle_TDF_HAttributeArray1;
-class Handle_TDF_HAttributeArray1 : public Handle_MMgt_TShared {
-
-    public:
-        // constructors
-        Handle_TDF_HAttributeArray1();
-        Handle_TDF_HAttributeArray1(const Handle_TDF_HAttributeArray1 &aHandle);
-        Handle_TDF_HAttributeArray1(const TDF_HAttributeArray1 *anItem);
-        void Nullify();
-        Standard_Boolean IsNull() const;
-        static const Handle_TDF_HAttributeArray1 DownCast(const Handle_Standard_Transient &AnObject);
-
-};
-%extend Handle_TDF_HAttributeArray1 {
-    TDF_HAttributeArray1* _get_reference() {
-    return (TDF_HAttributeArray1*)$self->Access();
-    }
-};
-
-%extend Handle_TDF_HAttributeArray1 {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
-};
-
-%extend TDF_HAttributeArray1 {
 	%pythoncode {
 	__repr__ = _dumps_object
 	}
@@ -3267,7 +1466,7 @@ class Handle_TDF_HAttributeArray1 : public Handle_MMgt_TShared {
 class TDF_IDFilter {
 	public:
 		%feature("compactdefaultargs") TDF_IDFilter;
-		%feature("autodoc", "	* Creates an ID/attribute filter based on an ID list. The default mode is 'ignore all but...'. //! This filter has 2 working mode: keep and ignore. //! Ignore/Exclusive mode: all IDs are ignored except these set to be kept, using Keep(). Of course, it is possible set an kept ID to be ignored using Ignore(). //! Keep/Inclusive mode: all IDs are kept except these set to be ignored, using Ignore(). Of course, it is possible set an ignored ID to be kept using Keep().
+		%feature("autodoc", "	* Creates an ID/attribute filter based on an ID list. The default mode is 'ignore all but...'. //! This filter has 2 working mode: keep and ignore. //! Ignore/Exclusive mode: all IDs are ignored except these set to be kept, using Keep----. Of course, it is possible set an kept ID to be ignored using Ignore----. //! Keep/Inclusive mode: all IDs are kept except these set to be ignored, using Ignore----. Of course, it is possible set an ignored ID to be kept using Keep----.
 
 	:param ignoreMode: default value is Standard_True
 	:type ignoreMode: bool
@@ -3289,7 +1488,7 @@ class TDF_IDFilter {
 ") IgnoreAll;
 		Standard_Boolean IgnoreAll ();
 		%feature("compactdefaultargs") Keep;
-		%feature("autodoc", "	* An attribute with <anID> as ID is to be kept and the filter will answer true to the question IsKept(<anID>).
+		%feature("autodoc", "	* An attribute with <anID> as ID is to be kept and the filter will answer true to the question IsKept--<anID>--.
 
 	:param anID:
 	:type anID: Standard_GUID &
@@ -3297,7 +1496,7 @@ class TDF_IDFilter {
 ") Keep;
 		void Keep (const Standard_GUID & anID);
 		%feature("compactdefaultargs") Keep;
-		%feature("autodoc", "	* Attributes with ID owned by <anIDList> are to be kept and the filter will answer true to the question IsKept(<anID>) with ID from <anIDList>.
+		%feature("autodoc", "	* Attributes with ID owned by <anIDList> are to be kept and the filter will answer true to the question IsKept--<anID>-- with ID from <anIDList>.
 
 	:param anIDList:
 	:type anIDList: TDF_IDList &
@@ -3305,7 +1504,7 @@ class TDF_IDFilter {
 ") Keep;
 		void Keep (const TDF_IDList & anIDList);
 		%feature("compactdefaultargs") Ignore;
-		%feature("autodoc", "	* An attribute with <anID> as ID is to be ignored and the filter will answer false to the question IsKept(<anID>).
+		%feature("autodoc", "	* An attribute with <anID> as ID is to be ignored and the filter will answer false to the question IsKept--<anID>--.
 
 	:param anID:
 	:type anID: Standard_GUID &
@@ -3313,7 +1512,7 @@ class TDF_IDFilter {
 ") Ignore;
 		void Ignore (const Standard_GUID & anID);
 		%feature("compactdefaultargs") Ignore;
-		%feature("autodoc", "	* Attributes with ID owned by <anIDList> are to be ignored and the filter will answer false to the question IsKept(<anID>) with ID from <anIDList>.
+		%feature("autodoc", "	* Attributes with ID owned by <anIDList> are to be ignored and the filter will answer false to the question IsKept--<anID>-- with ID from <anIDList>.
 
 	:param anIDList:
 	:type anIDList: TDF_IDList &
@@ -3384,384 +1583,6 @@ class TDF_IDFilter {
 	__repr__ = _dumps_object
 	}
 };
-%nodefaultctor TDF_IDList;
-class TDF_IDList {
-	public:
-		%feature("compactdefaultargs") TDF_IDList;
-		%feature("autodoc", "	:rtype: None
-") TDF_IDList;
-		 TDF_IDList ();
-		%feature("compactdefaultargs") TDF_IDList;
-		%feature("autodoc", "	:param Other:
-	:type Other: TDF_IDList &
-	:rtype: None
-") TDF_IDList;
-		 TDF_IDList (const TDF_IDList & Other);
-		%feature("compactdefaultargs") Assign;
-		%feature("autodoc", "	:param Other:
-	:type Other: TDF_IDList &
-	:rtype: None
-") Assign;
-		void Assign (const TDF_IDList & Other);
-		%feature("compactdefaultargs") operator =;
-		%feature("autodoc", "	:param Other:
-	:type Other: TDF_IDList &
-	:rtype: None
-") operator =;
-		void operator = (const TDF_IDList & Other);
-		%feature("compactdefaultargs") Extent;
-		%feature("autodoc", "	:rtype: int
-") Extent;
-		Standard_Integer Extent ();
-		%feature("compactdefaultargs") Clear;
-		%feature("autodoc", "	:rtype: None
-") Clear;
-		void Clear ();
-		%feature("compactdefaultargs") IsEmpty;
-		%feature("autodoc", "	:rtype: bool
-") IsEmpty;
-		Standard_Boolean IsEmpty ();
-		%feature("compactdefaultargs") Prepend;
-		%feature("autodoc", "	:param I:
-	:type I: Standard_GUID &
-	:rtype: None
-") Prepend;
-		void Prepend (const Standard_GUID & I);
-		%feature("compactdefaultargs") Prepend;
-		%feature("autodoc", "	:param I:
-	:type I: Standard_GUID &
-	:param theIt:
-	:type theIt: TDF_ListIteratorOfIDList &
-	:rtype: None
-") Prepend;
-		void Prepend (const Standard_GUID & I,TDF_ListIteratorOfIDList & theIt);
-		%feature("compactdefaultargs") Prepend;
-		%feature("autodoc", "	:param Other:
-	:type Other: TDF_IDList &
-	:rtype: None
-") Prepend;
-		void Prepend (TDF_IDList & Other);
-		%feature("compactdefaultargs") Append;
-		%feature("autodoc", "	:param I:
-	:type I: Standard_GUID &
-	:rtype: None
-") Append;
-		void Append (const Standard_GUID & I);
-		%feature("compactdefaultargs") Append;
-		%feature("autodoc", "	:param I:
-	:type I: Standard_GUID &
-	:param theIt:
-	:type theIt: TDF_ListIteratorOfIDList &
-	:rtype: None
-") Append;
-		void Append (const Standard_GUID & I,TDF_ListIteratorOfIDList & theIt);
-		%feature("compactdefaultargs") Append;
-		%feature("autodoc", "	:param Other:
-	:type Other: TDF_IDList &
-	:rtype: None
-") Append;
-		void Append (TDF_IDList & Other);
-		%feature("compactdefaultargs") First;
-		%feature("autodoc", "	:rtype: Standard_GUID
-") First;
-		Standard_GUID & First ();
-		%feature("compactdefaultargs") Last;
-		%feature("autodoc", "	:rtype: Standard_GUID
-") Last;
-		Standard_GUID & Last ();
-		%feature("compactdefaultargs") RemoveFirst;
-		%feature("autodoc", "	:rtype: None
-") RemoveFirst;
-		void RemoveFirst ();
-		%feature("compactdefaultargs") Remove;
-		%feature("autodoc", "	:param It:
-	:type It: TDF_ListIteratorOfIDList &
-	:rtype: None
-") Remove;
-		void Remove (TDF_ListIteratorOfIDList & It);
-		%feature("compactdefaultargs") InsertBefore;
-		%feature("autodoc", "	:param I:
-	:type I: Standard_GUID &
-	:param It:
-	:type It: TDF_ListIteratorOfIDList &
-	:rtype: None
-") InsertBefore;
-		void InsertBefore (const Standard_GUID & I,TDF_ListIteratorOfIDList & It);
-		%feature("compactdefaultargs") InsertBefore;
-		%feature("autodoc", "	:param Other:
-	:type Other: TDF_IDList &
-	:param It:
-	:type It: TDF_ListIteratorOfIDList &
-	:rtype: None
-") InsertBefore;
-		void InsertBefore (TDF_IDList & Other,TDF_ListIteratorOfIDList & It);
-		%feature("compactdefaultargs") InsertAfter;
-		%feature("autodoc", "	:param I:
-	:type I: Standard_GUID &
-	:param It:
-	:type It: TDF_ListIteratorOfIDList &
-	:rtype: None
-") InsertAfter;
-		void InsertAfter (const Standard_GUID & I,TDF_ListIteratorOfIDList & It);
-		%feature("compactdefaultargs") InsertAfter;
-		%feature("autodoc", "	:param Other:
-	:type Other: TDF_IDList &
-	:param It:
-	:type It: TDF_ListIteratorOfIDList &
-	:rtype: None
-") InsertAfter;
-		void InsertAfter (TDF_IDList & Other,TDF_ListIteratorOfIDList & It);
-};
-
-
-%extend TDF_IDList {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor TDF_IDMap;
-class TDF_IDMap : public TCollection_BasicMap {
-	public:
-		%feature("compactdefaultargs") TDF_IDMap;
-		%feature("autodoc", "	:param NbBuckets: default value is 1
-	:type NbBuckets: int
-	:rtype: None
-") TDF_IDMap;
-		 TDF_IDMap (const Standard_Integer NbBuckets = 1);
-		%feature("compactdefaultargs") TDF_IDMap;
-		%feature("autodoc", "	:param Other:
-	:type Other: TDF_IDMap &
-	:rtype: None
-") TDF_IDMap;
-		 TDF_IDMap (const TDF_IDMap & Other);
-		%feature("compactdefaultargs") Assign;
-		%feature("autodoc", "	:param Other:
-	:type Other: TDF_IDMap &
-	:rtype: TDF_IDMap
-") Assign;
-		TDF_IDMap & Assign (const TDF_IDMap & Other);
-		%feature("compactdefaultargs") operator =;
-		%feature("autodoc", "	:param Other:
-	:type Other: TDF_IDMap &
-	:rtype: TDF_IDMap
-") operator =;
-		TDF_IDMap & operator = (const TDF_IDMap & Other);
-		%feature("compactdefaultargs") ReSize;
-		%feature("autodoc", "	:param NbBuckets:
-	:type NbBuckets: int
-	:rtype: None
-") ReSize;
-		void ReSize (const Standard_Integer NbBuckets);
-		%feature("compactdefaultargs") Clear;
-		%feature("autodoc", "	:rtype: None
-") Clear;
-		void Clear ();
-		%feature("compactdefaultargs") Add;
-		%feature("autodoc", "	:param aKey:
-	:type aKey: Standard_GUID &
-	:rtype: bool
-") Add;
-		Standard_Boolean Add (const Standard_GUID & aKey);
-		%feature("compactdefaultargs") Contains;
-		%feature("autodoc", "	:param aKey:
-	:type aKey: Standard_GUID &
-	:rtype: bool
-") Contains;
-		Standard_Boolean Contains (const Standard_GUID & aKey);
-		%feature("compactdefaultargs") Remove;
-		%feature("autodoc", "	:param aKey:
-	:type aKey: Standard_GUID &
-	:rtype: bool
-") Remove;
-		Standard_Boolean Remove (const Standard_GUID & aKey);
-};
-
-
-%extend TDF_IDMap {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor TDF_IndexedMapNodeOfAttributeIndexedMap;
-class TDF_IndexedMapNodeOfAttributeIndexedMap : public TCollection_MapNode {
-	public:
-		%feature("compactdefaultargs") TDF_IndexedMapNodeOfAttributeIndexedMap;
-		%feature("autodoc", "	:param K1:
-	:type K1: Handle_TDF_Attribute &
-	:param K2:
-	:type K2: int
-	:param n1:
-	:type n1: TCollection_MapNodePtr &
-	:param n2:
-	:type n2: TCollection_MapNodePtr &
-	:rtype: None
-") TDF_IndexedMapNodeOfAttributeIndexedMap;
-		 TDF_IndexedMapNodeOfAttributeIndexedMap (const Handle_TDF_Attribute & K1,const Standard_Integer K2,const TCollection_MapNodePtr & n1,const TCollection_MapNodePtr & n2);
-		%feature("compactdefaultargs") Key1;
-		%feature("autodoc", "	:rtype: Handle_TDF_Attribute
-") Key1;
-		Handle_TDF_Attribute Key1 ();
-
-            %feature("autodoc","1");
-            %extend {
-                Standard_Integer GetKey2() {
-                return (Standard_Integer) $self->Key2();
-                }
-            };
-            %feature("autodoc","1");
-            %extend {
-                void SetKey2(Standard_Integer value ) {
-                $self->Key2()=value;
-                }
-            };
-            		%feature("compactdefaultargs") Next2;
-		%feature("autodoc", "	:rtype: TCollection_MapNodePtr
-") Next2;
-		TCollection_MapNodePtr & Next2 ();
-};
-
-
-%extend TDF_IndexedMapNodeOfAttributeIndexedMap {
-	%pythoncode {
-		def GetHandle(self):
-		    try:
-		        return self.thisHandle
-		    except:
-		        self.thisHandle = Handle_TDF_IndexedMapNodeOfAttributeIndexedMap(self)
-		        self.thisown = False
-		        return self.thisHandle
-	}
-};
-
-%pythonappend Handle_TDF_IndexedMapNodeOfAttributeIndexedMap::Handle_TDF_IndexedMapNodeOfAttributeIndexedMap %{
-    # register the handle in the base object
-    if len(args) > 0:
-        register_handle(self, args[0])
-%}
-
-%nodefaultctor Handle_TDF_IndexedMapNodeOfAttributeIndexedMap;
-class Handle_TDF_IndexedMapNodeOfAttributeIndexedMap : public Handle_TCollection_MapNode {
-
-    public:
-        // constructors
-        Handle_TDF_IndexedMapNodeOfAttributeIndexedMap();
-        Handle_TDF_IndexedMapNodeOfAttributeIndexedMap(const Handle_TDF_IndexedMapNodeOfAttributeIndexedMap &aHandle);
-        Handle_TDF_IndexedMapNodeOfAttributeIndexedMap(const TDF_IndexedMapNodeOfAttributeIndexedMap *anItem);
-        void Nullify();
-        Standard_Boolean IsNull() const;
-        static const Handle_TDF_IndexedMapNodeOfAttributeIndexedMap DownCast(const Handle_Standard_Transient &AnObject);
-
-};
-%extend Handle_TDF_IndexedMapNodeOfAttributeIndexedMap {
-    TDF_IndexedMapNodeOfAttributeIndexedMap* _get_reference() {
-    return (TDF_IndexedMapNodeOfAttributeIndexedMap*)$self->Access();
-    }
-};
-
-%extend Handle_TDF_IndexedMapNodeOfAttributeIndexedMap {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
-};
-
-%extend TDF_IndexedMapNodeOfAttributeIndexedMap {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor TDF_IndexedMapNodeOfLabelIndexedMap;
-class TDF_IndexedMapNodeOfLabelIndexedMap : public TCollection_MapNode {
-	public:
-		%feature("compactdefaultargs") TDF_IndexedMapNodeOfLabelIndexedMap;
-		%feature("autodoc", "	:param K1:
-	:type K1: TDF_Label &
-	:param K2:
-	:type K2: int
-	:param n1:
-	:type n1: TCollection_MapNodePtr &
-	:param n2:
-	:type n2: TCollection_MapNodePtr &
-	:rtype: None
-") TDF_IndexedMapNodeOfLabelIndexedMap;
-		 TDF_IndexedMapNodeOfLabelIndexedMap (const TDF_Label & K1,const Standard_Integer K2,const TCollection_MapNodePtr & n1,const TCollection_MapNodePtr & n2);
-		%feature("compactdefaultargs") Key1;
-		%feature("autodoc", "	:rtype: TDF_Label
-") Key1;
-		TDF_Label & Key1 ();
-
-            %feature("autodoc","1");
-            %extend {
-                Standard_Integer GetKey2() {
-                return (Standard_Integer) $self->Key2();
-                }
-            };
-            %feature("autodoc","1");
-            %extend {
-                void SetKey2(Standard_Integer value ) {
-                $self->Key2()=value;
-                }
-            };
-            		%feature("compactdefaultargs") Next2;
-		%feature("autodoc", "	:rtype: TCollection_MapNodePtr
-") Next2;
-		TCollection_MapNodePtr & Next2 ();
-};
-
-
-%extend TDF_IndexedMapNodeOfLabelIndexedMap {
-	%pythoncode {
-		def GetHandle(self):
-		    try:
-		        return self.thisHandle
-		    except:
-		        self.thisHandle = Handle_TDF_IndexedMapNodeOfLabelIndexedMap(self)
-		        self.thisown = False
-		        return self.thisHandle
-	}
-};
-
-%pythonappend Handle_TDF_IndexedMapNodeOfLabelIndexedMap::Handle_TDF_IndexedMapNodeOfLabelIndexedMap %{
-    # register the handle in the base object
-    if len(args) > 0:
-        register_handle(self, args[0])
-%}
-
-%nodefaultctor Handle_TDF_IndexedMapNodeOfLabelIndexedMap;
-class Handle_TDF_IndexedMapNodeOfLabelIndexedMap : public Handle_TCollection_MapNode {
-
-    public:
-        // constructors
-        Handle_TDF_IndexedMapNodeOfLabelIndexedMap();
-        Handle_TDF_IndexedMapNodeOfLabelIndexedMap(const Handle_TDF_IndexedMapNodeOfLabelIndexedMap &aHandle);
-        Handle_TDF_IndexedMapNodeOfLabelIndexedMap(const TDF_IndexedMapNodeOfLabelIndexedMap *anItem);
-        void Nullify();
-        Standard_Boolean IsNull() const;
-        static const Handle_TDF_IndexedMapNodeOfLabelIndexedMap DownCast(const Handle_Standard_Transient &AnObject);
-
-};
-%extend Handle_TDF_IndexedMapNodeOfLabelIndexedMap {
-    TDF_IndexedMapNodeOfLabelIndexedMap* _get_reference() {
-    return (TDF_IndexedMapNodeOfLabelIndexedMap*)$self->Access();
-    }
-};
-
-%extend Handle_TDF_IndexedMapNodeOfLabelIndexedMap {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
-};
-
-%extend TDF_IndexedMapNodeOfLabelIndexedMap {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
 %nodefaultctor TDF_Label;
 class TDF_Label {
 	public:
@@ -3816,7 +1637,7 @@ class TDF_Label {
 ") IsImported;
 		Standard_Boolean IsImported ();
 		%feature("compactdefaultargs") IsEqual;
-		%feature("autodoc", "	* Returns True if the <aLabel> is equal to me (same LabelNode*).
+		%feature("autodoc", "	* Returns True if the <aLabel> is equal to me --same LabelNode*--.
 
 	:param aLabel:
 	:type aLabel: TDF_Label &
@@ -3874,9 +1695,11 @@ class TDF_Label {
 
 	:param anAttribute:
 	:type anAttribute: Handle_TDF_Attribute &
+	:param append: default value is Standard_False
+	:type append: bool
 	:rtype: None
 ") AddAttribute;
-		void AddAttribute (const Handle_TDF_Attribute & anAttribute);
+		void AddAttribute (const Handle_TDF_Attribute & anAttribute,const Standard_Boolean append = Standard_False);
 		%feature("compactdefaultargs") ForgetAttribute;
 		%feature("autodoc", "	* Forgets an Attribute from the current label, setting its forgotten status true and its valid status false. Raises if the attribute is not in the structure.
 
@@ -3919,6 +1742,16 @@ class TDF_Label {
 	:rtype: bool
 ") FindAttribute;
 		Standard_Boolean FindAttribute (const Standard_GUID & anID,Handle_TDF_Attribute & anAttribute);
+		%feature("compactdefaultargs") FindAttribute;
+		%feature("autodoc", "	* Safe variant of FindAttribute---- for arbitrary type of argument
+
+	:param theID:
+	:type theID: Standard_GUID &
+	:param theAttr:
+	:type theAttr: Handle_T &
+	:rtype: bool
+") FindAttribute;
+		Standard_Boolean FindAttribute (const Standard_GUID & theID,Handle_T & theAttr);
 		%feature("compactdefaultargs") FindAttribute;
 		%feature("autodoc", "	* Finds an attribute of the current label, according to <anID> and <aTransaction>. This attribute has/had to be a valid one for the given transaction index . So, this attribute is not necessary a valid one. //! The method returns True if found, False otherwise. //! A removed attribute cannot be found nor a backuped attribute of a removed one.
 
@@ -3988,7 +1821,7 @@ class TDF_Label {
 ") NbChildren;
 		Standard_Integer NbChildren ();
 		%feature("compactdefaultargs") FindChild;
-		%feature("autodoc", "	* Finds a child label having <aTag> as tag. Creates The tag aTag identifies the label which will be the parent. If create is true and no child label is found, a new one is created. Example: //creating a label with tag 10 at Root TDF_Label lab1 = aDF->Root().FindChild(10); //creating labels 7 and 2 on label 10 TDF_Label lab2 = lab1.FindChild(7); TDF_Label lab3 = lab1.FindChild(2);
+		%feature("autodoc", "	* Finds a child label having <aTag> as tag. Creates The tag aTag identifies the label which will be the parent. If create is true and no child label is found, a new one is created. Example: //creating a label with tag 10 at Root TDF_Label lab1 = aDF->Root----.FindChild--10--; //creating labels 7 and 2 on label 10 TDF_Label lab2 = lab1.FindChild--7--; TDF_Label lab3 = lab1.FindChild--2--;
 
 	:param aTag:
 	:type aTag: int
@@ -4010,7 +1843,7 @@ class TDF_Label {
 ") Transaction;
 		Standard_Integer Transaction ();
 		%feature("compactdefaultargs") HasLowerNode;
-		%feature("autodoc", "	* Returns true if node address of <self> is lower than <otherLabel> one. Used to quickly sort labels (not on entry criterion). //! -C++: inline
+		%feature("autodoc", "	* Returns true if node address of <self> is lower than <otherLabel> one. Used to quickly sort labels --not on entry criterion--. //! -C++: inline
 
 	:param otherLabel:
 	:type otherLabel: TDF_Label &
@@ -4018,7 +1851,7 @@ class TDF_Label {
 ") HasLowerNode;
 		Standard_Boolean HasLowerNode (const TDF_Label & otherLabel);
 		%feature("compactdefaultargs") HasGreaterNode;
-		%feature("autodoc", "	* Returns true if node address of <self> is greater than <otherLabel> one. Used to quickly sort labels (not on entry criterion). //! -C++: inline
+		%feature("autodoc", "	* Returns true if node address of <self> is greater than <otherLabel> one. Used to quickly sort labels --not on entry criterion--. //! -C++: inline
 
 	:param otherLabel:
 	:type otherLabel: TDF_Label &
@@ -4061,1320 +1894,8 @@ class TDF_Label {
 	__repr__ = _dumps_object
 	}
 };
-%nodefaultctor TDF_LabelDataMap;
-class TDF_LabelDataMap : public TCollection_BasicMap {
-	public:
-		%feature("compactdefaultargs") TDF_LabelDataMap;
-		%feature("autodoc", "	:param NbBuckets: default value is 1
-	:type NbBuckets: int
-	:rtype: None
-") TDF_LabelDataMap;
-		 TDF_LabelDataMap (const Standard_Integer NbBuckets = 1);
-		%feature("compactdefaultargs") Assign;
-		%feature("autodoc", "	:param Other:
-	:type Other: TDF_LabelDataMap &
-	:rtype: TDF_LabelDataMap
-") Assign;
-		TDF_LabelDataMap & Assign (const TDF_LabelDataMap & Other);
-		%feature("compactdefaultargs") operator =;
-		%feature("autodoc", "	:param Other:
-	:type Other: TDF_LabelDataMap &
-	:rtype: TDF_LabelDataMap
-") operator =;
-		TDF_LabelDataMap & operator = (const TDF_LabelDataMap & Other);
-		%feature("compactdefaultargs") ReSize;
-		%feature("autodoc", "	:param NbBuckets:
-	:type NbBuckets: int
-	:rtype: None
-") ReSize;
-		void ReSize (const Standard_Integer NbBuckets);
-		%feature("compactdefaultargs") Clear;
-		%feature("autodoc", "	:rtype: None
-") Clear;
-		void Clear ();
-		%feature("compactdefaultargs") Bind;
-		%feature("autodoc", "	:param K:
-	:type K: TDF_Label &
-	:param I:
-	:type I: TDF_Label &
-	:rtype: bool
-") Bind;
-		Standard_Boolean Bind (const TDF_Label & K,const TDF_Label & I);
-		%feature("compactdefaultargs") IsBound;
-		%feature("autodoc", "	:param K:
-	:type K: TDF_Label &
-	:rtype: bool
-") IsBound;
-		Standard_Boolean IsBound (const TDF_Label & K);
-		%feature("compactdefaultargs") UnBind;
-		%feature("autodoc", "	:param K:
-	:type K: TDF_Label &
-	:rtype: bool
-") UnBind;
-		Standard_Boolean UnBind (const TDF_Label & K);
-		%feature("compactdefaultargs") Find;
-		%feature("autodoc", "	:param K:
-	:type K: TDF_Label &
-	:rtype: TDF_Label
-") Find;
-		const TDF_Label & Find (const TDF_Label & K);
-		%feature("compactdefaultargs") ChangeFind;
-		%feature("autodoc", "	:param K:
-	:type K: TDF_Label &
-	:rtype: TDF_Label
-") ChangeFind;
-		TDF_Label & ChangeFind (const TDF_Label & K);
-		%feature("compactdefaultargs") Find1;
-		%feature("autodoc", "	:param K:
-	:type K: TDF_Label &
-	:rtype: Standard_Address
-") Find1;
-		Standard_Address Find1 (const TDF_Label & K);
-		%feature("compactdefaultargs") ChangeFind1;
-		%feature("autodoc", "	:param K:
-	:type K: TDF_Label &
-	:rtype: Standard_Address
-") ChangeFind1;
-		Standard_Address ChangeFind1 (const TDF_Label & K);
-};
-
-
-%extend TDF_LabelDataMap {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor TDF_LabelDoubleMap;
-class TDF_LabelDoubleMap : public TCollection_BasicMap {
-	public:
-		%feature("compactdefaultargs") TDF_LabelDoubleMap;
-		%feature("autodoc", "	:param NbBuckets: default value is 1
-	:type NbBuckets: int
-	:rtype: None
-") TDF_LabelDoubleMap;
-		 TDF_LabelDoubleMap (const Standard_Integer NbBuckets = 1);
-		%feature("compactdefaultargs") Assign;
-		%feature("autodoc", "	:param Other:
-	:type Other: TDF_LabelDoubleMap &
-	:rtype: TDF_LabelDoubleMap
-") Assign;
-		TDF_LabelDoubleMap & Assign (const TDF_LabelDoubleMap & Other);
-		%feature("compactdefaultargs") operator =;
-		%feature("autodoc", "	:param Other:
-	:type Other: TDF_LabelDoubleMap &
-	:rtype: TDF_LabelDoubleMap
-") operator =;
-		TDF_LabelDoubleMap & operator = (const TDF_LabelDoubleMap & Other);
-		%feature("compactdefaultargs") ReSize;
-		%feature("autodoc", "	:param NbBuckets:
-	:type NbBuckets: int
-	:rtype: None
-") ReSize;
-		void ReSize (const Standard_Integer NbBuckets);
-		%feature("compactdefaultargs") Clear;
-		%feature("autodoc", "	:rtype: None
-") Clear;
-		void Clear ();
-		%feature("compactdefaultargs") Bind;
-		%feature("autodoc", "	:param K1:
-	:type K1: TDF_Label &
-	:param K2:
-	:type K2: TDF_Label &
-	:rtype: None
-") Bind;
-		void Bind (const TDF_Label & K1,const TDF_Label & K2);
-		%feature("compactdefaultargs") AreBound;
-		%feature("autodoc", "	:param K1:
-	:type K1: TDF_Label &
-	:param K2:
-	:type K2: TDF_Label &
-	:rtype: bool
-") AreBound;
-		Standard_Boolean AreBound (const TDF_Label & K1,const TDF_Label & K2);
-		%feature("compactdefaultargs") IsBound1;
-		%feature("autodoc", "	:param K:
-	:type K: TDF_Label &
-	:rtype: bool
-") IsBound1;
-		Standard_Boolean IsBound1 (const TDF_Label & K);
-		%feature("compactdefaultargs") IsBound2;
-		%feature("autodoc", "	:param K:
-	:type K: TDF_Label &
-	:rtype: bool
-") IsBound2;
-		Standard_Boolean IsBound2 (const TDF_Label & K);
-		%feature("compactdefaultargs") Find1;
-		%feature("autodoc", "	:param K:
-	:type K: TDF_Label &
-	:rtype: TDF_Label
-") Find1;
-		const TDF_Label & Find1 (const TDF_Label & K);
-		%feature("compactdefaultargs") Find2;
-		%feature("autodoc", "	:param K:
-	:type K: TDF_Label &
-	:rtype: TDF_Label
-") Find2;
-		const TDF_Label & Find2 (const TDF_Label & K);
-		%feature("compactdefaultargs") UnBind1;
-		%feature("autodoc", "	:param K:
-	:type K: TDF_Label &
-	:rtype: bool
-") UnBind1;
-		Standard_Boolean UnBind1 (const TDF_Label & K);
-		%feature("compactdefaultargs") UnBind2;
-		%feature("autodoc", "	:param K:
-	:type K: TDF_Label &
-	:rtype: bool
-") UnBind2;
-		Standard_Boolean UnBind2 (const TDF_Label & K);
-};
-
-
-%extend TDF_LabelDoubleMap {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor TDF_LabelIndexedMap;
-class TDF_LabelIndexedMap : public TCollection_BasicMap {
-	public:
-		%feature("compactdefaultargs") TDF_LabelIndexedMap;
-		%feature("autodoc", "	:param NbBuckets: default value is 1
-	:type NbBuckets: int
-	:rtype: None
-") TDF_LabelIndexedMap;
-		 TDF_LabelIndexedMap (const Standard_Integer NbBuckets = 1);
-		%feature("compactdefaultargs") TDF_LabelIndexedMap;
-		%feature("autodoc", "	:param Other:
-	:type Other: TDF_LabelIndexedMap &
-	:rtype: None
-") TDF_LabelIndexedMap;
-		 TDF_LabelIndexedMap (const TDF_LabelIndexedMap & Other);
-		%feature("compactdefaultargs") Assign;
-		%feature("autodoc", "	:param Other:
-	:type Other: TDF_LabelIndexedMap &
-	:rtype: TDF_LabelIndexedMap
-") Assign;
-		TDF_LabelIndexedMap & Assign (const TDF_LabelIndexedMap & Other);
-		%feature("compactdefaultargs") operator =;
-		%feature("autodoc", "	:param Other:
-	:type Other: TDF_LabelIndexedMap &
-	:rtype: TDF_LabelIndexedMap
-") operator =;
-		TDF_LabelIndexedMap & operator = (const TDF_LabelIndexedMap & Other);
-		%feature("compactdefaultargs") ReSize;
-		%feature("autodoc", "	:param NbBuckets:
-	:type NbBuckets: int
-	:rtype: None
-") ReSize;
-		void ReSize (const Standard_Integer NbBuckets);
-		%feature("compactdefaultargs") Clear;
-		%feature("autodoc", "	:rtype: None
-") Clear;
-		void Clear ();
-		%feature("compactdefaultargs") Add;
-		%feature("autodoc", "	:param K:
-	:type K: TDF_Label &
-	:rtype: int
-") Add;
-		Standard_Integer Add (const TDF_Label & K);
-		%feature("compactdefaultargs") Substitute;
-		%feature("autodoc", "	:param I:
-	:type I: int
-	:param K:
-	:type K: TDF_Label &
-	:rtype: None
-") Substitute;
-		void Substitute (const Standard_Integer I,const TDF_Label & K);
-		%feature("compactdefaultargs") RemoveLast;
-		%feature("autodoc", "	:rtype: None
-") RemoveLast;
-		void RemoveLast ();
-		%feature("compactdefaultargs") Contains;
-		%feature("autodoc", "	:param K:
-	:type K: TDF_Label &
-	:rtype: bool
-") Contains;
-		Standard_Boolean Contains (const TDF_Label & K);
-		%feature("compactdefaultargs") FindKey;
-		%feature("autodoc", "	:param I:
-	:type I: int
-	:rtype: TDF_Label
-") FindKey;
-		const TDF_Label & FindKey (const Standard_Integer I);
-		%feature("compactdefaultargs") FindIndex;
-		%feature("autodoc", "	:param K:
-	:type K: TDF_Label &
-	:rtype: int
-") FindIndex;
-		Standard_Integer FindIndex (const TDF_Label & K);
-};
-
-
-%extend TDF_LabelIndexedMap {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor TDF_LabelIntegerMap;
-class TDF_LabelIntegerMap : public TCollection_BasicMap {
-	public:
-		%feature("compactdefaultargs") TDF_LabelIntegerMap;
-		%feature("autodoc", "	:param NbBuckets: default value is 1
-	:type NbBuckets: int
-	:rtype: None
-") TDF_LabelIntegerMap;
-		 TDF_LabelIntegerMap (const Standard_Integer NbBuckets = 1);
-		%feature("compactdefaultargs") Assign;
-		%feature("autodoc", "	:param Other:
-	:type Other: TDF_LabelIntegerMap &
-	:rtype: TDF_LabelIntegerMap
-") Assign;
-		TDF_LabelIntegerMap & Assign (const TDF_LabelIntegerMap & Other);
-		%feature("compactdefaultargs") operator =;
-		%feature("autodoc", "	:param Other:
-	:type Other: TDF_LabelIntegerMap &
-	:rtype: TDF_LabelIntegerMap
-") operator =;
-		TDF_LabelIntegerMap & operator = (const TDF_LabelIntegerMap & Other);
-		%feature("compactdefaultargs") ReSize;
-		%feature("autodoc", "	:param NbBuckets:
-	:type NbBuckets: int
-	:rtype: None
-") ReSize;
-		void ReSize (const Standard_Integer NbBuckets);
-		%feature("compactdefaultargs") Clear;
-		%feature("autodoc", "	:rtype: None
-") Clear;
-		void Clear ();
-		%feature("compactdefaultargs") Bind;
-		%feature("autodoc", "	:param K:
-	:type K: TDF_Label &
-	:param I:
-	:type I: int &
-	:rtype: bool
-") Bind;
-		Standard_Boolean Bind (const TDF_Label & K,const Standard_Integer & I);
-		%feature("compactdefaultargs") IsBound;
-		%feature("autodoc", "	:param K:
-	:type K: TDF_Label &
-	:rtype: bool
-") IsBound;
-		Standard_Boolean IsBound (const TDF_Label & K);
-		%feature("compactdefaultargs") UnBind;
-		%feature("autodoc", "	:param K:
-	:type K: TDF_Label &
-	:rtype: bool
-") UnBind;
-		Standard_Boolean UnBind (const TDF_Label & K);
-		%feature("compactdefaultargs") Find;
-		%feature("autodoc", "	:param K:
-	:type K: TDF_Label &
-	:rtype: int
-") Find;
-		const Standard_Integer & Find (const TDF_Label & K);
-		%feature("compactdefaultargs") ChangeFind;
-		%feature("autodoc", "	:param K:
-	:type K: TDF_Label &
-	:rtype: int
-") ChangeFind;
-		Standard_Integer & ChangeFind (const TDF_Label & K);
-		%feature("compactdefaultargs") Find1;
-		%feature("autodoc", "	:param K:
-	:type K: TDF_Label &
-	:rtype: Standard_Address
-") Find1;
-		Standard_Address Find1 (const TDF_Label & K);
-		%feature("compactdefaultargs") ChangeFind1;
-		%feature("autodoc", "	:param K:
-	:type K: TDF_Label &
-	:rtype: Standard_Address
-") ChangeFind1;
-		Standard_Address ChangeFind1 (const TDF_Label & K);
-};
-
-
-%extend TDF_LabelIntegerMap {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor TDF_LabelList;
-class TDF_LabelList {
-	public:
-		%feature("compactdefaultargs") TDF_LabelList;
-		%feature("autodoc", "	:rtype: None
-") TDF_LabelList;
-		 TDF_LabelList ();
-		%feature("compactdefaultargs") TDF_LabelList;
-		%feature("autodoc", "	:param Other:
-	:type Other: TDF_LabelList &
-	:rtype: None
-") TDF_LabelList;
-		 TDF_LabelList (const TDF_LabelList & Other);
-		%feature("compactdefaultargs") Assign;
-		%feature("autodoc", "	:param Other:
-	:type Other: TDF_LabelList &
-	:rtype: None
-") Assign;
-		void Assign (const TDF_LabelList & Other);
-		%feature("compactdefaultargs") operator =;
-		%feature("autodoc", "	:param Other:
-	:type Other: TDF_LabelList &
-	:rtype: None
-") operator =;
-		void operator = (const TDF_LabelList & Other);
-		%feature("compactdefaultargs") Extent;
-		%feature("autodoc", "	:rtype: int
-") Extent;
-		Standard_Integer Extent ();
-		%feature("compactdefaultargs") Clear;
-		%feature("autodoc", "	:rtype: None
-") Clear;
-		void Clear ();
-		%feature("compactdefaultargs") IsEmpty;
-		%feature("autodoc", "	:rtype: bool
-") IsEmpty;
-		Standard_Boolean IsEmpty ();
-		%feature("compactdefaultargs") Prepend;
-		%feature("autodoc", "	:param I:
-	:type I: TDF_Label &
-	:rtype: None
-") Prepend;
-		void Prepend (const TDF_Label & I);
-		%feature("compactdefaultargs") Prepend;
-		%feature("autodoc", "	:param I:
-	:type I: TDF_Label &
-	:param theIt:
-	:type theIt: TDF_ListIteratorOfLabelList &
-	:rtype: None
-") Prepend;
-		void Prepend (const TDF_Label & I,TDF_ListIteratorOfLabelList & theIt);
-		%feature("compactdefaultargs") Prepend;
-		%feature("autodoc", "	:param Other:
-	:type Other: TDF_LabelList &
-	:rtype: None
-") Prepend;
-		void Prepend (TDF_LabelList & Other);
-		%feature("compactdefaultargs") Append;
-		%feature("autodoc", "	:param I:
-	:type I: TDF_Label &
-	:rtype: None
-") Append;
-		void Append (const TDF_Label & I);
-		%feature("compactdefaultargs") Append;
-		%feature("autodoc", "	:param I:
-	:type I: TDF_Label &
-	:param theIt:
-	:type theIt: TDF_ListIteratorOfLabelList &
-	:rtype: None
-") Append;
-		void Append (const TDF_Label & I,TDF_ListIteratorOfLabelList & theIt);
-		%feature("compactdefaultargs") Append;
-		%feature("autodoc", "	:param Other:
-	:type Other: TDF_LabelList &
-	:rtype: None
-") Append;
-		void Append (TDF_LabelList & Other);
-		%feature("compactdefaultargs") First;
-		%feature("autodoc", "	:rtype: TDF_Label
-") First;
-		TDF_Label & First ();
-		%feature("compactdefaultargs") Last;
-		%feature("autodoc", "	:rtype: TDF_Label
-") Last;
-		TDF_Label & Last ();
-		%feature("compactdefaultargs") RemoveFirst;
-		%feature("autodoc", "	:rtype: None
-") RemoveFirst;
-		void RemoveFirst ();
-		%feature("compactdefaultargs") Remove;
-		%feature("autodoc", "	:param It:
-	:type It: TDF_ListIteratorOfLabelList &
-	:rtype: None
-") Remove;
-		void Remove (TDF_ListIteratorOfLabelList & It);
-		%feature("compactdefaultargs") InsertBefore;
-		%feature("autodoc", "	:param I:
-	:type I: TDF_Label &
-	:param It:
-	:type It: TDF_ListIteratorOfLabelList &
-	:rtype: None
-") InsertBefore;
-		void InsertBefore (const TDF_Label & I,TDF_ListIteratorOfLabelList & It);
-		%feature("compactdefaultargs") InsertBefore;
-		%feature("autodoc", "	:param Other:
-	:type Other: TDF_LabelList &
-	:param It:
-	:type It: TDF_ListIteratorOfLabelList &
-	:rtype: None
-") InsertBefore;
-		void InsertBefore (TDF_LabelList & Other,TDF_ListIteratorOfLabelList & It);
-		%feature("compactdefaultargs") InsertAfter;
-		%feature("autodoc", "	:param I:
-	:type I: TDF_Label &
-	:param It:
-	:type It: TDF_ListIteratorOfLabelList &
-	:rtype: None
-") InsertAfter;
-		void InsertAfter (const TDF_Label & I,TDF_ListIteratorOfLabelList & It);
-		%feature("compactdefaultargs") InsertAfter;
-		%feature("autodoc", "	:param Other:
-	:type Other: TDF_LabelList &
-	:param It:
-	:type It: TDF_ListIteratorOfLabelList &
-	:rtype: None
-") InsertAfter;
-		void InsertAfter (TDF_LabelList & Other,TDF_ListIteratorOfLabelList & It);
-};
-
-
-%extend TDF_LabelList {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor TDF_LabelMap;
-class TDF_LabelMap : public TCollection_BasicMap {
-	public:
-		%feature("compactdefaultargs") TDF_LabelMap;
-		%feature("autodoc", "	:param NbBuckets: default value is 1
-	:type NbBuckets: int
-	:rtype: None
-") TDF_LabelMap;
-		 TDF_LabelMap (const Standard_Integer NbBuckets = 1);
-		%feature("compactdefaultargs") TDF_LabelMap;
-		%feature("autodoc", "	:param Other:
-	:type Other: TDF_LabelMap &
-	:rtype: None
-") TDF_LabelMap;
-		 TDF_LabelMap (const TDF_LabelMap & Other);
-		%feature("compactdefaultargs") Assign;
-		%feature("autodoc", "	:param Other:
-	:type Other: TDF_LabelMap &
-	:rtype: TDF_LabelMap
-") Assign;
-		TDF_LabelMap & Assign (const TDF_LabelMap & Other);
-		%feature("compactdefaultargs") operator =;
-		%feature("autodoc", "	:param Other:
-	:type Other: TDF_LabelMap &
-	:rtype: TDF_LabelMap
-") operator =;
-		TDF_LabelMap & operator = (const TDF_LabelMap & Other);
-		%feature("compactdefaultargs") ReSize;
-		%feature("autodoc", "	:param NbBuckets:
-	:type NbBuckets: int
-	:rtype: None
-") ReSize;
-		void ReSize (const Standard_Integer NbBuckets);
-		%feature("compactdefaultargs") Clear;
-		%feature("autodoc", "	:rtype: None
-") Clear;
-		void Clear ();
-		%feature("compactdefaultargs") Add;
-		%feature("autodoc", "	:param aKey:
-	:type aKey: TDF_Label &
-	:rtype: bool
-") Add;
-		Standard_Boolean Add (const TDF_Label & aKey);
-		%feature("compactdefaultargs") Contains;
-		%feature("autodoc", "	:param aKey:
-	:type aKey: TDF_Label &
-	:rtype: bool
-") Contains;
-		Standard_Boolean Contains (const TDF_Label & aKey);
-		%feature("compactdefaultargs") Remove;
-		%feature("autodoc", "	:param aKey:
-	:type aKey: TDF_Label &
-	:rtype: bool
-") Remove;
-		Standard_Boolean Remove (const TDF_Label & aKey);
-};
-
-
-%extend TDF_LabelMap {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor TDF_LabelSequence;
-class TDF_LabelSequence : public TCollection_BaseSequence {
-	public:
-		%feature("compactdefaultargs") TDF_LabelSequence;
-		%feature("autodoc", "	:rtype: None
-") TDF_LabelSequence;
-		 TDF_LabelSequence ();
-		%feature("compactdefaultargs") TDF_LabelSequence;
-		%feature("autodoc", "	:param Other:
-	:type Other: TDF_LabelSequence &
-	:rtype: None
-") TDF_LabelSequence;
-		 TDF_LabelSequence (const TDF_LabelSequence & Other);
-		%feature("compactdefaultargs") Clear;
-		%feature("autodoc", "	:rtype: None
-") Clear;
-		void Clear ();
-		%feature("compactdefaultargs") Assign;
-		%feature("autodoc", "	:param Other:
-	:type Other: TDF_LabelSequence &
-	:rtype: TDF_LabelSequence
-") Assign;
-		const TDF_LabelSequence & Assign (const TDF_LabelSequence & Other);
-		%feature("compactdefaultargs") operator =;
-		%feature("autodoc", "	:param Other:
-	:type Other: TDF_LabelSequence &
-	:rtype: TDF_LabelSequence
-") operator =;
-		const TDF_LabelSequence & operator = (const TDF_LabelSequence & Other);
-		%feature("compactdefaultargs") Append;
-		%feature("autodoc", "	:param T:
-	:type T: TDF_Label &
-	:rtype: None
-") Append;
-		void Append (const TDF_Label & T);
-		%feature("compactdefaultargs") Append;
-		%feature("autodoc", "	:param S:
-	:type S: TDF_LabelSequence &
-	:rtype: None
-") Append;
-		void Append (TDF_LabelSequence & S);
-		%feature("compactdefaultargs") Prepend;
-		%feature("autodoc", "	:param T:
-	:type T: TDF_Label &
-	:rtype: None
-") Prepend;
-		void Prepend (const TDF_Label & T);
-		%feature("compactdefaultargs") Prepend;
-		%feature("autodoc", "	:param S:
-	:type S: TDF_LabelSequence &
-	:rtype: None
-") Prepend;
-		void Prepend (TDF_LabelSequence & S);
-		%feature("compactdefaultargs") InsertBefore;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param T:
-	:type T: TDF_Label &
-	:rtype: None
-") InsertBefore;
-		void InsertBefore (const Standard_Integer Index,const TDF_Label & T);
-		%feature("compactdefaultargs") InsertBefore;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param S:
-	:type S: TDF_LabelSequence &
-	:rtype: None
-") InsertBefore;
-		void InsertBefore (const Standard_Integer Index,TDF_LabelSequence & S);
-		%feature("compactdefaultargs") InsertAfter;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param T:
-	:type T: TDF_Label &
-	:rtype: None
-") InsertAfter;
-		void InsertAfter (const Standard_Integer Index,const TDF_Label & T);
-		%feature("compactdefaultargs") InsertAfter;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param S:
-	:type S: TDF_LabelSequence &
-	:rtype: None
-") InsertAfter;
-		void InsertAfter (const Standard_Integer Index,TDF_LabelSequence & S);
-		%feature("compactdefaultargs") First;
-		%feature("autodoc", "	:rtype: TDF_Label
-") First;
-		const TDF_Label & First ();
-		%feature("compactdefaultargs") Last;
-		%feature("autodoc", "	:rtype: TDF_Label
-") Last;
-		const TDF_Label & Last ();
-		%feature("compactdefaultargs") Split;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param Sub:
-	:type Sub: TDF_LabelSequence &
-	:rtype: None
-") Split;
-		void Split (const Standard_Integer Index,TDF_LabelSequence & Sub);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: TDF_Label
-") Value;
-		const TDF_Label & Value (const Standard_Integer Index);
-		%feature("compactdefaultargs") SetValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param I:
-	:type I: TDF_Label &
-	:rtype: None
-") SetValue;
-		void SetValue (const Standard_Integer Index,const TDF_Label & I);
-		%feature("compactdefaultargs") ChangeValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: TDF_Label
-") ChangeValue;
-		TDF_Label & ChangeValue (const Standard_Integer Index);
-		%feature("compactdefaultargs") Remove;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: None
-") Remove;
-		void Remove (const Standard_Integer Index);
-		%feature("compactdefaultargs") Remove;
-		%feature("autodoc", "	:param FromIndex:
-	:type FromIndex: int
-	:param ToIndex:
-	:type ToIndex: int
-	:rtype: None
-") Remove;
-		void Remove (const Standard_Integer FromIndex,const Standard_Integer ToIndex);
-};
-
-
-%extend TDF_LabelSequence {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor TDF_ListIteratorOfAttributeDeltaList;
-class TDF_ListIteratorOfAttributeDeltaList {
-	public:
-		%feature("compactdefaultargs") TDF_ListIteratorOfAttributeDeltaList;
-		%feature("autodoc", "	:rtype: None
-") TDF_ListIteratorOfAttributeDeltaList;
-		 TDF_ListIteratorOfAttributeDeltaList ();
-		%feature("compactdefaultargs") TDF_ListIteratorOfAttributeDeltaList;
-		%feature("autodoc", "	:param L:
-	:type L: TDF_AttributeDeltaList &
-	:rtype: None
-") TDF_ListIteratorOfAttributeDeltaList;
-		 TDF_ListIteratorOfAttributeDeltaList (const TDF_AttributeDeltaList & L);
-		%feature("compactdefaultargs") Initialize;
-		%feature("autodoc", "	:param L:
-	:type L: TDF_AttributeDeltaList &
-	:rtype: None
-") Initialize;
-		void Initialize (const TDF_AttributeDeltaList & L);
-		%feature("compactdefaultargs") More;
-		%feature("autodoc", "	:rtype: bool
-") More;
-		Standard_Boolean More ();
-		%feature("compactdefaultargs") Next;
-		%feature("autodoc", "	:rtype: None
-") Next;
-		void Next ();
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:rtype: Handle_TDF_AttributeDelta
-") Value;
-		Handle_TDF_AttributeDelta Value ();
-};
-
-
-%extend TDF_ListIteratorOfAttributeDeltaList {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor TDF_ListIteratorOfAttributeList;
-class TDF_ListIteratorOfAttributeList {
-	public:
-		%feature("compactdefaultargs") TDF_ListIteratorOfAttributeList;
-		%feature("autodoc", "	:rtype: None
-") TDF_ListIteratorOfAttributeList;
-		 TDF_ListIteratorOfAttributeList ();
-		%feature("compactdefaultargs") TDF_ListIteratorOfAttributeList;
-		%feature("autodoc", "	:param L:
-	:type L: TDF_AttributeList &
-	:rtype: None
-") TDF_ListIteratorOfAttributeList;
-		 TDF_ListIteratorOfAttributeList (const TDF_AttributeList & L);
-		%feature("compactdefaultargs") Initialize;
-		%feature("autodoc", "	:param L:
-	:type L: TDF_AttributeList &
-	:rtype: None
-") Initialize;
-		void Initialize (const TDF_AttributeList & L);
-		%feature("compactdefaultargs") More;
-		%feature("autodoc", "	:rtype: bool
-") More;
-		Standard_Boolean More ();
-		%feature("compactdefaultargs") Next;
-		%feature("autodoc", "	:rtype: None
-") Next;
-		void Next ();
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:rtype: Handle_TDF_Attribute
-") Value;
-		Handle_TDF_Attribute Value ();
-};
-
-
-%extend TDF_ListIteratorOfAttributeList {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor TDF_ListIteratorOfDeltaList;
-class TDF_ListIteratorOfDeltaList {
-	public:
-		%feature("compactdefaultargs") TDF_ListIteratorOfDeltaList;
-		%feature("autodoc", "	:rtype: None
-") TDF_ListIteratorOfDeltaList;
-		 TDF_ListIteratorOfDeltaList ();
-		%feature("compactdefaultargs") TDF_ListIteratorOfDeltaList;
-		%feature("autodoc", "	:param L:
-	:type L: TDF_DeltaList &
-	:rtype: None
-") TDF_ListIteratorOfDeltaList;
-		 TDF_ListIteratorOfDeltaList (const TDF_DeltaList & L);
-		%feature("compactdefaultargs") Initialize;
-		%feature("autodoc", "	:param L:
-	:type L: TDF_DeltaList &
-	:rtype: None
-") Initialize;
-		void Initialize (const TDF_DeltaList & L);
-		%feature("compactdefaultargs") More;
-		%feature("autodoc", "	:rtype: bool
-") More;
-		Standard_Boolean More ();
-		%feature("compactdefaultargs") Next;
-		%feature("autodoc", "	:rtype: None
-") Next;
-		void Next ();
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:rtype: Handle_TDF_Delta
-") Value;
-		Handle_TDF_Delta Value ();
-};
-
-
-%extend TDF_ListIteratorOfDeltaList {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor TDF_ListIteratorOfIDList;
-class TDF_ListIteratorOfIDList {
-	public:
-		%feature("compactdefaultargs") TDF_ListIteratorOfIDList;
-		%feature("autodoc", "	:rtype: None
-") TDF_ListIteratorOfIDList;
-		 TDF_ListIteratorOfIDList ();
-		%feature("compactdefaultargs") TDF_ListIteratorOfIDList;
-		%feature("autodoc", "	:param L:
-	:type L: TDF_IDList &
-	:rtype: None
-") TDF_ListIteratorOfIDList;
-		 TDF_ListIteratorOfIDList (const TDF_IDList & L);
-		%feature("compactdefaultargs") Initialize;
-		%feature("autodoc", "	:param L:
-	:type L: TDF_IDList &
-	:rtype: None
-") Initialize;
-		void Initialize (const TDF_IDList & L);
-		%feature("compactdefaultargs") More;
-		%feature("autodoc", "	:rtype: bool
-") More;
-		Standard_Boolean More ();
-		%feature("compactdefaultargs") Next;
-		%feature("autodoc", "	:rtype: None
-") Next;
-		void Next ();
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:rtype: Standard_GUID
-") Value;
-		Standard_GUID & Value ();
-};
-
-
-%extend TDF_ListIteratorOfIDList {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor TDF_ListIteratorOfLabelList;
-class TDF_ListIteratorOfLabelList {
-	public:
-		%feature("compactdefaultargs") TDF_ListIteratorOfLabelList;
-		%feature("autodoc", "	:rtype: None
-") TDF_ListIteratorOfLabelList;
-		 TDF_ListIteratorOfLabelList ();
-		%feature("compactdefaultargs") TDF_ListIteratorOfLabelList;
-		%feature("autodoc", "	:param L:
-	:type L: TDF_LabelList &
-	:rtype: None
-") TDF_ListIteratorOfLabelList;
-		 TDF_ListIteratorOfLabelList (const TDF_LabelList & L);
-		%feature("compactdefaultargs") Initialize;
-		%feature("autodoc", "	:param L:
-	:type L: TDF_LabelList &
-	:rtype: None
-") Initialize;
-		void Initialize (const TDF_LabelList & L);
-		%feature("compactdefaultargs") More;
-		%feature("autodoc", "	:rtype: bool
-") More;
-		Standard_Boolean More ();
-		%feature("compactdefaultargs") Next;
-		%feature("autodoc", "	:rtype: None
-") Next;
-		void Next ();
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:rtype: TDF_Label
-") Value;
-		TDF_Label & Value ();
-};
-
-
-%extend TDF_ListIteratorOfLabelList {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor TDF_ListNodeOfAttributeDeltaList;
-class TDF_ListNodeOfAttributeDeltaList : public TCollection_MapNode {
-	public:
-		%feature("compactdefaultargs") TDF_ListNodeOfAttributeDeltaList;
-		%feature("autodoc", "	:param I:
-	:type I: Handle_TDF_AttributeDelta &
-	:param n:
-	:type n: TCollection_MapNodePtr &
-	:rtype: None
-") TDF_ListNodeOfAttributeDeltaList;
-		 TDF_ListNodeOfAttributeDeltaList (const Handle_TDF_AttributeDelta & I,const TCollection_MapNodePtr & n);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:rtype: Handle_TDF_AttributeDelta
-") Value;
-		Handle_TDF_AttributeDelta Value ();
-};
-
-
-%extend TDF_ListNodeOfAttributeDeltaList {
-	%pythoncode {
-		def GetHandle(self):
-		    try:
-		        return self.thisHandle
-		    except:
-		        self.thisHandle = Handle_TDF_ListNodeOfAttributeDeltaList(self)
-		        self.thisown = False
-		        return self.thisHandle
-	}
-};
-
-%pythonappend Handle_TDF_ListNodeOfAttributeDeltaList::Handle_TDF_ListNodeOfAttributeDeltaList %{
-    # register the handle in the base object
-    if len(args) > 0:
-        register_handle(self, args[0])
-%}
-
-%nodefaultctor Handle_TDF_ListNodeOfAttributeDeltaList;
-class Handle_TDF_ListNodeOfAttributeDeltaList : public Handle_TCollection_MapNode {
-
-    public:
-        // constructors
-        Handle_TDF_ListNodeOfAttributeDeltaList();
-        Handle_TDF_ListNodeOfAttributeDeltaList(const Handle_TDF_ListNodeOfAttributeDeltaList &aHandle);
-        Handle_TDF_ListNodeOfAttributeDeltaList(const TDF_ListNodeOfAttributeDeltaList *anItem);
-        void Nullify();
-        Standard_Boolean IsNull() const;
-        static const Handle_TDF_ListNodeOfAttributeDeltaList DownCast(const Handle_Standard_Transient &AnObject);
-
-};
-%extend Handle_TDF_ListNodeOfAttributeDeltaList {
-    TDF_ListNodeOfAttributeDeltaList* _get_reference() {
-    return (TDF_ListNodeOfAttributeDeltaList*)$self->Access();
-    }
-};
-
-%extend Handle_TDF_ListNodeOfAttributeDeltaList {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
-};
-
-%extend TDF_ListNodeOfAttributeDeltaList {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor TDF_ListNodeOfAttributeList;
-class TDF_ListNodeOfAttributeList : public TCollection_MapNode {
-	public:
-		%feature("compactdefaultargs") TDF_ListNodeOfAttributeList;
-		%feature("autodoc", "	:param I:
-	:type I: Handle_TDF_Attribute &
-	:param n:
-	:type n: TCollection_MapNodePtr &
-	:rtype: None
-") TDF_ListNodeOfAttributeList;
-		 TDF_ListNodeOfAttributeList (const Handle_TDF_Attribute & I,const TCollection_MapNodePtr & n);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:rtype: Handle_TDF_Attribute
-") Value;
-		Handle_TDF_Attribute Value ();
-};
-
-
-%extend TDF_ListNodeOfAttributeList {
-	%pythoncode {
-		def GetHandle(self):
-		    try:
-		        return self.thisHandle
-		    except:
-		        self.thisHandle = Handle_TDF_ListNodeOfAttributeList(self)
-		        self.thisown = False
-		        return self.thisHandle
-	}
-};
-
-%pythonappend Handle_TDF_ListNodeOfAttributeList::Handle_TDF_ListNodeOfAttributeList %{
-    # register the handle in the base object
-    if len(args) > 0:
-        register_handle(self, args[0])
-%}
-
-%nodefaultctor Handle_TDF_ListNodeOfAttributeList;
-class Handle_TDF_ListNodeOfAttributeList : public Handle_TCollection_MapNode {
-
-    public:
-        // constructors
-        Handle_TDF_ListNodeOfAttributeList();
-        Handle_TDF_ListNodeOfAttributeList(const Handle_TDF_ListNodeOfAttributeList &aHandle);
-        Handle_TDF_ListNodeOfAttributeList(const TDF_ListNodeOfAttributeList *anItem);
-        void Nullify();
-        Standard_Boolean IsNull() const;
-        static const Handle_TDF_ListNodeOfAttributeList DownCast(const Handle_Standard_Transient &AnObject);
-
-};
-%extend Handle_TDF_ListNodeOfAttributeList {
-    TDF_ListNodeOfAttributeList* _get_reference() {
-    return (TDF_ListNodeOfAttributeList*)$self->Access();
-    }
-};
-
-%extend Handle_TDF_ListNodeOfAttributeList {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
-};
-
-%extend TDF_ListNodeOfAttributeList {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor TDF_ListNodeOfDeltaList;
-class TDF_ListNodeOfDeltaList : public TCollection_MapNode {
-	public:
-		%feature("compactdefaultargs") TDF_ListNodeOfDeltaList;
-		%feature("autodoc", "	:param I:
-	:type I: Handle_TDF_Delta &
-	:param n:
-	:type n: TCollection_MapNodePtr &
-	:rtype: None
-") TDF_ListNodeOfDeltaList;
-		 TDF_ListNodeOfDeltaList (const Handle_TDF_Delta & I,const TCollection_MapNodePtr & n);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:rtype: Handle_TDF_Delta
-") Value;
-		Handle_TDF_Delta Value ();
-};
-
-
-%extend TDF_ListNodeOfDeltaList {
-	%pythoncode {
-		def GetHandle(self):
-		    try:
-		        return self.thisHandle
-		    except:
-		        self.thisHandle = Handle_TDF_ListNodeOfDeltaList(self)
-		        self.thisown = False
-		        return self.thisHandle
-	}
-};
-
-%pythonappend Handle_TDF_ListNodeOfDeltaList::Handle_TDF_ListNodeOfDeltaList %{
-    # register the handle in the base object
-    if len(args) > 0:
-        register_handle(self, args[0])
-%}
-
-%nodefaultctor Handle_TDF_ListNodeOfDeltaList;
-class Handle_TDF_ListNodeOfDeltaList : public Handle_TCollection_MapNode {
-
-    public:
-        // constructors
-        Handle_TDF_ListNodeOfDeltaList();
-        Handle_TDF_ListNodeOfDeltaList(const Handle_TDF_ListNodeOfDeltaList &aHandle);
-        Handle_TDF_ListNodeOfDeltaList(const TDF_ListNodeOfDeltaList *anItem);
-        void Nullify();
-        Standard_Boolean IsNull() const;
-        static const Handle_TDF_ListNodeOfDeltaList DownCast(const Handle_Standard_Transient &AnObject);
-
-};
-%extend Handle_TDF_ListNodeOfDeltaList {
-    TDF_ListNodeOfDeltaList* _get_reference() {
-    return (TDF_ListNodeOfDeltaList*)$self->Access();
-    }
-};
-
-%extend Handle_TDF_ListNodeOfDeltaList {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
-};
-
-%extend TDF_ListNodeOfDeltaList {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor TDF_ListNodeOfIDList;
-class TDF_ListNodeOfIDList : public TCollection_MapNode {
-	public:
-		%feature("compactdefaultargs") TDF_ListNodeOfIDList;
-		%feature("autodoc", "	:param I:
-	:type I: Standard_GUID &
-	:param n:
-	:type n: TCollection_MapNodePtr &
-	:rtype: None
-") TDF_ListNodeOfIDList;
-		 TDF_ListNodeOfIDList (const Standard_GUID & I,const TCollection_MapNodePtr & n);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:rtype: Standard_GUID
-") Value;
-		Standard_GUID & Value ();
-};
-
-
-%extend TDF_ListNodeOfIDList {
-	%pythoncode {
-		def GetHandle(self):
-		    try:
-		        return self.thisHandle
-		    except:
-		        self.thisHandle = Handle_TDF_ListNodeOfIDList(self)
-		        self.thisown = False
-		        return self.thisHandle
-	}
-};
-
-%pythonappend Handle_TDF_ListNodeOfIDList::Handle_TDF_ListNodeOfIDList %{
-    # register the handle in the base object
-    if len(args) > 0:
-        register_handle(self, args[0])
-%}
-
-%nodefaultctor Handle_TDF_ListNodeOfIDList;
-class Handle_TDF_ListNodeOfIDList : public Handle_TCollection_MapNode {
-
-    public:
-        // constructors
-        Handle_TDF_ListNodeOfIDList();
-        Handle_TDF_ListNodeOfIDList(const Handle_TDF_ListNodeOfIDList &aHandle);
-        Handle_TDF_ListNodeOfIDList(const TDF_ListNodeOfIDList *anItem);
-        void Nullify();
-        Standard_Boolean IsNull() const;
-        static const Handle_TDF_ListNodeOfIDList DownCast(const Handle_Standard_Transient &AnObject);
-
-};
-%extend Handle_TDF_ListNodeOfIDList {
-    TDF_ListNodeOfIDList* _get_reference() {
-    return (TDF_ListNodeOfIDList*)$self->Access();
-    }
-};
-
-%extend Handle_TDF_ListNodeOfIDList {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
-};
-
-%extend TDF_ListNodeOfIDList {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor TDF_ListNodeOfLabelList;
-class TDF_ListNodeOfLabelList : public TCollection_MapNode {
-	public:
-		%feature("compactdefaultargs") TDF_ListNodeOfLabelList;
-		%feature("autodoc", "	:param I:
-	:type I: TDF_Label &
-	:param n:
-	:type n: TCollection_MapNodePtr &
-	:rtype: None
-") TDF_ListNodeOfLabelList;
-		 TDF_ListNodeOfLabelList (const TDF_Label & I,const TCollection_MapNodePtr & n);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:rtype: TDF_Label
-") Value;
-		TDF_Label & Value ();
-};
-
-
-%extend TDF_ListNodeOfLabelList {
-	%pythoncode {
-		def GetHandle(self):
-		    try:
-		        return self.thisHandle
-		    except:
-		        self.thisHandle = Handle_TDF_ListNodeOfLabelList(self)
-		        self.thisown = False
-		        return self.thisHandle
-	}
-};
-
-%pythonappend Handle_TDF_ListNodeOfLabelList::Handle_TDF_ListNodeOfLabelList %{
-    # register the handle in the base object
-    if len(args) > 0:
-        register_handle(self, args[0])
-%}
-
-%nodefaultctor Handle_TDF_ListNodeOfLabelList;
-class Handle_TDF_ListNodeOfLabelList : public Handle_TCollection_MapNode {
-
-    public:
-        // constructors
-        Handle_TDF_ListNodeOfLabelList();
-        Handle_TDF_ListNodeOfLabelList(const Handle_TDF_ListNodeOfLabelList &aHandle);
-        Handle_TDF_ListNodeOfLabelList(const TDF_ListNodeOfLabelList *anItem);
-        void Nullify();
-        Standard_Boolean IsNull() const;
-        static const Handle_TDF_ListNodeOfLabelList DownCast(const Handle_Standard_Transient &AnObject);
-
-};
-%extend Handle_TDF_ListNodeOfLabelList {
-    TDF_ListNodeOfLabelList* _get_reference() {
-    return (TDF_ListNodeOfLabelList*)$self->Access();
-    }
-};
-
-%extend Handle_TDF_ListNodeOfLabelList {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
-};
-
-%extend TDF_ListNodeOfLabelList {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor TDF_MapIteratorOfAttributeMap;
-class TDF_MapIteratorOfAttributeMap : public TCollection_BasicMapIterator {
-	public:
-		%feature("compactdefaultargs") TDF_MapIteratorOfAttributeMap;
-		%feature("autodoc", "	:rtype: None
-") TDF_MapIteratorOfAttributeMap;
-		 TDF_MapIteratorOfAttributeMap ();
-		%feature("compactdefaultargs") TDF_MapIteratorOfAttributeMap;
-		%feature("autodoc", "	:param aMap:
-	:type aMap: TDF_AttributeMap &
-	:rtype: None
-") TDF_MapIteratorOfAttributeMap;
-		 TDF_MapIteratorOfAttributeMap (const TDF_AttributeMap & aMap);
-		%feature("compactdefaultargs") Initialize;
-		%feature("autodoc", "	:param aMap:
-	:type aMap: TDF_AttributeMap &
-	:rtype: None
-") Initialize;
-		void Initialize (const TDF_AttributeMap & aMap);
-		%feature("compactdefaultargs") Key;
-		%feature("autodoc", "	:rtype: Handle_TDF_Attribute
-") Key;
-		Handle_TDF_Attribute Key ();
-};
-
-
-%extend TDF_MapIteratorOfAttributeMap {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor TDF_MapIteratorOfIDMap;
-class TDF_MapIteratorOfIDMap : public TCollection_BasicMapIterator {
-	public:
-		%feature("compactdefaultargs") TDF_MapIteratorOfIDMap;
-		%feature("autodoc", "	:rtype: None
-") TDF_MapIteratorOfIDMap;
-		 TDF_MapIteratorOfIDMap ();
-		%feature("compactdefaultargs") TDF_MapIteratorOfIDMap;
-		%feature("autodoc", "	:param aMap:
-	:type aMap: TDF_IDMap &
-	:rtype: None
-") TDF_MapIteratorOfIDMap;
-		 TDF_MapIteratorOfIDMap (const TDF_IDMap & aMap);
-		%feature("compactdefaultargs") Initialize;
-		%feature("autodoc", "	:param aMap:
-	:type aMap: TDF_IDMap &
-	:rtype: None
-") Initialize;
-		void Initialize (const TDF_IDMap & aMap);
-		%feature("compactdefaultargs") Key;
-		%feature("autodoc", "	:rtype: Standard_GUID
-") Key;
-		const Standard_GUID & Key ();
-};
-
-
-%extend TDF_MapIteratorOfIDMap {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor TDF_MapIteratorOfLabelMap;
-class TDF_MapIteratorOfLabelMap : public TCollection_BasicMapIterator {
-	public:
-		%feature("compactdefaultargs") TDF_MapIteratorOfLabelMap;
-		%feature("autodoc", "	:rtype: None
-") TDF_MapIteratorOfLabelMap;
-		 TDF_MapIteratorOfLabelMap ();
-		%feature("compactdefaultargs") TDF_MapIteratorOfLabelMap;
-		%feature("autodoc", "	:param aMap:
-	:type aMap: TDF_LabelMap &
-	:rtype: None
-") TDF_MapIteratorOfLabelMap;
-		 TDF_MapIteratorOfLabelMap (const TDF_LabelMap & aMap);
-		%feature("compactdefaultargs") Initialize;
-		%feature("autodoc", "	:param aMap:
-	:type aMap: TDF_LabelMap &
-	:rtype: None
-") Initialize;
-		void Initialize (const TDF_LabelMap & aMap);
-		%feature("compactdefaultargs") Key;
-		%feature("autodoc", "	:rtype: TDF_Label
-") Key;
-		const TDF_Label & Key ();
-};
-
-
-%extend TDF_MapIteratorOfLabelMap {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
 %nodefaultctor TDF_RelocationTable;
-class TDF_RelocationTable : public MMgt_TShared {
+class TDF_RelocationTable : public Standard_Transient {
 	public:
 		%feature("compactdefaultargs") TDF_RelocationTable;
 		%feature("autodoc", "	* Creates an relocation table. <selfRelocate> says if a value without explicit relocation is its own relocation.
@@ -5421,7 +1942,7 @@ class TDF_RelocationTable : public MMgt_TShared {
 ") SetRelocation;
 		void SetRelocation (const TDF_Label & aSourceLabel,const TDF_Label & aTargetLabel);
 		%feature("compactdefaultargs") HasRelocation;
-		%feature("autodoc", "	* Finds the relocation value of <aSourceLabel> and returns it into <aTargetLabel>. //! (See above SelfRelocate method for more explanation about the method behavior)
+		%feature("autodoc", "	* Finds the relocation value of <aSourceLabel> and returns it into <aTargetLabel>. //! --See above SelfRelocate method for more explanation about the method behavior--
 
 	:param aSourceLabel:
 	:type aSourceLabel: TDF_Label &
@@ -5441,7 +1962,7 @@ class TDF_RelocationTable : public MMgt_TShared {
 ") SetRelocation;
 		void SetRelocation (const Handle_TDF_Attribute & aSourceAttribute,const Handle_TDF_Attribute & aTargetAttribute);
 		%feature("compactdefaultargs") HasRelocation;
-		%feature("autodoc", "	* Finds the relocation value of <aSourceAttribute> and returns it into <aTargetAttribute>. //! (See above SelfRelocate method for more explanation about the method behavior)
+		%feature("autodoc", "	* Finds the relocation value of <aSourceAttribute> and returns it into <aTargetAttribute>. //! --See above SelfRelocate method for more explanation about the method behavior--
 
 	:param aSourceAttribute:
 	:type aSourceAttribute: Handle_TDF_Attribute &
@@ -5450,6 +1971,16 @@ class TDF_RelocationTable : public MMgt_TShared {
 	:rtype: bool
 ") HasRelocation;
 		Standard_Boolean HasRelocation (const Handle_TDF_Attribute & aSourceAttribute,Handle_TDF_Attribute & aTargetAttribute);
+		%feature("compactdefaultargs") HasRelocation;
+		%feature("autodoc", "	* Safe variant for arbitrary type of argument
+
+	:param theSource:
+	:type theSource: Handle_TDF_Attribute &
+	:param theTarget:
+	:type theTarget: Handle_T &
+	:rtype: bool
+") HasRelocation;
+		Standard_Boolean HasRelocation (const Handle_TDF_Attribute & theSource,Handle_T & theTarget);
 		%feature("compactdefaultargs") SetTransientRelocation;
 		%feature("autodoc", "	* Sets the relocation value of <aSourceTransient> to <aTargetTransient>.
 
@@ -5461,7 +1992,7 @@ class TDF_RelocationTable : public MMgt_TShared {
 ") SetTransientRelocation;
 		void SetTransientRelocation (const Handle_Standard_Transient & aSourceTransient,const Handle_Standard_Transient & aTargetTransient);
 		%feature("compactdefaultargs") HasTransientRelocation;
-		%feature("autodoc", "	* Finds the relocation value of <aSourceTransient> and returns it into <aTargetTransient>. //! (See above SelfRelocate method for more explanation about the method behavior)
+		%feature("autodoc", "	* Finds the relocation value of <aSourceTransient> and returns it into <aTargetTransient>. //! --See above SelfRelocate method for more explanation about the method behavior--
 
 	:param aSourceTransient:
 	:type aSourceTransient: Handle_Standard_Transient &
@@ -5546,7 +2077,7 @@ class TDF_RelocationTable : public MMgt_TShared {
 %}
 
 %nodefaultctor Handle_TDF_RelocationTable;
-class Handle_TDF_RelocationTable : public Handle_MMgt_TShared {
+class Handle_TDF_RelocationTable : public Handle_Standard_Transient {
 
     public:
         // constructors
@@ -5558,371 +2089,23 @@ class Handle_TDF_RelocationTable : public Handle_MMgt_TShared {
         static const Handle_TDF_RelocationTable DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_TDF_RelocationTable {
     TDF_RelocationTable* _get_reference() {
-    return (TDF_RelocationTable*)$self->Access();
+    return (TDF_RelocationTable*)$self->get();
     }
 };
 
 %extend Handle_TDF_RelocationTable {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend TDF_RelocationTable {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor TDF_SequenceNodeOfAttributeSequence;
-class TDF_SequenceNodeOfAttributeSequence : public TCollection_SeqNode {
-	public:
-		%feature("compactdefaultargs") TDF_SequenceNodeOfAttributeSequence;
-		%feature("autodoc", "	:param I:
-	:type I: Handle_TDF_Attribute &
-	:param n:
-	:type n: TCollection_SeqNodePtr &
-	:param p:
-	:type p: TCollection_SeqNodePtr &
-	:rtype: None
-") TDF_SequenceNodeOfAttributeSequence;
-		 TDF_SequenceNodeOfAttributeSequence (const Handle_TDF_Attribute & I,const TCollection_SeqNodePtr & n,const TCollection_SeqNodePtr & p);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:rtype: Handle_TDF_Attribute
-") Value;
-		Handle_TDF_Attribute Value ();
-};
-
-
-%extend TDF_SequenceNodeOfAttributeSequence {
-	%pythoncode {
-		def GetHandle(self):
-		    try:
-		        return self.thisHandle
-		    except:
-		        self.thisHandle = Handle_TDF_SequenceNodeOfAttributeSequence(self)
-		        self.thisown = False
-		        return self.thisHandle
-	}
-};
-
-%pythonappend Handle_TDF_SequenceNodeOfAttributeSequence::Handle_TDF_SequenceNodeOfAttributeSequence %{
-    # register the handle in the base object
-    if len(args) > 0:
-        register_handle(self, args[0])
-%}
-
-%nodefaultctor Handle_TDF_SequenceNodeOfAttributeSequence;
-class Handle_TDF_SequenceNodeOfAttributeSequence : public Handle_TCollection_SeqNode {
-
-    public:
-        // constructors
-        Handle_TDF_SequenceNodeOfAttributeSequence();
-        Handle_TDF_SequenceNodeOfAttributeSequence(const Handle_TDF_SequenceNodeOfAttributeSequence &aHandle);
-        Handle_TDF_SequenceNodeOfAttributeSequence(const TDF_SequenceNodeOfAttributeSequence *anItem);
-        void Nullify();
-        Standard_Boolean IsNull() const;
-        static const Handle_TDF_SequenceNodeOfAttributeSequence DownCast(const Handle_Standard_Transient &AnObject);
-
-};
-%extend Handle_TDF_SequenceNodeOfAttributeSequence {
-    TDF_SequenceNodeOfAttributeSequence* _get_reference() {
-    return (TDF_SequenceNodeOfAttributeSequence*)$self->Access();
-    }
-};
-
-%extend Handle_TDF_SequenceNodeOfAttributeSequence {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
-};
-
-%extend TDF_SequenceNodeOfAttributeSequence {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor TDF_SequenceNodeOfLabelSequence;
-class TDF_SequenceNodeOfLabelSequence : public TCollection_SeqNode {
-	public:
-		%feature("compactdefaultargs") TDF_SequenceNodeOfLabelSequence;
-		%feature("autodoc", "	:param I:
-	:type I: TDF_Label &
-	:param n:
-	:type n: TCollection_SeqNodePtr &
-	:param p:
-	:type p: TCollection_SeqNodePtr &
-	:rtype: None
-") TDF_SequenceNodeOfLabelSequence;
-		 TDF_SequenceNodeOfLabelSequence (const TDF_Label & I,const TCollection_SeqNodePtr & n,const TCollection_SeqNodePtr & p);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:rtype: TDF_Label
-") Value;
-		TDF_Label & Value ();
-};
-
-
-%extend TDF_SequenceNodeOfLabelSequence {
-	%pythoncode {
-		def GetHandle(self):
-		    try:
-		        return self.thisHandle
-		    except:
-		        self.thisHandle = Handle_TDF_SequenceNodeOfLabelSequence(self)
-		        self.thisown = False
-		        return self.thisHandle
-	}
-};
-
-%pythonappend Handle_TDF_SequenceNodeOfLabelSequence::Handle_TDF_SequenceNodeOfLabelSequence %{
-    # register the handle in the base object
-    if len(args) > 0:
-        register_handle(self, args[0])
-%}
-
-%nodefaultctor Handle_TDF_SequenceNodeOfLabelSequence;
-class Handle_TDF_SequenceNodeOfLabelSequence : public Handle_TCollection_SeqNode {
-
-    public:
-        // constructors
-        Handle_TDF_SequenceNodeOfLabelSequence();
-        Handle_TDF_SequenceNodeOfLabelSequence(const Handle_TDF_SequenceNodeOfLabelSequence &aHandle);
-        Handle_TDF_SequenceNodeOfLabelSequence(const TDF_SequenceNodeOfLabelSequence *anItem);
-        void Nullify();
-        Standard_Boolean IsNull() const;
-        static const Handle_TDF_SequenceNodeOfLabelSequence DownCast(const Handle_Standard_Transient &AnObject);
-
-};
-%extend Handle_TDF_SequenceNodeOfLabelSequence {
-    TDF_SequenceNodeOfLabelSequence* _get_reference() {
-    return (TDF_SequenceNodeOfLabelSequence*)$self->Access();
-    }
-};
-
-%extend Handle_TDF_SequenceNodeOfLabelSequence {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
-};
-
-%extend TDF_SequenceNodeOfLabelSequence {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor TDF_StdMapNodeOfAttributeMap;
-class TDF_StdMapNodeOfAttributeMap : public TCollection_MapNode {
-	public:
-		%feature("compactdefaultargs") TDF_StdMapNodeOfAttributeMap;
-		%feature("autodoc", "	:param K:
-	:type K: Handle_TDF_Attribute &
-	:param n:
-	:type n: TCollection_MapNodePtr &
-	:rtype: None
-") TDF_StdMapNodeOfAttributeMap;
-		 TDF_StdMapNodeOfAttributeMap (const Handle_TDF_Attribute & K,const TCollection_MapNodePtr & n);
-		%feature("compactdefaultargs") Key;
-		%feature("autodoc", "	:rtype: Handle_TDF_Attribute
-") Key;
-		Handle_TDF_Attribute Key ();
-};
-
-
-%extend TDF_StdMapNodeOfAttributeMap {
-	%pythoncode {
-		def GetHandle(self):
-		    try:
-		        return self.thisHandle
-		    except:
-		        self.thisHandle = Handle_TDF_StdMapNodeOfAttributeMap(self)
-		        self.thisown = False
-		        return self.thisHandle
-	}
-};
-
-%pythonappend Handle_TDF_StdMapNodeOfAttributeMap::Handle_TDF_StdMapNodeOfAttributeMap %{
-    # register the handle in the base object
-    if len(args) > 0:
-        register_handle(self, args[0])
-%}
-
-%nodefaultctor Handle_TDF_StdMapNodeOfAttributeMap;
-class Handle_TDF_StdMapNodeOfAttributeMap : public Handle_TCollection_MapNode {
-
-    public:
-        // constructors
-        Handle_TDF_StdMapNodeOfAttributeMap();
-        Handle_TDF_StdMapNodeOfAttributeMap(const Handle_TDF_StdMapNodeOfAttributeMap &aHandle);
-        Handle_TDF_StdMapNodeOfAttributeMap(const TDF_StdMapNodeOfAttributeMap *anItem);
-        void Nullify();
-        Standard_Boolean IsNull() const;
-        static const Handle_TDF_StdMapNodeOfAttributeMap DownCast(const Handle_Standard_Transient &AnObject);
-
-};
-%extend Handle_TDF_StdMapNodeOfAttributeMap {
-    TDF_StdMapNodeOfAttributeMap* _get_reference() {
-    return (TDF_StdMapNodeOfAttributeMap*)$self->Access();
-    }
-};
-
-%extend Handle_TDF_StdMapNodeOfAttributeMap {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
-};
-
-%extend TDF_StdMapNodeOfAttributeMap {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor TDF_StdMapNodeOfIDMap;
-class TDF_StdMapNodeOfIDMap : public TCollection_MapNode {
-	public:
-		%feature("compactdefaultargs") TDF_StdMapNodeOfIDMap;
-		%feature("autodoc", "	:param K:
-	:type K: Standard_GUID &
-	:param n:
-	:type n: TCollection_MapNodePtr &
-	:rtype: None
-") TDF_StdMapNodeOfIDMap;
-		 TDF_StdMapNodeOfIDMap (const Standard_GUID & K,const TCollection_MapNodePtr & n);
-		%feature("compactdefaultargs") Key;
-		%feature("autodoc", "	:rtype: Standard_GUID
-") Key;
-		Standard_GUID & Key ();
-};
-
-
-%extend TDF_StdMapNodeOfIDMap {
-	%pythoncode {
-		def GetHandle(self):
-		    try:
-		        return self.thisHandle
-		    except:
-		        self.thisHandle = Handle_TDF_StdMapNodeOfIDMap(self)
-		        self.thisown = False
-		        return self.thisHandle
-	}
-};
-
-%pythonappend Handle_TDF_StdMapNodeOfIDMap::Handle_TDF_StdMapNodeOfIDMap %{
-    # register the handle in the base object
-    if len(args) > 0:
-        register_handle(self, args[0])
-%}
-
-%nodefaultctor Handle_TDF_StdMapNodeOfIDMap;
-class Handle_TDF_StdMapNodeOfIDMap : public Handle_TCollection_MapNode {
-
-    public:
-        // constructors
-        Handle_TDF_StdMapNodeOfIDMap();
-        Handle_TDF_StdMapNodeOfIDMap(const Handle_TDF_StdMapNodeOfIDMap &aHandle);
-        Handle_TDF_StdMapNodeOfIDMap(const TDF_StdMapNodeOfIDMap *anItem);
-        void Nullify();
-        Standard_Boolean IsNull() const;
-        static const Handle_TDF_StdMapNodeOfIDMap DownCast(const Handle_Standard_Transient &AnObject);
-
-};
-%extend Handle_TDF_StdMapNodeOfIDMap {
-    TDF_StdMapNodeOfIDMap* _get_reference() {
-    return (TDF_StdMapNodeOfIDMap*)$self->Access();
-    }
-};
-
-%extend Handle_TDF_StdMapNodeOfIDMap {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
-};
-
-%extend TDF_StdMapNodeOfIDMap {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor TDF_StdMapNodeOfLabelMap;
-class TDF_StdMapNodeOfLabelMap : public TCollection_MapNode {
-	public:
-		%feature("compactdefaultargs") TDF_StdMapNodeOfLabelMap;
-		%feature("autodoc", "	:param K:
-	:type K: TDF_Label &
-	:param n:
-	:type n: TCollection_MapNodePtr &
-	:rtype: None
-") TDF_StdMapNodeOfLabelMap;
-		 TDF_StdMapNodeOfLabelMap (const TDF_Label & K,const TCollection_MapNodePtr & n);
-		%feature("compactdefaultargs") Key;
-		%feature("autodoc", "	:rtype: TDF_Label
-") Key;
-		TDF_Label & Key ();
-};
-
-
-%extend TDF_StdMapNodeOfLabelMap {
-	%pythoncode {
-		def GetHandle(self):
-		    try:
-		        return self.thisHandle
-		    except:
-		        self.thisHandle = Handle_TDF_StdMapNodeOfLabelMap(self)
-		        self.thisown = False
-		        return self.thisHandle
-	}
-};
-
-%pythonappend Handle_TDF_StdMapNodeOfLabelMap::Handle_TDF_StdMapNodeOfLabelMap %{
-    # register the handle in the base object
-    if len(args) > 0:
-        register_handle(self, args[0])
-%}
-
-%nodefaultctor Handle_TDF_StdMapNodeOfLabelMap;
-class Handle_TDF_StdMapNodeOfLabelMap : public Handle_TCollection_MapNode {
-
-    public:
-        // constructors
-        Handle_TDF_StdMapNodeOfLabelMap();
-        Handle_TDF_StdMapNodeOfLabelMap(const Handle_TDF_StdMapNodeOfLabelMap &aHandle);
-        Handle_TDF_StdMapNodeOfLabelMap(const TDF_StdMapNodeOfLabelMap *anItem);
-        void Nullify();
-        Standard_Boolean IsNull() const;
-        static const Handle_TDF_StdMapNodeOfLabelMap DownCast(const Handle_Standard_Transient &AnObject);
-
-};
-%extend Handle_TDF_StdMapNodeOfLabelMap {
-    TDF_StdMapNodeOfLabelMap* _get_reference() {
-    return (TDF_StdMapNodeOfLabelMap*)$self->Access();
-    }
-};
-
-%extend Handle_TDF_StdMapNodeOfLabelMap {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
-};
-
-%extend TDF_StdMapNodeOfLabelMap {
 	%pythoncode {
 	__repr__ = _dumps_object
 	}
@@ -6313,19 +2496,20 @@ class Handle_TDF_DeltaOnAddition : public Handle_TDF_AttributeDelta {
         static const Handle_TDF_DeltaOnAddition DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_TDF_DeltaOnAddition {
     TDF_DeltaOnAddition* _get_reference() {
-    return (TDF_DeltaOnAddition*)$self->Access();
+    return (TDF_DeltaOnAddition*)$self->get();
     }
 };
 
 %extend Handle_TDF_DeltaOnAddition {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend TDF_DeltaOnAddition {
@@ -6384,19 +2568,20 @@ class Handle_TDF_DeltaOnForget : public Handle_TDF_AttributeDelta {
         static const Handle_TDF_DeltaOnForget DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_TDF_DeltaOnForget {
     TDF_DeltaOnForget* _get_reference() {
-    return (TDF_DeltaOnForget*)$self->Access();
+    return (TDF_DeltaOnForget*)$self->get();
     }
 };
 
 %extend Handle_TDF_DeltaOnForget {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend TDF_DeltaOnForget {
@@ -6447,19 +2632,20 @@ class Handle_TDF_DeltaOnModification : public Handle_TDF_AttributeDelta {
         static const Handle_TDF_DeltaOnModification DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_TDF_DeltaOnModification {
     TDF_DeltaOnModification* _get_reference() {
-    return (TDF_DeltaOnModification*)$self->Access();
+    return (TDF_DeltaOnModification*)$self->get();
     }
 };
 
 %extend Handle_TDF_DeltaOnModification {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend TDF_DeltaOnModification {
@@ -6504,19 +2690,20 @@ class Handle_TDF_DeltaOnRemoval : public Handle_TDF_AttributeDelta {
         static const Handle_TDF_DeltaOnRemoval DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_TDF_DeltaOnRemoval {
     TDF_DeltaOnRemoval* _get_reference() {
-    return (TDF_DeltaOnRemoval*)$self->Access();
+    return (TDF_DeltaOnRemoval*)$self->get();
     }
 };
 
 %extend Handle_TDF_DeltaOnRemoval {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend TDF_DeltaOnRemoval {
@@ -6575,19 +2762,20 @@ class Handle_TDF_DeltaOnResume : public Handle_TDF_AttributeDelta {
         static const Handle_TDF_DeltaOnResume DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_TDF_DeltaOnResume {
     TDF_DeltaOnResume* _get_reference() {
-    return (TDF_DeltaOnResume*)$self->Access();
+    return (TDF_DeltaOnResume*)$self->get();
     }
 };
 
 %extend Handle_TDF_DeltaOnResume {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend TDF_DeltaOnResume {
@@ -6694,19 +2882,20 @@ class Handle_TDF_Reference : public Handle_TDF_Attribute {
         static const Handle_TDF_Reference DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_TDF_Reference {
     TDF_Reference* _get_reference() {
-    return (TDF_Reference*)$self->Access();
+    return (TDF_Reference*)$self->get();
     }
 };
 
 %extend Handle_TDF_Reference {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend TDF_Reference {
@@ -6732,7 +2921,7 @@ class TDF_TagSource : public TDF_Attribute {
 ") Set;
 		static Handle_TDF_TagSource Set (const TDF_Label & label);
 		%feature("compactdefaultargs") NewChild;
-		%feature("autodoc", "	* Find (or create) a tagSource attribute located at <L> and make a new child label. TagSource methods =================
+		%feature("autodoc", "	* Find --or create-- a tagSource attribute located at <L> and make a new child label. TagSource methods =================
 
 	:param L:
 	:type L: TDF_Label &
@@ -6819,19 +3008,20 @@ class Handle_TDF_TagSource : public Handle_TDF_Attribute {
         static const Handle_TDF_TagSource DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_TDF_TagSource {
     TDF_TagSource* _get_reference() {
-    return (TDF_TagSource*)$self->Access();
+    return (TDF_TagSource*)$self->get();
     }
 };
 
 %extend Handle_TDF_TagSource {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend TDF_TagSource {
@@ -6890,19 +3080,20 @@ class Handle_TDF_DefaultDeltaOnModification : public Handle_TDF_DeltaOnModificat
         static const Handle_TDF_DefaultDeltaOnModification DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_TDF_DefaultDeltaOnModification {
     TDF_DefaultDeltaOnModification* _get_reference() {
-    return (TDF_DefaultDeltaOnModification*)$self->Access();
+    return (TDF_DefaultDeltaOnModification*)$self->get();
     }
 };
 
 %extend Handle_TDF_DefaultDeltaOnModification {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend TDF_DefaultDeltaOnModification {
@@ -6961,19 +3152,20 @@ class Handle_TDF_DefaultDeltaOnRemoval : public Handle_TDF_DeltaOnRemoval {
         static const Handle_TDF_DefaultDeltaOnRemoval DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_TDF_DefaultDeltaOnRemoval {
     TDF_DefaultDeltaOnRemoval* _get_reference() {
-    return (TDF_DefaultDeltaOnRemoval*)$self->Access();
+    return (TDF_DefaultDeltaOnRemoval*)$self->get();
     }
 };
 
 %extend Handle_TDF_DefaultDeltaOnRemoval {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend TDF_DefaultDeltaOnRemoval {

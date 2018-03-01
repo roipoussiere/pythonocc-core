@@ -1,5 +1,5 @@
 /*
-Copyright 2008-2017 Thomas Paviot (tpaviot@gmail.com)
+Copyright 2008-2018 Thomas Paviot (tpaviot@gmail.com)
 
 
 This file is part of pythonOCC.
@@ -56,10 +56,14 @@ def register_handle(handle, base_object):
 /* typedefs */
 /* end typedefs declaration */
 
+/* templates */
+/* end templates declaration */
+
 /* public enums */
 /* end public enums declaration */
 
 %rename(xmlxcafdrivers) XmlXCAFDrivers;
+%nodefaultctor XmlXCAFDrivers;
 class XmlXCAFDrivers {
 	public:
 		%feature("compactdefaultargs") Factory;
@@ -69,7 +73,15 @@ class XmlXCAFDrivers {
 	:type aGUID: Standard_GUID &
 	:rtype: Handle_Standard_Transient
 ") Factory;
-		static Handle_Standard_Transient Factory (const Standard_GUID & aGUID);
+		Handle_Standard_Transient Factory (const Standard_GUID & aGUID);
+		%feature("compactdefaultargs") DefineFormat;
+		%feature("autodoc", "	* Defines format 'XmlXCAF' and registers its read and write drivers in the specified application
+
+	:param theApp:
+	:type theApp: Handle_TDocStd_Application &
+	:rtype: void
+") DefineFormat;
+		static void DefineFormat (const Handle_TDocStd_Application & theApp);
 };
 
 
@@ -125,19 +137,20 @@ class Handle_XmlXCAFDrivers_DocumentRetrievalDriver : public Handle_XmlDrivers_D
         static const Handle_XmlXCAFDrivers_DocumentRetrievalDriver DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_XmlXCAFDrivers_DocumentRetrievalDriver {
     XmlXCAFDrivers_DocumentRetrievalDriver* _get_reference() {
-    return (XmlXCAFDrivers_DocumentRetrievalDriver*)$self->Access();
+    return (XmlXCAFDrivers_DocumentRetrievalDriver*)$self->get();
     }
 };
 
 %extend Handle_XmlXCAFDrivers_DocumentRetrievalDriver {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend XmlXCAFDrivers_DocumentRetrievalDriver {
@@ -194,19 +207,20 @@ class Handle_XmlXCAFDrivers_DocumentStorageDriver : public Handle_XmlDrivers_Doc
         static const Handle_XmlXCAFDrivers_DocumentStorageDriver DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_XmlXCAFDrivers_DocumentStorageDriver {
     XmlXCAFDrivers_DocumentStorageDriver* _get_reference() {
-    return (XmlXCAFDrivers_DocumentStorageDriver*)$self->Access();
+    return (XmlXCAFDrivers_DocumentStorageDriver*)$self->get();
     }
 };
 
 %extend Handle_XmlXCAFDrivers_DocumentStorageDriver {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend XmlXCAFDrivers_DocumentStorageDriver {

@@ -1,5 +1,5 @@
 /*
-Copyright 2008-2017 Thomas Paviot (tpaviot@gmail.com)
+Copyright 2008-2018 Thomas Paviot (tpaviot@gmail.com)
 
 
 This file is part of pythonOCC.
@@ -55,6 +55,9 @@ def register_handle(handle, base_object):
 
 /* typedefs */
 /* end typedefs declaration */
+
+/* templates */
+/* end templates declaration */
 
 /* public enums */
 /* end public enums declaration */
@@ -179,7 +182,7 @@ class RWStepShape_RWAngularLocation {
 ") WriteStep;
 		void WriteStep (StepData_StepWriter & SW,const Handle_StepShape_AngularLocation & ent);
 		%feature("compactdefaultargs") Share;
-		%feature("autodoc", "	* Fills data for graph (shared items)
+		%feature("autodoc", "	* Fills data for graph --shared items--
 
 	:param ent:
 	:type ent: Handle_StepShape_AngularLocation &
@@ -230,7 +233,7 @@ class RWStepShape_RWAngularSize {
 ") WriteStep;
 		void WriteStep (StepData_StepWriter & SW,const Handle_StepShape_AngularSize & ent);
 		%feature("compactdefaultargs") Share;
-		%feature("autodoc", "	* Fills data for graph (shared items)
+		%feature("autodoc", "	* Fills data for graph --shared items--
 
 	:param ent:
 	:type ent: Handle_StepShape_AngularSize &
@@ -549,7 +552,7 @@ class RWStepShape_RWCompoundShapeRepresentation {
 ") WriteStep;
 		void WriteStep (StepData_StepWriter & SW,const Handle_StepShape_CompoundShapeRepresentation & ent);
 		%feature("compactdefaultargs") Share;
-		%feature("autodoc", "	* Fills data for graph (shared items)
+		%feature("autodoc", "	* Fills data for graph --shared items--
 
 	:param ent:
 	:type ent: Handle_StepShape_CompoundShapeRepresentation &
@@ -600,7 +603,7 @@ class RWStepShape_RWConnectedEdgeSet {
 ") WriteStep;
 		void WriteStep (StepData_StepWriter & SW,const Handle_StepShape_ConnectedEdgeSet & ent);
 		%feature("compactdefaultargs") Share;
-		%feature("autodoc", "	* Fills data for graph (shared items)
+		%feature("autodoc", "	* Fills data for graph --shared items--
 
 	:param ent:
 	:type ent: Handle_StepShape_ConnectedEdgeSet &
@@ -694,7 +697,7 @@ class RWStepShape_RWConnectedFaceShapeRepresentation {
 ") WriteStep;
 		void WriteStep (StepData_StepWriter & SW,const Handle_StepShape_ConnectedFaceShapeRepresentation & ent);
 		%feature("compactdefaultargs") Share;
-		%feature("autodoc", "	* Fills data for graph (shared items)
+		%feature("autodoc", "	* Fills data for graph --shared items--
 
 	:param ent:
 	:type ent: Handle_StepShape_ConnectedFaceShapeRepresentation &
@@ -745,7 +748,7 @@ class RWStepShape_RWConnectedFaceSubSet {
 ") WriteStep;
 		void WriteStep (StepData_StepWriter & SW,const Handle_StepShape_ConnectedFaceSubSet & ent);
 		%feature("compactdefaultargs") Share;
-		%feature("autodoc", "	* Fills data for graph (shared items)
+		%feature("autodoc", "	* Fills data for graph --shared items--
 
 	:param ent:
 	:type ent: Handle_StepShape_ConnectedFaceSubSet &
@@ -968,7 +971,7 @@ class RWStepShape_RWDimensionalCharacteristicRepresentation {
 ") WriteStep;
 		void WriteStep (StepData_StepWriter & SW,const Handle_StepShape_DimensionalCharacteristicRepresentation & ent);
 		%feature("compactdefaultargs") Share;
-		%feature("autodoc", "	* Fills data for graph (shared items)
+		%feature("autodoc", "	* Fills data for graph --shared items--
 
 	:param ent:
 	:type ent: Handle_StepShape_DimensionalCharacteristicRepresentation &
@@ -1019,7 +1022,7 @@ class RWStepShape_RWDimensionalLocation {
 ") WriteStep;
 		void WriteStep (StepData_StepWriter & SW,const Handle_StepShape_DimensionalLocation & ent);
 		%feature("compactdefaultargs") Share;
-		%feature("autodoc", "	* Fills data for graph (shared items)
+		%feature("autodoc", "	* Fills data for graph --shared items--
 
 	:param ent:
 	:type ent: Handle_StepShape_DimensionalLocation &
@@ -1070,7 +1073,7 @@ class RWStepShape_RWDimensionalLocationWithPath {
 ") WriteStep;
 		void WriteStep (StepData_StepWriter & SW,const Handle_StepShape_DimensionalLocationWithPath & ent);
 		%feature("compactdefaultargs") Share;
-		%feature("autodoc", "	* Fills data for graph (shared items)
+		%feature("autodoc", "	* Fills data for graph --shared items--
 
 	:param ent:
 	:type ent: Handle_StepShape_DimensionalLocationWithPath &
@@ -1121,7 +1124,7 @@ class RWStepShape_RWDimensionalSize {
 ") WriteStep;
 		void WriteStep (StepData_StepWriter & SW,const Handle_StepShape_DimensionalSize & ent);
 		%feature("compactdefaultargs") Share;
-		%feature("autodoc", "	* Fills data for graph (shared items)
+		%feature("autodoc", "	* Fills data for graph --shared items--
 
 	:param ent:
 	:type ent: Handle_StepShape_DimensionalSize &
@@ -1172,7 +1175,7 @@ class RWStepShape_RWDimensionalSizeWithPath {
 ") WriteStep;
 		void WriteStep (StepData_StepWriter & SW,const Handle_StepShape_DimensionalSizeWithPath & ent);
 		%feature("compactdefaultargs") Share;
-		%feature("autodoc", "	* Fills data for graph (shared items)
+		%feature("autodoc", "	* Fills data for graph --shared items--
 
 	:param ent:
 	:type ent: Handle_StepShape_DimensionalSizeWithPath &
@@ -1266,7 +1269,7 @@ class RWStepShape_RWEdgeBasedWireframeModel {
 ") WriteStep;
 		void WriteStep (StepData_StepWriter & SW,const Handle_StepShape_EdgeBasedWireframeModel & ent);
 		%feature("compactdefaultargs") Share;
-		%feature("autodoc", "	* Fills data for graph (shared items)
+		%feature("autodoc", "	* Fills data for graph --shared items--
 
 	:param ent:
 	:type ent: Handle_StepShape_EdgeBasedWireframeModel &
@@ -1317,7 +1320,7 @@ class RWStepShape_RWEdgeBasedWireframeShapeRepresentation {
 ") WriteStep;
 		void WriteStep (StepData_StepWriter & SW,const Handle_StepShape_EdgeBasedWireframeShapeRepresentation & ent);
 		%feature("compactdefaultargs") Share;
-		%feature("autodoc", "	* Fills data for graph (shared items)
+		%feature("autodoc", "	* Fills data for graph --shared items--
 
 	:param ent:
 	:type ent: Handle_StepShape_EdgeBasedWireframeShapeRepresentation &
@@ -1603,7 +1606,7 @@ class RWStepShape_RWFaceBasedSurfaceModel {
 ") WriteStep;
 		void WriteStep (StepData_StepWriter & SW,const Handle_StepShape_FaceBasedSurfaceModel & ent);
 		%feature("compactdefaultargs") Share;
-		%feature("autodoc", "	* Fills data for graph (shared items)
+		%feature("autodoc", "	* Fills data for graph --shared items--
 
 	:param ent:
 	:type ent: Handle_StepShape_FaceBasedSurfaceModel &
@@ -2422,7 +2425,7 @@ class RWStepShape_RWNonManifoldSurfaceShapeRepresentation {
 ") WriteStep;
 		void WriteStep (StepData_StepWriter & SW,const Handle_StepShape_NonManifoldSurfaceShapeRepresentation & ent);
 		%feature("compactdefaultargs") Share;
-		%feature("autodoc", "	* Fills data for graph (shared items)
+		%feature("autodoc", "	* Fills data for graph --shared items--
 
 	:param ent:
 	:type ent: Handle_StepShape_NonManifoldSurfaceShapeRepresentation &
@@ -2817,7 +2820,7 @@ class RWStepShape_RWPointRepresentation {
 ") WriteStep;
 		void WriteStep (StepData_StepWriter & SW,const Handle_StepShape_PointRepresentation & ent);
 		%feature("compactdefaultargs") Share;
-		%feature("autodoc", "	* Fills data for graph (shared items)
+		%feature("autodoc", "	* Fills data for graph --shared items--
 
 	:param ent:
 	:type ent: Handle_StepShape_PointRepresentation &
@@ -3204,7 +3207,7 @@ class RWStepShape_RWSeamEdge {
 ") WriteStep;
 		void WriteStep (StepData_StepWriter & SW,const Handle_StepShape_SeamEdge & ent);
 		%feature("compactdefaultargs") Share;
-		%feature("autodoc", "	* Fills data for graph (shared items)
+		%feature("autodoc", "	* Fills data for graph --shared items--
 
 	:param ent:
 	:type ent: Handle_StepShape_SeamEdge &
@@ -3255,7 +3258,7 @@ class RWStepShape_RWShapeDefinitionRepresentation {
 ") WriteStep;
 		void WriteStep (StepData_StepWriter & SW,const Handle_StepShape_ShapeDefinitionRepresentation & ent);
 		%feature("compactdefaultargs") Share;
-		%feature("autodoc", "	* Fills data for graph (shared items)
+		%feature("autodoc", "	* Fills data for graph --shared items--
 
 	:param ent:
 	:type ent: Handle_StepShape_ShapeDefinitionRepresentation &
@@ -3306,7 +3309,7 @@ class RWStepShape_RWShapeDimensionRepresentation {
 ") WriteStep;
 		void WriteStep (StepData_StepWriter & SW,const Handle_StepShape_ShapeDimensionRepresentation & ent);
 		%feature("compactdefaultargs") Share;
-		%feature("autodoc", "	* Fills data for graph (shared items)
+		%feature("autodoc", "	* Fills data for graph --shared items--
 
 	:param ent:
 	:type ent: Handle_StepShape_ShapeDimensionRepresentation &
@@ -3400,7 +3403,7 @@ class RWStepShape_RWShapeRepresentationWithParameters {
 ") WriteStep;
 		void WriteStep (StepData_StepWriter & SW,const Handle_StepShape_ShapeRepresentationWithParameters & ent);
 		%feature("compactdefaultargs") Share;
-		%feature("autodoc", "	* Fills data for graph (shared items)
+		%feature("autodoc", "	* Fills data for graph --shared items--
 
 	:param ent:
 	:type ent: Handle_StepShape_ShapeRepresentationWithParameters &
@@ -3615,7 +3618,7 @@ class RWStepShape_RWSubedge {
 ") WriteStep;
 		void WriteStep (StepData_StepWriter & SW,const Handle_StepShape_Subedge & ent);
 		%feature("compactdefaultargs") Share;
-		%feature("autodoc", "	* Fills data for graph (shared items)
+		%feature("autodoc", "	* Fills data for graph --shared items--
 
 	:param ent:
 	:type ent: Handle_StepShape_Subedge &
@@ -3666,7 +3669,7 @@ class RWStepShape_RWSubface {
 ") WriteStep;
 		void WriteStep (StepData_StepWriter & SW,const Handle_StepShape_Subface & ent);
 		%feature("compactdefaultargs") Share;
-		%feature("autodoc", "	* Fills data for graph (shared items)
+		%feature("autodoc", "	* Fills data for graph --shared items--
 
 	:param ent:
 	:type ent: Handle_StepShape_Subface &
@@ -3964,6 +3967,47 @@ class RWStepShape_RWTypeQualifier {
 
 
 %extend RWStepShape_RWTypeQualifier {
+	%pythoncode {
+	__repr__ = _dumps_object
+	}
+};
+%nodefaultctor RWStepShape_RWValueFormatTypeQualifier;
+class RWStepShape_RWValueFormatTypeQualifier {
+	public:
+		%feature("compactdefaultargs") RWStepShape_RWValueFormatTypeQualifier;
+		%feature("autodoc", "	* Empty constructor
+
+	:rtype: None
+") RWStepShape_RWValueFormatTypeQualifier;
+		 RWStepShape_RWValueFormatTypeQualifier ();
+		%feature("compactdefaultargs") ReadStep;
+		%feature("autodoc", "	* Reads ValueFormatTypeQualifier
+
+	:param data:
+	:type data: Handle_StepData_StepReaderData &
+	:param num:
+	:type num: int
+	:param ach:
+	:type ach: Handle_Interface_Check &
+	:param ent:
+	:type ent: Handle_StepShape_ValueFormatTypeQualifier &
+	:rtype: None
+") ReadStep;
+		void ReadStep (const Handle_StepData_StepReaderData & data,const Standard_Integer num,Handle_Interface_Check & ach,const Handle_StepShape_ValueFormatTypeQualifier & ent);
+		%feature("compactdefaultargs") WriteStep;
+		%feature("autodoc", "	* Writes ValueFormatTypeQualifier
+
+	:param SW:
+	:type SW: StepData_StepWriter &
+	:param ent:
+	:type ent: Handle_StepShape_ValueFormatTypeQualifier &
+	:rtype: None
+") WriteStep;
+		void WriteStep (StepData_StepWriter & SW,const Handle_StepShape_ValueFormatTypeQualifier & ent);
+};
+
+
+%extend RWStepShape_RWValueFormatTypeQualifier {
 	%pythoncode {
 	__repr__ = _dumps_object
 	}

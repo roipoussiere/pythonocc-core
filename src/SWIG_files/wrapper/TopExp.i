@@ -1,5 +1,5 @@
 /*
-Copyright 2008-2017 Thomas Paviot (tpaviot@gmail.com)
+Copyright 2008-2018 Thomas Paviot (tpaviot@gmail.com)
 
 
 This file is part of pythonOCC.
@@ -57,6 +57,9 @@ def register_handle(handle, base_object):
 typedef TopoDS_Iterator * TopExp_Stack;
 /* end typedefs declaration */
 
+/* templates */
+/* end templates declaration */
+
 /* public enums */
 /* end public enums declaration */
 
@@ -99,6 +102,22 @@ class TopExp {
 	:rtype: void
 ") MapShapesAndAncestors;
 		static void MapShapesAndAncestors (const TopoDS_Shape & S,const TopAbs_ShapeEnum TS,const TopAbs_ShapeEnum TA,TopTools_IndexedDataMapOfShapeListOfShape & M);
+		%feature("compactdefaultargs") MapShapesAndUniqueAncestors;
+		%feature("autodoc", "	* Stores in the map <M> all the subshape of <S> of type <TS> for each one append to the list all unique ancestors of type <TA>. For example map all the edges and bind the list of faces. useOrientation = True : taking account the ancestor orientation Warning: The map is not cleared at first.
+
+	:param S:
+	:type S: TopoDS_Shape &
+	:param TS:
+	:type TS: TopAbs_ShapeEnum
+	:param TA:
+	:type TA: TopAbs_ShapeEnum
+	:param M:
+	:type M: TopTools_IndexedDataMapOfShapeListOfShape &
+	:param useOrientation: default value is Standard_False
+	:type useOrientation: bool
+	:rtype: void
+") MapShapesAndUniqueAncestors;
+		static void MapShapesAndUniqueAncestors (const TopoDS_Shape & S,const TopAbs_ShapeEnum TS,const TopAbs_ShapeEnum TA,TopTools_IndexedDataMapOfShapeListOfShape & M,const Standard_Boolean useOrientation = Standard_False);
 		%feature("compactdefaultargs") FirstVertex;
 		%feature("autodoc", "	* Returns the Vertex of orientation FORWARD in E. If there is none returns a Null Shape. CumOri = True : taking account the edge orientation
 
@@ -229,7 +248,7 @@ class TopExp_Explorer {
 ") Depth;
 		Standard_Integer Depth ();
 		%feature("compactdefaultargs") Clear;
-		%feature("autodoc", "	* Clears the content of the explorer. It will return False on More().
+		%feature("autodoc", "	* Clears the content of the explorer. It will return False on More----.
 
 	:rtype: None
 ") Clear;

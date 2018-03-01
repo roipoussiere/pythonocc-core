@@ -1,5 +1,5 @@
 /*
-Copyright 2008-2017 Thomas Paviot (tpaviot@gmail.com)
+Copyright 2008-2018 Thomas Paviot (tpaviot@gmail.com)
 
 
 This file is part of pythonOCC.
@@ -56,6 +56,10 @@ def register_handle(handle, base_object):
 /* typedefs */
 /* end typedefs declaration */
 
+/* templates */
+%template(Law_Laws) NCollection_List <Handle_Law_Function>;
+/* end templates declaration */
+
 /* public enums */
 /* end public enums declaration */
 
@@ -85,7 +89,7 @@ class Law {
 ") MixBnd;
 		static Handle_TColStd_HArray1OfReal MixBnd (const Standard_Integer Degree,const TColStd_Array1OfReal & Knots,const TColStd_Array1OfInteger & Mults,const Handle_Law_Linear & Lin);
 		%feature("compactdefaultargs") MixTgt;
-		%feature("autodoc", "	* Builds the poles of the 1d bspline that is null on the rigth side of Knots(Index) (on the left if NulOnTheRight is false) and that is like a t*(1-t)(1-t) curve on the left side of Knots(Index) (on the rigth if NulOnTheRight is false). The result curve is C1 with a derivative equal to 1. at first parameter (-1 at last parameter if NulOnTheRight is false). Warning: Mults(Index) must greater or equal to degree-1.
+		%feature("autodoc", "	* Builds the poles of the 1d bspline that is null on the rigth side of Knots--Index-- --on the left if NulOnTheRight is false-- and that is like a t*--1-t----1-t-- curve on the left side of Knots--Index-- --on the rigth if NulOnTheRight is false--. The result curve is C1 with a derivative equal to 1. at first parameter ---1 at last parameter if NulOnTheRight is false--. Warning: Mults--Index-- must greater or equal to degree-1.
 
 	:param Degree:
 	:type Degree: int
@@ -125,7 +129,7 @@ class Law {
 ") Reparametrize;
 		static Handle_Law_BSpline Reparametrize (const Adaptor3d_Curve & Curve,const Standard_Real First,const Standard_Real Last,const Standard_Boolean HasDF,const Standard_Boolean HasDL,const Standard_Real DFirst,const Standard_Real DLast,const Standard_Boolean Rev,const Standard_Integer NbPoints);
 		%feature("compactdefaultargs") Scale;
-		%feature("autodoc", "	* Computes a 1 d curve to scale a field of tangency. Value is 1. for t = (First+Last)/2 . If HasFirst value for t = First is VFirst (null derivative). If HasLast value for t = Last is VLast (null derivative). //! 1.  _ _/ \_ __/ \__ / VFirst ____/  VLast \____ First  Last
+		%feature("autodoc", "	* Computes a 1 d curve to scale a field of tangency. Value is 1. for t = --First+Last--/2 . If HasFirst value for t = First is VFirst --null derivative--. If HasLast value for t = Last is VLast --null derivative--. //! 1.  _ _/ \_ __/ \__ / VFirst ____/  VLast \____ First  Last
 
 	:param First:
 	:type First: float
@@ -167,7 +171,7 @@ class Law {
 	}
 };
 %nodefaultctor Law_BSpline;
-class Law_BSpline : public MMgt_TShared {
+class Law_BSpline : public Standard_Transient {
 	public:
 		%feature("compactdefaultargs") Law_BSpline;
 		%feature("autodoc", "	* Creates a non-rational B_spline curve on the basis <Knots, Multiplicities> of degree <Degree>.
@@ -246,7 +250,7 @@ class Law_BSpline : public MMgt_TShared {
 ") IncrementMultiplicity;
 		void IncrementMultiplicity (const Standard_Integer I1,const Standard_Integer I2,const Standard_Integer M);
 		%feature("compactdefaultargs") InsertKnot;
-		%feature("autodoc", "	* Inserts a knot value in the sequence of knots. If <U> is an existing knot the multiplicity is increased by <M>. //! If U is not on the parameter range nothing is done. //! If the multiplicity is negative or null nothing is done. The new multiplicity is limited to the degree. //! The tolerance criterion for knots equality is the max of Epsilon(U) and ParametricTolerance.
+		%feature("autodoc", "	* Inserts a knot value in the sequence of knots. If <U> is an existing knot the multiplicity is increased by <M>. //! If U is not on the parameter range nothing is done. //! If the multiplicity is negative or null nothing is done. The new multiplicity is limited to the degree. //! The tolerance criterion for knots equality is the max of Epsilon--U-- and ParametricTolerance.
 
 	:param U:
 	:type U: float
@@ -260,7 +264,7 @@ class Law_BSpline : public MMgt_TShared {
 ") InsertKnot;
 		void InsertKnot (const Standard_Real U,const Standard_Integer M = 1,const Standard_Real ParametricTolerance = 0.0,const Standard_Boolean Add = Standard_True);
 		%feature("compactdefaultargs") InsertKnots;
-		%feature("autodoc", "	* Inserts a set of knots values in the sequence of knots. //! For each U = Knots(i), M = Mults(i) //! If <U> is an existing knot the multiplicity is increased by <M> if <Add> is True, increased to <M> if <Add> is False. //! If U is not on the parameter range nothing is done. //! If the multiplicity is negative or null nothing is done. The new multiplicity is limited to the degree. //! The tolerance criterion for knots equality is the max of Epsilon(U) and ParametricTolerance.
+		%feature("autodoc", "	* Inserts a set of knots values in the sequence of knots. //! For each U = Knots--i--, M = Mults--i-- //! If <U> is an existing knot the multiplicity is increased by <M> if <Add> is True, increased to <M> if <Add> is False. //! If U is not on the parameter range nothing is done. //! If the multiplicity is negative or null nothing is done. The new multiplicity is limited to the degree. //! The tolerance criterion for knots equality is the max of Epsilon--U-- and ParametricTolerance.
 
 	:param Knots:
 	:type Knots: TColStd_Array1OfReal &
@@ -310,7 +314,7 @@ class Law_BSpline : public MMgt_TShared {
 ") Segment;
 		void Segment (const Standard_Real U1,const Standard_Real U2);
 		%feature("compactdefaultargs") SetKnot;
-		%feature("autodoc", "	* Changes the knot of range Index. The multiplicity of the knot is not modified. Raised if K >= Knots(Index+1) or K <= Knots(Index-1). Raised if Index < 1 || Index > NbKnots
+		%feature("autodoc", "	* Changes the knot of range Index. The multiplicity of the knot is not modified. Raised if K >= Knots--Index+1-- or K <= Knots--Index-1--. Raised if Index < 1 || Index > NbKnots
 
 	:param Index:
 	:type Index: int
@@ -320,7 +324,7 @@ class Law_BSpline : public MMgt_TShared {
 ") SetKnot;
 		void SetKnot (const Standard_Integer Index,const Standard_Real K);
 		%feature("compactdefaultargs") SetKnots;
-		%feature("autodoc", "	* Changes all the knots of the curve The multiplicity of the knots are not modified. //! Raised if there is an index such that K (Index+1) <= K (Index). //! Raised if K.Lower() < 1 or K.Upper() > NbKnots
+		%feature("autodoc", "	* Changes all the knots of the curve The multiplicity of the knots are not modified. //! Raised if there is an index such that K --Index+1-- <= K --Index--. //! Raised if K.Lower---- < 1 or K.Upper---- > NbKnots
 
 	:param K:
 	:type K: TColStd_Array1OfReal &
@@ -328,7 +332,7 @@ class Law_BSpline : public MMgt_TShared {
 ") SetKnots;
 		void SetKnots (const TColStd_Array1OfReal & K);
 		%feature("compactdefaultargs") SetKnot;
-		%feature("autodoc", "	* Changes the knot of range Index with its multiplicity. You can increase the multiplicity of a knot but it is not allowed to decrease the multiplicity of an existing knot. //! Raised if K >= Knots(Index+1) or K <= Knots(Index-1). Raised if M is greater than Degree or lower than the previous multiplicity of knot of range Index. Raised if Index < 1 || Index > NbKnots
+		%feature("autodoc", "	* Changes the knot of range Index with its multiplicity. You can increase the multiplicity of a knot but it is not allowed to decrease the multiplicity of an existing knot. //! Raised if K >= Knots--Index+1-- or K <= Knots--Index-1--. Raised if M is greater than Degree or lower than the previous multiplicity of knot of range Index. Raised if Index < 1 || Index > NbKnots
 
 	:param Index:
 	:type Index: int
@@ -348,13 +352,13 @@ class Law_BSpline : public MMgt_TShared {
 ") PeriodicNormalization;
 		void PeriodicNormalization (Standard_Real &OutValue);
 		%feature("compactdefaultargs") SetPeriodic;
-		%feature("autodoc", "	* Makes a closed B-spline into a periodic curve. The curve is periodic if the knot sequence is periodic and if the curve is closed (The tolerance criterion is Resolution from gp). The period T is equal to Knot(LastUKnotIndex) - Knot(FirstUKnotIndex). A periodic B-spline can be uniform or not. Raised if the curve is not closed.
+		%feature("autodoc", "	* Makes a closed B-spline into a periodic curve. The curve is periodic if the knot sequence is periodic and if the curve is closed --The tolerance criterion is Resolution from gp--. The period T is equal to Knot--LastUKnotIndex-- - Knot--FirstUKnotIndex--. A periodic B-spline can be uniform or not. Raised if the curve is not closed.
 
 	:rtype: None
 ") SetPeriodic;
 		void SetPeriodic ();
 		%feature("compactdefaultargs") SetOrigin;
-		%feature("autodoc", "	* Set the origin of a periodic curve at Knot(index) KnotVector and poles are modified. Raised if the curve is not periodic Raised if index not in the range [FirstUKnotIndex , LastUKnotIndex]
+		%feature("autodoc", "	* Set the origin of a periodic curve at Knot--index-- KnotVector and poles are modified. Raised if the curve is not periodic Raised if index not in the range [FirstUKnotIndex , LastUKnotIndex]
 
 	:param Index:
 	:type Index: int
@@ -488,7 +492,7 @@ class Law_BSpline : public MMgt_TShared {
 ") D3;
 		void D3 (const Standard_Real U,Standard_Real &OutValue,Standard_Real &OutValue,Standard_Real &OutValue,Standard_Real &OutValue);
 		%feature("compactdefaultargs") DN;
-		%feature("autodoc", "	* The following functions computes the point of parameter U and the derivatives at this point on the B-spline curve arc defined between the knot FromK1 and the knot ToK2. U can be out of bounds [Knot (FromK1), Knot (ToK2)] but for the computation we only use the definition of the curve between these two knots. This method is useful to compute local derivative, if the order of continuity of the whole curve is not greater enough. Inside the parametric domain Knot (FromK1), Knot (ToK2) the evaluations are the same as if we consider the whole definition of the curve. Of course the evaluations are different outside this parametric domain.
+		%feature("autodoc", "	* The following functions computes the point of parameter U and the derivatives at this point on the B-spline curve arc defined between the knot FromK1 and the knot ToK2. U can be out of bounds [Knot --FromK1--, Knot --ToK2--] but for the computation we only use the definition of the curve between these two knots. This method is useful to compute local derivative, if the order of continuity of the whole curve is not greater enough. Inside the parametric domain Knot --FromK1--, Knot --ToK2-- the evaluations are the same as if we consider the whole definition of the curve. Of course the evaluations are different outside this parametric domain.
 
 	:param U:
 	:type U: float
@@ -586,7 +590,7 @@ class Law_BSpline : public MMgt_TShared {
 ") EndPoint;
 		Standard_Real EndPoint ();
 		%feature("compactdefaultargs") FirstUKnotIndex;
-		%feature("autodoc", "	* For a B-spline curve the first parameter (which gives the start point of the curve) is a knot value but if the multiplicity of the first knot index is lower than Degree + 1 it is not the first knot of the curve. This method computes the index of the knot corresponding to the first parameter.
+		%feature("autodoc", "	* For a B-spline curve the first parameter --which gives the start point of the curve-- is a knot value but if the multiplicity of the first knot index is lower than Degree + 1 it is not the first knot of the curve. This method computes the index of the knot corresponding to the first parameter.
 
 	:rtype: int
 ") FirstUKnotIndex;
@@ -628,7 +632,7 @@ class Law_BSpline : public MMgt_TShared {
 ") KnotDistribution;
 		GeomAbs_BSplKnotDistribution KnotDistribution ();
 		%feature("compactdefaultargs") LastUKnotIndex;
-		%feature("autodoc", "	* For a BSpline curve the last parameter (which gives the end point of the curve) is a knot value but if the multiplicity of the last knot index is lower than Degree + 1 it is not the last knot of the curve. This method computes the index of the knot corresponding to the last parameter.
+		%feature("autodoc", "	* For a BSpline curve the last parameter --which gives the end point of the curve-- is a knot value but if the multiplicity of the last knot index is lower than Degree + 1 it is not the last knot of the curve. This method computes the index of the knot corresponding to the last parameter.
 
 	:rtype: int
 ") LastUKnotIndex;
@@ -640,7 +644,7 @@ class Law_BSpline : public MMgt_TShared {
 ") LastParameter;
 		Standard_Real LastParameter ();
 		%feature("compactdefaultargs") LocateU;
-		%feature("autodoc", "	* Locates the parametric value U in the sequence of knots. If 'WithKnotRepetition' is True we consider the knot's representation with repetition of multiple knot value, otherwise we consider the knot's representation with no repetition of multiple knot values. Knots (I1) <= U <= Knots (I2) . if I1 = I2 U is a knot value (the tolerance criterion ParametricTolerance is used). . if I1 < 1 => U < Knots (1) - Abs(ParametricTolerance) . if I2 > NbKnots => U > Knots (NbKnots) + Abs(ParametricTolerance)
+		%feature("autodoc", "	* Locates the parametric value U in the sequence of knots. If 'WithKnotRepetition' is True we consider the knot's representation with repetition of multiple knot value, otherwise we consider the knot's representation with no repetition of multiple knot values. Knots --I1-- <= U <= Knots --I2-- . if I1 = I2 U is a knot value --the tolerance criterion ParametricTolerance is used--. . if I1 < 1 => U < Knots --1-- - Abs--ParametricTolerance-- . if I2 > NbKnots => U > Knots --NbKnots-- + Abs--ParametricTolerance--
 
 	:param U:
 	:type U: float
@@ -748,7 +752,7 @@ class Law_BSpline : public MMgt_TShared {
 ") MovePointAndTangent;
 		void MovePointAndTangent (const Standard_Real U,const Standard_Real NewValue,const Standard_Real Derivative,const Standard_Real Tolerance,const Standard_Integer StartingCondition,const Standard_Integer EndingCondition,Standard_Integer &OutValue);
 		%feature("compactdefaultargs") Resolution;
-		%feature("autodoc", "	* given Tolerance3D returns UTolerance such that if f(t) is the curve we have | t1 - t0| < Utolerance ===> |f(t1) - f(t0)| < Tolerance3D
+		%feature("autodoc", "	* given Tolerance3D returns UTolerance such that if f--t-- is the curve we have | t1 - t0| < Utolerance ===> |f--t1-- - f--t0--| < Tolerance3D
 
 	:param Tolerance3D:
 	:type Tolerance3D: float
@@ -783,7 +787,7 @@ class Law_BSpline : public MMgt_TShared {
 %}
 
 %nodefaultctor Handle_Law_BSpline;
-class Handle_Law_BSpline : public Handle_MMgt_TShared {
+class Handle_Law_BSpline : public Handle_Standard_Transient {
 
     public:
         // constructors
@@ -795,19 +799,20 @@ class Handle_Law_BSpline : public Handle_MMgt_TShared {
         static const Handle_Law_BSpline DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_Law_BSpline {
     Law_BSpline* _get_reference() {
-    return (Law_BSpline*)$self->Access();
+    return (Law_BSpline*)$self->get();
     }
 };
 
 %extend Handle_Law_BSpline {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend Law_BSpline {
@@ -859,14 +864,14 @@ class Law_BSplineKnotSplitting {
 	}
 };
 %nodefaultctor Law_Function;
-class Law_Function : public MMgt_TShared {
+class Law_Function : public Standard_Transient {
 	public:
 		%feature("compactdefaultargs") Continuity;
 		%feature("autodoc", "	:rtype: GeomAbs_Shape
 ") Continuity;
 		virtual GeomAbs_Shape Continuity ();
 		%feature("compactdefaultargs") NbIntervals;
-		%feature("autodoc", "	* Returns the number of intervals for continuity <S>. May be one if Continuity(me) >= <S>
+		%feature("autodoc", "	* Returns the number of intervals for continuity <S>. May be one if Continuity--me-- >= <S>
 
 	:param S:
 	:type S: GeomAbs_Shape
@@ -874,7 +879,7 @@ class Law_Function : public MMgt_TShared {
 ") NbIntervals;
 		virtual Standard_Integer NbIntervals (const GeomAbs_Shape S);
 		%feature("compactdefaultargs") Intervals;
-		%feature("autodoc", "	* Stores in <T> the parameters bounding the intervals of continuity <S>. //! The array must provide enough room to accomodate for the parameters. i.e. T.Length() > NbIntervals()
+		%feature("autodoc", "	* Stores in <T> the parameters bounding the intervals of continuity <S>. //! The array must provide enough room to accomodate for the parameters. i.e. T.Length---- > NbIntervals----
 
 	:param T:
 	:type T: TColStd_Array1OfReal &
@@ -961,7 +966,7 @@ class Law_Function : public MMgt_TShared {
 %}
 
 %nodefaultctor Handle_Law_Function;
-class Handle_Law_Function : public Handle_MMgt_TShared {
+class Handle_Law_Function : public Handle_Standard_Transient {
 
     public:
         // constructors
@@ -973,19 +978,20 @@ class Handle_Law_Function : public Handle_MMgt_TShared {
         static const Handle_Law_Function DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_Law_Function {
     Law_Function* _get_reference() {
-    return (Law_Function*)$self->Access();
+    return (Law_Function*)$self->get();
     }
 };
 
 %extend Handle_Law_Function {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend Law_Function {
@@ -1033,7 +1039,7 @@ class Law_Interpolate {
 ") Load;
 		void Load (const Standard_Real InitialTangent,const Standard_Real FinalTangent);
 		%feature("compactdefaultargs") Load;
-		%feature("autodoc", "	* loads the tangents. We should have as many tangents as they are points in the array if TangentFlags.Value(i) is Standard_True use the tangent Tangents.Value(i) otherwise the tangent is not constrained.
+		%feature("autodoc", "	* loads the tangents. We should have as many tangents as they are points in the array if TangentFlags.Value--i-- is Standard_True use the tangent Tangents.Value--i-- otherwise the tangent is not constrained.
 
 	:param Tangents:
 	:type Tangents: TColStd_Array1OfReal &
@@ -1064,249 +1070,6 @@ class Law_Interpolate {
 	__repr__ = _dumps_object
 	}
 };
-%nodefaultctor Law_Laws;
-class Law_Laws {
-	public:
-		%feature("compactdefaultargs") Law_Laws;
-		%feature("autodoc", "	:rtype: None
-") Law_Laws;
-		 Law_Laws ();
-		%feature("compactdefaultargs") Law_Laws;
-		%feature("autodoc", "	:param Other:
-	:type Other: Law_Laws &
-	:rtype: None
-") Law_Laws;
-		 Law_Laws (const Law_Laws & Other);
-		%feature("compactdefaultargs") Assign;
-		%feature("autodoc", "	:param Other:
-	:type Other: Law_Laws &
-	:rtype: None
-") Assign;
-		void Assign (const Law_Laws & Other);
-		%feature("compactdefaultargs") operator =;
-		%feature("autodoc", "	:param Other:
-	:type Other: Law_Laws &
-	:rtype: None
-") operator =;
-		void operator = (const Law_Laws & Other);
-		%feature("compactdefaultargs") Extent;
-		%feature("autodoc", "	:rtype: int
-") Extent;
-		Standard_Integer Extent ();
-		%feature("compactdefaultargs") Clear;
-		%feature("autodoc", "	:rtype: None
-") Clear;
-		void Clear ();
-		%feature("compactdefaultargs") IsEmpty;
-		%feature("autodoc", "	:rtype: bool
-") IsEmpty;
-		Standard_Boolean IsEmpty ();
-		%feature("compactdefaultargs") Prepend;
-		%feature("autodoc", "	:param I:
-	:type I: Handle_Law_Function &
-	:rtype: None
-") Prepend;
-		void Prepend (const Handle_Law_Function & I);
-		%feature("compactdefaultargs") Prepend;
-		%feature("autodoc", "	:param I:
-	:type I: Handle_Law_Function &
-	:param theIt:
-	:type theIt: Law_ListIteratorOfLaws &
-	:rtype: None
-") Prepend;
-		void Prepend (const Handle_Law_Function & I,Law_ListIteratorOfLaws & theIt);
-		%feature("compactdefaultargs") Prepend;
-		%feature("autodoc", "	:param Other:
-	:type Other: Law_Laws &
-	:rtype: None
-") Prepend;
-		void Prepend (Law_Laws & Other);
-		%feature("compactdefaultargs") Append;
-		%feature("autodoc", "	:param I:
-	:type I: Handle_Law_Function &
-	:rtype: None
-") Append;
-		void Append (const Handle_Law_Function & I);
-		%feature("compactdefaultargs") Append;
-		%feature("autodoc", "	:param I:
-	:type I: Handle_Law_Function &
-	:param theIt:
-	:type theIt: Law_ListIteratorOfLaws &
-	:rtype: None
-") Append;
-		void Append (const Handle_Law_Function & I,Law_ListIteratorOfLaws & theIt);
-		%feature("compactdefaultargs") Append;
-		%feature("autodoc", "	:param Other:
-	:type Other: Law_Laws &
-	:rtype: None
-") Append;
-		void Append (Law_Laws & Other);
-		%feature("compactdefaultargs") First;
-		%feature("autodoc", "	:rtype: Handle_Law_Function
-") First;
-		Handle_Law_Function First ();
-		%feature("compactdefaultargs") Last;
-		%feature("autodoc", "	:rtype: Handle_Law_Function
-") Last;
-		Handle_Law_Function Last ();
-		%feature("compactdefaultargs") RemoveFirst;
-		%feature("autodoc", "	:rtype: None
-") RemoveFirst;
-		void RemoveFirst ();
-		%feature("compactdefaultargs") Remove;
-		%feature("autodoc", "	:param It:
-	:type It: Law_ListIteratorOfLaws &
-	:rtype: None
-") Remove;
-		void Remove (Law_ListIteratorOfLaws & It);
-		%feature("compactdefaultargs") InsertBefore;
-		%feature("autodoc", "	:param I:
-	:type I: Handle_Law_Function &
-	:param It:
-	:type It: Law_ListIteratorOfLaws &
-	:rtype: None
-") InsertBefore;
-		void InsertBefore (const Handle_Law_Function & I,Law_ListIteratorOfLaws & It);
-		%feature("compactdefaultargs") InsertBefore;
-		%feature("autodoc", "	:param Other:
-	:type Other: Law_Laws &
-	:param It:
-	:type It: Law_ListIteratorOfLaws &
-	:rtype: None
-") InsertBefore;
-		void InsertBefore (Law_Laws & Other,Law_ListIteratorOfLaws & It);
-		%feature("compactdefaultargs") InsertAfter;
-		%feature("autodoc", "	:param I:
-	:type I: Handle_Law_Function &
-	:param It:
-	:type It: Law_ListIteratorOfLaws &
-	:rtype: None
-") InsertAfter;
-		void InsertAfter (const Handle_Law_Function & I,Law_ListIteratorOfLaws & It);
-		%feature("compactdefaultargs") InsertAfter;
-		%feature("autodoc", "	:param Other:
-	:type Other: Law_Laws &
-	:param It:
-	:type It: Law_ListIteratorOfLaws &
-	:rtype: None
-") InsertAfter;
-		void InsertAfter (Law_Laws & Other,Law_ListIteratorOfLaws & It);
-};
-
-
-%extend Law_Laws {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor Law_ListIteratorOfLaws;
-class Law_ListIteratorOfLaws {
-	public:
-		%feature("compactdefaultargs") Law_ListIteratorOfLaws;
-		%feature("autodoc", "	:rtype: None
-") Law_ListIteratorOfLaws;
-		 Law_ListIteratorOfLaws ();
-		%feature("compactdefaultargs") Law_ListIteratorOfLaws;
-		%feature("autodoc", "	:param L:
-	:type L: Law_Laws &
-	:rtype: None
-") Law_ListIteratorOfLaws;
-		 Law_ListIteratorOfLaws (const Law_Laws & L);
-		%feature("compactdefaultargs") Initialize;
-		%feature("autodoc", "	:param L:
-	:type L: Law_Laws &
-	:rtype: None
-") Initialize;
-		void Initialize (const Law_Laws & L);
-		%feature("compactdefaultargs") More;
-		%feature("autodoc", "	:rtype: bool
-") More;
-		Standard_Boolean More ();
-		%feature("compactdefaultargs") Next;
-		%feature("autodoc", "	:rtype: None
-") Next;
-		void Next ();
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:rtype: Handle_Law_Function
-") Value;
-		Handle_Law_Function Value ();
-};
-
-
-%extend Law_ListIteratorOfLaws {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor Law_ListNodeOfLaws;
-class Law_ListNodeOfLaws : public TCollection_MapNode {
-	public:
-		%feature("compactdefaultargs") Law_ListNodeOfLaws;
-		%feature("autodoc", "	:param I:
-	:type I: Handle_Law_Function &
-	:param n:
-	:type n: TCollection_MapNodePtr &
-	:rtype: None
-") Law_ListNodeOfLaws;
-		 Law_ListNodeOfLaws (const Handle_Law_Function & I,const TCollection_MapNodePtr & n);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:rtype: Handle_Law_Function
-") Value;
-		Handle_Law_Function Value ();
-};
-
-
-%extend Law_ListNodeOfLaws {
-	%pythoncode {
-		def GetHandle(self):
-		    try:
-		        return self.thisHandle
-		    except:
-		        self.thisHandle = Handle_Law_ListNodeOfLaws(self)
-		        self.thisown = False
-		        return self.thisHandle
-	}
-};
-
-%pythonappend Handle_Law_ListNodeOfLaws::Handle_Law_ListNodeOfLaws %{
-    # register the handle in the base object
-    if len(args) > 0:
-        register_handle(self, args[0])
-%}
-
-%nodefaultctor Handle_Law_ListNodeOfLaws;
-class Handle_Law_ListNodeOfLaws : public Handle_TCollection_MapNode {
-
-    public:
-        // constructors
-        Handle_Law_ListNodeOfLaws();
-        Handle_Law_ListNodeOfLaws(const Handle_Law_ListNodeOfLaws &aHandle);
-        Handle_Law_ListNodeOfLaws(const Law_ListNodeOfLaws *anItem);
-        void Nullify();
-        Standard_Boolean IsNull() const;
-        static const Handle_Law_ListNodeOfLaws DownCast(const Handle_Standard_Transient &AnObject);
-
-};
-%extend Handle_Law_ListNodeOfLaws {
-    Law_ListNodeOfLaws* _get_reference() {
-    return (Law_ListNodeOfLaws*)$self->Access();
-    }
-};
-
-%extend Handle_Law_ListNodeOfLaws {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
-};
-
-%extend Law_ListNodeOfLaws {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
 %nodefaultctor Law_BSpFunc;
 class Law_BSpFunc : public Law_Function {
 	public:
@@ -1329,7 +1092,7 @@ class Law_BSpFunc : public Law_Function {
 ") Continuity;
 		GeomAbs_Shape Continuity ();
 		%feature("compactdefaultargs") NbIntervals;
-		%feature("autodoc", "	* Returns the number of intervals for continuity <S>. May be one if Continuity(me) >= <S>
+		%feature("autodoc", "	* Returns the number of intervals for continuity <S>. May be one if Continuity--me-- >= <S>
 
 	:param S:
 	:type S: GeomAbs_Shape
@@ -1337,7 +1100,7 @@ class Law_BSpFunc : public Law_Function {
 ") NbIntervals;
 		Standard_Integer NbIntervals (const GeomAbs_Shape S);
 		%feature("compactdefaultargs") Intervals;
-		%feature("autodoc", "	* Stores in <T> the parameters bounding the intervals of continuity <S>. //! The array must provide enough room to accomodate for the parameters. i.e. T.Length() > NbIntervals()
+		%feature("autodoc", "	* Stores in <T> the parameters bounding the intervals of continuity <S>. //! The array must provide enough room to accomodate for the parameters. i.e. T.Length---- > NbIntervals----
 
 	:param T:
 	:type T: TColStd_Array1OfReal &
@@ -1438,19 +1201,20 @@ class Handle_Law_BSpFunc : public Handle_Law_Function {
         static const Handle_Law_BSpFunc DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_Law_BSpFunc {
     Law_BSpFunc* _get_reference() {
-    return (Law_BSpFunc*)$self->Access();
+    return (Law_BSpFunc*)$self->get();
     }
 };
 
 %extend Handle_Law_BSpFunc {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend Law_BSpFunc {
@@ -1484,7 +1248,7 @@ class Law_Composite : public Law_Function {
 ") Continuity;
 		GeomAbs_Shape Continuity ();
 		%feature("compactdefaultargs") NbIntervals;
-		%feature("autodoc", "	* Returns the number of intervals for continuity <S>. May be one if Continuity(me) >= <S>
+		%feature("autodoc", "	* Returns the number of intervals for continuity <S>. May be one if Continuity--me-- >= <S>
 
 	:param S:
 	:type S: GeomAbs_Shape
@@ -1492,7 +1256,7 @@ class Law_Composite : public Law_Function {
 ") NbIntervals;
 		Standard_Integer NbIntervals (const GeomAbs_Shape S);
 		%feature("compactdefaultargs") Intervals;
-		%feature("autodoc", "	* Stores in <T> the parameters bounding the intervals of continuity <S>. //! The array must provide enough room to accomodate for the parameters. i.e. T.Length() > NbIntervals()
+		%feature("autodoc", "	* Stores in <T> the parameters bounding the intervals of continuity <S>. //! The array must provide enough room to accomodate for the parameters. i.e. T.Length---- > NbIntervals----
 
 	:param T:
 	:type T: TColStd_Array1OfReal &
@@ -1611,19 +1375,20 @@ class Handle_Law_Composite : public Handle_Law_Function {
         static const Handle_Law_Composite DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_Law_Composite {
     Law_Composite* _get_reference() {
-    return (Law_Composite*)$self->Access();
+    return (Law_Composite*)$self->get();
     }
 };
 
 %extend Handle_Law_Composite {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend Law_Composite {
@@ -1760,19 +1525,20 @@ class Handle_Law_Constant : public Handle_Law_Function {
         static const Handle_Law_Constant DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_Law_Constant {
     Law_Constant* _get_reference() {
-    return (Law_Constant*)$self->Access();
+    return (Law_Constant*)$self->get();
     }
 };
 
 %extend Handle_Law_Constant {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend Law_Constant {
@@ -1915,19 +1681,20 @@ class Handle_Law_Linear : public Handle_Law_Function {
         static const Handle_Law_Linear DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_Law_Linear {
     Law_Linear* _get_reference() {
-    return (Law_Linear*)$self->Access();
+    return (Law_Linear*)$self->get();
     }
 };
 
 %extend Handle_Law_Linear {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend Law_Linear {
@@ -1945,7 +1712,7 @@ class Law_Interpol : public Law_BSpFunc {
 ") Law_Interpol;
 		 Law_Interpol ();
 		%feature("compactdefaultargs") Set;
-		%feature("autodoc", "	* Defines this evolution law by interpolating the set of 2D points ParAndRad. The Y coordinate of a point of ParAndRad is the value of the function at the parameter point given by its X coordinate. If Periodic is true, this function is assumed to be periodic. Warning - The X coordinates of points in the table ParAndRad must be given in ascendant order. - If Periodic is true, the first and last Y coordinates of points in the table ParAndRad are assumed to be equal. In addition, with the second syntax, Dd and Df are also assumed to be equal. If this is not the case, Set uses the first value(s) as last value(s).
+		%feature("autodoc", "	* Defines this evolution law by interpolating the set of 2D points ParAndRad. The Y coordinate of a point of ParAndRad is the value of the function at the parameter point given by its X coordinate. If Periodic is true, this function is assumed to be periodic. Warning - The X coordinates of points in the table ParAndRad must be given in ascendant order. - If Periodic is true, the first and last Y coordinates of points in the table ParAndRad are assumed to be equal. In addition, with the second syntax, Dd and Df are also assumed to be equal. If this is not the case, Set uses the first value--s-- as last value--s--.
 
 	:param ParAndRad:
 	:type ParAndRad: TColgp_Array1OfPnt2d
@@ -1967,7 +1734,7 @@ class Law_Interpol : public Law_BSpFunc {
 ") SetInRelative;
 		void SetInRelative (const TColgp_Array1OfPnt2d & ParAndRad,const Standard_Real Ud,const Standard_Real Uf,const Standard_Boolean Periodic = Standard_False);
 		%feature("compactdefaultargs") Set;
-		%feature("autodoc", "	* Defines this evolution law by interpolating the set of 2D points ParAndRad. The Y coordinate of a point of ParAndRad is the value of the function at the parameter point given by its X coordinate. If Periodic is true, this function is assumed to be periodic. In the second syntax, Dd and Df define the values of the first derivative of the function at its first and last points. Warning - The X coordinates of points in the table ParAndRad must be given in ascendant order. - If Periodic is true, the first and last Y coordinates of points in the table ParAndRad are assumed to be equal. In addition, with the second syntax, Dd and Df are also assumed to be equal. If this is not the case, Set uses the first value(s) as last value(s).
+		%feature("autodoc", "	* Defines this evolution law by interpolating the set of 2D points ParAndRad. The Y coordinate of a point of ParAndRad is the value of the function at the parameter point given by its X coordinate. If Periodic is true, this function is assumed to be periodic. In the second syntax, Dd and Df define the values of the first derivative of the function at its first and last points. Warning - The X coordinates of points in the table ParAndRad must be given in ascendant order. - If Periodic is true, the first and last Y coordinates of points in the table ParAndRad are assumed to be equal. In addition, with the second syntax, Dd and Df are also assumed to be equal. If this is not the case, Set uses the first value--s-- as last value--s--.
 
 	:param ParAndRad:
 	:type ParAndRad: TColgp_Array1OfPnt2d
@@ -2030,19 +1797,20 @@ class Handle_Law_Interpol : public Handle_Law_BSpFunc {
         static const Handle_Law_Interpol DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_Law_Interpol {
     Law_Interpol* _get_reference() {
-    return (Law_Interpol*)$self->Access();
+    return (Law_Interpol*)$self->get();
     }
 };
 
 %extend Handle_Law_Interpol {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend Law_Interpol {
@@ -2125,19 +1893,20 @@ class Handle_Law_S : public Handle_Law_BSpFunc {
         static const Handle_Law_S DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_Law_S {
     Law_S* _get_reference() {
-    return (Law_S*)$self->Access();
+    return (Law_S*)$self->get();
     }
 };
 
 %extend Handle_Law_S {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend Law_S {

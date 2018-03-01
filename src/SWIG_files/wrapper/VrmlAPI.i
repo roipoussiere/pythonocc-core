@@ -1,5 +1,5 @@
 /*
-Copyright 2008-2017 Thomas Paviot (tpaviot@gmail.com)
+Copyright 2008-2018 Thomas Paviot (tpaviot@gmail.com)
 
 
 This file is part of pythonOCC.
@@ -56,6 +56,9 @@ def register_handle(handle, base_object):
 /* typedefs */
 /* end typedefs declaration */
 
+/* templates */
+/* end templates declaration */
+
 /* public enums */
 enum VrmlAPI_RepresentationOfShape {
 	VrmlAPI_ShadedRepresentation = 0,
@@ -98,7 +101,7 @@ class VrmlAPI_Writer {
 ") VrmlAPI_Writer;
 		 VrmlAPI_Writer ();
 		%feature("compactdefaultargs") ResetToDefaults;
-		%feature("autodoc", "	* Resets all parameters (representation, deflection) to their default values..
+		%feature("autodoc", "	* Resets all parameters --representation, deflection-- to their default values..
 
 	:rtype: None
 ") ResetToDefaults;
@@ -118,7 +121,7 @@ class VrmlAPI_Writer {
 ") SetDeflection;
 		void SetDeflection (const Standard_Real aDef);
 		%feature("compactdefaultargs") SetRepresentation;
-		%feature("autodoc", "	* Sets the representation of the shape aRep which is written to the VRML file. The three options are : - shaded - wireframe - both shaded and wireframe (default) defined through the VrmlAPI_RepresentationOfShape enumeration.
+		%feature("autodoc", "	* Sets the representation of the shape aRep which is written to the VRML file. The three options are : - shaded - wireframe - both shaded and wireframe --default-- defined through the VrmlAPI_RepresentationOfShape enumeration.
 
 	:param aRep:
 	:type aRep: VrmlAPI_RepresentationOfShape

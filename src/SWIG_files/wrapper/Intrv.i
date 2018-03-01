@@ -1,5 +1,5 @@
 /*
-Copyright 2008-2017 Thomas Paviot (tpaviot@gmail.com)
+Copyright 2008-2018 Thomas Paviot (tpaviot@gmail.com)
 
 
 This file is part of pythonOCC.
@@ -55,6 +55,10 @@ def register_handle(handle, base_object):
 
 /* typedefs */
 /* end typedefs declaration */
+
+/* templates */
+%template(Intrv_SequenceOfInterval) NCollection_Sequence <Intrv_Interval>;
+/* end templates declaration */
 
 /* public enums */
 enum Intrv_Position {
@@ -403,220 +407,6 @@ class Intrv_Intervals {
 
 
 %extend Intrv_Intervals {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor Intrv_SequenceNodeOfSequenceOfInterval;
-class Intrv_SequenceNodeOfSequenceOfInterval : public TCollection_SeqNode {
-	public:
-		%feature("compactdefaultargs") Intrv_SequenceNodeOfSequenceOfInterval;
-		%feature("autodoc", "	:param I:
-	:type I: Intrv_Interval &
-	:param n:
-	:type n: TCollection_SeqNodePtr &
-	:param p:
-	:type p: TCollection_SeqNodePtr &
-	:rtype: None
-") Intrv_SequenceNodeOfSequenceOfInterval;
-		 Intrv_SequenceNodeOfSequenceOfInterval (const Intrv_Interval & I,const TCollection_SeqNodePtr & n,const TCollection_SeqNodePtr & p);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:rtype: Intrv_Interval
-") Value;
-		Intrv_Interval & Value ();
-};
-
-
-%extend Intrv_SequenceNodeOfSequenceOfInterval {
-	%pythoncode {
-		def GetHandle(self):
-		    try:
-		        return self.thisHandle
-		    except:
-		        self.thisHandle = Handle_Intrv_SequenceNodeOfSequenceOfInterval(self)
-		        self.thisown = False
-		        return self.thisHandle
-	}
-};
-
-%pythonappend Handle_Intrv_SequenceNodeOfSequenceOfInterval::Handle_Intrv_SequenceNodeOfSequenceOfInterval %{
-    # register the handle in the base object
-    if len(args) > 0:
-        register_handle(self, args[0])
-%}
-
-%nodefaultctor Handle_Intrv_SequenceNodeOfSequenceOfInterval;
-class Handle_Intrv_SequenceNodeOfSequenceOfInterval : public Handle_TCollection_SeqNode {
-
-    public:
-        // constructors
-        Handle_Intrv_SequenceNodeOfSequenceOfInterval();
-        Handle_Intrv_SequenceNodeOfSequenceOfInterval(const Handle_Intrv_SequenceNodeOfSequenceOfInterval &aHandle);
-        Handle_Intrv_SequenceNodeOfSequenceOfInterval(const Intrv_SequenceNodeOfSequenceOfInterval *anItem);
-        void Nullify();
-        Standard_Boolean IsNull() const;
-        static const Handle_Intrv_SequenceNodeOfSequenceOfInterval DownCast(const Handle_Standard_Transient &AnObject);
-
-};
-%extend Handle_Intrv_SequenceNodeOfSequenceOfInterval {
-    Intrv_SequenceNodeOfSequenceOfInterval* _get_reference() {
-    return (Intrv_SequenceNodeOfSequenceOfInterval*)$self->Access();
-    }
-};
-
-%extend Handle_Intrv_SequenceNodeOfSequenceOfInterval {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
-};
-
-%extend Intrv_SequenceNodeOfSequenceOfInterval {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor Intrv_SequenceOfInterval;
-class Intrv_SequenceOfInterval : public TCollection_BaseSequence {
-	public:
-		%feature("compactdefaultargs") Intrv_SequenceOfInterval;
-		%feature("autodoc", "	:rtype: None
-") Intrv_SequenceOfInterval;
-		 Intrv_SequenceOfInterval ();
-		%feature("compactdefaultargs") Intrv_SequenceOfInterval;
-		%feature("autodoc", "	:param Other:
-	:type Other: Intrv_SequenceOfInterval &
-	:rtype: None
-") Intrv_SequenceOfInterval;
-		 Intrv_SequenceOfInterval (const Intrv_SequenceOfInterval & Other);
-		%feature("compactdefaultargs") Clear;
-		%feature("autodoc", "	:rtype: None
-") Clear;
-		void Clear ();
-		%feature("compactdefaultargs") Assign;
-		%feature("autodoc", "	:param Other:
-	:type Other: Intrv_SequenceOfInterval &
-	:rtype: Intrv_SequenceOfInterval
-") Assign;
-		const Intrv_SequenceOfInterval & Assign (const Intrv_SequenceOfInterval & Other);
-		%feature("compactdefaultargs") operator =;
-		%feature("autodoc", "	:param Other:
-	:type Other: Intrv_SequenceOfInterval &
-	:rtype: Intrv_SequenceOfInterval
-") operator =;
-		const Intrv_SequenceOfInterval & operator = (const Intrv_SequenceOfInterval & Other);
-		%feature("compactdefaultargs") Append;
-		%feature("autodoc", "	:param T:
-	:type T: Intrv_Interval &
-	:rtype: None
-") Append;
-		void Append (const Intrv_Interval & T);
-		%feature("compactdefaultargs") Append;
-		%feature("autodoc", "	:param S:
-	:type S: Intrv_SequenceOfInterval &
-	:rtype: None
-") Append;
-		void Append (Intrv_SequenceOfInterval & S);
-		%feature("compactdefaultargs") Prepend;
-		%feature("autodoc", "	:param T:
-	:type T: Intrv_Interval &
-	:rtype: None
-") Prepend;
-		void Prepend (const Intrv_Interval & T);
-		%feature("compactdefaultargs") Prepend;
-		%feature("autodoc", "	:param S:
-	:type S: Intrv_SequenceOfInterval &
-	:rtype: None
-") Prepend;
-		void Prepend (Intrv_SequenceOfInterval & S);
-		%feature("compactdefaultargs") InsertBefore;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param T:
-	:type T: Intrv_Interval &
-	:rtype: None
-") InsertBefore;
-		void InsertBefore (const Standard_Integer Index,const Intrv_Interval & T);
-		%feature("compactdefaultargs") InsertBefore;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param S:
-	:type S: Intrv_SequenceOfInterval &
-	:rtype: None
-") InsertBefore;
-		void InsertBefore (const Standard_Integer Index,Intrv_SequenceOfInterval & S);
-		%feature("compactdefaultargs") InsertAfter;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param T:
-	:type T: Intrv_Interval &
-	:rtype: None
-") InsertAfter;
-		void InsertAfter (const Standard_Integer Index,const Intrv_Interval & T);
-		%feature("compactdefaultargs") InsertAfter;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param S:
-	:type S: Intrv_SequenceOfInterval &
-	:rtype: None
-") InsertAfter;
-		void InsertAfter (const Standard_Integer Index,Intrv_SequenceOfInterval & S);
-		%feature("compactdefaultargs") First;
-		%feature("autodoc", "	:rtype: Intrv_Interval
-") First;
-		const Intrv_Interval & First ();
-		%feature("compactdefaultargs") Last;
-		%feature("autodoc", "	:rtype: Intrv_Interval
-") Last;
-		const Intrv_Interval & Last ();
-		%feature("compactdefaultargs") Split;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param Sub:
-	:type Sub: Intrv_SequenceOfInterval &
-	:rtype: None
-") Split;
-		void Split (const Standard_Integer Index,Intrv_SequenceOfInterval & Sub);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: Intrv_Interval
-") Value;
-		const Intrv_Interval & Value (const Standard_Integer Index);
-		%feature("compactdefaultargs") SetValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param I:
-	:type I: Intrv_Interval &
-	:rtype: None
-") SetValue;
-		void SetValue (const Standard_Integer Index,const Intrv_Interval & I);
-		%feature("compactdefaultargs") ChangeValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: Intrv_Interval
-") ChangeValue;
-		Intrv_Interval & ChangeValue (const Standard_Integer Index);
-		%feature("compactdefaultargs") Remove;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: None
-") Remove;
-		void Remove (const Standard_Integer Index);
-		%feature("compactdefaultargs") Remove;
-		%feature("autodoc", "	:param FromIndex:
-	:type FromIndex: int
-	:param ToIndex:
-	:type ToIndex: int
-	:rtype: None
-") Remove;
-		void Remove (const Standard_Integer FromIndex,const Standard_Integer ToIndex);
-};
-
-
-%extend Intrv_SequenceOfInterval {
 	%pythoncode {
 	__repr__ = _dumps_object
 	}

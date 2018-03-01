@@ -1,5 +1,5 @@
 /*
-Copyright 2008-2017 Thomas Paviot (tpaviot@gmail.com)
+Copyright 2008-2018 Thomas Paviot (tpaviot@gmail.com)
 
 
 This file is part of pythonOCC.
@@ -56,6 +56,10 @@ def register_handle(handle, base_object):
 /* typedefs */
 /* end typedefs declaration */
 
+/* templates */
+%template(TPrsStd_DataMapOfGUIDDriver) NCollection_DataMap <Standard_GUID , Handle_TPrsStd_Driver , Standard_GUID>;
+/* end templates declaration */
+
 /* public enums */
 /* end public enums declaration */
 
@@ -79,7 +83,7 @@ class TPrsStd_AISPresentation : public TDF_Attribute {
 ") Set;
 		static Handle_TPrsStd_AISPresentation Set (const TDF_Label & L,const Standard_GUID & driver);
 		%feature("compactdefaultargs") Unset;
-		%feature("autodoc", "	* Delete (if exist) the presentation attribute associated to the label <L>.
+		%feature("autodoc", "	* Delete --if exist-- the presentation attribute associated to the label <L>.
 
 	:param L:
 	:type L: TDF_Label &
@@ -376,19 +380,20 @@ class Handle_TPrsStd_AISPresentation : public Handle_TDF_Attribute {
         static const Handle_TPrsStd_AISPresentation DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_TPrsStd_AISPresentation {
     TPrsStd_AISPresentation* _get_reference() {
-    return (TPrsStd_AISPresentation*)$self->Access();
+    return (TPrsStd_AISPresentation*)$self->get();
     }
 };
 
 %extend Handle_TPrsStd_AISPresentation {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend TPrsStd_AISPresentation {
@@ -547,19 +552,20 @@ class Handle_TPrsStd_AISViewer : public Handle_TDF_Attribute {
         static const Handle_TPrsStd_AISViewer DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_TPrsStd_AISViewer {
     TPrsStd_AISViewer* _get_reference() {
-    return (TPrsStd_AISViewer*)$self->Access();
+    return (TPrsStd_AISViewer*)$self->get();
     }
 };
 
 %extend Handle_TPrsStd_AISViewer {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend TPrsStd_AISViewer {
@@ -765,201 +771,8 @@ class TPrsStd_ConstraintTools {
 	__repr__ = _dumps_object
 	}
 };
-%nodefaultctor TPrsStd_DataMapIteratorOfDataMapOfGUIDDriver;
-class TPrsStd_DataMapIteratorOfDataMapOfGUIDDriver : public TCollection_BasicMapIterator {
-	public:
-		%feature("compactdefaultargs") TPrsStd_DataMapIteratorOfDataMapOfGUIDDriver;
-		%feature("autodoc", "	:rtype: None
-") TPrsStd_DataMapIteratorOfDataMapOfGUIDDriver;
-		 TPrsStd_DataMapIteratorOfDataMapOfGUIDDriver ();
-		%feature("compactdefaultargs") TPrsStd_DataMapIteratorOfDataMapOfGUIDDriver;
-		%feature("autodoc", "	:param aMap:
-	:type aMap: TPrsStd_DataMapOfGUIDDriver &
-	:rtype: None
-") TPrsStd_DataMapIteratorOfDataMapOfGUIDDriver;
-		 TPrsStd_DataMapIteratorOfDataMapOfGUIDDriver (const TPrsStd_DataMapOfGUIDDriver & aMap);
-		%feature("compactdefaultargs") Initialize;
-		%feature("autodoc", "	:param aMap:
-	:type aMap: TPrsStd_DataMapOfGUIDDriver &
-	:rtype: None
-") Initialize;
-		void Initialize (const TPrsStd_DataMapOfGUIDDriver & aMap);
-		%feature("compactdefaultargs") Key;
-		%feature("autodoc", "	:rtype: Standard_GUID
-") Key;
-		const Standard_GUID & Key ();
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:rtype: Handle_TPrsStd_Driver
-") Value;
-		Handle_TPrsStd_Driver Value ();
-};
-
-
-%extend TPrsStd_DataMapIteratorOfDataMapOfGUIDDriver {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor TPrsStd_DataMapNodeOfDataMapOfGUIDDriver;
-class TPrsStd_DataMapNodeOfDataMapOfGUIDDriver : public TCollection_MapNode {
-	public:
-		%feature("compactdefaultargs") TPrsStd_DataMapNodeOfDataMapOfGUIDDriver;
-		%feature("autodoc", "	:param K:
-	:type K: Standard_GUID &
-	:param I:
-	:type I: Handle_TPrsStd_Driver &
-	:param n:
-	:type n: TCollection_MapNodePtr &
-	:rtype: None
-") TPrsStd_DataMapNodeOfDataMapOfGUIDDriver;
-		 TPrsStd_DataMapNodeOfDataMapOfGUIDDriver (const Standard_GUID & K,const Handle_TPrsStd_Driver & I,const TCollection_MapNodePtr & n);
-		%feature("compactdefaultargs") Key;
-		%feature("autodoc", "	:rtype: Standard_GUID
-") Key;
-		Standard_GUID & Key ();
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:rtype: Handle_TPrsStd_Driver
-") Value;
-		Handle_TPrsStd_Driver Value ();
-};
-
-
-%extend TPrsStd_DataMapNodeOfDataMapOfGUIDDriver {
-	%pythoncode {
-		def GetHandle(self):
-		    try:
-		        return self.thisHandle
-		    except:
-		        self.thisHandle = Handle_TPrsStd_DataMapNodeOfDataMapOfGUIDDriver(self)
-		        self.thisown = False
-		        return self.thisHandle
-	}
-};
-
-%pythonappend Handle_TPrsStd_DataMapNodeOfDataMapOfGUIDDriver::Handle_TPrsStd_DataMapNodeOfDataMapOfGUIDDriver %{
-    # register the handle in the base object
-    if len(args) > 0:
-        register_handle(self, args[0])
-%}
-
-%nodefaultctor Handle_TPrsStd_DataMapNodeOfDataMapOfGUIDDriver;
-class Handle_TPrsStd_DataMapNodeOfDataMapOfGUIDDriver : public Handle_TCollection_MapNode {
-
-    public:
-        // constructors
-        Handle_TPrsStd_DataMapNodeOfDataMapOfGUIDDriver();
-        Handle_TPrsStd_DataMapNodeOfDataMapOfGUIDDriver(const Handle_TPrsStd_DataMapNodeOfDataMapOfGUIDDriver &aHandle);
-        Handle_TPrsStd_DataMapNodeOfDataMapOfGUIDDriver(const TPrsStd_DataMapNodeOfDataMapOfGUIDDriver *anItem);
-        void Nullify();
-        Standard_Boolean IsNull() const;
-        static const Handle_TPrsStd_DataMapNodeOfDataMapOfGUIDDriver DownCast(const Handle_Standard_Transient &AnObject);
-
-};
-%extend Handle_TPrsStd_DataMapNodeOfDataMapOfGUIDDriver {
-    TPrsStd_DataMapNodeOfDataMapOfGUIDDriver* _get_reference() {
-    return (TPrsStd_DataMapNodeOfDataMapOfGUIDDriver*)$self->Access();
-    }
-};
-
-%extend Handle_TPrsStd_DataMapNodeOfDataMapOfGUIDDriver {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
-};
-
-%extend TPrsStd_DataMapNodeOfDataMapOfGUIDDriver {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor TPrsStd_DataMapOfGUIDDriver;
-class TPrsStd_DataMapOfGUIDDriver : public TCollection_BasicMap {
-	public:
-		%feature("compactdefaultargs") TPrsStd_DataMapOfGUIDDriver;
-		%feature("autodoc", "	:param NbBuckets: default value is 1
-	:type NbBuckets: int
-	:rtype: None
-") TPrsStd_DataMapOfGUIDDriver;
-		 TPrsStd_DataMapOfGUIDDriver (const Standard_Integer NbBuckets = 1);
-		%feature("compactdefaultargs") Assign;
-		%feature("autodoc", "	:param Other:
-	:type Other: TPrsStd_DataMapOfGUIDDriver &
-	:rtype: TPrsStd_DataMapOfGUIDDriver
-") Assign;
-		TPrsStd_DataMapOfGUIDDriver & Assign (const TPrsStd_DataMapOfGUIDDriver & Other);
-		%feature("compactdefaultargs") operator =;
-		%feature("autodoc", "	:param Other:
-	:type Other: TPrsStd_DataMapOfGUIDDriver &
-	:rtype: TPrsStd_DataMapOfGUIDDriver
-") operator =;
-		TPrsStd_DataMapOfGUIDDriver & operator = (const TPrsStd_DataMapOfGUIDDriver & Other);
-		%feature("compactdefaultargs") ReSize;
-		%feature("autodoc", "	:param NbBuckets:
-	:type NbBuckets: int
-	:rtype: None
-") ReSize;
-		void ReSize (const Standard_Integer NbBuckets);
-		%feature("compactdefaultargs") Clear;
-		%feature("autodoc", "	:rtype: None
-") Clear;
-		void Clear ();
-		%feature("compactdefaultargs") Bind;
-		%feature("autodoc", "	:param K:
-	:type K: Standard_GUID &
-	:param I:
-	:type I: Handle_TPrsStd_Driver &
-	:rtype: bool
-") Bind;
-		Standard_Boolean Bind (const Standard_GUID & K,const Handle_TPrsStd_Driver & I);
-		%feature("compactdefaultargs") IsBound;
-		%feature("autodoc", "	:param K:
-	:type K: Standard_GUID &
-	:rtype: bool
-") IsBound;
-		Standard_Boolean IsBound (const Standard_GUID & K);
-		%feature("compactdefaultargs") UnBind;
-		%feature("autodoc", "	:param K:
-	:type K: Standard_GUID &
-	:rtype: bool
-") UnBind;
-		Standard_Boolean UnBind (const Standard_GUID & K);
-		%feature("compactdefaultargs") Find;
-		%feature("autodoc", "	:param K:
-	:type K: Standard_GUID &
-	:rtype: Handle_TPrsStd_Driver
-") Find;
-		Handle_TPrsStd_Driver Find (const Standard_GUID & K);
-		%feature("compactdefaultargs") ChangeFind;
-		%feature("autodoc", "	:param K:
-	:type K: Standard_GUID &
-	:rtype: Handle_TPrsStd_Driver
-") ChangeFind;
-		Handle_TPrsStd_Driver ChangeFind (const Standard_GUID & K);
-		%feature("compactdefaultargs") Find1;
-		%feature("autodoc", "	:param K:
-	:type K: Standard_GUID &
-	:rtype: Standard_Address
-") Find1;
-		Standard_Address Find1 (const Standard_GUID & K);
-		%feature("compactdefaultargs") ChangeFind1;
-		%feature("autodoc", "	:param K:
-	:type K: Standard_GUID &
-	:rtype: Standard_Address
-") ChangeFind1;
-		Standard_Address ChangeFind1 (const Standard_GUID & K);
-};
-
-
-%extend TPrsStd_DataMapOfGUIDDriver {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
 %nodefaultctor TPrsStd_Driver;
-class TPrsStd_Driver : public MMgt_TShared {
+class TPrsStd_Driver : public Standard_Transient {
 	public:
 		%feature("compactdefaultargs") Update;
 		%feature("autodoc", "	* Updates the interactive object ais with information found on the attributes associated with the label L.
@@ -993,7 +806,7 @@ class TPrsStd_Driver : public MMgt_TShared {
 %}
 
 %nodefaultctor Handle_TPrsStd_Driver;
-class Handle_TPrsStd_Driver : public Handle_MMgt_TShared {
+class Handle_TPrsStd_Driver : public Handle_Standard_Transient {
 
     public:
         // constructors
@@ -1005,19 +818,20 @@ class Handle_TPrsStd_Driver : public Handle_MMgt_TShared {
         static const Handle_TPrsStd_Driver DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_TPrsStd_Driver {
     TPrsStd_Driver* _get_reference() {
-    return (TPrsStd_Driver*)$self->Access();
+    return (TPrsStd_Driver*)$self->get();
     }
 };
 
 %extend Handle_TPrsStd_Driver {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend TPrsStd_Driver {
@@ -1026,7 +840,7 @@ class Handle_TPrsStd_Driver : public Handle_MMgt_TShared {
 	}
 };
 %nodefaultctor TPrsStd_DriverTable;
-class TPrsStd_DriverTable : public MMgt_TShared {
+class TPrsStd_DriverTable : public Standard_Transient {
 	public:
 		%feature("compactdefaultargs") Get;
 		%feature("autodoc", "	* Returns the static table. If it does not exist, creates it and fills it with standard drivers.
@@ -1102,7 +916,7 @@ class TPrsStd_DriverTable : public MMgt_TShared {
 %}
 
 %nodefaultctor Handle_TPrsStd_DriverTable;
-class Handle_TPrsStd_DriverTable : public Handle_MMgt_TShared {
+class Handle_TPrsStd_DriverTable : public Handle_Standard_Transient {
 
     public:
         // constructors
@@ -1114,19 +928,20 @@ class Handle_TPrsStd_DriverTable : public Handle_MMgt_TShared {
         static const Handle_TPrsStd_DriverTable DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_TPrsStd_DriverTable {
     TPrsStd_DriverTable* _get_reference() {
-    return (TPrsStd_DriverTable*)$self->Access();
+    return (TPrsStd_DriverTable*)$self->get();
     }
 };
 
 %extend Handle_TPrsStd_DriverTable {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend TPrsStd_DriverTable {
@@ -1144,7 +959,7 @@ class TPrsStd_AxisDriver : public TPrsStd_Driver {
 ") TPrsStd_AxisDriver;
 		 TPrsStd_AxisDriver ();
 		%feature("compactdefaultargs") Update;
-		%feature("autodoc", "	* Build the AISObject (if null) or update it. No compute is done. Returns <True> if informations was found and AISObject updated.
+		%feature("autodoc", "	* Build the AISObject --if null-- or update it. No compute is done. Returns <True> if informations was found and AISObject updated.
 
 	:param aLabel:
 	:type aLabel: TDF_Label &
@@ -1187,19 +1002,20 @@ class Handle_TPrsStd_AxisDriver : public Handle_TPrsStd_Driver {
         static const Handle_TPrsStd_AxisDriver DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_TPrsStd_AxisDriver {
     TPrsStd_AxisDriver* _get_reference() {
-    return (TPrsStd_AxisDriver*)$self->Access();
+    return (TPrsStd_AxisDriver*)$self->get();
     }
 };
 
 %extend Handle_TPrsStd_AxisDriver {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend TPrsStd_AxisDriver {
@@ -1217,7 +1033,7 @@ class TPrsStd_ConstraintDriver : public TPrsStd_Driver {
 ") TPrsStd_ConstraintDriver;
 		 TPrsStd_ConstraintDriver ();
 		%feature("compactdefaultargs") Update;
-		%feature("autodoc", "	* Build the AISObject (if null) or update it. No compute is done. Returns <True> if informations was found and AISObject updated.
+		%feature("autodoc", "	* Build the AISObject --if null-- or update it. No compute is done. Returns <True> if informations was found and AISObject updated.
 
 	:param aLabel:
 	:type aLabel: TDF_Label &
@@ -1260,19 +1076,20 @@ class Handle_TPrsStd_ConstraintDriver : public Handle_TPrsStd_Driver {
         static const Handle_TPrsStd_ConstraintDriver DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_TPrsStd_ConstraintDriver {
     TPrsStd_ConstraintDriver* _get_reference() {
-    return (TPrsStd_ConstraintDriver*)$self->Access();
+    return (TPrsStd_ConstraintDriver*)$self->get();
     }
 };
 
 %extend Handle_TPrsStd_ConstraintDriver {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend TPrsStd_ConstraintDriver {
@@ -1290,7 +1107,7 @@ class TPrsStd_GeometryDriver : public TPrsStd_Driver {
 ") TPrsStd_GeometryDriver;
 		 TPrsStd_GeometryDriver ();
 		%feature("compactdefaultargs") Update;
-		%feature("autodoc", "	* Build the AISObject (if null) or update it. No compute is done. Returns <True> if informations was found and AISObject updated.
+		%feature("autodoc", "	* Build the AISObject --if null-- or update it. No compute is done. Returns <True> if informations was found and AISObject updated.
 
 	:param aLabel:
 	:type aLabel: TDF_Label &
@@ -1333,19 +1150,20 @@ class Handle_TPrsStd_GeometryDriver : public Handle_TPrsStd_Driver {
         static const Handle_TPrsStd_GeometryDriver DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_TPrsStd_GeometryDriver {
     TPrsStd_GeometryDriver* _get_reference() {
-    return (TPrsStd_GeometryDriver*)$self->Access();
+    return (TPrsStd_GeometryDriver*)$self->get();
     }
 };
 
 %extend Handle_TPrsStd_GeometryDriver {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend TPrsStd_GeometryDriver {
@@ -1363,7 +1181,7 @@ class TPrsStd_NamedShapeDriver : public TPrsStd_Driver {
 ") TPrsStd_NamedShapeDriver;
 		 TPrsStd_NamedShapeDriver ();
 		%feature("compactdefaultargs") Update;
-		%feature("autodoc", "	* Build the AISObject (if null) or update it. No compute is done. Returns <True> if informations was found and AISObject updated.
+		%feature("autodoc", "	* Build the AISObject --if null-- or update it. No compute is done. Returns <True> if informations was found and AISObject updated.
 
 	:param aLabel:
 	:type aLabel: TDF_Label &
@@ -1406,19 +1224,20 @@ class Handle_TPrsStd_NamedShapeDriver : public Handle_TPrsStd_Driver {
         static const Handle_TPrsStd_NamedShapeDriver DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_TPrsStd_NamedShapeDriver {
     TPrsStd_NamedShapeDriver* _get_reference() {
-    return (TPrsStd_NamedShapeDriver*)$self->Access();
+    return (TPrsStd_NamedShapeDriver*)$self->get();
     }
 };
 
 %extend Handle_TPrsStd_NamedShapeDriver {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend TPrsStd_NamedShapeDriver {
@@ -1436,7 +1255,7 @@ class TPrsStd_PlaneDriver : public TPrsStd_Driver {
 ") TPrsStd_PlaneDriver;
 		 TPrsStd_PlaneDriver ();
 		%feature("compactdefaultargs") Update;
-		%feature("autodoc", "	* Build the AISObject (if null) or update it. No compute is done. Returns <True> if informations was found and AISObject updated.
+		%feature("autodoc", "	* Build the AISObject --if null-- or update it. No compute is done. Returns <True> if informations was found and AISObject updated.
 
 	:param aLabel:
 	:type aLabel: TDF_Label &
@@ -1479,19 +1298,20 @@ class Handle_TPrsStd_PlaneDriver : public Handle_TPrsStd_Driver {
         static const Handle_TPrsStd_PlaneDriver DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_TPrsStd_PlaneDriver {
     TPrsStd_PlaneDriver* _get_reference() {
-    return (TPrsStd_PlaneDriver*)$self->Access();
+    return (TPrsStd_PlaneDriver*)$self->get();
     }
 };
 
 %extend Handle_TPrsStd_PlaneDriver {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend TPrsStd_PlaneDriver {
@@ -1509,7 +1329,7 @@ class TPrsStd_PointDriver : public TPrsStd_Driver {
 ") TPrsStd_PointDriver;
 		 TPrsStd_PointDriver ();
 		%feature("compactdefaultargs") Update;
-		%feature("autodoc", "	* Build the AISObject (if null) or update it. No compute is done. Returns <True> if informations was found and AISObject updated.
+		%feature("autodoc", "	* Build the AISObject --if null-- or update it. No compute is done. Returns <True> if informations was found and AISObject updated.
 
 	:param aLabel:
 	:type aLabel: TDF_Label &
@@ -1552,19 +1372,20 @@ class Handle_TPrsStd_PointDriver : public Handle_TPrsStd_Driver {
         static const Handle_TPrsStd_PointDriver DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_TPrsStd_PointDriver {
     TPrsStd_PointDriver* _get_reference() {
-    return (TPrsStd_PointDriver*)$self->Access();
+    return (TPrsStd_PointDriver*)$self->get();
     }
 };
 
 %extend Handle_TPrsStd_PointDriver {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend TPrsStd_PointDriver {

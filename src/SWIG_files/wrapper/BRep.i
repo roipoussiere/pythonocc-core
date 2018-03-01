@@ -1,5 +1,5 @@
 /*
-Copyright 2008-2017 Thomas Paviot (tpaviot@gmail.com)
+Copyright 2008-2018 Thomas Paviot (tpaviot@gmail.com)
 
 
 This file is part of pythonOCC.
@@ -55,6 +55,11 @@ def register_handle(handle, base_object):
 
 /* typedefs */
 /* end typedefs declaration */
+
+/* templates */
+%template(BRep_ListOfPointRepresentation) NCollection_List <Handle_BRep_PointRepresentation>;
+%template(BRep_ListOfCurveRepresentation) NCollection_List <Handle_BRep_CurveRepresentation>;
+/* end templates declaration */
 
 /* public enums */
 /* end public enums declaration */
@@ -150,7 +155,7 @@ class BRep_Builder : public TopoDS_Builder {
 ") NaturalRestriction;
 		void NaturalRestriction (const TopoDS_Face & F,const Standard_Boolean N);
 		%feature("compactdefaultargs") MakeEdge;
-		%feature("autodoc", "	* Makes an undefined Edge (no geometry).
+		%feature("autodoc", "	* Makes an undefined Edge --no geometry--.
 
 	:param E:
 	:type E: TopoDS_Edge &
@@ -740,7 +745,7 @@ class BRep_Builder : public TopoDS_Builder {
 	}
 };
 %nodefaultctor BRep_CurveRepresentation;
-class BRep_CurveRepresentation : public MMgt_TShared {
+class BRep_CurveRepresentation : public Standard_Transient {
 	public:
 		%feature("compactdefaultargs") IsCurve3D;
 		%feature("autodoc", "	* A 3D curve representation.
@@ -984,7 +989,7 @@ class BRep_CurveRepresentation : public MMgt_TShared {
 %}
 
 %nodefaultctor Handle_BRep_CurveRepresentation;
-class Handle_BRep_CurveRepresentation : public Handle_MMgt_TShared {
+class Handle_BRep_CurveRepresentation : public Handle_Standard_Transient {
 
     public:
         // constructors
@@ -996,19 +1001,20 @@ class Handle_BRep_CurveRepresentation : public Handle_MMgt_TShared {
         static const Handle_BRep_CurveRepresentation DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_BRep_CurveRepresentation {
     BRep_CurveRepresentation* _get_reference() {
-    return (BRep_CurveRepresentation*)$self->Access();
+    return (BRep_CurveRepresentation*)$self->get();
     }
 };
 
 %extend Handle_BRep_CurveRepresentation {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend BRep_CurveRepresentation {
@@ -1016,494 +1022,8 @@ class Handle_BRep_CurveRepresentation : public Handle_MMgt_TShared {
 	__repr__ = _dumps_object
 	}
 };
-%nodefaultctor BRep_ListIteratorOfListOfCurveRepresentation;
-class BRep_ListIteratorOfListOfCurveRepresentation {
-	public:
-		%feature("compactdefaultargs") BRep_ListIteratorOfListOfCurveRepresentation;
-		%feature("autodoc", "	:rtype: None
-") BRep_ListIteratorOfListOfCurveRepresentation;
-		 BRep_ListIteratorOfListOfCurveRepresentation ();
-		%feature("compactdefaultargs") BRep_ListIteratorOfListOfCurveRepresentation;
-		%feature("autodoc", "	:param L:
-	:type L: BRep_ListOfCurveRepresentation &
-	:rtype: None
-") BRep_ListIteratorOfListOfCurveRepresentation;
-		 BRep_ListIteratorOfListOfCurveRepresentation (const BRep_ListOfCurveRepresentation & L);
-		%feature("compactdefaultargs") Initialize;
-		%feature("autodoc", "	:param L:
-	:type L: BRep_ListOfCurveRepresentation &
-	:rtype: None
-") Initialize;
-		void Initialize (const BRep_ListOfCurveRepresentation & L);
-		%feature("compactdefaultargs") More;
-		%feature("autodoc", "	:rtype: bool
-") More;
-		Standard_Boolean More ();
-		%feature("compactdefaultargs") Next;
-		%feature("autodoc", "	:rtype: None
-") Next;
-		void Next ();
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:rtype: Handle_BRep_CurveRepresentation
-") Value;
-		Handle_BRep_CurveRepresentation Value ();
-};
-
-
-%extend BRep_ListIteratorOfListOfCurveRepresentation {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor BRep_ListIteratorOfListOfPointRepresentation;
-class BRep_ListIteratorOfListOfPointRepresentation {
-	public:
-		%feature("compactdefaultargs") BRep_ListIteratorOfListOfPointRepresentation;
-		%feature("autodoc", "	:rtype: None
-") BRep_ListIteratorOfListOfPointRepresentation;
-		 BRep_ListIteratorOfListOfPointRepresentation ();
-		%feature("compactdefaultargs") BRep_ListIteratorOfListOfPointRepresentation;
-		%feature("autodoc", "	:param L:
-	:type L: BRep_ListOfPointRepresentation &
-	:rtype: None
-") BRep_ListIteratorOfListOfPointRepresentation;
-		 BRep_ListIteratorOfListOfPointRepresentation (const BRep_ListOfPointRepresentation & L);
-		%feature("compactdefaultargs") Initialize;
-		%feature("autodoc", "	:param L:
-	:type L: BRep_ListOfPointRepresentation &
-	:rtype: None
-") Initialize;
-		void Initialize (const BRep_ListOfPointRepresentation & L);
-		%feature("compactdefaultargs") More;
-		%feature("autodoc", "	:rtype: bool
-") More;
-		Standard_Boolean More ();
-		%feature("compactdefaultargs") Next;
-		%feature("autodoc", "	:rtype: None
-") Next;
-		void Next ();
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:rtype: Handle_BRep_PointRepresentation
-") Value;
-		Handle_BRep_PointRepresentation Value ();
-};
-
-
-%extend BRep_ListIteratorOfListOfPointRepresentation {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor BRep_ListNodeOfListOfCurveRepresentation;
-class BRep_ListNodeOfListOfCurveRepresentation : public TCollection_MapNode {
-	public:
-		%feature("compactdefaultargs") BRep_ListNodeOfListOfCurveRepresentation;
-		%feature("autodoc", "	:param I:
-	:type I: Handle_BRep_CurveRepresentation &
-	:param n:
-	:type n: TCollection_MapNodePtr &
-	:rtype: None
-") BRep_ListNodeOfListOfCurveRepresentation;
-		 BRep_ListNodeOfListOfCurveRepresentation (const Handle_BRep_CurveRepresentation & I,const TCollection_MapNodePtr & n);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:rtype: Handle_BRep_CurveRepresentation
-") Value;
-		Handle_BRep_CurveRepresentation Value ();
-};
-
-
-%extend BRep_ListNodeOfListOfCurveRepresentation {
-	%pythoncode {
-		def GetHandle(self):
-		    try:
-		        return self.thisHandle
-		    except:
-		        self.thisHandle = Handle_BRep_ListNodeOfListOfCurveRepresentation(self)
-		        self.thisown = False
-		        return self.thisHandle
-	}
-};
-
-%pythonappend Handle_BRep_ListNodeOfListOfCurveRepresentation::Handle_BRep_ListNodeOfListOfCurveRepresentation %{
-    # register the handle in the base object
-    if len(args) > 0:
-        register_handle(self, args[0])
-%}
-
-%nodefaultctor Handle_BRep_ListNodeOfListOfCurveRepresentation;
-class Handle_BRep_ListNodeOfListOfCurveRepresentation : public Handle_TCollection_MapNode {
-
-    public:
-        // constructors
-        Handle_BRep_ListNodeOfListOfCurveRepresentation();
-        Handle_BRep_ListNodeOfListOfCurveRepresentation(const Handle_BRep_ListNodeOfListOfCurveRepresentation &aHandle);
-        Handle_BRep_ListNodeOfListOfCurveRepresentation(const BRep_ListNodeOfListOfCurveRepresentation *anItem);
-        void Nullify();
-        Standard_Boolean IsNull() const;
-        static const Handle_BRep_ListNodeOfListOfCurveRepresentation DownCast(const Handle_Standard_Transient &AnObject);
-
-};
-%extend Handle_BRep_ListNodeOfListOfCurveRepresentation {
-    BRep_ListNodeOfListOfCurveRepresentation* _get_reference() {
-    return (BRep_ListNodeOfListOfCurveRepresentation*)$self->Access();
-    }
-};
-
-%extend Handle_BRep_ListNodeOfListOfCurveRepresentation {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
-};
-
-%extend BRep_ListNodeOfListOfCurveRepresentation {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor BRep_ListNodeOfListOfPointRepresentation;
-class BRep_ListNodeOfListOfPointRepresentation : public TCollection_MapNode {
-	public:
-		%feature("compactdefaultargs") BRep_ListNodeOfListOfPointRepresentation;
-		%feature("autodoc", "	:param I:
-	:type I: Handle_BRep_PointRepresentation &
-	:param n:
-	:type n: TCollection_MapNodePtr &
-	:rtype: None
-") BRep_ListNodeOfListOfPointRepresentation;
-		 BRep_ListNodeOfListOfPointRepresentation (const Handle_BRep_PointRepresentation & I,const TCollection_MapNodePtr & n);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:rtype: Handle_BRep_PointRepresentation
-") Value;
-		Handle_BRep_PointRepresentation Value ();
-};
-
-
-%extend BRep_ListNodeOfListOfPointRepresentation {
-	%pythoncode {
-		def GetHandle(self):
-		    try:
-		        return self.thisHandle
-		    except:
-		        self.thisHandle = Handle_BRep_ListNodeOfListOfPointRepresentation(self)
-		        self.thisown = False
-		        return self.thisHandle
-	}
-};
-
-%pythonappend Handle_BRep_ListNodeOfListOfPointRepresentation::Handle_BRep_ListNodeOfListOfPointRepresentation %{
-    # register the handle in the base object
-    if len(args) > 0:
-        register_handle(self, args[0])
-%}
-
-%nodefaultctor Handle_BRep_ListNodeOfListOfPointRepresentation;
-class Handle_BRep_ListNodeOfListOfPointRepresentation : public Handle_TCollection_MapNode {
-
-    public:
-        // constructors
-        Handle_BRep_ListNodeOfListOfPointRepresentation();
-        Handle_BRep_ListNodeOfListOfPointRepresentation(const Handle_BRep_ListNodeOfListOfPointRepresentation &aHandle);
-        Handle_BRep_ListNodeOfListOfPointRepresentation(const BRep_ListNodeOfListOfPointRepresentation *anItem);
-        void Nullify();
-        Standard_Boolean IsNull() const;
-        static const Handle_BRep_ListNodeOfListOfPointRepresentation DownCast(const Handle_Standard_Transient &AnObject);
-
-};
-%extend Handle_BRep_ListNodeOfListOfPointRepresentation {
-    BRep_ListNodeOfListOfPointRepresentation* _get_reference() {
-    return (BRep_ListNodeOfListOfPointRepresentation*)$self->Access();
-    }
-};
-
-%extend Handle_BRep_ListNodeOfListOfPointRepresentation {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
-};
-
-%extend BRep_ListNodeOfListOfPointRepresentation {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor BRep_ListOfCurveRepresentation;
-class BRep_ListOfCurveRepresentation {
-	public:
-		%feature("compactdefaultargs") BRep_ListOfCurveRepresentation;
-		%feature("autodoc", "	:rtype: None
-") BRep_ListOfCurveRepresentation;
-		 BRep_ListOfCurveRepresentation ();
-		%feature("compactdefaultargs") BRep_ListOfCurveRepresentation;
-		%feature("autodoc", "	:param Other:
-	:type Other: BRep_ListOfCurveRepresentation &
-	:rtype: None
-") BRep_ListOfCurveRepresentation;
-		 BRep_ListOfCurveRepresentation (const BRep_ListOfCurveRepresentation & Other);
-		%feature("compactdefaultargs") Assign;
-		%feature("autodoc", "	:param Other:
-	:type Other: BRep_ListOfCurveRepresentation &
-	:rtype: None
-") Assign;
-		void Assign (const BRep_ListOfCurveRepresentation & Other);
-		%feature("compactdefaultargs") operator =;
-		%feature("autodoc", "	:param Other:
-	:type Other: BRep_ListOfCurveRepresentation &
-	:rtype: None
-") operator =;
-		void operator = (const BRep_ListOfCurveRepresentation & Other);
-		%feature("compactdefaultargs") Extent;
-		%feature("autodoc", "	:rtype: int
-") Extent;
-		Standard_Integer Extent ();
-		%feature("compactdefaultargs") Clear;
-		%feature("autodoc", "	:rtype: None
-") Clear;
-		void Clear ();
-		%feature("compactdefaultargs") IsEmpty;
-		%feature("autodoc", "	:rtype: bool
-") IsEmpty;
-		Standard_Boolean IsEmpty ();
-		%feature("compactdefaultargs") Prepend;
-		%feature("autodoc", "	:param I:
-	:type I: Handle_BRep_CurveRepresentation &
-	:rtype: None
-") Prepend;
-		void Prepend (const Handle_BRep_CurveRepresentation & I);
-		%feature("compactdefaultargs") Prepend;
-		%feature("autodoc", "	:param I:
-	:type I: Handle_BRep_CurveRepresentation &
-	:param theIt:
-	:type theIt: BRep_ListIteratorOfListOfCurveRepresentation &
-	:rtype: None
-") Prepend;
-		void Prepend (const Handle_BRep_CurveRepresentation & I,BRep_ListIteratorOfListOfCurveRepresentation & theIt);
-		%feature("compactdefaultargs") Prepend;
-		%feature("autodoc", "	:param Other:
-	:type Other: BRep_ListOfCurveRepresentation &
-	:rtype: None
-") Prepend;
-		void Prepend (BRep_ListOfCurveRepresentation & Other);
-		%feature("compactdefaultargs") Append;
-		%feature("autodoc", "	:param I:
-	:type I: Handle_BRep_CurveRepresentation &
-	:rtype: None
-") Append;
-		void Append (const Handle_BRep_CurveRepresentation & I);
-		%feature("compactdefaultargs") Append;
-		%feature("autodoc", "	:param I:
-	:type I: Handle_BRep_CurveRepresentation &
-	:param theIt:
-	:type theIt: BRep_ListIteratorOfListOfCurveRepresentation &
-	:rtype: None
-") Append;
-		void Append (const Handle_BRep_CurveRepresentation & I,BRep_ListIteratorOfListOfCurveRepresentation & theIt);
-		%feature("compactdefaultargs") Append;
-		%feature("autodoc", "	:param Other:
-	:type Other: BRep_ListOfCurveRepresentation &
-	:rtype: None
-") Append;
-		void Append (BRep_ListOfCurveRepresentation & Other);
-		%feature("compactdefaultargs") First;
-		%feature("autodoc", "	:rtype: Handle_BRep_CurveRepresentation
-") First;
-		Handle_BRep_CurveRepresentation First ();
-		%feature("compactdefaultargs") Last;
-		%feature("autodoc", "	:rtype: Handle_BRep_CurveRepresentation
-") Last;
-		Handle_BRep_CurveRepresentation Last ();
-		%feature("compactdefaultargs") RemoveFirst;
-		%feature("autodoc", "	:rtype: None
-") RemoveFirst;
-		void RemoveFirst ();
-		%feature("compactdefaultargs") Remove;
-		%feature("autodoc", "	:param It:
-	:type It: BRep_ListIteratorOfListOfCurveRepresentation &
-	:rtype: None
-") Remove;
-		void Remove (BRep_ListIteratorOfListOfCurveRepresentation & It);
-		%feature("compactdefaultargs") InsertBefore;
-		%feature("autodoc", "	:param I:
-	:type I: Handle_BRep_CurveRepresentation &
-	:param It:
-	:type It: BRep_ListIteratorOfListOfCurveRepresentation &
-	:rtype: None
-") InsertBefore;
-		void InsertBefore (const Handle_BRep_CurveRepresentation & I,BRep_ListIteratorOfListOfCurveRepresentation & It);
-		%feature("compactdefaultargs") InsertBefore;
-		%feature("autodoc", "	:param Other:
-	:type Other: BRep_ListOfCurveRepresentation &
-	:param It:
-	:type It: BRep_ListIteratorOfListOfCurveRepresentation &
-	:rtype: None
-") InsertBefore;
-		void InsertBefore (BRep_ListOfCurveRepresentation & Other,BRep_ListIteratorOfListOfCurveRepresentation & It);
-		%feature("compactdefaultargs") InsertAfter;
-		%feature("autodoc", "	:param I:
-	:type I: Handle_BRep_CurveRepresentation &
-	:param It:
-	:type It: BRep_ListIteratorOfListOfCurveRepresentation &
-	:rtype: None
-") InsertAfter;
-		void InsertAfter (const Handle_BRep_CurveRepresentation & I,BRep_ListIteratorOfListOfCurveRepresentation & It);
-		%feature("compactdefaultargs") InsertAfter;
-		%feature("autodoc", "	:param Other:
-	:type Other: BRep_ListOfCurveRepresentation &
-	:param It:
-	:type It: BRep_ListIteratorOfListOfCurveRepresentation &
-	:rtype: None
-") InsertAfter;
-		void InsertAfter (BRep_ListOfCurveRepresentation & Other,BRep_ListIteratorOfListOfCurveRepresentation & It);
-};
-
-
-%extend BRep_ListOfCurveRepresentation {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor BRep_ListOfPointRepresentation;
-class BRep_ListOfPointRepresentation {
-	public:
-		%feature("compactdefaultargs") BRep_ListOfPointRepresentation;
-		%feature("autodoc", "	:rtype: None
-") BRep_ListOfPointRepresentation;
-		 BRep_ListOfPointRepresentation ();
-		%feature("compactdefaultargs") BRep_ListOfPointRepresentation;
-		%feature("autodoc", "	:param Other:
-	:type Other: BRep_ListOfPointRepresentation &
-	:rtype: None
-") BRep_ListOfPointRepresentation;
-		 BRep_ListOfPointRepresentation (const BRep_ListOfPointRepresentation & Other);
-		%feature("compactdefaultargs") Assign;
-		%feature("autodoc", "	:param Other:
-	:type Other: BRep_ListOfPointRepresentation &
-	:rtype: None
-") Assign;
-		void Assign (const BRep_ListOfPointRepresentation & Other);
-		%feature("compactdefaultargs") operator =;
-		%feature("autodoc", "	:param Other:
-	:type Other: BRep_ListOfPointRepresentation &
-	:rtype: None
-") operator =;
-		void operator = (const BRep_ListOfPointRepresentation & Other);
-		%feature("compactdefaultargs") Extent;
-		%feature("autodoc", "	:rtype: int
-") Extent;
-		Standard_Integer Extent ();
-		%feature("compactdefaultargs") Clear;
-		%feature("autodoc", "	:rtype: None
-") Clear;
-		void Clear ();
-		%feature("compactdefaultargs") IsEmpty;
-		%feature("autodoc", "	:rtype: bool
-") IsEmpty;
-		Standard_Boolean IsEmpty ();
-		%feature("compactdefaultargs") Prepend;
-		%feature("autodoc", "	:param I:
-	:type I: Handle_BRep_PointRepresentation &
-	:rtype: None
-") Prepend;
-		void Prepend (const Handle_BRep_PointRepresentation & I);
-		%feature("compactdefaultargs") Prepend;
-		%feature("autodoc", "	:param I:
-	:type I: Handle_BRep_PointRepresentation &
-	:param theIt:
-	:type theIt: BRep_ListIteratorOfListOfPointRepresentation &
-	:rtype: None
-") Prepend;
-		void Prepend (const Handle_BRep_PointRepresentation & I,BRep_ListIteratorOfListOfPointRepresentation & theIt);
-		%feature("compactdefaultargs") Prepend;
-		%feature("autodoc", "	:param Other:
-	:type Other: BRep_ListOfPointRepresentation &
-	:rtype: None
-") Prepend;
-		void Prepend (BRep_ListOfPointRepresentation & Other);
-		%feature("compactdefaultargs") Append;
-		%feature("autodoc", "	:param I:
-	:type I: Handle_BRep_PointRepresentation &
-	:rtype: None
-") Append;
-		void Append (const Handle_BRep_PointRepresentation & I);
-		%feature("compactdefaultargs") Append;
-		%feature("autodoc", "	:param I:
-	:type I: Handle_BRep_PointRepresentation &
-	:param theIt:
-	:type theIt: BRep_ListIteratorOfListOfPointRepresentation &
-	:rtype: None
-") Append;
-		void Append (const Handle_BRep_PointRepresentation & I,BRep_ListIteratorOfListOfPointRepresentation & theIt);
-		%feature("compactdefaultargs") Append;
-		%feature("autodoc", "	:param Other:
-	:type Other: BRep_ListOfPointRepresentation &
-	:rtype: None
-") Append;
-		void Append (BRep_ListOfPointRepresentation & Other);
-		%feature("compactdefaultargs") First;
-		%feature("autodoc", "	:rtype: Handle_BRep_PointRepresentation
-") First;
-		Handle_BRep_PointRepresentation First ();
-		%feature("compactdefaultargs") Last;
-		%feature("autodoc", "	:rtype: Handle_BRep_PointRepresentation
-") Last;
-		Handle_BRep_PointRepresentation Last ();
-		%feature("compactdefaultargs") RemoveFirst;
-		%feature("autodoc", "	:rtype: None
-") RemoveFirst;
-		void RemoveFirst ();
-		%feature("compactdefaultargs") Remove;
-		%feature("autodoc", "	:param It:
-	:type It: BRep_ListIteratorOfListOfPointRepresentation &
-	:rtype: None
-") Remove;
-		void Remove (BRep_ListIteratorOfListOfPointRepresentation & It);
-		%feature("compactdefaultargs") InsertBefore;
-		%feature("autodoc", "	:param I:
-	:type I: Handle_BRep_PointRepresentation &
-	:param It:
-	:type It: BRep_ListIteratorOfListOfPointRepresentation &
-	:rtype: None
-") InsertBefore;
-		void InsertBefore (const Handle_BRep_PointRepresentation & I,BRep_ListIteratorOfListOfPointRepresentation & It);
-		%feature("compactdefaultargs") InsertBefore;
-		%feature("autodoc", "	:param Other:
-	:type Other: BRep_ListOfPointRepresentation &
-	:param It:
-	:type It: BRep_ListIteratorOfListOfPointRepresentation &
-	:rtype: None
-") InsertBefore;
-		void InsertBefore (BRep_ListOfPointRepresentation & Other,BRep_ListIteratorOfListOfPointRepresentation & It);
-		%feature("compactdefaultargs") InsertAfter;
-		%feature("autodoc", "	:param I:
-	:type I: Handle_BRep_PointRepresentation &
-	:param It:
-	:type It: BRep_ListIteratorOfListOfPointRepresentation &
-	:rtype: None
-") InsertAfter;
-		void InsertAfter (const Handle_BRep_PointRepresentation & I,BRep_ListIteratorOfListOfPointRepresentation & It);
-		%feature("compactdefaultargs") InsertAfter;
-		%feature("autodoc", "	:param Other:
-	:type Other: BRep_ListOfPointRepresentation &
-	:param It:
-	:type It: BRep_ListIteratorOfListOfPointRepresentation &
-	:rtype: None
-") InsertAfter;
-		void InsertAfter (BRep_ListOfPointRepresentation & Other,BRep_ListIteratorOfListOfPointRepresentation & It);
-};
-
-
-%extend BRep_ListOfPointRepresentation {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
 %nodefaultctor BRep_PointRepresentation;
-class BRep_PointRepresentation : public MMgt_TShared {
+class BRep_PointRepresentation : public Standard_Transient {
 	public:
 		%feature("compactdefaultargs") IsPointOnCurve;
 		%feature("autodoc", "	* A point on a 3d curve.
@@ -1637,7 +1157,7 @@ class BRep_PointRepresentation : public MMgt_TShared {
 %}
 
 %nodefaultctor Handle_BRep_PointRepresentation;
-class Handle_BRep_PointRepresentation : public Handle_MMgt_TShared {
+class Handle_BRep_PointRepresentation : public Handle_Standard_Transient {
 
     public:
         // constructors
@@ -1649,19 +1169,20 @@ class Handle_BRep_PointRepresentation : public Handle_MMgt_TShared {
         static const Handle_BRep_PointRepresentation DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_BRep_PointRepresentation {
     BRep_PointRepresentation* _get_reference() {
-    return (BRep_PointRepresentation*)$self->Access();
+    return (BRep_PointRepresentation*)$self->get();
     }
 };
 
 %extend Handle_BRep_PointRepresentation {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend BRep_PointRepresentation {
@@ -1774,19 +1295,20 @@ class Handle_BRep_TEdge : public Handle_TopoDS_TEdge {
         static const Handle_BRep_TEdge DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_BRep_TEdge {
     BRep_TEdge* _get_reference() {
-    return (BRep_TEdge*)$self->Access();
+    return (BRep_TEdge*)$self->get();
     }
 };
 
 %extend Handle_BRep_TEdge {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend BRep_TEdge {
@@ -1893,19 +1415,20 @@ class Handle_BRep_TFace : public Handle_TopoDS_TFace {
         static const Handle_BRep_TFace DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_BRep_TFace {
     BRep_TFace* _get_reference() {
-    return (BRep_TFace*)$self->Access();
+    return (BRep_TFace*)$self->get();
     }
 };
 
 %extend Handle_BRep_TFace {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend BRep_TFace {
@@ -1996,19 +1519,20 @@ class Handle_BRep_TVertex : public Handle_TopoDS_TVertex {
         static const Handle_BRep_TVertex DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_BRep_TVertex {
     BRep_TVertex* _get_reference() {
-    return (BRep_TVertex*)$self->Access();
+    return (BRep_TVertex*)$self->get();
     }
 };
 
 %extend Handle_BRep_TVertex {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend BRep_TVertex {
@@ -2019,7 +1543,7 @@ class Handle_BRep_TVertex : public Handle_TopoDS_TVertex {
 class BRep_Tool {
 	public:
 		%feature("compactdefaultargs") IsClosed;
-		%feature("autodoc", "	* If S is Shell, returns True if it has no free boundaries (edges). If S is Wire, returns True if it has no free ends (vertices). (Internal and External sub-shepes are ignored in these checks) If S is Edge, returns True if its vertices are the same. For other shape types returns S.Closed().
+		%feature("autodoc", "	* If S is Shell, returns True if it has no free boundaries --edges--. If S is Wire, returns True if it has no free ends --vertices--. --Internal and External sub-shepes are ignored in these checks-- If S is Edge, returns True if its vertices are the same. For other shape types returns S.Closed----.
 
 	:param S:
 	:type S: TopoDS_Shape &
@@ -2144,6 +1668,22 @@ class BRep_Tool {
 	:rtype: Handle_Geom2d_Curve
 ") CurveOnSurface;
 		static Handle_Geom2d_Curve CurveOnSurface (const TopoDS_Edge & E,const Handle_Geom_Surface & S,const TopLoc_Location & L,Standard_Real &OutValue,Standard_Real &OutValue);
+		%feature("compactdefaultargs") CurveOnPlane;
+		%feature("autodoc", "	* For the planar surface builds the 2d curve for the edge by projection of the edge on plane. Returns a NULL handle if the surface is not planar or the projection failed.
+
+	:param E:
+	:type E: TopoDS_Edge &
+	:param S:
+	:type S: Handle_Geom_Surface &
+	:param L:
+	:type L: TopLoc_Location &
+	:param First:
+	:type First: float &
+	:param Last:
+	:type Last: float &
+	:rtype: Handle_Geom2d_Curve
+") CurveOnPlane;
+		static Handle_Geom2d_Curve CurveOnPlane (const TopoDS_Edge & E,const Handle_Geom_Surface & S,const TopLoc_Location & L,Standard_Real &OutValue,Standard_Real &OutValue);
 		%feature("compactdefaultargs") CurveOnSurface;
 		%feature("autodoc", "	* Returns in <C>, <S>, <L> a 2d curve, a surface and a location for the edge <E>. <C> and <S> are null if the edge has no curve on surface. Returns in <First> and <Last> the parameter range.
 
@@ -2570,6 +2110,16 @@ class BRep_Tool {
 	:rtype: gp_Pnt2d
 ") Parameters;
 		static gp_Pnt2d Parameters (const TopoDS_Vertex & V,const TopoDS_Face & F);
+		%feature("compactdefaultargs") MaxTolerance;
+		%feature("autodoc", "	* Returns the maximum tolerance of input shape subshapes.
+
+	:param theShape:
+	:type theShape: TopoDS_Shape &
+	:param theSubShape:
+	:type theSubShape: TopAbs_ShapeEnum
+	:rtype: float
+") MaxTolerance;
+		static Standard_Real MaxTolerance (const TopoDS_Shape & theShape,const TopAbs_ShapeEnum theSubShape);
 };
 
 
@@ -2602,7 +2152,7 @@ class BRep_CurveOn2Surfaces : public BRep_CurveRepresentation {
 ") IsRegularity;
 		virtual Standard_Boolean IsRegularity ();
 		%feature("compactdefaultargs") IsRegularity;
-		%feature("autodoc", "	* A curve on two surfaces (continuity).
+		%feature("autodoc", "	* A curve on two surfaces --continuity--.
 
 	:param S1:
 	:type S1: Handle_Geom_Surface &
@@ -2687,19 +2237,20 @@ class Handle_BRep_CurveOn2Surfaces : public Handle_BRep_CurveRepresentation {
         static const Handle_BRep_CurveOn2Surfaces DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_BRep_CurveOn2Surfaces {
     BRep_CurveOn2Surfaces* _get_reference() {
-    return (BRep_CurveOn2Surfaces*)$self->Access();
+    return (BRep_CurveOn2Surfaces*)$self->get();
     }
 };
 
 %extend Handle_BRep_CurveOn2Surfaces {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend BRep_CurveOn2Surfaces {
@@ -2796,19 +2347,20 @@ class Handle_BRep_GCurve : public Handle_BRep_CurveRepresentation {
         static const Handle_BRep_GCurve DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_BRep_GCurve {
     BRep_GCurve* _get_reference() {
-    return (BRep_GCurve*)$self->Access();
+    return (BRep_GCurve*)$self->get();
     }
 };
 
 %extend Handle_BRep_GCurve {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend BRep_GCurve {
@@ -2887,19 +2439,20 @@ class Handle_BRep_PointOnCurve : public Handle_BRep_PointRepresentation {
         static const Handle_BRep_PointOnCurve DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_BRep_PointOnCurve {
     BRep_PointOnCurve* _get_reference() {
-    return (BRep_PointOnCurve*)$self->Access();
+    return (BRep_PointOnCurve*)$self->get();
     }
 };
 
 %extend Handle_BRep_PointOnCurve {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend BRep_PointOnCurve {
@@ -2954,19 +2507,20 @@ class Handle_BRep_PointsOnSurface : public Handle_BRep_PointRepresentation {
         static const Handle_BRep_PointsOnSurface DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_BRep_PointsOnSurface {
     BRep_PointsOnSurface* _get_reference() {
-    return (BRep_PointsOnSurface*)$self->Access();
+    return (BRep_PointsOnSurface*)$self->get();
     }
 };
 
 %extend Handle_BRep_PointsOnSurface {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend BRep_PointsOnSurface {
@@ -3041,19 +2595,20 @@ class Handle_BRep_Polygon3D : public Handle_BRep_CurveRepresentation {
         static const Handle_BRep_Polygon3D DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_BRep_Polygon3D {
     BRep_Polygon3D* _get_reference() {
-    return (BRep_Polygon3D*)$self->Access();
+    return (BRep_Polygon3D*)$self->get();
     }
 };
 
 %extend Handle_BRep_Polygon3D {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend BRep_Polygon3D {
@@ -3144,19 +2699,20 @@ class Handle_BRep_PolygonOnSurface : public Handle_BRep_CurveRepresentation {
         static const Handle_BRep_PolygonOnSurface DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_BRep_PolygonOnSurface {
     BRep_PolygonOnSurface* _get_reference() {
-    return (BRep_PolygonOnSurface*)$self->Access();
+    return (BRep_PolygonOnSurface*)$self->get();
     }
 };
 
 %extend Handle_BRep_PolygonOnSurface {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend BRep_PolygonOnSurface {
@@ -3249,19 +2805,20 @@ class Handle_BRep_PolygonOnTriangulation : public Handle_BRep_CurveRepresentatio
         static const Handle_BRep_PolygonOnTriangulation DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_BRep_PolygonOnTriangulation {
     BRep_PolygonOnTriangulation* _get_reference() {
-    return (BRep_PolygonOnTriangulation*)$self->Access();
+    return (BRep_PolygonOnTriangulation*)$self->get();
     }
 };
 
 %extend Handle_BRep_PolygonOnTriangulation {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend BRep_PolygonOnTriangulation {
@@ -3346,19 +2903,20 @@ class Handle_BRep_Curve3D : public Handle_BRep_GCurve {
         static const Handle_BRep_Curve3D DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_BRep_Curve3D {
     BRep_Curve3D* _get_reference() {
-    return (BRep_Curve3D*)$self->Access();
+    return (BRep_Curve3D*)$self->get();
     }
 };
 
 %extend Handle_BRep_Curve3D {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend BRep_Curve3D {
@@ -3481,19 +3039,20 @@ class Handle_BRep_CurveOnSurface : public Handle_BRep_GCurve {
         static const Handle_BRep_CurveOnSurface DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_BRep_CurveOnSurface {
     BRep_CurveOnSurface* _get_reference() {
-    return (BRep_CurveOnSurface*)$self->Access();
+    return (BRep_CurveOnSurface*)$self->get();
     }
 };
 
 %extend Handle_BRep_CurveOnSurface {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend BRep_CurveOnSurface {
@@ -3576,19 +3135,20 @@ class Handle_BRep_PointOnCurveOnSurface : public Handle_BRep_PointsOnSurface {
         static const Handle_BRep_PointOnCurveOnSurface DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_BRep_PointOnCurveOnSurface {
     BRep_PointOnCurveOnSurface* _get_reference() {
-    return (BRep_PointOnCurveOnSurface*)$self->Access();
+    return (BRep_PointOnCurveOnSurface*)$self->get();
     }
 };
 
 %extend Handle_BRep_PointOnCurveOnSurface {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend BRep_PointOnCurveOnSurface {
@@ -3667,19 +3227,20 @@ class Handle_BRep_PointOnSurface : public Handle_BRep_PointsOnSurface {
         static const Handle_BRep_PointOnSurface DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_BRep_PointOnSurface {
     BRep_PointOnSurface* _get_reference() {
-    return (BRep_PointOnSurface*)$self->Access();
+    return (BRep_PointOnSurface*)$self->get();
     }
 };
 
 %extend Handle_BRep_PointOnSurface {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend BRep_PointOnSurface {
@@ -3758,19 +3319,20 @@ class Handle_BRep_PolygonOnClosedSurface : public Handle_BRep_PolygonOnSurface {
         static const Handle_BRep_PolygonOnClosedSurface DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_BRep_PolygonOnClosedSurface {
     BRep_PolygonOnClosedSurface* _get_reference() {
-    return (BRep_PolygonOnClosedSurface*)$self->Access();
+    return (BRep_PolygonOnClosedSurface*)$self->get();
     }
 };
 
 %extend Handle_BRep_PolygonOnClosedSurface {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend BRep_PolygonOnClosedSurface {
@@ -3849,19 +3411,20 @@ class Handle_BRep_PolygonOnClosedTriangulation : public Handle_BRep_PolygonOnTri
         static const Handle_BRep_PolygonOnClosedTriangulation DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_BRep_PolygonOnClosedTriangulation {
     BRep_PolygonOnClosedTriangulation* _get_reference() {
-    return (BRep_PolygonOnClosedTriangulation*)$self->Access();
+    return (BRep_PolygonOnClosedTriangulation*)$self->get();
     }
 };
 
 %extend Handle_BRep_PolygonOnClosedTriangulation {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend BRep_PolygonOnClosedTriangulation {
@@ -3915,7 +3478,7 @@ class BRep_CurveOnClosedSurface : public BRep_CurveOnSurface {
 ") IsRegularity;
 		virtual Standard_Boolean IsRegularity ();
 		%feature("compactdefaultargs") IsRegularity;
-		%feature("autodoc", "	* A curve on two surfaces (continuity).
+		%feature("autodoc", "	* A curve on two surfaces --continuity--.
 
 	:param S1:
 	:type S1: Handle_Geom_Surface &
@@ -3933,13 +3496,13 @@ class BRep_CurveOnClosedSurface : public BRep_CurveOnSurface {
 ") PCurve2;
 		Handle_Geom2d_Curve PCurve2 ();
 		%feature("compactdefaultargs") Surface2;
-		%feature("autodoc", "	* Returns Surface()
+		%feature("autodoc", "	* Returns Surface----
 
 	:rtype: Handle_Geom_Surface
 ") Surface2;
 		Handle_Geom_Surface Surface2 ();
 		%feature("compactdefaultargs") Location2;
-		%feature("autodoc", "	* Returns Location()
+		%feature("autodoc", "	* Returns Location----
 
 	:rtype: TopLoc_Location
 ") Location2;
@@ -4006,19 +3569,20 @@ class Handle_BRep_CurveOnClosedSurface : public Handle_BRep_CurveOnSurface {
         static const Handle_BRep_CurveOnClosedSurface DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_BRep_CurveOnClosedSurface {
     BRep_CurveOnClosedSurface* _get_reference() {
-    return (BRep_CurveOnClosedSurface*)$self->Access();
+    return (BRep_CurveOnClosedSurface*)$self->get();
     }
 };
 
 %extend Handle_BRep_CurveOnClosedSurface {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend BRep_CurveOnClosedSurface {

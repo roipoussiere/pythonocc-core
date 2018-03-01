@@ -1,5 +1,5 @@
 /*
-Copyright 2008-2017 Thomas Paviot (tpaviot@gmail.com)
+Copyright 2008-2018 Thomas Paviot (tpaviot@gmail.com)
 
 
 This file is part of pythonOCC.
@@ -56,6 +56,15 @@ def register_handle(handle, base_object):
 /* typedefs */
 /* end typedefs declaration */
 
+/* templates */
+%template(MAT_DataMapOfIntegerNode) NCollection_DataMap <Standard_Integer , Handle_MAT_Node , TColStd_MapIntegerHasher>;
+%template(MAT_DataMapOfIntegerArc) NCollection_DataMap <Standard_Integer , Handle_MAT_Arc , TColStd_MapIntegerHasher>;
+%template(MAT_DataMapOfIntegerBisector) NCollection_DataMap <Standard_Integer , Handle_MAT_Bisector , TColStd_MapIntegerHasher>;
+%template(MAT_SequenceOfBasicElt) NCollection_Sequence <Handle_MAT_BasicElt>;
+%template(MAT_SequenceOfArc) NCollection_Sequence <Handle_MAT_Arc>;
+%template(MAT_DataMapOfIntegerBasicElt) NCollection_DataMap <Standard_Integer , Handle_MAT_BasicElt , TColStd_MapIntegerHasher>;
+/* end templates declaration */
+
 /* public enums */
 enum MAT_Side {
 	MAT_Left = 0,
@@ -65,7 +74,7 @@ enum MAT_Side {
 /* end public enums declaration */
 
 %nodefaultctor MAT_Arc;
-class MAT_Arc : public MMgt_TShared {
+class MAT_Arc : public Standard_Transient {
 	public:
 		%feature("compactdefaultargs") MAT_Arc;
 		%feature("autodoc", "	:param ArcIndex:
@@ -134,7 +143,7 @@ class MAT_Arc : public MMgt_TShared {
 ") HasNeighbour;
 		Standard_Boolean HasNeighbour (const Handle_MAT_Node & aNode,const MAT_Side aSide);
 		%feature("compactdefaultargs") Neighbour;
-		%feature("autodoc", "	* Returns the first arc linked to the Node <aNode> located on the side <aSide> of <self>; if HasNeighbour() returns False.
+		%feature("autodoc", "	* Returns the first arc linked to the Node <aNode> located on the side <aSide> of <self>; if HasNeighbour---- returns False.
 
 	:param aNode:
 	:type aNode: Handle_MAT_Node &
@@ -227,7 +236,7 @@ class MAT_Arc : public MMgt_TShared {
 %}
 
 %nodefaultctor Handle_MAT_Arc;
-class Handle_MAT_Arc : public Handle_MMgt_TShared {
+class Handle_MAT_Arc : public Handle_Standard_Transient {
 
     public:
         // constructors
@@ -239,19 +248,20 @@ class Handle_MAT_Arc : public Handle_MMgt_TShared {
         static const Handle_MAT_Arc DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_MAT_Arc {
     MAT_Arc* _get_reference() {
-    return (MAT_Arc*)$self->Access();
+    return (MAT_Arc*)$self->get();
     }
 };
 
 %extend Handle_MAT_Arc {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend MAT_Arc {
@@ -260,7 +270,7 @@ class Handle_MAT_Arc : public Handle_MMgt_TShared {
 	}
 };
 %nodefaultctor MAT_BasicElt;
-class MAT_BasicElt : public MMgt_TShared {
+class MAT_BasicElt : public Standard_Transient {
 	public:
 		%feature("compactdefaultargs") MAT_BasicElt;
 		%feature("autodoc", "	* Constructor, <anInteger> is the <index> of <self>.
@@ -340,7 +350,7 @@ class MAT_BasicElt : public MMgt_TShared {
 %}
 
 %nodefaultctor Handle_MAT_BasicElt;
-class Handle_MAT_BasicElt : public Handle_MMgt_TShared {
+class Handle_MAT_BasicElt : public Handle_Standard_Transient {
 
     public:
         // constructors
@@ -352,19 +362,20 @@ class Handle_MAT_BasicElt : public Handle_MMgt_TShared {
         static const Handle_MAT_BasicElt DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_MAT_BasicElt {
     MAT_BasicElt* _get_reference() {
-    return (MAT_BasicElt*)$self->Access();
+    return (MAT_BasicElt*)$self->get();
     }
 };
 
 %extend Handle_MAT_BasicElt {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend MAT_BasicElt {
@@ -373,7 +384,7 @@ class Handle_MAT_BasicElt : public Handle_MMgt_TShared {
 	}
 };
 %nodefaultctor MAT_Bisector;
-class MAT_Bisector : public MMgt_TShared {
+class MAT_Bisector : public Standard_Transient {
 	public:
 		%feature("compactdefaultargs") MAT_Bisector;
 		%feature("autodoc", "	:rtype: None
@@ -547,7 +558,7 @@ class MAT_Bisector : public MMgt_TShared {
 %}
 
 %nodefaultctor Handle_MAT_Bisector;
-class Handle_MAT_Bisector : public Handle_MMgt_TShared {
+class Handle_MAT_Bisector : public Handle_Standard_Transient {
 
     public:
         // constructors
@@ -559,19 +570,20 @@ class Handle_MAT_Bisector : public Handle_MMgt_TShared {
         static const Handle_MAT_Bisector DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_MAT_Bisector {
     MAT_Bisector* _get_reference() {
-    return (MAT_Bisector*)$self->Access();
+    return (MAT_Bisector*)$self->get();
     }
 };
 
 %extend Handle_MAT_Bisector {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend MAT_Bisector {
@@ -579,816 +591,8 @@ class Handle_MAT_Bisector : public Handle_MMgt_TShared {
 	__repr__ = _dumps_object
 	}
 };
-%nodefaultctor MAT_DataMapIteratorOfDataMapOfIntegerArc;
-class MAT_DataMapIteratorOfDataMapOfIntegerArc : public TCollection_BasicMapIterator {
-	public:
-		%feature("compactdefaultargs") MAT_DataMapIteratorOfDataMapOfIntegerArc;
-		%feature("autodoc", "	:rtype: None
-") MAT_DataMapIteratorOfDataMapOfIntegerArc;
-		 MAT_DataMapIteratorOfDataMapOfIntegerArc ();
-		%feature("compactdefaultargs") MAT_DataMapIteratorOfDataMapOfIntegerArc;
-		%feature("autodoc", "	:param aMap:
-	:type aMap: MAT_DataMapOfIntegerArc &
-	:rtype: None
-") MAT_DataMapIteratorOfDataMapOfIntegerArc;
-		 MAT_DataMapIteratorOfDataMapOfIntegerArc (const MAT_DataMapOfIntegerArc & aMap);
-		%feature("compactdefaultargs") Initialize;
-		%feature("autodoc", "	:param aMap:
-	:type aMap: MAT_DataMapOfIntegerArc &
-	:rtype: None
-") Initialize;
-		void Initialize (const MAT_DataMapOfIntegerArc & aMap);
-		%feature("compactdefaultargs") Key;
-		%feature("autodoc", "	:rtype: int
-") Key;
-		const Standard_Integer & Key ();
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:rtype: Handle_MAT_Arc
-") Value;
-		Handle_MAT_Arc Value ();
-};
-
-
-%extend MAT_DataMapIteratorOfDataMapOfIntegerArc {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor MAT_DataMapIteratorOfDataMapOfIntegerBasicElt;
-class MAT_DataMapIteratorOfDataMapOfIntegerBasicElt : public TCollection_BasicMapIterator {
-	public:
-		%feature("compactdefaultargs") MAT_DataMapIteratorOfDataMapOfIntegerBasicElt;
-		%feature("autodoc", "	:rtype: None
-") MAT_DataMapIteratorOfDataMapOfIntegerBasicElt;
-		 MAT_DataMapIteratorOfDataMapOfIntegerBasicElt ();
-		%feature("compactdefaultargs") MAT_DataMapIteratorOfDataMapOfIntegerBasicElt;
-		%feature("autodoc", "	:param aMap:
-	:type aMap: MAT_DataMapOfIntegerBasicElt &
-	:rtype: None
-") MAT_DataMapIteratorOfDataMapOfIntegerBasicElt;
-		 MAT_DataMapIteratorOfDataMapOfIntegerBasicElt (const MAT_DataMapOfIntegerBasicElt & aMap);
-		%feature("compactdefaultargs") Initialize;
-		%feature("autodoc", "	:param aMap:
-	:type aMap: MAT_DataMapOfIntegerBasicElt &
-	:rtype: None
-") Initialize;
-		void Initialize (const MAT_DataMapOfIntegerBasicElt & aMap);
-		%feature("compactdefaultargs") Key;
-		%feature("autodoc", "	:rtype: int
-") Key;
-		const Standard_Integer & Key ();
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:rtype: Handle_MAT_BasicElt
-") Value;
-		Handle_MAT_BasicElt Value ();
-};
-
-
-%extend MAT_DataMapIteratorOfDataMapOfIntegerBasicElt {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor MAT_DataMapIteratorOfDataMapOfIntegerBisector;
-class MAT_DataMapIteratorOfDataMapOfIntegerBisector : public TCollection_BasicMapIterator {
-	public:
-		%feature("compactdefaultargs") MAT_DataMapIteratorOfDataMapOfIntegerBisector;
-		%feature("autodoc", "	:rtype: None
-") MAT_DataMapIteratorOfDataMapOfIntegerBisector;
-		 MAT_DataMapIteratorOfDataMapOfIntegerBisector ();
-		%feature("compactdefaultargs") MAT_DataMapIteratorOfDataMapOfIntegerBisector;
-		%feature("autodoc", "	:param aMap:
-	:type aMap: MAT_DataMapOfIntegerBisector &
-	:rtype: None
-") MAT_DataMapIteratorOfDataMapOfIntegerBisector;
-		 MAT_DataMapIteratorOfDataMapOfIntegerBisector (const MAT_DataMapOfIntegerBisector & aMap);
-		%feature("compactdefaultargs") Initialize;
-		%feature("autodoc", "	:param aMap:
-	:type aMap: MAT_DataMapOfIntegerBisector &
-	:rtype: None
-") Initialize;
-		void Initialize (const MAT_DataMapOfIntegerBisector & aMap);
-		%feature("compactdefaultargs") Key;
-		%feature("autodoc", "	:rtype: int
-") Key;
-		const Standard_Integer & Key ();
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:rtype: Handle_MAT_Bisector
-") Value;
-		Handle_MAT_Bisector Value ();
-};
-
-
-%extend MAT_DataMapIteratorOfDataMapOfIntegerBisector {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor MAT_DataMapIteratorOfDataMapOfIntegerNode;
-class MAT_DataMapIteratorOfDataMapOfIntegerNode : public TCollection_BasicMapIterator {
-	public:
-		%feature("compactdefaultargs") MAT_DataMapIteratorOfDataMapOfIntegerNode;
-		%feature("autodoc", "	:rtype: None
-") MAT_DataMapIteratorOfDataMapOfIntegerNode;
-		 MAT_DataMapIteratorOfDataMapOfIntegerNode ();
-		%feature("compactdefaultargs") MAT_DataMapIteratorOfDataMapOfIntegerNode;
-		%feature("autodoc", "	:param aMap:
-	:type aMap: MAT_DataMapOfIntegerNode &
-	:rtype: None
-") MAT_DataMapIteratorOfDataMapOfIntegerNode;
-		 MAT_DataMapIteratorOfDataMapOfIntegerNode (const MAT_DataMapOfIntegerNode & aMap);
-		%feature("compactdefaultargs") Initialize;
-		%feature("autodoc", "	:param aMap:
-	:type aMap: MAT_DataMapOfIntegerNode &
-	:rtype: None
-") Initialize;
-		void Initialize (const MAT_DataMapOfIntegerNode & aMap);
-		%feature("compactdefaultargs") Key;
-		%feature("autodoc", "	:rtype: int
-") Key;
-		const Standard_Integer & Key ();
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:rtype: Handle_MAT_Node
-") Value;
-		Handle_MAT_Node Value ();
-};
-
-
-%extend MAT_DataMapIteratorOfDataMapOfIntegerNode {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor MAT_DataMapNodeOfDataMapOfIntegerArc;
-class MAT_DataMapNodeOfDataMapOfIntegerArc : public TCollection_MapNode {
-	public:
-		%feature("compactdefaultargs") MAT_DataMapNodeOfDataMapOfIntegerArc;
-		%feature("autodoc", "	:param K:
-	:type K: int &
-	:param I:
-	:type I: Handle_MAT_Arc &
-	:param n:
-	:type n: TCollection_MapNodePtr &
-	:rtype: None
-") MAT_DataMapNodeOfDataMapOfIntegerArc;
-		 MAT_DataMapNodeOfDataMapOfIntegerArc (const Standard_Integer & K,const Handle_MAT_Arc & I,const TCollection_MapNodePtr & n);
-
-            %feature("autodoc","1");
-            %extend {
-                Standard_Integer GetKey() {
-                return (Standard_Integer) $self->Key();
-                }
-            };
-            %feature("autodoc","1");
-            %extend {
-                void SetKey(Standard_Integer value ) {
-                $self->Key()=value;
-                }
-            };
-            		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:rtype: Handle_MAT_Arc
-") Value;
-		Handle_MAT_Arc Value ();
-};
-
-
-%extend MAT_DataMapNodeOfDataMapOfIntegerArc {
-	%pythoncode {
-		def GetHandle(self):
-		    try:
-		        return self.thisHandle
-		    except:
-		        self.thisHandle = Handle_MAT_DataMapNodeOfDataMapOfIntegerArc(self)
-		        self.thisown = False
-		        return self.thisHandle
-	}
-};
-
-%pythonappend Handle_MAT_DataMapNodeOfDataMapOfIntegerArc::Handle_MAT_DataMapNodeOfDataMapOfIntegerArc %{
-    # register the handle in the base object
-    if len(args) > 0:
-        register_handle(self, args[0])
-%}
-
-%nodefaultctor Handle_MAT_DataMapNodeOfDataMapOfIntegerArc;
-class Handle_MAT_DataMapNodeOfDataMapOfIntegerArc : public Handle_TCollection_MapNode {
-
-    public:
-        // constructors
-        Handle_MAT_DataMapNodeOfDataMapOfIntegerArc();
-        Handle_MAT_DataMapNodeOfDataMapOfIntegerArc(const Handle_MAT_DataMapNodeOfDataMapOfIntegerArc &aHandle);
-        Handle_MAT_DataMapNodeOfDataMapOfIntegerArc(const MAT_DataMapNodeOfDataMapOfIntegerArc *anItem);
-        void Nullify();
-        Standard_Boolean IsNull() const;
-        static const Handle_MAT_DataMapNodeOfDataMapOfIntegerArc DownCast(const Handle_Standard_Transient &AnObject);
-
-};
-%extend Handle_MAT_DataMapNodeOfDataMapOfIntegerArc {
-    MAT_DataMapNodeOfDataMapOfIntegerArc* _get_reference() {
-    return (MAT_DataMapNodeOfDataMapOfIntegerArc*)$self->Access();
-    }
-};
-
-%extend Handle_MAT_DataMapNodeOfDataMapOfIntegerArc {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
-};
-
-%extend MAT_DataMapNodeOfDataMapOfIntegerArc {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor MAT_DataMapNodeOfDataMapOfIntegerBasicElt;
-class MAT_DataMapNodeOfDataMapOfIntegerBasicElt : public TCollection_MapNode {
-	public:
-		%feature("compactdefaultargs") MAT_DataMapNodeOfDataMapOfIntegerBasicElt;
-		%feature("autodoc", "	:param K:
-	:type K: int &
-	:param I:
-	:type I: Handle_MAT_BasicElt &
-	:param n:
-	:type n: TCollection_MapNodePtr &
-	:rtype: None
-") MAT_DataMapNodeOfDataMapOfIntegerBasicElt;
-		 MAT_DataMapNodeOfDataMapOfIntegerBasicElt (const Standard_Integer & K,const Handle_MAT_BasicElt & I,const TCollection_MapNodePtr & n);
-
-            %feature("autodoc","1");
-            %extend {
-                Standard_Integer GetKey() {
-                return (Standard_Integer) $self->Key();
-                }
-            };
-            %feature("autodoc","1");
-            %extend {
-                void SetKey(Standard_Integer value ) {
-                $self->Key()=value;
-                }
-            };
-            		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:rtype: Handle_MAT_BasicElt
-") Value;
-		Handle_MAT_BasicElt Value ();
-};
-
-
-%extend MAT_DataMapNodeOfDataMapOfIntegerBasicElt {
-	%pythoncode {
-		def GetHandle(self):
-		    try:
-		        return self.thisHandle
-		    except:
-		        self.thisHandle = Handle_MAT_DataMapNodeOfDataMapOfIntegerBasicElt(self)
-		        self.thisown = False
-		        return self.thisHandle
-	}
-};
-
-%pythonappend Handle_MAT_DataMapNodeOfDataMapOfIntegerBasicElt::Handle_MAT_DataMapNodeOfDataMapOfIntegerBasicElt %{
-    # register the handle in the base object
-    if len(args) > 0:
-        register_handle(self, args[0])
-%}
-
-%nodefaultctor Handle_MAT_DataMapNodeOfDataMapOfIntegerBasicElt;
-class Handle_MAT_DataMapNodeOfDataMapOfIntegerBasicElt : public Handle_TCollection_MapNode {
-
-    public:
-        // constructors
-        Handle_MAT_DataMapNodeOfDataMapOfIntegerBasicElt();
-        Handle_MAT_DataMapNodeOfDataMapOfIntegerBasicElt(const Handle_MAT_DataMapNodeOfDataMapOfIntegerBasicElt &aHandle);
-        Handle_MAT_DataMapNodeOfDataMapOfIntegerBasicElt(const MAT_DataMapNodeOfDataMapOfIntegerBasicElt *anItem);
-        void Nullify();
-        Standard_Boolean IsNull() const;
-        static const Handle_MAT_DataMapNodeOfDataMapOfIntegerBasicElt DownCast(const Handle_Standard_Transient &AnObject);
-
-};
-%extend Handle_MAT_DataMapNodeOfDataMapOfIntegerBasicElt {
-    MAT_DataMapNodeOfDataMapOfIntegerBasicElt* _get_reference() {
-    return (MAT_DataMapNodeOfDataMapOfIntegerBasicElt*)$self->Access();
-    }
-};
-
-%extend Handle_MAT_DataMapNodeOfDataMapOfIntegerBasicElt {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
-};
-
-%extend MAT_DataMapNodeOfDataMapOfIntegerBasicElt {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor MAT_DataMapNodeOfDataMapOfIntegerBisector;
-class MAT_DataMapNodeOfDataMapOfIntegerBisector : public TCollection_MapNode {
-	public:
-		%feature("compactdefaultargs") MAT_DataMapNodeOfDataMapOfIntegerBisector;
-		%feature("autodoc", "	:param K:
-	:type K: int &
-	:param I:
-	:type I: Handle_MAT_Bisector &
-	:param n:
-	:type n: TCollection_MapNodePtr &
-	:rtype: None
-") MAT_DataMapNodeOfDataMapOfIntegerBisector;
-		 MAT_DataMapNodeOfDataMapOfIntegerBisector (const Standard_Integer & K,const Handle_MAT_Bisector & I,const TCollection_MapNodePtr & n);
-
-            %feature("autodoc","1");
-            %extend {
-                Standard_Integer GetKey() {
-                return (Standard_Integer) $self->Key();
-                }
-            };
-            %feature("autodoc","1");
-            %extend {
-                void SetKey(Standard_Integer value ) {
-                $self->Key()=value;
-                }
-            };
-            		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:rtype: Handle_MAT_Bisector
-") Value;
-		Handle_MAT_Bisector Value ();
-};
-
-
-%extend MAT_DataMapNodeOfDataMapOfIntegerBisector {
-	%pythoncode {
-		def GetHandle(self):
-		    try:
-		        return self.thisHandle
-		    except:
-		        self.thisHandle = Handle_MAT_DataMapNodeOfDataMapOfIntegerBisector(self)
-		        self.thisown = False
-		        return self.thisHandle
-	}
-};
-
-%pythonappend Handle_MAT_DataMapNodeOfDataMapOfIntegerBisector::Handle_MAT_DataMapNodeOfDataMapOfIntegerBisector %{
-    # register the handle in the base object
-    if len(args) > 0:
-        register_handle(self, args[0])
-%}
-
-%nodefaultctor Handle_MAT_DataMapNodeOfDataMapOfIntegerBisector;
-class Handle_MAT_DataMapNodeOfDataMapOfIntegerBisector : public Handle_TCollection_MapNode {
-
-    public:
-        // constructors
-        Handle_MAT_DataMapNodeOfDataMapOfIntegerBisector();
-        Handle_MAT_DataMapNodeOfDataMapOfIntegerBisector(const Handle_MAT_DataMapNodeOfDataMapOfIntegerBisector &aHandle);
-        Handle_MAT_DataMapNodeOfDataMapOfIntegerBisector(const MAT_DataMapNodeOfDataMapOfIntegerBisector *anItem);
-        void Nullify();
-        Standard_Boolean IsNull() const;
-        static const Handle_MAT_DataMapNodeOfDataMapOfIntegerBisector DownCast(const Handle_Standard_Transient &AnObject);
-
-};
-%extend Handle_MAT_DataMapNodeOfDataMapOfIntegerBisector {
-    MAT_DataMapNodeOfDataMapOfIntegerBisector* _get_reference() {
-    return (MAT_DataMapNodeOfDataMapOfIntegerBisector*)$self->Access();
-    }
-};
-
-%extend Handle_MAT_DataMapNodeOfDataMapOfIntegerBisector {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
-};
-
-%extend MAT_DataMapNodeOfDataMapOfIntegerBisector {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor MAT_DataMapNodeOfDataMapOfIntegerNode;
-class MAT_DataMapNodeOfDataMapOfIntegerNode : public TCollection_MapNode {
-	public:
-		%feature("compactdefaultargs") MAT_DataMapNodeOfDataMapOfIntegerNode;
-		%feature("autodoc", "	:param K:
-	:type K: int &
-	:param I:
-	:type I: Handle_MAT_Node &
-	:param n:
-	:type n: TCollection_MapNodePtr &
-	:rtype: None
-") MAT_DataMapNodeOfDataMapOfIntegerNode;
-		 MAT_DataMapNodeOfDataMapOfIntegerNode (const Standard_Integer & K,const Handle_MAT_Node & I,const TCollection_MapNodePtr & n);
-
-            %feature("autodoc","1");
-            %extend {
-                Standard_Integer GetKey() {
-                return (Standard_Integer) $self->Key();
-                }
-            };
-            %feature("autodoc","1");
-            %extend {
-                void SetKey(Standard_Integer value ) {
-                $self->Key()=value;
-                }
-            };
-            		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:rtype: Handle_MAT_Node
-") Value;
-		Handle_MAT_Node Value ();
-};
-
-
-%extend MAT_DataMapNodeOfDataMapOfIntegerNode {
-	%pythoncode {
-		def GetHandle(self):
-		    try:
-		        return self.thisHandle
-		    except:
-		        self.thisHandle = Handle_MAT_DataMapNodeOfDataMapOfIntegerNode(self)
-		        self.thisown = False
-		        return self.thisHandle
-	}
-};
-
-%pythonappend Handle_MAT_DataMapNodeOfDataMapOfIntegerNode::Handle_MAT_DataMapNodeOfDataMapOfIntegerNode %{
-    # register the handle in the base object
-    if len(args) > 0:
-        register_handle(self, args[0])
-%}
-
-%nodefaultctor Handle_MAT_DataMapNodeOfDataMapOfIntegerNode;
-class Handle_MAT_DataMapNodeOfDataMapOfIntegerNode : public Handle_TCollection_MapNode {
-
-    public:
-        // constructors
-        Handle_MAT_DataMapNodeOfDataMapOfIntegerNode();
-        Handle_MAT_DataMapNodeOfDataMapOfIntegerNode(const Handle_MAT_DataMapNodeOfDataMapOfIntegerNode &aHandle);
-        Handle_MAT_DataMapNodeOfDataMapOfIntegerNode(const MAT_DataMapNodeOfDataMapOfIntegerNode *anItem);
-        void Nullify();
-        Standard_Boolean IsNull() const;
-        static const Handle_MAT_DataMapNodeOfDataMapOfIntegerNode DownCast(const Handle_Standard_Transient &AnObject);
-
-};
-%extend Handle_MAT_DataMapNodeOfDataMapOfIntegerNode {
-    MAT_DataMapNodeOfDataMapOfIntegerNode* _get_reference() {
-    return (MAT_DataMapNodeOfDataMapOfIntegerNode*)$self->Access();
-    }
-};
-
-%extend Handle_MAT_DataMapNodeOfDataMapOfIntegerNode {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
-};
-
-%extend MAT_DataMapNodeOfDataMapOfIntegerNode {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor MAT_DataMapOfIntegerArc;
-class MAT_DataMapOfIntegerArc : public TCollection_BasicMap {
-	public:
-		%feature("compactdefaultargs") MAT_DataMapOfIntegerArc;
-		%feature("autodoc", "	:param NbBuckets: default value is 1
-	:type NbBuckets: int
-	:rtype: None
-") MAT_DataMapOfIntegerArc;
-		 MAT_DataMapOfIntegerArc (const Standard_Integer NbBuckets = 1);
-		%feature("compactdefaultargs") Assign;
-		%feature("autodoc", "	:param Other:
-	:type Other: MAT_DataMapOfIntegerArc &
-	:rtype: MAT_DataMapOfIntegerArc
-") Assign;
-		MAT_DataMapOfIntegerArc & Assign (const MAT_DataMapOfIntegerArc & Other);
-		%feature("compactdefaultargs") operator =;
-		%feature("autodoc", "	:param Other:
-	:type Other: MAT_DataMapOfIntegerArc &
-	:rtype: MAT_DataMapOfIntegerArc
-") operator =;
-		MAT_DataMapOfIntegerArc & operator = (const MAT_DataMapOfIntegerArc & Other);
-		%feature("compactdefaultargs") ReSize;
-		%feature("autodoc", "	:param NbBuckets:
-	:type NbBuckets: int
-	:rtype: None
-") ReSize;
-		void ReSize (const Standard_Integer NbBuckets);
-		%feature("compactdefaultargs") Clear;
-		%feature("autodoc", "	:rtype: None
-") Clear;
-		void Clear ();
-		%feature("compactdefaultargs") Bind;
-		%feature("autodoc", "	:param K:
-	:type K: int &
-	:param I:
-	:type I: Handle_MAT_Arc &
-	:rtype: bool
-") Bind;
-		Standard_Boolean Bind (const Standard_Integer & K,const Handle_MAT_Arc & I);
-		%feature("compactdefaultargs") IsBound;
-		%feature("autodoc", "	:param K:
-	:type K: int &
-	:rtype: bool
-") IsBound;
-		Standard_Boolean IsBound (const Standard_Integer & K);
-		%feature("compactdefaultargs") UnBind;
-		%feature("autodoc", "	:param K:
-	:type K: int &
-	:rtype: bool
-") UnBind;
-		Standard_Boolean UnBind (const Standard_Integer & K);
-		%feature("compactdefaultargs") Find;
-		%feature("autodoc", "	:param K:
-	:type K: int &
-	:rtype: Handle_MAT_Arc
-") Find;
-		Handle_MAT_Arc Find (const Standard_Integer & K);
-		%feature("compactdefaultargs") ChangeFind;
-		%feature("autodoc", "	:param K:
-	:type K: int &
-	:rtype: Handle_MAT_Arc
-") ChangeFind;
-		Handle_MAT_Arc ChangeFind (const Standard_Integer & K);
-		%feature("compactdefaultargs") Find1;
-		%feature("autodoc", "	:param K:
-	:type K: int &
-	:rtype: Standard_Address
-") Find1;
-		Standard_Address Find1 (const Standard_Integer & K);
-		%feature("compactdefaultargs") ChangeFind1;
-		%feature("autodoc", "	:param K:
-	:type K: int &
-	:rtype: Standard_Address
-") ChangeFind1;
-		Standard_Address ChangeFind1 (const Standard_Integer & K);
-};
-
-
-%extend MAT_DataMapOfIntegerArc {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor MAT_DataMapOfIntegerBasicElt;
-class MAT_DataMapOfIntegerBasicElt : public TCollection_BasicMap {
-	public:
-		%feature("compactdefaultargs") MAT_DataMapOfIntegerBasicElt;
-		%feature("autodoc", "	:param NbBuckets: default value is 1
-	:type NbBuckets: int
-	:rtype: None
-") MAT_DataMapOfIntegerBasicElt;
-		 MAT_DataMapOfIntegerBasicElt (const Standard_Integer NbBuckets = 1);
-		%feature("compactdefaultargs") Assign;
-		%feature("autodoc", "	:param Other:
-	:type Other: MAT_DataMapOfIntegerBasicElt &
-	:rtype: MAT_DataMapOfIntegerBasicElt
-") Assign;
-		MAT_DataMapOfIntegerBasicElt & Assign (const MAT_DataMapOfIntegerBasicElt & Other);
-		%feature("compactdefaultargs") operator =;
-		%feature("autodoc", "	:param Other:
-	:type Other: MAT_DataMapOfIntegerBasicElt &
-	:rtype: MAT_DataMapOfIntegerBasicElt
-") operator =;
-		MAT_DataMapOfIntegerBasicElt & operator = (const MAT_DataMapOfIntegerBasicElt & Other);
-		%feature("compactdefaultargs") ReSize;
-		%feature("autodoc", "	:param NbBuckets:
-	:type NbBuckets: int
-	:rtype: None
-") ReSize;
-		void ReSize (const Standard_Integer NbBuckets);
-		%feature("compactdefaultargs") Clear;
-		%feature("autodoc", "	:rtype: None
-") Clear;
-		void Clear ();
-		%feature("compactdefaultargs") Bind;
-		%feature("autodoc", "	:param K:
-	:type K: int &
-	:param I:
-	:type I: Handle_MAT_BasicElt &
-	:rtype: bool
-") Bind;
-		Standard_Boolean Bind (const Standard_Integer & K,const Handle_MAT_BasicElt & I);
-		%feature("compactdefaultargs") IsBound;
-		%feature("autodoc", "	:param K:
-	:type K: int &
-	:rtype: bool
-") IsBound;
-		Standard_Boolean IsBound (const Standard_Integer & K);
-		%feature("compactdefaultargs") UnBind;
-		%feature("autodoc", "	:param K:
-	:type K: int &
-	:rtype: bool
-") UnBind;
-		Standard_Boolean UnBind (const Standard_Integer & K);
-		%feature("compactdefaultargs") Find;
-		%feature("autodoc", "	:param K:
-	:type K: int &
-	:rtype: Handle_MAT_BasicElt
-") Find;
-		Handle_MAT_BasicElt Find (const Standard_Integer & K);
-		%feature("compactdefaultargs") ChangeFind;
-		%feature("autodoc", "	:param K:
-	:type K: int &
-	:rtype: Handle_MAT_BasicElt
-") ChangeFind;
-		Handle_MAT_BasicElt ChangeFind (const Standard_Integer & K);
-		%feature("compactdefaultargs") Find1;
-		%feature("autodoc", "	:param K:
-	:type K: int &
-	:rtype: Standard_Address
-") Find1;
-		Standard_Address Find1 (const Standard_Integer & K);
-		%feature("compactdefaultargs") ChangeFind1;
-		%feature("autodoc", "	:param K:
-	:type K: int &
-	:rtype: Standard_Address
-") ChangeFind1;
-		Standard_Address ChangeFind1 (const Standard_Integer & K);
-};
-
-
-%extend MAT_DataMapOfIntegerBasicElt {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor MAT_DataMapOfIntegerBisector;
-class MAT_DataMapOfIntegerBisector : public TCollection_BasicMap {
-	public:
-		%feature("compactdefaultargs") MAT_DataMapOfIntegerBisector;
-		%feature("autodoc", "	:param NbBuckets: default value is 1
-	:type NbBuckets: int
-	:rtype: None
-") MAT_DataMapOfIntegerBisector;
-		 MAT_DataMapOfIntegerBisector (const Standard_Integer NbBuckets = 1);
-		%feature("compactdefaultargs") Assign;
-		%feature("autodoc", "	:param Other:
-	:type Other: MAT_DataMapOfIntegerBisector &
-	:rtype: MAT_DataMapOfIntegerBisector
-") Assign;
-		MAT_DataMapOfIntegerBisector & Assign (const MAT_DataMapOfIntegerBisector & Other);
-		%feature("compactdefaultargs") operator =;
-		%feature("autodoc", "	:param Other:
-	:type Other: MAT_DataMapOfIntegerBisector &
-	:rtype: MAT_DataMapOfIntegerBisector
-") operator =;
-		MAT_DataMapOfIntegerBisector & operator = (const MAT_DataMapOfIntegerBisector & Other);
-		%feature("compactdefaultargs") ReSize;
-		%feature("autodoc", "	:param NbBuckets:
-	:type NbBuckets: int
-	:rtype: None
-") ReSize;
-		void ReSize (const Standard_Integer NbBuckets);
-		%feature("compactdefaultargs") Clear;
-		%feature("autodoc", "	:rtype: None
-") Clear;
-		void Clear ();
-		%feature("compactdefaultargs") Bind;
-		%feature("autodoc", "	:param K:
-	:type K: int &
-	:param I:
-	:type I: Handle_MAT_Bisector &
-	:rtype: bool
-") Bind;
-		Standard_Boolean Bind (const Standard_Integer & K,const Handle_MAT_Bisector & I);
-		%feature("compactdefaultargs") IsBound;
-		%feature("autodoc", "	:param K:
-	:type K: int &
-	:rtype: bool
-") IsBound;
-		Standard_Boolean IsBound (const Standard_Integer & K);
-		%feature("compactdefaultargs") UnBind;
-		%feature("autodoc", "	:param K:
-	:type K: int &
-	:rtype: bool
-") UnBind;
-		Standard_Boolean UnBind (const Standard_Integer & K);
-		%feature("compactdefaultargs") Find;
-		%feature("autodoc", "	:param K:
-	:type K: int &
-	:rtype: Handle_MAT_Bisector
-") Find;
-		Handle_MAT_Bisector Find (const Standard_Integer & K);
-		%feature("compactdefaultargs") ChangeFind;
-		%feature("autodoc", "	:param K:
-	:type K: int &
-	:rtype: Handle_MAT_Bisector
-") ChangeFind;
-		Handle_MAT_Bisector ChangeFind (const Standard_Integer & K);
-		%feature("compactdefaultargs") Find1;
-		%feature("autodoc", "	:param K:
-	:type K: int &
-	:rtype: Standard_Address
-") Find1;
-		Standard_Address Find1 (const Standard_Integer & K);
-		%feature("compactdefaultargs") ChangeFind1;
-		%feature("autodoc", "	:param K:
-	:type K: int &
-	:rtype: Standard_Address
-") ChangeFind1;
-		Standard_Address ChangeFind1 (const Standard_Integer & K);
-};
-
-
-%extend MAT_DataMapOfIntegerBisector {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor MAT_DataMapOfIntegerNode;
-class MAT_DataMapOfIntegerNode : public TCollection_BasicMap {
-	public:
-		%feature("compactdefaultargs") MAT_DataMapOfIntegerNode;
-		%feature("autodoc", "	:param NbBuckets: default value is 1
-	:type NbBuckets: int
-	:rtype: None
-") MAT_DataMapOfIntegerNode;
-		 MAT_DataMapOfIntegerNode (const Standard_Integer NbBuckets = 1);
-		%feature("compactdefaultargs") Assign;
-		%feature("autodoc", "	:param Other:
-	:type Other: MAT_DataMapOfIntegerNode &
-	:rtype: MAT_DataMapOfIntegerNode
-") Assign;
-		MAT_DataMapOfIntegerNode & Assign (const MAT_DataMapOfIntegerNode & Other);
-		%feature("compactdefaultargs") operator =;
-		%feature("autodoc", "	:param Other:
-	:type Other: MAT_DataMapOfIntegerNode &
-	:rtype: MAT_DataMapOfIntegerNode
-") operator =;
-		MAT_DataMapOfIntegerNode & operator = (const MAT_DataMapOfIntegerNode & Other);
-		%feature("compactdefaultargs") ReSize;
-		%feature("autodoc", "	:param NbBuckets:
-	:type NbBuckets: int
-	:rtype: None
-") ReSize;
-		void ReSize (const Standard_Integer NbBuckets);
-		%feature("compactdefaultargs") Clear;
-		%feature("autodoc", "	:rtype: None
-") Clear;
-		void Clear ();
-		%feature("compactdefaultargs") Bind;
-		%feature("autodoc", "	:param K:
-	:type K: int &
-	:param I:
-	:type I: Handle_MAT_Node &
-	:rtype: bool
-") Bind;
-		Standard_Boolean Bind (const Standard_Integer & K,const Handle_MAT_Node & I);
-		%feature("compactdefaultargs") IsBound;
-		%feature("autodoc", "	:param K:
-	:type K: int &
-	:rtype: bool
-") IsBound;
-		Standard_Boolean IsBound (const Standard_Integer & K);
-		%feature("compactdefaultargs") UnBind;
-		%feature("autodoc", "	:param K:
-	:type K: int &
-	:rtype: bool
-") UnBind;
-		Standard_Boolean UnBind (const Standard_Integer & K);
-		%feature("compactdefaultargs") Find;
-		%feature("autodoc", "	:param K:
-	:type K: int &
-	:rtype: Handle_MAT_Node
-") Find;
-		Handle_MAT_Node Find (const Standard_Integer & K);
-		%feature("compactdefaultargs") ChangeFind;
-		%feature("autodoc", "	:param K:
-	:type K: int &
-	:rtype: Handle_MAT_Node
-") ChangeFind;
-		Handle_MAT_Node ChangeFind (const Standard_Integer & K);
-		%feature("compactdefaultargs") Find1;
-		%feature("autodoc", "	:param K:
-	:type K: int &
-	:rtype: Standard_Address
-") Find1;
-		Standard_Address Find1 (const Standard_Integer & K);
-		%feature("compactdefaultargs") ChangeFind1;
-		%feature("autodoc", "	:param K:
-	:type K: int &
-	:rtype: Standard_Address
-") ChangeFind1;
-		Standard_Address ChangeFind1 (const Standard_Integer & K);
-};
-
-
-%extend MAT_DataMapOfIntegerNode {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
 %nodefaultctor MAT_Edge;
-class MAT_Edge : public MMgt_TShared {
+class MAT_Edge : public Standard_Transient {
 	public:
 		%feature("compactdefaultargs") MAT_Edge;
 		%feature("autodoc", "	:rtype: None
@@ -1474,7 +678,7 @@ class MAT_Edge : public MMgt_TShared {
 %}
 
 %nodefaultctor Handle_MAT_Edge;
-class Handle_MAT_Edge : public Handle_MMgt_TShared {
+class Handle_MAT_Edge : public Handle_Standard_Transient {
 
     public:
         // constructors
@@ -1486,19 +690,20 @@ class Handle_MAT_Edge : public Handle_MMgt_TShared {
         static const Handle_MAT_Edge DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_MAT_Edge {
     MAT_Edge* _get_reference() {
-    return (MAT_Edge*)$self->Access();
+    return (MAT_Edge*)$self->get();
     }
 };
 
 %extend Handle_MAT_Edge {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend MAT_Edge {
@@ -1507,7 +712,7 @@ class Handle_MAT_Edge : public Handle_MMgt_TShared {
 	}
 };
 %nodefaultctor MAT_Graph;
-class MAT_Graph : public MMgt_TShared {
+class MAT_Graph : public Standard_Transient {
 	public:
 		%feature("compactdefaultargs") MAT_Graph;
 		%feature("autodoc", "	* Empty constructor.
@@ -1641,7 +846,7 @@ class MAT_Graph : public MMgt_TShared {
 %}
 
 %nodefaultctor Handle_MAT_Graph;
-class Handle_MAT_Graph : public Handle_MMgt_TShared {
+class Handle_MAT_Graph : public Handle_Standard_Transient {
 
     public:
         // constructors
@@ -1653,19 +858,20 @@ class Handle_MAT_Graph : public Handle_MMgt_TShared {
         static const Handle_MAT_Graph DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_MAT_Graph {
     MAT_Graph* _get_reference() {
-    return (MAT_Graph*)$self->Access();
+    return (MAT_Graph*)$self->get();
     }
 };
 
 %extend Handle_MAT_Graph {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend MAT_Graph {
@@ -1674,7 +880,7 @@ class Handle_MAT_Graph : public Handle_MMgt_TShared {
 	}
 };
 %nodefaultctor MAT_ListOfBisector;
-class MAT_ListOfBisector : public MMgt_TShared {
+class MAT_ListOfBisector : public Standard_Transient {
 	public:
 		%feature("compactdefaultargs") MAT_ListOfBisector;
 		%feature("autodoc", "	:rtype: None
@@ -1816,7 +1022,7 @@ class MAT_ListOfBisector : public MMgt_TShared {
 %}
 
 %nodefaultctor Handle_MAT_ListOfBisector;
-class Handle_MAT_ListOfBisector : public Handle_MMgt_TShared {
+class Handle_MAT_ListOfBisector : public Handle_Standard_Transient {
 
     public:
         // constructors
@@ -1828,19 +1034,20 @@ class Handle_MAT_ListOfBisector : public Handle_MMgt_TShared {
         static const Handle_MAT_ListOfBisector DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_MAT_ListOfBisector {
     MAT_ListOfBisector* _get_reference() {
-    return (MAT_ListOfBisector*)$self->Access();
+    return (MAT_ListOfBisector*)$self->get();
     }
 };
 
 %extend Handle_MAT_ListOfBisector {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend MAT_ListOfBisector {
@@ -1849,7 +1056,7 @@ class Handle_MAT_ListOfBisector : public Handle_MMgt_TShared {
 	}
 };
 %nodefaultctor MAT_ListOfEdge;
-class MAT_ListOfEdge : public MMgt_TShared {
+class MAT_ListOfEdge : public Standard_Transient {
 	public:
 		%feature("compactdefaultargs") MAT_ListOfEdge;
 		%feature("autodoc", "	:rtype: None
@@ -1991,7 +1198,7 @@ class MAT_ListOfEdge : public MMgt_TShared {
 %}
 
 %nodefaultctor Handle_MAT_ListOfEdge;
-class Handle_MAT_ListOfEdge : public Handle_MMgt_TShared {
+class Handle_MAT_ListOfEdge : public Handle_Standard_Transient {
 
     public:
         // constructors
@@ -2003,19 +1210,20 @@ class Handle_MAT_ListOfEdge : public Handle_MMgt_TShared {
         static const Handle_MAT_ListOfEdge DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_MAT_ListOfEdge {
     MAT_ListOfEdge* _get_reference() {
-    return (MAT_ListOfEdge*)$self->Access();
+    return (MAT_ListOfEdge*)$self->get();
     }
 };
 
 %extend Handle_MAT_ListOfEdge {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend MAT_ListOfEdge {
@@ -2024,7 +1232,7 @@ class Handle_MAT_ListOfEdge : public Handle_MMgt_TShared {
 	}
 };
 %nodefaultctor MAT_Node;
-class MAT_Node : public MMgt_TShared {
+class MAT_Node : public Standard_Transient {
 	public:
 		%feature("compactdefaultargs") MAT_Node;
 		%feature("autodoc", "	:param GeomIndex:
@@ -2069,7 +1277,7 @@ class MAT_Node : public MMgt_TShared {
 ") Distance;
 		Standard_Real Distance ();
 		%feature("compactdefaultargs") PendingNode;
-		%feature("autodoc", "	* Returns True if <self> is a pending Node. (ie : the number of Arc Linked = 1)
+		%feature("autodoc", "	* Returns True if <self> is a pending Node. --ie : the number of Arc Linked = 1--
 
 	:rtype: bool
 ") PendingNode;
@@ -2122,7 +1330,7 @@ class MAT_Node : public MMgt_TShared {
 %}
 
 %nodefaultctor Handle_MAT_Node;
-class Handle_MAT_Node : public Handle_MMgt_TShared {
+class Handle_MAT_Node : public Handle_Standard_Transient {
 
     public:
         // constructors
@@ -2134,19 +1342,20 @@ class Handle_MAT_Node : public Handle_MMgt_TShared {
         static const Handle_MAT_Node DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_MAT_Node {
     MAT_Node* _get_reference() {
-    return (MAT_Node*)$self->Access();
+    return (MAT_Node*)$self->get();
     }
 };
 
 %extend Handle_MAT_Node {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend MAT_Node {
@@ -2154,436 +1363,8 @@ class Handle_MAT_Node : public Handle_MMgt_TShared {
 	__repr__ = _dumps_object
 	}
 };
-%nodefaultctor MAT_SequenceNodeOfSequenceOfArc;
-class MAT_SequenceNodeOfSequenceOfArc : public TCollection_SeqNode {
-	public:
-		%feature("compactdefaultargs") MAT_SequenceNodeOfSequenceOfArc;
-		%feature("autodoc", "	:param I:
-	:type I: Handle_MAT_Arc &
-	:param n:
-	:type n: TCollection_SeqNodePtr &
-	:param p:
-	:type p: TCollection_SeqNodePtr &
-	:rtype: None
-") MAT_SequenceNodeOfSequenceOfArc;
-		 MAT_SequenceNodeOfSequenceOfArc (const Handle_MAT_Arc & I,const TCollection_SeqNodePtr & n,const TCollection_SeqNodePtr & p);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:rtype: Handle_MAT_Arc
-") Value;
-		Handle_MAT_Arc Value ();
-};
-
-
-%extend MAT_SequenceNodeOfSequenceOfArc {
-	%pythoncode {
-		def GetHandle(self):
-		    try:
-		        return self.thisHandle
-		    except:
-		        self.thisHandle = Handle_MAT_SequenceNodeOfSequenceOfArc(self)
-		        self.thisown = False
-		        return self.thisHandle
-	}
-};
-
-%pythonappend Handle_MAT_SequenceNodeOfSequenceOfArc::Handle_MAT_SequenceNodeOfSequenceOfArc %{
-    # register the handle in the base object
-    if len(args) > 0:
-        register_handle(self, args[0])
-%}
-
-%nodefaultctor Handle_MAT_SequenceNodeOfSequenceOfArc;
-class Handle_MAT_SequenceNodeOfSequenceOfArc : public Handle_TCollection_SeqNode {
-
-    public:
-        // constructors
-        Handle_MAT_SequenceNodeOfSequenceOfArc();
-        Handle_MAT_SequenceNodeOfSequenceOfArc(const Handle_MAT_SequenceNodeOfSequenceOfArc &aHandle);
-        Handle_MAT_SequenceNodeOfSequenceOfArc(const MAT_SequenceNodeOfSequenceOfArc *anItem);
-        void Nullify();
-        Standard_Boolean IsNull() const;
-        static const Handle_MAT_SequenceNodeOfSequenceOfArc DownCast(const Handle_Standard_Transient &AnObject);
-
-};
-%extend Handle_MAT_SequenceNodeOfSequenceOfArc {
-    MAT_SequenceNodeOfSequenceOfArc* _get_reference() {
-    return (MAT_SequenceNodeOfSequenceOfArc*)$self->Access();
-    }
-};
-
-%extend Handle_MAT_SequenceNodeOfSequenceOfArc {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
-};
-
-%extend MAT_SequenceNodeOfSequenceOfArc {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor MAT_SequenceNodeOfSequenceOfBasicElt;
-class MAT_SequenceNodeOfSequenceOfBasicElt : public TCollection_SeqNode {
-	public:
-		%feature("compactdefaultargs") MAT_SequenceNodeOfSequenceOfBasicElt;
-		%feature("autodoc", "	:param I:
-	:type I: Handle_MAT_BasicElt &
-	:param n:
-	:type n: TCollection_SeqNodePtr &
-	:param p:
-	:type p: TCollection_SeqNodePtr &
-	:rtype: None
-") MAT_SequenceNodeOfSequenceOfBasicElt;
-		 MAT_SequenceNodeOfSequenceOfBasicElt (const Handle_MAT_BasicElt & I,const TCollection_SeqNodePtr & n,const TCollection_SeqNodePtr & p);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:rtype: Handle_MAT_BasicElt
-") Value;
-		Handle_MAT_BasicElt Value ();
-};
-
-
-%extend MAT_SequenceNodeOfSequenceOfBasicElt {
-	%pythoncode {
-		def GetHandle(self):
-		    try:
-		        return self.thisHandle
-		    except:
-		        self.thisHandle = Handle_MAT_SequenceNodeOfSequenceOfBasicElt(self)
-		        self.thisown = False
-		        return self.thisHandle
-	}
-};
-
-%pythonappend Handle_MAT_SequenceNodeOfSequenceOfBasicElt::Handle_MAT_SequenceNodeOfSequenceOfBasicElt %{
-    # register the handle in the base object
-    if len(args) > 0:
-        register_handle(self, args[0])
-%}
-
-%nodefaultctor Handle_MAT_SequenceNodeOfSequenceOfBasicElt;
-class Handle_MAT_SequenceNodeOfSequenceOfBasicElt : public Handle_TCollection_SeqNode {
-
-    public:
-        // constructors
-        Handle_MAT_SequenceNodeOfSequenceOfBasicElt();
-        Handle_MAT_SequenceNodeOfSequenceOfBasicElt(const Handle_MAT_SequenceNodeOfSequenceOfBasicElt &aHandle);
-        Handle_MAT_SequenceNodeOfSequenceOfBasicElt(const MAT_SequenceNodeOfSequenceOfBasicElt *anItem);
-        void Nullify();
-        Standard_Boolean IsNull() const;
-        static const Handle_MAT_SequenceNodeOfSequenceOfBasicElt DownCast(const Handle_Standard_Transient &AnObject);
-
-};
-%extend Handle_MAT_SequenceNodeOfSequenceOfBasicElt {
-    MAT_SequenceNodeOfSequenceOfBasicElt* _get_reference() {
-    return (MAT_SequenceNodeOfSequenceOfBasicElt*)$self->Access();
-    }
-};
-
-%extend Handle_MAT_SequenceNodeOfSequenceOfBasicElt {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
-};
-
-%extend MAT_SequenceNodeOfSequenceOfBasicElt {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor MAT_SequenceOfArc;
-class MAT_SequenceOfArc : public TCollection_BaseSequence {
-	public:
-		%feature("compactdefaultargs") MAT_SequenceOfArc;
-		%feature("autodoc", "	:rtype: None
-") MAT_SequenceOfArc;
-		 MAT_SequenceOfArc ();
-		%feature("compactdefaultargs") MAT_SequenceOfArc;
-		%feature("autodoc", "	:param Other:
-	:type Other: MAT_SequenceOfArc &
-	:rtype: None
-") MAT_SequenceOfArc;
-		 MAT_SequenceOfArc (const MAT_SequenceOfArc & Other);
-		%feature("compactdefaultargs") Clear;
-		%feature("autodoc", "	:rtype: None
-") Clear;
-		void Clear ();
-		%feature("compactdefaultargs") Assign;
-		%feature("autodoc", "	:param Other:
-	:type Other: MAT_SequenceOfArc &
-	:rtype: MAT_SequenceOfArc
-") Assign;
-		const MAT_SequenceOfArc & Assign (const MAT_SequenceOfArc & Other);
-		%feature("compactdefaultargs") operator =;
-		%feature("autodoc", "	:param Other:
-	:type Other: MAT_SequenceOfArc &
-	:rtype: MAT_SequenceOfArc
-") operator =;
-		const MAT_SequenceOfArc & operator = (const MAT_SequenceOfArc & Other);
-		%feature("compactdefaultargs") Append;
-		%feature("autodoc", "	:param T:
-	:type T: Handle_MAT_Arc &
-	:rtype: None
-") Append;
-		void Append (const Handle_MAT_Arc & T);
-		%feature("compactdefaultargs") Append;
-		%feature("autodoc", "	:param S:
-	:type S: MAT_SequenceOfArc &
-	:rtype: None
-") Append;
-		void Append (MAT_SequenceOfArc & S);
-		%feature("compactdefaultargs") Prepend;
-		%feature("autodoc", "	:param T:
-	:type T: Handle_MAT_Arc &
-	:rtype: None
-") Prepend;
-		void Prepend (const Handle_MAT_Arc & T);
-		%feature("compactdefaultargs") Prepend;
-		%feature("autodoc", "	:param S:
-	:type S: MAT_SequenceOfArc &
-	:rtype: None
-") Prepend;
-		void Prepend (MAT_SequenceOfArc & S);
-		%feature("compactdefaultargs") InsertBefore;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param T:
-	:type T: Handle_MAT_Arc &
-	:rtype: None
-") InsertBefore;
-		void InsertBefore (const Standard_Integer Index,const Handle_MAT_Arc & T);
-		%feature("compactdefaultargs") InsertBefore;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param S:
-	:type S: MAT_SequenceOfArc &
-	:rtype: None
-") InsertBefore;
-		void InsertBefore (const Standard_Integer Index,MAT_SequenceOfArc & S);
-		%feature("compactdefaultargs") InsertAfter;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param T:
-	:type T: Handle_MAT_Arc &
-	:rtype: None
-") InsertAfter;
-		void InsertAfter (const Standard_Integer Index,const Handle_MAT_Arc & T);
-		%feature("compactdefaultargs") InsertAfter;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param S:
-	:type S: MAT_SequenceOfArc &
-	:rtype: None
-") InsertAfter;
-		void InsertAfter (const Standard_Integer Index,MAT_SequenceOfArc & S);
-		%feature("compactdefaultargs") First;
-		%feature("autodoc", "	:rtype: Handle_MAT_Arc
-") First;
-		Handle_MAT_Arc First ();
-		%feature("compactdefaultargs") Last;
-		%feature("autodoc", "	:rtype: Handle_MAT_Arc
-") Last;
-		Handle_MAT_Arc Last ();
-		%feature("compactdefaultargs") Split;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param Sub:
-	:type Sub: MAT_SequenceOfArc &
-	:rtype: None
-") Split;
-		void Split (const Standard_Integer Index,MAT_SequenceOfArc & Sub);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: Handle_MAT_Arc
-") Value;
-		Handle_MAT_Arc Value (const Standard_Integer Index);
-		%feature("compactdefaultargs") SetValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param I:
-	:type I: Handle_MAT_Arc &
-	:rtype: None
-") SetValue;
-		void SetValue (const Standard_Integer Index,const Handle_MAT_Arc & I);
-		%feature("compactdefaultargs") ChangeValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: Handle_MAT_Arc
-") ChangeValue;
-		Handle_MAT_Arc ChangeValue (const Standard_Integer Index);
-		%feature("compactdefaultargs") Remove;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: None
-") Remove;
-		void Remove (const Standard_Integer Index);
-		%feature("compactdefaultargs") Remove;
-		%feature("autodoc", "	:param FromIndex:
-	:type FromIndex: int
-	:param ToIndex:
-	:type ToIndex: int
-	:rtype: None
-") Remove;
-		void Remove (const Standard_Integer FromIndex,const Standard_Integer ToIndex);
-};
-
-
-%extend MAT_SequenceOfArc {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor MAT_SequenceOfBasicElt;
-class MAT_SequenceOfBasicElt : public TCollection_BaseSequence {
-	public:
-		%feature("compactdefaultargs") MAT_SequenceOfBasicElt;
-		%feature("autodoc", "	:rtype: None
-") MAT_SequenceOfBasicElt;
-		 MAT_SequenceOfBasicElt ();
-		%feature("compactdefaultargs") MAT_SequenceOfBasicElt;
-		%feature("autodoc", "	:param Other:
-	:type Other: MAT_SequenceOfBasicElt &
-	:rtype: None
-") MAT_SequenceOfBasicElt;
-		 MAT_SequenceOfBasicElt (const MAT_SequenceOfBasicElt & Other);
-		%feature("compactdefaultargs") Clear;
-		%feature("autodoc", "	:rtype: None
-") Clear;
-		void Clear ();
-		%feature("compactdefaultargs") Assign;
-		%feature("autodoc", "	:param Other:
-	:type Other: MAT_SequenceOfBasicElt &
-	:rtype: MAT_SequenceOfBasicElt
-") Assign;
-		const MAT_SequenceOfBasicElt & Assign (const MAT_SequenceOfBasicElt & Other);
-		%feature("compactdefaultargs") operator =;
-		%feature("autodoc", "	:param Other:
-	:type Other: MAT_SequenceOfBasicElt &
-	:rtype: MAT_SequenceOfBasicElt
-") operator =;
-		const MAT_SequenceOfBasicElt & operator = (const MAT_SequenceOfBasicElt & Other);
-		%feature("compactdefaultargs") Append;
-		%feature("autodoc", "	:param T:
-	:type T: Handle_MAT_BasicElt &
-	:rtype: None
-") Append;
-		void Append (const Handle_MAT_BasicElt & T);
-		%feature("compactdefaultargs") Append;
-		%feature("autodoc", "	:param S:
-	:type S: MAT_SequenceOfBasicElt &
-	:rtype: None
-") Append;
-		void Append (MAT_SequenceOfBasicElt & S);
-		%feature("compactdefaultargs") Prepend;
-		%feature("autodoc", "	:param T:
-	:type T: Handle_MAT_BasicElt &
-	:rtype: None
-") Prepend;
-		void Prepend (const Handle_MAT_BasicElt & T);
-		%feature("compactdefaultargs") Prepend;
-		%feature("autodoc", "	:param S:
-	:type S: MAT_SequenceOfBasicElt &
-	:rtype: None
-") Prepend;
-		void Prepend (MAT_SequenceOfBasicElt & S);
-		%feature("compactdefaultargs") InsertBefore;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param T:
-	:type T: Handle_MAT_BasicElt &
-	:rtype: None
-") InsertBefore;
-		void InsertBefore (const Standard_Integer Index,const Handle_MAT_BasicElt & T);
-		%feature("compactdefaultargs") InsertBefore;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param S:
-	:type S: MAT_SequenceOfBasicElt &
-	:rtype: None
-") InsertBefore;
-		void InsertBefore (const Standard_Integer Index,MAT_SequenceOfBasicElt & S);
-		%feature("compactdefaultargs") InsertAfter;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param T:
-	:type T: Handle_MAT_BasicElt &
-	:rtype: None
-") InsertAfter;
-		void InsertAfter (const Standard_Integer Index,const Handle_MAT_BasicElt & T);
-		%feature("compactdefaultargs") InsertAfter;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param S:
-	:type S: MAT_SequenceOfBasicElt &
-	:rtype: None
-") InsertAfter;
-		void InsertAfter (const Standard_Integer Index,MAT_SequenceOfBasicElt & S);
-		%feature("compactdefaultargs") First;
-		%feature("autodoc", "	:rtype: Handle_MAT_BasicElt
-") First;
-		Handle_MAT_BasicElt First ();
-		%feature("compactdefaultargs") Last;
-		%feature("autodoc", "	:rtype: Handle_MAT_BasicElt
-") Last;
-		Handle_MAT_BasicElt Last ();
-		%feature("compactdefaultargs") Split;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param Sub:
-	:type Sub: MAT_SequenceOfBasicElt &
-	:rtype: None
-") Split;
-		void Split (const Standard_Integer Index,MAT_SequenceOfBasicElt & Sub);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: Handle_MAT_BasicElt
-") Value;
-		Handle_MAT_BasicElt Value (const Standard_Integer Index);
-		%feature("compactdefaultargs") SetValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param I:
-	:type I: Handle_MAT_BasicElt &
-	:rtype: None
-") SetValue;
-		void SetValue (const Standard_Integer Index,const Handle_MAT_BasicElt & I);
-		%feature("compactdefaultargs") ChangeValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: Handle_MAT_BasicElt
-") ChangeValue;
-		Handle_MAT_BasicElt ChangeValue (const Standard_Integer Index);
-		%feature("compactdefaultargs") Remove;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: None
-") Remove;
-		void Remove (const Standard_Integer Index);
-		%feature("compactdefaultargs") Remove;
-		%feature("autodoc", "	:param FromIndex:
-	:type FromIndex: int
-	:param ToIndex:
-	:type ToIndex: int
-	:rtype: None
-") Remove;
-		void Remove (const Standard_Integer FromIndex,const Standard_Integer ToIndex);
-};
-
-
-%extend MAT_SequenceOfBasicElt {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
 %nodefaultctor MAT_TListNodeOfListOfBisector;
-class MAT_TListNodeOfListOfBisector : public MMgt_TShared {
+class MAT_TListNodeOfListOfBisector : public Standard_Transient {
 	public:
 		%feature("compactdefaultargs") MAT_TListNodeOfListOfBisector;
 		%feature("autodoc", "	:rtype: None
@@ -2651,7 +1432,7 @@ class MAT_TListNodeOfListOfBisector : public MMgt_TShared {
 %}
 
 %nodefaultctor Handle_MAT_TListNodeOfListOfBisector;
-class Handle_MAT_TListNodeOfListOfBisector : public Handle_MMgt_TShared {
+class Handle_MAT_TListNodeOfListOfBisector : public Handle_Standard_Transient {
 
     public:
         // constructors
@@ -2663,19 +1444,20 @@ class Handle_MAT_TListNodeOfListOfBisector : public Handle_MMgt_TShared {
         static const Handle_MAT_TListNodeOfListOfBisector DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_MAT_TListNodeOfListOfBisector {
     MAT_TListNodeOfListOfBisector* _get_reference() {
-    return (MAT_TListNodeOfListOfBisector*)$self->Access();
+    return (MAT_TListNodeOfListOfBisector*)$self->get();
     }
 };
 
 %extend Handle_MAT_TListNodeOfListOfBisector {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend MAT_TListNodeOfListOfBisector {
@@ -2684,7 +1466,7 @@ class Handle_MAT_TListNodeOfListOfBisector : public Handle_MMgt_TShared {
 	}
 };
 %nodefaultctor MAT_TListNodeOfListOfEdge;
-class MAT_TListNodeOfListOfEdge : public MMgt_TShared {
+class MAT_TListNodeOfListOfEdge : public Standard_Transient {
 	public:
 		%feature("compactdefaultargs") MAT_TListNodeOfListOfEdge;
 		%feature("autodoc", "	:rtype: None
@@ -2752,7 +1534,7 @@ class MAT_TListNodeOfListOfEdge : public MMgt_TShared {
 %}
 
 %nodefaultctor Handle_MAT_TListNodeOfListOfEdge;
-class Handle_MAT_TListNodeOfListOfEdge : public Handle_MMgt_TShared {
+class Handle_MAT_TListNodeOfListOfEdge : public Handle_Standard_Transient {
 
     public:
         // constructors
@@ -2764,19 +1546,20 @@ class Handle_MAT_TListNodeOfListOfEdge : public Handle_MMgt_TShared {
         static const Handle_MAT_TListNodeOfListOfEdge DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_MAT_TListNodeOfListOfEdge {
     MAT_TListNodeOfListOfEdge* _get_reference() {
-    return (MAT_TListNodeOfListOfEdge*)$self->Access();
+    return (MAT_TListNodeOfListOfEdge*)$self->get();
     }
 };
 
 %extend Handle_MAT_TListNodeOfListOfEdge {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend MAT_TListNodeOfListOfEdge {
@@ -2785,7 +1568,7 @@ class Handle_MAT_TListNodeOfListOfEdge : public Handle_MMgt_TShared {
 	}
 };
 %nodefaultctor MAT_Zone;
-class MAT_Zone : public MMgt_TShared {
+class MAT_Zone : public Standard_Transient {
 	public:
 		%feature("compactdefaultargs") MAT_Zone;
 		%feature("autodoc", "	:rtype: None
@@ -2855,7 +1638,7 @@ class MAT_Zone : public MMgt_TShared {
 %}
 
 %nodefaultctor Handle_MAT_Zone;
-class Handle_MAT_Zone : public Handle_MMgt_TShared {
+class Handle_MAT_Zone : public Handle_Standard_Transient {
 
     public:
         // constructors
@@ -2867,19 +1650,20 @@ class Handle_MAT_Zone : public Handle_MMgt_TShared {
         static const Handle_MAT_Zone DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_MAT_Zone {
     MAT_Zone* _get_reference() {
-    return (MAT_Zone*)$self->Access();
+    return (MAT_Zone*)$self->get();
     }
 };
 
 %extend Handle_MAT_Zone {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend MAT_Zone {

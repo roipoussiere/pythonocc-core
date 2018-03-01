@@ -1,5 +1,5 @@
 /*
-Copyright 2008-2017 Thomas Paviot (tpaviot@gmail.com)
+Copyright 2008-2018 Thomas Paviot (tpaviot@gmail.com)
 
 
 This file is part of pythonOCC.
@@ -58,6 +58,9 @@ typedef Standard_Address ( * OSD_ThreadFunction ) ( Standard_Address data );
 typedef pthread_t OSD_PThread;
 /* end typedefs declaration */
 
+/* templates */
+/* end templates declaration */
+
 /* public enums */
 enum OSD_LockType {
 	OSD_NoLock = 0,
@@ -107,8 +110,7 @@ enum OSD_WhoAmI {
 	OSD_WChronometer = 11,
 	OSD_WTimer = 12,
 	OSD_WPackage = 13,
-	OSD_WPrinter = 14,
-	OSD_WEnvironmentIterator = 15,
+	OSD_WEnvironmentIterator = 14,
 };
 
 enum OSD_SysType {

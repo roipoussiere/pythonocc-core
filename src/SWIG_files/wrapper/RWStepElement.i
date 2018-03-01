@@ -1,5 +1,5 @@
 /*
-Copyright 2008-2017 Thomas Paviot (tpaviot@gmail.com)
+Copyright 2008-2018 Thomas Paviot (tpaviot@gmail.com)
 
 
 This file is part of pythonOCC.
@@ -56,6 +56,9 @@ def register_handle(handle, base_object):
 /* typedefs */
 /* end typedefs declaration */
 
+/* templates */
+/* end templates declaration */
+
 /* public enums */
 /* end public enums declaration */
 
@@ -93,7 +96,7 @@ class RWStepElement_RWAnalysisItemWithinRepresentation {
 ") WriteStep;
 		void WriteStep (StepData_StepWriter & SW,const Handle_StepElement_AnalysisItemWithinRepresentation & ent);
 		%feature("compactdefaultargs") Share;
-		%feature("autodoc", "	* Fills data for graph (shared items)
+		%feature("autodoc", "	* Fills data for graph --shared items--
 
 	:param ent:
 	:type ent: Handle_StepElement_AnalysisItemWithinRepresentation &
@@ -144,7 +147,7 @@ class RWStepElement_RWCurve3dElementDescriptor {
 ") WriteStep;
 		void WriteStep (StepData_StepWriter & SW,const Handle_StepElement_Curve3dElementDescriptor & ent);
 		%feature("compactdefaultargs") Share;
-		%feature("autodoc", "	* Fills data for graph (shared items)
+		%feature("autodoc", "	* Fills data for graph --shared items--
 
 	:param ent:
 	:type ent: Handle_StepElement_Curve3dElementDescriptor &
@@ -195,7 +198,7 @@ class RWStepElement_RWCurveElementEndReleasePacket {
 ") WriteStep;
 		void WriteStep (StepData_StepWriter & SW,const Handle_StepElement_CurveElementEndReleasePacket & ent);
 		%feature("compactdefaultargs") Share;
-		%feature("autodoc", "	* Fills data for graph (shared items)
+		%feature("autodoc", "	* Fills data for graph --shared items--
 
 	:param ent:
 	:type ent: Handle_StepElement_CurveElementEndReleasePacket &
@@ -246,7 +249,7 @@ class RWStepElement_RWCurveElementSectionDefinition {
 ") WriteStep;
 		void WriteStep (StepData_StepWriter & SW,const Handle_StepElement_CurveElementSectionDefinition & ent);
 		%feature("compactdefaultargs") Share;
-		%feature("autodoc", "	* Fills data for graph (shared items)
+		%feature("autodoc", "	* Fills data for graph --shared items--
 
 	:param ent:
 	:type ent: Handle_StepElement_CurveElementSectionDefinition &
@@ -297,7 +300,7 @@ class RWStepElement_RWCurveElementSectionDerivedDefinitions {
 ") WriteStep;
 		void WriteStep (StepData_StepWriter & SW,const Handle_StepElement_CurveElementSectionDerivedDefinitions & ent);
 		%feature("compactdefaultargs") Share;
-		%feature("autodoc", "	* Fills data for graph (shared items)
+		%feature("autodoc", "	* Fills data for graph --shared items--
 
 	:param ent:
 	:type ent: Handle_StepElement_CurveElementSectionDerivedDefinitions &
@@ -348,7 +351,7 @@ class RWStepElement_RWElementDescriptor {
 ") WriteStep;
 		void WriteStep (StepData_StepWriter & SW,const Handle_StepElement_ElementDescriptor & ent);
 		%feature("compactdefaultargs") Share;
-		%feature("autodoc", "	* Fills data for graph (shared items)
+		%feature("autodoc", "	* Fills data for graph --shared items--
 
 	:param ent:
 	:type ent: Handle_StepElement_ElementDescriptor &
@@ -399,7 +402,7 @@ class RWStepElement_RWElementMaterial {
 ") WriteStep;
 		void WriteStep (StepData_StepWriter & SW,const Handle_StepElement_ElementMaterial & ent);
 		%feature("compactdefaultargs") Share;
-		%feature("autodoc", "	* Fills data for graph (shared items)
+		%feature("autodoc", "	* Fills data for graph --shared items--
 
 	:param ent:
 	:type ent: Handle_StepElement_ElementMaterial &
@@ -450,7 +453,7 @@ class RWStepElement_RWSurface3dElementDescriptor {
 ") WriteStep;
 		void WriteStep (StepData_StepWriter & SW,const Handle_StepElement_Surface3dElementDescriptor & ent);
 		%feature("compactdefaultargs") Share;
-		%feature("autodoc", "	* Fills data for graph (shared items)
+		%feature("autodoc", "	* Fills data for graph --shared items--
 
 	:param ent:
 	:type ent: Handle_StepElement_Surface3dElementDescriptor &
@@ -501,7 +504,7 @@ class RWStepElement_RWSurfaceElementProperty {
 ") WriteStep;
 		void WriteStep (StepData_StepWriter & SW,const Handle_StepElement_SurfaceElementProperty & ent);
 		%feature("compactdefaultargs") Share;
-		%feature("autodoc", "	* Fills data for graph (shared items)
+		%feature("autodoc", "	* Fills data for graph --shared items--
 
 	:param ent:
 	:type ent: Handle_StepElement_SurfaceElementProperty &
@@ -552,7 +555,7 @@ class RWStepElement_RWSurfaceSection {
 ") WriteStep;
 		void WriteStep (StepData_StepWriter & SW,const Handle_StepElement_SurfaceSection & ent);
 		%feature("compactdefaultargs") Share;
-		%feature("autodoc", "	* Fills data for graph (shared items)
+		%feature("autodoc", "	* Fills data for graph --shared items--
 
 	:param ent:
 	:type ent: Handle_StepElement_SurfaceSection &
@@ -603,7 +606,7 @@ class RWStepElement_RWSurfaceSectionField {
 ") WriteStep;
 		void WriteStep (StepData_StepWriter & SW,const Handle_StepElement_SurfaceSectionField & ent);
 		%feature("compactdefaultargs") Share;
-		%feature("autodoc", "	* Fills data for graph (shared items)
+		%feature("autodoc", "	* Fills data for graph --shared items--
 
 	:param ent:
 	:type ent: Handle_StepElement_SurfaceSectionField &
@@ -654,7 +657,7 @@ class RWStepElement_RWSurfaceSectionFieldConstant {
 ") WriteStep;
 		void WriteStep (StepData_StepWriter & SW,const Handle_StepElement_SurfaceSectionFieldConstant & ent);
 		%feature("compactdefaultargs") Share;
-		%feature("autodoc", "	* Fills data for graph (shared items)
+		%feature("autodoc", "	* Fills data for graph --shared items--
 
 	:param ent:
 	:type ent: Handle_StepElement_SurfaceSectionFieldConstant &
@@ -705,7 +708,7 @@ class RWStepElement_RWSurfaceSectionFieldVarying {
 ") WriteStep;
 		void WriteStep (StepData_StepWriter & SW,const Handle_StepElement_SurfaceSectionFieldVarying & ent);
 		%feature("compactdefaultargs") Share;
-		%feature("autodoc", "	* Fills data for graph (shared items)
+		%feature("autodoc", "	* Fills data for graph --shared items--
 
 	:param ent:
 	:type ent: Handle_StepElement_SurfaceSectionFieldVarying &
@@ -756,7 +759,7 @@ class RWStepElement_RWUniformSurfaceSection {
 ") WriteStep;
 		void WriteStep (StepData_StepWriter & SW,const Handle_StepElement_UniformSurfaceSection & ent);
 		%feature("compactdefaultargs") Share;
-		%feature("autodoc", "	* Fills data for graph (shared items)
+		%feature("autodoc", "	* Fills data for graph --shared items--
 
 	:param ent:
 	:type ent: Handle_StepElement_UniformSurfaceSection &
@@ -807,7 +810,7 @@ class RWStepElement_RWVolume3dElementDescriptor {
 ") WriteStep;
 		void WriteStep (StepData_StepWriter & SW,const Handle_StepElement_Volume3dElementDescriptor & ent);
 		%feature("compactdefaultargs") Share;
-		%feature("autodoc", "	* Fills data for graph (shared items)
+		%feature("autodoc", "	* Fills data for graph --shared items--
 
 	:param ent:
 	:type ent: Handle_StepElement_Volume3dElementDescriptor &

@@ -1,5 +1,5 @@
 /*
-Copyright 2008-2017 Thomas Paviot (tpaviot@gmail.com)
+Copyright 2008-2018 Thomas Paviot (tpaviot@gmail.com)
 
 
 This file is part of pythonOCC.
@@ -55,6 +55,9 @@ def register_handle(handle, base_object):
 
 /* typedefs */
 /* end typedefs declaration */
+
+/* templates */
+/* end templates declaration */
 
 /* public enums */
 enum VrmlConverter_TypeOfLight {
@@ -225,7 +228,7 @@ class VrmlConverter_DeflectionCurve {
 	}
 };
 %nodefaultctor VrmlConverter_Drawer;
-class VrmlConverter_Drawer : public MMgt_TShared {
+class VrmlConverter_Drawer : public Standard_Transient {
 	public:
 		%feature("compactdefaultargs") VrmlConverter_Drawer;
 		%feature("autodoc", "	:rtype: None
@@ -247,16 +250,16 @@ class VrmlConverter_Drawer : public MMgt_TShared {
 		%feature("autodoc", "	* Defines the maximal chordial deviation when drawing any curve; If this value is one of the obvious parameters of methods, current value from Drawer won't be used. This value is used by: //! VrmlConverter_DeflectionCurve VrmlConverter_WFDeflectionRestrictedFace VrmlConverter_WFDeflectionShape
 
 	:param aChordialDeviation:
-	:type aChordialDeviation: Quantity_Length
+	:type aChordialDeviation: float
 	:rtype: None
 ") SetMaximalChordialDeviation;
-		void SetMaximalChordialDeviation (const Quantity_Length aChordialDeviation);
+		void SetMaximalChordialDeviation (const Standard_Real aChordialDeviation);
 		%feature("compactdefaultargs") MaximalChordialDeviation;
 		%feature("autodoc", "	* returns the maximal chordial deviation. Default value: 0.1
 
-	:rtype: Quantity_Length
+	:rtype: float
 ") MaximalChordialDeviation;
-		Quantity_Length MaximalChordialDeviation ();
+		Standard_Real MaximalChordialDeviation ();
 		%feature("compactdefaultargs") SetDeviationCoefficient;
 		%feature("autodoc", "	* default 0.001
 
@@ -270,7 +273,7 @@ class VrmlConverter_Drawer : public MMgt_TShared {
 ") DeviationCoefficient;
 		Standard_Real DeviationCoefficient ();
 		%feature("compactdefaultargs") SetDiscretisation;
-		%feature("autodoc", "	* default: 17 points. Defines the Discretisation (myNbPoints) when drawing any curve; If this value is one of the obvious parameters of methods, current value from Drawer won't be used. This value is used by: //! VrmlConverter_Curve VrmlConverter_WFRestrictedFace VrmlConverter_WFShape
+		%feature("autodoc", "	* default: 17 points. Defines the Discretisation --myNbPoints-- when drawing any curve; If this value is one of the obvious parameters of methods, current value from Drawer won't be used. This value is used by: //! VrmlConverter_Curve VrmlConverter_WFRestrictedFace VrmlConverter_WFShape
 
 	:param d:
 	:type d: int
@@ -511,7 +514,7 @@ class VrmlConverter_Drawer : public MMgt_TShared {
 %}
 
 %nodefaultctor Handle_VrmlConverter_Drawer;
-class Handle_VrmlConverter_Drawer : public Handle_MMgt_TShared {
+class Handle_VrmlConverter_Drawer : public Handle_Standard_Transient {
 
     public:
         // constructors
@@ -523,19 +526,20 @@ class Handle_VrmlConverter_Drawer : public Handle_MMgt_TShared {
         static const Handle_VrmlConverter_Drawer DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_VrmlConverter_Drawer {
     VrmlConverter_Drawer* _get_reference() {
-    return (VrmlConverter_Drawer*)$self->Access();
+    return (VrmlConverter_Drawer*)$self->get();
     }
 };
 
 %extend Handle_VrmlConverter_Drawer {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend VrmlConverter_Drawer {
@@ -566,10 +570,10 @@ class VrmlConverter_HLRShape {
 	}
 };
 %nodefaultctor VrmlConverter_LineAspect;
-class VrmlConverter_LineAspect : public MMgt_TShared {
+class VrmlConverter_LineAspect : public Standard_Transient {
 	public:
 		%feature("compactdefaultargs") VrmlConverter_LineAspect;
-		%feature("autodoc", "	* create a default LineAspect. Default value: HasMaterial = False - a line hasn't own material (color)
+		%feature("autodoc", "	* create a default LineAspect. Default value: HasMaterial = False - a line hasn't own material --color--
 
 	:rtype: None
 ") VrmlConverter_LineAspect;
@@ -628,7 +632,7 @@ class VrmlConverter_LineAspect : public MMgt_TShared {
 %}
 
 %nodefaultctor Handle_VrmlConverter_LineAspect;
-class Handle_VrmlConverter_LineAspect : public Handle_MMgt_TShared {
+class Handle_VrmlConverter_LineAspect : public Handle_Standard_Transient {
 
     public:
         // constructors
@@ -640,19 +644,20 @@ class Handle_VrmlConverter_LineAspect : public Handle_MMgt_TShared {
         static const Handle_VrmlConverter_LineAspect DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_VrmlConverter_LineAspect {
     VrmlConverter_LineAspect* _get_reference() {
-    return (VrmlConverter_LineAspect*)$self->Access();
+    return (VrmlConverter_LineAspect*)$self->get();
     }
 };
 
 %extend Handle_VrmlConverter_LineAspect {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend VrmlConverter_LineAspect {
@@ -661,10 +666,10 @@ class Handle_VrmlConverter_LineAspect : public Handle_MMgt_TShared {
 	}
 };
 %nodefaultctor VrmlConverter_PointAspect;
-class VrmlConverter_PointAspect : public MMgt_TShared {
+class VrmlConverter_PointAspect : public Standard_Transient {
 	public:
 		%feature("compactdefaultargs") VrmlConverter_PointAspect;
-		%feature("autodoc", "	* create a default PointAspect. Default value: HasMaterial = False - a line hasn't own material (color)
+		%feature("autodoc", "	* create a default PointAspect. Default value: HasMaterial = False - a line hasn't own material --color--
 
 	:rtype: None
 ") VrmlConverter_PointAspect;
@@ -723,7 +728,7 @@ class VrmlConverter_PointAspect : public MMgt_TShared {
 %}
 
 %nodefaultctor Handle_VrmlConverter_PointAspect;
-class Handle_VrmlConverter_PointAspect : public Handle_MMgt_TShared {
+class Handle_VrmlConverter_PointAspect : public Handle_Standard_Transient {
 
     public:
         // constructors
@@ -735,19 +740,20 @@ class Handle_VrmlConverter_PointAspect : public Handle_MMgt_TShared {
         static const Handle_VrmlConverter_PointAspect DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_VrmlConverter_PointAspect {
     VrmlConverter_PointAspect* _get_reference() {
-    return (VrmlConverter_PointAspect*)$self->Access();
+    return (VrmlConverter_PointAspect*)$self->get();
     }
 };
 
 %extend Handle_VrmlConverter_PointAspect {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend VrmlConverter_PointAspect {
@@ -756,32 +762,32 @@ class Handle_VrmlConverter_PointAspect : public Handle_MMgt_TShared {
 	}
 };
 %nodefaultctor VrmlConverter_Projector;
-class VrmlConverter_Projector : public MMgt_TShared {
+class VrmlConverter_Projector : public Standard_Transient {
 	public:
 		%feature("compactdefaultargs") VrmlConverter_Projector;
 		%feature("autodoc", "	:param Shapes:
 	:type Shapes: TopTools_Array1OfShape &
 	:param Focus:
-	:type Focus: Quantity_Length
+	:type Focus: float
 	:param DX:
-	:type DX: Quantity_Length
+	:type DX: float
 	:param DY:
-	:type DY: Quantity_Length
+	:type DY: float
 	:param DZ:
-	:type DZ: Quantity_Length
+	:type DZ: float
 	:param XUp:
-	:type XUp: Quantity_Length
+	:type XUp: float
 	:param YUp:
-	:type YUp: Quantity_Length
+	:type YUp: float
 	:param ZUp:
-	:type ZUp: Quantity_Length
+	:type ZUp: float
 	:param Camera: default value is VrmlConverter_NoCamera
 	:type Camera: VrmlConverter_TypeOfCamera
 	:param Light: default value is VrmlConverter_NoLight
 	:type Light: VrmlConverter_TypeOfLight
 	:rtype: None
 ") VrmlConverter_Projector;
-		 VrmlConverter_Projector (const TopTools_Array1OfShape & Shapes,const Quantity_Length Focus,const Quantity_Length DX,const Quantity_Length DY,const Quantity_Length DZ,const Quantity_Length XUp,const Quantity_Length YUp,const Quantity_Length ZUp,const VrmlConverter_TypeOfCamera Camera = VrmlConverter_NoCamera,const VrmlConverter_TypeOfLight Light = VrmlConverter_NoLight);
+		 VrmlConverter_Projector (const TopTools_Array1OfShape & Shapes,const Standard_Real Focus,const Standard_Real DX,const Standard_Real DY,const Standard_Real DZ,const Standard_Real XUp,const Standard_Real YUp,const Standard_Real ZUp,const VrmlConverter_TypeOfCamera Camera = VrmlConverter_NoCamera,const VrmlConverter_TypeOfLight Light = VrmlConverter_NoLight);
 		%feature("compactdefaultargs") SetCamera;
 		%feature("autodoc", "	:param aCamera:
 	:type aCamera: VrmlConverter_TypeOfCamera
@@ -836,7 +842,7 @@ class VrmlConverter_Projector : public MMgt_TShared {
 %}
 
 %nodefaultctor Handle_VrmlConverter_Projector;
-class Handle_VrmlConverter_Projector : public Handle_MMgt_TShared {
+class Handle_VrmlConverter_Projector : public Handle_Standard_Transient {
 
     public:
         // constructors
@@ -848,19 +854,20 @@ class Handle_VrmlConverter_Projector : public Handle_MMgt_TShared {
         static const Handle_VrmlConverter_Projector DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_VrmlConverter_Projector {
     VrmlConverter_Projector* _get_reference() {
-    return (VrmlConverter_Projector*)$self->Access();
+    return (VrmlConverter_Projector*)$self->get();
     }
 };
 
 %extend Handle_VrmlConverter_Projector {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend VrmlConverter_Projector {
@@ -899,7 +906,7 @@ class VrmlConverter_ShadedShape {
 	}
 };
 %nodefaultctor VrmlConverter_ShadingAspect;
-class VrmlConverter_ShadingAspect : public MMgt_TShared {
+class VrmlConverter_ShadingAspect : public Standard_Transient {
 	public:
 		%feature("compactdefaultargs") VrmlConverter_ShadingAspect;
 		%feature("autodoc", "	* create a default ShadingAspect.
@@ -977,7 +984,7 @@ class VrmlConverter_ShadingAspect : public MMgt_TShared {
 %}
 
 %nodefaultctor Handle_VrmlConverter_ShadingAspect;
-class Handle_VrmlConverter_ShadingAspect : public Handle_MMgt_TShared {
+class Handle_VrmlConverter_ShadingAspect : public Handle_Standard_Transient {
 
     public:
         // constructors
@@ -989,19 +996,20 @@ class Handle_VrmlConverter_ShadingAspect : public Handle_MMgt_TShared {
         static const Handle_VrmlConverter_ShadingAspect DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_VrmlConverter_ShadingAspect {
     VrmlConverter_ShadingAspect* _get_reference() {
-    return (VrmlConverter_ShadingAspect*)$self->Access();
+    return (VrmlConverter_ShadingAspect*)$self->get();
     }
 };
 
 %extend Handle_VrmlConverter_ShadingAspect {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend VrmlConverter_ShadingAspect {
@@ -1051,7 +1059,7 @@ class VrmlConverter_WFDeflectionRestrictedFace {
 	:param DrawVIso:
 	:type DrawVIso: bool
 	:param Deflection:
-	:type Deflection: Quantity_Length
+	:type Deflection: float
 	:param NBUiso:
 	:type NBUiso: int
 	:param NBViso:
@@ -1060,7 +1068,7 @@ class VrmlConverter_WFDeflectionRestrictedFace {
 	:type aDrawer: Handle_VrmlConverter_Drawer &
 	:rtype: void
 ") Add;
-		static void Add (Standard_OStream & anOStream,const Handle_BRepAdaptor_HSurface & aFace,const Standard_Boolean DrawUIso,const Standard_Boolean DrawVIso,const Quantity_Length Deflection,const Standard_Integer NBUiso,const Standard_Integer NBViso,const Handle_VrmlConverter_Drawer & aDrawer);
+		static void Add (Standard_OStream & anOStream,const Handle_BRepAdaptor_HSurface & aFace,const Standard_Boolean DrawUIso,const Standard_Boolean DrawVIso,const Standard_Real Deflection,const Standard_Integer NBUiso,const Standard_Integer NBViso,const Handle_VrmlConverter_Drawer & aDrawer);
 };
 
 
@@ -1232,19 +1240,20 @@ class Handle_VrmlConverter_IsoAspect : public Handle_VrmlConverter_LineAspect {
         static const Handle_VrmlConverter_IsoAspect DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_VrmlConverter_IsoAspect {
     VrmlConverter_IsoAspect* _get_reference() {
-    return (VrmlConverter_IsoAspect*)$self->Access();
+    return (VrmlConverter_IsoAspect*)$self->get();
     }
 };
 
 %extend Handle_VrmlConverter_IsoAspect {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend VrmlConverter_IsoAspect {

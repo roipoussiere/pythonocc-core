@@ -1,5 +1,5 @@
 /*
-Copyright 2008-2017 Thomas Paviot (tpaviot@gmail.com)
+Copyright 2008-2018 Thomas Paviot (tpaviot@gmail.com)
 
 
 This file is part of pythonOCC.
@@ -54,9 +54,13 @@ def register_handle(handle, base_object):
 };
 
 /* typedefs */
-typedef NCollection_List <Handle_TColgp_HSequenceOfPnt> Prs3d_NListOfSequenceOfPnt;
+typedef Prs3d_Drawer Graphic3d_HighlightStyle;
 typedef Prs3d_NListOfSequenceOfPnt::Iterator Prs3d_NListIteratorOfListOfSequenceOfPnt;
 /* end typedefs declaration */
+
+/* templates */
+%template(Prs3d_NListOfSequenceOfPnt) NCollection_List <Handle_TColgp_HSequenceOfPnt>;
+/* end templates declaration */
 
 /* public enums */
 enum Prs3d_DimensionTextVerticalPosition {
@@ -65,10 +69,36 @@ enum Prs3d_DimensionTextVerticalPosition {
 	Prs3d_DTVP_Center = 2,
 };
 
+enum Prs3d_TypeOfHighlight {
+	Prs3d_TypeOfHighlight_None = 0,
+	Prs3d_TypeOfHighlight_Selected = 1,
+	Prs3d_TypeOfHighlight_Dynamic = 2,
+	Prs3d_TypeOfHighlight_LocalSelected = 3,
+	Prs3d_TypeOfHighlight_LocalDynamic = 4,
+	Prs3d_TypeOfHighlight_SubIntensity = 5,
+	Prs3d_TypeOfHighlight_NB = 6,
+};
+
 enum Prs3d_VertexDrawMode {
 	Prs3d_VDM_Isolated = 0,
 	Prs3d_VDM_All = 1,
 	Prs3d_VDM_Inherited = 2,
+};
+
+enum Prs3d_DatumMode {
+	Prs3d_DM_WireFrame = 0,
+	Prs3d_DM_Shaded = 1,
+};
+
+enum Prs3d_DatumAttribute {
+	Prs3d_DA_XAxisLength = 0,
+	Prs3d_DA_YAxisLength = 1,
+	Prs3d_DA_ZAxisLength = 2,
+	Prs3d_DP_ShadingTubeRadiusPercent = 3,
+	Prs3d_DP_ShadingConeRadiusPercent = 4,
+	Prs3d_DP_ShadingConeLengthPercent = 5,
+	Prs3d_DP_ShadingOriginRadiusPercent = 6,
+	Prs3d_DP_ShadingNumberOfFacettes = 7,
 };
 
 enum Prs3d_DimensionTextHorizontalPosition {
@@ -89,6 +119,30 @@ enum Prs3d_TypeOfHLR {
 	Prs3d_TOH_Algo = 2,
 };
 
+enum Prs3d_DatumAxes {
+	Prs3d_DA_XAxis = 1,
+	Prs3d_DA_YAxis = 2,
+	Prs3d_DA_ZAxis = 4,
+	Prs3d_DA_XYAxis = Prs3d_DA_XAxis | Prs3d_DA_YAxis,
+	Prs3d_DA_YZAxis = Prs3d_DA_YAxis | Prs3d_DA_ZAxis,
+	Prs3d_DA_XZAxis = Prs3d_DA_XAxis | Prs3d_DA_ZAxis,
+	Prs3d_DA_XYZAxis = Prs3d_DA_XAxis | Prs3d_DA_YAxis | Prs3d_DA_ZAxis,
+};
+
+enum Prs3d_DatumParts {
+	Prs3d_DP_Origin = 0,
+	Prs3d_DP_XAxis = 1,
+	Prs3d_DP_YAxis = 2,
+	Prs3d_DP_ZAxis = 3,
+	Prs3d_DP_XArrow = 4,
+	Prs3d_DP_YArrow = 5,
+	Prs3d_DP_ZArrow = 6,
+	Prs3d_DP_XOYAxis = 7,
+	Prs3d_DP_YOZAxis = 8,
+	Prs3d_DP_XOZAxis = 9,
+	Prs3d_DP_None = 10,
+};
+
 enum Prs3d_DimensionArrowOrientation {
 	Prs3d_DAO_Internal = 0,
 	Prs3d_DAO_External = 1,
@@ -104,24 +158,24 @@ class Prs3d {
 		%feature("autodoc", "	* draws an arrow at a given location, with respect to a given direction.
 
 	:param X:
-	:type X: Quantity_Length
+	:type X: float
 	:param Y:
-	:type Y: Quantity_Length
+	:type Y: float
 	:param Z:
-	:type Z: Quantity_Length
+	:type Z: float
 	:param aDistance:
-	:type aDistance: Quantity_Length
+	:type aDistance: float
 	:param p1:
 	:type p1: gp_Pnt
 	:param p2:
 	:type p2: gp_Pnt
 	:param dist:
-	:type dist: Quantity_Length &
+	:type dist: float &
 	:rtype: bool
 ") MatchSegment;
-		static Standard_Boolean MatchSegment (const Quantity_Length X,const Quantity_Length Y,const Quantity_Length Z,const Quantity_Length aDistance,const gp_Pnt & p1,const gp_Pnt & p2,Standard_Real &OutValue);
+		static Standard_Boolean MatchSegment (const Standard_Real X,const Standard_Real Y,const Standard_Real Z,const Standard_Real aDistance,const gp_Pnt & p1,const gp_Pnt & p2,Standard_Real &OutValue);
 		%feature("compactdefaultargs") GetDeflection;
-		%feature("autodoc", "	* Computes the absolute deflection value depending on the type of deflection in theDrawer: <ul> <li><b>Aspect_TOD_RELATIVE</b>: the absolute deflection is computed using the relative deviation coefficient from theDrawer and the shape's bounding box;</li> <li><b>Aspect_TOD_ABSOLUTE</b>: the maximal chordial deviation from theDrawer is returned.</li> </ul> In case of the type of deflection in theDrawer computed relative deflection for shape is stored as absolute deflection. It is necessary to use it later on for sub-shapes. This function should always be used to compute the deflection value for building discrete representations of the shape (triangualtion, wireframe) to avoid incosistencies between different representations of the shape and undesirable visual artifacts.
+		%feature("autodoc", "	* Computes the absolute deflection value depending on the type of deflection in theDrawer: <ul> <li><b>Aspect_TOD_RELATIVE</b>: the absolute deflection is computed using the relative deviation coefficient from theDrawer and the shape's bounding box;</li> <li><b>Aspect_TOD_ABSOLUTE</b>: the maximal chordial deviation from theDrawer is returned.</li> </ul> In case of the type of deflection in theDrawer computed relative deflection for shape is stored as absolute deflection. It is necessary to use it later on for sub-shapes. This function should always be used to compute the deflection value for building discrete representations of the shape --triangualtion, wireframe-- to avoid incosistencies between different representations of the shape and undesirable visual artifacts.
 
 	:param theShape:
 	:type theShape: TopoDS_Shape &
@@ -130,6 +184,26 @@ class Prs3d {
 	:rtype: float
 ") GetDeflection;
 		static Standard_Real GetDeflection (const TopoDS_Shape & theShape,const Handle_Prs3d_Drawer & theDrawer);
+		%feature("compactdefaultargs") PrimitivesFromPolylines;
+		%feature("autodoc", "	* Assembles array of primitives for sequence of polylines. @param thePoints [in] the polylines sequence returns array of primitives
+
+	:param thePoints:
+	:type thePoints: Prs3d_NListOfSequenceOfPnt &
+	:rtype: Handle_Graphic3d_ArrayOfPrimitives
+") PrimitivesFromPolylines;
+		static Handle_Graphic3d_ArrayOfPrimitives PrimitivesFromPolylines (const Prs3d_NListOfSequenceOfPnt & thePoints);
+		%feature("compactdefaultargs") AddPrimitivesGroup;
+		%feature("autodoc", "	* Add primitives into new group in presentation and clear the list of polylines.
+
+	:param thePrs:
+	:type thePrs: Handle_Prs3d_Presentation &
+	:param theAspect:
+	:type theAspect: Handle_Prs3d_LineAspect &
+	:param thePolylines:
+	:type thePolylines: Prs3d_NListOfSequenceOfPnt &
+	:rtype: void
+") AddPrimitivesGroup;
+		static void AddPrimitivesGroup (const Handle_Prs3d_Presentation & thePrs,const Handle_Prs3d_LineAspect & theAspect,Prs3d_NListOfSequenceOfPnt & thePolylines);
 };
 
 
@@ -139,7 +213,7 @@ class Prs3d {
 	}
 };
 %nodefaultctor Prs3d_BasicAspect;
-class Prs3d_BasicAspect : public MMgt_TShared {
+class Prs3d_BasicAspect : public Standard_Transient {
 	public:
 };
 
@@ -163,7 +237,7 @@ class Prs3d_BasicAspect : public MMgt_TShared {
 %}
 
 %nodefaultctor Handle_Prs3d_BasicAspect;
-class Handle_Prs3d_BasicAspect : public Handle_MMgt_TShared {
+class Handle_Prs3d_BasicAspect : public Handle_Standard_Transient {
 
     public:
         // constructors
@@ -175,19 +249,20 @@ class Handle_Prs3d_BasicAspect : public Handle_MMgt_TShared {
         static const Handle_Prs3d_BasicAspect DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_Prs3d_BasicAspect {
     Prs3d_BasicAspect* _get_reference() {
-    return (Prs3d_BasicAspect*)$self->Access();
+    return (Prs3d_BasicAspect*)$self->get();
     }
 };
 
 %extend Handle_Prs3d_BasicAspect {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend Prs3d_BasicAspect {
@@ -247,7 +322,7 @@ class Prs3d_DimensionUnits {
 	}
 };
 %nodefaultctor Prs3d_Drawer;
-class Prs3d_Drawer : public MMgt_TShared {
+class Prs3d_Drawer : public Graphic3d_PresentationAttributes {
 	public:
 		%feature("compactdefaultargs") Prs3d_Drawer;
 		%feature("autodoc", "	* Default constructor.
@@ -279,16 +354,16 @@ class Prs3d_Drawer : public MMgt_TShared {
 		%feature("autodoc", "	* Defines the maximal chordial deviation when drawing any curve. Even if the type of deviation is set to TOD_Relative, this value is used by: Prs3d_DeflectionCurve Prs3d_WFDeflectionSurface Prs3d_WFDeflectionRestrictedFace
 
 	:param theChordialDeviation:
-	:type theChordialDeviation: Quantity_Length
+	:type theChordialDeviation: float
 	:rtype: None
 ") SetMaximalChordialDeviation;
-		void SetMaximalChordialDeviation (const Quantity_Length theChordialDeviation);
+		void SetMaximalChordialDeviation (const Standard_Real theChordialDeviation);
 		%feature("compactdefaultargs") MaximalChordialDeviation;
 		%feature("autodoc", "	* Returns the maximal chordal deviation. The default value is 0.1. Drawings of curves or patches are made with respect to an absolute maximal chordal deviation.
 
-	:rtype: Quantity_Length
+	:rtype: float
 ") MaximalChordialDeviation;
-		Quantity_Length MaximalChordialDeviation ();
+		Standard_Real MaximalChordialDeviation ();
 		%feature("compactdefaultargs") HasOwnMaximalChordialDeviation;
 		%feature("autodoc", "	* Returns true if the drawer has a maximal chordial deviation setting active.
 
@@ -355,6 +430,26 @@ class Prs3d_Drawer : public MMgt_TShared {
 	:rtype: bool
 ") HasOwnIsoOnPlane;
 		Standard_Boolean HasOwnIsoOnPlane ();
+		%feature("compactdefaultargs") IsoOnTriangulation;
+		%feature("autodoc", "	* Returns True if the drawing of isos on triangulation is enabled.
+
+	:rtype: bool
+") IsoOnTriangulation;
+		Standard_Boolean IsoOnTriangulation ();
+		%feature("compactdefaultargs") HasOwnIsoOnTriangulation;
+		%feature("autodoc", "	* Returns true if the drawer has IsoOnTriangulation setting active.
+
+	:rtype: bool
+") HasOwnIsoOnTriangulation;
+		Standard_Boolean HasOwnIsoOnTriangulation ();
+		%feature("compactdefaultargs") SetIsoOnTriangulation;
+		%feature("autodoc", "	* Enables or disables isolines on triangulation by setting the parameter theIsEnabled to true or false.
+
+	:param theToEnable:
+	:type theToEnable: bool
+	:rtype: None
+") SetIsoOnTriangulation;
+		void SetIsoOnTriangulation (const Standard_Boolean theToEnable);
 		%feature("compactdefaultargs") SetDiscretisation;
 		%feature("autodoc", "	* Sets the discretisation parameter theValue.
 
@@ -407,6 +502,12 @@ class Prs3d_Drawer : public MMgt_TShared {
 	:rtype: float
 ") PreviousDeviationCoefficient;
 		Standard_Real PreviousDeviationCoefficient ();
+		%feature("compactdefaultargs") UpdatePreviousDeviationCoefficient;
+		%feature("autodoc", "	* Updates the previous value used for the chordal deviation coefficient to the current state.
+
+	:rtype: None
+") UpdatePreviousDeviationCoefficient;
+		void UpdatePreviousDeviationCoefficient ();
 		%feature("compactdefaultargs") SetHLRDeviationCoefficient;
 		%feature("autodoc", "	* Sets the deviation coefficient aCoefficient for removal of hidden lines created by different viewpoints in different presentations. The Default value is 0.02. Also sets the hasOwnHLRDeviationCoefficient flag to Standard_True and myPreviousHLRDeviationCoefficient
 
@@ -471,6 +572,12 @@ class Prs3d_Drawer : public MMgt_TShared {
 	:rtype: float
 ") PreviousDeviationAngle;
 		Standard_Real PreviousDeviationAngle ();
+		%feature("compactdefaultargs") UpdatePreviousDeviationAngle;
+		%feature("autodoc", "	* Updates the previous deviation angle to the current value
+
+	:rtype: None
+") UpdatePreviousDeviationAngle;
+		void UpdatePreviousDeviationAngle ();
 		%feature("compactdefaultargs") SetHLRAngle;
 		%feature("autodoc", "	* Sets anAngle, the angle of maximum chordal deviation for removal of hidden lines created by different viewpoints in different presentations. The default value is 20 * M_PI / 180. Also sets the hasOwnHLRDeviationAngle flag to Standard_True and myPreviousHLRDeviationAngle.
 
@@ -524,7 +631,7 @@ class Prs3d_Drawer : public MMgt_TShared {
 ") HasOwnIsAutoTriangulation;
 		Standard_Boolean HasOwnIsAutoTriangulation ();
 		%feature("compactdefaultargs") UIsoAspect;
-		%feature("autodoc", "	* Defines the attributes which are used when drawing an U isoparametric curve of a face. Defines the number of U isoparametric curves to be drawn for a single face. The LineAspect for U isoparametric lines can be edited (methods SetColor, SetTypeOfLine, SetWidth, SetNumber) The default values are: COLOR : Quantity_NOC_GRAY75 TYPE OF LINE: Aspect_TOL_SOLID WIDTH : 0.5 //! These attributes are used by the following algorithms: Prs3d_WFDeflectionSurface Prs3d_WFDeflectionRestrictedFace
+		%feature("autodoc", "	* Defines the attributes which are used when drawing an U isoparametric curve of a face. Defines the number of U isoparametric curves to be drawn for a single face. The LineAspect for U isoparametric lines can be edited --methods SetColor, SetTypeOfLine, SetWidth, SetNumber-- The default values are: COLOR : Quantity_NOC_GRAY75 TYPE OF LINE: Aspect_TOL_SOLID WIDTH : 0.5 //! These attributes are used by the following algorithms: Prs3d_WFDeflectionSurface Prs3d_WFDeflectionRestrictedFace
 
 	:rtype: Handle_Prs3d_IsoAspect
 ") UIsoAspect;
@@ -542,7 +649,7 @@ class Prs3d_Drawer : public MMgt_TShared {
 ") HasOwnUIsoAspect;
 		Standard_Boolean HasOwnUIsoAspect ();
 		%feature("compactdefaultargs") VIsoAspect;
-		%feature("autodoc", "	* Defines the attributes which are used when drawing an V isoparametric curve of a face. Defines the number of V isoparametric curves to be drawn for a single face. The LineAspect for V isoparametric lines can be edited (methods SetColor, SetTypeOfLine, SetWidth, SetNumber) The default values are: COLOR : Quantity_NOC_GRAY82 TYPE OF LINE: Aspect_TOL_SOLID WIDTH : 0.5 //! These attributes are used by the following algorithms: Prs3d_WFDeflectionSurface Prs3d_WFDeflectionRestrictedFace
+		%feature("autodoc", "	* Defines the attributes which are used when drawing an V isoparametric curve of a face. Defines the number of V isoparametric curves to be drawn for a single face. The LineAspect for V isoparametric lines can be edited --methods SetColor, SetTypeOfLine, SetWidth, SetNumber-- The default values are: COLOR : Quantity_NOC_GRAY82 TYPE OF LINE: Aspect_TOL_SOLID WIDTH : 0.5 //! These attributes are used by the following algorithms: Prs3d_WFDeflectionSurface Prs3d_WFDeflectionRestrictedFace
 
 	:rtype: Handle_Prs3d_IsoAspect
 ") VIsoAspect;
@@ -681,26 +788,6 @@ class Prs3d_Drawer : public MMgt_TShared {
 	:rtype: bool
 ") HasOwnShadingAspect;
 		Standard_Boolean HasOwnShadingAspect ();
-		%feature("compactdefaultargs") ShadingAspectGlobal;
-		%feature("autodoc", "	* Returns True if the ShadingAspect is applied to the whole presentation.
-
-	:rtype: bool
-") ShadingAspectGlobal;
-		Standard_Boolean ShadingAspectGlobal ();
-		%feature("compactdefaultargs") SetShadingAspectGlobal;
-		%feature("autodoc", "	* Indicates that the ShadingAspect will be apply to the whole presentation. This allows to modify the aspect without recomputing the content of the presentation.
-
-	:param theValue:
-	:type theValue: bool
-	:rtype: None
-") SetShadingAspectGlobal;
-		void SetShadingAspectGlobal (const Standard_Boolean theValue);
-		%feature("compactdefaultargs") HasOwnShadingAspectGlobal;
-		%feature("autodoc", "	* Returns true if the drawer has its own attribute for ShadingAspectGlobal flag that overrides the one in the link.
-
-	:rtype: bool
-") HasOwnShadingAspectGlobal;
-		Standard_Boolean HasOwnShadingAspectGlobal ();
 		%feature("compactdefaultargs") SeenLineAspect;
 		%feature("autodoc", "	* Returns settings for seen line aspects. These settings can be edited. The default values are: Color: Quantity_NOC_YELLOW Type of line: Aspect_TOL_SOLID Width: 1.0
 
@@ -770,7 +857,7 @@ class Prs3d_Drawer : public MMgt_TShared {
 ") SetLineArrowDraw;
 		void SetLineArrowDraw (const Standard_Boolean theIsEnabled);
 		%feature("compactdefaultargs") LineArrowDraw;
-		%feature("autodoc", "	* Returns True if drawing an arrow at the end of each edge is enabled and False otherwise (the default).
+		%feature("autodoc", "	* Returns True if drawing an arrow at the end of each edge is enabled and False otherwise --the default--.
 
 	:rtype: bool
 ") LineArrowDraw;
@@ -846,7 +933,7 @@ class Prs3d_Drawer : public MMgt_TShared {
 ") HasOwnVectorAspect;
 		Standard_Boolean HasOwnVectorAspect ();
 		%feature("compactdefaultargs") SetVertexDrawMode;
-		%feature("autodoc", "	* Sets the mode of visualization of vertices of a TopoDS_Shape instance. By default, only stand-alone vertices (not belonging topologically to an edge) are drawn, that corresponds to Prs3d_VDM_Standalone mode. Switching to Prs3d_VDM_Standalone mode makes all shape's vertices visible. To inherit this parameter from the global drawer instance ('the link') when it is present, Prs3d_VDM_Inherited value should be used.
+		%feature("autodoc", "	* Sets the mode of visualization of vertices of a TopoDS_Shape instance. By default, only stand-alone vertices --not belonging topologically to an edge-- are drawn, that corresponds to Prs3d_VDM_Standalone mode. Switching to Prs3d_VDM_Standalone mode makes all shape's vertices visible. To inherit this parameter from the global drawer instance --'the link'-- when it is present, Prs3d_VDM_Inherited value should be used.
 
 	:param theMode:
 	:type theMode: Prs3d_VertexDrawMode
@@ -860,7 +947,7 @@ class Prs3d_Drawer : public MMgt_TShared {
 ") VertexDrawMode;
 		Prs3d_VertexDrawMode VertexDrawMode ();
 		%feature("compactdefaultargs") HasOwnVertexDrawMode;
-		%feature("autodoc", "	* Returns true if the vertex draw mode is not equal to <b>Prs3d_VDM_Inherited</b>. This means that individual vertex draw mode value (i.e. not inherited from the global drawer) is used for a specific interactive object.
+		%feature("autodoc", "	* Returns true if the vertex draw mode is not equal to <b>Prs3d_VDM_Inherited</b>. This means that individual vertex draw mode value --i.e. not inherited from the global drawer-- is used for a specific interactive object.
 
 	:rtype: bool
 ") HasOwnVertexDrawMode;
@@ -1145,12 +1232,32 @@ class Prs3d_Drawer : public MMgt_TShared {
 	:rtype: None
 ") Link;
 		void Link (const Handle_Prs3d_Drawer & theDrawer);
+		%feature("compactdefaultargs") SetLink;
+		%feature("autodoc", "	* Sets theDrawer as a link to which the current object references.
+
+	:param theDrawer:
+	:type theDrawer: Handle_Prs3d_Drawer &
+	:rtype: None
+") SetLink;
+		void SetLink (const Handle_Prs3d_Drawer & theDrawer);
 		%feature("compactdefaultargs") ClearLocalAttributes;
 		%feature("autodoc", "	* Removes local attributes.
 
 	:rtype: None
 ") ClearLocalAttributes;
 		void ClearLocalAttributes ();
+		%feature("compactdefaultargs") SetShaderProgram;
+		%feature("autodoc", "	* Assign shader program for specified type of primitives. @param theProgram new program to set --might be NULL-- @param theAspect the type of primitives @param theToOverrideDefaults if true then non-overridden attributes using defaults will be allocated and copied from the Link;  otherwise, only already customized attributes will be changed
+
+	:param theProgram:
+	:type theProgram: Handle_Graphic3d_ShaderProgram &
+	:param theAspect:
+	:type theAspect: Graphic3d_GroupAspect
+	:param theToOverrideDefaults: default value is false
+	:type theToOverrideDefaults: bool
+	:rtype: None
+") SetShaderProgram;
+		void SetShaderProgram (const Handle_Graphic3d_ShaderProgram & theProgram,const Graphic3d_GroupAspect theAspect,const bool theToOverrideDefaults = false);
 };
 
 
@@ -1173,7 +1280,7 @@ class Prs3d_Drawer : public MMgt_TShared {
 %}
 
 %nodefaultctor Handle_Prs3d_Drawer;
-class Handle_Prs3d_Drawer : public Handle_MMgt_TShared {
+class Handle_Prs3d_Drawer : public Handle_Graphic3d_PresentationAttributes {
 
     public:
         // constructors
@@ -1185,151 +1292,23 @@ class Handle_Prs3d_Drawer : public Handle_MMgt_TShared {
         static const Handle_Prs3d_Drawer DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_Prs3d_Drawer {
     Prs3d_Drawer* _get_reference() {
-    return (Prs3d_Drawer*)$self->Access();
+    return (Prs3d_Drawer*)$self->get();
     }
 };
 
 %extend Handle_Prs3d_Drawer {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend Prs3d_Drawer {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor Prs3d_PlaneSet;
-class Prs3d_PlaneSet : public MMgt_TShared {
-	public:
-		%feature("compactdefaultargs") Prs3d_PlaneSet;
-		%feature("autodoc", "	:param Xdir:
-	:type Xdir: float
-	:param Ydir:
-	:type Ydir: float
-	:param Zdir:
-	:type Zdir: float
-	:param Xloc:
-	:type Xloc: Quantity_Length
-	:param Yloc:
-	:type Yloc: Quantity_Length
-	:param Zloc:
-	:type Zloc: Quantity_Length
-	:param anOffset:
-	:type anOffset: Quantity_Length
-	:rtype: None
-") Prs3d_PlaneSet;
-		 Prs3d_PlaneSet (const Standard_Real Xdir,const Standard_Real Ydir,const Standard_Real Zdir,const Quantity_Length Xloc,const Quantity_Length Yloc,const Quantity_Length Zloc,const Quantity_Length anOffset);
-		%feature("compactdefaultargs") SetDirection;
-		%feature("autodoc", "	:param X:
-	:type X: float
-	:param Y:
-	:type Y: float
-	:param Z:
-	:type Z: float
-	:rtype: None
-") SetDirection;
-		void SetDirection (const Standard_Real X,const Standard_Real Y,const Standard_Real Z);
-		%feature("compactdefaultargs") SetLocation;
-		%feature("autodoc", "	:param X:
-	:type X: Quantity_Length
-	:param Y:
-	:type Y: Quantity_Length
-	:param Z:
-	:type Z: Quantity_Length
-	:rtype: None
-") SetLocation;
-		void SetLocation (const Quantity_Length X,const Quantity_Length Y,const Quantity_Length Z);
-		%feature("compactdefaultargs") SetOffset;
-		%feature("autodoc", "	:param anOffset:
-	:type anOffset: Quantity_Length
-	:rtype: None
-") SetOffset;
-		void SetOffset (const Quantity_Length anOffset);
-		%feature("compactdefaultargs") Plane;
-		%feature("autodoc", "	:rtype: gp_Pln
-") Plane;
-		gp_Pln Plane ();
-		%feature("compactdefaultargs") Offset;
-		%feature("autodoc", "	:rtype: Quantity_Length
-") Offset;
-		Quantity_Length Offset ();
-		%feature("compactdefaultargs") Location;
-		%feature("autodoc", "	:param X:
-	:type X: Quantity_Length &
-	:param Y:
-	:type Y: Quantity_Length &
-	:param Z:
-	:type Z: Quantity_Length &
-	:rtype: None
-") Location;
-		void Location (Standard_Real &OutValue,Standard_Real &OutValue,Standard_Real &OutValue);
-		%feature("compactdefaultargs") Direction;
-		%feature("autodoc", "	:param X:
-	:type X: Quantity_Length &
-	:param Y:
-	:type Y: Quantity_Length &
-	:param Z:
-	:type Z: Quantity_Length &
-	:rtype: None
-") Direction;
-		void Direction (Standard_Real &OutValue,Standard_Real &OutValue,Standard_Real &OutValue);
-};
-
-
-%extend Prs3d_PlaneSet {
-	%pythoncode {
-		def GetHandle(self):
-		    try:
-		        return self.thisHandle
-		    except:
-		        self.thisHandle = Handle_Prs3d_PlaneSet(self)
-		        self.thisown = False
-		        return self.thisHandle
-	}
-};
-
-%pythonappend Handle_Prs3d_PlaneSet::Handle_Prs3d_PlaneSet %{
-    # register the handle in the base object
-    if len(args) > 0:
-        register_handle(self, args[0])
-%}
-
-%nodefaultctor Handle_Prs3d_PlaneSet;
-class Handle_Prs3d_PlaneSet : public Handle_MMgt_TShared {
-
-    public:
-        // constructors
-        Handle_Prs3d_PlaneSet();
-        Handle_Prs3d_PlaneSet(const Handle_Prs3d_PlaneSet &aHandle);
-        Handle_Prs3d_PlaneSet(const Prs3d_PlaneSet *anItem);
-        void Nullify();
-        Standard_Boolean IsNull() const;
-        static const Handle_Prs3d_PlaneSet DownCast(const Handle_Standard_Transient &AnObject);
-
-};
-%extend Handle_Prs3d_PlaneSet {
-    Prs3d_PlaneSet* _get_reference() {
-    return (Prs3d_PlaneSet*)$self->Access();
-    }
-};
-
-%extend Handle_Prs3d_PlaneSet {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
-};
-
-%extend Prs3d_PlaneSet {
 	%pythoncode {
 	__repr__ = _dumps_object
 	}
@@ -1366,13 +1345,13 @@ class Prs3d_Presentation : public Graphic3d_Structure {
 		%feature("compactdefaultargs") Compute;
 		%feature("autodoc", "	* Returns the new Structure defined for the new visualization
 
-	:param aProjector:
-	:type aProjector: Handle_Graphic3d_DataStructureManager &
-	:param AMatrix:
-	:type AMatrix: TColStd_Array2OfReal &
+	:param theProjector:
+	:type theProjector: Handle_Graphic3d_DataStructureManager &
+	:param theTrsf:
+	:type theTrsf: Handle_Geom_Transformation &
 	:rtype: Handle_Graphic3d_Structure
 ") Compute;
-		virtual Handle_Graphic3d_Structure Compute (const Handle_Graphic3d_DataStructureManager & aProjector,const TColStd_Array2OfReal & AMatrix);
+		virtual Handle_Graphic3d_Structure Compute (const Handle_Graphic3d_DataStructureManager & theProjector,const Handle_Geom_Transformation & theTrsf);
 		%feature("compactdefaultargs") Compute;
 		%feature("autodoc", "	* Returns the new Structure defined for the new visualization
 
@@ -1386,57 +1365,15 @@ class Prs3d_Presentation : public Graphic3d_Structure {
 		%feature("compactdefaultargs") Compute;
 		%feature("autodoc", "	* Returns the new Structure defined for the new visualization
 
-	:param aProjector:
-	:type aProjector: Handle_Graphic3d_DataStructureManager &
-	:param AMatrix:
-	:type AMatrix: TColStd_Array2OfReal &
-	:param aStructure:
-	:type aStructure: Handle_Graphic3d_Structure &
+	:param theProjector:
+	:type theProjector: Handle_Graphic3d_DataStructureManager &
+	:param theTrsf:
+	:type theTrsf: Handle_Geom_Transformation &
+	:param theStructure:
+	:type theStructure: Handle_Graphic3d_Structure &
 	:rtype: void
 ") Compute;
-		virtual void Compute (const Handle_Graphic3d_DataStructureManager & aProjector,const TColStd_Array2OfReal & AMatrix,Handle_Graphic3d_Structure & aStructure);
-		%feature("compactdefaultargs") SetShadingAspect;
-		%feature("autodoc", "	:param aShadingAspect:
-	:type aShadingAspect: Handle_Prs3d_ShadingAspect &
-	:rtype: None
-") SetShadingAspect;
-		void SetShadingAspect (const Handle_Prs3d_ShadingAspect & aShadingAspect);
-		%feature("compactdefaultargs") Transform;
-		%feature("autodoc", "	:param aTransformation:
-	:type aTransformation: Handle_Geom_Transformation &
-	:rtype: None
-") Transform;
-		void Transform (const Handle_Geom_Transformation & aTransformation);
-		%feature("compactdefaultargs") Place;
-		%feature("autodoc", "	:param X:
-	:type X: Quantity_Length
-	:param Y:
-	:type Y: Quantity_Length
-	:param Z:
-	:type Z: Quantity_Length
-	:rtype: None
-") Place;
-		void Place (const Quantity_Length X,const Quantity_Length Y,const Quantity_Length Z);
-		%feature("compactdefaultargs") Multiply;
-		%feature("autodoc", "	:param aTransformation:
-	:type aTransformation: Handle_Geom_Transformation &
-	:rtype: None
-") Multiply;
-		void Multiply (const Handle_Geom_Transformation & aTransformation);
-		%feature("compactdefaultargs") Move;
-		%feature("autodoc", "	:param X:
-	:type X: Quantity_Length
-	:param Y:
-	:type Y: Quantity_Length
-	:param Z:
-	:type Z: Quantity_Length
-	:rtype: None
-") Move;
-		void Move (const Quantity_Length X,const Quantity_Length Y,const Quantity_Length Z);
-		%feature("compactdefaultargs") Transformation;
-		%feature("autodoc", "	:rtype: Handle_Geom_Transformation
-") Transformation;
-		Handle_Geom_Transformation Transformation ();
+		virtual void Compute (const Handle_Graphic3d_DataStructureManager & theProjector,const Handle_Geom_Transformation & theTrsf,Handle_Graphic3d_Structure & theStructure);
 		%feature("compactdefaultargs") Connect;
 		%feature("autodoc", "	:param aPresentation:
 	:type aPresentation: Handle_Prs3d_Presentation &
@@ -1487,19 +1424,20 @@ class Handle_Prs3d_Presentation : public Handle_Graphic3d_Structure {
         static const Handle_Prs3d_Presentation DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_Prs3d_Presentation {
     Prs3d_Presentation* _get_reference() {
-    return (Prs3d_Presentation*)$self->Access();
+    return (Prs3d_Presentation*)$self->get();
     }
 };
 
 %extend Handle_Prs3d_Presentation {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend Prs3d_Presentation {
@@ -1508,7 +1446,7 @@ class Handle_Prs3d_Presentation : public Handle_Graphic3d_Structure {
 	}
 };
 %nodefaultctor Prs3d_Projector;
-class Prs3d_Projector : public MMgt_TShared {
+class Prs3d_Projector : public Standard_Transient {
 	public:
 		%feature("compactdefaultargs") Prs3d_Projector;
 		%feature("autodoc", "	:param Pr:
@@ -1522,28 +1460,28 @@ class Prs3d_Projector : public MMgt_TShared {
 	:param Pers:
 	:type Pers: bool
 	:param Focus:
-	:type Focus: Quantity_Length
+	:type Focus: float
 	:param DX:
-	:type DX: Quantity_Length
+	:type DX: float
 	:param DY:
-	:type DY: Quantity_Length
+	:type DY: float
 	:param DZ:
-	:type DZ: Quantity_Length
+	:type DZ: float
 	:param XAt:
-	:type XAt: Quantity_Length
+	:type XAt: float
 	:param YAt:
-	:type YAt: Quantity_Length
+	:type YAt: float
 	:param ZAt:
-	:type ZAt: Quantity_Length
+	:type ZAt: float
 	:param XUp:
-	:type XUp: Quantity_Length
+	:type XUp: float
 	:param YUp:
-	:type YUp: Quantity_Length
+	:type YUp: float
 	:param ZUp:
-	:type ZUp: Quantity_Length
+	:type ZUp: float
 	:rtype: None
 ") Prs3d_Projector;
-		 Prs3d_Projector (const Standard_Boolean Pers,const Quantity_Length Focus,const Quantity_Length DX,const Quantity_Length DY,const Quantity_Length DZ,const Quantity_Length XAt,const Quantity_Length YAt,const Quantity_Length ZAt,const Quantity_Length XUp,const Quantity_Length YUp,const Quantity_Length ZUp);
+		 Prs3d_Projector (const Standard_Boolean Pers,const Standard_Real Focus,const Standard_Real DX,const Standard_Real DY,const Standard_Real DZ,const Standard_Real XAt,const Standard_Real YAt,const Standard_Real ZAt,const Standard_Real XUp,const Standard_Real YUp,const Standard_Real ZUp);
 		%feature("compactdefaultargs") Projector;
 		%feature("autodoc", "	* Returns a projector object for use in a hidden line removal algorithm.
 
@@ -1572,7 +1510,7 @@ class Prs3d_Projector : public MMgt_TShared {
 %}
 
 %nodefaultctor Handle_Prs3d_Projector;
-class Handle_Prs3d_Projector : public Handle_MMgt_TShared {
+class Handle_Prs3d_Projector : public Handle_Standard_Transient {
 
     public:
         // constructors
@@ -1584,19 +1522,20 @@ class Handle_Prs3d_Projector : public Handle_MMgt_TShared {
         static const Handle_Prs3d_Projector DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_Prs3d_Projector {
     Prs3d_Projector* _get_reference() {
-    return (Prs3d_Projector*)$self->Access();
+    return (Prs3d_Projector*)$self->get();
     }
 };
 
 %extend Handle_Prs3d_Projector {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend Prs3d_Projector {
@@ -1607,21 +1546,21 @@ class Handle_Prs3d_Projector : public Handle_MMgt_TShared {
 class Prs3d_Root {
 	public:
 		%feature("compactdefaultargs") CurrentGroup;
-		%feature("autodoc", "	* Returns the current group of primititves inside graphic objects in the display. A group also contains the attributes whose ranges are limited to the primitives in it.
+		%feature("autodoc", "	* Returns the current --last created-- group of primititves inside graphic objects in the display. A group also contains the attributes whose ranges are limited to the primitives in it.
 
-	:param Prs3d:
-	:type Prs3d: Handle_Prs3d_Presentation &
+	:param thePrs3d:
+	:type thePrs3d: Handle_Prs3d_Presentation &
 	:rtype: Handle_Graphic3d_Group
 ") CurrentGroup;
-		static Handle_Graphic3d_Group CurrentGroup (const Handle_Prs3d_Presentation & Prs3d);
+		static Handle_Graphic3d_Group CurrentGroup (const Handle_Prs3d_Presentation & thePrs3d);
 		%feature("compactdefaultargs") NewGroup;
 		%feature("autodoc", "	* Returns the new group of primitives inside graphic objects in the display. A group also contains the attributes whose ranges are limited to the primitives in it.
 
-	:param Prs3d:
-	:type Prs3d: Handle_Prs3d_Presentation &
+	:param thePrs3d:
+	:type thePrs3d: Handle_Prs3d_Presentation &
 	:rtype: Handle_Graphic3d_Group
 ") NewGroup;
-		static Handle_Graphic3d_Group NewGroup (const Handle_Prs3d_Presentation & Prs3d);
+		static Handle_Graphic3d_Group NewGroup (const Handle_Prs3d_Presentation & thePrs3d);
 };
 
 
@@ -1634,7 +1573,7 @@ class Prs3d_Root {
 class Prs3d_ShapeTool {
 	public:
 		%feature("compactdefaultargs") Prs3d_ShapeTool;
-		%feature("autodoc", "	* Constructs the tool and initializes it using theShape and theAllVertices (optional) arguments. By default, only isolated and internal vertices are considered, however if theAllVertices argument is equal to True, all shape's vertices are taken into account.
+		%feature("autodoc", "	* Constructs the tool and initializes it using theShape and theAllVertices --optional-- arguments. By default, only isolated and internal vertices are considered, however if theAllVertices argument is equal to True, all shape's vertices are taken into account.
 
 	:param theShape:
 	:type theShape: TopoDS_Shape &
@@ -1741,6 +1680,12 @@ class Prs3d_ShapeTool {
 	:rtype: Handle_Poly_Polygon3D
 ") Polygon3D;
 		Handle_Poly_Polygon3D Polygon3D (TopLoc_Location & l);
+		%feature("compactdefaultargs") IsPlanarFace;
+		%feature("autodoc", "	:param theFace:
+	:type theFace: TopoDS_Face &
+	:rtype: bool
+") IsPlanarFace;
+		static Standard_Boolean IsPlanarFace (const TopoDS_Face & theFace);
 };
 
 
@@ -1749,40 +1694,118 @@ class Prs3d_ShapeTool {
 	__repr__ = _dumps_object
 	}
 };
+%nodefaultctor Prs3d_ToolQuadric;
+class Prs3d_ToolQuadric {
+	public:
+		%feature("compactdefaultargs") FillArray;
+		%feature("autodoc", "	* Generate primitives for 3D quadric surface and fill the given array. Optional transformation is applied.
+
+	:param theArray:
+	:type theArray: Handle_Graphic3d_ArrayOfTriangles &
+	:param theTrsf:
+	:type theTrsf: gp_Trsf
+	:rtype: None
+") FillArray;
+		void FillArray (Handle_Graphic3d_ArrayOfTriangles & theArray,const gp_Trsf & theTrsf);
+		%feature("compactdefaultargs") FillArray;
+		%feature("autodoc", "	* Generate primitives for 3D quadric surface presentation and fill the given array and poly triangulation structure. Optional transformation is applied.
+
+	:param theArray:
+	:type theArray: Handle_Graphic3d_ArrayOfTriangles &
+	:param theTriangulation:
+	:type theTriangulation: Handle_Poly_Triangulation &
+	:param theTrsf:
+	:type theTrsf: gp_Trsf
+	:rtype: None
+") FillArray;
+		void FillArray (Handle_Graphic3d_ArrayOfTriangles & theArray,Handle_Poly_Triangulation & theTriangulation,const gp_Trsf & theTrsf);
+		%feature("compactdefaultargs") TrianglesNb;
+		%feature("autodoc", "	* Number of triangles for presentation with the given params.
+
+	:param theSlicesNb:
+	:type theSlicesNb: int
+	:param theStacksNb:
+	:type theStacksNb: int
+	:rtype: int
+") TrianglesNb;
+		static Standard_Integer TrianglesNb (const Standard_Integer theSlicesNb,const Standard_Integer theStacksNb);
+};
+
+
+%extend Prs3d_ToolQuadric {
+	%pythoncode {
+	__repr__ = _dumps_object
+	}
+};
+%nodefaultctor Prs3d_Arrow;
 class Prs3d_Arrow : public Prs3d_Root {
 	public:
-		%feature("compactdefaultargs") Draw;
-		%feature("autodoc", "	* Defines the representation of the arrow defined by the location point aLocation, the direction aDirection and the length aLength. The angle anAngle defines the angle of opening of the arrow head. The presentation object aPresentation stores the information defined in this framework.
+		%feature("compactdefaultargs") DrawShaded;
+		%feature("autodoc", "	* Defines the representation of the arrow as shaded triangulation. @param theAxis axis definition --arrow origin and direction-- @param theTubeRadius tube --cylinder-- radius @param theAxisLength overall arrow length --cylinder + cone-- @param theConeRadius cone radius --arrow tip-- @param theConeLength cone length --arrow tip-- @param theNbFacettes tessellation quality for each part
 
-	:param aPresentation:
-	:type aPresentation: Handle_Prs3d_Presentation &
-	:param aLocation:
-	:type aLocation: gp_Pnt
-	:param aDirection:
-	:type aDirection: gp_Dir
-	:param anAngle:
-	:type anAngle: Quantity_PlaneAngle
-	:param aLength:
-	:type aLength: Quantity_Length
+	:param theAxis:
+	:type theAxis: gp_Ax1
+	:param theTubeRadius:
+	:type theTubeRadius: float
+	:param theAxisLength:
+	:type theAxisLength: float
+	:param theConeRadius:
+	:type theConeRadius: float
+	:param theConeLength:
+	:type theConeLength: float
+	:param theNbFacettes:
+	:type theNbFacettes: int
+	:rtype: Handle_Graphic3d_ArrayOfTriangles
+") DrawShaded;
+		static Handle_Graphic3d_ArrayOfTriangles DrawShaded (const gp_Ax1 & theAxis,const Standard_Real theTubeRadius,const Standard_Real theAxisLength,const Standard_Real theConeRadius,const Standard_Real theConeLength,const Standard_Integer theNbFacettes);
+		%feature("compactdefaultargs") DrawSegments;
+		%feature("autodoc", "	* Defines the representation of the arrow as a container of segments. @param theLocation location of the arrow tip @param theDir direction of the arrow @param theAngle angle of opening of the arrow head @param theLength length of the arrow --from the tip-- @param theNbSegments count of points on polyline where location is connected
+
+	:param theLocation:
+	:type theLocation: gp_Pnt
+	:param theDir:
+	:type theDir: gp_Dir
+	:param theAngle:
+	:type theAngle: float
+	:param theLength:
+	:type theLength: float
+	:param theNbSegments:
+	:type theNbSegments: int
+	:rtype: Handle_Graphic3d_ArrayOfSegments
+") DrawSegments;
+		static Handle_Graphic3d_ArrayOfSegments DrawSegments (const gp_Pnt & theLocation,const gp_Dir & theDir,const Standard_Real theAngle,const Standard_Real theLength,const Standard_Integer theNbSegments);
+		%feature("compactdefaultargs") Draw;
+		%feature("autodoc", "	* Defines the representation of the arrow. Note that this method does NOT assign any presentation aspects to the primitives group! @param theGroup presentation group to add primitives @param theLocation location of the arrow tip @param theDirection direction of the arrow @param theAngle angle of opening of the arrow head @param theLength length of the arrow --from the tip--
+
+	:param theGroup:
+	:type theGroup: Handle_Graphic3d_Group &
+	:param theLocation:
+	:type theLocation: gp_Pnt
+	:param theDirection:
+	:type theDirection: gp_Dir
+	:param theAngle:
+	:type theAngle: float
+	:param theLength:
+	:type theLength: float
 	:rtype: void
 ") Draw;
-		static void Draw (const Handle_Prs3d_Presentation & aPresentation,const gp_Pnt & aLocation,const gp_Dir & aDirection,const Quantity_PlaneAngle anAngle,const Quantity_Length aLength);
-		%feature("compactdefaultargs") Fill;
-		%feature("autodoc", "	* Defines the representation of the arrow defined by the location point aLocation, the direction vector aDirection and the length aLength. The angle anAngle defines the angle of opening of the arrow head, and the drawer aDrawer specifies the display attributes which arrows will have. With this syntax, no presentation object is created.
+		static void Draw (const Handle_Graphic3d_Group & theGroup,const gp_Pnt & theLocation,const gp_Dir & theDirection,const Standard_Real theAngle,const Standard_Real theLength);
+		%feature("compactdefaultargs") Draw;
+		%feature("autodoc", "	* Alias to another method Draw---- for backward compatibility.
 
-	:param aPresentation:
-	:type aPresentation: Handle_Prs3d_Presentation &
-	:param aLocation:
-	:type aLocation: gp_Pnt
-	:param aDirection:
-	:type aDirection: gp_Dir
-	:param anAngle:
-	:type anAngle: Quantity_PlaneAngle
-	:param aLength:
-	:type aLength: Quantity_Length
+	:param thePrs:
+	:type thePrs: Handle_Prs3d_Presentation &
+	:param theLocation:
+	:type theLocation: gp_Pnt
+	:param theDirection:
+	:type theDirection: gp_Dir
+	:param theAngle:
+	:type theAngle: float
+	:param theLength:
+	:type theLength: float
 	:rtype: void
-") Fill;
-		static void Fill (const Handle_Prs3d_Presentation & aPresentation,const gp_Pnt & aLocation,const gp_Dir & aDirection,const Quantity_PlaneAngle anAngle,const Quantity_Length aLength);
+") Draw;
+		static void Draw (const Handle_Prs3d_Presentation & thePrs,const gp_Pnt & theLocation,const gp_Dir & theDirection,const Standard_Real theAngle,const Standard_Real theLength);
 };
 
 
@@ -1804,12 +1827,12 @@ class Prs3d_ArrowAspect : public Prs3d_BasicAspect {
 		%feature("autodoc", "	* Constructs a framework to display an arrow with a shaft of the length aLength and having a head with sides at the angle anAngle from each other.
 
 	:param anAngle:
-	:type anAngle: Quantity_PlaneAngle
+	:type anAngle: float
 	:param aLength:
-	:type aLength: Quantity_Length
+	:type aLength: float
 	:rtype: None
 ") Prs3d_ArrowAspect;
-		 Prs3d_ArrowAspect (const Quantity_PlaneAngle anAngle,const Quantity_Length aLength);
+		 Prs3d_ArrowAspect (const Standard_Real anAngle,const Standard_Real aLength);
 		%feature("compactdefaultargs") Prs3d_ArrowAspect;
 		%feature("autodoc", "	:param theAspect:
 	:type theAspect: Handle_Graphic3d_AspectLine3d &
@@ -1820,42 +1843,36 @@ class Prs3d_ArrowAspect : public Prs3d_BasicAspect {
 		%feature("autodoc", "	* defines the angle of the arrows.
 
 	:param anAngle:
-	:type anAngle: Quantity_PlaneAngle
+	:type anAngle: float
 	:rtype: None
 ") SetAngle;
-		void SetAngle (const Quantity_PlaneAngle anAngle);
+		void SetAngle (const Standard_Real anAngle);
 		%feature("compactdefaultargs") Angle;
 		%feature("autodoc", "	* returns the current value of the angle used when drawing an arrow.
 
-	:rtype: Quantity_PlaneAngle
+	:rtype: float
 ") Angle;
-		Quantity_PlaneAngle Angle ();
+		Standard_Real Angle ();
 		%feature("compactdefaultargs") SetLength;
-		%feature("autodoc", "	* defines the length of the arrows.
+		%feature("autodoc", "	* Defines the length of the arrows.
 
-	:param aLength:
-	:type aLength: Quantity_Length
+	:param theLength:
+	:type theLength: float
 	:rtype: None
 ") SetLength;
-		void SetLength (const Quantity_Length aLength);
+		void SetLength (const Standard_Real theLength);
 		%feature("compactdefaultargs") Length;
-		%feature("autodoc", "	* returns the current value of the length used when drawing an arrow.
+		%feature("autodoc", "	* Returns the current value of the length used when drawing an arrow.
 
-	:rtype: Quantity_Length
+	:rtype: float
 ") Length;
-		Quantity_Length Length ();
+		Standard_Real Length ();
 		%feature("compactdefaultargs") SetColor;
-		%feature("autodoc", "	:param aColor:
-	:type aColor: Quantity_Color &
+		%feature("autodoc", "	:param theColor:
+	:type theColor: Quantity_Color &
 	:rtype: None
 ") SetColor;
-		void SetColor (const Quantity_Color & aColor);
-		%feature("compactdefaultargs") SetColor;
-		%feature("autodoc", "	:param aColor:
-	:type aColor: Quantity_NameOfColor
-	:rtype: None
-") SetColor;
-		void SetColor (const Quantity_NameOfColor aColor);
+		void SetColor (const Quantity_Color & theColor);
 		%feature("compactdefaultargs") Aspect;
 		%feature("autodoc", "	:rtype: Handle_Graphic3d_AspectLine3d
 ") Aspect;
@@ -1900,19 +1917,20 @@ class Handle_Prs3d_ArrowAspect : public Handle_Prs3d_BasicAspect {
         static const Handle_Prs3d_ArrowAspect DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_Prs3d_ArrowAspect {
     Prs3d_ArrowAspect* _get_reference() {
-    return (Prs3d_ArrowAspect*)$self->Access();
+    return (Prs3d_ArrowAspect*)$self->get();
     }
 };
 
 %extend Handle_Prs3d_ArrowAspect {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend Prs3d_ArrowAspect {
@@ -1929,6 +1947,40 @@ class Prs3d_DatumAspect : public Prs3d_BasicAspect {
 	:rtype: None
 ") Prs3d_DatumAspect;
 		 Prs3d_DatumAspect ();
+		%feature("compactdefaultargs") LineAspect;
+		%feature("autodoc", "	* Returns the right-handed coordinate system set in SetComponent.
+
+	:param thePart:
+	:type thePart: Prs3d_DatumParts
+	:rtype: Handle_Prs3d_LineAspect
+") LineAspect;
+		Handle_Prs3d_LineAspect LineAspect (Prs3d_DatumParts thePart);
+		%feature("compactdefaultargs") ShadingAspect;
+		%feature("autodoc", "	* Returns the right-handed coordinate system set in SetComponent.
+
+	:param thePart:
+	:type thePart: Prs3d_DatumParts
+	:rtype: Handle_Prs3d_ShadingAspect
+") ShadingAspect;
+		Handle_Prs3d_ShadingAspect ShadingAspect (Prs3d_DatumParts thePart);
+		%feature("compactdefaultargs") TextAspect;
+		%feature("autodoc", "	* Returns the right-handed coordinate system set in SetComponent.
+
+	:rtype: Handle_Prs3d_TextAspect
+") TextAspect;
+		Handle_Prs3d_TextAspect TextAspect ();
+		%feature("compactdefaultargs") PointAspect;
+		%feature("autodoc", "	* Returns the point aspect of origin wireframe presentation
+
+	:rtype: Handle_Prs3d_PointAspect
+") PointAspect;
+		Handle_Prs3d_PointAspect PointAspect ();
+		%feature("compactdefaultargs") ArrowAspect;
+		%feature("autodoc", "	* Returns the arrow aspect of presentation
+
+	:rtype: Handle_Prs3d_ArrowAspect
+") ArrowAspect;
+		Handle_Prs3d_ArrowAspect ArrowAspect ();
 		%feature("compactdefaultargs") FirstAxisAspect;
 		%feature("autodoc", "	* Returns the attributes for display of the first axis.
 
@@ -1950,11 +2002,11 @@ class Prs3d_DatumAspect : public Prs3d_BasicAspect {
 		%feature("compactdefaultargs") SetDrawFirstAndSecondAxis;
 		%feature("autodoc", "	* Sets the DrawFirstAndSecondAxis attributes to active.
 
-	:param draw:
-	:type draw: bool
+	:param theToDraw:
+	:type theToDraw: bool
 	:rtype: None
 ") SetDrawFirstAndSecondAxis;
-		void SetDrawFirstAndSecondAxis (const Standard_Boolean draw);
+		void SetDrawFirstAndSecondAxis (Standard_Boolean theToDraw);
 		%feature("compactdefaultargs") DrawFirstAndSecondAxis;
 		%feature("autodoc", "	* Returns true if the first and second axes can be drawn.
 
@@ -1964,47 +2016,117 @@ class Prs3d_DatumAspect : public Prs3d_BasicAspect {
 		%feature("compactdefaultargs") SetDrawThirdAxis;
 		%feature("autodoc", "	* Sets the DrawThirdAxis attributes to active.
 
-	:param draw:
-	:type draw: bool
+	:param theToDraw:
+	:type theToDraw: bool
 	:rtype: None
 ") SetDrawThirdAxis;
-		void SetDrawThirdAxis (const Standard_Boolean draw);
+		void SetDrawThirdAxis (Standard_Boolean theToDraw);
 		%feature("compactdefaultargs") DrawThirdAxis;
 		%feature("autodoc", "	* Returns true if the third axis can be drawn.
 
 	:rtype: bool
 ") DrawThirdAxis;
 		Standard_Boolean DrawThirdAxis ();
-		%feature("compactdefaultargs") SetAxisLength;
-		%feature("autodoc", "	* Sets the lengths L1, L2 and L3 of the three axes.
+		%feature("compactdefaultargs") DrawDatumPart;
+		%feature("autodoc", "	* Returns true if the given part is used in axes of aspect
 
-	:param L1:
-	:type L1: float
-	:param L2:
-	:type L2: float
-	:param L3:
-	:type L3: float
+	:param thePart:
+	:type thePart: Prs3d_DatumParts
+	:rtype: bool
+") DrawDatumPart;
+		Standard_Boolean DrawDatumPart (Prs3d_DatumParts thePart);
+		%feature("compactdefaultargs") SetDrawDatumAxes;
+		%feature("autodoc", "	* Sets the axes used in the datum aspect
+
+	:param theType:
+	:type theType: Prs3d_DatumAxes
+	:rtype: None
+") SetDrawDatumAxes;
+		void SetDrawDatumAxes (Prs3d_DatumAxes theType);
+		%feature("compactdefaultargs") DatumAxes;
+		%feature("autodoc", "	* Returns axes used in the datum aspect
+
+	:rtype: Prs3d_DatumAxes
+") DatumAxes;
+		Prs3d_DatumAxes DatumAxes ();
+		%feature("compactdefaultargs") SetAttribute;
+		%feature("autodoc", "	* Sets the attribute of the datum type
+
+	:param theType:
+	:type theType: Prs3d_DatumAttribute
+	:param theValue:
+	:type theValue: float &
+	:rtype: None
+") SetAttribute;
+		void SetAttribute (Prs3d_DatumAttribute theType,const Standard_Real & theValue);
+		%feature("compactdefaultargs") Attribute;
+		%feature("autodoc", "	* Returns the attribute of the datum type
+
+	:param theType:
+	:type theType: Prs3d_DatumAttribute
+	:rtype: float
+") Attribute;
+		Standard_Real Attribute (Prs3d_DatumAttribute theType);
+		%feature("compactdefaultargs") SetAxisLength;
+		%feature("autodoc", "	* Sets the lengths of the three axes.
+
+	:param theL1:
+	:type theL1: float
+	:param theL2:
+	:type theL2: float
+	:param theL3:
+	:type theL3: float
 	:rtype: None
 ") SetAxisLength;
-		void SetAxisLength (const Standard_Real L1,const Standard_Real L2,const Standard_Real L3);
+		void SetAxisLength (Standard_Real theL1,Standard_Real theL2,Standard_Real theL3);
+		%feature("compactdefaultargs") AxisLength;
+		%feature("autodoc", "	* Returns the length of the displayed first axis.
+
+	:param thePart:
+	:type thePart: Prs3d_DatumParts
+	:rtype: float
+") AxisLength;
+		Standard_Real AxisLength (Prs3d_DatumParts thePart);
 		%feature("compactdefaultargs") FirstAxisLength;
 		%feature("autodoc", "	* Returns the length of the displayed first axis.
 
-	:rtype: Quantity_Length
+	:rtype: float
 ") FirstAxisLength;
-		Quantity_Length FirstAxisLength ();
+		Standard_Real FirstAxisLength ();
 		%feature("compactdefaultargs") SecondAxisLength;
 		%feature("autodoc", "	* Returns the length of the displayed second axis.
 
-	:rtype: Quantity_Length
+	:rtype: float
 ") SecondAxisLength;
-		Quantity_Length SecondAxisLength ();
+		Standard_Real SecondAxisLength ();
 		%feature("compactdefaultargs") ThirdAxisLength;
 		%feature("autodoc", "	* Returns the length of the displayed third axis.
 
-	:rtype: Quantity_Length
+	:rtype: float
 ") ThirdAxisLength;
-		Quantity_Length ThirdAxisLength ();
+		Standard_Real ThirdAxisLength ();
+		%feature("compactdefaultargs") SetToDrawLabels;
+		%feature("autodoc", "	* Sets option to draw or not to draw text labels for axes
+
+	:param theToDraw:
+	:type theToDraw: bool
+	:rtype: None
+") SetToDrawLabels;
+		void SetToDrawLabels (Standard_Boolean theToDraw);
+		%feature("compactdefaultargs") ToDrawLabels;
+		%feature("autodoc", "	* returns true if axes labels are drawn
+
+	:rtype: bool
+") ToDrawLabels;
+		Standard_Boolean ToDrawLabels ();
+		%feature("compactdefaultargs") ArrowPartForAxis;
+		%feature("autodoc", "	* Returns type of arrow for a type of axis
+
+	:param thePart:
+	:type thePart: Prs3d_DatumParts
+	:rtype: Prs3d_DatumParts
+") ArrowPartForAxis;
+		Prs3d_DatumParts ArrowPartForAxis (Prs3d_DatumParts thePart);
 };
 
 
@@ -2039,19 +2161,20 @@ class Handle_Prs3d_DatumAspect : public Handle_Prs3d_BasicAspect {
         static const Handle_Prs3d_DatumAspect DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_Prs3d_DatumAspect {
     Prs3d_DatumAspect* _get_reference() {
-    return (Prs3d_DatumAspect*)$self->Access();
+    return (Prs3d_DatumAspect*)$self->get();
     }
 };
 
 %extend Handle_Prs3d_DatumAspect {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend Prs3d_DatumAspect {
@@ -2119,11 +2242,11 @@ class Prs3d_DimensionAspect : public Prs3d_BasicAspect {
 		%feature("compactdefaultargs") MakeTextShaded;
 		%feature("autodoc", "	* Turns on/off text shading for 3d text.
 
-	:param isTextShaded:
-	:type isTextShaded: bool
+	:param theIsTextShaded:
+	:type theIsTextShaded: bool
 	:rtype: None
 ") MakeTextShaded;
-		void MakeTextShaded (const Standard_Boolean isTextShaded);
+		void MakeTextShaded (const Standard_Boolean theIsTextShaded);
 		%feature("compactdefaultargs") IsArrows3d;
 		%feature("autodoc", "	* Gets type of arrows.
 
@@ -2133,11 +2256,11 @@ class Prs3d_DimensionAspect : public Prs3d_BasicAspect {
 		%feature("compactdefaultargs") MakeArrows3d;
 		%feature("autodoc", "	* Sets type of arrows.
 
-	:param isArrows3d:
-	:type isArrows3d: bool
+	:param theIsArrows3d:
+	:type theIsArrows3d: bool
 	:rtype: None
 ") MakeArrows3d;
-		void MakeArrows3d (const Standard_Boolean isArrows3d);
+		void MakeArrows3d (const Standard_Boolean theIsArrows3d);
 		%feature("compactdefaultargs") IsUnitsDisplayed;
 		%feature("autodoc", "	* Shows if Units are to be displayed along with dimension value.
 
@@ -2153,7 +2276,7 @@ class Prs3d_DimensionAspect : public Prs3d_BasicAspect {
 ") MakeUnitsDisplayed;
 		void MakeUnitsDisplayed (const Standard_Boolean theIsDisplayed);
 		%feature("compactdefaultargs") SetArrowOrientation;
-		%feature("autodoc", "	* Sets orientation of arrows (external or internal). By default orientation is chosen automatically according to situation and text label size.
+		%feature("autodoc", "	* Sets orientation of arrows --external or internal--. By default orientation is chosen automatically according to situation and text label size.
 
 	:param theArrowOrient:
 	:type theArrowOrient: Prs3d_DimensionArrowOrientation
@@ -2161,7 +2284,7 @@ class Prs3d_DimensionAspect : public Prs3d_BasicAspect {
 ") SetArrowOrientation;
 		void SetArrowOrientation (const Prs3d_DimensionArrowOrientation theArrowOrient);
 		%feature("compactdefaultargs") ArrowOrientation;
-		%feature("autodoc", "	* Gets orientation of arrows (external or internal).
+		%feature("autodoc", "	* Gets orientation of arrows --external or internal--.
 
 	:rtype: Prs3d_DimensionArrowOrientation
 ") ArrowOrientation;
@@ -2231,7 +2354,7 @@ class Prs3d_DimensionAspect : public Prs3d_BasicAspect {
 ") ExtensionSize;
 		Standard_Real ExtensionSize ();
 		%feature("compactdefaultargs") SetArrowTailSize;
-		%feature("autodoc", "	* Set size for arrow tail (extension without text).
+		%feature("autodoc", "	* Set size for arrow tail --extension without text--.
 
 	:param theSize:
 	:type theSize: float
@@ -2257,7 +2380,7 @@ class Prs3d_DimensionAspect : public Prs3d_BasicAspect {
 
 	:rtype: TCollection_AsciiString
 ") ValueStringFormat;
-		TCollection_AsciiString ValueStringFormat ();
+		const TCollection_AsciiString & ValueStringFormat ();
 };
 
 
@@ -2292,19 +2415,20 @@ class Handle_Prs3d_DimensionAspect : public Handle_Prs3d_BasicAspect {
         static const Handle_Prs3d_DimensionAspect DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_Prs3d_DimensionAspect {
     Prs3d_DimensionAspect* _get_reference() {
-    return (Prs3d_DimensionAspect*)$self->Access();
+    return (Prs3d_DimensionAspect*)$self->get();
     }
 };
 
 %extend Handle_Prs3d_DimensionAspect {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend Prs3d_DimensionAspect {
@@ -2318,25 +2442,15 @@ class Prs3d_LineAspect : public Prs3d_BasicAspect {
 		%feature("compactdefaultargs") Prs3d_LineAspect;
 		%feature("autodoc", "	* Constructs a framework for line aspect defined by - the color aColor - the type of line aType and - the line thickness aWidth. Type of line refers to whether the line is solid or dotted, for example.
 
-	:param aColor:
-	:type aColor: Quantity_NameOfColor
-	:param aType:
-	:type aType: Aspect_TypeOfLine
-	:param aWidth:
-	:type aWidth: float
+	:param theColor:
+	:type theColor: Quantity_Color &
+	:param theType:
+	:type theType: Aspect_TypeOfLine
+	:param theWidth:
+	:type theWidth: float
 	:rtype: None
 ") Prs3d_LineAspect;
-		 Prs3d_LineAspect (const Quantity_NameOfColor aColor,const Aspect_TypeOfLine aType,const Standard_Real aWidth);
-		%feature("compactdefaultargs") Prs3d_LineAspect;
-		%feature("autodoc", "	:param aColor:
-	:type aColor: Quantity_Color &
-	:param aType:
-	:type aType: Aspect_TypeOfLine
-	:param aWidth:
-	:type aWidth: float
-	:rtype: None
-") Prs3d_LineAspect;
-		 Prs3d_LineAspect (const Quantity_Color & aColor,const Aspect_TypeOfLine aType,const Standard_Real aWidth);
+		 Prs3d_LineAspect (const Quantity_Color & theColor,const Aspect_TypeOfLine theType,const Standard_Real theWidth);
 		%feature("compactdefaultargs") Prs3d_LineAspect;
 		%feature("autodoc", "	:param theAspect:
 	:type theAspect: Handle_Graphic3d_AspectLine3d &
@@ -2344,35 +2458,29 @@ class Prs3d_LineAspect : public Prs3d_BasicAspect {
 ") Prs3d_LineAspect;
 		 Prs3d_LineAspect (const Handle_Graphic3d_AspectLine3d & theAspect);
 		%feature("compactdefaultargs") SetColor;
-		%feature("autodoc", "	:param aColor:
-	:type aColor: Quantity_Color &
-	:rtype: None
-") SetColor;
-		void SetColor (const Quantity_Color & aColor);
-		%feature("compactdefaultargs") SetColor;
 		%feature("autodoc", "	* Sets the line color defined at the time of construction. Default value: Quantity_NOC_YELLOW
 
-	:param aColor:
-	:type aColor: Quantity_NameOfColor
+	:param theColor:
+	:type theColor: Quantity_Color &
 	:rtype: None
 ") SetColor;
-		void SetColor (const Quantity_NameOfColor aColor);
+		void SetColor (const Quantity_Color & theColor);
 		%feature("compactdefaultargs") SetTypeOfLine;
 		%feature("autodoc", "	* Sets the type of line defined at the time of construction. This could, for example, be solid, dotted or made up of dashes. Default value: Aspect_TOL_SOLID
 
-	:param aType:
-	:type aType: Aspect_TypeOfLine
+	:param theType:
+	:type theType: Aspect_TypeOfLine
 	:rtype: None
 ") SetTypeOfLine;
-		void SetTypeOfLine (const Aspect_TypeOfLine aType);
+		void SetTypeOfLine (const Aspect_TypeOfLine theType);
 		%feature("compactdefaultargs") SetWidth;
 		%feature("autodoc", "	* Sets the line width defined at the time of construction. Default value: 1.
 
-	:param aWidth:
-	:type aWidth: float
+	:param theWidth:
+	:type theWidth: float
 	:rtype: None
 ") SetWidth;
-		void SetWidth (const Standard_Real aWidth);
+		void SetWidth (const Standard_Real theWidth);
 		%feature("compactdefaultargs") Aspect;
 		%feature("autodoc", "	* Returns the line aspect. This is defined as the set of color, type and thickness attributes.
 
@@ -2419,19 +2527,20 @@ class Handle_Prs3d_LineAspect : public Handle_Prs3d_BasicAspect {
         static const Handle_Prs3d_LineAspect DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_Prs3d_LineAspect {
     Prs3d_LineAspect* _get_reference() {
-    return (Prs3d_LineAspect*)$self->Access();
+    return (Prs3d_LineAspect*)$self->get();
     }
 };
 
 %extend Handle_Prs3d_LineAspect {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend Prs3d_LineAspect {
@@ -2467,53 +2576,53 @@ class Prs3d_PlaneAspect : public Prs3d_BasicAspect {
 ") ArrowAspect;
 		Handle_Prs3d_LineAspect ArrowAspect ();
 		%feature("compactdefaultargs") SetArrowsLength;
-		%feature("autodoc", "	:param L:
-	:type L: Quantity_Length
+		%feature("autodoc", "	:param theLength:
+	:type theLength: float
 	:rtype: None
 ") SetArrowsLength;
-		void SetArrowsLength (const Quantity_Length L);
+		void SetArrowsLength (const Standard_Real theLength);
 		%feature("compactdefaultargs") ArrowsLength;
 		%feature("autodoc", "	* Returns the length of the arrow shaft used in the display of arrows.
 
-	:rtype: Quantity_Length
+	:rtype: float
 ") ArrowsLength;
-		Quantity_Length ArrowsLength ();
+		Standard_Real ArrowsLength ();
 		%feature("compactdefaultargs") SetArrowsSize;
 		%feature("autodoc", "	* Sets the angle of the arrowhead used in the display of planes.
 
-	:param L:
-	:type L: Quantity_Length
+	:param theSize:
+	:type theSize: float
 	:rtype: None
 ") SetArrowsSize;
-		void SetArrowsSize (const Quantity_Length L);
+		void SetArrowsSize (const Standard_Real theSize);
 		%feature("compactdefaultargs") ArrowsSize;
 		%feature("autodoc", "	* Returns the size of arrows used in the display of planes.
 
-	:rtype: Quantity_Length
+	:rtype: float
 ") ArrowsSize;
-		Quantity_Length ArrowsSize ();
+		Standard_Real ArrowsSize ();
 		%feature("compactdefaultargs") SetArrowsAngle;
 		%feature("autodoc", "	* Sets the angle of the arrowhead used in the display of arrows involved in the presentation of planes.
 
-	:param ang:
-	:type ang: Quantity_PlaneAngle
+	:param theAngle:
+	:type theAngle: float
 	:rtype: None
 ") SetArrowsAngle;
-		void SetArrowsAngle (const Quantity_PlaneAngle ang);
+		void SetArrowsAngle (const Standard_Real theAngle);
 		%feature("compactdefaultargs") ArrowsAngle;
 		%feature("autodoc", "	* Returns the angle of the arrowhead used in the display of arrows involved in the presentation of planes.
 
-	:rtype: Quantity_PlaneAngle
+	:rtype: float
 ") ArrowsAngle;
-		Quantity_PlaneAngle ArrowsAngle ();
+		Standard_Real ArrowsAngle ();
 		%feature("compactdefaultargs") SetDisplayCenterArrow;
 		%feature("autodoc", "	* Sets the display attributes defined in DisplayCenterArrow to active.
 
-	:param draw:
-	:type draw: bool
+	:param theToDraw:
+	:type theToDraw: bool
 	:rtype: None
 ") SetDisplayCenterArrow;
-		void SetDisplayCenterArrow (const Standard_Boolean draw);
+		void SetDisplayCenterArrow (const Standard_Boolean theToDraw);
 		%feature("compactdefaultargs") DisplayCenterArrow;
 		%feature("autodoc", "	* Returns true if the display of center arrows is allowed.
 
@@ -2523,11 +2632,11 @@ class Prs3d_PlaneAspect : public Prs3d_BasicAspect {
 		%feature("compactdefaultargs") SetDisplayEdgesArrows;
 		%feature("autodoc", "	* Sets the display attributes defined in DisplayEdgesArrows to active.
 
-	:param draw:
-	:type draw: bool
+	:param theToDraw:
+	:type theToDraw: bool
 	:rtype: None
 ") SetDisplayEdgesArrows;
-		void SetDisplayEdgesArrows (const Standard_Boolean draw);
+		void SetDisplayEdgesArrows (const Standard_Boolean theToDraw);
 		%feature("compactdefaultargs") DisplayEdgesArrows;
 		%feature("autodoc", "	* Returns true if the display of edge arrows is allowed.
 
@@ -2535,11 +2644,11 @@ class Prs3d_PlaneAspect : public Prs3d_BasicAspect {
 ") DisplayEdgesArrows;
 		Standard_Boolean DisplayEdgesArrows ();
 		%feature("compactdefaultargs") SetDisplayEdges;
-		%feature("autodoc", "	:param draw:
-	:type draw: bool
+		%feature("autodoc", "	:param theToDraw:
+	:type theToDraw: bool
 	:rtype: None
 ") SetDisplayEdges;
-		void SetDisplayEdges (const Standard_Boolean draw);
+		void SetDisplayEdges (const Standard_Boolean theToDraw);
 		%feature("compactdefaultargs") DisplayEdges;
 		%feature("autodoc", "	:rtype: bool
 ") DisplayEdges;
@@ -2547,11 +2656,11 @@ class Prs3d_PlaneAspect : public Prs3d_BasicAspect {
 		%feature("compactdefaultargs") SetDisplayIso;
 		%feature("autodoc", "	* Sets the display attributes defined in DisplayIso to active.
 
-	:param draw:
-	:type draw: bool
+	:param theToDraw:
+	:type theToDraw: bool
 	:rtype: None
 ") SetDisplayIso;
-		void SetDisplayIso (const Standard_Boolean draw);
+		void SetDisplayIso (const Standard_Boolean theToDraw);
 		%feature("compactdefaultargs") DisplayIso;
 		%feature("autodoc", "	* Returns true if the display of isoparameters is allowed.
 
@@ -2559,39 +2668,39 @@ class Prs3d_PlaneAspect : public Prs3d_BasicAspect {
 ") DisplayIso;
 		Standard_Boolean DisplayIso ();
 		%feature("compactdefaultargs") SetPlaneLength;
-		%feature("autodoc", "	:param LX:
-	:type LX: Quantity_Length
-	:param LY:
-	:type LY: Quantity_Length
+		%feature("autodoc", "	:param theLX:
+	:type theLX: float
+	:param theLY:
+	:type theLY: float
 	:rtype: None
 ") SetPlaneLength;
-		void SetPlaneLength (const Quantity_Length LX,const Quantity_Length LY);
+		void SetPlaneLength (const Standard_Real theLX,const Standard_Real theLY);
 		%feature("compactdefaultargs") PlaneXLength;
 		%feature("autodoc", "	* Returns the length of the x axis used in the display of planes.
 
-	:rtype: Quantity_Length
+	:rtype: float
 ") PlaneXLength;
-		Quantity_Length PlaneXLength ();
+		Standard_Real PlaneXLength ();
 		%feature("compactdefaultargs") PlaneYLength;
 		%feature("autodoc", "	* Returns the length of the y axis used in the display of planes.
 
-	:rtype: Quantity_Length
+	:rtype: float
 ") PlaneYLength;
-		Quantity_Length PlaneYLength ();
+		Standard_Real PlaneYLength ();
 		%feature("compactdefaultargs") SetIsoDistance;
 		%feature("autodoc", "	* Sets the distance L between isoparameters used in the display of planes.
 
-	:param L:
-	:type L: Quantity_Length
+	:param theL:
+	:type theL: float
 	:rtype: None
 ") SetIsoDistance;
-		void SetIsoDistance (const Quantity_Length L);
+		void SetIsoDistance (const Standard_Real theL);
 		%feature("compactdefaultargs") IsoDistance;
 		%feature("autodoc", "	* Returns the distance between isoparameters used in the display of planes.
 
-	:rtype: Quantity_Length
+	:rtype: float
 ") IsoDistance;
-		Quantity_Length IsoDistance ();
+		Standard_Real IsoDistance ();
 };
 
 
@@ -2626,19 +2735,20 @@ class Handle_Prs3d_PlaneAspect : public Handle_Prs3d_BasicAspect {
         static const Handle_Prs3d_PlaneAspect DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_Prs3d_PlaneAspect {
     Prs3d_PlaneAspect* _get_reference() {
-    return (Prs3d_PlaneAspect*)$self->Access();
+    return (Prs3d_PlaneAspect*)$self->get();
     }
 };
 
 %extend Handle_Prs3d_PlaneAspect {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend Prs3d_PlaneAspect {
@@ -2650,39 +2760,29 @@ class Handle_Prs3d_PlaneAspect : public Handle_Prs3d_BasicAspect {
 class Prs3d_PointAspect : public Prs3d_BasicAspect {
 	public:
 		%feature("compactdefaultargs") Prs3d_PointAspect;
-		%feature("autodoc", "	:param aType:
-	:type aType: Aspect_TypeOfMarker
-	:param aColor:
-	:type aColor: Quantity_Color &
-	:param aScale:
-	:type aScale: float
+		%feature("autodoc", "	:param theType:
+	:type theType: Aspect_TypeOfMarker
+	:param theColor:
+	:type theColor: Quantity_Color &
+	:param theScale:
+	:type theScale: float
 	:rtype: None
 ") Prs3d_PointAspect;
-		 Prs3d_PointAspect (const Aspect_TypeOfMarker aType,const Quantity_Color & aColor,const Standard_Real aScale);
+		 Prs3d_PointAspect (const Aspect_TypeOfMarker theType,const Quantity_Color & theColor,const Standard_Real theScale);
 		%feature("compactdefaultargs") Prs3d_PointAspect;
-		%feature("autodoc", "	:param aType:
-	:type aType: Aspect_TypeOfMarker
-	:param aColor:
-	:type aColor: Quantity_NameOfColor
-	:param aScale:
-	:type aScale: float
-	:rtype: None
-") Prs3d_PointAspect;
-		 Prs3d_PointAspect (const Aspect_TypeOfMarker aType,const Quantity_NameOfColor aColor,const Standard_Real aScale);
-		%feature("compactdefaultargs") Prs3d_PointAspect;
-		%feature("autodoc", "	* defines only the urer defined marker point.
+		%feature("autodoc", "	* Defines the user defined marker point.
 
-	:param AColor:
-	:type AColor: Quantity_Color &
-	:param AWidth:
-	:type AWidth: int
-	:param AHeight:
-	:type AHeight: int
-	:param ATexture:
-	:type ATexture: Handle_TColStd_HArray1OfByte &
+	:param theColor:
+	:type theColor: Quantity_Color &
+	:param theWidth:
+	:type theWidth: int
+	:param theHeight:
+	:type theHeight: int
+	:param theTexture:
+	:type theTexture: Handle_TColStd_HArray1OfByte &
 	:rtype: None
 ") Prs3d_PointAspect;
-		 Prs3d_PointAspect (const Quantity_Color & AColor,const Standard_Integer AWidth,const Standard_Integer AHeight,const Handle_TColStd_HArray1OfByte & ATexture);
+		 Prs3d_PointAspect (const Quantity_Color & theColor,const Standard_Integer theWidth,const Standard_Integer theHeight,const Handle_TColStd_HArray1OfByte & theTexture);
 		%feature("compactdefaultargs") Prs3d_PointAspect;
 		%feature("autodoc", "	:param theAspect:
 	:type theAspect: Handle_Graphic3d_AspectMarker3d &
@@ -2690,35 +2790,29 @@ class Prs3d_PointAspect : public Prs3d_BasicAspect {
 ") Prs3d_PointAspect;
 		 Prs3d_PointAspect (const Handle_Graphic3d_AspectMarker3d & theAspect);
 		%feature("compactdefaultargs") SetColor;
-		%feature("autodoc", "	:param aColor:
-	:type aColor: Quantity_Color &
-	:rtype: None
-") SetColor;
-		void SetColor (const Quantity_Color & aColor);
-		%feature("compactdefaultargs") SetColor;
 		%feature("autodoc", "	* defines the color to be used when drawing a point. Default value: Quantity_NOC_YELLOW
 
-	:param aColor:
-	:type aColor: Quantity_NameOfColor
+	:param theColor:
+	:type theColor: Quantity_Color &
 	:rtype: None
 ") SetColor;
-		void SetColor (const Quantity_NameOfColor aColor);
+		void SetColor (const Quantity_Color & theColor);
 		%feature("compactdefaultargs") SetTypeOfMarker;
 		%feature("autodoc", "	* defines the type of representation to be used when drawing a point. Default value: Aspect_TOM_PLUS
 
-	:param aType:
-	:type aType: Aspect_TypeOfMarker
+	:param theType:
+	:type theType: Aspect_TypeOfMarker
 	:rtype: None
 ") SetTypeOfMarker;
-		void SetTypeOfMarker (const Aspect_TypeOfMarker aType);
+		void SetTypeOfMarker (const Aspect_TypeOfMarker theType);
 		%feature("compactdefaultargs") SetScale;
 		%feature("autodoc", "	* defines the size of the marker used when drawing a point. Default value: 1.
 
-	:param aScale:
-	:type aScale: float
+	:param theScale:
+	:type theScale: float
 	:rtype: None
 ") SetScale;
-		void SetScale (const Standard_Real aScale);
+		void SetScale (const Standard_Real theScale);
 		%feature("compactdefaultargs") Aspect;
 		%feature("autodoc", "	:rtype: Handle_Graphic3d_AspectMarker3d
 ") Aspect;
@@ -2732,10 +2826,10 @@ class Prs3d_PointAspect : public Prs3d_BasicAspect {
 		%feature("compactdefaultargs") GetTextureSize;
 		%feature("autodoc", "	* Returns marker's texture size.
 
-	:param AWidth:
-	:type AWidth: int &
-	:param AHeight:
-	:type AHeight: int &
+	:param theWidth:
+	:type theWidth: int &
+	:param theHeight:
+	:type theHeight: int &
 	:rtype: None
 ") GetTextureSize;
 		void GetTextureSize (Standard_Integer &OutValue,Standard_Integer &OutValue);
@@ -2779,19 +2873,20 @@ class Handle_Prs3d_PointAspect : public Handle_Prs3d_BasicAspect {
         static const Handle_Prs3d_PointAspect DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_Prs3d_PointAspect {
     Prs3d_PointAspect* _get_reference() {
-    return (Prs3d_PointAspect*)$self->Access();
+    return (Prs3d_PointAspect*)$self->get();
     }
 };
 
 %extend Handle_Prs3d_PointAspect {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend Prs3d_PointAspect {
@@ -2812,6 +2907,24 @@ class Prs3d_PresentationShadow : public Prs3d_Presentation {
 	:rtype: None
 ") Prs3d_PresentationShadow;
 		 Prs3d_PresentationShadow (const Handle_Graphic3d_StructureManager & theViewer,const Handle_Prs3d_Presentation & thePrs);
+		%feature("compactdefaultargs") ParentId;
+		%feature("autodoc", "	* Returns the id of the parent presentation
+
+	:rtype: inline int
+") ParentId;
+		inline Standard_Integer ParentId ();
+		%feature("compactdefaultargs") ParentAffinity;
+		%feature("autodoc", "	* Returns view affinity of the parent presentation
+
+	:rtype: inline  Handle_Graphic3d_ViewAffinity
+") ParentAffinity;
+		Handle_Graphic3d_ViewAffinity ParentAffinity ();
+		%feature("compactdefaultargs") CalculateBoundBox;
+		%feature("autodoc", "	* Do nothing - axis-aligned bounding box should be initialized from parent structure.
+
+	:rtype: void
+") CalculateBoundBox;
+		virtual void CalculateBoundBox ();
 };
 
 
@@ -2846,19 +2959,20 @@ class Handle_Prs3d_PresentationShadow : public Handle_Prs3d_Presentation {
         static const Handle_Prs3d_PresentationShadow DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_Prs3d_PresentationShadow {
     Prs3d_PresentationShadow* _get_reference() {
-    return (Prs3d_PresentationShadow*)$self->Access();
+    return (Prs3d_PresentationShadow*)$self->get();
     }
 };
 
 %extend Handle_Prs3d_PresentationShadow {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend Prs3d_PresentationShadow {
@@ -2876,7 +2990,9 @@ class Prs3d_ShadingAspect : public Prs3d_BasicAspect {
 ") Prs3d_ShadingAspect;
 		 Prs3d_ShadingAspect ();
 		%feature("compactdefaultargs") Prs3d_ShadingAspect;
-		%feature("autodoc", "	:param theAspect:
+		%feature("autodoc", "	* Constructor with initialization.
+
+	:param theAspect:
 	:type theAspect: Handle_Graphic3d_AspectFillArea3d &
 	:rtype: None
 ") Prs3d_ShadingAspect;
@@ -2891,16 +3007,6 @@ class Prs3d_ShadingAspect : public Prs3d_BasicAspect {
 	:rtype: None
 ") SetColor;
 		void SetColor (const Quantity_Color & aColor,const Aspect_TypeOfFacingModel aModel = Aspect_TOFM_BOTH_SIDE);
-		%feature("compactdefaultargs") SetColor;
-		%feature("autodoc", "	* Change the polygons interior color and material ambient color.
-
-	:param aColor:
-	:type aColor: Quantity_NameOfColor
-	:param aModel: default value is Aspect_TOFM_BOTH_SIDE
-	:type aModel: Aspect_TypeOfFacingModel
-	:rtype: None
-") SetColor;
-		void SetColor (const Quantity_NameOfColor aColor,const Aspect_TypeOfFacingModel aModel = Aspect_TOFM_BOTH_SIDE);
 		%feature("compactdefaultargs") SetMaterial;
 		%feature("autodoc", "	* Change the polygons material aspect.
 
@@ -2911,16 +3017,8 @@ class Prs3d_ShadingAspect : public Prs3d_BasicAspect {
 	:rtype: None
 ") SetMaterial;
 		void SetMaterial (const Graphic3d_MaterialAspect & aMaterial,const Aspect_TypeOfFacingModel aModel = Aspect_TOFM_BOTH_SIDE);
-		%feature("compactdefaultargs") SetMaterial;
-		%feature("autodoc", "	:param aMaterial:
-	:type aMaterial: Graphic3d_NameOfMaterial
-	:param aModel: default value is Aspect_TOFM_BOTH_SIDE
-	:type aModel: Aspect_TypeOfFacingModel
-	:rtype: None
-") SetMaterial;
-		void SetMaterial (const Graphic3d_NameOfMaterial aMaterial,const Aspect_TypeOfFacingModel aModel = Aspect_TOFM_BOTH_SIDE);
 		%feature("compactdefaultargs") SetTransparency;
-		%feature("autodoc", "	* Change the polygons transparency value. Warning : aValue must be in the range 0,1. 0 is the default (NO transparent)
+		%feature("autodoc", "	* Change the polygons transparency value. Warning : aValue must be in the range 0,1. 0 is the default --NO transparent--
 
 	:param aValue:
 	:type aValue: float
@@ -2999,19 +3097,20 @@ class Handle_Prs3d_ShadingAspect : public Handle_Prs3d_BasicAspect {
         static const Handle_Prs3d_ShadingAspect DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_Prs3d_ShadingAspect {
     Prs3d_ShadingAspect* _get_reference() {
-    return (Prs3d_ShadingAspect*)$self->Access();
+    return (Prs3d_ShadingAspect*)$self->get();
     }
 };
 
 %extend Handle_Prs3d_ShadingAspect {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend Prs3d_ShadingAspect {
@@ -3022,33 +3121,79 @@ class Handle_Prs3d_ShadingAspect : public Handle_Prs3d_BasicAspect {
 class Prs3d_Text : public Prs3d_Root {
 	public:
 		%feature("compactdefaultargs") Draw;
-		%feature("autodoc", "	* Defines the display of the text aText at the point AttachmentPoint. The drawer aDrawer specifies the display attributes which texts will have. The presentation object aPresentation stores the information defined in this framework. static void Draw (const Handle_Prs3d_Presentation& aPresentation, const Handle_Prs3d_TextAspect& anAspect, const TCollection_ExtendedString& aText, const gp_Pnt& AttachmentPoint);
+		%feature("autodoc", "	* Defines the display of the text. @param theGroup group to add primitives @param theAspect presentation attributes @param theText text to draw @param theAttachmentPoint attachment point
 
-	:param aPresentation:
-	:type aPresentation: Handle_Prs3d_Presentation &
-	:param aDrawer:
-	:type aDrawer: Handle_Prs3d_Drawer &
-	:param aText:
-	:type aText: TCollection_ExtendedString &
-	:param AttachmentPoint:
-	:type AttachmentPoint: gp_Pnt
+	:param theGroup:
+	:type theGroup: Handle_Graphic3d_Group &
+	:param theAspect:
+	:type theAspect: Handle_Prs3d_TextAspect &
+	:param theText:
+	:type theText: TCollection_ExtendedString &
+	:param theAttachmentPoint:
+	:type theAttachmentPoint: gp_Pnt
 	:rtype: void
 ") Draw;
-		static void Draw (const Handle_Prs3d_Presentation & aPresentation,const Handle_Prs3d_Drawer & aDrawer,const TCollection_ExtendedString & aText,const gp_Pnt & AttachmentPoint);
+		static void Draw (const Handle_Graphic3d_Group & theGroup,const Handle_Prs3d_TextAspect & theAspect,const TCollection_ExtendedString & theText,const gp_Pnt & theAttachmentPoint);
 		%feature("compactdefaultargs") Draw;
-		%feature("autodoc", "	* Defines the display of the text aText at the point AttachmentPoint. The text aspect object anAspect specifies the display attributes which texts will have. The presentation object aPresentation stores the information defined in this framework. This syntax could be used if you had not already defined text display attributes in a drawer or if you wanted to exceptionally overide the definition provided in your drawer.
+		%feature("autodoc", "	* Draws the text label. @param theGroup group to add primitives @param theAspect presentation attributes @param theText text to draw @param theOrientation location and orientation specified in the model 3D space @param theHasOwnAnchor
 
-	:param aPresentation:
-	:type aPresentation: Handle_Prs3d_Presentation &
-	:param anAspect:
-	:type anAspect: Handle_Prs3d_TextAspect &
-	:param aText:
-	:type aText: TCollection_ExtendedString &
-	:param AttachmentPoint:
-	:type AttachmentPoint: gp_Pnt
+	:param theGroup:
+	:type theGroup: Handle_Graphic3d_Group &
+	:param theAspect:
+	:type theAspect: Handle_Prs3d_TextAspect &
+	:param theText:
+	:type theText: TCollection_ExtendedString &
+	:param theOrientation:
+	:type theOrientation: gp_Ax2
+	:param theHasOwnAnchor: default value is Standard_True
+	:type theHasOwnAnchor: bool
 	:rtype: void
 ") Draw;
-		static void Draw (const Handle_Prs3d_Presentation & aPresentation,const Handle_Prs3d_TextAspect & anAspect,const TCollection_ExtendedString & aText,const gp_Pnt & AttachmentPoint);
+		static void Draw (const Handle_Graphic3d_Group & theGroup,const Handle_Prs3d_TextAspect & theAspect,const TCollection_ExtendedString & theText,const gp_Ax2 & theOrientation,const Standard_Boolean theHasOwnAnchor = Standard_True);
+		%feature("compactdefaultargs") Draw;
+		%feature("autodoc", "	* Alias to another method Draw---- for backward compatibility.
+
+	:param thePrs:
+	:type thePrs: Handle_Prs3d_Presentation &
+	:param theDrawer:
+	:type theDrawer: Handle_Prs3d_Drawer &
+	:param theText:
+	:type theText: TCollection_ExtendedString &
+	:param theAttachmentPoint:
+	:type theAttachmentPoint: gp_Pnt
+	:rtype: void
+") Draw;
+		static void Draw (const Handle_Prs3d_Presentation & thePrs,const Handle_Prs3d_Drawer & theDrawer,const TCollection_ExtendedString & theText,const gp_Pnt & theAttachmentPoint);
+		%feature("compactdefaultargs") Draw;
+		%feature("autodoc", "	* Alias to another method Draw---- for backward compatibility.
+
+	:param thePrs:
+	:type thePrs: Handle_Prs3d_Presentation &
+	:param theAspect:
+	:type theAspect: Handle_Prs3d_TextAspect &
+	:param theText:
+	:type theText: TCollection_ExtendedString &
+	:param theOrientation:
+	:type theOrientation: gp_Ax2
+	:param theHasOwnAnchor: default value is Standard_True
+	:type theHasOwnAnchor: bool
+	:rtype: void
+") Draw;
+		static void Draw (const Handle_Prs3d_Presentation & thePrs,const Handle_Prs3d_TextAspect & theAspect,const TCollection_ExtendedString & theText,const gp_Ax2 & theOrientation,const Standard_Boolean theHasOwnAnchor = Standard_True);
+		%feature("compactdefaultargs") Draw;
+		%feature("autodoc", "	* Alias to another method Draw---- for backward compatibility.
+
+	:param thePrs:
+	:type thePrs: Handle_Prs3d_Presentation &
+	:param theAspect:
+	:type theAspect: Handle_Prs3d_TextAspect &
+	:param theText:
+	:type theText: TCollection_ExtendedString &
+	:param theAttachmentPoint:
+	:type theAttachmentPoint: gp_Pnt
+	:rtype: void
+") Draw;
+		static void Draw (const Handle_Prs3d_Presentation & thePrs,const Handle_Prs3d_TextAspect & theAspect,const TCollection_ExtendedString & theText,const gp_Pnt & theAttachmentPoint);
 };
 
 
@@ -3073,59 +3218,53 @@ class Prs3d_TextAspect : public Prs3d_BasicAspect {
 ") Prs3d_TextAspect;
 		 Prs3d_TextAspect (const Handle_Graphic3d_AspectText3d & theAspect);
 		%feature("compactdefaultargs") SetColor;
-		%feature("autodoc", "	:param aColor:
-	:type aColor: Quantity_Color &
-	:rtype: None
-") SetColor;
-		void SetColor (const Quantity_Color & aColor);
-		%feature("compactdefaultargs") SetColor;
 		%feature("autodoc", "	* Sets the color of the type used in text display.
 
-	:param aColor:
-	:type aColor: Quantity_NameOfColor
+	:param theColor:
+	:type theColor: Quantity_Color &
 	:rtype: None
 ") SetColor;
-		void SetColor (const Quantity_NameOfColor aColor);
+		void SetColor (const Quantity_Color & theColor);
 		%feature("compactdefaultargs") SetFont;
 		%feature("autodoc", "	* Sets the font used in text display.
 
-	:param aFont:
-	:type aFont: char *
+	:param theFont:
+	:type theFont: char *
 	:rtype: None
 ") SetFont;
-		void SetFont (const char * aFont);
+		void SetFont (const char * theFont);
 		%feature("compactdefaultargs") SetHeightWidthRatio;
 		%feature("autodoc", "	* Returns the height-width ratio, also known as the expansion factor.
 
-	:param aRatio:
-	:type aRatio: float
+	:param theRatio:
+	:type theRatio: float
 	:rtype: None
 ") SetHeightWidthRatio;
-		void SetHeightWidthRatio (const Standard_Real aRatio);
+		void SetHeightWidthRatio (const Standard_Real theRatio);
 		%feature("compactdefaultargs") SetSpace;
 		%feature("autodoc", "	* Sets the length of the box which text will occupy.
 
-	:param aSpace:
-	:type aSpace: Quantity_Length
+	:param theSpace:
+	:type theSpace: float
 	:rtype: None
 ") SetSpace;
-		void SetSpace (const Quantity_Length aSpace);
+		void SetSpace (const Standard_Real theSpace);
 		%feature("compactdefaultargs") SetHeight;
 		%feature("autodoc", "	* Sets the height of the text.
 
-	:param aHeight:
-	:type aHeight: float
+	:param theHeight:
+	:type theHeight: float
 	:rtype: None
 ") SetHeight;
-		void SetHeight (const Standard_Real aHeight);
+		void SetHeight (const Standard_Real theHeight);
 		%feature("compactdefaultargs") SetAngle;
 		%feature("autodoc", "	* Sets the angle
 
-	:param anAngle:
-	:type anAngle: Quantity_PlaneAngle
+	:param theAngle:
+	:type theAngle: float
 	:rtype: None
 ") SetAngle;
-		void SetAngle (const Quantity_PlaneAngle anAngle);
+		void SetAngle (const Standard_Real theAngle);
 		%feature("compactdefaultargs") Height;
 		%feature("autodoc", "	* Returns the height of the text box.
 
@@ -3135,35 +3274,35 @@ class Prs3d_TextAspect : public Prs3d_BasicAspect {
 		%feature("compactdefaultargs") Angle;
 		%feature("autodoc", "	* Returns the angle
 
-	:rtype: Quantity_PlaneAngle
+	:rtype: float
 ") Angle;
-		Quantity_PlaneAngle Angle ();
+		Standard_Real Angle ();
 		%feature("compactdefaultargs") SetHorizontalJustification;
 		%feature("autodoc", "	* Sets horizontal alignment of text.
 
-	:param aJustification:
-	:type aJustification: Graphic3d_HorizontalTextAlignment
+	:param theJustification:
+	:type theJustification: Graphic3d_HorizontalTextAlignment
 	:rtype: None
 ") SetHorizontalJustification;
-		void SetHorizontalJustification (const Graphic3d_HorizontalTextAlignment aJustification);
+		void SetHorizontalJustification (const Graphic3d_HorizontalTextAlignment theJustification);
 		%feature("compactdefaultargs") SetVerticalJustification;
 		%feature("autodoc", "	* Sets the vertical alignment of text.
 
-	:param aJustification:
-	:type aJustification: Graphic3d_VerticalTextAlignment
+	:param theJustification:
+	:type theJustification: Graphic3d_VerticalTextAlignment
 	:rtype: None
 ") SetVerticalJustification;
-		void SetVerticalJustification (const Graphic3d_VerticalTextAlignment aJustification);
+		void SetVerticalJustification (const Graphic3d_VerticalTextAlignment theJustification);
 		%feature("compactdefaultargs") SetOrientation;
 		%feature("autodoc", "	* Sets the orientation of text.
 
-	:param anOrientation:
-	:type anOrientation: Graphic3d_TextPath
+	:param theOrientation:
+	:type theOrientation: Graphic3d_TextPath
 	:rtype: None
 ") SetOrientation;
-		void SetOrientation (const Graphic3d_TextPath anOrientation);
+		void SetOrientation (const Graphic3d_TextPath theOrientation);
 		%feature("compactdefaultargs") HorizontalJustification;
-		%feature("autodoc", "	* Returns the horizontal alignment of the text. The range of values includes: - left - center - right, and - normal (justified).
+		%feature("autodoc", "	* Returns the horizontal alignment of the text. The range of values includes: - left - center - right, and - normal --justified--.
 
 	:rtype: Graphic3d_HorizontalTextAlignment
 ") HorizontalJustification;
@@ -3226,22 +3365,146 @@ class Handle_Prs3d_TextAspect : public Handle_Prs3d_BasicAspect {
         static const Handle_Prs3d_TextAspect DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_Prs3d_TextAspect {
     Prs3d_TextAspect* _get_reference() {
-    return (Prs3d_TextAspect*)$self->Access();
+    return (Prs3d_TextAspect*)$self->get();
     }
 };
 
 %extend Handle_Prs3d_TextAspect {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend Prs3d_TextAspect {
+	%pythoncode {
+	__repr__ = _dumps_object
+	}
+};
+%nodefaultctor Prs3d_ToolCylinder;
+class Prs3d_ToolCylinder : public Prs3d_ToolQuadric {
+	public:
+		%feature("compactdefaultargs") Create;
+		%feature("autodoc", "	* Generate primitives for 3D quadric surface and return a filled array.
+
+	:param theBottomRad:
+	:type theBottomRad: float
+	:param theTopRad:
+	:type theTopRad: float
+	:param theHeight:
+	:type theHeight: float
+	:param theNbSlices:
+	:type theNbSlices: int
+	:param theNbStacks:
+	:type theNbStacks: int
+	:param theTrsf:
+	:type theTrsf: gp_Trsf
+	:rtype: Handle_Graphic3d_ArrayOfTriangles
+") Create;
+		static Handle_Graphic3d_ArrayOfTriangles Create (const Standard_Real theBottomRad,const Standard_Real theTopRad,const Standard_Real theHeight,const Standard_Integer theNbSlices,const Standard_Integer theNbStacks,const gp_Trsf & theTrsf);
+		%feature("compactdefaultargs") Prs3d_ToolCylinder;
+		%feature("autodoc", "	* Initializes the algorithm.
+
+	:param theBottomRad:
+	:type theBottomRad: float
+	:param theTopRad:
+	:type theTopRad: float
+	:param theHeight:
+	:type theHeight: float
+	:param theNbSlices:
+	:type theNbSlices: int
+	:param theNbStacks:
+	:type theNbStacks: int
+	:rtype: None
+") Prs3d_ToolCylinder;
+		 Prs3d_ToolCylinder (const Standard_Real theBottomRad,const Standard_Real theTopRad,const Standard_Real theHeight,const Standard_Integer theNbSlices,const Standard_Integer theNbStacks);
+};
+
+
+%extend Prs3d_ToolCylinder {
+	%pythoncode {
+	__repr__ = _dumps_object
+	}
+};
+%nodefaultctor Prs3d_ToolDisk;
+class Prs3d_ToolDisk : public Prs3d_ToolQuadric {
+	public:
+		%feature("compactdefaultargs") Create;
+		%feature("autodoc", "	* Generate primitives for 3D quadric surface and return a filled array.
+
+	:param theInnerRadius:
+	:type theInnerRadius: float
+	:param theOuterRadius:
+	:type theOuterRadius: float
+	:param theNbSlices:
+	:type theNbSlices: int
+	:param theNbStacks:
+	:type theNbStacks: int
+	:param theTrsf:
+	:type theTrsf: gp_Trsf
+	:rtype: Handle_Graphic3d_ArrayOfTriangles
+") Create;
+		static Handle_Graphic3d_ArrayOfTriangles Create (const Standard_Real theInnerRadius,const Standard_Real theOuterRadius,const Standard_Integer theNbSlices,const Standard_Integer theNbStacks,const gp_Trsf & theTrsf);
+		%feature("compactdefaultargs") Prs3d_ToolDisk;
+		%feature("autodoc", "	* Initializes the algorithm.
+
+	:param theInnerRadius:
+	:type theInnerRadius: float
+	:param theOuterRadius:
+	:type theOuterRadius: float
+	:param theNbSlices:
+	:type theNbSlices: int
+	:param theNbStacks:
+	:type theNbStacks: int
+	:rtype: None
+") Prs3d_ToolDisk;
+		 Prs3d_ToolDisk (const Standard_Real theInnerRadius,const Standard_Real theOuterRadius,const Standard_Integer theNbSlices,const Standard_Integer theNbStacks);
+};
+
+
+%extend Prs3d_ToolDisk {
+	%pythoncode {
+	__repr__ = _dumps_object
+	}
+};
+%nodefaultctor Prs3d_ToolSphere;
+class Prs3d_ToolSphere : public Prs3d_ToolQuadric {
+	public:
+		%feature("compactdefaultargs") Create;
+		%feature("autodoc", "	* Generate primitives for 3D quadric surface and return a filled array.
+
+	:param theRadius:
+	:type theRadius: float
+	:param theNbSlices:
+	:type theNbSlices: int
+	:param theNbStacks:
+	:type theNbStacks: int
+	:param theTrsf:
+	:type theTrsf: gp_Trsf
+	:rtype: Handle_Graphic3d_ArrayOfTriangles
+") Create;
+		static Handle_Graphic3d_ArrayOfTriangles Create (const Standard_Real theRadius,const Standard_Integer theNbSlices,const Standard_Integer theNbStacks,const gp_Trsf & theTrsf);
+		%feature("compactdefaultargs") Prs3d_ToolSphere;
+		%feature("autodoc", "	* Initializes the algorithm.
+
+	:param theRadius:
+	:type theRadius: float
+	:param theNbSlices:
+	:type theNbSlices: int
+	:param theNbStacks:
+	:type theNbStacks: int
+	:rtype: None
+") Prs3d_ToolSphere;
+		 Prs3d_ToolSphere (const Standard_Real theRadius,const Standard_Integer theNbSlices,const Standard_Integer theNbStacks);
+};
+
+
+%extend Prs3d_ToolSphere {
 	%pythoncode {
 	__repr__ = _dumps_object
 	}
@@ -3252,37 +3515,25 @@ class Prs3d_IsoAspect : public Prs3d_LineAspect {
 		%feature("compactdefaultargs") Prs3d_IsoAspect;
 		%feature("autodoc", "	* Constructs a framework to define display attributes of isoparameters. These include: - the color attribute aColor - the type of line aType - the width value aWidth - aNumber, the number of isoparameters to be displayed.
 
-	:param aColor:
-	:type aColor: Quantity_NameOfColor
-	:param aType:
-	:type aType: Aspect_TypeOfLine
-	:param aWidth:
-	:type aWidth: float
-	:param aNumber:
-	:type aNumber: int
+	:param theColor:
+	:type theColor: Quantity_Color &
+	:param theType:
+	:type theType: Aspect_TypeOfLine
+	:param theWidth:
+	:type theWidth: float
+	:param theNumber:
+	:type theNumber: int
 	:rtype: None
 ") Prs3d_IsoAspect;
-		 Prs3d_IsoAspect (const Quantity_NameOfColor aColor,const Aspect_TypeOfLine aType,const Standard_Real aWidth,const Standard_Integer aNumber);
-		%feature("compactdefaultargs") Prs3d_IsoAspect;
-		%feature("autodoc", "	:param aColor:
-	:type aColor: Quantity_Color &
-	:param aType:
-	:type aType: Aspect_TypeOfLine
-	:param aWidth:
-	:type aWidth: float
-	:param aNumber:
-	:type aNumber: int
-	:rtype: None
-") Prs3d_IsoAspect;
-		 Prs3d_IsoAspect (const Quantity_Color & aColor,const Aspect_TypeOfLine aType,const Standard_Real aWidth,const Standard_Integer aNumber);
+		 Prs3d_IsoAspect (const Quantity_Color & theColor,const Aspect_TypeOfLine theType,const Standard_Real theWidth,const Standard_Integer theNumber);
 		%feature("compactdefaultargs") SetNumber;
 		%feature("autodoc", "	* defines the number of U or V isoparametric curves to be drawn for a single face. Default value: 10
 
-	:param aNumber:
-	:type aNumber: int
+	:param theNumber:
+	:type theNumber: int
 	:rtype: None
 ") SetNumber;
-		void SetNumber (const Standard_Integer aNumber);
+		void SetNumber (const Standard_Integer theNumber);
 		%feature("compactdefaultargs") Number;
 		%feature("autodoc", "	* returns the number of U or V isoparametric curves drawn for a single face.
 
@@ -3323,19 +3574,20 @@ class Handle_Prs3d_IsoAspect : public Handle_Prs3d_LineAspect {
         static const Handle_Prs3d_IsoAspect DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_Prs3d_IsoAspect {
     Prs3d_IsoAspect* _get_reference() {
-    return (Prs3d_IsoAspect*)$self->Access();
+    return (Prs3d_IsoAspect*)$self->get();
     }
 };
 
 %extend Handle_Prs3d_IsoAspect {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend Prs3d_IsoAspect {

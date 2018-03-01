@@ -1,5 +1,5 @@
 /*
-Copyright 2008-2017 Thomas Paviot (tpaviot@gmail.com)
+Copyright 2008-2018 Thomas Paviot (tpaviot@gmail.com)
 
 
 This file is part of pythonOCC.
@@ -55,6 +55,9 @@ def register_handle(handle, base_object):
 
 /* typedefs */
 /* end typedefs declaration */
+
+/* templates */
+/* end templates declaration */
 
 /* public enums */
 enum Vrml_VertexOrdering {
@@ -169,7 +172,7 @@ class Vrml {
 	}
 };
 %nodefaultctor Vrml_AsciiText;
-class Vrml_AsciiText : public MMgt_TShared {
+class Vrml_AsciiText : public Standard_Transient {
 	public:
 		%feature("compactdefaultargs") Vrml_AsciiText;
 		%feature("autodoc", "	:rtype: None
@@ -257,7 +260,7 @@ class Vrml_AsciiText : public MMgt_TShared {
 %}
 
 %nodefaultctor Handle_Vrml_AsciiText;
-class Handle_Vrml_AsciiText : public Handle_MMgt_TShared {
+class Handle_Vrml_AsciiText : public Handle_Standard_Transient {
 
     public:
         // constructors
@@ -269,19 +272,20 @@ class Handle_Vrml_AsciiText : public Handle_MMgt_TShared {
         static const Handle_Vrml_AsciiText DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_Vrml_AsciiText {
     Vrml_AsciiText* _get_reference() {
-    return (Vrml_AsciiText*)$self->Access();
+    return (Vrml_AsciiText*)$self->get();
     }
 };
 
 %extend Handle_Vrml_AsciiText {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend Vrml_AsciiText {
@@ -349,7 +353,7 @@ class Vrml_Cone {
 	}
 };
 %nodefaultctor Vrml_Coordinate3;
-class Vrml_Coordinate3 : public MMgt_TShared {
+class Vrml_Coordinate3 : public Standard_Transient {
 	public:
 		%feature("compactdefaultargs") Vrml_Coordinate3;
 		%feature("autodoc", "	:param aPoint:
@@ -401,7 +405,7 @@ class Vrml_Coordinate3 : public MMgt_TShared {
 %}
 
 %nodefaultctor Handle_Vrml_Coordinate3;
-class Handle_Vrml_Coordinate3 : public Handle_MMgt_TShared {
+class Handle_Vrml_Coordinate3 : public Handle_Standard_Transient {
 
     public:
         // constructors
@@ -413,19 +417,20 @@ class Handle_Vrml_Coordinate3 : public Handle_MMgt_TShared {
         static const Handle_Vrml_Coordinate3 DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_Vrml_Coordinate3 {
     Vrml_Coordinate3* _get_reference() {
-    return (Vrml_Coordinate3*)$self->Access();
+    return (Vrml_Coordinate3*)$self->get();
     }
 };
 
 %extend Handle_Vrml_Coordinate3 {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend Vrml_Coordinate3 {
@@ -709,7 +714,7 @@ class Vrml_Group {
 	}
 };
 %nodefaultctor Vrml_IndexedFaceSet;
-class Vrml_IndexedFaceSet : public MMgt_TShared {
+class Vrml_IndexedFaceSet : public Standard_Transient {
 	public:
 		%feature("compactdefaultargs") Vrml_IndexedFaceSet;
 		%feature("autodoc", "	:param aCoordIndex:
@@ -797,7 +802,7 @@ class Vrml_IndexedFaceSet : public MMgt_TShared {
 %}
 
 %nodefaultctor Handle_Vrml_IndexedFaceSet;
-class Handle_Vrml_IndexedFaceSet : public Handle_MMgt_TShared {
+class Handle_Vrml_IndexedFaceSet : public Handle_Standard_Transient {
 
     public:
         // constructors
@@ -809,19 +814,20 @@ class Handle_Vrml_IndexedFaceSet : public Handle_MMgt_TShared {
         static const Handle_Vrml_IndexedFaceSet DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_Vrml_IndexedFaceSet {
     Vrml_IndexedFaceSet* _get_reference() {
-    return (Vrml_IndexedFaceSet*)$self->Access();
+    return (Vrml_IndexedFaceSet*)$self->get();
     }
 };
 
 %extend Handle_Vrml_IndexedFaceSet {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend Vrml_IndexedFaceSet {
@@ -830,7 +836,7 @@ class Handle_Vrml_IndexedFaceSet : public Handle_MMgt_TShared {
 	}
 };
 %nodefaultctor Vrml_IndexedLineSet;
-class Vrml_IndexedLineSet : public MMgt_TShared {
+class Vrml_IndexedLineSet : public Standard_Transient {
 	public:
 		%feature("compactdefaultargs") Vrml_IndexedLineSet;
 		%feature("autodoc", "	:param aCoordIndex:
@@ -918,7 +924,7 @@ class Vrml_IndexedLineSet : public MMgt_TShared {
 %}
 
 %nodefaultctor Handle_Vrml_IndexedLineSet;
-class Handle_Vrml_IndexedLineSet : public Handle_MMgt_TShared {
+class Handle_Vrml_IndexedLineSet : public Handle_Standard_Transient {
 
     public:
         // constructors
@@ -930,19 +936,20 @@ class Handle_Vrml_IndexedLineSet : public Handle_MMgt_TShared {
         static const Handle_Vrml_IndexedLineSet DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_Vrml_IndexedLineSet {
     Vrml_IndexedLineSet* _get_reference() {
-    return (Vrml_IndexedLineSet*)$self->Access();
+    return (Vrml_IndexedLineSet*)$self->get();
     }
 };
 
 %extend Handle_Vrml_IndexedLineSet {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend Vrml_IndexedLineSet {
@@ -989,7 +996,7 @@ class Vrml_Info {
 class Vrml_Instancing {
 	public:
 		%feature("compactdefaultargs") Vrml_Instancing;
-		%feature("autodoc", "	* Adds 'DEF <myName>' in anOStream (VRML file).
+		%feature("autodoc", "	* Adds 'DEF <myName>' in anOStream --VRML file--.
 
 	:param aString:
 	:type aString: TCollection_AsciiString &
@@ -1021,7 +1028,7 @@ class Vrml_Instancing {
 	}
 };
 %nodefaultctor Vrml_LOD;
-class Vrml_LOD : public MMgt_TShared {
+class Vrml_LOD : public Standard_Transient {
 	public:
 		%feature("compactdefaultargs") Vrml_LOD;
 		%feature("autodoc", "	:rtype: None
@@ -1085,7 +1092,7 @@ class Vrml_LOD : public MMgt_TShared {
 %}
 
 %nodefaultctor Handle_Vrml_LOD;
-class Handle_Vrml_LOD : public Handle_MMgt_TShared {
+class Handle_Vrml_LOD : public Handle_Standard_Transient {
 
     public:
         // constructors
@@ -1097,19 +1104,20 @@ class Handle_Vrml_LOD : public Handle_MMgt_TShared {
         static const Handle_Vrml_LOD DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_Vrml_LOD {
     Vrml_LOD* _get_reference() {
-    return (Vrml_LOD*)$self->Access();
+    return (Vrml_LOD*)$self->get();
     }
 };
 
 %extend Handle_Vrml_LOD {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend Vrml_LOD {
@@ -1118,7 +1126,7 @@ class Handle_Vrml_LOD : public Handle_MMgt_TShared {
 	}
 };
 %nodefaultctor Vrml_Material;
-class Vrml_Material : public MMgt_TShared {
+class Vrml_Material : public Standard_Transient {
 	public:
 		%feature("compactdefaultargs") Vrml_Material;
 		%feature("autodoc", "	:param aAmbientColor:
@@ -1230,7 +1238,7 @@ class Vrml_Material : public MMgt_TShared {
 %}
 
 %nodefaultctor Handle_Vrml_Material;
-class Handle_Vrml_Material : public Handle_MMgt_TShared {
+class Handle_Vrml_Material : public Handle_Standard_Transient {
 
     public:
         // constructors
@@ -1242,19 +1250,20 @@ class Handle_Vrml_Material : public Handle_MMgt_TShared {
         static const Handle_Vrml_Material DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_Vrml_Material {
     Vrml_Material* _get_reference() {
-    return (Vrml_Material*)$self->Access();
+    return (Vrml_Material*)$self->get();
     }
 };
 
 %extend Handle_Vrml_Material {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend Vrml_Material {
@@ -1341,7 +1350,7 @@ class Vrml_MatrixTransform {
 	}
 };
 %nodefaultctor Vrml_Normal;
-class Vrml_Normal : public MMgt_TShared {
+class Vrml_Normal : public Standard_Transient {
 	public:
 		%feature("compactdefaultargs") Vrml_Normal;
 		%feature("autodoc", "	:param aVector:
@@ -1393,7 +1402,7 @@ class Vrml_Normal : public MMgt_TShared {
 %}
 
 %nodefaultctor Handle_Vrml_Normal;
-class Handle_Vrml_Normal : public Handle_MMgt_TShared {
+class Handle_Vrml_Normal : public Handle_Standard_Transient {
 
     public:
         // constructors
@@ -1405,19 +1414,20 @@ class Handle_Vrml_Normal : public Handle_MMgt_TShared {
         static const Handle_Vrml_Normal DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_Vrml_Normal {
     Vrml_Normal* _get_reference() {
-    return (Vrml_Normal*)$self->Access();
+    return (Vrml_Normal*)$self->get();
     }
 };
 
 %extend Handle_Vrml_Normal {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend Vrml_Normal {
@@ -1776,7 +1786,7 @@ class Vrml_Rotation {
 	}
 };
 %nodefaultctor Vrml_SFImage;
-class Vrml_SFImage : public MMgt_TShared {
+class Vrml_SFImage : public Standard_Transient {
 	public:
 		%feature("compactdefaultargs") Vrml_SFImage;
 		%feature("autodoc", "	:rtype: None
@@ -1860,7 +1870,7 @@ class Vrml_SFImage : public MMgt_TShared {
 %}
 
 %nodefaultctor Handle_Vrml_SFImage;
-class Handle_Vrml_SFImage : public Handle_MMgt_TShared {
+class Handle_Vrml_SFImage : public Handle_Standard_Transient {
 
     public:
         // constructors
@@ -1872,19 +1882,20 @@ class Handle_Vrml_SFImage : public Handle_MMgt_TShared {
         static const Handle_Vrml_SFImage DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_Vrml_SFImage {
     Vrml_SFImage* _get_reference() {
-    return (Vrml_SFImage*)$self->Access();
+    return (Vrml_SFImage*)$self->get();
     }
 };
 
 %extend Handle_Vrml_SFImage {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend Vrml_SFImage {
@@ -2440,7 +2451,7 @@ class Vrml_Texture2Transform {
 	}
 };
 %nodefaultctor Vrml_TextureCoordinate2;
-class Vrml_TextureCoordinate2 : public MMgt_TShared {
+class Vrml_TextureCoordinate2 : public Standard_Transient {
 	public:
 		%feature("compactdefaultargs") Vrml_TextureCoordinate2;
 		%feature("autodoc", "	:rtype: None
@@ -2492,7 +2503,7 @@ class Vrml_TextureCoordinate2 : public MMgt_TShared {
 %}
 
 %nodefaultctor Handle_Vrml_TextureCoordinate2;
-class Handle_Vrml_TextureCoordinate2 : public Handle_MMgt_TShared {
+class Handle_Vrml_TextureCoordinate2 : public Handle_Standard_Transient {
 
     public:
         // constructors
@@ -2504,19 +2515,20 @@ class Handle_Vrml_TextureCoordinate2 : public Handle_MMgt_TShared {
         static const Handle_Vrml_TextureCoordinate2 DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_Vrml_TextureCoordinate2 {
     Vrml_TextureCoordinate2* _get_reference() {
-    return (Vrml_TextureCoordinate2*)$self->Access();
+    return (Vrml_TextureCoordinate2*)$self->get();
     }
 };
 
 %extend Handle_Vrml_TextureCoordinate2 {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend Vrml_TextureCoordinate2 {

@@ -1,5 +1,5 @@
 /*
-Copyright 2008-2017 Thomas Paviot (tpaviot@gmail.com)
+Copyright 2008-2018 Thomas Paviot (tpaviot@gmail.com)
 
 
 This file is part of pythonOCC.
@@ -56,6 +56,11 @@ def register_handle(handle, base_object):
 /* typedefs */
 /* end typedefs declaration */
 
+/* templates */
+%template(IntRes2d_SequenceOfIntersectionSegment) NCollection_Sequence <IntRes2d_IntersectionSegment>;
+%template(IntRes2d_SequenceOfIntersectionPoint) NCollection_Sequence <IntRes2d_IntersectionPoint>;
+/* end templates declaration */
+
 /* public enums */
 enum IntRes2d_Position {
 	IntRes2d_Head = 0,
@@ -82,7 +87,7 @@ enum IntRes2d_TypeTrans {
 class IntRes2d_Domain {
 	public:
 		%feature("compactdefaultargs") IntRes2d_Domain;
-		%feature("autodoc", "	* Creates an infinite Domain (HasFirstPoint = False and HasLastPoint = False).
+		%feature("autodoc", "	* Creates an infinite Domain --HasFirstPoint = False and HasLastPoint = False--.
 
 	:rtype: None
 ") IntRes2d_Domain;
@@ -186,7 +191,7 @@ class IntRes2d_Domain {
 ") FirstPoint;
 		const gp_Pnt2d  FirstPoint ();
 		%feature("compactdefaultargs") FirstTolerance;
-		%feature("autodoc", "	* Returns the tolerance of the first (left) bound. The exception DomainError is raised if HasFirstPoint returns False.
+		%feature("autodoc", "	* Returns the tolerance of the first --left-- bound. The exception DomainError is raised if HasFirstPoint returns False.
 
 	:rtype: float
 ") FirstTolerance;
@@ -210,7 +215,7 @@ class IntRes2d_Domain {
 ") LastPoint;
 		const gp_Pnt2d  LastPoint ();
 		%feature("compactdefaultargs") LastTolerance;
-		%feature("autodoc", "	* Returns the tolerance of the last (right) bound. The exception DomainError is raised if HasLastPoint returns False.
+		%feature("autodoc", "	* Returns the tolerance of the last --right-- bound. The exception DomainError is raised if HasLastPoint returns False.
 
 	:rtype: float
 ") LastTolerance;
@@ -240,6 +245,7 @@ class IntRes2d_Domain {
 	}
 };
 %nodefaultctor IntRes2d_Intersection;
+%ignore IntRes2d_Intersection::~IntRes2d_Intersection();
 class IntRes2d_Intersection {
 	public:
 		%feature("compactdefaultargs") IsDone;
@@ -261,7 +267,7 @@ class IntRes2d_Intersection {
 ") NbPoints;
 		Standard_Integer NbPoints ();
 		%feature("compactdefaultargs") Point;
-		%feature("autodoc", "	* This function returns the intersection point of range N; The exception NotDone is raised if IsDone returns False. The exception OutOfRange is raised if (N <= 0) or (N > NbPoints).
+		%feature("autodoc", "	* This function returns the intersection point of range N; The exception NotDone is raised if IsDone returns False. The exception OutOfRange is raised if --N <= 0-- or --N > NbPoints--.
 
 	:param N:
 	:type N: int
@@ -275,7 +281,7 @@ class IntRes2d_Intersection {
 ") NbSegments;
 		Standard_Integer NbSegments ();
 		%feature("compactdefaultargs") Segment;
-		%feature("autodoc", "	* This function returns the intersection segment of range N; The exception NotDone is raised if IsDone returns False. The exception OutOfRange is raised if (N <= 0) or (N > NbPoints).
+		%feature("autodoc", "	* This function returns the intersection segment of range N; The exception NotDone is raised if IsDone returns False. The exception OutOfRange is raised if --N <= 0-- or --N > NbPoints--.
 
 	:param N:
 	:type N: int
@@ -306,7 +312,7 @@ class IntRes2d_IntersectionPoint {
 ") IntRes2d_IntersectionPoint;
 		 IntRes2d_IntersectionPoint ();
 		%feature("compactdefaultargs") IntRes2d_IntersectionPoint;
-		%feature("autodoc", "	* Creates an IntersectionPoint. if ReversedFlag is False, the parameter Uc1(resp. Uc2) and the Transition Trans1 (resp. Trans2) refer to the first curve (resp. second curve) otherwise Uc1 and Trans1 (resp. Uc2 and Trans2) refer to the second curve (resp. the first curve).
+		%feature("autodoc", "	* Creates an IntersectionPoint. if ReversedFlag is False, the parameter Uc1--resp. Uc2-- and the Transition Trans1 --resp. Trans2-- refer to the first curve --resp. second curve-- otherwise Uc1 and Trans1 --resp. Uc2 and Trans2-- refer to the second curve --resp. the first curve--.
 
 	:param P:
 	:type P: gp_Pnt2d
@@ -371,38 +377,6 @@ class IntRes2d_IntersectionPoint {
 	:rtype: IntRes2d_Transition
 ") TransitionOfSecond;
 		const IntRes2d_Transition & TransitionOfSecond ();
-		%feature("compactdefaultargs") _CSFDB_GetIntRes2d_IntersectionPointpt;
-		%feature("autodoc", "	:rtype: gp_Pnt2d
-") _CSFDB_GetIntRes2d_IntersectionPointpt;
-		const gp_Pnt2d  _CSFDB_GetIntRes2d_IntersectionPointpt ();
-		%feature("compactdefaultargs") _CSFDB_GetIntRes2d_IntersectionPointp1;
-		%feature("autodoc", "	:rtype: float
-") _CSFDB_GetIntRes2d_IntersectionPointp1;
-		Standard_Real _CSFDB_GetIntRes2d_IntersectionPointp1 ();
-		%feature("compactdefaultargs") _CSFDB_SetIntRes2d_IntersectionPointp1;
-		%feature("autodoc", "	:param p:
-	:type p: float
-	:rtype: None
-") _CSFDB_SetIntRes2d_IntersectionPointp1;
-		void _CSFDB_SetIntRes2d_IntersectionPointp1 (const Standard_Real p);
-		%feature("compactdefaultargs") _CSFDB_GetIntRes2d_IntersectionPointp2;
-		%feature("autodoc", "	:rtype: float
-") _CSFDB_GetIntRes2d_IntersectionPointp2;
-		Standard_Real _CSFDB_GetIntRes2d_IntersectionPointp2 ();
-		%feature("compactdefaultargs") _CSFDB_SetIntRes2d_IntersectionPointp2;
-		%feature("autodoc", "	:param p:
-	:type p: float
-	:rtype: None
-") _CSFDB_SetIntRes2d_IntersectionPointp2;
-		void _CSFDB_SetIntRes2d_IntersectionPointp2 (const Standard_Real p);
-		%feature("compactdefaultargs") _CSFDB_GetIntRes2d_IntersectionPointtrans1;
-		%feature("autodoc", "	:rtype: IntRes2d_Transition
-") _CSFDB_GetIntRes2d_IntersectionPointtrans1;
-		const IntRes2d_Transition & _CSFDB_GetIntRes2d_IntersectionPointtrans1 ();
-		%feature("compactdefaultargs") _CSFDB_GetIntRes2d_IntersectionPointtrans2;
-		%feature("autodoc", "	:rtype: IntRes2d_Transition
-") _CSFDB_GetIntRes2d_IntersectionPointtrans2;
-		const IntRes2d_Transition & _CSFDB_GetIntRes2d_IntersectionPointtrans2 ();
 };
 
 
@@ -465,7 +439,7 @@ class IntRes2d_IntersectionSegment {
 ") HasFirstPoint;
 		Standard_Boolean HasFirstPoint ();
 		%feature("compactdefaultargs") FirstPoint;
-		%feature("autodoc", "	* Returns the first point of the segment as an IntersectionPoint (with a transition). The exception DomainError is raised if HasFirstPoint returns False.
+		%feature("autodoc", "	* Returns the first point of the segment as an IntersectionPoint --with a transition--. The exception DomainError is raised if HasFirstPoint returns False.
 
 	:rtype: IntRes2d_IntersectionPoint
 ") FirstPoint;
@@ -477,481 +451,15 @@ class IntRes2d_IntersectionSegment {
 ") HasLastPoint;
 		Standard_Boolean HasLastPoint ();
 		%feature("compactdefaultargs") LastPoint;
-		%feature("autodoc", "	* Returns the last point of the segment as an IntersectionPoint (with a transition). The exception DomainError is raised if HasLastExtremity returns False.
+		%feature("autodoc", "	* Returns the last point of the segment as an IntersectionPoint --with a transition--. The exception DomainError is raised if HasLastExtremity returns False.
 
 	:rtype: IntRes2d_IntersectionPoint
 ") LastPoint;
 		const IntRes2d_IntersectionPoint & LastPoint ();
-		%feature("compactdefaultargs") _CSFDB_GetIntRes2d_IntersectionSegmentoppos;
-		%feature("autodoc", "	:rtype: bool
-") _CSFDB_GetIntRes2d_IntersectionSegmentoppos;
-		Standard_Boolean _CSFDB_GetIntRes2d_IntersectionSegmentoppos ();
-		%feature("compactdefaultargs") _CSFDB_SetIntRes2d_IntersectionSegmentoppos;
-		%feature("autodoc", "	:param p:
-	:type p: bool
-	:rtype: None
-") _CSFDB_SetIntRes2d_IntersectionSegmentoppos;
-		void _CSFDB_SetIntRes2d_IntersectionSegmentoppos (const Standard_Boolean p);
-		%feature("compactdefaultargs") _CSFDB_GetIntRes2d_IntersectionSegmentfirst;
-		%feature("autodoc", "	:rtype: bool
-") _CSFDB_GetIntRes2d_IntersectionSegmentfirst;
-		Standard_Boolean _CSFDB_GetIntRes2d_IntersectionSegmentfirst ();
-		%feature("compactdefaultargs") _CSFDB_SetIntRes2d_IntersectionSegmentfirst;
-		%feature("autodoc", "	:param p:
-	:type p: bool
-	:rtype: None
-") _CSFDB_SetIntRes2d_IntersectionSegmentfirst;
-		void _CSFDB_SetIntRes2d_IntersectionSegmentfirst (const Standard_Boolean p);
-		%feature("compactdefaultargs") _CSFDB_GetIntRes2d_IntersectionSegmentlast;
-		%feature("autodoc", "	:rtype: bool
-") _CSFDB_GetIntRes2d_IntersectionSegmentlast;
-		Standard_Boolean _CSFDB_GetIntRes2d_IntersectionSegmentlast ();
-		%feature("compactdefaultargs") _CSFDB_SetIntRes2d_IntersectionSegmentlast;
-		%feature("autodoc", "	:param p:
-	:type p: bool
-	:rtype: None
-") _CSFDB_SetIntRes2d_IntersectionSegmentlast;
-		void _CSFDB_SetIntRes2d_IntersectionSegmentlast (const Standard_Boolean p);
-		%feature("compactdefaultargs") _CSFDB_GetIntRes2d_IntersectionSegmentptfirst;
-		%feature("autodoc", "	:rtype: IntRes2d_IntersectionPoint
-") _CSFDB_GetIntRes2d_IntersectionSegmentptfirst;
-		const IntRes2d_IntersectionPoint & _CSFDB_GetIntRes2d_IntersectionSegmentptfirst ();
-		%feature("compactdefaultargs") _CSFDB_GetIntRes2d_IntersectionSegmentptlast;
-		%feature("autodoc", "	:rtype: IntRes2d_IntersectionPoint
-") _CSFDB_GetIntRes2d_IntersectionSegmentptlast;
-		const IntRes2d_IntersectionPoint & _CSFDB_GetIntRes2d_IntersectionSegmentptlast ();
 };
 
 
 %extend IntRes2d_IntersectionSegment {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor IntRes2d_SequenceNodeOfSequenceOfIntersectionPoint;
-class IntRes2d_SequenceNodeOfSequenceOfIntersectionPoint : public TCollection_SeqNode {
-	public:
-		%feature("compactdefaultargs") IntRes2d_SequenceNodeOfSequenceOfIntersectionPoint;
-		%feature("autodoc", "	:param I:
-	:type I: IntRes2d_IntersectionPoint &
-	:param n:
-	:type n: TCollection_SeqNodePtr &
-	:param p:
-	:type p: TCollection_SeqNodePtr &
-	:rtype: None
-") IntRes2d_SequenceNodeOfSequenceOfIntersectionPoint;
-		 IntRes2d_SequenceNodeOfSequenceOfIntersectionPoint (const IntRes2d_IntersectionPoint & I,const TCollection_SeqNodePtr & n,const TCollection_SeqNodePtr & p);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:rtype: IntRes2d_IntersectionPoint
-") Value;
-		IntRes2d_IntersectionPoint & Value ();
-};
-
-
-%extend IntRes2d_SequenceNodeOfSequenceOfIntersectionPoint {
-	%pythoncode {
-		def GetHandle(self):
-		    try:
-		        return self.thisHandle
-		    except:
-		        self.thisHandle = Handle_IntRes2d_SequenceNodeOfSequenceOfIntersectionPoint(self)
-		        self.thisown = False
-		        return self.thisHandle
-	}
-};
-
-%pythonappend Handle_IntRes2d_SequenceNodeOfSequenceOfIntersectionPoint::Handle_IntRes2d_SequenceNodeOfSequenceOfIntersectionPoint %{
-    # register the handle in the base object
-    if len(args) > 0:
-        register_handle(self, args[0])
-%}
-
-%nodefaultctor Handle_IntRes2d_SequenceNodeOfSequenceOfIntersectionPoint;
-class Handle_IntRes2d_SequenceNodeOfSequenceOfIntersectionPoint : public Handle_TCollection_SeqNode {
-
-    public:
-        // constructors
-        Handle_IntRes2d_SequenceNodeOfSequenceOfIntersectionPoint();
-        Handle_IntRes2d_SequenceNodeOfSequenceOfIntersectionPoint(const Handle_IntRes2d_SequenceNodeOfSequenceOfIntersectionPoint &aHandle);
-        Handle_IntRes2d_SequenceNodeOfSequenceOfIntersectionPoint(const IntRes2d_SequenceNodeOfSequenceOfIntersectionPoint *anItem);
-        void Nullify();
-        Standard_Boolean IsNull() const;
-        static const Handle_IntRes2d_SequenceNodeOfSequenceOfIntersectionPoint DownCast(const Handle_Standard_Transient &AnObject);
-
-};
-%extend Handle_IntRes2d_SequenceNodeOfSequenceOfIntersectionPoint {
-    IntRes2d_SequenceNodeOfSequenceOfIntersectionPoint* _get_reference() {
-    return (IntRes2d_SequenceNodeOfSequenceOfIntersectionPoint*)$self->Access();
-    }
-};
-
-%extend Handle_IntRes2d_SequenceNodeOfSequenceOfIntersectionPoint {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
-};
-
-%extend IntRes2d_SequenceNodeOfSequenceOfIntersectionPoint {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor IntRes2d_SequenceNodeOfSequenceOfIntersectionSegment;
-class IntRes2d_SequenceNodeOfSequenceOfIntersectionSegment : public TCollection_SeqNode {
-	public:
-		%feature("compactdefaultargs") IntRes2d_SequenceNodeOfSequenceOfIntersectionSegment;
-		%feature("autodoc", "	:param I:
-	:type I: IntRes2d_IntersectionSegment &
-	:param n:
-	:type n: TCollection_SeqNodePtr &
-	:param p:
-	:type p: TCollection_SeqNodePtr &
-	:rtype: None
-") IntRes2d_SequenceNodeOfSequenceOfIntersectionSegment;
-		 IntRes2d_SequenceNodeOfSequenceOfIntersectionSegment (const IntRes2d_IntersectionSegment & I,const TCollection_SeqNodePtr & n,const TCollection_SeqNodePtr & p);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:rtype: IntRes2d_IntersectionSegment
-") Value;
-		IntRes2d_IntersectionSegment & Value ();
-};
-
-
-%extend IntRes2d_SequenceNodeOfSequenceOfIntersectionSegment {
-	%pythoncode {
-		def GetHandle(self):
-		    try:
-		        return self.thisHandle
-		    except:
-		        self.thisHandle = Handle_IntRes2d_SequenceNodeOfSequenceOfIntersectionSegment(self)
-		        self.thisown = False
-		        return self.thisHandle
-	}
-};
-
-%pythonappend Handle_IntRes2d_SequenceNodeOfSequenceOfIntersectionSegment::Handle_IntRes2d_SequenceNodeOfSequenceOfIntersectionSegment %{
-    # register the handle in the base object
-    if len(args) > 0:
-        register_handle(self, args[0])
-%}
-
-%nodefaultctor Handle_IntRes2d_SequenceNodeOfSequenceOfIntersectionSegment;
-class Handle_IntRes2d_SequenceNodeOfSequenceOfIntersectionSegment : public Handle_TCollection_SeqNode {
-
-    public:
-        // constructors
-        Handle_IntRes2d_SequenceNodeOfSequenceOfIntersectionSegment();
-        Handle_IntRes2d_SequenceNodeOfSequenceOfIntersectionSegment(const Handle_IntRes2d_SequenceNodeOfSequenceOfIntersectionSegment &aHandle);
-        Handle_IntRes2d_SequenceNodeOfSequenceOfIntersectionSegment(const IntRes2d_SequenceNodeOfSequenceOfIntersectionSegment *anItem);
-        void Nullify();
-        Standard_Boolean IsNull() const;
-        static const Handle_IntRes2d_SequenceNodeOfSequenceOfIntersectionSegment DownCast(const Handle_Standard_Transient &AnObject);
-
-};
-%extend Handle_IntRes2d_SequenceNodeOfSequenceOfIntersectionSegment {
-    IntRes2d_SequenceNodeOfSequenceOfIntersectionSegment* _get_reference() {
-    return (IntRes2d_SequenceNodeOfSequenceOfIntersectionSegment*)$self->Access();
-    }
-};
-
-%extend Handle_IntRes2d_SequenceNodeOfSequenceOfIntersectionSegment {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
-};
-
-%extend IntRes2d_SequenceNodeOfSequenceOfIntersectionSegment {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor IntRes2d_SequenceOfIntersectionPoint;
-class IntRes2d_SequenceOfIntersectionPoint : public TCollection_BaseSequence {
-	public:
-		%feature("compactdefaultargs") IntRes2d_SequenceOfIntersectionPoint;
-		%feature("autodoc", "	:rtype: None
-") IntRes2d_SequenceOfIntersectionPoint;
-		 IntRes2d_SequenceOfIntersectionPoint ();
-		%feature("compactdefaultargs") IntRes2d_SequenceOfIntersectionPoint;
-		%feature("autodoc", "	:param Other:
-	:type Other: IntRes2d_SequenceOfIntersectionPoint &
-	:rtype: None
-") IntRes2d_SequenceOfIntersectionPoint;
-		 IntRes2d_SequenceOfIntersectionPoint (const IntRes2d_SequenceOfIntersectionPoint & Other);
-		%feature("compactdefaultargs") Clear;
-		%feature("autodoc", "	:rtype: None
-") Clear;
-		void Clear ();
-		%feature("compactdefaultargs") Assign;
-		%feature("autodoc", "	:param Other:
-	:type Other: IntRes2d_SequenceOfIntersectionPoint &
-	:rtype: IntRes2d_SequenceOfIntersectionPoint
-") Assign;
-		const IntRes2d_SequenceOfIntersectionPoint & Assign (const IntRes2d_SequenceOfIntersectionPoint & Other);
-		%feature("compactdefaultargs") operator =;
-		%feature("autodoc", "	:param Other:
-	:type Other: IntRes2d_SequenceOfIntersectionPoint &
-	:rtype: IntRes2d_SequenceOfIntersectionPoint
-") operator =;
-		const IntRes2d_SequenceOfIntersectionPoint & operator = (const IntRes2d_SequenceOfIntersectionPoint & Other);
-		%feature("compactdefaultargs") Append;
-		%feature("autodoc", "	:param T:
-	:type T: IntRes2d_IntersectionPoint &
-	:rtype: None
-") Append;
-		void Append (const IntRes2d_IntersectionPoint & T);
-		%feature("compactdefaultargs") Append;
-		%feature("autodoc", "	:param S:
-	:type S: IntRes2d_SequenceOfIntersectionPoint &
-	:rtype: None
-") Append;
-		void Append (IntRes2d_SequenceOfIntersectionPoint & S);
-		%feature("compactdefaultargs") Prepend;
-		%feature("autodoc", "	:param T:
-	:type T: IntRes2d_IntersectionPoint &
-	:rtype: None
-") Prepend;
-		void Prepend (const IntRes2d_IntersectionPoint & T);
-		%feature("compactdefaultargs") Prepend;
-		%feature("autodoc", "	:param S:
-	:type S: IntRes2d_SequenceOfIntersectionPoint &
-	:rtype: None
-") Prepend;
-		void Prepend (IntRes2d_SequenceOfIntersectionPoint & S);
-		%feature("compactdefaultargs") InsertBefore;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param T:
-	:type T: IntRes2d_IntersectionPoint &
-	:rtype: None
-") InsertBefore;
-		void InsertBefore (const Standard_Integer Index,const IntRes2d_IntersectionPoint & T);
-		%feature("compactdefaultargs") InsertBefore;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param S:
-	:type S: IntRes2d_SequenceOfIntersectionPoint &
-	:rtype: None
-") InsertBefore;
-		void InsertBefore (const Standard_Integer Index,IntRes2d_SequenceOfIntersectionPoint & S);
-		%feature("compactdefaultargs") InsertAfter;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param T:
-	:type T: IntRes2d_IntersectionPoint &
-	:rtype: None
-") InsertAfter;
-		void InsertAfter (const Standard_Integer Index,const IntRes2d_IntersectionPoint & T);
-		%feature("compactdefaultargs") InsertAfter;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param S:
-	:type S: IntRes2d_SequenceOfIntersectionPoint &
-	:rtype: None
-") InsertAfter;
-		void InsertAfter (const Standard_Integer Index,IntRes2d_SequenceOfIntersectionPoint & S);
-		%feature("compactdefaultargs") First;
-		%feature("autodoc", "	:rtype: IntRes2d_IntersectionPoint
-") First;
-		const IntRes2d_IntersectionPoint & First ();
-		%feature("compactdefaultargs") Last;
-		%feature("autodoc", "	:rtype: IntRes2d_IntersectionPoint
-") Last;
-		const IntRes2d_IntersectionPoint & Last ();
-		%feature("compactdefaultargs") Split;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param Sub:
-	:type Sub: IntRes2d_SequenceOfIntersectionPoint &
-	:rtype: None
-") Split;
-		void Split (const Standard_Integer Index,IntRes2d_SequenceOfIntersectionPoint & Sub);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: IntRes2d_IntersectionPoint
-") Value;
-		const IntRes2d_IntersectionPoint & Value (const Standard_Integer Index);
-		%feature("compactdefaultargs") SetValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param I:
-	:type I: IntRes2d_IntersectionPoint &
-	:rtype: None
-") SetValue;
-		void SetValue (const Standard_Integer Index,const IntRes2d_IntersectionPoint & I);
-		%feature("compactdefaultargs") ChangeValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: IntRes2d_IntersectionPoint
-") ChangeValue;
-		IntRes2d_IntersectionPoint & ChangeValue (const Standard_Integer Index);
-		%feature("compactdefaultargs") Remove;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: None
-") Remove;
-		void Remove (const Standard_Integer Index);
-		%feature("compactdefaultargs") Remove;
-		%feature("autodoc", "	:param FromIndex:
-	:type FromIndex: int
-	:param ToIndex:
-	:type ToIndex: int
-	:rtype: None
-") Remove;
-		void Remove (const Standard_Integer FromIndex,const Standard_Integer ToIndex);
-};
-
-
-%extend IntRes2d_SequenceOfIntersectionPoint {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor IntRes2d_SequenceOfIntersectionSegment;
-class IntRes2d_SequenceOfIntersectionSegment : public TCollection_BaseSequence {
-	public:
-		%feature("compactdefaultargs") IntRes2d_SequenceOfIntersectionSegment;
-		%feature("autodoc", "	:rtype: None
-") IntRes2d_SequenceOfIntersectionSegment;
-		 IntRes2d_SequenceOfIntersectionSegment ();
-		%feature("compactdefaultargs") IntRes2d_SequenceOfIntersectionSegment;
-		%feature("autodoc", "	:param Other:
-	:type Other: IntRes2d_SequenceOfIntersectionSegment &
-	:rtype: None
-") IntRes2d_SequenceOfIntersectionSegment;
-		 IntRes2d_SequenceOfIntersectionSegment (const IntRes2d_SequenceOfIntersectionSegment & Other);
-		%feature("compactdefaultargs") Clear;
-		%feature("autodoc", "	:rtype: None
-") Clear;
-		void Clear ();
-		%feature("compactdefaultargs") Assign;
-		%feature("autodoc", "	:param Other:
-	:type Other: IntRes2d_SequenceOfIntersectionSegment &
-	:rtype: IntRes2d_SequenceOfIntersectionSegment
-") Assign;
-		const IntRes2d_SequenceOfIntersectionSegment & Assign (const IntRes2d_SequenceOfIntersectionSegment & Other);
-		%feature("compactdefaultargs") operator =;
-		%feature("autodoc", "	:param Other:
-	:type Other: IntRes2d_SequenceOfIntersectionSegment &
-	:rtype: IntRes2d_SequenceOfIntersectionSegment
-") operator =;
-		const IntRes2d_SequenceOfIntersectionSegment & operator = (const IntRes2d_SequenceOfIntersectionSegment & Other);
-		%feature("compactdefaultargs") Append;
-		%feature("autodoc", "	:param T:
-	:type T: IntRes2d_IntersectionSegment &
-	:rtype: None
-") Append;
-		void Append (const IntRes2d_IntersectionSegment & T);
-		%feature("compactdefaultargs") Append;
-		%feature("autodoc", "	:param S:
-	:type S: IntRes2d_SequenceOfIntersectionSegment &
-	:rtype: None
-") Append;
-		void Append (IntRes2d_SequenceOfIntersectionSegment & S);
-		%feature("compactdefaultargs") Prepend;
-		%feature("autodoc", "	:param T:
-	:type T: IntRes2d_IntersectionSegment &
-	:rtype: None
-") Prepend;
-		void Prepend (const IntRes2d_IntersectionSegment & T);
-		%feature("compactdefaultargs") Prepend;
-		%feature("autodoc", "	:param S:
-	:type S: IntRes2d_SequenceOfIntersectionSegment &
-	:rtype: None
-") Prepend;
-		void Prepend (IntRes2d_SequenceOfIntersectionSegment & S);
-		%feature("compactdefaultargs") InsertBefore;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param T:
-	:type T: IntRes2d_IntersectionSegment &
-	:rtype: None
-") InsertBefore;
-		void InsertBefore (const Standard_Integer Index,const IntRes2d_IntersectionSegment & T);
-		%feature("compactdefaultargs") InsertBefore;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param S:
-	:type S: IntRes2d_SequenceOfIntersectionSegment &
-	:rtype: None
-") InsertBefore;
-		void InsertBefore (const Standard_Integer Index,IntRes2d_SequenceOfIntersectionSegment & S);
-		%feature("compactdefaultargs") InsertAfter;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param T:
-	:type T: IntRes2d_IntersectionSegment &
-	:rtype: None
-") InsertAfter;
-		void InsertAfter (const Standard_Integer Index,const IntRes2d_IntersectionSegment & T);
-		%feature("compactdefaultargs") InsertAfter;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param S:
-	:type S: IntRes2d_SequenceOfIntersectionSegment &
-	:rtype: None
-") InsertAfter;
-		void InsertAfter (const Standard_Integer Index,IntRes2d_SequenceOfIntersectionSegment & S);
-		%feature("compactdefaultargs") First;
-		%feature("autodoc", "	:rtype: IntRes2d_IntersectionSegment
-") First;
-		const IntRes2d_IntersectionSegment & First ();
-		%feature("compactdefaultargs") Last;
-		%feature("autodoc", "	:rtype: IntRes2d_IntersectionSegment
-") Last;
-		const IntRes2d_IntersectionSegment & Last ();
-		%feature("compactdefaultargs") Split;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param Sub:
-	:type Sub: IntRes2d_SequenceOfIntersectionSegment &
-	:rtype: None
-") Split;
-		void Split (const Standard_Integer Index,IntRes2d_SequenceOfIntersectionSegment & Sub);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: IntRes2d_IntersectionSegment
-") Value;
-		const IntRes2d_IntersectionSegment & Value (const Standard_Integer Index);
-		%feature("compactdefaultargs") SetValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param I:
-	:type I: IntRes2d_IntersectionSegment &
-	:rtype: None
-") SetValue;
-		void SetValue (const Standard_Integer Index,const IntRes2d_IntersectionSegment & I);
-		%feature("compactdefaultargs") ChangeValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: IntRes2d_IntersectionSegment
-") ChangeValue;
-		IntRes2d_IntersectionSegment & ChangeValue (const Standard_Integer Index);
-		%feature("compactdefaultargs") Remove;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: None
-") Remove;
-		void Remove (const Standard_Integer Index);
-		%feature("compactdefaultargs") Remove;
-		%feature("autodoc", "	:param FromIndex:
-	:type FromIndex: int
-	:param ToIndex:
-	:type ToIndex: int
-	:rtype: None
-") Remove;
-		void Remove (const Standard_Integer FromIndex,const Standard_Integer ToIndex);
-};
-
-
-%extend IntRes2d_SequenceOfIntersectionSegment {
 	%pythoncode {
 	__repr__ = _dumps_object
 	}
@@ -1042,7 +550,7 @@ class IntRes2d_Transition {
 ") SetPosition;
 		void SetPosition (const IntRes2d_Position Pos);
 		%feature("compactdefaultargs") PositionOnCurve;
-		%feature("autodoc", "	* Indicates if the intersection is at the beginning (IntRes2d_Head), at the end (IntRes2d_End), or in the middle (IntRes2d_Middle) of the curve.
+		%feature("autodoc", "	* Indicates if the intersection is at the beginning --IntRes2d_Head--, at the end --IntRes2d_End--, or in the middle --IntRes2d_Middle-- of the curve.
 
 	:rtype: IntRes2d_Position
 ") PositionOnCurve;
@@ -1071,56 +579,6 @@ class IntRes2d_Transition {
 	:rtype: bool
 ") IsOpposite;
 		Standard_Boolean IsOpposite ();
-		%feature("compactdefaultargs") _CSFDB_GetIntRes2d_Transitiontangent;
-		%feature("autodoc", "	:rtype: bool
-") _CSFDB_GetIntRes2d_Transitiontangent;
-		Standard_Boolean _CSFDB_GetIntRes2d_Transitiontangent ();
-		%feature("compactdefaultargs") _CSFDB_SetIntRes2d_Transitiontangent;
-		%feature("autodoc", "	:param p:
-	:type p: bool
-	:rtype: None
-") _CSFDB_SetIntRes2d_Transitiontangent;
-		void _CSFDB_SetIntRes2d_Transitiontangent (const Standard_Boolean p);
-		%feature("compactdefaultargs") _CSFDB_GetIntRes2d_Transitionposit;
-		%feature("autodoc", "	:rtype: IntRes2d_Position
-") _CSFDB_GetIntRes2d_Transitionposit;
-		IntRes2d_Position _CSFDB_GetIntRes2d_Transitionposit ();
-		%feature("compactdefaultargs") _CSFDB_SetIntRes2d_Transitionposit;
-		%feature("autodoc", "	:param p:
-	:type p: IntRes2d_Position
-	:rtype: None
-") _CSFDB_SetIntRes2d_Transitionposit;
-		void _CSFDB_SetIntRes2d_Transitionposit (const IntRes2d_Position p);
-		%feature("compactdefaultargs") _CSFDB_GetIntRes2d_Transitiontypetra;
-		%feature("autodoc", "	:rtype: IntRes2d_TypeTrans
-") _CSFDB_GetIntRes2d_Transitiontypetra;
-		IntRes2d_TypeTrans _CSFDB_GetIntRes2d_Transitiontypetra ();
-		%feature("compactdefaultargs") _CSFDB_SetIntRes2d_Transitiontypetra;
-		%feature("autodoc", "	:param p:
-	:type p: IntRes2d_TypeTrans
-	:rtype: None
-") _CSFDB_SetIntRes2d_Transitiontypetra;
-		void _CSFDB_SetIntRes2d_Transitiontypetra (const IntRes2d_TypeTrans p);
-		%feature("compactdefaultargs") _CSFDB_GetIntRes2d_Transitionsituat;
-		%feature("autodoc", "	:rtype: IntRes2d_Situation
-") _CSFDB_GetIntRes2d_Transitionsituat;
-		IntRes2d_Situation _CSFDB_GetIntRes2d_Transitionsituat ();
-		%feature("compactdefaultargs") _CSFDB_SetIntRes2d_Transitionsituat;
-		%feature("autodoc", "	:param p:
-	:type p: IntRes2d_Situation
-	:rtype: None
-") _CSFDB_SetIntRes2d_Transitionsituat;
-		void _CSFDB_SetIntRes2d_Transitionsituat (const IntRes2d_Situation p);
-		%feature("compactdefaultargs") _CSFDB_GetIntRes2d_Transitionoppos;
-		%feature("autodoc", "	:rtype: bool
-") _CSFDB_GetIntRes2d_Transitionoppos;
-		Standard_Boolean _CSFDB_GetIntRes2d_Transitionoppos ();
-		%feature("compactdefaultargs") _CSFDB_SetIntRes2d_Transitionoppos;
-		%feature("autodoc", "	:param p:
-	:type p: bool
-	:rtype: None
-") _CSFDB_SetIntRes2d_Transitionoppos;
-		void _CSFDB_SetIntRes2d_Transitionoppos (const Standard_Boolean p);
 };
 
 

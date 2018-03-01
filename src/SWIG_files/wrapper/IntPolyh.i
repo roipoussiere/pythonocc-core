@@ -1,5 +1,5 @@
 /*
-Copyright 2008-2017 Thomas Paviot (tpaviot@gmail.com)
+Copyright 2008-2018 Thomas Paviot (tpaviot@gmail.com)
 
 
 This file is part of pythonOCC.
@@ -54,15 +54,14 @@ def register_handle(handle, base_object):
 };
 
 /* typedefs */
-typedef IntPolyh_Array <IntPolyh_Edge> IntPolyh_ArrayOfEdges;
-typedef IntPolyh_Array <IntPolyh_Triangle> IntPolyh_ArrayOfTriangles;
-typedef IntPolyh_Array <IntPolyh_Point> IntPolyh_ArrayOfPoints;
-typedef IntPolyh_Array <IntPolyh_StartPoint> IntPolyh_ArrayOfTangentZones;
-typedef IntPolyh_Array <IntPolyh_Couple> IntPolyh_ArrayOfCouples;
 typedef IntPolyh_MaillageAffinage * IntPolyh_PMaillageAffinage;
-typedef IntPolyh_Array <IntPolyh_StartPoint> IntPolyh_ArrayOfStartPoints;
-typedef IntPolyh_Array <IntPolyh_SectionLine> IntPolyh_ArrayOfSectionLines;
+typedef IntPolyh_ListOfCouples::Iterator IntPolyh_ListIteratorOfListOfCouples;
 /* end typedefs declaration */
+
+/* templates */
+%template(IntPolyh_SeqOfStartPoints) NCollection_Sequence <IntPolyh_StartPoint>;
+%template(IntPolyh_ListOfCouples) NCollection_List <IntPolyh_Couple>;
+/* end templates declaration */
 
 /* public enums */
 /* end public enums declaration */
@@ -71,54 +70,96 @@ typedef IntPolyh_Array <IntPolyh_SectionLine> IntPolyh_ArrayOfSectionLines;
 class IntPolyh_Couple {
 	public:
 		%feature("compactdefaultargs") IntPolyh_Couple;
-		%feature("autodoc", "	:rtype: None
+		%feature("autodoc", "	* Constructor
+
+	:rtype: None
 ") IntPolyh_Couple;
 		 IntPolyh_Couple ();
 		%feature("compactdefaultargs") IntPolyh_Couple;
-		%feature("autodoc", "	:param i1:
-	:type i1: int
-	:param i2:
-	:type i2: int
+		%feature("autodoc", "	* Constructor
+
+	:param theTriangle1:
+	:type theTriangle1: int
+	:param theTriangle2:
+	:type theTriangle2: int
+	:param theAngle: default value is -2.0
+	:type theAngle: float
 	:rtype: None
 ") IntPolyh_Couple;
-		 IntPolyh_Couple (const Standard_Integer i1,const Standard_Integer i2);
+		 IntPolyh_Couple (const Standard_Integer theTriangle1,const Standard_Integer theTriangle2,const Standard_Real theAngle = -2.0);
 		%feature("compactdefaultargs") FirstValue;
-		%feature("autodoc", "	:rtype: int
+		%feature("autodoc", "	* Returns the first index
+
+	:rtype: int
 ") FirstValue;
 		Standard_Integer FirstValue ();
 		%feature("compactdefaultargs") SecondValue;
-		%feature("autodoc", "	:rtype: int
+		%feature("autodoc", "	* Returns the second index
+
+	:rtype: int
 ") SecondValue;
 		Standard_Integer SecondValue ();
-		%feature("compactdefaultargs") AnalyseFlagValue;
-		%feature("autodoc", "	:rtype: int
-") AnalyseFlagValue;
-		Standard_Integer AnalyseFlagValue ();
-		%feature("compactdefaultargs") AngleValue;
-		%feature("autodoc", "	:rtype: float
-") AngleValue;
-		Standard_Real AngleValue ();
+		%feature("compactdefaultargs") IsAnalyzed;
+		%feature("autodoc", "	* Returns True if the couple has been analyzed
+
+	:rtype: bool
+") IsAnalyzed;
+		Standard_Boolean IsAnalyzed ();
+		%feature("compactdefaultargs") Angle;
+		%feature("autodoc", "	* Returns the angle
+
+	:rtype: float
+") Angle;
+		Standard_Real Angle ();
 		%feature("compactdefaultargs") SetCoupleValue;
-		%feature("autodoc", "	:param v:
-	:type v: int
-	:param w:
-	:type w: int
+		%feature("autodoc", "	* Sets the triangles
+
+	:param theInd1:
+	:type theInd1: int
+	:param theInd2:
+	:type theInd2: int
 	:rtype: None
 ") SetCoupleValue;
-		void SetCoupleValue (const Standard_Integer v,const Standard_Integer w);
-		%feature("compactdefaultargs") SetAnalyseFlag;
-		%feature("autodoc", "	:param v:
-	:type v: int
+		void SetCoupleValue (const Standard_Integer theInd1,const Standard_Integer theInd2);
+		%feature("compactdefaultargs") SetAnalyzed;
+		%feature("autodoc", "	* Sets the analyzed flag
+
+	:param theAnalyzed:
+	:type theAnalyzed: bool
 	:rtype: None
-") SetAnalyseFlag;
-		void SetAnalyseFlag (const Standard_Integer v);
-		%feature("compactdefaultargs") SetAngleValue;
-		%feature("autodoc", "	:param ang:
-	:type ang: float
+") SetAnalyzed;
+		void SetAnalyzed (const Standard_Boolean theAnalyzed);
+		%feature("compactdefaultargs") SetAngle;
+		%feature("autodoc", "	* Sets the angle
+
+	:param theAngle:
+	:type theAngle: float
 	:rtype: None
-") SetAngleValue;
-		void SetAngleValue (const Standard_Real ang);
-		%feature("compactdefaultargs") Dump;
+") SetAngle;
+		void SetAngle (const Standard_Real theAngle);
+		%feature("compactdefaultargs") IsEqual;
+		%feature("autodoc", "	* Returns true if the Couple is equal to <theOther>
+
+	:param theOther:
+	:type theOther: IntPolyh_Couple &
+	:rtype: bool
+") IsEqual;
+		Standard_Boolean IsEqual (const IntPolyh_Couple & theOther);
+		%feature("compactdefaultargs") HashCode;
+		%feature("autodoc", "	* Returns hash code
+
+	:param theUpper:
+	:type theUpper: int
+	:rtype: int
+") HashCode;
+		Standard_Integer HashCode (const Standard_Integer theUpper);
+
+        %extend {
+            Standard_Integer __hash__() {
+            return $self->HashCode(2147483647);
+            }
+        };
+        		%feature("compactdefaultargs") Dump;
 		%feature("autodoc", "	:param v:
 	:type v: int
 	:rtype: None
@@ -132,75 +173,112 @@ class IntPolyh_Couple {
 	__repr__ = _dumps_object
 	}
 };
+%nodefaultctor IntPolyh_CoupleMapHasher;
+class IntPolyh_CoupleMapHasher {
+	public:
+		%feature("compactdefaultargs") HashCode;
+		%feature("autodoc", "	:param theCouple:
+	:type theCouple: IntPolyh_Couple &
+	:param Upper:
+	:type Upper: int
+	:rtype: int
+") HashCode;
+		static Standard_Integer HashCode (const IntPolyh_Couple & theCouple,const Standard_Integer Upper);
+		%feature("compactdefaultargs") IsEqual;
+		%feature("autodoc", "	:param theCouple1:
+	:type theCouple1: IntPolyh_Couple &
+	:param theCouple2:
+	:type theCouple2: IntPolyh_Couple &
+	:rtype: bool
+") IsEqual;
+		static Standard_Boolean IsEqual (const IntPolyh_Couple & theCouple1,const IntPolyh_Couple & theCouple2);
+};
+
+
+%extend IntPolyh_CoupleMapHasher {
+	%pythoncode {
+	__repr__ = _dumps_object
+	}
+};
 %nodefaultctor IntPolyh_Edge;
 class IntPolyh_Edge {
 	public:
 		%feature("compactdefaultargs") IntPolyh_Edge;
-		%feature("autodoc", "	:rtype: None
+		%feature("autodoc", "	* Constructor
+
+	:rtype: None
 ") IntPolyh_Edge;
 		 IntPolyh_Edge ();
 		%feature("compactdefaultargs") IntPolyh_Edge;
-		%feature("autodoc", "	:param i1:
-	:type i1: int
-	:param i2:
-	:type i2: int
-	:param i3:
-	:type i3: int
-	:param i4:
-	:type i4: int
+		%feature("autodoc", "	* Constructor
+
+	:param thePoint1:
+	:type thePoint1: int
+	:param thePoint2:
+	:type thePoint2: int
+	:param theTriangle1:
+	:type theTriangle1: int
+	:param theTriangle2:
+	:type theTriangle2: int
 	:rtype: None
 ") IntPolyh_Edge;
-		 IntPolyh_Edge (const Standard_Integer i1,const Standard_Integer i2,const Standard_Integer i3,const Standard_Integer i4);
+		 IntPolyh_Edge (const Standard_Integer thePoint1,const Standard_Integer thePoint2,const Standard_Integer theTriangle1,const Standard_Integer theTriangle2);
 		%feature("compactdefaultargs") FirstPoint;
-		%feature("autodoc", "	:rtype: int
+		%feature("autodoc", "	* Returns the first point
+
+	:rtype: int
 ") FirstPoint;
 		Standard_Integer FirstPoint ();
 		%feature("compactdefaultargs") SecondPoint;
-		%feature("autodoc", "	:rtype: int
+		%feature("autodoc", "	* Returns the second point
+
+	:rtype: int
 ") SecondPoint;
 		Standard_Integer SecondPoint ();
 		%feature("compactdefaultargs") FirstTriangle;
-		%feature("autodoc", "	:rtype: int
+		%feature("autodoc", "	* Returns the first triangle
+
+	:rtype: int
 ") FirstTriangle;
 		Standard_Integer FirstTriangle ();
 		%feature("compactdefaultargs") SecondTriangle;
-		%feature("autodoc", "	:rtype: int
+		%feature("autodoc", "	* Returns the second triangle
+
+	:rtype: int
 ") SecondTriangle;
 		Standard_Integer SecondTriangle ();
-		%feature("compactdefaultargs") AnalysisFlag;
-		%feature("autodoc", "	:rtype: int
-") AnalysisFlag;
-		Standard_Integer AnalysisFlag ();
 		%feature("compactdefaultargs") SetFirstPoint;
-		%feature("autodoc", "	:param v:
-	:type v: int
+		%feature("autodoc", "	* Sets the first point
+
+	:param thePoint:
+	:type thePoint: int
 	:rtype: None
 ") SetFirstPoint;
-		void SetFirstPoint (const Standard_Integer v);
+		void SetFirstPoint (const Standard_Integer thePoint);
 		%feature("compactdefaultargs") SetSecondPoint;
-		%feature("autodoc", "	:param v:
-	:type v: int
+		%feature("autodoc", "	* Sets the second point
+
+	:param thePoint:
+	:type thePoint: int
 	:rtype: None
 ") SetSecondPoint;
-		void SetSecondPoint (const Standard_Integer v);
+		void SetSecondPoint (const Standard_Integer thePoint);
 		%feature("compactdefaultargs") SetFirstTriangle;
-		%feature("autodoc", "	:param v:
-	:type v: int
+		%feature("autodoc", "	* Sets the first triangle
+
+	:param theTriangle:
+	:type theTriangle: int
 	:rtype: None
 ") SetFirstTriangle;
-		void SetFirstTriangle (const Standard_Integer v);
+		void SetFirstTriangle (const Standard_Integer theTriangle);
 		%feature("compactdefaultargs") SetSecondTriangle;
-		%feature("autodoc", "	:param v:
-	:type v: int
+		%feature("autodoc", "	* Sets the second triangle
+
+	:param theTriangle:
+	:type theTriangle: int
 	:rtype: None
 ") SetSecondTriangle;
-		void SetSecondTriangle (const Standard_Integer v);
-		%feature("compactdefaultargs") SetAnalysisFlag;
-		%feature("autodoc", "	:param v:
-	:type v: int
-	:rtype: None
-") SetAnalysisFlag;
-		void SetAnalysisFlag (const Standard_Integer v);
+		void SetSecondTriangle (const Standard_Integer theTriangle);
 		%feature("compactdefaultargs") Dump;
 		%feature("autodoc", "	:param v:
 	:type v: int
@@ -366,49 +444,67 @@ class IntPolyh_Intersection {
 class IntPolyh_Point {
 	public:
 		%feature("compactdefaultargs") IntPolyh_Point;
-		%feature("autodoc", "	:rtype: None
+		%feature("autodoc", "	* Constructor
+
+	:rtype: None
 ") IntPolyh_Point;
 		 IntPolyh_Point ();
 		%feature("compactdefaultargs") IntPolyh_Point;
-		%feature("autodoc", "	:param xx:
-	:type xx: float
-	:param yy:
-	:type yy: float
-	:param zz:
-	:type zz: float
-	:param uu:
-	:type uu: float
-	:param vv:
-	:type vv: float
+		%feature("autodoc", "	* Constructor
+
+	:param x:
+	:type x: float
+	:param y:
+	:type y: float
+	:param z:
+	:type z: float
+	:param u:
+	:type u: float
+	:param v:
+	:type v: float
 	:rtype: None
 ") IntPolyh_Point;
-		 IntPolyh_Point (const Standard_Real xx,const Standard_Real yy,const Standard_Real zz,const Standard_Real uu,const Standard_Real vv);
+		 IntPolyh_Point (const Standard_Real x,const Standard_Real y,const Standard_Real z,const Standard_Real u,const Standard_Real v);
 		%feature("compactdefaultargs") X;
-		%feature("autodoc", "	:rtype: float
+		%feature("autodoc", "	* Returns X coordinate of the 3D point
+
+	:rtype: float
 ") X;
 		Standard_Real X ();
 		%feature("compactdefaultargs") Y;
-		%feature("autodoc", "	:rtype: float
+		%feature("autodoc", "	* Returns Y coordinate of the 3D point
+
+	:rtype: float
 ") Y;
 		Standard_Real Y ();
 		%feature("compactdefaultargs") Z;
-		%feature("autodoc", "	:rtype: float
+		%feature("autodoc", "	* Returns the Z coordinate of the 3D point
+
+	:rtype: float
 ") Z;
 		Standard_Real Z ();
 		%feature("compactdefaultargs") U;
-		%feature("autodoc", "	:rtype: float
+		%feature("autodoc", "	* Returns the U coordinate of the 2D point
+
+	:rtype: float
 ") U;
 		Standard_Real U ();
 		%feature("compactdefaultargs") V;
-		%feature("autodoc", "	:rtype: float
+		%feature("autodoc", "	* Returns the V coordinate of the 2D point
+
+	:rtype: float
 ") V;
 		Standard_Real V ();
 		%feature("compactdefaultargs") PartOfCommon;
-		%feature("autodoc", "	:rtype: int
+		%feature("autodoc", "	* Returns 0 if the point is not common with the other surface
+
+	:rtype: int
 ") PartOfCommon;
 		Standard_Integer PartOfCommon ();
 		%feature("compactdefaultargs") Equal;
-		%feature("autodoc", "	:param Pt:
+		%feature("autodoc", "	* Assignment operator
+
+	:param Pt:
 	:type Pt: IntPolyh_Point &
 	:rtype: None
 ") Equal;
@@ -420,59 +516,75 @@ class IntPolyh_Point {
 ") operator =;
 		void operator = (const IntPolyh_Point & Pt);
 		%feature("compactdefaultargs") Set;
-		%feature("autodoc", "	:param v1:
-	:type v1: float
-	:param v2:
-	:type v2: float
-	:param v3:
-	:type v3: float
-	:param v4:
-	:type v4: float
-	:param v5:
-	:type v5: float
+		%feature("autodoc", "	* Sets the point
+
+	:param x:
+	:type x: float
+	:param y:
+	:type y: float
+	:param z:
+	:type z: float
+	:param u:
+	:type u: float
+	:param v:
+	:type v: float
 	:param II: default value is 1
 	:type II: int
 	:rtype: None
 ") Set;
-		void Set (const Standard_Real v1,const Standard_Real v2,const Standard_Real v3,const Standard_Real v4,const Standard_Real v5,const Standard_Integer II = 1);
+		void Set (const Standard_Real x,const Standard_Real y,const Standard_Real z,const Standard_Real u,const Standard_Real v,const Standard_Integer II = 1);
 		%feature("compactdefaultargs") SetX;
-		%feature("autodoc", "	:param v:
-	:type v: float
+		%feature("autodoc", "	* Sets the X coordinate for the 3D point
+
+	:param x:
+	:type x: float
 	:rtype: None
 ") SetX;
-		void SetX (const Standard_Real v);
+		void SetX (const Standard_Real x);
 		%feature("compactdefaultargs") SetY;
-		%feature("autodoc", "	:param v:
-	:type v: float
+		%feature("autodoc", "	* Sets the Y coordinate for the 3D point
+
+	:param y:
+	:type y: float
 	:rtype: None
 ") SetY;
-		void SetY (const Standard_Real v);
+		void SetY (const Standard_Real y);
 		%feature("compactdefaultargs") SetZ;
-		%feature("autodoc", "	:param v:
-	:type v: float
+		%feature("autodoc", "	* Sets the Z coordinate for the 3D point
+
+	:param z:
+	:type z: float
 	:rtype: None
 ") SetZ;
-		void SetZ (const Standard_Real v);
+		void SetZ (const Standard_Real z);
 		%feature("compactdefaultargs") SetU;
-		%feature("autodoc", "	:param v:
-	:type v: float
+		%feature("autodoc", "	* Sets the U coordinate for the 2D point
+
+	:param u:
+	:type u: float
 	:rtype: None
 ") SetU;
-		void SetU (const Standard_Real v);
+		void SetU (const Standard_Real u);
 		%feature("compactdefaultargs") SetV;
-		%feature("autodoc", "	:param v:
+		%feature("autodoc", "	* Sets the V coordinate for the 2D point
+
+	:param v:
 	:type v: float
 	:rtype: None
 ") SetV;
 		void SetV (const Standard_Real v);
 		%feature("compactdefaultargs") SetPartOfCommon;
-		%feature("autodoc", "	:param ii:
+		%feature("autodoc", "	* Sets the part of common
+
+	:param ii:
 	:type ii: int
 	:rtype: None
 ") SetPartOfCommon;
 		void SetPartOfCommon (const Standard_Integer ii);
 		%feature("compactdefaultargs") Middle;
-		%feature("autodoc", "	:param MySurface:
+		%feature("autodoc", "	* Creates middle point from P1 and P2 and stores it to this
+
+	:param MySurface:
 	:type MySurface: Handle_Adaptor3d_HSurface &
 	:param P1:
 	:type P1: IntPolyh_Point &
@@ -482,7 +594,9 @@ class IntPolyh_Point {
 ") Middle;
 		void Middle (const Handle_Adaptor3d_HSurface & MySurface,const IntPolyh_Point & P1,const IntPolyh_Point & P2);
 		%feature("compactdefaultargs") Add;
-		%feature("autodoc", "	:param P1:
+		%feature("autodoc", "	* Addition
+
+	:param P1:
 	:type P1: IntPolyh_Point &
 	:rtype: IntPolyh_Point
 ") Add;
@@ -494,7 +608,9 @@ class IntPolyh_Point {
 ") operator +;
 		IntPolyh_Point operator + (const IntPolyh_Point & P1);
 		%feature("compactdefaultargs") Sub;
-		%feature("autodoc", "	:param P1:
+		%feature("autodoc", "	* Subtraction
+
+	:param P1:
 	:type P1: IntPolyh_Point &
 	:rtype: IntPolyh_Point
 ") Sub;
@@ -506,7 +622,9 @@ class IntPolyh_Point {
 ") operator -;
 		IntPolyh_Point operator - (const IntPolyh_Point & P1);
 		%feature("compactdefaultargs") Divide;
-		%feature("autodoc", "	:param rr:
+		%feature("autodoc", "	* Division
+
+	:param rr:
 	:type rr: float
 	:rtype: IntPolyh_Point
 ") Divide;
@@ -518,7 +636,9 @@ class IntPolyh_Point {
 ") operator /;
 		IntPolyh_Point operator / (const Standard_Real rr);
 		%feature("compactdefaultargs") Multiplication;
-		%feature("autodoc", "	:param rr:
+		%feature("autodoc", "	* Multiplication
+
+	:param rr:
 	:type rr: float
 	:rtype: IntPolyh_Point
 ") Multiplication;
@@ -530,23 +650,31 @@ class IntPolyh_Point {
 ") operator *;
 		IntPolyh_Point operator * (const Standard_Real rr);
 		%feature("compactdefaultargs") SquareModulus;
-		%feature("autodoc", "	:rtype: float
+		%feature("autodoc", "	* Square modulus
+
+	:rtype: float
 ") SquareModulus;
 		Standard_Real SquareModulus ();
 		%feature("compactdefaultargs") SquareDistance;
-		%feature("autodoc", "	:param P2:
+		%feature("autodoc", "	* Square distance to the other point
+
+	:param P2:
 	:type P2: IntPolyh_Point &
 	:rtype: float
 ") SquareDistance;
 		Standard_Real SquareDistance (const IntPolyh_Point & P2);
 		%feature("compactdefaultargs") Dot;
-		%feature("autodoc", "	:param P2:
+		%feature("autodoc", "	* Dot
+
+	:param P2:
 	:type P2: IntPolyh_Point &
 	:rtype: float
 ") Dot;
 		Standard_Real Dot (const IntPolyh_Point & P2);
 		%feature("compactdefaultargs") Cross;
-		%feature("autodoc", "	:param P1:
+		%feature("autodoc", "	* Cross
+
+	:param P1:
 	:type P1: IntPolyh_Point &
 	:param P2:
 	:type P2: IntPolyh_Point &
@@ -554,23 +682,31 @@ class IntPolyh_Point {
 ") Cross;
 		void Cross (const IntPolyh_Point & P1,const IntPolyh_Point & P2);
 		%feature("compactdefaultargs") Dump;
-		%feature("autodoc", "	:rtype: None
+		%feature("autodoc", "	* Dump
+
+	:rtype: None
 ") Dump;
 		void Dump ();
 		%feature("compactdefaultargs") Dump;
-		%feature("autodoc", "	:param i:
+		%feature("autodoc", "	* Dump
+
+	:param i:
 	:type i: int
 	:rtype: None
 ") Dump;
 		void Dump (const Standard_Integer i);
 		%feature("compactdefaultargs") SetDegenerated;
-		%feature("autodoc", "	:param theFlag:
+		%feature("autodoc", "	* Sets the degenerated flag
+
+	:param theFlag:
 	:type theFlag: bool
 	:rtype: None
 ") SetDegenerated;
 		void SetDegenerated (const Standard_Boolean theFlag);
 		%feature("compactdefaultargs") Degenerated;
-		%feature("autodoc", "	:rtype: bool
+		%feature("autodoc", "	* Returns the degenerated flag
+
+	:rtype: bool
 ") Degenerated;
 		Standard_Boolean Degenerated ();
 };
@@ -654,220 +790,6 @@ class IntPolyh_SectionLine {
 
 
 %extend IntPolyh_SectionLine {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor IntPolyh_SeqOfStartPoints;
-class IntPolyh_SeqOfStartPoints : public TCollection_BaseSequence {
-	public:
-		%feature("compactdefaultargs") IntPolyh_SeqOfStartPoints;
-		%feature("autodoc", "	:rtype: None
-") IntPolyh_SeqOfStartPoints;
-		 IntPolyh_SeqOfStartPoints ();
-		%feature("compactdefaultargs") IntPolyh_SeqOfStartPoints;
-		%feature("autodoc", "	:param Other:
-	:type Other: IntPolyh_SeqOfStartPoints &
-	:rtype: None
-") IntPolyh_SeqOfStartPoints;
-		 IntPolyh_SeqOfStartPoints (const IntPolyh_SeqOfStartPoints & Other);
-		%feature("compactdefaultargs") Clear;
-		%feature("autodoc", "	:rtype: None
-") Clear;
-		void Clear ();
-		%feature("compactdefaultargs") Assign;
-		%feature("autodoc", "	:param Other:
-	:type Other: IntPolyh_SeqOfStartPoints &
-	:rtype: IntPolyh_SeqOfStartPoints
-") Assign;
-		const IntPolyh_SeqOfStartPoints & Assign (const IntPolyh_SeqOfStartPoints & Other);
-		%feature("compactdefaultargs") operator =;
-		%feature("autodoc", "	:param Other:
-	:type Other: IntPolyh_SeqOfStartPoints &
-	:rtype: IntPolyh_SeqOfStartPoints
-") operator =;
-		const IntPolyh_SeqOfStartPoints & operator = (const IntPolyh_SeqOfStartPoints & Other);
-		%feature("compactdefaultargs") Append;
-		%feature("autodoc", "	:param T:
-	:type T: IntPolyh_StartPoint &
-	:rtype: None
-") Append;
-		void Append (const IntPolyh_StartPoint & T);
-		%feature("compactdefaultargs") Append;
-		%feature("autodoc", "	:param S:
-	:type S: IntPolyh_SeqOfStartPoints &
-	:rtype: None
-") Append;
-		void Append (IntPolyh_SeqOfStartPoints & S);
-		%feature("compactdefaultargs") Prepend;
-		%feature("autodoc", "	:param T:
-	:type T: IntPolyh_StartPoint &
-	:rtype: None
-") Prepend;
-		void Prepend (const IntPolyh_StartPoint & T);
-		%feature("compactdefaultargs") Prepend;
-		%feature("autodoc", "	:param S:
-	:type S: IntPolyh_SeqOfStartPoints &
-	:rtype: None
-") Prepend;
-		void Prepend (IntPolyh_SeqOfStartPoints & S);
-		%feature("compactdefaultargs") InsertBefore;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param T:
-	:type T: IntPolyh_StartPoint &
-	:rtype: None
-") InsertBefore;
-		void InsertBefore (const Standard_Integer Index,const IntPolyh_StartPoint & T);
-		%feature("compactdefaultargs") InsertBefore;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param S:
-	:type S: IntPolyh_SeqOfStartPoints &
-	:rtype: None
-") InsertBefore;
-		void InsertBefore (const Standard_Integer Index,IntPolyh_SeqOfStartPoints & S);
-		%feature("compactdefaultargs") InsertAfter;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param T:
-	:type T: IntPolyh_StartPoint &
-	:rtype: None
-") InsertAfter;
-		void InsertAfter (const Standard_Integer Index,const IntPolyh_StartPoint & T);
-		%feature("compactdefaultargs") InsertAfter;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param S:
-	:type S: IntPolyh_SeqOfStartPoints &
-	:rtype: None
-") InsertAfter;
-		void InsertAfter (const Standard_Integer Index,IntPolyh_SeqOfStartPoints & S);
-		%feature("compactdefaultargs") First;
-		%feature("autodoc", "	:rtype: IntPolyh_StartPoint
-") First;
-		const IntPolyh_StartPoint & First ();
-		%feature("compactdefaultargs") Last;
-		%feature("autodoc", "	:rtype: IntPolyh_StartPoint
-") Last;
-		const IntPolyh_StartPoint & Last ();
-		%feature("compactdefaultargs") Split;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param Sub:
-	:type Sub: IntPolyh_SeqOfStartPoints &
-	:rtype: None
-") Split;
-		void Split (const Standard_Integer Index,IntPolyh_SeqOfStartPoints & Sub);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: IntPolyh_StartPoint
-") Value;
-		const IntPolyh_StartPoint & Value (const Standard_Integer Index);
-		%feature("compactdefaultargs") SetValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param I:
-	:type I: IntPolyh_StartPoint &
-	:rtype: None
-") SetValue;
-		void SetValue (const Standard_Integer Index,const IntPolyh_StartPoint & I);
-		%feature("compactdefaultargs") ChangeValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: IntPolyh_StartPoint
-") ChangeValue;
-		IntPolyh_StartPoint & ChangeValue (const Standard_Integer Index);
-		%feature("compactdefaultargs") Remove;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: None
-") Remove;
-		void Remove (const Standard_Integer Index);
-		%feature("compactdefaultargs") Remove;
-		%feature("autodoc", "	:param FromIndex:
-	:type FromIndex: int
-	:param ToIndex:
-	:type ToIndex: int
-	:rtype: None
-") Remove;
-		void Remove (const Standard_Integer FromIndex,const Standard_Integer ToIndex);
-};
-
-
-%extend IntPolyh_SeqOfStartPoints {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor IntPolyh_SequenceNodeOfSeqOfStartPoints;
-class IntPolyh_SequenceNodeOfSeqOfStartPoints : public TCollection_SeqNode {
-	public:
-		%feature("compactdefaultargs") IntPolyh_SequenceNodeOfSeqOfStartPoints;
-		%feature("autodoc", "	:param I:
-	:type I: IntPolyh_StartPoint &
-	:param n:
-	:type n: TCollection_SeqNodePtr &
-	:param p:
-	:type p: TCollection_SeqNodePtr &
-	:rtype: None
-") IntPolyh_SequenceNodeOfSeqOfStartPoints;
-		 IntPolyh_SequenceNodeOfSeqOfStartPoints (const IntPolyh_StartPoint & I,const TCollection_SeqNodePtr & n,const TCollection_SeqNodePtr & p);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:rtype: IntPolyh_StartPoint
-") Value;
-		IntPolyh_StartPoint & Value ();
-};
-
-
-%extend IntPolyh_SequenceNodeOfSeqOfStartPoints {
-	%pythoncode {
-		def GetHandle(self):
-		    try:
-		        return self.thisHandle
-		    except:
-		        self.thisHandle = Handle_IntPolyh_SequenceNodeOfSeqOfStartPoints(self)
-		        self.thisown = False
-		        return self.thisHandle
-	}
-};
-
-%pythonappend Handle_IntPolyh_SequenceNodeOfSeqOfStartPoints::Handle_IntPolyh_SequenceNodeOfSeqOfStartPoints %{
-    # register the handle in the base object
-    if len(args) > 0:
-        register_handle(self, args[0])
-%}
-
-%nodefaultctor Handle_IntPolyh_SequenceNodeOfSeqOfStartPoints;
-class Handle_IntPolyh_SequenceNodeOfSeqOfStartPoints : public Handle_TCollection_SeqNode {
-
-    public:
-        // constructors
-        Handle_IntPolyh_SequenceNodeOfSeqOfStartPoints();
-        Handle_IntPolyh_SequenceNodeOfSeqOfStartPoints(const Handle_IntPolyh_SequenceNodeOfSeqOfStartPoints &aHandle);
-        Handle_IntPolyh_SequenceNodeOfSeqOfStartPoints(const IntPolyh_SequenceNodeOfSeqOfStartPoints *anItem);
-        void Nullify();
-        Standard_Boolean IsNull() const;
-        static const Handle_IntPolyh_SequenceNodeOfSeqOfStartPoints DownCast(const Handle_Standard_Transient &AnObject);
-
-};
-%extend Handle_IntPolyh_SequenceNodeOfSeqOfStartPoints {
-    IntPolyh_SequenceNodeOfSeqOfStartPoints* _get_reference() {
-    return (IntPolyh_SequenceNodeOfSeqOfStartPoints*)$self->Access();
-    }
-};
-
-%extend Handle_IntPolyh_SequenceNodeOfSeqOfStartPoints {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
-};
-
-%extend IntPolyh_SequenceNodeOfSeqOfStartPoints {
 	%pythoncode {
 	__repr__ = _dumps_object
 	}
@@ -983,18 +905,6 @@ class IntPolyh_StartPoint {
 	:rtype: int
 ") GetEdgePoints;
 		Standard_Integer GetEdgePoints (const IntPolyh_Triangle & Triangle,Standard_Integer &OutValue,Standard_Integer &OutValue,Standard_Integer &OutValue);
-		%feature("compactdefaultargs") Equal;
-		%feature("autodoc", "	:param StPt:
-	:type StPt: IntPolyh_StartPoint &
-	:rtype: None
-") Equal;
-		void Equal (const IntPolyh_StartPoint & StPt);
-		%feature("compactdefaultargs") operator =;
-		%feature("autodoc", "	:param StPt:
-	:type StPt: IntPolyh_StartPoint &
-	:rtype: None
-") operator =;
-		void operator = (const IntPolyh_StartPoint & StPt);
 		%feature("compactdefaultargs") SetXYZ;
 		%feature("autodoc", "	:param XX:
 	:type XX: float
@@ -1093,192 +1003,252 @@ class IntPolyh_StartPoint {
 class IntPolyh_Triangle {
 	public:
 		%feature("compactdefaultargs") IntPolyh_Triangle;
-		%feature("autodoc", "	:rtype: None
+		%feature("autodoc", "	* Constructor
+
+	:rtype: None
 ") IntPolyh_Triangle;
 		 IntPolyh_Triangle ();
 		%feature("compactdefaultargs") IntPolyh_Triangle;
-		%feature("autodoc", "	:param i1:
-	:type i1: int
-	:param i2:
-	:type i2: int
-	:param i3:
-	:type i3: int
+		%feature("autodoc", "	* Constructor
+
+	:param thePoint1:
+	:type thePoint1: int
+	:param thePoint2:
+	:type thePoint2: int
+	:param thePoint3:
+	:type thePoint3: int
 	:rtype: None
 ") IntPolyh_Triangle;
-		 IntPolyh_Triangle (const Standard_Integer i1,const Standard_Integer i2,const Standard_Integer i3);
+		 IntPolyh_Triangle (const Standard_Integer thePoint1,const Standard_Integer thePoint2,const Standard_Integer thePoint3);
 		%feature("compactdefaultargs") FirstPoint;
-		%feature("autodoc", "	:rtype: int
+		%feature("autodoc", "	* Returns the first point
+
+	:rtype: int
 ") FirstPoint;
 		Standard_Integer FirstPoint ();
 		%feature("compactdefaultargs") SecondPoint;
-		%feature("autodoc", "	:rtype: int
+		%feature("autodoc", "	* Returns the second point
+
+	:rtype: int
 ") SecondPoint;
 		Standard_Integer SecondPoint ();
 		%feature("compactdefaultargs") ThirdPoint;
-		%feature("autodoc", "	:rtype: int
+		%feature("autodoc", "	* Returns the third point
+
+	:rtype: int
 ") ThirdPoint;
 		Standard_Integer ThirdPoint ();
 		%feature("compactdefaultargs") FirstEdge;
-		%feature("autodoc", "	:rtype: int
+		%feature("autodoc", "	* Returns the first edge
+
+	:rtype: int
 ") FirstEdge;
 		Standard_Integer FirstEdge ();
 		%feature("compactdefaultargs") FirstEdgeOrientation;
-		%feature("autodoc", "	:rtype: int
+		%feature("autodoc", "	* Returns the orientation of the first edge
+
+	:rtype: int
 ") FirstEdgeOrientation;
 		Standard_Integer FirstEdgeOrientation ();
 		%feature("compactdefaultargs") SecondEdge;
-		%feature("autodoc", "	:rtype: int
+		%feature("autodoc", "	* Returns the second edge
+
+	:rtype: int
 ") SecondEdge;
 		Standard_Integer SecondEdge ();
 		%feature("compactdefaultargs") SecondEdgeOrientation;
-		%feature("autodoc", "	:rtype: int
+		%feature("autodoc", "	* Returns the orientation of the second edge
+
+	:rtype: int
 ") SecondEdgeOrientation;
 		Standard_Integer SecondEdgeOrientation ();
 		%feature("compactdefaultargs") ThirdEdge;
-		%feature("autodoc", "	:rtype: int
+		%feature("autodoc", "	* Returns the third edge
+
+	:rtype: int
 ") ThirdEdge;
 		Standard_Integer ThirdEdge ();
 		%feature("compactdefaultargs") ThirdEdgeOrientation;
-		%feature("autodoc", "	:rtype: int
+		%feature("autodoc", "	* Returns the orientation of the third edge
+
+	:rtype: int
 ") ThirdEdgeOrientation;
 		Standard_Integer ThirdEdgeOrientation ();
-		%feature("compactdefaultargs") GetFleche;
-		%feature("autodoc", "	:rtype: float
-") GetFleche;
-		Standard_Real GetFleche ();
-		%feature("compactdefaultargs") IndiceIntersectionPossible;
-		%feature("autodoc", "	:rtype: int
-") IndiceIntersectionPossible;
-		Standard_Integer IndiceIntersectionPossible ();
-		%feature("compactdefaultargs") IndiceIntersection;
-		%feature("autodoc", "	:rtype: int
-") IndiceIntersection;
-		Standard_Integer IndiceIntersection ();
+		%feature("compactdefaultargs") Deflection;
+		%feature("autodoc", "	* Returns the deflection of the triangle
+
+	:rtype: float
+") Deflection;
+		Standard_Real Deflection ();
+		%feature("compactdefaultargs") IsIntersectionPossible;
+		%feature("autodoc", "	* Returns possibility of the intersection
+
+	:rtype: bool
+") IsIntersectionPossible;
+		Standard_Boolean IsIntersectionPossible ();
+		%feature("compactdefaultargs") HasIntersection;
+		%feature("autodoc", "	* Returns true if the triangle has interfered the other triangle
+
+	:rtype: bool
+") HasIntersection;
+		Standard_Boolean HasIntersection ();
+		%feature("compactdefaultargs") IsDegenerated;
+		%feature("autodoc", "	* Returns the Degenerated flag
+
+	:rtype: bool
+") IsDegenerated;
+		Standard_Boolean IsDegenerated ();
 		%feature("compactdefaultargs") SetFirstPoint;
-		%feature("autodoc", "	:param v:
-	:type v: int
+		%feature("autodoc", "	* Sets the first point
+
+	:param thePoint:
+	:type thePoint: int
 	:rtype: None
 ") SetFirstPoint;
-		void SetFirstPoint (const Standard_Integer v);
+		void SetFirstPoint (const Standard_Integer thePoint);
 		%feature("compactdefaultargs") SetSecondPoint;
-		%feature("autodoc", "	:param v:
-	:type v: int
+		%feature("autodoc", "	* Sets the second point
+
+	:param thePoint:
+	:type thePoint: int
 	:rtype: None
 ") SetSecondPoint;
-		void SetSecondPoint (const Standard_Integer v);
+		void SetSecondPoint (const Standard_Integer thePoint);
 		%feature("compactdefaultargs") SetThirdPoint;
-		%feature("autodoc", "	:param v:
-	:type v: int
+		%feature("autodoc", "	* Sets the third point
+
+	:param thePoint:
+	:type thePoint: int
 	:rtype: None
 ") SetThirdPoint;
-		void SetThirdPoint (const Standard_Integer v);
+		void SetThirdPoint (const Standard_Integer thePoint);
 		%feature("compactdefaultargs") SetFirstEdge;
-		%feature("autodoc", "	:param v:
-	:type v: int
-	:param s:
-	:type s: int
+		%feature("autodoc", "	* Sets the first edge
+
+	:param theEdge:
+	:type theEdge: int
+	:param theEdgeOrientation:
+	:type theEdgeOrientation: int
 	:rtype: None
 ") SetFirstEdge;
-		void SetFirstEdge (const Standard_Integer v,const Standard_Integer s);
+		void SetFirstEdge (const Standard_Integer theEdge,const Standard_Integer theEdgeOrientation);
 		%feature("compactdefaultargs") SetSecondEdge;
-		%feature("autodoc", "	:param v:
-	:type v: int
-	:param s:
-	:type s: int
+		%feature("autodoc", "	* Sets the second edge
+
+	:param theEdge:
+	:type theEdge: int
+	:param theEdgeOrientation:
+	:type theEdgeOrientation: int
 	:rtype: None
 ") SetSecondEdge;
-		void SetSecondEdge (const Standard_Integer v,const Standard_Integer s);
+		void SetSecondEdge (const Standard_Integer theEdge,const Standard_Integer theEdgeOrientation);
 		%feature("compactdefaultargs") SetThirdEdge;
-		%feature("autodoc", "	:param v:
-	:type v: int
-	:param s:
-	:type s: int
+		%feature("autodoc", "	* Sets the third edge
+
+	:param theEdge:
+	:type theEdge: int
+	:param theEdgeOrientation:
+	:type theEdgeOrientation: int
 	:rtype: None
 ") SetThirdEdge;
-		void SetThirdEdge (const Standard_Integer v,const Standard_Integer s);
-		%feature("compactdefaultargs") SetFleche;
-		%feature("autodoc", "	:param v:
-	:type v: float
+		void SetThirdEdge (const Standard_Integer theEdge,const Standard_Integer theEdgeOrientation);
+		%feature("compactdefaultargs") SetDeflection;
+		%feature("autodoc", "	* Sets the deflection
+
+	:param theDeflection:
+	:type theDeflection: float
 	:rtype: None
-") SetFleche;
-		void SetFleche (const Standard_Real v);
-		%feature("compactdefaultargs") SetIndiceIntersectionPossible;
-		%feature("autodoc", "	:param v:
-	:type v: int
+") SetDeflection;
+		void SetDeflection (const Standard_Real theDeflection);
+		%feature("compactdefaultargs") SetIntersectionPossible;
+		%feature("autodoc", "	* Sets the flag of possibility of intersection
+
+	:param theIP:
+	:type theIP: bool
 	:rtype: None
-") SetIndiceIntersectionPossible;
-		void SetIndiceIntersectionPossible (const Standard_Integer v);
-		%feature("compactdefaultargs") SetIndiceIntersection;
-		%feature("autodoc", "	:param v:
-	:type v: int
+") SetIntersectionPossible;
+		void SetIntersectionPossible (const Standard_Boolean theIP);
+		%feature("compactdefaultargs") SetIntersection;
+		%feature("autodoc", "	* Sets the flag of intersection
+
+	:param theInt:
+	:type theInt: bool
 	:rtype: None
-") SetIndiceIntersection;
-		void SetIndiceIntersection (const Standard_Integer v);
+") SetIntersection;
+		void SetIntersection (const Standard_Boolean theInt);
+		%feature("compactdefaultargs") SetDegenerated;
+		%feature("autodoc", "	* Sets the degenerated flag
+
+	:param theDegFlag:
+	:type theDegFlag: bool
+	:rtype: None
+") SetDegenerated;
+		void SetDegenerated (const Standard_Boolean theDegFlag);
 		%feature("compactdefaultargs") GetEdgeNumber;
-		%feature("autodoc", "	:param v:
-	:type v: int
+		%feature("autodoc", "	* Gets the edge number by the index
+
+	:param theEdgeIndex:
+	:type theEdgeIndex: int
 	:rtype: int
 ") GetEdgeNumber;
-		Standard_Integer GetEdgeNumber (const Standard_Integer v);
+		Standard_Integer GetEdgeNumber (const Standard_Integer theEdgeIndex);
 		%feature("compactdefaultargs") SetEdge;
-		%feature("autodoc", "	:param v:
-	:type v: int
-	:param en:
-	:type en: int
+		%feature("autodoc", "	* Sets the edge by the index
+
+	:param theEdgeIndex:
+	:type theEdgeIndex: int
+	:param theEdgeNumber:
+	:type theEdgeNumber: int
 	:rtype: None
 ") SetEdge;
-		void SetEdge (const Standard_Integer v,const Standard_Integer en);
+		void SetEdge (const Standard_Integer theEdgeIndex,const Standard_Integer theEdgeNumber);
 		%feature("compactdefaultargs") GetEdgeOrientation;
-		%feature("autodoc", "	:param v:
-	:type v: int
+		%feature("autodoc", "	* Gets the edges orientation by the index
+
+	:param theEdgeIndex:
+	:type theEdgeIndex: int
 	:rtype: int
 ") GetEdgeOrientation;
-		Standard_Integer GetEdgeOrientation (const Standard_Integer v);
+		Standard_Integer GetEdgeOrientation (const Standard_Integer theEdgeIndex);
 		%feature("compactdefaultargs") SetEdgeOrientation;
-		%feature("autodoc", "	:param v:
-	:type v: int
-	:param oe:
-	:type oe: int
+		%feature("autodoc", "	* Sets the edges orientation by the index
+
+	:param theEdgeIndex:
+	:type theEdgeIndex: int
+	:param theEdgeOrientation:
+	:type theEdgeOrientation: int
 	:rtype: None
 ") SetEdgeOrientation;
-		void SetEdgeOrientation (const Standard_Integer v,const Standard_Integer oe);
-		%feature("compactdefaultargs") TriangleDeflection;
-		%feature("autodoc", "	:param MaSurface:
-	:type MaSurface: Handle_Adaptor3d_HSurface &
-	:param TP:
-	:type TP: IntPolyh_ArrayOfPoints &
-	:rtype: None
-") TriangleDeflection;
-		void TriangleDeflection (const Handle_Adaptor3d_HSurface & MaSurface,const IntPolyh_ArrayOfPoints & TP);
-		%feature("compactdefaultargs") CheckCommonEdge;
-		%feature("autodoc", "	:param PE1:
-	:type PE1: int
-	:param PE2:
-	:type PE2: int
-	:param P3:
-	:type P3: int
-	:param Index:
-	:type Index: int
-	:param TTriangles:
-	:type TTriangles: IntPolyh_ArrayOfTriangles &
-	:rtype: int
-") CheckCommonEdge;
-		Standard_Integer CheckCommonEdge (const Standard_Integer PE1,const Standard_Integer PE2,const Standard_Integer P3,const Standard_Integer Index,const IntPolyh_ArrayOfTriangles & TTriangles);
-		%feature("compactdefaultargs") GetNextTriangle2;
-		%feature("autodoc", "	:param NumTri:
-	:type NumTri: int
-	:param NumEdge:
-	:type NumEdge: int
+		void SetEdgeOrientation (const Standard_Integer theEdgeIndex,const Standard_Integer theEdgeOrientation);
+		%feature("compactdefaultargs") ComputeDeflection;
+		%feature("autodoc", "	* Computes the deflection for the triangle
+
+	:param theSurface:
+	:type theSurface: Handle_Adaptor3d_HSurface &
+	:param thePoints:
+	:type thePoints: IntPolyh_ArrayOfPoints &
+	:rtype: float
+") ComputeDeflection;
+		Standard_Real ComputeDeflection (const Handle_Adaptor3d_HSurface & theSurface,const IntPolyh_ArrayOfPoints & thePoints);
+		%feature("compactdefaultargs") GetNextTriangle;
+		%feature("autodoc", "	* Gets the adjacent triangle
+
+	:param theTriangle:
+	:type theTriangle: int
+	:param theEdgeNum:
+	:type theEdgeNum: int
 	:param TEdges:
 	:type TEdges: IntPolyh_ArrayOfEdges &
 	:rtype: int
-") GetNextTriangle2;
-		Standard_Integer GetNextTriangle2 (const Standard_Integer NumTri,const Standard_Integer NumEdge,const IntPolyh_ArrayOfEdges & TEdges);
+") GetNextTriangle;
+		Standard_Integer GetNextTriangle (const Standard_Integer theTriangle,const Standard_Integer theEdgeNum,const IntPolyh_ArrayOfEdges & TEdges);
 		%feature("compactdefaultargs") MiddleRefinement;
-		%feature("autodoc", "	:param TriangleNumber:
-	:type TriangleNumber: int
-	:param MySurface:
-	:type MySurface: Handle_Adaptor3d_HSurface &
+		%feature("autodoc", "	* Splits the triangle on two to decrease its deflection
+
+	:param theTriangleNumber:
+	:type theTriangleNumber: int
+	:param theSurface:
+	:type theSurface: Handle_Adaptor3d_HSurface &
 	:param TPoints:
 	:type TPoints: IntPolyh_ArrayOfPoints &
 	:param TTriangles:
@@ -1287,14 +1257,18 @@ class IntPolyh_Triangle {
 	:type TEdges: IntPolyh_ArrayOfEdges &
 	:rtype: None
 ") MiddleRefinement;
-		void MiddleRefinement (const Standard_Integer TriangleNumber,const Handle_Adaptor3d_HSurface & MySurface,IntPolyh_ArrayOfPoints & TPoints,IntPolyh_ArrayOfTriangles & TTriangles,IntPolyh_ArrayOfEdges & TEdges);
+		void MiddleRefinement (const Standard_Integer theTriangleNumber,const Handle_Adaptor3d_HSurface & theSurface,IntPolyh_ArrayOfPoints & TPoints,IntPolyh_ArrayOfTriangles & TTriangles,IntPolyh_ArrayOfEdges & TEdges);
 		%feature("compactdefaultargs") MultipleMiddleRefinement;
-		%feature("autodoc", "	:param NombreAffinages:
-	:type NombreAffinages: int
-	:param TriangleNumber:
-	:type TriangleNumber: int
-	:param MySurface:
-	:type MySurface: Handle_Adaptor3d_HSurface &
+		%feature("autodoc", "	* Splits the current triangle and new triangles until the refinement criterion is not achieved
+
+	:param theRefineCriterion:
+	:type theRefineCriterion: float
+	:param theBox:
+	:type theBox: Bnd_Box &
+	:param theTriangleNumber:
+	:type theTriangleNumber: int
+	:param theSurface:
+	:type theSurface: Handle_Adaptor3d_HSurface &
 	:param TPoints:
 	:type TPoints: IntPolyh_ArrayOfPoints &
 	:param TTriangles:
@@ -1303,65 +1277,47 @@ class IntPolyh_Triangle {
 	:type TEdges: IntPolyh_ArrayOfEdges &
 	:rtype: None
 ") MultipleMiddleRefinement;
-		void MultipleMiddleRefinement (const Standard_Integer NombreAffinages,const Standard_Integer TriangleNumber,const Handle_Adaptor3d_HSurface & MySurface,IntPolyh_ArrayOfPoints & TPoints,IntPolyh_ArrayOfTriangles & TTriangles,IntPolyh_ArrayOfEdges & TEdges);
-		%feature("compactdefaultargs") CompareBoxTriangle;
-		%feature("autodoc", "	:param b:
-	:type b: Bnd_Box &
-	:param TPoints:
-	:type TPoints: IntPolyh_ArrayOfPoints &
-	:rtype: int
-") CompareBoxTriangle;
-		Standard_Integer CompareBoxTriangle (const Bnd_Box & b,const IntPolyh_ArrayOfPoints & TPoints);
-		%feature("compactdefaultargs") MultipleMiddleRefinement2;
-		%feature("autodoc", "	:param RefineCriterion:
-	:type RefineCriterion: float
-	:param thebox:
-	:type thebox: Bnd_Box &
-	:param TriangleNumber:
-	:type TriangleNumber: int
-	:param MySurface:
-	:type MySurface: Handle_Adaptor3d_HSurface &
-	:param TPoints:
-	:type TPoints: IntPolyh_ArrayOfPoints &
-	:param TTriangles:
-	:type TTriangles: IntPolyh_ArrayOfTriangles &
+		void MultipleMiddleRefinement (const Standard_Real theRefineCriterion,const Bnd_Box & theBox,const Standard_Integer theTriangleNumber,const Handle_Adaptor3d_HSurface & theSurface,IntPolyh_ArrayOfPoints & TPoints,IntPolyh_ArrayOfTriangles & TTriangles,IntPolyh_ArrayOfEdges & TEdges);
+		%feature("compactdefaultargs") LinkEdges2Triangle;
+		%feature("autodoc", "	* Links edges to triangle
+
 	:param TEdges:
 	:type TEdges: IntPolyh_ArrayOfEdges &
-	:rtype: None
-") MultipleMiddleRefinement2;
-		void MultipleMiddleRefinement2 (const Standard_Real RefineCriterion,const Bnd_Box & thebox,const Standard_Integer TriangleNumber,const Handle_Adaptor3d_HSurface & MySurface,IntPolyh_ArrayOfPoints & TPoints,IntPolyh_ArrayOfTriangles & TTriangles,IntPolyh_ArrayOfEdges & TEdges);
-		%feature("compactdefaultargs") LinkEdges2Triangle;
-		%feature("autodoc", "	:param TEdges:
-	:type TEdges: IntPolyh_ArrayOfEdges &
-	:param ed1:
-	:type ed1: int
-	:param ed2:
-	:type ed2: int
-	:param ed3:
-	:type ed3: int
+	:param theEdge1:
+	:type theEdge1: int
+	:param theEdge2:
+	:type theEdge2: int
+	:param theEdge3:
+	:type theEdge3: int
 	:rtype: None
 ") LinkEdges2Triangle;
-		void LinkEdges2Triangle (const IntPolyh_ArrayOfEdges & TEdges,const Standard_Integer ed1,const Standard_Integer ed2,const Standard_Integer ed3);
-		%feature("compactdefaultargs") SetEdgeandOrientation;
-		%feature("autodoc", "	:param Edge:
-	:type Edge: int
-	:param TEdges:
-	:type TEdges: IntPolyh_ArrayOfEdges &
+		void LinkEdges2Triangle (const IntPolyh_ArrayOfEdges & TEdges,const Standard_Integer theEdge1,const Standard_Integer theEdge2,const Standard_Integer theEdge3);
+		%feature("compactdefaultargs") SetEdgeAndOrientation;
+		%feature("autodoc", "	* Sets the appropriate edge and orientation for the triangle.
+
+	:param theEdge:
+	:type theEdge: IntPolyh_Edge &
+	:param theEdgeIndex:
+	:type theEdgeIndex: int
 	:rtype: None
-") SetEdgeandOrientation;
-		void SetEdgeandOrientation (const Standard_Integer Edge,const IntPolyh_ArrayOfEdges & TEdges);
+") SetEdgeAndOrientation;
+		void SetEdgeAndOrientation (const IntPolyh_Edge & theEdge,const Standard_Integer theEdgeIndex);
+		%feature("compactdefaultargs") BoundingBox;
+		%feature("autodoc", "	* Returns the bounding box of the triangle.
+
+	:param thePoints:
+	:type thePoints: IntPolyh_ArrayOfPoints &
+	:rtype: Bnd_Box
+") BoundingBox;
+		const Bnd_Box & BoundingBox (const IntPolyh_ArrayOfPoints & thePoints);
 		%feature("compactdefaultargs") Dump;
-		%feature("autodoc", "	:param v:
+		%feature("autodoc", "	* Dumps the contents of the triangle.
+
+	:param v:
 	:type v: int
 	:rtype: None
 ") Dump;
 		void Dump (const Standard_Integer v);
-		%feature("compactdefaultargs") DumpFleche;
-		%feature("autodoc", "	:param v:
-	:type v: int
-	:rtype: None
-") DumpFleche;
-		void DumpFleche (const Standard_Integer v);
 };
 
 

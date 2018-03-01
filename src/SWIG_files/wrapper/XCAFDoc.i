@@ -1,5 +1,5 @@
 /*
-Copyright 2008-2017 Thomas Paviot (tpaviot@gmail.com)
+Copyright 2008-2018 Thomas Paviot (tpaviot@gmail.com)
 
 
 This file is part of pythonOCC.
@@ -54,7 +54,13 @@ def register_handle(handle, base_object):
 };
 
 /* typedefs */
+typedef TCollection_AsciiString XCAFDoc_PartId;
 /* end typedefs declaration */
+
+/* templates */
+%template(XCAFDoc_DataMapOfShapeLabel) NCollection_DataMap <TopoDS_Shape , TDF_Label , TopTools_ShapeMapHasher>;
+%template(XCAFDoc_GraphNodeSequence) NCollection_Sequence <Handle_XCAFDoc_GraphNode>;
+/* end templates declaration */
 
 /* public enums */
 enum XCAFDoc_ColorType {
@@ -69,7 +75,7 @@ enum XCAFDoc_ColorType {
 class XCAFDoc {
 	public:
 		%feature("compactdefaultargs") AssemblyGUID;
-		%feature("autodoc", "	* Returns GUID for UAttribute identifying assembly
+		%feature("autodoc", "	* class for containing GraphNodes. Returns GUID for UAttribute identifying assembly
 
 	:rtype: Standard_GUID
 ") AssemblyGUID;
@@ -94,6 +100,24 @@ class XCAFDoc {
 	:rtype: Standard_GUID
 ") DimTolRefGUID;
 		static Standard_GUID DimTolRefGUID ();
+		%feature("compactdefaultargs") DimensionRefFirstGUID;
+		%feature("autodoc", "	* Return GUIDs for TreeNode representing specified types of Dimension
+
+	:rtype: Standard_GUID
+") DimensionRefFirstGUID;
+		static Standard_GUID DimensionRefFirstGUID ();
+		%feature("compactdefaultargs") DimensionRefSecondGUID;
+		%feature("autodoc", "	* Return GUIDs for TreeNode representing specified types of Dimension
+
+	:rtype: Standard_GUID
+") DimensionRefSecondGUID;
+		static Standard_GUID DimensionRefSecondGUID ();
+		%feature("compactdefaultargs") GeomToleranceRefGUID;
+		%feature("autodoc", "	* Return GUIDs for TreeNode representing specified types of GeomTolerance
+
+	:rtype: Standard_GUID
+") GeomToleranceRefGUID;
+		static Standard_GUID GeomToleranceRefGUID ();
 		%feature("compactdefaultargs") DatumRefGUID;
 		%feature("autodoc", "	* Return GUIDs for TreeNode representing specified types of datum
 
@@ -114,6 +138,12 @@ class XCAFDoc {
 		%feature("autodoc", "	:rtype: Standard_GUID
 ") MaterialRefGUID;
 		static Standard_GUID MaterialRefGUID ();
+		%feature("compactdefaultargs") NoteRefGUID;
+		%feature("autodoc", "	* Return GUIDs for representing notes
+
+	:rtype: Standard_GUID
+") NoteRefGUID;
+		static Standard_GUID NoteRefGUID ();
 		%feature("compactdefaultargs") InvisibleGUID;
 		%feature("autodoc", "	:rtype: Standard_GUID
 ") InvisibleGUID;
@@ -130,6 +160,46 @@ class XCAFDoc {
 	:rtype: Standard_GUID
 ") SHUORefGUID;
 		static Standard_GUID SHUORefGUID ();
+		%feature("compactdefaultargs") ViewRefGUID;
+		%feature("autodoc", "	* Return GUIDs for TreeNode representing specified types of View
+
+	:rtype: Standard_GUID
+") ViewRefGUID;
+		static Standard_GUID ViewRefGUID ();
+		%feature("compactdefaultargs") ViewRefShapeGUID;
+		%feature("autodoc", "	* Return GUIDs for TreeNode representing specified types of View
+
+	:rtype: Standard_GUID
+") ViewRefShapeGUID;
+		static Standard_GUID ViewRefShapeGUID ();
+		%feature("compactdefaultargs") ViewRefGDTGUID;
+		%feature("autodoc", "	* Return GUIDs for TreeNode representing specified types of View
+
+	:rtype: Standard_GUID
+") ViewRefGDTGUID;
+		static Standard_GUID ViewRefGDTGUID ();
+		%feature("compactdefaultargs") ViewRefPlaneGUID;
+		%feature("autodoc", "	* Return GUIDs for TreeNode representing specified types of View
+
+	:rtype: Standard_GUID
+") ViewRefPlaneGUID;
+		static Standard_GUID ViewRefPlaneGUID ();
+		%feature("compactdefaultargs") ViewRefNoteGUID;
+		%feature("autodoc", "	* Return GUIDs for GraphNode representing specified types of View
+
+	:rtype: Standard_GUID
+") ViewRefNoteGUID;
+		static Standard_GUID ViewRefNoteGUID ();
+		%feature("compactdefaultargs") ViewRefAnnotationGUID;
+		%feature("autodoc", "	:rtype: Standard_GUID
+") ViewRefAnnotationGUID;
+		static Standard_GUID ViewRefAnnotationGUID ();
+		%feature("compactdefaultargs") LockGUID;
+		%feature("autodoc", "	* Returns GUID for UAttribute identifying lock flag
+
+	:rtype: Standard_GUID
+") LockGUID;
+		static Standard_GUID LockGUID ();
 };
 
 
@@ -247,22 +317,348 @@ class Handle_XCAFDoc_Area : public Handle_TDF_Attribute {
         static const Handle_XCAFDoc_Area DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_XCAFDoc_Area {
     XCAFDoc_Area* _get_reference() {
-    return (XCAFDoc_Area*)$self->Access();
+    return (XCAFDoc_Area*)$self->get();
     }
 };
 
 %extend Handle_XCAFDoc_Area {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend XCAFDoc_Area {
+	%pythoncode {
+	__repr__ = _dumps_object
+	}
+};
+%nodefaultctor XCAFDoc_AssemblyItemId;
+class XCAFDoc_AssemblyItemId {
+	public:
+		%feature("compactdefaultargs") XCAFDoc_AssemblyItemId;
+		%feature("autodoc", "	* Constructs an empty item ID.
+
+	:rtype: None
+") XCAFDoc_AssemblyItemId;
+		 XCAFDoc_AssemblyItemId ();
+		%feature("compactdefaultargs") XCAFDoc_AssemblyItemId;
+		%feature("autodoc", "	* Constructs an item ID from a list of strings, where every string is a label entry. \param [in] thePath - list of label entries.
+
+	:param thePath:
+	:type thePath: TColStd_ListOfAsciiString &
+	:rtype: None
+") XCAFDoc_AssemblyItemId;
+		 XCAFDoc_AssemblyItemId (const TColStd_ListOfAsciiString & thePath);
+		%feature("compactdefaultargs") XCAFDoc_AssemblyItemId;
+		%feature("autodoc", "	* Constructs an item ID from a formatted path, where label entries are separated by '/' symbol. \param [in] theString - formatted full path.
+
+	:param theString:
+	:type theString: TCollection_AsciiString &
+	:rtype: None
+") XCAFDoc_AssemblyItemId;
+		 XCAFDoc_AssemblyItemId (const TCollection_AsciiString & theString);
+		%feature("compactdefaultargs") Init;
+		%feature("autodoc", "	* Initializes the item ID from a list of strings, where every string is a label entry. \param [in] thePath - list of label entries.
+
+	:param thePath:
+	:type thePath: TColStd_ListOfAsciiString &
+	:rtype: None
+") Init;
+		void Init (const TColStd_ListOfAsciiString & thePath);
+		%feature("compactdefaultargs") Init;
+		%feature("autodoc", "	* Initializes the item ID from a formatted path, where label entries are separated by '/' symbol. \param [in] theString - formatted full path.
+
+	:param theString:
+	:type theString: TCollection_AsciiString &
+	:rtype: None
+") Init;
+		void Init (const TCollection_AsciiString & theString);
+		%feature("compactdefaultargs") IsNull;
+		%feature("autodoc", "	* Returns true if the full path is empty, otherwise - false.
+
+	:rtype: bool
+") IsNull;
+		Standard_Boolean IsNull ();
+		%feature("compactdefaultargs") Nullify;
+		%feature("autodoc", "	* Clears the full path.
+
+	:rtype: None
+") Nullify;
+		void Nullify ();
+		%feature("compactdefaultargs") IsChild;
+		%feature("autodoc", "	* Checks if this item is a child of the given item. \param [in] theOther - potentially ancestor item. eturn true if the item is a child of theOther item, otherwise - false.
+
+	:param theOther:
+	:type theOther: XCAFDoc_AssemblyItemId &
+	:rtype: bool
+") IsChild;
+		Standard_Boolean IsChild (const XCAFDoc_AssemblyItemId & theOther);
+		%feature("compactdefaultargs") IsDirectChild;
+		%feature("autodoc", "	* Checks if this item is a direct child of the given item. \param [in] theOther - potentially parent item. eturn true if the item is a direct child of theOther item, otherwise - false.
+
+	:param theOther:
+	:type theOther: XCAFDoc_AssemblyItemId &
+	:rtype: bool
+") IsDirectChild;
+		Standard_Boolean IsDirectChild (const XCAFDoc_AssemblyItemId & theOther);
+		%feature("compactdefaultargs") IsEqual;
+		%feature("autodoc", "	* Checks for item IDs equality. \param [in] theOther - the item ID to check equality with. eturn true if this ID is equal to theOther, otherwise - false.
+
+	:param theOther:
+	:type theOther: XCAFDoc_AssemblyItemId &
+	:rtype: bool
+") IsEqual;
+		Standard_Boolean IsEqual (const XCAFDoc_AssemblyItemId & theOther);
+		%feature("compactdefaultargs") GetPath;
+		%feature("autodoc", "	* Returns the full path as a list of label entries.
+
+	:rtype: TColStd_ListOfAsciiString
+") GetPath;
+		const TColStd_ListOfAsciiString & GetPath ();
+		%feature("compactdefaultargs") ToString;
+		%feature("autodoc", "	* Returns the full pass as a formatted string.
+
+	:rtype: TCollection_AsciiString
+") ToString;
+		TCollection_AsciiString ToString ();
+};
+
+
+%extend XCAFDoc_AssemblyItemId {
+	%pythoncode {
+	__repr__ = _dumps_object
+	}
+};
+%nodefaultctor XCAFDoc_AssemblyItemRef;
+class XCAFDoc_AssemblyItemRef : public TDF_Attribute {
+	public:
+		%feature("compactdefaultargs") GetID;
+		%feature("autodoc", "	:rtype: Standard_GUID
+") GetID;
+		static const Standard_GUID & GetID ();
+		%feature("compactdefaultargs") Get;
+		%feature("autodoc", "	* Finds a reference attribute on the given label and returns it, if it is found
+
+	:param theLabel:
+	:type theLabel: TDF_Label &
+	:rtype: Handle_XCAFDoc_AssemblyItemRef
+") Get;
+		static Handle_XCAFDoc_AssemblyItemRef Get (const TDF_Label & theLabel);
+		%feature("compactdefaultargs") Set;
+		%feature("autodoc", "	* @name Set reference attribute functions. @{ Create --if not exist-- a reference to an assembly item. \param [in] theLabel - label to add the attribute. \param [in] theItemId - assembly item ID. eturn A handle to the attribute instance.
+
+	:param theLabel:
+	:type theLabel: TDF_Label &
+	:param theItemId:
+	:type theItemId: XCAFDoc_AssemblyItemId &
+	:rtype: Handle_XCAFDoc_AssemblyItemRef
+") Set;
+		static Handle_XCAFDoc_AssemblyItemRef Set (const TDF_Label & theLabel,const XCAFDoc_AssemblyItemId & theItemId);
+		%feature("compactdefaultargs") Set;
+		%feature("autodoc", "	* Create --if not exist-- a reference to an assembly item's label attribute. \param [in] theLabel - label to add the attribute. \param [in] theItemId - assembly item ID. \param [in] theGUID - assembly item's label attribute ID. eturn A handle to the attribute instance.
+
+	:param theLabel:
+	:type theLabel: TDF_Label &
+	:param theItemId:
+	:type theItemId: XCAFDoc_AssemblyItemId &
+	:param theGUID:
+	:type theGUID: Standard_GUID &
+	:rtype: Handle_XCAFDoc_AssemblyItemRef
+") Set;
+		static Handle_XCAFDoc_AssemblyItemRef Set (const TDF_Label & theLabel,const XCAFDoc_AssemblyItemId & theItemId,const Standard_GUID & theGUID);
+		%feature("compactdefaultargs") Set;
+		%feature("autodoc", "	* Create --if not exist-- a reference to an assembly item's subshape. \param [in] theLabel - label to add the attribute. \param [in] theItemId - assembly item ID. \param [in] theShapeIndex - assembly item's subshape index. eturn A handle to the attribute instance.
+
+	:param theLabel:
+	:type theLabel: TDF_Label &
+	:param theItemId:
+	:type theItemId: XCAFDoc_AssemblyItemId &
+	:param theShapeIndex:
+	:type theShapeIndex: int
+	:rtype: Handle_XCAFDoc_AssemblyItemRef
+") Set;
+		static Handle_XCAFDoc_AssemblyItemRef Set (const TDF_Label & theLabel,const XCAFDoc_AssemblyItemId & theItemId,const Standard_Integer theShapeIndex);
+		%feature("compactdefaultargs") XCAFDoc_AssemblyItemRef;
+		%feature("autodoc", "	* @} Creates an empty reference attribute.
+
+	:rtype: None
+") XCAFDoc_AssemblyItemRef;
+		 XCAFDoc_AssemblyItemRef ();
+		%feature("compactdefaultargs") IsOrphan;
+		%feature("autodoc", "	* Checks if the reference points to a really existing item in XDE document.
+
+	:rtype: bool
+") IsOrphan;
+		Standard_Boolean IsOrphan ();
+		%feature("compactdefaultargs") HasExtraRef;
+		%feature("autodoc", "	* @name Extra reference functions. @{ Checks if the reference points on an item's shapeindex or attribute.
+
+	:rtype: bool
+") HasExtraRef;
+		Standard_Boolean HasExtraRef ();
+		%feature("compactdefaultargs") IsGUID;
+		%feature("autodoc", "	* Checks is the reference points to an item's attribute.
+
+	:rtype: bool
+") IsGUID;
+		Standard_Boolean IsGUID ();
+		%feature("compactdefaultargs") IsSubshapeIndex;
+		%feature("autodoc", "	* Checks is the reference points to an item's subshape.
+
+	:rtype: bool
+") IsSubshapeIndex;
+		Standard_Boolean IsSubshapeIndex ();
+		%feature("compactdefaultargs") GetGUID;
+		%feature("autodoc", "	* Returns the assembly item's attribute that the reference points to. If the reference doesn't point to an attribute, returns an empty GUID.
+
+	:rtype: Standard_GUID
+") GetGUID;
+		Standard_GUID GetGUID ();
+		%feature("compactdefaultargs") GetSubshapeIndex;
+		%feature("autodoc", "	* Returns the assembly item's subshape that the reference points to. If the reference doesn't point to a subshape, returns 0.
+
+	:rtype: int
+") GetSubshapeIndex;
+		Standard_Integer GetSubshapeIndex ();
+		%feature("compactdefaultargs") GetItem;
+		%feature("autodoc", "	* @} Returns the assembly item ID that the reference points to.
+
+	:rtype: XCAFDoc_AssemblyItemId
+") GetItem;
+		const XCAFDoc_AssemblyItemId & GetItem ();
+		%feature("compactdefaultargs") SetItem;
+		%feature("autodoc", "	* @name Set reference data functions. @{ Sets the assembly item ID that the reference points to. Extra reference data --if any-- will be cleared.
+
+	:param theItemId:
+	:type theItemId: XCAFDoc_AssemblyItemId &
+	:rtype: None
+") SetItem;
+		void SetItem (const XCAFDoc_AssemblyItemId & theItemId);
+		%feature("compactdefaultargs") SetItem;
+		%feature("autodoc", "	* Sets the assembly item ID from a list of label entries that the reference points to. Extra reference data --if any-- will be cleared.
+
+	:param thePath:
+	:type thePath: TColStd_ListOfAsciiString &
+	:rtype: None
+") SetItem;
+		void SetItem (const TColStd_ListOfAsciiString & thePath);
+		%feature("compactdefaultargs") SetItem;
+		%feature("autodoc", "	* Sets the assembly item ID from a formatted path that the reference points to. Extra reference data --if any-- will be cleared.
+
+	:param theString:
+	:type theString: TCollection_AsciiString &
+	:rtype: None
+") SetItem;
+		void SetItem (const TCollection_AsciiString & theString);
+		%feature("compactdefaultargs") SetGUID;
+		%feature("autodoc", "	* Sets the assembly item's label attribute that the reference points to. The base assembly item will not change.
+
+	:param theAttrGUID:
+	:type theAttrGUID: Standard_GUID &
+	:rtype: None
+") SetGUID;
+		void SetGUID (const Standard_GUID & theAttrGUID);
+		%feature("compactdefaultargs") SetSubshapeIndex;
+		%feature("autodoc", "	* Sets the assembly item's subshape that the reference points to. The base assembly item will not change.
+
+	:param theShapeIndex:
+	:type theShapeIndex: int
+	:rtype: None
+") SetSubshapeIndex;
+		void SetSubshapeIndex (Standard_Integer theShapeIndex);
+		%feature("compactdefaultargs") ClearExtraRef;
+		%feature("autodoc", "	* @} Reverts the reference to empty state.
+
+	:rtype: None
+") ClearExtraRef;
+		void ClearExtraRef ();
+		%feature("compactdefaultargs") ID;
+		%feature("autodoc", "	:rtype: Standard_GUID
+") ID;
+		const Standard_GUID & ID ();
+		%feature("compactdefaultargs") NewEmpty;
+		%feature("autodoc", "	:rtype: Handle_TDF_Attribute
+") NewEmpty;
+		Handle_TDF_Attribute NewEmpty ();
+		%feature("compactdefaultargs") Restore;
+		%feature("autodoc", "	:param theAttrFrom:
+	:type theAttrFrom: Handle_TDF_Attribute &
+	:rtype: None
+") Restore;
+		void Restore (const Handle_TDF_Attribute & theAttrFrom);
+		%feature("compactdefaultargs") Paste;
+		%feature("autodoc", "	:param theAttrInto:
+	:type theAttrInto: Handle_TDF_Attribute &
+	:param theRT:
+	:type theRT: Handle_TDF_RelocationTable &
+	:rtype: None
+") Paste;
+		void Paste (const Handle_TDF_Attribute & theAttrInto,const Handle_TDF_RelocationTable & theRT);
+
+        %feature("autodoc", "1");
+        %extend{
+            std::string DumpToString() {
+            std::stringstream s;
+            self->Dump(s);
+            return s.str();}
+        };
+        };
+
+
+%extend XCAFDoc_AssemblyItemRef {
+	%pythoncode {
+		def GetHandle(self):
+		    try:
+		        return self.thisHandle
+		    except:
+		        self.thisHandle = Handle_XCAFDoc_AssemblyItemRef(self)
+		        self.thisown = False
+		        return self.thisHandle
+	}
+};
+
+%pythonappend Handle_XCAFDoc_AssemblyItemRef::Handle_XCAFDoc_AssemblyItemRef %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
+%nodefaultctor Handle_XCAFDoc_AssemblyItemRef;
+class Handle_XCAFDoc_AssemblyItemRef : public Handle_TDF_Attribute {
+
+    public:
+        // constructors
+        Handle_XCAFDoc_AssemblyItemRef();
+        Handle_XCAFDoc_AssemblyItemRef(const Handle_XCAFDoc_AssemblyItemRef &aHandle);
+        Handle_XCAFDoc_AssemblyItemRef(const XCAFDoc_AssemblyItemRef *anItem);
+        void Nullify();
+        Standard_Boolean IsNull() const;
+        static const Handle_XCAFDoc_AssemblyItemRef DownCast(const Handle_Standard_Transient &AnObject);
+
+};
+
+%extend Handle_XCAFDoc_AssemblyItemRef {
+    XCAFDoc_AssemblyItemRef* _get_reference() {
+    return (XCAFDoc_AssemblyItemRef*)$self->get();
+    }
+};
+
+%extend Handle_XCAFDoc_AssemblyItemRef {
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
+};
+
+%extend XCAFDoc_AssemblyItemRef {
 	%pythoncode {
 	__repr__ = _dumps_object
 	}
@@ -374,22 +770,261 @@ class Handle_XCAFDoc_Centroid : public Handle_TDF_Attribute {
         static const Handle_XCAFDoc_Centroid DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_XCAFDoc_Centroid {
     XCAFDoc_Centroid* _get_reference() {
-    return (XCAFDoc_Centroid*)$self->Access();
+    return (XCAFDoc_Centroid*)$self->get();
     }
 };
 
 %extend Handle_XCAFDoc_Centroid {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend XCAFDoc_Centroid {
+	%pythoncode {
+	__repr__ = _dumps_object
+	}
+};
+%nodefaultctor XCAFDoc_ClippingPlaneTool;
+class XCAFDoc_ClippingPlaneTool : public TDF_Attribute {
+	public:
+		%feature("compactdefaultargs") XCAFDoc_ClippingPlaneTool;
+		%feature("autodoc", "	:rtype: None
+") XCAFDoc_ClippingPlaneTool;
+		 XCAFDoc_ClippingPlaneTool ();
+		%feature("compactdefaultargs") Set;
+		%feature("autodoc", "	* Creates --if not exist-- ClippingPlaneTool.
+
+	:param theLabel:
+	:type theLabel: TDF_Label &
+	:rtype: Handle_XCAFDoc_ClippingPlaneTool
+") Set;
+		static Handle_XCAFDoc_ClippingPlaneTool Set (const TDF_Label & theLabel);
+		%feature("compactdefaultargs") GetID;
+		%feature("autodoc", "	:rtype: Standard_GUID
+") GetID;
+		static const Standard_GUID & GetID ();
+		%feature("compactdefaultargs") BaseLabel;
+		%feature("autodoc", "	* returns the label under which ClippingPlanes are stored
+
+	:rtype: TDF_Label
+") BaseLabel;
+		TDF_Label BaseLabel ();
+		%feature("compactdefaultargs") IsClippingPlane;
+		%feature("autodoc", "	* Returns True if label belongs to a ClippingPlane table and is a ClippingPlane definition
+
+	:param theLabel:
+	:type theLabel: TDF_Label &
+	:rtype: bool
+") IsClippingPlane;
+		Standard_Boolean IsClippingPlane (const TDF_Label & theLabel);
+		%feature("compactdefaultargs") GetClippingPlane;
+		%feature("autodoc", "	* Returns ClippingPlane defined by label lab Returns False if the label is not in ClippingPlane table or does not define a ClippingPlane
+
+	:param theLabel:
+	:type theLabel: TDF_Label &
+	:param thePlane:
+	:type thePlane: gp_Pln
+	:param theName:
+	:type theName: TCollection_ExtendedString &
+	:param theCapping:
+	:type theCapping: bool
+	:rtype: bool
+") GetClippingPlane;
+		Standard_Boolean GetClippingPlane (const TDF_Label & theLabel,gp_Pln & thePlane,TCollection_ExtendedString & theName,Standard_Boolean &OutValue);
+		%feature("compactdefaultargs") GetClippingPlane;
+		%feature("autodoc", "	* Returns ClippingPlane defined by label lab Returns False if the label is not in ClippingPlane table or does not define a ClippingPlane
+
+	:param theLabel:
+	:type theLabel: TDF_Label &
+	:param thePlane:
+	:type thePlane: gp_Pln
+	:param theName:
+	:type theName: Handle_TCollection_HAsciiString &
+	:param theCapping:
+	:type theCapping: bool
+	:rtype: bool
+") GetClippingPlane;
+		Standard_Boolean GetClippingPlane (const TDF_Label & theLabel,gp_Pln & thePlane,Handle_TCollection_HAsciiString & theName,Standard_Boolean &OutValue);
+		%feature("compactdefaultargs") AddClippingPlane;
+		%feature("autodoc", "	* Adds a clipping plane definition to a ClippingPlane table and returns its label --returns existing label if the same clipping plane is already defined--
+
+	:param thePlane:
+	:type thePlane: gp_Pln
+	:param theName:
+	:type theName: TCollection_ExtendedString
+	:param theCapping:
+	:type theCapping: bool
+	:rtype: TDF_Label
+") AddClippingPlane;
+		TDF_Label AddClippingPlane (const gp_Pln thePlane,const TCollection_ExtendedString theName,const Standard_Boolean theCapping);
+		%feature("compactdefaultargs") AddClippingPlane;
+		%feature("autodoc", "	* Adds a clipping plane definition to a ClippingPlane table and returns its label --returns existing label if the same clipping plane is already defined--
+
+	:param thePlane:
+	:type thePlane: gp_Pln
+	:param theName:
+	:type theName: Handle_TCollection_HAsciiString &
+	:param theCapping:
+	:type theCapping: bool
+	:rtype: TDF_Label
+") AddClippingPlane;
+		TDF_Label AddClippingPlane (const gp_Pln thePlane,const Handle_TCollection_HAsciiString & theName,const Standard_Boolean theCapping);
+		%feature("compactdefaultargs") AddClippingPlane;
+		%feature("autodoc", "	* Adds a clipping plane definition to a ClippingPlane table and returns its label --returns existing label if the same clipping plane is already defined--
+
+	:param thePlane:
+	:type thePlane: gp_Pln
+	:param theName:
+	:type theName: TCollection_ExtendedString
+	:rtype: TDF_Label
+") AddClippingPlane;
+		TDF_Label AddClippingPlane (const gp_Pln thePlane,const TCollection_ExtendedString theName);
+		%feature("compactdefaultargs") AddClippingPlane;
+		%feature("autodoc", "	* Adds a clipping plane definition to a ClippingPlane table and returns its label --returns existing label if the same clipping plane is already defined--
+
+	:param thePlane:
+	:type thePlane: gp_Pln
+	:param theName:
+	:type theName: Handle_TCollection_HAsciiString &
+	:rtype: TDF_Label
+") AddClippingPlane;
+		TDF_Label AddClippingPlane (const gp_Pln thePlane,const Handle_TCollection_HAsciiString & theName);
+		%feature("compactdefaultargs") RemoveClippingPlane;
+		%feature("autodoc", "	* Removes clipping plane from the ClippingPlane table Return false and do nothing if clipping plane is referenced in at least one View
+
+	:param theLabel:
+	:type theLabel: TDF_Label &
+	:rtype: bool
+") RemoveClippingPlane;
+		Standard_Boolean RemoveClippingPlane (const TDF_Label & theLabel);
+		%feature("compactdefaultargs") GetClippingPlanes;
+		%feature("autodoc", "	* Returns a sequence of clipping planes currently stored in the ClippingPlane table
+
+	:param Labels:
+	:type Labels: TDF_LabelSequence &
+	:rtype: None
+") GetClippingPlanes;
+		void GetClippingPlanes (TDF_LabelSequence & Labels);
+		%feature("compactdefaultargs") UpdateClippingPlane;
+		%feature("autodoc", "	* Sets new value of plane and name to the given clipping plane label or do nothing, if the given label is not a clipping plane label
+
+	:param theLabelL:
+	:type theLabelL: TDF_Label &
+	:param thePlane:
+	:type thePlane: gp_Pln
+	:param theName:
+	:type theName: TCollection_ExtendedString
+	:rtype: None
+") UpdateClippingPlane;
+		void UpdateClippingPlane (const TDF_Label & theLabelL,const gp_Pln thePlane,const TCollection_ExtendedString theName);
+		%feature("compactdefaultargs") SetCapping;
+		%feature("autodoc", "	* Set new value of capping for given clipping plane label
+
+	:param theClippingPlaneL:
+	:type theClippingPlaneL: TDF_Label &
+	:param theCapping:
+	:type theCapping: bool
+	:rtype: None
+") SetCapping;
+		void SetCapping (const TDF_Label & theClippingPlaneL,const Standard_Boolean theCapping);
+		%feature("compactdefaultargs") GetCapping;
+		%feature("autodoc", "	* Get capping value for given clipping plane label Return capping value
+
+	:param theClippingPlaneL:
+	:type theClippingPlaneL: TDF_Label &
+	:rtype: bool
+") GetCapping;
+		Standard_Boolean GetCapping (const TDF_Label & theClippingPlaneL);
+		%feature("compactdefaultargs") GetCapping;
+		%feature("autodoc", "	* Get capping value for given clipping plane label Return true if Label is valid abd capping is exist.
+
+	:param theClippingPlaneL:
+	:type theClippingPlaneL: TDF_Label &
+	:param theCapping:
+	:type theCapping: bool
+	:rtype: bool
+") GetCapping;
+		Standard_Boolean GetCapping (const TDF_Label & theClippingPlaneL,Standard_Boolean &OutValue);
+		%feature("compactdefaultargs") ID;
+		%feature("autodoc", "	:rtype: Standard_GUID
+") ID;
+		const Standard_GUID & ID ();
+		%feature("compactdefaultargs") Restore;
+		%feature("autodoc", "	:param with:
+	:type with: Handle_TDF_Attribute &
+	:rtype: None
+") Restore;
+		void Restore (const Handle_TDF_Attribute & with);
+		%feature("compactdefaultargs") NewEmpty;
+		%feature("autodoc", "	:rtype: Handle_TDF_Attribute
+") NewEmpty;
+		Handle_TDF_Attribute NewEmpty ();
+		%feature("compactdefaultargs") Paste;
+		%feature("autodoc", "	:param into:
+	:type into: Handle_TDF_Attribute &
+	:param RT:
+	:type RT: Handle_TDF_RelocationTable &
+	:rtype: None
+") Paste;
+		void Paste (const Handle_TDF_Attribute & into,const Handle_TDF_RelocationTable & RT);
+};
+
+
+%extend XCAFDoc_ClippingPlaneTool {
+	%pythoncode {
+		def GetHandle(self):
+		    try:
+		        return self.thisHandle
+		    except:
+		        self.thisHandle = Handle_XCAFDoc_ClippingPlaneTool(self)
+		        self.thisown = False
+		        return self.thisHandle
+	}
+};
+
+%pythonappend Handle_XCAFDoc_ClippingPlaneTool::Handle_XCAFDoc_ClippingPlaneTool %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
+%nodefaultctor Handle_XCAFDoc_ClippingPlaneTool;
+class Handle_XCAFDoc_ClippingPlaneTool : public Handle_TDF_Attribute {
+
+    public:
+        // constructors
+        Handle_XCAFDoc_ClippingPlaneTool();
+        Handle_XCAFDoc_ClippingPlaneTool(const Handle_XCAFDoc_ClippingPlaneTool &aHandle);
+        Handle_XCAFDoc_ClippingPlaneTool(const XCAFDoc_ClippingPlaneTool *anItem);
+        void Nullify();
+        Standard_Boolean IsNull() const;
+        static const Handle_XCAFDoc_ClippingPlaneTool DownCast(const Handle_Standard_Transient &AnObject);
+
+};
+
+%extend Handle_XCAFDoc_ClippingPlaneTool {
+    XCAFDoc_ClippingPlaneTool* _get_reference() {
+    return (XCAFDoc_ClippingPlaneTool*)$self->get();
+    }
+};
+
+%extend Handle_XCAFDoc_ClippingPlaneTool {
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
+};
+
+%extend XCAFDoc_ClippingPlaneTool {
 	%pythoncode {
 	__repr__ = _dumps_object
 	}
@@ -417,6 +1052,14 @@ class XCAFDoc_Color : public TDF_Attribute {
 		%feature("autodoc", "	:param label:
 	:type label: TDF_Label &
 	:param C:
+	:type C: Quantity_ColorRGBA &
+	:rtype: Handle_XCAFDoc_Color
+") Set;
+		static Handle_XCAFDoc_Color Set (const TDF_Label & label,const Quantity_ColorRGBA & C);
+		%feature("compactdefaultargs") Set;
+		%feature("autodoc", "	:param label:
+	:type label: TDF_Label &
+	:param C:
 	:type C: Quantity_NameOfColor
 	:rtype: Handle_XCAFDoc_Color
 ") Set;
@@ -432,15 +1075,23 @@ class XCAFDoc_Color : public TDF_Attribute {
 	:type G: float
 	:param B:
 	:type B: float
+	:param alpha: default value is 1.0
+	:type alpha: float
 	:rtype: Handle_XCAFDoc_Color
 ") Set;
-		static Handle_XCAFDoc_Color Set (const TDF_Label & label,const Standard_Real R,const Standard_Real G,const Standard_Real B);
+		static Handle_XCAFDoc_Color Set (const TDF_Label & label,const Standard_Real R,const Standard_Real G,const Standard_Real B,const Standard_Real alpha = 1.0);
 		%feature("compactdefaultargs") Set;
 		%feature("autodoc", "	:param C:
 	:type C: Quantity_Color &
 	:rtype: None
 ") Set;
 		void Set (const Quantity_Color & C);
+		%feature("compactdefaultargs") Set;
+		%feature("autodoc", "	:param C:
+	:type C: Quantity_ColorRGBA &
+	:rtype: None
+") Set;
+		void Set (const Quantity_ColorRGBA & C);
 		%feature("compactdefaultargs") Set;
 		%feature("autodoc", "	:param C:
 	:type C: Quantity_NameOfColor
@@ -454,21 +1105,25 @@ class XCAFDoc_Color : public TDF_Attribute {
 	:type G: float
 	:param B:
 	:type B: float
+	:param alpha: default value is 1.0
+	:type alpha: float
 	:rtype: None
 ") Set;
-		void Set (const Standard_Real R,const Standard_Real G,const Standard_Real B);
+		void Set (const Standard_Real R,const Standard_Real G,const Standard_Real B,const Standard_Real alpha = 1.0);
 		%feature("compactdefaultargs") GetColor;
 		%feature("autodoc", "	:rtype: Quantity_Color
 ") GetColor;
 		const Quantity_Color & GetColor ();
+		%feature("compactdefaultargs") GetColorRGBA;
+		%feature("autodoc", "	:rtype: Quantity_ColorRGBA
+") GetColorRGBA;
+		const Quantity_ColorRGBA & GetColorRGBA ();
 		%feature("compactdefaultargs") GetNOC;
 		%feature("autodoc", "	:rtype: Quantity_NameOfColor
 ") GetNOC;
 		Quantity_NameOfColor GetNOC ();
 		%feature("compactdefaultargs") GetRGB;
-		%feature("autodoc", "	* Returns True if there is a reference on the same label
-
-	:param R:
+		%feature("autodoc", "	:param R:
 	:type R: float &
 	:param G:
 	:type G: float &
@@ -477,6 +1132,10 @@ class XCAFDoc_Color : public TDF_Attribute {
 	:rtype: None
 ") GetRGB;
 		void GetRGB (Standard_Real &OutValue,Standard_Real &OutValue,Standard_Real &OutValue);
+		%feature("compactdefaultargs") GetAlpha;
+		%feature("autodoc", "	:rtype: Standard_ShortReal
+") GetAlpha;
+		Standard_ShortReal GetAlpha ();
 		%feature("compactdefaultargs") ID;
 		%feature("autodoc", "	:rtype: Standard_GUID
 ") ID;
@@ -533,19 +1192,20 @@ class Handle_XCAFDoc_Color : public Handle_TDF_Attribute {
         static const Handle_XCAFDoc_Color DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_XCAFDoc_Color {
     XCAFDoc_Color* _get_reference() {
-    return (XCAFDoc_Color*)$self->Access();
+    return (XCAFDoc_Color*)$self->get();
     }
 };
 
 %extend Handle_XCAFDoc_Color {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend XCAFDoc_Color {
@@ -561,7 +1221,7 @@ class XCAFDoc_ColorTool : public TDF_Attribute {
 ") XCAFDoc_ColorTool;
 		 XCAFDoc_ColorTool ();
 		%feature("compactdefaultargs") Set;
-		%feature("autodoc", "	* Creates (if not exist) ColorTool.
+		%feature("autodoc", "	* Creates --if not exist-- ColorTool.
 
 	:param L:
 	:type L: TDF_Label &
@@ -602,6 +1262,16 @@ class XCAFDoc_ColorTool : public TDF_Attribute {
 	:rtype: bool
 ") GetColor;
 		Standard_Boolean GetColor (const TDF_Label & lab,Quantity_Color & col);
+		%feature("compactdefaultargs") GetColor;
+		%feature("autodoc", "	* Returns color defined by label lab Returns False if the label is not in colortable or does not define a color
+
+	:param lab:
+	:type lab: TDF_Label &
+	:param col:
+	:type col: Quantity_ColorRGBA &
+	:rtype: bool
+") GetColor;
+		Standard_Boolean GetColor (const TDF_Label & lab,Quantity_ColorRGBA & col);
 		%feature("compactdefaultargs") FindColor;
 		%feature("autodoc", "	* Finds a color definition in a colortable and returns its label if found Returns False if color is not found in colortable
 
@@ -613,21 +1283,47 @@ class XCAFDoc_ColorTool : public TDF_Attribute {
 ") FindColor;
 		Standard_Boolean FindColor (const Quantity_Color & col,TDF_Label & lab);
 		%feature("compactdefaultargs") FindColor;
-		%feature("autodoc", "	* Finds a color definition in a colortable and returns its label if found (or Null label else)
+		%feature("autodoc", "	* Finds a color definition in a colortable and returns its label if found Returns False if color is not found in colortable
+
+	:param col:
+	:type col: Quantity_ColorRGBA &
+	:param lab:
+	:type lab: TDF_Label &
+	:rtype: bool
+") FindColor;
+		Standard_Boolean FindColor (const Quantity_ColorRGBA & col,TDF_Label & lab);
+		%feature("compactdefaultargs") FindColor;
+		%feature("autodoc", "	* Finds a color definition in a colortable and returns its label if found --or Null label else--
 
 	:param col:
 	:type col: Quantity_Color &
 	:rtype: TDF_Label
 ") FindColor;
 		TDF_Label FindColor (const Quantity_Color & col);
+		%feature("compactdefaultargs") FindColor;
+		%feature("autodoc", "	* Finds a color definition in a colortable and returns its label if found --or Null label else--
+
+	:param col:
+	:type col: Quantity_ColorRGBA &
+	:rtype: TDF_Label
+") FindColor;
+		TDF_Label FindColor (const Quantity_ColorRGBA & col);
 		%feature("compactdefaultargs") AddColor;
-		%feature("autodoc", "	* Adds a color definition to a colortable and returns its label (returns existing label if the same color is already defined)
+		%feature("autodoc", "	* Adds a color definition to a colortable and returns its label --returns existing label if the same color is already defined--
 
 	:param col:
 	:type col: Quantity_Color &
 	:rtype: TDF_Label
 ") AddColor;
 		TDF_Label AddColor (const Quantity_Color & col);
+		%feature("compactdefaultargs") AddColor;
+		%feature("autodoc", "	* Adds a color definition to a colortable and returns its label --returns existing label if the same color is already defined--
+
+	:param col:
+	:type col: Quantity_ColorRGBA &
+	:rtype: TDF_Label
+") AddColor;
+		TDF_Label AddColor (const Quantity_ColorRGBA & col);
 		%feature("compactdefaultargs") RemoveColor;
 		%feature("autodoc", "	* Removes color from the colortable
 
@@ -645,7 +1341,7 @@ class XCAFDoc_ColorTool : public TDF_Attribute {
 ") GetColors;
 		void GetColors (TDF_LabelSequence & Labels);
 		%feature("compactdefaultargs") SetColor;
-		%feature("autodoc", "	* Sets a link with GUID defined by <type> (see XCAFDoc::ColorRefGUID()) from label <L> to color defined by <colorL>. Color of shape is defined following way in dependance with type of color. If type of color is XCAFDoc_ColorGen - then this color defines default color for surfaces and curves. If for shape color with types XCAFDoc_ColorSurf or XCAFDoc_ColorCurv is specified then such color overrides generic color.
+		%feature("autodoc", "	* Sets a link with GUID defined by <type> --see XCAFDoc::ColorRefGUID------ from label <L> to color defined by <colorL>. Color of shape is defined following way in dependance with type of color. If type of color is XCAFDoc_ColorGen - then this color defines default color for surfaces and curves. If for shape color with types XCAFDoc_ColorSurf or XCAFDoc_ColorCurv is specified then such color overrides generic color.
 
 	:param L:
 	:type L: TDF_Label &
@@ -657,7 +1353,7 @@ class XCAFDoc_ColorTool : public TDF_Attribute {
 ") SetColor;
 		void SetColor (const TDF_Label & L,const TDF_Label & colorL,const XCAFDoc_ColorType type);
 		%feature("compactdefaultargs") SetColor;
-		%feature("autodoc", "	* Sets a link with GUID defined by <type> (see XCAFDoc::ColorRefGUID()) from label <L> to color <Color> in the colortable Adds a color as necessary
+		%feature("autodoc", "	* Sets a link with GUID defined by <type> --see XCAFDoc::ColorRefGUID------ from label <L> to color <Color> in the colortable Adds a color as necessary
 
 	:param L:
 	:type L: TDF_Label &
@@ -668,8 +1364,20 @@ class XCAFDoc_ColorTool : public TDF_Attribute {
 	:rtype: None
 ") SetColor;
 		void SetColor (const TDF_Label & L,const Quantity_Color & Color,const XCAFDoc_ColorType type);
+		%feature("compactdefaultargs") SetColor;
+		%feature("autodoc", "	* Sets a link with GUID defined by <type> --see XCAFDoc::ColorRefGUID------ from label <L> to color <Color> in the colortable Adds a color as necessary
+
+	:param L:
+	:type L: TDF_Label &
+	:param Color:
+	:type Color: Quantity_ColorRGBA &
+	:param type:
+	:type type: XCAFDoc_ColorType
+	:rtype: None
+") SetColor;
+		void SetColor (const TDF_Label & L,const Quantity_ColorRGBA & Color,const XCAFDoc_ColorType type);
 		%feature("compactdefaultargs") UnSetColor;
-		%feature("autodoc", "	* Removes a link with GUID defined by <type> (see XCAFDoc::ColorRefGUID()) from label <L> to color
+		%feature("autodoc", "	* Removes a link with GUID defined by <type> --see XCAFDoc::ColorRefGUID------ from label <L> to color
 
 	:param L:
 	:type L: TDF_Label &
@@ -712,8 +1420,20 @@ class XCAFDoc_ColorTool : public TDF_Attribute {
 	:rtype: bool
 ") GetColor;
 		Standard_Boolean GetColor (const TDF_Label & L,const XCAFDoc_ColorType type,Quantity_Color & color);
+		%feature("compactdefaultargs") GetColor;
+		%feature("autodoc", "	* Returns color assigned to <L> as <type> Returns False if no such color is assigned
+
+	:param L:
+	:type L: TDF_Label &
+	:param type:
+	:type type: XCAFDoc_ColorType
+	:param color:
+	:type color: Quantity_ColorRGBA &
+	:rtype: bool
+") GetColor;
+		Standard_Boolean GetColor (const TDF_Label & L,const XCAFDoc_ColorType type,Quantity_ColorRGBA & color);
 		%feature("compactdefaultargs") SetColor;
-		%feature("autodoc", "	* Sets a link with GUID defined by <type> (see XCAFDoc::ColorRefGUID()) from label <L> to color defined by <colorL> Returns False if cannot find a label for shape S
+		%feature("autodoc", "	* Sets a link with GUID defined by <type> --see XCAFDoc::ColorRefGUID------ from label <L> to color defined by <colorL> Returns False if cannot find a label for shape S
 
 	:param S:
 	:type S: TopoDS_Shape &
@@ -725,7 +1445,7 @@ class XCAFDoc_ColorTool : public TDF_Attribute {
 ") SetColor;
 		Standard_Boolean SetColor (const TopoDS_Shape & S,const TDF_Label & colorL,const XCAFDoc_ColorType type);
 		%feature("compactdefaultargs") SetColor;
-		%feature("autodoc", "	* Sets a link with GUID defined by <type> (see XCAFDoc::ColorRefGUID()) from label <L> to color <Color> in the colortable Adds a color as necessary Returns False if cannot find a label for shape S
+		%feature("autodoc", "	* Sets a link with GUID defined by <type> --see XCAFDoc::ColorRefGUID------ from label <L> to color <Color> in the colortable Adds a color as necessary Returns False if cannot find a label for shape S
 
 	:param S:
 	:type S: TopoDS_Shape &
@@ -736,8 +1456,20 @@ class XCAFDoc_ColorTool : public TDF_Attribute {
 	:rtype: bool
 ") SetColor;
 		Standard_Boolean SetColor (const TopoDS_Shape & S,const Quantity_Color & Color,const XCAFDoc_ColorType type);
+		%feature("compactdefaultargs") SetColor;
+		%feature("autodoc", "	* Sets a link with GUID defined by <type> --see XCAFDoc::ColorRefGUID------ from label <L> to color <Color> in the colortable Adds a color as necessary Returns False if cannot find a label for shape S
+
+	:param S:
+	:type S: TopoDS_Shape &
+	:param Color:
+	:type Color: Quantity_ColorRGBA &
+	:param type:
+	:type type: XCAFDoc_ColorType
+	:rtype: bool
+") SetColor;
+		Standard_Boolean SetColor (const TopoDS_Shape & S,const Quantity_ColorRGBA & Color,const XCAFDoc_ColorType type);
 		%feature("compactdefaultargs") UnSetColor;
-		%feature("autodoc", "	* Removes a link with GUID defined by <type> (see XCAFDoc::ColorRefGUID()) from label <L> to color Returns True if such link existed
+		%feature("autodoc", "	* Removes a link with GUID defined by <type> --see XCAFDoc::ColorRefGUID------ from label <L> to color Returns True if such link existed
 
 	:param S:
 	:type S: TopoDS_Shape &
@@ -780,6 +1512,18 @@ class XCAFDoc_ColorTool : public TDF_Attribute {
 	:rtype: bool
 ") GetColor;
 		Standard_Boolean GetColor (const TopoDS_Shape & S,const XCAFDoc_ColorType type,Quantity_Color & color);
+		%feature("compactdefaultargs") GetColor;
+		%feature("autodoc", "	* Returns color assigned to <L> as <type> Returns False if no such color is assigned
+
+	:param S:
+	:type S: TopoDS_Shape &
+	:param type:
+	:type type: XCAFDoc_ColorType
+	:param color:
+	:type color: Quantity_ColorRGBA &
+	:rtype: bool
+") GetColor;
+		Standard_Boolean GetColor (const TopoDS_Shape & S,const XCAFDoc_ColorType type,Quantity_ColorRGBA & color);
 		%feature("compactdefaultargs") IsVisible;
 		%feature("autodoc", "	* Return True if object on this label is visible, False if invisible.
 
@@ -812,6 +1556,20 @@ class XCAFDoc_ColorTool : public TDF_Attribute {
 	:rtype: bool
 ") SetInstanceColor;
 		Standard_Boolean SetInstanceColor (const TopoDS_Shape & theShape,const XCAFDoc_ColorType type,const Quantity_Color & color,const Standard_Boolean isCreateSHUO = Standard_True);
+		%feature("compactdefaultargs") SetInstanceColor;
+		%feature("autodoc", "	* Sets the color of component that styled with SHUO structure Returns False if no sush component found NOTE: create SHUO structeure if it is necessary and if <isCreateSHUO>
+
+	:param theShape:
+	:type theShape: TopoDS_Shape &
+	:param type:
+	:type type: XCAFDoc_ColorType
+	:param color:
+	:type color: Quantity_ColorRGBA &
+	:param isCreateSHUO: default value is Standard_True
+	:type isCreateSHUO: bool
+	:rtype: bool
+") SetInstanceColor;
+		Standard_Boolean SetInstanceColor (const TopoDS_Shape & theShape,const XCAFDoc_ColorType type,const Quantity_ColorRGBA & color,const Standard_Boolean isCreateSHUO = Standard_True);
 		%feature("compactdefaultargs") GetInstanceColor;
 		%feature("autodoc", "	* Gets the color of component that styled with SHUO structure Returns False if no sush component or color type
 
@@ -824,6 +1582,18 @@ class XCAFDoc_ColorTool : public TDF_Attribute {
 	:rtype: bool
 ") GetInstanceColor;
 		Standard_Boolean GetInstanceColor (const TopoDS_Shape & theShape,const XCAFDoc_ColorType type,Quantity_Color & color);
+		%feature("compactdefaultargs") GetInstanceColor;
+		%feature("autodoc", "	* Gets the color of component that styled with SHUO structure Returns False if no sush component or color type
+
+	:param theShape:
+	:type theShape: TopoDS_Shape &
+	:param type:
+	:type type: XCAFDoc_ColorType
+	:param color:
+	:type color: Quantity_ColorRGBA &
+	:rtype: bool
+") GetInstanceColor;
+		Standard_Boolean GetInstanceColor (const TopoDS_Shape & theShape,const XCAFDoc_ColorType type,Quantity_ColorRGBA & color);
 		%feature("compactdefaultargs") IsInstanceVisible;
 		%feature("autodoc", "	* Gets the visibility status of component that styled with SHUO structure Returns False if no sush component
 
@@ -833,7 +1603,7 @@ class XCAFDoc_ColorTool : public TDF_Attribute {
 ") IsInstanceVisible;
 		Standard_Boolean IsInstanceVisible (const TopoDS_Shape & theShape);
 		%feature("compactdefaultargs") ReverseChainsOfTreeNodes;
-		%feature("autodoc", "	* Reverses order in chains of TreeNodes (from Last to First) under each Color Label since we became to use function ::Prepend() instead of ::Append() in method SetColor() for acceleration
+		%feature("autodoc", "	* Reverses order in chains of TreeNodes --from Last to First-- under each Color Label since we became to use function ::Prepend---- instead of ::Append---- in method SetColor---- for acceleration
 
 	:rtype: bool
 ") ReverseChainsOfTreeNodes;
@@ -894,215 +1664,23 @@ class Handle_XCAFDoc_ColorTool : public Handle_TDF_Attribute {
         static const Handle_XCAFDoc_ColorTool DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_XCAFDoc_ColorTool {
     XCAFDoc_ColorTool* _get_reference() {
-    return (XCAFDoc_ColorTool*)$self->Access();
+    return (XCAFDoc_ColorTool*)$self->get();
     }
 };
 
 %extend Handle_XCAFDoc_ColorTool {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend XCAFDoc_ColorTool {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor XCAFDoc_DataMapIteratorOfDataMapOfShapeLabel;
-class XCAFDoc_DataMapIteratorOfDataMapOfShapeLabel : public TCollection_BasicMapIterator {
-	public:
-		%feature("compactdefaultargs") XCAFDoc_DataMapIteratorOfDataMapOfShapeLabel;
-		%feature("autodoc", "	:rtype: None
-") XCAFDoc_DataMapIteratorOfDataMapOfShapeLabel;
-		 XCAFDoc_DataMapIteratorOfDataMapOfShapeLabel ();
-		%feature("compactdefaultargs") XCAFDoc_DataMapIteratorOfDataMapOfShapeLabel;
-		%feature("autodoc", "	:param aMap:
-	:type aMap: XCAFDoc_DataMapOfShapeLabel &
-	:rtype: None
-") XCAFDoc_DataMapIteratorOfDataMapOfShapeLabel;
-		 XCAFDoc_DataMapIteratorOfDataMapOfShapeLabel (const XCAFDoc_DataMapOfShapeLabel & aMap);
-		%feature("compactdefaultargs") Initialize;
-		%feature("autodoc", "	:param aMap:
-	:type aMap: XCAFDoc_DataMapOfShapeLabel &
-	:rtype: None
-") Initialize;
-		void Initialize (const XCAFDoc_DataMapOfShapeLabel & aMap);
-		%feature("compactdefaultargs") Key;
-		%feature("autodoc", "	:rtype: TopoDS_Shape
-") Key;
-		const TopoDS_Shape  Key ();
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:rtype: TDF_Label
-") Value;
-		const TDF_Label & Value ();
-};
-
-
-%extend XCAFDoc_DataMapIteratorOfDataMapOfShapeLabel {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor XCAFDoc_DataMapNodeOfDataMapOfShapeLabel;
-class XCAFDoc_DataMapNodeOfDataMapOfShapeLabel : public TCollection_MapNode {
-	public:
-		%feature("compactdefaultargs") XCAFDoc_DataMapNodeOfDataMapOfShapeLabel;
-		%feature("autodoc", "	:param K:
-	:type K: TopoDS_Shape &
-	:param I:
-	:type I: TDF_Label &
-	:param n:
-	:type n: TCollection_MapNodePtr &
-	:rtype: None
-") XCAFDoc_DataMapNodeOfDataMapOfShapeLabel;
-		 XCAFDoc_DataMapNodeOfDataMapOfShapeLabel (const TopoDS_Shape & K,const TDF_Label & I,const TCollection_MapNodePtr & n);
-		%feature("compactdefaultargs") Key;
-		%feature("autodoc", "	:rtype: TopoDS_Shape
-") Key;
-		TopoDS_Shape  Key ();
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:rtype: TDF_Label
-") Value;
-		TDF_Label & Value ();
-};
-
-
-%extend XCAFDoc_DataMapNodeOfDataMapOfShapeLabel {
-	%pythoncode {
-		def GetHandle(self):
-		    try:
-		        return self.thisHandle
-		    except:
-		        self.thisHandle = Handle_XCAFDoc_DataMapNodeOfDataMapOfShapeLabel(self)
-		        self.thisown = False
-		        return self.thisHandle
-	}
-};
-
-%pythonappend Handle_XCAFDoc_DataMapNodeOfDataMapOfShapeLabel::Handle_XCAFDoc_DataMapNodeOfDataMapOfShapeLabel %{
-    # register the handle in the base object
-    if len(args) > 0:
-        register_handle(self, args[0])
-%}
-
-%nodefaultctor Handle_XCAFDoc_DataMapNodeOfDataMapOfShapeLabel;
-class Handle_XCAFDoc_DataMapNodeOfDataMapOfShapeLabel : public Handle_TCollection_MapNode {
-
-    public:
-        // constructors
-        Handle_XCAFDoc_DataMapNodeOfDataMapOfShapeLabel();
-        Handle_XCAFDoc_DataMapNodeOfDataMapOfShapeLabel(const Handle_XCAFDoc_DataMapNodeOfDataMapOfShapeLabel &aHandle);
-        Handle_XCAFDoc_DataMapNodeOfDataMapOfShapeLabel(const XCAFDoc_DataMapNodeOfDataMapOfShapeLabel *anItem);
-        void Nullify();
-        Standard_Boolean IsNull() const;
-        static const Handle_XCAFDoc_DataMapNodeOfDataMapOfShapeLabel DownCast(const Handle_Standard_Transient &AnObject);
-
-};
-%extend Handle_XCAFDoc_DataMapNodeOfDataMapOfShapeLabel {
-    XCAFDoc_DataMapNodeOfDataMapOfShapeLabel* _get_reference() {
-    return (XCAFDoc_DataMapNodeOfDataMapOfShapeLabel*)$self->Access();
-    }
-};
-
-%extend Handle_XCAFDoc_DataMapNodeOfDataMapOfShapeLabel {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
-};
-
-%extend XCAFDoc_DataMapNodeOfDataMapOfShapeLabel {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor XCAFDoc_DataMapOfShapeLabel;
-class XCAFDoc_DataMapOfShapeLabel : public TCollection_BasicMap {
-	public:
-		%feature("compactdefaultargs") XCAFDoc_DataMapOfShapeLabel;
-		%feature("autodoc", "	:param NbBuckets: default value is 1
-	:type NbBuckets: int
-	:rtype: None
-") XCAFDoc_DataMapOfShapeLabel;
-		 XCAFDoc_DataMapOfShapeLabel (const Standard_Integer NbBuckets = 1);
-		%feature("compactdefaultargs") Assign;
-		%feature("autodoc", "	:param Other:
-	:type Other: XCAFDoc_DataMapOfShapeLabel &
-	:rtype: XCAFDoc_DataMapOfShapeLabel
-") Assign;
-		XCAFDoc_DataMapOfShapeLabel & Assign (const XCAFDoc_DataMapOfShapeLabel & Other);
-		%feature("compactdefaultargs") operator =;
-		%feature("autodoc", "	:param Other:
-	:type Other: XCAFDoc_DataMapOfShapeLabel &
-	:rtype: XCAFDoc_DataMapOfShapeLabel
-") operator =;
-		XCAFDoc_DataMapOfShapeLabel & operator = (const XCAFDoc_DataMapOfShapeLabel & Other);
-		%feature("compactdefaultargs") ReSize;
-		%feature("autodoc", "	:param NbBuckets:
-	:type NbBuckets: int
-	:rtype: None
-") ReSize;
-		void ReSize (const Standard_Integer NbBuckets);
-		%feature("compactdefaultargs") Clear;
-		%feature("autodoc", "	:rtype: None
-") Clear;
-		void Clear ();
-		%feature("compactdefaultargs") Bind;
-		%feature("autodoc", "	:param K:
-	:type K: TopoDS_Shape &
-	:param I:
-	:type I: TDF_Label &
-	:rtype: bool
-") Bind;
-		Standard_Boolean Bind (const TopoDS_Shape & K,const TDF_Label & I);
-		%feature("compactdefaultargs") IsBound;
-		%feature("autodoc", "	:param K:
-	:type K: TopoDS_Shape &
-	:rtype: bool
-") IsBound;
-		Standard_Boolean IsBound (const TopoDS_Shape & K);
-		%feature("compactdefaultargs") UnBind;
-		%feature("autodoc", "	:param K:
-	:type K: TopoDS_Shape &
-	:rtype: bool
-") UnBind;
-		Standard_Boolean UnBind (const TopoDS_Shape & K);
-		%feature("compactdefaultargs") Find;
-		%feature("autodoc", "	:param K:
-	:type K: TopoDS_Shape &
-	:rtype: TDF_Label
-") Find;
-		const TDF_Label & Find (const TopoDS_Shape & K);
-		%feature("compactdefaultargs") ChangeFind;
-		%feature("autodoc", "	:param K:
-	:type K: TopoDS_Shape &
-	:rtype: TDF_Label
-") ChangeFind;
-		TDF_Label & ChangeFind (const TopoDS_Shape & K);
-		%feature("compactdefaultargs") Find1;
-		%feature("autodoc", "	:param K:
-	:type K: TopoDS_Shape &
-	:rtype: Standard_Address
-") Find1;
-		Standard_Address Find1 (const TopoDS_Shape & K);
-		%feature("compactdefaultargs") ChangeFind1;
-		%feature("autodoc", "	:param K:
-	:type K: TopoDS_Shape &
-	:rtype: Standard_Address
-") ChangeFind1;
-		Standard_Address ChangeFind1 (const TopoDS_Shape & K);
-};
-
-
-%extend XCAFDoc_DataMapOfShapeLabel {
 	%pythoncode {
 	__repr__ = _dumps_object
 	}
@@ -1131,6 +1709,12 @@ class XCAFDoc_Datum : public TDF_Attribute {
 ") Set;
 		static Handle_XCAFDoc_Datum Set (const TDF_Label & label,const Handle_TCollection_HAsciiString & aName,const Handle_TCollection_HAsciiString & aDescription,const Handle_TCollection_HAsciiString & anIdentification);
 		%feature("compactdefaultargs") Set;
+		%feature("autodoc", "	:param theLabel:
+	:type theLabel: TDF_Label &
+	:rtype: Handle_XCAFDoc_Datum
+") Set;
+		static Handle_XCAFDoc_Datum Set (const TDF_Label & theLabel);
+		%feature("compactdefaultargs") Set;
 		%feature("autodoc", "	:param aName:
 	:type aName: Handle_TCollection_HAsciiString &
 	:param aDescription:
@@ -1152,6 +1736,16 @@ class XCAFDoc_Datum : public TDF_Attribute {
 		%feature("autodoc", "	:rtype: Handle_TCollection_HAsciiString
 ") GetIdentification;
 		Handle_TCollection_HAsciiString GetIdentification ();
+		%feature("compactdefaultargs") GetObject;
+		%feature("autodoc", "	:rtype: Handle_XCAFDimTolObjects_DatumObject
+") GetObject;
+		Handle_XCAFDimTolObjects_DatumObject GetObject ();
+		%feature("compactdefaultargs") SetObject;
+		%feature("autodoc", "	:param theObject:
+	:type theObject: Handle_XCAFDimTolObjects_DatumObject &
+	:rtype: None
+") SetObject;
+		void SetObject (const Handle_XCAFDimTolObjects_DatumObject & theObject);
 		%feature("compactdefaultargs") ID;
 		%feature("autodoc", "	:rtype: Standard_GUID
 ") ID;
@@ -1208,19 +1802,20 @@ class Handle_XCAFDoc_Datum : public Handle_TDF_Attribute {
         static const Handle_XCAFDoc_Datum DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_XCAFDoc_Datum {
     XCAFDoc_Datum* _get_reference() {
-    return (XCAFDoc_Datum*)$self->Access();
+    return (XCAFDoc_Datum*)$self->get();
     }
 };
 
 %extend Handle_XCAFDoc_Datum {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend XCAFDoc_Datum {
@@ -1337,19 +1932,20 @@ class Handle_XCAFDoc_DimTol : public Handle_TDF_Attribute {
         static const Handle_XCAFDoc_DimTol DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_XCAFDoc_DimTol {
     XCAFDoc_DimTol* _get_reference() {
-    return (XCAFDoc_DimTol*)$self->Access();
+    return (XCAFDoc_DimTol*)$self->get();
     }
 };
 
 %extend Handle_XCAFDoc_DimTol {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend XCAFDoc_DimTol {
@@ -1365,7 +1961,7 @@ class XCAFDoc_DimTolTool : public TDF_Attribute {
 ") XCAFDoc_DimTolTool;
 		 XCAFDoc_DimTolTool ();
 		%feature("compactdefaultargs") Set;
-		%feature("autodoc", "	* Creates (if not exist) DimTolTool.
+		%feature("autodoc", "	* Creates --if not exist-- DimTolTool.
 
 	:param L:
 	:type L: TDF_Label &
@@ -1388,6 +1984,124 @@ class XCAFDoc_DimTolTool : public TDF_Attribute {
 	:rtype: Handle_XCAFDoc_ShapeTool
 ") ShapeTool;
 		Handle_XCAFDoc_ShapeTool ShapeTool ();
+		%feature("compactdefaultargs") IsDimension;
+		%feature("autodoc", "	* Returns True if label belongs to a dimtoltable and is a Dimension definition
+
+	:param theLab:
+	:type theLab: TDF_Label &
+	:rtype: bool
+") IsDimension;
+		Standard_Boolean IsDimension (const TDF_Label & theLab);
+		%feature("compactdefaultargs") GetDimensionLabels;
+		%feature("autodoc", "	* Returns a sequence of Dimensions labels currently stored in the DGTtable
+
+	:param theLabels:
+	:type theLabels: TDF_LabelSequence &
+	:rtype: None
+") GetDimensionLabels;
+		void GetDimensionLabels (TDF_LabelSequence & theLabels);
+		%feature("compactdefaultargs") SetDimension;
+		%feature("autodoc", "	* Sets a link with GUID
+
+	:param theFirstLS:
+	:type theFirstLS: TDF_LabelSequence &
+	:param theSecondLS:
+	:type theSecondLS: TDF_LabelSequence &
+	:param theDimTolL:
+	:type theDimTolL: TDF_Label &
+	:rtype: None
+") SetDimension;
+		void SetDimension (const TDF_LabelSequence & theFirstLS,const TDF_LabelSequence & theSecondLS,const TDF_Label & theDimTolL);
+		%feature("compactdefaultargs") SetDimension;
+		%feature("autodoc", "	* Sets a link with GUID
+
+	:param theFirstL:
+	:type theFirstL: TDF_Label &
+	:param theSecondL:
+	:type theSecondL: TDF_Label &
+	:param theDimTolL:
+	:type theDimTolL: TDF_Label &
+	:rtype: None
+") SetDimension;
+		void SetDimension (const TDF_Label & theFirstL,const TDF_Label & theSecondL,const TDF_Label & theDimTolL);
+		%feature("compactdefaultargs") SetDimension;
+		%feature("autodoc", "	* Sets a link with GUID
+
+	:param theL:
+	:type theL: TDF_Label &
+	:param theDimTolL:
+	:type theDimTolL: TDF_Label &
+	:rtype: None
+") SetDimension;
+		void SetDimension (const TDF_Label & theL,const TDF_Label & theDimTolL);
+		%feature("compactdefaultargs") GetRefDimensionLabels;
+		%feature("autodoc", "	* Returns all Dimension labels defined for label ShapeL
+
+	:param theShapeL:
+	:type theShapeL: TDF_Label &
+	:param theDimensions:
+	:type theDimensions: TDF_LabelSequence &
+	:rtype: bool
+") GetRefDimensionLabels;
+		Standard_Boolean GetRefDimensionLabels (const TDF_Label & theShapeL,TDF_LabelSequence & theDimensions);
+		%feature("compactdefaultargs") AddDimension;
+		%feature("autodoc", "	* Adds a dimension definition to a DGTtable and returns its label
+
+	:rtype: TDF_Label
+") AddDimension;
+		TDF_Label AddDimension ();
+		%feature("compactdefaultargs") IsGeomTolerance;
+		%feature("autodoc", "	* Returns True if label belongs to a dimtoltable and is a DimTol definition
+
+	:param theLab:
+	:type theLab: TDF_Label &
+	:rtype: bool
+") IsGeomTolerance;
+		Standard_Boolean IsGeomTolerance (const TDF_Label & theLab);
+		%feature("compactdefaultargs") GetGeomToleranceLabels;
+		%feature("autodoc", "	* Returns a sequence of Tolerance labels currently stored in the DGTtable
+
+	:param theLabels:
+	:type theLabels: TDF_LabelSequence &
+	:rtype: None
+") GetGeomToleranceLabels;
+		void GetGeomToleranceLabels (TDF_LabelSequence & theLabels);
+		%feature("compactdefaultargs") SetGeomTolerance;
+		%feature("autodoc", "	* Sets a link with GUID
+
+	:param theL:
+	:type theL: TDF_Label &
+	:param theDimTolL:
+	:type theDimTolL: TDF_Label &
+	:rtype: None
+") SetGeomTolerance;
+		void SetGeomTolerance (const TDF_Label & theL,const TDF_Label & theDimTolL);
+		%feature("compactdefaultargs") SetGeomTolerance;
+		%feature("autodoc", "	* Sets a link with GUID
+
+	:param theL:
+	:type theL: TDF_LabelSequence &
+	:param theDimTolL:
+	:type theDimTolL: TDF_Label &
+	:rtype: None
+") SetGeomTolerance;
+		void SetGeomTolerance (const TDF_LabelSequence & theL,const TDF_Label & theDimTolL);
+		%feature("compactdefaultargs") GetRefGeomToleranceLabels;
+		%feature("autodoc", "	* Returns all GeomTolerance labels defined for label ShapeL
+
+	:param theShapeL:
+	:type theShapeL: TDF_Label &
+	:param theDimTols:
+	:type theDimTols: TDF_LabelSequence &
+	:rtype: bool
+") GetRefGeomToleranceLabels;
+		Standard_Boolean GetRefGeomToleranceLabels (const TDF_Label & theShapeL,TDF_LabelSequence & theDimTols);
+		%feature("compactdefaultargs") AddGeomTolerance;
+		%feature("autodoc", "	* Adds a GeomTolerance definition to a DGTtable and returns its label
+
+	:rtype: TDF_Label
+") AddGeomTolerance;
+		TDF_Label AddGeomTolerance ();
 		%feature("compactdefaultargs") IsDimTol;
 		%feature("autodoc", "	* Returns True if label belongs to a dimtoltable and is a DimTol definition
 
@@ -1421,7 +2135,7 @@ class XCAFDoc_DimTolTool : public TDF_Attribute {
 ") FindDimTol;
 		Standard_Boolean FindDimTol (const Standard_Integer kind,const Handle_TColStd_HArray1OfReal & aVal,const Handle_TCollection_HAsciiString & aName,const Handle_TCollection_HAsciiString & aDescription,TDF_Label & lab);
 		%feature("compactdefaultargs") FindDimTol;
-		%feature("autodoc", "	* Finds a dimtol definition in a DGTtable and returns its label if found (or Null label else)
+		%feature("autodoc", "	* Finds a dimtol definition in a DGTtable and returns its label if found --or Null label else--
 
 	:param kind:
 	:type kind: int
@@ -1479,11 +2193,13 @@ class XCAFDoc_DimTolTool : public TDF_Attribute {
 
 	:param DimTolL:
 	:type DimTolL: TDF_Label &
-	:param ShapeL:
-	:type ShapeL: TDF_Label &
+	:param ShapeLFirst:
+	:type ShapeLFirst: TDF_LabelSequence &
+	:param ShapeLSecond:
+	:type ShapeLSecond: TDF_LabelSequence &
 	:rtype: bool
 ") GetRefShapeLabel;
-		Standard_Boolean GetRefShapeLabel (const TDF_Label & DimTolL,TDF_Label & ShapeL);
+		Standard_Boolean GetRefShapeLabel (const TDF_Label & DimTolL,TDF_LabelSequence & ShapeLFirst,TDF_LabelSequence & ShapeLSecond);
 		%feature("compactdefaultargs") GetRefDGTLabels;
 		%feature("autodoc", "	* Returns all DimTol labels defined for label ShapeL
 
@@ -1552,16 +2268,32 @@ class XCAFDoc_DimTolTool : public TDF_Attribute {
 	:rtype: TDF_Label
 ") AddDatum;
 		TDF_Label AddDatum (const Handle_TCollection_HAsciiString & aName,const Handle_TCollection_HAsciiString & aDescription,const Handle_TCollection_HAsciiString & anIdentification);
+		%feature("compactdefaultargs") AddDatum;
+		%feature("autodoc", "	* Adds a datum definition to a DGTtable and returns its label
+
+	:rtype: TDF_Label
+") AddDatum;
+		TDF_Label AddDatum ();
 		%feature("compactdefaultargs") SetDatum;
 		%feature("autodoc", "	* Sets a link with GUID
 
-	:param L:
-	:type L: TDF_Label &
-	:param DatumL:
-	:type DatumL: TDF_Label &
+	:param theShapeLabels:
+	:type theShapeLabels: TDF_LabelSequence &
+	:param theDatumL:
+	:type theDatumL: TDF_Label &
 	:rtype: None
 ") SetDatum;
-		void SetDatum (const TDF_Label & L,const TDF_Label & DatumL);
+		void SetDatum (const TDF_LabelSequence & theShapeLabels,const TDF_Label & theDatumL);
+		%feature("compactdefaultargs") SetDatumToGeomTol;
+		%feature("autodoc", "	* Sets a link with GUID for Datum Sets connection between Datum and Tolerance
+
+	:param theL:
+	:type theL: TDF_Label &
+	:param theTolerL:
+	:type theTolerL: TDF_Label &
+	:rtype: None
+") SetDatumToGeomTol;
+		void SetDatumToGeomTol (const TDF_Label & theL,const TDF_Label & theTolerL);
 		%feature("compactdefaultargs") SetDatum;
 		%feature("autodoc", "	* Sets a link with GUID for Datum Adds a Datum as necessary Sets connection between Datum and Tolerance
 
@@ -1592,7 +2324,7 @@ class XCAFDoc_DimTolTool : public TDF_Attribute {
 	:rtype: bool
 ") GetDatum;
 		Standard_Boolean GetDatum (const TDF_Label & DatumL,Handle_TCollection_HAsciiString & aName,Handle_TCollection_HAsciiString & aDescription,Handle_TCollection_HAsciiString & anIdentification);
-		%feature("compactdefaultargs") GetDatumTolerLabels;
+		%feature("compactdefaultargs") GetDatumOfTolerLabels;
 		%feature("autodoc", "	* Returns all Datum labels defined for label DimTolL
 
 	:param DimTolL:
@@ -1600,8 +2332,62 @@ class XCAFDoc_DimTolTool : public TDF_Attribute {
 	:param Datums:
 	:type Datums: TDF_LabelSequence &
 	:rtype: bool
-") GetDatumTolerLabels;
-		Standard_Boolean GetDatumTolerLabels (const TDF_Label & DimTolL,TDF_LabelSequence & Datums);
+") GetDatumOfTolerLabels;
+		Standard_Boolean GetDatumOfTolerLabels (const TDF_Label & DimTolL,TDF_LabelSequence & Datums);
+		%feature("compactdefaultargs") GetDatumWithObjectOfTolerLabels;
+		%feature("autodoc", "	* Returns all Datum labels with XCAFDimTolObjects_DatumObject defined for label DimTolL
+
+	:param DimTolL:
+	:type DimTolL: TDF_Label &
+	:param Datums:
+	:type Datums: TDF_LabelSequence &
+	:rtype: bool
+") GetDatumWithObjectOfTolerLabels;
+		Standard_Boolean GetDatumWithObjectOfTolerLabels (const TDF_Label & DimTolL,TDF_LabelSequence & Datums);
+		%feature("compactdefaultargs") GetTolerOfDatumLabels;
+		%feature("autodoc", "	* Returns all GeomToleranses labels defined for label DatumL
+
+	:param theDatumL:
+	:type theDatumL: TDF_Label &
+	:param theTols:
+	:type theTols: TDF_LabelSequence &
+	:rtype: bool
+") GetTolerOfDatumLabels;
+		Standard_Boolean GetTolerOfDatumLabels (const TDF_Label & theDatumL,TDF_LabelSequence & theTols);
+		%feature("compactdefaultargs") GetRefDatumLabel;
+		%feature("autodoc", "	* Returns Datum label defined for label ShapeL
+
+	:param theShapeL:
+	:type theShapeL: TDF_Label &
+	:param theDatum:
+	:type theDatum: TDF_LabelSequence &
+	:rtype: bool
+") GetRefDatumLabel;
+		Standard_Boolean GetRefDatumLabel (const TDF_Label & theShapeL,TDF_LabelSequence & theDatum);
+		%feature("compactdefaultargs") IsLocked;
+		%feature("autodoc", "	* Returns true if the given GDT is marked as locked
+
+	:param theViewL:
+	:type theViewL: TDF_Label &
+	:rtype: bool
+") IsLocked;
+		Standard_Boolean IsLocked (const TDF_Label & theViewL);
+		%feature("compactdefaultargs") Lock;
+		%feature("autodoc", "	* Mark the given GDT as locked
+
+	:param theViewL:
+	:type theViewL: TDF_Label &
+	:rtype: None
+") Lock;
+		void Lock (const TDF_Label & theViewL);
+		%feature("compactdefaultargs") Unlock;
+		%feature("autodoc", "	* Unlock the given GDT
+
+	:param theViewL:
+	:type theViewL: TDF_Label &
+	:rtype: None
+") Unlock;
+		void Unlock (const TDF_Label & theViewL);
 		%feature("compactdefaultargs") ID;
 		%feature("autodoc", "	:rtype: Standard_GUID
 ") ID;
@@ -1658,22 +2444,127 @@ class Handle_XCAFDoc_DimTolTool : public Handle_TDF_Attribute {
         static const Handle_XCAFDoc_DimTolTool DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_XCAFDoc_DimTolTool {
     XCAFDoc_DimTolTool* _get_reference() {
-    return (XCAFDoc_DimTolTool*)$self->Access();
+    return (XCAFDoc_DimTolTool*)$self->get();
     }
 };
 
 %extend Handle_XCAFDoc_DimTolTool {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend XCAFDoc_DimTolTool {
+	%pythoncode {
+	__repr__ = _dumps_object
+	}
+};
+%nodefaultctor XCAFDoc_Dimension;
+class XCAFDoc_Dimension : public TDF_Attribute {
+	public:
+		%feature("compactdefaultargs") XCAFDoc_Dimension;
+		%feature("autodoc", "	:rtype: None
+") XCAFDoc_Dimension;
+		 XCAFDoc_Dimension ();
+		%feature("compactdefaultargs") GetID;
+		%feature("autodoc", "	:rtype: Standard_GUID
+") GetID;
+		static const Standard_GUID & GetID ();
+		%feature("compactdefaultargs") Set;
+		%feature("autodoc", "	:param theLabel:
+	:type theLabel: TDF_Label &
+	:rtype: Handle_XCAFDoc_Dimension
+") Set;
+		static Handle_XCAFDoc_Dimension Set (const TDF_Label & theLabel);
+		%feature("compactdefaultargs") ID;
+		%feature("autodoc", "	:rtype: Standard_GUID
+") ID;
+		const Standard_GUID & ID ();
+		%feature("compactdefaultargs") Restore;
+		%feature("autodoc", "	:param With:
+	:type With: Handle_TDF_Attribute &
+	:rtype: None
+") Restore;
+		void Restore (const Handle_TDF_Attribute & With);
+		%feature("compactdefaultargs") NewEmpty;
+		%feature("autodoc", "	:rtype: Handle_TDF_Attribute
+") NewEmpty;
+		Handle_TDF_Attribute NewEmpty ();
+		%feature("compactdefaultargs") Paste;
+		%feature("autodoc", "	:param Into:
+	:type Into: Handle_TDF_Attribute &
+	:param RT:
+	:type RT: Handle_TDF_RelocationTable &
+	:rtype: None
+") Paste;
+		void Paste (const Handle_TDF_Attribute & Into,const Handle_TDF_RelocationTable & RT);
+		%feature("compactdefaultargs") SetObject;
+		%feature("autodoc", "	:param theDimensionObject:
+	:type theDimensionObject: Handle_XCAFDimTolObjects_DimensionObject &
+	:rtype: None
+") SetObject;
+		void SetObject (const Handle_XCAFDimTolObjects_DimensionObject & theDimensionObject);
+		%feature("compactdefaultargs") GetObject;
+		%feature("autodoc", "	:rtype: Handle_XCAFDimTolObjects_DimensionObject
+") GetObject;
+		Handle_XCAFDimTolObjects_DimensionObject GetObject ();
+};
+
+
+%extend XCAFDoc_Dimension {
+	%pythoncode {
+		def GetHandle(self):
+		    try:
+		        return self.thisHandle
+		    except:
+		        self.thisHandle = Handle_XCAFDoc_Dimension(self)
+		        self.thisown = False
+		        return self.thisHandle
+	}
+};
+
+%pythonappend Handle_XCAFDoc_Dimension::Handle_XCAFDoc_Dimension %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
+%nodefaultctor Handle_XCAFDoc_Dimension;
+class Handle_XCAFDoc_Dimension : public Handle_TDF_Attribute {
+
+    public:
+        // constructors
+        Handle_XCAFDoc_Dimension();
+        Handle_XCAFDoc_Dimension(const Handle_XCAFDoc_Dimension &aHandle);
+        Handle_XCAFDoc_Dimension(const XCAFDoc_Dimension *anItem);
+        void Nullify();
+        Standard_Boolean IsNull() const;
+        static const Handle_XCAFDoc_Dimension DownCast(const Handle_Standard_Transient &AnObject);
+
+};
+
+%extend Handle_XCAFDoc_Dimension {
+    XCAFDoc_Dimension* _get_reference() {
+    return (XCAFDoc_Dimension*)$self->get();
+    }
+};
+
+%extend Handle_XCAFDoc_Dimension {
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
+};
+
+%extend XCAFDoc_Dimension {
 	%pythoncode {
 	__repr__ = _dumps_object
 	}
@@ -1686,7 +2577,7 @@ class XCAFDoc_DocumentTool : public TDF_Attribute {
 ") GetID;
 		static const Standard_GUID & GetID ();
 		%feature("compactdefaultargs") Set;
-		%feature("autodoc", "	* Create (if not exist) DocumentTool attribute on 0.1 label if <IsAcces> is true, else on <L> label. This label will be returned by DocLabel(); If the attribute is already set it won't be reset on <L> even if <IsAcces> is false. ColorTool and ShapeTool attributes are also set by this method.
+		%feature("autodoc", "	* Create --if not exist-- DocumentTool attribute on 0.1 label if <IsAcces> is true, else on <L> label. This label will be returned by DocLabel----; If the attribute is already set it won't be reset on <L> even if <IsAcces> is false. ColorTool and ShapeTool attributes are also set by this method.
 
 	:param L:
 	:type L: TDF_Label &
@@ -1710,7 +2601,7 @@ class XCAFDoc_DocumentTool : public TDF_Attribute {
 ") DocLabel;
 		static TDF_Label DocLabel (const TDF_Label & acces);
 		%feature("compactdefaultargs") ShapesLabel;
-		%feature("autodoc", "	* Returns sub-label of DocLabel() with tag 1.
+		%feature("autodoc", "	* Returns sub-label of DocLabel---- with tag 1.
 
 	:param acces:
 	:type acces: TDF_Label &
@@ -1718,7 +2609,7 @@ class XCAFDoc_DocumentTool : public TDF_Attribute {
 ") ShapesLabel;
 		static TDF_Label ShapesLabel (const TDF_Label & acces);
 		%feature("compactdefaultargs") ColorsLabel;
-		%feature("autodoc", "	* Returns sub-label of DocLabel() with tag 2.
+		%feature("autodoc", "	* Returns sub-label of DocLabel---- with tag 2.
 
 	:param acces:
 	:type acces: TDF_Label &
@@ -1726,7 +2617,7 @@ class XCAFDoc_DocumentTool : public TDF_Attribute {
 ") ColorsLabel;
 		static TDF_Label ColorsLabel (const TDF_Label & acces);
 		%feature("compactdefaultargs") LayersLabel;
-		%feature("autodoc", "	* Returns sub-label of DocLabel() with tag 3.
+		%feature("autodoc", "	* Returns sub-label of DocLabel---- with tag 3.
 
 	:param acces:
 	:type acces: TDF_Label &
@@ -1734,7 +2625,7 @@ class XCAFDoc_DocumentTool : public TDF_Attribute {
 ") LayersLabel;
 		static TDF_Label LayersLabel (const TDF_Label & acces);
 		%feature("compactdefaultargs") DGTsLabel;
-		%feature("autodoc", "	* Returns sub-label of DocLabel() with tag 4.
+		%feature("autodoc", "	* Returns sub-label of DocLabel---- with tag 4.
 
 	:param acces:
 	:type acces: TDF_Label &
@@ -1742,15 +2633,39 @@ class XCAFDoc_DocumentTool : public TDF_Attribute {
 ") DGTsLabel;
 		static TDF_Label DGTsLabel (const TDF_Label & acces);
 		%feature("compactdefaultargs") MaterialsLabel;
-		%feature("autodoc", "	* Returns sub-label of DocLabel() with tag 5.
+		%feature("autodoc", "	* Returns sub-label of DocLabel---- with tag 5.
 
 	:param acces:
 	:type acces: TDF_Label &
 	:rtype: TDF_Label
 ") MaterialsLabel;
 		static TDF_Label MaterialsLabel (const TDF_Label & acces);
+		%feature("compactdefaultargs") ViewsLabel;
+		%feature("autodoc", "	* Returns sub-label of DocLabel---- with tag 7.
+
+	:param acces:
+	:type acces: TDF_Label &
+	:rtype: TDF_Label
+") ViewsLabel;
+		static TDF_Label ViewsLabel (const TDF_Label & acces);
+		%feature("compactdefaultargs") ClippingPlanesLabel;
+		%feature("autodoc", "	* Returns sub-label of DocLabel---- with tag 8.
+
+	:param acces:
+	:type acces: TDF_Label &
+	:rtype: TDF_Label
+") ClippingPlanesLabel;
+		static TDF_Label ClippingPlanesLabel (const TDF_Label & acces);
+		%feature("compactdefaultargs") NotesLabel;
+		%feature("autodoc", "	* Returns sub-label of DocLabel---- with tag 9.
+
+	:param acces:
+	:type acces: TDF_Label &
+	:rtype: TDF_Label
+") NotesLabel;
+		static TDF_Label NotesLabel (const TDF_Label & acces);
 		%feature("compactdefaultargs") ShapeTool;
-		%feature("autodoc", "	* Creates (if it does not exist) ShapeTool attribute on ShapesLabel().
+		%feature("autodoc", "	* Creates --if it does not exist-- ShapeTool attribute on ShapesLabel----.
 
 	:param acces:
 	:type acces: TDF_Label &
@@ -1758,7 +2673,7 @@ class XCAFDoc_DocumentTool : public TDF_Attribute {
 ") ShapeTool;
 		static Handle_XCAFDoc_ShapeTool ShapeTool (const TDF_Label & acces);
 		%feature("compactdefaultargs") ColorTool;
-		%feature("autodoc", "	* Creates (if it does not exist) ColorTool attribute on ColorsLabel().
+		%feature("autodoc", "	* Creates --if it does not exist-- ColorTool attribute on ColorsLabel----.
 
 	:param acces:
 	:type acces: TDF_Label &
@@ -1766,7 +2681,7 @@ class XCAFDoc_DocumentTool : public TDF_Attribute {
 ") ColorTool;
 		static Handle_XCAFDoc_ColorTool ColorTool (const TDF_Label & acces);
 		%feature("compactdefaultargs") LayerTool;
-		%feature("autodoc", "	* Creates (if it does not exist) LayerTool attribute on LayersLabel().
+		%feature("autodoc", "	* Creates --if it does not exist-- LayerTool attribute on LayersLabel----.
 
 	:param acces:
 	:type acces: TDF_Label &
@@ -1774,7 +2689,7 @@ class XCAFDoc_DocumentTool : public TDF_Attribute {
 ") LayerTool;
 		static Handle_XCAFDoc_LayerTool LayerTool (const TDF_Label & acces);
 		%feature("compactdefaultargs") DimTolTool;
-		%feature("autodoc", "	* Creates (if it does not exist) DimTolTool attribute on DGTsLabel().
+		%feature("autodoc", "	* Creates --if it does not exist-- DimTolTool attribute on DGTsLabel----.
 
 	:param acces:
 	:type acces: TDF_Label &
@@ -1782,13 +2697,37 @@ class XCAFDoc_DocumentTool : public TDF_Attribute {
 ") DimTolTool;
 		static Handle_XCAFDoc_DimTolTool DimTolTool (const TDF_Label & acces);
 		%feature("compactdefaultargs") MaterialTool;
-		%feature("autodoc", "	* Creates (if it does not exist) DimTolTool attribute on DGTsLabel().
+		%feature("autodoc", "	* Creates --if it does not exist-- DimTolTool attribute on DGTsLabel----.
 
 	:param acces:
 	:type acces: TDF_Label &
 	:rtype: Handle_XCAFDoc_MaterialTool
 ") MaterialTool;
 		static Handle_XCAFDoc_MaterialTool MaterialTool (const TDF_Label & acces);
+		%feature("compactdefaultargs") ViewTool;
+		%feature("autodoc", "	* Creates --if it does not exist-- ViewTool attribute on ViewsLabel----.
+
+	:param acces:
+	:type acces: TDF_Label &
+	:rtype: Handle_XCAFDoc_ViewTool
+") ViewTool;
+		static Handle_XCAFDoc_ViewTool ViewTool (const TDF_Label & acces);
+		%feature("compactdefaultargs") ClippingPlaneTool;
+		%feature("autodoc", "	* Creates --if it does not exist-- ClippingPlaneTool attribute on ClippingPlanesLabel----.
+
+	:param acces:
+	:type acces: TDF_Label &
+	:rtype: Handle_XCAFDoc_ClippingPlaneTool
+") ClippingPlaneTool;
+		static Handle_XCAFDoc_ClippingPlaneTool ClippingPlaneTool (const TDF_Label & acces);
+		%feature("compactdefaultargs") NotesTool;
+		%feature("autodoc", "	* Creates --if it does not exist-- NotesTool attribute on NotesLabel----.
+
+	:param acces:
+	:type acces: TDF_Label &
+	:rtype: Handle_XCAFDoc_NotesTool
+") NotesTool;
+		static Handle_XCAFDoc_NotesTool NotesTool (const TDF_Label & acces);
 		%feature("compactdefaultargs") XCAFDoc_DocumentTool;
 		%feature("autodoc", "	:rtype: None
 ") XCAFDoc_DocumentTool;
@@ -1821,12 +2760,6 @@ class XCAFDoc_DocumentTool : public TDF_Attribute {
 	:rtype: None
 ") Paste;
 		void Paste (const Handle_TDF_Attribute & into,const Handle_TDF_RelocationTable & RT);
-		%feature("compactdefaultargs") Destroy;
-		%feature("autodoc", "	* Unregisters the document holding this attribute from an internal global map of XDE documents.
-
-	:rtype: void
-") Destroy;
-		virtual void Destroy ();
 };
 
 
@@ -1861,22 +2794,165 @@ class Handle_XCAFDoc_DocumentTool : public Handle_TDF_Attribute {
         static const Handle_XCAFDoc_DocumentTool DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_XCAFDoc_DocumentTool {
     XCAFDoc_DocumentTool* _get_reference() {
-    return (XCAFDoc_DocumentTool*)$self->Access();
+    return (XCAFDoc_DocumentTool*)$self->get();
     }
 };
 
 %extend Handle_XCAFDoc_DocumentTool {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend XCAFDoc_DocumentTool {
+	%pythoncode {
+	__repr__ = _dumps_object
+	}
+};
+class XCAFDoc_Editor {
+	public:
+		%feature("compactdefaultargs") Expand;
+		%feature("autodoc", "	* Convert Shape--compound-- to assembly
+
+	:param Doc:
+	:type Doc: TDF_Label &
+	:param Shape:
+	:type Shape: TDF_Label &
+	:param recursively: default value is Standard_True
+	:type recursively: bool
+	:rtype: bool
+") Expand;
+		static Standard_Boolean Expand (const TDF_Label & Doc,const TDF_Label & Shape,const Standard_Boolean recursively = Standard_True);
+		%feature("compactdefaultargs") Expand;
+		%feature("autodoc", "	* Convert all compounds in Doc to assembly
+
+	:param Doc:
+	:type Doc: TDF_Label &
+	:param recursively: default value is Standard_True
+	:type recursively: bool
+	:rtype: bool
+") Expand;
+		static Standard_Boolean Expand (const TDF_Label & Doc,const Standard_Boolean recursively = Standard_True);
+};
+
+
+%extend XCAFDoc_Editor {
+	%pythoncode {
+	__repr__ = _dumps_object
+	}
+};
+%nodefaultctor XCAFDoc_GeomTolerance;
+class XCAFDoc_GeomTolerance : public TDF_Attribute {
+	public:
+		%feature("compactdefaultargs") XCAFDoc_GeomTolerance;
+		%feature("autodoc", "	:rtype: None
+") XCAFDoc_GeomTolerance;
+		 XCAFDoc_GeomTolerance ();
+		%feature("compactdefaultargs") XCAFDoc_GeomTolerance;
+		%feature("autodoc", "	:param theObj:
+	:type theObj: Handle_XCAFDoc_GeomTolerance &
+	:rtype: None
+") XCAFDoc_GeomTolerance;
+		 XCAFDoc_GeomTolerance (const Handle_XCAFDoc_GeomTolerance & theObj);
+		%feature("compactdefaultargs") GetID;
+		%feature("autodoc", "	:rtype: Standard_GUID
+") GetID;
+		static const Standard_GUID & GetID ();
+		%feature("compactdefaultargs") Set;
+		%feature("autodoc", "	:param theLabel:
+	:type theLabel: TDF_Label &
+	:rtype: Handle_XCAFDoc_GeomTolerance
+") Set;
+		static Handle_XCAFDoc_GeomTolerance Set (const TDF_Label & theLabel);
+		%feature("compactdefaultargs") SetObject;
+		%feature("autodoc", "	:param theObject:
+	:type theObject: Handle_XCAFDimTolObjects_GeomToleranceObject &
+	:rtype: None
+") SetObject;
+		void SetObject (const Handle_XCAFDimTolObjects_GeomToleranceObject & theObject);
+		%feature("compactdefaultargs") GetObject;
+		%feature("autodoc", "	:rtype: Handle_XCAFDimTolObjects_GeomToleranceObject
+") GetObject;
+		Handle_XCAFDimTolObjects_GeomToleranceObject GetObject ();
+		%feature("compactdefaultargs") ID;
+		%feature("autodoc", "	:rtype: Standard_GUID
+") ID;
+		const Standard_GUID & ID ();
+		%feature("compactdefaultargs") Restore;
+		%feature("autodoc", "	:param With:
+	:type With: Handle_TDF_Attribute &
+	:rtype: None
+") Restore;
+		void Restore (const Handle_TDF_Attribute & With);
+		%feature("compactdefaultargs") NewEmpty;
+		%feature("autodoc", "	:rtype: Handle_TDF_Attribute
+") NewEmpty;
+		Handle_TDF_Attribute NewEmpty ();
+		%feature("compactdefaultargs") Paste;
+		%feature("autodoc", "	:param Into:
+	:type Into: Handle_TDF_Attribute &
+	:param RT:
+	:type RT: Handle_TDF_RelocationTable &
+	:rtype: None
+") Paste;
+		void Paste (const Handle_TDF_Attribute & Into,const Handle_TDF_RelocationTable & RT);
+};
+
+
+%extend XCAFDoc_GeomTolerance {
+	%pythoncode {
+		def GetHandle(self):
+		    try:
+		        return self.thisHandle
+		    except:
+		        self.thisHandle = Handle_XCAFDoc_GeomTolerance(self)
+		        self.thisown = False
+		        return self.thisHandle
+	}
+};
+
+%pythonappend Handle_XCAFDoc_GeomTolerance::Handle_XCAFDoc_GeomTolerance %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
+%nodefaultctor Handle_XCAFDoc_GeomTolerance;
+class Handle_XCAFDoc_GeomTolerance : public Handle_TDF_Attribute {
+
+    public:
+        // constructors
+        Handle_XCAFDoc_GeomTolerance();
+        Handle_XCAFDoc_GeomTolerance(const Handle_XCAFDoc_GeomTolerance &aHandle);
+        Handle_XCAFDoc_GeomTolerance(const XCAFDoc_GeomTolerance *anItem);
+        void Nullify();
+        Standard_Boolean IsNull() const;
+        static const Handle_XCAFDoc_GeomTolerance DownCast(const Handle_Standard_Transient &AnObject);
+
+};
+
+%extend Handle_XCAFDoc_GeomTolerance {
+    XCAFDoc_GeomTolerance* _get_reference() {
+    return (XCAFDoc_GeomTolerance*)$self->get();
+    }
+};
+
+%extend Handle_XCAFDoc_GeomTolerance {
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
+};
+
+%extend XCAFDoc_GeomTolerance {
 	%pythoncode {
 	__repr__ = _dumps_object
 	}
@@ -2037,7 +3113,7 @@ class XCAFDoc_GraphNode : public TDF_Attribute {
 ") NbChildren;
 		Standard_Integer NbChildren ();
 		%feature("compactdefaultargs") ID;
-		%feature("autodoc", "	* Returns the Graph ID (default or explicit one depending onthe Set method used).
+		%feature("autodoc", "	* Returns the Graph ID --default or explicit one depending onthe Set method used--.
 
 	:rtype: Standard_GUID
 ") ID;
@@ -2112,165 +3188,23 @@ class Handle_XCAFDoc_GraphNode : public Handle_TDF_Attribute {
         static const Handle_XCAFDoc_GraphNode DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_XCAFDoc_GraphNode {
     XCAFDoc_GraphNode* _get_reference() {
-    return (XCAFDoc_GraphNode*)$self->Access();
+    return (XCAFDoc_GraphNode*)$self->get();
     }
 };
 
 %extend Handle_XCAFDoc_GraphNode {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend XCAFDoc_GraphNode {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor XCAFDoc_GraphNodeSequence;
-class XCAFDoc_GraphNodeSequence : public TCollection_BaseSequence {
-	public:
-		%feature("compactdefaultargs") XCAFDoc_GraphNodeSequence;
-		%feature("autodoc", "	:rtype: None
-") XCAFDoc_GraphNodeSequence;
-		 XCAFDoc_GraphNodeSequence ();
-		%feature("compactdefaultargs") XCAFDoc_GraphNodeSequence;
-		%feature("autodoc", "	:param Other:
-	:type Other: XCAFDoc_GraphNodeSequence &
-	:rtype: None
-") XCAFDoc_GraphNodeSequence;
-		 XCAFDoc_GraphNodeSequence (const XCAFDoc_GraphNodeSequence & Other);
-		%feature("compactdefaultargs") Clear;
-		%feature("autodoc", "	:rtype: None
-") Clear;
-		void Clear ();
-		%feature("compactdefaultargs") Assign;
-		%feature("autodoc", "	:param Other:
-	:type Other: XCAFDoc_GraphNodeSequence &
-	:rtype: XCAFDoc_GraphNodeSequence
-") Assign;
-		const XCAFDoc_GraphNodeSequence & Assign (const XCAFDoc_GraphNodeSequence & Other);
-		%feature("compactdefaultargs") operator =;
-		%feature("autodoc", "	:param Other:
-	:type Other: XCAFDoc_GraphNodeSequence &
-	:rtype: XCAFDoc_GraphNodeSequence
-") operator =;
-		const XCAFDoc_GraphNodeSequence & operator = (const XCAFDoc_GraphNodeSequence & Other);
-		%feature("compactdefaultargs") Append;
-		%feature("autodoc", "	:param T:
-	:type T: Handle_XCAFDoc_GraphNode &
-	:rtype: None
-") Append;
-		void Append (const Handle_XCAFDoc_GraphNode & T);
-		%feature("compactdefaultargs") Append;
-		%feature("autodoc", "	:param S:
-	:type S: XCAFDoc_GraphNodeSequence &
-	:rtype: None
-") Append;
-		void Append (XCAFDoc_GraphNodeSequence & S);
-		%feature("compactdefaultargs") Prepend;
-		%feature("autodoc", "	:param T:
-	:type T: Handle_XCAFDoc_GraphNode &
-	:rtype: None
-") Prepend;
-		void Prepend (const Handle_XCAFDoc_GraphNode & T);
-		%feature("compactdefaultargs") Prepend;
-		%feature("autodoc", "	:param S:
-	:type S: XCAFDoc_GraphNodeSequence &
-	:rtype: None
-") Prepend;
-		void Prepend (XCAFDoc_GraphNodeSequence & S);
-		%feature("compactdefaultargs") InsertBefore;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param T:
-	:type T: Handle_XCAFDoc_GraphNode &
-	:rtype: None
-") InsertBefore;
-		void InsertBefore (const Standard_Integer Index,const Handle_XCAFDoc_GraphNode & T);
-		%feature("compactdefaultargs") InsertBefore;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param S:
-	:type S: XCAFDoc_GraphNodeSequence &
-	:rtype: None
-") InsertBefore;
-		void InsertBefore (const Standard_Integer Index,XCAFDoc_GraphNodeSequence & S);
-		%feature("compactdefaultargs") InsertAfter;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param T:
-	:type T: Handle_XCAFDoc_GraphNode &
-	:rtype: None
-") InsertAfter;
-		void InsertAfter (const Standard_Integer Index,const Handle_XCAFDoc_GraphNode & T);
-		%feature("compactdefaultargs") InsertAfter;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param S:
-	:type S: XCAFDoc_GraphNodeSequence &
-	:rtype: None
-") InsertAfter;
-		void InsertAfter (const Standard_Integer Index,XCAFDoc_GraphNodeSequence & S);
-		%feature("compactdefaultargs") First;
-		%feature("autodoc", "	:rtype: Handle_XCAFDoc_GraphNode
-") First;
-		Handle_XCAFDoc_GraphNode First ();
-		%feature("compactdefaultargs") Last;
-		%feature("autodoc", "	:rtype: Handle_XCAFDoc_GraphNode
-") Last;
-		Handle_XCAFDoc_GraphNode Last ();
-		%feature("compactdefaultargs") Split;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param Sub:
-	:type Sub: XCAFDoc_GraphNodeSequence &
-	:rtype: None
-") Split;
-		void Split (const Standard_Integer Index,XCAFDoc_GraphNodeSequence & Sub);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: Handle_XCAFDoc_GraphNode
-") Value;
-		Handle_XCAFDoc_GraphNode Value (const Standard_Integer Index);
-		%feature("compactdefaultargs") SetValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param I:
-	:type I: Handle_XCAFDoc_GraphNode &
-	:rtype: None
-") SetValue;
-		void SetValue (const Standard_Integer Index,const Handle_XCAFDoc_GraphNode & I);
-		%feature("compactdefaultargs") ChangeValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: Handle_XCAFDoc_GraphNode
-") ChangeValue;
-		Handle_XCAFDoc_GraphNode ChangeValue (const Standard_Integer Index);
-		%feature("compactdefaultargs") Remove;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: None
-") Remove;
-		void Remove (const Standard_Integer Index);
-		%feature("compactdefaultargs") Remove;
-		%feature("autodoc", "	:param FromIndex:
-	:type FromIndex: int
-	:param ToIndex:
-	:type ToIndex: int
-	:rtype: None
-") Remove;
-		void Remove (const Standard_Integer FromIndex,const Standard_Integer ToIndex);
-};
-
-
-%extend XCAFDoc_GraphNodeSequence {
 	%pythoncode {
 	__repr__ = _dumps_object
 	}
@@ -2283,7 +3217,7 @@ class XCAFDoc_LayerTool : public TDF_Attribute {
 ") XCAFDoc_LayerTool;
 		 XCAFDoc_LayerTool ();
 		%feature("compactdefaultargs") Set;
-		%feature("autodoc", "	* Creates (if not exist) LayerTool.
+		%feature("autodoc", "	* Creates --if not exist-- LayerTool.
 
 	:param L:
 	:type L: TDF_Label &
@@ -2335,7 +3269,7 @@ class XCAFDoc_LayerTool : public TDF_Attribute {
 ") FindLayer;
 		Standard_Boolean FindLayer (const TCollection_ExtendedString & aLayer,TDF_Label & lab);
 		%feature("compactdefaultargs") FindLayer;
-		%feature("autodoc", "	* Finds a Layer definition in a Layertable and returns its label if found (or Null label else)
+		%feature("autodoc", "	* Finds a Layer definition in a Layertable and returns its label if found --or Null label else--
 
 	:param aLayer:
 	:type aLayer: TCollection_ExtendedString &
@@ -2343,7 +3277,7 @@ class XCAFDoc_LayerTool : public TDF_Attribute {
 ") FindLayer;
 		TDF_Label FindLayer (const TCollection_ExtendedString & aLayer);
 		%feature("compactdefaultargs") AddLayer;
-		%feature("autodoc", "	* Adds a Layer definition to a Layertable and returns its label (returns existing label if the same Layer is already defined)
+		%feature("autodoc", "	* Adds a Layer definition to a Layertable and returns its label --returns existing label if the same Layer is already defined--
 
 	:param aLayer:
 	:type aLayer: TCollection_ExtendedString &
@@ -2650,19 +3584,20 @@ class Handle_XCAFDoc_LayerTool : public Handle_TDF_Attribute {
         static const Handle_XCAFDoc_LayerTool DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_XCAFDoc_LayerTool {
     XCAFDoc_LayerTool* _get_reference() {
-    return (XCAFDoc_LayerTool*)$self->Access();
+    return (XCAFDoc_LayerTool*)$self->get();
     }
 };
 
 %extend Handle_XCAFDoc_LayerTool {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend XCAFDoc_LayerTool {
@@ -2761,19 +3696,20 @@ class Handle_XCAFDoc_Location : public Handle_TDF_Attribute {
         static const Handle_XCAFDoc_Location DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_XCAFDoc_Location {
     XCAFDoc_Location* _get_reference() {
-    return (XCAFDoc_Location*)$self->Access();
+    return (XCAFDoc_Location*)$self->get();
     }
 };
 
 %extend Handle_XCAFDoc_Location {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend XCAFDoc_Location {
@@ -2898,19 +3834,20 @@ class Handle_XCAFDoc_Material : public Handle_TDF_Attribute {
         static const Handle_XCAFDoc_Material DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_XCAFDoc_Material {
     XCAFDoc_Material* _get_reference() {
-    return (XCAFDoc_Material*)$self->Access();
+    return (XCAFDoc_Material*)$self->get();
     }
 };
 
 %extend Handle_XCAFDoc_Material {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend XCAFDoc_Material {
@@ -2926,7 +3863,7 @@ class XCAFDoc_MaterialTool : public TDF_Attribute {
 ") XCAFDoc_MaterialTool;
 		 XCAFDoc_MaterialTool ();
 		%feature("compactdefaultargs") Set;
-		%feature("autodoc", "	* Creates (if not exist) MaterialTool.
+		%feature("autodoc", "	* Creates --if not exist-- MaterialTool.
 
 	:param L:
 	:type L: TDF_Label &
@@ -3091,19 +4028,20 @@ class Handle_XCAFDoc_MaterialTool : public Handle_TDF_Attribute {
         static const Handle_XCAFDoc_MaterialTool DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_XCAFDoc_MaterialTool {
     XCAFDoc_MaterialTool* _get_reference() {
-    return (XCAFDoc_MaterialTool*)$self->Access();
+    return (XCAFDoc_MaterialTool*)$self->get();
     }
 };
 
 %extend Handle_XCAFDoc_MaterialTool {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend XCAFDoc_MaterialTool {
@@ -3111,73 +4049,704 @@ class Handle_XCAFDoc_MaterialTool : public Handle_TDF_Attribute {
 	__repr__ = _dumps_object
 	}
 };
-%nodefaultctor XCAFDoc_SequenceNodeOfGraphNodeSequence;
-class XCAFDoc_SequenceNodeOfGraphNodeSequence : public TCollection_SeqNode {
+%nodefaultctor XCAFDoc_Note;
+class XCAFDoc_Note : public TDF_Attribute {
 	public:
-		%feature("compactdefaultargs") XCAFDoc_SequenceNodeOfGraphNodeSequence;
-		%feature("autodoc", "	:param I:
-	:type I: Handle_XCAFDoc_GraphNode &
-	:param n:
-	:type n: TCollection_SeqNodePtr &
-	:param p:
-	:type p: TCollection_SeqNodePtr &
+		%feature("compactdefaultargs") IsMine;
+		%feature("autodoc", "	* Checks if the given label represents a note.
+
+	:param theLabel:
+	:type theLabel: TDF_Label &
+	:rtype: bool
+") IsMine;
+		static Standard_Boolean IsMine (const TDF_Label & theLabel);
+		%feature("compactdefaultargs") Get;
+		%feature("autodoc", "	* Finds a reference attribute on the given label and returns it, if it is found
+
+	:param theLabel:
+	:type theLabel: TDF_Label &
+	:rtype: Handle_XCAFDoc_Note
+") Get;
+		static Handle_XCAFDoc_Note Get (const TDF_Label & theLabel);
+		%feature("compactdefaultargs") Set;
+		%feature("autodoc", "	* Sets the user name and the timestamp of the note. \param [in] theUserName - the user associated with the note. \param [in] theTimeStamp - timestamp of the note. eturn A handle to the attribute instance.
+
+	:param theUserName:
+	:type theUserName: TCollection_ExtendedString &
+	:param theTimeStamp:
+	:type theTimeStamp: TCollection_ExtendedString &
 	:rtype: None
-") XCAFDoc_SequenceNodeOfGraphNodeSequence;
-		 XCAFDoc_SequenceNodeOfGraphNodeSequence (const Handle_XCAFDoc_GraphNode & I,const TCollection_SeqNodePtr & n,const TCollection_SeqNodePtr & p);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:rtype: Handle_XCAFDoc_GraphNode
-") Value;
-		Handle_XCAFDoc_GraphNode Value ();
-};
+") Set;
+		void Set (const TCollection_ExtendedString & theUserName,const TCollection_ExtendedString & theTimeStamp);
+		%feature("compactdefaultargs") UserName;
+		%feature("autodoc", "	* Returns the user name, who created the note.
+
+	:rtype: TCollection_ExtendedString
+") UserName;
+		const TCollection_ExtendedString & UserName ();
+		%feature("compactdefaultargs") TimeStamp;
+		%feature("autodoc", "	* Returns the timestamp of the note.
+
+	:rtype: TCollection_ExtendedString
+") TimeStamp;
+		const TCollection_ExtendedString & TimeStamp ();
+		%feature("compactdefaultargs") IsOrphan;
+		%feature("autodoc", "	* Checks if the note isn't linked to annotated items.
+
+	:rtype: bool
+") IsOrphan;
+		Standard_Boolean IsOrphan ();
+		%feature("compactdefaultargs") Restore;
+		%feature("autodoc", "	:param theAttrFrom:
+	:type theAttrFrom: Handle_TDF_Attribute &
+	:rtype: None
+") Restore;
+		void Restore (const Handle_TDF_Attribute & theAttrFrom);
+		%feature("compactdefaultargs") Paste;
+		%feature("autodoc", "	:param theAttrInto:
+	:type theAttrInto: Handle_TDF_Attribute &
+	:param theRT:
+	:type theRT: Handle_TDF_RelocationTable &
+	:rtype: None
+") Paste;
+		void Paste (const Handle_TDF_Attribute & theAttrInto,const Handle_TDF_RelocationTable & theRT);
+
+        %feature("autodoc", "1");
+        %extend{
+            std::string DumpToString() {
+            std::stringstream s;
+            self->Dump(s);
+            return s.str();}
+        };
+        };
 
 
-%extend XCAFDoc_SequenceNodeOfGraphNodeSequence {
+%extend XCAFDoc_Note {
 	%pythoncode {
 		def GetHandle(self):
 		    try:
 		        return self.thisHandle
 		    except:
-		        self.thisHandle = Handle_XCAFDoc_SequenceNodeOfGraphNodeSequence(self)
+		        self.thisHandle = Handle_XCAFDoc_Note(self)
 		        self.thisown = False
 		        return self.thisHandle
 	}
 };
 
-%pythonappend Handle_XCAFDoc_SequenceNodeOfGraphNodeSequence::Handle_XCAFDoc_SequenceNodeOfGraphNodeSequence %{
+%pythonappend Handle_XCAFDoc_Note::Handle_XCAFDoc_Note %{
     # register the handle in the base object
     if len(args) > 0:
         register_handle(self, args[0])
 %}
 
-%nodefaultctor Handle_XCAFDoc_SequenceNodeOfGraphNodeSequence;
-class Handle_XCAFDoc_SequenceNodeOfGraphNodeSequence : public Handle_TCollection_SeqNode {
+%nodefaultctor Handle_XCAFDoc_Note;
+class Handle_XCAFDoc_Note : public Handle_TDF_Attribute {
 
     public:
         // constructors
-        Handle_XCAFDoc_SequenceNodeOfGraphNodeSequence();
-        Handle_XCAFDoc_SequenceNodeOfGraphNodeSequence(const Handle_XCAFDoc_SequenceNodeOfGraphNodeSequence &aHandle);
-        Handle_XCAFDoc_SequenceNodeOfGraphNodeSequence(const XCAFDoc_SequenceNodeOfGraphNodeSequence *anItem);
+        Handle_XCAFDoc_Note();
+        Handle_XCAFDoc_Note(const Handle_XCAFDoc_Note &aHandle);
+        Handle_XCAFDoc_Note(const XCAFDoc_Note *anItem);
         void Nullify();
         Standard_Boolean IsNull() const;
-        static const Handle_XCAFDoc_SequenceNodeOfGraphNodeSequence DownCast(const Handle_Standard_Transient &AnObject);
+        static const Handle_XCAFDoc_Note DownCast(const Handle_Standard_Transient &AnObject);
 
 };
-%extend Handle_XCAFDoc_SequenceNodeOfGraphNodeSequence {
-    XCAFDoc_SequenceNodeOfGraphNodeSequence* _get_reference() {
-    return (XCAFDoc_SequenceNodeOfGraphNodeSequence*)$self->Access();
+
+%extend Handle_XCAFDoc_Note {
+    XCAFDoc_Note* _get_reference() {
+    return (XCAFDoc_Note*)$self->get();
     }
 };
 
-%extend Handle_XCAFDoc_SequenceNodeOfGraphNodeSequence {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
+%extend Handle_XCAFDoc_Note {
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
+};
+
+%extend XCAFDoc_Note {
+	%pythoncode {
+	__repr__ = _dumps_object
+	}
+};
+%nodefaultctor XCAFDoc_NotesTool;
+class XCAFDoc_NotesTool : public TDF_Attribute {
+	public:
+		%feature("compactdefaultargs") GetID;
+		%feature("autodoc", "	:rtype: Standard_GUID
+") GetID;
+		static const Standard_GUID & GetID ();
+		%feature("compactdefaultargs") Set;
+		%feature("autodoc", "	* Create --if not exist-- a notes tool from XCAFDoc on theLabel.
+
+	:param theLabel:
+	:type theLabel: TDF_Label &
+	:rtype: Handle_XCAFDoc_NotesTool
+") Set;
+		static Handle_XCAFDoc_NotesTool Set (const TDF_Label & theLabel);
+		%feature("compactdefaultargs") XCAFDoc_NotesTool;
+		%feature("autodoc", "	* Creates an empty notes tool.
+
+	:rtype: None
+") XCAFDoc_NotesTool;
+		 XCAFDoc_NotesTool ();
+		%feature("compactdefaultargs") GetNotesLabel;
+		%feature("autodoc", "	* Returns the label of the notes hive.
+
+	:rtype: TDF_Label
+") GetNotesLabel;
+		TDF_Label GetNotesLabel ();
+		%feature("compactdefaultargs") GetAnnotatedItemsLabel;
+		%feature("autodoc", "	* Returns the label of the annotated items hive.
+
+	:rtype: TDF_Label
+") GetAnnotatedItemsLabel;
+		TDF_Label GetAnnotatedItemsLabel ();
+		%feature("compactdefaultargs") NbNotes;
+		%feature("autodoc", "	* Returns the number of labels in the notes hive.
+
+	:rtype: int
+") NbNotes;
+		Standard_Integer NbNotes ();
+		%feature("compactdefaultargs") NbAnnotatedItems;
+		%feature("autodoc", "	* Returns the number of labels in the annotated items hive.
+
+	:rtype: int
+") NbAnnotatedItems;
+		Standard_Integer NbAnnotatedItems ();
+		%feature("compactdefaultargs") GetNotes;
+		%feature("autodoc", "	* Returns all labels from the notes hive. The label sequence isn't cleared beforehand. \param [out] theNoteLabels - sequence of labels.
+
+	:param theNoteLabels:
+	:type theNoteLabels: TDF_LabelSequence &
+	:rtype: None
+") GetNotes;
+		void GetNotes (TDF_LabelSequence & theNoteLabels);
+		%feature("compactdefaultargs") GetAnnotatedItems;
+		%feature("autodoc", "	* Returns all labels from the annotated items hive. The label sequence isn't cleared beforehand. \param [out] theNoteLabels - sequence of labels.
+
+	:param theLabels:
+	:type theLabels: TDF_LabelSequence &
+	:rtype: None
+") GetAnnotatedItems;
+		void GetAnnotatedItems (TDF_LabelSequence & theLabels);
+		%feature("compactdefaultargs") IsAnnotatedItem;
+		%feature("autodoc", "	* Checks if the given assembly item is annotated. \param [in] theItemId - assembly item ID. eturn true if the item is annotated, otherwise - false.
+
+	:param theItemId:
+	:type theItemId: XCAFDoc_AssemblyItemId &
+	:rtype: bool
+") IsAnnotatedItem;
+		Standard_Boolean IsAnnotatedItem (const XCAFDoc_AssemblyItemId & theItemId);
+		%feature("compactdefaultargs") IsAnnotatedItem;
+		%feature("autodoc", "	* Checks if the given labeled item is annotated. \param [in] theItemLabel - item label. eturn true if the item is annotated, otherwise - false.
+
+	:param theItemLabel:
+	:type theItemLabel: TDF_Label &
+	:rtype: bool
+") IsAnnotatedItem;
+		Standard_Boolean IsAnnotatedItem (const TDF_Label & theItemLabel);
+		%feature("compactdefaultargs") FindAnnotatedItem;
+		%feature("autodoc", "	* @name Find annotated item functions @{ Finds a label of the given assembly item ID in the annotated items hive. \param [in] theItemId - assembly item ID. eturn annotated item label if it is found, otherwise - null label.
+
+	:param theItemId:
+	:type theItemId: XCAFDoc_AssemblyItemId &
+	:rtype: TDF_Label
+") FindAnnotatedItem;
+		TDF_Label FindAnnotatedItem (const XCAFDoc_AssemblyItemId & theItemId);
+		%feature("compactdefaultargs") FindAnnotatedItem;
+		%feature("autodoc", "	* Finds a label of the given labeled item in the annotated items hive. \param [in] theItemLabel - item label. eturn annotated item label if it is found, otherwise - null label.
+
+	:param theItemLabel:
+	:type theItemLabel: TDF_Label &
+	:rtype: TDF_Label
+") FindAnnotatedItem;
+		TDF_Label FindAnnotatedItem (const TDF_Label & theItemLabel);
+		%feature("compactdefaultargs") FindAnnotatedItemAttr;
+		%feature("autodoc", "	* Finds a label of the given assembly item's attribute in the annotated items hive. \param [in] theItemId - assembly item ID. \param [in] theGUID - assembly item's attribute GUID. eturn annotated item label if it is found, otherwise - null label.
+
+	:param theItemId:
+	:type theItemId: XCAFDoc_AssemblyItemId &
+	:param theGUID:
+	:type theGUID: Standard_GUID &
+	:rtype: TDF_Label
+") FindAnnotatedItemAttr;
+		TDF_Label FindAnnotatedItemAttr (const XCAFDoc_AssemblyItemId & theItemId,const Standard_GUID & theGUID);
+		%feature("compactdefaultargs") FindAnnotatedItemAttr;
+		%feature("autodoc", "	* Finds a label of the given labeled item's attribute in the annotated items hive. \param [in] theItemLabel - item label. \param [in] theGUID - item's attribute GUID. eturn annotated item label if it is found, otherwise - null label.
+
+	:param theItemLabel:
+	:type theItemLabel: TDF_Label &
+	:param theGUID:
+	:type theGUID: Standard_GUID &
+	:rtype: TDF_Label
+") FindAnnotatedItemAttr;
+		TDF_Label FindAnnotatedItemAttr (const TDF_Label & theItemLabel,const Standard_GUID & theGUID);
+		%feature("compactdefaultargs") FindAnnotatedItemSubshape;
+		%feature("autodoc", "	* Finds a label of the given assembly item's subshape in the annotated items hive. \param [in] theItemId - assembly item ID. \param [in] theSubshapeIndex - assembly item's subshape index. eturn annotated item label if it is found, otherwise - null label.
+
+	:param theItemId:
+	:type theItemId: XCAFDoc_AssemblyItemId &
+	:param theSubshapeIndex:
+	:type theSubshapeIndex: int
+	:rtype: TDF_Label
+") FindAnnotatedItemSubshape;
+		TDF_Label FindAnnotatedItemSubshape (const XCAFDoc_AssemblyItemId & theItemId,Standard_Integer theSubshapeIndex);
+		%feature("compactdefaultargs") FindAnnotatedItemSubshape;
+		%feature("autodoc", "	* Finds a label of the given labeled item's subshape in the annotated items hive. \param [in] theItemLabel - item label. \param [in] theSubshapeIndex - labeled item's subshape index. eturn annotated item label if it is found, otherwise - null label.
+
+	:param theItemLabel:
+	:type theItemLabel: TDF_Label &
+	:param theSubshapeIndex:
+	:type theSubshapeIndex: int
+	:rtype: TDF_Label
+") FindAnnotatedItemSubshape;
+		TDF_Label FindAnnotatedItemSubshape (const TDF_Label & theItemLabel,Standard_Integer theSubshapeIndex);
+		%feature("compactdefaultargs") CreateComment;
+		%feature("autodoc", "	* @} @name Note creation functions @{ Create a new comment note. Creates a new label under the notes hive and attaches ef XCAFDoc_NoteComment attribute --derived ftom ef XCAFDoc_Note--. \param [in] theUserName - the user associated with the note. \param [in] theTimeStamp - timestamp of the note. \param [in] theComment - textual comment. eturn a handle to the base note attribute.
+
+	:param theUserName:
+	:type theUserName: TCollection_ExtendedString &
+	:param theTimeStamp:
+	:type theTimeStamp: TCollection_ExtendedString &
+	:param theComment:
+	:type theComment: TCollection_ExtendedString &
+	:rtype: Handle_XCAFDoc_Note
+") CreateComment;
+		Handle_XCAFDoc_Note CreateComment (const TCollection_ExtendedString & theUserName,const TCollection_ExtendedString & theTimeStamp,const TCollection_ExtendedString & theComment);
+		%feature("compactdefaultargs") CreateBalloon;
+		%feature("autodoc", "	* Create a new 'balloon' note. Creates a new label under the notes hive and attaches ef XCAFDoc_NoteBalloon attribute --derived ftom ef XCAFDoc_Note--. \param [in] theUserName - the user associated with the note. \param [in] theTimeStamp - timestamp of the note. \param [in] theComment - textual comment. eturn a handle to the base note attribute.
+
+	:param theUserName:
+	:type theUserName: TCollection_ExtendedString &
+	:param theTimeStamp:
+	:type theTimeStamp: TCollection_ExtendedString &
+	:param theComment:
+	:type theComment: TCollection_ExtendedString &
+	:rtype: Handle_XCAFDoc_Note
+") CreateBalloon;
+		Handle_XCAFDoc_Note CreateBalloon (const TCollection_ExtendedString & theUserName,const TCollection_ExtendedString & theTimeStamp,const TCollection_ExtendedString & theComment);
+		%feature("compactdefaultargs") CreateBinData;
+		%feature("autodoc", "	* Create a new note with data loaded from a binary file. Creates a new label under the notes hive and attaches ef XCAFDoc_NoteComment attribute --derived ftom ef XCAFDoc_Note--. \param [in] theUserName - the user associated with the note. \param [in] theTimeStamp - timestamp of the note. \param [in] theTitle - file title. \param [in] theMIMEtype - MIME type of the file. \param [in] theFile - input binary file. eturn a handle to the base note attribute.
+
+	:param theUserName:
+	:type theUserName: TCollection_ExtendedString &
+	:param theTimeStamp:
+	:type theTimeStamp: TCollection_ExtendedString &
+	:param theTitle:
+	:type theTitle: TCollection_ExtendedString &
+	:param theMIMEtype:
+	:type theMIMEtype: TCollection_AsciiString &
+	:param theFile:
+	:type theFile: OSD_File &
+	:rtype: Handle_XCAFDoc_Note
+") CreateBinData;
+		Handle_XCAFDoc_Note CreateBinData (const TCollection_ExtendedString & theUserName,const TCollection_ExtendedString & theTimeStamp,const TCollection_ExtendedString & theTitle,const TCollection_AsciiString & theMIMEtype,OSD_File & theFile);
+		%feature("compactdefaultargs") CreateBinData;
+		%feature("autodoc", "	* Create a new note with data loaded from a byte data array. Creates a new label under the notes hive and attaches ef XCAFDoc_NoteComment attribute --derived ftom ef XCAFDoc_Note--. \param [in] theUserName - the user associated with the note. \param [in] theTimeStamp - timestamp of the note. \param [in] theTitle - data title. \param [in] theMIMEtype - MIME type of the file. \param [in] theData - byte data array. eturn a handle to the base note attribute.
+
+	:param theUserName:
+	:type theUserName: TCollection_ExtendedString &
+	:param theTimeStamp:
+	:type theTimeStamp: TCollection_ExtendedString &
+	:param theTitle:
+	:type theTitle: TCollection_ExtendedString &
+	:param theMIMEtype:
+	:type theMIMEtype: TCollection_AsciiString &
+	:param theData:
+	:type theData: Handle_TColStd_HArray1OfByte &
+	:rtype: Handle_XCAFDoc_Note
+") CreateBinData;
+		Handle_XCAFDoc_Note CreateBinData (const TCollection_ExtendedString & theUserName,const TCollection_ExtendedString & theTimeStamp,const TCollection_ExtendedString & theTitle,const TCollection_AsciiString & theMIMEtype,const Handle_TColStd_HArray1OfByte & theData);
+		%feature("compactdefaultargs") GetNotes;
+		%feature("autodoc", "	* @} @name Get notes from annotated items functions @{ Gets all note labels of the assembly item. Notes linked to item's subshapes or attributes aren't taken into account. The label sequence isn't cleared beforehand. \param [in] theItemId - assembly item ID. \param [out] theNoteLabels - sequence of labels. eturn number of added labels.
+
+	:param theItemId:
+	:type theItemId: XCAFDoc_AssemblyItemId &
+	:param theNoteLabels:
+	:type theNoteLabels: TDF_LabelSequence &
+	:rtype: int
+") GetNotes;
+		Standard_Integer GetNotes (const XCAFDoc_AssemblyItemId & theItemId,TDF_LabelSequence & theNoteLabels);
+		%feature("compactdefaultargs") GetNotes;
+		%feature("autodoc", "	* Gets all note labels of the labeled item. Notes linked to item's attributes aren't taken into account. The label sequence isn't cleared beforehand. \param [in] theItemLabel - item label. \param [out] theNoteLabels - sequence of labels. eturn number of added labels.
+
+	:param theItemLabel:
+	:type theItemLabel: TDF_Label &
+	:param theNoteLabels:
+	:type theNoteLabels: TDF_LabelSequence &
+	:rtype: int
+") GetNotes;
+		Standard_Integer GetNotes (const TDF_Label & theItemLabel,TDF_LabelSequence & theNoteLabels);
+		%feature("compactdefaultargs") GetAttrNotes;
+		%feature("autodoc", "	* Gets all note labels of the assembly item's attribute. Notes linked to the item itself or to item's subshapes aren't taken into account. The label sequence isn't cleared beforehand. \param [in] theItemId - assembly item ID. \param [in] theGUID - assembly item's attribute GUID. \param [out] theNoteLabels - sequence of labels. eturn number of added labels.
+
+	:param theItemId:
+	:type theItemId: XCAFDoc_AssemblyItemId &
+	:param theGUID:
+	:type theGUID: Standard_GUID &
+	:param theNoteLabels:
+	:type theNoteLabels: TDF_LabelSequence &
+	:rtype: int
+") GetAttrNotes;
+		Standard_Integer GetAttrNotes (const XCAFDoc_AssemblyItemId & theItemId,const Standard_GUID & theGUID,TDF_LabelSequence & theNoteLabels);
+		%feature("compactdefaultargs") GetAttrNotes;
+		%feature("autodoc", "	* Gets all note labels of the labeled item's attribute. Notes linked to the item itself or to item's subshapes aren't taken into account. The label sequence isn't cleared beforehand. \param [in] theItemLabel - item label. \param [in] theGUID - item's attribute GUID. \param [out] theNoteLabels - sequence of labels. eturn number of added labels.
+
+	:param theItemLabel:
+	:type theItemLabel: TDF_Label &
+	:param theGUID:
+	:type theGUID: Standard_GUID &
+	:param theNoteLabels:
+	:type theNoteLabels: TDF_LabelSequence &
+	:rtype: int
+") GetAttrNotes;
+		Standard_Integer GetAttrNotes (const TDF_Label & theItemLabel,const Standard_GUID & theGUID,TDF_LabelSequence & theNoteLabels);
+		%feature("compactdefaultargs") GetSubshapeNotes;
+		%feature("autodoc", "	* Gets all note labels of the annotated item. Notes linked to the item itself or to item's attributes taken into account. The label sequence isn't cleared beforehand. \param [in] theItemId - assembly item ID. \param [in] theSubshapeIndex - assembly item's subshape index. \param [out] theNoteLabels - sequence of labels. eturn number of added labels.
+
+	:param theItemId:
+	:type theItemId: XCAFDoc_AssemblyItemId &
+	:param theSubshapeIndex:
+	:type theSubshapeIndex: int
+	:param theNoteLabels:
+	:type theNoteLabels: TDF_LabelSequence &
+	:rtype: int
+") GetSubshapeNotes;
+		Standard_Integer GetSubshapeNotes (const XCAFDoc_AssemblyItemId & theItemId,Standard_Integer theSubshapeIndex,TDF_LabelSequence & theNoteLabels);
+		%feature("compactdefaultargs") AddNote;
+		%feature("autodoc", "	* @} @name Annotation functions @{ Adds the given note to the assembly item. \param [in] theNoteLabel - note label. \param [in] theItemId - assembly item ID. eturn a handle to the assembly reference attribute.
+
+	:param theNoteLabel:
+	:type theNoteLabel: TDF_Label &
+	:param theItemId:
+	:type theItemId: XCAFDoc_AssemblyItemId &
+	:rtype: Handle_XCAFDoc_AssemblyItemRef
+") AddNote;
+		Handle_XCAFDoc_AssemblyItemRef AddNote (const TDF_Label & theNoteLabel,const XCAFDoc_AssemblyItemId & theItemId);
+		%feature("compactdefaultargs") AddNote;
+		%feature("autodoc", "	* Adds the given note to the labeled item. \param [in] theNoteLabel - note label. \param [in] theItemLabel - item label. eturn a handle to the assembly reference attribute.
+
+	:param theNoteLabel:
+	:type theNoteLabel: TDF_Label &
+	:param theItemLabel:
+	:type theItemLabel: TDF_Label &
+	:rtype: Handle_XCAFDoc_AssemblyItemRef
+") AddNote;
+		Handle_XCAFDoc_AssemblyItemRef AddNote (const TDF_Label & theNoteLabel,const TDF_Label & theItemLabel);
+		%feature("compactdefaultargs") AddNoteToAttr;
+		%feature("autodoc", "	* Adds the given note to the assembly item's attribute. \param [in] theNoteLabel - note label. \param [in] theItemId - assembly item ID. \param [in] theGUID - assembly item's attribute GUID. eturn a handle to the assembly reference attribute.
+
+	:param theNoteLabel:
+	:type theNoteLabel: TDF_Label &
+	:param theItemId:
+	:type theItemId: XCAFDoc_AssemblyItemId &
+	:param theGUID:
+	:type theGUID: Standard_GUID &
+	:rtype: Handle_XCAFDoc_AssemblyItemRef
+") AddNoteToAttr;
+		Handle_XCAFDoc_AssemblyItemRef AddNoteToAttr (const TDF_Label & theNoteLabel,const XCAFDoc_AssemblyItemId & theItemId,const Standard_GUID & theGUID);
+		%feature("compactdefaultargs") AddNoteToAttr;
+		%feature("autodoc", "	* Adds the given note to the labeled item's attribute. \param [in] theNoteLabel - note label. \param [in] theItemLabel - item label. \param [in] theGUID - assembly item's attribute GUID. eturn a handle to the assembly reference attribute.
+
+	:param theNoteLabel:
+	:type theNoteLabel: TDF_Label &
+	:param theItemLabel:
+	:type theItemLabel: TDF_Label &
+	:param theGUID:
+	:type theGUID: Standard_GUID &
+	:rtype: Handle_XCAFDoc_AssemblyItemRef
+") AddNoteToAttr;
+		Handle_XCAFDoc_AssemblyItemRef AddNoteToAttr (const TDF_Label & theNoteLabel,const TDF_Label & theItemLabel,const Standard_GUID & theGUID);
+		%feature("compactdefaultargs") AddNoteToSubshape;
+		%feature("autodoc", "	* Adds the given note to the assembly item's subshape. \param [in] theNoteLabel - note label. \param [in] theItemId - assembly item ID. \param [in] theSubshapeIndex - assembly item's subshape index. eturn a handle to the assembly reference attribute.
+
+	:param theNoteLabel:
+	:type theNoteLabel: TDF_Label &
+	:param theItemId:
+	:type theItemId: XCAFDoc_AssemblyItemId &
+	:param theSubshapeIndex:
+	:type theSubshapeIndex: int
+	:rtype: Handle_XCAFDoc_AssemblyItemRef
+") AddNoteToSubshape;
+		Handle_XCAFDoc_AssemblyItemRef AddNoteToSubshape (const TDF_Label & theNoteLabel,const XCAFDoc_AssemblyItemId & theItemId,Standard_Integer theSubshapeIndex);
+		%feature("compactdefaultargs") AddNoteToSubshape;
+		%feature("autodoc", "	* Adds the given note to the labeled item's subshape. \param [in] theNoteLabel - note label. \param [in] theItemLabel - item label. \param [in] theSubshapeIndex - assembly item's subshape index. eturn a handle to the assembly reference attribute.
+
+	:param theNoteLabel:
+	:type theNoteLabel: TDF_Label &
+	:param theItemLabel:
+	:type theItemLabel: TDF_Label &
+	:param theSubshapeIndex:
+	:type theSubshapeIndex: int
+	:rtype: Handle_XCAFDoc_AssemblyItemRef
+") AddNoteToSubshape;
+		Handle_XCAFDoc_AssemblyItemRef AddNoteToSubshape (const TDF_Label & theNoteLabel,const TDF_Label & theItemLabel,Standard_Integer theSubshapeIndex);
+		%feature("compactdefaultargs") RemoveNote;
+		%feature("autodoc", "	* @} @name Remove annotation functions @{ Removes the given note from the assembly item. \param [in] theNoteLabel - note label. \param [in] theItemId - assembly item ID. \param [in] theDelIfOrphan - deletes the note from the notes hive  if there are no more assembly items  linked with the note. eturn true if the note is removed, otherwise - false.
+
+	:param theNoteLabel:
+	:type theNoteLabel: TDF_Label &
+	:param theItemId:
+	:type theItemId: XCAFDoc_AssemblyItemId &
+	:param theDelIfOrphan: default value is Standard_False
+	:type theDelIfOrphan: bool
+	:rtype: bool
+") RemoveNote;
+		Standard_Boolean RemoveNote (const TDF_Label & theNoteLabel,const XCAFDoc_AssemblyItemId & theItemId,Standard_Boolean theDelIfOrphan = Standard_False);
+		%feature("compactdefaultargs") RemoveNote;
+		%feature("autodoc", "	* Removes the given note from the labeled item. \param [in] theNoteLabel - note label. \param [in] theItemLabel - item label. \param [in] theDelIfOrphan - deletes the note from the notes hive  if there are no more labeled items  linked with the note. eturn true if the note is removed, otherwise - false.
+
+	:param theNoteLabel:
+	:type theNoteLabel: TDF_Label &
+	:param theItemLabel:
+	:type theItemLabel: TDF_Label &
+	:param theDelIfOrphan: default value is Standard_False
+	:type theDelIfOrphan: bool
+	:rtype: bool
+") RemoveNote;
+		Standard_Boolean RemoveNote (const TDF_Label & theNoteLabel,const TDF_Label & theItemLabel,Standard_Boolean theDelIfOrphan = Standard_False);
+		%feature("compactdefaultargs") RemoveSubshapeNote;
+		%feature("autodoc", "	* Removes the given note from the assembly item's subshape. \param [in] theNoteLabel - note label. \param [in] theItemId - assembly item ID. \param [in] theSubshapeIndex - assembly item's subshape index. \param [in] theDelIfOrphan - deletes the note from the notes hive  if there are no more assembly item's  subshape linked with the note. eturn true if the note is removed, otherwise - false.
+
+	:param theNoteLabel:
+	:type theNoteLabel: TDF_Label &
+	:param theItemId:
+	:type theItemId: XCAFDoc_AssemblyItemId &
+	:param theSubshapeIndex:
+	:type theSubshapeIndex: int
+	:param theDelIfOrphan: default value is Standard_False
+	:type theDelIfOrphan: bool
+	:rtype: bool
+") RemoveSubshapeNote;
+		Standard_Boolean RemoveSubshapeNote (const TDF_Label & theNoteLabel,const XCAFDoc_AssemblyItemId & theItemId,Standard_Integer theSubshapeIndex,Standard_Boolean theDelIfOrphan = Standard_False);
+		%feature("compactdefaultargs") RemoveSubshapeNote;
+		%feature("autodoc", "	* Removes the given note from the labeled item's subshape. \param [in] theNoteLabel - note label. \param [in] theItemLabel - item label. \param [in] theSubshapeIndex - labeled item's subshape index. \param [in] theDelIfOrphan - deletes the note from the notes hive  if there are no more assembly item's  subshape linked with the note. eturn true if the note is removed, otherwise - false.
+
+	:param theNoteLabel:
+	:type theNoteLabel: TDF_Label &
+	:param theItemLabel:
+	:type theItemLabel: TDF_Label &
+	:param theSubshapeIndex:
+	:type theSubshapeIndex: int
+	:param theDelIfOrphan: default value is Standard_False
+	:type theDelIfOrphan: bool
+	:rtype: bool
+") RemoveSubshapeNote;
+		Standard_Boolean RemoveSubshapeNote (const TDF_Label & theNoteLabel,const TDF_Label & theItemLabel,Standard_Integer theSubshapeIndex,Standard_Boolean theDelIfOrphan = Standard_False);
+		%feature("compactdefaultargs") RemoveAttrNote;
+		%feature("autodoc", "	* Removes a note from the assembly item's attribute. \param [in] theNoteLabel - note label. \param [in] theItemId - assembly item ID. \param [in] theGUID - assembly item's attribute GUID. \param [in] theDelIfOrphan - deletes the note from the notes hive  if there are no more assembly item's  attribute linked with the note. eturn true if the note is removed, otherwise - false.
+
+	:param theNoteLabel:
+	:type theNoteLabel: TDF_Label &
+	:param theItemId:
+	:type theItemId: XCAFDoc_AssemblyItemId &
+	:param theGUID:
+	:type theGUID: Standard_GUID &
+	:param theDelIfOrphan: default value is Standard_False
+	:type theDelIfOrphan: bool
+	:rtype: bool
+") RemoveAttrNote;
+		Standard_Boolean RemoveAttrNote (const TDF_Label & theNoteLabel,const XCAFDoc_AssemblyItemId & theItemId,const Standard_GUID & theGUID,Standard_Boolean theDelIfOrphan = Standard_False);
+		%feature("compactdefaultargs") RemoveAttrNote;
+		%feature("autodoc", "	* Removes a note from the labeled item's attribute. \param [in] theNoteLabel - note label. \param [in] theItemLabel - item label. \param [in] theGUID - labeled item's attribute GUID. \param [in] theDelIfOrphan - deletes the note from the notes hive  if there are no more assembly item's  attribute linked with the note. eturn true if the note is removed, otherwise - false.
+
+	:param theNoteLabel:
+	:type theNoteLabel: TDF_Label &
+	:param theItemLabel:
+	:type theItemLabel: TDF_Label &
+	:param theGUID:
+	:type theGUID: Standard_GUID &
+	:param theDelIfOrphan: default value is Standard_False
+	:type theDelIfOrphan: bool
+	:rtype: bool
+") RemoveAttrNote;
+		Standard_Boolean RemoveAttrNote (const TDF_Label & theNoteLabel,const TDF_Label & theItemLabel,const Standard_GUID & theGUID,Standard_Boolean theDelIfOrphan = Standard_False);
+		%feature("compactdefaultargs") RemoveAllNotes;
+		%feature("autodoc", "	* Removes all notes from the assembly item. \param [in] theItemId - assembly item ID. \param [in] theDelIfOrphan - deletes removed notes from the notes  hive if there are no more annotated items  linked with the notes. eturn true if the notes are removed, otherwise - false.
+
+	:param theItemId:
+	:type theItemId: XCAFDoc_AssemblyItemId &
+	:param theDelIfOrphan: default value is Standard_False
+	:type theDelIfOrphan: bool
+	:rtype: bool
+") RemoveAllNotes;
+		Standard_Boolean RemoveAllNotes (const XCAFDoc_AssemblyItemId & theItemId,Standard_Boolean theDelIfOrphan = Standard_False);
+		%feature("compactdefaultargs") RemoveAllNotes;
+		%feature("autodoc", "	* Removes all notes from the labeled item. \param [in] theItemLabel - item label. \param [in] theDelIfOrphan - deletes removed notes from the notes  hive if there are no more annotated items  linked with the notes. eturn true if the notes are removed, otherwise - false.
+
+	:param theItemLabel:
+	:type theItemLabel: TDF_Label &
+	:param theDelIfOrphan: default value is Standard_False
+	:type theDelIfOrphan: bool
+	:rtype: bool
+") RemoveAllNotes;
+		Standard_Boolean RemoveAllNotes (const TDF_Label & theItemLabel,Standard_Boolean theDelIfOrphan = Standard_False);
+		%feature("compactdefaultargs") RemoveAllSubshapeNotes;
+		%feature("autodoc", "	* Removes all notes from the assembly item's subshape. \param [in] theItemId - assembly item ID. \param [in] theSubshapeIndex - assembly item's subshape index. \param [in] theDelIfOrphan - deletes removed notes from the notes  hive if there are no more annotated items  linked with the notes. eturn true if the notes are removed, otherwise - false.
+
+	:param theItemId:
+	:type theItemId: XCAFDoc_AssemblyItemId &
+	:param theSubshapeIndex:
+	:type theSubshapeIndex: int
+	:param theDelIfOrphan: default value is Standard_False
+	:type theDelIfOrphan: bool
+	:rtype: bool
+") RemoveAllSubshapeNotes;
+		Standard_Boolean RemoveAllSubshapeNotes (const XCAFDoc_AssemblyItemId & theItemId,Standard_Integer theSubshapeIndex,Standard_Boolean theDelIfOrphan = Standard_False);
+		%feature("compactdefaultargs") RemoveAllAttrNotes;
+		%feature("autodoc", "	* Removes all notes from the assembly item's attribute. \param [in] theItemId - assembly item ID. \param [in] theGUID - assembly item's attribute GUID. \param [in] theDelIfOrphan - deletes removed notes from the notes  hive if there are no more annotated items  linked with the notes. eturn true if the notes are removed, otherwise - false.
+
+	:param theItemId:
+	:type theItemId: XCAFDoc_AssemblyItemId &
+	:param theGUID:
+	:type theGUID: Standard_GUID &
+	:param theDelIfOrphan: default value is Standard_False
+	:type theDelIfOrphan: bool
+	:rtype: bool
+") RemoveAllAttrNotes;
+		Standard_Boolean RemoveAllAttrNotes (const XCAFDoc_AssemblyItemId & theItemId,const Standard_GUID & theGUID,Standard_Boolean theDelIfOrphan = Standard_False);
+		%feature("compactdefaultargs") RemoveAllAttrNotes;
+		%feature("autodoc", "	* Removes all notes from the labeled item's attribute. \param [in] theItemLabel - item label. \param [in] theGUID - labeled item's attribute GUID. \param [in] theDelIfOrphan - deletes removed notes from the notes  hive if there are no more annotated items  linked with the notes. eturn true if the notes are removed, otherwise - false.
+
+	:param theItemLabel:
+	:type theItemLabel: TDF_Label &
+	:param theGUID:
+	:type theGUID: Standard_GUID &
+	:param theDelIfOrphan: default value is Standard_False
+	:type theDelIfOrphan: bool
+	:rtype: bool
+") RemoveAllAttrNotes;
+		Standard_Boolean RemoveAllAttrNotes (const TDF_Label & theItemLabel,const Standard_GUID & theGUID,Standard_Boolean theDelIfOrphan = Standard_False);
+		%feature("compactdefaultargs") DeleteNote;
+		%feature("autodoc", "	* @} @name Delete note functions @{ Deletes the given note. Removes all links with items annotated by the note. \param [in] theNoteLabel - note label. eturn true if the note is deleted, otherwise - false.
+
+	:param theNoteLabel:
+	:type theNoteLabel: TDF_Label &
+	:rtype: bool
+") DeleteNote;
+		Standard_Boolean DeleteNote (const TDF_Label & theNoteLabel);
+		%feature("compactdefaultargs") DeleteNotes;
+		%feature("autodoc", "	* Deletes the given notes. Removes all links with items annotated by the notes. \param [in] theNoteLabels - note label sequence. eturn number of deleted notes.
+
+	:param theNoteLabels:
+	:type theNoteLabels: TDF_LabelSequence &
+	:rtype: int
+") DeleteNotes;
+		Standard_Integer DeleteNotes (TDF_LabelSequence & theNoteLabels);
+		%feature("compactdefaultargs") DeleteAllNotes;
+		%feature("autodoc", "	* Deletes all notes. Clears all annotations. eturn number of deleted notes.
+
+	:rtype: int
+") DeleteAllNotes;
+		Standard_Integer DeleteAllNotes ();
+		%feature("compactdefaultargs") NbOrphanNotes;
+		%feature("autodoc", "	* @} @name Orphan annotated items functions @{ Returns number of notes that aren't linked to annotated items.
+
+	:rtype: int
+") NbOrphanNotes;
+		Standard_Integer NbOrphanNotes ();
+		%feature("compactdefaultargs") GetOrphanNotes;
+		%feature("autodoc", "	* Returns note labels that aren't linked to annotated items. The label sequence isn't cleared beforehand. \param [out] theNoteLabels - sequence of labels.
+
+	:param theNoteLabels:
+	:type theNoteLabels: TDF_LabelSequence &
+	:rtype: None
+") GetOrphanNotes;
+		void GetOrphanNotes (TDF_LabelSequence & theNoteLabels);
+		%feature("compactdefaultargs") DeleteOrphanNotes;
+		%feature("autodoc", "	* Deletes all notes that aren't linked to annotated items. eturn number of deleted notes.
+
+	:rtype: int
+") DeleteOrphanNotes;
+		Standard_Integer DeleteOrphanNotes ();
+		%feature("compactdefaultargs") ID;
+		%feature("autodoc", "	* @}
+
+	:rtype: Standard_GUID
+") ID;
+		const Standard_GUID & ID ();
+		%feature("compactdefaultargs") NewEmpty;
+		%feature("autodoc", "	:rtype: Handle_TDF_Attribute
+") NewEmpty;
+		Handle_TDF_Attribute NewEmpty ();
+		%feature("compactdefaultargs") Restore;
+		%feature("autodoc", "	:param theAttrFrom:
+	:type theAttrFrom: Handle_TDF_Attribute &
+	:rtype: None
+") Restore;
+		void Restore (const Handle_TDF_Attribute & theAttrFrom);
+		%feature("compactdefaultargs") Paste;
+		%feature("autodoc", "	:param theAttrInto:
+	:type theAttrInto: Handle_TDF_Attribute &
+	:param theRT:
+	:type theRT: Handle_TDF_RelocationTable &
+	:rtype: None
+") Paste;
+		void Paste (const Handle_TDF_Attribute & theAttrInto,const Handle_TDF_RelocationTable & theRT);
+
+        %feature("autodoc", "1");
+        %extend{
+            std::string DumpToString() {
+            std::stringstream s;
+            self->Dump(s);
+            return s.str();}
+        };
+        };
+
+
+%extend XCAFDoc_NotesTool {
+	%pythoncode {
+		def GetHandle(self):
+		    try:
+		        return self.thisHandle
+		    except:
+		        self.thisHandle = Handle_XCAFDoc_NotesTool(self)
+		        self.thisown = False
+		        return self.thisHandle
+	}
+};
+
+%pythonappend Handle_XCAFDoc_NotesTool::Handle_XCAFDoc_NotesTool %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
+%nodefaultctor Handle_XCAFDoc_NotesTool;
+class Handle_XCAFDoc_NotesTool : public Handle_TDF_Attribute {
+
+    public:
+        // constructors
+        Handle_XCAFDoc_NotesTool();
+        Handle_XCAFDoc_NotesTool(const Handle_XCAFDoc_NotesTool &aHandle);
+        Handle_XCAFDoc_NotesTool(const XCAFDoc_NotesTool *anItem);
+        void Nullify();
+        Standard_Boolean IsNull() const;
+        static const Handle_XCAFDoc_NotesTool DownCast(const Handle_Standard_Transient &AnObject);
+
+};
+
+%extend Handle_XCAFDoc_NotesTool {
+    XCAFDoc_NotesTool* _get_reference() {
+    return (XCAFDoc_NotesTool*)$self->get();
     }
 };
 
-%extend XCAFDoc_SequenceNodeOfGraphNodeSequence {
+%extend Handle_XCAFDoc_NotesTool {
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
+};
+
+%extend XCAFDoc_NotesTool {
 	%pythoncode {
 	__repr__ = _dumps_object
 	}
@@ -3190,7 +4759,7 @@ class XCAFDoc_ShapeMapTool : public TDF_Attribute {
 ") GetID;
 		static const Standard_GUID & GetID ();
 		%feature("compactdefaultargs") Set;
-		%feature("autodoc", "	* Create (if not exist) ShapeTool from XCAFDoc on <L>.
+		%feature("autodoc", "	* Create --if not exist-- ShapeTool from XCAFDoc on <L>.
 
 	:param L:
 	:type L: TDF_Label &
@@ -3212,7 +4781,7 @@ class XCAFDoc_ShapeMapTool : public TDF_Attribute {
 ") IsSubShape;
 		Standard_Boolean IsSubShape (const TopoDS_Shape & sub);
 		%feature("compactdefaultargs") SetShape;
-		%feature("autodoc", "	* Sets representation (TopoDS_Shape) for top-level shape
+		%feature("autodoc", "	* Sets representation --TopoDS_Shape-- for top-level shape
 
 	:param S:
 	:type S: TopoDS_Shape &
@@ -3279,19 +4848,20 @@ class Handle_XCAFDoc_ShapeMapTool : public Handle_TDF_Attribute {
         static const Handle_XCAFDoc_ShapeMapTool DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_XCAFDoc_ShapeMapTool {
     XCAFDoc_ShapeMapTool* _get_reference() {
-    return (XCAFDoc_ShapeMapTool*)$self->Access();
+    return (XCAFDoc_ShapeMapTool*)$self->get();
     }
 };
 
 %extend Handle_XCAFDoc_ShapeMapTool {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend XCAFDoc_ShapeMapTool {
@@ -3307,7 +4877,7 @@ class XCAFDoc_ShapeTool : public TDF_Attribute {
 ") GetID;
 		static const Standard_GUID & GetID ();
 		%feature("compactdefaultargs") Set;
-		%feature("autodoc", "	* Create (if not exist) ShapeTool from XCAFDoc on <L>.
+		%feature("autodoc", "	* Create --if not exist-- ShapeTool from XCAFDoc on <L>.
 
 	:param L:
 	:type L: TDF_Label &
@@ -3315,7 +4885,7 @@ class XCAFDoc_ShapeTool : public TDF_Attribute {
 ") Set;
 		static Handle_XCAFDoc_ShapeTool Set (const TDF_Label & L);
 		%feature("compactdefaultargs") XCAFDoc_ShapeTool;
-		%feature("autodoc", "	* Creates an empty tool Creates a tool to work with a document <Doc> Attaches to label XCAFDoc::LabelShapes()
+		%feature("autodoc", "	* Creates an empty tool Creates a tool to work with a document <Doc> Attaches to label XCAFDoc::LabelShapes----
 
 	:rtype: None
 ") XCAFDoc_ShapeTool;
@@ -3329,7 +4899,7 @@ class XCAFDoc_ShapeTool : public TDF_Attribute {
 ") IsTopLevel;
 		Standard_Boolean IsTopLevel (const TDF_Label & L);
 		%feature("compactdefaultargs") IsFree;
-		%feature("autodoc", "	* Returns True if the label is not used by any assembly, i.e. contains sublabels which are assembly components This is relevant only if IsShape() is True (There is no Father TreeNode on this <L>)
+		%feature("autodoc", "	* Returns True if the label is not used by any assembly, i.e. contains sublabels which are assembly components This is relevant only if IsShape---- is True --There is no Father TreeNode on this <L>--
 
 	:param L:
 	:type L: TDF_Label &
@@ -3337,7 +4907,7 @@ class XCAFDoc_ShapeTool : public TDF_Attribute {
 ") IsFree;
 		static Standard_Boolean IsFree (const TDF_Label & L);
 		%feature("compactdefaultargs") IsShape;
-		%feature("autodoc", "	* Returns True if the label represents a shape (simple shape, assembly or reference)
+		%feature("autodoc", "	* Returns True if the label represents a shape --simple shape, assembly or reference--
 
 	:param L:
 	:type L: TDF_Label &
@@ -3361,7 +4931,7 @@ class XCAFDoc_ShapeTool : public TDF_Attribute {
 ") IsReference;
 		static Standard_Boolean IsReference (const TDF_Label & L);
 		%feature("compactdefaultargs") IsAssembly;
-		%feature("autodoc", "	* Returns True if the label is a label of assembly, i.e. contains sublabels which are assembly components This is relevant only if IsShape() is True
+		%feature("autodoc", "	* Returns True if the label is a label of assembly, i.e. contains sublabels which are assembly components This is relevant only if IsShape---- is True
 
 	:param L:
 	:type L: TDF_Label &
@@ -3377,7 +4947,7 @@ class XCAFDoc_ShapeTool : public TDF_Attribute {
 ") IsComponent;
 		static Standard_Boolean IsComponent (const TDF_Label & L);
 		%feature("compactdefaultargs") IsCompound;
-		%feature("autodoc", "	* Returns True if the label is a label of compound, i.e. contains some sublabels This is relevant only if IsShape() is True
+		%feature("autodoc", "	* Returns True if the label is a label of compound, i.e. contains some sublabels This is relevant only if IsShape---- is True
 
 	:param L:
 	:type L: TDF_Label &
@@ -3415,7 +4985,7 @@ class XCAFDoc_ShapeTool : public TDF_Attribute {
 ") SearchUsingMap;
 		Standard_Boolean SearchUsingMap (const TopoDS_Shape & S,TDF_Label & L,const Standard_Boolean findWithoutLoc,const Standard_Boolean findSubshape);
 		%feature("compactdefaultargs") Search;
-		%feature("autodoc", "	* General tool to find a (sub) shape in the document * If findInstance is True, and S has a non-null location, first tries to find the shape among the top-level shapes with this location * If not found, and findComponent is True, tries to find the shape among the components of assemblies * If not found, tries to find the shape without location among top-level shapes * If not found and findSubshape is True, tries to find a shape as a subshape of top-level simple shapes Returns False if nothing is found
+		%feature("autodoc", "	* General tool to find a --sub-- shape in the document * If findInstance is True, and S has a non-null location, first tries to find the shape among the top-level shapes with this location * If not found, and findComponent is True, tries to find the shape among the components of assemblies * If not found, tries to find the shape without location among top-level shapes * If not found and findSubshape is True, tries to find a shape as a subshape of top-level simple shapes Returns False if nothing is found
 
 	:param S:
 	:type S: TopoDS_Shape &
@@ -3431,7 +5001,7 @@ class XCAFDoc_ShapeTool : public TDF_Attribute {
 ") Search;
 		Standard_Boolean Search (const TopoDS_Shape & S,TDF_Label & L,const Standard_Boolean findInstance = Standard_True,const Standard_Boolean findComponent = Standard_True,const Standard_Boolean findSubshape = Standard_True);
 		%feature("compactdefaultargs") FindShape;
-		%feature("autodoc", "	* Returns the label corresponding to shape S (searches among top-level shapes, not including subcomponents of assemblies) If findInstance is False (default), searches for the non-located shape (i.e. among original shapes) If findInstance is True, searches for the shape with the same location, including shape instances Return True if <S> is found.
+		%feature("autodoc", "	* Returns the label corresponding to shape S --searches among top-level shapes, not including subcomponents of assemblies-- If findInstance is False --default--, searches for the non-located shape --i.e. among original shapes-- If findInstance is True, searches for the shape with the same location, including shape instances Return True if <S> is found.
 
 	:param S:
 	:type S: TopoDS_Shape &
@@ -3471,13 +5041,13 @@ class XCAFDoc_ShapeTool : public TDF_Attribute {
 ") GetShape;
 		static TopoDS_Shape GetShape (const TDF_Label & L);
 		%feature("compactdefaultargs") NewShape;
-		%feature("autodoc", "	* Creates new (empty) top-level shape. Initially it holds empty TopoDS_Compound
+		%feature("autodoc", "	* Creates new --empty-- top-level shape. Initially it holds empty TopoDS_Compound
 
 	:rtype: TDF_Label
 ") NewShape;
 		TDF_Label NewShape ();
 		%feature("compactdefaultargs") SetShape;
-		%feature("autodoc", "	* Sets representation (TopoDS_Shape) for top-level shape
+		%feature("autodoc", "	* Sets representation --TopoDS_Shape-- for top-level shape.
 
 	:param L:
 	:type L: TDF_Label &
@@ -3487,7 +5057,7 @@ class XCAFDoc_ShapeTool : public TDF_Attribute {
 ") SetShape;
 		void SetShape (const TDF_Label & L,const TopoDS_Shape & S);
 		%feature("compactdefaultargs") AddShape;
-		%feature("autodoc", "	* Adds a new top-level (creates and returns a new label) If makeAssembly is True, treats TopAbs_COMPOUND shapes as assemblies (creates assembly structure). NOTE: <makePrepare> replace components without location in assmebly by located components to avoid some problems. If AutoNaming() is True then automatically attaches names.
+		%feature("autodoc", "	* Adds a new top-level --creates and returns a new label-- If makeAssembly is True, treats TopAbs_COMPOUND shapes as assemblies --creates assembly structure--. NOTE: <makePrepare> replace components without location in assmebly by located components to avoid some problems. If AutoNaming---- is True then automatically attaches names.
 
 	:param S:
 	:type S: TopoDS_Shape &
@@ -3499,7 +5069,7 @@ class XCAFDoc_ShapeTool : public TDF_Attribute {
 ") AddShape;
 		TDF_Label AddShape (const TopoDS_Shape & S,const Standard_Boolean makeAssembly = Standard_True,const Standard_Boolean makePrepare = Standard_True);
 		%feature("compactdefaultargs") RemoveShape;
-		%feature("autodoc", "	* Removes shape (whole label and all its sublabels) If removeCompletely is true, removes complete shape If removeCompletely is false, removes instance(location) only Returns False (and does nothing) if shape is not free or is not top-level shape
+		%feature("autodoc", "	* Removes shape --whole label and all its sublabels-- If removeCompletely is true, removes complete shape If removeCompletely is false, removes instance--location-- only Returns False --and does nothing-- if shape is not free or is not top-level shape
 
 	:param L:
 	:type L: TDF_Label &
@@ -3515,7 +5085,7 @@ class XCAFDoc_ShapeTool : public TDF_Attribute {
 ") Init;
 		void Init ();
 		%feature("compactdefaultargs") SetAutoNaming;
-		%feature("autodoc", "	* Sets auto-naming mode to <V>. If True then for added shapes, links, assemblies and SHUO's, the TDataStd_Name attribute is automatically added. For shapes it contains a shape type (e.g. 'SOLID', 'SHELL', etc); for links it has a form '=>[0:1:1:2]' (where a tag is a label containing a shape without a location); for assemblies it is 'ASSEMBLY', and 'SHUO' for SHUO's. This setting is global; it cannot be made a member function as it is used by static methods as well. By default, auto-naming is enabled. See also AutoNaming().
+		%feature("autodoc", "	* Sets auto-naming mode to <V>. If True then for added shapes, links, assemblies and SHUO's, the TDataStd_Name attribute is automatically added. For shapes it contains a shape type --e.g. 'SOLID', 'SHELL', etc--; for links it has a form '=>[0:1:1:2]' --where a tag is a label containing a shape without a location--; for assemblies it is 'ASSEMBLY', and 'SHUO' for SHUO's. This setting is global; it cannot be made a member function as it is used by static methods as well. By default, auto-naming is enabled. See also AutoNaming----.
 
 	:param V:
 	:type V: bool
@@ -3523,7 +5093,7 @@ class XCAFDoc_ShapeTool : public TDF_Attribute {
 ") SetAutoNaming;
 		static void SetAutoNaming (const Standard_Boolean V);
 		%feature("compactdefaultargs") AutoNaming;
-		%feature("autodoc", "	* Returns current auto-naming mode. See SetAutoNaming() for description.
+		%feature("autodoc", "	* Returns current auto-naming mode. See SetAutoNaming---- for description.
 
 	:rtype: bool
 ") AutoNaming;
@@ -3551,7 +5121,7 @@ class XCAFDoc_ShapeTool : public TDF_Attribute {
 ") GetShapes;
 		void GetShapes (TDF_LabelSequence & Labels);
 		%feature("compactdefaultargs") GetFreeShapes;
-		%feature("autodoc", "	* Returns a sequence of all top-level shapes which are free (i.e. not referred by any other)
+		%feature("autodoc", "	* Returns a sequence of all top-level shapes which are free --i.e. not referred by any other--
 
 	:param FreeLabels:
 	:type FreeLabels: TDF_LabelSequence &
@@ -3559,7 +5129,7 @@ class XCAFDoc_ShapeTool : public TDF_Attribute {
 ") GetFreeShapes;
 		void GetFreeShapes (TDF_LabelSequence & FreeLabels);
 		%feature("compactdefaultargs") GetUsers;
-		%feature("autodoc", "	* Returns list of labels which refer shape L as component Returns number of users (0 if shape is free)
+		%feature("autodoc", "	* Returns list of labels which refer shape L as component Returns number of users --0 if shape is free--
 
 	:param L:
 	:type L: TDF_Label &
@@ -3611,7 +5181,7 @@ class XCAFDoc_ShapeTool : public TDF_Attribute {
 ") GetComponents;
 		static Standard_Boolean GetComponents (const TDF_Label & L,TDF_LabelSequence & Labels,const Standard_Boolean getsubchilds = Standard_False);
 		%feature("compactdefaultargs") AddComponent;
-		%feature("autodoc", "	* Adds a component given by its label and location to the assembly Note: assembly must be IsAssembly() or IsSimpleShape()
+		%feature("autodoc", "	* Adds a component given by its label and location to the assembly Note: assembly must be IsAssembly---- or IsSimpleShape----
 
 	:param assembly:
 	:type assembly: TDF_Label &
@@ -3623,7 +5193,7 @@ class XCAFDoc_ShapeTool : public TDF_Attribute {
 ") AddComponent;
 		TDF_Label AddComponent (const TDF_Label & assembly,const TDF_Label & comp,const TopLoc_Location & Loc);
 		%feature("compactdefaultargs") AddComponent;
-		%feature("autodoc", "	* Adds a shape (located) as a component to the assembly If necessary, creates an additional top-level shape for component and return the Label of component. If expand is True and component is Compound, it will be created as assembly also Note: assembly must be IsAssembly() or IsSimpleShape()
+		%feature("autodoc", "	* Adds a shape --located-- as a component to the assembly If necessary, creates an additional top-level shape for component and return the Label of component. If expand is True and component is Compound, it will be created as assembly also Note: assembly must be IsAssembly---- or IsSimpleShape----
 
 	:param assembly:
 	:type assembly: TDF_Label &
@@ -3642,14 +5212,12 @@ class XCAFDoc_ShapeTool : public TDF_Attribute {
 	:rtype: None
 ") RemoveComponent;
 		void RemoveComponent (const TDF_Label & comp);
-		%feature("compactdefaultargs") UpdateAssembly;
-		%feature("autodoc", "	* Update an assembly at label <L>
+		%feature("compactdefaultargs") UpdateAssemblies;
+		%feature("autodoc", "	* Top-down update for all assembly compounds stored in the document.
 
-	:param L:
-	:type L: TDF_Label &
 	:rtype: None
-") UpdateAssembly;
-		void UpdateAssembly (const TDF_Label & L);
+") UpdateAssemblies;
+		void UpdateAssemblies ();
 		%feature("compactdefaultargs") FindSubShape;
 		%feature("autodoc", "	* Finds a label for subshape <sub> of shape stored on label shapeL Returns Null label if it is not found
 
@@ -3679,7 +5247,7 @@ class XCAFDoc_ShapeTool : public TDF_Attribute {
 ") FindMainShapeUsingMap;
 		TDF_Label FindMainShapeUsingMap (const TopoDS_Shape & sub);
 		%feature("compactdefaultargs") FindMainShape;
-		%feature("autodoc", "	* Performs a search among top-level shapes to find the shape containing <sub> as subshape Checks only simple shapes, and returns the first found label (which should be the only one for valid model)
+		%feature("autodoc", "	* Performs a search among top-level shapes to find the shape containing <sub> as subshape Checks only simple shapes, and returns the first found label --which should be the only one for valid model--
 
 	:param sub:
 	:type sub: TopoDS_Shape &
@@ -3705,12 +5273,20 @@ class XCAFDoc_ShapeTool : public TDF_Attribute {
 		%feature("compactdefaultargs") Dump;
 		%feature("autodoc", "	:param theDumpLog:
 	:type theDumpLog: Standard_OStream &
-	:param deep: default value is Standard_False
+	:param deep:
 	:type deep: bool
-	:rtype: None
+	:rtype: Standard_OStream
 ") Dump;
-		void Dump (Standard_OStream & theDumpLog,const Standard_Boolean deep = Standard_False);
-		%feature("compactdefaultargs") DumpShape;
+		Standard_OStream & Dump (Standard_OStream & theDumpLog,const Standard_Boolean deep);
+
+        %feature("autodoc", "1");
+        %extend{
+            std::string DumpToString() {
+            std::stringstream s;
+            self->Dump(s);
+            return s.str();}
+        };
+        		%feature("compactdefaultargs") DumpShape;
 		%feature("autodoc", "	* Print to ostream <theDumpLog> type of shape found on <L> label and the entry of <L>, with <level> tabs before. If <deep>, print also TShape and Location addresses
 
 	:param theDumpLog:
@@ -3783,7 +5359,7 @@ class XCAFDoc_ShapeTool : public TDF_Attribute {
 ") GetExternRefs;
 		static void GetExternRefs (const TDF_Label & L,TColStd_SequenceOfHAsciiString & SHAS);
 		%feature("compactdefaultargs") SetSHUO;
-		%feature("autodoc", "	* Sets the SHUO structure between upper_usage and next_usage create multy-level (if number of labels > 2) SHUO from first to last Initialise out <MainSHUOAttr> by main upper_usage SHUO attribute. Returns False if some of labels in not component label
+		%feature("autodoc", "	* Sets the SHUO structure between upper_usage and next_usage create multy-level --if number of labels > 2-- SHUO from first to last Initialise out <MainSHUOAttr> by main upper_usage SHUO attribute. Returns False if some of labels in not component label
 
 	:param Labels:
 	:type Labels: TDF_LabelSequence &
@@ -3813,7 +5389,7 @@ class XCAFDoc_ShapeTool : public TDF_Attribute {
 ") GetAllComponentSHUO;
 		static Standard_Boolean GetAllComponentSHUO (const TDF_Label & CompLabel,TDF_AttributeSequence & SHUOAttrs);
 		%feature("compactdefaultargs") GetSHUOUpperUsage;
-		%feature("autodoc", "	* Returns the sequence of labels of SHUO attributes, which is upper_usage for this next_usage SHUO attribute (that indicated by label) NOTE: returns upper_usages only on one level (not recurse) NOTE: do not clear the sequence before filling
+		%feature("autodoc", "	* Returns the sequence of labels of SHUO attributes, which is upper_usage for this next_usage SHUO attribute --that indicated by label-- NOTE: returns upper_usages only on one level --not recurse-- NOTE: do not clear the sequence before filling
 
 	:param NextUsageL:
 	:type NextUsageL: TDF_Label &
@@ -3823,7 +5399,7 @@ class XCAFDoc_ShapeTool : public TDF_Attribute {
 ") GetSHUOUpperUsage;
 		static Standard_Boolean GetSHUOUpperUsage (const TDF_Label & NextUsageL,TDF_LabelSequence & Labels);
 		%feature("compactdefaultargs") GetSHUONextUsage;
-		%feature("autodoc", "	* Returns the sequence of labels of SHUO attributes, which is next_usage for this upper_usage SHUO attribute (that indicated by label) NOTE: returns next_usages only on one level (not recurse) NOTE: do not clear the sequence before filling
+		%feature("autodoc", "	* Returns the sequence of labels of SHUO attributes, which is next_usage for this upper_usage SHUO attribute --that indicated by label-- NOTE: returns next_usages only on one level --not recurse-- NOTE: do not clear the sequence before filling
 
 	:param UpperUsageL:
 	:type UpperUsageL: TDF_Label &
@@ -3886,6 +5462,24 @@ class XCAFDoc_ShapeTool : public TDF_Attribute {
 	:rtype: bool
 ") FindSHUO;
 		static Standard_Boolean FindSHUO (const TDF_LabelSequence & Labels,Handle_XCAFDoc_GraphNode & theSHUOAttr);
+		%feature("compactdefaultargs") Expand;
+		%feature("autodoc", "	* Convert Shape --compound-- to assembly
+
+	:param Shape:
+	:type Shape: TDF_Label &
+	:rtype: bool
+") Expand;
+		Standard_Boolean Expand (const TDF_Label & Shape);
+		%feature("compactdefaultargs") makeSubShape;
+		%feature("autodoc", "	* Make subshape for Part from Shape
+
+	:param Part:
+	:type Part: TDF_Label &
+	:param Shape:
+	:type Shape: TopoDS_Shape &
+	:rtype: None
+") makeSubShape;
+		void makeSubShape (const TDF_Label & Part,const TopoDS_Shape & Shape);
 };
 
 
@@ -3920,22 +5514,437 @@ class Handle_XCAFDoc_ShapeTool : public Handle_TDF_Attribute {
         static const Handle_XCAFDoc_ShapeTool DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_XCAFDoc_ShapeTool {
     XCAFDoc_ShapeTool* _get_reference() {
-    return (XCAFDoc_ShapeTool*)$self->Access();
+    return (XCAFDoc_ShapeTool*)$self->get();
     }
 };
 
 %extend Handle_XCAFDoc_ShapeTool {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend XCAFDoc_ShapeTool {
+	%pythoncode {
+	__repr__ = _dumps_object
+	}
+};
+%nodefaultctor XCAFDoc_View;
+class XCAFDoc_View : public TDF_Attribute {
+	public:
+		%feature("compactdefaultargs") XCAFDoc_View;
+		%feature("autodoc", "	:rtype: None
+") XCAFDoc_View;
+		 XCAFDoc_View ();
+		%feature("compactdefaultargs") GetID;
+		%feature("autodoc", "	:rtype: Standard_GUID
+") GetID;
+		static const Standard_GUID & GetID ();
+		%feature("compactdefaultargs") Set;
+		%feature("autodoc", "	:param theLabel:
+	:type theLabel: TDF_Label &
+	:rtype: Handle_XCAFDoc_View
+") Set;
+		static Handle_XCAFDoc_View Set (const TDF_Label & theLabel);
+		%feature("compactdefaultargs") ID;
+		%feature("autodoc", "	:rtype: Standard_GUID
+") ID;
+		const Standard_GUID & ID ();
+		%feature("compactdefaultargs") Restore;
+		%feature("autodoc", "	:param With:
+	:type With: Handle_TDF_Attribute &
+	:rtype: None
+") Restore;
+		void Restore (const Handle_TDF_Attribute & With);
+		%feature("compactdefaultargs") NewEmpty;
+		%feature("autodoc", "	:rtype: Handle_TDF_Attribute
+") NewEmpty;
+		Handle_TDF_Attribute NewEmpty ();
+		%feature("compactdefaultargs") Paste;
+		%feature("autodoc", "	:param Into:
+	:type Into: Handle_TDF_Attribute &
+	:param RT:
+	:type RT: Handle_TDF_RelocationTable &
+	:rtype: None
+") Paste;
+		void Paste (const Handle_TDF_Attribute & Into,const Handle_TDF_RelocationTable & RT);
+		%feature("compactdefaultargs") SetObject;
+		%feature("autodoc", "	:param theViewObject:
+	:type theViewObject: Handle_XCAFView_Object &
+	:rtype: None
+") SetObject;
+		void SetObject (const Handle_XCAFView_Object & theViewObject);
+		%feature("compactdefaultargs") GetObject;
+		%feature("autodoc", "	:rtype: Handle_XCAFView_Object
+") GetObject;
+		Handle_XCAFView_Object GetObject ();
+};
+
+
+%extend XCAFDoc_View {
+	%pythoncode {
+		def GetHandle(self):
+		    try:
+		        return self.thisHandle
+		    except:
+		        self.thisHandle = Handle_XCAFDoc_View(self)
+		        self.thisown = False
+		        return self.thisHandle
+	}
+};
+
+%pythonappend Handle_XCAFDoc_View::Handle_XCAFDoc_View %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
+%nodefaultctor Handle_XCAFDoc_View;
+class Handle_XCAFDoc_View : public Handle_TDF_Attribute {
+
+    public:
+        // constructors
+        Handle_XCAFDoc_View();
+        Handle_XCAFDoc_View(const Handle_XCAFDoc_View &aHandle);
+        Handle_XCAFDoc_View(const XCAFDoc_View *anItem);
+        void Nullify();
+        Standard_Boolean IsNull() const;
+        static const Handle_XCAFDoc_View DownCast(const Handle_Standard_Transient &AnObject);
+
+};
+
+%extend Handle_XCAFDoc_View {
+    XCAFDoc_View* _get_reference() {
+    return (XCAFDoc_View*)$self->get();
+    }
+};
+
+%extend Handle_XCAFDoc_View {
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
+};
+
+%extend XCAFDoc_View {
+	%pythoncode {
+	__repr__ = _dumps_object
+	}
+};
+%nodefaultctor XCAFDoc_ViewTool;
+class XCAFDoc_ViewTool : public TDF_Attribute {
+	public:
+		%feature("compactdefaultargs") XCAFDoc_ViewTool;
+		%feature("autodoc", "	:rtype: None
+") XCAFDoc_ViewTool;
+		 XCAFDoc_ViewTool ();
+		%feature("compactdefaultargs") Set;
+		%feature("autodoc", "	* Creates --if not exist-- ViewTool.
+
+	:param L:
+	:type L: TDF_Label &
+	:rtype: Handle_XCAFDoc_ViewTool
+") Set;
+		static Handle_XCAFDoc_ViewTool Set (const TDF_Label & L);
+		%feature("compactdefaultargs") GetID;
+		%feature("autodoc", "	:rtype: Standard_GUID
+") GetID;
+		static const Standard_GUID & GetID ();
+		%feature("compactdefaultargs") BaseLabel;
+		%feature("autodoc", "	* Returns the label under which Views are stored
+
+	:rtype: TDF_Label
+") BaseLabel;
+		TDF_Label BaseLabel ();
+		%feature("compactdefaultargs") IsView;
+		%feature("autodoc", "	* Returns True if label belongs to a View table and is a View definition
+
+	:param theLabel:
+	:type theLabel: TDF_Label &
+	:rtype: bool
+") IsView;
+		Standard_Boolean IsView (const TDF_Label & theLabel);
+		%feature("compactdefaultargs") GetViewLabels;
+		%feature("autodoc", "	* Returns a sequence of View labels currently stored in the View table
+
+	:param theLabels:
+	:type theLabels: TDF_LabelSequence &
+	:rtype: None
+") GetViewLabels;
+		void GetViewLabels (TDF_LabelSequence & theLabels);
+		%feature("compactdefaultargs") SetView;
+		%feature("autodoc", "	* Sets a link with GUID
+
+	:param theShapes:
+	:type theShapes: TDF_LabelSequence &
+	:param theGDTs:
+	:type theGDTs: TDF_LabelSequence &
+	:param theClippingPlanes:
+	:type theClippingPlanes: TDF_LabelSequence &
+	:param theNotes:
+	:type theNotes: TDF_LabelSequence &
+	:param theAnnotations:
+	:type theAnnotations: TDF_LabelSequence &
+	:param theViewL:
+	:type theViewL: TDF_Label &
+	:rtype: None
+") SetView;
+		void SetView (const TDF_LabelSequence & theShapes,const TDF_LabelSequence & theGDTs,const TDF_LabelSequence & theClippingPlanes,const TDF_LabelSequence & theNotes,const TDF_LabelSequence & theAnnotations,const TDF_Label & theViewL);
+		%feature("compactdefaultargs") SetView;
+		%feature("autodoc", "	* Sets a link with GUID
+
+	:param theShapes:
+	:type theShapes: TDF_LabelSequence &
+	:param theGDTs:
+	:type theGDTs: TDF_LabelSequence &
+	:param theClippingPlanes:
+	:type theClippingPlanes: TDF_LabelSequence &
+	:param theViewL:
+	:type theViewL: TDF_Label &
+	:rtype: None
+") SetView;
+		void SetView (const TDF_LabelSequence & theShapes,const TDF_LabelSequence & theGDTs,const TDF_LabelSequence & theClippingPlanes,const TDF_Label & theViewL);
+		%feature("compactdefaultargs") SetView;
+		%feature("autodoc", "	* Sets a link with GUID
+
+	:param theShapes:
+	:type theShapes: TDF_LabelSequence &
+	:param theGDTs:
+	:type theGDTs: TDF_LabelSequence &
+	:param theViewL:
+	:type theViewL: TDF_Label &
+	:rtype: None
+") SetView;
+		void SetView (const TDF_LabelSequence & theShapes,const TDF_LabelSequence & theGDTs,const TDF_Label & theViewL);
+		%feature("compactdefaultargs") SetClippingPlanes;
+		%feature("autodoc", "	* Set Clipping planes to given View
+
+	:param theClippingPlaneLabels:
+	:type theClippingPlaneLabels: TDF_LabelSequence &
+	:param theViewL:
+	:type theViewL: TDF_Label &
+	:rtype: None
+") SetClippingPlanes;
+		void SetClippingPlanes (const TDF_LabelSequence & theClippingPlaneLabels,const TDF_Label & theViewL);
+		%feature("compactdefaultargs") RemoveView;
+		%feature("autodoc", "	* Remove View
+
+	:param theViewL:
+	:type theViewL: TDF_Label &
+	:rtype: None
+") RemoveView;
+		void RemoveView (const TDF_Label & theViewL);
+		%feature("compactdefaultargs") GetViewLabelsForShape;
+		%feature("autodoc", "	* Returns all View labels defined for label ShapeL
+
+	:param theShapeL:
+	:type theShapeL: TDF_Label &
+	:param theViews:
+	:type theViews: TDF_LabelSequence &
+	:rtype: bool
+") GetViewLabelsForShape;
+		Standard_Boolean GetViewLabelsForShape (const TDF_Label & theShapeL,TDF_LabelSequence & theViews);
+		%feature("compactdefaultargs") GetViewLabelsForGDT;
+		%feature("autodoc", "	* Returns all View labels defined for label GDTL
+
+	:param theGDTL:
+	:type theGDTL: TDF_Label &
+	:param theViews:
+	:type theViews: TDF_LabelSequence &
+	:rtype: bool
+") GetViewLabelsForGDT;
+		Standard_Boolean GetViewLabelsForGDT (const TDF_Label & theGDTL,TDF_LabelSequence & theViews);
+		%feature("compactdefaultargs") GetViewLabelsForClippingPlane;
+		%feature("autodoc", "	* Returns all View labels defined for label ClippingPlaneL
+
+	:param theClippingPlaneL:
+	:type theClippingPlaneL: TDF_Label &
+	:param theViews:
+	:type theViews: TDF_LabelSequence &
+	:rtype: bool
+") GetViewLabelsForClippingPlane;
+		Standard_Boolean GetViewLabelsForClippingPlane (const TDF_Label & theClippingPlaneL,TDF_LabelSequence & theViews);
+		%feature("compactdefaultargs") GetViewLabelsForNote;
+		%feature("autodoc", "	* Returns all View labels defined for label NoteL
+
+	:param theNoteL:
+	:type theNoteL: TDF_Label &
+	:param theViews:
+	:type theViews: TDF_LabelSequence &
+	:rtype: bool
+") GetViewLabelsForNote;
+		Standard_Boolean GetViewLabelsForNote (const TDF_Label & theNoteL,TDF_LabelSequence & theViews);
+		%feature("compactdefaultargs") GetViewLabelsForAnnotation;
+		%feature("autodoc", "	* Returns all View labels defined for label AnnotationL
+
+	:param theAnnotationL:
+	:type theAnnotationL: TDF_Label &
+	:param theViews:
+	:type theViews: TDF_LabelSequence &
+	:rtype: bool
+") GetViewLabelsForAnnotation;
+		Standard_Boolean GetViewLabelsForAnnotation (const TDF_Label & theAnnotationL,TDF_LabelSequence & theViews);
+		%feature("compactdefaultargs") AddView;
+		%feature("autodoc", "	* Adds a view definition to a View table and returns its label
+
+	:rtype: TDF_Label
+") AddView;
+		TDF_Label AddView ();
+		%feature("compactdefaultargs") GetRefShapeLabel;
+		%feature("autodoc", "	* Returns shape labels defined for label theViewL Returns False if the theViewL is not in View table
+
+	:param theViewL:
+	:type theViewL: TDF_Label &
+	:param theShapeLabels:
+	:type theShapeLabels: TDF_LabelSequence &
+	:rtype: bool
+") GetRefShapeLabel;
+		Standard_Boolean GetRefShapeLabel (const TDF_Label & theViewL,TDF_LabelSequence & theShapeLabels);
+		%feature("compactdefaultargs") GetRefGDTLabel;
+		%feature("autodoc", "	* Returns GDT labels defined for label theViewL Returns False if the theViewL is not in View table
+
+	:param theViewL:
+	:type theViewL: TDF_Label &
+	:param theGDTLabels:
+	:type theGDTLabels: TDF_LabelSequence &
+	:rtype: bool
+") GetRefGDTLabel;
+		Standard_Boolean GetRefGDTLabel (const TDF_Label & theViewL,TDF_LabelSequence & theGDTLabels);
+		%feature("compactdefaultargs") GetRefClippingPlaneLabel;
+		%feature("autodoc", "	* Returns ClippingPlane labels defined for label theViewL Returns False if the theViewL is not in View table
+
+	:param theViewL:
+	:type theViewL: TDF_Label &
+	:param theClippingPlaneLabels:
+	:type theClippingPlaneLabels: TDF_LabelSequence &
+	:rtype: bool
+") GetRefClippingPlaneLabel;
+		Standard_Boolean GetRefClippingPlaneLabel (const TDF_Label & theViewL,TDF_LabelSequence & theClippingPlaneLabels);
+		%feature("compactdefaultargs") GetRefNoteLabel;
+		%feature("autodoc", "	* Returns Notes labels defined for label theViewL Returns False if the theViewL is not in View table
+
+	:param theViewL:
+	:type theViewL: TDF_Label &
+	:param theNoteLabels:
+	:type theNoteLabels: TDF_LabelSequence &
+	:rtype: bool
+") GetRefNoteLabel;
+		Standard_Boolean GetRefNoteLabel (const TDF_Label & theViewL,TDF_LabelSequence & theNoteLabels);
+		%feature("compactdefaultargs") GetRefAnnotationLabel;
+		%feature("autodoc", "	* Returns Annotation labels defined for label theViewL Returns False if the theViewL is not in View table
+
+	:param theViewL:
+	:type theViewL: TDF_Label &
+	:param theAnnotationLabels:
+	:type theAnnotationLabels: TDF_LabelSequence &
+	:rtype: bool
+") GetRefAnnotationLabel;
+		Standard_Boolean GetRefAnnotationLabel (const TDF_Label & theViewL,TDF_LabelSequence & theAnnotationLabels);
+		%feature("compactdefaultargs") IsLocked;
+		%feature("autodoc", "	* Returns true if the given View is marked as locked
+
+	:param theViewL:
+	:type theViewL: TDF_Label &
+	:rtype: bool
+") IsLocked;
+		Standard_Boolean IsLocked (const TDF_Label & theViewL);
+		%feature("compactdefaultargs") Lock;
+		%feature("autodoc", "	* Mark the given View as locked
+
+	:param theViewL:
+	:type theViewL: TDF_Label &
+	:rtype: None
+") Lock;
+		void Lock (const TDF_Label & theViewL);
+		%feature("compactdefaultargs") Unlock;
+		%feature("autodoc", "	* Unlock the given View
+
+	:param theViewL:
+	:type theViewL: TDF_Label &
+	:rtype: None
+") Unlock;
+		void Unlock (const TDF_Label & theViewL);
+		%feature("compactdefaultargs") ID;
+		%feature("autodoc", "	:rtype: Standard_GUID
+") ID;
+		const Standard_GUID & ID ();
+		%feature("compactdefaultargs") Restore;
+		%feature("autodoc", "	:param with:
+	:type with: Handle_TDF_Attribute &
+	:rtype: None
+") Restore;
+		void Restore (const Handle_TDF_Attribute & with);
+		%feature("compactdefaultargs") NewEmpty;
+		%feature("autodoc", "	:rtype: Handle_TDF_Attribute
+") NewEmpty;
+		Handle_TDF_Attribute NewEmpty ();
+		%feature("compactdefaultargs") Paste;
+		%feature("autodoc", "	:param into:
+	:type into: Handle_TDF_Attribute &
+	:param RT:
+	:type RT: Handle_TDF_RelocationTable &
+	:rtype: None
+") Paste;
+		void Paste (const Handle_TDF_Attribute & into,const Handle_TDF_RelocationTable & RT);
+};
+
+
+%extend XCAFDoc_ViewTool {
+	%pythoncode {
+		def GetHandle(self):
+		    try:
+		        return self.thisHandle
+		    except:
+		        self.thisHandle = Handle_XCAFDoc_ViewTool(self)
+		        self.thisown = False
+		        return self.thisHandle
+	}
+};
+
+%pythonappend Handle_XCAFDoc_ViewTool::Handle_XCAFDoc_ViewTool %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
+%nodefaultctor Handle_XCAFDoc_ViewTool;
+class Handle_XCAFDoc_ViewTool : public Handle_TDF_Attribute {
+
+    public:
+        // constructors
+        Handle_XCAFDoc_ViewTool();
+        Handle_XCAFDoc_ViewTool(const Handle_XCAFDoc_ViewTool &aHandle);
+        Handle_XCAFDoc_ViewTool(const XCAFDoc_ViewTool *anItem);
+        void Nullify();
+        Standard_Boolean IsNull() const;
+        static const Handle_XCAFDoc_ViewTool DownCast(const Handle_Standard_Transient &AnObject);
+
+};
+
+%extend Handle_XCAFDoc_ViewTool {
+    XCAFDoc_ViewTool* _get_reference() {
+    return (XCAFDoc_ViewTool*)$self->get();
+    }
+};
+
+%extend Handle_XCAFDoc_ViewTool {
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
+};
+
+%extend XCAFDoc_ViewTool {
 	%pythoncode {
 	__repr__ = _dumps_object
 	}
@@ -4049,22 +6058,445 @@ class Handle_XCAFDoc_Volume : public Handle_TDF_Attribute {
         static const Handle_XCAFDoc_Volume DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_XCAFDoc_Volume {
     XCAFDoc_Volume* _get_reference() {
-    return (XCAFDoc_Volume*)$self->Access();
+    return (XCAFDoc_Volume*)$self->get();
     }
 };
 
 %extend Handle_XCAFDoc_Volume {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend XCAFDoc_Volume {
+	%pythoncode {
+	__repr__ = _dumps_object
+	}
+};
+%nodefaultctor XCAFDoc_NoteBinData;
+class XCAFDoc_NoteBinData : public XCAFDoc_Note {
+	public:
+		%feature("compactdefaultargs") GetID;
+		%feature("autodoc", "	:rtype: Standard_GUID
+") GetID;
+		static const Standard_GUID & GetID ();
+		%feature("compactdefaultargs") Get;
+		%feature("autodoc", "	* Finds a binary data attribute on the given label and returns it, if it is found
+
+	:param theLabel:
+	:type theLabel: TDF_Label &
+	:rtype: Handle_XCAFDoc_NoteBinData
+") Get;
+		static Handle_XCAFDoc_NoteBinData Get (const TDF_Label & theLabel);
+		%feature("compactdefaultargs") Set;
+		%feature("autodoc", "	* @name Set attribute functions. @{ Create --if not exist-- a binary note with data loaded from a binary file. \param [in] theLabel - label to add the attribute. \param [in] theUserName - the name of the user, who created the note. \param [in] theTimeStamp - creation timestamp of the note. \param [in] theTitle - file title. \param [in] theMIMEtype - MIME type of the file. \param [in] theFile - input binary file. eturn A handle to the attribute instance.
+
+	:param theLabel:
+	:type theLabel: TDF_Label &
+	:param theUserName:
+	:type theUserName: TCollection_ExtendedString &
+	:param theTimeStamp:
+	:type theTimeStamp: TCollection_ExtendedString &
+	:param theTitle:
+	:type theTitle: TCollection_ExtendedString &
+	:param theMIMEtype:
+	:type theMIMEtype: TCollection_AsciiString &
+	:param theFile:
+	:type theFile: OSD_File &
+	:rtype: Handle_XCAFDoc_NoteBinData
+") Set;
+		static Handle_XCAFDoc_NoteBinData Set (const TDF_Label & theLabel,const TCollection_ExtendedString & theUserName,const TCollection_ExtendedString & theTimeStamp,const TCollection_ExtendedString & theTitle,const TCollection_AsciiString & theMIMEtype,OSD_File & theFile);
+		%feature("compactdefaultargs") Set;
+		%feature("autodoc", "	* Create --if not exist-- a binary note byte data array. \param [in] theLabel - label to add the attribute. \param [in] theUserName - the name of the user, who created the note. \param [in] theTimeStamp - creation timestamp of the note. \param [in] theTitle - data title. \param [in] theMIMEtype - MIME type of data. \param [in] theData - byte data array. eturn A handle to the attribute instance.
+
+	:param theLabel:
+	:type theLabel: TDF_Label &
+	:param theUserName:
+	:type theUserName: TCollection_ExtendedString &
+	:param theTimeStamp:
+	:type theTimeStamp: TCollection_ExtendedString &
+	:param theTitle:
+	:type theTitle: TCollection_ExtendedString &
+	:param theMIMEtype:
+	:type theMIMEtype: TCollection_AsciiString &
+	:param theData:
+	:type theData: Handle_TColStd_HArray1OfByte &
+	:rtype: Handle_XCAFDoc_NoteBinData
+") Set;
+		static Handle_XCAFDoc_NoteBinData Set (const TDF_Label & theLabel,const TCollection_ExtendedString & theUserName,const TCollection_ExtendedString & theTimeStamp,const TCollection_ExtendedString & theTitle,const TCollection_AsciiString & theMIMEtype,const Handle_TColStd_HArray1OfByte & theData);
+		%feature("compactdefaultargs") XCAFDoc_NoteBinData;
+		%feature("autodoc", "	* @} Creates an empty binary data note.
+
+	:rtype: None
+") XCAFDoc_NoteBinData;
+		 XCAFDoc_NoteBinData ();
+		%feature("compactdefaultargs") Set;
+		%feature("autodoc", "	* @name Set attribute data functions. @{ Sets title, MIME type and data from a binary file. \param [in] theTitle - file title. \param [in] theMIMEtype - MIME type of the file. \param [in] theFile - input binary file.
+
+	:param theTitle:
+	:type theTitle: TCollection_ExtendedString &
+	:param theMIMEtype:
+	:type theMIMEtype: TCollection_AsciiString &
+	:param theFile:
+	:type theFile: OSD_File &
+	:rtype: bool
+") Set;
+		Standard_Boolean Set (const TCollection_ExtendedString & theTitle,const TCollection_AsciiString & theMIMEtype,OSD_File & theFile);
+		%feature("compactdefaultargs") Set;
+		%feature("autodoc", "	* Sets title, MIME type and data from a byte array. \param [in] theTitle - data title. \param [in] theMIMEtype - MIME type of data. \param [in] theData - byte data array.
+
+	:param theTitle:
+	:type theTitle: TCollection_ExtendedString &
+	:param theMIMEtype:
+	:type theMIMEtype: TCollection_AsciiString &
+	:param theData:
+	:type theData: Handle_TColStd_HArray1OfByte &
+	:rtype: None
+") Set;
+		void Set (const TCollection_ExtendedString & theTitle,const TCollection_AsciiString & theMIMEtype,const Handle_TColStd_HArray1OfByte & theData);
+		%feature("compactdefaultargs") Title;
+		%feature("autodoc", "	* @} Returns the note title.
+
+	:rtype: TCollection_ExtendedString
+") Title;
+		const TCollection_ExtendedString & Title ();
+		%feature("compactdefaultargs") MIMEtype;
+		%feature("autodoc", "	* Returns data MIME type.
+
+	:rtype: TCollection_AsciiString
+") MIMEtype;
+		const TCollection_AsciiString & MIMEtype ();
+		%feature("compactdefaultargs") Size;
+		%feature("autodoc", "	* Size of data in bytes.
+
+	:rtype: int
+") Size;
+		Standard_Integer Size ();
+		%feature("compactdefaultargs") Data;
+		%feature("autodoc", "	* Returns byte data array.
+
+	:rtype: Handle_TColStd_HArray1OfByte
+") Data;
+		Handle_TColStd_HArray1OfByte Data ();
+		%feature("compactdefaultargs") ID;
+		%feature("autodoc", "	:rtype: Standard_GUID
+") ID;
+		const Standard_GUID & ID ();
+		%feature("compactdefaultargs") NewEmpty;
+		%feature("autodoc", "	:rtype: Handle_TDF_Attribute
+") NewEmpty;
+		Handle_TDF_Attribute NewEmpty ();
+		%feature("compactdefaultargs") Restore;
+		%feature("autodoc", "	:param theAttrFrom:
+	:type theAttrFrom: Handle_TDF_Attribute &
+	:rtype: None
+") Restore;
+		void Restore (const Handle_TDF_Attribute & theAttrFrom);
+		%feature("compactdefaultargs") Paste;
+		%feature("autodoc", "	:param theAttrInto:
+	:type theAttrInto: Handle_TDF_Attribute &
+	:param theRT:
+	:type theRT: Handle_TDF_RelocationTable &
+	:rtype: None
+") Paste;
+		void Paste (const Handle_TDF_Attribute & theAttrInto,const Handle_TDF_RelocationTable & theRT);
+
+        %feature("autodoc", "1");
+        %extend{
+            std::string DumpToString() {
+            std::stringstream s;
+            self->Dump(s);
+            return s.str();}
+        };
+        };
+
+
+%extend XCAFDoc_NoteBinData {
+	%pythoncode {
+		def GetHandle(self):
+		    try:
+		        return self.thisHandle
+		    except:
+		        self.thisHandle = Handle_XCAFDoc_NoteBinData(self)
+		        self.thisown = False
+		        return self.thisHandle
+	}
+};
+
+%pythonappend Handle_XCAFDoc_NoteBinData::Handle_XCAFDoc_NoteBinData %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
+%nodefaultctor Handle_XCAFDoc_NoteBinData;
+class Handle_XCAFDoc_NoteBinData : public Handle_XCAFDoc_Note {
+
+    public:
+        // constructors
+        Handle_XCAFDoc_NoteBinData();
+        Handle_XCAFDoc_NoteBinData(const Handle_XCAFDoc_NoteBinData &aHandle);
+        Handle_XCAFDoc_NoteBinData(const XCAFDoc_NoteBinData *anItem);
+        void Nullify();
+        Standard_Boolean IsNull() const;
+        static const Handle_XCAFDoc_NoteBinData DownCast(const Handle_Standard_Transient &AnObject);
+
+};
+
+%extend Handle_XCAFDoc_NoteBinData {
+    XCAFDoc_NoteBinData* _get_reference() {
+    return (XCAFDoc_NoteBinData*)$self->get();
+    }
+};
+
+%extend Handle_XCAFDoc_NoteBinData {
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
+};
+
+%extend XCAFDoc_NoteBinData {
+	%pythoncode {
+	__repr__ = _dumps_object
+	}
+};
+%nodefaultctor XCAFDoc_NoteComment;
+class XCAFDoc_NoteComment : public XCAFDoc_Note {
+	public:
+		%feature("compactdefaultargs") GetID;
+		%feature("autodoc", "	:rtype: Standard_GUID
+") GetID;
+		static const Standard_GUID & GetID ();
+		%feature("compactdefaultargs") Get;
+		%feature("autodoc", "	* Finds a reference attribute on the given label and returns it, if it is found
+
+	:param theLabel:
+	:type theLabel: TDF_Label &
+	:rtype: Handle_XCAFDoc_NoteComment
+") Get;
+		static Handle_XCAFDoc_NoteComment Get (const TDF_Label & theLabel);
+		%feature("compactdefaultargs") Set;
+		%feature("autodoc", "	* Create --if not exist-- a comment note on the given label. \param [in] theLabel - note label. \param [in] theUserName - the name of the user, who created the note. \param [in] theTimeStamp - creation timestamp of the note. \param [in] theComment - comment text.
+
+	:param theLabel:
+	:type theLabel: TDF_Label &
+	:param theUserName:
+	:type theUserName: TCollection_ExtendedString &
+	:param theTimeStamp:
+	:type theTimeStamp: TCollection_ExtendedString &
+	:param theComment:
+	:type theComment: TCollection_ExtendedString &
+	:rtype: Handle_XCAFDoc_NoteComment
+") Set;
+		static Handle_XCAFDoc_NoteComment Set (const TDF_Label & theLabel,const TCollection_ExtendedString & theUserName,const TCollection_ExtendedString & theTimeStamp,const TCollection_ExtendedString & theComment);
+		%feature("compactdefaultargs") XCAFDoc_NoteComment;
+		%feature("autodoc", "	* Creates an empty comment note.
+
+	:rtype: None
+") XCAFDoc_NoteComment;
+		 XCAFDoc_NoteComment ();
+		%feature("compactdefaultargs") Set;
+		%feature("autodoc", "	* Sets the comment text.
+
+	:param theComment:
+	:type theComment: TCollection_ExtendedString &
+	:rtype: None
+") Set;
+		void Set (const TCollection_ExtendedString & theComment);
+		%feature("compactdefaultargs") Comment;
+		%feature("autodoc", "	* Returns the comment text.
+
+	:rtype: TCollection_ExtendedString
+") Comment;
+		const TCollection_ExtendedString & Comment ();
+		%feature("compactdefaultargs") ID;
+		%feature("autodoc", "	:rtype: Standard_GUID
+") ID;
+		const Standard_GUID & ID ();
+		%feature("compactdefaultargs") NewEmpty;
+		%feature("autodoc", "	:rtype: Handle_TDF_Attribute
+") NewEmpty;
+		Handle_TDF_Attribute NewEmpty ();
+		%feature("compactdefaultargs") Restore;
+		%feature("autodoc", "	:param theAttrFrom:
+	:type theAttrFrom: Handle_TDF_Attribute &
+	:rtype: None
+") Restore;
+		void Restore (const Handle_TDF_Attribute & theAttrFrom);
+		%feature("compactdefaultargs") Paste;
+		%feature("autodoc", "	:param theAttrInto:
+	:type theAttrInto: Handle_TDF_Attribute &
+	:param theRT:
+	:type theRT: Handle_TDF_RelocationTable &
+	:rtype: None
+") Paste;
+		void Paste (const Handle_TDF_Attribute & theAttrInto,const Handle_TDF_RelocationTable & theRT);
+
+        %feature("autodoc", "1");
+        %extend{
+            std::string DumpToString() {
+            std::stringstream s;
+            self->Dump(s);
+            return s.str();}
+        };
+        };
+
+
+%extend XCAFDoc_NoteComment {
+	%pythoncode {
+		def GetHandle(self):
+		    try:
+		        return self.thisHandle
+		    except:
+		        self.thisHandle = Handle_XCAFDoc_NoteComment(self)
+		        self.thisown = False
+		        return self.thisHandle
+	}
+};
+
+%pythonappend Handle_XCAFDoc_NoteComment::Handle_XCAFDoc_NoteComment %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
+%nodefaultctor Handle_XCAFDoc_NoteComment;
+class Handle_XCAFDoc_NoteComment : public Handle_XCAFDoc_Note {
+
+    public:
+        // constructors
+        Handle_XCAFDoc_NoteComment();
+        Handle_XCAFDoc_NoteComment(const Handle_XCAFDoc_NoteComment &aHandle);
+        Handle_XCAFDoc_NoteComment(const XCAFDoc_NoteComment *anItem);
+        void Nullify();
+        Standard_Boolean IsNull() const;
+        static const Handle_XCAFDoc_NoteComment DownCast(const Handle_Standard_Transient &AnObject);
+
+};
+
+%extend Handle_XCAFDoc_NoteComment {
+    XCAFDoc_NoteComment* _get_reference() {
+    return (XCAFDoc_NoteComment*)$self->get();
+    }
+};
+
+%extend Handle_XCAFDoc_NoteComment {
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
+};
+
+%extend XCAFDoc_NoteComment {
+	%pythoncode {
+	__repr__ = _dumps_object
+	}
+};
+%nodefaultctor XCAFDoc_NoteBalloon;
+class XCAFDoc_NoteBalloon : public XCAFDoc_NoteComment {
+	public:
+		%feature("compactdefaultargs") GetID;
+		%feature("autodoc", "	:rtype: Standard_GUID
+") GetID;
+		static const Standard_GUID & GetID ();
+		%feature("compactdefaultargs") Get;
+		%feature("autodoc", "	* Finds a reference attribute on the given label and returns it, if it is found
+
+	:param theLabel:
+	:type theLabel: TDF_Label &
+	:rtype: Handle_XCAFDoc_NoteBalloon
+") Get;
+		static Handle_XCAFDoc_NoteBalloon Get (const TDF_Label & theLabel);
+		%feature("compactdefaultargs") Set;
+		%feature("autodoc", "	* Create --if not exist-- a comment note on the given label. \param [in] theLabel - note label. \param [in] theUserName - the name of the user, who created the note. \param [in] theTimeStamp - creation timestamp of the note. \param [in] theComment - comment text.
+
+	:param theLabel:
+	:type theLabel: TDF_Label &
+	:param theUserName:
+	:type theUserName: TCollection_ExtendedString &
+	:param theTimeStamp:
+	:type theTimeStamp: TCollection_ExtendedString &
+	:param theComment:
+	:type theComment: TCollection_ExtendedString &
+	:rtype: Handle_XCAFDoc_NoteBalloon
+") Set;
+		static Handle_XCAFDoc_NoteBalloon Set (const TDF_Label & theLabel,const TCollection_ExtendedString & theUserName,const TCollection_ExtendedString & theTimeStamp,const TCollection_ExtendedString & theComment);
+		%feature("compactdefaultargs") XCAFDoc_NoteBalloon;
+		%feature("autodoc", "	* Creates an empty comment note.
+
+	:rtype: None
+") XCAFDoc_NoteBalloon;
+		 XCAFDoc_NoteBalloon ();
+		%feature("compactdefaultargs") ID;
+		%feature("autodoc", "	:rtype: Standard_GUID
+") ID;
+		const Standard_GUID & ID ();
+		%feature("compactdefaultargs") NewEmpty;
+		%feature("autodoc", "	:rtype: Handle_TDF_Attribute
+") NewEmpty;
+		Handle_TDF_Attribute NewEmpty ();
+};
+
+
+%extend XCAFDoc_NoteBalloon {
+	%pythoncode {
+		def GetHandle(self):
+		    try:
+		        return self.thisHandle
+		    except:
+		        self.thisHandle = Handle_XCAFDoc_NoteBalloon(self)
+		        self.thisown = False
+		        return self.thisHandle
+	}
+};
+
+%pythonappend Handle_XCAFDoc_NoteBalloon::Handle_XCAFDoc_NoteBalloon %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
+%nodefaultctor Handle_XCAFDoc_NoteBalloon;
+class Handle_XCAFDoc_NoteBalloon : public Handle_XCAFDoc_NoteComment {
+
+    public:
+        // constructors
+        Handle_XCAFDoc_NoteBalloon();
+        Handle_XCAFDoc_NoteBalloon(const Handle_XCAFDoc_NoteBalloon &aHandle);
+        Handle_XCAFDoc_NoteBalloon(const XCAFDoc_NoteBalloon *anItem);
+        void Nullify();
+        Standard_Boolean IsNull() const;
+        static const Handle_XCAFDoc_NoteBalloon DownCast(const Handle_Standard_Transient &AnObject);
+
+};
+
+%extend Handle_XCAFDoc_NoteBalloon {
+    XCAFDoc_NoteBalloon* _get_reference() {
+    return (XCAFDoc_NoteBalloon*)$self->get();
+    }
+};
+
+%extend Handle_XCAFDoc_NoteBalloon {
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
+};
+
+%extend XCAFDoc_NoteBalloon {
 	%pythoncode {
 	__repr__ = _dumps_object
 	}

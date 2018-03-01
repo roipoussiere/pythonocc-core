@@ -1,5 +1,5 @@
 /*
-Copyright 2008-2017 Thomas Paviot (tpaviot@gmail.com)
+Copyright 2008-2018 Thomas Paviot (tpaviot@gmail.com)
 
 
 This file is part of pythonOCC.
@@ -56,6 +56,9 @@ def register_handle(handle, base_object):
 /* typedefs */
 /* end typedefs declaration */
 
+/* templates */
+/* end templates declaration */
+
 /* public enums */
 /* end public enums declaration */
 
@@ -63,27 +66,31 @@ def register_handle(handle, base_object):
 class BRepGProp {
 	public:
 		%feature("compactdefaultargs") LinearProperties;
-		%feature("autodoc", "	* Computes the linear global properties of the shape S, i.e. the global properties induced by each edge of the shape S, and brings them together with the global properties still retained by the framework LProps. If the current system of LProps was empty, its global properties become equal to the linear global properties of S. For this computation no linear density is attached to the edges. So, for example, the added mass corresponds to the sum of the lengths of the edges of S. The density of the composed systems, i.e. that of each component of the current system of LProps, and that of S which is considered to be equal to 1, must be coherent. Note that this coherence cannot be checked. You are advised to use a separate framework for each density, and then to bring these frameworks together into a global one. The point relative to which the inertia of the system is computed is the reference point of the framework LProps. Note: if your programming ensures that the framework LProps retains only linear global properties (brought together for example, by the function LinearProperties) for objects the density of which is equal to 1 (or is not defined), the function Mass will return the total length of edges of the system analysed by LProps. Warning No check is performed to verify that the shape S retains truly linear properties. If S is simply a vertex, it is not considered to present any additional global properties.
+		%feature("autodoc", "	* Computes the linear global properties of the shape S, i.e. the global properties induced by each edge of the shape S, and brings them together with the global properties still retained by the framework LProps. If the current system of LProps was empty, its global properties become equal to the linear global properties of S. For this computation no linear density is attached to the edges. So, for example, the added mass corresponds to the sum of the lengths of the edges of S. The density of the composed systems, i.e. that of each component of the current system of LProps, and that of S which is considered to be equal to 1, must be coherent. Note that this coherence cannot be checked. You are advised to use a separate framework for each density, and then to bring these frameworks together into a global one. The point relative to which the inertia of the system is computed is the reference point of the framework LProps. Note: if your programming ensures that the framework LProps retains only linear global properties --brought together for example, by the function LinearProperties-- for objects the density of which is equal to 1 --or is not defined--, the function Mass will return the total length of edges of the system analysed by LProps. Warning No check is performed to verify that the shape S retains truly linear properties. If S is simply a vertex, it is not considered to present any additional global properties. SkipShared is special flag, which allows to take in calculation shared topological entities or not For ex., if SkipShared = True, edges, shared by two or more faces, are taken into calculation only once. If we have cube with sizes 1, 1, 1, its linear properties = 12 for SkipEdges = true and 24 for SkipEdges = false.
 
 	:param S:
 	:type S: TopoDS_Shape &
 	:param LProps:
 	:type LProps: GProp_GProps &
+	:param SkipShared: default value is Standard_False
+	:type SkipShared: bool
 	:rtype: void
 ") LinearProperties;
-		static void LinearProperties (const TopoDS_Shape & S,GProp_GProps & LProps);
+		static void LinearProperties (const TopoDS_Shape & S,GProp_GProps & LProps,const Standard_Boolean SkipShared = Standard_False);
 		%feature("compactdefaultargs") SurfaceProperties;
-		%feature("autodoc", "	* Computes the surface global properties of the shape S, i.e. the global properties induced by each face of the shape S, and brings them together with the global properties still retained by the framework SProps. If the current system of SProps was empty, its global properties become equal to the surface global properties of S. For this computation, no surface density is attached to the faces. Consequently, the added mass corresponds to the sum of the areas of the faces of S. The density of the component systems, i.e. that of each component of the current system of SProps, and that of S which is considered to be equal to 1, must be coherent. Note that this coherence cannot be checked. You are advised to use a framework for each different value of density, and then to bring these frameworks together into a global one. The point relative to which the inertia of the system is computed is the reference point of the framework SProps. Note : if your programming ensures that the framework SProps retains only surface global properties, brought together, for example, by the function SurfaceProperties, for objects the density of which is equal to 1 (or is not defined), the function Mass will return the total area of faces of the system analysed by SProps. Warning No check is performed to verify that the shape S retains truly surface properties. If S is simply a vertex, an edge or a wire, it is not considered to present any additional global properties.
+		%feature("autodoc", "	* Computes the surface global properties of the shape S, i.e. the global properties induced by each face of the shape S, and brings them together with the global properties still retained by the framework SProps. If the current system of SProps was empty, its global properties become equal to the surface global properties of S. For this computation, no surface density is attached to the faces. Consequently, the added mass corresponds to the sum of the areas of the faces of S. The density of the component systems, i.e. that of each component of the current system of SProps, and that of S which is considered to be equal to 1, must be coherent. Note that this coherence cannot be checked. You are advised to use a framework for each different value of density, and then to bring these frameworks together into a global one. The point relative to which the inertia of the system is computed is the reference point of the framework SProps. Note : if your programming ensures that the framework SProps retains only surface global properties, brought together, for example, by the function SurfaceProperties, for objects the density of which is equal to 1 --or is not defined--, the function Mass will return the total area of faces of the system analysed by SProps. Warning No check is performed to verify that the shape S retains truly surface properties. If S is simply a vertex, an edge or a wire, it is not considered to present any additional global properties. SkipShared is special flag, which allows to take in calculation shared topological entities or not For ex., if SkipShared = True, faces, shared by two or more shells, are taken into calculation only once.
 
 	:param S:
 	:type S: TopoDS_Shape &
 	:param SProps:
 	:type SProps: GProp_GProps &
+	:param SkipShared: default value is Standard_False
+	:type SkipShared: bool
 	:rtype: void
 ") SurfaceProperties;
-		static void SurfaceProperties (const TopoDS_Shape & S,GProp_GProps & SProps);
+		static void SurfaceProperties (const TopoDS_Shape & S,GProp_GProps & SProps,const Standard_Boolean SkipShared = Standard_False);
 		%feature("compactdefaultargs") SurfaceProperties;
-		%feature("autodoc", "	* Updates <SProps> with the shape <S>, that contains its pricipal properties. The surface properties of all the faces in <S> are computed. Adaptive 2D Gauss integration is used. Parameter Eps sets maximal relative error of computed mass (area) for each face. Error is calculated as Abs((M(i+1)-M(i))/M(i+1)), M(i+1) and M(i) are values for two successive steps of adaptive integration. Method returns estimation of relative error reached for whole shape. WARNING: if Eps > 0.001 algorithm performs non-adaptive integration. //! Computes the global volume properties of the solid S, and brings them together with the global properties still retained by the framework VProps. If the current system of VProps was empty, its global properties become equal to the global properties of S for volume. For this computation, no volume density is attached to the solid. Consequently, the added mass corresponds to the volume of S. The density of the component systems, i.e. that of each component of the current system of VProps, and that of S which is considered to be equal to 1, must be coherent to each other. Note that this coherence cannot be checked. You are advised to use a separate framework for each density, and then to bring these frameworks together into a global one. The point relative to which the inertia of the system is computed is the reference point of the framework VProps. Note: if your programming ensures that the framework VProps retains only global properties of volume (brought together for example, by the function VolumeProperties) for objects the density of which is equal to 1 (or is not defined), the function Mass will return the total volume of the solids of the system analysed by VProps. Warning The shape S must represent an object whose global volume properties can be computed. It may be a finite solid, or a series of finite solids all oriented in a coherent way. Nonetheless, S must be exempt of any free boundary. Note that these conditions of coherence are not checked by this algorithm, and results will be false if they are not respected.
+		%feature("autodoc", "	* Updates <SProps> with the shape <S>, that contains its pricipal properties. The surface properties of all the faces in <S> are computed. Adaptive 2D Gauss integration is used. Parameter Eps sets maximal relative error of computed mass --area-- for each face. Error is calculated as Abs----M--i+1---M--i----/M--i+1----, M--i+1-- and M--i-- are values for two successive steps of adaptive integration. Method returns estimation of relative error reached for whole shape. WARNING: if Eps > 0.001 algorithm performs non-adaptive integration. SkipShared is special flag, which allows to take in calculation shared topological entities or not For ex., if SkipShared = True, faces, shared by two or more shells, are taken into calculation only once.
 
 	:param S:
 	:type S: TopoDS_Shape &
@@ -91,21 +98,27 @@ class BRepGProp {
 	:type SProps: GProp_GProps &
 	:param Eps:
 	:type Eps: float
+	:param SkipShared: default value is Standard_False
+	:type SkipShared: bool
 	:rtype: float
 ") SurfaceProperties;
-		static Standard_Real SurfaceProperties (const TopoDS_Shape & S,GProp_GProps & SProps,const Standard_Real Eps);
+		static Standard_Real SurfaceProperties (const TopoDS_Shape & S,GProp_GProps & SProps,const Standard_Real Eps,const Standard_Boolean SkipShared = Standard_False);
 		%feature("compactdefaultargs") VolumeProperties;
-		%feature("autodoc", "	:param S:
+		%feature("autodoc", "	* //! Computes the global volume properties of the solid S, and brings them together with the global properties still retained by the framework VProps. If the current system of VProps was empty, its global properties become equal to the global properties of S for volume. For this computation, no volume density is attached to the solid. Consequently, the added mass corresponds to the volume of S. The density of the component systems, i.e. that of each component of the current system of VProps, and that of S which is considered to be equal to 1, must be coherent to each other. Note that this coherence cannot be checked. You are advised to use a separate framework for each density, and then to bring these frameworks together into a global one. The point relative to which the inertia of the system is computed is the reference point of the framework VProps. Note: if your programming ensures that the framework VProps retains only global properties of volume --brought together for example, by the function VolumeProperties-- for objects the density of which is equal to 1 --or is not defined--, the function Mass will return the total volume of the solids of the system analysed by VProps. Warning The shape S must represent an object whose global volume properties can be computed. It may be a finite solid, or a series of finite solids all oriented in a coherent way. Nonetheless, S must be exempt of any free boundary. Note that these conditions of coherence are not checked by this algorithm, and results will be false if they are not respected. SkipShared is special flag, which allows to take in calculation shared topological entities or not For ex., if SkipShared = True, the volumes formed by the equal --the same TShape, location and orientation-- faces are taken into calculation only once.
+
+	:param S:
 	:type S: TopoDS_Shape &
 	:param VProps:
 	:type VProps: GProp_GProps &
 	:param OnlyClosed: default value is Standard_False
 	:type OnlyClosed: bool
+	:param SkipShared: default value is Standard_False
+	:type SkipShared: bool
 	:rtype: void
 ") VolumeProperties;
-		static void VolumeProperties (const TopoDS_Shape & S,GProp_GProps & VProps,const Standard_Boolean OnlyClosed = Standard_False);
+		static void VolumeProperties (const TopoDS_Shape & S,GProp_GProps & VProps,const Standard_Boolean OnlyClosed = Standard_False,const Standard_Boolean SkipShared = Standard_False);
 		%feature("compactdefaultargs") VolumeProperties;
-		%feature("autodoc", "	* Updates <VProps> with the shape <S>, that contains its pricipal properties. The volume properties of all the FORWARD and REVERSED faces in <S> are computed. If OnlyClosed is True then computed faces must belong to closed Shells. Adaptive 2D Gauss integration is used. Parameter Eps sets maximal relative error of computed mass (volume) for each face. Error is calculated as Abs((M(i+1)-M(i))/M(i+1)), M(i+1) and M(i) are values for two successive steps of adaptive integration. Method returns estimation of relative error reached for whole shape. WARNING: if Eps > 0.001 algorithm performs non-adaptive integration.
+		%feature("autodoc", "	* Updates <VProps> with the shape <S>, that contains its pricipal properties. The volume properties of all the FORWARD and REVERSED faces in <S> are computed. If OnlyClosed is True then computed faces must belong to closed Shells. Adaptive 2D Gauss integration is used. Parameter Eps sets maximal relative error of computed mass --volume-- for each face. Error is calculated as Abs----M--i+1---M--i----/M--i+1----, M--i+1-- and M--i-- are values for two successive steps of adaptive integration. Method returns estimation of relative error reached for whole shape. WARNING: if Eps > 0.001 algorithm performs non-adaptive integration. SkipShared is special flag, which allows to take in calculation shared topological entities or not For ex., if SkipShared = True, the volumes formed by the equal --the same TShape, location and orientation-- faces are taken into calculation only once.
 
 	:param S:
 	:type S: TopoDS_Shape &
@@ -115,11 +128,13 @@ class BRepGProp {
 	:type Eps: float
 	:param OnlyClosed: default value is Standard_False
 	:type OnlyClosed: bool
+	:param SkipShared: default value is Standard_False
+	:type SkipShared: bool
 	:rtype: float
 ") VolumeProperties;
-		static Standard_Real VolumeProperties (const TopoDS_Shape & S,GProp_GProps & VProps,const Standard_Real Eps,const Standard_Boolean OnlyClosed = Standard_False);
+		static Standard_Real VolumeProperties (const TopoDS_Shape & S,GProp_GProps & VProps,const Standard_Real Eps,const Standard_Boolean OnlyClosed = Standard_False,const Standard_Boolean SkipShared = Standard_False);
 		%feature("compactdefaultargs") VolumePropertiesGK;
-		%feature("autodoc", "	* Updates <VProps> with the shape <S>, that contains its pricipal properties. The volume properties of all the FORWARD and REVERSED faces in <S> are computed. If OnlyClosed is True then computed faces must belong to closed Shells. Adaptive 2D Gauss integration is used. Parameter IsUseSpan says if it is necessary to define spans on a face. This option has an effect only for BSpline faces. Parameter Eps sets maximal relative error of computed property for each face. Error is delivered by the adaptive Gauss-Kronrod method of integral computation that is used for properties computation. Method returns estimation of relative error reached for whole shape. Returns negative value if the computation is failed.
+		%feature("autodoc", "	* Updates <VProps> with the shape <S>, that contains its pricipal properties. The volume properties of all the FORWARD and REVERSED faces in <S> are computed. If OnlyClosed is True then computed faces must belong to closed Shells. Adaptive 2D Gauss integration is used. Parameter IsUseSpan says if it is necessary to define spans on a face. This option has an effect only for BSpline faces. Parameter Eps sets maximal relative error of computed property for each face. Error is delivered by the adaptive Gauss-Kronrod method of integral computation that is used for properties computation. Method returns estimation of relative error reached for whole shape. Returns negative value if the computation is failed. SkipShared is special flag, which allows to take in calculation shared topological entities or not For ex., if SkipShared = True, the volumes formed by the equal --the same TShape, location and orientation-- faces are taken into calculation only once.
 
 	:param S:
 	:type S: TopoDS_Shape &
@@ -135,9 +150,11 @@ class BRepGProp {
 	:type CGFlag: bool
 	:param IFlag: default value is Standard_False
 	:type IFlag: bool
+	:param SkipShared: default value is Standard_False
+	:type SkipShared: bool
 	:rtype: float
 ") VolumePropertiesGK;
-		static Standard_Real VolumePropertiesGK (const TopoDS_Shape & S,GProp_GProps & VProps,const Standard_Real Eps = 0.001,const Standard_Boolean OnlyClosed = Standard_False,const Standard_Boolean IsUseSpan = Standard_False,const Standard_Boolean CGFlag = Standard_False,const Standard_Boolean IFlag = Standard_False);
+		static Standard_Real VolumePropertiesGK (const TopoDS_Shape & S,GProp_GProps & VProps,const Standard_Real Eps = 0.001,const Standard_Boolean OnlyClosed = Standard_False,const Standard_Boolean IsUseSpan = Standard_False,const Standard_Boolean CGFlag = Standard_False,const Standard_Boolean IFlag = Standard_False,const Standard_Boolean SkipShared = Standard_False);
 		%feature("compactdefaultargs") VolumePropertiesGK;
 		%feature("autodoc", "	:param S:
 	:type S: TopoDS_Shape &
@@ -155,9 +172,11 @@ class BRepGProp {
 	:type CGFlag: bool
 	:param IFlag: default value is Standard_False
 	:type IFlag: bool
+	:param SkipShared: default value is Standard_False
+	:type SkipShared: bool
 	:rtype: float
 ") VolumePropertiesGK;
-		static Standard_Real VolumePropertiesGK (const TopoDS_Shape & S,GProp_GProps & VProps,const gp_Pln & thePln,const Standard_Real Eps = 0.001,const Standard_Boolean OnlyClosed = Standard_False,const Standard_Boolean IsUseSpan = Standard_False,const Standard_Boolean CGFlag = Standard_False,const Standard_Boolean IFlag = Standard_False);
+		static Standard_Real VolumePropertiesGK (const TopoDS_Shape & S,GProp_GProps & VProps,const gp_Pln & thePln,const Standard_Real Eps = 0.001,const Standard_Boolean OnlyClosed = Standard_False,const Standard_Boolean IsUseSpan = Standard_False,const Standard_Boolean CGFlag = Standard_False,const Standard_Boolean IFlag = Standard_False,const Standard_Boolean SkipShared = Standard_False);
 };
 
 
@@ -309,7 +328,7 @@ class BRepGProp_EdgeTool {
 ") D1;
 		static void D1 (const BRepAdaptor_Curve & C,const Standard_Real U,gp_Pnt & P,gp_Vec & V1);
 		%feature("compactdefaultargs") NbIntervals;
-		%feature("autodoc", "	* Returns the number of intervals for continuity <S>. May be one if Continuity(me) >= <S>
+		%feature("autodoc", "	* Returns the number of intervals for continuity <S>. May be one if Continuity--me-- >= <S>
 
 	:param C:
 	:type C: BRepAdaptor_Curve &
@@ -319,7 +338,7 @@ class BRepGProp_EdgeTool {
 ") NbIntervals;
 		static Standard_Integer NbIntervals (const BRepAdaptor_Curve & C,const GeomAbs_Shape S);
 		%feature("compactdefaultargs") Intervals;
-		%feature("autodoc", "	* Stores in <T> the parameters bounding the intervals of continuity <S>. //! The array must provide enough room to accomodate for the parameters. i.e. T.Length() > NbIntervals()
+		%feature("autodoc", "	* Stores in <T> the parameters bounding the intervals of continuity <S>. //! The array must provide enough room to accomodate for the parameters. i.e. T.Length---- > NbIntervals----
 
 	:param C:
 	:type C: BRepAdaptor_Curve &
@@ -375,6 +394,12 @@ class BRepGProp_Face {
 	:rtype: bool
 ") NaturalRestriction;
 		Standard_Boolean NaturalRestriction ();
+		%feature("compactdefaultargs") GetFace;
+		%feature("autodoc", "	* Returns the TopoDS face.
+
+	:rtype: TopoDS_Face
+") GetFace;
+		const TopoDS_Face  GetFace ();
 		%feature("compactdefaultargs") Value2d;
 		%feature("autodoc", "	* Returns the value of the boundary curve of the face.
 
@@ -582,7 +607,7 @@ class BRepGProp_Sinert : public GProp_GProps {
 ") BRepGProp_Sinert;
 		 BRepGProp_Sinert (const BRepGProp_Face & S,const gp_Pnt & SLocation);
 		%feature("compactdefaultargs") BRepGProp_Sinert;
-		%feature("autodoc", "	* Builds a Sinert to evaluate the global properties of the face <S>. If isNaturalRestriction is true the domain of S is defined with the natural bounds, else it defined with an iterator of Edge from TopoDS (see DomainTool from GProp)
+		%feature("autodoc", "	* Builds a Sinert to evaluate the global properties of the face <S>. If isNaturalRestriction is true the domain of S is defined with the natural bounds, else it defined with an iterator of Edge from TopoDS --see DomainTool from GProp--
 
 	:param S:
 	:type S: BRepGProp_Face &
@@ -671,7 +696,7 @@ class BRepGProp_Sinert : public GProp_GProps {
 class BRepGProp_TFunction : public math_Function {
 	public:
 		%feature("compactdefaultargs") BRepGProp_TFunction;
-		%feature("autodoc", "	* Constructor. Initializes the function with the face, the location point, the flag IsByPoint, the coefficients theCoeff that have different meaning depending on the value of IsByPoint. The last two parameters are theUMin - the lower bound of the inner integral. This value is fixed for any integral. And the value of tolerance of inner integral computation. If IsByPoint is equal to Standard_True, the number of the coefficients is equal to 3 and they represent X, Y and Z coordinates (theCoeff[0], theCoeff[1] and theCoeff[2] correspondingly) of the shift if the inertia is computed with respect to the point different then the location. If IsByPoint is equal to Standard_False, the number of the coefficients is 4 and they represent the compbination of plane parameters and shift values.
+		%feature("autodoc", "	* Constructor. Initializes the function with the face, the location point, the flag IsByPoint, the coefficients theCoeff that have different meaning depending on the value of IsByPoint. The last two parameters are theUMin - the lower bound of the inner integral. This value is fixed for any integral. And the value of tolerance of inner integral computation. If IsByPoint is equal to Standard_True, the number of the coefficients is equal to 3 and they represent X, Y and Z coordinates --theCoeff[0], theCoeff[1] and theCoeff[2] correspondingly-- of the shift if the inertia is computed with respect to the point different then the location. If IsByPoint is equal to Standard_False, the number of the coefficients is 4 and they represent the compbination of plane parameters and shift values.
 
 	:param theSurface:
 	:type theSurface: BRepGProp_Face &
@@ -756,7 +781,7 @@ class BRepGProp_TFunction : public math_Function {
 class BRepGProp_UFunction : public math_Function {
 	public:
 		%feature("compactdefaultargs") BRepGProp_UFunction;
-		%feature("autodoc", "	* Constructor. Initializes the function with the face, the location point, the flag IsByPoint and the coefficients theCoeff that have different meaning depending on the value of IsByPoint. If IsByPoint is equal to Standard_True, the number of the coefficients is equal to 3 and they represent X, Y and Z coordinates (theCoeff[0], theCoeff[1] and theCoeff[2] correspondingly) of the shift, if the inertia is computed with respect to the point different then the location. If IsByPoint is equal to Standard_False, the number of the coefficients is 4 and they represent the combination of plane parameters and shift values.
+		%feature("autodoc", "	* Constructor. Initializes the function with the face, the location point, the flag IsByPoint and the coefficients theCoeff that have different meaning depending on the value of IsByPoint. If IsByPoint is equal to Standard_True, the number of the coefficients is equal to 3 and they represent X, Y and Z coordinates --theCoeff[0], theCoeff[1] and theCoeff[2] correspondingly-- of the shift, if the inertia is computed with respect to the point different then the location. If IsByPoint is equal to Standard_False, the number of the coefficients is 4 and they represent the combination of plane parameters and shift values.
 
 	:param theSurface:
 	:type theSurface: BRepGProp_Face &
@@ -821,7 +846,7 @@ class BRepGProp_Vinert : public GProp_GProps {
 ") BRepGProp_Vinert;
 		 BRepGProp_Vinert (const BRepGProp_Face & S,const gp_Pnt & VLocation);
 		%feature("compactdefaultargs") BRepGProp_Vinert;
-		%feature("autodoc", "	* Computes the global properties of a region of 3D space delimited with the surface <S> and the point VLocation. S can be closed Adaptive 2D Gauss integration is used. Parameter Eps sets maximal relative error of computed mass (volume) for face. Error is calculated as Abs((M(i+1)-M(i))/M(i+1)), M(i+1) and M(i) are values for two successive steps of adaptive integration.
+		%feature("autodoc", "	* Computes the global properties of a region of 3D space delimited with the surface <S> and the point VLocation. S can be closed Adaptive 2D Gauss integration is used. Parameter Eps sets maximal relative error of computed mass --volume-- for face. Error is calculated as Abs----M--i+1---M--i----/M--i+1----, M--i+1-- and M--i-- are values for two successive steps of adaptive integration.
 
 	:param S:
 	:type S: BRepGProp_Face &
@@ -845,7 +870,7 @@ class BRepGProp_Vinert : public GProp_GProps {
 ") BRepGProp_Vinert;
 		 BRepGProp_Vinert (const BRepGProp_Face & S,const gp_Pnt & O,const gp_Pnt & VLocation);
 		%feature("compactdefaultargs") BRepGProp_Vinert;
-		%feature("autodoc", "	* Computes the global properties of the region of 3D space delimited with the surface <S> and the point VLocation. Adaptive 2D Gauss integration is used. Parameter Eps sets maximal relative error of computed mass (volume) for face. Error is calculated as Abs((M(i+1)-M(i))/M(i+1)), M(i+1) and M(i) are values for two successive steps of adaptive integration. WARNING: if Eps > 0.001 algorithm performs non-adaptive integration.
+		%feature("autodoc", "	* Computes the global properties of the region of 3D space delimited with the surface <S> and the point VLocation. Adaptive 2D Gauss integration is used. Parameter Eps sets maximal relative error of computed mass --volume-- for face. Error is calculated as Abs----M--i+1---M--i----/M--i+1----, M--i+1-- and M--i-- are values for two successive steps of adaptive integration. WARNING: if Eps > 0.001 algorithm performs non-adaptive integration.
 
 	:param S:
 	:type S: BRepGProp_Face &
@@ -871,7 +896,7 @@ class BRepGProp_Vinert : public GProp_GProps {
 ") BRepGProp_Vinert;
 		 BRepGProp_Vinert (const BRepGProp_Face & S,const gp_Pln & Pl,const gp_Pnt & VLocation);
 		%feature("compactdefaultargs") BRepGProp_Vinert;
-		%feature("autodoc", "	* Computes the global properties of the region of 3D space delimited with the surface <S> and the plane Pln. Adaptive 2D Gauss integration is used. Parameter Eps sets maximal relative error of computed mass (volume) for face. Error is calculated as Abs((M(i+1)-M(i))/M(i+1)), M(i+1) and M(i) are values for two successive steps of adaptive integration. WARNING: if Eps > 0.001 algorithm performs non-adaptive integration.
+		%feature("autodoc", "	* Computes the global properties of the region of 3D space delimited with the surface <S> and the plane Pln. Adaptive 2D Gauss integration is used. Parameter Eps sets maximal relative error of computed mass --volume-- for face. Error is calculated as Abs----M--i+1---M--i----/M--i+1----, M--i+1-- and M--i-- are values for two successive steps of adaptive integration. WARNING: if Eps > 0.001 algorithm performs non-adaptive integration.
 
 	:param S:
 	:type S: BRepGProp_Face &
@@ -897,7 +922,7 @@ class BRepGProp_Vinert : public GProp_GProps {
 ") BRepGProp_Vinert;
 		 BRepGProp_Vinert (BRepGProp_Face & S,BRepGProp_Domain & D,const gp_Pnt & VLocation);
 		%feature("compactdefaultargs") BRepGProp_Vinert;
-		%feature("autodoc", "	* Computes the global properties of a region of 3D space delimited with the surface <S> and the point VLocation. S can be closed Adaptive 2D Gauss integration is used. Parameter Eps sets maximal relative error of computed mass (volume) for face. Error is calculated as Abs((M(i+1)-M(i))/M(i+1)), M(i+1) and M(i) are values for two successive steps of adaptive integration.
+		%feature("autodoc", "	* Computes the global properties of a region of 3D space delimited with the surface <S> and the point VLocation. S can be closed Adaptive 2D Gauss integration is used. Parameter Eps sets maximal relative error of computed mass --volume-- for face. Error is calculated as Abs----M--i+1---M--i----/M--i+1----, M--i+1-- and M--i-- are values for two successive steps of adaptive integration.
 
 	:param S:
 	:type S: BRepGProp_Face &
@@ -925,7 +950,7 @@ class BRepGProp_Vinert : public GProp_GProps {
 ") BRepGProp_Vinert;
 		 BRepGProp_Vinert (BRepGProp_Face & S,BRepGProp_Domain & D,const gp_Pnt & O,const gp_Pnt & VLocation);
 		%feature("compactdefaultargs") BRepGProp_Vinert;
-		%feature("autodoc", "	* Computes the global properties of the region of 3D space delimited with the surface <S> and the point VLocation. Adaptive 2D Gauss integration is used. Parameter Eps sets maximal relative error of computed mass (volume) for face. Error is calculated as Abs((M(i+1)-M(i))/M(i+1)), M(i+1) and M(i) are values for two successive steps of adaptive integration. WARNING: if Eps > 0.001 algorithm performs non-adaptive integration.
+		%feature("autodoc", "	* Computes the global properties of the region of 3D space delimited with the surface <S> and the point VLocation. Adaptive 2D Gauss integration is used. Parameter Eps sets maximal relative error of computed mass --volume-- for face. Error is calculated as Abs----M--i+1---M--i----/M--i+1----, M--i+1-- and M--i-- are values for two successive steps of adaptive integration. WARNING: if Eps > 0.001 algorithm performs non-adaptive integration.
 
 	:param S:
 	:type S: BRepGProp_Face &
@@ -955,7 +980,7 @@ class BRepGProp_Vinert : public GProp_GProps {
 ") BRepGProp_Vinert;
 		 BRepGProp_Vinert (BRepGProp_Face & S,BRepGProp_Domain & D,const gp_Pln & Pl,const gp_Pnt & VLocation);
 		%feature("compactdefaultargs") BRepGProp_Vinert;
-		%feature("autodoc", "	* Computes the global properties of the region of 3D space delimited with the surface <S> and the plane Pln. Adaptive 2D Gauss integration is used. Parameter Eps sets maximal relative error of computed mass (volume) for face. Error is calculated as Abs((M(i+1)-M(i))/M(i+1)), M(i+1) and M(i) are values for two successive steps of adaptive integration. WARNING: if Eps > 0.001 algorithm performs non-adaptive integration.
+		%feature("autodoc", "	* Computes the global properties of the region of 3D space delimited with the surface <S> and the plane Pln. Adaptive 2D Gauss integration is used. Parameter Eps sets maximal relative error of computed mass --volume-- for face. Error is calculated as Abs----M--i+1---M--i----/M--i+1----, M--i+1-- and M--i-- are values for two successive steps of adaptive integration. WARNING: if Eps > 0.001 algorithm performs non-adaptive integration.
 
 	:param S:
 	:type S: BRepGProp_Face &

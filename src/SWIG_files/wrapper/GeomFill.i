@@ -1,5 +1,5 @@
 /*
-Copyright 2008-2017 Thomas Paviot (tpaviot@gmail.com)
+Copyright 2008-2018 Thomas Paviot (tpaviot@gmail.com)
 
 
 This file is part of pythonOCC.
@@ -55,6 +55,13 @@ def register_handle(handle, base_object):
 
 /* typedefs */
 /* end typedefs declaration */
+
+/* templates */
+%template(GeomFill_Array1OfLocationLaw) NCollection_Array1 <Handle_GeomFill_LocationLaw>;
+%template(GeomFill_SequenceOfAx2) NCollection_Sequence <gp_Ax2>;
+%template(GeomFill_SequenceOfTrsf) NCollection_Sequence <gp_Trsf>;
+%template(GeomFill_Array1OfSectionLaw) NCollection_Array1 <Handle_GeomFill_SectionLaw>;
+/* end templates declaration */
 
 /* public enums */
 enum GeomFill_ApproxStyle {
@@ -335,19 +342,25 @@ class GeomFill_AppSurf : public AppBlend_Approx {
 ") Init;
 		void Init (const Standard_Integer Degmin,const Standard_Integer Degmax,const Standard_Real Tol3d,const Standard_Real Tol2d,const Standard_Integer NbIt,const Standard_Boolean KnownParameters = Standard_False);
 		%feature("compactdefaultargs") SetParType;
-		%feature("autodoc", "	:param ParType:
+		%feature("autodoc", "	* Define the type of parametrization used in the approximation
+
+	:param ParType:
 	:type ParType: Approx_ParametrizationType
 	:rtype: None
 ") SetParType;
 		void SetParType (const Approx_ParametrizationType ParType);
 		%feature("compactdefaultargs") SetContinuity;
-		%feature("autodoc", "	:param C:
+		%feature("autodoc", "	* Define the Continuity used in the approximation
+
+	:param C:
 	:type C: GeomAbs_Shape
 	:rtype: None
 ") SetContinuity;
 		void SetContinuity (const GeomAbs_Shape C);
 		%feature("compactdefaultargs") SetCriteriumWeight;
-		%feature("autodoc", "	:param W1:
+		%feature("autodoc", "	* define the Weights associed to the criterium used in the optimization. //! if Wi <= 0
+
+	:param W1:
 	:type W1: float
 	:param W2:
 	:type W2: float
@@ -357,15 +370,21 @@ class GeomFill_AppSurf : public AppBlend_Approx {
 ") SetCriteriumWeight;
 		void SetCriteriumWeight (const Standard_Real W1,const Standard_Real W2,const Standard_Real W3);
 		%feature("compactdefaultargs") ParType;
-		%feature("autodoc", "	:rtype: Approx_ParametrizationType
+		%feature("autodoc", "	* returns the type of parametrization used in the approximation
+
+	:rtype: Approx_ParametrizationType
 ") ParType;
 		Approx_ParametrizationType ParType ();
 		%feature("compactdefaultargs") Continuity;
-		%feature("autodoc", "	:rtype: GeomAbs_Shape
+		%feature("autodoc", "	* returns the Continuity used in the approximation
+
+	:rtype: GeomAbs_Shape
 ") Continuity;
 		GeomAbs_Shape Continuity ();
 		%feature("compactdefaultargs") CriteriumWeight;
-		%feature("autodoc", "	:param W1:
+		%feature("autodoc", "	* returns the Weights --as percent-- associed to the criterium used in the optimization.
+
+	:param W1:
 	:type W1: float &
 	:param W2:
 	:type W2: float &
@@ -576,19 +595,25 @@ class GeomFill_AppSweep : public AppBlend_Approx {
 ") Init;
 		void Init (const Standard_Integer Degmin,const Standard_Integer Degmax,const Standard_Real Tol3d,const Standard_Real Tol2d,const Standard_Integer NbIt,const Standard_Boolean KnownParameters = Standard_False);
 		%feature("compactdefaultargs") SetParType;
-		%feature("autodoc", "	:param ParType:
+		%feature("autodoc", "	* Define the type of parametrization used in the approximation
+
+	:param ParType:
 	:type ParType: Approx_ParametrizationType
 	:rtype: None
 ") SetParType;
 		void SetParType (const Approx_ParametrizationType ParType);
 		%feature("compactdefaultargs") SetContinuity;
-		%feature("autodoc", "	:param C:
+		%feature("autodoc", "	* Define the Continuity used in the approximation
+
+	:param C:
 	:type C: GeomAbs_Shape
 	:rtype: None
 ") SetContinuity;
 		void SetContinuity (const GeomAbs_Shape C);
 		%feature("compactdefaultargs") SetCriteriumWeight;
-		%feature("autodoc", "	:param W1:
+		%feature("autodoc", "	* define the Weights associed to the criterium used in the optimization. //! if Wi <= 0
+
+	:param W1:
 	:type W1: float
 	:param W2:
 	:type W2: float
@@ -598,15 +623,21 @@ class GeomFill_AppSweep : public AppBlend_Approx {
 ") SetCriteriumWeight;
 		void SetCriteriumWeight (const Standard_Real W1,const Standard_Real W2,const Standard_Real W3);
 		%feature("compactdefaultargs") ParType;
-		%feature("autodoc", "	:rtype: Approx_ParametrizationType
+		%feature("autodoc", "	* returns the type of parametrization used in the approximation
+
+	:rtype: Approx_ParametrizationType
 ") ParType;
 		Approx_ParametrizationType ParType ();
 		%feature("compactdefaultargs") Continuity;
-		%feature("autodoc", "	:rtype: GeomAbs_Shape
+		%feature("autodoc", "	* returns the Continuity used in the approximation
+
+	:rtype: GeomAbs_Shape
 ") Continuity;
 		GeomAbs_Shape Continuity ();
 		%feature("compactdefaultargs") CriteriumWeight;
-		%feature("autodoc", "	:param W1:
+		%feature("autodoc", "	* returns the Weights --as percent-- associed to the criterium used in the optimization.
+
+	:param W1:
 	:type W1: float &
 	:param W2:
 	:type W2: float &
@@ -773,180 +804,6 @@ class GeomFill_AppSweep : public AppBlend_Approx {
 
 
 %extend GeomFill_AppSweep {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor GeomFill_Array1OfLocationLaw;
-class GeomFill_Array1OfLocationLaw {
-	public:
-		%feature("compactdefaultargs") GeomFill_Array1OfLocationLaw;
-		%feature("autodoc", "	:param Low:
-	:type Low: int
-	:param Up:
-	:type Up: int
-	:rtype: None
-") GeomFill_Array1OfLocationLaw;
-		 GeomFill_Array1OfLocationLaw (const Standard_Integer Low,const Standard_Integer Up);
-		%feature("compactdefaultargs") GeomFill_Array1OfLocationLaw;
-		%feature("autodoc", "	:param Item:
-	:type Item: Handle_GeomFill_LocationLaw &
-	:param Low:
-	:type Low: int
-	:param Up:
-	:type Up: int
-	:rtype: None
-") GeomFill_Array1OfLocationLaw;
-		 GeomFill_Array1OfLocationLaw (const Handle_GeomFill_LocationLaw & Item,const Standard_Integer Low,const Standard_Integer Up);
-		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	:param V:
-	:type V: Handle_GeomFill_LocationLaw &
-	:rtype: None
-") Init;
-		void Init (const Handle_GeomFill_LocationLaw & V);
-		%feature("compactdefaultargs") Destroy;
-		%feature("autodoc", "	:rtype: None
-") Destroy;
-		void Destroy ();
-		%feature("compactdefaultargs") IsAllocated;
-		%feature("autodoc", "	:rtype: bool
-") IsAllocated;
-		Standard_Boolean IsAllocated ();
-		%feature("compactdefaultargs") Assign;
-		%feature("autodoc", "	:param Other:
-	:type Other: GeomFill_Array1OfLocationLaw &
-	:rtype: GeomFill_Array1OfLocationLaw
-") Assign;
-		const GeomFill_Array1OfLocationLaw & Assign (const GeomFill_Array1OfLocationLaw & Other);
-		%feature("compactdefaultargs") operator =;
-		%feature("autodoc", "	:param Other:
-	:type Other: GeomFill_Array1OfLocationLaw &
-	:rtype: GeomFill_Array1OfLocationLaw
-") operator =;
-		const GeomFill_Array1OfLocationLaw & operator = (const GeomFill_Array1OfLocationLaw & Other);
-		%feature("compactdefaultargs") Length;
-		%feature("autodoc", "	:rtype: int
-") Length;
-		Standard_Integer Length ();
-		%feature("compactdefaultargs") Lower;
-		%feature("autodoc", "	:rtype: int
-") Lower;
-		Standard_Integer Lower ();
-		%feature("compactdefaultargs") Upper;
-		%feature("autodoc", "	:rtype: int
-") Upper;
-		Standard_Integer Upper ();
-		%feature("compactdefaultargs") SetValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param Value:
-	:type Value: Handle_GeomFill_LocationLaw &
-	:rtype: None
-") SetValue;
-		void SetValue (const Standard_Integer Index,const Handle_GeomFill_LocationLaw & Value);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: Handle_GeomFill_LocationLaw
-") Value;
-		Handle_GeomFill_LocationLaw Value (const Standard_Integer Index);
-		%feature("compactdefaultargs") ChangeValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: Handle_GeomFill_LocationLaw
-") ChangeValue;
-		Handle_GeomFill_LocationLaw ChangeValue (const Standard_Integer Index);
-};
-
-
-%extend GeomFill_Array1OfLocationLaw {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor GeomFill_Array1OfSectionLaw;
-class GeomFill_Array1OfSectionLaw {
-	public:
-		%feature("compactdefaultargs") GeomFill_Array1OfSectionLaw;
-		%feature("autodoc", "	:param Low:
-	:type Low: int
-	:param Up:
-	:type Up: int
-	:rtype: None
-") GeomFill_Array1OfSectionLaw;
-		 GeomFill_Array1OfSectionLaw (const Standard_Integer Low,const Standard_Integer Up);
-		%feature("compactdefaultargs") GeomFill_Array1OfSectionLaw;
-		%feature("autodoc", "	:param Item:
-	:type Item: Handle_GeomFill_SectionLaw &
-	:param Low:
-	:type Low: int
-	:param Up:
-	:type Up: int
-	:rtype: None
-") GeomFill_Array1OfSectionLaw;
-		 GeomFill_Array1OfSectionLaw (const Handle_GeomFill_SectionLaw & Item,const Standard_Integer Low,const Standard_Integer Up);
-		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	:param V:
-	:type V: Handle_GeomFill_SectionLaw &
-	:rtype: None
-") Init;
-		void Init (const Handle_GeomFill_SectionLaw & V);
-		%feature("compactdefaultargs") Destroy;
-		%feature("autodoc", "	:rtype: None
-") Destroy;
-		void Destroy ();
-		%feature("compactdefaultargs") IsAllocated;
-		%feature("autodoc", "	:rtype: bool
-") IsAllocated;
-		Standard_Boolean IsAllocated ();
-		%feature("compactdefaultargs") Assign;
-		%feature("autodoc", "	:param Other:
-	:type Other: GeomFill_Array1OfSectionLaw &
-	:rtype: GeomFill_Array1OfSectionLaw
-") Assign;
-		const GeomFill_Array1OfSectionLaw & Assign (const GeomFill_Array1OfSectionLaw & Other);
-		%feature("compactdefaultargs") operator =;
-		%feature("autodoc", "	:param Other:
-	:type Other: GeomFill_Array1OfSectionLaw &
-	:rtype: GeomFill_Array1OfSectionLaw
-") operator =;
-		const GeomFill_Array1OfSectionLaw & operator = (const GeomFill_Array1OfSectionLaw & Other);
-		%feature("compactdefaultargs") Length;
-		%feature("autodoc", "	:rtype: int
-") Length;
-		Standard_Integer Length ();
-		%feature("compactdefaultargs") Lower;
-		%feature("autodoc", "	:rtype: int
-") Lower;
-		Standard_Integer Lower ();
-		%feature("compactdefaultargs") Upper;
-		%feature("autodoc", "	:rtype: int
-") Upper;
-		Standard_Integer Upper ();
-		%feature("compactdefaultargs") SetValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param Value:
-	:type Value: Handle_GeomFill_SectionLaw &
-	:rtype: None
-") SetValue;
-		void SetValue (const Standard_Integer Index,const Handle_GeomFill_SectionLaw & Value);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: Handle_GeomFill_SectionLaw
-") Value;
-		Handle_GeomFill_SectionLaw Value (const Standard_Integer Index);
-		%feature("compactdefaultargs") ChangeValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: Handle_GeomFill_SectionLaw
-") ChangeValue;
-		Handle_GeomFill_SectionLaw ChangeValue (const Standard_Integer Index);
-};
-
-
-%extend GeomFill_Array1OfSectionLaw {
 	%pythoncode {
 	__repr__ = _dumps_object
 	}
@@ -1162,7 +1019,7 @@ class GeomFill_BezierCurves {
 	}
 };
 %nodefaultctor GeomFill_Boundary;
-class GeomFill_Boundary : public MMgt_TShared {
+class GeomFill_Boundary : public Standard_Transient {
 	public:
 		%feature("compactdefaultargs") Value;
 		%feature("autodoc", "	:param U:
@@ -1280,7 +1137,7 @@ class GeomFill_Boundary : public MMgt_TShared {
 %}
 
 %nodefaultctor Handle_GeomFill_Boundary;
-class Handle_GeomFill_Boundary : public Handle_MMgt_TShared {
+class Handle_GeomFill_Boundary : public Handle_Standard_Transient {
 
     public:
         // constructors
@@ -1292,19 +1149,20 @@ class Handle_GeomFill_Boundary : public Handle_MMgt_TShared {
         static const Handle_GeomFill_Boundary DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_GeomFill_Boundary {
     GeomFill_Boundary* _get_reference() {
-    return (GeomFill_Boundary*)$self->Access();
+    return (GeomFill_Boundary*)$self->get();
     }
 };
 
 %extend Handle_GeomFill_Boundary {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend GeomFill_Boundary {
@@ -1316,7 +1174,7 @@ class Handle_GeomFill_Boundary : public Handle_MMgt_TShared {
 class GeomFill_CircularBlendFunc : public Approx_SweepFunction {
 	public:
 		%feature("compactdefaultargs") GeomFill_CircularBlendFunc;
-		%feature("autodoc", "	* Create a Blend with a constant radius with 2 guide-line. <FShape> sets the type of fillet surface. The -- default value is Convert_TgtThetaOver2 (classical -- nurbs -- representation of circles). ChFi3d_QuasiAngular -- corresponds to a nurbs representation of circles -- which parameterisation matches the circle one. -- ChFi3d_Polynomial corresponds to a polynomial -- representation of circles.
+		%feature("autodoc", "	* Create a Blend with a constant radius with 2 guide-line. <FShape> sets the type of fillet surface. The -- default value is Convert_TgtThetaOver2 --classical -- nurbs -- representation of circles--. ChFi3d_QuasiAngular -- corresponds to a nurbs representation of circles -- which parameterisation matches the circle one. -- ChFi3d_Polynomial corresponds to a polynomial -- representation of circles.
 
 	:param Path:
 	:type Path: Handle_Adaptor3d_HCurve &
@@ -1444,7 +1302,7 @@ class GeomFill_CircularBlendFunc : public Approx_SweepFunction {
 ") IsRational;
 		virtual Standard_Boolean IsRational ();
 		%feature("compactdefaultargs") NbIntervals;
-		%feature("autodoc", "	* Returns the number of intervals for continuity <S>. May be one if Continuity(me) >= <S>
+		%feature("autodoc", "	* Returns the number of intervals for continuity <S>. May be one if Continuity--me-- >= <S>
 
 	:param S:
 	:type S: GeomAbs_Shape
@@ -1452,7 +1310,7 @@ class GeomFill_CircularBlendFunc : public Approx_SweepFunction {
 ") NbIntervals;
 		virtual Standard_Integer NbIntervals (const GeomAbs_Shape S);
 		%feature("compactdefaultargs") Intervals;
-		%feature("autodoc", "	* Stores in <T> the parameters bounding the intervals of continuity <S>. //! The array must provide enough room to accomodate for the parameters. i.e. T.Length() > NbIntervals()
+		%feature("autodoc", "	* Stores in <T> the parameters bounding the intervals of continuity <S>. //! The array must provide enough room to accomodate for the parameters. i.e. T.Length---- > NbIntervals----
 
 	:param T:
 	:type T: TColStd_Array1OfReal &
@@ -1472,7 +1330,7 @@ class GeomFill_CircularBlendFunc : public Approx_SweepFunction {
 ") SetInterval;
 		virtual void SetInterval (const Standard_Real First,const Standard_Real Last);
 		%feature("compactdefaultargs") GetTolerance;
-		%feature("autodoc", "	* Returns the tolerance to reach in approximation to respecte BoundTol error at the Boundary AngleTol tangent error at the Boundary (in radian) SurfTol error inside the surface.
+		%feature("autodoc", "	* Returns the tolerance to reach in approximation to respecte BoundTol error at the Boundary AngleTol tangent error at the Boundary --in radian-- SurfTol error inside the surface.
 
 	:param BoundTol:
 	:type BoundTol: float
@@ -1486,7 +1344,7 @@ class GeomFill_CircularBlendFunc : public Approx_SweepFunction {
 ") GetTolerance;
 		virtual void GetTolerance (const Standard_Real BoundTol,const Standard_Real SurfTol,const Standard_Real AngleTol,TColStd_Array1OfReal & Tol3d);
 		%feature("compactdefaultargs") SetTolerance;
-		%feature("autodoc", "	* Is usfull, if (me) have to be run numerical algorithme to perform D0, D1 or D2
+		%feature("autodoc", "	* Is usfull, if --me-- have to be run numerical algorithme to perform D0, D1 or D2
 
 	:param Tol3d:
 	:type Tol3d: float
@@ -1549,19 +1407,20 @@ class Handle_GeomFill_CircularBlendFunc : public Handle_Approx_SweepFunction {
         static const Handle_GeomFill_CircularBlendFunc DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_GeomFill_CircularBlendFunc {
     GeomFill_CircularBlendFunc* _get_reference() {
-    return (GeomFill_CircularBlendFunc*)$self->Access();
+    return (GeomFill_CircularBlendFunc*)$self->get();
     }
 };
 
 %extend Handle_GeomFill_CircularBlendFunc {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend GeomFill_CircularBlendFunc {
@@ -1611,7 +1470,7 @@ class GeomFill_ConstrainedFilling {
 ") Init;
 		void Init (const Handle_GeomFill_Boundary & B1,const Handle_GeomFill_Boundary & B2,const Handle_GeomFill_Boundary & B3,const Handle_GeomFill_Boundary & B4,const Standard_Boolean NoCheck = Standard_False);
 		%feature("compactdefaultargs") SetDomain;
-		%feature("autodoc", "	* Allows to modify domain on witch the blending function associated to the constrained boundary B will propag the influence of the field of tangency. Can be usefull to reduce influence of boundaries on whitch the Coons compatibility conditions are not respected. l is a relative value of the parametric range of B. Default value for l is 1 (used in Init). Warning: Must be called after Init with a constrained boundary used in the call to Init.
+		%feature("autodoc", "	* Allows to modify domain on witch the blending function associated to the constrained boundary B will propag the influence of the field of tangency. Can be usefull to reduce influence of boundaries on whitch the Coons compatibility conditions are not respected. l is a relative value of the parametric range of B. Default value for l is 1 --used in Init--. Warning: Must be called after Init with a constrained boundary used in the call to Init.
 
 	:param l:
 	:type l: float
@@ -1669,7 +1528,7 @@ class GeomFill_ConstrainedFilling {
 ") CheckTgteField;
 		void CheckTgteField (const Standard_Integer I);
 		%feature("compactdefaultargs") CheckApprox;
-		%feature("autodoc", "	* Computes values and normals along the bound I and compare them to the approx result curves (bound and tgte field) , draw the normals and tangents.
+		%feature("autodoc", "	* Computes values and normals along the bound I and compare them to the approx result curves --bound and tgte field-- , draw the normals and tangents.
 
 	:param I:
 	:type I: int
@@ -1693,7 +1552,7 @@ class GeomFill_ConstrainedFilling {
 	}
 };
 %nodefaultctor GeomFill_CoonsAlgPatch;
-class GeomFill_CoonsAlgPatch : public MMgt_TShared {
+class GeomFill_CoonsAlgPatch : public Standard_Transient {
 	public:
 		%feature("compactdefaultargs") GeomFill_CoonsAlgPatch;
 		%feature("autodoc", "	* Constructs the algorithmic patch. By Default the constructed blending functions are linear. Warning: No control is done on the bounds. B1/B3 and B2/B4 must be same range and well oriented.
@@ -1809,7 +1668,7 @@ class GeomFill_CoonsAlgPatch : public MMgt_TShared {
 %}
 
 %nodefaultctor Handle_GeomFill_CoonsAlgPatch;
-class Handle_GeomFill_CoonsAlgPatch : public Handle_MMgt_TShared {
+class Handle_GeomFill_CoonsAlgPatch : public Handle_Standard_Transient {
 
     public:
         // constructors
@@ -1821,19 +1680,20 @@ class Handle_GeomFill_CoonsAlgPatch : public Handle_MMgt_TShared {
         static const Handle_GeomFill_CoonsAlgPatch DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_GeomFill_CoonsAlgPatch {
     GeomFill_CoonsAlgPatch* _get_reference() {
-    return (GeomFill_CoonsAlgPatch*)$self->Access();
+    return (GeomFill_CoonsAlgPatch*)$self->get();
     }
 };
 
 %extend Handle_GeomFill_CoonsAlgPatch {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend GeomFill_CoonsAlgPatch {
@@ -2157,439 +2017,8 @@ class GeomFill_FunctionGuide : public math_FunctionSetWithDerivatives {
 	__repr__ = _dumps_object
 	}
 };
-%nodefaultctor GeomFill_HArray1OfLocationLaw;
-class GeomFill_HArray1OfLocationLaw : public MMgt_TShared {
-	public:
-		%feature("compactdefaultargs") GeomFill_HArray1OfLocationLaw;
-		%feature("autodoc", "	:param Low:
-	:type Low: int
-	:param Up:
-	:type Up: int
-	:rtype: None
-") GeomFill_HArray1OfLocationLaw;
-		 GeomFill_HArray1OfLocationLaw (const Standard_Integer Low,const Standard_Integer Up);
-		%feature("compactdefaultargs") GeomFill_HArray1OfLocationLaw;
-		%feature("autodoc", "	:param Low:
-	:type Low: int
-	:param Up:
-	:type Up: int
-	:param V:
-	:type V: Handle_GeomFill_LocationLaw &
-	:rtype: None
-") GeomFill_HArray1OfLocationLaw;
-		 GeomFill_HArray1OfLocationLaw (const Standard_Integer Low,const Standard_Integer Up,const Handle_GeomFill_LocationLaw & V);
-		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	:param V:
-	:type V: Handle_GeomFill_LocationLaw &
-	:rtype: None
-") Init;
-		void Init (const Handle_GeomFill_LocationLaw & V);
-		%feature("compactdefaultargs") Length;
-		%feature("autodoc", "	:rtype: int
-") Length;
-		Standard_Integer Length ();
-		%feature("compactdefaultargs") Lower;
-		%feature("autodoc", "	:rtype: int
-") Lower;
-		Standard_Integer Lower ();
-		%feature("compactdefaultargs") Upper;
-		%feature("autodoc", "	:rtype: int
-") Upper;
-		Standard_Integer Upper ();
-		%feature("compactdefaultargs") SetValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param Value:
-	:type Value: Handle_GeomFill_LocationLaw &
-	:rtype: None
-") SetValue;
-		void SetValue (const Standard_Integer Index,const Handle_GeomFill_LocationLaw & Value);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: Handle_GeomFill_LocationLaw
-") Value;
-		Handle_GeomFill_LocationLaw Value (const Standard_Integer Index);
-		%feature("compactdefaultargs") ChangeValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: Handle_GeomFill_LocationLaw
-") ChangeValue;
-		Handle_GeomFill_LocationLaw ChangeValue (const Standard_Integer Index);
-		%feature("compactdefaultargs") Array1;
-		%feature("autodoc", "	:rtype: GeomFill_Array1OfLocationLaw
-") Array1;
-		const GeomFill_Array1OfLocationLaw & Array1 ();
-		%feature("compactdefaultargs") ChangeArray1;
-		%feature("autodoc", "	:rtype: GeomFill_Array1OfLocationLaw
-") ChangeArray1;
-		GeomFill_Array1OfLocationLaw & ChangeArray1 ();
-};
-
-
-%extend GeomFill_HArray1OfLocationLaw {
-	%pythoncode {
-		def GetHandle(self):
-		    try:
-		        return self.thisHandle
-		    except:
-		        self.thisHandle = Handle_GeomFill_HArray1OfLocationLaw(self)
-		        self.thisown = False
-		        return self.thisHandle
-	}
-};
-
-%pythonappend Handle_GeomFill_HArray1OfLocationLaw::Handle_GeomFill_HArray1OfLocationLaw %{
-    # register the handle in the base object
-    if len(args) > 0:
-        register_handle(self, args[0])
-%}
-
-%nodefaultctor Handle_GeomFill_HArray1OfLocationLaw;
-class Handle_GeomFill_HArray1OfLocationLaw : public Handle_MMgt_TShared {
-
-    public:
-        // constructors
-        Handle_GeomFill_HArray1OfLocationLaw();
-        Handle_GeomFill_HArray1OfLocationLaw(const Handle_GeomFill_HArray1OfLocationLaw &aHandle);
-        Handle_GeomFill_HArray1OfLocationLaw(const GeomFill_HArray1OfLocationLaw *anItem);
-        void Nullify();
-        Standard_Boolean IsNull() const;
-        static const Handle_GeomFill_HArray1OfLocationLaw DownCast(const Handle_Standard_Transient &AnObject);
-
-};
-%extend Handle_GeomFill_HArray1OfLocationLaw {
-    GeomFill_HArray1OfLocationLaw* _get_reference() {
-    return (GeomFill_HArray1OfLocationLaw*)$self->Access();
-    }
-};
-
-%extend Handle_GeomFill_HArray1OfLocationLaw {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
-};
-
-%extend GeomFill_HArray1OfLocationLaw {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor GeomFill_HArray1OfSectionLaw;
-class GeomFill_HArray1OfSectionLaw : public MMgt_TShared {
-	public:
-		%feature("compactdefaultargs") GeomFill_HArray1OfSectionLaw;
-		%feature("autodoc", "	:param Low:
-	:type Low: int
-	:param Up:
-	:type Up: int
-	:rtype: None
-") GeomFill_HArray1OfSectionLaw;
-		 GeomFill_HArray1OfSectionLaw (const Standard_Integer Low,const Standard_Integer Up);
-		%feature("compactdefaultargs") GeomFill_HArray1OfSectionLaw;
-		%feature("autodoc", "	:param Low:
-	:type Low: int
-	:param Up:
-	:type Up: int
-	:param V:
-	:type V: Handle_GeomFill_SectionLaw &
-	:rtype: None
-") GeomFill_HArray1OfSectionLaw;
-		 GeomFill_HArray1OfSectionLaw (const Standard_Integer Low,const Standard_Integer Up,const Handle_GeomFill_SectionLaw & V);
-		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	:param V:
-	:type V: Handle_GeomFill_SectionLaw &
-	:rtype: None
-") Init;
-		void Init (const Handle_GeomFill_SectionLaw & V);
-		%feature("compactdefaultargs") Length;
-		%feature("autodoc", "	:rtype: int
-") Length;
-		Standard_Integer Length ();
-		%feature("compactdefaultargs") Lower;
-		%feature("autodoc", "	:rtype: int
-") Lower;
-		Standard_Integer Lower ();
-		%feature("compactdefaultargs") Upper;
-		%feature("autodoc", "	:rtype: int
-") Upper;
-		Standard_Integer Upper ();
-		%feature("compactdefaultargs") SetValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param Value:
-	:type Value: Handle_GeomFill_SectionLaw &
-	:rtype: None
-") SetValue;
-		void SetValue (const Standard_Integer Index,const Handle_GeomFill_SectionLaw & Value);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: Handle_GeomFill_SectionLaw
-") Value;
-		Handle_GeomFill_SectionLaw Value (const Standard_Integer Index);
-		%feature("compactdefaultargs") ChangeValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: Handle_GeomFill_SectionLaw
-") ChangeValue;
-		Handle_GeomFill_SectionLaw ChangeValue (const Standard_Integer Index);
-		%feature("compactdefaultargs") Array1;
-		%feature("autodoc", "	:rtype: GeomFill_Array1OfSectionLaw
-") Array1;
-		const GeomFill_Array1OfSectionLaw & Array1 ();
-		%feature("compactdefaultargs") ChangeArray1;
-		%feature("autodoc", "	:rtype: GeomFill_Array1OfSectionLaw
-") ChangeArray1;
-		GeomFill_Array1OfSectionLaw & ChangeArray1 ();
-};
-
-
-%extend GeomFill_HArray1OfSectionLaw {
-	%pythoncode {
-		def GetHandle(self):
-		    try:
-		        return self.thisHandle
-		    except:
-		        self.thisHandle = Handle_GeomFill_HArray1OfSectionLaw(self)
-		        self.thisown = False
-		        return self.thisHandle
-	}
-};
-
-%pythonappend Handle_GeomFill_HArray1OfSectionLaw::Handle_GeomFill_HArray1OfSectionLaw %{
-    # register the handle in the base object
-    if len(args) > 0:
-        register_handle(self, args[0])
-%}
-
-%nodefaultctor Handle_GeomFill_HArray1OfSectionLaw;
-class Handle_GeomFill_HArray1OfSectionLaw : public Handle_MMgt_TShared {
-
-    public:
-        // constructors
-        Handle_GeomFill_HArray1OfSectionLaw();
-        Handle_GeomFill_HArray1OfSectionLaw(const Handle_GeomFill_HArray1OfSectionLaw &aHandle);
-        Handle_GeomFill_HArray1OfSectionLaw(const GeomFill_HArray1OfSectionLaw *anItem);
-        void Nullify();
-        Standard_Boolean IsNull() const;
-        static const Handle_GeomFill_HArray1OfSectionLaw DownCast(const Handle_Standard_Transient &AnObject);
-
-};
-%extend Handle_GeomFill_HArray1OfSectionLaw {
-    GeomFill_HArray1OfSectionLaw* _get_reference() {
-    return (GeomFill_HArray1OfSectionLaw*)$self->Access();
-    }
-};
-
-%extend Handle_GeomFill_HArray1OfSectionLaw {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
-};
-
-%extend GeomFill_HArray1OfSectionLaw {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor GeomFill_HSequenceOfAx2;
-class GeomFill_HSequenceOfAx2 : public MMgt_TShared {
-	public:
-		%feature("compactdefaultargs") GeomFill_HSequenceOfAx2;
-		%feature("autodoc", "	:rtype: None
-") GeomFill_HSequenceOfAx2;
-		 GeomFill_HSequenceOfAx2 ();
-		%feature("compactdefaultargs") IsEmpty;
-		%feature("autodoc", "	:rtype: bool
-") IsEmpty;
-		Standard_Boolean IsEmpty ();
-		%feature("compactdefaultargs") Length;
-		%feature("autodoc", "	:rtype: int
-") Length;
-		Standard_Integer Length ();
-		%feature("compactdefaultargs") Clear;
-		%feature("autodoc", "	:rtype: None
-") Clear;
-		void Clear ();
-		%feature("compactdefaultargs") Append;
-		%feature("autodoc", "	:param anItem:
-	:type anItem: gp_Ax2
-	:rtype: None
-") Append;
-		void Append (const gp_Ax2 & anItem);
-		%feature("compactdefaultargs") Append;
-		%feature("autodoc", "	:param aSequence:
-	:type aSequence: Handle_GeomFill_HSequenceOfAx2 &
-	:rtype: None
-") Append;
-		void Append (const Handle_GeomFill_HSequenceOfAx2 & aSequence);
-		%feature("compactdefaultargs") Prepend;
-		%feature("autodoc", "	:param anItem:
-	:type anItem: gp_Ax2
-	:rtype: None
-") Prepend;
-		void Prepend (const gp_Ax2 & anItem);
-		%feature("compactdefaultargs") Prepend;
-		%feature("autodoc", "	:param aSequence:
-	:type aSequence: Handle_GeomFill_HSequenceOfAx2 &
-	:rtype: None
-") Prepend;
-		void Prepend (const Handle_GeomFill_HSequenceOfAx2 & aSequence);
-		%feature("compactdefaultargs") Reverse;
-		%feature("autodoc", "	:rtype: None
-") Reverse;
-		void Reverse ();
-		%feature("compactdefaultargs") InsertBefore;
-		%feature("autodoc", "	:param anIndex:
-	:type anIndex: int
-	:param anItem:
-	:type anItem: gp_Ax2
-	:rtype: None
-") InsertBefore;
-		void InsertBefore (const Standard_Integer anIndex,const gp_Ax2 & anItem);
-		%feature("compactdefaultargs") InsertBefore;
-		%feature("autodoc", "	:param anIndex:
-	:type anIndex: int
-	:param aSequence:
-	:type aSequence: Handle_GeomFill_HSequenceOfAx2 &
-	:rtype: None
-") InsertBefore;
-		void InsertBefore (const Standard_Integer anIndex,const Handle_GeomFill_HSequenceOfAx2 & aSequence);
-		%feature("compactdefaultargs") InsertAfter;
-		%feature("autodoc", "	:param anIndex:
-	:type anIndex: int
-	:param anItem:
-	:type anItem: gp_Ax2
-	:rtype: None
-") InsertAfter;
-		void InsertAfter (const Standard_Integer anIndex,const gp_Ax2 & anItem);
-		%feature("compactdefaultargs") InsertAfter;
-		%feature("autodoc", "	:param anIndex:
-	:type anIndex: int
-	:param aSequence:
-	:type aSequence: Handle_GeomFill_HSequenceOfAx2 &
-	:rtype: None
-") InsertAfter;
-		void InsertAfter (const Standard_Integer anIndex,const Handle_GeomFill_HSequenceOfAx2 & aSequence);
-		%feature("compactdefaultargs") Exchange;
-		%feature("autodoc", "	:param anIndex:
-	:type anIndex: int
-	:param anOtherIndex:
-	:type anOtherIndex: int
-	:rtype: None
-") Exchange;
-		void Exchange (const Standard_Integer anIndex,const Standard_Integer anOtherIndex);
-		%feature("compactdefaultargs") Split;
-		%feature("autodoc", "	:param anIndex:
-	:type anIndex: int
-	:rtype: Handle_GeomFill_HSequenceOfAx2
-") Split;
-		Handle_GeomFill_HSequenceOfAx2 Split (const Standard_Integer anIndex);
-		%feature("compactdefaultargs") SetValue;
-		%feature("autodoc", "	:param anIndex:
-	:type anIndex: int
-	:param anItem:
-	:type anItem: gp_Ax2
-	:rtype: None
-") SetValue;
-		void SetValue (const Standard_Integer anIndex,const gp_Ax2 & anItem);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:param anIndex:
-	:type anIndex: int
-	:rtype: gp_Ax2
-") Value;
-		const gp_Ax2  Value (const Standard_Integer anIndex);
-		%feature("compactdefaultargs") ChangeValue;
-		%feature("autodoc", "	:param anIndex:
-	:type anIndex: int
-	:rtype: gp_Ax2
-") ChangeValue;
-		gp_Ax2  ChangeValue (const Standard_Integer anIndex);
-		%feature("compactdefaultargs") Remove;
-		%feature("autodoc", "	:param anIndex:
-	:type anIndex: int
-	:rtype: None
-") Remove;
-		void Remove (const Standard_Integer anIndex);
-		%feature("compactdefaultargs") Remove;
-		%feature("autodoc", "	:param fromIndex:
-	:type fromIndex: int
-	:param toIndex:
-	:type toIndex: int
-	:rtype: None
-") Remove;
-		void Remove (const Standard_Integer fromIndex,const Standard_Integer toIndex);
-		%feature("compactdefaultargs") Sequence;
-		%feature("autodoc", "	:rtype: GeomFill_SequenceOfAx2
-") Sequence;
-		const GeomFill_SequenceOfAx2 & Sequence ();
-		%feature("compactdefaultargs") ChangeSequence;
-		%feature("autodoc", "	:rtype: GeomFill_SequenceOfAx2
-") ChangeSequence;
-		GeomFill_SequenceOfAx2 & ChangeSequence ();
-};
-
-
-%extend GeomFill_HSequenceOfAx2 {
-	%pythoncode {
-		def GetHandle(self):
-		    try:
-		        return self.thisHandle
-		    except:
-		        self.thisHandle = Handle_GeomFill_HSequenceOfAx2(self)
-		        self.thisown = False
-		        return self.thisHandle
-	}
-};
-
-%pythonappend Handle_GeomFill_HSequenceOfAx2::Handle_GeomFill_HSequenceOfAx2 %{
-    # register the handle in the base object
-    if len(args) > 0:
-        register_handle(self, args[0])
-%}
-
-%nodefaultctor Handle_GeomFill_HSequenceOfAx2;
-class Handle_GeomFill_HSequenceOfAx2 : public Handle_MMgt_TShared {
-
-    public:
-        // constructors
-        Handle_GeomFill_HSequenceOfAx2();
-        Handle_GeomFill_HSequenceOfAx2(const Handle_GeomFill_HSequenceOfAx2 &aHandle);
-        Handle_GeomFill_HSequenceOfAx2(const GeomFill_HSequenceOfAx2 *anItem);
-        void Nullify();
-        Standard_Boolean IsNull() const;
-        static const Handle_GeomFill_HSequenceOfAx2 DownCast(const Handle_Standard_Transient &AnObject);
-
-};
-%extend Handle_GeomFill_HSequenceOfAx2 {
-    GeomFill_HSequenceOfAx2* _get_reference() {
-    return (GeomFill_HSequenceOfAx2*)$self->Access();
-    }
-};
-
-%extend Handle_GeomFill_HSequenceOfAx2 {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
-};
-
-%extend GeomFill_HSequenceOfAx2 {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
 %nodefaultctor GeomFill_Line;
-class GeomFill_Line : public MMgt_TShared {
+class GeomFill_Line : public Standard_Transient {
 	public:
 		%feature("compactdefaultargs") GeomFill_Line;
 		%feature("autodoc", "	:rtype: None
@@ -2633,7 +2062,7 @@ class GeomFill_Line : public MMgt_TShared {
 %}
 
 %nodefaultctor Handle_GeomFill_Line;
-class Handle_GeomFill_Line : public Handle_MMgt_TShared {
+class Handle_GeomFill_Line : public Handle_Standard_Transient {
 
     public:
         // constructors
@@ -2645,19 +2074,20 @@ class Handle_GeomFill_Line : public Handle_MMgt_TShared {
         static const Handle_GeomFill_Line DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_GeomFill_Line {
     GeomFill_Line* _get_reference() {
-    return (GeomFill_Line*)$self->Access();
+    return (GeomFill_Line*)$self->get();
     }
 };
 
 %extend Handle_GeomFill_Line {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend GeomFill_Line {
@@ -2735,7 +2165,7 @@ class GeomFill_LocFunction {
 	}
 };
 %nodefaultctor GeomFill_LocationLaw;
-class GeomFill_LocationLaw : public MMgt_TShared {
+class GeomFill_LocationLaw : public Standard_Transient {
 	public:
 		%feature("compactdefaultargs") SetCurve;
 		%feature("autodoc", "	:param C:
@@ -2748,7 +2178,7 @@ class GeomFill_LocationLaw : public MMgt_TShared {
 ") GetCurve;
 		Handle_Adaptor3d_HCurve GetCurve ();
 		%feature("compactdefaultargs") SetTrsf;
-		%feature("autodoc", "	* Set a transformation Matrix like the law M(t) become Mat * M(t)
+		%feature("autodoc", "	* Set a transformation Matrix like the law M--t-- become Mat * M--t--
 
 	:param Transfo:
 	:type Transfo: gp_Mat
@@ -2832,37 +2262,37 @@ class GeomFill_LocationLaw : public MMgt_TShared {
 ") D2;
 		virtual Standard_Boolean D2 (const Standard_Real Param,gp_Mat & M,gp_Vec & V,gp_Mat & DM,gp_Vec & DV,gp_Mat & D2M,gp_Vec & D2V,TColgp_Array1OfPnt2d & Poles2d,TColgp_Array1OfVec2d & DPoles2d,TColgp_Array1OfVec2d & D2Poles2d);
 		%feature("compactdefaultargs") Nb2dCurves;
-		%feature("autodoc", "	* get the number of 2d curves (Restrictions + Traces) to approximate.
+		%feature("autodoc", "	* get the number of 2d curves --Restrictions + Traces-- to approximate.
 
 	:rtype: int
 ") Nb2dCurves;
 		Standard_Integer Nb2dCurves ();
 		%feature("compactdefaultargs") HasFirstRestriction;
-		%feature("autodoc", "	* Say if the first restriction is defined in this class. If it is true the first element of poles array in D0,D1,D2... Correspond to this restriction. Returns Standard_False (default implementation)
+		%feature("autodoc", "	* Say if the first restriction is defined in this class. If it is true the first element of poles array in D0,D1,D2... Correspond to this restriction. Returns Standard_False --default implementation--
 
 	:rtype: bool
 ") HasFirstRestriction;
 		virtual Standard_Boolean HasFirstRestriction ();
 		%feature("compactdefaultargs") HasLastRestriction;
-		%feature("autodoc", "	* Say if the last restriction is defined in this class. If it is true the last element of poles array in D0,D1,D2... Correspond to this restriction. Returns Standard_False (default implementation)
+		%feature("autodoc", "	* Say if the last restriction is defined in this class. If it is true the last element of poles array in D0,D1,D2... Correspond to this restriction. Returns Standard_False --default implementation--
 
 	:rtype: bool
 ") HasLastRestriction;
 		virtual Standard_Boolean HasLastRestriction ();
 		%feature("compactdefaultargs") TraceNumber;
-		%feature("autodoc", "	* Give the number of trace (Curves 2d wich are not restriction) Returns 0 (default implementation)
+		%feature("autodoc", "	* Give the number of trace --Curves 2d wich are not restriction-- Returns 0 --default implementation--
 
 	:rtype: int
 ") TraceNumber;
 		virtual Standard_Integer TraceNumber ();
 		%feature("compactdefaultargs") ErrorStatus;
-		%feature("autodoc", "	* Give a status to the Law Returns PipeOk (default implementation)
+		%feature("autodoc", "	* Give a status to the Law Returns PipeOk --default implementation--
 
 	:rtype: GeomFill_PipeError
 ") ErrorStatus;
 		virtual GeomFill_PipeError ErrorStatus ();
 		%feature("compactdefaultargs") NbIntervals;
-		%feature("autodoc", "	* Returns the number of intervals for continuity <S>. May be one if Continuity(me) >= <S>
+		%feature("autodoc", "	* Returns the number of intervals for continuity <S>. May be one if Continuity--me-- >= <S>
 
 	:param S:
 	:type S: GeomAbs_Shape
@@ -2870,7 +2300,7 @@ class GeomFill_LocationLaw : public MMgt_TShared {
 ") NbIntervals;
 		virtual Standard_Integer NbIntervals (const GeomAbs_Shape S);
 		%feature("compactdefaultargs") Intervals;
-		%feature("autodoc", "	* Stores in <T> the parameters bounding the intervals of continuity <S>. //! The array must provide enough room to accomodate for the parameters. i.e. T.Length() > NbIntervals()
+		%feature("autodoc", "	* Stores in <T> the parameters bounding the intervals of continuity <S>. //! The array must provide enough room to accomodate for the parameters. i.e. T.Length---- > NbIntervals----
 
 	:param T:
 	:type T: TColStd_Array1OfReal &
@@ -2924,7 +2354,7 @@ class GeomFill_LocationLaw : public MMgt_TShared {
 ") Resolution;
 		virtual void Resolution (const Standard_Integer Index,const Standard_Real Tol,Standard_Real &OutValue,Standard_Real &OutValue);
 		%feature("compactdefaultargs") SetTolerance;
-		%feature("autodoc", "	* Is usefull, if (me) have to run numerical algorithm to perform D0, D1 or D2 The default implementation make nothing.
+		%feature("autodoc", "	* Is usefull, if --me-- have to run numerical algorithm to perform D0, D1 or D2 The default implementation make nothing.
 
 	:param Tol3d:
 	:type Tol3d: float
@@ -2934,13 +2364,13 @@ class GeomFill_LocationLaw : public MMgt_TShared {
 ") SetTolerance;
 		virtual void SetTolerance (const Standard_Real Tol3d,const Standard_Real Tol2d);
 		%feature("compactdefaultargs") GetMaximalNorm;
-		%feature("autodoc", "	* Get the maximum Norm of the matrix-location part. It is usful to find an good Tolerance to approx M(t).
+		%feature("autodoc", "	* Get the maximum Norm of the matrix-location part. It is usful to find an good Tolerance to approx M--t--.
 
 	:rtype: float
 ") GetMaximalNorm;
 		virtual Standard_Real GetMaximalNorm ();
 		%feature("compactdefaultargs") GetAverageLaw;
-		%feature("autodoc", "	* Get average value of M(t) and V(t) it is usfull to make fast approximation of rational surfaces.
+		%feature("autodoc", "	* Get average value of M--t-- and V--t-- it is usfull to make fast approximation of rational surfaces.
 
 	:param AM:
 	:type AM: gp_Mat
@@ -2993,7 +2423,7 @@ class GeomFill_LocationLaw : public MMgt_TShared {
 %}
 
 %nodefaultctor Handle_GeomFill_LocationLaw;
-class Handle_GeomFill_LocationLaw : public Handle_MMgt_TShared {
+class Handle_GeomFill_LocationLaw : public Handle_Standard_Transient {
 
     public:
         // constructors
@@ -3005,19 +2435,20 @@ class Handle_GeomFill_LocationLaw : public Handle_MMgt_TShared {
         static const Handle_GeomFill_LocationLaw DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_GeomFill_LocationLaw {
     GeomFill_LocationLaw* _get_reference() {
-    return (GeomFill_LocationLaw*)$self->Access();
+    return (GeomFill_LocationLaw*)$self->get();
     }
 };
 
 %extend Handle_GeomFill_LocationLaw {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend GeomFill_LocationLaw {
@@ -3043,7 +2474,7 @@ class GeomFill_Pipe {
 ") GeomFill_Pipe;
 		 GeomFill_Pipe (const Handle_Geom_Curve & Path,const Standard_Real Radius);
 		%feature("compactdefaultargs") GeomFill_Pipe;
-		%feature("autodoc", "	* Create a pipe with a constant section (<FirstSection>) and a path (<Path>) Option can be - GeomFill_IsCorrectedFrenet - GeomFill_IsFrenet - GeomFill_IsConstant
+		%feature("autodoc", "	* Create a pipe with a constant section --<FirstSection>-- and a path --<Path>-- Option can be - GeomFill_IsCorrectedFrenet - GeomFill_IsFrenet - GeomFill_IsConstant
 
 	:param Path:
 	:type Path: Handle_Geom_Curve &
@@ -3055,7 +2486,7 @@ class GeomFill_Pipe {
 ") GeomFill_Pipe;
 		 GeomFill_Pipe (const Handle_Geom_Curve & Path,const Handle_Geom_Curve & FirstSect,const GeomFill_Trihedron Option = GeomFill_IsCorrectedFrenet);
 		%feature("compactdefaultargs") GeomFill_Pipe;
-		%feature("autodoc", "	* Create a pipe with a constant section (<FirstSection>) and a path defined by <Path> and <Support>
+		%feature("autodoc", "	* Create a pipe with a constant section --<FirstSection>-- and a path defined by <Path> and <Support>
 
 	:param Path:
 	:type Path: Handle_Geom2d_Curve &
@@ -3067,7 +2498,7 @@ class GeomFill_Pipe {
 ") GeomFill_Pipe;
 		 GeomFill_Pipe (const Handle_Geom2d_Curve & Path,const Handle_Geom_Surface & Support,const Handle_Geom_Curve & FirstSect);
 		%feature("compactdefaultargs") GeomFill_Pipe;
-		%feature("autodoc", "	* Create a pipe with a constant section (<FirstSection>) and a path <Path> and a fixed binormal direction <Dir>
+		%feature("autodoc", "	* Create a pipe with a constant section --<FirstSection>-- and a path <Path> and a fixed binormal direction <Dir>
 
 	:param Path:
 	:type Path: Handle_Geom_Curve &
@@ -3129,7 +2560,7 @@ class GeomFill_Pipe {
 ") GeomFill_Pipe;
 		 GeomFill_Pipe (const Handle_Adaptor3d_HCurve & Path,const Handle_Adaptor3d_HCurve & Curve1,const Handle_Adaptor3d_HCurve & Curve2,const Standard_Real Radius);
 		%feature("compactdefaultargs") GeomFill_Pipe;
-		%feature("autodoc", "	* Create a pipe with a constant section and with 1 guide-line. Use the function Perform to build the surface. All standard specific cases are detected in order to construct, according to the respective geometric nature of Path and the sections, a planar, cylindrical, conical, spherical or toroidal surface, a surface of linear extrusion or a surface of revolution. In the general case, the result is a BSpline surface (NURBS) built by approximation of a series of sections where: - the number of sections N is chosen automatically by the algorithm according to the respective geometries of Path and the sections. N is greater than or equal to 2; - N points Pi (with i in the range [ 1,N ]) are defined at regular intervals along the curve Path from its first point to its end point. At each point Pi, a coordinate system Ti is computed with Pi as origin, and with the tangential and normal vectors to Path defining two of its coordinate axes. In the case of a pipe with a constant circular section, the first section is a circle of radius Radius centered on the origin of Path and whose 'Z Axis' is aligned along the vector tangential to the origin of Path. In the case of a pipe with a constant section, the first section is the curve FirstSect. In these two cases, the ith section (for values of i greater than 1) is obtained by applying to a copy of this first section the geometric transformation which transforms coordinate system T1 into coordinate system Ti. In the case of an evolving section, N-2 intermediate curves Si are first computed (if N is greater than 2, and with i in the range [ 2,N-1 ]) whose geometry evolves regularly from the curve S1=FirstSect to the curve SN=LastSect. The first section is FirstSect, and the ith section (for values of i greater than 1) is obtained by applying to the curve Si the geometric transformation which transforms coordinate system T1 into coordinate system Ti.
+		%feature("autodoc", "	* Create a pipe with a constant section and with 1 guide-line. Use the function Perform to build the surface. All standard specific cases are detected in order to construct, according to the respective geometric nature of Path and the sections, a planar, cylindrical, conical, spherical or toroidal surface, a surface of linear extrusion or a surface of revolution. In the general case, the result is a BSpline surface --NURBS-- built by approximation of a series of sections where: - the number of sections N is chosen automatically by the algorithm according to the respective geometries of Path and the sections. N is greater than or equal to 2; - N points Pi --with i in the range [ 1,N ]-- are defined at regular intervals along the curve Path from its first point to its end point. At each point Pi, a coordinate system Ti is computed with Pi as origin, and with the tangential and normal vectors to Path defining two of its coordinate axes. In the case of a pipe with a constant circular section, the first section is a circle of radius Radius centered on the origin of Path and whose 'Z Axis' is aligned along the vector tangential to the origin of Path. In the case of a pipe with a constant section, the first section is the curve FirstSect. In these two cases, the ith section --for values of i greater than 1-- is obtained by applying to a copy of this first section the geometric transformation which transforms coordinate system T1 into coordinate system Ti. In the case of an evolving section, N-2 intermediate curves Si are first computed --if N is greater than 2, and with i in the range [ 2,N-1 ]-- whose geometry evolves regularly from the curve S1=FirstSect to the curve SN=LastSect. The first section is FirstSect, and the ith section --for values of i greater than 1-- is obtained by applying to the curve Si the geometric transformation which transforms coordinate system T1 into coordinate system Ti.
 
 	:param Path:
 	:type Path: Handle_Geom_Curve &
@@ -3231,7 +2662,7 @@ class GeomFill_Pipe {
 ") Init;
 		void Init (const Handle_Geom_Curve & Path,const Handle_Adaptor3d_HCurve & Guide,const Handle_Geom_Curve & FirstSect,const Standard_Boolean ByACR,const Standard_Boolean rotat);
 		%feature("compactdefaultargs") Perform;
-		%feature("autodoc", "	* Builds the pipe defined at the time of initialization of this algorithm. A description of the resulting surface is given under Constructors. If WithParameters (defaulted to false) is set to true, the approximation algorithm (used only in the general case of construction of a BSpline surface) builds the surface with a u parameter corresponding to the one of the path. Exceptions Standard_ConstructionError if a surface cannot be constructed from the data. Warning: It is the old Perform method, the next methode is recommended.
+		%feature("autodoc", "	* Builds the pipe defined at the time of initialization of this algorithm. A description of the resulting surface is given under Constructors. If WithParameters --defaulted to false-- is set to true, the approximation algorithm --used only in the general case of construction of a BSpline surface-- builds the surface with a u parameter corresponding to the one of the path. Exceptions Standard_ConstructionError if a surface cannot be constructed from the data. Warning: It is the old Perform method, the next methode is recommended.
 
 	:param WithParameters: default value is Standard_False
 	:type WithParameters: bool
@@ -3257,13 +2688,13 @@ class GeomFill_Pipe {
 ") Perform;
 		void Perform (const Standard_Real Tol,const Standard_Boolean Polynomial,const GeomAbs_Shape Conti = GeomAbs_C1,const Standard_Integer MaxDegree = 11,const Standard_Integer NbMaxSegment = 30);
 		%feature("compactdefaultargs") Surface;
-		%feature("autodoc", "	* Returns the surface built by this algorithm. Warning Do not use this function before the surface is built (in this case the function will return a null handle).
+		%feature("autodoc", "	* Returns the surface built by this algorithm. Warning Do not use this function before the surface is built --in this case the function will return a null handle--.
 
 	:rtype: Handle_Geom_Surface
 ") Surface;
 		Handle_Geom_Surface Surface ();
 		%feature("compactdefaultargs") ExchangeUV;
-		%feature("autodoc", "	* The u parametric direction of the surface constructed by this algorithm usually corresponds to the evolution along the path and the v parametric direction corresponds to the evolution along the section(s). However, this rule is not respected when constructing certain specific Geom surfaces (typically cylindrical surfaces, surfaces of revolution, etc.) for which the parameterization is inversed. The ExchangeUV function checks for this, and returns true in all these specific cases. Warning Do not use this function before the surface is built.
+		%feature("autodoc", "	* The u parametric direction of the surface constructed by this algorithm usually corresponds to the evolution along the path and the v parametric direction corresponds to the evolution along the section--s--. However, this rule is not respected when constructing certain specific Geom surfaces --typically cylindrical surfaces, surfaces of revolution, etc.-- for which the parameterization is inversed. The ExchangeUV function checks for this, and returns true in all these specific cases. Warning Do not use this function before the surface is built.
 
 	:rtype: bool
 ") ExchangeUV;
@@ -3288,6 +2719,12 @@ class GeomFill_Pipe {
 	:rtype: float
 ") ErrorOnSurf;
 		Standard_Real ErrorOnSurf ();
+		%feature("compactdefaultargs") IsDone;
+		%feature("autodoc", "	* Returns whether approximation was done.
+
+	:rtype: bool
+") IsDone;
+		Standard_Boolean IsDone ();
 };
 
 
@@ -3528,7 +2965,7 @@ class GeomFill_Profiler {
 ") NbPoles;
 		Standard_Integer NbPoles ();
 		%feature("compactdefaultargs") Poles;
-		%feature("autodoc", "	* returns in <Poles> the poles of the BSplineCurve from index <Index> adjusting to the current profile. Raises if not yet perform Raises if <Index> not in the range [1,NbCurves] if the length of <Poles> is not equal to NbPoles().
+		%feature("autodoc", "	* returns in <Poles> the poles of the BSplineCurve from index <Index> adjusting to the current profile. Raises if not yet perform Raises if <Index> not in the range [1,NbCurves] if the length of <Poles> is not equal to NbPoles----.
 
 	:param Index:
 	:type Index: int
@@ -3538,7 +2975,7 @@ class GeomFill_Profiler {
 ") Poles;
 		void Poles (const Standard_Integer Index,TColgp_Array1OfPnt & Poles);
 		%feature("compactdefaultargs") Weights;
-		%feature("autodoc", "	* returns in <Weights> the weights of the BSplineCurve from index <Index> adjusting to the current profile. Raises if not yet perform Raises if <Index> not in the range [1,NbCurves] or if the length of <Weights> is not equal to NbPoles().
+		%feature("autodoc", "	* returns in <Weights> the weights of the BSplineCurve from index <Index> adjusting to the current profile. Raises if not yet perform Raises if <Index> not in the range [1,NbCurves] or if the length of <Weights> is not equal to NbPoles----.
 
 	:param Index:
 	:type Index: int
@@ -3554,7 +2991,7 @@ class GeomFill_Profiler {
 ") NbKnots;
 		Standard_Integer NbKnots ();
 		%feature("compactdefaultargs") KnotsAndMults;
-		%feature("autodoc", "	* Raises if not yet perform Raises if the lengthes of <Knots> and <Mults> are not equal to NbKnots().
+		%feature("autodoc", "	* Raises if not yet perform Raises if the lengthes of <Knots> and <Mults> are not equal to NbKnots----.
 
 	:param Knots:
 	:type Knots: TColStd_Array1OfReal &
@@ -3687,7 +3124,7 @@ class GeomFill_QuasiAngularConvertor {
 	}
 };
 %nodefaultctor GeomFill_SectionLaw;
-class GeomFill_SectionLaw : public MMgt_TShared {
+class GeomFill_SectionLaw : public Standard_Transient {
 	public:
 		%feature("compactdefaultargs") D0;
 		%feature("autodoc", "	* compute the section for v = param
@@ -3790,7 +3227,7 @@ class GeomFill_SectionLaw : public MMgt_TShared {
 ") IsVPeriodic;
 		virtual Standard_Boolean IsVPeriodic ();
 		%feature("compactdefaultargs") NbIntervals;
-		%feature("autodoc", "	* Returns the number of intervals for continuity <S>. May be one if Continuity(me) >= <S>
+		%feature("autodoc", "	* Returns the number of intervals for continuity <S>. May be one if Continuity--me-- >= <S>
 
 	:param S:
 	:type S: GeomAbs_Shape
@@ -3798,7 +3235,7 @@ class GeomFill_SectionLaw : public MMgt_TShared {
 ") NbIntervals;
 		virtual Standard_Integer NbIntervals (const GeomAbs_Shape S);
 		%feature("compactdefaultargs") Intervals;
-		%feature("autodoc", "	* Stores in <T> the parameters bounding the intervals of continuity <S>. //! The array must provide enough room to accomodate for the parameters. i.e. T.Length() > NbIntervals()
+		%feature("autodoc", "	* Stores in <T> the parameters bounding the intervals of continuity <S>. //! The array must provide enough room to accomodate for the parameters. i.e. T.Length---- > NbIntervals----
 
 	:param T:
 	:type T: TColStd_Array1OfReal &
@@ -3838,7 +3275,7 @@ class GeomFill_SectionLaw : public MMgt_TShared {
 ") GetDomain;
 		virtual void GetDomain (Standard_Real &OutValue,Standard_Real &OutValue);
 		%feature("compactdefaultargs") GetTolerance;
-		%feature("autodoc", "	* Returns the tolerances associated at each poles to reach in approximation, to satisfy: BoundTol error at the Boundary AngleTol tangent error at the Boundary (in radian) SurfTol error inside the surface.
+		%feature("autodoc", "	* Returns the tolerances associated at each poles to reach in approximation, to satisfy: BoundTol error at the Boundary AngleTol tangent error at the Boundary --in radian-- SurfTol error inside the surface.
 
 	:param BoundTol:
 	:type BoundTol: float
@@ -3852,7 +3289,7 @@ class GeomFill_SectionLaw : public MMgt_TShared {
 ") GetTolerance;
 		virtual void GetTolerance (const Standard_Real BoundTol,const Standard_Real SurfTol,const Standard_Real AngleTol,TColStd_Array1OfReal & Tol3d);
 		%feature("compactdefaultargs") SetTolerance;
-		%feature("autodoc", "	* Is usefull, if (me) have to run numerical algorithm to perform D0, D1 or D2 The default implementation make nothing.
+		%feature("autodoc", "	* Is usefull, if --me-- have to run numerical algorithm to perform D0, D1 or D2 The default implementation make nothing.
 
 	:param Tol3d:
 	:type Tol3d: float
@@ -3933,7 +3370,7 @@ class GeomFill_SectionLaw : public MMgt_TShared {
 %}
 
 %nodefaultctor Handle_GeomFill_SectionLaw;
-class Handle_GeomFill_SectionLaw : public Handle_MMgt_TShared {
+class Handle_GeomFill_SectionLaw : public Handle_Standard_Transient {
 
     public:
         // constructors
@@ -3945,19 +3382,20 @@ class Handle_GeomFill_SectionLaw : public Handle_MMgt_TShared {
         static const Handle_GeomFill_SectionLaw DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_GeomFill_SectionLaw {
     GeomFill_SectionLaw* _get_reference() {
-    return (GeomFill_SectionLaw*)$self->Access();
+    return (GeomFill_SectionLaw*)$self->get();
     }
 };
 
 %extend Handle_GeomFill_SectionLaw {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend GeomFill_SectionLaw {
@@ -4058,434 +3496,6 @@ class GeomFill_SectionPlacement {
 	__repr__ = _dumps_object
 	}
 };
-%nodefaultctor GeomFill_SequenceNodeOfSequenceOfAx2;
-class GeomFill_SequenceNodeOfSequenceOfAx2 : public TCollection_SeqNode {
-	public:
-		%feature("compactdefaultargs") GeomFill_SequenceNodeOfSequenceOfAx2;
-		%feature("autodoc", "	:param I:
-	:type I: gp_Ax2
-	:param n:
-	:type n: TCollection_SeqNodePtr &
-	:param p:
-	:type p: TCollection_SeqNodePtr &
-	:rtype: None
-") GeomFill_SequenceNodeOfSequenceOfAx2;
-		 GeomFill_SequenceNodeOfSequenceOfAx2 (const gp_Ax2 & I,const TCollection_SeqNodePtr & n,const TCollection_SeqNodePtr & p);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:rtype: gp_Ax2
-") Value;
-		gp_Ax2  Value ();
-};
-
-
-%extend GeomFill_SequenceNodeOfSequenceOfAx2 {
-	%pythoncode {
-		def GetHandle(self):
-		    try:
-		        return self.thisHandle
-		    except:
-		        self.thisHandle = Handle_GeomFill_SequenceNodeOfSequenceOfAx2(self)
-		        self.thisown = False
-		        return self.thisHandle
-	}
-};
-
-%pythonappend Handle_GeomFill_SequenceNodeOfSequenceOfAx2::Handle_GeomFill_SequenceNodeOfSequenceOfAx2 %{
-    # register the handle in the base object
-    if len(args) > 0:
-        register_handle(self, args[0])
-%}
-
-%nodefaultctor Handle_GeomFill_SequenceNodeOfSequenceOfAx2;
-class Handle_GeomFill_SequenceNodeOfSequenceOfAx2 : public Handle_TCollection_SeqNode {
-
-    public:
-        // constructors
-        Handle_GeomFill_SequenceNodeOfSequenceOfAx2();
-        Handle_GeomFill_SequenceNodeOfSequenceOfAx2(const Handle_GeomFill_SequenceNodeOfSequenceOfAx2 &aHandle);
-        Handle_GeomFill_SequenceNodeOfSequenceOfAx2(const GeomFill_SequenceNodeOfSequenceOfAx2 *anItem);
-        void Nullify();
-        Standard_Boolean IsNull() const;
-        static const Handle_GeomFill_SequenceNodeOfSequenceOfAx2 DownCast(const Handle_Standard_Transient &AnObject);
-
-};
-%extend Handle_GeomFill_SequenceNodeOfSequenceOfAx2 {
-    GeomFill_SequenceNodeOfSequenceOfAx2* _get_reference() {
-    return (GeomFill_SequenceNodeOfSequenceOfAx2*)$self->Access();
-    }
-};
-
-%extend Handle_GeomFill_SequenceNodeOfSequenceOfAx2 {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
-};
-
-%extend GeomFill_SequenceNodeOfSequenceOfAx2 {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor GeomFill_SequenceNodeOfSequenceOfTrsf;
-class GeomFill_SequenceNodeOfSequenceOfTrsf : public TCollection_SeqNode {
-	public:
-		%feature("compactdefaultargs") GeomFill_SequenceNodeOfSequenceOfTrsf;
-		%feature("autodoc", "	:param I:
-	:type I: gp_Trsf
-	:param n:
-	:type n: TCollection_SeqNodePtr &
-	:param p:
-	:type p: TCollection_SeqNodePtr &
-	:rtype: None
-") GeomFill_SequenceNodeOfSequenceOfTrsf;
-		 GeomFill_SequenceNodeOfSequenceOfTrsf (const gp_Trsf & I,const TCollection_SeqNodePtr & n,const TCollection_SeqNodePtr & p);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:rtype: gp_Trsf
-") Value;
-		gp_Trsf  Value ();
-};
-
-
-%extend GeomFill_SequenceNodeOfSequenceOfTrsf {
-	%pythoncode {
-		def GetHandle(self):
-		    try:
-		        return self.thisHandle
-		    except:
-		        self.thisHandle = Handle_GeomFill_SequenceNodeOfSequenceOfTrsf(self)
-		        self.thisown = False
-		        return self.thisHandle
-	}
-};
-
-%pythonappend Handle_GeomFill_SequenceNodeOfSequenceOfTrsf::Handle_GeomFill_SequenceNodeOfSequenceOfTrsf %{
-    # register the handle in the base object
-    if len(args) > 0:
-        register_handle(self, args[0])
-%}
-
-%nodefaultctor Handle_GeomFill_SequenceNodeOfSequenceOfTrsf;
-class Handle_GeomFill_SequenceNodeOfSequenceOfTrsf : public Handle_TCollection_SeqNode {
-
-    public:
-        // constructors
-        Handle_GeomFill_SequenceNodeOfSequenceOfTrsf();
-        Handle_GeomFill_SequenceNodeOfSequenceOfTrsf(const Handle_GeomFill_SequenceNodeOfSequenceOfTrsf &aHandle);
-        Handle_GeomFill_SequenceNodeOfSequenceOfTrsf(const GeomFill_SequenceNodeOfSequenceOfTrsf *anItem);
-        void Nullify();
-        Standard_Boolean IsNull() const;
-        static const Handle_GeomFill_SequenceNodeOfSequenceOfTrsf DownCast(const Handle_Standard_Transient &AnObject);
-
-};
-%extend Handle_GeomFill_SequenceNodeOfSequenceOfTrsf {
-    GeomFill_SequenceNodeOfSequenceOfTrsf* _get_reference() {
-    return (GeomFill_SequenceNodeOfSequenceOfTrsf*)$self->Access();
-    }
-};
-
-%extend Handle_GeomFill_SequenceNodeOfSequenceOfTrsf {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
-};
-
-%extend GeomFill_SequenceNodeOfSequenceOfTrsf {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor GeomFill_SequenceOfAx2;
-class GeomFill_SequenceOfAx2 : public TCollection_BaseSequence {
-	public:
-		%feature("compactdefaultargs") GeomFill_SequenceOfAx2;
-		%feature("autodoc", "	:rtype: None
-") GeomFill_SequenceOfAx2;
-		 GeomFill_SequenceOfAx2 ();
-		%feature("compactdefaultargs") GeomFill_SequenceOfAx2;
-		%feature("autodoc", "	:param Other:
-	:type Other: GeomFill_SequenceOfAx2 &
-	:rtype: None
-") GeomFill_SequenceOfAx2;
-		 GeomFill_SequenceOfAx2 (const GeomFill_SequenceOfAx2 & Other);
-		%feature("compactdefaultargs") Clear;
-		%feature("autodoc", "	:rtype: None
-") Clear;
-		void Clear ();
-		%feature("compactdefaultargs") Assign;
-		%feature("autodoc", "	:param Other:
-	:type Other: GeomFill_SequenceOfAx2 &
-	:rtype: GeomFill_SequenceOfAx2
-") Assign;
-		const GeomFill_SequenceOfAx2 & Assign (const GeomFill_SequenceOfAx2 & Other);
-		%feature("compactdefaultargs") operator =;
-		%feature("autodoc", "	:param Other:
-	:type Other: GeomFill_SequenceOfAx2 &
-	:rtype: GeomFill_SequenceOfAx2
-") operator =;
-		const GeomFill_SequenceOfAx2 & operator = (const GeomFill_SequenceOfAx2 & Other);
-		%feature("compactdefaultargs") Append;
-		%feature("autodoc", "	:param T:
-	:type T: gp_Ax2
-	:rtype: None
-") Append;
-		void Append (const gp_Ax2 & T);
-		%feature("compactdefaultargs") Append;
-		%feature("autodoc", "	:param S:
-	:type S: GeomFill_SequenceOfAx2 &
-	:rtype: None
-") Append;
-		void Append (GeomFill_SequenceOfAx2 & S);
-		%feature("compactdefaultargs") Prepend;
-		%feature("autodoc", "	:param T:
-	:type T: gp_Ax2
-	:rtype: None
-") Prepend;
-		void Prepend (const gp_Ax2 & T);
-		%feature("compactdefaultargs") Prepend;
-		%feature("autodoc", "	:param S:
-	:type S: GeomFill_SequenceOfAx2 &
-	:rtype: None
-") Prepend;
-		void Prepend (GeomFill_SequenceOfAx2 & S);
-		%feature("compactdefaultargs") InsertBefore;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param T:
-	:type T: gp_Ax2
-	:rtype: None
-") InsertBefore;
-		void InsertBefore (const Standard_Integer Index,const gp_Ax2 & T);
-		%feature("compactdefaultargs") InsertBefore;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param S:
-	:type S: GeomFill_SequenceOfAx2 &
-	:rtype: None
-") InsertBefore;
-		void InsertBefore (const Standard_Integer Index,GeomFill_SequenceOfAx2 & S);
-		%feature("compactdefaultargs") InsertAfter;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param T:
-	:type T: gp_Ax2
-	:rtype: None
-") InsertAfter;
-		void InsertAfter (const Standard_Integer Index,const gp_Ax2 & T);
-		%feature("compactdefaultargs") InsertAfter;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param S:
-	:type S: GeomFill_SequenceOfAx2 &
-	:rtype: None
-") InsertAfter;
-		void InsertAfter (const Standard_Integer Index,GeomFill_SequenceOfAx2 & S);
-		%feature("compactdefaultargs") First;
-		%feature("autodoc", "	:rtype: gp_Ax2
-") First;
-		const gp_Ax2  First ();
-		%feature("compactdefaultargs") Last;
-		%feature("autodoc", "	:rtype: gp_Ax2
-") Last;
-		const gp_Ax2  Last ();
-		%feature("compactdefaultargs") Split;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param Sub:
-	:type Sub: GeomFill_SequenceOfAx2 &
-	:rtype: None
-") Split;
-		void Split (const Standard_Integer Index,GeomFill_SequenceOfAx2 & Sub);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: gp_Ax2
-") Value;
-		const gp_Ax2  Value (const Standard_Integer Index);
-		%feature("compactdefaultargs") SetValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param I:
-	:type I: gp_Ax2
-	:rtype: None
-") SetValue;
-		void SetValue (const Standard_Integer Index,const gp_Ax2 & I);
-		%feature("compactdefaultargs") ChangeValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: gp_Ax2
-") ChangeValue;
-		gp_Ax2  ChangeValue (const Standard_Integer Index);
-		%feature("compactdefaultargs") Remove;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: None
-") Remove;
-		void Remove (const Standard_Integer Index);
-		%feature("compactdefaultargs") Remove;
-		%feature("autodoc", "	:param FromIndex:
-	:type FromIndex: int
-	:param ToIndex:
-	:type ToIndex: int
-	:rtype: None
-") Remove;
-		void Remove (const Standard_Integer FromIndex,const Standard_Integer ToIndex);
-};
-
-
-%extend GeomFill_SequenceOfAx2 {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor GeomFill_SequenceOfTrsf;
-class GeomFill_SequenceOfTrsf : public TCollection_BaseSequence {
-	public:
-		%feature("compactdefaultargs") GeomFill_SequenceOfTrsf;
-		%feature("autodoc", "	:rtype: None
-") GeomFill_SequenceOfTrsf;
-		 GeomFill_SequenceOfTrsf ();
-		%feature("compactdefaultargs") GeomFill_SequenceOfTrsf;
-		%feature("autodoc", "	:param Other:
-	:type Other: GeomFill_SequenceOfTrsf &
-	:rtype: None
-") GeomFill_SequenceOfTrsf;
-		 GeomFill_SequenceOfTrsf (const GeomFill_SequenceOfTrsf & Other);
-		%feature("compactdefaultargs") Clear;
-		%feature("autodoc", "	:rtype: None
-") Clear;
-		void Clear ();
-		%feature("compactdefaultargs") Assign;
-		%feature("autodoc", "	:param Other:
-	:type Other: GeomFill_SequenceOfTrsf &
-	:rtype: GeomFill_SequenceOfTrsf
-") Assign;
-		const GeomFill_SequenceOfTrsf & Assign (const GeomFill_SequenceOfTrsf & Other);
-		%feature("compactdefaultargs") operator =;
-		%feature("autodoc", "	:param Other:
-	:type Other: GeomFill_SequenceOfTrsf &
-	:rtype: GeomFill_SequenceOfTrsf
-") operator =;
-		const GeomFill_SequenceOfTrsf & operator = (const GeomFill_SequenceOfTrsf & Other);
-		%feature("compactdefaultargs") Append;
-		%feature("autodoc", "	:param T:
-	:type T: gp_Trsf
-	:rtype: None
-") Append;
-		void Append (const gp_Trsf & T);
-		%feature("compactdefaultargs") Append;
-		%feature("autodoc", "	:param S:
-	:type S: GeomFill_SequenceOfTrsf &
-	:rtype: None
-") Append;
-		void Append (GeomFill_SequenceOfTrsf & S);
-		%feature("compactdefaultargs") Prepend;
-		%feature("autodoc", "	:param T:
-	:type T: gp_Trsf
-	:rtype: None
-") Prepend;
-		void Prepend (const gp_Trsf & T);
-		%feature("compactdefaultargs") Prepend;
-		%feature("autodoc", "	:param S:
-	:type S: GeomFill_SequenceOfTrsf &
-	:rtype: None
-") Prepend;
-		void Prepend (GeomFill_SequenceOfTrsf & S);
-		%feature("compactdefaultargs") InsertBefore;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param T:
-	:type T: gp_Trsf
-	:rtype: None
-") InsertBefore;
-		void InsertBefore (const Standard_Integer Index,const gp_Trsf & T);
-		%feature("compactdefaultargs") InsertBefore;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param S:
-	:type S: GeomFill_SequenceOfTrsf &
-	:rtype: None
-") InsertBefore;
-		void InsertBefore (const Standard_Integer Index,GeomFill_SequenceOfTrsf & S);
-		%feature("compactdefaultargs") InsertAfter;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param T:
-	:type T: gp_Trsf
-	:rtype: None
-") InsertAfter;
-		void InsertAfter (const Standard_Integer Index,const gp_Trsf & T);
-		%feature("compactdefaultargs") InsertAfter;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param S:
-	:type S: GeomFill_SequenceOfTrsf &
-	:rtype: None
-") InsertAfter;
-		void InsertAfter (const Standard_Integer Index,GeomFill_SequenceOfTrsf & S);
-		%feature("compactdefaultargs") First;
-		%feature("autodoc", "	:rtype: gp_Trsf
-") First;
-		const gp_Trsf  First ();
-		%feature("compactdefaultargs") Last;
-		%feature("autodoc", "	:rtype: gp_Trsf
-") Last;
-		const gp_Trsf  Last ();
-		%feature("compactdefaultargs") Split;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param Sub:
-	:type Sub: GeomFill_SequenceOfTrsf &
-	:rtype: None
-") Split;
-		void Split (const Standard_Integer Index,GeomFill_SequenceOfTrsf & Sub);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: gp_Trsf
-") Value;
-		const gp_Trsf  Value (const Standard_Integer Index);
-		%feature("compactdefaultargs") SetValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param I:
-	:type I: gp_Trsf
-	:rtype: None
-") SetValue;
-		void SetValue (const Standard_Integer Index,const gp_Trsf & I);
-		%feature("compactdefaultargs") ChangeValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: gp_Trsf
-") ChangeValue;
-		gp_Trsf  ChangeValue (const Standard_Integer Index);
-		%feature("compactdefaultargs") Remove;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: None
-") Remove;
-		void Remove (const Standard_Integer Index);
-		%feature("compactdefaultargs") Remove;
-		%feature("autodoc", "	:param FromIndex:
-	:type FromIndex: int
-	:param ToIndex:
-	:type ToIndex: int
-	:rtype: None
-") Remove;
-		void Remove (const Standard_Integer FromIndex,const Standard_Integer ToIndex);
-};
-
-
-%extend GeomFill_SequenceOfTrsf {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
 %nodefaultctor GeomFill_SnglrFunc;
 class GeomFill_SnglrFunc : public Adaptor3d_Curve {
 	public:
@@ -4510,7 +3520,7 @@ class GeomFill_SnglrFunc : public Adaptor3d_Curve {
 ") LastParameter;
 		Standard_Real LastParameter ();
 		%feature("compactdefaultargs") NbIntervals;
-		%feature("autodoc", "	* Returns the number of intervals for continuity <S>. May be one if Continuity(me) >= <S>
+		%feature("autodoc", "	* Returns the number of intervals for continuity <S>. May be one if Continuity--me-- >= <S>
 
 	:param S:
 	:type S: GeomAbs_Shape
@@ -4518,7 +3528,7 @@ class GeomFill_SnglrFunc : public Adaptor3d_Curve {
 ") NbIntervals;
 		Standard_Integer NbIntervals (const GeomAbs_Shape S);
 		%feature("compactdefaultargs") Intervals;
-		%feature("autodoc", "	* Stores in <T> the parameters bounding the intervals of continuity <S>. //! The array must provide enough room to accomodate for the parameters. i.e. T.Length() > NbIntervals()
+		%feature("autodoc", "	* Stores in <T> the parameters bounding the intervals of continuity <S>. //! The array must provide enough room to accomodate for the parameters. i.e. T.Length---- > NbIntervals----
 
 	:param T:
 	:type T: TColStd_Array1OfReal &
@@ -4639,7 +3649,7 @@ class GeomFill_Sweep {
 ") GeomFill_Sweep;
 		 GeomFill_Sweep (const Handle_GeomFill_LocationLaw & Location,const Standard_Boolean WithKpart = Standard_True);
 		%feature("compactdefaultargs") SetDomain;
-		%feature("autodoc", "	* Set parametric information [<First>, <Last>] Sets the parametric bound of the sweeping surface to build. <SectionFirst>, <SectionLast> gives coresponding bounds parameter on the section law of <First> and <Last> //! V-Iso on Sweeping Surface S(u,v) is defined by Location(v) and Section(w) where w = SectionFirst + (v - First) / (Last-First) * (SectionLast - SectionFirst) //! By default w = v, and First and Last are given by First and Last parameter stored in LocationLaw.
+		%feature("autodoc", "	* Set parametric information [<First>, <Last>] Sets the parametric bound of the sweeping surface to build. <SectionFirst>, <SectionLast> gives coresponding bounds parameter on the section law of <First> and <Last> //! V-Iso on Sweeping Surface S--u,v-- is defined by Location--v-- and Section--w-- where w = SectionFirst + --v - First-- / --Last-First-- * --SectionLast - SectionFirst-- //! By default w = v, and First and Last are given by First and Last parameter stored in LocationLaw.
 
 	:param First:
 	:type First: float
@@ -4653,7 +3663,7 @@ class GeomFill_Sweep {
 ") SetDomain;
 		void SetDomain (const Standard_Real First,const Standard_Real Last,const Standard_Real SectionFirst,const Standard_Real SectionLast);
 		%feature("compactdefaultargs") SetTolerance;
-		%feature("autodoc", "	* Set Approximation Tolerance Tol3d : Tolerance to surface approximation Tol2d : Tolerance used to perform curve approximation Normaly the 2d curve are approximated with a tolerance given by the resolution method define in <LocationLaw> but if this tolerance is too large Tol2d is used. TolAngular : Tolerance (in radian) to control the angle beetween tangents on the section law and tangent of iso-v on approximed surface
+		%feature("autodoc", "	* Set Approximation Tolerance Tol3d : Tolerance to surface approximation Tol2d : Tolerance used to perform curve approximation Normaly the 2d curve are approximated with a tolerance given by the resolution method define in <LocationLaw> but if this tolerance is too large Tol2d is used. TolAngular : Tolerance --in radian-- to control the angle beetween tangents on the section law and tangent of iso-v on approximed surface
 
 	:param Tol3d:
 	:type Tol3d: float
@@ -4681,19 +3691,19 @@ class GeomFill_Sweep {
 ") ExchangeUV;
 		Standard_Boolean ExchangeUV ();
 		%feature("compactdefaultargs") UReversed;
-		%feature("autodoc", "	* returns true if Parametrisation sens in U is inverse of parametrisation sens of section (or of path if ExchangeUV)
+		%feature("autodoc", "	* returns true if Parametrisation sens in U is inverse of parametrisation sens of section --or of path if ExchangeUV--
 
 	:rtype: bool
 ") UReversed;
 		Standard_Boolean UReversed ();
 		%feature("compactdefaultargs") VReversed;
-		%feature("autodoc", "	* returns true if Parametrisation sens in V is inverse of parametrisation sens of path (or of section if ExchangeUV)
+		%feature("autodoc", "	* returns true if Parametrisation sens in V is inverse of parametrisation sens of path --or of section if ExchangeUV--
 
 	:rtype: bool
 ") VReversed;
 		Standard_Boolean VReversed ();
 		%feature("compactdefaultargs") Build;
-		%feature("autodoc", "	* Build the Sweeep Surface ApproxStyle defines Approximation Strategy - GeomFill_Section : The composed Function : Location X Section is directly approximed. - GeomFill_Location : The location law is approximed, and the SweepSurface is build algebric composition of approximed location law and section law This option is Ok, if Section.Surface() methode is effective. Continuity : The continuity in v waiting on the surface Degmax : The maximum degree in v requiered on the surface Segmax : The maximum number of span in v requiered on the surface //! raise If Domain are infinite or Profile not Setted.
+		%feature("autodoc", "	* Build the Sweeep Surface ApproxStyle defines Approximation Strategy - GeomFill_Section : The composed Function : Location X Section is directly approximed. - GeomFill_Location : The location law is approximed, and the SweepSurface is build algebric composition of approximed location law and section law This option is Ok, if Section.Surface---- methode is effective. Continuity : The continuity in v waiting on the surface Degmax : The maximum degree in v requiered on the surface Segmax : The maximum number of span in v requiered on the surface //! raise If Domain are infinite or Profile not Setted.
 
 	:param Section:
 	:type Section: Handle_GeomFill_SectionLaw &
@@ -4902,7 +3912,7 @@ class GeomFill_SweepFunction : public Approx_SweepFunction {
 ") IsRational;
 		virtual Standard_Boolean IsRational ();
 		%feature("compactdefaultargs") NbIntervals;
-		%feature("autodoc", "	* Returns the number of intervals for continuity <S>. May be one if Continuity(me) >= <S>
+		%feature("autodoc", "	* Returns the number of intervals for continuity <S>. May be one if Continuity--me-- >= <S>
 
 	:param S:
 	:type S: GeomAbs_Shape
@@ -4910,7 +3920,7 @@ class GeomFill_SweepFunction : public Approx_SweepFunction {
 ") NbIntervals;
 		virtual Standard_Integer NbIntervals (const GeomAbs_Shape S);
 		%feature("compactdefaultargs") Intervals;
-		%feature("autodoc", "	* Stores in <T> the parameters bounding the intervals of continuity <S>. //! The array must provide enough room to accomodate for the parameters. i.e. T.Length() > NbIntervals()
+		%feature("autodoc", "	* Stores in <T> the parameters bounding the intervals of continuity <S>. //! The array must provide enough room to accomodate for the parameters. i.e. T.Length---- > NbIntervals----
 
 	:param T:
 	:type T: TColStd_Array1OfReal &
@@ -4944,7 +3954,7 @@ class GeomFill_SweepFunction : public Approx_SweepFunction {
 ") Resolution;
 		virtual void Resolution (const Standard_Integer Index,const Standard_Real Tol,Standard_Real &OutValue,Standard_Real &OutValue);
 		%feature("compactdefaultargs") GetTolerance;
-		%feature("autodoc", "	* Returns the tolerance to reach in approximation to respecte BoundTol error at the Boundary AngleTol tangent error at the Boundary (in radian) SurfTol error inside the surface.
+		%feature("autodoc", "	* Returns the tolerance to reach in approximation to respecte BoundTol error at the Boundary AngleTol tangent error at the Boundary --in radian-- SurfTol error inside the surface.
 
 	:param BoundTol:
 	:type BoundTol: float
@@ -4958,7 +3968,7 @@ class GeomFill_SweepFunction : public Approx_SweepFunction {
 ") GetTolerance;
 		virtual void GetTolerance (const Standard_Real BoundTol,const Standard_Real SurfTol,const Standard_Real AngleTol,TColStd_Array1OfReal & Tol3d);
 		%feature("compactdefaultargs") SetTolerance;
-		%feature("autodoc", "	* Is usfull, if (me) have to be run numerical algorithme to perform D0, D1 or D2
+		%feature("autodoc", "	* Is usfull, if --me-- have to be run numerical algorithme to perform D0, D1 or D2
 
 	:param Tol3d:
 	:type Tol3d: float
@@ -5021,19 +4031,20 @@ class Handle_GeomFill_SweepFunction : public Handle_Approx_SweepFunction {
         static const Handle_GeomFill_SweepFunction DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_GeomFill_SweepFunction {
     GeomFill_SweepFunction* _get_reference() {
-    return (GeomFill_SweepFunction*)$self->Access();
+    return (GeomFill_SweepFunction*)$self->get();
     }
 };
 
 %extend Handle_GeomFill_SweepFunction {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend GeomFill_SweepFunction {
@@ -5063,7 +4074,7 @@ class GeomFill_Tensor {
 ") Init;
 		void Init (const Standard_Real InitialValue);
 		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	* accesses (in read or write mode) the value of index <Row>, <Col> and <Mat> of a Tensor. An exception is raised if <Row>, <Col> or <Mat> are not in the correct range.
+		%feature("autodoc", "	* accesses --in read or write mode-- the value of index <Row>, <Col> and <Mat> of a Tensor. An exception is raised if <Row>, <Col> or <Mat> are not in the correct range.
 
 	:param Row:
 	:type Row: int
@@ -5075,7 +4086,7 @@ class GeomFill_Tensor {
 ") Value;
 		const Standard_Real & Value (const Standard_Integer Row,const Standard_Integer Col,const Standard_Integer Mat);
 		%feature("compactdefaultargs") ChangeValue;
-		%feature("autodoc", "	* accesses (in read or write mode) the value of index <Row>, <Col> and <Mat> of a Tensor. An exception is raised if <Row>, <Col> or <Mat> are not in the correct range.
+		%feature("autodoc", "	* accesses --in read or write mode-- the value of index <Row>, <Col> and <Mat> of a Tensor. An exception is raised if <Row>, <Col> or <Mat> are not in the correct range.
 
 	:param Row:
 	:type Row: int
@@ -5103,7 +4114,7 @@ class GeomFill_Tensor {
 	}
 };
 %nodefaultctor GeomFill_TgtField;
-class GeomFill_TgtField : public MMgt_TShared {
+class GeomFill_TgtField : public Standard_Transient {
 	public:
 		%feature("compactdefaultargs") IsScalable;
 		%feature("autodoc", "	:rtype: bool
@@ -5165,7 +4176,7 @@ class GeomFill_TgtField : public MMgt_TShared {
 %}
 
 %nodefaultctor Handle_GeomFill_TgtField;
-class Handle_GeomFill_TgtField : public Handle_MMgt_TShared {
+class Handle_GeomFill_TgtField : public Handle_Standard_Transient {
 
     public:
         // constructors
@@ -5177,19 +4188,20 @@ class Handle_GeomFill_TgtField : public Handle_MMgt_TShared {
         static const Handle_GeomFill_TgtField DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_GeomFill_TgtField {
     GeomFill_TgtField* _get_reference() {
-    return (GeomFill_TgtField*)$self->Access();
+    return (GeomFill_TgtField*)$self->get();
     }
 };
 
 %extend Handle_GeomFill_TgtField {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend GeomFill_TgtField {
@@ -5198,7 +4210,7 @@ class Handle_GeomFill_TgtField : public Handle_MMgt_TShared {
 	}
 };
 %nodefaultctor GeomFill_TrihedronLaw;
-class GeomFill_TrihedronLaw : public MMgt_TShared {
+class GeomFill_TrihedronLaw : public Standard_Transient {
 	public:
 		%feature("compactdefaultargs") SetCurve;
 		%feature("autodoc", "	:param C:
@@ -5211,7 +4223,7 @@ class GeomFill_TrihedronLaw : public MMgt_TShared {
 ") Copy;
 		virtual Handle_GeomFill_TrihedronLaw Copy ();
 		%feature("compactdefaultargs") ErrorStatus;
-		%feature("autodoc", "	* Give a status to the Law Returns PipeOk (default implementation)
+		%feature("autodoc", "	* Give a status to the Law Returns PipeOk --default implementation--
 
 	:rtype: GeomFill_PipeError
 ") ErrorStatus;
@@ -5277,7 +4289,7 @@ class GeomFill_TrihedronLaw : public MMgt_TShared {
 ") D2;
 		virtual Standard_Boolean D2 (const Standard_Real Param,gp_Vec & Tangent,gp_Vec & DTangent,gp_Vec & D2Tangent,gp_Vec & Normal,gp_Vec & DNormal,gp_Vec & D2Normal,gp_Vec & BiNormal,gp_Vec & DBiNormal,gp_Vec & D2BiNormal);
 		%feature("compactdefaultargs") NbIntervals;
-		%feature("autodoc", "	* Returns the number of intervals for continuity <S>. May be one if Continuity(me) >= <S>
+		%feature("autodoc", "	* Returns the number of intervals for continuity <S>. May be one if Continuity--me-- >= <S>
 
 	:param S:
 	:type S: GeomAbs_Shape
@@ -5285,7 +4297,7 @@ class GeomFill_TrihedronLaw : public MMgt_TShared {
 ") NbIntervals;
 		virtual Standard_Integer NbIntervals (const GeomAbs_Shape S);
 		%feature("compactdefaultargs") Intervals;
-		%feature("autodoc", "	* Stores in <T> the parameters bounding the intervals of continuity <S>. //! The array must provide enough room to accomodate for the parameters. i.e. T.Length() > NbIntervals()
+		%feature("autodoc", "	* Stores in <T> the parameters bounding the intervals of continuity <S>. //! The array must provide enough room to accomodate for the parameters. i.e. T.Length---- > NbIntervals----
 
 	:param T:
 	:type T: TColStd_Array1OfReal &
@@ -5315,7 +4327,7 @@ class GeomFill_TrihedronLaw : public MMgt_TShared {
 ") GetInterval;
 		void GetInterval (Standard_Real &OutValue,Standard_Real &OutValue);
 		%feature("compactdefaultargs") GetAverageLaw;
-		%feature("autodoc", "	* Get average value of M(t) and V(t) it is usfull to make fast approximation of rational surfaces.
+		%feature("autodoc", "	* Get average value of M--t-- and V--t-- it is usfull to make fast approximation of rational surfaces.
 
 	:param ATangent:
 	:type ATangent: gp_Vec
@@ -5360,7 +4372,7 @@ class GeomFill_TrihedronLaw : public MMgt_TShared {
 %}
 
 %nodefaultctor Handle_GeomFill_TrihedronLaw;
-class Handle_GeomFill_TrihedronLaw : public Handle_MMgt_TShared {
+class Handle_GeomFill_TrihedronLaw : public Handle_Standard_Transient {
 
     public:
         // constructors
@@ -5372,19 +4384,20 @@ class Handle_GeomFill_TrihedronLaw : public Handle_MMgt_TShared {
         static const Handle_GeomFill_TrihedronLaw DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_GeomFill_TrihedronLaw {
     GeomFill_TrihedronLaw* _get_reference() {
-    return (GeomFill_TrihedronLaw*)$self->Access();
+    return (GeomFill_TrihedronLaw*)$self->get();
     }
 };
 
 %extend Handle_GeomFill_TrihedronLaw {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend GeomFill_TrihedronLaw {
@@ -5396,7 +4409,7 @@ class Handle_GeomFill_TrihedronLaw : public Handle_MMgt_TShared {
 class GeomFill_BoundWithSurf : public GeomFill_Boundary {
 	public:
 		%feature("compactdefaultargs") GeomFill_BoundWithSurf;
-		%feature("autodoc", "	* Constructs a boundary object defined by the 3d curve CurveOnSurf. The surface to be filled along this boundary will be in the tolerance range defined by Tol3d. What's more, at each point of CurveOnSurf, the angle between the normal to the surface to be filled along this boundary, and the normal to the surface on which CurveOnSurf lies, must not be greater than TolAng. This object is to be used as a boundary for a GeomFill_ConstrainedFilling framework. Warning CurveOnSurf is an adapted curve, that is, an object which is an interface between: - the services provided by a curve lying on a surface from the package Geom - and those required of the curve by the computation algorithm which uses it. The adapted curve is created in the following way: Handle_Geom_Surface mySurface = ... ; Handle_Geom2d_Curve myParamCurve = ... ; // where myParamCurve is a 2D curve in the parametric space of the surface mySurface Handle_GeomAdaptor_HSurface Surface = new GeomAdaptor_HSurface(mySurface); Handle_Geom2dAdaptor_HCurve ParamCurve = new Geom2dAdaptor_HCurve(myParamCurve); CurveOnSurf = Adaptor3d_CurveOnSurface(ParamCurve,Surface); The boundary is then constructed with the CurveOnSurf object: Standard_Real Tol = ... ; Standard_Real TolAng = ... ; myBoundary = GeomFill_BoundWithSurf ( CurveOnSurf, Tol, TolAng );
+		%feature("autodoc", "	* Constructs a boundary object defined by the 3d curve CurveOnSurf. The surface to be filled along this boundary will be in the tolerance range defined by Tol3d. What's more, at each point of CurveOnSurf, the angle between the normal to the surface to be filled along this boundary, and the normal to the surface on which CurveOnSurf lies, must not be greater than TolAng. This object is to be used as a boundary for a GeomFill_ConstrainedFilling framework. Warning CurveOnSurf is an adapted curve, that is, an object which is an interface between: - the services provided by a curve lying on a surface from the package Geom - and those required of the curve by the computation algorithm which uses it. The adapted curve is created in the following way: Handle_Geom_Surface mySurface = ... ; Handle_Geom2d_Curve myParamCurve = ... ; // where myParamCurve is a 2D curve in the parametric space of the surface mySurface Handle_GeomAdaptor_HSurface Surface = new GeomAdaptor_HSurface--mySurface--; Handle_Geom2dAdaptor_HCurve ParamCurve = new Geom2dAdaptor_HCurve--myParamCurve--; CurveOnSurf = Adaptor3d_CurveOnSurface--ParamCurve,Surface--; The boundary is then constructed with the CurveOnSurf object: Standard_Real Tol = ... ; Standard_Real TolAng = ... ; myBoundary = GeomFill_BoundWithSurf -- CurveOnSurf, Tol, TolAng --;
 
 	:param CurveOnSurf:
 	:type CurveOnSurf: Adaptor3d_CurveOnSurface &
@@ -5507,19 +4520,20 @@ class Handle_GeomFill_BoundWithSurf : public Handle_GeomFill_Boundary {
         static const Handle_GeomFill_BoundWithSurf DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_GeomFill_BoundWithSurf {
     GeomFill_BoundWithSurf* _get_reference() {
-    return (GeomFill_BoundWithSurf*)$self->Access();
+    return (GeomFill_BoundWithSurf*)$self->get();
     }
 };
 
 %extend Handle_GeomFill_BoundWithSurf {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend GeomFill_BoundWithSurf {
@@ -5607,7 +4621,7 @@ class GeomFill_ConstantBiNormal : public GeomFill_TrihedronLaw {
 ") D2;
 		virtual Standard_Boolean D2 (const Standard_Real Param,gp_Vec & Tangent,gp_Vec & DTangent,gp_Vec & D2Tangent,gp_Vec & Normal,gp_Vec & DNormal,gp_Vec & D2Normal,gp_Vec & BiNormal,gp_Vec & DBiNormal,gp_Vec & D2BiNormal);
 		%feature("compactdefaultargs") NbIntervals;
-		%feature("autodoc", "	* Returns the number of intervals for continuity <S>. May be one if Continuity(me) >= <S>
+		%feature("autodoc", "	* Returns the number of intervals for continuity <S>. May be one if Continuity--me-- >= <S>
 
 	:param S:
 	:type S: GeomAbs_Shape
@@ -5615,7 +4629,7 @@ class GeomFill_ConstantBiNormal : public GeomFill_TrihedronLaw {
 ") NbIntervals;
 		virtual Standard_Integer NbIntervals (const GeomAbs_Shape S);
 		%feature("compactdefaultargs") Intervals;
-		%feature("autodoc", "	* Stores in <T> the parameters bounding the intervals of continuity <S>. //! The array must provide enough room to accomodate for the parameters. i.e. T.Length() > NbIntervals()
+		%feature("autodoc", "	* Stores in <T> the parameters bounding the intervals of continuity <S>. //! The array must provide enough room to accomodate for the parameters. i.e. T.Length---- > NbIntervals----
 
 	:param T:
 	:type T: TColStd_Array1OfReal &
@@ -5625,7 +4639,7 @@ class GeomFill_ConstantBiNormal : public GeomFill_TrihedronLaw {
 ") Intervals;
 		virtual void Intervals (TColStd_Array1OfReal & T,const GeomAbs_Shape S);
 		%feature("compactdefaultargs") GetAverageLaw;
-		%feature("autodoc", "	* Gets average value of Tangent(t) and Normal(t) it is usfull to make fast approximation of rational surfaces.
+		%feature("autodoc", "	* Gets average value of Tangent--t-- and Normal--t-- it is usfull to make fast approximation of rational surfaces.
 
 	:param ATangent:
 	:type ATangent: gp_Vec
@@ -5682,19 +4696,20 @@ class Handle_GeomFill_ConstantBiNormal : public Handle_GeomFill_TrihedronLaw {
         static const Handle_GeomFill_ConstantBiNormal DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_GeomFill_ConstantBiNormal {
     GeomFill_ConstantBiNormal* _get_reference() {
-    return (GeomFill_ConstantBiNormal*)$self->Access();
+    return (GeomFill_ConstantBiNormal*)$self->get();
     }
 };
 
 %extend Handle_GeomFill_ConstantBiNormal {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend GeomFill_ConstantBiNormal {
@@ -5873,7 +4888,7 @@ class GeomFill_CorrectedFrenet : public GeomFill_TrihedronLaw {
 ") D2;
 		virtual Standard_Boolean D2 (const Standard_Real Param,gp_Vec & Tangent,gp_Vec & DTangent,gp_Vec & D2Tangent,gp_Vec & Normal,gp_Vec & DNormal,gp_Vec & D2Normal,gp_Vec & BiNormal,gp_Vec & DBiNormal,gp_Vec & D2BiNormal);
 		%feature("compactdefaultargs") NbIntervals;
-		%feature("autodoc", "	* Returns the number of intervals for continuity <S>. May be one if Continuity(me) >= <S>
+		%feature("autodoc", "	* Returns the number of intervals for continuity <S>. May be one if Continuity--me-- >= <S>
 
 	:param S:
 	:type S: GeomAbs_Shape
@@ -5881,7 +4896,7 @@ class GeomFill_CorrectedFrenet : public GeomFill_TrihedronLaw {
 ") NbIntervals;
 		virtual Standard_Integer NbIntervals (const GeomAbs_Shape S);
 		%feature("compactdefaultargs") Intervals;
-		%feature("autodoc", "	* Stores in <T> the parameters bounding the intervals of continuity <S>. //! The array must provide enough room to accomodate for the parameters. i.e. T.Length() > NbIntervals()
+		%feature("autodoc", "	* Stores in <T> the parameters bounding the intervals of continuity <S>. //! The array must provide enough room to accomodate for the parameters. i.e. T.Length---- > NbIntervals----
 
 	:param T:
 	:type T: TColStd_Array1OfReal &
@@ -5897,7 +4912,7 @@ class GeomFill_CorrectedFrenet : public GeomFill_TrihedronLaw {
 ") EvaluateBestMode;
 		GeomFill_Trihedron EvaluateBestMode ();
 		%feature("compactdefaultargs") GetAverageLaw;
-		%feature("autodoc", "	* Get average value of Tangent(t) and Normal(t) it is usfull to make fast approximation of rational surfaces.
+		%feature("autodoc", "	* Get average value of Tangent--t-- and Normal--t-- it is usfull to make fast approximation of rational surfaces.
 
 	:param ATangent:
 	:type ATangent: gp_Vec
@@ -5954,19 +4969,20 @@ class Handle_GeomFill_CorrectedFrenet : public Handle_GeomFill_TrihedronLaw {
         static const Handle_GeomFill_CorrectedFrenet DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_GeomFill_CorrectedFrenet {
     GeomFill_CorrectedFrenet* _get_reference() {
-    return (GeomFill_CorrectedFrenet*)$self->Access();
+    return (GeomFill_CorrectedFrenet*)$self->get();
     }
 };
 
 %extend Handle_GeomFill_CorrectedFrenet {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend GeomFill_CorrectedFrenet {
@@ -5994,7 +5010,7 @@ class GeomFill_CurveAndTrihedron : public GeomFill_LocationLaw {
 ") GetCurve;
 		Handle_Adaptor3d_HCurve GetCurve ();
 		%feature("compactdefaultargs") SetTrsf;
-		%feature("autodoc", "	* Set a transformation Matrix like the law M(t) become Mat * M(t)
+		%feature("autodoc", "	* Set a transformation Matrix like the law M--t-- become Mat * M--t--
 
 	:param Transfo:
 	:type Transfo: gp_Mat
@@ -6078,7 +5094,7 @@ class GeomFill_CurveAndTrihedron : public GeomFill_LocationLaw {
 ") D2;
 		virtual Standard_Boolean D2 (const Standard_Real Param,gp_Mat & M,gp_Vec & V,gp_Mat & DM,gp_Vec & DV,gp_Mat & D2M,gp_Vec & D2V,TColgp_Array1OfPnt2d & Poles2d,TColgp_Array1OfVec2d & DPoles2d,TColgp_Array1OfVec2d & D2Poles2d);
 		%feature("compactdefaultargs") NbIntervals;
-		%feature("autodoc", "	* Returns the number of intervals for continuity <S>. May be one if Continuity(me) >= <S>
+		%feature("autodoc", "	* Returns the number of intervals for continuity <S>. May be one if Continuity--me-- >= <S>
 
 	:param S:
 	:type S: GeomAbs_Shape
@@ -6086,7 +5102,7 @@ class GeomFill_CurveAndTrihedron : public GeomFill_LocationLaw {
 ") NbIntervals;
 		virtual Standard_Integer NbIntervals (const GeomAbs_Shape S);
 		%feature("compactdefaultargs") Intervals;
-		%feature("autodoc", "	* Stores in <T> the parameters bounding the intervals of continuity <S>. //! The array must provide enough room to accomodate for the parameters. i.e. T.Length() > NbIntervals()
+		%feature("autodoc", "	* Stores in <T> the parameters bounding the intervals of continuity <S>. //! The array must provide enough room to accomodate for the parameters. i.e. T.Length---- > NbIntervals----
 
 	:param T:
 	:type T: TColStd_Array1OfReal &
@@ -6126,13 +5142,13 @@ class GeomFill_CurveAndTrihedron : public GeomFill_LocationLaw {
 ") GetDomain;
 		virtual void GetDomain (Standard_Real &OutValue,Standard_Real &OutValue);
 		%feature("compactdefaultargs") GetMaximalNorm;
-		%feature("autodoc", "	* Get the maximum Norm of the matrix-location part. It is usful to find an good Tolerance to approx M(t).
+		%feature("autodoc", "	* Get the maximum Norm of the matrix-location part. It is usful to find an good Tolerance to approx M--t--.
 
 	:rtype: float
 ") GetMaximalNorm;
 		virtual Standard_Real GetMaximalNorm ();
 		%feature("compactdefaultargs") GetAverageLaw;
-		%feature("autodoc", "	* Get average value of M(t) and V(t) it is usfull to make fast approximation of rational surfaces.
+		%feature("autodoc", "	* Get average value of M--t-- and V--t-- it is usfull to make fast approximation of rational surfaces.
 
 	:param AM:
 	:type AM: gp_Mat
@@ -6197,19 +5213,20 @@ class Handle_GeomFill_CurveAndTrihedron : public Handle_GeomFill_LocationLaw {
         static const Handle_GeomFill_CurveAndTrihedron DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_GeomFill_CurveAndTrihedron {
     GeomFill_CurveAndTrihedron* _get_reference() {
-    return (GeomFill_CurveAndTrihedron*)$self->Access();
+    return (GeomFill_CurveAndTrihedron*)$self->get();
     }
 };
 
 %extend Handle_GeomFill_CurveAndTrihedron {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend GeomFill_CurveAndTrihedron {
@@ -6256,32 +5273,6 @@ class GeomFill_Curved : public GeomFill_Filling {
 	:rtype: None
 ") GeomFill_Curved;
 		 GeomFill_Curved (const TColgp_Array1OfPnt & P1,const TColgp_Array1OfPnt & P2,const TColgp_Array1OfPnt & P3,const TColgp_Array1OfPnt & P4,const TColStd_Array1OfReal & W1,const TColStd_Array1OfReal & W2,const TColStd_Array1OfReal & W3,const TColStd_Array1OfReal & W4);
-		%feature("compactdefaultargs") GeomFill_Curved;
-		%feature("autodoc", "	:param P1:
-	:type P1: TColgp_Array1OfPnt
-	:param P2:
-	:type P2: TColgp_Array1OfPnt
-	:param P3:
-	:type P3: TColgp_Array1OfPnt
-	:rtype: None
-") GeomFill_Curved;
-		 GeomFill_Curved (const TColgp_Array1OfPnt & P1,const TColgp_Array1OfPnt & P2,const TColgp_Array1OfPnt & P3);
-		%feature("compactdefaultargs") GeomFill_Curved;
-		%feature("autodoc", "	:param P1:
-	:type P1: TColgp_Array1OfPnt
-	:param P2:
-	:type P2: TColgp_Array1OfPnt
-	:param P3:
-	:type P3: TColgp_Array1OfPnt
-	:param W1:
-	:type W1: TColStd_Array1OfReal &
-	:param W2:
-	:type W2: TColStd_Array1OfReal &
-	:param W3:
-	:type W3: TColStd_Array1OfReal &
-	:rtype: None
-") GeomFill_Curved;
-		 GeomFill_Curved (const TColgp_Array1OfPnt & P1,const TColgp_Array1OfPnt & P2,const TColgp_Array1OfPnt & P3,const TColStd_Array1OfReal & W1,const TColStd_Array1OfReal & W2,const TColStd_Array1OfReal & W3);
 		%feature("compactdefaultargs") GeomFill_Curved;
 		%feature("autodoc", "	:param P1:
 	:type P1: TColgp_Array1OfPnt
@@ -6334,32 +5325,6 @@ class GeomFill_Curved : public GeomFill_Filling {
 	:rtype: None
 ") Init;
 		void Init (const TColgp_Array1OfPnt & P1,const TColgp_Array1OfPnt & P2,const TColgp_Array1OfPnt & P3,const TColgp_Array1OfPnt & P4,const TColStd_Array1OfReal & W1,const TColStd_Array1OfReal & W2,const TColStd_Array1OfReal & W3,const TColStd_Array1OfReal & W4);
-		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	:param P1:
-	:type P1: TColgp_Array1OfPnt
-	:param P2:
-	:type P2: TColgp_Array1OfPnt
-	:param P3:
-	:type P3: TColgp_Array1OfPnt
-	:rtype: None
-") Init;
-		void Init (const TColgp_Array1OfPnt & P1,const TColgp_Array1OfPnt & P2,const TColgp_Array1OfPnt & P3);
-		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	:param P1:
-	:type P1: TColgp_Array1OfPnt
-	:param P2:
-	:type P2: TColgp_Array1OfPnt
-	:param P3:
-	:type P3: TColgp_Array1OfPnt
-	:param W1:
-	:type W1: TColStd_Array1OfReal &
-	:param W2:
-	:type W2: TColStd_Array1OfReal &
-	:param W3:
-	:type W3: TColStd_Array1OfReal &
-	:rtype: None
-") Init;
-		void Init (const TColgp_Array1OfPnt & P1,const TColgp_Array1OfPnt & P2,const TColgp_Array1OfPnt & P3,const TColStd_Array1OfReal & W1,const TColStd_Array1OfReal & W2,const TColStd_Array1OfReal & W3);
 		%feature("compactdefaultargs") Init;
 		%feature("autodoc", "	:param P1:
 	:type P1: TColgp_Array1OfPnt
@@ -6460,7 +5425,7 @@ class GeomFill_Darboux : public GeomFill_TrihedronLaw {
 ") D2;
 		virtual Standard_Boolean D2 (const Standard_Real Param,gp_Vec & Tangent,gp_Vec & DTangent,gp_Vec & D2Tangent,gp_Vec & Normal,gp_Vec & DNormal,gp_Vec & D2Normal,gp_Vec & BiNormal,gp_Vec & DBiNormal,gp_Vec & D2BiNormal);
 		%feature("compactdefaultargs") NbIntervals;
-		%feature("autodoc", "	* Returns the number of intervals for continuity <S>. May be one if Continuity(me) >= <S>
+		%feature("autodoc", "	* Returns the number of intervals for continuity <S>. May be one if Continuity--me-- >= <S>
 
 	:param S:
 	:type S: GeomAbs_Shape
@@ -6468,7 +5433,7 @@ class GeomFill_Darboux : public GeomFill_TrihedronLaw {
 ") NbIntervals;
 		virtual Standard_Integer NbIntervals (const GeomAbs_Shape S);
 		%feature("compactdefaultargs") Intervals;
-		%feature("autodoc", "	* Stores in <T> the parameters bounding the intervals of continuity <S>. //! The array must provide enough room to accomodate for the parameters. i.e. T.Length() > NbIntervals()
+		%feature("autodoc", "	* Stores in <T> the parameters bounding the intervals of continuity <S>. //! The array must provide enough room to accomodate for the parameters. i.e. T.Length---- > NbIntervals----
 
 	:param T:
 	:type T: TColStd_Array1OfReal &
@@ -6478,7 +5443,7 @@ class GeomFill_Darboux : public GeomFill_TrihedronLaw {
 ") Intervals;
 		virtual void Intervals (TColStd_Array1OfReal & T,const GeomAbs_Shape S);
 		%feature("compactdefaultargs") GetAverageLaw;
-		%feature("autodoc", "	* Get average value of Tangent(t) and Normal(t) it is usfull to make fast approximation of rational surfaces.
+		%feature("autodoc", "	* Get average value of Tangent--t-- and Normal--t-- it is usfull to make fast approximation of rational surfaces.
 
 	:param ATangent:
 	:type ATangent: gp_Vec
@@ -6535,19 +5500,20 @@ class Handle_GeomFill_Darboux : public Handle_GeomFill_TrihedronLaw {
         static const Handle_GeomFill_Darboux DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_GeomFill_Darboux {
     GeomFill_Darboux* _get_reference() {
-    return (GeomFill_Darboux*)$self->Access();
+    return (GeomFill_Darboux*)$self->get();
     }
 };
 
 %extend Handle_GeomFill_Darboux {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend GeomFill_Darboux {
@@ -6652,19 +5618,20 @@ class Handle_GeomFill_DegeneratedBound : public Handle_GeomFill_Boundary {
         static const Handle_GeomFill_DegeneratedBound DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_GeomFill_DegeneratedBound {
     GeomFill_DegeneratedBound* _get_reference() {
-    return (GeomFill_DegeneratedBound*)$self->Access();
+    return (GeomFill_DegeneratedBound*)$self->get();
     }
 };
 
 %extend Handle_GeomFill_DegeneratedBound {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend GeomFill_DegeneratedBound {
@@ -6754,7 +5721,7 @@ class GeomFill_DiscreteTrihedron : public GeomFill_TrihedronLaw {
 ") D2;
 		virtual Standard_Boolean D2 (const Standard_Real Param,gp_Vec & Tangent,gp_Vec & DTangent,gp_Vec & D2Tangent,gp_Vec & Normal,gp_Vec & DNormal,gp_Vec & D2Normal,gp_Vec & BiNormal,gp_Vec & DBiNormal,gp_Vec & D2BiNormal);
 		%feature("compactdefaultargs") NbIntervals;
-		%feature("autodoc", "	* Returns the number of intervals for continuity <S>. May be one if Continuity(me) >= <S>
+		%feature("autodoc", "	* Returns the number of intervals for continuity <S>. May be one if Continuity--me-- >= <S>
 
 	:param S:
 	:type S: GeomAbs_Shape
@@ -6762,7 +5729,7 @@ class GeomFill_DiscreteTrihedron : public GeomFill_TrihedronLaw {
 ") NbIntervals;
 		virtual Standard_Integer NbIntervals (const GeomAbs_Shape S);
 		%feature("compactdefaultargs") Intervals;
-		%feature("autodoc", "	* Stores in <T> the parameters bounding the intervals of continuity <S>. //! The array must provide enough room to accomodate for the parameters. i.e. T.Length() > NbIntervals()
+		%feature("autodoc", "	* Stores in <T> the parameters bounding the intervals of continuity <S>. //! The array must provide enough room to accomodate for the parameters. i.e. T.Length---- > NbIntervals----
 
 	:param T:
 	:type T: TColStd_Array1OfReal &
@@ -6772,7 +5739,7 @@ class GeomFill_DiscreteTrihedron : public GeomFill_TrihedronLaw {
 ") Intervals;
 		virtual void Intervals (TColStd_Array1OfReal & T,const GeomAbs_Shape S);
 		%feature("compactdefaultargs") GetAverageLaw;
-		%feature("autodoc", "	* Get average value of Tangent(t) and Normal(t) it is usful to make fast approximation of rational surfaces.
+		%feature("autodoc", "	* Get average value of Tangent--t-- and Normal--t-- it is usful to make fast approximation of rational surfaces.
 
 	:param ATangent:
 	:type ATangent: gp_Vec
@@ -6829,19 +5796,20 @@ class Handle_GeomFill_DiscreteTrihedron : public Handle_GeomFill_TrihedronLaw {
         static const Handle_GeomFill_DiscreteTrihedron DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_GeomFill_DiscreteTrihedron {
     GeomFill_DiscreteTrihedron* _get_reference() {
-    return (GeomFill_DiscreteTrihedron*)$self->Access();
+    return (GeomFill_DiscreteTrihedron*)$self->get();
     }
 };
 
 %extend Handle_GeomFill_DiscreteTrihedron {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend GeomFill_DiscreteTrihedron {
@@ -6929,7 +5897,7 @@ class GeomFill_DraftTrihedron : public GeomFill_TrihedronLaw {
 ") D2;
 		virtual Standard_Boolean D2 (const Standard_Real Param,gp_Vec & Tangent,gp_Vec & DTangent,gp_Vec & D2Tangent,gp_Vec & Normal,gp_Vec & DNormal,gp_Vec & D2Normal,gp_Vec & BiNormal,gp_Vec & DBiNormal,gp_Vec & D2BiNormal);
 		%feature("compactdefaultargs") NbIntervals;
-		%feature("autodoc", "	* Returns the number of intervals for continuity <S>. May be one if Continuity(me) >= <S>
+		%feature("autodoc", "	* Returns the number of intervals for continuity <S>. May be one if Continuity--me-- >= <S>
 
 	:param S:
 	:type S: GeomAbs_Shape
@@ -6937,7 +5905,7 @@ class GeomFill_DraftTrihedron : public GeomFill_TrihedronLaw {
 ") NbIntervals;
 		virtual Standard_Integer NbIntervals (const GeomAbs_Shape S);
 		%feature("compactdefaultargs") Intervals;
-		%feature("autodoc", "	* Stores in <T> the parameters bounding the intervals of continuity <S>. //! The array must provide enough room to accomodate for the parameters. i.e. T.Length() > NbIntervals()
+		%feature("autodoc", "	* Stores in <T> the parameters bounding the intervals of continuity <S>. //! The array must provide enough room to accomodate for the parameters. i.e. T.Length---- > NbIntervals----
 
 	:param T:
 	:type T: TColStd_Array1OfReal &
@@ -6947,7 +5915,7 @@ class GeomFill_DraftTrihedron : public GeomFill_TrihedronLaw {
 ") Intervals;
 		virtual void Intervals (TColStd_Array1OfReal & T,const GeomAbs_Shape S);
 		%feature("compactdefaultargs") GetAverageLaw;
-		%feature("autodoc", "	* Get average value of Tangent(t) and Normal(t) it is usefull to make fast approximation of rational surfaces.
+		%feature("autodoc", "	* Get average value of Tangent--t-- and Normal--t-- it is usefull to make fast approximation of rational surfaces.
 
 	:param ATangent:
 	:type ATangent: gp_Vec
@@ -7004,19 +5972,20 @@ class Handle_GeomFill_DraftTrihedron : public Handle_GeomFill_TrihedronLaw {
         static const Handle_GeomFill_DraftTrihedron DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_GeomFill_DraftTrihedron {
     GeomFill_DraftTrihedron* _get_reference() {
-    return (GeomFill_DraftTrihedron*)$self->Access();
+    return (GeomFill_DraftTrihedron*)$self->get();
     }
 };
 
 %extend Handle_GeomFill_DraftTrihedron {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend GeomFill_DraftTrihedron {
@@ -7138,7 +6107,7 @@ class GeomFill_EvolvedSection : public GeomFill_SectionLaw {
 ") IsVPeriodic;
 		virtual Standard_Boolean IsVPeriodic ();
 		%feature("compactdefaultargs") NbIntervals;
-		%feature("autodoc", "	* Returns the number of intervals for continuity <S>. May be one if Continuity(me) >= <S>
+		%feature("autodoc", "	* Returns the number of intervals for continuity <S>. May be one if Continuity--me-- >= <S>
 
 	:param S:
 	:type S: GeomAbs_Shape
@@ -7146,7 +6115,7 @@ class GeomFill_EvolvedSection : public GeomFill_SectionLaw {
 ") NbIntervals;
 		virtual Standard_Integer NbIntervals (const GeomAbs_Shape S);
 		%feature("compactdefaultargs") Intervals;
-		%feature("autodoc", "	* Stores in <T> the parameters bounding the intervals of continuity <S>. //! The array must provide enough room to accomodate for the parameters. i.e. T.Length() > NbIntervals()
+		%feature("autodoc", "	* Stores in <T> the parameters bounding the intervals of continuity <S>. //! The array must provide enough room to accomodate for the parameters. i.e. T.Length---- > NbIntervals----
 
 	:param T:
 	:type T: TColStd_Array1OfReal &
@@ -7186,7 +6155,7 @@ class GeomFill_EvolvedSection : public GeomFill_SectionLaw {
 ") GetDomain;
 		virtual void GetDomain (Standard_Real &OutValue,Standard_Real &OutValue);
 		%feature("compactdefaultargs") GetTolerance;
-		%feature("autodoc", "	* Returns the tolerances associated at each poles to reach in approximation, to satisfy: BoundTol error at the Boundary AngleTol tangent error at the Boundary (in radian) SurfTol error inside the surface.
+		%feature("autodoc", "	* Returns the tolerances associated at each poles to reach in approximation, to satisfy: BoundTol error at the Boundary AngleTol tangent error at the Boundary --in radian-- SurfTol error inside the surface.
 
 	:param BoundTol:
 	:type BoundTol: float
@@ -7267,19 +6236,20 @@ class Handle_GeomFill_EvolvedSection : public Handle_GeomFill_SectionLaw {
         static const Handle_GeomFill_EvolvedSection DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_GeomFill_EvolvedSection {
     GeomFill_EvolvedSection* _get_reference() {
-    return (GeomFill_EvolvedSection*)$self->Access();
+    return (GeomFill_EvolvedSection*)$self->get();
     }
 };
 
 %extend Handle_GeomFill_EvolvedSection {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend GeomFill_EvolvedSection {
@@ -7363,7 +6333,7 @@ class GeomFill_Fixed : public GeomFill_TrihedronLaw {
 ") D2;
 		virtual Standard_Boolean D2 (const Standard_Real Param,gp_Vec & Tangent,gp_Vec & DTangent,gp_Vec & D2Tangent,gp_Vec & Normal,gp_Vec & DNormal,gp_Vec & D2Normal,gp_Vec & BiNormal,gp_Vec & DBiNormal,gp_Vec & D2BiNormal);
 		%feature("compactdefaultargs") NbIntervals;
-		%feature("autodoc", "	* Returns the number of intervals for continuity <S>. May be one if Continuity(me) >= <S>
+		%feature("autodoc", "	* Returns the number of intervals for continuity <S>. May be one if Continuity--me-- >= <S>
 
 	:param S:
 	:type S: GeomAbs_Shape
@@ -7371,7 +6341,7 @@ class GeomFill_Fixed : public GeomFill_TrihedronLaw {
 ") NbIntervals;
 		virtual Standard_Integer NbIntervals (const GeomAbs_Shape S);
 		%feature("compactdefaultargs") Intervals;
-		%feature("autodoc", "	* Stores in <T> the parameters bounding the intervals of continuity <S>. //! The array must provide enough room to accomodate for the parameters. i.e. T.Length() > NbIntervals()
+		%feature("autodoc", "	* Stores in <T> the parameters bounding the intervals of continuity <S>. //! The array must provide enough room to accomodate for the parameters. i.e. T.Length---- > NbIntervals----
 
 	:param T:
 	:type T: TColStd_Array1OfReal &
@@ -7381,7 +6351,7 @@ class GeomFill_Fixed : public GeomFill_TrihedronLaw {
 ") Intervals;
 		virtual void Intervals (TColStd_Array1OfReal & T,const GeomAbs_Shape S);
 		%feature("compactdefaultargs") GetAverageLaw;
-		%feature("autodoc", "	* Get average value of Tangent(t) and Normal(t) it is usfull to make fast approximation of rational surfaces.
+		%feature("autodoc", "	* Get average value of Tangent--t-- and Normal--t-- it is usfull to make fast approximation of rational surfaces.
 
 	:param ATangent:
 	:type ATangent: gp_Vec
@@ -7432,19 +6402,20 @@ class Handle_GeomFill_Fixed : public Handle_GeomFill_TrihedronLaw {
         static const Handle_GeomFill_Fixed DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_GeomFill_Fixed {
     GeomFill_Fixed* _get_reference() {
-    return (GeomFill_Fixed*)$self->Access();
+    return (GeomFill_Fixed*)$self->get();
     }
 };
 
 %extend Handle_GeomFill_Fixed {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend GeomFill_Fixed {
@@ -7534,7 +6505,7 @@ class GeomFill_Frenet : public GeomFill_TrihedronLaw {
 ") D2;
 		virtual Standard_Boolean D2 (const Standard_Real Param,gp_Vec & Tangent,gp_Vec & DTangent,gp_Vec & D2Tangent,gp_Vec & Normal,gp_Vec & DNormal,gp_Vec & D2Normal,gp_Vec & BiNormal,gp_Vec & DBiNormal,gp_Vec & D2BiNormal);
 		%feature("compactdefaultargs") NbIntervals;
-		%feature("autodoc", "	* Returns the number of intervals for continuity <S>. May be one if Continuity(me) >= <S>
+		%feature("autodoc", "	* Returns the number of intervals for continuity <S>. May be one if Continuity--me-- >= <S>
 
 	:param S:
 	:type S: GeomAbs_Shape
@@ -7542,7 +6513,7 @@ class GeomFill_Frenet : public GeomFill_TrihedronLaw {
 ") NbIntervals;
 		virtual Standard_Integer NbIntervals (const GeomAbs_Shape S);
 		%feature("compactdefaultargs") Intervals;
-		%feature("autodoc", "	* Stores in <T> the parameters bounding the intervals of continuity <S>. //! The array must provide enough room to accomodate for the parameters. i.e. T.Length() > NbIntervals()
+		%feature("autodoc", "	* Stores in <T> the parameters bounding the intervals of continuity <S>. //! The array must provide enough room to accomodate for the parameters. i.e. T.Length---- > NbIntervals----
 
 	:param T:
 	:type T: TColStd_Array1OfReal &
@@ -7552,7 +6523,7 @@ class GeomFill_Frenet : public GeomFill_TrihedronLaw {
 ") Intervals;
 		virtual void Intervals (TColStd_Array1OfReal & T,const GeomAbs_Shape S);
 		%feature("compactdefaultargs") GetAverageLaw;
-		%feature("autodoc", "	* Get average value of Tangent(t) and Normal(t) it is usfull to make fast approximation of rational surfaces.
+		%feature("autodoc", "	* Get average value of Tangent--t-- and Normal--t-- it is usfull to make fast approximation of rational surfaces.
 
 	:param ATangent:
 	:type ATangent: gp_Vec
@@ -7609,19 +6580,20 @@ class Handle_GeomFill_Frenet : public Handle_GeomFill_TrihedronLaw {
         static const Handle_GeomFill_Frenet DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_GeomFill_Frenet {
     GeomFill_Frenet* _get_reference() {
-    return (GeomFill_Frenet*)$self->Access();
+    return (GeomFill_Frenet*)$self->get();
     }
 };
 
 %extend Handle_GeomFill_Frenet {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend GeomFill_Frenet {
@@ -7637,7 +6609,7 @@ class GeomFill_Generator : public GeomFill_Profiler {
 ") GeomFill_Generator;
 		 GeomFill_Generator ();
 		%feature("compactdefaultargs") Perform;
-		%feature("autodoc", "	* Converts all curves to BSplineCurves. Set them to the common profile. Compute the surface (degv = 1). <PTol> is used to compare 2 knots.
+		%feature("autodoc", "	* Converts all curves to BSplineCurves. Set them to the common profile. Compute the surface --degv = 1--. <PTol> is used to compare 2 knots.
 
 	:param PTol:
 	:type PTol: float
@@ -7772,25 +6744,25 @@ class GeomFill_LocationDraft : public GeomFill_LocationLaw {
 ") D2;
 		virtual Standard_Boolean D2 (const Standard_Real Param,gp_Mat & M,gp_Vec & V,gp_Mat & DM,gp_Vec & DV,gp_Mat & D2M,gp_Vec & D2V,TColgp_Array1OfPnt2d & Poles2d,TColgp_Array1OfVec2d & DPoles2d,TColgp_Array1OfVec2d & D2Poles2d);
 		%feature("compactdefaultargs") HasFirstRestriction;
-		%feature("autodoc", "	* Say if the first restriction is defined in this class. If it is true the first element of poles array in D0,D1,D2... Correspond to this restriction. Returns Standard_False (default implementation)
+		%feature("autodoc", "	* Say if the first restriction is defined in this class. If it is true the first element of poles array in D0,D1,D2... Correspond to this restriction. Returns Standard_False --default implementation--
 
 	:rtype: bool
 ") HasFirstRestriction;
 		virtual Standard_Boolean HasFirstRestriction ();
 		%feature("compactdefaultargs") HasLastRestriction;
-		%feature("autodoc", "	* Say if the last restriction is defined in this class. If it is true the last element of poles array in D0,D1,D2... Correspond to this restriction. Returns Standard_False (default implementation)
+		%feature("autodoc", "	* Say if the last restriction is defined in this class. If it is true the last element of poles array in D0,D1,D2... Correspond to this restriction. Returns Standard_False --default implementation--
 
 	:rtype: bool
 ") HasLastRestriction;
 		virtual Standard_Boolean HasLastRestriction ();
 		%feature("compactdefaultargs") TraceNumber;
-		%feature("autodoc", "	* Give the number of trace (Curves 2d wich are not restriction) Returns 1 (default implementation)
+		%feature("autodoc", "	* Give the number of trace --Curves 2d wich are not restriction-- Returns 1 --default implementation--
 
 	:rtype: int
 ") TraceNumber;
 		virtual Standard_Integer TraceNumber ();
 		%feature("compactdefaultargs") NbIntervals;
-		%feature("autodoc", "	* Returns the number of intervals for continuity <S>. May be one if Continuity(me) >= <S>
+		%feature("autodoc", "	* Returns the number of intervals for continuity <S>. May be one if Continuity--me-- >= <S>
 
 	:param S:
 	:type S: GeomAbs_Shape
@@ -7798,7 +6770,7 @@ class GeomFill_LocationDraft : public GeomFill_LocationLaw {
 ") NbIntervals;
 		virtual Standard_Integer NbIntervals (const GeomAbs_Shape S);
 		%feature("compactdefaultargs") Intervals;
-		%feature("autodoc", "	* Stores in <T> the parameters bounding the intervals of continuity <S>. //! The array must provide enough room to accomodate for the parameters. i.e. T.Length() > NbIntervals()
+		%feature("autodoc", "	* Stores in <T> the parameters bounding the intervals of continuity <S>. //! The array must provide enough room to accomodate for the parameters. i.e. T.Length---- > NbIntervals----
 
 	:param T:
 	:type T: TColStd_Array1OfReal &
@@ -7852,13 +6824,13 @@ class GeomFill_LocationDraft : public GeomFill_LocationLaw {
 ") Resolution;
 		virtual void Resolution (const Standard_Integer Index,const Standard_Real Tol,Standard_Real &OutValue,Standard_Real &OutValue);
 		%feature("compactdefaultargs") GetMaximalNorm;
-		%feature("autodoc", "	* Get the maximum Norm of the matrix-location part. It is usful to find an good Tolerance to approx M(t).
+		%feature("autodoc", "	* Get the maximum Norm of the matrix-location part. It is usful to find an good Tolerance to approx M--t--.
 
 	:rtype: float
 ") GetMaximalNorm;
 		virtual Standard_Real GetMaximalNorm ();
 		%feature("compactdefaultargs") GetAverageLaw;
-		%feature("autodoc", "	* Get average value of M(t) and V(t) it is usfull to make fast approximation of rational surfaces.
+		%feature("autodoc", "	* Get average value of M--t-- and V--t-- it is usfull to make fast approximation of rational surfaces.
 
 	:param AM:
 	:type AM: gp_Mat
@@ -7933,19 +6905,20 @@ class Handle_GeomFill_LocationDraft : public Handle_GeomFill_LocationLaw {
         static const Handle_GeomFill_LocationDraft DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_GeomFill_LocationDraft {
     GeomFill_LocationDraft* _get_reference() {
-    return (GeomFill_LocationDraft*)$self->Access();
+    return (GeomFill_LocationDraft*)$self->get();
     }
 };
 
 %extend Handle_GeomFill_LocationDraft {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend GeomFill_LocationDraft {
@@ -8075,31 +7048,31 @@ class GeomFill_LocationGuide : public GeomFill_LocationLaw {
 ") D2;
 		virtual Standard_Boolean D2 (const Standard_Real Param,gp_Mat & M,gp_Vec & V,gp_Mat & DM,gp_Vec & DV,gp_Mat & D2M,gp_Vec & D2V,TColgp_Array1OfPnt2d & Poles2d,TColgp_Array1OfVec2d & DPoles2d,TColgp_Array1OfVec2d & D2Poles2d);
 		%feature("compactdefaultargs") HasFirstRestriction;
-		%feature("autodoc", "	* Say if the first restriction is defined in this class. If it is true the first element of poles array in D0,D1,D2... Correspond to this restriction. Returns Standard_False (default implementation)
+		%feature("autodoc", "	* Say if the first restriction is defined in this class. If it is true the first element of poles array in D0,D1,D2... Correspond to this restriction. Returns Standard_False --default implementation--
 
 	:rtype: bool
 ") HasFirstRestriction;
 		virtual Standard_Boolean HasFirstRestriction ();
 		%feature("compactdefaultargs") HasLastRestriction;
-		%feature("autodoc", "	* Say if the last restriction is defined in this class. If it is true the last element of poles array in D0,D1,D2... Correspond to this restriction. Returns Standard_False (default implementation)
+		%feature("autodoc", "	* Say if the last restriction is defined in this class. If it is true the last element of poles array in D0,D1,D2... Correspond to this restriction. Returns Standard_False --default implementation--
 
 	:rtype: bool
 ") HasLastRestriction;
 		virtual Standard_Boolean HasLastRestriction ();
 		%feature("compactdefaultargs") TraceNumber;
-		%feature("autodoc", "	* Give the number of trace (Curves 2d wich are not restriction) Returns 1 (default implementation)
+		%feature("autodoc", "	* Give the number of trace --Curves 2d wich are not restriction-- Returns 1 --default implementation--
 
 	:rtype: int
 ") TraceNumber;
 		virtual Standard_Integer TraceNumber ();
 		%feature("compactdefaultargs") ErrorStatus;
-		%feature("autodoc", "	* Give a status to the Law Returns PipeOk (default implementation)
+		%feature("autodoc", "	* Give a status to the Law Returns PipeOk --default implementation--
 
 	:rtype: GeomFill_PipeError
 ") ErrorStatus;
 		virtual GeomFill_PipeError ErrorStatus ();
 		%feature("compactdefaultargs") NbIntervals;
-		%feature("autodoc", "	* Returns the number of intervals for continuity <S>. May be one if Continuity(me) >= <S>
+		%feature("autodoc", "	* Returns the number of intervals for continuity <S>. May be one if Continuity--me-- >= <S>
 
 	:param S:
 	:type S: GeomAbs_Shape
@@ -8107,7 +7080,7 @@ class GeomFill_LocationGuide : public GeomFill_LocationLaw {
 ") NbIntervals;
 		virtual Standard_Integer NbIntervals (const GeomAbs_Shape S);
 		%feature("compactdefaultargs") Intervals;
-		%feature("autodoc", "	* Stores in <T> the parameters bounding the intervals of continuity <S>. //! The array must provide enough room to accomodate for the parameters. i.e. T.Length() > NbIntervals()
+		%feature("autodoc", "	* Stores in <T> the parameters bounding the intervals of continuity <S>. //! The array must provide enough room to accomodate for the parameters. i.e. T.Length---- > NbIntervals----
 
 	:param T:
 	:type T: TColStd_Array1OfReal &
@@ -8147,7 +7120,7 @@ class GeomFill_LocationGuide : public GeomFill_LocationLaw {
 ") GetDomain;
 		virtual void GetDomain (Standard_Real &OutValue,Standard_Real &OutValue);
 		%feature("compactdefaultargs") SetTolerance;
-		%feature("autodoc", "	* Is usefull, if (me) have to run numerical algorithm to perform D0, D1 or D2 The default implementation make nothing.
+		%feature("autodoc", "	* Is usefull, if --me-- have to run numerical algorithm to perform D0, D1 or D2 The default implementation make nothing.
 
 	:param Tol3d:
 	:type Tol3d: float
@@ -8171,13 +7144,13 @@ class GeomFill_LocationGuide : public GeomFill_LocationLaw {
 ") Resolution;
 		virtual void Resolution (const Standard_Integer Index,const Standard_Real Tol,Standard_Real &OutValue,Standard_Real &OutValue);
 		%feature("compactdefaultargs") GetMaximalNorm;
-		%feature("autodoc", "	* Get the maximum Norm of the matrix-location part. It is usful to find an good Tolerance to approx M(t).
+		%feature("autodoc", "	* Get the maximum Norm of the matrix-location part. It is usful to find an good Tolerance to approx M--t--.
 
 	:rtype: float
 ") GetMaximalNorm;
 		virtual Standard_Real GetMaximalNorm ();
 		%feature("compactdefaultargs") GetAverageLaw;
-		%feature("autodoc", "	* Get average value of M(t) and V(t) it is usfull to make fast approximation of rational surfaces.
+		%feature("autodoc", "	* Get average value of M--t-- and V--t-- it is usfull to make fast approximation of rational surfaces.
 
 	:param AM:
 	:type AM: gp_Mat
@@ -8264,19 +7237,20 @@ class Handle_GeomFill_LocationGuide : public Handle_GeomFill_LocationLaw {
         static const Handle_GeomFill_LocationGuide DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_GeomFill_LocationGuide {
     GeomFill_LocationGuide* _get_reference() {
-    return (GeomFill_LocationGuide*)$self->Access();
+    return (GeomFill_LocationGuide*)$self->get();
     }
 };
 
 %extend Handle_GeomFill_LocationGuide {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend GeomFill_LocationGuide {
@@ -8373,7 +7347,7 @@ class GeomFill_SectionGenerator : public GeomFill_Profiler {
 class GeomFill_SimpleBound : public GeomFill_Boundary {
 	public:
 		%feature("compactdefaultargs") GeomFill_SimpleBound;
-		%feature("autodoc", "	* Constructs the boundary object defined by the 3d curve. The surface to be built along this boundary will be in the tolerance range defined by Tol3d. This object is to be used as a boundary for a GeomFill_ConstrainedFilling framework. Dummy is initialized but has no function in this class. Warning Curve is an adapted curve, that is, an object which is an interface between: - the services provided by a 3D curve from the package Geom - and those required of the curve by the computation algorithm which uses it. The adapted curve is created in one of the following ways: - First sequence: Handle_Geom_Curve myCurve = ... ; Handle_GeomAdaptor_HCurve Curve = new GeomAdaptor_HCurve(myCurve); - Second sequence: // Step 1 Handle_Geom_Curve myCurve = ... ; GeomAdaptor_Curve Crv (myCurve); // Step 2 Handle_GeomAdaptor_HCurve Curve = new GeomAdaptor_HCurve(Crv); You use the second part of this sequence if you already have the adapted curve Crv. The boundary is then constructed with the Curve object: Standard_Real Tol = ... ; Standard_Real dummy = 0. ; myBoundary = GeomFill_SimpleBound (Curve,Tol,dummy);
+		%feature("autodoc", "	* Constructs the boundary object defined by the 3d curve. The surface to be built along this boundary will be in the tolerance range defined by Tol3d. This object is to be used as a boundary for a GeomFill_ConstrainedFilling framework. Dummy is initialized but has no function in this class. Warning Curve is an adapted curve, that is, an object which is an interface between: - the services provided by a 3D curve from the package Geom - and those required of the curve by the computation algorithm which uses it. The adapted curve is created in one of the following ways: - First sequence: Handle_Geom_Curve myCurve = ... ; Handle_GeomAdaptor_HCurve Curve = new GeomAdaptor_HCurve--myCurve--; - Second sequence: // Step 1 Handle_Geom_Curve myCurve = ... ; GeomAdaptor_Curve Crv --myCurve--; // Step 2 Handle_GeomAdaptor_HCurve Curve = new GeomAdaptor_HCurve--Crv--; You use the second part of this sequence if you already have the adapted curve Crv. The boundary is then constructed with the Curve object: Standard_Real Tol = ... ; Standard_Real dummy = 0. ; myBoundary = GeomFill_SimpleBound --Curve,Tol,dummy--;
 
 	:param Curve:
 	:type Curve: Handle_Adaptor3d_HCurve &
@@ -8464,19 +7438,20 @@ class Handle_GeomFill_SimpleBound : public Handle_GeomFill_Boundary {
         static const Handle_GeomFill_SimpleBound DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_GeomFill_SimpleBound {
     GeomFill_SimpleBound* _get_reference() {
-    return (GeomFill_SimpleBound*)$self->Access();
+    return (GeomFill_SimpleBound*)$self->get();
     }
 };
 
 %extend Handle_GeomFill_SimpleBound {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend GeomFill_SimpleBound {
@@ -8636,19 +7611,20 @@ class Handle_GeomFill_TgtOnCoons : public Handle_GeomFill_TgtField {
         static const Handle_GeomFill_TgtOnCoons DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_GeomFill_TgtOnCoons {
     GeomFill_TgtOnCoons* _get_reference() {
-    return (GeomFill_TgtOnCoons*)$self->Access();
+    return (GeomFill_TgtOnCoons*)$self->get();
     }
 };
 
 %extend Handle_GeomFill_TgtOnCoons {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend GeomFill_TgtOnCoons {
@@ -8711,19 +7687,20 @@ class Handle_GeomFill_TrihedronWithGuide : public Handle_GeomFill_TrihedronLaw {
         static const Handle_GeomFill_TrihedronWithGuide DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_GeomFill_TrihedronWithGuide {
     GeomFill_TrihedronWithGuide* _get_reference() {
-    return (GeomFill_TrihedronWithGuide*)$self->Access();
+    return (GeomFill_TrihedronWithGuide*)$self->get();
     }
 };
 
 %extend Handle_GeomFill_TrihedronWithGuide {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend GeomFill_TrihedronWithGuide {
@@ -8847,7 +7824,7 @@ class GeomFill_UniformSection : public GeomFill_SectionLaw {
 ") IsVPeriodic;
 		virtual Standard_Boolean IsVPeriodic ();
 		%feature("compactdefaultargs") NbIntervals;
-		%feature("autodoc", "	* Returns the number of intervals for continuity <S>. May be one if Continuity(me) >= <S>
+		%feature("autodoc", "	* Returns the number of intervals for continuity <S>. May be one if Continuity--me-- >= <S>
 
 	:param S:
 	:type S: GeomAbs_Shape
@@ -8855,7 +7832,7 @@ class GeomFill_UniformSection : public GeomFill_SectionLaw {
 ") NbIntervals;
 		virtual Standard_Integer NbIntervals (const GeomAbs_Shape S);
 		%feature("compactdefaultargs") Intervals;
-		%feature("autodoc", "	* Stores in <T> the parameters bounding the intervals of continuity <S>. //! The array must provide enough room to accomodate for the parameters. i.e. T.Length() > NbIntervals()
+		%feature("autodoc", "	* Stores in <T> the parameters bounding the intervals of continuity <S>. //! The array must provide enough room to accomodate for the parameters. i.e. T.Length---- > NbIntervals----
 
 	:param T:
 	:type T: TColStd_Array1OfReal &
@@ -8895,7 +7872,7 @@ class GeomFill_UniformSection : public GeomFill_SectionLaw {
 ") GetDomain;
 		virtual void GetDomain (Standard_Real &OutValue,Standard_Real &OutValue);
 		%feature("compactdefaultargs") GetTolerance;
-		%feature("autodoc", "	* Returns the tolerances associated at each poles to reach in approximation, to satisfy: BoundTol error at the Boundary AngleTol tangent error at the Boundary (in radian) SurfTol error inside the surface.
+		%feature("autodoc", "	* Returns the tolerances associated at each poles to reach in approximation, to satisfy: BoundTol error at the Boundary AngleTol tangent error at the Boundary --in radian-- SurfTol error inside the surface.
 
 	:param BoundTol:
 	:type BoundTol: float
@@ -8976,19 +7953,20 @@ class Handle_GeomFill_UniformSection : public Handle_GeomFill_SectionLaw {
         static const Handle_GeomFill_UniformSection DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_GeomFill_UniformSection {
     GeomFill_UniformSection* _get_reference() {
-    return (GeomFill_UniformSection*)$self->Access();
+    return (GeomFill_UniformSection*)$self->get();
     }
 };
 
 %extend Handle_GeomFill_UniformSection {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend GeomFill_UniformSection {
@@ -9074,7 +8052,7 @@ class GeomFill_GuideTrihedronAC : public GeomFill_TrihedronWithGuide {
 ") D2;
 		virtual Standard_Boolean D2 (const Standard_Real Param,gp_Vec & Tangent,gp_Vec & DTangent,gp_Vec & D2Tangent,gp_Vec & Normal,gp_Vec & DNormal,gp_Vec & D2Normal,gp_Vec & BiNormal,gp_Vec & DBiNormal,gp_Vec & D2BiNormal);
 		%feature("compactdefaultargs") NbIntervals;
-		%feature("autodoc", "	* Returns the number of intervals for continuity <S>. May be one if Continuity(me) >= <S>
+		%feature("autodoc", "	* Returns the number of intervals for continuity <S>. May be one if Continuity--me-- >= <S>
 
 	:param S:
 	:type S: GeomAbs_Shape
@@ -9082,7 +8060,7 @@ class GeomFill_GuideTrihedronAC : public GeomFill_TrihedronWithGuide {
 ") NbIntervals;
 		virtual Standard_Integer NbIntervals (const GeomAbs_Shape S);
 		%feature("compactdefaultargs") Intervals;
-		%feature("autodoc", "	* Stores in <T> the parameters bounding the intervals of continuity <S>. //! The array must provide enough room to accomodate for the parameters. i.e. T.Length() > NbIntervals()
+		%feature("autodoc", "	* Stores in <T> the parameters bounding the intervals of continuity <S>. //! The array must provide enough room to accomodate for the parameters. i.e. T.Length---- > NbIntervals----
 
 	:param T:
 	:type T: TColStd_Array1OfReal &
@@ -9102,7 +8080,7 @@ class GeomFill_GuideTrihedronAC : public GeomFill_TrihedronWithGuide {
 ") SetInterval;
 		virtual void SetInterval (const Standard_Real First,const Standard_Real Last);
 		%feature("compactdefaultargs") GetAverageLaw;
-		%feature("autodoc", "	* Get average value of M(t) and V(t) it is usfull to make fast approximation of rational surfaces.
+		%feature("autodoc", "	* Get average value of M--t-- and V--t-- it is usfull to make fast approximation of rational surfaces.
 
 	:param ATangent:
 	:type ATangent: gp_Vec
@@ -9167,19 +8145,20 @@ class Handle_GeomFill_GuideTrihedronAC : public Handle_GeomFill_TrihedronWithGui
         static const Handle_GeomFill_GuideTrihedronAC DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_GeomFill_GuideTrihedronAC {
     GeomFill_GuideTrihedronAC* _get_reference() {
-    return (GeomFill_GuideTrihedronAC*)$self->Access();
+    return (GeomFill_GuideTrihedronAC*)$self->get();
     }
 };
 
 %extend Handle_GeomFill_GuideTrihedronAC {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend GeomFill_GuideTrihedronAC {
@@ -9207,7 +8186,7 @@ class GeomFill_GuideTrihedronPlan : public GeomFill_TrihedronWithGuide {
 ") Copy;
 		virtual Handle_GeomFill_TrihedronLaw Copy ();
 		%feature("compactdefaultargs") ErrorStatus;
-		%feature("autodoc", "	* Give a status to the Law Returns PipeOk (default implementation)
+		%feature("autodoc", "	* Give a status to the Law Returns PipeOk --default implementation--
 
 	:rtype: GeomFill_PipeError
 ") ErrorStatus;
@@ -9281,7 +8260,7 @@ class GeomFill_GuideTrihedronPlan : public GeomFill_TrihedronWithGuide {
 ") SetInterval;
 		virtual void SetInterval (const Standard_Real First,const Standard_Real Last);
 		%feature("compactdefaultargs") NbIntervals;
-		%feature("autodoc", "	* Returns the number of intervals for continuity <S>. May be one if Continuity(me) >= <S>
+		%feature("autodoc", "	* Returns the number of intervals for continuity <S>. May be one if Continuity--me-- >= <S>
 
 	:param S:
 	:type S: GeomAbs_Shape
@@ -9289,7 +8268,7 @@ class GeomFill_GuideTrihedronPlan : public GeomFill_TrihedronWithGuide {
 ") NbIntervals;
 		virtual Standard_Integer NbIntervals (const GeomAbs_Shape S);
 		%feature("compactdefaultargs") Intervals;
-		%feature("autodoc", "	* Stores in <T> the parameters bounding the intervals of continuity <S>. //! The array must provide enough room to accomodate for the parameters. i.e. T.Length() > NbIntervals()
+		%feature("autodoc", "	* Stores in <T> the parameters bounding the intervals of continuity <S>. //! The array must provide enough room to accomodate for the parameters. i.e. T.Length---- > NbIntervals----
 
 	:param T:
 	:type T: TColStd_Array1OfReal &
@@ -9299,7 +8278,7 @@ class GeomFill_GuideTrihedronPlan : public GeomFill_TrihedronWithGuide {
 ") Intervals;
 		virtual void Intervals (TColStd_Array1OfReal & T,const GeomAbs_Shape S);
 		%feature("compactdefaultargs") GetAverageLaw;
-		%feature("autodoc", "	* Get average value of M(t) and V(t) it is usfull to make fast approximation of rational surfaces.
+		%feature("autodoc", "	* Get average value of M--t-- and V--t-- it is usfull to make fast approximation of rational surfaces.
 
 	:param ATangent:
 	:type ATangent: gp_Vec
@@ -9364,19 +8343,20 @@ class Handle_GeomFill_GuideTrihedronPlan : public Handle_GeomFill_TrihedronWithG
         static const Handle_GeomFill_GuideTrihedronPlan DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_GeomFill_GuideTrihedronPlan {
     GeomFill_GuideTrihedronPlan* _get_reference() {
-    return (GeomFill_GuideTrihedronPlan*)$self->Access();
+    return (GeomFill_GuideTrihedronPlan*)$self->get();
     }
 };
 
 %extend Handle_GeomFill_GuideTrihedronPlan {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend GeomFill_GuideTrihedronPlan {

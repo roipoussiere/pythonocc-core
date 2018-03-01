@@ -1,5 +1,5 @@
 /*
-Copyright 2008-2017 Thomas Paviot (tpaviot@gmail.com)
+Copyright 2008-2018 Thomas Paviot (tpaviot@gmail.com)
 
 
 This file is part of pythonOCC.
@@ -56,6 +56,17 @@ def register_handle(handle, base_object):
 /* typedefs */
 typedef TDataStd_TreeNode * TDataStd_PtrTreeNode;
 /* end typedefs declaration */
+
+/* templates */
+%template(TDataStd_ListOfByte) NCollection_List <Standard_Byte>;
+%template(TDataStd_DataMapOfStringByte) NCollection_DataMap <TCollection_ExtendedString , Standard_Byte , TCollection_ExtendedString>;
+%template(TDataStd_DataMapOfStringString) NCollection_DataMap <TCollection_ExtendedString , TCollection_ExtendedString , TCollection_ExtendedString>;
+%template(TDataStd_DataMapOfStringReal) NCollection_DataMap <TCollection_ExtendedString , Standard_Real , TCollection_ExtendedString>;
+%template(TDataStd_ListOfExtendedString) NCollection_List <TCollection_ExtendedString>;
+%template(TDataStd_DataMapOfStringHArray1OfInteger) NCollection_DataMap <TCollection_ExtendedString , Handle_TColStd_HArray1OfInteger , TCollection_ExtendedString>;
+%template(TDataStd_LabelArray1) NCollection_Array1 <TDF_Label>;
+%template(TDataStd_DataMapOfStringHArray1OfReal) NCollection_DataMap <TCollection_ExtendedString , Handle_TColStd_HArray1OfReal , TCollection_ExtendedString>;
+/* end templates declaration */
 
 /* public enums */
 enum TDataStd_RealEnum {
@@ -114,6 +125,18 @@ class TDataStd_AsciiString : public TDF_Attribute {
 	:rtype: Handle_TDataStd_AsciiString
 ") Set;
 		static Handle_TDataStd_AsciiString Set (const TDF_Label & label,const TCollection_AsciiString & string);
+		%feature("compactdefaultargs") Set;
+		%feature("autodoc", "	* Finds, or creates, an AsciiString attribute with explicit user defined <guid> and sets <string>. The Name attribute is returned.
+
+	:param label:
+	:type label: TDF_Label &
+	:param guid:
+	:type guid: Standard_GUID &
+	:param string:
+	:type string: TCollection_AsciiString &
+	:rtype: Handle_TDataStd_AsciiString
+") Set;
+		static Handle_TDataStd_AsciiString Set (const TDF_Label & label,const Standard_GUID & guid,const TCollection_AsciiString & string);
 		%feature("compactdefaultargs") TDataStd_AsciiString;
 		%feature("autodoc", "	:rtype: None
 ") TDataStd_AsciiString;
@@ -124,6 +147,20 @@ class TDataStd_AsciiString : public TDF_Attribute {
 	:rtype: None
 ") Set;
 		void Set (const TCollection_AsciiString & S);
+		%feature("compactdefaultargs") SetID;
+		%feature("autodoc", "	* Sets the explicit user defined GUID to the attribute.
+
+	:param guid:
+	:type guid: Standard_GUID &
+	:rtype: None
+") SetID;
+		void SetID (const Standard_GUID & guid);
+		%feature("compactdefaultargs") SetID;
+		%feature("autodoc", "	* Sets default GUID for the attribute.
+
+	:rtype: None
+") SetID;
+		void SetID ();
 		%feature("compactdefaultargs") Get;
 		%feature("autodoc", "	:rtype: TCollection_AsciiString
 ") Get;
@@ -196,19 +233,20 @@ class Handle_TDataStd_AsciiString : public Handle_TDF_Attribute {
         static const Handle_TDataStd_AsciiString DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_TDataStd_AsciiString {
     TDataStd_AsciiString* _get_reference() {
-    return (TDataStd_AsciiString*)$self->Access();
+    return (TDataStd_AsciiString*)$self->get();
     }
 };
 
 %extend Handle_TDataStd_AsciiString {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend TDataStd_AsciiString {
@@ -226,7 +264,7 @@ class TDataStd_BooleanArray : public TDF_Attribute {
 ") GetID;
 		static const Standard_GUID & GetID ();
 		%feature("compactdefaultargs") Set;
-		%feature("autodoc", "	* Finds or creates an attribute with the array.
+		%feature("autodoc", "	* Finds or creates an attribute with internal boolean array.
 
 	:param label:
 	:type label: TDF_Label &
@@ -237,6 +275,20 @@ class TDataStd_BooleanArray : public TDF_Attribute {
 	:rtype: Handle_TDataStd_BooleanArray
 ") Set;
 		static Handle_TDataStd_BooleanArray Set (const TDF_Label & label,const Standard_Integer lower,const Standard_Integer upper);
+		%feature("compactdefaultargs") Set;
+		%feature("autodoc", "	* Finds or creates an attribute with the array using explicit user defined <guid>.
+
+	:param label:
+	:type label: TDF_Label &
+	:param theGuid:
+	:type theGuid: Standard_GUID &
+	:param lower:
+	:type lower: int
+	:param upper:
+	:type upper: int
+	:rtype: Handle_TDataStd_BooleanArray
+") Set;
+		static Handle_TDataStd_BooleanArray Set (const TDF_Label & label,const Standard_GUID & theGuid,const Standard_Integer lower,const Standard_Integer upper);
 		%feature("compactdefaultargs") Init;
 		%feature("autodoc", "	* Initialize the inner array with bounds from <lower> to <upper>
 
@@ -257,6 +309,20 @@ class TDataStd_BooleanArray : public TDF_Attribute {
 	:rtype: None
 ") SetValue;
 		void SetValue (const Standard_Integer index,const Standard_Boolean value);
+		%feature("compactdefaultargs") SetID;
+		%feature("autodoc", "	* Sets the explicit GUID --user defined-- for the attribute.
+
+	:param theGuid:
+	:type theGuid: Standard_GUID &
+	:rtype: None
+") SetID;
+		void SetID (const Standard_GUID & theGuid);
+		%feature("compactdefaultargs") SetID;
+		%feature("autodoc", "	* Sets default GUID for the attribute.
+
+	:rtype: None
+") SetID;
+		void SetID ();
 		%feature("compactdefaultargs") Value;
 		%feature("autodoc", "	* Return the value of the <Index>th element of the array.
 
@@ -361,19 +427,20 @@ class Handle_TDataStd_BooleanArray : public Handle_TDF_Attribute {
         static const Handle_TDataStd_BooleanArray DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_TDataStd_BooleanArray {
     TDataStd_BooleanArray* _get_reference() {
-    return (TDataStd_BooleanArray*)$self->Access();
+    return (TDataStd_BooleanArray*)$self->get();
     }
 };
 
 %extend Handle_TDataStd_BooleanArray {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend TDataStd_BooleanArray {
@@ -398,6 +465,16 @@ class TDataStd_BooleanList : public TDF_Attribute {
 	:rtype: Handle_TDataStd_BooleanList
 ") Set;
 		static Handle_TDataStd_BooleanList Set (const TDF_Label & label);
+		%feature("compactdefaultargs") Set;
+		%feature("autodoc", "	* Finds or creates a list of boolean values attribute with explicit user defined <guid>.
+
+	:param label:
+	:type label: TDF_Label &
+	:param theGuid:
+	:type theGuid: Standard_GUID &
+	:rtype: Handle_TDataStd_BooleanList
+") Set;
+		static Handle_TDataStd_BooleanList Set (const TDF_Label & label,const Standard_GUID & theGuid);
 		%feature("compactdefaultargs") TDataStd_BooleanList;
 		%feature("autodoc", "	:rtype: None
 ") TDataStd_BooleanList;
@@ -440,6 +517,48 @@ class TDataStd_BooleanList : public TDF_Attribute {
 	:rtype: TDataStd_ListOfByte
 ") List;
 		const TDataStd_ListOfByte & List ();
+		%feature("compactdefaultargs") InsertBefore;
+		%feature("autodoc", "	* Inserts the <value> before the <index> position. The indices start with 1 .. Extent----.
+
+	:param index:
+	:type index: int
+	:param before_value:
+	:type before_value: bool
+	:rtype: bool
+") InsertBefore;
+		Standard_Boolean InsertBefore (const Standard_Integer index,const Standard_Boolean before_value);
+		%feature("compactdefaultargs") InsertAfter;
+		%feature("autodoc", "	* Inserts the <value> after the <index> position. The indices start with 1 .. Extent----.
+
+	:param index:
+	:type index: int
+	:param after_value:
+	:type after_value: bool
+	:rtype: bool
+") InsertAfter;
+		Standard_Boolean InsertAfter (const Standard_Integer index,const Standard_Boolean after_value);
+		%feature("compactdefaultargs") Remove;
+		%feature("autodoc", "	* Removes a value at <index> position.
+
+	:param index:
+	:type index: int
+	:rtype: bool
+") Remove;
+		Standard_Boolean Remove (const Standard_Integer index);
+		%feature("compactdefaultargs") SetID;
+		%feature("autodoc", "	* Sets the explicit GUID --user defined-- for the attribute.
+
+	:param theGuid:
+	:type theGuid: Standard_GUID &
+	:rtype: None
+") SetID;
+		void SetID (const Standard_GUID & theGuid);
+		%feature("compactdefaultargs") SetID;
+		%feature("autodoc", "	* Sets default GUID for the attribute.
+
+	:rtype: None
+") SetID;
+		void SetID ();
 		%feature("compactdefaultargs") ID;
 		%feature("autodoc", "	:rtype: Standard_GUID
 ") ID;
@@ -504,19 +623,20 @@ class Handle_TDataStd_BooleanList : public Handle_TDF_Attribute {
         static const Handle_TDataStd_BooleanList DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_TDataStd_BooleanList {
     TDataStd_BooleanList* _get_reference() {
-    return (TDataStd_BooleanList*)$self->Access();
+    return (TDataStd_BooleanList*)$self->get();
     }
 };
 
 %extend Handle_TDataStd_BooleanList {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend TDataStd_BooleanList {
@@ -547,6 +667,22 @@ class TDataStd_ByteArray : public TDF_Attribute {
 	:rtype: Handle_TDataStd_ByteArray
 ") Set;
 		static Handle_TDataStd_ByteArray Set (const TDF_Label & label,const Standard_Integer lower,const Standard_Integer upper,const Standard_Boolean isDelta = Standard_False);
+		%feature("compactdefaultargs") Set;
+		%feature("autodoc", "	* Finds or creates an attribute with byte array and explicit user defined <guid> on the specified label.
+
+	:param label:
+	:type label: TDF_Label &
+	:param theGuid:
+	:type theGuid: Standard_GUID &
+	:param lower:
+	:type lower: int
+	:param upper:
+	:type upper: int
+	:param isDelta: default value is Standard_False
+	:type isDelta: bool
+	:rtype: Handle_TDataStd_ByteArray
+") Set;
+		static Handle_TDataStd_ByteArray Set (const TDF_Label & label,const Standard_GUID & theGuid,const Standard_Integer lower,const Standard_Integer upper,const Standard_Boolean isDelta = Standard_False);
 		%feature("compactdefaultargs") Init;
 		%feature("autodoc", "	* Initialize the inner array with bounds from <lower> to <upper>
 
@@ -567,6 +703,20 @@ class TDataStd_ByteArray : public TDF_Attribute {
 	:rtype: None
 ") SetValue;
 		void SetValue (const Standard_Integer index,const Standard_Byte value);
+		%feature("compactdefaultargs") SetID;
+		%feature("autodoc", "	* Sets the explicit GUID --user defined-- for the attribute.
+
+	:param theGuid:
+	:type theGuid: Standard_GUID &
+	:rtype: None
+") SetID;
+		void SetID (const Standard_GUID & theGuid);
+		%feature("compactdefaultargs") SetID;
+		%feature("autodoc", "	* Sets default GUID for the attribute.
+
+	:rtype: None
+") SetID;
+		void SetID ();
 		%feature("compactdefaultargs") Value;
 		%feature("autodoc", "	* Return the value of the <Index>th element of the array.
 
@@ -596,9 +746,9 @@ class TDataStd_ByteArray : public TDF_Attribute {
 		%feature("compactdefaultargs") InternalArray;
 		%feature("autodoc", "	:rtype: Handle_TColStd_HArray1OfByte
 ") InternalArray;
-		const Handle_TColStd_HArray1OfByte InternalArray ();
+		Handle_TColStd_HArray1OfByte InternalArray ();
 		%feature("compactdefaultargs") ChangeArray;
-		%feature("autodoc", "	* Sets the inner array <myValue> of the attribute to <newArray>. If value of <newArray> differs from <myValue>, Backup performed and myValue refers to new instance of HArray1OfInteger that holds <newArray> values. If <isCheckItems> equal True each item of <newArray> will be checked with each item of <myValue> for coincidence (to avoid backup).
+		%feature("autodoc", "	* Sets the inner array <myValue> of the attribute to <newArray>. If value of <newArray> differs from <myValue>, Backup performed and myValue refers to new instance of HArray1OfInteger that holds <newArray> values. If <isCheckItems> equal True each item of <newArray> will be checked with each item of <myValue> for coincidence --to avoid backup--.
 
 	:param newArray:
 	:type newArray: Handle_TColStd_HArray1OfByte &
@@ -695,19 +845,20 @@ class Handle_TDataStd_ByteArray : public Handle_TDF_Attribute {
         static const Handle_TDataStd_ByteArray DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_TDataStd_ByteArray {
     TDataStd_ByteArray* _get_reference() {
-    return (TDataStd_ByteArray*)$self->Access();
+    return (TDataStd_ByteArray*)$self->get();
     }
 };
 
 %extend Handle_TDataStd_ByteArray {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend TDataStd_ByteArray {
@@ -889,19 +1040,20 @@ class Handle_TDataStd_Comment : public Handle_TDF_Attribute {
         static const Handle_TDataStd_Comment DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_TDataStd_Comment {
     TDataStd_Comment* _get_reference() {
-    return (TDataStd_Comment*)$self->Access();
+    return (TDataStd_Comment*)$self->get();
     }
 };
 
 %extend Handle_TDataStd_Comment {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend TDataStd_Comment {
@@ -927,7 +1079,7 @@ class TDataStd_Current : public TDF_Attribute {
 ") Set;
 		static void Set (const TDF_Label & L);
 		%feature("compactdefaultargs") Get;
-		%feature("autodoc", "	* returns current of <acces> Framework. raise if (!Has)
+		%feature("autodoc", "	* returns current of <acces> Framework. raise if --!Has--
 
 	:param acces:
 	:type acces: TDF_Label &
@@ -1020,996 +1172,23 @@ class Handle_TDataStd_Current : public Handle_TDF_Attribute {
         static const Handle_TDataStd_Current DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_TDataStd_Current {
     TDataStd_Current* _get_reference() {
-    return (TDataStd_Current*)$self->Access();
+    return (TDataStd_Current*)$self->get();
     }
 };
 
 %extend Handle_TDataStd_Current {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend TDataStd_Current {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor TDataStd_DataMapIteratorOfDataMapOfStringByte;
-class TDataStd_DataMapIteratorOfDataMapOfStringByte : public TCollection_BasicMapIterator {
-	public:
-		%feature("compactdefaultargs") TDataStd_DataMapIteratorOfDataMapOfStringByte;
-		%feature("autodoc", "	:rtype: None
-") TDataStd_DataMapIteratorOfDataMapOfStringByte;
-		 TDataStd_DataMapIteratorOfDataMapOfStringByte ();
-		%feature("compactdefaultargs") TDataStd_DataMapIteratorOfDataMapOfStringByte;
-		%feature("autodoc", "	:param aMap:
-	:type aMap: TDataStd_DataMapOfStringByte &
-	:rtype: None
-") TDataStd_DataMapIteratorOfDataMapOfStringByte;
-		 TDataStd_DataMapIteratorOfDataMapOfStringByte (const TDataStd_DataMapOfStringByte & aMap);
-		%feature("compactdefaultargs") Initialize;
-		%feature("autodoc", "	:param aMap:
-	:type aMap: TDataStd_DataMapOfStringByte &
-	:rtype: None
-") Initialize;
-		void Initialize (const TDataStd_DataMapOfStringByte & aMap);
-		%feature("compactdefaultargs") Key;
-		%feature("autodoc", "	:rtype: TCollection_ExtendedString
-") Key;
-		const TCollection_ExtendedString & Key ();
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:rtype: Standard_Byte
-") Value;
-		const Standard_Byte & Value ();
-};
-
-
-%extend TDataStd_DataMapIteratorOfDataMapOfStringByte {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor TDataStd_DataMapIteratorOfDataMapOfStringHArray1OfInteger;
-class TDataStd_DataMapIteratorOfDataMapOfStringHArray1OfInteger : public TCollection_BasicMapIterator {
-	public:
-		%feature("compactdefaultargs") TDataStd_DataMapIteratorOfDataMapOfStringHArray1OfInteger;
-		%feature("autodoc", "	:rtype: None
-") TDataStd_DataMapIteratorOfDataMapOfStringHArray1OfInteger;
-		 TDataStd_DataMapIteratorOfDataMapOfStringHArray1OfInteger ();
-		%feature("compactdefaultargs") TDataStd_DataMapIteratorOfDataMapOfStringHArray1OfInteger;
-		%feature("autodoc", "	:param aMap:
-	:type aMap: TDataStd_DataMapOfStringHArray1OfInteger &
-	:rtype: None
-") TDataStd_DataMapIteratorOfDataMapOfStringHArray1OfInteger;
-		 TDataStd_DataMapIteratorOfDataMapOfStringHArray1OfInteger (const TDataStd_DataMapOfStringHArray1OfInteger & aMap);
-		%feature("compactdefaultargs") Initialize;
-		%feature("autodoc", "	:param aMap:
-	:type aMap: TDataStd_DataMapOfStringHArray1OfInteger &
-	:rtype: None
-") Initialize;
-		void Initialize (const TDataStd_DataMapOfStringHArray1OfInteger & aMap);
-		%feature("compactdefaultargs") Key;
-		%feature("autodoc", "	:rtype: TCollection_ExtendedString
-") Key;
-		const TCollection_ExtendedString & Key ();
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:rtype: Handle_TColStd_HArray1OfInteger
-") Value;
-		Handle_TColStd_HArray1OfInteger Value ();
-};
-
-
-%extend TDataStd_DataMapIteratorOfDataMapOfStringHArray1OfInteger {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor TDataStd_DataMapIteratorOfDataMapOfStringHArray1OfReal;
-class TDataStd_DataMapIteratorOfDataMapOfStringHArray1OfReal : public TCollection_BasicMapIterator {
-	public:
-		%feature("compactdefaultargs") TDataStd_DataMapIteratorOfDataMapOfStringHArray1OfReal;
-		%feature("autodoc", "	:rtype: None
-") TDataStd_DataMapIteratorOfDataMapOfStringHArray1OfReal;
-		 TDataStd_DataMapIteratorOfDataMapOfStringHArray1OfReal ();
-		%feature("compactdefaultargs") TDataStd_DataMapIteratorOfDataMapOfStringHArray1OfReal;
-		%feature("autodoc", "	:param aMap:
-	:type aMap: TDataStd_DataMapOfStringHArray1OfReal &
-	:rtype: None
-") TDataStd_DataMapIteratorOfDataMapOfStringHArray1OfReal;
-		 TDataStd_DataMapIteratorOfDataMapOfStringHArray1OfReal (const TDataStd_DataMapOfStringHArray1OfReal & aMap);
-		%feature("compactdefaultargs") Initialize;
-		%feature("autodoc", "	:param aMap:
-	:type aMap: TDataStd_DataMapOfStringHArray1OfReal &
-	:rtype: None
-") Initialize;
-		void Initialize (const TDataStd_DataMapOfStringHArray1OfReal & aMap);
-		%feature("compactdefaultargs") Key;
-		%feature("autodoc", "	:rtype: TCollection_ExtendedString
-") Key;
-		const TCollection_ExtendedString & Key ();
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:rtype: Handle_TColStd_HArray1OfReal
-") Value;
-		Handle_TColStd_HArray1OfReal Value ();
-};
-
-
-%extend TDataStd_DataMapIteratorOfDataMapOfStringHArray1OfReal {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor TDataStd_DataMapIteratorOfDataMapOfStringReal;
-class TDataStd_DataMapIteratorOfDataMapOfStringReal : public TCollection_BasicMapIterator {
-	public:
-		%feature("compactdefaultargs") TDataStd_DataMapIteratorOfDataMapOfStringReal;
-		%feature("autodoc", "	:rtype: None
-") TDataStd_DataMapIteratorOfDataMapOfStringReal;
-		 TDataStd_DataMapIteratorOfDataMapOfStringReal ();
-		%feature("compactdefaultargs") TDataStd_DataMapIteratorOfDataMapOfStringReal;
-		%feature("autodoc", "	:param aMap:
-	:type aMap: TDataStd_DataMapOfStringReal &
-	:rtype: None
-") TDataStd_DataMapIteratorOfDataMapOfStringReal;
-		 TDataStd_DataMapIteratorOfDataMapOfStringReal (const TDataStd_DataMapOfStringReal & aMap);
-		%feature("compactdefaultargs") Initialize;
-		%feature("autodoc", "	:param aMap:
-	:type aMap: TDataStd_DataMapOfStringReal &
-	:rtype: None
-") Initialize;
-		void Initialize (const TDataStd_DataMapOfStringReal & aMap);
-		%feature("compactdefaultargs") Key;
-		%feature("autodoc", "	:rtype: TCollection_ExtendedString
-") Key;
-		const TCollection_ExtendedString & Key ();
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:rtype: float
-") Value;
-		const Standard_Real & Value ();
-};
-
-
-%extend TDataStd_DataMapIteratorOfDataMapOfStringReal {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor TDataStd_DataMapIteratorOfDataMapOfStringString;
-class TDataStd_DataMapIteratorOfDataMapOfStringString : public TCollection_BasicMapIterator {
-	public:
-		%feature("compactdefaultargs") TDataStd_DataMapIteratorOfDataMapOfStringString;
-		%feature("autodoc", "	:rtype: None
-") TDataStd_DataMapIteratorOfDataMapOfStringString;
-		 TDataStd_DataMapIteratorOfDataMapOfStringString ();
-		%feature("compactdefaultargs") TDataStd_DataMapIteratorOfDataMapOfStringString;
-		%feature("autodoc", "	:param aMap:
-	:type aMap: TDataStd_DataMapOfStringString &
-	:rtype: None
-") TDataStd_DataMapIteratorOfDataMapOfStringString;
-		 TDataStd_DataMapIteratorOfDataMapOfStringString (const TDataStd_DataMapOfStringString & aMap);
-		%feature("compactdefaultargs") Initialize;
-		%feature("autodoc", "	:param aMap:
-	:type aMap: TDataStd_DataMapOfStringString &
-	:rtype: None
-") Initialize;
-		void Initialize (const TDataStd_DataMapOfStringString & aMap);
-		%feature("compactdefaultargs") Key;
-		%feature("autodoc", "	:rtype: TCollection_ExtendedString
-") Key;
-		const TCollection_ExtendedString & Key ();
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:rtype: TCollection_ExtendedString
-") Value;
-		const TCollection_ExtendedString & Value ();
-};
-
-
-%extend TDataStd_DataMapIteratorOfDataMapOfStringString {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor TDataStd_DataMapNodeOfDataMapOfStringByte;
-class TDataStd_DataMapNodeOfDataMapOfStringByte : public TCollection_MapNode {
-	public:
-		%feature("compactdefaultargs") TDataStd_DataMapNodeOfDataMapOfStringByte;
-		%feature("autodoc", "	:param K:
-	:type K: TCollection_ExtendedString &
-	:param I:
-	:type I: Standard_Byte &
-	:param n:
-	:type n: TCollection_MapNodePtr &
-	:rtype: None
-") TDataStd_DataMapNodeOfDataMapOfStringByte;
-		 TDataStd_DataMapNodeOfDataMapOfStringByte (const TCollection_ExtendedString & K,const Standard_Byte & I,const TCollection_MapNodePtr & n);
-		%feature("compactdefaultargs") Key;
-		%feature("autodoc", "	:rtype: TCollection_ExtendedString
-") Key;
-		TCollection_ExtendedString & Key ();
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:rtype: Standard_Byte
-") Value;
-		Standard_Byte & Value ();
-};
-
-
-%extend TDataStd_DataMapNodeOfDataMapOfStringByte {
-	%pythoncode {
-		def GetHandle(self):
-		    try:
-		        return self.thisHandle
-		    except:
-		        self.thisHandle = Handle_TDataStd_DataMapNodeOfDataMapOfStringByte(self)
-		        self.thisown = False
-		        return self.thisHandle
-	}
-};
-
-%pythonappend Handle_TDataStd_DataMapNodeOfDataMapOfStringByte::Handle_TDataStd_DataMapNodeOfDataMapOfStringByte %{
-    # register the handle in the base object
-    if len(args) > 0:
-        register_handle(self, args[0])
-%}
-
-%nodefaultctor Handle_TDataStd_DataMapNodeOfDataMapOfStringByte;
-class Handle_TDataStd_DataMapNodeOfDataMapOfStringByte : public Handle_TCollection_MapNode {
-
-    public:
-        // constructors
-        Handle_TDataStd_DataMapNodeOfDataMapOfStringByte();
-        Handle_TDataStd_DataMapNodeOfDataMapOfStringByte(const Handle_TDataStd_DataMapNodeOfDataMapOfStringByte &aHandle);
-        Handle_TDataStd_DataMapNodeOfDataMapOfStringByte(const TDataStd_DataMapNodeOfDataMapOfStringByte *anItem);
-        void Nullify();
-        Standard_Boolean IsNull() const;
-        static const Handle_TDataStd_DataMapNodeOfDataMapOfStringByte DownCast(const Handle_Standard_Transient &AnObject);
-
-};
-%extend Handle_TDataStd_DataMapNodeOfDataMapOfStringByte {
-    TDataStd_DataMapNodeOfDataMapOfStringByte* _get_reference() {
-    return (TDataStd_DataMapNodeOfDataMapOfStringByte*)$self->Access();
-    }
-};
-
-%extend Handle_TDataStd_DataMapNodeOfDataMapOfStringByte {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
-};
-
-%extend TDataStd_DataMapNodeOfDataMapOfStringByte {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor TDataStd_DataMapNodeOfDataMapOfStringHArray1OfInteger;
-class TDataStd_DataMapNodeOfDataMapOfStringHArray1OfInteger : public TCollection_MapNode {
-	public:
-		%feature("compactdefaultargs") TDataStd_DataMapNodeOfDataMapOfStringHArray1OfInteger;
-		%feature("autodoc", "	:param K:
-	:type K: TCollection_ExtendedString &
-	:param I:
-	:type I: Handle_TColStd_HArray1OfInteger &
-	:param n:
-	:type n: TCollection_MapNodePtr &
-	:rtype: None
-") TDataStd_DataMapNodeOfDataMapOfStringHArray1OfInteger;
-		 TDataStd_DataMapNodeOfDataMapOfStringHArray1OfInteger (const TCollection_ExtendedString & K,const Handle_TColStd_HArray1OfInteger & I,const TCollection_MapNodePtr & n);
-		%feature("compactdefaultargs") Key;
-		%feature("autodoc", "	:rtype: TCollection_ExtendedString
-") Key;
-		TCollection_ExtendedString & Key ();
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:rtype: Handle_TColStd_HArray1OfInteger
-") Value;
-		Handle_TColStd_HArray1OfInteger Value ();
-};
-
-
-%extend TDataStd_DataMapNodeOfDataMapOfStringHArray1OfInteger {
-	%pythoncode {
-		def GetHandle(self):
-		    try:
-		        return self.thisHandle
-		    except:
-		        self.thisHandle = Handle_TDataStd_DataMapNodeOfDataMapOfStringHArray1OfInteger(self)
-		        self.thisown = False
-		        return self.thisHandle
-	}
-};
-
-%pythonappend Handle_TDataStd_DataMapNodeOfDataMapOfStringHArray1OfInteger::Handle_TDataStd_DataMapNodeOfDataMapOfStringHArray1OfInteger %{
-    # register the handle in the base object
-    if len(args) > 0:
-        register_handle(self, args[0])
-%}
-
-%nodefaultctor Handle_TDataStd_DataMapNodeOfDataMapOfStringHArray1OfInteger;
-class Handle_TDataStd_DataMapNodeOfDataMapOfStringHArray1OfInteger : public Handle_TCollection_MapNode {
-
-    public:
-        // constructors
-        Handle_TDataStd_DataMapNodeOfDataMapOfStringHArray1OfInteger();
-        Handle_TDataStd_DataMapNodeOfDataMapOfStringHArray1OfInteger(const Handle_TDataStd_DataMapNodeOfDataMapOfStringHArray1OfInteger &aHandle);
-        Handle_TDataStd_DataMapNodeOfDataMapOfStringHArray1OfInteger(const TDataStd_DataMapNodeOfDataMapOfStringHArray1OfInteger *anItem);
-        void Nullify();
-        Standard_Boolean IsNull() const;
-        static const Handle_TDataStd_DataMapNodeOfDataMapOfStringHArray1OfInteger DownCast(const Handle_Standard_Transient &AnObject);
-
-};
-%extend Handle_TDataStd_DataMapNodeOfDataMapOfStringHArray1OfInteger {
-    TDataStd_DataMapNodeOfDataMapOfStringHArray1OfInteger* _get_reference() {
-    return (TDataStd_DataMapNodeOfDataMapOfStringHArray1OfInteger*)$self->Access();
-    }
-};
-
-%extend Handle_TDataStd_DataMapNodeOfDataMapOfStringHArray1OfInteger {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
-};
-
-%extend TDataStd_DataMapNodeOfDataMapOfStringHArray1OfInteger {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor TDataStd_DataMapNodeOfDataMapOfStringHArray1OfReal;
-class TDataStd_DataMapNodeOfDataMapOfStringHArray1OfReal : public TCollection_MapNode {
-	public:
-		%feature("compactdefaultargs") TDataStd_DataMapNodeOfDataMapOfStringHArray1OfReal;
-		%feature("autodoc", "	:param K:
-	:type K: TCollection_ExtendedString &
-	:param I:
-	:type I: Handle_TColStd_HArray1OfReal &
-	:param n:
-	:type n: TCollection_MapNodePtr &
-	:rtype: None
-") TDataStd_DataMapNodeOfDataMapOfStringHArray1OfReal;
-		 TDataStd_DataMapNodeOfDataMapOfStringHArray1OfReal (const TCollection_ExtendedString & K,const Handle_TColStd_HArray1OfReal & I,const TCollection_MapNodePtr & n);
-		%feature("compactdefaultargs") Key;
-		%feature("autodoc", "	:rtype: TCollection_ExtendedString
-") Key;
-		TCollection_ExtendedString & Key ();
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:rtype: Handle_TColStd_HArray1OfReal
-") Value;
-		Handle_TColStd_HArray1OfReal Value ();
-};
-
-
-%extend TDataStd_DataMapNodeOfDataMapOfStringHArray1OfReal {
-	%pythoncode {
-		def GetHandle(self):
-		    try:
-		        return self.thisHandle
-		    except:
-		        self.thisHandle = Handle_TDataStd_DataMapNodeOfDataMapOfStringHArray1OfReal(self)
-		        self.thisown = False
-		        return self.thisHandle
-	}
-};
-
-%pythonappend Handle_TDataStd_DataMapNodeOfDataMapOfStringHArray1OfReal::Handle_TDataStd_DataMapNodeOfDataMapOfStringHArray1OfReal %{
-    # register the handle in the base object
-    if len(args) > 0:
-        register_handle(self, args[0])
-%}
-
-%nodefaultctor Handle_TDataStd_DataMapNodeOfDataMapOfStringHArray1OfReal;
-class Handle_TDataStd_DataMapNodeOfDataMapOfStringHArray1OfReal : public Handle_TCollection_MapNode {
-
-    public:
-        // constructors
-        Handle_TDataStd_DataMapNodeOfDataMapOfStringHArray1OfReal();
-        Handle_TDataStd_DataMapNodeOfDataMapOfStringHArray1OfReal(const Handle_TDataStd_DataMapNodeOfDataMapOfStringHArray1OfReal &aHandle);
-        Handle_TDataStd_DataMapNodeOfDataMapOfStringHArray1OfReal(const TDataStd_DataMapNodeOfDataMapOfStringHArray1OfReal *anItem);
-        void Nullify();
-        Standard_Boolean IsNull() const;
-        static const Handle_TDataStd_DataMapNodeOfDataMapOfStringHArray1OfReal DownCast(const Handle_Standard_Transient &AnObject);
-
-};
-%extend Handle_TDataStd_DataMapNodeOfDataMapOfStringHArray1OfReal {
-    TDataStd_DataMapNodeOfDataMapOfStringHArray1OfReal* _get_reference() {
-    return (TDataStd_DataMapNodeOfDataMapOfStringHArray1OfReal*)$self->Access();
-    }
-};
-
-%extend Handle_TDataStd_DataMapNodeOfDataMapOfStringHArray1OfReal {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
-};
-
-%extend TDataStd_DataMapNodeOfDataMapOfStringHArray1OfReal {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor TDataStd_DataMapNodeOfDataMapOfStringReal;
-class TDataStd_DataMapNodeOfDataMapOfStringReal : public TCollection_MapNode {
-	public:
-		%feature("compactdefaultargs") TDataStd_DataMapNodeOfDataMapOfStringReal;
-		%feature("autodoc", "	:param K:
-	:type K: TCollection_ExtendedString &
-	:param I:
-	:type I: float &
-	:param n:
-	:type n: TCollection_MapNodePtr &
-	:rtype: None
-") TDataStd_DataMapNodeOfDataMapOfStringReal;
-		 TDataStd_DataMapNodeOfDataMapOfStringReal (const TCollection_ExtendedString & K,const Standard_Real & I,const TCollection_MapNodePtr & n);
-		%feature("compactdefaultargs") Key;
-		%feature("autodoc", "	:rtype: TCollection_ExtendedString
-") Key;
-		TCollection_ExtendedString & Key ();
-
-            %feature("autodoc","1");
-            %extend {
-                Standard_Real GetValue() {
-                return (Standard_Real) $self->Value();
-                }
-            };
-            %feature("autodoc","1");
-            %extend {
-                void SetValue(Standard_Real value ) {
-                $self->Value()=value;
-                }
-            };
-            };
-
-
-%extend TDataStd_DataMapNodeOfDataMapOfStringReal {
-	%pythoncode {
-		def GetHandle(self):
-		    try:
-		        return self.thisHandle
-		    except:
-		        self.thisHandle = Handle_TDataStd_DataMapNodeOfDataMapOfStringReal(self)
-		        self.thisown = False
-		        return self.thisHandle
-	}
-};
-
-%pythonappend Handle_TDataStd_DataMapNodeOfDataMapOfStringReal::Handle_TDataStd_DataMapNodeOfDataMapOfStringReal %{
-    # register the handle in the base object
-    if len(args) > 0:
-        register_handle(self, args[0])
-%}
-
-%nodefaultctor Handle_TDataStd_DataMapNodeOfDataMapOfStringReal;
-class Handle_TDataStd_DataMapNodeOfDataMapOfStringReal : public Handle_TCollection_MapNode {
-
-    public:
-        // constructors
-        Handle_TDataStd_DataMapNodeOfDataMapOfStringReal();
-        Handle_TDataStd_DataMapNodeOfDataMapOfStringReal(const Handle_TDataStd_DataMapNodeOfDataMapOfStringReal &aHandle);
-        Handle_TDataStd_DataMapNodeOfDataMapOfStringReal(const TDataStd_DataMapNodeOfDataMapOfStringReal *anItem);
-        void Nullify();
-        Standard_Boolean IsNull() const;
-        static const Handle_TDataStd_DataMapNodeOfDataMapOfStringReal DownCast(const Handle_Standard_Transient &AnObject);
-
-};
-%extend Handle_TDataStd_DataMapNodeOfDataMapOfStringReal {
-    TDataStd_DataMapNodeOfDataMapOfStringReal* _get_reference() {
-    return (TDataStd_DataMapNodeOfDataMapOfStringReal*)$self->Access();
-    }
-};
-
-%extend Handle_TDataStd_DataMapNodeOfDataMapOfStringReal {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
-};
-
-%extend TDataStd_DataMapNodeOfDataMapOfStringReal {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor TDataStd_DataMapNodeOfDataMapOfStringString;
-class TDataStd_DataMapNodeOfDataMapOfStringString : public TCollection_MapNode {
-	public:
-		%feature("compactdefaultargs") TDataStd_DataMapNodeOfDataMapOfStringString;
-		%feature("autodoc", "	:param K:
-	:type K: TCollection_ExtendedString &
-	:param I:
-	:type I: TCollection_ExtendedString &
-	:param n:
-	:type n: TCollection_MapNodePtr &
-	:rtype: None
-") TDataStd_DataMapNodeOfDataMapOfStringString;
-		 TDataStd_DataMapNodeOfDataMapOfStringString (const TCollection_ExtendedString & K,const TCollection_ExtendedString & I,const TCollection_MapNodePtr & n);
-		%feature("compactdefaultargs") Key;
-		%feature("autodoc", "	:rtype: TCollection_ExtendedString
-") Key;
-		TCollection_ExtendedString & Key ();
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:rtype: TCollection_ExtendedString
-") Value;
-		TCollection_ExtendedString & Value ();
-};
-
-
-%extend TDataStd_DataMapNodeOfDataMapOfStringString {
-	%pythoncode {
-		def GetHandle(self):
-		    try:
-		        return self.thisHandle
-		    except:
-		        self.thisHandle = Handle_TDataStd_DataMapNodeOfDataMapOfStringString(self)
-		        self.thisown = False
-		        return self.thisHandle
-	}
-};
-
-%pythonappend Handle_TDataStd_DataMapNodeOfDataMapOfStringString::Handle_TDataStd_DataMapNodeOfDataMapOfStringString %{
-    # register the handle in the base object
-    if len(args) > 0:
-        register_handle(self, args[0])
-%}
-
-%nodefaultctor Handle_TDataStd_DataMapNodeOfDataMapOfStringString;
-class Handle_TDataStd_DataMapNodeOfDataMapOfStringString : public Handle_TCollection_MapNode {
-
-    public:
-        // constructors
-        Handle_TDataStd_DataMapNodeOfDataMapOfStringString();
-        Handle_TDataStd_DataMapNodeOfDataMapOfStringString(const Handle_TDataStd_DataMapNodeOfDataMapOfStringString &aHandle);
-        Handle_TDataStd_DataMapNodeOfDataMapOfStringString(const TDataStd_DataMapNodeOfDataMapOfStringString *anItem);
-        void Nullify();
-        Standard_Boolean IsNull() const;
-        static const Handle_TDataStd_DataMapNodeOfDataMapOfStringString DownCast(const Handle_Standard_Transient &AnObject);
-
-};
-%extend Handle_TDataStd_DataMapNodeOfDataMapOfStringString {
-    TDataStd_DataMapNodeOfDataMapOfStringString* _get_reference() {
-    return (TDataStd_DataMapNodeOfDataMapOfStringString*)$self->Access();
-    }
-};
-
-%extend Handle_TDataStd_DataMapNodeOfDataMapOfStringString {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
-};
-
-%extend TDataStd_DataMapNodeOfDataMapOfStringString {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor TDataStd_DataMapOfStringByte;
-class TDataStd_DataMapOfStringByte : public TCollection_BasicMap {
-	public:
-		%feature("compactdefaultargs") TDataStd_DataMapOfStringByte;
-		%feature("autodoc", "	:param NbBuckets: default value is 1
-	:type NbBuckets: int
-	:rtype: None
-") TDataStd_DataMapOfStringByte;
-		 TDataStd_DataMapOfStringByte (const Standard_Integer NbBuckets = 1);
-		%feature("compactdefaultargs") Assign;
-		%feature("autodoc", "	:param Other:
-	:type Other: TDataStd_DataMapOfStringByte &
-	:rtype: TDataStd_DataMapOfStringByte
-") Assign;
-		TDataStd_DataMapOfStringByte & Assign (const TDataStd_DataMapOfStringByte & Other);
-		%feature("compactdefaultargs") operator =;
-		%feature("autodoc", "	:param Other:
-	:type Other: TDataStd_DataMapOfStringByte &
-	:rtype: TDataStd_DataMapOfStringByte
-") operator =;
-		TDataStd_DataMapOfStringByte & operator = (const TDataStd_DataMapOfStringByte & Other);
-		%feature("compactdefaultargs") ReSize;
-		%feature("autodoc", "	:param NbBuckets:
-	:type NbBuckets: int
-	:rtype: None
-") ReSize;
-		void ReSize (const Standard_Integer NbBuckets);
-		%feature("compactdefaultargs") Clear;
-		%feature("autodoc", "	:rtype: None
-") Clear;
-		void Clear ();
-		%feature("compactdefaultargs") Bind;
-		%feature("autodoc", "	:param K:
-	:type K: TCollection_ExtendedString &
-	:param I:
-	:type I: Standard_Byte &
-	:rtype: bool
-") Bind;
-		Standard_Boolean Bind (const TCollection_ExtendedString & K,const Standard_Byte & I);
-		%feature("compactdefaultargs") IsBound;
-		%feature("autodoc", "	:param K:
-	:type K: TCollection_ExtendedString &
-	:rtype: bool
-") IsBound;
-		Standard_Boolean IsBound (const TCollection_ExtendedString & K);
-		%feature("compactdefaultargs") UnBind;
-		%feature("autodoc", "	:param K:
-	:type K: TCollection_ExtendedString &
-	:rtype: bool
-") UnBind;
-		Standard_Boolean UnBind (const TCollection_ExtendedString & K);
-		%feature("compactdefaultargs") Find;
-		%feature("autodoc", "	:param K:
-	:type K: TCollection_ExtendedString &
-	:rtype: Standard_Byte
-") Find;
-		const Standard_Byte & Find (const TCollection_ExtendedString & K);
-		%feature("compactdefaultargs") ChangeFind;
-		%feature("autodoc", "	:param K:
-	:type K: TCollection_ExtendedString &
-	:rtype: Standard_Byte
-") ChangeFind;
-		Standard_Byte & ChangeFind (const TCollection_ExtendedString & K);
-		%feature("compactdefaultargs") Find1;
-		%feature("autodoc", "	:param K:
-	:type K: TCollection_ExtendedString &
-	:rtype: Standard_Address
-") Find1;
-		Standard_Address Find1 (const TCollection_ExtendedString & K);
-		%feature("compactdefaultargs") ChangeFind1;
-		%feature("autodoc", "	:param K:
-	:type K: TCollection_ExtendedString &
-	:rtype: Standard_Address
-") ChangeFind1;
-		Standard_Address ChangeFind1 (const TCollection_ExtendedString & K);
-};
-
-
-%extend TDataStd_DataMapOfStringByte {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor TDataStd_DataMapOfStringHArray1OfInteger;
-class TDataStd_DataMapOfStringHArray1OfInteger : public TCollection_BasicMap {
-	public:
-		%feature("compactdefaultargs") TDataStd_DataMapOfStringHArray1OfInteger;
-		%feature("autodoc", "	:param NbBuckets: default value is 1
-	:type NbBuckets: int
-	:rtype: None
-") TDataStd_DataMapOfStringHArray1OfInteger;
-		 TDataStd_DataMapOfStringHArray1OfInteger (const Standard_Integer NbBuckets = 1);
-		%feature("compactdefaultargs") Assign;
-		%feature("autodoc", "	:param Other:
-	:type Other: TDataStd_DataMapOfStringHArray1OfInteger &
-	:rtype: TDataStd_DataMapOfStringHArray1OfInteger
-") Assign;
-		TDataStd_DataMapOfStringHArray1OfInteger & Assign (const TDataStd_DataMapOfStringHArray1OfInteger & Other);
-		%feature("compactdefaultargs") operator =;
-		%feature("autodoc", "	:param Other:
-	:type Other: TDataStd_DataMapOfStringHArray1OfInteger &
-	:rtype: TDataStd_DataMapOfStringHArray1OfInteger
-") operator =;
-		TDataStd_DataMapOfStringHArray1OfInteger & operator = (const TDataStd_DataMapOfStringHArray1OfInteger & Other);
-		%feature("compactdefaultargs") ReSize;
-		%feature("autodoc", "	:param NbBuckets:
-	:type NbBuckets: int
-	:rtype: None
-") ReSize;
-		void ReSize (const Standard_Integer NbBuckets);
-		%feature("compactdefaultargs") Clear;
-		%feature("autodoc", "	:rtype: None
-") Clear;
-		void Clear ();
-		%feature("compactdefaultargs") Bind;
-		%feature("autodoc", "	:param K:
-	:type K: TCollection_ExtendedString &
-	:param I:
-	:type I: Handle_TColStd_HArray1OfInteger &
-	:rtype: bool
-") Bind;
-		Standard_Boolean Bind (const TCollection_ExtendedString & K,const Handle_TColStd_HArray1OfInteger & I);
-		%feature("compactdefaultargs") IsBound;
-		%feature("autodoc", "	:param K:
-	:type K: TCollection_ExtendedString &
-	:rtype: bool
-") IsBound;
-		Standard_Boolean IsBound (const TCollection_ExtendedString & K);
-		%feature("compactdefaultargs") UnBind;
-		%feature("autodoc", "	:param K:
-	:type K: TCollection_ExtendedString &
-	:rtype: bool
-") UnBind;
-		Standard_Boolean UnBind (const TCollection_ExtendedString & K);
-		%feature("compactdefaultargs") Find;
-		%feature("autodoc", "	:param K:
-	:type K: TCollection_ExtendedString &
-	:rtype: Handle_TColStd_HArray1OfInteger
-") Find;
-		Handle_TColStd_HArray1OfInteger Find (const TCollection_ExtendedString & K);
-		%feature("compactdefaultargs") ChangeFind;
-		%feature("autodoc", "	:param K:
-	:type K: TCollection_ExtendedString &
-	:rtype: Handle_TColStd_HArray1OfInteger
-") ChangeFind;
-		Handle_TColStd_HArray1OfInteger ChangeFind (const TCollection_ExtendedString & K);
-		%feature("compactdefaultargs") Find1;
-		%feature("autodoc", "	:param K:
-	:type K: TCollection_ExtendedString &
-	:rtype: Standard_Address
-") Find1;
-		Standard_Address Find1 (const TCollection_ExtendedString & K);
-		%feature("compactdefaultargs") ChangeFind1;
-		%feature("autodoc", "	:param K:
-	:type K: TCollection_ExtendedString &
-	:rtype: Standard_Address
-") ChangeFind1;
-		Standard_Address ChangeFind1 (const TCollection_ExtendedString & K);
-};
-
-
-%extend TDataStd_DataMapOfStringHArray1OfInteger {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor TDataStd_DataMapOfStringHArray1OfReal;
-class TDataStd_DataMapOfStringHArray1OfReal : public TCollection_BasicMap {
-	public:
-		%feature("compactdefaultargs") TDataStd_DataMapOfStringHArray1OfReal;
-		%feature("autodoc", "	:param NbBuckets: default value is 1
-	:type NbBuckets: int
-	:rtype: None
-") TDataStd_DataMapOfStringHArray1OfReal;
-		 TDataStd_DataMapOfStringHArray1OfReal (const Standard_Integer NbBuckets = 1);
-		%feature("compactdefaultargs") Assign;
-		%feature("autodoc", "	:param Other:
-	:type Other: TDataStd_DataMapOfStringHArray1OfReal &
-	:rtype: TDataStd_DataMapOfStringHArray1OfReal
-") Assign;
-		TDataStd_DataMapOfStringHArray1OfReal & Assign (const TDataStd_DataMapOfStringHArray1OfReal & Other);
-		%feature("compactdefaultargs") operator =;
-		%feature("autodoc", "	:param Other:
-	:type Other: TDataStd_DataMapOfStringHArray1OfReal &
-	:rtype: TDataStd_DataMapOfStringHArray1OfReal
-") operator =;
-		TDataStd_DataMapOfStringHArray1OfReal & operator = (const TDataStd_DataMapOfStringHArray1OfReal & Other);
-		%feature("compactdefaultargs") ReSize;
-		%feature("autodoc", "	:param NbBuckets:
-	:type NbBuckets: int
-	:rtype: None
-") ReSize;
-		void ReSize (const Standard_Integer NbBuckets);
-		%feature("compactdefaultargs") Clear;
-		%feature("autodoc", "	:rtype: None
-") Clear;
-		void Clear ();
-		%feature("compactdefaultargs") Bind;
-		%feature("autodoc", "	:param K:
-	:type K: TCollection_ExtendedString &
-	:param I:
-	:type I: Handle_TColStd_HArray1OfReal &
-	:rtype: bool
-") Bind;
-		Standard_Boolean Bind (const TCollection_ExtendedString & K,const Handle_TColStd_HArray1OfReal & I);
-		%feature("compactdefaultargs") IsBound;
-		%feature("autodoc", "	:param K:
-	:type K: TCollection_ExtendedString &
-	:rtype: bool
-") IsBound;
-		Standard_Boolean IsBound (const TCollection_ExtendedString & K);
-		%feature("compactdefaultargs") UnBind;
-		%feature("autodoc", "	:param K:
-	:type K: TCollection_ExtendedString &
-	:rtype: bool
-") UnBind;
-		Standard_Boolean UnBind (const TCollection_ExtendedString & K);
-		%feature("compactdefaultargs") Find;
-		%feature("autodoc", "	:param K:
-	:type K: TCollection_ExtendedString &
-	:rtype: Handle_TColStd_HArray1OfReal
-") Find;
-		Handle_TColStd_HArray1OfReal Find (const TCollection_ExtendedString & K);
-		%feature("compactdefaultargs") ChangeFind;
-		%feature("autodoc", "	:param K:
-	:type K: TCollection_ExtendedString &
-	:rtype: Handle_TColStd_HArray1OfReal
-") ChangeFind;
-		Handle_TColStd_HArray1OfReal ChangeFind (const TCollection_ExtendedString & K);
-		%feature("compactdefaultargs") Find1;
-		%feature("autodoc", "	:param K:
-	:type K: TCollection_ExtendedString &
-	:rtype: Standard_Address
-") Find1;
-		Standard_Address Find1 (const TCollection_ExtendedString & K);
-		%feature("compactdefaultargs") ChangeFind1;
-		%feature("autodoc", "	:param K:
-	:type K: TCollection_ExtendedString &
-	:rtype: Standard_Address
-") ChangeFind1;
-		Standard_Address ChangeFind1 (const TCollection_ExtendedString & K);
-};
-
-
-%extend TDataStd_DataMapOfStringHArray1OfReal {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor TDataStd_DataMapOfStringReal;
-class TDataStd_DataMapOfStringReal : public TCollection_BasicMap {
-	public:
-		%feature("compactdefaultargs") TDataStd_DataMapOfStringReal;
-		%feature("autodoc", "	:param NbBuckets: default value is 1
-	:type NbBuckets: int
-	:rtype: None
-") TDataStd_DataMapOfStringReal;
-		 TDataStd_DataMapOfStringReal (const Standard_Integer NbBuckets = 1);
-		%feature("compactdefaultargs") Assign;
-		%feature("autodoc", "	:param Other:
-	:type Other: TDataStd_DataMapOfStringReal &
-	:rtype: TDataStd_DataMapOfStringReal
-") Assign;
-		TDataStd_DataMapOfStringReal & Assign (const TDataStd_DataMapOfStringReal & Other);
-		%feature("compactdefaultargs") operator =;
-		%feature("autodoc", "	:param Other:
-	:type Other: TDataStd_DataMapOfStringReal &
-	:rtype: TDataStd_DataMapOfStringReal
-") operator =;
-		TDataStd_DataMapOfStringReal & operator = (const TDataStd_DataMapOfStringReal & Other);
-		%feature("compactdefaultargs") ReSize;
-		%feature("autodoc", "	:param NbBuckets:
-	:type NbBuckets: int
-	:rtype: None
-") ReSize;
-		void ReSize (const Standard_Integer NbBuckets);
-		%feature("compactdefaultargs") Clear;
-		%feature("autodoc", "	:rtype: None
-") Clear;
-		void Clear ();
-		%feature("compactdefaultargs") Bind;
-		%feature("autodoc", "	:param K:
-	:type K: TCollection_ExtendedString &
-	:param I:
-	:type I: float &
-	:rtype: bool
-") Bind;
-		Standard_Boolean Bind (const TCollection_ExtendedString & K,const Standard_Real & I);
-		%feature("compactdefaultargs") IsBound;
-		%feature("autodoc", "	:param K:
-	:type K: TCollection_ExtendedString &
-	:rtype: bool
-") IsBound;
-		Standard_Boolean IsBound (const TCollection_ExtendedString & K);
-		%feature("compactdefaultargs") UnBind;
-		%feature("autodoc", "	:param K:
-	:type K: TCollection_ExtendedString &
-	:rtype: bool
-") UnBind;
-		Standard_Boolean UnBind (const TCollection_ExtendedString & K);
-		%feature("compactdefaultargs") Find;
-		%feature("autodoc", "	:param K:
-	:type K: TCollection_ExtendedString &
-	:rtype: float
-") Find;
-		const Standard_Real & Find (const TCollection_ExtendedString & K);
-		%feature("compactdefaultargs") ChangeFind;
-		%feature("autodoc", "	:param K:
-	:type K: TCollection_ExtendedString &
-	:rtype: float
-") ChangeFind;
-		Standard_Real & ChangeFind (const TCollection_ExtendedString & K);
-		%feature("compactdefaultargs") Find1;
-		%feature("autodoc", "	:param K:
-	:type K: TCollection_ExtendedString &
-	:rtype: Standard_Address
-") Find1;
-		Standard_Address Find1 (const TCollection_ExtendedString & K);
-		%feature("compactdefaultargs") ChangeFind1;
-		%feature("autodoc", "	:param K:
-	:type K: TCollection_ExtendedString &
-	:rtype: Standard_Address
-") ChangeFind1;
-		Standard_Address ChangeFind1 (const TCollection_ExtendedString & K);
-};
-
-
-%extend TDataStd_DataMapOfStringReal {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor TDataStd_DataMapOfStringString;
-class TDataStd_DataMapOfStringString : public TCollection_BasicMap {
-	public:
-		%feature("compactdefaultargs") TDataStd_DataMapOfStringString;
-		%feature("autodoc", "	:param NbBuckets: default value is 1
-	:type NbBuckets: int
-	:rtype: None
-") TDataStd_DataMapOfStringString;
-		 TDataStd_DataMapOfStringString (const Standard_Integer NbBuckets = 1);
-		%feature("compactdefaultargs") Assign;
-		%feature("autodoc", "	:param Other:
-	:type Other: TDataStd_DataMapOfStringString &
-	:rtype: TDataStd_DataMapOfStringString
-") Assign;
-		TDataStd_DataMapOfStringString & Assign (const TDataStd_DataMapOfStringString & Other);
-		%feature("compactdefaultargs") operator =;
-		%feature("autodoc", "	:param Other:
-	:type Other: TDataStd_DataMapOfStringString &
-	:rtype: TDataStd_DataMapOfStringString
-") operator =;
-		TDataStd_DataMapOfStringString & operator = (const TDataStd_DataMapOfStringString & Other);
-		%feature("compactdefaultargs") ReSize;
-		%feature("autodoc", "	:param NbBuckets:
-	:type NbBuckets: int
-	:rtype: None
-") ReSize;
-		void ReSize (const Standard_Integer NbBuckets);
-		%feature("compactdefaultargs") Clear;
-		%feature("autodoc", "	:rtype: None
-") Clear;
-		void Clear ();
-		%feature("compactdefaultargs") Bind;
-		%feature("autodoc", "	:param K:
-	:type K: TCollection_ExtendedString &
-	:param I:
-	:type I: TCollection_ExtendedString &
-	:rtype: bool
-") Bind;
-		Standard_Boolean Bind (const TCollection_ExtendedString & K,const TCollection_ExtendedString & I);
-		%feature("compactdefaultargs") IsBound;
-		%feature("autodoc", "	:param K:
-	:type K: TCollection_ExtendedString &
-	:rtype: bool
-") IsBound;
-		Standard_Boolean IsBound (const TCollection_ExtendedString & K);
-		%feature("compactdefaultargs") UnBind;
-		%feature("autodoc", "	:param K:
-	:type K: TCollection_ExtendedString &
-	:rtype: bool
-") UnBind;
-		Standard_Boolean UnBind (const TCollection_ExtendedString & K);
-		%feature("compactdefaultargs") Find;
-		%feature("autodoc", "	:param K:
-	:type K: TCollection_ExtendedString &
-	:rtype: TCollection_ExtendedString
-") Find;
-		const TCollection_ExtendedString & Find (const TCollection_ExtendedString & K);
-		%feature("compactdefaultargs") ChangeFind;
-		%feature("autodoc", "	:param K:
-	:type K: TCollection_ExtendedString &
-	:rtype: TCollection_ExtendedString
-") ChangeFind;
-		TCollection_ExtendedString & ChangeFind (const TCollection_ExtendedString & K);
-		%feature("compactdefaultargs") Find1;
-		%feature("autodoc", "	:param K:
-	:type K: TCollection_ExtendedString &
-	:rtype: Standard_Address
-") Find1;
-		Standard_Address Find1 (const TCollection_ExtendedString & K);
-		%feature("compactdefaultargs") ChangeFind1;
-		%feature("autodoc", "	:param K:
-	:type K: TCollection_ExtendedString &
-	:rtype: Standard_Address
-") ChangeFind1;
-		Standard_Address ChangeFind1 (const TCollection_ExtendedString & K);
-};
-
-
-%extend TDataStd_DataMapOfStringString {
 	%pythoncode {
 	__repr__ = _dumps_object
 	}
@@ -2065,19 +1244,20 @@ class Handle_TDataStd_DeltaOnModificationOfByteArray : public Handle_TDF_DeltaOn
         static const Handle_TDataStd_DeltaOnModificationOfByteArray DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_TDataStd_DeltaOnModificationOfByteArray {
     TDataStd_DeltaOnModificationOfByteArray* _get_reference() {
-    return (TDataStd_DeltaOnModificationOfByteArray*)$self->Access();
+    return (TDataStd_DeltaOnModificationOfByteArray*)$self->get();
     }
 };
 
 %extend Handle_TDataStd_DeltaOnModificationOfByteArray {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend TDataStd_DeltaOnModificationOfByteArray {
@@ -2136,19 +1316,20 @@ class Handle_TDataStd_DeltaOnModificationOfExtStringArray : public Handle_TDF_De
         static const Handle_TDataStd_DeltaOnModificationOfExtStringArray DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_TDataStd_DeltaOnModificationOfExtStringArray {
     TDataStd_DeltaOnModificationOfExtStringArray* _get_reference() {
-    return (TDataStd_DeltaOnModificationOfExtStringArray*)$self->Access();
+    return (TDataStd_DeltaOnModificationOfExtStringArray*)$self->get();
     }
 };
 
 %extend Handle_TDataStd_DeltaOnModificationOfExtStringArray {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend TDataStd_DeltaOnModificationOfExtStringArray {
@@ -2207,19 +1388,20 @@ class Handle_TDataStd_DeltaOnModificationOfIntArray : public Handle_TDF_DeltaOnM
         static const Handle_TDataStd_DeltaOnModificationOfIntArray DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_TDataStd_DeltaOnModificationOfIntArray {
     TDataStd_DeltaOnModificationOfIntArray* _get_reference() {
-    return (TDataStd_DeltaOnModificationOfIntArray*)$self->Access();
+    return (TDataStd_DeltaOnModificationOfIntArray*)$self->get();
     }
 };
 
 %extend Handle_TDataStd_DeltaOnModificationOfIntArray {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend TDataStd_DeltaOnModificationOfIntArray {
@@ -2278,19 +1460,20 @@ class Handle_TDataStd_DeltaOnModificationOfIntPackedMap : public Handle_TDF_Delt
         static const Handle_TDataStd_DeltaOnModificationOfIntPackedMap DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_TDataStd_DeltaOnModificationOfIntPackedMap {
     TDataStd_DeltaOnModificationOfIntPackedMap* _get_reference() {
-    return (TDataStd_DeltaOnModificationOfIntPackedMap*)$self->Access();
+    return (TDataStd_DeltaOnModificationOfIntPackedMap*)$self->get();
     }
 };
 
 %extend Handle_TDataStd_DeltaOnModificationOfIntPackedMap {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend TDataStd_DeltaOnModificationOfIntPackedMap {
@@ -2349,19 +1532,20 @@ class Handle_TDataStd_DeltaOnModificationOfRealArray : public Handle_TDF_DeltaOn
         static const Handle_TDataStd_DeltaOnModificationOfRealArray DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_TDataStd_DeltaOnModificationOfRealArray {
     TDataStd_DeltaOnModificationOfRealArray* _get_reference() {
-    return (TDataStd_DeltaOnModificationOfRealArray*)$self->Access();
+    return (TDataStd_DeltaOnModificationOfRealArray*)$self->get();
     }
 };
 
 %extend Handle_TDataStd_DeltaOnModificationOfRealArray {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend TDataStd_DeltaOnModificationOfRealArray {
@@ -2399,7 +1583,7 @@ class TDataStd_Directory : public TDF_Attribute {
 ") AddDirectory;
 		static Handle_TDataStd_Directory AddDirectory (const Handle_TDataStd_Directory & dir);
 		%feature("compactdefaultargs") MakeObjectLabel;
-		%feature("autodoc", "	* Makes new label and returns it to insert other object attributes (sketch,part...etc...)
+		%feature("autodoc", "	* Makes new label and returns it to insert other object attributes --sketch,part...etc...--
 
 	:param dir:
 	:type dir: Handle_TDataStd_Directory &
@@ -2486,19 +1670,20 @@ class Handle_TDataStd_Directory : public Handle_TDF_Attribute {
         static const Handle_TDataStd_Directory DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_TDataStd_Directory {
     TDataStd_Directory* _get_reference() {
-    return (TDataStd_Directory*)$self->Access();
+    return (TDataStd_Directory*)$self->get();
     }
 };
 
 %extend Handle_TDataStd_Directory {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend TDataStd_Directory {
@@ -2611,19 +1796,20 @@ class Handle_TDataStd_Expression : public Handle_TDF_Attribute {
         static const Handle_TDataStd_Expression DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_TDataStd_Expression {
     TDataStd_Expression* _get_reference() {
-    return (TDataStd_Expression*)$self->Access();
+    return (TDataStd_Expression*)$self->get();
     }
 };
 
 %extend Handle_TDataStd_Expression {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend TDataStd_Expression {
@@ -2654,6 +1840,22 @@ class TDataStd_ExtStringArray : public TDF_Attribute {
 	:rtype: Handle_TDataStd_ExtStringArray
 ") Set;
 		static Handle_TDataStd_ExtStringArray Set (const TDF_Label & label,const Standard_Integer lower,const Standard_Integer upper,const Standard_Boolean isDelta = Standard_False);
+		%feature("compactdefaultargs") Set;
+		%feature("autodoc", "	* Finds, or creates, an ExtStringArray attribute with explicit user defined <guid>. The ExtStringArray attribute is returned.
+
+	:param label:
+	:type label: TDF_Label &
+	:param theGuid:
+	:type theGuid: Standard_GUID &
+	:param lower:
+	:type lower: int
+	:param upper:
+	:type upper: int
+	:param isDelta: default value is Standard_False
+	:type isDelta: bool
+	:rtype: Handle_TDataStd_ExtStringArray
+") Set;
+		static Handle_TDataStd_ExtStringArray Set (const TDF_Label & label,const Standard_GUID & theGuid,const Standard_Integer lower,const Standard_Integer upper,const Standard_Boolean isDelta = Standard_False);
 		%feature("compactdefaultargs") Init;
 		%feature("autodoc", "	* Initializes the inner array with bounds from <lower> to <upper>
 
@@ -2674,6 +1876,20 @@ class TDataStd_ExtStringArray : public TDF_Attribute {
 	:rtype: None
 ") SetValue;
 		void SetValue (const Standard_Integer Index,const TCollection_ExtendedString & Value);
+		%feature("compactdefaultargs") SetID;
+		%feature("autodoc", "	* Sets the explicit GUID --user defined-- for the attribute.
+
+	:param theGuid:
+	:type theGuid: Standard_GUID &
+	:rtype: None
+") SetID;
+		void SetID (const Standard_GUID & theGuid);
+		%feature("compactdefaultargs") SetID;
+		%feature("autodoc", "	* Sets default GUID for the attribute.
+
+	:rtype: None
+") SetID;
+		void SetID ();
 		%feature("compactdefaultargs") Value;
 		%feature("autodoc", "	* Returns the value of the <Index>th element of the array
 
@@ -2701,7 +1917,7 @@ class TDataStd_ExtStringArray : public TDF_Attribute {
 ") Length;
 		Standard_Integer Length ();
 		%feature("compactdefaultargs") ChangeArray;
-		%feature("autodoc", "	* Sets the inner array <myValue> of the ExtStringArray attribute to <newArray>. If value of <newArray> differs from <myValue>, Backup performed and myValue refers to new instance of HArray1OfExtendedString that holds <newArray> values If <isCheckItems> equal True each item of <newArray> will be checked with each item of <myValue> for coincidence (to avoid backup).
+		%feature("autodoc", "	* Sets the inner array <myValue> of the ExtStringArray attribute to <newArray>. If value of <newArray> differs from <myValue>, Backup performed and myValue refers to new instance of HArray1OfExtendedString that holds <newArray> values If <isCheckItems> equal True each item of <newArray> will be checked with each item of <myValue> for coincidence --to avoid backup--.
 
 	:param newArray:
 	:type newArray: Handle_TColStd_HArray1OfExtendedString &
@@ -2715,7 +1931,7 @@ class TDataStd_ExtStringArray : public TDF_Attribute {
 
 	:rtype: Handle_TColStd_HArray1OfExtendedString
 ") Array;
-		const Handle_TColStd_HArray1OfExtendedString Array ();
+		Handle_TColStd_HArray1OfExtendedString Array ();
 		%feature("compactdefaultargs") GetDelta;
 		%feature("autodoc", "	:rtype: bool
 ") GetDelta;
@@ -2804,19 +2020,20 @@ class Handle_TDataStd_ExtStringArray : public Handle_TDF_Attribute {
         static const Handle_TDataStd_ExtStringArray DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_TDataStd_ExtStringArray {
     TDataStd_ExtStringArray* _get_reference() {
-    return (TDataStd_ExtStringArray*)$self->Access();
+    return (TDataStd_ExtStringArray*)$self->get();
     }
 };
 
 %extend Handle_TDataStd_ExtStringArray {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend TDataStd_ExtStringArray {
@@ -2834,13 +2051,23 @@ class TDataStd_ExtStringList : public TDF_Attribute {
 ") GetID;
 		static const Standard_GUID & GetID ();
 		%feature("compactdefaultargs") Set;
-		%feature("autodoc", "	* Finds or creates a list of string values attribute.
+		%feature("autodoc", "	* Finds or creates a list of string values attribute with explicit user defined <guid>.
 
 	:param label:
 	:type label: TDF_Label &
 	:rtype: Handle_TDataStd_ExtStringList
 ") Set;
 		static Handle_TDataStd_ExtStringList Set (const TDF_Label & label);
+		%feature("compactdefaultargs") Set;
+		%feature("autodoc", "	* Finds or creates a list of string values attribute.
+
+	:param label:
+	:type label: TDF_Label &
+	:param theGuid:
+	:type theGuid: Standard_GUID &
+	:rtype: Handle_TDataStd_ExtStringList
+") Set;
+		static Handle_TDataStd_ExtStringList Set (const TDF_Label & label,const Standard_GUID & theGuid);
 		%feature("compactdefaultargs") TDataStd_ExtStringList;
 		%feature("autodoc", "	:rtype: None
 ") TDataStd_ExtStringList;
@@ -2865,6 +2092,20 @@ class TDataStd_ExtStringList : public TDF_Attribute {
 	:rtype: None
 ") Append;
 		void Append (const TCollection_ExtendedString & value);
+		%feature("compactdefaultargs") SetID;
+		%feature("autodoc", "	* Sets the explicit GUID --user defined-- for the attribute.
+
+	:param theGuid:
+	:type theGuid: Standard_GUID &
+	:rtype: None
+") SetID;
+		void SetID (const Standard_GUID & theGuid);
+		%feature("compactdefaultargs") SetID;
+		%feature("autodoc", "	* Sets default GUID for the attribute.
+
+	:rtype: None
+") SetID;
+		void SetID ();
 		%feature("compactdefaultargs") InsertBefore;
 		%feature("autodoc", "	* Inserts the <value> before the first meet of <before_value>.
 
@@ -2875,6 +2116,16 @@ class TDataStd_ExtStringList : public TDF_Attribute {
 	:rtype: bool
 ") InsertBefore;
 		Standard_Boolean InsertBefore (const TCollection_ExtendedString & value,const TCollection_ExtendedString & before_value);
+		%feature("compactdefaultargs") InsertBefore;
+		%feature("autodoc", "	* Inserts the <value> before the <index> position. The indices start with 1 .. Extent----.
+
+	:param index:
+	:type index: int
+	:param before_value:
+	:type before_value: TCollection_ExtendedString &
+	:rtype: bool
+") InsertBefore;
+		Standard_Boolean InsertBefore (const Standard_Integer index,const TCollection_ExtendedString & before_value);
 		%feature("compactdefaultargs") InsertAfter;
 		%feature("autodoc", "	* Inserts the <value> after the first meet of <after_value>.
 
@@ -2885,6 +2136,16 @@ class TDataStd_ExtStringList : public TDF_Attribute {
 	:rtype: bool
 ") InsertAfter;
 		Standard_Boolean InsertAfter (const TCollection_ExtendedString & value,const TCollection_ExtendedString & after_value);
+		%feature("compactdefaultargs") InsertAfter;
+		%feature("autodoc", "	* Inserts the <value> after the <index> position. The indices start with 1 .. Extent----.
+
+	:param index:
+	:type index: int
+	:param after_value:
+	:type after_value: TCollection_ExtendedString &
+	:rtype: bool
+") InsertAfter;
+		Standard_Boolean InsertAfter (const Standard_Integer index,const TCollection_ExtendedString & after_value);
 		%feature("compactdefaultargs") Remove;
 		%feature("autodoc", "	* Removes the first meet of the <value>.
 
@@ -2893,6 +2154,14 @@ class TDataStd_ExtStringList : public TDF_Attribute {
 	:rtype: bool
 ") Remove;
 		Standard_Boolean Remove (const TCollection_ExtendedString & value);
+		%feature("compactdefaultargs") Remove;
+		%feature("autodoc", "	* Removes a value at <index> position.
+
+	:param index:
+	:type index: int
+	:rtype: bool
+") Remove;
+		Standard_Boolean Remove (const Standard_Integer index);
 		%feature("compactdefaultargs") Clear;
 		%feature("autodoc", "	:rtype: None
 ") Clear;
@@ -2973,19 +2242,20 @@ class Handle_TDataStd_ExtStringList : public Handle_TDF_Attribute {
         static const Handle_TDataStd_ExtStringList DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_TDataStd_ExtStringList {
     TDataStd_ExtStringList* _get_reference() {
-    return (TDataStd_ExtStringList*)$self->Access();
+    return (TDataStd_ExtStringList*)$self->get();
     }
 };
 
 %extend Handle_TDataStd_ExtStringList {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend TDataStd_ExtStringList {
@@ -2994,7 +2264,7 @@ class Handle_TDataStd_ExtStringList : public Handle_TDF_Attribute {
 	}
 };
 %nodefaultctor TDataStd_HDataMapOfStringByte;
-class TDataStd_HDataMapOfStringByte : public MMgt_TShared {
+class TDataStd_HDataMapOfStringByte : public Standard_Transient {
 	public:
 		%feature("compactdefaultargs") TDataStd_HDataMapOfStringByte;
 		%feature("autodoc", "	:param NbBuckets: default value is 1
@@ -3038,7 +2308,7 @@ class TDataStd_HDataMapOfStringByte : public MMgt_TShared {
 %}
 
 %nodefaultctor Handle_TDataStd_HDataMapOfStringByte;
-class Handle_TDataStd_HDataMapOfStringByte : public Handle_MMgt_TShared {
+class Handle_TDataStd_HDataMapOfStringByte : public Handle_Standard_Transient {
 
     public:
         // constructors
@@ -3050,19 +2320,20 @@ class Handle_TDataStd_HDataMapOfStringByte : public Handle_MMgt_TShared {
         static const Handle_TDataStd_HDataMapOfStringByte DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_TDataStd_HDataMapOfStringByte {
     TDataStd_HDataMapOfStringByte* _get_reference() {
-    return (TDataStd_HDataMapOfStringByte*)$self->Access();
+    return (TDataStd_HDataMapOfStringByte*)$self->get();
     }
 };
 
 %extend Handle_TDataStd_HDataMapOfStringByte {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend TDataStd_HDataMapOfStringByte {
@@ -3071,7 +2342,7 @@ class Handle_TDataStd_HDataMapOfStringByte : public Handle_MMgt_TShared {
 	}
 };
 %nodefaultctor TDataStd_HDataMapOfStringHArray1OfInteger;
-class TDataStd_HDataMapOfStringHArray1OfInteger : public MMgt_TShared {
+class TDataStd_HDataMapOfStringHArray1OfInteger : public Standard_Transient {
 	public:
 		%feature("compactdefaultargs") TDataStd_HDataMapOfStringHArray1OfInteger;
 		%feature("autodoc", "	:param NbBuckets: default value is 1
@@ -3115,7 +2386,7 @@ class TDataStd_HDataMapOfStringHArray1OfInteger : public MMgt_TShared {
 %}
 
 %nodefaultctor Handle_TDataStd_HDataMapOfStringHArray1OfInteger;
-class Handle_TDataStd_HDataMapOfStringHArray1OfInteger : public Handle_MMgt_TShared {
+class Handle_TDataStd_HDataMapOfStringHArray1OfInteger : public Handle_Standard_Transient {
 
     public:
         // constructors
@@ -3127,19 +2398,20 @@ class Handle_TDataStd_HDataMapOfStringHArray1OfInteger : public Handle_MMgt_TSha
         static const Handle_TDataStd_HDataMapOfStringHArray1OfInteger DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_TDataStd_HDataMapOfStringHArray1OfInteger {
     TDataStd_HDataMapOfStringHArray1OfInteger* _get_reference() {
-    return (TDataStd_HDataMapOfStringHArray1OfInteger*)$self->Access();
+    return (TDataStd_HDataMapOfStringHArray1OfInteger*)$self->get();
     }
 };
 
 %extend Handle_TDataStd_HDataMapOfStringHArray1OfInteger {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend TDataStd_HDataMapOfStringHArray1OfInteger {
@@ -3148,7 +2420,7 @@ class Handle_TDataStd_HDataMapOfStringHArray1OfInteger : public Handle_MMgt_TSha
 	}
 };
 %nodefaultctor TDataStd_HDataMapOfStringHArray1OfReal;
-class TDataStd_HDataMapOfStringHArray1OfReal : public MMgt_TShared {
+class TDataStd_HDataMapOfStringHArray1OfReal : public Standard_Transient {
 	public:
 		%feature("compactdefaultargs") TDataStd_HDataMapOfStringHArray1OfReal;
 		%feature("autodoc", "	:param NbBuckets: default value is 1
@@ -3192,7 +2464,7 @@ class TDataStd_HDataMapOfStringHArray1OfReal : public MMgt_TShared {
 %}
 
 %nodefaultctor Handle_TDataStd_HDataMapOfStringHArray1OfReal;
-class Handle_TDataStd_HDataMapOfStringHArray1OfReal : public Handle_MMgt_TShared {
+class Handle_TDataStd_HDataMapOfStringHArray1OfReal : public Handle_Standard_Transient {
 
     public:
         // constructors
@@ -3204,19 +2476,20 @@ class Handle_TDataStd_HDataMapOfStringHArray1OfReal : public Handle_MMgt_TShared
         static const Handle_TDataStd_HDataMapOfStringHArray1OfReal DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_TDataStd_HDataMapOfStringHArray1OfReal {
     TDataStd_HDataMapOfStringHArray1OfReal* _get_reference() {
-    return (TDataStd_HDataMapOfStringHArray1OfReal*)$self->Access();
+    return (TDataStd_HDataMapOfStringHArray1OfReal*)$self->get();
     }
 };
 
 %extend Handle_TDataStd_HDataMapOfStringHArray1OfReal {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend TDataStd_HDataMapOfStringHArray1OfReal {
@@ -3225,7 +2498,7 @@ class Handle_TDataStd_HDataMapOfStringHArray1OfReal : public Handle_MMgt_TShared
 	}
 };
 %nodefaultctor TDataStd_HDataMapOfStringInteger;
-class TDataStd_HDataMapOfStringInteger : public MMgt_TShared {
+class TDataStd_HDataMapOfStringInteger : public Standard_Transient {
 	public:
 		%feature("compactdefaultargs") TDataStd_HDataMapOfStringInteger;
 		%feature("autodoc", "	:param NbBuckets: default value is 1
@@ -3269,7 +2542,7 @@ class TDataStd_HDataMapOfStringInteger : public MMgt_TShared {
 %}
 
 %nodefaultctor Handle_TDataStd_HDataMapOfStringInteger;
-class Handle_TDataStd_HDataMapOfStringInteger : public Handle_MMgt_TShared {
+class Handle_TDataStd_HDataMapOfStringInteger : public Handle_Standard_Transient {
 
     public:
         // constructors
@@ -3281,19 +2554,20 @@ class Handle_TDataStd_HDataMapOfStringInteger : public Handle_MMgt_TShared {
         static const Handle_TDataStd_HDataMapOfStringInteger DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_TDataStd_HDataMapOfStringInteger {
     TDataStd_HDataMapOfStringInteger* _get_reference() {
-    return (TDataStd_HDataMapOfStringInteger*)$self->Access();
+    return (TDataStd_HDataMapOfStringInteger*)$self->get();
     }
 };
 
 %extend Handle_TDataStd_HDataMapOfStringInteger {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend TDataStd_HDataMapOfStringInteger {
@@ -3302,7 +2576,7 @@ class Handle_TDataStd_HDataMapOfStringInteger : public Handle_MMgt_TShared {
 	}
 };
 %nodefaultctor TDataStd_HDataMapOfStringReal;
-class TDataStd_HDataMapOfStringReal : public MMgt_TShared {
+class TDataStd_HDataMapOfStringReal : public Standard_Transient {
 	public:
 		%feature("compactdefaultargs") TDataStd_HDataMapOfStringReal;
 		%feature("autodoc", "	:param NbBuckets: default value is 1
@@ -3346,7 +2620,7 @@ class TDataStd_HDataMapOfStringReal : public MMgt_TShared {
 %}
 
 %nodefaultctor Handle_TDataStd_HDataMapOfStringReal;
-class Handle_TDataStd_HDataMapOfStringReal : public Handle_MMgt_TShared {
+class Handle_TDataStd_HDataMapOfStringReal : public Handle_Standard_Transient {
 
     public:
         // constructors
@@ -3358,19 +2632,20 @@ class Handle_TDataStd_HDataMapOfStringReal : public Handle_MMgt_TShared {
         static const Handle_TDataStd_HDataMapOfStringReal DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_TDataStd_HDataMapOfStringReal {
     TDataStd_HDataMapOfStringReal* _get_reference() {
-    return (TDataStd_HDataMapOfStringReal*)$self->Access();
+    return (TDataStd_HDataMapOfStringReal*)$self->get();
     }
 };
 
 %extend Handle_TDataStd_HDataMapOfStringReal {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend TDataStd_HDataMapOfStringReal {
@@ -3379,7 +2654,7 @@ class Handle_TDataStd_HDataMapOfStringReal : public Handle_MMgt_TShared {
 	}
 };
 %nodefaultctor TDataStd_HDataMapOfStringString;
-class TDataStd_HDataMapOfStringString : public MMgt_TShared {
+class TDataStd_HDataMapOfStringString : public Standard_Transient {
 	public:
 		%feature("compactdefaultargs") TDataStd_HDataMapOfStringString;
 		%feature("autodoc", "	:param NbBuckets: default value is 1
@@ -3423,7 +2698,7 @@ class TDataStd_HDataMapOfStringString : public MMgt_TShared {
 %}
 
 %nodefaultctor Handle_TDataStd_HDataMapOfStringString;
-class Handle_TDataStd_HDataMapOfStringString : public Handle_MMgt_TShared {
+class Handle_TDataStd_HDataMapOfStringString : public Handle_Standard_Transient {
 
     public:
         // constructors
@@ -3435,143 +2710,23 @@ class Handle_TDataStd_HDataMapOfStringString : public Handle_MMgt_TShared {
         static const Handle_TDataStd_HDataMapOfStringString DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_TDataStd_HDataMapOfStringString {
     TDataStd_HDataMapOfStringString* _get_reference() {
-    return (TDataStd_HDataMapOfStringString*)$self->Access();
+    return (TDataStd_HDataMapOfStringString*)$self->get();
     }
 };
 
 %extend Handle_TDataStd_HDataMapOfStringString {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend TDataStd_HDataMapOfStringString {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor TDataStd_HLabelArray1;
-class TDataStd_HLabelArray1 : public MMgt_TShared {
-	public:
-		%feature("compactdefaultargs") TDataStd_HLabelArray1;
-		%feature("autodoc", "	:param Low:
-	:type Low: int
-	:param Up:
-	:type Up: int
-	:rtype: None
-") TDataStd_HLabelArray1;
-		 TDataStd_HLabelArray1 (const Standard_Integer Low,const Standard_Integer Up);
-		%feature("compactdefaultargs") TDataStd_HLabelArray1;
-		%feature("autodoc", "	:param Low:
-	:type Low: int
-	:param Up:
-	:type Up: int
-	:param V:
-	:type V: TDF_Label &
-	:rtype: None
-") TDataStd_HLabelArray1;
-		 TDataStd_HLabelArray1 (const Standard_Integer Low,const Standard_Integer Up,const TDF_Label & V);
-		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	:param V:
-	:type V: TDF_Label &
-	:rtype: None
-") Init;
-		void Init (const TDF_Label & V);
-		%feature("compactdefaultargs") Length;
-		%feature("autodoc", "	:rtype: int
-") Length;
-		Standard_Integer Length ();
-		%feature("compactdefaultargs") Lower;
-		%feature("autodoc", "	:rtype: int
-") Lower;
-		Standard_Integer Lower ();
-		%feature("compactdefaultargs") Upper;
-		%feature("autodoc", "	:rtype: int
-") Upper;
-		Standard_Integer Upper ();
-		%feature("compactdefaultargs") SetValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param Value:
-	:type Value: TDF_Label &
-	:rtype: None
-") SetValue;
-		void SetValue (const Standard_Integer Index,const TDF_Label & Value);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: TDF_Label
-") Value;
-		const TDF_Label & Value (const Standard_Integer Index);
-		%feature("compactdefaultargs") ChangeValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: TDF_Label
-") ChangeValue;
-		TDF_Label & ChangeValue (const Standard_Integer Index);
-		%feature("compactdefaultargs") Array1;
-		%feature("autodoc", "	:rtype: TDataStd_LabelArray1
-") Array1;
-		const TDataStd_LabelArray1 & Array1 ();
-		%feature("compactdefaultargs") ChangeArray1;
-		%feature("autodoc", "	:rtype: TDataStd_LabelArray1
-") ChangeArray1;
-		TDataStd_LabelArray1 & ChangeArray1 ();
-};
-
-
-%extend TDataStd_HLabelArray1 {
-	%pythoncode {
-		def GetHandle(self):
-		    try:
-		        return self.thisHandle
-		    except:
-		        self.thisHandle = Handle_TDataStd_HLabelArray1(self)
-		        self.thisown = False
-		        return self.thisHandle
-	}
-};
-
-%pythonappend Handle_TDataStd_HLabelArray1::Handle_TDataStd_HLabelArray1 %{
-    # register the handle in the base object
-    if len(args) > 0:
-        register_handle(self, args[0])
-%}
-
-%nodefaultctor Handle_TDataStd_HLabelArray1;
-class Handle_TDataStd_HLabelArray1 : public Handle_MMgt_TShared {
-
-    public:
-        // constructors
-        Handle_TDataStd_HLabelArray1();
-        Handle_TDataStd_HLabelArray1(const Handle_TDataStd_HLabelArray1 &aHandle);
-        Handle_TDataStd_HLabelArray1(const TDataStd_HLabelArray1 *anItem);
-        void Nullify();
-        Standard_Boolean IsNull() const;
-        static const Handle_TDataStd_HLabelArray1 DownCast(const Handle_Standard_Transient &AnObject);
-
-};
-%extend Handle_TDataStd_HLabelArray1 {
-    TDataStd_HLabelArray1* _get_reference() {
-    return (TDataStd_HLabelArray1*)$self->Access();
-    }
-};
-
-%extend Handle_TDataStd_HLabelArray1 {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
-};
-
-%extend TDataStd_HLabelArray1 {
 	%pythoncode {
 	__repr__ = _dumps_object
 	}
@@ -3727,19 +2882,20 @@ class Handle_TDataStd_IntPackedMap : public Handle_TDF_Attribute {
         static const Handle_TDataStd_IntPackedMap DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_TDataStd_IntPackedMap {
     TDataStd_IntPackedMap* _get_reference() {
-    return (TDataStd_IntPackedMap*)$self->Access();
+    return (TDataStd_IntPackedMap*)$self->get();
     }
 };
 
 %extend Handle_TDataStd_IntPackedMap {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend TDataStd_IntPackedMap {
@@ -3757,7 +2913,7 @@ class TDataStd_Integer : public TDF_Attribute {
 ") GetID;
 		static const Standard_GUID & GetID ();
 		%feature("compactdefaultargs") Set;
-		%feature("autodoc", "	* Finds, or creates, an Integer attribute and sets <value> the Integer attribute is returned. Integer methods ===============
+		%feature("autodoc", "	* Finds, or creates, an Integer attribute and sets <value> the Integer attribute is returned.
 
 	:param label:
 	:type label: TDF_Label &
@@ -3767,11 +2923,39 @@ class TDataStd_Integer : public TDF_Attribute {
 ") Set;
 		static Handle_TDataStd_Integer Set (const TDF_Label & label,const Standard_Integer value);
 		%feature("compactdefaultargs") Set;
-		%feature("autodoc", "	:param V:
+		%feature("autodoc", "	* Finds, or creates, an Integer attribute with explicit user defined <guid> and sets <value>. The Integer attribute is returned.
+
+	:param label:
+	:type label: TDF_Label &
+	:param guid:
+	:type guid: Standard_GUID &
+	:param value:
+	:type value: int
+	:rtype: Handle_TDataStd_Integer
+") Set;
+		static Handle_TDataStd_Integer Set (const TDF_Label & label,const Standard_GUID & guid,const Standard_Integer value);
+		%feature("compactdefaultargs") Set;
+		%feature("autodoc", "	* Integer methods ===============
+
+	:param V:
 	:type V: int
 	:rtype: None
 ") Set;
 		void Set (const Standard_Integer V);
+		%feature("compactdefaultargs") SetID;
+		%feature("autodoc", "	* Sets the explicit GUID --user defined-- for the attribute.
+
+	:param guid:
+	:type guid: Standard_GUID &
+	:rtype: None
+") SetID;
+		void SetID (const Standard_GUID & guid);
+		%feature("compactdefaultargs") SetID;
+		%feature("autodoc", "	* Sets default GUID for the attribute.
+
+	:rtype: None
+") SetID;
+		void SetID ();
 		%feature("compactdefaultargs") Get;
 		%feature("autodoc", "	* Returns the integer value contained in the attribute.
 
@@ -3852,19 +3036,20 @@ class Handle_TDataStd_Integer : public Handle_TDF_Attribute {
         static const Handle_TDataStd_Integer DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_TDataStd_Integer {
     TDataStd_Integer* _get_reference() {
-    return (TDataStd_Integer*)$self->Access();
+    return (TDataStd_Integer*)$self->get();
     }
 };
 
 %extend Handle_TDataStd_Integer {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend TDataStd_Integer {
@@ -3895,6 +3080,22 @@ class TDataStd_IntegerArray : public TDF_Attribute {
 	:rtype: Handle_TDataStd_IntegerArray
 ") Set;
 		static Handle_TDataStd_IntegerArray Set (const TDF_Label & label,const Standard_Integer lower,const Standard_Integer upper,const Standard_Boolean isDelta = Standard_False);
+		%feature("compactdefaultargs") Set;
+		%feature("autodoc", "	* Finds, or creates, an IntegerArray attribute with explicit user defined <guid>. The IntegerArray attribute is returned.
+
+	:param label:
+	:type label: TDF_Label &
+	:param theGuid:
+	:type theGuid: Standard_GUID &
+	:param lower:
+	:type lower: int
+	:param upper:
+	:type upper: int
+	:param isDelta: default value is Standard_False
+	:type isDelta: bool
+	:rtype: Handle_TDataStd_IntegerArray
+") Set;
+		static Handle_TDataStd_IntegerArray Set (const TDF_Label & label,const Standard_GUID & theGuid,const Standard_Integer lower,const Standard_Integer upper,const Standard_Boolean isDelta = Standard_False);
 		%feature("compactdefaultargs") Init;
 		%feature("autodoc", "	* Initialize the inner array with bounds from <lower> to <upper>
 
@@ -3915,6 +3116,20 @@ class TDataStd_IntegerArray : public TDF_Attribute {
 	:rtype: None
 ") SetValue;
 		void SetValue (const Standard_Integer Index,const Standard_Integer Value);
+		%feature("compactdefaultargs") SetID;
+		%feature("autodoc", "	* Sets the explicit GUID --user defined-- for the attribute.
+
+	:param theGuid:
+	:type theGuid: Standard_GUID &
+	:rtype: None
+") SetID;
+		void SetID (const Standard_GUID & theGuid);
+		%feature("compactdefaultargs") SetID;
+		%feature("autodoc", "	* Sets default GUID for the attribute.
+
+	:rtype: None
+") SetID;
+		void SetID ();
 		%feature("compactdefaultargs") Value;
 		%feature("autodoc", "	* Return the value of the <Index>th element of the array
 
@@ -3942,7 +3157,7 @@ class TDataStd_IntegerArray : public TDF_Attribute {
 ") Length;
 		Standard_Integer Length ();
 		%feature("compactdefaultargs") ChangeArray;
-		%feature("autodoc", "	* Sets the inner array <myValue> of the IntegerArray attribute to <newArray>. If value of <newArray> differs from <myValue>, Backup performed and myValue refers to new instance of HArray1OfInteger that holds <newArray> values If <isCheckItems> equal True each item of <newArray> will be checked with each item of <myValue> for coincidence (to avoid backup).
+		%feature("autodoc", "	* Sets the inner array <myValue> of the IntegerArray attribute to <newArray>. If value of <newArray> differs from <myValue>, Backup performed and myValue refers to new instance of HArray1OfInteger that holds <newArray> values If <isCheckItems> equal True each item of <newArray> will be checked with each item of <myValue> for coincidence --to avoid backup--.
 
 	:param newArray:
 	:type newArray: Handle_TColStd_HArray1OfInteger &
@@ -3956,7 +3171,7 @@ class TDataStd_IntegerArray : public TDF_Attribute {
 
 	:rtype: Handle_TColStd_HArray1OfInteger
 ") Array;
-		const Handle_TColStd_HArray1OfInteger Array ();
+		Handle_TColStd_HArray1OfInteger Array ();
 		%feature("compactdefaultargs") GetDelta;
 		%feature("autodoc", "	:rtype: bool
 ") GetDelta;
@@ -3988,7 +3203,7 @@ class TDataStd_IntegerArray : public TDF_Attribute {
 ") NewEmpty;
 		Handle_TDF_Attribute NewEmpty ();
 		%feature("compactdefaultargs") Paste;
-		%feature("autodoc", "	* Note. Uses inside ChangeArray() method
+		%feature("autodoc", "	* Note. Uses inside ChangeArray---- method
 
 	:param Into:
 	:type Into: Handle_TDF_Attribute &
@@ -4047,19 +3262,20 @@ class Handle_TDataStd_IntegerArray : public Handle_TDF_Attribute {
         static const Handle_TDataStd_IntegerArray DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_TDataStd_IntegerArray {
     TDataStd_IntegerArray* _get_reference() {
-    return (TDataStd_IntegerArray*)$self->Access();
+    return (TDataStd_IntegerArray*)$self->get();
     }
 };
 
 %extend Handle_TDataStd_IntegerArray {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend TDataStd_IntegerArray {
@@ -4084,6 +3300,16 @@ class TDataStd_IntegerList : public TDF_Attribute {
 	:rtype: Handle_TDataStd_IntegerList
 ") Set;
 		static Handle_TDataStd_IntegerList Set (const TDF_Label & label);
+		%feature("compactdefaultargs") Set;
+		%feature("autodoc", "	* Finds or creates a list of integer values attribute with explicit user defined <guid>.
+
+	:param label:
+	:type label: TDF_Label &
+	:param theGuid:
+	:type theGuid: Standard_GUID &
+	:rtype: Handle_TDataStd_IntegerList
+") Set;
+		static Handle_TDataStd_IntegerList Set (const TDF_Label & label,const Standard_GUID & theGuid);
 		%feature("compactdefaultargs") TDataStd_IntegerList;
 		%feature("autodoc", "	:rtype: None
 ") TDataStd_IntegerList;
@@ -4108,6 +3334,20 @@ class TDataStd_IntegerList : public TDF_Attribute {
 	:rtype: None
 ") Append;
 		void Append (const Standard_Integer value);
+		%feature("compactdefaultargs") SetID;
+		%feature("autodoc", "	* Sets the explicit GUID --user defined-- for the attribute.
+
+	:param theGuid:
+	:type theGuid: Standard_GUID &
+	:rtype: None
+") SetID;
+		void SetID (const Standard_GUID & theGuid);
+		%feature("compactdefaultargs") SetID;
+		%feature("autodoc", "	* Sets default GUID for the attribute.
+
+	:rtype: None
+") SetID;
+		void SetID ();
 		%feature("compactdefaultargs") InsertBefore;
 		%feature("autodoc", "	* Inserts the <value> before the first meet of <before_value>.
 
@@ -4118,6 +3358,16 @@ class TDataStd_IntegerList : public TDF_Attribute {
 	:rtype: bool
 ") InsertBefore;
 		Standard_Boolean InsertBefore (const Standard_Integer value,const Standard_Integer before_value);
+		%feature("compactdefaultargs") InsertBeforeByIndex;
+		%feature("autodoc", "	* Inserts the <value> before the <index> position. The indices start with 1 .. Extent----.
+
+	:param index:
+	:type index: int
+	:param before_value:
+	:type before_value: int
+	:rtype: bool
+") InsertBeforeByIndex;
+		Standard_Boolean InsertBeforeByIndex (const Standard_Integer index,const Standard_Integer before_value);
 		%feature("compactdefaultargs") InsertAfter;
 		%feature("autodoc", "	* Inserts the <value> after the first meet of <after_value>.
 
@@ -4128,6 +3378,16 @@ class TDataStd_IntegerList : public TDF_Attribute {
 	:rtype: bool
 ") InsertAfter;
 		Standard_Boolean InsertAfter (const Standard_Integer value,const Standard_Integer after_value);
+		%feature("compactdefaultargs") InsertAfterByIndex;
+		%feature("autodoc", "	* Inserts the <value> after the <index> position. The indices start with 1 .. Extent----.
+
+	:param index:
+	:type index: int
+	:param after_value:
+	:type after_value: int
+	:rtype: bool
+") InsertAfterByIndex;
+		Standard_Boolean InsertAfterByIndex (const Standard_Integer index,const Standard_Integer after_value);
 		%feature("compactdefaultargs") Remove;
 		%feature("autodoc", "	* Removes the first meet of the <value>.
 
@@ -4136,6 +3396,14 @@ class TDataStd_IntegerList : public TDF_Attribute {
 	:rtype: bool
 ") Remove;
 		Standard_Boolean Remove (const Standard_Integer value);
+		%feature("compactdefaultargs") RemoveByIndex;
+		%feature("autodoc", "	* Removes a value at <index> position.
+
+	:param index:
+	:type index: int
+	:rtype: bool
+") RemoveByIndex;
+		Standard_Boolean RemoveByIndex (const Standard_Integer index);
 		%feature("compactdefaultargs") Clear;
 		%feature("autodoc", "	:rtype: None
 ") Clear;
@@ -4216,595 +3484,23 @@ class Handle_TDataStd_IntegerList : public Handle_TDF_Attribute {
         static const Handle_TDataStd_IntegerList DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_TDataStd_IntegerList {
     TDataStd_IntegerList* _get_reference() {
-    return (TDataStd_IntegerList*)$self->Access();
+    return (TDataStd_IntegerList*)$self->get();
     }
 };
 
 %extend Handle_TDataStd_IntegerList {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend TDataStd_IntegerList {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor TDataStd_LabelArray1;
-class TDataStd_LabelArray1 {
-	public:
-		%feature("compactdefaultargs") TDataStd_LabelArray1;
-		%feature("autodoc", "	:param Low:
-	:type Low: int
-	:param Up:
-	:type Up: int
-	:rtype: None
-") TDataStd_LabelArray1;
-		 TDataStd_LabelArray1 (const Standard_Integer Low,const Standard_Integer Up);
-		%feature("compactdefaultargs") TDataStd_LabelArray1;
-		%feature("autodoc", "	:param Item:
-	:type Item: TDF_Label &
-	:param Low:
-	:type Low: int
-	:param Up:
-	:type Up: int
-	:rtype: None
-") TDataStd_LabelArray1;
-		 TDataStd_LabelArray1 (const TDF_Label & Item,const Standard_Integer Low,const Standard_Integer Up);
-		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	:param V:
-	:type V: TDF_Label &
-	:rtype: None
-") Init;
-		void Init (const TDF_Label & V);
-		%feature("compactdefaultargs") Destroy;
-		%feature("autodoc", "	:rtype: None
-") Destroy;
-		void Destroy ();
-		%feature("compactdefaultargs") IsAllocated;
-		%feature("autodoc", "	:rtype: bool
-") IsAllocated;
-		Standard_Boolean IsAllocated ();
-		%feature("compactdefaultargs") Assign;
-		%feature("autodoc", "	:param Other:
-	:type Other: TDataStd_LabelArray1 &
-	:rtype: TDataStd_LabelArray1
-") Assign;
-		const TDataStd_LabelArray1 & Assign (const TDataStd_LabelArray1 & Other);
-		%feature("compactdefaultargs") operator =;
-		%feature("autodoc", "	:param Other:
-	:type Other: TDataStd_LabelArray1 &
-	:rtype: TDataStd_LabelArray1
-") operator =;
-		const TDataStd_LabelArray1 & operator = (const TDataStd_LabelArray1 & Other);
-		%feature("compactdefaultargs") Length;
-		%feature("autodoc", "	:rtype: int
-") Length;
-		Standard_Integer Length ();
-		%feature("compactdefaultargs") Lower;
-		%feature("autodoc", "	:rtype: int
-") Lower;
-		Standard_Integer Lower ();
-		%feature("compactdefaultargs") Upper;
-		%feature("autodoc", "	:rtype: int
-") Upper;
-		Standard_Integer Upper ();
-		%feature("compactdefaultargs") SetValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param Value:
-	:type Value: TDF_Label &
-	:rtype: None
-") SetValue;
-		void SetValue (const Standard_Integer Index,const TDF_Label & Value);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: TDF_Label
-") Value;
-		const TDF_Label & Value (const Standard_Integer Index);
-		%feature("compactdefaultargs") ChangeValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: TDF_Label
-") ChangeValue;
-		TDF_Label & ChangeValue (const Standard_Integer Index);
-};
-
-
-%extend TDataStd_LabelArray1 {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor TDataStd_ListIteratorOfListOfByte;
-class TDataStd_ListIteratorOfListOfByte {
-	public:
-		%feature("compactdefaultargs") TDataStd_ListIteratorOfListOfByte;
-		%feature("autodoc", "	:rtype: None
-") TDataStd_ListIteratorOfListOfByte;
-		 TDataStd_ListIteratorOfListOfByte ();
-		%feature("compactdefaultargs") TDataStd_ListIteratorOfListOfByte;
-		%feature("autodoc", "	:param L:
-	:type L: TDataStd_ListOfByte &
-	:rtype: None
-") TDataStd_ListIteratorOfListOfByte;
-		 TDataStd_ListIteratorOfListOfByte (const TDataStd_ListOfByte & L);
-		%feature("compactdefaultargs") Initialize;
-		%feature("autodoc", "	:param L:
-	:type L: TDataStd_ListOfByte &
-	:rtype: None
-") Initialize;
-		void Initialize (const TDataStd_ListOfByte & L);
-		%feature("compactdefaultargs") More;
-		%feature("autodoc", "	:rtype: bool
-") More;
-		Standard_Boolean More ();
-		%feature("compactdefaultargs") Next;
-		%feature("autodoc", "	:rtype: None
-") Next;
-		void Next ();
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:rtype: Standard_Byte
-") Value;
-		Standard_Byte & Value ();
-};
-
-
-%extend TDataStd_ListIteratorOfListOfByte {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor TDataStd_ListIteratorOfListOfExtendedString;
-class TDataStd_ListIteratorOfListOfExtendedString {
-	public:
-		%feature("compactdefaultargs") TDataStd_ListIteratorOfListOfExtendedString;
-		%feature("autodoc", "	:rtype: None
-") TDataStd_ListIteratorOfListOfExtendedString;
-		 TDataStd_ListIteratorOfListOfExtendedString ();
-		%feature("compactdefaultargs") TDataStd_ListIteratorOfListOfExtendedString;
-		%feature("autodoc", "	:param L:
-	:type L: TDataStd_ListOfExtendedString &
-	:rtype: None
-") TDataStd_ListIteratorOfListOfExtendedString;
-		 TDataStd_ListIteratorOfListOfExtendedString (const TDataStd_ListOfExtendedString & L);
-		%feature("compactdefaultargs") Initialize;
-		%feature("autodoc", "	:param L:
-	:type L: TDataStd_ListOfExtendedString &
-	:rtype: None
-") Initialize;
-		void Initialize (const TDataStd_ListOfExtendedString & L);
-		%feature("compactdefaultargs") More;
-		%feature("autodoc", "	:rtype: bool
-") More;
-		Standard_Boolean More ();
-		%feature("compactdefaultargs") Next;
-		%feature("autodoc", "	:rtype: None
-") Next;
-		void Next ();
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:rtype: TCollection_ExtendedString
-") Value;
-		TCollection_ExtendedString & Value ();
-};
-
-
-%extend TDataStd_ListIteratorOfListOfExtendedString {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor TDataStd_ListNodeOfListOfByte;
-class TDataStd_ListNodeOfListOfByte : public TCollection_MapNode {
-	public:
-		%feature("compactdefaultargs") TDataStd_ListNodeOfListOfByte;
-		%feature("autodoc", "	:param I:
-	:type I: Standard_Byte &
-	:param n:
-	:type n: TCollection_MapNodePtr &
-	:rtype: None
-") TDataStd_ListNodeOfListOfByte;
-		 TDataStd_ListNodeOfListOfByte (const Standard_Byte & I,const TCollection_MapNodePtr & n);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:rtype: Standard_Byte
-") Value;
-		Standard_Byte & Value ();
-};
-
-
-%extend TDataStd_ListNodeOfListOfByte {
-	%pythoncode {
-		def GetHandle(self):
-		    try:
-		        return self.thisHandle
-		    except:
-		        self.thisHandle = Handle_TDataStd_ListNodeOfListOfByte(self)
-		        self.thisown = False
-		        return self.thisHandle
-	}
-};
-
-%pythonappend Handle_TDataStd_ListNodeOfListOfByte::Handle_TDataStd_ListNodeOfListOfByte %{
-    # register the handle in the base object
-    if len(args) > 0:
-        register_handle(self, args[0])
-%}
-
-%nodefaultctor Handle_TDataStd_ListNodeOfListOfByte;
-class Handle_TDataStd_ListNodeOfListOfByte : public Handle_TCollection_MapNode {
-
-    public:
-        // constructors
-        Handle_TDataStd_ListNodeOfListOfByte();
-        Handle_TDataStd_ListNodeOfListOfByte(const Handle_TDataStd_ListNodeOfListOfByte &aHandle);
-        Handle_TDataStd_ListNodeOfListOfByte(const TDataStd_ListNodeOfListOfByte *anItem);
-        void Nullify();
-        Standard_Boolean IsNull() const;
-        static const Handle_TDataStd_ListNodeOfListOfByte DownCast(const Handle_Standard_Transient &AnObject);
-
-};
-%extend Handle_TDataStd_ListNodeOfListOfByte {
-    TDataStd_ListNodeOfListOfByte* _get_reference() {
-    return (TDataStd_ListNodeOfListOfByte*)$self->Access();
-    }
-};
-
-%extend Handle_TDataStd_ListNodeOfListOfByte {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
-};
-
-%extend TDataStd_ListNodeOfListOfByte {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor TDataStd_ListNodeOfListOfExtendedString;
-class TDataStd_ListNodeOfListOfExtendedString : public TCollection_MapNode {
-	public:
-		%feature("compactdefaultargs") TDataStd_ListNodeOfListOfExtendedString;
-		%feature("autodoc", "	:param I:
-	:type I: TCollection_ExtendedString &
-	:param n:
-	:type n: TCollection_MapNodePtr &
-	:rtype: None
-") TDataStd_ListNodeOfListOfExtendedString;
-		 TDataStd_ListNodeOfListOfExtendedString (const TCollection_ExtendedString & I,const TCollection_MapNodePtr & n);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:rtype: TCollection_ExtendedString
-") Value;
-		TCollection_ExtendedString & Value ();
-};
-
-
-%extend TDataStd_ListNodeOfListOfExtendedString {
-	%pythoncode {
-		def GetHandle(self):
-		    try:
-		        return self.thisHandle
-		    except:
-		        self.thisHandle = Handle_TDataStd_ListNodeOfListOfExtendedString(self)
-		        self.thisown = False
-		        return self.thisHandle
-	}
-};
-
-%pythonappend Handle_TDataStd_ListNodeOfListOfExtendedString::Handle_TDataStd_ListNodeOfListOfExtendedString %{
-    # register the handle in the base object
-    if len(args) > 0:
-        register_handle(self, args[0])
-%}
-
-%nodefaultctor Handle_TDataStd_ListNodeOfListOfExtendedString;
-class Handle_TDataStd_ListNodeOfListOfExtendedString : public Handle_TCollection_MapNode {
-
-    public:
-        // constructors
-        Handle_TDataStd_ListNodeOfListOfExtendedString();
-        Handle_TDataStd_ListNodeOfListOfExtendedString(const Handle_TDataStd_ListNodeOfListOfExtendedString &aHandle);
-        Handle_TDataStd_ListNodeOfListOfExtendedString(const TDataStd_ListNodeOfListOfExtendedString *anItem);
-        void Nullify();
-        Standard_Boolean IsNull() const;
-        static const Handle_TDataStd_ListNodeOfListOfExtendedString DownCast(const Handle_Standard_Transient &AnObject);
-
-};
-%extend Handle_TDataStd_ListNodeOfListOfExtendedString {
-    TDataStd_ListNodeOfListOfExtendedString* _get_reference() {
-    return (TDataStd_ListNodeOfListOfExtendedString*)$self->Access();
-    }
-};
-
-%extend Handle_TDataStd_ListNodeOfListOfExtendedString {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
-};
-
-%extend TDataStd_ListNodeOfListOfExtendedString {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor TDataStd_ListOfByte;
-class TDataStd_ListOfByte {
-	public:
-		%feature("compactdefaultargs") TDataStd_ListOfByte;
-		%feature("autodoc", "	:rtype: None
-") TDataStd_ListOfByte;
-		 TDataStd_ListOfByte ();
-		%feature("compactdefaultargs") TDataStd_ListOfByte;
-		%feature("autodoc", "	:param Other:
-	:type Other: TDataStd_ListOfByte &
-	:rtype: None
-") TDataStd_ListOfByte;
-		 TDataStd_ListOfByte (const TDataStd_ListOfByte & Other);
-		%feature("compactdefaultargs") Assign;
-		%feature("autodoc", "	:param Other:
-	:type Other: TDataStd_ListOfByte &
-	:rtype: None
-") Assign;
-		void Assign (const TDataStd_ListOfByte & Other);
-		%feature("compactdefaultargs") operator =;
-		%feature("autodoc", "	:param Other:
-	:type Other: TDataStd_ListOfByte &
-	:rtype: None
-") operator =;
-		void operator = (const TDataStd_ListOfByte & Other);
-		%feature("compactdefaultargs") Extent;
-		%feature("autodoc", "	:rtype: int
-") Extent;
-		Standard_Integer Extent ();
-		%feature("compactdefaultargs") Clear;
-		%feature("autodoc", "	:rtype: None
-") Clear;
-		void Clear ();
-		%feature("compactdefaultargs") IsEmpty;
-		%feature("autodoc", "	:rtype: bool
-") IsEmpty;
-		Standard_Boolean IsEmpty ();
-		%feature("compactdefaultargs") Prepend;
-		%feature("autodoc", "	:param I:
-	:type I: Standard_Byte &
-	:rtype: None
-") Prepend;
-		void Prepend (const Standard_Byte & I);
-		%feature("compactdefaultargs") Prepend;
-		%feature("autodoc", "	:param I:
-	:type I: Standard_Byte &
-	:param theIt:
-	:type theIt: TDataStd_ListIteratorOfListOfByte &
-	:rtype: None
-") Prepend;
-		void Prepend (const Standard_Byte & I,TDataStd_ListIteratorOfListOfByte & theIt);
-		%feature("compactdefaultargs") Prepend;
-		%feature("autodoc", "	:param Other:
-	:type Other: TDataStd_ListOfByte &
-	:rtype: None
-") Prepend;
-		void Prepend (TDataStd_ListOfByte & Other);
-		%feature("compactdefaultargs") Append;
-		%feature("autodoc", "	:param I:
-	:type I: Standard_Byte &
-	:rtype: None
-") Append;
-		void Append (const Standard_Byte & I);
-		%feature("compactdefaultargs") Append;
-		%feature("autodoc", "	:param I:
-	:type I: Standard_Byte &
-	:param theIt:
-	:type theIt: TDataStd_ListIteratorOfListOfByte &
-	:rtype: None
-") Append;
-		void Append (const Standard_Byte & I,TDataStd_ListIteratorOfListOfByte & theIt);
-		%feature("compactdefaultargs") Append;
-		%feature("autodoc", "	:param Other:
-	:type Other: TDataStd_ListOfByte &
-	:rtype: None
-") Append;
-		void Append (TDataStd_ListOfByte & Other);
-		%feature("compactdefaultargs") First;
-		%feature("autodoc", "	:rtype: Standard_Byte
-") First;
-		Standard_Byte & First ();
-		%feature("compactdefaultargs") Last;
-		%feature("autodoc", "	:rtype: Standard_Byte
-") Last;
-		Standard_Byte & Last ();
-		%feature("compactdefaultargs") RemoveFirst;
-		%feature("autodoc", "	:rtype: None
-") RemoveFirst;
-		void RemoveFirst ();
-		%feature("compactdefaultargs") Remove;
-		%feature("autodoc", "	:param It:
-	:type It: TDataStd_ListIteratorOfListOfByte &
-	:rtype: None
-") Remove;
-		void Remove (TDataStd_ListIteratorOfListOfByte & It);
-		%feature("compactdefaultargs") InsertBefore;
-		%feature("autodoc", "	:param I:
-	:type I: Standard_Byte &
-	:param It:
-	:type It: TDataStd_ListIteratorOfListOfByte &
-	:rtype: None
-") InsertBefore;
-		void InsertBefore (const Standard_Byte & I,TDataStd_ListIteratorOfListOfByte & It);
-		%feature("compactdefaultargs") InsertBefore;
-		%feature("autodoc", "	:param Other:
-	:type Other: TDataStd_ListOfByte &
-	:param It:
-	:type It: TDataStd_ListIteratorOfListOfByte &
-	:rtype: None
-") InsertBefore;
-		void InsertBefore (TDataStd_ListOfByte & Other,TDataStd_ListIteratorOfListOfByte & It);
-		%feature("compactdefaultargs") InsertAfter;
-		%feature("autodoc", "	:param I:
-	:type I: Standard_Byte &
-	:param It:
-	:type It: TDataStd_ListIteratorOfListOfByte &
-	:rtype: None
-") InsertAfter;
-		void InsertAfter (const Standard_Byte & I,TDataStd_ListIteratorOfListOfByte & It);
-		%feature("compactdefaultargs") InsertAfter;
-		%feature("autodoc", "	:param Other:
-	:type Other: TDataStd_ListOfByte &
-	:param It:
-	:type It: TDataStd_ListIteratorOfListOfByte &
-	:rtype: None
-") InsertAfter;
-		void InsertAfter (TDataStd_ListOfByte & Other,TDataStd_ListIteratorOfListOfByte & It);
-};
-
-
-%extend TDataStd_ListOfByte {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor TDataStd_ListOfExtendedString;
-class TDataStd_ListOfExtendedString {
-	public:
-		%feature("compactdefaultargs") TDataStd_ListOfExtendedString;
-		%feature("autodoc", "	:rtype: None
-") TDataStd_ListOfExtendedString;
-		 TDataStd_ListOfExtendedString ();
-		%feature("compactdefaultargs") TDataStd_ListOfExtendedString;
-		%feature("autodoc", "	:param Other:
-	:type Other: TDataStd_ListOfExtendedString &
-	:rtype: None
-") TDataStd_ListOfExtendedString;
-		 TDataStd_ListOfExtendedString (const TDataStd_ListOfExtendedString & Other);
-		%feature("compactdefaultargs") Assign;
-		%feature("autodoc", "	:param Other:
-	:type Other: TDataStd_ListOfExtendedString &
-	:rtype: None
-") Assign;
-		void Assign (const TDataStd_ListOfExtendedString & Other);
-		%feature("compactdefaultargs") operator =;
-		%feature("autodoc", "	:param Other:
-	:type Other: TDataStd_ListOfExtendedString &
-	:rtype: None
-") operator =;
-		void operator = (const TDataStd_ListOfExtendedString & Other);
-		%feature("compactdefaultargs") Extent;
-		%feature("autodoc", "	:rtype: int
-") Extent;
-		Standard_Integer Extent ();
-		%feature("compactdefaultargs") Clear;
-		%feature("autodoc", "	:rtype: None
-") Clear;
-		void Clear ();
-		%feature("compactdefaultargs") IsEmpty;
-		%feature("autodoc", "	:rtype: bool
-") IsEmpty;
-		Standard_Boolean IsEmpty ();
-		%feature("compactdefaultargs") Prepend;
-		%feature("autodoc", "	:param I:
-	:type I: TCollection_ExtendedString &
-	:rtype: None
-") Prepend;
-		void Prepend (const TCollection_ExtendedString & I);
-		%feature("compactdefaultargs") Prepend;
-		%feature("autodoc", "	:param I:
-	:type I: TCollection_ExtendedString &
-	:param theIt:
-	:type theIt: TDataStd_ListIteratorOfListOfExtendedString &
-	:rtype: None
-") Prepend;
-		void Prepend (const TCollection_ExtendedString & I,TDataStd_ListIteratorOfListOfExtendedString & theIt);
-		%feature("compactdefaultargs") Prepend;
-		%feature("autodoc", "	:param Other:
-	:type Other: TDataStd_ListOfExtendedString &
-	:rtype: None
-") Prepend;
-		void Prepend (TDataStd_ListOfExtendedString & Other);
-		%feature("compactdefaultargs") Append;
-		%feature("autodoc", "	:param I:
-	:type I: TCollection_ExtendedString &
-	:rtype: None
-") Append;
-		void Append (const TCollection_ExtendedString & I);
-		%feature("compactdefaultargs") Append;
-		%feature("autodoc", "	:param I:
-	:type I: TCollection_ExtendedString &
-	:param theIt:
-	:type theIt: TDataStd_ListIteratorOfListOfExtendedString &
-	:rtype: None
-") Append;
-		void Append (const TCollection_ExtendedString & I,TDataStd_ListIteratorOfListOfExtendedString & theIt);
-		%feature("compactdefaultargs") Append;
-		%feature("autodoc", "	:param Other:
-	:type Other: TDataStd_ListOfExtendedString &
-	:rtype: None
-") Append;
-		void Append (TDataStd_ListOfExtendedString & Other);
-		%feature("compactdefaultargs") First;
-		%feature("autodoc", "	:rtype: TCollection_ExtendedString
-") First;
-		TCollection_ExtendedString & First ();
-		%feature("compactdefaultargs") Last;
-		%feature("autodoc", "	:rtype: TCollection_ExtendedString
-") Last;
-		TCollection_ExtendedString & Last ();
-		%feature("compactdefaultargs") RemoveFirst;
-		%feature("autodoc", "	:rtype: None
-") RemoveFirst;
-		void RemoveFirst ();
-		%feature("compactdefaultargs") Remove;
-		%feature("autodoc", "	:param It:
-	:type It: TDataStd_ListIteratorOfListOfExtendedString &
-	:rtype: None
-") Remove;
-		void Remove (TDataStd_ListIteratorOfListOfExtendedString & It);
-		%feature("compactdefaultargs") InsertBefore;
-		%feature("autodoc", "	:param I:
-	:type I: TCollection_ExtendedString &
-	:param It:
-	:type It: TDataStd_ListIteratorOfListOfExtendedString &
-	:rtype: None
-") InsertBefore;
-		void InsertBefore (const TCollection_ExtendedString & I,TDataStd_ListIteratorOfListOfExtendedString & It);
-		%feature("compactdefaultargs") InsertBefore;
-		%feature("autodoc", "	:param Other:
-	:type Other: TDataStd_ListOfExtendedString &
-	:param It:
-	:type It: TDataStd_ListIteratorOfListOfExtendedString &
-	:rtype: None
-") InsertBefore;
-		void InsertBefore (TDataStd_ListOfExtendedString & Other,TDataStd_ListIteratorOfListOfExtendedString & It);
-		%feature("compactdefaultargs") InsertAfter;
-		%feature("autodoc", "	:param I:
-	:type I: TCollection_ExtendedString &
-	:param It:
-	:type It: TDataStd_ListIteratorOfListOfExtendedString &
-	:rtype: None
-") InsertAfter;
-		void InsertAfter (const TCollection_ExtendedString & I,TDataStd_ListIteratorOfListOfExtendedString & It);
-		%feature("compactdefaultargs") InsertAfter;
-		%feature("autodoc", "	:param Other:
-	:type Other: TDataStd_ListOfExtendedString &
-	:param It:
-	:type It: TDataStd_ListIteratorOfListOfExtendedString &
-	:rtype: None
-") InsertAfter;
-		void InsertAfter (TDataStd_ListOfExtendedString & Other,TDataStd_ListIteratorOfListOfExtendedString & It);
-};
-
-
-%extend TDataStd_ListOfExtendedString {
 	%pythoncode {
 	__repr__ = _dumps_object
 	}
@@ -4819,7 +3515,7 @@ class TDataStd_Name : public TDF_Attribute {
 ") GetID;
 		static const Standard_GUID & GetID ();
 		%feature("compactdefaultargs") Set;
-		%feature("autodoc", "	* Creates (if does not exist) and sets the name in the name attribute. from any label <L> search in father labels (L is not concerned) the first name attribute.if found set it in <father>. class methods working on the name tree ====================================== Search in the whole TDF_Data the Name attribute which fit with <fullPath>. Returns True if found. Search under <currentLabel> a label which fit with <name>. Returns True if found. Shortcut which avoids building a ListOfExtendedStrin. Search in the whole TDF_Data the label which fit with name Returns True if found. tools methods to translate path <-> pathlist =========================================== move to draw For Draw test we may provide this tool method which convert a path in a sequence of string to call after the FindLabel methods. Example: if it's given 'Assembly:Part_1:Sketch_5' it will return in <pathlist> the list of 3 strings: 'Assembly','Part_1','Sketch_5'. move to draw from <pathlist> build the string path Name methods ============
+		%feature("autodoc", "	* Creates --if does not exist-- and sets the name in the name attribute. from any label <L> search in father labels --L is not concerned-- the first name attribute.if found set it in <father>. class methods working on the name tree ====================================== Search in the whole TDF_Data the Name attribute which fit with <fullPath>. Returns True if found. Search under <currentLabel> a label which fit with <name>. Returns True if found. Shortcut which avoids building a ListOfExtendedStrin. Search in the whole TDF_Data the label which fit with name Returns True if found. tools methods to translate path <-> pathlist =========================================== move to draw For Draw test we may provide this tool method which convert a path in a sequence of string to call after the FindLabel methods. Example: if it's given 'Assembly:Part_1:Sketch_5' it will return in <pathlist> the list of 3 strings: 'Assembly','Part_1','Sketch_5'. move to draw from <pathlist> build the string path Name methods ============
 
 	:param label:
 	:type label: TDF_Label &
@@ -4828,6 +3524,18 @@ class TDataStd_Name : public TDF_Attribute {
 	:rtype: Handle_TDataStd_Name
 ") Set;
 		static Handle_TDataStd_Name Set (const TDF_Label & label,const TCollection_ExtendedString & string);
+		%feature("compactdefaultargs") Set;
+		%feature("autodoc", "	* Finds, or creates, a Name attribute with explicit user defined <guid> and sets <string>. The Name attribute is returned.
+
+	:param label:
+	:type label: TDF_Label &
+	:param guid:
+	:type guid: Standard_GUID &
+	:param string:
+	:type string: TCollection_ExtendedString &
+	:rtype: Handle_TDataStd_Name
+") Set;
+		static Handle_TDataStd_Name Set (const TDF_Label & label,const Standard_GUID & guid,const TCollection_ExtendedString & string);
 		%feature("compactdefaultargs") TDataStd_Name;
 		%feature("autodoc", "	:rtype: None
 ") TDataStd_Name;
@@ -4840,6 +3548,20 @@ class TDataStd_Name : public TDF_Attribute {
 	:rtype: None
 ") Set;
 		void Set (const TCollection_ExtendedString & S);
+		%feature("compactdefaultargs") SetID;
+		%feature("autodoc", "	* Sets the explicit user defined GUID to the attribute.
+
+	:param guid:
+	:type guid: Standard_GUID &
+	:rtype: None
+") SetID;
+		void SetID (const Standard_GUID & guid);
+		%feature("compactdefaultargs") SetID;
+		%feature("autodoc", "	* Sets default GUID for the attribute.
+
+	:rtype: None
+") SetID;
+		void SetID ();
 		%feature("compactdefaultargs") Get;
 		%feature("autodoc", "	* Returns the name contained in this name attribute.
 
@@ -4910,19 +3632,20 @@ class Handle_TDataStd_Name : public Handle_TDF_Attribute {
         static const Handle_TDataStd_Name DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_TDataStd_Name {
     TDataStd_Name* _get_reference() {
-    return (TDataStd_Name*)$self->Access();
+    return (TDataStd_Name*)$self->get();
     }
 };
 
 %extend Handle_TDataStd_Name {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend TDataStd_Name {
@@ -4966,7 +3689,7 @@ class TDataStd_NamedData : public TDF_Attribute {
 ") HasInteger;
 		Standard_Boolean HasInteger (const TCollection_ExtendedString & theName);
 		%feature("compactdefaultargs") GetInteger;
-		%feature("autodoc", "	* Returns the integer value specified by the Name. It returns 0 if internal map doesn't contain the specified integer (use HasInteger() to check before).
+		%feature("autodoc", "	* Returns the integer value specified by the Name. It returns 0 if internal map doesn't contain the specified integer --use HasInteger---- to check before--.
 
 	:param theName:
 	:type theName: TCollection_ExtendedString &
@@ -5012,7 +3735,7 @@ class TDataStd_NamedData : public TDF_Attribute {
 ") HasReal;
 		Standard_Boolean HasReal (const TCollection_ExtendedString & theName);
 		%feature("compactdefaultargs") GetReal;
-		%feature("autodoc", "	* Returns the named real. It returns 0.0 if there is no such a named real (use HasReal()).
+		%feature("autodoc", "	* Returns the named real. It returns 0.0 if there is no such a named real --use HasReal------.
 
 	:param theName:
 	:type theName: TCollection_ExtendedString &
@@ -5058,7 +3781,7 @@ class TDataStd_NamedData : public TDF_Attribute {
 ") HasString;
 		Standard_Boolean HasString (const TCollection_ExtendedString & theName);
 		%feature("compactdefaultargs") GetString;
-		%feature("autodoc", "	* Returns the named string. It returns an empty string if there is no such a named string (use HasString()).
+		%feature("autodoc", "	* Returns the named string. It returns an empty string if there is no such a named string --use HasString------.
 
 	:param theName:
 	:type theName: TCollection_ExtendedString &
@@ -5104,7 +3827,7 @@ class TDataStd_NamedData : public TDF_Attribute {
 ") HasByte;
 		Standard_Boolean HasByte (const TCollection_ExtendedString & theName);
 		%feature("compactdefaultargs") GetByte;
-		%feature("autodoc", "	* Returns the named byte. It returns 0 if there is no such a named byte (use HasByte()).
+		%feature("autodoc", "	* Returns the named byte. It returns 0 if there is no such a named byte --use HasByte------.
 
 	:param theName:
 	:type theName: TCollection_ExtendedString &
@@ -5150,7 +3873,7 @@ class TDataStd_NamedData : public TDF_Attribute {
 ") HasArrayOfIntegers;
 		Standard_Boolean HasArrayOfIntegers (const TCollection_ExtendedString & theName);
 		%feature("compactdefaultargs") GetArrayOfIntegers;
-		%feature("autodoc", "	* Returns the named array of integer values. It returns a NULL Handle if there is no such a named array of integers (use HasArrayOfIntegers()).
+		%feature("autodoc", "	* Returns the named array of integer values. It returns a NULL Handle if there is no such a named array of integers --use HasArrayOfIntegers------.
 
 	:param theName:
 	:type theName: TCollection_ExtendedString &
@@ -5196,7 +3919,7 @@ class TDataStd_NamedData : public TDF_Attribute {
 ") HasArrayOfReals;
 		Standard_Boolean HasArrayOfReals (const TCollection_ExtendedString & theName);
 		%feature("compactdefaultargs") GetArrayOfReals;
-		%feature("autodoc", "	* Returns the named array of real values. It returns a NULL Handle if there is no such a named array of reals (use HasArrayOfReals()).
+		%feature("autodoc", "	* Returns the named array of real values. It returns a NULL Handle if there is no such a named array of reals --use HasArrayOfReals------.
 
 	:param theName:
 	:type theName: TCollection_ExtendedString &
@@ -5291,19 +4014,20 @@ class Handle_TDataStd_NamedData : public Handle_TDF_Attribute {
         static const Handle_TDataStd_NamedData DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_TDataStd_NamedData {
     TDataStd_NamedData* _get_reference() {
-    return (TDataStd_NamedData*)$self->Access();
+    return (TDataStd_NamedData*)$self->get();
     }
 };
 
 %extend Handle_TDataStd_NamedData {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend TDataStd_NamedData {
@@ -5426,19 +4150,20 @@ class Handle_TDataStd_NoteBook : public Handle_TDF_Attribute {
         static const Handle_TDataStd_NoteBook DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_TDataStd_NoteBook {
     TDataStd_NoteBook* _get_reference() {
-    return (TDataStd_NoteBook*)$self->Access();
+    return (TDataStd_NoteBook*)$self->get();
     }
 };
 
 %extend Handle_TDataStd_NoteBook {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend TDataStd_NoteBook {
@@ -5450,13 +4175,13 @@ class Handle_TDataStd_NoteBook : public Handle_TDF_Attribute {
 class TDataStd_Real : public TDF_Attribute {
 	public:
 		%feature("compactdefaultargs") GetID;
-		%feature("autodoc", "	* class methods ============= Returns the GUID for real numbers.
+		%feature("autodoc", "	* class methods ============= Returns the default GUID for real numbers.
 
 	:rtype: Standard_GUID
 ") GetID;
 		static const Standard_GUID & GetID ();
 		%feature("compactdefaultargs") Set;
-		%feature("autodoc", "	* Finds, or creates, an Real attribute and sets <value> the Real attribute is returned. the Real dimension is Scalar by default. use SetDimension to overwrite. Real methods ============
+		%feature("autodoc", "	* Finds, or creates, a Real attribute with default GUID and sets <value>. The Real attribute is returned. The Real dimension is Scalar by default. Use SetDimension to overwrite. Real methods ============
 
 	:param label:
 	:type label: TDF_Label &
@@ -5465,28 +4190,58 @@ class TDataStd_Real : public TDF_Attribute {
 	:rtype: Handle_TDataStd_Real
 ") Set;
 		static Handle_TDataStd_Real Set (const TDF_Label & label,const Standard_Real value);
+		%feature("compactdefaultargs") Set;
+		%feature("autodoc", "	* Finds, or creates, a Real attribute with explicit GUID and sets <value>. The Real attribute is returned. Real methods ============
+
+	:param label:
+	:type label: TDF_Label &
+	:param guid:
+	:type guid: Standard_GUID &
+	:param value:
+	:type value: float
+	:rtype: Handle_TDataStd_Real
+") Set;
+		static Handle_TDataStd_Real Set (const TDF_Label & label,const Standard_GUID & guid,const Standard_Real value);
 		%feature("compactdefaultargs") TDataStd_Real;
 		%feature("autodoc", "	:rtype: None
 ") TDataStd_Real;
 		 TDataStd_Real ();
 		%feature("compactdefaultargs") SetDimension;
-		%feature("autodoc", "	:param DIM:
+		%feature("autodoc", "	* Obsolete method that will be removed in next versions. This field is not supported in the persistence mechanism.
+
+	:param DIM:
 	:type DIM: TDataStd_RealEnum
 	:rtype: None
 ") SetDimension;
 		void SetDimension (const TDataStd_RealEnum DIM);
 		%feature("compactdefaultargs") GetDimension;
-		%feature("autodoc", "	:rtype: TDataStd_RealEnum
+		%feature("autodoc", "	* Obsolete method that will be removed in next versions. This field is not supported in the persistence mechanism.
+
+	:rtype: TDataStd_RealEnum
 ") GetDimension;
 		TDataStd_RealEnum GetDimension ();
 		%feature("compactdefaultargs") Set;
-		%feature("autodoc", "	* Finds or creates the real number V.
+		%feature("autodoc", "	* Sets the real number V.
 
 	:param V:
 	:type V: float
 	:rtype: None
 ") Set;
 		void Set (const Standard_Real V);
+		%feature("compactdefaultargs") SetID;
+		%feature("autodoc", "	* Sets the explicit GUID for the attribute.
+
+	:param guid:
+	:type guid: Standard_GUID &
+	:rtype: None
+") SetID;
+		void SetID (const Standard_GUID & guid);
+		%feature("compactdefaultargs") SetID;
+		%feature("autodoc", "	* Sets default GUID for the attribute.
+
+	:rtype: None
+") SetID;
+		void SetID ();
 		%feature("compactdefaultargs") Get;
 		%feature("autodoc", "	* Returns the real number value contained in the attribute.
 
@@ -5563,19 +4318,20 @@ class Handle_TDataStd_Real : public Handle_TDF_Attribute {
         static const Handle_TDataStd_Real DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_TDataStd_Real {
     TDataStd_Real* _get_reference() {
-    return (TDataStd_Real*)$self->Access();
+    return (TDataStd_Real*)$self->get();
     }
 };
 
 %extend Handle_TDataStd_Real {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend TDataStd_Real {
@@ -5606,6 +4362,22 @@ class TDataStd_RealArray : public TDF_Attribute {
 	:rtype: Handle_TDataStd_RealArray
 ") Set;
 		static Handle_TDataStd_RealArray Set (const TDF_Label & label,const Standard_Integer lower,const Standard_Integer upper,const Standard_Boolean isDelta = Standard_False);
+		%feature("compactdefaultargs") Set;
+		%feature("autodoc", "	* Finds, or creates, an RealArray attribute with explicit user defined <guid>. The RealArray attribute is returned.
+
+	:param label:
+	:type label: TDF_Label &
+	:param theGuid:
+	:type theGuid: Standard_GUID &
+	:param lower:
+	:type lower: int
+	:param upper:
+	:type upper: int
+	:param isDelta: default value is Standard_False
+	:type isDelta: bool
+	:rtype: Handle_TDataStd_RealArray
+") Set;
+		static Handle_TDataStd_RealArray Set (const TDF_Label & label,const Standard_GUID & theGuid,const Standard_Integer lower,const Standard_Integer upper,const Standard_Boolean isDelta = Standard_False);
 		%feature("compactdefaultargs") Init;
 		%feature("autodoc", "	* Initialize the inner array with bounds from <lower> to <upper>
 
@@ -5616,6 +4388,20 @@ class TDataStd_RealArray : public TDF_Attribute {
 	:rtype: None
 ") Init;
 		void Init (const Standard_Integer lower,const Standard_Integer upper);
+		%feature("compactdefaultargs") SetID;
+		%feature("autodoc", "	* Sets the explicit GUID --user defined-- for the attribute.
+
+	:param theGuid:
+	:type theGuid: Standard_GUID &
+	:rtype: None
+") SetID;
+		void SetID (const Standard_GUID & theGuid);
+		%feature("compactdefaultargs") SetID;
+		%feature("autodoc", "	* Sets default GUID for the attribute.
+
+	:rtype: None
+") SetID;
+		void SetID ();
 		%feature("compactdefaultargs") SetValue;
 		%feature("autodoc", "	* Sets the <Index>th element of the array to <Value> OutOfRange exception is raised if <Index> doesn't respect Lower and Upper bounds of the internal array.
 
@@ -5653,7 +4439,7 @@ class TDataStd_RealArray : public TDF_Attribute {
 ") Length;
 		Standard_Integer Length ();
 		%feature("compactdefaultargs") ChangeArray;
-		%feature("autodoc", "	* Sets the inner array <myValue> of the RealArray attribute to <newArray>. If value of <newArray> differs from <myValue>, Backup performed and myValue refers to new instance of HArray1OfReal that holds <newArray> values If <isCheckItems> equal True each item of <newArray> will be checked with each item of <myValue> for coincidence (to avoid backup).
+		%feature("autodoc", "	* Sets the inner array <myValue> of the RealArray attribute to <newArray>. If value of <newArray> differs from <myValue>, Backup performed and myValue refers to new instance of HArray1OfReal that holds <newArray> values If <isCheckItems> equal True each item of <newArray> will be checked with each item of <myValue> for coincidence --to avoid backup--.
 
 	:param newArray:
 	:type newArray: Handle_TColStd_HArray1OfReal &
@@ -5667,7 +4453,7 @@ class TDataStd_RealArray : public TDF_Attribute {
 
 	:rtype: Handle_TColStd_HArray1OfReal
 ") Array;
-		const Handle_TColStd_HArray1OfReal Array ();
+		Handle_TColStd_HArray1OfReal Array ();
 		%feature("compactdefaultargs") GetDelta;
 		%feature("autodoc", "	:rtype: bool
 ") GetDelta;
@@ -5699,7 +4485,7 @@ class TDataStd_RealArray : public TDF_Attribute {
 ") NewEmpty;
 		Handle_TDF_Attribute NewEmpty ();
 		%feature("compactdefaultargs") Paste;
-		%feature("autodoc", "	* Note. Uses inside ChangeArray() method
+		%feature("autodoc", "	* Note. Uses inside ChangeArray---- method
 
 	:param Into:
 	:type Into: Handle_TDF_Attribute &
@@ -5758,19 +4544,20 @@ class Handle_TDataStd_RealArray : public Handle_TDF_Attribute {
         static const Handle_TDataStd_RealArray DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_TDataStd_RealArray {
     TDataStd_RealArray* _get_reference() {
-    return (TDataStd_RealArray*)$self->Access();
+    return (TDataStd_RealArray*)$self->get();
     }
 };
 
 %extend Handle_TDataStd_RealArray {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend TDataStd_RealArray {
@@ -5795,6 +4582,16 @@ class TDataStd_RealList : public TDF_Attribute {
 	:rtype: Handle_TDataStd_RealList
 ") Set;
 		static Handle_TDataStd_RealList Set (const TDF_Label & label);
+		%feature("compactdefaultargs") Set;
+		%feature("autodoc", "	* Finds or creates a list of double values attribute with explicit user defined <guid>.
+
+	:param label:
+	:type label: TDF_Label &
+	:param theGuid:
+	:type theGuid: Standard_GUID &
+	:rtype: Handle_TDataStd_RealList
+") Set;
+		static Handle_TDataStd_RealList Set (const TDF_Label & label,const Standard_GUID & theGuid);
 		%feature("compactdefaultargs") TDataStd_RealList;
 		%feature("autodoc", "	:rtype: None
 ") TDataStd_RealList;
@@ -5819,6 +4616,20 @@ class TDataStd_RealList : public TDF_Attribute {
 	:rtype: None
 ") Append;
 		void Append (const Standard_Real value);
+		%feature("compactdefaultargs") SetID;
+		%feature("autodoc", "	* Sets the explicit GUID --user defined-- for the attribute.
+
+	:param theGuid:
+	:type theGuid: Standard_GUID &
+	:rtype: None
+") SetID;
+		void SetID (const Standard_GUID & theGuid);
+		%feature("compactdefaultargs") SetID;
+		%feature("autodoc", "	* Sets default GUID for the attribute.
+
+	:rtype: None
+") SetID;
+		void SetID ();
 		%feature("compactdefaultargs") InsertBefore;
 		%feature("autodoc", "	* Inserts the <value> before the first meet of <before_value>.
 
@@ -5829,6 +4640,16 @@ class TDataStd_RealList : public TDF_Attribute {
 	:rtype: bool
 ") InsertBefore;
 		Standard_Boolean InsertBefore (const Standard_Real value,const Standard_Real before_value);
+		%feature("compactdefaultargs") InsertBeforeByIndex;
+		%feature("autodoc", "	* Inserts the <value> before the <index> position. The indices start with 1 .. Extent----.
+
+	:param index:
+	:type index: int
+	:param before_value:
+	:type before_value: float
+	:rtype: bool
+") InsertBeforeByIndex;
+		Standard_Boolean InsertBeforeByIndex (const Standard_Integer index,const Standard_Real before_value);
 		%feature("compactdefaultargs") InsertAfter;
 		%feature("autodoc", "	* Inserts the <value> after the first meet of <after_value>.
 
@@ -5839,6 +4660,16 @@ class TDataStd_RealList : public TDF_Attribute {
 	:rtype: bool
 ") InsertAfter;
 		Standard_Boolean InsertAfter (const Standard_Real value,const Standard_Real after_value);
+		%feature("compactdefaultargs") InsertAfterByIndex;
+		%feature("autodoc", "	* Inserts the <value> after the <index> position. The indices start with 1 .. Extent----.
+
+	:param index:
+	:type index: int
+	:param after_value:
+	:type after_value: float
+	:rtype: bool
+") InsertAfterByIndex;
+		Standard_Boolean InsertAfterByIndex (const Standard_Integer index,const Standard_Real after_value);
 		%feature("compactdefaultargs") Remove;
 		%feature("autodoc", "	* Removes the first meet of the <value>.
 
@@ -5847,6 +4678,14 @@ class TDataStd_RealList : public TDF_Attribute {
 	:rtype: bool
 ") Remove;
 		Standard_Boolean Remove (const Standard_Real value);
+		%feature("compactdefaultargs") RemoveByIndex;
+		%feature("autodoc", "	* Removes a value at <index> position.
+
+	:param index:
+	:type index: int
+	:rtype: bool
+") RemoveByIndex;
+		Standard_Boolean RemoveByIndex (const Standard_Integer index);
 		%feature("compactdefaultargs") Clear;
 		%feature("autodoc", "	:rtype: None
 ") Clear;
@@ -5927,19 +4766,20 @@ class Handle_TDataStd_RealList : public Handle_TDF_Attribute {
         static const Handle_TDataStd_RealList DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_TDataStd_RealList {
     TDataStd_RealList* _get_reference() {
-    return (TDataStd_RealList*)$self->Access();
+    return (TDataStd_RealList*)$self->get();
     }
 };
 
 %extend Handle_TDataStd_RealList {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend TDataStd_RealList {
@@ -5951,13 +4791,13 @@ class Handle_TDataStd_RealList : public Handle_TDF_Attribute {
 class TDataStd_ReferenceArray : public TDF_Attribute {
 	public:
 		%feature("compactdefaultargs") GetID;
-		%feature("autodoc", "	* Static methods ============== Returns the ID of the array of references (labels) attribute.
+		%feature("autodoc", "	* Static methods ============== Returns the ID of the array of references --labels-- attribute.
 
 	:rtype: Standard_GUID
 ") GetID;
 		static const Standard_GUID & GetID ();
 		%feature("compactdefaultargs") Set;
-		%feature("autodoc", "	* Finds or creates an array of reference values (labels) attribute.
+		%feature("autodoc", "	* Finds or creates an array of reference values --labels-- attribute.
 
 	:param label:
 	:type label: TDF_Label &
@@ -5968,6 +4808,20 @@ class TDataStd_ReferenceArray : public TDF_Attribute {
 	:rtype: Handle_TDataStd_ReferenceArray
 ") Set;
 		static Handle_TDataStd_ReferenceArray Set (const TDF_Label & label,const Standard_Integer lower,const Standard_Integer upper);
+		%feature("compactdefaultargs") Set;
+		%feature("autodoc", "	* Finds or creates an array of reference values --labels-- attribute with explicit user defined <guid>.
+
+	:param label:
+	:type label: TDF_Label &
+	:param theGuid:
+	:type theGuid: Standard_GUID &
+	:param lower:
+	:type lower: int
+	:param upper:
+	:type upper: int
+	:rtype: Handle_TDataStd_ReferenceArray
+") Set;
+		static Handle_TDataStd_ReferenceArray Set (const TDF_Label & label,const Standard_GUID & theGuid,const Standard_Integer lower,const Standard_Integer upper);
 		%feature("compactdefaultargs") Init;
 		%feature("autodoc", "	* Initialize the inner array with bounds from <lower> to <upper>
 
@@ -5988,6 +4842,20 @@ class TDataStd_ReferenceArray : public TDF_Attribute {
 	:rtype: None
 ") SetValue;
 		void SetValue (const Standard_Integer index,const TDF_Label & value);
+		%feature("compactdefaultargs") SetID;
+		%feature("autodoc", "	* Sets the explicit GUID --user defined-- for the attribute.
+
+	:param theGuid:
+	:type theGuid: Standard_GUID &
+	:rtype: None
+") SetID;
+		void SetID (const Standard_GUID & theGuid);
+		%feature("compactdefaultargs") SetID;
+		%feature("autodoc", "	* Sets default GUID for the attribute.
+
+	:rtype: None
+") SetID;
+		void SetID ();
 		%feature("compactdefaultargs") Value;
 		%feature("autodoc", "	* Returns the value of the <Index>th element of the array.
 
@@ -6100,19 +4968,20 @@ class Handle_TDataStd_ReferenceArray : public Handle_TDF_Attribute {
         static const Handle_TDataStd_ReferenceArray DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_TDataStd_ReferenceArray {
     TDataStd_ReferenceArray* _get_reference() {
-    return (TDataStd_ReferenceArray*)$self->Access();
+    return (TDataStd_ReferenceArray*)$self->get();
     }
 };
 
 %extend Handle_TDataStd_ReferenceArray {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend TDataStd_ReferenceArray {
@@ -6124,19 +4993,29 @@ class Handle_TDataStd_ReferenceArray : public Handle_TDF_Attribute {
 class TDataStd_ReferenceList : public TDF_Attribute {
 	public:
 		%feature("compactdefaultargs") GetID;
-		%feature("autodoc", "	* Static methods ============== Returns the ID of the list of references (labels) attribute.
+		%feature("autodoc", "	* Static methods ============== Returns the ID of the list of references --labels-- attribute.
 
 	:rtype: Standard_GUID
 ") GetID;
 		static const Standard_GUID & GetID ();
 		%feature("compactdefaultargs") Set;
-		%feature("autodoc", "	* Finds or creates a list of reference values (labels) attribute.
+		%feature("autodoc", "	* Finds or creates a list of reference values --labels-- attribute.
 
 	:param label:
 	:type label: TDF_Label &
 	:rtype: Handle_TDataStd_ReferenceList
 ") Set;
 		static Handle_TDataStd_ReferenceList Set (const TDF_Label & label);
+		%feature("compactdefaultargs") Set;
+		%feature("autodoc", "	* Finds or creates a list of reference values --labels-- attribute with explicit user defined <guid>.
+
+	:param label:
+	:type label: TDF_Label &
+	:param theGuid:
+	:type theGuid: Standard_GUID &
+	:rtype: Handle_TDataStd_ReferenceList
+") Set;
+		static Handle_TDataStd_ReferenceList Set (const TDF_Label & label,const Standard_GUID & theGuid);
 		%feature("compactdefaultargs") TDataStd_ReferenceList;
 		%feature("autodoc", "	:rtype: None
 ") TDataStd_ReferenceList;
@@ -6161,6 +5040,20 @@ class TDataStd_ReferenceList : public TDF_Attribute {
 	:rtype: None
 ") Append;
 		void Append (const TDF_Label & value);
+		%feature("compactdefaultargs") SetID;
+		%feature("autodoc", "	* Sets the explicit GUID --user defined-- for the attribute.
+
+	:param theGuid:
+	:type theGuid: Standard_GUID &
+	:rtype: None
+") SetID;
+		void SetID (const Standard_GUID & theGuid);
+		%feature("compactdefaultargs") SetID;
+		%feature("autodoc", "	* Sets default GUID for the attribute.
+
+	:rtype: None
+") SetID;
+		void SetID ();
 		%feature("compactdefaultargs") InsertBefore;
 		%feature("autodoc", "	* Inserts the <value> before the first meet of <before_value>.
 
@@ -6171,6 +5064,16 @@ class TDataStd_ReferenceList : public TDF_Attribute {
 	:rtype: bool
 ") InsertBefore;
 		Standard_Boolean InsertBefore (const TDF_Label & value,const TDF_Label & before_value);
+		%feature("compactdefaultargs") InsertBefore;
+		%feature("autodoc", "	* Inserts the label before the <index> position. The indices start with 1 .. Extent----.
+
+	:param index:
+	:type index: int
+	:param before_value:
+	:type before_value: TDF_Label &
+	:rtype: bool
+") InsertBefore;
+		Standard_Boolean InsertBefore (const Standard_Integer index,const TDF_Label & before_value);
 		%feature("compactdefaultargs") InsertAfter;
 		%feature("autodoc", "	* Inserts the <value> after the first meet of <after_value>.
 
@@ -6181,6 +5084,16 @@ class TDataStd_ReferenceList : public TDF_Attribute {
 	:rtype: bool
 ") InsertAfter;
 		Standard_Boolean InsertAfter (const TDF_Label & value,const TDF_Label & after_value);
+		%feature("compactdefaultargs") InsertAfter;
+		%feature("autodoc", "	* Inserts the label after the <index> position. The indices start with 1 .. Extent----.
+
+	:param index:
+	:type index: int
+	:param after_value:
+	:type after_value: TDF_Label &
+	:rtype: bool
+") InsertAfter;
+		Standard_Boolean InsertAfter (const Standard_Integer index,const TDF_Label & after_value);
 		%feature("compactdefaultargs") Remove;
 		%feature("autodoc", "	* Removes the first meet of the <value>.
 
@@ -6189,6 +5102,14 @@ class TDataStd_ReferenceList : public TDF_Attribute {
 	:rtype: bool
 ") Remove;
 		Standard_Boolean Remove (const TDF_Label & value);
+		%feature("compactdefaultargs") Remove;
+		%feature("autodoc", "	* Removes a label at 'index' position.
+
+	:param index:
+	:type index: int
+	:rtype: bool
+") Remove;
+		Standard_Boolean Remove (const Standard_Integer index);
 		%feature("compactdefaultargs") Clear;
 		%feature("autodoc", "	:rtype: None
 ") Clear;
@@ -6275,19 +5196,20 @@ class Handle_TDataStd_ReferenceList : public Handle_TDF_Attribute {
         static const Handle_TDataStd_ReferenceList DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_TDataStd_ReferenceList {
     TDataStd_ReferenceList* _get_reference() {
-    return (TDataStd_ReferenceList*)$self->Access();
+    return (TDataStd_ReferenceList*)$self->get();
     }
 };
 
 %extend Handle_TDataStd_ReferenceList {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend TDataStd_ReferenceList {
@@ -6400,19 +5322,20 @@ class Handle_TDataStd_Relation : public Handle_TDF_Attribute {
         static const Handle_TDataStd_Relation DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_TDataStd_Relation {
     TDataStd_Relation* _get_reference() {
-    return (TDataStd_Relation*)$self->Access();
+    return (TDataStd_Relation*)$self->get();
     }
 };
 
 %extend Handle_TDataStd_Relation {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend TDataStd_Relation {
@@ -6505,19 +5428,20 @@ class Handle_TDataStd_Tick : public Handle_TDF_Attribute {
         static const Handle_TDataStd_Tick DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_TDataStd_Tick {
     TDataStd_Tick* _get_reference() {
-    return (TDataStd_Tick*)$self->Access();
+    return (TDataStd_Tick*)$self->get();
     }
 };
 
 %extend Handle_TDataStd_Tick {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend TDataStd_Tick {
@@ -6611,7 +5535,7 @@ class TDataStd_TreeNode : public TDF_Attribute {
 ") Depth;
 		Standard_Integer Depth ();
 		%feature("compactdefaultargs") NbChildren;
-		%feature("autodoc", "	* Returns the number of child nodes. If <allLevels> is true, the method counts children of all levels (children of children ...)
+		%feature("autodoc", "	* Returns the number of child nodes. If <allLevels> is true, the method counts children of all levels --children of children ...--
 
 	:param allLevels: default value is Standard_False
 	:type allLevels: bool
@@ -6805,7 +5729,7 @@ class TDataStd_TreeNode : public TDF_Attribute {
 ") AfterUndo;
 		virtual Standard_Boolean AfterUndo (const Handle_TDF_AttributeDelta & anAttDelta,const Standard_Boolean forceIt = Standard_False);
 		%feature("compactdefaultargs") ID;
-		%feature("autodoc", "	* Returns the tree ID (default or explicit one depending onthe Set method used).
+		%feature("autodoc", "	* Returns the tree ID --default or explicit one depending onthe Set method used--.
 
 	:rtype: Standard_GUID
 ") ID;
@@ -6876,19 +5800,20 @@ class Handle_TDataStd_TreeNode : public Handle_TDF_Attribute {
         static const Handle_TDataStd_TreeNode DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_TDataStd_TreeNode {
     TDataStd_TreeNode* _get_reference() {
-    return (TDataStd_TreeNode*)$self->Access();
+    return (TDataStd_TreeNode*)$self->get();
     }
 };
 
 %extend Handle_TDataStd_TreeNode {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend TDataStd_TreeNode {
@@ -6989,19 +5914,20 @@ class Handle_TDataStd_UAttribute : public Handle_TDF_Attribute {
         static const Handle_TDataStd_UAttribute DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_TDataStd_UAttribute {
     TDataStd_UAttribute* _get_reference() {
-    return (TDataStd_UAttribute*)$self->Access();
+    return (TDataStd_UAttribute*)$self->get();
     }
 };
 
 %extend Handle_TDataStd_UAttribute {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend TDataStd_UAttribute {
@@ -7045,15 +5971,23 @@ class TDataStd_Variable : public TDF_Attribute {
 ") Name;
 		const TCollection_ExtendedString & Name ();
 		%feature("compactdefaultargs") Set;
-		%feature("autodoc", "	* retrieve or create the associated real attribute and set the value <value>. if creation, dimension is written.
+		%feature("autodoc", "	* retrieve or create the associated real attribute and set the value <value>.
 
 	:param value:
 	:type value: float
-	:param dimension: default value is TDataStd_SCALAR
+	:rtype: None
+") Set;
+		void Set (const Standard_Real value);
+		%feature("compactdefaultargs") Set;
+		%feature("autodoc", "	* Obsolete method that will be removed in next versions. The dimension argument is not supported in the persistence mechanism.
+
+	:param value:
+	:type value: float
+	:param dimension:
 	:type dimension: TDataStd_RealEnum
 	:rtype: None
 ") Set;
-		void Set (const Standard_Real value,const TDataStd_RealEnum dimension = TDataStd_SCALAR);
+		void Set (const Standard_Real value,const TDataStd_RealEnum dimension);
 		%feature("compactdefaultargs") IsValued;
 		%feature("autodoc", "	* returns True if a Real attribute is associated.
 
@@ -7073,13 +6007,13 @@ class TDataStd_Variable : public TDF_Attribute {
 ") Real;
 		Handle_TDataStd_Real Real ();
 		%feature("compactdefaultargs") IsAssigned;
-		%feature("autodoc", "	* returns True if an Expression attribute is associated. create(if doesn't exist), set and returns the assigned expression attribute.
+		%feature("autodoc", "	* returns True if an Expression attribute is associated. create--if doesn't exist--, set and returns the assigned expression attribute.
 
 	:rtype: bool
 ") IsAssigned;
 		Standard_Boolean IsAssigned ();
 		%feature("compactdefaultargs") Assign;
-		%feature("autodoc", "	* create(if doesn't exist) and returns the assigned expression attribute. fill it after.
+		%feature("autodoc", "	* create--if doesn't exist-- and returns the assigned expression attribute. fill it after.
 
 	:rtype: Handle_TDataStd_Expression
 ") Assign;
@@ -7097,7 +6031,7 @@ class TDataStd_Variable : public TDF_Attribute {
 ") Expression;
 		Handle_TDataStd_Expression Expression ();
 		%feature("compactdefaultargs") IsCaptured;
-		%feature("autodoc", "	* shortcut for <Real()->IsCaptured()>
+		%feature("autodoc", "	* shortcut for <Real----->IsCaptured---->
 
 	:rtype: bool
 ") IsCaptured;
@@ -7200,19 +6134,20 @@ class Handle_TDataStd_Variable : public Handle_TDF_Attribute {
         static const Handle_TDataStd_Variable DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_TDataStd_Variable {
     TDataStd_Variable* _get_reference() {
-    return (TDataStd_Variable*)$self->Access();
+    return (TDataStd_Variable*)$self->get();
     }
 };
 
 %extend Handle_TDataStd_Variable {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend TDataStd_Variable {

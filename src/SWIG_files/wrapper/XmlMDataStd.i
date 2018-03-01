@@ -1,5 +1,5 @@
 /*
-Copyright 2008-2017 Thomas Paviot (tpaviot@gmail.com)
+Copyright 2008-2018 Thomas Paviot (tpaviot@gmail.com)
 
 
 This file is part of pythonOCC.
@@ -56,6 +56,9 @@ def register_handle(handle, base_object):
 /* typedefs */
 /* end typedefs declaration */
 
+/* templates */
+/* end templates declaration */
+
 /* public enums */
 /* end public enums declaration */
 
@@ -104,7 +107,7 @@ class XmlMDataStd_AsciiStringDriver : public XmlMDF_ADriver {
 ") NewEmpty;
 		Handle_TDF_Attribute NewEmpty ();
 		%feature("compactdefaultargs") Paste;
-		%feature("autodoc", "	* persistent -> transient (retrieve)
+		%feature("autodoc", "	* persistent -> transient --retrieve--
 
 	:param Source:
 	:type Source: XmlObjMgt_Persistent &
@@ -116,7 +119,7 @@ class XmlMDataStd_AsciiStringDriver : public XmlMDF_ADriver {
 ") Paste;
 		Standard_Boolean Paste (const XmlObjMgt_Persistent & Source,const Handle_TDF_Attribute & Target,XmlObjMgt_RRelocationTable & RelocTable);
 		%feature("compactdefaultargs") Paste;
-		%feature("autodoc", "	* transient -> persistent (store)
+		%feature("autodoc", "	* transient -> persistent --store--
 
 	:param Source:
 	:type Source: Handle_TDF_Attribute &
@@ -161,19 +164,20 @@ class Handle_XmlMDataStd_AsciiStringDriver : public Handle_XmlMDF_ADriver {
         static const Handle_XmlMDataStd_AsciiStringDriver DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_XmlMDataStd_AsciiStringDriver {
     XmlMDataStd_AsciiStringDriver* _get_reference() {
-    return (XmlMDataStd_AsciiStringDriver*)$self->Access();
+    return (XmlMDataStd_AsciiStringDriver*)$self->get();
     }
 };
 
 %extend Handle_XmlMDataStd_AsciiStringDriver {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend XmlMDataStd_AsciiStringDriver {
@@ -248,19 +252,20 @@ class Handle_XmlMDataStd_BooleanArrayDriver : public Handle_XmlMDF_ADriver {
         static const Handle_XmlMDataStd_BooleanArrayDriver DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_XmlMDataStd_BooleanArrayDriver {
     XmlMDataStd_BooleanArrayDriver* _get_reference() {
-    return (XmlMDataStd_BooleanArrayDriver*)$self->Access();
+    return (XmlMDataStd_BooleanArrayDriver*)$self->get();
     }
 };
 
 %extend Handle_XmlMDataStd_BooleanArrayDriver {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend XmlMDataStd_BooleanArrayDriver {
@@ -335,19 +340,20 @@ class Handle_XmlMDataStd_BooleanListDriver : public Handle_XmlMDF_ADriver {
         static const Handle_XmlMDataStd_BooleanListDriver DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_XmlMDataStd_BooleanListDriver {
     XmlMDataStd_BooleanListDriver* _get_reference() {
-    return (XmlMDataStd_BooleanListDriver*)$self->Access();
+    return (XmlMDataStd_BooleanListDriver*)$self->get();
     }
 };
 
 %extend Handle_XmlMDataStd_BooleanListDriver {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend XmlMDataStd_BooleanListDriver {
@@ -422,19 +428,20 @@ class Handle_XmlMDataStd_ByteArrayDriver : public Handle_XmlMDF_ADriver {
         static const Handle_XmlMDataStd_ByteArrayDriver DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_XmlMDataStd_ByteArrayDriver {
     XmlMDataStd_ByteArrayDriver* _get_reference() {
-    return (XmlMDataStd_ByteArrayDriver*)$self->Access();
+    return (XmlMDataStd_ByteArrayDriver*)$self->get();
     }
 };
 
 %extend Handle_XmlMDataStd_ByteArrayDriver {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend XmlMDataStd_ByteArrayDriver {
@@ -509,19 +516,20 @@ class Handle_XmlMDataStd_CommentDriver : public Handle_XmlMDF_ADriver {
         static const Handle_XmlMDataStd_CommentDriver DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_XmlMDataStd_CommentDriver {
     XmlMDataStd_CommentDriver* _get_reference() {
-    return (XmlMDataStd_CommentDriver*)$self->Access();
+    return (XmlMDataStd_CommentDriver*)$self->get();
     }
 };
 
 %extend Handle_XmlMDataStd_CommentDriver {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend XmlMDataStd_CommentDriver {
@@ -596,19 +604,20 @@ class Handle_XmlMDataStd_DirectoryDriver : public Handle_XmlMDF_ADriver {
         static const Handle_XmlMDataStd_DirectoryDriver DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_XmlMDataStd_DirectoryDriver {
     XmlMDataStd_DirectoryDriver* _get_reference() {
-    return (XmlMDataStd_DirectoryDriver*)$self->Access();
+    return (XmlMDataStd_DirectoryDriver*)$self->get();
     }
 };
 
 %extend Handle_XmlMDataStd_DirectoryDriver {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend XmlMDataStd_DirectoryDriver {
@@ -683,19 +692,20 @@ class Handle_XmlMDataStd_ExpressionDriver : public Handle_XmlMDF_ADriver {
         static const Handle_XmlMDataStd_ExpressionDriver DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_XmlMDataStd_ExpressionDriver {
     XmlMDataStd_ExpressionDriver* _get_reference() {
-    return (XmlMDataStd_ExpressionDriver*)$self->Access();
+    return (XmlMDataStd_ExpressionDriver*)$self->get();
     }
 };
 
 %extend Handle_XmlMDataStd_ExpressionDriver {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend XmlMDataStd_ExpressionDriver {
@@ -770,19 +780,20 @@ class Handle_XmlMDataStd_ExtStringArrayDriver : public Handle_XmlMDF_ADriver {
         static const Handle_XmlMDataStd_ExtStringArrayDriver DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_XmlMDataStd_ExtStringArrayDriver {
     XmlMDataStd_ExtStringArrayDriver* _get_reference() {
-    return (XmlMDataStd_ExtStringArrayDriver*)$self->Access();
+    return (XmlMDataStd_ExtStringArrayDriver*)$self->get();
     }
 };
 
 %extend Handle_XmlMDataStd_ExtStringArrayDriver {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend XmlMDataStd_ExtStringArrayDriver {
@@ -857,19 +868,20 @@ class Handle_XmlMDataStd_ExtStringListDriver : public Handle_XmlMDF_ADriver {
         static const Handle_XmlMDataStd_ExtStringListDriver DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_XmlMDataStd_ExtStringListDriver {
     XmlMDataStd_ExtStringListDriver* _get_reference() {
-    return (XmlMDataStd_ExtStringListDriver*)$self->Access();
+    return (XmlMDataStd_ExtStringListDriver*)$self->get();
     }
 };
 
 %extend Handle_XmlMDataStd_ExtStringListDriver {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend XmlMDataStd_ExtStringListDriver {
@@ -891,7 +903,7 @@ class XmlMDataStd_IntPackedMapDriver : public XmlMDF_ADriver {
 ") NewEmpty;
 		Handle_TDF_Attribute NewEmpty ();
 		%feature("compactdefaultargs") Paste;
-		%feature("autodoc", "	* persistent -> transient (retrieve)
+		%feature("autodoc", "	* persistent -> transient --retrieve--
 
 	:param Source:
 	:type Source: XmlObjMgt_Persistent &
@@ -903,7 +915,7 @@ class XmlMDataStd_IntPackedMapDriver : public XmlMDF_ADriver {
 ") Paste;
 		Standard_Boolean Paste (const XmlObjMgt_Persistent & Source,const Handle_TDF_Attribute & Target,XmlObjMgt_RRelocationTable & RelocTable);
 		%feature("compactdefaultargs") Paste;
-		%feature("autodoc", "	* transient -> persistent (store)
+		%feature("autodoc", "	* transient -> persistent --store--
 
 	:param Source:
 	:type Source: Handle_TDF_Attribute &
@@ -948,19 +960,20 @@ class Handle_XmlMDataStd_IntPackedMapDriver : public Handle_XmlMDF_ADriver {
         static const Handle_XmlMDataStd_IntPackedMapDriver DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_XmlMDataStd_IntPackedMapDriver {
     XmlMDataStd_IntPackedMapDriver* _get_reference() {
-    return (XmlMDataStd_IntPackedMapDriver*)$self->Access();
+    return (XmlMDataStd_IntPackedMapDriver*)$self->get();
     }
 };
 
 %extend Handle_XmlMDataStd_IntPackedMapDriver {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend XmlMDataStd_IntPackedMapDriver {
@@ -1035,19 +1048,20 @@ class Handle_XmlMDataStd_IntegerArrayDriver : public Handle_XmlMDF_ADriver {
         static const Handle_XmlMDataStd_IntegerArrayDriver DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_XmlMDataStd_IntegerArrayDriver {
     XmlMDataStd_IntegerArrayDriver* _get_reference() {
-    return (XmlMDataStd_IntegerArrayDriver*)$self->Access();
+    return (XmlMDataStd_IntegerArrayDriver*)$self->get();
     }
 };
 
 %extend Handle_XmlMDataStd_IntegerArrayDriver {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend XmlMDataStd_IntegerArrayDriver {
@@ -1122,19 +1136,20 @@ class Handle_XmlMDataStd_IntegerDriver : public Handle_XmlMDF_ADriver {
         static const Handle_XmlMDataStd_IntegerDriver DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_XmlMDataStd_IntegerDriver {
     XmlMDataStd_IntegerDriver* _get_reference() {
-    return (XmlMDataStd_IntegerDriver*)$self->Access();
+    return (XmlMDataStd_IntegerDriver*)$self->get();
     }
 };
 
 %extend Handle_XmlMDataStd_IntegerDriver {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend XmlMDataStd_IntegerDriver {
@@ -1209,19 +1224,20 @@ class Handle_XmlMDataStd_IntegerListDriver : public Handle_XmlMDF_ADriver {
         static const Handle_XmlMDataStd_IntegerListDriver DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_XmlMDataStd_IntegerListDriver {
     XmlMDataStd_IntegerListDriver* _get_reference() {
-    return (XmlMDataStd_IntegerListDriver*)$self->Access();
+    return (XmlMDataStd_IntegerListDriver*)$self->get();
     }
 };
 
 %extend Handle_XmlMDataStd_IntegerListDriver {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend XmlMDataStd_IntegerListDriver {
@@ -1296,19 +1312,20 @@ class Handle_XmlMDataStd_NameDriver : public Handle_XmlMDF_ADriver {
         static const Handle_XmlMDataStd_NameDriver DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_XmlMDataStd_NameDriver {
     XmlMDataStd_NameDriver* _get_reference() {
-    return (XmlMDataStd_NameDriver*)$self->Access();
+    return (XmlMDataStd_NameDriver*)$self->get();
     }
 };
 
 %extend Handle_XmlMDataStd_NameDriver {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend XmlMDataStd_NameDriver {
@@ -1383,19 +1400,20 @@ class Handle_XmlMDataStd_NamedDataDriver : public Handle_XmlMDF_ADriver {
         static const Handle_XmlMDataStd_NamedDataDriver DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_XmlMDataStd_NamedDataDriver {
     XmlMDataStd_NamedDataDriver* _get_reference() {
-    return (XmlMDataStd_NamedDataDriver*)$self->Access();
+    return (XmlMDataStd_NamedDataDriver*)$self->get();
     }
 };
 
 %extend Handle_XmlMDataStd_NamedDataDriver {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend XmlMDataStd_NamedDataDriver {
@@ -1470,19 +1488,20 @@ class Handle_XmlMDataStd_NoteBookDriver : public Handle_XmlMDF_ADriver {
         static const Handle_XmlMDataStd_NoteBookDriver DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_XmlMDataStd_NoteBookDriver {
     XmlMDataStd_NoteBookDriver* _get_reference() {
-    return (XmlMDataStd_NoteBookDriver*)$self->Access();
+    return (XmlMDataStd_NoteBookDriver*)$self->get();
     }
 };
 
 %extend Handle_XmlMDataStd_NoteBookDriver {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend XmlMDataStd_NoteBookDriver {
@@ -1557,19 +1576,20 @@ class Handle_XmlMDataStd_RealArrayDriver : public Handle_XmlMDF_ADriver {
         static const Handle_XmlMDataStd_RealArrayDriver DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_XmlMDataStd_RealArrayDriver {
     XmlMDataStd_RealArrayDriver* _get_reference() {
-    return (XmlMDataStd_RealArrayDriver*)$self->Access();
+    return (XmlMDataStd_RealArrayDriver*)$self->get();
     }
 };
 
 %extend Handle_XmlMDataStd_RealArrayDriver {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend XmlMDataStd_RealArrayDriver {
@@ -1644,19 +1664,20 @@ class Handle_XmlMDataStd_RealDriver : public Handle_XmlMDF_ADriver {
         static const Handle_XmlMDataStd_RealDriver DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_XmlMDataStd_RealDriver {
     XmlMDataStd_RealDriver* _get_reference() {
-    return (XmlMDataStd_RealDriver*)$self->Access();
+    return (XmlMDataStd_RealDriver*)$self->get();
     }
 };
 
 %extend Handle_XmlMDataStd_RealDriver {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend XmlMDataStd_RealDriver {
@@ -1731,19 +1752,20 @@ class Handle_XmlMDataStd_RealListDriver : public Handle_XmlMDF_ADriver {
         static const Handle_XmlMDataStd_RealListDriver DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_XmlMDataStd_RealListDriver {
     XmlMDataStd_RealListDriver* _get_reference() {
-    return (XmlMDataStd_RealListDriver*)$self->Access();
+    return (XmlMDataStd_RealListDriver*)$self->get();
     }
 };
 
 %extend Handle_XmlMDataStd_RealListDriver {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend XmlMDataStd_RealListDriver {
@@ -1818,19 +1840,20 @@ class Handle_XmlMDataStd_ReferenceArrayDriver : public Handle_XmlMDF_ADriver {
         static const Handle_XmlMDataStd_ReferenceArrayDriver DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_XmlMDataStd_ReferenceArrayDriver {
     XmlMDataStd_ReferenceArrayDriver* _get_reference() {
-    return (XmlMDataStd_ReferenceArrayDriver*)$self->Access();
+    return (XmlMDataStd_ReferenceArrayDriver*)$self->get();
     }
 };
 
 %extend Handle_XmlMDataStd_ReferenceArrayDriver {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend XmlMDataStd_ReferenceArrayDriver {
@@ -1905,19 +1928,20 @@ class Handle_XmlMDataStd_ReferenceListDriver : public Handle_XmlMDF_ADriver {
         static const Handle_XmlMDataStd_ReferenceListDriver DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_XmlMDataStd_ReferenceListDriver {
     XmlMDataStd_ReferenceListDriver* _get_reference() {
-    return (XmlMDataStd_ReferenceListDriver*)$self->Access();
+    return (XmlMDataStd_ReferenceListDriver*)$self->get();
     }
 };
 
 %extend Handle_XmlMDataStd_ReferenceListDriver {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend XmlMDataStd_ReferenceListDriver {
@@ -1992,19 +2016,20 @@ class Handle_XmlMDataStd_RelationDriver : public Handle_XmlMDF_ADriver {
         static const Handle_XmlMDataStd_RelationDriver DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_XmlMDataStd_RelationDriver {
     XmlMDataStd_RelationDriver* _get_reference() {
-    return (XmlMDataStd_RelationDriver*)$self->Access();
+    return (XmlMDataStd_RelationDriver*)$self->get();
     }
 };
 
 %extend Handle_XmlMDataStd_RelationDriver {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend XmlMDataStd_RelationDriver {
@@ -2079,19 +2104,20 @@ class Handle_XmlMDataStd_TickDriver : public Handle_XmlMDF_ADriver {
         static const Handle_XmlMDataStd_TickDriver DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_XmlMDataStd_TickDriver {
     XmlMDataStd_TickDriver* _get_reference() {
-    return (XmlMDataStd_TickDriver*)$self->Access();
+    return (XmlMDataStd_TickDriver*)$self->get();
     }
 };
 
 %extend Handle_XmlMDataStd_TickDriver {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend XmlMDataStd_TickDriver {
@@ -2166,19 +2192,20 @@ class Handle_XmlMDataStd_TreeNodeDriver : public Handle_XmlMDF_ADriver {
         static const Handle_XmlMDataStd_TreeNodeDriver DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_XmlMDataStd_TreeNodeDriver {
     XmlMDataStd_TreeNodeDriver* _get_reference() {
-    return (XmlMDataStd_TreeNodeDriver*)$self->Access();
+    return (XmlMDataStd_TreeNodeDriver*)$self->get();
     }
 };
 
 %extend Handle_XmlMDataStd_TreeNodeDriver {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend XmlMDataStd_TreeNodeDriver {
@@ -2253,19 +2280,20 @@ class Handle_XmlMDataStd_UAttributeDriver : public Handle_XmlMDF_ADriver {
         static const Handle_XmlMDataStd_UAttributeDriver DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_XmlMDataStd_UAttributeDriver {
     XmlMDataStd_UAttributeDriver* _get_reference() {
-    return (XmlMDataStd_UAttributeDriver*)$self->Access();
+    return (XmlMDataStd_UAttributeDriver*)$self->get();
     }
 };
 
 %extend Handle_XmlMDataStd_UAttributeDriver {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend XmlMDataStd_UAttributeDriver {
@@ -2340,19 +2368,20 @@ class Handle_XmlMDataStd_VariableDriver : public Handle_XmlMDF_ADriver {
         static const Handle_XmlMDataStd_VariableDriver DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_XmlMDataStd_VariableDriver {
     XmlMDataStd_VariableDriver* _get_reference() {
-    return (XmlMDataStd_VariableDriver*)$self->Access();
+    return (XmlMDataStd_VariableDriver*)$self->get();
     }
 };
 
 %extend Handle_XmlMDataStd_VariableDriver {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend XmlMDataStd_VariableDriver {

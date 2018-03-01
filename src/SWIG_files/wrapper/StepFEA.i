@@ -1,5 +1,5 @@
 /*
-Copyright 2008-2017 Thomas Paviot (tpaviot@gmail.com)
+Copyright 2008-2018 Thomas Paviot (tpaviot@gmail.com)
 
 
 This file is part of pythonOCC.
@@ -56,6 +56,19 @@ def register_handle(handle, base_object):
 /* typedefs */
 /* end typedefs declaration */
 
+/* templates */
+%template(StepFEA_Array1OfCurveElementEndOffset) NCollection_Array1 <Handle_StepFEA_CurveElementEndOffset>;
+%template(StepFEA_Array1OfNodeRepresentation) NCollection_Array1 <Handle_StepFEA_NodeRepresentation>;
+%template(StepFEA_Array1OfCurveElementEndRelease) NCollection_Array1 <Handle_StepFEA_CurveElementEndRelease>;
+%template(StepFEA_SequenceOfCurve3dElementProperty) NCollection_Sequence <Handle_StepFEA_Curve3dElementProperty>;
+%template(StepFEA_Array1OfElementRepresentation) NCollection_Array1 <Handle_StepFEA_ElementRepresentation>;
+%template(StepFEA_SequenceOfElementGeometricRelationship) NCollection_Sequence <Handle_StepFEA_ElementGeometricRelationship>;
+%template(StepFEA_SequenceOfNodeRepresentation) NCollection_Sequence <Handle_StepFEA_NodeRepresentation>;
+%template(StepFEA_SequenceOfElementRepresentation) NCollection_Sequence <Handle_StepFEA_ElementRepresentation>;
+%template(StepFEA_Array1OfCurveElementInterval) NCollection_Array1 <Handle_StepFEA_CurveElementInterval>;
+%template(StepFEA_Array1OfDegreeOfFreedom) NCollection_Array1 <StepFEA_DegreeOfFreedom>;
+/* end templates declaration */
+
 /* public enums */
 enum StepFEA_ElementVolume {
 	StepFEA_Volume = 0,
@@ -87,530 +100,8 @@ enum StepFEA_UnspecifiedValue {
 
 /* end public enums declaration */
 
-%nodefaultctor StepFEA_Array1OfCurveElementEndOffset;
-class StepFEA_Array1OfCurveElementEndOffset {
-	public:
-		%feature("compactdefaultargs") StepFEA_Array1OfCurveElementEndOffset;
-		%feature("autodoc", "	:param Low:
-	:type Low: int
-	:param Up:
-	:type Up: int
-	:rtype: None
-") StepFEA_Array1OfCurveElementEndOffset;
-		 StepFEA_Array1OfCurveElementEndOffset (const Standard_Integer Low,const Standard_Integer Up);
-		%feature("compactdefaultargs") StepFEA_Array1OfCurveElementEndOffset;
-		%feature("autodoc", "	:param Item:
-	:type Item: Handle_StepFEA_CurveElementEndOffset &
-	:param Low:
-	:type Low: int
-	:param Up:
-	:type Up: int
-	:rtype: None
-") StepFEA_Array1OfCurveElementEndOffset;
-		 StepFEA_Array1OfCurveElementEndOffset (const Handle_StepFEA_CurveElementEndOffset & Item,const Standard_Integer Low,const Standard_Integer Up);
-		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	:param V:
-	:type V: Handle_StepFEA_CurveElementEndOffset &
-	:rtype: None
-") Init;
-		void Init (const Handle_StepFEA_CurveElementEndOffset & V);
-		%feature("compactdefaultargs") Destroy;
-		%feature("autodoc", "	:rtype: None
-") Destroy;
-		void Destroy ();
-		%feature("compactdefaultargs") IsAllocated;
-		%feature("autodoc", "	:rtype: bool
-") IsAllocated;
-		Standard_Boolean IsAllocated ();
-		%feature("compactdefaultargs") Assign;
-		%feature("autodoc", "	:param Other:
-	:type Other: StepFEA_Array1OfCurveElementEndOffset &
-	:rtype: StepFEA_Array1OfCurveElementEndOffset
-") Assign;
-		const StepFEA_Array1OfCurveElementEndOffset & Assign (const StepFEA_Array1OfCurveElementEndOffset & Other);
-		%feature("compactdefaultargs") operator =;
-		%feature("autodoc", "	:param Other:
-	:type Other: StepFEA_Array1OfCurveElementEndOffset &
-	:rtype: StepFEA_Array1OfCurveElementEndOffset
-") operator =;
-		const StepFEA_Array1OfCurveElementEndOffset & operator = (const StepFEA_Array1OfCurveElementEndOffset & Other);
-		%feature("compactdefaultargs") Length;
-		%feature("autodoc", "	:rtype: int
-") Length;
-		Standard_Integer Length ();
-		%feature("compactdefaultargs") Lower;
-		%feature("autodoc", "	:rtype: int
-") Lower;
-		Standard_Integer Lower ();
-		%feature("compactdefaultargs") Upper;
-		%feature("autodoc", "	:rtype: int
-") Upper;
-		Standard_Integer Upper ();
-		%feature("compactdefaultargs") SetValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param Value:
-	:type Value: Handle_StepFEA_CurveElementEndOffset &
-	:rtype: None
-") SetValue;
-		void SetValue (const Standard_Integer Index,const Handle_StepFEA_CurveElementEndOffset & Value);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: Handle_StepFEA_CurveElementEndOffset
-") Value;
-		Handle_StepFEA_CurveElementEndOffset Value (const Standard_Integer Index);
-		%feature("compactdefaultargs") ChangeValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: Handle_StepFEA_CurveElementEndOffset
-") ChangeValue;
-		Handle_StepFEA_CurveElementEndOffset ChangeValue (const Standard_Integer Index);
-};
-
-
-%extend StepFEA_Array1OfCurveElementEndOffset {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor StepFEA_Array1OfCurveElementEndRelease;
-class StepFEA_Array1OfCurveElementEndRelease {
-	public:
-		%feature("compactdefaultargs") StepFEA_Array1OfCurveElementEndRelease;
-		%feature("autodoc", "	:param Low:
-	:type Low: int
-	:param Up:
-	:type Up: int
-	:rtype: None
-") StepFEA_Array1OfCurveElementEndRelease;
-		 StepFEA_Array1OfCurveElementEndRelease (const Standard_Integer Low,const Standard_Integer Up);
-		%feature("compactdefaultargs") StepFEA_Array1OfCurveElementEndRelease;
-		%feature("autodoc", "	:param Item:
-	:type Item: Handle_StepFEA_CurveElementEndRelease &
-	:param Low:
-	:type Low: int
-	:param Up:
-	:type Up: int
-	:rtype: None
-") StepFEA_Array1OfCurveElementEndRelease;
-		 StepFEA_Array1OfCurveElementEndRelease (const Handle_StepFEA_CurveElementEndRelease & Item,const Standard_Integer Low,const Standard_Integer Up);
-		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	:param V:
-	:type V: Handle_StepFEA_CurveElementEndRelease &
-	:rtype: None
-") Init;
-		void Init (const Handle_StepFEA_CurveElementEndRelease & V);
-		%feature("compactdefaultargs") Destroy;
-		%feature("autodoc", "	:rtype: None
-") Destroy;
-		void Destroy ();
-		%feature("compactdefaultargs") IsAllocated;
-		%feature("autodoc", "	:rtype: bool
-") IsAllocated;
-		Standard_Boolean IsAllocated ();
-		%feature("compactdefaultargs") Assign;
-		%feature("autodoc", "	:param Other:
-	:type Other: StepFEA_Array1OfCurveElementEndRelease &
-	:rtype: StepFEA_Array1OfCurveElementEndRelease
-") Assign;
-		const StepFEA_Array1OfCurveElementEndRelease & Assign (const StepFEA_Array1OfCurveElementEndRelease & Other);
-		%feature("compactdefaultargs") operator =;
-		%feature("autodoc", "	:param Other:
-	:type Other: StepFEA_Array1OfCurveElementEndRelease &
-	:rtype: StepFEA_Array1OfCurveElementEndRelease
-") operator =;
-		const StepFEA_Array1OfCurveElementEndRelease & operator = (const StepFEA_Array1OfCurveElementEndRelease & Other);
-		%feature("compactdefaultargs") Length;
-		%feature("autodoc", "	:rtype: int
-") Length;
-		Standard_Integer Length ();
-		%feature("compactdefaultargs") Lower;
-		%feature("autodoc", "	:rtype: int
-") Lower;
-		Standard_Integer Lower ();
-		%feature("compactdefaultargs") Upper;
-		%feature("autodoc", "	:rtype: int
-") Upper;
-		Standard_Integer Upper ();
-		%feature("compactdefaultargs") SetValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param Value:
-	:type Value: Handle_StepFEA_CurveElementEndRelease &
-	:rtype: None
-") SetValue;
-		void SetValue (const Standard_Integer Index,const Handle_StepFEA_CurveElementEndRelease & Value);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: Handle_StepFEA_CurveElementEndRelease
-") Value;
-		Handle_StepFEA_CurveElementEndRelease Value (const Standard_Integer Index);
-		%feature("compactdefaultargs") ChangeValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: Handle_StepFEA_CurveElementEndRelease
-") ChangeValue;
-		Handle_StepFEA_CurveElementEndRelease ChangeValue (const Standard_Integer Index);
-};
-
-
-%extend StepFEA_Array1OfCurveElementEndRelease {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor StepFEA_Array1OfCurveElementInterval;
-class StepFEA_Array1OfCurveElementInterval {
-	public:
-		%feature("compactdefaultargs") StepFEA_Array1OfCurveElementInterval;
-		%feature("autodoc", "	:param Low:
-	:type Low: int
-	:param Up:
-	:type Up: int
-	:rtype: None
-") StepFEA_Array1OfCurveElementInterval;
-		 StepFEA_Array1OfCurveElementInterval (const Standard_Integer Low,const Standard_Integer Up);
-		%feature("compactdefaultargs") StepFEA_Array1OfCurveElementInterval;
-		%feature("autodoc", "	:param Item:
-	:type Item: Handle_StepFEA_CurveElementInterval &
-	:param Low:
-	:type Low: int
-	:param Up:
-	:type Up: int
-	:rtype: None
-") StepFEA_Array1OfCurveElementInterval;
-		 StepFEA_Array1OfCurveElementInterval (const Handle_StepFEA_CurveElementInterval & Item,const Standard_Integer Low,const Standard_Integer Up);
-		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	:param V:
-	:type V: Handle_StepFEA_CurveElementInterval &
-	:rtype: None
-") Init;
-		void Init (const Handle_StepFEA_CurveElementInterval & V);
-		%feature("compactdefaultargs") Destroy;
-		%feature("autodoc", "	:rtype: None
-") Destroy;
-		void Destroy ();
-		%feature("compactdefaultargs") IsAllocated;
-		%feature("autodoc", "	:rtype: bool
-") IsAllocated;
-		Standard_Boolean IsAllocated ();
-		%feature("compactdefaultargs") Assign;
-		%feature("autodoc", "	:param Other:
-	:type Other: StepFEA_Array1OfCurveElementInterval &
-	:rtype: StepFEA_Array1OfCurveElementInterval
-") Assign;
-		const StepFEA_Array1OfCurveElementInterval & Assign (const StepFEA_Array1OfCurveElementInterval & Other);
-		%feature("compactdefaultargs") operator =;
-		%feature("autodoc", "	:param Other:
-	:type Other: StepFEA_Array1OfCurveElementInterval &
-	:rtype: StepFEA_Array1OfCurveElementInterval
-") operator =;
-		const StepFEA_Array1OfCurveElementInterval & operator = (const StepFEA_Array1OfCurveElementInterval & Other);
-		%feature("compactdefaultargs") Length;
-		%feature("autodoc", "	:rtype: int
-") Length;
-		Standard_Integer Length ();
-		%feature("compactdefaultargs") Lower;
-		%feature("autodoc", "	:rtype: int
-") Lower;
-		Standard_Integer Lower ();
-		%feature("compactdefaultargs") Upper;
-		%feature("autodoc", "	:rtype: int
-") Upper;
-		Standard_Integer Upper ();
-		%feature("compactdefaultargs") SetValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param Value:
-	:type Value: Handle_StepFEA_CurveElementInterval &
-	:rtype: None
-") SetValue;
-		void SetValue (const Standard_Integer Index,const Handle_StepFEA_CurveElementInterval & Value);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: Handle_StepFEA_CurveElementInterval
-") Value;
-		Handle_StepFEA_CurveElementInterval Value (const Standard_Integer Index);
-		%feature("compactdefaultargs") ChangeValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: Handle_StepFEA_CurveElementInterval
-") ChangeValue;
-		Handle_StepFEA_CurveElementInterval ChangeValue (const Standard_Integer Index);
-};
-
-
-%extend StepFEA_Array1OfCurveElementInterval {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor StepFEA_Array1OfDegreeOfFreedom;
-class StepFEA_Array1OfDegreeOfFreedom {
-	public:
-		%feature("compactdefaultargs") StepFEA_Array1OfDegreeOfFreedom;
-		%feature("autodoc", "	:param Low:
-	:type Low: int
-	:param Up:
-	:type Up: int
-	:rtype: None
-") StepFEA_Array1OfDegreeOfFreedom;
-		 StepFEA_Array1OfDegreeOfFreedom (const Standard_Integer Low,const Standard_Integer Up);
-		%feature("compactdefaultargs") StepFEA_Array1OfDegreeOfFreedom;
-		%feature("autodoc", "	:param Item:
-	:type Item: StepFEA_DegreeOfFreedom &
-	:param Low:
-	:type Low: int
-	:param Up:
-	:type Up: int
-	:rtype: None
-") StepFEA_Array1OfDegreeOfFreedom;
-		 StepFEA_Array1OfDegreeOfFreedom (const StepFEA_DegreeOfFreedom & Item,const Standard_Integer Low,const Standard_Integer Up);
-		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	:param V:
-	:type V: StepFEA_DegreeOfFreedom &
-	:rtype: None
-") Init;
-		void Init (const StepFEA_DegreeOfFreedom & V);
-		%feature("compactdefaultargs") Destroy;
-		%feature("autodoc", "	:rtype: None
-") Destroy;
-		void Destroy ();
-		%feature("compactdefaultargs") IsAllocated;
-		%feature("autodoc", "	:rtype: bool
-") IsAllocated;
-		Standard_Boolean IsAllocated ();
-		%feature("compactdefaultargs") Assign;
-		%feature("autodoc", "	:param Other:
-	:type Other: StepFEA_Array1OfDegreeOfFreedom &
-	:rtype: StepFEA_Array1OfDegreeOfFreedom
-") Assign;
-		const StepFEA_Array1OfDegreeOfFreedom & Assign (const StepFEA_Array1OfDegreeOfFreedom & Other);
-		%feature("compactdefaultargs") operator =;
-		%feature("autodoc", "	:param Other:
-	:type Other: StepFEA_Array1OfDegreeOfFreedom &
-	:rtype: StepFEA_Array1OfDegreeOfFreedom
-") operator =;
-		const StepFEA_Array1OfDegreeOfFreedom & operator = (const StepFEA_Array1OfDegreeOfFreedom & Other);
-		%feature("compactdefaultargs") Length;
-		%feature("autodoc", "	:rtype: int
-") Length;
-		Standard_Integer Length ();
-		%feature("compactdefaultargs") Lower;
-		%feature("autodoc", "	:rtype: int
-") Lower;
-		Standard_Integer Lower ();
-		%feature("compactdefaultargs") Upper;
-		%feature("autodoc", "	:rtype: int
-") Upper;
-		Standard_Integer Upper ();
-		%feature("compactdefaultargs") SetValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param Value:
-	:type Value: StepFEA_DegreeOfFreedom &
-	:rtype: None
-") SetValue;
-		void SetValue (const Standard_Integer Index,const StepFEA_DegreeOfFreedom & Value);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: StepFEA_DegreeOfFreedom
-") Value;
-		const StepFEA_DegreeOfFreedom & Value (const Standard_Integer Index);
-		%feature("compactdefaultargs") ChangeValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: StepFEA_DegreeOfFreedom
-") ChangeValue;
-		StepFEA_DegreeOfFreedom & ChangeValue (const Standard_Integer Index);
-};
-
-
-%extend StepFEA_Array1OfDegreeOfFreedom {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor StepFEA_Array1OfElementRepresentation;
-class StepFEA_Array1OfElementRepresentation {
-	public:
-		%feature("compactdefaultargs") StepFEA_Array1OfElementRepresentation;
-		%feature("autodoc", "	:param Low:
-	:type Low: int
-	:param Up:
-	:type Up: int
-	:rtype: None
-") StepFEA_Array1OfElementRepresentation;
-		 StepFEA_Array1OfElementRepresentation (const Standard_Integer Low,const Standard_Integer Up);
-		%feature("compactdefaultargs") StepFEA_Array1OfElementRepresentation;
-		%feature("autodoc", "	:param Item:
-	:type Item: Handle_StepFEA_ElementRepresentation &
-	:param Low:
-	:type Low: int
-	:param Up:
-	:type Up: int
-	:rtype: None
-") StepFEA_Array1OfElementRepresentation;
-		 StepFEA_Array1OfElementRepresentation (const Handle_StepFEA_ElementRepresentation & Item,const Standard_Integer Low,const Standard_Integer Up);
-		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	:param V:
-	:type V: Handle_StepFEA_ElementRepresentation &
-	:rtype: None
-") Init;
-		void Init (const Handle_StepFEA_ElementRepresentation & V);
-		%feature("compactdefaultargs") Destroy;
-		%feature("autodoc", "	:rtype: None
-") Destroy;
-		void Destroy ();
-		%feature("compactdefaultargs") IsAllocated;
-		%feature("autodoc", "	:rtype: bool
-") IsAllocated;
-		Standard_Boolean IsAllocated ();
-		%feature("compactdefaultargs") Assign;
-		%feature("autodoc", "	:param Other:
-	:type Other: StepFEA_Array1OfElementRepresentation &
-	:rtype: StepFEA_Array1OfElementRepresentation
-") Assign;
-		const StepFEA_Array1OfElementRepresentation & Assign (const StepFEA_Array1OfElementRepresentation & Other);
-		%feature("compactdefaultargs") operator =;
-		%feature("autodoc", "	:param Other:
-	:type Other: StepFEA_Array1OfElementRepresentation &
-	:rtype: StepFEA_Array1OfElementRepresentation
-") operator =;
-		const StepFEA_Array1OfElementRepresentation & operator = (const StepFEA_Array1OfElementRepresentation & Other);
-		%feature("compactdefaultargs") Length;
-		%feature("autodoc", "	:rtype: int
-") Length;
-		Standard_Integer Length ();
-		%feature("compactdefaultargs") Lower;
-		%feature("autodoc", "	:rtype: int
-") Lower;
-		Standard_Integer Lower ();
-		%feature("compactdefaultargs") Upper;
-		%feature("autodoc", "	:rtype: int
-") Upper;
-		Standard_Integer Upper ();
-		%feature("compactdefaultargs") SetValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param Value:
-	:type Value: Handle_StepFEA_ElementRepresentation &
-	:rtype: None
-") SetValue;
-		void SetValue (const Standard_Integer Index,const Handle_StepFEA_ElementRepresentation & Value);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: Handle_StepFEA_ElementRepresentation
-") Value;
-		Handle_StepFEA_ElementRepresentation Value (const Standard_Integer Index);
-		%feature("compactdefaultargs") ChangeValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: Handle_StepFEA_ElementRepresentation
-") ChangeValue;
-		Handle_StepFEA_ElementRepresentation ChangeValue (const Standard_Integer Index);
-};
-
-
-%extend StepFEA_Array1OfElementRepresentation {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor StepFEA_Array1OfNodeRepresentation;
-class StepFEA_Array1OfNodeRepresentation {
-	public:
-		%feature("compactdefaultargs") StepFEA_Array1OfNodeRepresentation;
-		%feature("autodoc", "	:param Low:
-	:type Low: int
-	:param Up:
-	:type Up: int
-	:rtype: None
-") StepFEA_Array1OfNodeRepresentation;
-		 StepFEA_Array1OfNodeRepresentation (const Standard_Integer Low,const Standard_Integer Up);
-		%feature("compactdefaultargs") StepFEA_Array1OfNodeRepresentation;
-		%feature("autodoc", "	:param Item:
-	:type Item: Handle_StepFEA_NodeRepresentation &
-	:param Low:
-	:type Low: int
-	:param Up:
-	:type Up: int
-	:rtype: None
-") StepFEA_Array1OfNodeRepresentation;
-		 StepFEA_Array1OfNodeRepresentation (const Handle_StepFEA_NodeRepresentation & Item,const Standard_Integer Low,const Standard_Integer Up);
-		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	:param V:
-	:type V: Handle_StepFEA_NodeRepresentation &
-	:rtype: None
-") Init;
-		void Init (const Handle_StepFEA_NodeRepresentation & V);
-		%feature("compactdefaultargs") Destroy;
-		%feature("autodoc", "	:rtype: None
-") Destroy;
-		void Destroy ();
-		%feature("compactdefaultargs") IsAllocated;
-		%feature("autodoc", "	:rtype: bool
-") IsAllocated;
-		Standard_Boolean IsAllocated ();
-		%feature("compactdefaultargs") Assign;
-		%feature("autodoc", "	:param Other:
-	:type Other: StepFEA_Array1OfNodeRepresentation &
-	:rtype: StepFEA_Array1OfNodeRepresentation
-") Assign;
-		const StepFEA_Array1OfNodeRepresentation & Assign (const StepFEA_Array1OfNodeRepresentation & Other);
-		%feature("compactdefaultargs") operator =;
-		%feature("autodoc", "	:param Other:
-	:type Other: StepFEA_Array1OfNodeRepresentation &
-	:rtype: StepFEA_Array1OfNodeRepresentation
-") operator =;
-		const StepFEA_Array1OfNodeRepresentation & operator = (const StepFEA_Array1OfNodeRepresentation & Other);
-		%feature("compactdefaultargs") Length;
-		%feature("autodoc", "	:rtype: int
-") Length;
-		Standard_Integer Length ();
-		%feature("compactdefaultargs") Lower;
-		%feature("autodoc", "	:rtype: int
-") Lower;
-		Standard_Integer Lower ();
-		%feature("compactdefaultargs") Upper;
-		%feature("autodoc", "	:rtype: int
-") Upper;
-		Standard_Integer Upper ();
-		%feature("compactdefaultargs") SetValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param Value:
-	:type Value: Handle_StepFEA_NodeRepresentation &
-	:rtype: None
-") SetValue;
-		void SetValue (const Standard_Integer Index,const Handle_StepFEA_NodeRepresentation & Value);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: Handle_StepFEA_NodeRepresentation
-") Value;
-		Handle_StepFEA_NodeRepresentation Value (const Standard_Integer Index);
-		%feature("compactdefaultargs") ChangeValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: Handle_StepFEA_NodeRepresentation
-") ChangeValue;
-		Handle_StepFEA_NodeRepresentation ChangeValue (const Standard_Integer Index);
-};
-
-
-%extend StepFEA_Array1OfNodeRepresentation {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
 %nodefaultctor StepFEA_Curve3dElementProperty;
-class StepFEA_Curve3dElementProperty : public MMgt_TShared {
+class StepFEA_Curve3dElementProperty : public Standard_Transient {
 	public:
 		%feature("compactdefaultargs") StepFEA_Curve3dElementProperty;
 		%feature("autodoc", "	* Empty constructor
@@ -619,7 +110,7 @@ class StepFEA_Curve3dElementProperty : public MMgt_TShared {
 ") StepFEA_Curve3dElementProperty;
 		 StepFEA_Curve3dElementProperty ();
 		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	* Initialize all fields (own and inherited)
+		%feature("autodoc", "	* Initialize all fields --own and inherited--
 
 	:param aPropertyId:
 	:type aPropertyId: Handle_TCollection_HAsciiString &
@@ -726,7 +217,7 @@ class StepFEA_Curve3dElementProperty : public MMgt_TShared {
 %}
 
 %nodefaultctor Handle_StepFEA_Curve3dElementProperty;
-class Handle_StepFEA_Curve3dElementProperty : public Handle_MMgt_TShared {
+class Handle_StepFEA_Curve3dElementProperty : public Handle_Standard_Transient {
 
     public:
         // constructors
@@ -738,19 +229,20 @@ class Handle_StepFEA_Curve3dElementProperty : public Handle_MMgt_TShared {
         static const Handle_StepFEA_Curve3dElementProperty DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_StepFEA_Curve3dElementProperty {
     StepFEA_Curve3dElementProperty* _get_reference() {
-    return (StepFEA_Curve3dElementProperty*)$self->Access();
+    return (StepFEA_Curve3dElementProperty*)$self->get();
     }
 };
 
 %extend Handle_StepFEA_Curve3dElementProperty {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend StepFEA_Curve3dElementProperty {
@@ -776,19 +268,19 @@ class StepFEA_CurveElementEndCoordinateSystem : public StepData_SelectType {
 ") CaseNum;
 		Standard_Integer CaseNum (const Handle_Standard_Transient & ent);
 		%feature("compactdefaultargs") FeaAxis2Placement3d;
-		%feature("autodoc", "	* Returns Value as FeaAxis2Placement3d (or Null if another type)
+		%feature("autodoc", "	* Returns Value as FeaAxis2Placement3d --or Null if another type--
 
 	:rtype: Handle_StepFEA_FeaAxis2Placement3d
 ") FeaAxis2Placement3d;
 		Handle_StepFEA_FeaAxis2Placement3d FeaAxis2Placement3d ();
 		%feature("compactdefaultargs") AlignedCurve3dElementCoordinateSystem;
-		%feature("autodoc", "	* Returns Value as AlignedCurve3dElementCoordinateSystem (or Null if another type)
+		%feature("autodoc", "	* Returns Value as AlignedCurve3dElementCoordinateSystem --or Null if another type--
 
 	:rtype: Handle_StepFEA_AlignedCurve3dElementCoordinateSystem
 ") AlignedCurve3dElementCoordinateSystem;
 		Handle_StepFEA_AlignedCurve3dElementCoordinateSystem AlignedCurve3dElementCoordinateSystem ();
 		%feature("compactdefaultargs") ParametricCurve3dElementCoordinateSystem;
-		%feature("autodoc", "	* Returns Value as ParametricCurve3dElementCoordinateSystem (or Null if another type)
+		%feature("autodoc", "	* Returns Value as ParametricCurve3dElementCoordinateSystem --or Null if another type--
 
 	:rtype: Handle_StepFEA_ParametricCurve3dElementCoordinateSystem
 ") ParametricCurve3dElementCoordinateSystem;
@@ -802,7 +294,7 @@ class StepFEA_CurveElementEndCoordinateSystem : public StepData_SelectType {
 	}
 };
 %nodefaultctor StepFEA_CurveElementEndOffset;
-class StepFEA_CurveElementEndOffset : public MMgt_TShared {
+class StepFEA_CurveElementEndOffset : public Standard_Transient {
 	public:
 		%feature("compactdefaultargs") StepFEA_CurveElementEndOffset;
 		%feature("autodoc", "	* Empty constructor
@@ -811,7 +303,7 @@ class StepFEA_CurveElementEndOffset : public MMgt_TShared {
 ") StepFEA_CurveElementEndOffset;
 		 StepFEA_CurveElementEndOffset ();
 		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	* Initialize all fields (own and inherited)
+		%feature("autodoc", "	* Initialize all fields --own and inherited--
 
 	:param aCoordinateSystem:
 	:type aCoordinateSystem: StepFEA_CurveElementEndCoordinateSystem &
@@ -870,7 +362,7 @@ class StepFEA_CurveElementEndOffset : public MMgt_TShared {
 %}
 
 %nodefaultctor Handle_StepFEA_CurveElementEndOffset;
-class Handle_StepFEA_CurveElementEndOffset : public Handle_MMgt_TShared {
+class Handle_StepFEA_CurveElementEndOffset : public Handle_Standard_Transient {
 
     public:
         // constructors
@@ -882,19 +374,20 @@ class Handle_StepFEA_CurveElementEndOffset : public Handle_MMgt_TShared {
         static const Handle_StepFEA_CurveElementEndOffset DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_StepFEA_CurveElementEndOffset {
     StepFEA_CurveElementEndOffset* _get_reference() {
-    return (StepFEA_CurveElementEndOffset*)$self->Access();
+    return (StepFEA_CurveElementEndOffset*)$self->get();
     }
 };
 
 %extend Handle_StepFEA_CurveElementEndOffset {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend StepFEA_CurveElementEndOffset {
@@ -903,7 +396,7 @@ class Handle_StepFEA_CurveElementEndOffset : public Handle_MMgt_TShared {
 	}
 };
 %nodefaultctor StepFEA_CurveElementEndRelease;
-class StepFEA_CurveElementEndRelease : public MMgt_TShared {
+class StepFEA_CurveElementEndRelease : public Standard_Transient {
 	public:
 		%feature("compactdefaultargs") StepFEA_CurveElementEndRelease;
 		%feature("autodoc", "	* Empty constructor
@@ -912,7 +405,7 @@ class StepFEA_CurveElementEndRelease : public MMgt_TShared {
 ") StepFEA_CurveElementEndRelease;
 		 StepFEA_CurveElementEndRelease ();
 		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	* Initialize all fields (own and inherited)
+		%feature("autodoc", "	* Initialize all fields --own and inherited--
 
 	:param aCoordinateSystem:
 	:type aCoordinateSystem: StepFEA_CurveElementEndCoordinateSystem &
@@ -971,7 +464,7 @@ class StepFEA_CurveElementEndRelease : public MMgt_TShared {
 %}
 
 %nodefaultctor Handle_StepFEA_CurveElementEndRelease;
-class Handle_StepFEA_CurveElementEndRelease : public Handle_MMgt_TShared {
+class Handle_StepFEA_CurveElementEndRelease : public Handle_Standard_Transient {
 
     public:
         // constructors
@@ -983,19 +476,20 @@ class Handle_StepFEA_CurveElementEndRelease : public Handle_MMgt_TShared {
         static const Handle_StepFEA_CurveElementEndRelease DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_StepFEA_CurveElementEndRelease {
     StepFEA_CurveElementEndRelease* _get_reference() {
-    return (StepFEA_CurveElementEndRelease*)$self->Access();
+    return (StepFEA_CurveElementEndRelease*)$self->get();
     }
 };
 
 %extend Handle_StepFEA_CurveElementEndRelease {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend StepFEA_CurveElementEndRelease {
@@ -1004,7 +498,7 @@ class Handle_StepFEA_CurveElementEndRelease : public Handle_MMgt_TShared {
 	}
 };
 %nodefaultctor StepFEA_CurveElementInterval;
-class StepFEA_CurveElementInterval : public MMgt_TShared {
+class StepFEA_CurveElementInterval : public Standard_Transient {
 	public:
 		%feature("compactdefaultargs") StepFEA_CurveElementInterval;
 		%feature("autodoc", "	* Empty constructor
@@ -1013,7 +507,7 @@ class StepFEA_CurveElementInterval : public MMgt_TShared {
 ") StepFEA_CurveElementInterval;
 		 StepFEA_CurveElementInterval ();
 		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	* Initialize all fields (own and inherited)
+		%feature("autodoc", "	* Initialize all fields --own and inherited--
 
 	:param aFinishPosition:
 	:type aFinishPosition: Handle_StepFEA_CurveElementLocation &
@@ -1072,7 +566,7 @@ class StepFEA_CurveElementInterval : public MMgt_TShared {
 %}
 
 %nodefaultctor Handle_StepFEA_CurveElementInterval;
-class Handle_StepFEA_CurveElementInterval : public Handle_MMgt_TShared {
+class Handle_StepFEA_CurveElementInterval : public Handle_Standard_Transient {
 
     public:
         // constructors
@@ -1084,19 +578,20 @@ class Handle_StepFEA_CurveElementInterval : public Handle_MMgt_TShared {
         static const Handle_StepFEA_CurveElementInterval DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_StepFEA_CurveElementInterval {
     StepFEA_CurveElementInterval* _get_reference() {
-    return (StepFEA_CurveElementInterval*)$self->Access();
+    return (StepFEA_CurveElementInterval*)$self->get();
     }
 };
 
 %extend Handle_StepFEA_CurveElementInterval {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend StepFEA_CurveElementInterval {
@@ -1105,7 +600,7 @@ class Handle_StepFEA_CurveElementInterval : public Handle_MMgt_TShared {
 	}
 };
 %nodefaultctor StepFEA_CurveElementLocation;
-class StepFEA_CurveElementLocation : public MMgt_TShared {
+class StepFEA_CurveElementLocation : public Standard_Transient {
 	public:
 		%feature("compactdefaultargs") StepFEA_CurveElementLocation;
 		%feature("autodoc", "	* Empty constructor
@@ -1114,7 +609,7 @@ class StepFEA_CurveElementLocation : public MMgt_TShared {
 ") StepFEA_CurveElementLocation;
 		 StepFEA_CurveElementLocation ();
 		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	* Initialize all fields (own and inherited)
+		%feature("autodoc", "	* Initialize all fields --own and inherited--
 
 	:param aCoordinate:
 	:type aCoordinate: Handle_StepFEA_FeaParametricPoint &
@@ -1157,7 +652,7 @@ class StepFEA_CurveElementLocation : public MMgt_TShared {
 %}
 
 %nodefaultctor Handle_StepFEA_CurveElementLocation;
-class Handle_StepFEA_CurveElementLocation : public Handle_MMgt_TShared {
+class Handle_StepFEA_CurveElementLocation : public Handle_Standard_Transient {
 
     public:
         // constructors
@@ -1169,19 +664,20 @@ class Handle_StepFEA_CurveElementLocation : public Handle_MMgt_TShared {
         static const Handle_StepFEA_CurveElementLocation DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_StepFEA_CurveElementLocation {
     StepFEA_CurveElementLocation* _get_reference() {
-    return (StepFEA_CurveElementLocation*)$self->Access();
+    return (StepFEA_CurveElementLocation*)$self->get();
     }
 };
 
 %extend Handle_StepFEA_CurveElementLocation {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend StepFEA_CurveElementLocation {
@@ -1221,7 +717,7 @@ class StepFEA_DegreeOfFreedom : public StepData_SelectType {
 ") NewMember;
 		virtual Handle_StepData_SelectMember NewMember ();
 		%feature("compactdefaultargs") SetEnumeratedDegreeOfFreedom;
-		%feature("autodoc", "	* Returns Value as EnumeratedDegreeOfFreedom (or Null if another type)
+		%feature("autodoc", "	* Returns Value as EnumeratedDegreeOfFreedom --or Null if another type--
 
 	:param aVal:
 	:type aVal: StepFEA_EnumeratedDegreeOfFreedom
@@ -1229,7 +725,7 @@ class StepFEA_DegreeOfFreedom : public StepData_SelectType {
 ") SetEnumeratedDegreeOfFreedom;
 		void SetEnumeratedDegreeOfFreedom (const StepFEA_EnumeratedDegreeOfFreedom aVal);
 		%feature("compactdefaultargs") EnumeratedDegreeOfFreedom;
-		%feature("autodoc", "	* Returns Value as EnumeratedDegreeOfFreedom (or Null if another type)
+		%feature("autodoc", "	* Returns Value as EnumeratedDegreeOfFreedom --or Null if another type--
 
 	:rtype: StepFEA_EnumeratedDegreeOfFreedom
 ") EnumeratedDegreeOfFreedom;
@@ -1243,7 +739,7 @@ class StepFEA_DegreeOfFreedom : public StepData_SelectType {
 ") SetApplicationDefinedDegreeOfFreedom;
 		void SetApplicationDefinedDegreeOfFreedom (const Handle_TCollection_HAsciiString & aVal);
 		%feature("compactdefaultargs") ApplicationDefinedDegreeOfFreedom;
-		%feature("autodoc", "	* Returns Value as ApplicationDefinedDegreeOfFreedom (or Null if another type)
+		%feature("autodoc", "	* Returns Value as ApplicationDefinedDegreeOfFreedom --or Null if another type--
 
 	:rtype: Handle_TCollection_HAsciiString
 ") ApplicationDefinedDegreeOfFreedom;
@@ -1327,19 +823,20 @@ class Handle_StepFEA_DegreeOfFreedomMember : public Handle_StepData_SelectNamed 
         static const Handle_StepFEA_DegreeOfFreedomMember DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_StepFEA_DegreeOfFreedomMember {
     StepFEA_DegreeOfFreedomMember* _get_reference() {
-    return (StepFEA_DegreeOfFreedomMember*)$self->Access();
+    return (StepFEA_DegreeOfFreedomMember*)$self->get();
     }
 };
 
 %extend Handle_StepFEA_DegreeOfFreedomMember {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend StepFEA_DegreeOfFreedomMember {
@@ -1348,7 +845,7 @@ class Handle_StepFEA_DegreeOfFreedomMember : public Handle_StepData_SelectNamed 
 	}
 };
 %nodefaultctor StepFEA_ElementGeometricRelationship;
-class StepFEA_ElementGeometricRelationship : public MMgt_TShared {
+class StepFEA_ElementGeometricRelationship : public Standard_Transient {
 	public:
 		%feature("compactdefaultargs") StepFEA_ElementGeometricRelationship;
 		%feature("autodoc", "	* Empty constructor
@@ -1357,7 +854,7 @@ class StepFEA_ElementGeometricRelationship : public MMgt_TShared {
 ") StepFEA_ElementGeometricRelationship;
 		 StepFEA_ElementGeometricRelationship ();
 		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	* Initialize all fields (own and inherited)
+		%feature("autodoc", "	* Initialize all fields --own and inherited--
 
 	:param aElementRef:
 	:type aElementRef: StepFEA_ElementOrElementGroup &
@@ -1432,7 +929,7 @@ class StepFEA_ElementGeometricRelationship : public MMgt_TShared {
 %}
 
 %nodefaultctor Handle_StepFEA_ElementGeometricRelationship;
-class Handle_StepFEA_ElementGeometricRelationship : public Handle_MMgt_TShared {
+class Handle_StepFEA_ElementGeometricRelationship : public Handle_Standard_Transient {
 
     public:
         // constructors
@@ -1444,19 +941,20 @@ class Handle_StepFEA_ElementGeometricRelationship : public Handle_MMgt_TShared {
         static const Handle_StepFEA_ElementGeometricRelationship DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_StepFEA_ElementGeometricRelationship {
     StepFEA_ElementGeometricRelationship* _get_reference() {
-    return (StepFEA_ElementGeometricRelationship*)$self->Access();
+    return (StepFEA_ElementGeometricRelationship*)$self->get();
     }
 };
 
 %extend Handle_StepFEA_ElementGeometricRelationship {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend StepFEA_ElementGeometricRelationship {
@@ -1482,13 +980,13 @@ class StepFEA_ElementOrElementGroup : public StepData_SelectType {
 ") CaseNum;
 		Standard_Integer CaseNum (const Handle_Standard_Transient & ent);
 		%feature("compactdefaultargs") ElementRepresentation;
-		%feature("autodoc", "	* Returns Value as ElementRepresentation (or Null if another type)
+		%feature("autodoc", "	* Returns Value as ElementRepresentation --or Null if another type--
 
 	:rtype: Handle_StepFEA_ElementRepresentation
 ") ElementRepresentation;
 		Handle_StepFEA_ElementRepresentation ElementRepresentation ();
 		%feature("compactdefaultargs") ElementGroup;
-		%feature("autodoc", "	* Returns Value as ElementGroup (or Null if another type)
+		%feature("autodoc", "	* Returns Value as ElementGroup --or Null if another type--
 
 	:rtype: Handle_StepFEA_ElementGroup
 ") ElementGroup;
@@ -1511,7 +1009,7 @@ class StepFEA_ElementRepresentation : public StepRepr_Representation {
 ") StepFEA_ElementRepresentation;
 		 StepFEA_ElementRepresentation ();
 		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	* Initialize all fields (own and inherited)
+		%feature("autodoc", "	* Initialize all fields --own and inherited--
 
 	:param aRepresentation_Name:
 	:type aRepresentation_Name: Handle_TCollection_HAsciiString &
@@ -1572,19 +1070,20 @@ class Handle_StepFEA_ElementRepresentation : public Handle_StepRepr_Representati
         static const Handle_StepFEA_ElementRepresentation DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_StepFEA_ElementRepresentation {
     StepFEA_ElementRepresentation* _get_reference() {
-    return (StepFEA_ElementRepresentation*)$self->Access();
+    return (StepFEA_ElementRepresentation*)$self->get();
     }
 };
 
 %extend Handle_StepFEA_ElementRepresentation {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend StepFEA_ElementRepresentation {
@@ -1602,7 +1101,7 @@ class StepFEA_FeaAxis2Placement3d : public StepGeom_Axis2Placement3d {
 ") StepFEA_FeaAxis2Placement3d;
 		 StepFEA_FeaAxis2Placement3d ();
 		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	* Initialize all fields (own and inherited)
+		%feature("autodoc", "	* Initialize all fields --own and inherited--
 
 	:param aRepresentationItem_Name:
 	:type aRepresentationItem_Name: Handle_TCollection_HAsciiString &
@@ -1685,19 +1184,20 @@ class Handle_StepFEA_FeaAxis2Placement3d : public Handle_StepGeom_Axis2Placement
         static const Handle_StepFEA_FeaAxis2Placement3d DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_StepFEA_FeaAxis2Placement3d {
     StepFEA_FeaAxis2Placement3d* _get_reference() {
-    return (StepFEA_FeaAxis2Placement3d*)$self->Access();
+    return (StepFEA_FeaAxis2Placement3d*)$self->get();
     }
 };
 
 %extend Handle_StepFEA_FeaAxis2Placement3d {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend StepFEA_FeaAxis2Placement3d {
@@ -1706,7 +1206,7 @@ class Handle_StepFEA_FeaAxis2Placement3d : public Handle_StepGeom_Axis2Placement
 	}
 };
 %nodefaultctor StepFEA_FeaCurveSectionGeometricRelationship;
-class StepFEA_FeaCurveSectionGeometricRelationship : public MMgt_TShared {
+class StepFEA_FeaCurveSectionGeometricRelationship : public Standard_Transient {
 	public:
 		%feature("compactdefaultargs") StepFEA_FeaCurveSectionGeometricRelationship;
 		%feature("autodoc", "	* Empty constructor
@@ -1715,7 +1215,7 @@ class StepFEA_FeaCurveSectionGeometricRelationship : public MMgt_TShared {
 ") StepFEA_FeaCurveSectionGeometricRelationship;
 		 StepFEA_FeaCurveSectionGeometricRelationship ();
 		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	* Initialize all fields (own and inherited)
+		%feature("autodoc", "	* Initialize all fields --own and inherited--
 
 	:param aSectionRef:
 	:type aSectionRef: Handle_StepElement_CurveElementSectionDefinition &
@@ -1774,7 +1274,7 @@ class StepFEA_FeaCurveSectionGeometricRelationship : public MMgt_TShared {
 %}
 
 %nodefaultctor Handle_StepFEA_FeaCurveSectionGeometricRelationship;
-class Handle_StepFEA_FeaCurveSectionGeometricRelationship : public Handle_MMgt_TShared {
+class Handle_StepFEA_FeaCurveSectionGeometricRelationship : public Handle_Standard_Transient {
 
     public:
         // constructors
@@ -1786,19 +1286,20 @@ class Handle_StepFEA_FeaCurveSectionGeometricRelationship : public Handle_MMgt_T
         static const Handle_StepFEA_FeaCurveSectionGeometricRelationship DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_StepFEA_FeaCurveSectionGeometricRelationship {
     StepFEA_FeaCurveSectionGeometricRelationship* _get_reference() {
-    return (StepFEA_FeaCurveSectionGeometricRelationship*)$self->Access();
+    return (StepFEA_FeaCurveSectionGeometricRelationship*)$self->get();
     }
 };
 
 %extend Handle_StepFEA_FeaCurveSectionGeometricRelationship {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend StepFEA_FeaCurveSectionGeometricRelationship {
@@ -1816,7 +1317,7 @@ class StepFEA_FeaGroup : public StepBasic_Group {
 ") StepFEA_FeaGroup;
 		 StepFEA_FeaGroup ();
 		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	* Initialize all fields (own and inherited)
+		%feature("autodoc", "	* Initialize all fields --own and inherited--
 
 	:param aGroup_Name:
 	:type aGroup_Name: Handle_TCollection_HAsciiString &
@@ -1875,19 +1376,20 @@ class Handle_StepFEA_FeaGroup : public Handle_StepBasic_Group {
         static const Handle_StepFEA_FeaGroup DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_StepFEA_FeaGroup {
     StepFEA_FeaGroup* _get_reference() {
-    return (StepFEA_FeaGroup*)$self->Access();
+    return (StepFEA_FeaGroup*)$self->get();
     }
 };
 
 %extend Handle_StepFEA_FeaGroup {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend StepFEA_FeaGroup {
@@ -1938,19 +1440,20 @@ class Handle_StepFEA_FeaMaterialPropertyRepresentation : public Handle_StepRepr_
         static const Handle_StepFEA_FeaMaterialPropertyRepresentation DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_StepFEA_FeaMaterialPropertyRepresentation {
     StepFEA_FeaMaterialPropertyRepresentation* _get_reference() {
-    return (StepFEA_FeaMaterialPropertyRepresentation*)$self->Access();
+    return (StepFEA_FeaMaterialPropertyRepresentation*)$self->get();
     }
 };
 
 %extend Handle_StepFEA_FeaMaterialPropertyRepresentation {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend StepFEA_FeaMaterialPropertyRepresentation {
@@ -2001,19 +1504,20 @@ class Handle_StepFEA_FeaMaterialPropertyRepresentationItem : public Handle_StepR
         static const Handle_StepFEA_FeaMaterialPropertyRepresentationItem DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_StepFEA_FeaMaterialPropertyRepresentationItem {
     StepFEA_FeaMaterialPropertyRepresentationItem* _get_reference() {
-    return (StepFEA_FeaMaterialPropertyRepresentationItem*)$self->Access();
+    return (StepFEA_FeaMaterialPropertyRepresentationItem*)$self->get();
     }
 };
 
 %extend Handle_StepFEA_FeaMaterialPropertyRepresentationItem {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend StepFEA_FeaMaterialPropertyRepresentationItem {
@@ -2031,7 +1535,7 @@ class StepFEA_FeaModel : public StepRepr_Representation {
 ") StepFEA_FeaModel;
 		 StepFEA_FeaModel ();
 		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	* Initialize all fields (own and inherited)
+		%feature("autodoc", "	* Initialize all fields --own and inherited--
 
 	:param aRepresentation_Name:
 	:type aRepresentation_Name: Handle_TCollection_HAsciiString &
@@ -2140,19 +1644,20 @@ class Handle_StepFEA_FeaModel : public Handle_StepRepr_Representation {
         static const Handle_StepFEA_FeaModel DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_StepFEA_FeaModel {
     StepFEA_FeaModel* _get_reference() {
-    return (StepFEA_FeaModel*)$self->Access();
+    return (StepFEA_FeaModel*)$self->get();
     }
 };
 
 %extend Handle_StepFEA_FeaModel {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend StepFEA_FeaModel {
@@ -2203,19 +1708,20 @@ class Handle_StepFEA_FeaModelDefinition : public Handle_StepRepr_ShapeAspect {
         static const Handle_StepFEA_FeaModelDefinition DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_StepFEA_FeaModelDefinition {
     StepFEA_FeaModelDefinition* _get_reference() {
-    return (StepFEA_FeaModelDefinition*)$self->Access();
+    return (StepFEA_FeaModelDefinition*)$self->get();
     }
 };
 
 %extend Handle_StepFEA_FeaModelDefinition {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend StepFEA_FeaModelDefinition {
@@ -2233,7 +1739,7 @@ class StepFEA_FeaParametricPoint : public StepGeom_Point {
 ") StepFEA_FeaParametricPoint;
 		 StepFEA_FeaParametricPoint ();
 		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	* Initialize all fields (own and inherited)
+		%feature("autodoc", "	* Initialize all fields --own and inherited--
 
 	:param aRepresentationItem_Name:
 	:type aRepresentationItem_Name: Handle_TCollection_HAsciiString &
@@ -2290,19 +1796,20 @@ class Handle_StepFEA_FeaParametricPoint : public Handle_StepGeom_Point {
         static const Handle_StepFEA_FeaParametricPoint DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_StepFEA_FeaParametricPoint {
     StepFEA_FeaParametricPoint* _get_reference() {
-    return (StepFEA_FeaParametricPoint*)$self->Access();
+    return (StepFEA_FeaParametricPoint*)$self->get();
     }
 };
 
 %extend Handle_StepFEA_FeaParametricPoint {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend StepFEA_FeaParametricPoint {
@@ -2353,19 +1860,20 @@ class Handle_StepFEA_FeaRepresentationItem : public Handle_StepRepr_Representati
         static const Handle_StepFEA_FeaRepresentationItem DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_StepFEA_FeaRepresentationItem {
     StepFEA_FeaRepresentationItem* _get_reference() {
-    return (StepFEA_FeaRepresentationItem*)$self->Access();
+    return (StepFEA_FeaRepresentationItem*)$self->get();
     }
 };
 
 %extend Handle_StepFEA_FeaRepresentationItem {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend StepFEA_FeaRepresentationItem {
@@ -2374,7 +1882,7 @@ class Handle_StepFEA_FeaRepresentationItem : public Handle_StepRepr_Representati
 	}
 };
 %nodefaultctor StepFEA_FeaSurfaceSectionGeometricRelationship;
-class StepFEA_FeaSurfaceSectionGeometricRelationship : public MMgt_TShared {
+class StepFEA_FeaSurfaceSectionGeometricRelationship : public Standard_Transient {
 	public:
 		%feature("compactdefaultargs") StepFEA_FeaSurfaceSectionGeometricRelationship;
 		%feature("autodoc", "	* Empty constructor
@@ -2383,7 +1891,7 @@ class StepFEA_FeaSurfaceSectionGeometricRelationship : public MMgt_TShared {
 ") StepFEA_FeaSurfaceSectionGeometricRelationship;
 		 StepFEA_FeaSurfaceSectionGeometricRelationship ();
 		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	* Initialize all fields (own and inherited)
+		%feature("autodoc", "	* Initialize all fields --own and inherited--
 
 	:param aSectionRef:
 	:type aSectionRef: Handle_StepElement_SurfaceSection &
@@ -2442,7 +1950,7 @@ class StepFEA_FeaSurfaceSectionGeometricRelationship : public MMgt_TShared {
 %}
 
 %nodefaultctor Handle_StepFEA_FeaSurfaceSectionGeometricRelationship;
-class Handle_StepFEA_FeaSurfaceSectionGeometricRelationship : public Handle_MMgt_TShared {
+class Handle_StepFEA_FeaSurfaceSectionGeometricRelationship : public Handle_Standard_Transient {
 
     public:
         // constructors
@@ -2454,19 +1962,20 @@ class Handle_StepFEA_FeaSurfaceSectionGeometricRelationship : public Handle_MMgt
         static const Handle_StepFEA_FeaSurfaceSectionGeometricRelationship DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_StepFEA_FeaSurfaceSectionGeometricRelationship {
     StepFEA_FeaSurfaceSectionGeometricRelationship* _get_reference() {
-    return (StepFEA_FeaSurfaceSectionGeometricRelationship*)$self->Access();
+    return (StepFEA_FeaSurfaceSectionGeometricRelationship*)$self->get();
     }
 };
 
 %extend Handle_StepFEA_FeaSurfaceSectionGeometricRelationship {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend StepFEA_FeaSurfaceSectionGeometricRelationship {
@@ -2475,7 +1984,7 @@ class Handle_StepFEA_FeaSurfaceSectionGeometricRelationship : public Handle_MMgt
 	}
 };
 %nodefaultctor StepFEA_FreedomAndCoefficient;
-class StepFEA_FreedomAndCoefficient : public MMgt_TShared {
+class StepFEA_FreedomAndCoefficient : public Standard_Transient {
 	public:
 		%feature("compactdefaultargs") StepFEA_FreedomAndCoefficient;
 		%feature("autodoc", "	* Empty constructor
@@ -2484,7 +1993,7 @@ class StepFEA_FreedomAndCoefficient : public MMgt_TShared {
 ") StepFEA_FreedomAndCoefficient;
 		 StepFEA_FreedomAndCoefficient ();
 		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	* Initialize all fields (own and inherited)
+		%feature("autodoc", "	* Initialize all fields --own and inherited--
 
 	:param aFreedom:
 	:type aFreedom: StepFEA_DegreeOfFreedom &
@@ -2543,7 +2052,7 @@ class StepFEA_FreedomAndCoefficient : public MMgt_TShared {
 %}
 
 %nodefaultctor Handle_StepFEA_FreedomAndCoefficient;
-class Handle_StepFEA_FreedomAndCoefficient : public Handle_MMgt_TShared {
+class Handle_StepFEA_FreedomAndCoefficient : public Handle_Standard_Transient {
 
     public:
         // constructors
@@ -2555,19 +2064,20 @@ class Handle_StepFEA_FreedomAndCoefficient : public Handle_MMgt_TShared {
         static const Handle_StepFEA_FreedomAndCoefficient DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_StepFEA_FreedomAndCoefficient {
     StepFEA_FreedomAndCoefficient* _get_reference() {
-    return (StepFEA_FreedomAndCoefficient*)$self->Access();
+    return (StepFEA_FreedomAndCoefficient*)$self->get();
     }
 };
 
 %extend Handle_StepFEA_FreedomAndCoefficient {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend StepFEA_FreedomAndCoefficient {
@@ -2576,7 +2086,7 @@ class Handle_StepFEA_FreedomAndCoefficient : public Handle_MMgt_TShared {
 	}
 };
 %nodefaultctor StepFEA_FreedomsList;
-class StepFEA_FreedomsList : public MMgt_TShared {
+class StepFEA_FreedomsList : public Standard_Transient {
 	public:
 		%feature("compactdefaultargs") StepFEA_FreedomsList;
 		%feature("autodoc", "	* Empty constructor
@@ -2585,7 +2095,7 @@ class StepFEA_FreedomsList : public MMgt_TShared {
 ") StepFEA_FreedomsList;
 		 StepFEA_FreedomsList ();
 		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	* Initialize all fields (own and inherited)
+		%feature("autodoc", "	* Initialize all fields --own and inherited--
 
 	:param aFreedoms:
 	:type aFreedoms: Handle_StepFEA_HArray1OfDegreeOfFreedom &
@@ -2628,7 +2138,7 @@ class StepFEA_FreedomsList : public MMgt_TShared {
 %}
 
 %nodefaultctor Handle_StepFEA_FreedomsList;
-class Handle_StepFEA_FreedomsList : public Handle_MMgt_TShared {
+class Handle_StepFEA_FreedomsList : public Handle_Standard_Transient {
 
     public:
         // constructors
@@ -2640,1504 +2150,23 @@ class Handle_StepFEA_FreedomsList : public Handle_MMgt_TShared {
         static const Handle_StepFEA_FreedomsList DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_StepFEA_FreedomsList {
     StepFEA_FreedomsList* _get_reference() {
-    return (StepFEA_FreedomsList*)$self->Access();
+    return (StepFEA_FreedomsList*)$self->get();
     }
 };
 
 %extend Handle_StepFEA_FreedomsList {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend StepFEA_FreedomsList {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor StepFEA_HArray1OfCurveElementEndOffset;
-class StepFEA_HArray1OfCurveElementEndOffset : public MMgt_TShared {
-	public:
-		%feature("compactdefaultargs") StepFEA_HArray1OfCurveElementEndOffset;
-		%feature("autodoc", "	:param Low:
-	:type Low: int
-	:param Up:
-	:type Up: int
-	:rtype: None
-") StepFEA_HArray1OfCurveElementEndOffset;
-		 StepFEA_HArray1OfCurveElementEndOffset (const Standard_Integer Low,const Standard_Integer Up);
-		%feature("compactdefaultargs") StepFEA_HArray1OfCurveElementEndOffset;
-		%feature("autodoc", "	:param Low:
-	:type Low: int
-	:param Up:
-	:type Up: int
-	:param V:
-	:type V: Handle_StepFEA_CurveElementEndOffset &
-	:rtype: None
-") StepFEA_HArray1OfCurveElementEndOffset;
-		 StepFEA_HArray1OfCurveElementEndOffset (const Standard_Integer Low,const Standard_Integer Up,const Handle_StepFEA_CurveElementEndOffset & V);
-		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	:param V:
-	:type V: Handle_StepFEA_CurveElementEndOffset &
-	:rtype: None
-") Init;
-		void Init (const Handle_StepFEA_CurveElementEndOffset & V);
-		%feature("compactdefaultargs") Length;
-		%feature("autodoc", "	:rtype: int
-") Length;
-		Standard_Integer Length ();
-		%feature("compactdefaultargs") Lower;
-		%feature("autodoc", "	:rtype: int
-") Lower;
-		Standard_Integer Lower ();
-		%feature("compactdefaultargs") Upper;
-		%feature("autodoc", "	:rtype: int
-") Upper;
-		Standard_Integer Upper ();
-		%feature("compactdefaultargs") SetValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param Value:
-	:type Value: Handle_StepFEA_CurveElementEndOffset &
-	:rtype: None
-") SetValue;
-		void SetValue (const Standard_Integer Index,const Handle_StepFEA_CurveElementEndOffset & Value);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: Handle_StepFEA_CurveElementEndOffset
-") Value;
-		Handle_StepFEA_CurveElementEndOffset Value (const Standard_Integer Index);
-		%feature("compactdefaultargs") ChangeValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: Handle_StepFEA_CurveElementEndOffset
-") ChangeValue;
-		Handle_StepFEA_CurveElementEndOffset ChangeValue (const Standard_Integer Index);
-		%feature("compactdefaultargs") Array1;
-		%feature("autodoc", "	:rtype: StepFEA_Array1OfCurveElementEndOffset
-") Array1;
-		const StepFEA_Array1OfCurveElementEndOffset & Array1 ();
-		%feature("compactdefaultargs") ChangeArray1;
-		%feature("autodoc", "	:rtype: StepFEA_Array1OfCurveElementEndOffset
-") ChangeArray1;
-		StepFEA_Array1OfCurveElementEndOffset & ChangeArray1 ();
-};
-
-
-%extend StepFEA_HArray1OfCurveElementEndOffset {
-	%pythoncode {
-		def GetHandle(self):
-		    try:
-		        return self.thisHandle
-		    except:
-		        self.thisHandle = Handle_StepFEA_HArray1OfCurveElementEndOffset(self)
-		        self.thisown = False
-		        return self.thisHandle
-	}
-};
-
-%pythonappend Handle_StepFEA_HArray1OfCurveElementEndOffset::Handle_StepFEA_HArray1OfCurveElementEndOffset %{
-    # register the handle in the base object
-    if len(args) > 0:
-        register_handle(self, args[0])
-%}
-
-%nodefaultctor Handle_StepFEA_HArray1OfCurveElementEndOffset;
-class Handle_StepFEA_HArray1OfCurveElementEndOffset : public Handle_MMgt_TShared {
-
-    public:
-        // constructors
-        Handle_StepFEA_HArray1OfCurveElementEndOffset();
-        Handle_StepFEA_HArray1OfCurveElementEndOffset(const Handle_StepFEA_HArray1OfCurveElementEndOffset &aHandle);
-        Handle_StepFEA_HArray1OfCurveElementEndOffset(const StepFEA_HArray1OfCurveElementEndOffset *anItem);
-        void Nullify();
-        Standard_Boolean IsNull() const;
-        static const Handle_StepFEA_HArray1OfCurveElementEndOffset DownCast(const Handle_Standard_Transient &AnObject);
-
-};
-%extend Handle_StepFEA_HArray1OfCurveElementEndOffset {
-    StepFEA_HArray1OfCurveElementEndOffset* _get_reference() {
-    return (StepFEA_HArray1OfCurveElementEndOffset*)$self->Access();
-    }
-};
-
-%extend Handle_StepFEA_HArray1OfCurveElementEndOffset {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
-};
-
-%extend StepFEA_HArray1OfCurveElementEndOffset {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor StepFEA_HArray1OfCurveElementEndRelease;
-class StepFEA_HArray1OfCurveElementEndRelease : public MMgt_TShared {
-	public:
-		%feature("compactdefaultargs") StepFEA_HArray1OfCurveElementEndRelease;
-		%feature("autodoc", "	:param Low:
-	:type Low: int
-	:param Up:
-	:type Up: int
-	:rtype: None
-") StepFEA_HArray1OfCurveElementEndRelease;
-		 StepFEA_HArray1OfCurveElementEndRelease (const Standard_Integer Low,const Standard_Integer Up);
-		%feature("compactdefaultargs") StepFEA_HArray1OfCurveElementEndRelease;
-		%feature("autodoc", "	:param Low:
-	:type Low: int
-	:param Up:
-	:type Up: int
-	:param V:
-	:type V: Handle_StepFEA_CurveElementEndRelease &
-	:rtype: None
-") StepFEA_HArray1OfCurveElementEndRelease;
-		 StepFEA_HArray1OfCurveElementEndRelease (const Standard_Integer Low,const Standard_Integer Up,const Handle_StepFEA_CurveElementEndRelease & V);
-		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	:param V:
-	:type V: Handle_StepFEA_CurveElementEndRelease &
-	:rtype: None
-") Init;
-		void Init (const Handle_StepFEA_CurveElementEndRelease & V);
-		%feature("compactdefaultargs") Length;
-		%feature("autodoc", "	:rtype: int
-") Length;
-		Standard_Integer Length ();
-		%feature("compactdefaultargs") Lower;
-		%feature("autodoc", "	:rtype: int
-") Lower;
-		Standard_Integer Lower ();
-		%feature("compactdefaultargs") Upper;
-		%feature("autodoc", "	:rtype: int
-") Upper;
-		Standard_Integer Upper ();
-		%feature("compactdefaultargs") SetValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param Value:
-	:type Value: Handle_StepFEA_CurveElementEndRelease &
-	:rtype: None
-") SetValue;
-		void SetValue (const Standard_Integer Index,const Handle_StepFEA_CurveElementEndRelease & Value);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: Handle_StepFEA_CurveElementEndRelease
-") Value;
-		Handle_StepFEA_CurveElementEndRelease Value (const Standard_Integer Index);
-		%feature("compactdefaultargs") ChangeValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: Handle_StepFEA_CurveElementEndRelease
-") ChangeValue;
-		Handle_StepFEA_CurveElementEndRelease ChangeValue (const Standard_Integer Index);
-		%feature("compactdefaultargs") Array1;
-		%feature("autodoc", "	:rtype: StepFEA_Array1OfCurveElementEndRelease
-") Array1;
-		const StepFEA_Array1OfCurveElementEndRelease & Array1 ();
-		%feature("compactdefaultargs") ChangeArray1;
-		%feature("autodoc", "	:rtype: StepFEA_Array1OfCurveElementEndRelease
-") ChangeArray1;
-		StepFEA_Array1OfCurveElementEndRelease & ChangeArray1 ();
-};
-
-
-%extend StepFEA_HArray1OfCurveElementEndRelease {
-	%pythoncode {
-		def GetHandle(self):
-		    try:
-		        return self.thisHandle
-		    except:
-		        self.thisHandle = Handle_StepFEA_HArray1OfCurveElementEndRelease(self)
-		        self.thisown = False
-		        return self.thisHandle
-	}
-};
-
-%pythonappend Handle_StepFEA_HArray1OfCurveElementEndRelease::Handle_StepFEA_HArray1OfCurveElementEndRelease %{
-    # register the handle in the base object
-    if len(args) > 0:
-        register_handle(self, args[0])
-%}
-
-%nodefaultctor Handle_StepFEA_HArray1OfCurveElementEndRelease;
-class Handle_StepFEA_HArray1OfCurveElementEndRelease : public Handle_MMgt_TShared {
-
-    public:
-        // constructors
-        Handle_StepFEA_HArray1OfCurveElementEndRelease();
-        Handle_StepFEA_HArray1OfCurveElementEndRelease(const Handle_StepFEA_HArray1OfCurveElementEndRelease &aHandle);
-        Handle_StepFEA_HArray1OfCurveElementEndRelease(const StepFEA_HArray1OfCurveElementEndRelease *anItem);
-        void Nullify();
-        Standard_Boolean IsNull() const;
-        static const Handle_StepFEA_HArray1OfCurveElementEndRelease DownCast(const Handle_Standard_Transient &AnObject);
-
-};
-%extend Handle_StepFEA_HArray1OfCurveElementEndRelease {
-    StepFEA_HArray1OfCurveElementEndRelease* _get_reference() {
-    return (StepFEA_HArray1OfCurveElementEndRelease*)$self->Access();
-    }
-};
-
-%extend Handle_StepFEA_HArray1OfCurveElementEndRelease {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
-};
-
-%extend StepFEA_HArray1OfCurveElementEndRelease {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor StepFEA_HArray1OfCurveElementInterval;
-class StepFEA_HArray1OfCurveElementInterval : public MMgt_TShared {
-	public:
-		%feature("compactdefaultargs") StepFEA_HArray1OfCurveElementInterval;
-		%feature("autodoc", "	:param Low:
-	:type Low: int
-	:param Up:
-	:type Up: int
-	:rtype: None
-") StepFEA_HArray1OfCurveElementInterval;
-		 StepFEA_HArray1OfCurveElementInterval (const Standard_Integer Low,const Standard_Integer Up);
-		%feature("compactdefaultargs") StepFEA_HArray1OfCurveElementInterval;
-		%feature("autodoc", "	:param Low:
-	:type Low: int
-	:param Up:
-	:type Up: int
-	:param V:
-	:type V: Handle_StepFEA_CurveElementInterval &
-	:rtype: None
-") StepFEA_HArray1OfCurveElementInterval;
-		 StepFEA_HArray1OfCurveElementInterval (const Standard_Integer Low,const Standard_Integer Up,const Handle_StepFEA_CurveElementInterval & V);
-		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	:param V:
-	:type V: Handle_StepFEA_CurveElementInterval &
-	:rtype: None
-") Init;
-		void Init (const Handle_StepFEA_CurveElementInterval & V);
-		%feature("compactdefaultargs") Length;
-		%feature("autodoc", "	:rtype: int
-") Length;
-		Standard_Integer Length ();
-		%feature("compactdefaultargs") Lower;
-		%feature("autodoc", "	:rtype: int
-") Lower;
-		Standard_Integer Lower ();
-		%feature("compactdefaultargs") Upper;
-		%feature("autodoc", "	:rtype: int
-") Upper;
-		Standard_Integer Upper ();
-		%feature("compactdefaultargs") SetValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param Value:
-	:type Value: Handle_StepFEA_CurveElementInterval &
-	:rtype: None
-") SetValue;
-		void SetValue (const Standard_Integer Index,const Handle_StepFEA_CurveElementInterval & Value);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: Handle_StepFEA_CurveElementInterval
-") Value;
-		Handle_StepFEA_CurveElementInterval Value (const Standard_Integer Index);
-		%feature("compactdefaultargs") ChangeValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: Handle_StepFEA_CurveElementInterval
-") ChangeValue;
-		Handle_StepFEA_CurveElementInterval ChangeValue (const Standard_Integer Index);
-		%feature("compactdefaultargs") Array1;
-		%feature("autodoc", "	:rtype: StepFEA_Array1OfCurveElementInterval
-") Array1;
-		const StepFEA_Array1OfCurveElementInterval & Array1 ();
-		%feature("compactdefaultargs") ChangeArray1;
-		%feature("autodoc", "	:rtype: StepFEA_Array1OfCurveElementInterval
-") ChangeArray1;
-		StepFEA_Array1OfCurveElementInterval & ChangeArray1 ();
-};
-
-
-%extend StepFEA_HArray1OfCurveElementInterval {
-	%pythoncode {
-		def GetHandle(self):
-		    try:
-		        return self.thisHandle
-		    except:
-		        self.thisHandle = Handle_StepFEA_HArray1OfCurveElementInterval(self)
-		        self.thisown = False
-		        return self.thisHandle
-	}
-};
-
-%pythonappend Handle_StepFEA_HArray1OfCurveElementInterval::Handle_StepFEA_HArray1OfCurveElementInterval %{
-    # register the handle in the base object
-    if len(args) > 0:
-        register_handle(self, args[0])
-%}
-
-%nodefaultctor Handle_StepFEA_HArray1OfCurveElementInterval;
-class Handle_StepFEA_HArray1OfCurveElementInterval : public Handle_MMgt_TShared {
-
-    public:
-        // constructors
-        Handle_StepFEA_HArray1OfCurveElementInterval();
-        Handle_StepFEA_HArray1OfCurveElementInterval(const Handle_StepFEA_HArray1OfCurveElementInterval &aHandle);
-        Handle_StepFEA_HArray1OfCurveElementInterval(const StepFEA_HArray1OfCurveElementInterval *anItem);
-        void Nullify();
-        Standard_Boolean IsNull() const;
-        static const Handle_StepFEA_HArray1OfCurveElementInterval DownCast(const Handle_Standard_Transient &AnObject);
-
-};
-%extend Handle_StepFEA_HArray1OfCurveElementInterval {
-    StepFEA_HArray1OfCurveElementInterval* _get_reference() {
-    return (StepFEA_HArray1OfCurveElementInterval*)$self->Access();
-    }
-};
-
-%extend Handle_StepFEA_HArray1OfCurveElementInterval {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
-};
-
-%extend StepFEA_HArray1OfCurveElementInterval {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor StepFEA_HArray1OfDegreeOfFreedom;
-class StepFEA_HArray1OfDegreeOfFreedom : public MMgt_TShared {
-	public:
-		%feature("compactdefaultargs") StepFEA_HArray1OfDegreeOfFreedom;
-		%feature("autodoc", "	:param Low:
-	:type Low: int
-	:param Up:
-	:type Up: int
-	:rtype: None
-") StepFEA_HArray1OfDegreeOfFreedom;
-		 StepFEA_HArray1OfDegreeOfFreedom (const Standard_Integer Low,const Standard_Integer Up);
-		%feature("compactdefaultargs") StepFEA_HArray1OfDegreeOfFreedom;
-		%feature("autodoc", "	:param Low:
-	:type Low: int
-	:param Up:
-	:type Up: int
-	:param V:
-	:type V: StepFEA_DegreeOfFreedom &
-	:rtype: None
-") StepFEA_HArray1OfDegreeOfFreedom;
-		 StepFEA_HArray1OfDegreeOfFreedom (const Standard_Integer Low,const Standard_Integer Up,const StepFEA_DegreeOfFreedom & V);
-		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	:param V:
-	:type V: StepFEA_DegreeOfFreedom &
-	:rtype: None
-") Init;
-		void Init (const StepFEA_DegreeOfFreedom & V);
-		%feature("compactdefaultargs") Length;
-		%feature("autodoc", "	:rtype: int
-") Length;
-		Standard_Integer Length ();
-		%feature("compactdefaultargs") Lower;
-		%feature("autodoc", "	:rtype: int
-") Lower;
-		Standard_Integer Lower ();
-		%feature("compactdefaultargs") Upper;
-		%feature("autodoc", "	:rtype: int
-") Upper;
-		Standard_Integer Upper ();
-		%feature("compactdefaultargs") SetValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param Value:
-	:type Value: StepFEA_DegreeOfFreedom &
-	:rtype: None
-") SetValue;
-		void SetValue (const Standard_Integer Index,const StepFEA_DegreeOfFreedom & Value);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: StepFEA_DegreeOfFreedom
-") Value;
-		const StepFEA_DegreeOfFreedom & Value (const Standard_Integer Index);
-		%feature("compactdefaultargs") ChangeValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: StepFEA_DegreeOfFreedom
-") ChangeValue;
-		StepFEA_DegreeOfFreedom & ChangeValue (const Standard_Integer Index);
-		%feature("compactdefaultargs") Array1;
-		%feature("autodoc", "	:rtype: StepFEA_Array1OfDegreeOfFreedom
-") Array1;
-		const StepFEA_Array1OfDegreeOfFreedom & Array1 ();
-		%feature("compactdefaultargs") ChangeArray1;
-		%feature("autodoc", "	:rtype: StepFEA_Array1OfDegreeOfFreedom
-") ChangeArray1;
-		StepFEA_Array1OfDegreeOfFreedom & ChangeArray1 ();
-};
-
-
-%extend StepFEA_HArray1OfDegreeOfFreedom {
-	%pythoncode {
-		def GetHandle(self):
-		    try:
-		        return self.thisHandle
-		    except:
-		        self.thisHandle = Handle_StepFEA_HArray1OfDegreeOfFreedom(self)
-		        self.thisown = False
-		        return self.thisHandle
-	}
-};
-
-%pythonappend Handle_StepFEA_HArray1OfDegreeOfFreedom::Handle_StepFEA_HArray1OfDegreeOfFreedom %{
-    # register the handle in the base object
-    if len(args) > 0:
-        register_handle(self, args[0])
-%}
-
-%nodefaultctor Handle_StepFEA_HArray1OfDegreeOfFreedom;
-class Handle_StepFEA_HArray1OfDegreeOfFreedom : public Handle_MMgt_TShared {
-
-    public:
-        // constructors
-        Handle_StepFEA_HArray1OfDegreeOfFreedom();
-        Handle_StepFEA_HArray1OfDegreeOfFreedom(const Handle_StepFEA_HArray1OfDegreeOfFreedom &aHandle);
-        Handle_StepFEA_HArray1OfDegreeOfFreedom(const StepFEA_HArray1OfDegreeOfFreedom *anItem);
-        void Nullify();
-        Standard_Boolean IsNull() const;
-        static const Handle_StepFEA_HArray1OfDegreeOfFreedom DownCast(const Handle_Standard_Transient &AnObject);
-
-};
-%extend Handle_StepFEA_HArray1OfDegreeOfFreedom {
-    StepFEA_HArray1OfDegreeOfFreedom* _get_reference() {
-    return (StepFEA_HArray1OfDegreeOfFreedom*)$self->Access();
-    }
-};
-
-%extend Handle_StepFEA_HArray1OfDegreeOfFreedom {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
-};
-
-%extend StepFEA_HArray1OfDegreeOfFreedom {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor StepFEA_HArray1OfElementRepresentation;
-class StepFEA_HArray1OfElementRepresentation : public MMgt_TShared {
-	public:
-		%feature("compactdefaultargs") StepFEA_HArray1OfElementRepresentation;
-		%feature("autodoc", "	:param Low:
-	:type Low: int
-	:param Up:
-	:type Up: int
-	:rtype: None
-") StepFEA_HArray1OfElementRepresentation;
-		 StepFEA_HArray1OfElementRepresentation (const Standard_Integer Low,const Standard_Integer Up);
-		%feature("compactdefaultargs") StepFEA_HArray1OfElementRepresentation;
-		%feature("autodoc", "	:param Low:
-	:type Low: int
-	:param Up:
-	:type Up: int
-	:param V:
-	:type V: Handle_StepFEA_ElementRepresentation &
-	:rtype: None
-") StepFEA_HArray1OfElementRepresentation;
-		 StepFEA_HArray1OfElementRepresentation (const Standard_Integer Low,const Standard_Integer Up,const Handle_StepFEA_ElementRepresentation & V);
-		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	:param V:
-	:type V: Handle_StepFEA_ElementRepresentation &
-	:rtype: None
-") Init;
-		void Init (const Handle_StepFEA_ElementRepresentation & V);
-		%feature("compactdefaultargs") Length;
-		%feature("autodoc", "	:rtype: int
-") Length;
-		Standard_Integer Length ();
-		%feature("compactdefaultargs") Lower;
-		%feature("autodoc", "	:rtype: int
-") Lower;
-		Standard_Integer Lower ();
-		%feature("compactdefaultargs") Upper;
-		%feature("autodoc", "	:rtype: int
-") Upper;
-		Standard_Integer Upper ();
-		%feature("compactdefaultargs") SetValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param Value:
-	:type Value: Handle_StepFEA_ElementRepresentation &
-	:rtype: None
-") SetValue;
-		void SetValue (const Standard_Integer Index,const Handle_StepFEA_ElementRepresentation & Value);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: Handle_StepFEA_ElementRepresentation
-") Value;
-		Handle_StepFEA_ElementRepresentation Value (const Standard_Integer Index);
-		%feature("compactdefaultargs") ChangeValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: Handle_StepFEA_ElementRepresentation
-") ChangeValue;
-		Handle_StepFEA_ElementRepresentation ChangeValue (const Standard_Integer Index);
-		%feature("compactdefaultargs") Array1;
-		%feature("autodoc", "	:rtype: StepFEA_Array1OfElementRepresentation
-") Array1;
-		const StepFEA_Array1OfElementRepresentation & Array1 ();
-		%feature("compactdefaultargs") ChangeArray1;
-		%feature("autodoc", "	:rtype: StepFEA_Array1OfElementRepresentation
-") ChangeArray1;
-		StepFEA_Array1OfElementRepresentation & ChangeArray1 ();
-};
-
-
-%extend StepFEA_HArray1OfElementRepresentation {
-	%pythoncode {
-		def GetHandle(self):
-		    try:
-		        return self.thisHandle
-		    except:
-		        self.thisHandle = Handle_StepFEA_HArray1OfElementRepresentation(self)
-		        self.thisown = False
-		        return self.thisHandle
-	}
-};
-
-%pythonappend Handle_StepFEA_HArray1OfElementRepresentation::Handle_StepFEA_HArray1OfElementRepresentation %{
-    # register the handle in the base object
-    if len(args) > 0:
-        register_handle(self, args[0])
-%}
-
-%nodefaultctor Handle_StepFEA_HArray1OfElementRepresentation;
-class Handle_StepFEA_HArray1OfElementRepresentation : public Handle_MMgt_TShared {
-
-    public:
-        // constructors
-        Handle_StepFEA_HArray1OfElementRepresentation();
-        Handle_StepFEA_HArray1OfElementRepresentation(const Handle_StepFEA_HArray1OfElementRepresentation &aHandle);
-        Handle_StepFEA_HArray1OfElementRepresentation(const StepFEA_HArray1OfElementRepresentation *anItem);
-        void Nullify();
-        Standard_Boolean IsNull() const;
-        static const Handle_StepFEA_HArray1OfElementRepresentation DownCast(const Handle_Standard_Transient &AnObject);
-
-};
-%extend Handle_StepFEA_HArray1OfElementRepresentation {
-    StepFEA_HArray1OfElementRepresentation* _get_reference() {
-    return (StepFEA_HArray1OfElementRepresentation*)$self->Access();
-    }
-};
-
-%extend Handle_StepFEA_HArray1OfElementRepresentation {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
-};
-
-%extend StepFEA_HArray1OfElementRepresentation {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor StepFEA_HArray1OfNodeRepresentation;
-class StepFEA_HArray1OfNodeRepresentation : public MMgt_TShared {
-	public:
-		%feature("compactdefaultargs") StepFEA_HArray1OfNodeRepresentation;
-		%feature("autodoc", "	:param Low:
-	:type Low: int
-	:param Up:
-	:type Up: int
-	:rtype: None
-") StepFEA_HArray1OfNodeRepresentation;
-		 StepFEA_HArray1OfNodeRepresentation (const Standard_Integer Low,const Standard_Integer Up);
-		%feature("compactdefaultargs") StepFEA_HArray1OfNodeRepresentation;
-		%feature("autodoc", "	:param Low:
-	:type Low: int
-	:param Up:
-	:type Up: int
-	:param V:
-	:type V: Handle_StepFEA_NodeRepresentation &
-	:rtype: None
-") StepFEA_HArray1OfNodeRepresentation;
-		 StepFEA_HArray1OfNodeRepresentation (const Standard_Integer Low,const Standard_Integer Up,const Handle_StepFEA_NodeRepresentation & V);
-		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	:param V:
-	:type V: Handle_StepFEA_NodeRepresentation &
-	:rtype: None
-") Init;
-		void Init (const Handle_StepFEA_NodeRepresentation & V);
-		%feature("compactdefaultargs") Length;
-		%feature("autodoc", "	:rtype: int
-") Length;
-		Standard_Integer Length ();
-		%feature("compactdefaultargs") Lower;
-		%feature("autodoc", "	:rtype: int
-") Lower;
-		Standard_Integer Lower ();
-		%feature("compactdefaultargs") Upper;
-		%feature("autodoc", "	:rtype: int
-") Upper;
-		Standard_Integer Upper ();
-		%feature("compactdefaultargs") SetValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param Value:
-	:type Value: Handle_StepFEA_NodeRepresentation &
-	:rtype: None
-") SetValue;
-		void SetValue (const Standard_Integer Index,const Handle_StepFEA_NodeRepresentation & Value);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: Handle_StepFEA_NodeRepresentation
-") Value;
-		Handle_StepFEA_NodeRepresentation Value (const Standard_Integer Index);
-		%feature("compactdefaultargs") ChangeValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: Handle_StepFEA_NodeRepresentation
-") ChangeValue;
-		Handle_StepFEA_NodeRepresentation ChangeValue (const Standard_Integer Index);
-		%feature("compactdefaultargs") Array1;
-		%feature("autodoc", "	:rtype: StepFEA_Array1OfNodeRepresentation
-") Array1;
-		const StepFEA_Array1OfNodeRepresentation & Array1 ();
-		%feature("compactdefaultargs") ChangeArray1;
-		%feature("autodoc", "	:rtype: StepFEA_Array1OfNodeRepresentation
-") ChangeArray1;
-		StepFEA_Array1OfNodeRepresentation & ChangeArray1 ();
-};
-
-
-%extend StepFEA_HArray1OfNodeRepresentation {
-	%pythoncode {
-		def GetHandle(self):
-		    try:
-		        return self.thisHandle
-		    except:
-		        self.thisHandle = Handle_StepFEA_HArray1OfNodeRepresentation(self)
-		        self.thisown = False
-		        return self.thisHandle
-	}
-};
-
-%pythonappend Handle_StepFEA_HArray1OfNodeRepresentation::Handle_StepFEA_HArray1OfNodeRepresentation %{
-    # register the handle in the base object
-    if len(args) > 0:
-        register_handle(self, args[0])
-%}
-
-%nodefaultctor Handle_StepFEA_HArray1OfNodeRepresentation;
-class Handle_StepFEA_HArray1OfNodeRepresentation : public Handle_MMgt_TShared {
-
-    public:
-        // constructors
-        Handle_StepFEA_HArray1OfNodeRepresentation();
-        Handle_StepFEA_HArray1OfNodeRepresentation(const Handle_StepFEA_HArray1OfNodeRepresentation &aHandle);
-        Handle_StepFEA_HArray1OfNodeRepresentation(const StepFEA_HArray1OfNodeRepresentation *anItem);
-        void Nullify();
-        Standard_Boolean IsNull() const;
-        static const Handle_StepFEA_HArray1OfNodeRepresentation DownCast(const Handle_Standard_Transient &AnObject);
-
-};
-%extend Handle_StepFEA_HArray1OfNodeRepresentation {
-    StepFEA_HArray1OfNodeRepresentation* _get_reference() {
-    return (StepFEA_HArray1OfNodeRepresentation*)$self->Access();
-    }
-};
-
-%extend Handle_StepFEA_HArray1OfNodeRepresentation {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
-};
-
-%extend StepFEA_HArray1OfNodeRepresentation {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor StepFEA_HSequenceOfCurve3dElementProperty;
-class StepFEA_HSequenceOfCurve3dElementProperty : public MMgt_TShared {
-	public:
-		%feature("compactdefaultargs") StepFEA_HSequenceOfCurve3dElementProperty;
-		%feature("autodoc", "	:rtype: None
-") StepFEA_HSequenceOfCurve3dElementProperty;
-		 StepFEA_HSequenceOfCurve3dElementProperty ();
-		%feature("compactdefaultargs") IsEmpty;
-		%feature("autodoc", "	:rtype: bool
-") IsEmpty;
-		Standard_Boolean IsEmpty ();
-		%feature("compactdefaultargs") Length;
-		%feature("autodoc", "	:rtype: int
-") Length;
-		Standard_Integer Length ();
-		%feature("compactdefaultargs") Clear;
-		%feature("autodoc", "	:rtype: None
-") Clear;
-		void Clear ();
-		%feature("compactdefaultargs") Append;
-		%feature("autodoc", "	:param anItem:
-	:type anItem: Handle_StepFEA_Curve3dElementProperty &
-	:rtype: None
-") Append;
-		void Append (const Handle_StepFEA_Curve3dElementProperty & anItem);
-		%feature("compactdefaultargs") Append;
-		%feature("autodoc", "	:param aSequence:
-	:type aSequence: Handle_StepFEA_HSequenceOfCurve3dElementProperty &
-	:rtype: None
-") Append;
-		void Append (const Handle_StepFEA_HSequenceOfCurve3dElementProperty & aSequence);
-		%feature("compactdefaultargs") Prepend;
-		%feature("autodoc", "	:param anItem:
-	:type anItem: Handle_StepFEA_Curve3dElementProperty &
-	:rtype: None
-") Prepend;
-		void Prepend (const Handle_StepFEA_Curve3dElementProperty & anItem);
-		%feature("compactdefaultargs") Prepend;
-		%feature("autodoc", "	:param aSequence:
-	:type aSequence: Handle_StepFEA_HSequenceOfCurve3dElementProperty &
-	:rtype: None
-") Prepend;
-		void Prepend (const Handle_StepFEA_HSequenceOfCurve3dElementProperty & aSequence);
-		%feature("compactdefaultargs") Reverse;
-		%feature("autodoc", "	:rtype: None
-") Reverse;
-		void Reverse ();
-		%feature("compactdefaultargs") InsertBefore;
-		%feature("autodoc", "	:param anIndex:
-	:type anIndex: int
-	:param anItem:
-	:type anItem: Handle_StepFEA_Curve3dElementProperty &
-	:rtype: None
-") InsertBefore;
-		void InsertBefore (const Standard_Integer anIndex,const Handle_StepFEA_Curve3dElementProperty & anItem);
-		%feature("compactdefaultargs") InsertBefore;
-		%feature("autodoc", "	:param anIndex:
-	:type anIndex: int
-	:param aSequence:
-	:type aSequence: Handle_StepFEA_HSequenceOfCurve3dElementProperty &
-	:rtype: None
-") InsertBefore;
-		void InsertBefore (const Standard_Integer anIndex,const Handle_StepFEA_HSequenceOfCurve3dElementProperty & aSequence);
-		%feature("compactdefaultargs") InsertAfter;
-		%feature("autodoc", "	:param anIndex:
-	:type anIndex: int
-	:param anItem:
-	:type anItem: Handle_StepFEA_Curve3dElementProperty &
-	:rtype: None
-") InsertAfter;
-		void InsertAfter (const Standard_Integer anIndex,const Handle_StepFEA_Curve3dElementProperty & anItem);
-		%feature("compactdefaultargs") InsertAfter;
-		%feature("autodoc", "	:param anIndex:
-	:type anIndex: int
-	:param aSequence:
-	:type aSequence: Handle_StepFEA_HSequenceOfCurve3dElementProperty &
-	:rtype: None
-") InsertAfter;
-		void InsertAfter (const Standard_Integer anIndex,const Handle_StepFEA_HSequenceOfCurve3dElementProperty & aSequence);
-		%feature("compactdefaultargs") Exchange;
-		%feature("autodoc", "	:param anIndex:
-	:type anIndex: int
-	:param anOtherIndex:
-	:type anOtherIndex: int
-	:rtype: None
-") Exchange;
-		void Exchange (const Standard_Integer anIndex,const Standard_Integer anOtherIndex);
-		%feature("compactdefaultargs") Split;
-		%feature("autodoc", "	:param anIndex:
-	:type anIndex: int
-	:rtype: Handle_StepFEA_HSequenceOfCurve3dElementProperty
-") Split;
-		Handle_StepFEA_HSequenceOfCurve3dElementProperty Split (const Standard_Integer anIndex);
-		%feature("compactdefaultargs") SetValue;
-		%feature("autodoc", "	:param anIndex:
-	:type anIndex: int
-	:param anItem:
-	:type anItem: Handle_StepFEA_Curve3dElementProperty &
-	:rtype: None
-") SetValue;
-		void SetValue (const Standard_Integer anIndex,const Handle_StepFEA_Curve3dElementProperty & anItem);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:param anIndex:
-	:type anIndex: int
-	:rtype: Handle_StepFEA_Curve3dElementProperty
-") Value;
-		Handle_StepFEA_Curve3dElementProperty Value (const Standard_Integer anIndex);
-		%feature("compactdefaultargs") ChangeValue;
-		%feature("autodoc", "	:param anIndex:
-	:type anIndex: int
-	:rtype: Handle_StepFEA_Curve3dElementProperty
-") ChangeValue;
-		Handle_StepFEA_Curve3dElementProperty ChangeValue (const Standard_Integer anIndex);
-		%feature("compactdefaultargs") Remove;
-		%feature("autodoc", "	:param anIndex:
-	:type anIndex: int
-	:rtype: None
-") Remove;
-		void Remove (const Standard_Integer anIndex);
-		%feature("compactdefaultargs") Remove;
-		%feature("autodoc", "	:param fromIndex:
-	:type fromIndex: int
-	:param toIndex:
-	:type toIndex: int
-	:rtype: None
-") Remove;
-		void Remove (const Standard_Integer fromIndex,const Standard_Integer toIndex);
-		%feature("compactdefaultargs") Sequence;
-		%feature("autodoc", "	:rtype: StepFEA_SequenceOfCurve3dElementProperty
-") Sequence;
-		const StepFEA_SequenceOfCurve3dElementProperty & Sequence ();
-		%feature("compactdefaultargs") ChangeSequence;
-		%feature("autodoc", "	:rtype: StepFEA_SequenceOfCurve3dElementProperty
-") ChangeSequence;
-		StepFEA_SequenceOfCurve3dElementProperty & ChangeSequence ();
-};
-
-
-%extend StepFEA_HSequenceOfCurve3dElementProperty {
-	%pythoncode {
-		def GetHandle(self):
-		    try:
-		        return self.thisHandle
-		    except:
-		        self.thisHandle = Handle_StepFEA_HSequenceOfCurve3dElementProperty(self)
-		        self.thisown = False
-		        return self.thisHandle
-	}
-};
-
-%pythonappend Handle_StepFEA_HSequenceOfCurve3dElementProperty::Handle_StepFEA_HSequenceOfCurve3dElementProperty %{
-    # register the handle in the base object
-    if len(args) > 0:
-        register_handle(self, args[0])
-%}
-
-%nodefaultctor Handle_StepFEA_HSequenceOfCurve3dElementProperty;
-class Handle_StepFEA_HSequenceOfCurve3dElementProperty : public Handle_MMgt_TShared {
-
-    public:
-        // constructors
-        Handle_StepFEA_HSequenceOfCurve3dElementProperty();
-        Handle_StepFEA_HSequenceOfCurve3dElementProperty(const Handle_StepFEA_HSequenceOfCurve3dElementProperty &aHandle);
-        Handle_StepFEA_HSequenceOfCurve3dElementProperty(const StepFEA_HSequenceOfCurve3dElementProperty *anItem);
-        void Nullify();
-        Standard_Boolean IsNull() const;
-        static const Handle_StepFEA_HSequenceOfCurve3dElementProperty DownCast(const Handle_Standard_Transient &AnObject);
-
-};
-%extend Handle_StepFEA_HSequenceOfCurve3dElementProperty {
-    StepFEA_HSequenceOfCurve3dElementProperty* _get_reference() {
-    return (StepFEA_HSequenceOfCurve3dElementProperty*)$self->Access();
-    }
-};
-
-%extend Handle_StepFEA_HSequenceOfCurve3dElementProperty {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
-};
-
-%extend StepFEA_HSequenceOfCurve3dElementProperty {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor StepFEA_HSequenceOfElementGeometricRelationship;
-class StepFEA_HSequenceOfElementGeometricRelationship : public MMgt_TShared {
-	public:
-		%feature("compactdefaultargs") StepFEA_HSequenceOfElementGeometricRelationship;
-		%feature("autodoc", "	:rtype: None
-") StepFEA_HSequenceOfElementGeometricRelationship;
-		 StepFEA_HSequenceOfElementGeometricRelationship ();
-		%feature("compactdefaultargs") IsEmpty;
-		%feature("autodoc", "	:rtype: bool
-") IsEmpty;
-		Standard_Boolean IsEmpty ();
-		%feature("compactdefaultargs") Length;
-		%feature("autodoc", "	:rtype: int
-") Length;
-		Standard_Integer Length ();
-		%feature("compactdefaultargs") Clear;
-		%feature("autodoc", "	:rtype: None
-") Clear;
-		void Clear ();
-		%feature("compactdefaultargs") Append;
-		%feature("autodoc", "	:param anItem:
-	:type anItem: Handle_StepFEA_ElementGeometricRelationship &
-	:rtype: None
-") Append;
-		void Append (const Handle_StepFEA_ElementGeometricRelationship & anItem);
-		%feature("compactdefaultargs") Append;
-		%feature("autodoc", "	:param aSequence:
-	:type aSequence: Handle_StepFEA_HSequenceOfElementGeometricRelationship &
-	:rtype: None
-") Append;
-		void Append (const Handle_StepFEA_HSequenceOfElementGeometricRelationship & aSequence);
-		%feature("compactdefaultargs") Prepend;
-		%feature("autodoc", "	:param anItem:
-	:type anItem: Handle_StepFEA_ElementGeometricRelationship &
-	:rtype: None
-") Prepend;
-		void Prepend (const Handle_StepFEA_ElementGeometricRelationship & anItem);
-		%feature("compactdefaultargs") Prepend;
-		%feature("autodoc", "	:param aSequence:
-	:type aSequence: Handle_StepFEA_HSequenceOfElementGeometricRelationship &
-	:rtype: None
-") Prepend;
-		void Prepend (const Handle_StepFEA_HSequenceOfElementGeometricRelationship & aSequence);
-		%feature("compactdefaultargs") Reverse;
-		%feature("autodoc", "	:rtype: None
-") Reverse;
-		void Reverse ();
-		%feature("compactdefaultargs") InsertBefore;
-		%feature("autodoc", "	:param anIndex:
-	:type anIndex: int
-	:param anItem:
-	:type anItem: Handle_StepFEA_ElementGeometricRelationship &
-	:rtype: None
-") InsertBefore;
-		void InsertBefore (const Standard_Integer anIndex,const Handle_StepFEA_ElementGeometricRelationship & anItem);
-		%feature("compactdefaultargs") InsertBefore;
-		%feature("autodoc", "	:param anIndex:
-	:type anIndex: int
-	:param aSequence:
-	:type aSequence: Handle_StepFEA_HSequenceOfElementGeometricRelationship &
-	:rtype: None
-") InsertBefore;
-		void InsertBefore (const Standard_Integer anIndex,const Handle_StepFEA_HSequenceOfElementGeometricRelationship & aSequence);
-		%feature("compactdefaultargs") InsertAfter;
-		%feature("autodoc", "	:param anIndex:
-	:type anIndex: int
-	:param anItem:
-	:type anItem: Handle_StepFEA_ElementGeometricRelationship &
-	:rtype: None
-") InsertAfter;
-		void InsertAfter (const Standard_Integer anIndex,const Handle_StepFEA_ElementGeometricRelationship & anItem);
-		%feature("compactdefaultargs") InsertAfter;
-		%feature("autodoc", "	:param anIndex:
-	:type anIndex: int
-	:param aSequence:
-	:type aSequence: Handle_StepFEA_HSequenceOfElementGeometricRelationship &
-	:rtype: None
-") InsertAfter;
-		void InsertAfter (const Standard_Integer anIndex,const Handle_StepFEA_HSequenceOfElementGeometricRelationship & aSequence);
-		%feature("compactdefaultargs") Exchange;
-		%feature("autodoc", "	:param anIndex:
-	:type anIndex: int
-	:param anOtherIndex:
-	:type anOtherIndex: int
-	:rtype: None
-") Exchange;
-		void Exchange (const Standard_Integer anIndex,const Standard_Integer anOtherIndex);
-		%feature("compactdefaultargs") Split;
-		%feature("autodoc", "	:param anIndex:
-	:type anIndex: int
-	:rtype: Handle_StepFEA_HSequenceOfElementGeometricRelationship
-") Split;
-		Handle_StepFEA_HSequenceOfElementGeometricRelationship Split (const Standard_Integer anIndex);
-		%feature("compactdefaultargs") SetValue;
-		%feature("autodoc", "	:param anIndex:
-	:type anIndex: int
-	:param anItem:
-	:type anItem: Handle_StepFEA_ElementGeometricRelationship &
-	:rtype: None
-") SetValue;
-		void SetValue (const Standard_Integer anIndex,const Handle_StepFEA_ElementGeometricRelationship & anItem);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:param anIndex:
-	:type anIndex: int
-	:rtype: Handle_StepFEA_ElementGeometricRelationship
-") Value;
-		Handle_StepFEA_ElementGeometricRelationship Value (const Standard_Integer anIndex);
-		%feature("compactdefaultargs") ChangeValue;
-		%feature("autodoc", "	:param anIndex:
-	:type anIndex: int
-	:rtype: Handle_StepFEA_ElementGeometricRelationship
-") ChangeValue;
-		Handle_StepFEA_ElementGeometricRelationship ChangeValue (const Standard_Integer anIndex);
-		%feature("compactdefaultargs") Remove;
-		%feature("autodoc", "	:param anIndex:
-	:type anIndex: int
-	:rtype: None
-") Remove;
-		void Remove (const Standard_Integer anIndex);
-		%feature("compactdefaultargs") Remove;
-		%feature("autodoc", "	:param fromIndex:
-	:type fromIndex: int
-	:param toIndex:
-	:type toIndex: int
-	:rtype: None
-") Remove;
-		void Remove (const Standard_Integer fromIndex,const Standard_Integer toIndex);
-		%feature("compactdefaultargs") Sequence;
-		%feature("autodoc", "	:rtype: StepFEA_SequenceOfElementGeometricRelationship
-") Sequence;
-		const StepFEA_SequenceOfElementGeometricRelationship & Sequence ();
-		%feature("compactdefaultargs") ChangeSequence;
-		%feature("autodoc", "	:rtype: StepFEA_SequenceOfElementGeometricRelationship
-") ChangeSequence;
-		StepFEA_SequenceOfElementGeometricRelationship & ChangeSequence ();
-};
-
-
-%extend StepFEA_HSequenceOfElementGeometricRelationship {
-	%pythoncode {
-		def GetHandle(self):
-		    try:
-		        return self.thisHandle
-		    except:
-		        self.thisHandle = Handle_StepFEA_HSequenceOfElementGeometricRelationship(self)
-		        self.thisown = False
-		        return self.thisHandle
-	}
-};
-
-%pythonappend Handle_StepFEA_HSequenceOfElementGeometricRelationship::Handle_StepFEA_HSequenceOfElementGeometricRelationship %{
-    # register the handle in the base object
-    if len(args) > 0:
-        register_handle(self, args[0])
-%}
-
-%nodefaultctor Handle_StepFEA_HSequenceOfElementGeometricRelationship;
-class Handle_StepFEA_HSequenceOfElementGeometricRelationship : public Handle_MMgt_TShared {
-
-    public:
-        // constructors
-        Handle_StepFEA_HSequenceOfElementGeometricRelationship();
-        Handle_StepFEA_HSequenceOfElementGeometricRelationship(const Handle_StepFEA_HSequenceOfElementGeometricRelationship &aHandle);
-        Handle_StepFEA_HSequenceOfElementGeometricRelationship(const StepFEA_HSequenceOfElementGeometricRelationship *anItem);
-        void Nullify();
-        Standard_Boolean IsNull() const;
-        static const Handle_StepFEA_HSequenceOfElementGeometricRelationship DownCast(const Handle_Standard_Transient &AnObject);
-
-};
-%extend Handle_StepFEA_HSequenceOfElementGeometricRelationship {
-    StepFEA_HSequenceOfElementGeometricRelationship* _get_reference() {
-    return (StepFEA_HSequenceOfElementGeometricRelationship*)$self->Access();
-    }
-};
-
-%extend Handle_StepFEA_HSequenceOfElementGeometricRelationship {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
-};
-
-%extend StepFEA_HSequenceOfElementGeometricRelationship {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor StepFEA_HSequenceOfElementRepresentation;
-class StepFEA_HSequenceOfElementRepresentation : public MMgt_TShared {
-	public:
-		%feature("compactdefaultargs") StepFEA_HSequenceOfElementRepresentation;
-		%feature("autodoc", "	:rtype: None
-") StepFEA_HSequenceOfElementRepresentation;
-		 StepFEA_HSequenceOfElementRepresentation ();
-		%feature("compactdefaultargs") IsEmpty;
-		%feature("autodoc", "	:rtype: bool
-") IsEmpty;
-		Standard_Boolean IsEmpty ();
-		%feature("compactdefaultargs") Length;
-		%feature("autodoc", "	:rtype: int
-") Length;
-		Standard_Integer Length ();
-		%feature("compactdefaultargs") Clear;
-		%feature("autodoc", "	:rtype: None
-") Clear;
-		void Clear ();
-		%feature("compactdefaultargs") Append;
-		%feature("autodoc", "	:param anItem:
-	:type anItem: Handle_StepFEA_ElementRepresentation &
-	:rtype: None
-") Append;
-		void Append (const Handle_StepFEA_ElementRepresentation & anItem);
-		%feature("compactdefaultargs") Append;
-		%feature("autodoc", "	:param aSequence:
-	:type aSequence: Handle_StepFEA_HSequenceOfElementRepresentation &
-	:rtype: None
-") Append;
-		void Append (const Handle_StepFEA_HSequenceOfElementRepresentation & aSequence);
-		%feature("compactdefaultargs") Prepend;
-		%feature("autodoc", "	:param anItem:
-	:type anItem: Handle_StepFEA_ElementRepresentation &
-	:rtype: None
-") Prepend;
-		void Prepend (const Handle_StepFEA_ElementRepresentation & anItem);
-		%feature("compactdefaultargs") Prepend;
-		%feature("autodoc", "	:param aSequence:
-	:type aSequence: Handle_StepFEA_HSequenceOfElementRepresentation &
-	:rtype: None
-") Prepend;
-		void Prepend (const Handle_StepFEA_HSequenceOfElementRepresentation & aSequence);
-		%feature("compactdefaultargs") Reverse;
-		%feature("autodoc", "	:rtype: None
-") Reverse;
-		void Reverse ();
-		%feature("compactdefaultargs") InsertBefore;
-		%feature("autodoc", "	:param anIndex:
-	:type anIndex: int
-	:param anItem:
-	:type anItem: Handle_StepFEA_ElementRepresentation &
-	:rtype: None
-") InsertBefore;
-		void InsertBefore (const Standard_Integer anIndex,const Handle_StepFEA_ElementRepresentation & anItem);
-		%feature("compactdefaultargs") InsertBefore;
-		%feature("autodoc", "	:param anIndex:
-	:type anIndex: int
-	:param aSequence:
-	:type aSequence: Handle_StepFEA_HSequenceOfElementRepresentation &
-	:rtype: None
-") InsertBefore;
-		void InsertBefore (const Standard_Integer anIndex,const Handle_StepFEA_HSequenceOfElementRepresentation & aSequence);
-		%feature("compactdefaultargs") InsertAfter;
-		%feature("autodoc", "	:param anIndex:
-	:type anIndex: int
-	:param anItem:
-	:type anItem: Handle_StepFEA_ElementRepresentation &
-	:rtype: None
-") InsertAfter;
-		void InsertAfter (const Standard_Integer anIndex,const Handle_StepFEA_ElementRepresentation & anItem);
-		%feature("compactdefaultargs") InsertAfter;
-		%feature("autodoc", "	:param anIndex:
-	:type anIndex: int
-	:param aSequence:
-	:type aSequence: Handle_StepFEA_HSequenceOfElementRepresentation &
-	:rtype: None
-") InsertAfter;
-		void InsertAfter (const Standard_Integer anIndex,const Handle_StepFEA_HSequenceOfElementRepresentation & aSequence);
-		%feature("compactdefaultargs") Exchange;
-		%feature("autodoc", "	:param anIndex:
-	:type anIndex: int
-	:param anOtherIndex:
-	:type anOtherIndex: int
-	:rtype: None
-") Exchange;
-		void Exchange (const Standard_Integer anIndex,const Standard_Integer anOtherIndex);
-		%feature("compactdefaultargs") Split;
-		%feature("autodoc", "	:param anIndex:
-	:type anIndex: int
-	:rtype: Handle_StepFEA_HSequenceOfElementRepresentation
-") Split;
-		Handle_StepFEA_HSequenceOfElementRepresentation Split (const Standard_Integer anIndex);
-		%feature("compactdefaultargs") SetValue;
-		%feature("autodoc", "	:param anIndex:
-	:type anIndex: int
-	:param anItem:
-	:type anItem: Handle_StepFEA_ElementRepresentation &
-	:rtype: None
-") SetValue;
-		void SetValue (const Standard_Integer anIndex,const Handle_StepFEA_ElementRepresentation & anItem);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:param anIndex:
-	:type anIndex: int
-	:rtype: Handle_StepFEA_ElementRepresentation
-") Value;
-		Handle_StepFEA_ElementRepresentation Value (const Standard_Integer anIndex);
-		%feature("compactdefaultargs") ChangeValue;
-		%feature("autodoc", "	:param anIndex:
-	:type anIndex: int
-	:rtype: Handle_StepFEA_ElementRepresentation
-") ChangeValue;
-		Handle_StepFEA_ElementRepresentation ChangeValue (const Standard_Integer anIndex);
-		%feature("compactdefaultargs") Remove;
-		%feature("autodoc", "	:param anIndex:
-	:type anIndex: int
-	:rtype: None
-") Remove;
-		void Remove (const Standard_Integer anIndex);
-		%feature("compactdefaultargs") Remove;
-		%feature("autodoc", "	:param fromIndex:
-	:type fromIndex: int
-	:param toIndex:
-	:type toIndex: int
-	:rtype: None
-") Remove;
-		void Remove (const Standard_Integer fromIndex,const Standard_Integer toIndex);
-		%feature("compactdefaultargs") Sequence;
-		%feature("autodoc", "	:rtype: StepFEA_SequenceOfElementRepresentation
-") Sequence;
-		const StepFEA_SequenceOfElementRepresentation & Sequence ();
-		%feature("compactdefaultargs") ChangeSequence;
-		%feature("autodoc", "	:rtype: StepFEA_SequenceOfElementRepresentation
-") ChangeSequence;
-		StepFEA_SequenceOfElementRepresentation & ChangeSequence ();
-};
-
-
-%extend StepFEA_HSequenceOfElementRepresentation {
-	%pythoncode {
-		def GetHandle(self):
-		    try:
-		        return self.thisHandle
-		    except:
-		        self.thisHandle = Handle_StepFEA_HSequenceOfElementRepresentation(self)
-		        self.thisown = False
-		        return self.thisHandle
-	}
-};
-
-%pythonappend Handle_StepFEA_HSequenceOfElementRepresentation::Handle_StepFEA_HSequenceOfElementRepresentation %{
-    # register the handle in the base object
-    if len(args) > 0:
-        register_handle(self, args[0])
-%}
-
-%nodefaultctor Handle_StepFEA_HSequenceOfElementRepresentation;
-class Handle_StepFEA_HSequenceOfElementRepresentation : public Handle_MMgt_TShared {
-
-    public:
-        // constructors
-        Handle_StepFEA_HSequenceOfElementRepresentation();
-        Handle_StepFEA_HSequenceOfElementRepresentation(const Handle_StepFEA_HSequenceOfElementRepresentation &aHandle);
-        Handle_StepFEA_HSequenceOfElementRepresentation(const StepFEA_HSequenceOfElementRepresentation *anItem);
-        void Nullify();
-        Standard_Boolean IsNull() const;
-        static const Handle_StepFEA_HSequenceOfElementRepresentation DownCast(const Handle_Standard_Transient &AnObject);
-
-};
-%extend Handle_StepFEA_HSequenceOfElementRepresentation {
-    StepFEA_HSequenceOfElementRepresentation* _get_reference() {
-    return (StepFEA_HSequenceOfElementRepresentation*)$self->Access();
-    }
-};
-
-%extend Handle_StepFEA_HSequenceOfElementRepresentation {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
-};
-
-%extend StepFEA_HSequenceOfElementRepresentation {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor StepFEA_HSequenceOfNodeRepresentation;
-class StepFEA_HSequenceOfNodeRepresentation : public MMgt_TShared {
-	public:
-		%feature("compactdefaultargs") StepFEA_HSequenceOfNodeRepresentation;
-		%feature("autodoc", "	:rtype: None
-") StepFEA_HSequenceOfNodeRepresentation;
-		 StepFEA_HSequenceOfNodeRepresentation ();
-		%feature("compactdefaultargs") IsEmpty;
-		%feature("autodoc", "	:rtype: bool
-") IsEmpty;
-		Standard_Boolean IsEmpty ();
-		%feature("compactdefaultargs") Length;
-		%feature("autodoc", "	:rtype: int
-") Length;
-		Standard_Integer Length ();
-		%feature("compactdefaultargs") Clear;
-		%feature("autodoc", "	:rtype: None
-") Clear;
-		void Clear ();
-		%feature("compactdefaultargs") Append;
-		%feature("autodoc", "	:param anItem:
-	:type anItem: Handle_StepFEA_NodeRepresentation &
-	:rtype: None
-") Append;
-		void Append (const Handle_StepFEA_NodeRepresentation & anItem);
-		%feature("compactdefaultargs") Append;
-		%feature("autodoc", "	:param aSequence:
-	:type aSequence: Handle_StepFEA_HSequenceOfNodeRepresentation &
-	:rtype: None
-") Append;
-		void Append (const Handle_StepFEA_HSequenceOfNodeRepresentation & aSequence);
-		%feature("compactdefaultargs") Prepend;
-		%feature("autodoc", "	:param anItem:
-	:type anItem: Handle_StepFEA_NodeRepresentation &
-	:rtype: None
-") Prepend;
-		void Prepend (const Handle_StepFEA_NodeRepresentation & anItem);
-		%feature("compactdefaultargs") Prepend;
-		%feature("autodoc", "	:param aSequence:
-	:type aSequence: Handle_StepFEA_HSequenceOfNodeRepresentation &
-	:rtype: None
-") Prepend;
-		void Prepend (const Handle_StepFEA_HSequenceOfNodeRepresentation & aSequence);
-		%feature("compactdefaultargs") Reverse;
-		%feature("autodoc", "	:rtype: None
-") Reverse;
-		void Reverse ();
-		%feature("compactdefaultargs") InsertBefore;
-		%feature("autodoc", "	:param anIndex:
-	:type anIndex: int
-	:param anItem:
-	:type anItem: Handle_StepFEA_NodeRepresentation &
-	:rtype: None
-") InsertBefore;
-		void InsertBefore (const Standard_Integer anIndex,const Handle_StepFEA_NodeRepresentation & anItem);
-		%feature("compactdefaultargs") InsertBefore;
-		%feature("autodoc", "	:param anIndex:
-	:type anIndex: int
-	:param aSequence:
-	:type aSequence: Handle_StepFEA_HSequenceOfNodeRepresentation &
-	:rtype: None
-") InsertBefore;
-		void InsertBefore (const Standard_Integer anIndex,const Handle_StepFEA_HSequenceOfNodeRepresentation & aSequence);
-		%feature("compactdefaultargs") InsertAfter;
-		%feature("autodoc", "	:param anIndex:
-	:type anIndex: int
-	:param anItem:
-	:type anItem: Handle_StepFEA_NodeRepresentation &
-	:rtype: None
-") InsertAfter;
-		void InsertAfter (const Standard_Integer anIndex,const Handle_StepFEA_NodeRepresentation & anItem);
-		%feature("compactdefaultargs") InsertAfter;
-		%feature("autodoc", "	:param anIndex:
-	:type anIndex: int
-	:param aSequence:
-	:type aSequence: Handle_StepFEA_HSequenceOfNodeRepresentation &
-	:rtype: None
-") InsertAfter;
-		void InsertAfter (const Standard_Integer anIndex,const Handle_StepFEA_HSequenceOfNodeRepresentation & aSequence);
-		%feature("compactdefaultargs") Exchange;
-		%feature("autodoc", "	:param anIndex:
-	:type anIndex: int
-	:param anOtherIndex:
-	:type anOtherIndex: int
-	:rtype: None
-") Exchange;
-		void Exchange (const Standard_Integer anIndex,const Standard_Integer anOtherIndex);
-		%feature("compactdefaultargs") Split;
-		%feature("autodoc", "	:param anIndex:
-	:type anIndex: int
-	:rtype: Handle_StepFEA_HSequenceOfNodeRepresentation
-") Split;
-		Handle_StepFEA_HSequenceOfNodeRepresentation Split (const Standard_Integer anIndex);
-		%feature("compactdefaultargs") SetValue;
-		%feature("autodoc", "	:param anIndex:
-	:type anIndex: int
-	:param anItem:
-	:type anItem: Handle_StepFEA_NodeRepresentation &
-	:rtype: None
-") SetValue;
-		void SetValue (const Standard_Integer anIndex,const Handle_StepFEA_NodeRepresentation & anItem);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:param anIndex:
-	:type anIndex: int
-	:rtype: Handle_StepFEA_NodeRepresentation
-") Value;
-		Handle_StepFEA_NodeRepresentation Value (const Standard_Integer anIndex);
-		%feature("compactdefaultargs") ChangeValue;
-		%feature("autodoc", "	:param anIndex:
-	:type anIndex: int
-	:rtype: Handle_StepFEA_NodeRepresentation
-") ChangeValue;
-		Handle_StepFEA_NodeRepresentation ChangeValue (const Standard_Integer anIndex);
-		%feature("compactdefaultargs") Remove;
-		%feature("autodoc", "	:param anIndex:
-	:type anIndex: int
-	:rtype: None
-") Remove;
-		void Remove (const Standard_Integer anIndex);
-		%feature("compactdefaultargs") Remove;
-		%feature("autodoc", "	:param fromIndex:
-	:type fromIndex: int
-	:param toIndex:
-	:type toIndex: int
-	:rtype: None
-") Remove;
-		void Remove (const Standard_Integer fromIndex,const Standard_Integer toIndex);
-		%feature("compactdefaultargs") Sequence;
-		%feature("autodoc", "	:rtype: StepFEA_SequenceOfNodeRepresentation
-") Sequence;
-		const StepFEA_SequenceOfNodeRepresentation & Sequence ();
-		%feature("compactdefaultargs") ChangeSequence;
-		%feature("autodoc", "	:rtype: StepFEA_SequenceOfNodeRepresentation
-") ChangeSequence;
-		StepFEA_SequenceOfNodeRepresentation & ChangeSequence ();
-};
-
-
-%extend StepFEA_HSequenceOfNodeRepresentation {
-	%pythoncode {
-		def GetHandle(self):
-		    try:
-		        return self.thisHandle
-		    except:
-		        self.thisHandle = Handle_StepFEA_HSequenceOfNodeRepresentation(self)
-		        self.thisown = False
-		        return self.thisHandle
-	}
-};
-
-%pythonappend Handle_StepFEA_HSequenceOfNodeRepresentation::Handle_StepFEA_HSequenceOfNodeRepresentation %{
-    # register the handle in the base object
-    if len(args) > 0:
-        register_handle(self, args[0])
-%}
-
-%nodefaultctor Handle_StepFEA_HSequenceOfNodeRepresentation;
-class Handle_StepFEA_HSequenceOfNodeRepresentation : public Handle_MMgt_TShared {
-
-    public:
-        // constructors
-        Handle_StepFEA_HSequenceOfNodeRepresentation();
-        Handle_StepFEA_HSequenceOfNodeRepresentation(const Handle_StepFEA_HSequenceOfNodeRepresentation &aHandle);
-        Handle_StepFEA_HSequenceOfNodeRepresentation(const StepFEA_HSequenceOfNodeRepresentation *anItem);
-        void Nullify();
-        Standard_Boolean IsNull() const;
-        static const Handle_StepFEA_HSequenceOfNodeRepresentation DownCast(const Handle_Standard_Transient &AnObject);
-
-};
-%extend Handle_StepFEA_HSequenceOfNodeRepresentation {
-    StepFEA_HSequenceOfNodeRepresentation* _get_reference() {
-    return (StepFEA_HSequenceOfNodeRepresentation*)$self->Access();
-    }
-};
-
-%extend Handle_StepFEA_HSequenceOfNodeRepresentation {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
-};
-
-%extend StepFEA_HSequenceOfNodeRepresentation {
 	%pythoncode {
 	__repr__ = _dumps_object
 	}
@@ -4185,19 +2214,20 @@ class Handle_StepFEA_NodeDefinition : public Handle_StepRepr_ShapeAspect {
         static const Handle_StepFEA_NodeDefinition DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_StepFEA_NodeDefinition {
     StepFEA_NodeDefinition* _get_reference() {
-    return (StepFEA_NodeDefinition*)$self->Access();
+    return (StepFEA_NodeDefinition*)$self->get();
     }
 };
 
 %extend Handle_StepFEA_NodeDefinition {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend StepFEA_NodeDefinition {
@@ -4215,7 +2245,7 @@ class StepFEA_NodeRepresentation : public StepRepr_Representation {
 ") StepFEA_NodeRepresentation;
 		 StepFEA_NodeRepresentation ();
 		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	* Initialize all fields (own and inherited)
+		%feature("autodoc", "	* Initialize all fields --own and inherited--
 
 	:param aRepresentation_Name:
 	:type aRepresentation_Name: Handle_TCollection_HAsciiString &
@@ -4276,19 +2306,20 @@ class Handle_StepFEA_NodeRepresentation : public Handle_StepRepr_Representation 
         static const Handle_StepFEA_NodeRepresentation DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_StepFEA_NodeRepresentation {
     StepFEA_NodeRepresentation* _get_reference() {
-    return (StepFEA_NodeRepresentation*)$self->Access();
+    return (StepFEA_NodeRepresentation*)$self->get();
     }
 };
 
 %extend Handle_StepFEA_NodeRepresentation {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend StepFEA_NodeRepresentation {
@@ -4306,7 +2337,7 @@ class StepFEA_NodeSet : public StepGeom_GeometricRepresentationItem {
 ") StepFEA_NodeSet;
 		 StepFEA_NodeSet ();
 		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	* Initialize all fields (own and inherited)
+		%feature("autodoc", "	* Initialize all fields --own and inherited--
 
 	:param aRepresentationItem_Name:
 	:type aRepresentationItem_Name: Handle_TCollection_HAsciiString &
@@ -4363,878 +2394,23 @@ class Handle_StepFEA_NodeSet : public Handle_StepGeom_GeometricRepresentationIte
         static const Handle_StepFEA_NodeSet DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_StepFEA_NodeSet {
     StepFEA_NodeSet* _get_reference() {
-    return (StepFEA_NodeSet*)$self->Access();
+    return (StepFEA_NodeSet*)$self->get();
     }
 };
 
 %extend Handle_StepFEA_NodeSet {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend StepFEA_NodeSet {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor StepFEA_SequenceNodeOfSequenceOfCurve3dElementProperty;
-class StepFEA_SequenceNodeOfSequenceOfCurve3dElementProperty : public TCollection_SeqNode {
-	public:
-		%feature("compactdefaultargs") StepFEA_SequenceNodeOfSequenceOfCurve3dElementProperty;
-		%feature("autodoc", "	:param I:
-	:type I: Handle_StepFEA_Curve3dElementProperty &
-	:param n:
-	:type n: TCollection_SeqNodePtr &
-	:param p:
-	:type p: TCollection_SeqNodePtr &
-	:rtype: None
-") StepFEA_SequenceNodeOfSequenceOfCurve3dElementProperty;
-		 StepFEA_SequenceNodeOfSequenceOfCurve3dElementProperty (const Handle_StepFEA_Curve3dElementProperty & I,const TCollection_SeqNodePtr & n,const TCollection_SeqNodePtr & p);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:rtype: Handle_StepFEA_Curve3dElementProperty
-") Value;
-		Handle_StepFEA_Curve3dElementProperty Value ();
-};
-
-
-%extend StepFEA_SequenceNodeOfSequenceOfCurve3dElementProperty {
-	%pythoncode {
-		def GetHandle(self):
-		    try:
-		        return self.thisHandle
-		    except:
-		        self.thisHandle = Handle_StepFEA_SequenceNodeOfSequenceOfCurve3dElementProperty(self)
-		        self.thisown = False
-		        return self.thisHandle
-	}
-};
-
-%pythonappend Handle_StepFEA_SequenceNodeOfSequenceOfCurve3dElementProperty::Handle_StepFEA_SequenceNodeOfSequenceOfCurve3dElementProperty %{
-    # register the handle in the base object
-    if len(args) > 0:
-        register_handle(self, args[0])
-%}
-
-%nodefaultctor Handle_StepFEA_SequenceNodeOfSequenceOfCurve3dElementProperty;
-class Handle_StepFEA_SequenceNodeOfSequenceOfCurve3dElementProperty : public Handle_TCollection_SeqNode {
-
-    public:
-        // constructors
-        Handle_StepFEA_SequenceNodeOfSequenceOfCurve3dElementProperty();
-        Handle_StepFEA_SequenceNodeOfSequenceOfCurve3dElementProperty(const Handle_StepFEA_SequenceNodeOfSequenceOfCurve3dElementProperty &aHandle);
-        Handle_StepFEA_SequenceNodeOfSequenceOfCurve3dElementProperty(const StepFEA_SequenceNodeOfSequenceOfCurve3dElementProperty *anItem);
-        void Nullify();
-        Standard_Boolean IsNull() const;
-        static const Handle_StepFEA_SequenceNodeOfSequenceOfCurve3dElementProperty DownCast(const Handle_Standard_Transient &AnObject);
-
-};
-%extend Handle_StepFEA_SequenceNodeOfSequenceOfCurve3dElementProperty {
-    StepFEA_SequenceNodeOfSequenceOfCurve3dElementProperty* _get_reference() {
-    return (StepFEA_SequenceNodeOfSequenceOfCurve3dElementProperty*)$self->Access();
-    }
-};
-
-%extend Handle_StepFEA_SequenceNodeOfSequenceOfCurve3dElementProperty {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
-};
-
-%extend StepFEA_SequenceNodeOfSequenceOfCurve3dElementProperty {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor StepFEA_SequenceNodeOfSequenceOfElementGeometricRelationship;
-class StepFEA_SequenceNodeOfSequenceOfElementGeometricRelationship : public TCollection_SeqNode {
-	public:
-		%feature("compactdefaultargs") StepFEA_SequenceNodeOfSequenceOfElementGeometricRelationship;
-		%feature("autodoc", "	:param I:
-	:type I: Handle_StepFEA_ElementGeometricRelationship &
-	:param n:
-	:type n: TCollection_SeqNodePtr &
-	:param p:
-	:type p: TCollection_SeqNodePtr &
-	:rtype: None
-") StepFEA_SequenceNodeOfSequenceOfElementGeometricRelationship;
-		 StepFEA_SequenceNodeOfSequenceOfElementGeometricRelationship (const Handle_StepFEA_ElementGeometricRelationship & I,const TCollection_SeqNodePtr & n,const TCollection_SeqNodePtr & p);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:rtype: Handle_StepFEA_ElementGeometricRelationship
-") Value;
-		Handle_StepFEA_ElementGeometricRelationship Value ();
-};
-
-
-%extend StepFEA_SequenceNodeOfSequenceOfElementGeometricRelationship {
-	%pythoncode {
-		def GetHandle(self):
-		    try:
-		        return self.thisHandle
-		    except:
-		        self.thisHandle = Handle_StepFEA_SequenceNodeOfSequenceOfElementGeometricRelationship(self)
-		        self.thisown = False
-		        return self.thisHandle
-	}
-};
-
-%pythonappend Handle_StepFEA_SequenceNodeOfSequenceOfElementGeometricRelationship::Handle_StepFEA_SequenceNodeOfSequenceOfElementGeometricRelationship %{
-    # register the handle in the base object
-    if len(args) > 0:
-        register_handle(self, args[0])
-%}
-
-%nodefaultctor Handle_StepFEA_SequenceNodeOfSequenceOfElementGeometricRelationship;
-class Handle_StepFEA_SequenceNodeOfSequenceOfElementGeometricRelationship : public Handle_TCollection_SeqNode {
-
-    public:
-        // constructors
-        Handle_StepFEA_SequenceNodeOfSequenceOfElementGeometricRelationship();
-        Handle_StepFEA_SequenceNodeOfSequenceOfElementGeometricRelationship(const Handle_StepFEA_SequenceNodeOfSequenceOfElementGeometricRelationship &aHandle);
-        Handle_StepFEA_SequenceNodeOfSequenceOfElementGeometricRelationship(const StepFEA_SequenceNodeOfSequenceOfElementGeometricRelationship *anItem);
-        void Nullify();
-        Standard_Boolean IsNull() const;
-        static const Handle_StepFEA_SequenceNodeOfSequenceOfElementGeometricRelationship DownCast(const Handle_Standard_Transient &AnObject);
-
-};
-%extend Handle_StepFEA_SequenceNodeOfSequenceOfElementGeometricRelationship {
-    StepFEA_SequenceNodeOfSequenceOfElementGeometricRelationship* _get_reference() {
-    return (StepFEA_SequenceNodeOfSequenceOfElementGeometricRelationship*)$self->Access();
-    }
-};
-
-%extend Handle_StepFEA_SequenceNodeOfSequenceOfElementGeometricRelationship {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
-};
-
-%extend StepFEA_SequenceNodeOfSequenceOfElementGeometricRelationship {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor StepFEA_SequenceNodeOfSequenceOfElementRepresentation;
-class StepFEA_SequenceNodeOfSequenceOfElementRepresentation : public TCollection_SeqNode {
-	public:
-		%feature("compactdefaultargs") StepFEA_SequenceNodeOfSequenceOfElementRepresentation;
-		%feature("autodoc", "	:param I:
-	:type I: Handle_StepFEA_ElementRepresentation &
-	:param n:
-	:type n: TCollection_SeqNodePtr &
-	:param p:
-	:type p: TCollection_SeqNodePtr &
-	:rtype: None
-") StepFEA_SequenceNodeOfSequenceOfElementRepresentation;
-		 StepFEA_SequenceNodeOfSequenceOfElementRepresentation (const Handle_StepFEA_ElementRepresentation & I,const TCollection_SeqNodePtr & n,const TCollection_SeqNodePtr & p);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:rtype: Handle_StepFEA_ElementRepresentation
-") Value;
-		Handle_StepFEA_ElementRepresentation Value ();
-};
-
-
-%extend StepFEA_SequenceNodeOfSequenceOfElementRepresentation {
-	%pythoncode {
-		def GetHandle(self):
-		    try:
-		        return self.thisHandle
-		    except:
-		        self.thisHandle = Handle_StepFEA_SequenceNodeOfSequenceOfElementRepresentation(self)
-		        self.thisown = False
-		        return self.thisHandle
-	}
-};
-
-%pythonappend Handle_StepFEA_SequenceNodeOfSequenceOfElementRepresentation::Handle_StepFEA_SequenceNodeOfSequenceOfElementRepresentation %{
-    # register the handle in the base object
-    if len(args) > 0:
-        register_handle(self, args[0])
-%}
-
-%nodefaultctor Handle_StepFEA_SequenceNodeOfSequenceOfElementRepresentation;
-class Handle_StepFEA_SequenceNodeOfSequenceOfElementRepresentation : public Handle_TCollection_SeqNode {
-
-    public:
-        // constructors
-        Handle_StepFEA_SequenceNodeOfSequenceOfElementRepresentation();
-        Handle_StepFEA_SequenceNodeOfSequenceOfElementRepresentation(const Handle_StepFEA_SequenceNodeOfSequenceOfElementRepresentation &aHandle);
-        Handle_StepFEA_SequenceNodeOfSequenceOfElementRepresentation(const StepFEA_SequenceNodeOfSequenceOfElementRepresentation *anItem);
-        void Nullify();
-        Standard_Boolean IsNull() const;
-        static const Handle_StepFEA_SequenceNodeOfSequenceOfElementRepresentation DownCast(const Handle_Standard_Transient &AnObject);
-
-};
-%extend Handle_StepFEA_SequenceNodeOfSequenceOfElementRepresentation {
-    StepFEA_SequenceNodeOfSequenceOfElementRepresentation* _get_reference() {
-    return (StepFEA_SequenceNodeOfSequenceOfElementRepresentation*)$self->Access();
-    }
-};
-
-%extend Handle_StepFEA_SequenceNodeOfSequenceOfElementRepresentation {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
-};
-
-%extend StepFEA_SequenceNodeOfSequenceOfElementRepresentation {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor StepFEA_SequenceNodeOfSequenceOfNodeRepresentation;
-class StepFEA_SequenceNodeOfSequenceOfNodeRepresentation : public TCollection_SeqNode {
-	public:
-		%feature("compactdefaultargs") StepFEA_SequenceNodeOfSequenceOfNodeRepresentation;
-		%feature("autodoc", "	:param I:
-	:type I: Handle_StepFEA_NodeRepresentation &
-	:param n:
-	:type n: TCollection_SeqNodePtr &
-	:param p:
-	:type p: TCollection_SeqNodePtr &
-	:rtype: None
-") StepFEA_SequenceNodeOfSequenceOfNodeRepresentation;
-		 StepFEA_SequenceNodeOfSequenceOfNodeRepresentation (const Handle_StepFEA_NodeRepresentation & I,const TCollection_SeqNodePtr & n,const TCollection_SeqNodePtr & p);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:rtype: Handle_StepFEA_NodeRepresentation
-") Value;
-		Handle_StepFEA_NodeRepresentation Value ();
-};
-
-
-%extend StepFEA_SequenceNodeOfSequenceOfNodeRepresentation {
-	%pythoncode {
-		def GetHandle(self):
-		    try:
-		        return self.thisHandle
-		    except:
-		        self.thisHandle = Handle_StepFEA_SequenceNodeOfSequenceOfNodeRepresentation(self)
-		        self.thisown = False
-		        return self.thisHandle
-	}
-};
-
-%pythonappend Handle_StepFEA_SequenceNodeOfSequenceOfNodeRepresentation::Handle_StepFEA_SequenceNodeOfSequenceOfNodeRepresentation %{
-    # register the handle in the base object
-    if len(args) > 0:
-        register_handle(self, args[0])
-%}
-
-%nodefaultctor Handle_StepFEA_SequenceNodeOfSequenceOfNodeRepresentation;
-class Handle_StepFEA_SequenceNodeOfSequenceOfNodeRepresentation : public Handle_TCollection_SeqNode {
-
-    public:
-        // constructors
-        Handle_StepFEA_SequenceNodeOfSequenceOfNodeRepresentation();
-        Handle_StepFEA_SequenceNodeOfSequenceOfNodeRepresentation(const Handle_StepFEA_SequenceNodeOfSequenceOfNodeRepresentation &aHandle);
-        Handle_StepFEA_SequenceNodeOfSequenceOfNodeRepresentation(const StepFEA_SequenceNodeOfSequenceOfNodeRepresentation *anItem);
-        void Nullify();
-        Standard_Boolean IsNull() const;
-        static const Handle_StepFEA_SequenceNodeOfSequenceOfNodeRepresentation DownCast(const Handle_Standard_Transient &AnObject);
-
-};
-%extend Handle_StepFEA_SequenceNodeOfSequenceOfNodeRepresentation {
-    StepFEA_SequenceNodeOfSequenceOfNodeRepresentation* _get_reference() {
-    return (StepFEA_SequenceNodeOfSequenceOfNodeRepresentation*)$self->Access();
-    }
-};
-
-%extend Handle_StepFEA_SequenceNodeOfSequenceOfNodeRepresentation {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
-};
-
-%extend StepFEA_SequenceNodeOfSequenceOfNodeRepresentation {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor StepFEA_SequenceOfCurve3dElementProperty;
-class StepFEA_SequenceOfCurve3dElementProperty : public TCollection_BaseSequence {
-	public:
-		%feature("compactdefaultargs") StepFEA_SequenceOfCurve3dElementProperty;
-		%feature("autodoc", "	:rtype: None
-") StepFEA_SequenceOfCurve3dElementProperty;
-		 StepFEA_SequenceOfCurve3dElementProperty ();
-		%feature("compactdefaultargs") StepFEA_SequenceOfCurve3dElementProperty;
-		%feature("autodoc", "	:param Other:
-	:type Other: StepFEA_SequenceOfCurve3dElementProperty &
-	:rtype: None
-") StepFEA_SequenceOfCurve3dElementProperty;
-		 StepFEA_SequenceOfCurve3dElementProperty (const StepFEA_SequenceOfCurve3dElementProperty & Other);
-		%feature("compactdefaultargs") Clear;
-		%feature("autodoc", "	:rtype: None
-") Clear;
-		void Clear ();
-		%feature("compactdefaultargs") Assign;
-		%feature("autodoc", "	:param Other:
-	:type Other: StepFEA_SequenceOfCurve3dElementProperty &
-	:rtype: StepFEA_SequenceOfCurve3dElementProperty
-") Assign;
-		const StepFEA_SequenceOfCurve3dElementProperty & Assign (const StepFEA_SequenceOfCurve3dElementProperty & Other);
-		%feature("compactdefaultargs") operator =;
-		%feature("autodoc", "	:param Other:
-	:type Other: StepFEA_SequenceOfCurve3dElementProperty &
-	:rtype: StepFEA_SequenceOfCurve3dElementProperty
-") operator =;
-		const StepFEA_SequenceOfCurve3dElementProperty & operator = (const StepFEA_SequenceOfCurve3dElementProperty & Other);
-		%feature("compactdefaultargs") Append;
-		%feature("autodoc", "	:param T:
-	:type T: Handle_StepFEA_Curve3dElementProperty &
-	:rtype: None
-") Append;
-		void Append (const Handle_StepFEA_Curve3dElementProperty & T);
-		%feature("compactdefaultargs") Append;
-		%feature("autodoc", "	:param S:
-	:type S: StepFEA_SequenceOfCurve3dElementProperty &
-	:rtype: None
-") Append;
-		void Append (StepFEA_SequenceOfCurve3dElementProperty & S);
-		%feature("compactdefaultargs") Prepend;
-		%feature("autodoc", "	:param T:
-	:type T: Handle_StepFEA_Curve3dElementProperty &
-	:rtype: None
-") Prepend;
-		void Prepend (const Handle_StepFEA_Curve3dElementProperty & T);
-		%feature("compactdefaultargs") Prepend;
-		%feature("autodoc", "	:param S:
-	:type S: StepFEA_SequenceOfCurve3dElementProperty &
-	:rtype: None
-") Prepend;
-		void Prepend (StepFEA_SequenceOfCurve3dElementProperty & S);
-		%feature("compactdefaultargs") InsertBefore;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param T:
-	:type T: Handle_StepFEA_Curve3dElementProperty &
-	:rtype: None
-") InsertBefore;
-		void InsertBefore (const Standard_Integer Index,const Handle_StepFEA_Curve3dElementProperty & T);
-		%feature("compactdefaultargs") InsertBefore;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param S:
-	:type S: StepFEA_SequenceOfCurve3dElementProperty &
-	:rtype: None
-") InsertBefore;
-		void InsertBefore (const Standard_Integer Index,StepFEA_SequenceOfCurve3dElementProperty & S);
-		%feature("compactdefaultargs") InsertAfter;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param T:
-	:type T: Handle_StepFEA_Curve3dElementProperty &
-	:rtype: None
-") InsertAfter;
-		void InsertAfter (const Standard_Integer Index,const Handle_StepFEA_Curve3dElementProperty & T);
-		%feature("compactdefaultargs") InsertAfter;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param S:
-	:type S: StepFEA_SequenceOfCurve3dElementProperty &
-	:rtype: None
-") InsertAfter;
-		void InsertAfter (const Standard_Integer Index,StepFEA_SequenceOfCurve3dElementProperty & S);
-		%feature("compactdefaultargs") First;
-		%feature("autodoc", "	:rtype: Handle_StepFEA_Curve3dElementProperty
-") First;
-		Handle_StepFEA_Curve3dElementProperty First ();
-		%feature("compactdefaultargs") Last;
-		%feature("autodoc", "	:rtype: Handle_StepFEA_Curve3dElementProperty
-") Last;
-		Handle_StepFEA_Curve3dElementProperty Last ();
-		%feature("compactdefaultargs") Split;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param Sub:
-	:type Sub: StepFEA_SequenceOfCurve3dElementProperty &
-	:rtype: None
-") Split;
-		void Split (const Standard_Integer Index,StepFEA_SequenceOfCurve3dElementProperty & Sub);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: Handle_StepFEA_Curve3dElementProperty
-") Value;
-		Handle_StepFEA_Curve3dElementProperty Value (const Standard_Integer Index);
-		%feature("compactdefaultargs") SetValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param I:
-	:type I: Handle_StepFEA_Curve3dElementProperty &
-	:rtype: None
-") SetValue;
-		void SetValue (const Standard_Integer Index,const Handle_StepFEA_Curve3dElementProperty & I);
-		%feature("compactdefaultargs") ChangeValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: Handle_StepFEA_Curve3dElementProperty
-") ChangeValue;
-		Handle_StepFEA_Curve3dElementProperty ChangeValue (const Standard_Integer Index);
-		%feature("compactdefaultargs") Remove;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: None
-") Remove;
-		void Remove (const Standard_Integer Index);
-		%feature("compactdefaultargs") Remove;
-		%feature("autodoc", "	:param FromIndex:
-	:type FromIndex: int
-	:param ToIndex:
-	:type ToIndex: int
-	:rtype: None
-") Remove;
-		void Remove (const Standard_Integer FromIndex,const Standard_Integer ToIndex);
-};
-
-
-%extend StepFEA_SequenceOfCurve3dElementProperty {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor StepFEA_SequenceOfElementGeometricRelationship;
-class StepFEA_SequenceOfElementGeometricRelationship : public TCollection_BaseSequence {
-	public:
-		%feature("compactdefaultargs") StepFEA_SequenceOfElementGeometricRelationship;
-		%feature("autodoc", "	:rtype: None
-") StepFEA_SequenceOfElementGeometricRelationship;
-		 StepFEA_SequenceOfElementGeometricRelationship ();
-		%feature("compactdefaultargs") StepFEA_SequenceOfElementGeometricRelationship;
-		%feature("autodoc", "	:param Other:
-	:type Other: StepFEA_SequenceOfElementGeometricRelationship &
-	:rtype: None
-") StepFEA_SequenceOfElementGeometricRelationship;
-		 StepFEA_SequenceOfElementGeometricRelationship (const StepFEA_SequenceOfElementGeometricRelationship & Other);
-		%feature("compactdefaultargs") Clear;
-		%feature("autodoc", "	:rtype: None
-") Clear;
-		void Clear ();
-		%feature("compactdefaultargs") Assign;
-		%feature("autodoc", "	:param Other:
-	:type Other: StepFEA_SequenceOfElementGeometricRelationship &
-	:rtype: StepFEA_SequenceOfElementGeometricRelationship
-") Assign;
-		const StepFEA_SequenceOfElementGeometricRelationship & Assign (const StepFEA_SequenceOfElementGeometricRelationship & Other);
-		%feature("compactdefaultargs") operator =;
-		%feature("autodoc", "	:param Other:
-	:type Other: StepFEA_SequenceOfElementGeometricRelationship &
-	:rtype: StepFEA_SequenceOfElementGeometricRelationship
-") operator =;
-		const StepFEA_SequenceOfElementGeometricRelationship & operator = (const StepFEA_SequenceOfElementGeometricRelationship & Other);
-		%feature("compactdefaultargs") Append;
-		%feature("autodoc", "	:param T:
-	:type T: Handle_StepFEA_ElementGeometricRelationship &
-	:rtype: None
-") Append;
-		void Append (const Handle_StepFEA_ElementGeometricRelationship & T);
-		%feature("compactdefaultargs") Append;
-		%feature("autodoc", "	:param S:
-	:type S: StepFEA_SequenceOfElementGeometricRelationship &
-	:rtype: None
-") Append;
-		void Append (StepFEA_SequenceOfElementGeometricRelationship & S);
-		%feature("compactdefaultargs") Prepend;
-		%feature("autodoc", "	:param T:
-	:type T: Handle_StepFEA_ElementGeometricRelationship &
-	:rtype: None
-") Prepend;
-		void Prepend (const Handle_StepFEA_ElementGeometricRelationship & T);
-		%feature("compactdefaultargs") Prepend;
-		%feature("autodoc", "	:param S:
-	:type S: StepFEA_SequenceOfElementGeometricRelationship &
-	:rtype: None
-") Prepend;
-		void Prepend (StepFEA_SequenceOfElementGeometricRelationship & S);
-		%feature("compactdefaultargs") InsertBefore;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param T:
-	:type T: Handle_StepFEA_ElementGeometricRelationship &
-	:rtype: None
-") InsertBefore;
-		void InsertBefore (const Standard_Integer Index,const Handle_StepFEA_ElementGeometricRelationship & T);
-		%feature("compactdefaultargs") InsertBefore;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param S:
-	:type S: StepFEA_SequenceOfElementGeometricRelationship &
-	:rtype: None
-") InsertBefore;
-		void InsertBefore (const Standard_Integer Index,StepFEA_SequenceOfElementGeometricRelationship & S);
-		%feature("compactdefaultargs") InsertAfter;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param T:
-	:type T: Handle_StepFEA_ElementGeometricRelationship &
-	:rtype: None
-") InsertAfter;
-		void InsertAfter (const Standard_Integer Index,const Handle_StepFEA_ElementGeometricRelationship & T);
-		%feature("compactdefaultargs") InsertAfter;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param S:
-	:type S: StepFEA_SequenceOfElementGeometricRelationship &
-	:rtype: None
-") InsertAfter;
-		void InsertAfter (const Standard_Integer Index,StepFEA_SequenceOfElementGeometricRelationship & S);
-		%feature("compactdefaultargs") First;
-		%feature("autodoc", "	:rtype: Handle_StepFEA_ElementGeometricRelationship
-") First;
-		Handle_StepFEA_ElementGeometricRelationship First ();
-		%feature("compactdefaultargs") Last;
-		%feature("autodoc", "	:rtype: Handle_StepFEA_ElementGeometricRelationship
-") Last;
-		Handle_StepFEA_ElementGeometricRelationship Last ();
-		%feature("compactdefaultargs") Split;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param Sub:
-	:type Sub: StepFEA_SequenceOfElementGeometricRelationship &
-	:rtype: None
-") Split;
-		void Split (const Standard_Integer Index,StepFEA_SequenceOfElementGeometricRelationship & Sub);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: Handle_StepFEA_ElementGeometricRelationship
-") Value;
-		Handle_StepFEA_ElementGeometricRelationship Value (const Standard_Integer Index);
-		%feature("compactdefaultargs") SetValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param I:
-	:type I: Handle_StepFEA_ElementGeometricRelationship &
-	:rtype: None
-") SetValue;
-		void SetValue (const Standard_Integer Index,const Handle_StepFEA_ElementGeometricRelationship & I);
-		%feature("compactdefaultargs") ChangeValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: Handle_StepFEA_ElementGeometricRelationship
-") ChangeValue;
-		Handle_StepFEA_ElementGeometricRelationship ChangeValue (const Standard_Integer Index);
-		%feature("compactdefaultargs") Remove;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: None
-") Remove;
-		void Remove (const Standard_Integer Index);
-		%feature("compactdefaultargs") Remove;
-		%feature("autodoc", "	:param FromIndex:
-	:type FromIndex: int
-	:param ToIndex:
-	:type ToIndex: int
-	:rtype: None
-") Remove;
-		void Remove (const Standard_Integer FromIndex,const Standard_Integer ToIndex);
-};
-
-
-%extend StepFEA_SequenceOfElementGeometricRelationship {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor StepFEA_SequenceOfElementRepresentation;
-class StepFEA_SequenceOfElementRepresentation : public TCollection_BaseSequence {
-	public:
-		%feature("compactdefaultargs") StepFEA_SequenceOfElementRepresentation;
-		%feature("autodoc", "	:rtype: None
-") StepFEA_SequenceOfElementRepresentation;
-		 StepFEA_SequenceOfElementRepresentation ();
-		%feature("compactdefaultargs") StepFEA_SequenceOfElementRepresentation;
-		%feature("autodoc", "	:param Other:
-	:type Other: StepFEA_SequenceOfElementRepresentation &
-	:rtype: None
-") StepFEA_SequenceOfElementRepresentation;
-		 StepFEA_SequenceOfElementRepresentation (const StepFEA_SequenceOfElementRepresentation & Other);
-		%feature("compactdefaultargs") Clear;
-		%feature("autodoc", "	:rtype: None
-") Clear;
-		void Clear ();
-		%feature("compactdefaultargs") Assign;
-		%feature("autodoc", "	:param Other:
-	:type Other: StepFEA_SequenceOfElementRepresentation &
-	:rtype: StepFEA_SequenceOfElementRepresentation
-") Assign;
-		const StepFEA_SequenceOfElementRepresentation & Assign (const StepFEA_SequenceOfElementRepresentation & Other);
-		%feature("compactdefaultargs") operator =;
-		%feature("autodoc", "	:param Other:
-	:type Other: StepFEA_SequenceOfElementRepresentation &
-	:rtype: StepFEA_SequenceOfElementRepresentation
-") operator =;
-		const StepFEA_SequenceOfElementRepresentation & operator = (const StepFEA_SequenceOfElementRepresentation & Other);
-		%feature("compactdefaultargs") Append;
-		%feature("autodoc", "	:param T:
-	:type T: Handle_StepFEA_ElementRepresentation &
-	:rtype: None
-") Append;
-		void Append (const Handle_StepFEA_ElementRepresentation & T);
-		%feature("compactdefaultargs") Append;
-		%feature("autodoc", "	:param S:
-	:type S: StepFEA_SequenceOfElementRepresentation &
-	:rtype: None
-") Append;
-		void Append (StepFEA_SequenceOfElementRepresentation & S);
-		%feature("compactdefaultargs") Prepend;
-		%feature("autodoc", "	:param T:
-	:type T: Handle_StepFEA_ElementRepresentation &
-	:rtype: None
-") Prepend;
-		void Prepend (const Handle_StepFEA_ElementRepresentation & T);
-		%feature("compactdefaultargs") Prepend;
-		%feature("autodoc", "	:param S:
-	:type S: StepFEA_SequenceOfElementRepresentation &
-	:rtype: None
-") Prepend;
-		void Prepend (StepFEA_SequenceOfElementRepresentation & S);
-		%feature("compactdefaultargs") InsertBefore;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param T:
-	:type T: Handle_StepFEA_ElementRepresentation &
-	:rtype: None
-") InsertBefore;
-		void InsertBefore (const Standard_Integer Index,const Handle_StepFEA_ElementRepresentation & T);
-		%feature("compactdefaultargs") InsertBefore;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param S:
-	:type S: StepFEA_SequenceOfElementRepresentation &
-	:rtype: None
-") InsertBefore;
-		void InsertBefore (const Standard_Integer Index,StepFEA_SequenceOfElementRepresentation & S);
-		%feature("compactdefaultargs") InsertAfter;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param T:
-	:type T: Handle_StepFEA_ElementRepresentation &
-	:rtype: None
-") InsertAfter;
-		void InsertAfter (const Standard_Integer Index,const Handle_StepFEA_ElementRepresentation & T);
-		%feature("compactdefaultargs") InsertAfter;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param S:
-	:type S: StepFEA_SequenceOfElementRepresentation &
-	:rtype: None
-") InsertAfter;
-		void InsertAfter (const Standard_Integer Index,StepFEA_SequenceOfElementRepresentation & S);
-		%feature("compactdefaultargs") First;
-		%feature("autodoc", "	:rtype: Handle_StepFEA_ElementRepresentation
-") First;
-		Handle_StepFEA_ElementRepresentation First ();
-		%feature("compactdefaultargs") Last;
-		%feature("autodoc", "	:rtype: Handle_StepFEA_ElementRepresentation
-") Last;
-		Handle_StepFEA_ElementRepresentation Last ();
-		%feature("compactdefaultargs") Split;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param Sub:
-	:type Sub: StepFEA_SequenceOfElementRepresentation &
-	:rtype: None
-") Split;
-		void Split (const Standard_Integer Index,StepFEA_SequenceOfElementRepresentation & Sub);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: Handle_StepFEA_ElementRepresentation
-") Value;
-		Handle_StepFEA_ElementRepresentation Value (const Standard_Integer Index);
-		%feature("compactdefaultargs") SetValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param I:
-	:type I: Handle_StepFEA_ElementRepresentation &
-	:rtype: None
-") SetValue;
-		void SetValue (const Standard_Integer Index,const Handle_StepFEA_ElementRepresentation & I);
-		%feature("compactdefaultargs") ChangeValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: Handle_StepFEA_ElementRepresentation
-") ChangeValue;
-		Handle_StepFEA_ElementRepresentation ChangeValue (const Standard_Integer Index);
-		%feature("compactdefaultargs") Remove;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: None
-") Remove;
-		void Remove (const Standard_Integer Index);
-		%feature("compactdefaultargs") Remove;
-		%feature("autodoc", "	:param FromIndex:
-	:type FromIndex: int
-	:param ToIndex:
-	:type ToIndex: int
-	:rtype: None
-") Remove;
-		void Remove (const Standard_Integer FromIndex,const Standard_Integer ToIndex);
-};
-
-
-%extend StepFEA_SequenceOfElementRepresentation {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor StepFEA_SequenceOfNodeRepresentation;
-class StepFEA_SequenceOfNodeRepresentation : public TCollection_BaseSequence {
-	public:
-		%feature("compactdefaultargs") StepFEA_SequenceOfNodeRepresentation;
-		%feature("autodoc", "	:rtype: None
-") StepFEA_SequenceOfNodeRepresentation;
-		 StepFEA_SequenceOfNodeRepresentation ();
-		%feature("compactdefaultargs") StepFEA_SequenceOfNodeRepresentation;
-		%feature("autodoc", "	:param Other:
-	:type Other: StepFEA_SequenceOfNodeRepresentation &
-	:rtype: None
-") StepFEA_SequenceOfNodeRepresentation;
-		 StepFEA_SequenceOfNodeRepresentation (const StepFEA_SequenceOfNodeRepresentation & Other);
-		%feature("compactdefaultargs") Clear;
-		%feature("autodoc", "	:rtype: None
-") Clear;
-		void Clear ();
-		%feature("compactdefaultargs") Assign;
-		%feature("autodoc", "	:param Other:
-	:type Other: StepFEA_SequenceOfNodeRepresentation &
-	:rtype: StepFEA_SequenceOfNodeRepresentation
-") Assign;
-		const StepFEA_SequenceOfNodeRepresentation & Assign (const StepFEA_SequenceOfNodeRepresentation & Other);
-		%feature("compactdefaultargs") operator =;
-		%feature("autodoc", "	:param Other:
-	:type Other: StepFEA_SequenceOfNodeRepresentation &
-	:rtype: StepFEA_SequenceOfNodeRepresentation
-") operator =;
-		const StepFEA_SequenceOfNodeRepresentation & operator = (const StepFEA_SequenceOfNodeRepresentation & Other);
-		%feature("compactdefaultargs") Append;
-		%feature("autodoc", "	:param T:
-	:type T: Handle_StepFEA_NodeRepresentation &
-	:rtype: None
-") Append;
-		void Append (const Handle_StepFEA_NodeRepresentation & T);
-		%feature("compactdefaultargs") Append;
-		%feature("autodoc", "	:param S:
-	:type S: StepFEA_SequenceOfNodeRepresentation &
-	:rtype: None
-") Append;
-		void Append (StepFEA_SequenceOfNodeRepresentation & S);
-		%feature("compactdefaultargs") Prepend;
-		%feature("autodoc", "	:param T:
-	:type T: Handle_StepFEA_NodeRepresentation &
-	:rtype: None
-") Prepend;
-		void Prepend (const Handle_StepFEA_NodeRepresentation & T);
-		%feature("compactdefaultargs") Prepend;
-		%feature("autodoc", "	:param S:
-	:type S: StepFEA_SequenceOfNodeRepresentation &
-	:rtype: None
-") Prepend;
-		void Prepend (StepFEA_SequenceOfNodeRepresentation & S);
-		%feature("compactdefaultargs") InsertBefore;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param T:
-	:type T: Handle_StepFEA_NodeRepresentation &
-	:rtype: None
-") InsertBefore;
-		void InsertBefore (const Standard_Integer Index,const Handle_StepFEA_NodeRepresentation & T);
-		%feature("compactdefaultargs") InsertBefore;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param S:
-	:type S: StepFEA_SequenceOfNodeRepresentation &
-	:rtype: None
-") InsertBefore;
-		void InsertBefore (const Standard_Integer Index,StepFEA_SequenceOfNodeRepresentation & S);
-		%feature("compactdefaultargs") InsertAfter;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param T:
-	:type T: Handle_StepFEA_NodeRepresentation &
-	:rtype: None
-") InsertAfter;
-		void InsertAfter (const Standard_Integer Index,const Handle_StepFEA_NodeRepresentation & T);
-		%feature("compactdefaultargs") InsertAfter;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param S:
-	:type S: StepFEA_SequenceOfNodeRepresentation &
-	:rtype: None
-") InsertAfter;
-		void InsertAfter (const Standard_Integer Index,StepFEA_SequenceOfNodeRepresentation & S);
-		%feature("compactdefaultargs") First;
-		%feature("autodoc", "	:rtype: Handle_StepFEA_NodeRepresentation
-") First;
-		Handle_StepFEA_NodeRepresentation First ();
-		%feature("compactdefaultargs") Last;
-		%feature("autodoc", "	:rtype: Handle_StepFEA_NodeRepresentation
-") Last;
-		Handle_StepFEA_NodeRepresentation Last ();
-		%feature("compactdefaultargs") Split;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param Sub:
-	:type Sub: StepFEA_SequenceOfNodeRepresentation &
-	:rtype: None
-") Split;
-		void Split (const Standard_Integer Index,StepFEA_SequenceOfNodeRepresentation & Sub);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: Handle_StepFEA_NodeRepresentation
-") Value;
-		Handle_StepFEA_NodeRepresentation Value (const Standard_Integer Index);
-		%feature("compactdefaultargs") SetValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param I:
-	:type I: Handle_StepFEA_NodeRepresentation &
-	:rtype: None
-") SetValue;
-		void SetValue (const Standard_Integer Index,const Handle_StepFEA_NodeRepresentation & I);
-		%feature("compactdefaultargs") ChangeValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: Handle_StepFEA_NodeRepresentation
-") ChangeValue;
-		Handle_StepFEA_NodeRepresentation ChangeValue (const Standard_Integer Index);
-		%feature("compactdefaultargs") Remove;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: None
-") Remove;
-		void Remove (const Standard_Integer Index);
-		%feature("compactdefaultargs") Remove;
-		%feature("autodoc", "	:param FromIndex:
-	:type FromIndex: int
-	:param ToIndex:
-	:type ToIndex: int
-	:rtype: None
-") Remove;
-		void Remove (const Standard_Integer FromIndex,const Standard_Integer ToIndex);
-};
-
-
-%extend StepFEA_SequenceOfNodeRepresentation {
 	%pythoncode {
 	__repr__ = _dumps_object
 	}
@@ -5257,7 +2433,7 @@ class StepFEA_SymmetricTensor22d : public StepData_SelectType {
 ") CaseNum;
 		Standard_Integer CaseNum (const Handle_Standard_Transient & ent);
 		%feature("compactdefaultargs") AnisotropicSymmetricTensor22d;
-		%feature("autodoc", "	* Returns Value as AnisotropicSymmetricTensor22d (or Null if another type)
+		%feature("autodoc", "	* Returns Value as AnisotropicSymmetricTensor22d --or Null if another type--
 
 	:rtype: Handle_TColStd_HArray1OfReal
 ") AnisotropicSymmetricTensor22d;
@@ -5310,7 +2486,7 @@ class StepFEA_SymmetricTensor23d : public StepData_SelectType {
 ") SetIsotropicSymmetricTensor23d;
 		void SetIsotropicSymmetricTensor23d (const Standard_Real aVal);
 		%feature("compactdefaultargs") IsotropicSymmetricTensor23d;
-		%feature("autodoc", "	* Returns Value as IsotropicSymmetricTensor23d (or Null if another type)
+		%feature("autodoc", "	* Returns Value as IsotropicSymmetricTensor23d --or Null if another type--
 
 	:rtype: float
 ") IsotropicSymmetricTensor23d;
@@ -5324,7 +2500,7 @@ class StepFEA_SymmetricTensor23d : public StepData_SelectType {
 ") SetOrthotropicSymmetricTensor23d;
 		void SetOrthotropicSymmetricTensor23d (const Handle_TColStd_HArray1OfReal & aVal);
 		%feature("compactdefaultargs") OrthotropicSymmetricTensor23d;
-		%feature("autodoc", "	* Returns Value as OrthotropicSymmetricTensor23d (or Null if another type)
+		%feature("autodoc", "	* Returns Value as OrthotropicSymmetricTensor23d --or Null if another type--
 
 	:rtype: Handle_TColStd_HArray1OfReal
 ") OrthotropicSymmetricTensor23d;
@@ -5338,7 +2514,7 @@ class StepFEA_SymmetricTensor23d : public StepData_SelectType {
 ") SetAnisotropicSymmetricTensor23d;
 		void SetAnisotropicSymmetricTensor23d (const Handle_TColStd_HArray1OfReal & aVal);
 		%feature("compactdefaultargs") AnisotropicSymmetricTensor23d;
-		%feature("autodoc", "	* Returns Value as AnisotropicSymmetricTensor23d (or Null if another type)
+		%feature("autodoc", "	* Returns Value as AnisotropicSymmetricTensor23d --or Null if another type--
 
 	:rtype: Handle_TColStd_HArray1OfReal
 ") AnisotropicSymmetricTensor23d;
@@ -5422,19 +2598,20 @@ class Handle_StepFEA_SymmetricTensor23dMember : public Handle_StepData_SelectArr
         static const Handle_StepFEA_SymmetricTensor23dMember DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_StepFEA_SymmetricTensor23dMember {
     StepFEA_SymmetricTensor23dMember* _get_reference() {
-    return (StepFEA_SymmetricTensor23dMember*)$self->Access();
+    return (StepFEA_SymmetricTensor23dMember*)$self->get();
     }
 };
 
 %extend Handle_StepFEA_SymmetricTensor23dMember {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend StepFEA_SymmetricTensor23dMember {
@@ -5460,7 +2637,7 @@ class StepFEA_SymmetricTensor42d : public StepData_SelectType {
 ") CaseNum;
 		Standard_Integer CaseNum (const Handle_Standard_Transient & ent);
 		%feature("compactdefaultargs") AnisotropicSymmetricTensor42d;
-		%feature("autodoc", "	* Returns Value as AnisotropicSymmetricTensor42d (or Null if another type)
+		%feature("autodoc", "	* Returns Value as AnisotropicSymmetricTensor42d --or Null if another type--
 
 	:rtype: Handle_TColStd_HArray1OfReal
 ") AnisotropicSymmetricTensor42d;
@@ -5503,31 +2680,31 @@ class StepFEA_SymmetricTensor43d : public StepData_SelectType {
 ") NewMember;
 		virtual Handle_StepData_SelectMember NewMember ();
 		%feature("compactdefaultargs") AnisotropicSymmetricTensor43d;
-		%feature("autodoc", "	* Returns Value as AnisotropicSymmetricTensor43d (or Null if another type)
+		%feature("autodoc", "	* Returns Value as AnisotropicSymmetricTensor43d --or Null if another type--
 
 	:rtype: Handle_TColStd_HArray1OfReal
 ") AnisotropicSymmetricTensor43d;
 		Handle_TColStd_HArray1OfReal AnisotropicSymmetricTensor43d ();
 		%feature("compactdefaultargs") FeaIsoOrthotropicSymmetricTensor43d;
-		%feature("autodoc", "	* Returns Value as FeaIsoOrthotropicSymmetricTensor43d (or Null if another type)
+		%feature("autodoc", "	* Returns Value as FeaIsoOrthotropicSymmetricTensor43d --or Null if another type--
 
 	:rtype: Handle_TColStd_HArray1OfReal
 ") FeaIsoOrthotropicSymmetricTensor43d;
 		Handle_TColStd_HArray1OfReal FeaIsoOrthotropicSymmetricTensor43d ();
 		%feature("compactdefaultargs") FeaTransverseIsotropicSymmetricTensor43d;
-		%feature("autodoc", "	* Returns Value as FeaTransverseIsotropicSymmetricTensor43d (or Null if another type)
+		%feature("autodoc", "	* Returns Value as FeaTransverseIsotropicSymmetricTensor43d --or Null if another type--
 
 	:rtype: Handle_TColStd_HArray1OfReal
 ") FeaTransverseIsotropicSymmetricTensor43d;
 		Handle_TColStd_HArray1OfReal FeaTransverseIsotropicSymmetricTensor43d ();
 		%feature("compactdefaultargs") FeaColumnNormalisedOrthotropicSymmetricTensor43d;
-		%feature("autodoc", "	* Returns Value as FeaColumnNormalisedOrthotropicSymmetricTensor43d (or Null if another type)
+		%feature("autodoc", "	* Returns Value as FeaColumnNormalisedOrthotropicSymmetricTensor43d --or Null if another type--
 
 	:rtype: Handle_TColStd_HArray1OfReal
 ") FeaColumnNormalisedOrthotropicSymmetricTensor43d;
 		Handle_TColStd_HArray1OfReal FeaColumnNormalisedOrthotropicSymmetricTensor43d ();
 		%feature("compactdefaultargs") FeaColumnNormalisedMonoclinicSymmetricTensor43d;
-		%feature("autodoc", "	* Returns Value as FeaColumnNormalisedMonoclinicSymmetricTensor43d (or Null if another type)
+		%feature("autodoc", "	* Returns Value as FeaColumnNormalisedMonoclinicSymmetricTensor43d --or Null if another type--
 
 	:rtype: Handle_TColStd_HArray1OfReal
 ") FeaColumnNormalisedMonoclinicSymmetricTensor43d;
@@ -5611,19 +2788,20 @@ class Handle_StepFEA_SymmetricTensor43dMember : public Handle_StepData_SelectArr
         static const Handle_StepFEA_SymmetricTensor43dMember DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_StepFEA_SymmetricTensor43dMember {
     StepFEA_SymmetricTensor43dMember* _get_reference() {
-    return (StepFEA_SymmetricTensor43dMember*)$self->Access();
+    return (StepFEA_SymmetricTensor43dMember*)$self->get();
     }
 };
 
 %extend Handle_StepFEA_SymmetricTensor43dMember {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend StepFEA_SymmetricTensor43dMember {
@@ -5641,7 +2819,7 @@ class StepFEA_AlignedCurve3dElementCoordinateSystem : public StepFEA_FeaRepresen
 ") StepFEA_AlignedCurve3dElementCoordinateSystem;
 		 StepFEA_AlignedCurve3dElementCoordinateSystem ();
 		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	* Initialize all fields (own and inherited)
+		%feature("autodoc", "	* Initialize all fields --own and inherited--
 
 	:param aRepresentationItem_Name:
 	:type aRepresentationItem_Name: Handle_TCollection_HAsciiString &
@@ -5698,19 +2876,20 @@ class Handle_StepFEA_AlignedCurve3dElementCoordinateSystem : public Handle_StepF
         static const Handle_StepFEA_AlignedCurve3dElementCoordinateSystem DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_StepFEA_AlignedCurve3dElementCoordinateSystem {
     StepFEA_AlignedCurve3dElementCoordinateSystem* _get_reference() {
-    return (StepFEA_AlignedCurve3dElementCoordinateSystem*)$self->Access();
+    return (StepFEA_AlignedCurve3dElementCoordinateSystem*)$self->get();
     }
 };
 
 %extend Handle_StepFEA_AlignedCurve3dElementCoordinateSystem {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend StepFEA_AlignedCurve3dElementCoordinateSystem {
@@ -5728,7 +2907,7 @@ class StepFEA_AlignedSurface3dElementCoordinateSystem : public StepFEA_FeaRepres
 ") StepFEA_AlignedSurface3dElementCoordinateSystem;
 		 StepFEA_AlignedSurface3dElementCoordinateSystem ();
 		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	* Initialize all fields (own and inherited)
+		%feature("autodoc", "	* Initialize all fields --own and inherited--
 
 	:param aRepresentationItem_Name:
 	:type aRepresentationItem_Name: Handle_TCollection_HAsciiString &
@@ -5785,19 +2964,20 @@ class Handle_StepFEA_AlignedSurface3dElementCoordinateSystem : public Handle_Ste
         static const Handle_StepFEA_AlignedSurface3dElementCoordinateSystem DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_StepFEA_AlignedSurface3dElementCoordinateSystem {
     StepFEA_AlignedSurface3dElementCoordinateSystem* _get_reference() {
-    return (StepFEA_AlignedSurface3dElementCoordinateSystem*)$self->Access();
+    return (StepFEA_AlignedSurface3dElementCoordinateSystem*)$self->get();
     }
 };
 
 %extend Handle_StepFEA_AlignedSurface3dElementCoordinateSystem {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend StepFEA_AlignedSurface3dElementCoordinateSystem {
@@ -5815,7 +2995,7 @@ class StepFEA_ArbitraryVolume3dElementCoordinateSystem : public StepFEA_FeaRepre
 ") StepFEA_ArbitraryVolume3dElementCoordinateSystem;
 		 StepFEA_ArbitraryVolume3dElementCoordinateSystem ();
 		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	* Initialize all fields (own and inherited)
+		%feature("autodoc", "	* Initialize all fields --own and inherited--
 
 	:param aRepresentationItem_Name:
 	:type aRepresentationItem_Name: Handle_TCollection_HAsciiString &
@@ -5872,19 +3052,20 @@ class Handle_StepFEA_ArbitraryVolume3dElementCoordinateSystem : public Handle_St
         static const Handle_StepFEA_ArbitraryVolume3dElementCoordinateSystem DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_StepFEA_ArbitraryVolume3dElementCoordinateSystem {
     StepFEA_ArbitraryVolume3dElementCoordinateSystem* _get_reference() {
-    return (StepFEA_ArbitraryVolume3dElementCoordinateSystem*)$self->Access();
+    return (StepFEA_ArbitraryVolume3dElementCoordinateSystem*)$self->get();
     }
 };
 
 %extend Handle_StepFEA_ArbitraryVolume3dElementCoordinateSystem {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend StepFEA_ArbitraryVolume3dElementCoordinateSystem {
@@ -5902,7 +3083,7 @@ class StepFEA_ConstantSurface3dElementCoordinateSystem : public StepFEA_FeaRepre
 ") StepFEA_ConstantSurface3dElementCoordinateSystem;
 		 StepFEA_ConstantSurface3dElementCoordinateSystem ();
 		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	* Initialize all fields (own and inherited)
+		%feature("autodoc", "	* Initialize all fields --own and inherited--
 
 	:param aRepresentationItem_Name:
 	:type aRepresentationItem_Name: Handle_TCollection_HAsciiString &
@@ -5975,19 +3156,20 @@ class Handle_StepFEA_ConstantSurface3dElementCoordinateSystem : public Handle_St
         static const Handle_StepFEA_ConstantSurface3dElementCoordinateSystem DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_StepFEA_ConstantSurface3dElementCoordinateSystem {
     StepFEA_ConstantSurface3dElementCoordinateSystem* _get_reference() {
-    return (StepFEA_ConstantSurface3dElementCoordinateSystem*)$self->Access();
+    return (StepFEA_ConstantSurface3dElementCoordinateSystem*)$self->get();
     }
 };
 
 %extend Handle_StepFEA_ConstantSurface3dElementCoordinateSystem {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend StepFEA_ConstantSurface3dElementCoordinateSystem {
@@ -6005,7 +3187,7 @@ class StepFEA_Curve3dElementRepresentation : public StepFEA_ElementRepresentatio
 ") StepFEA_Curve3dElementRepresentation;
 		 StepFEA_Curve3dElementRepresentation ();
 		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	* Initialize all fields (own and inherited)
+		%feature("autodoc", "	* Initialize all fields --own and inherited--
 
 	:param aRepresentation_Name:
 	:type aRepresentation_Name: Handle_TCollection_HAsciiString &
@@ -6116,19 +3298,20 @@ class Handle_StepFEA_Curve3dElementRepresentation : public Handle_StepFEA_Elemen
         static const Handle_StepFEA_Curve3dElementRepresentation DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_StepFEA_Curve3dElementRepresentation {
     StepFEA_Curve3dElementRepresentation* _get_reference() {
-    return (StepFEA_Curve3dElementRepresentation*)$self->Access();
+    return (StepFEA_Curve3dElementRepresentation*)$self->get();
     }
 };
 
 %extend Handle_StepFEA_Curve3dElementRepresentation {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend StepFEA_Curve3dElementRepresentation {
@@ -6146,7 +3329,7 @@ class StepFEA_CurveElementIntervalConstant : public StepFEA_CurveElementInterval
 ") StepFEA_CurveElementIntervalConstant;
 		 StepFEA_CurveElementIntervalConstant ();
 		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	* Initialize all fields (own and inherited)
+		%feature("autodoc", "	* Initialize all fields --own and inherited--
 
 	:param aCurveElementInterval_FinishPosition:
 	:type aCurveElementInterval_FinishPosition: Handle_StepFEA_CurveElementLocation &
@@ -6205,19 +3388,20 @@ class Handle_StepFEA_CurveElementIntervalConstant : public Handle_StepFEA_CurveE
         static const Handle_StepFEA_CurveElementIntervalConstant DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_StepFEA_CurveElementIntervalConstant {
     StepFEA_CurveElementIntervalConstant* _get_reference() {
-    return (StepFEA_CurveElementIntervalConstant*)$self->Access();
+    return (StepFEA_CurveElementIntervalConstant*)$self->get();
     }
 };
 
 %extend Handle_StepFEA_CurveElementIntervalConstant {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend StepFEA_CurveElementIntervalConstant {
@@ -6235,7 +3419,7 @@ class StepFEA_CurveElementIntervalLinearlyVarying : public StepFEA_CurveElementI
 ") StepFEA_CurveElementIntervalLinearlyVarying;
 		 StepFEA_CurveElementIntervalLinearlyVarying ();
 		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	* Initialize all fields (own and inherited)
+		%feature("autodoc", "	* Initialize all fields --own and inherited--
 
 	:param aCurveElementInterval_FinishPosition:
 	:type aCurveElementInterval_FinishPosition: Handle_StepFEA_CurveElementLocation &
@@ -6294,19 +3478,20 @@ class Handle_StepFEA_CurveElementIntervalLinearlyVarying : public Handle_StepFEA
         static const Handle_StepFEA_CurveElementIntervalLinearlyVarying DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_StepFEA_CurveElementIntervalLinearlyVarying {
     StepFEA_CurveElementIntervalLinearlyVarying* _get_reference() {
-    return (StepFEA_CurveElementIntervalLinearlyVarying*)$self->Access();
+    return (StepFEA_CurveElementIntervalLinearlyVarying*)$self->get();
     }
 };
 
 %extend Handle_StepFEA_CurveElementIntervalLinearlyVarying {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend StepFEA_CurveElementIntervalLinearlyVarying {
@@ -6357,19 +3542,20 @@ class Handle_StepFEA_DummyNode : public Handle_StepFEA_NodeRepresentation {
         static const Handle_StepFEA_DummyNode DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_StepFEA_DummyNode {
     StepFEA_DummyNode* _get_reference() {
-    return (StepFEA_DummyNode*)$self->Access();
+    return (StepFEA_DummyNode*)$self->get();
     }
 };
 
 %extend Handle_StepFEA_DummyNode {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend StepFEA_DummyNode {
@@ -6387,7 +3573,7 @@ class StepFEA_ElementGroup : public StepFEA_FeaGroup {
 ") StepFEA_ElementGroup;
 		 StepFEA_ElementGroup ();
 		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	* Initialize all fields (own and inherited)
+		%feature("autodoc", "	* Initialize all fields --own and inherited--
 
 	:param aGroup_Name:
 	:type aGroup_Name: Handle_TCollection_HAsciiString &
@@ -6448,19 +3634,20 @@ class Handle_StepFEA_ElementGroup : public Handle_StepFEA_FeaGroup {
         static const Handle_StepFEA_ElementGroup DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_StepFEA_ElementGroup {
     StepFEA_ElementGroup* _get_reference() {
-    return (StepFEA_ElementGroup*)$self->Access();
+    return (StepFEA_ElementGroup*)$self->get();
     }
 };
 
 %extend Handle_StepFEA_ElementGroup {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend StepFEA_ElementGroup {
@@ -6478,7 +3665,7 @@ class StepFEA_FeaAreaDensity : public StepFEA_FeaMaterialPropertyRepresentationI
 ") StepFEA_FeaAreaDensity;
 		 StepFEA_FeaAreaDensity ();
 		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	* Initialize all fields (own and inherited)
+		%feature("autodoc", "	* Initialize all fields --own and inherited--
 
 	:param aRepresentationItem_Name:
 	:type aRepresentationItem_Name: Handle_TCollection_HAsciiString &
@@ -6535,19 +3722,20 @@ class Handle_StepFEA_FeaAreaDensity : public Handle_StepFEA_FeaMaterialPropertyR
         static const Handle_StepFEA_FeaAreaDensity DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_StepFEA_FeaAreaDensity {
     StepFEA_FeaAreaDensity* _get_reference() {
-    return (StepFEA_FeaAreaDensity*)$self->Access();
+    return (StepFEA_FeaAreaDensity*)$self->get();
     }
 };
 
 %extend Handle_StepFEA_FeaAreaDensity {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend StepFEA_FeaAreaDensity {
@@ -6565,7 +3753,7 @@ class StepFEA_FeaLinearElasticity : public StepFEA_FeaMaterialPropertyRepresenta
 ") StepFEA_FeaLinearElasticity;
 		 StepFEA_FeaLinearElasticity ();
 		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	* Initialize all fields (own and inherited)
+		%feature("autodoc", "	* Initialize all fields --own and inherited--
 
 	:param aRepresentationItem_Name:
 	:type aRepresentationItem_Name: Handle_TCollection_HAsciiString &
@@ -6622,19 +3810,20 @@ class Handle_StepFEA_FeaLinearElasticity : public Handle_StepFEA_FeaMaterialProp
         static const Handle_StepFEA_FeaLinearElasticity DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_StepFEA_FeaLinearElasticity {
     StepFEA_FeaLinearElasticity* _get_reference() {
-    return (StepFEA_FeaLinearElasticity*)$self->Access();
+    return (StepFEA_FeaLinearElasticity*)$self->get();
     }
 };
 
 %extend Handle_StepFEA_FeaLinearElasticity {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend StepFEA_FeaLinearElasticity {
@@ -6652,7 +3841,7 @@ class StepFEA_FeaMassDensity : public StepFEA_FeaMaterialPropertyRepresentationI
 ") StepFEA_FeaMassDensity;
 		 StepFEA_FeaMassDensity ();
 		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	* Initialize all fields (own and inherited)
+		%feature("autodoc", "	* Initialize all fields --own and inherited--
 
 	:param aRepresentationItem_Name:
 	:type aRepresentationItem_Name: Handle_TCollection_HAsciiString &
@@ -6709,19 +3898,20 @@ class Handle_StepFEA_FeaMassDensity : public Handle_StepFEA_FeaMaterialPropertyR
         static const Handle_StepFEA_FeaMassDensity DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_StepFEA_FeaMassDensity {
     StepFEA_FeaMassDensity* _get_reference() {
-    return (StepFEA_FeaMassDensity*)$self->Access();
+    return (StepFEA_FeaMassDensity*)$self->get();
     }
 };
 
 %extend Handle_StepFEA_FeaMassDensity {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend StepFEA_FeaMassDensity {
@@ -6772,19 +3962,20 @@ class Handle_StepFEA_FeaModel3d : public Handle_StepFEA_FeaModel {
         static const Handle_StepFEA_FeaModel3d DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_StepFEA_FeaModel3d {
     StepFEA_FeaModel3d* _get_reference() {
-    return (StepFEA_FeaModel3d*)$self->Access();
+    return (StepFEA_FeaModel3d*)$self->get();
     }
 };
 
 %extend Handle_StepFEA_FeaModel3d {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend StepFEA_FeaModel3d {
@@ -6802,7 +3993,7 @@ class StepFEA_FeaMoistureAbsorption : public StepFEA_FeaMaterialPropertyRepresen
 ") StepFEA_FeaMoistureAbsorption;
 		 StepFEA_FeaMoistureAbsorption ();
 		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	* Initialize all fields (own and inherited)
+		%feature("autodoc", "	* Initialize all fields --own and inherited--
 
 	:param aRepresentationItem_Name:
 	:type aRepresentationItem_Name: Handle_TCollection_HAsciiString &
@@ -6859,19 +4050,20 @@ class Handle_StepFEA_FeaMoistureAbsorption : public Handle_StepFEA_FeaMaterialPr
         static const Handle_StepFEA_FeaMoistureAbsorption DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_StepFEA_FeaMoistureAbsorption {
     StepFEA_FeaMoistureAbsorption* _get_reference() {
-    return (StepFEA_FeaMoistureAbsorption*)$self->Access();
+    return (StepFEA_FeaMoistureAbsorption*)$self->get();
     }
 };
 
 %extend Handle_StepFEA_FeaMoistureAbsorption {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend StepFEA_FeaMoistureAbsorption {
@@ -6889,7 +4081,7 @@ class StepFEA_FeaSecantCoefficientOfLinearThermalExpansion : public StepFEA_FeaM
 ") StepFEA_FeaSecantCoefficientOfLinearThermalExpansion;
 		 StepFEA_FeaSecantCoefficientOfLinearThermalExpansion ();
 		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	* Initialize all fields (own and inherited)
+		%feature("autodoc", "	* Initialize all fields --own and inherited--
 
 	:param aRepresentationItem_Name:
 	:type aRepresentationItem_Name: Handle_TCollection_HAsciiString &
@@ -6962,19 +4154,20 @@ class Handle_StepFEA_FeaSecantCoefficientOfLinearThermalExpansion : public Handl
         static const Handle_StepFEA_FeaSecantCoefficientOfLinearThermalExpansion DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_StepFEA_FeaSecantCoefficientOfLinearThermalExpansion {
     StepFEA_FeaSecantCoefficientOfLinearThermalExpansion* _get_reference() {
-    return (StepFEA_FeaSecantCoefficientOfLinearThermalExpansion*)$self->Access();
+    return (StepFEA_FeaSecantCoefficientOfLinearThermalExpansion*)$self->get();
     }
 };
 
 %extend Handle_StepFEA_FeaSecantCoefficientOfLinearThermalExpansion {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend StepFEA_FeaSecantCoefficientOfLinearThermalExpansion {
@@ -6992,7 +4185,7 @@ class StepFEA_FeaShellBendingStiffness : public StepFEA_FeaMaterialPropertyRepre
 ") StepFEA_FeaShellBendingStiffness;
 		 StepFEA_FeaShellBendingStiffness ();
 		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	* Initialize all fields (own and inherited)
+		%feature("autodoc", "	* Initialize all fields --own and inherited--
 
 	:param aRepresentationItem_Name:
 	:type aRepresentationItem_Name: Handle_TCollection_HAsciiString &
@@ -7049,19 +4242,20 @@ class Handle_StepFEA_FeaShellBendingStiffness : public Handle_StepFEA_FeaMateria
         static const Handle_StepFEA_FeaShellBendingStiffness DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_StepFEA_FeaShellBendingStiffness {
     StepFEA_FeaShellBendingStiffness* _get_reference() {
-    return (StepFEA_FeaShellBendingStiffness*)$self->Access();
+    return (StepFEA_FeaShellBendingStiffness*)$self->get();
     }
 };
 
 %extend Handle_StepFEA_FeaShellBendingStiffness {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend StepFEA_FeaShellBendingStiffness {
@@ -7079,7 +4273,7 @@ class StepFEA_FeaShellMembraneBendingCouplingStiffness : public StepFEA_FeaMater
 ") StepFEA_FeaShellMembraneBendingCouplingStiffness;
 		 StepFEA_FeaShellMembraneBendingCouplingStiffness ();
 		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	* Initialize all fields (own and inherited)
+		%feature("autodoc", "	* Initialize all fields --own and inherited--
 
 	:param aRepresentationItem_Name:
 	:type aRepresentationItem_Name: Handle_TCollection_HAsciiString &
@@ -7136,19 +4330,20 @@ class Handle_StepFEA_FeaShellMembraneBendingCouplingStiffness : public Handle_St
         static const Handle_StepFEA_FeaShellMembraneBendingCouplingStiffness DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_StepFEA_FeaShellMembraneBendingCouplingStiffness {
     StepFEA_FeaShellMembraneBendingCouplingStiffness* _get_reference() {
-    return (StepFEA_FeaShellMembraneBendingCouplingStiffness*)$self->Access();
+    return (StepFEA_FeaShellMembraneBendingCouplingStiffness*)$self->get();
     }
 };
 
 %extend Handle_StepFEA_FeaShellMembraneBendingCouplingStiffness {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend StepFEA_FeaShellMembraneBendingCouplingStiffness {
@@ -7166,7 +4361,7 @@ class StepFEA_FeaShellMembraneStiffness : public StepFEA_FeaMaterialPropertyRepr
 ") StepFEA_FeaShellMembraneStiffness;
 		 StepFEA_FeaShellMembraneStiffness ();
 		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	* Initialize all fields (own and inherited)
+		%feature("autodoc", "	* Initialize all fields --own and inherited--
 
 	:param aRepresentationItem_Name:
 	:type aRepresentationItem_Name: Handle_TCollection_HAsciiString &
@@ -7223,19 +4418,20 @@ class Handle_StepFEA_FeaShellMembraneStiffness : public Handle_StepFEA_FeaMateri
         static const Handle_StepFEA_FeaShellMembraneStiffness DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_StepFEA_FeaShellMembraneStiffness {
     StepFEA_FeaShellMembraneStiffness* _get_reference() {
-    return (StepFEA_FeaShellMembraneStiffness*)$self->Access();
+    return (StepFEA_FeaShellMembraneStiffness*)$self->get();
     }
 };
 
 %extend Handle_StepFEA_FeaShellMembraneStiffness {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend StepFEA_FeaShellMembraneStiffness {
@@ -7253,7 +4449,7 @@ class StepFEA_FeaShellShearStiffness : public StepFEA_FeaMaterialPropertyReprese
 ") StepFEA_FeaShellShearStiffness;
 		 StepFEA_FeaShellShearStiffness ();
 		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	* Initialize all fields (own and inherited)
+		%feature("autodoc", "	* Initialize all fields --own and inherited--
 
 	:param aRepresentationItem_Name:
 	:type aRepresentationItem_Name: Handle_TCollection_HAsciiString &
@@ -7310,19 +4506,20 @@ class Handle_StepFEA_FeaShellShearStiffness : public Handle_StepFEA_FeaMaterialP
         static const Handle_StepFEA_FeaShellShearStiffness DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_StepFEA_FeaShellShearStiffness {
     StepFEA_FeaShellShearStiffness* _get_reference() {
-    return (StepFEA_FeaShellShearStiffness*)$self->Access();
+    return (StepFEA_FeaShellShearStiffness*)$self->get();
     }
 };
 
 %extend Handle_StepFEA_FeaShellShearStiffness {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend StepFEA_FeaShellShearStiffness {
@@ -7340,7 +4537,7 @@ class StepFEA_FeaTangentialCoefficientOfLinearThermalExpansion : public StepFEA_
 ") StepFEA_FeaTangentialCoefficientOfLinearThermalExpansion;
 		 StepFEA_FeaTangentialCoefficientOfLinearThermalExpansion ();
 		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	* Initialize all fields (own and inherited)
+		%feature("autodoc", "	* Initialize all fields --own and inherited--
 
 	:param aRepresentationItem_Name:
 	:type aRepresentationItem_Name: Handle_TCollection_HAsciiString &
@@ -7397,19 +4594,20 @@ class Handle_StepFEA_FeaTangentialCoefficientOfLinearThermalExpansion : public H
         static const Handle_StepFEA_FeaTangentialCoefficientOfLinearThermalExpansion DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_StepFEA_FeaTangentialCoefficientOfLinearThermalExpansion {
     StepFEA_FeaTangentialCoefficientOfLinearThermalExpansion* _get_reference() {
-    return (StepFEA_FeaTangentialCoefficientOfLinearThermalExpansion*)$self->Access();
+    return (StepFEA_FeaTangentialCoefficientOfLinearThermalExpansion*)$self->get();
     }
 };
 
 %extend Handle_StepFEA_FeaTangentialCoefficientOfLinearThermalExpansion {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend StepFEA_FeaTangentialCoefficientOfLinearThermalExpansion {
@@ -7460,19 +4658,20 @@ class Handle_StepFEA_GeometricNode : public Handle_StepFEA_NodeRepresentation {
         static const Handle_StepFEA_GeometricNode DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_StepFEA_GeometricNode {
     StepFEA_GeometricNode* _get_reference() {
-    return (StepFEA_GeometricNode*)$self->Access();
+    return (StepFEA_GeometricNode*)$self->get();
     }
 };
 
 %extend Handle_StepFEA_GeometricNode {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend StepFEA_GeometricNode {
@@ -7523,19 +4722,20 @@ class Handle_StepFEA_Node : public Handle_StepFEA_NodeRepresentation {
         static const Handle_StepFEA_Node DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_StepFEA_Node {
     StepFEA_Node* _get_reference() {
-    return (StepFEA_Node*)$self->Access();
+    return (StepFEA_Node*)$self->get();
     }
 };
 
 %extend Handle_StepFEA_Node {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend StepFEA_Node {
@@ -7553,7 +4753,7 @@ class StepFEA_NodeGroup : public StepFEA_FeaGroup {
 ") StepFEA_NodeGroup;
 		 StepFEA_NodeGroup ();
 		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	* Initialize all fields (own and inherited)
+		%feature("autodoc", "	* Initialize all fields --own and inherited--
 
 	:param aGroup_Name:
 	:type aGroup_Name: Handle_TCollection_HAsciiString &
@@ -7614,19 +4814,20 @@ class Handle_StepFEA_NodeGroup : public Handle_StepFEA_FeaGroup {
         static const Handle_StepFEA_NodeGroup DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_StepFEA_NodeGroup {
     StepFEA_NodeGroup* _get_reference() {
-    return (StepFEA_NodeGroup*)$self->Access();
+    return (StepFEA_NodeGroup*)$self->get();
     }
 };
 
 %extend Handle_StepFEA_NodeGroup {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend StepFEA_NodeGroup {
@@ -7644,7 +4845,7 @@ class StepFEA_ParametricCurve3dElementCoordinateDirection : public StepFEA_FeaRe
 ") StepFEA_ParametricCurve3dElementCoordinateDirection;
 		 StepFEA_ParametricCurve3dElementCoordinateDirection ();
 		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	* Initialize all fields (own and inherited)
+		%feature("autodoc", "	* Initialize all fields --own and inherited--
 
 	:param aRepresentationItem_Name:
 	:type aRepresentationItem_Name: Handle_TCollection_HAsciiString &
@@ -7701,19 +4902,20 @@ class Handle_StepFEA_ParametricCurve3dElementCoordinateDirection : public Handle
         static const Handle_StepFEA_ParametricCurve3dElementCoordinateDirection DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_StepFEA_ParametricCurve3dElementCoordinateDirection {
     StepFEA_ParametricCurve3dElementCoordinateDirection* _get_reference() {
-    return (StepFEA_ParametricCurve3dElementCoordinateDirection*)$self->Access();
+    return (StepFEA_ParametricCurve3dElementCoordinateDirection*)$self->get();
     }
 };
 
 %extend Handle_StepFEA_ParametricCurve3dElementCoordinateDirection {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend StepFEA_ParametricCurve3dElementCoordinateDirection {
@@ -7731,7 +4933,7 @@ class StepFEA_ParametricCurve3dElementCoordinateSystem : public StepFEA_FeaRepre
 ") StepFEA_ParametricCurve3dElementCoordinateSystem;
 		 StepFEA_ParametricCurve3dElementCoordinateSystem ();
 		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	* Initialize all fields (own and inherited)
+		%feature("autodoc", "	* Initialize all fields --own and inherited--
 
 	:param aRepresentationItem_Name:
 	:type aRepresentationItem_Name: Handle_TCollection_HAsciiString &
@@ -7788,19 +4990,20 @@ class Handle_StepFEA_ParametricCurve3dElementCoordinateSystem : public Handle_St
         static const Handle_StepFEA_ParametricCurve3dElementCoordinateSystem DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_StepFEA_ParametricCurve3dElementCoordinateSystem {
     StepFEA_ParametricCurve3dElementCoordinateSystem* _get_reference() {
-    return (StepFEA_ParametricCurve3dElementCoordinateSystem*)$self->Access();
+    return (StepFEA_ParametricCurve3dElementCoordinateSystem*)$self->get();
     }
 };
 
 %extend Handle_StepFEA_ParametricCurve3dElementCoordinateSystem {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend StepFEA_ParametricCurve3dElementCoordinateSystem {
@@ -7818,7 +5021,7 @@ class StepFEA_ParametricSurface3dElementCoordinateSystem : public StepFEA_FeaRep
 ") StepFEA_ParametricSurface3dElementCoordinateSystem;
 		 StepFEA_ParametricSurface3dElementCoordinateSystem ();
 		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	* Initialize all fields (own and inherited)
+		%feature("autodoc", "	* Initialize all fields --own and inherited--
 
 	:param aRepresentationItem_Name:
 	:type aRepresentationItem_Name: Handle_TCollection_HAsciiString &
@@ -7891,19 +5094,20 @@ class Handle_StepFEA_ParametricSurface3dElementCoordinateSystem : public Handle_
         static const Handle_StepFEA_ParametricSurface3dElementCoordinateSystem DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_StepFEA_ParametricSurface3dElementCoordinateSystem {
     StepFEA_ParametricSurface3dElementCoordinateSystem* _get_reference() {
-    return (StepFEA_ParametricSurface3dElementCoordinateSystem*)$self->Access();
+    return (StepFEA_ParametricSurface3dElementCoordinateSystem*)$self->get();
     }
 };
 
 %extend Handle_StepFEA_ParametricSurface3dElementCoordinateSystem {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend StepFEA_ParametricSurface3dElementCoordinateSystem {
@@ -7921,7 +5125,7 @@ class StepFEA_Surface3dElementRepresentation : public StepFEA_ElementRepresentat
 ") StepFEA_Surface3dElementRepresentation;
 		 StepFEA_Surface3dElementRepresentation ();
 		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	* Initialize all fields (own and inherited)
+		%feature("autodoc", "	* Initialize all fields --own and inherited--
 
 	:param aRepresentation_Name:
 	:type aRepresentation_Name: Handle_TCollection_HAsciiString &
@@ -8032,19 +5236,20 @@ class Handle_StepFEA_Surface3dElementRepresentation : public Handle_StepFEA_Elem
         static const Handle_StepFEA_Surface3dElementRepresentation DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_StepFEA_Surface3dElementRepresentation {
     StepFEA_Surface3dElementRepresentation* _get_reference() {
-    return (StepFEA_Surface3dElementRepresentation*)$self->Access();
+    return (StepFEA_Surface3dElementRepresentation*)$self->get();
     }
 };
 
 %extend Handle_StepFEA_Surface3dElementRepresentation {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend StepFEA_Surface3dElementRepresentation {
@@ -8062,7 +5267,7 @@ class StepFEA_Volume3dElementRepresentation : public StepFEA_ElementRepresentati
 ") StepFEA_Volume3dElementRepresentation;
 		 StepFEA_Volume3dElementRepresentation ();
 		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	* Initialize all fields (own and inherited)
+		%feature("autodoc", "	* Initialize all fields --own and inherited--
 
 	:param aRepresentation_Name:
 	:type aRepresentation_Name: Handle_TCollection_HAsciiString &
@@ -8157,19 +5362,20 @@ class Handle_StepFEA_Volume3dElementRepresentation : public Handle_StepFEA_Eleme
         static const Handle_StepFEA_Volume3dElementRepresentation DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_StepFEA_Volume3dElementRepresentation {
     StepFEA_Volume3dElementRepresentation* _get_reference() {
-    return (StepFEA_Volume3dElementRepresentation*)$self->Access();
+    return (StepFEA_Volume3dElementRepresentation*)$self->get();
     }
 };
 
 %extend Handle_StepFEA_Volume3dElementRepresentation {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend StepFEA_Volume3dElementRepresentation {
@@ -8220,19 +5426,20 @@ class Handle_StepFEA_NodeWithSolutionCoordinateSystem : public Handle_StepFEA_No
         static const Handle_StepFEA_NodeWithSolutionCoordinateSystem DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_StepFEA_NodeWithSolutionCoordinateSystem {
     StepFEA_NodeWithSolutionCoordinateSystem* _get_reference() {
-    return (StepFEA_NodeWithSolutionCoordinateSystem*)$self->Access();
+    return (StepFEA_NodeWithSolutionCoordinateSystem*)$self->get();
     }
 };
 
 %extend Handle_StepFEA_NodeWithSolutionCoordinateSystem {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend StepFEA_NodeWithSolutionCoordinateSystem {
@@ -8283,19 +5490,20 @@ class Handle_StepFEA_NodeWithVector : public Handle_StepFEA_Node {
         static const Handle_StepFEA_NodeWithVector DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_StepFEA_NodeWithVector {
     StepFEA_NodeWithVector* _get_reference() {
-    return (StepFEA_NodeWithVector*)$self->Access();
+    return (StepFEA_NodeWithVector*)$self->get();
     }
 };
 
 %extend Handle_StepFEA_NodeWithVector {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend StepFEA_NodeWithVector {

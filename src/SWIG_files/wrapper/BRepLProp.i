@@ -1,5 +1,5 @@
 /*
-Copyright 2008-2017 Thomas Paviot (tpaviot@gmail.com)
+Copyright 2008-2018 Thomas Paviot (tpaviot@gmail.com)
 
 
 This file is part of pythonOCC.
@@ -56,6 +56,9 @@ def register_handle(handle, base_object):
 /* typedefs */
 /* end typedefs declaration */
 
+/* templates */
+/* end templates declaration */
+
 /* public enums */
 /* end public enums declaration */
 
@@ -106,7 +109,9 @@ class BRepLProp {
 class BRepLProp_CLProps {
 	public:
 		%feature("compactdefaultargs") BRepLProp_CLProps;
-		%feature("autodoc", "	:param C:
+		%feature("autodoc", "	* Initializes the local properties of the curve <C> The current point and the derivatives are computed at the same time, which allows an optimization of the computation time. <N> indicates the maximum number of derivations to be done --0, 1, 2 or 3--. For example, to compute only the tangent, N should be equal to 1. <Resolution> is the linear tolerance --it is used to test if a vector is null--.
+
+	:param C:
 	:type C: BRepAdaptor_Curve &
 	:param N:
 	:type N: int
@@ -116,7 +121,9 @@ class BRepLProp_CLProps {
 ") BRepLProp_CLProps;
 		 BRepLProp_CLProps (const BRepAdaptor_Curve & C,const Standard_Integer N,const Standard_Real Resolution);
 		%feature("compactdefaultargs") BRepLProp_CLProps;
-		%feature("autodoc", "	:param C:
+		%feature("autodoc", "	* Same as previous constructor but here the parameter is set to the value <U>. All the computations done will be related to <C> and <U>.
+
+	:param C:
 	:type C: BRepAdaptor_Curve &
 	:param U:
 	:type U: float
@@ -128,7 +135,9 @@ class BRepLProp_CLProps {
 ") BRepLProp_CLProps;
 		 BRepLProp_CLProps (const BRepAdaptor_Curve & C,const Standard_Real U,const Standard_Integer N,const Standard_Real Resolution);
 		%feature("compactdefaultargs") BRepLProp_CLProps;
-		%feature("autodoc", "	:param N:
+		%feature("autodoc", "	* Same as previous constructor but here the parameter is set to the value <U> and the curve is set with SetCurve. the curve can have a empty constructor All the computations done will be related to <C> and <U> when the functions 'set' will be done.
+
+	:param N:
 	:type N: int
 	:param Resolution:
 	:type Resolution: float
@@ -136,55 +145,77 @@ class BRepLProp_CLProps {
 ") BRepLProp_CLProps;
 		 BRepLProp_CLProps (const Standard_Integer N,const Standard_Real Resolution);
 		%feature("compactdefaultargs") SetParameter;
-		%feature("autodoc", "	:param U:
+		%feature("autodoc", "	* Initializes the local properties of the curve for the parameter value <U>.
+
+	:param U:
 	:type U: float
 	:rtype: None
 ") SetParameter;
 		void SetParameter (const Standard_Real U);
 		%feature("compactdefaultargs") SetCurve;
-		%feature("autodoc", "	:param C:
+		%feature("autodoc", "	* Initializes the local properties of the curve for the new curve.
+
+	:param C:
 	:type C: BRepAdaptor_Curve &
 	:rtype: None
 ") SetCurve;
 		void SetCurve (const BRepAdaptor_Curve & C);
 		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:rtype: gp_Pnt
+		%feature("autodoc", "	* Returns the Point.
+
+	:rtype: gp_Pnt
 ") Value;
 		const gp_Pnt  Value ();
 		%feature("compactdefaultargs") D1;
-		%feature("autodoc", "	:rtype: gp_Vec
+		%feature("autodoc", "	* Returns the first derivative. The derivative is computed if it has not been yet.
+
+	:rtype: gp_Vec
 ") D1;
 		const gp_Vec  D1 ();
 		%feature("compactdefaultargs") D2;
-		%feature("autodoc", "	:rtype: gp_Vec
+		%feature("autodoc", "	* Returns the second derivative. The derivative is computed if it has not been yet.
+
+	:rtype: gp_Vec
 ") D2;
 		const gp_Vec  D2 ();
 		%feature("compactdefaultargs") D3;
-		%feature("autodoc", "	:rtype: gp_Vec
+		%feature("autodoc", "	* Returns the third derivative. The derivative is computed if it has not been yet.
+
+	:rtype: gp_Vec
 ") D3;
 		const gp_Vec  D3 ();
 		%feature("compactdefaultargs") IsTangentDefined;
-		%feature("autodoc", "	:rtype: bool
+		%feature("autodoc", "	* Returns True if the tangent is defined. For example, the tangent is not defined if the three first derivatives are all null.
+
+	:rtype: bool
 ") IsTangentDefined;
 		Standard_Boolean IsTangentDefined ();
 		%feature("compactdefaultargs") Tangent;
-		%feature("autodoc", "	:param D:
+		%feature("autodoc", "	* output the tangent direction <D>
+
+	:param D:
 	:type D: gp_Dir
 	:rtype: None
 ") Tangent;
 		void Tangent (gp_Dir & D);
 		%feature("compactdefaultargs") Curvature;
-		%feature("autodoc", "	:rtype: float
+		%feature("autodoc", "	* Returns the curvature.
+
+	:rtype: float
 ") Curvature;
 		Standard_Real Curvature ();
 		%feature("compactdefaultargs") Normal;
-		%feature("autodoc", "	:param N:
+		%feature("autodoc", "	* Returns the normal direction <N>.
+
+	:param N:
 	:type N: gp_Dir
 	:rtype: None
 ") Normal;
 		void Normal (gp_Dir & N);
 		%feature("compactdefaultargs") CentreOfCurvature;
-		%feature("autodoc", "	:param P:
+		%feature("autodoc", "	* Returns the centre of curvature <P>.
+
+	:param P:
 	:type P: gp_Pnt
 	:rtype: None
 ") CentreOfCurvature;
@@ -295,7 +326,9 @@ class BRepLProp_CurveTool {
 class BRepLProp_SLProps {
 	public:
 		%feature("compactdefaultargs") BRepLProp_SLProps;
-		%feature("autodoc", "	:param S:
+		%feature("autodoc", "	* Initializes the local properties of the surface <S> for the parameter values --<U>, <V>--. The current point and the derivatives are computed at the same time, which allows an optimization of the computation time. <N> indicates the maximum number of derivations to be done --0, 1, or 2--. For example, to compute only the tangent, N should be equal to 1. <Resolution> is the linear tolerance --it is used to test if a vector is null--.
+
+	:param S:
 	:type S: BRepAdaptor_Surface &
 	:param U:
 	:type U: float
@@ -309,7 +342,9 @@ class BRepLProp_SLProps {
 ") BRepLProp_SLProps;
 		 BRepLProp_SLProps (const BRepAdaptor_Surface & S,const Standard_Real U,const Standard_Real V,const Standard_Integer N,const Standard_Real Resolution);
 		%feature("compactdefaultargs") BRepLProp_SLProps;
-		%feature("autodoc", "	:param S:
+		%feature("autodoc", "	* idem as previous constructor but without setting the value of parameters <U> and <V>.
+
+	:param S:
 	:type S: BRepAdaptor_Surface &
 	:param N:
 	:type N: int
@@ -319,7 +354,9 @@ class BRepLProp_SLProps {
 ") BRepLProp_SLProps;
 		 BRepLProp_SLProps (const BRepAdaptor_Surface & S,const Standard_Integer N,const Standard_Real Resolution);
 		%feature("compactdefaultargs") BRepLProp_SLProps;
-		%feature("autodoc", "	:param N:
+		%feature("autodoc", "	* idem as previous constructor but without setting the value of parameters <U> and <V> and the surface. the surface can have an empty constructor.
+
+	:param N:
 	:type N: int
 	:param Resolution:
 	:type Resolution: float
@@ -327,13 +364,17 @@ class BRepLProp_SLProps {
 ") BRepLProp_SLProps;
 		 BRepLProp_SLProps (const Standard_Integer N,const Standard_Real Resolution);
 		%feature("compactdefaultargs") SetSurface;
-		%feature("autodoc", "	:param S:
+		%feature("autodoc", "	* Initializes the local properties of the surface S for the new surface.
+
+	:param S:
 	:type S: BRepAdaptor_Surface &
 	:rtype: None
 ") SetSurface;
 		void SetSurface (const BRepAdaptor_Surface & S);
 		%feature("compactdefaultargs") SetParameters;
-		%feature("autodoc", "	:param U:
+		%feature("autodoc", "	* Initializes the local properties of the surface S for the new parameter values --<U>, <V>--.
+
+	:param U:
 	:type U: float
 	:param V:
 	:type V: float
@@ -341,75 +382,109 @@ class BRepLProp_SLProps {
 ") SetParameters;
 		void SetParameters (const Standard_Real U,const Standard_Real V);
 		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:rtype: gp_Pnt
+		%feature("autodoc", "	* Returns the point.
+
+	:rtype: gp_Pnt
 ") Value;
 		const gp_Pnt  Value ();
 		%feature("compactdefaultargs") D1U;
-		%feature("autodoc", "	:rtype: gp_Vec
+		%feature("autodoc", "	* Returns the first U derivative. The derivative is computed if it has not been yet.
+
+	:rtype: gp_Vec
 ") D1U;
 		const gp_Vec  D1U ();
 		%feature("compactdefaultargs") D1V;
-		%feature("autodoc", "	:rtype: gp_Vec
+		%feature("autodoc", "	* Returns the first V derivative. The derivative is computed if it has not been yet.
+
+	:rtype: gp_Vec
 ") D1V;
 		const gp_Vec  D1V ();
 		%feature("compactdefaultargs") D2U;
-		%feature("autodoc", "	:rtype: gp_Vec
+		%feature("autodoc", "	* Returns the second U derivatives The derivative is computed if it has not been yet.
+
+	:rtype: gp_Vec
 ") D2U;
 		const gp_Vec  D2U ();
 		%feature("compactdefaultargs") D2V;
-		%feature("autodoc", "	:rtype: gp_Vec
+		%feature("autodoc", "	* Returns the second V derivative. The derivative is computed if it has not been yet.
+
+	:rtype: gp_Vec
 ") D2V;
 		const gp_Vec  D2V ();
 		%feature("compactdefaultargs") DUV;
-		%feature("autodoc", "	:rtype: gp_Vec
+		%feature("autodoc", "	* Returns the second UV cross-derivative. The derivative is computed if it has not been yet.
+
+	:rtype: gp_Vec
 ") DUV;
 		const gp_Vec  DUV ();
 		%feature("compactdefaultargs") IsTangentUDefined;
-		%feature("autodoc", "	:rtype: bool
+		%feature("autodoc", "	* returns True if the U tangent is defined. For example, the tangent is not defined if the two first U derivatives are null.
+
+	:rtype: bool
 ") IsTangentUDefined;
 		Standard_Boolean IsTangentUDefined ();
 		%feature("compactdefaultargs") TangentU;
-		%feature("autodoc", "	:param D:
+		%feature("autodoc", "	* Returns the tangent direction <D> on the iso-V.
+
+	:param D:
 	:type D: gp_Dir
 	:rtype: None
 ") TangentU;
 		void TangentU (gp_Dir & D);
 		%feature("compactdefaultargs") IsTangentVDefined;
-		%feature("autodoc", "	:rtype: bool
+		%feature("autodoc", "	* returns if the V tangent is defined. For example, the tangent is not defined if the two first V derivatives are null.
+
+	:rtype: bool
 ") IsTangentVDefined;
 		Standard_Boolean IsTangentVDefined ();
 		%feature("compactdefaultargs") TangentV;
-		%feature("autodoc", "	:param D:
+		%feature("autodoc", "	* Returns the tangent direction <D> on the iso-V.
+
+	:param D:
 	:type D: gp_Dir
 	:rtype: None
 ") TangentV;
 		void TangentV (gp_Dir & D);
 		%feature("compactdefaultargs") IsNormalDefined;
-		%feature("autodoc", "	:rtype: bool
+		%feature("autodoc", "	* Tells if the normal is defined.
+
+	:rtype: bool
 ") IsNormalDefined;
 		Standard_Boolean IsNormalDefined ();
 		%feature("compactdefaultargs") Normal;
-		%feature("autodoc", "	:rtype: gp_Dir
+		%feature("autodoc", "	* Returns the normal direction.
+
+	:rtype: gp_Dir
 ") Normal;
 		const gp_Dir  Normal ();
 		%feature("compactdefaultargs") IsCurvatureDefined;
-		%feature("autodoc", "	:rtype: bool
+		%feature("autodoc", "	* returns True if the curvature is defined.
+
+	:rtype: bool
 ") IsCurvatureDefined;
 		Standard_Boolean IsCurvatureDefined ();
 		%feature("compactdefaultargs") IsUmbilic;
-		%feature("autodoc", "	:rtype: bool
+		%feature("autodoc", "	* returns True if the point is umbilic --i.e. if the curvature is constant--.
+
+	:rtype: bool
 ") IsUmbilic;
 		Standard_Boolean IsUmbilic ();
 		%feature("compactdefaultargs") MaxCurvature;
-		%feature("autodoc", "	:rtype: float
+		%feature("autodoc", "	* Returns the maximum curvature
+
+	:rtype: float
 ") MaxCurvature;
 		Standard_Real MaxCurvature ();
 		%feature("compactdefaultargs") MinCurvature;
-		%feature("autodoc", "	:rtype: float
+		%feature("autodoc", "	* Returns the minimum curvature
+
+	:rtype: float
 ") MinCurvature;
 		Standard_Real MinCurvature ();
 		%feature("compactdefaultargs") CurvatureDirections;
-		%feature("autodoc", "	:param MaxD:
+		%feature("autodoc", "	* Returns the direction of the maximum and minimum curvature <MaxD> and <MinD>
+
+	:param MaxD:
 	:type MaxD: gp_Dir
 	:param MinD:
 	:type MinD: gp_Dir
@@ -417,11 +492,15 @@ class BRepLProp_SLProps {
 ") CurvatureDirections;
 		void CurvatureDirections (gp_Dir & MaxD,gp_Dir & MinD);
 		%feature("compactdefaultargs") MeanCurvature;
-		%feature("autodoc", "	:rtype: float
+		%feature("autodoc", "	* Returns the mean curvature.
+
+	:rtype: float
 ") MeanCurvature;
 		Standard_Real MeanCurvature ();
 		%feature("compactdefaultargs") GaussianCurvature;
-		%feature("autodoc", "	:rtype: float
+		%feature("autodoc", "	* Returns the Gaussian curvature
+
+	:rtype: float
 ") GaussianCurvature;
 		Standard_Real GaussianCurvature ();
 };

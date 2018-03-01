@@ -1,5 +1,5 @@
 /*
-Copyright 2008-2017 Thomas Paviot (tpaviot@gmail.com)
+Copyright 2008-2018 Thomas Paviot (tpaviot@gmail.com)
 
 
 This file is part of pythonOCC.
@@ -55,6 +55,9 @@ def register_handle(handle, base_object):
 
 /* typedefs */
 /* end typedefs declaration */
+
+/* templates */
+/* end templates declaration */
 
 /* public enums */
 /* end public enums declaration */
@@ -118,19 +121,20 @@ class Handle_IGESControl_ActorWrite : public Handle_Transfer_ActorOfFinderProces
         static const Handle_IGESControl_ActorWrite DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_IGESControl_ActorWrite {
     IGESControl_ActorWrite* _get_reference() {
-    return (IGESControl_ActorWrite*)$self->Access();
+    return (IGESControl_ActorWrite*)$self->get();
     }
 };
 
 %extend Handle_IGESControl_ActorWrite {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend IGESControl_ActorWrite {
@@ -181,19 +185,20 @@ class Handle_IGESControl_AlgoContainer : public Handle_IGESToBRep_AlgoContainer 
         static const Handle_IGESControl_AlgoContainer DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_IGESControl_AlgoContainer {
     IGESControl_AlgoContainer* _get_reference() {
-    return (IGESControl_AlgoContainer*)$self->Access();
+    return (IGESControl_AlgoContainer*)$self->get();
     }
 };
 
 %extend Handle_IGESControl_AlgoContainer {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend IGESControl_AlgoContainer {
@@ -205,7 +210,7 @@ class Handle_IGESControl_AlgoContainer : public Handle_IGESToBRep_AlgoContainer 
 class IGESControl_Controller : public XSControl_Controller {
 	public:
 		%feature("compactdefaultargs") IGESControl_Controller;
-		%feature("autodoc", "	* Initializes the use of IGES Norm (the first time) and returns a Controller for IGES-5.1 If <modefnes> is True, sets it to internal FNES format
+		%feature("autodoc", "	* Initializes the use of IGES Norm --the first time-- and returns a Controller for IGES-5.1 If <modefnes> is True, sets it to internal FNES format
 
 	:param modefnes: default value is Standard_False
 	:type modefnes: bool
@@ -219,7 +224,7 @@ class IGESControl_Controller : public XSControl_Controller {
 ") NewModel;
 		Handle_Interface_InterfaceModel NewModel ();
 		%feature("compactdefaultargs") ActorRead;
-		%feature("autodoc", "	* Returns the Actor for Read attached to the pair (norm,appli) It is an Actor from IGESToBRep, adapted from an IGESModel : Unit, tolerances
+		%feature("autodoc", "	* Returns the Actor for Read attached to the pair --norm,appli-- It is an Actor from IGESToBRep, adapted from an IGESModel : Unit, tolerances
 
 	:param model:
 	:type model: Handle_Interface_InterfaceModel &
@@ -227,7 +232,7 @@ class IGESControl_Controller : public XSControl_Controller {
 ") ActorRead;
 		Handle_Transfer_ActorOfTransientProcess ActorRead (const Handle_Interface_InterfaceModel & model);
 		%feature("compactdefaultargs") TransferWriteShape;
-		%feature("autodoc", "	* Takes one Shape and transfers it to the InterfaceModel (already created by NewModel for instance) <modetrans> is to be interpreted by each kind of XstepAdaptor Returns a status : 0 OK 1 No result 2 Fail -1 bad modeshape -2 bad model (requires an IGESModel) modeshape : 0 groupe of face (version < 5.1) 1 BREP-version 5.1 of IGES
+		%feature("autodoc", "	* Takes one Shape and transfers it to the InterfaceModel --already created by NewModel for instance-- <modetrans> is to be interpreted by each kind of XstepAdaptor Returns a status : 0 OK 1 No result 2 Fail -1 bad modeshape -2 bad model --requires an IGESModel-- modeshape : 0 groupe of face --version < 5.1-- 1 BREP-version 5.1 of IGES
 
 	:param shape:
 	:type shape: TopoDS_Shape &
@@ -286,19 +291,20 @@ class Handle_IGESControl_Controller : public Handle_XSControl_Controller {
         static const Handle_IGESControl_Controller DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_IGESControl_Controller {
     IGESControl_Controller* _get_reference() {
-    return (IGESControl_Controller*)$self->Access();
+    return (IGESControl_Controller*)$self->get();
     }
 };
 
 %extend Handle_IGESControl_Controller {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend IGESControl_Controller {
@@ -324,7 +330,7 @@ class IGESControl_IGESBoundary : public IGESToBRep_IGESBoundary {
 ") IGESControl_IGESBoundary;
 		 IGESControl_IGESBoundary (const IGESToBRep_CurveAndSurface & CS);
 		%feature("compactdefaultargs") Check;
-		%feature("autodoc", "	* Checks result of translation of IGES boundary entities (types 141, 142 or 508). Checks consistency of 2D and 3D representations and keeps only one if they are inconsistent. Checks the closure of resulting wire and if it is not closed, checks 2D and 3D representation and updates the resulting wire to contain only closed representation.
+		%feature("autodoc", "	* Checks result of translation of IGES boundary entities --types 141, 142 or 508--. Checks consistency of 2D and 3D representations and keeps only one if they are inconsistent. Checks the closure of resulting wire and if it is not closed, checks 2D and 3D representation and updates the resulting wire to contain only closed representation.
 
 	:param result:
 	:type result: bool
@@ -371,19 +377,20 @@ class Handle_IGESControl_IGESBoundary : public Handle_IGESToBRep_IGESBoundary {
         static const Handle_IGESControl_IGESBoundary DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_IGESControl_IGESBoundary {
     IGESControl_IGESBoundary* _get_reference() {
-    return (IGESControl_IGESBoundary*)$self->Access();
+    return (IGESControl_IGESBoundary*)$self->get();
     }
 };
 
 %extend Handle_IGESControl_IGESBoundary {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend IGESControl_IGESBoundary {
@@ -411,7 +418,7 @@ class IGESControl_Reader : public XSControl_Reader {
 ") IGESControl_Reader;
 		 IGESControl_Reader (const Handle_XSControl_WorkSession & WS,const Standard_Boolean scratch = Standard_True);
 		%feature("compactdefaultargs") SetReadVisible;
-		%feature("autodoc", "	* Set the transion of ALL Roots (if theReadOnlyVisible is False) or of Visible Roots (if theReadOnlyVisible is True)
+		%feature("autodoc", "	* Set the transion of ALL Roots --if theReadOnlyVisible is False-- or of Visible Roots --if theReadOnlyVisible is True--
 
 	:param ReadRoot:
 	:type ReadRoot: bool
@@ -423,13 +430,13 @@ class IGESControl_Reader : public XSControl_Reader {
 ") GetReadVisible;
 		Standard_Boolean GetReadVisible ();
 		%feature("compactdefaultargs") IGESModel;
-		%feature("autodoc", "	* Returns the model as a IGESModel. It can then be consulted (header, product)
+		%feature("autodoc", "	* Returns the model as a IGESModel. It can then be consulted --header, product--
 
 	:rtype: Handle_IGESData_IGESModel
 ") IGESModel;
 		Handle_IGESData_IGESModel IGESModel ();
 		%feature("compactdefaultargs") NbRootsForTransfer;
-		%feature("autodoc", "	* Determines the list of root entities from Model which are candidate for a transfer to a Shape (type of entities is PRODUCT) <theReadOnlyVisible> is taken into account to define roots
+		%feature("autodoc", "	* Determines the list of root entities from Model which are candidate for a transfer to a Shape --type of entities is PRODUCT-- <theReadOnlyVisible> is taken into account to define roots
 
 	:rtype: int
 ") NbRootsForTransfer;
@@ -501,19 +508,20 @@ class Handle_IGESControl_ToolContainer : public Handle_IGESToBRep_ToolContainer 
         static const Handle_IGESControl_ToolContainer DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_IGESControl_ToolContainer {
     IGESControl_ToolContainer* _get_reference() {
-    return (IGESControl_ToolContainer*)$self->Access();
+    return (IGESControl_ToolContainer*)$self->get();
     }
 };
 
 %extend Handle_IGESControl_ToolContainer {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend IGESControl_ToolContainer {
@@ -525,13 +533,13 @@ class Handle_IGESControl_ToolContainer : public Handle_IGESToBRep_ToolContainer 
 class IGESControl_Writer {
 	public:
 		%feature("compactdefaultargs") IGESControl_Writer;
-		%feature("autodoc", "	* Creates a writer object with the default unit (millimeters) and write mode (Face). IGESControl_Writer (const Standard_CString unit, const Standard_Integer modecr = 0);
+		%feature("autodoc", "	* Creates a writer object with the default unit --millimeters-- and write mode --Face--. IGESControl_Writer --const Standard_CString unit, const Standard_Integer modecr = 0--;
 
 	:rtype: None
 ") IGESControl_Writer;
 		 IGESControl_Writer ();
 		%feature("compactdefaultargs") IGESControl_Writer;
-		%feature("autodoc", "	* Creates a writer with given values for units and for write mode. unit may be any unit that is accepted by the IGES standard. By default, it is the millimeter. modecr defines the write mode and may be: - 0: Faces (default) - 1: BRep.
+		%feature("autodoc", "	* Creates a writer with given values for units and for write mode. unit may be any unit that is accepted by the IGES standard. By default, it is the millimeter. modecr defines the write mode and may be: - 0: Faces --default-- - 1: BRep.
 
 	:param unit:
 	:type unit: char *
@@ -541,7 +549,7 @@ class IGESControl_Writer {
 ") IGESControl_Writer;
 		 IGESControl_Writer (const char * unit,const Standard_Integer modecr = 0);
 		%feature("compactdefaultargs") IGESControl_Writer;
-		%feature("autodoc", "	* Creates a writer object with the prepared IGES model model in write mode. modecr defines the write mode and may be: - 0: Faces (default) - 1: BRep.
+		%feature("autodoc", "	* Creates a writer object with the prepared IGES model model in write mode. modecr defines the write mode and may be: - 0: Faces --default-- - 1: BRep.
 
 	:param model:
 	:type model: Handle_IGESData_IGESModel &
@@ -577,7 +585,7 @@ class IGESControl_Writer {
 ") AddShape;
 		Standard_Boolean AddShape (const TopoDS_Shape & sh);
 		%feature("compactdefaultargs") AddGeom;
-		%feature("autodoc", "	* Translates a Geometry (Surface or Curve) to IGES Entities and adds them to the model Returns True if done, False if geom is neither a Surface or a Curve suitable for IGES or is null
+		%feature("autodoc", "	* Translates a Geometry --Surface or Curve-- to IGES Entities and adds them to the model Returns True if done, False if geom is neither a Surface or a Curve suitable for IGES or is null
 
 	:param geom:
 	:type geom: Handle_Standard_Transient &
@@ -585,7 +593,7 @@ class IGESControl_Writer {
 ") AddGeom;
 		Standard_Boolean AddGeom (const Handle_Standard_Transient & geom);
 		%feature("compactdefaultargs") AddEntity;
-		%feature("autodoc", "	* Adds an IGES entity (and the ones it references) to the model
+		%feature("autodoc", "	* Adds an IGES entity --and the ones it references-- to the model
 
 	:param ent:
 	:type ent: Handle_IGESData_IGESEntity &
@@ -609,7 +617,7 @@ class IGESControl_Writer {
 ") Write;
 		Standard_Boolean Write (Standard_OStream & S,const Standard_Boolean fnes = Standard_False);
 		%feature("compactdefaultargs") Write;
-		%feature("autodoc", "	* Prepares and writes an IGES model either to an OStream, S or to a file name,CString. Returns True if the operation was performed correctly and False if an error occurred (for instance, if the processor could not create the file).
+		%feature("autodoc", "	* Prepares and writes an IGES model either to an OStream, S or to a file name,CString. Returns True if the operation was performed correctly and False if an error occurred --for instance, if the processor could not create the file--.
 
 	:param file:
 	:type file: char *
@@ -618,16 +626,6 @@ class IGESControl_Writer {
 	:rtype: bool
 ") Write;
 		Standard_Boolean Write (const char * file,const Standard_Boolean fnes = Standard_False);
-		%feature("compactdefaultargs") PrintStatsTransfer;
-		%feature("autodoc", "	* Prints Statistics about Transfer
-
-	:param what:
-	:type what: int
-	:param mode: default value is 0
-	:type mode: int
-	:rtype: None
-") PrintStatsTransfer;
-		void PrintStatsTransfer (const Standard_Integer what,const Standard_Integer mode = 0);
 };
 
 

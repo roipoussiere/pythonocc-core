@@ -1,5 +1,5 @@
 /*
-Copyright 2008-2017 Thomas Paviot (tpaviot@gmail.com)
+Copyright 2008-2018 Thomas Paviot (tpaviot@gmail.com)
 
 
 This file is part of pythonOCC.
@@ -54,10 +54,13 @@ def register_handle(handle, base_object):
 };
 
 /* typedefs */
-typedef NCollection_Sequence <BRepExtrema_SolutionElem> BRepExtrema_SeqOfSolution;
-typedef NCollection_DataMap <Standard_Integer , TColStd_PackedMapOfInteger> BRepExtrema_MapOfIntegerPackedMapOfInteger;
-typedef NCollection_Vector <TopoDS_Face> BRepExtrema_ShapeList;
 /* end typedefs declaration */
+
+/* templates */
+%template(BRepExtrema_SeqOfSolution) NCollection_Sequence <BRepExtrema_SolutionElem>;
+%template(BRepExtrema_MapOfIntegerPackedMapOfInteger) NCollection_DataMap <Standard_Integer , TColStd_PackedMapOfInteger>;
+%template(BRepExtrema_ShapeList) NCollection_Vector <TopoDS_Face>;
+/* end templates declaration */
 
 /* public enums */
 enum BRepExtrema_SupportType {
@@ -78,7 +81,7 @@ class BRepExtrema_DistShapeShape {
 ") BRepExtrema_DistShapeShape;
 		 BRepExtrema_DistShapeShape ();
 		%feature("compactdefaultargs") BRepExtrema_DistShapeShape;
-		%feature("autodoc", "	* computation of the minimum distance (value and pair of points) using default deflection Default value is Precision::Confusion().
+		%feature("autodoc", "	* computation of the minimum distance --value and pair of points-- using default deflection Default value is Precision::Confusion----.
 
 	:param Shape1:
 	:type Shape1: TopoDS_Shape &
@@ -130,7 +133,7 @@ class BRepExtrema_DistShapeShape {
 ") LoadS2;
 		void LoadS2 (const TopoDS_Shape & Shape1);
 		%feature("compactdefaultargs") Perform;
-		%feature("autodoc", "	* computation of the minimum distance (value and couple of points). Parameter theDeflection is used to specify a maximum deviation of extreme distances from the minimum one. Returns IsDone status.
+		%feature("autodoc", "	* computation of the minimum distance --value and couple of points--. Parameter theDeflection is used to specify a maximum deviation of extreme distances from the minimum one. Returns IsDone status.
 
 	:rtype: bool
 ") Perform;
@@ -228,7 +231,7 @@ class BRepExtrema_DistShapeShape {
 ") ParOnEdgeS2;
 		void ParOnEdgeS2 (const Standard_Integer N,Standard_Real &OutValue);
 		%feature("compactdefaultargs") ParOnFaceS1;
-		%feature("autodoc", "	* gives the corresponding parameters (U,V) if the Nth solution is situated on an face of the first shape
+		%feature("autodoc", "	* gives the corresponding parameters --U,V-- if the Nth solution is situated on an face of the first shape
 
 	:param N:
 	:type N: int
@@ -240,7 +243,7 @@ class BRepExtrema_DistShapeShape {
 ") ParOnFaceS1;
 		void ParOnFaceS1 (const Standard_Integer N,Standard_Real &OutValue,Standard_Real &OutValue);
 		%feature("compactdefaultargs") ParOnFaceS2;
-		%feature("autodoc", "	* gives the corresponding parameters (U,V) if the Nth solution is situated on an Face of the second shape
+		%feature("autodoc", "	* gives the corresponding parameters --U,V-- if the Nth solution is situated on an Face of the second shape
 
 	:param N:
 	:type N: int
@@ -283,7 +286,7 @@ class BRepExtrema_DistShapeShape {
 class BRepExtrema_DistanceSS {
 	public:
 		%feature("compactdefaultargs") BRepExtrema_DistanceSS;
-		%feature("autodoc", "	* computes the distance between two Shapes ( face edge vertex).
+		%feature("autodoc", "	* computes the distance between two Shapes -- face edge vertex--.
 
 	:param S1:
 	:type S1: TopoDS_Shape &
@@ -303,7 +306,7 @@ class BRepExtrema_DistanceSS {
 ") BRepExtrema_DistanceSS;
 		 BRepExtrema_DistanceSS (const TopoDS_Shape & S1,const TopoDS_Shape & S2,const Bnd_Box & B1,const Bnd_Box & B2,const Standard_Real DstRef,const Extrema_ExtFlag F = Extrema_ExtFlag_MINMAX,const Extrema_ExtAlgo A = Extrema_ExtAlgo_Grad);
 		%feature("compactdefaultargs") BRepExtrema_DistanceSS;
-		%feature("autodoc", "	* computes the distance between two Shapes ( face edge vertex). Parameter theDeflection is used to specify a maximum deviation of extreme distances from the minimum one. Default value is Precision::Confusion().
+		%feature("autodoc", "	* computes the distance between two Shapes -- face edge vertex--. Parameter theDeflection is used to specify a maximum deviation of extreme distances from the minimum one. Default value is Precision::Confusion----.
 
 	:param S1:
 	:type S1: TopoDS_Shape &
@@ -385,7 +388,7 @@ enum FilterResult {
 /* end public enums declaration */
 
 		%feature("compactdefaultargs") PreCheckElements;
-		%feature("autodoc", "	* Checks if two mesh elements should be tested for overlapping/intersection (used for detection correct/incorrect cases of shared edges and vertices).
+		%feature("autodoc", "	* Checks if two mesh elements should be tested for overlapping/intersection --used for detection correct/incorrect cases of shared edges and vertices--.
 
 	:param Standard_Integer:
 	:type Standard_Integer: 
@@ -982,13 +985,13 @@ class BRepExtrema_ShapeProximity {
 ") BRepExtrema_ShapeProximity;
 		 BRepExtrema_ShapeProximity (const TopoDS_Shape & theShape1,const TopoDS_Shape & theShape2,const Standard_Real theTolerance = 0.0);
 		%feature("compactdefaultargs") Tolerance;
-		%feature("autodoc", "	* Returns tolerance value for overlap test (distance between shapes).
+		%feature("autodoc", "	* Returns tolerance value for overlap test --distance between shapes--.
 
 	:rtype: float
 ") Tolerance;
 		Standard_Real Tolerance ();
 		%feature("compactdefaultargs") SetTolerance;
-		%feature("autodoc", "	* Sets tolerance value for overlap test (distance between shapes).
+		%feature("autodoc", "	* Sets tolerance value for overlap test --distance between shapes--.
 
 	:param theTolerance:
 	:type theTolerance: float
@@ -1024,19 +1027,19 @@ class BRepExtrema_ShapeProximity {
 ") IsDone;
 		Standard_Boolean IsDone ();
 		%feature("compactdefaultargs") OverlapSubShapes1;
-		%feature("autodoc", "	* Returns set of IDs of overlapped faces of 1st shape (started from 0).
+		%feature("autodoc", "	* Returns set of IDs of overlapped faces of 1st shape --started from 0--.
 
 	:rtype: BRepExtrema_MapOfIntegerPackedMapOfInteger
 ") OverlapSubShapes1;
 		const BRepExtrema_MapOfIntegerPackedMapOfInteger & OverlapSubShapes1 ();
 		%feature("compactdefaultargs") OverlapSubShapes2;
-		%feature("autodoc", "	* Returns set of IDs of overlapped faces of 2nd shape (started from 0).
+		%feature("autodoc", "	* Returns set of IDs of overlapped faces of 2nd shape --started from 0--.
 
 	:rtype: BRepExtrema_MapOfIntegerPackedMapOfInteger
 ") OverlapSubShapes2;
 		const BRepExtrema_MapOfIntegerPackedMapOfInteger & OverlapSubShapes2 ();
 		%feature("compactdefaultargs") GetSubShape1;
-		%feature("autodoc", "	* Returns sub-shape from 1st shape with the given index (started from 0).
+		%feature("autodoc", "	* Returns sub-shape from 1st shape with the given index --started from 0--.
 
 	:param theID:
 	:type theID: int
@@ -1044,7 +1047,7 @@ class BRepExtrema_ShapeProximity {
 ") GetSubShape1;
 		const TopoDS_Face  GetSubShape1 (const Standard_Integer theID);
 		%feature("compactdefaultargs") GetSubShape2;
-		%feature("autodoc", "	* Returns sub-shape from 1st shape with the given index (started from 0).
+		%feature("autodoc", "	* Returns sub-shape from 1st shape with the given index --started from 0--.
 
 	:param theID:
 	:type theID: int
@@ -1190,6 +1193,149 @@ class BRepExtrema_SolutionElem {
 	__repr__ = _dumps_object
 	}
 };
+%nodefaultctor BRepExtrema_TriangleSet;
+class BRepExtrema_TriangleSet : public BVH_PrimitiveSet3d {
+	public:
+		using BVH_PrimitiveSet3d:: Box;
+		%feature("compactdefaultargs") BRepExtrema_TriangleSet;
+		%feature("autodoc", "	* Creates empty triangle set.
+
+	:rtype: None
+") BRepExtrema_TriangleSet;
+		 BRepExtrema_TriangleSet ();
+		%feature("compactdefaultargs") BRepExtrema_TriangleSet;
+		%feature("autodoc", "	* Creates triangle set from the given face.
+
+	:param theFaces:
+	:type theFaces: BRepExtrema_ShapeList &
+	:rtype: None
+") BRepExtrema_TriangleSet;
+		 BRepExtrema_TriangleSet (const BRepExtrema_ShapeList & theFaces);
+		%feature("compactdefaultargs") Size;
+		%feature("autodoc", "	* @name methods implementing BVH set interface Returns total number of triangles.
+
+	:rtype: int
+") Size;
+		Standard_Integer Size ();
+		%feature("compactdefaultargs") Box;
+		%feature("autodoc", "	* Returns AABB of the given triangle.
+
+	:param theIndex:
+	:type theIndex: int
+	:rtype: BVH_Box<float, 3>
+") Box;
+		BVH_Box<Standard_Real, 3> Box (const Standard_Integer theIndex);
+		%feature("compactdefaultargs") Center;
+		%feature("autodoc", "	* Returns centroid position along specified axis.
+
+	:param theIndex:
+	:type theIndex: int
+	:param theAxis:
+	:type theAxis: int
+	:rtype: float
+") Center;
+		Standard_Real Center (const Standard_Integer theIndex,const Standard_Integer theAxis);
+		%feature("compactdefaultargs") Swap;
+		%feature("autodoc", "	* Swaps indices of two specified triangles.
+
+	:param theIndex1:
+	:type theIndex1: int
+	:param theIndex2:
+	:type theIndex2: int
+	:rtype: None
+") Swap;
+		void Swap (const Standard_Integer theIndex1,const Standard_Integer theIndex2);
+		%feature("compactdefaultargs") Clear;
+		%feature("autodoc", "	* Clears triangle set data.
+
+	:rtype: None
+") Clear;
+		void Clear ();
+		%feature("compactdefaultargs") Init;
+		%feature("autodoc", "	* Initializes triangle set.
+
+	:param theFaces:
+	:type theFaces: BRepExtrema_ShapeList &
+	:rtype: bool
+") Init;
+		Standard_Boolean Init (const BRepExtrema_ShapeList & theFaces);
+		%feature("compactdefaultargs") GetVertices;
+		%feature("autodoc", "	* Returns vertices of the given triangle.
+
+	:param theIndex:
+	:type theIndex: int
+	:param theVertex1:
+	:type theVertex1: BVH_Vec3d &
+	:param theVertex2:
+	:type theVertex2: BVH_Vec3d &
+	:param theVertex3:
+	:type theVertex3: BVH_Vec3d &
+	:rtype: None
+") GetVertices;
+		void GetVertices (const Standard_Integer theIndex,BVH_Vec3d & theVertex1,BVH_Vec3d & theVertex2,BVH_Vec3d & theVertex3);
+		%feature("compactdefaultargs") GetFaceID;
+		%feature("autodoc", "	* Returns face ID of the given triangle.
+
+	:param theIndex:
+	:type theIndex: int
+	:rtype: int
+") GetFaceID;
+		Standard_Integer GetFaceID (const Standard_Integer theIndex);
+};
+
+
+%extend BRepExtrema_TriangleSet {
+	%pythoncode {
+		def GetHandle(self):
+		    try:
+		        return self.thisHandle
+		    except:
+		        self.thisHandle = Handle_BRepExtrema_TriangleSet(self)
+		        self.thisown = False
+		        return self.thisHandle
+	}
+};
+
+%pythonappend Handle_BRepExtrema_TriangleSet::Handle_BRepExtrema_TriangleSet %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
+%nodefaultctor Handle_BRepExtrema_TriangleSet;
+class Handle_BRepExtrema_TriangleSet : public Handle_BVH_PrimitiveSet3d {
+
+    public:
+        // constructors
+        Handle_BRepExtrema_TriangleSet();
+        Handle_BRepExtrema_TriangleSet(const Handle_BRepExtrema_TriangleSet &aHandle);
+        Handle_BRepExtrema_TriangleSet(const BRepExtrema_TriangleSet *anItem);
+        void Nullify();
+        Standard_Boolean IsNull() const;
+        static const Handle_BRepExtrema_TriangleSet DownCast(const Handle_Standard_Transient &AnObject);
+
+};
+
+%extend Handle_BRepExtrema_TriangleSet {
+    BRepExtrema_TriangleSet* _get_reference() {
+    return (BRepExtrema_TriangleSet*)$self->get();
+    }
+};
+
+%extend Handle_BRepExtrema_TriangleSet {
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
+};
+
+%extend BRepExtrema_TriangleSet {
+	%pythoncode {
+	__repr__ = _dumps_object
+	}
+};
 %nodefaultctor BRepExtrema_SelfIntersection;
 class BRepExtrema_SelfIntersection : public BRepExtrema_ElementFilter {
 	public:
@@ -1246,13 +1392,13 @@ class BRepExtrema_SelfIntersection : public BRepExtrema_ElementFilter {
 ") IsDone;
 		Standard_Boolean IsDone ();
 		%feature("compactdefaultargs") OverlapElements;
-		%feature("autodoc", "	* Returns set of IDs of overlapped sub-shapes (started from 0).
+		%feature("autodoc", "	* Returns set of IDs of overlapped sub-shapes --started from 0--.
 
 	:rtype: BRepExtrema_MapOfIntegerPackedMapOfInteger
 ") OverlapElements;
 		const BRepExtrema_MapOfIntegerPackedMapOfInteger & OverlapElements ();
 		%feature("compactdefaultargs") GetSubShape;
-		%feature("autodoc", "	* Returns sub-shape from the shape for the given index (started from 0).
+		%feature("autodoc", "	* Returns sub-shape from the shape for the given index --started from 0--.
 
 	:param theID:
 	:type theID: int

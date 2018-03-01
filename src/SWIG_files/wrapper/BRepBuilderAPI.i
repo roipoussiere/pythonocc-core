@@ -1,5 +1,5 @@
 /*
-Copyright 2008-2017 Thomas Paviot (tpaviot@gmail.com)
+Copyright 2008-2018 Thomas Paviot (tpaviot@gmail.com)
 
 
 This file is part of pythonOCC.
@@ -54,10 +54,12 @@ def register_handle(handle, base_object):
 };
 
 /* typedefs */
-typedef NCollection_CellFilter <BRepBuilderAPI_VertexInspector> BRepBuilderAPI_CellFilter;
-typedef NCollection_Vector <gp_XYZ> VectorOfPoint;
-typedef NCollection_UBTree <Standard_Integer , Bnd_Box> BRepBuilderAPI_BndBoxTree;
 /* end typedefs declaration */
+
+/* templates */
+%template(VectorOfPoint) NCollection_Vector <gp_XYZ>;
+%template(BRepBuilderAPI_BndBoxTree) NCollection_UBTree <Standard_Integer , Bnd_Box>;
+/* end templates declaration */
 
 /* public enums */
 enum BRepBuilderAPI_ShapeModification {
@@ -210,10 +212,6 @@ class BRepBuilderAPI_Collect {
 %nodefaultctor BRepBuilderAPI_Command;
 class BRepBuilderAPI_Command {
 	public:
-		%feature("compactdefaultargs") Delete;
-		%feature("autodoc", "	:rtype: void
-") Delete;
-		virtual void Delete ();
 		%feature("compactdefaultargs") IsDone;
 		%feature("autodoc", "	:rtype: bool
 ") IsDone;
@@ -337,19 +335,20 @@ class Handle_BRepBuilderAPI_FastSewing : public Handle_Standard_Transient {
         static const Handle_BRepBuilderAPI_FastSewing DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_BRepBuilderAPI_FastSewing {
     BRepBuilderAPI_FastSewing* _get_reference() {
-    return (BRepBuilderAPI_FastSewing*)$self->Access();
+    return (BRepBuilderAPI_FastSewing*)$self->get();
     }
 };
 
 %extend Handle_BRepBuilderAPI_FastSewing {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend BRepBuilderAPI_FastSewing {
@@ -407,10 +406,10 @@ class BRepBuilderAPI_FindPlane {
 	}
 };
 %nodefaultctor BRepBuilderAPI_Sewing;
-class BRepBuilderAPI_Sewing : public MMgt_TShared {
+class BRepBuilderAPI_Sewing : public Standard_Transient {
 	public:
 		%feature("compactdefaultargs") BRepBuilderAPI_Sewing;
-		%feature("autodoc", "	* Creates an object with tolerance of connexity option for sewing (if false only control) option for analysis of degenerated shapes option for cutting of free edges. option for non manifold processing
+		%feature("autodoc", "	* Creates an object with tolerance of connexity option for sewing --if false only control-- option for analysis of degenerated shapes option for cutting of free edges. option for non manifold processing
 
 	:param tolerance: default value is 1.0e-06
 	:type tolerance: float
@@ -486,7 +485,7 @@ class BRepBuilderAPI_Sewing : public MMgt_TShared {
 ") GetContext;
 		Handle_BRepTools_ReShape GetContext ();
 		%feature("compactdefaultargs") NbFreeEdges;
-		%feature("autodoc", "	* Gives the number of free edges (edge shared by one face)
+		%feature("autodoc", "	* Gives the number of free edges --edge shared by one face--
 
 	:rtype: int
 ") NbFreeEdges;
@@ -500,7 +499,7 @@ class BRepBuilderAPI_Sewing : public MMgt_TShared {
 ") FreeEdge;
 		const TopoDS_Edge  FreeEdge (const Standard_Integer index);
 		%feature("compactdefaultargs") NbMultipleEdges;
-		%feature("autodoc", "	* Gives the number of multiple edges (edge shared by more than two faces)
+		%feature("autodoc", "	* Gives the number of multiple edges --edge shared by more than two faces--
 
 	:rtype: int
 ") NbMultipleEdges;
@@ -514,7 +513,7 @@ class BRepBuilderAPI_Sewing : public MMgt_TShared {
 ") MultipleEdge;
 		const TopoDS_Edge  MultipleEdge (const Standard_Integer index);
 		%feature("compactdefaultargs") NbContigousEdges;
-		%feature("autodoc", "	* Gives the number of contigous edges (edge shared by two faces)
+		%feature("autodoc", "	* Gives the number of contigous edges --edge shared by two faces--
 
 	:rtype: int
 ") NbContigousEdges;
@@ -528,7 +527,7 @@ class BRepBuilderAPI_Sewing : public MMgt_TShared {
 ") ContigousEdge;
 		const TopoDS_Edge  ContigousEdge (const Standard_Integer index);
 		%feature("compactdefaultargs") ContigousEdgeCouple;
-		%feature("autodoc", "	* Gives the sections (edge) belonging to a contigous edge
+		%feature("autodoc", "	* Gives the sections --edge-- belonging to a contigous edge
 
 	:param index:
 	:type index: int
@@ -536,7 +535,7 @@ class BRepBuilderAPI_Sewing : public MMgt_TShared {
 ") ContigousEdgeCouple;
 		const TopTools_ListOfShape & ContigousEdgeCouple (const Standard_Integer index);
 		%feature("compactdefaultargs") IsSectionBound;
-		%feature("autodoc", "	* Indicates if a section is bound (before use SectionToBoundary)
+		%feature("autodoc", "	* Indicates if a section is bound --before use SectionToBoundary--
 
 	:param section:
 	:type section: TopoDS_Edge &
@@ -544,7 +543,7 @@ class BRepBuilderAPI_Sewing : public MMgt_TShared {
 ") IsSectionBound;
 		Standard_Boolean IsSectionBound (const TopoDS_Edge & section);
 		%feature("compactdefaultargs") SectionToBoundary;
-		%feature("autodoc", "	* Gives the original edge (free boundary) which becomes the the section. Remember that sections constitute common edges. This imformation is important for control because with original edge we can find the surface to which the section is attached.
+		%feature("autodoc", "	* Gives the original edge --free boundary-- which becomes the the section. Remember that sections constitute common edges. This imformation is important for control because with original edge we can find the surface to which the section is attached.
 
 	:param section:
 	:type section: TopoDS_Edge &
@@ -612,7 +611,7 @@ class BRepBuilderAPI_Sewing : public MMgt_TShared {
 ") Dump;
 		void Dump ();
 		%feature("compactdefaultargs") NbDeletedFaces;
-		%feature("autodoc", "	* Gives the number of deleted faces (faces smallest than tolerance)
+		%feature("autodoc", "	* Gives the number of deleted faces --faces smallest than tolerance--
 
 	:rtype: int
 ") NbDeletedFaces;
@@ -769,7 +768,7 @@ class BRepBuilderAPI_Sewing : public MMgt_TShared {
 %}
 
 %nodefaultctor Handle_BRepBuilderAPI_Sewing;
-class Handle_BRepBuilderAPI_Sewing : public Handle_MMgt_TShared {
+class Handle_BRepBuilderAPI_Sewing : public Handle_Standard_Transient {
 
     public:
         // constructors
@@ -781,19 +780,20 @@ class Handle_BRepBuilderAPI_Sewing : public Handle_MMgt_TShared {
         static const Handle_BRepBuilderAPI_Sewing DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_BRepBuilderAPI_Sewing {
     BRepBuilderAPI_Sewing* _get_reference() {
-    return (BRepBuilderAPI_Sewing*)$self->Access();
+    return (BRepBuilderAPI_Sewing*)$self->get();
     }
 };
 
 %extend Handle_BRepBuilderAPI_Sewing {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend BRepBuilderAPI_Sewing {
@@ -913,12 +913,8 @@ class BRepBuilderAPI_BndBoxTreeSelector : public BRepBuilderAPI_BndBoxTree::Sele
 %nodefaultctor BRepBuilderAPI_MakeShape;
 class BRepBuilderAPI_MakeShape : public BRepBuilderAPI_Command {
 	public:
-		%feature("compactdefaultargs") Delete;
-		%feature("autodoc", "	:rtype: void
-") Delete;
-		virtual void Delete ();
 		%feature("compactdefaultargs") Build;
-		%feature("autodoc", "	* This is called by Shape(). It does nothing but may be redefined.
+		%feature("autodoc", "	* This is called by Shape----. It does nothing but may be redefined.
 
 	:rtype: void
 ") Build;
@@ -1293,7 +1289,7 @@ class BRepBuilderAPI_MakeEdge : public BRepBuilderAPI_MakeShape {
 ") BRepBuilderAPI_MakeEdge;
 		 BRepBuilderAPI_MakeEdge (const Handle_Geom2d_Curve & L,const Handle_Geom_Surface & S,const gp_Pnt & P1,const gp_Pnt & P2,const Standard_Real p1,const Standard_Real p2);
 		%feature("compactdefaultargs") BRepBuilderAPI_MakeEdge;
-		%feature("autodoc", "	* The general method to directly create an edge is to give - a 3D curve C as the support (geometric domain) of the edge, - two vertices V1 and V2 to limit the curve (definition of the restriction of the edge), and - two real values p1 and p2 which are the parameters for the vertices V1 and V2 on the curve. The curve may be defined as a 2d curve in the parametric space of a surface: a pcurve. The surface on which the edge is built is then kept at the level of the edge. The default tolerance will be associated with this edge. Rules applied to the arguments: For the curve: - The curve must not be a 'null handle'. - If the curve is a trimmed curve the basis curve is used. For the vertices: - Vertices may be null shapes. When V1 or V2 is null the edge is open in the corresponding direction and the parameter value p1 or p2 must be infinite (remember that Precision::Infinite() defines an infinite value). - The two vertices must be identical if they have the same 3D location. Identical vertices are used in particular when the curve is closed. For the parameters: - The parameters must be in the parametric range of the curve (or the basis curve if the curve is trimmed). If this condition is not satisfied the edge is not built, and the Error function will return BRepAPI_ParameterOutOfRange. - Parameter values must not be equal. If this condition is not satisfied (i.e. if | p1 - p2 | ) the edge is not built, and the Error function will return BRepAPI_LineThroughIdenticPoints. Parameter values are expected to be given in increasing order: C->FirstParameter() - If the parameter values are given in decreasing order the vertices are switched, i.e. the 'first vertex' is on the point of parameter p2 and the 'second vertex' is on the point of parameter p1. In such a case, to keep the original intent of the construction, the edge will be oriented 'reversed'. - On a periodic curve the parameter values p1 and p2 are adjusted by adding or subtracting the period to obtain p1 in the parametric range of the curve, and p2] such that [ p1 , where Period is the period of the curve. - A parameter value may be infinite. The edge is open in the corresponding direction. However the corresponding vertex must be a null shape. If this condition is not satisfied the edge is not built, and the Error function will return BRepAPI_PointWithInfiniteParameter. - The distance between the vertex and the point evaluated on the curve with the parameter, must be lower than the precision of the vertex. If this condition is not satisfied the edge is not built, and the Error function will return BRepAPI_DifferentsPointAndParameter. Other edge constructions - The parameter values can be omitted, they will be computed by projecting the vertices on the curve. Note that projection is the only way to evaluate the parameter values of the vertices on the curve: vertices must be given on the curve, i.e. the distance from a vertex to the curve must be less than or equal to the precision of the vertex. If this condition is not satisfied the edge is not built, and the Error function will return BRepAPI_PointProjectionFailed. - 3D points can be given in place of vertices. Vertices will be created from the points (with the default topological precision Precision::Confusion()). Note: - Giving vertices is useful when creating a connected edge. - If the parameter values correspond to the extremities of a closed curve, points must be identical, or at least coincident. If this condition is not satisfied the edge is not built, and the Error function will return BRepAPI_DifferentPointsOnClosedCurve. - The vertices or points can be omitted if the parameter values are given. The points will be computed from the parameters on the curve. The vertices or points and the parameter values can be omitted. The first and last parameters of the curve will then be used. //! Auxiliary methods
+		%feature("autodoc", "	* The general method to directly create an edge is to give - a 3D curve C as the support --geometric domain-- of the edge, - two vertices V1 and V2 to limit the curve --definition of the restriction of the edge--, and - two real values p1 and p2 which are the parameters for the vertices V1 and V2 on the curve. The curve may be defined as a 2d curve in the parametric space of a surface: a pcurve. The surface on which the edge is built is then kept at the level of the edge. The default tolerance will be associated with this edge. Rules applied to the arguments: For the curve: - The curve must not be a 'null handle'. - If the curve is a trimmed curve the basis curve is used. For the vertices: - Vertices may be null shapes. When V1 or V2 is null the edge is open in the corresponding direction and the parameter value p1 or p2 must be infinite --remember that Precision::Infinite---- defines an infinite value--. - The two vertices must be identical if they have the same 3D location. Identical vertices are used in particular when the curve is closed. For the parameters: - The parameters must be in the parametric range of the curve --or the basis curve if the curve is trimmed--. If this condition is not satisfied the edge is not built, and the Error function will return BRepAPI_ParameterOutOfRange. - Parameter values must not be equal. If this condition is not satisfied --i.e. if | p1 - p2 | -- the edge is not built, and the Error function will return BRepAPI_LineThroughIdenticPoints. Parameter values are expected to be given in increasing order: C->FirstParameter---- - If the parameter values are given in decreasing order the vertices are switched, i.e. the 'first vertex' is on the point of parameter p2 and the 'second vertex' is on the point of parameter p1. In such a case, to keep the original intent of the construction, the edge will be oriented 'reversed'. - On a periodic curve the parameter values p1 and p2 are adjusted by adding or subtracting the period to obtain p1 in the parametric range of the curve, and p2] such that [ p1 , where Period is the period of the curve. - A parameter value may be infinite. The edge is open in the corresponding direction. However the corresponding vertex must be a null shape. If this condition is not satisfied the edge is not built, and the Error function will return BRepAPI_PointWithInfiniteParameter. - The distance between the vertex and the point evaluated on the curve with the parameter, must be lower than the precision of the vertex. If this condition is not satisfied the edge is not built, and the Error function will return BRepAPI_DifferentsPointAndParameter. Other edge constructions - The parameter values can be omitted, they will be computed by projecting the vertices on the curve. Note that projection is the only way to evaluate the parameter values of the vertices on the curve: vertices must be given on the curve, i.e. the distance from a vertex to the curve must be less than or equal to the precision of the vertex. If this condition is not satisfied the edge is not built, and the Error function will return BRepAPI_PointProjectionFailed. - 3D points can be given in place of vertices. Vertices will be created from the points --with the default topological precision Precision::Confusion------. Note: - Giving vertices is useful when creating a connected edge. - If the parameter values correspond to the extremities of a closed curve, points must be identical, or at least coincident. If this condition is not satisfied the edge is not built, and the Error function will return BRepAPI_DifferentPointsOnClosedCurve. - The vertices or points can be omitted if the parameter values are given. The points will be computed from the parameters on the curve. The vertices or points and the parameter values can be omitted. The first and last parameters of the curve will then be used. //! Auxiliary methods
 
 	:param L:
 	:type L: Handle_Geom2d_Curve &
@@ -1435,7 +1431,7 @@ class BRepBuilderAPI_MakeEdge : public BRepBuilderAPI_MakeShape {
 ") Init;
 		void Init (const Handle_Geom2d_Curve & C,const Handle_Geom_Surface & S,const gp_Pnt & P1,const gp_Pnt & P2,const Standard_Real p1,const Standard_Real p2);
 		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	* Defines or redefines the arguments for the construction of an edge. This function is currently used after the empty constructor BRepAPI_MakeEdge().
+		%feature("autodoc", "	* Defines or redefines the arguments for the construction of an edge. This function is currently used after the empty constructor BRepAPI_MakeEdge----.
 
 	:param C:
 	:type C: Handle_Geom2d_Curve &
@@ -1917,7 +1913,7 @@ class BRepBuilderAPI_MakeFace : public BRepBuilderAPI_MakeShape {
 ") BRepBuilderAPI_MakeFace;
 		 BRepBuilderAPI_MakeFace (const gp_Torus & C);
 		%feature("compactdefaultargs") BRepBuilderAPI_MakeFace;
-		%feature("autodoc", "	* Make a face from a Surface. Accepts tolerance value (TolDegen) for resolution of degenerated edges.
+		%feature("autodoc", "	* Make a face from a Surface. Accepts tolerance value --TolDegen-- for resolution of degenerated edges.
 
 	:param S:
 	:type S: Handle_Geom_Surface &
@@ -2007,7 +2003,7 @@ class BRepBuilderAPI_MakeFace : public BRepBuilderAPI_MakeShape {
 ") BRepBuilderAPI_MakeFace;
 		 BRepBuilderAPI_MakeFace (const gp_Torus & C,const Standard_Real UMin,const Standard_Real UMax,const Standard_Real VMin,const Standard_Real VMax);
 		%feature("compactdefaultargs") BRepBuilderAPI_MakeFace;
-		%feature("autodoc", "	* Make a face from a Surface. Accepts tolerance value (TolDegen) for resolution of degenerated edges.
+		%feature("autodoc", "	* Make a face from a Surface. Accepts tolerance value --TolDegen-- for resolution of degenerated edges.
 
 	:param S:
 	:type S: Handle_Geom_Surface &
@@ -2107,7 +2103,7 @@ class BRepBuilderAPI_MakeFace : public BRepBuilderAPI_MakeShape {
 ") BRepBuilderAPI_MakeFace;
 		 BRepBuilderAPI_MakeFace (const Handle_Geom_Surface & S,const TopoDS_Wire & W,const Standard_Boolean Inside = Standard_True);
 		%feature("compactdefaultargs") BRepBuilderAPI_MakeFace;
-		%feature("autodoc", "	* Adds the wire <W> in the face <F> A general method to create a face is to give - a surface S as the support (the geometric domain) of the face, - and a wire W to bound it. The bounds of the face can also be defined by four parameter values umin, umax, vmin, vmax which determine isoparametric limitations on the parametric space of the surface. In this way, a patch is defined. The parameter values are optional. If they are omitted, the natural bounds of the surface are used. A wire is automatically built using the defined bounds. Up to four edges and four vertices are created with this wire (no edge is created when the corresponding parameter value is infinite). Wires can then be added using the function Add to define other restrictions on the face. These restrictions represent holes. More than one wire may be added by this way, provided that the wires do not cross each other and that they define only one area on the surface. (Be careful, however, as this is not checked). Forbidden addition of wires Note that in this schema, the third case is valid if edges of the wire W are declared internal to the face. As a result, these edges are no longer bounds of the face. A default tolerance (Precision::Confusion()) is given to the face, this tolerance may be increased during construction of the face using various algorithms. Rules applied to the arguments For the surface: - The surface must not be a 'null handle'. - If the surface is a trimmed surface, the basis surface is used. - For the wire: the wire is composed of connected edges, each edge having a parametric curve description in the parametric domain of the surface; in other words, as a pcurve. For the parameters: - The parameter values must be in the parametric range of the surface (or the basis surface, if the surface is trimmed). If this condition is not satisfied, the face is not built, and the Error function will return BRepBuilderAPI_ParametersOutOfRange. - The bounding parameters p1 and p2 are adjusted on a periodic surface in a given parametric direction by adding or subtracting the period to obtain p1 in the parametric range of the surface and such p2, that p2 - p1 <= Period, where Period is the period of the surface in this parametric direction. - A parameter value may be infinite. There will be no edge and no vertex in the corresponding direction.
+		%feature("autodoc", "	* Adds the wire <W> in the face <F> A general method to create a face is to give - a surface S as the support --the geometric domain-- of the face, - and a wire W to bound it. The bounds of the face can also be defined by four parameter values umin, umax, vmin, vmax which determine isoparametric limitations on the parametric space of the surface. In this way, a patch is defined. The parameter values are optional. If they are omitted, the natural bounds of the surface are used. A wire is automatically built using the defined bounds. Up to four edges and four vertices are created with this wire --no edge is created when the corresponding parameter value is infinite--. Wires can then be added using the function Add to define other restrictions on the face. These restrictions represent holes. More than one wire may be added by this way, provided that the wires do not cross each other and that they define only one area on the surface. --Be careful, however, as this is not checked--. Forbidden addition of wires Note that in this schema, the third case is valid if edges of the wire W are declared internal to the face. As a result, these edges are no longer bounds of the face. A default tolerance --Precision::Confusion------ is given to the face, this tolerance may be increased during construction of the face using various algorithms. Rules applied to the arguments For the surface: - The surface must not be a 'null handle'. - If the surface is a trimmed surface, the basis surface is used. - For the wire: the wire is composed of connected edges, each edge having a parametric curve description in the parametric domain of the surface; in other words, as a pcurve. For the parameters: - The parameter values must be in the parametric range of the surface --or the basis surface, if the surface is trimmed--. If this condition is not satisfied, the face is not built, and the Error function will return BRepBuilderAPI_ParametersOutOfRange. - The bounding parameters p1 and p2 are adjusted on a periodic surface in a given parametric direction by adding or subtracting the period to obtain p1 in the parametric range of the surface and such p2, that p2 - p1 <= Period, where Period is the period of the surface in this parametric direction. - A parameter value may be infinite. There will be no edge and no vertex in the corresponding direction.
 
 	:param F:
 	:type F: TopoDS_Face &
@@ -2117,7 +2113,7 @@ class BRepBuilderAPI_MakeFace : public BRepBuilderAPI_MakeShape {
 ") BRepBuilderAPI_MakeFace;
 		 BRepBuilderAPI_MakeFace (const TopoDS_Face & F,const TopoDS_Wire & W);
 		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	* Initializes (or reinitializes) the construction of a face by creating a new object which is a copy of the face F, in order to add wires to it, using the function Add. Note: this complete copy of the geometry is only required if you want to work on the geometries of the two faces independently.
+		%feature("autodoc", "	* Initializes --or reinitializes-- the construction of a face by creating a new object which is a copy of the face F, in order to add wires to it, using the function Add. Note: this complete copy of the geometry is only required if you want to work on the geometries of the two faces independently.
 
 	:param F:
 	:type F: TopoDS_Face &
@@ -2125,7 +2121,7 @@ class BRepBuilderAPI_MakeFace : public BRepBuilderAPI_MakeShape {
 ") Init;
 		void Init (const TopoDS_Face & F);
 		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	* Initializes (or reinitializes) the construction of a face on the surface S. If Bound is true, a wire is automatically created from the natural bounds of the surface S and added to the face in order to bound it. If Bound is false, no wire is added. This option is used when real bounds are known. These will be added to the face after this initialization, using the function Add. TolDegen parameter is used for resolution of degenerated edges if calculation of natural bounds is turned on.
+		%feature("autodoc", "	* Initializes --or reinitializes-- the construction of a face on the surface S. If Bound is true, a wire is automatically created from the natural bounds of the surface S and added to the face in order to bound it. If Bound is false, no wire is added. This option is used when real bounds are known. These will be added to the face after this initialization, using the function Add. TolDegen parameter is used for resolution of degenerated edges if calculation of natural bounds is turned on.
 
 	:param S:
 	:type S: Handle_Geom_Surface &
@@ -2137,7 +2133,7 @@ class BRepBuilderAPI_MakeFace : public BRepBuilderAPI_MakeShape {
 ") Init;
 		void Init (const Handle_Geom_Surface & S,const Standard_Boolean Bound,const Standard_Real TolDegen);
 		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	* Initializes (or reinitializes) the construction of a face on the surface S, limited in the u parametric direction by the two parameter values UMin and UMax and in the v parametric direction by the two parameter values VMin and VMax. Warning Error returns: - BRepBuilderAPI_ParametersOutOfRange when the parameters given are outside the bounds of the surface or the basis surface of a trimmed surface. TolDegen parameter is used for resolution of degenerated edges.
+		%feature("autodoc", "	* Initializes --or reinitializes-- the construction of a face on the surface S, limited in the u parametric direction by the two parameter values UMin and UMax and in the v parametric direction by the two parameter values VMin and VMax. Warning Error returns: - BRepBuilderAPI_ParametersOutOfRange when the parameters given are outside the bounds of the surface or the basis surface of a trimmed surface. TolDegen parameter is used for resolution of degenerated edges.
 
 	:param S:
 	:type S: Handle_Geom_Surface &
@@ -2155,7 +2151,7 @@ class BRepBuilderAPI_MakeFace : public BRepBuilderAPI_MakeShape {
 ") Init;
 		void Init (const Handle_Geom_Surface & S,const Standard_Real UMin,const Standard_Real UMax,const Standard_Real VMin,const Standard_Real VMax,const Standard_Real TolDegen);
 		%feature("compactdefaultargs") Add;
-		%feature("autodoc", "	* Adds the wire W to the constructed face as a hole. Warning W must not cross the other bounds of the face, and all the bounds must define only one area on the surface. (Be careful, however, as this is not checked.) Example // a cylinder gp_Cylinder C = ..; // a wire TopoDS_Wire W = ...; BRepBuilderAPI_MakeFace MF(C); MF.Add(W); TopoDS_Face F = MF;
+		%feature("autodoc", "	* Adds the wire W to the constructed face as a hole. Warning W must not cross the other bounds of the face, and all the bounds must define only one area on the surface. --Be careful, however, as this is not checked.-- Example // a cylinder gp_Cylinder C = ..; // a wire TopoDS_Wire W = ...; BRepBuilderAPI_MakeFace MF--C--; MF.Add--W--; TopoDS_Face F = MF;
 
 	:param W:
 	:type W: TopoDS_Wire &
@@ -2222,7 +2218,7 @@ class BRepBuilderAPI_MakePolygon : public BRepBuilderAPI_MakeShape {
 ") BRepBuilderAPI_MakePolygon;
 		 BRepBuilderAPI_MakePolygon (const gp_Pnt & P1,const gp_Pnt & P2,const gp_Pnt & P3,const Standard_Boolean Close = Standard_False);
 		%feature("compactdefaultargs") BRepBuilderAPI_MakePolygon;
-		%feature("autodoc", "	* Constructs a polygonal wire from 2, 3 or 4 points. Vertices are automatically created on the given points. The polygonal wire is closed if Close is true; otherwise it is open. Further vertices can be added using the Add function. The polygonal wire under construction can be consulted at any time by using the Wire function. Example //an open polygon from four points TopoDS_Wire W = BRepBuilderAPI_MakePolygon(P1,P2,P3,P4); Warning: The process is equivalent to: - initializing an empty polygonal wire, - and adding the given points in sequence. Consequently, be careful when using this function: if the sequence of points p1 - p2 - p1 is found among the arguments of the constructor, you will create a polygonal wire with two consecutive coincident edges.
+		%feature("autodoc", "	* Constructs a polygonal wire from 2, 3 or 4 points. Vertices are automatically created on the given points. The polygonal wire is closed if Close is true; otherwise it is open. Further vertices can be added using the Add function. The polygonal wire under construction can be consulted at any time by using the Wire function. Example //an open polygon from four points TopoDS_Wire W = BRepBuilderAPI_MakePolygon--P1,P2,P3,P4--; Warning: The process is equivalent to: - initializing an empty polygonal wire, - and adding the given points in sequence. Consequently, be careful when using this function: if the sequence of points p1 - p2 - p1 is found among the arguments of the constructor, you will create a polygonal wire with two consecutive coincident edges.
 
 	:param P1:
 	:type P1: gp_Pnt
@@ -2258,7 +2254,7 @@ class BRepBuilderAPI_MakePolygon : public BRepBuilderAPI_MakeShape {
 ") BRepBuilderAPI_MakePolygon;
 		 BRepBuilderAPI_MakePolygon (const TopoDS_Vertex & V1,const TopoDS_Vertex & V2,const TopoDS_Vertex & V3,const Standard_Boolean Close = Standard_False);
 		%feature("compactdefaultargs") BRepBuilderAPI_MakePolygon;
-		%feature("autodoc", "	* Constructs a polygonal wire from 2, 3 or 4 vertices. The polygonal wire is closed if Close is true; otherwise it is open (default value). Further vertices can be added using the Add function. The polygonal wire under construction can be consulted at any time by using the Wire function. Example //a closed triangle from three vertices TopoDS_Wire W = BRepBuilderAPI_MakePolygon(V1,V2,V3,Standard_True); Warning The process is equivalent to: - initializing an empty polygonal wire, - then adding the given points in sequence. So be careful, as when using this function, you could create a polygonal wire with two consecutive coincident edges if the sequence of vertices v1 - v2 - v1 is found among the constructor's arguments.
+		%feature("autodoc", "	* Constructs a polygonal wire from 2, 3 or 4 vertices. The polygonal wire is closed if Close is true; otherwise it is open --default value--. Further vertices can be added using the Add function. The polygonal wire under construction can be consulted at any time by using the Wire function. Example //a closed triangle from three vertices TopoDS_Wire W = BRepBuilderAPI_MakePolygon--V1,V2,V3,Standard_True--; Warning The process is equivalent to: - initializing an empty polygonal wire, - then adding the given points in sequence. So be careful, as when using this function, you could create a polygonal wire with two consecutive coincident edges if the sequence of vertices v1 - v2 - v1 is found among the constructor's arguments.
 
 	:param V1:
 	:type V1: TopoDS_Vertex &
@@ -2280,7 +2276,7 @@ class BRepBuilderAPI_MakePolygon : public BRepBuilderAPI_MakeShape {
 ") Add;
 		void Add (const gp_Pnt & P);
 		%feature("compactdefaultargs") Add;
-		%feature("autodoc", "	* Adds the point P or the vertex V at the end of the polygonal wire under construction. A vertex is automatically created on the point P. Warning - When P or V is coincident to the previous vertex, no edge is built. The method Added can be used to test for this. Neither P nor V is checked to verify that it is coincident with another vertex than the last one, of the polygonal wire under construction. It is also possible to add vertices on a closed polygon (built for example by using a constructor which declares the polygon closed, or after the use of the Close function). Consequently, be careful using this function: you might create: - a polygonal wire with two consecutive coincident edges, or - a non manifold polygonal wire. - P or V is not checked to verify if it is coincident with another vertex but the last one, of the polygonal wire under construction. It is also possible to add vertices on a closed polygon (built for example by using a constructor which declares the polygon closed, or after the use of the Close function). Consequently, be careful when using this function: you might create: - a polygonal wire with two consecutive coincident edges, or - a non-manifold polygonal wire.
+		%feature("autodoc", "	* Adds the point P or the vertex V at the end of the polygonal wire under construction. A vertex is automatically created on the point P. Warning - When P or V is coincident to the previous vertex, no edge is built. The method Added can be used to test for this. Neither P nor V is checked to verify that it is coincident with another vertex than the last one, of the polygonal wire under construction. It is also possible to add vertices on a closed polygon --built for example by using a constructor which declares the polygon closed, or after the use of the Close function--. Consequently, be careful using this function: you might create: - a polygonal wire with two consecutive coincident edges, or - a non manifold polygonal wire. - P or V is not checked to verify if it is coincident with another vertex but the last one, of the polygonal wire under construction. It is also possible to add vertices on a closed polygon --built for example by using a constructor which declares the polygon closed, or after the use of the Close function--. Consequently, be careful when using this function: you might create: - a polygonal wire with two consecutive coincident edges, or - a non-manifold polygonal wire.
 
 	:param V:
 	:type V: TopoDS_Vertex &
@@ -2310,7 +2306,7 @@ class BRepBuilderAPI_MakePolygon : public BRepBuilderAPI_MakeShape {
 ") LastVertex;
 		const TopoDS_Vertex  LastVertex ();
 		%feature("compactdefaultargs") IsDone;
-		%feature("autodoc", "	* Returns true if this algorithm contains a valid polygonal wire (i.e. if there is at least one edge). IsDone returns false if fewer than two vertices have been chained together by this construction algorithm.
+		%feature("autodoc", "	* Returns true if this algorithm contains a valid polygonal wire --i.e. if there is at least one edge--. IsDone returns false if fewer than two vertices have been chained together by this construction algorithm.
 
 	:rtype: bool
 ") IsDone;
@@ -2464,7 +2460,7 @@ class BRepBuilderAPI_MakeSolid : public BRepBuilderAPI_MakeShape {
 ") BRepBuilderAPI_MakeSolid;
 		 BRepBuilderAPI_MakeSolid (const TopoDS_Shell & S1,const TopoDS_Shell & S2);
 		%feature("compactdefaultargs") BRepBuilderAPI_MakeSolid;
-		%feature("autodoc", "	* Make a solid from three shells. Constructs a solid - covering the whole space, or - from shell S, or - from two shells S1 and S2, or - from three shells S1, S2 and S3, or Warning No check is done to verify the conditions of coherence of the resulting solid. In particular, S1, S2 (and S3) must not intersect each other. Besides, after all shells have been added using the Add function, one of these shells should constitute the outside skin of the solid; it may be closed (a finite solid) or open (an infinite solid). Other shells form hollows (cavities) in these previous ones. Each must bound a closed volume.
+		%feature("autodoc", "	* Make a solid from three shells. Constructs a solid - covering the whole space, or - from shell S, or - from two shells S1 and S2, or - from three shells S1, S2 and S3, or Warning No check is done to verify the conditions of coherence of the resulting solid. In particular, S1, S2 --and S3-- must not intersect each other. Besides, after all shells have been added using the Add function, one of these shells should constitute the outside skin of the solid; it may be closed --a finite solid-- or open --an infinite solid--. Other shells form hollows --cavities-- in these previous ones. Each must bound a closed volume.
 
 	:param S1:
 	:type S1: TopoDS_Shell &
@@ -2484,7 +2480,7 @@ class BRepBuilderAPI_MakeSolid : public BRepBuilderAPI_MakeShape {
 ") BRepBuilderAPI_MakeSolid;
 		 BRepBuilderAPI_MakeSolid (const TopoDS_Solid & So);
 		%feature("compactdefaultargs") BRepBuilderAPI_MakeSolid;
-		%feature("autodoc", "	* Add a shell to a solid. //! Constructs a solid: - from the solid So, to which shells can be added, or - by adding the shell S to the solid So. Warning No check is done to verify the conditions of coherence of the resulting solid. In particular S must not intersect the solid S0. Besides, after all shells have been added using the Add function, one of these shells should constitute the outside skin of the solid. It may be closed (a finite solid) or open (an infinite solid). Other shells form hollows (cavities) in the previous ones. Each must bound a closed volume.
+		%feature("autodoc", "	* Add a shell to a solid. //! Constructs a solid: - from the solid So, to which shells can be added, or - by adding the shell S to the solid So. Warning No check is done to verify the conditions of coherence of the resulting solid. In particular S must not intersect the solid S0. Besides, after all shells have been added using the Add function, one of these shells should constitute the outside skin of the solid. It may be closed --a finite solid-- or open --an infinite solid--. Other shells form hollows --cavities-- in the previous ones. Each must bound a closed volume.
 
 	:param So:
 	:type So: TopoDS_Solid &
@@ -2494,7 +2490,7 @@ class BRepBuilderAPI_MakeSolid : public BRepBuilderAPI_MakeShape {
 ") BRepBuilderAPI_MakeSolid;
 		 BRepBuilderAPI_MakeSolid (const TopoDS_Solid & So,const TopoDS_Shell & S);
 		%feature("compactdefaultargs") Add;
-		%feature("autodoc", "	* Adds the shell to the current solid. Warning No check is done to verify the conditions of coherence of the resulting solid. In particular, S must not intersect other shells of the solid under construction. Besides, after all shells have been added, one of these shells should constitute the outside skin of the solid. It may be closed (a finite solid) or open (an infinite solid). Other shells form hollows (cavities) in these previous ones. Each must bound a closed volume.
+		%feature("autodoc", "	* Adds the shell to the current solid. Warning No check is done to verify the conditions of coherence of the resulting solid. In particular, S must not intersect other shells of the solid under construction. Besides, after all shells have been added, one of these shells should constitute the outside skin of the solid. It may be closed --a finite solid-- or open --an infinite solid--. Other shells form hollows --cavities-- in these previous ones. Each must bound a closed volume.
 
 	:param S:
 	:type S: TopoDS_Shell &
@@ -2535,7 +2531,7 @@ class BRepBuilderAPI_MakeSolid : public BRepBuilderAPI_MakeShape {
 class BRepBuilderAPI_MakeVertex : public BRepBuilderAPI_MakeShape {
 	public:
 		%feature("compactdefaultargs") BRepBuilderAPI_MakeVertex;
-		%feature("autodoc", "	* Constructs a vertex from point P. Example create a vertex from a 3D point. gp_Pnt P(0,0,10); TopoDS_Vertex V = BRepBuilderAPI_MakeVertex(P);
+		%feature("autodoc", "	* Constructs a vertex from point P. Example create a vertex from a 3D point. gp_Pnt P--0,0,10--; TopoDS_Vertex V = BRepBuilderAPI_MakeVertex--P--;
 
 	:param P:
 	:type P: gp_Pnt
@@ -2600,7 +2596,7 @@ class BRepBuilderAPI_MakeWire : public BRepBuilderAPI_MakeShape {
 ") BRepBuilderAPI_MakeWire;
 		 BRepBuilderAPI_MakeWire (const TopoDS_Edge & E1,const TopoDS_Edge & E2,const TopoDS_Edge & E3);
 		%feature("compactdefaultargs") BRepBuilderAPI_MakeWire;
-		%feature("autodoc", "	* Make a Wire from four edges. Constructs a wire - from the TopoDS_Wire W composed of the edge E, or - from edge E, or - from two edges E1 and E2, or - from three edges E1, E2 and E3, or - from four edges E1, E2, E3 and E4. Further edges can be added using the function Add. Given edges are added in a sequence. Each of them must be connectable to the wire under construction, and so must satisfy the following condition (unless it is the first edge of the wire): one of its vertices must be geometrically coincident with one of the vertices of the wire (provided that the highest tolerance factor is assigned to the two vertices). It could also be the same vertex. Warning If an edge is not connectable to the wire under construction it is not added. The function Error will return BRepBuilderAPI_DisconnectedWire, the function IsDone will return false and the function Wire will raise an error, until a new connectable edge is added.
+		%feature("autodoc", "	* Make a Wire from four edges. Constructs a wire - from the TopoDS_Wire W composed of the edge E, or - from edge E, or - from two edges E1 and E2, or - from three edges E1, E2 and E3, or - from four edges E1, E2, E3 and E4. Further edges can be added using the function Add. Given edges are added in a sequence. Each of them must be connectable to the wire under construction, and so must satisfy the following condition --unless it is the first edge of the wire--: one of its vertices must be geometrically coincident with one of the vertices of the wire --provided that the highest tolerance factor is assigned to the two vertices--. It could also be the same vertex. Warning If an edge is not connectable to the wire under construction it is not added. The function Error will return BRepBuilderAPI_DisconnectedWire, the function IsDone will return false and the function Wire will raise an error, until a new connectable edge is added.
 
 	:param E1:
 	:type E1: TopoDS_Edge &
@@ -2632,7 +2628,7 @@ class BRepBuilderAPI_MakeWire : public BRepBuilderAPI_MakeShape {
 ") BRepBuilderAPI_MakeWire;
 		 BRepBuilderAPI_MakeWire (const TopoDS_Wire & W,const TopoDS_Edge & E);
 		%feature("compactdefaultargs") Add;
-		%feature("autodoc", "	* Adds the edge E to the wire under construction. E must be connectable to the wire under construction, and, unless it is the first edge of the wire, must satisfy the following condition: one of its vertices must be geometrically coincident with one of the vertices of the wire (provided that the highest tolerance factor is assigned to the two vertices). It could also be the same vertex. Warning If E is not connectable to the wire under construction it is not added. The function Error will return BRepBuilderAPI_DisconnectedWire, the function IsDone will return false and the function Wire will raise an error, until a new connectable edge is added.
+		%feature("autodoc", "	* Adds the edge E to the wire under construction. E must be connectable to the wire under construction, and, unless it is the first edge of the wire, must satisfy the following condition: one of its vertices must be geometrically coincident with one of the vertices of the wire --provided that the highest tolerance factor is assigned to the two vertices--. It could also be the same vertex. Warning If E is not connectable to the wire under construction it is not added. The function Error will return BRepBuilderAPI_DisconnectedWire, the function IsDone will return false and the function Wire will raise an error, until a new connectable edge is added.
 
 	:param E:
 	:type E: TopoDS_Edge &
@@ -2648,7 +2644,7 @@ class BRepBuilderAPI_MakeWire : public BRepBuilderAPI_MakeShape {
 ") Add;
 		void Add (const TopoDS_Wire & W);
 		%feature("compactdefaultargs") Add;
-		%feature("autodoc", "	* Adds the edges of <L> to the current wire. The edges are not to be consecutive. But they are to be all connected geometrically or topologically. If some of them are not connected the Status give DisconnectedWire but the 'Maker' is Done() and you can get the partial result. (ie connected to the first edgeof the list <L>)
+		%feature("autodoc", "	* Adds the edges of <L> to the current wire. The edges are not to be consecutive. But they are to be all connected geometrically or topologically. If some of them are not connected the Status give DisconnectedWire but the 'Maker' is Done---- and you can get the partial result. --ie connected to the first edgeof the list <L>--
 
 	:param L:
 	:type L: TopTools_ListOfShape &
@@ -2678,7 +2674,7 @@ class BRepBuilderAPI_MakeWire : public BRepBuilderAPI_MakeShape {
 ") operator TopoDS_Wire;
 		 operator TopoDS_Wire ();
 		%feature("compactdefaultargs") Edge;
-		%feature("autodoc", "	* Returns the last edge added to the wire under construction. Warning - This edge can be different from the original one (the argument of the function Add, for instance,) - A null edge is returned if there are no edges in the wire under construction, or if the last edge which you tried to add was not connectable..
+		%feature("autodoc", "	* Returns the last edge added to the wire under construction. Warning - This edge can be different from the original one --the argument of the function Add, for instance,-- - A null edge is returned if there are no edges in the wire under construction, or if the last edge which you tried to add was not connectable..
 
 	:rtype: TopoDS_Edge
 ") Edge;
@@ -2734,7 +2730,7 @@ class BRepBuilderAPI_Copy : public BRepBuilderAPI_ModifyShape {
 ") BRepBuilderAPI_Copy;
 		 BRepBuilderAPI_Copy ();
 		%feature("compactdefaultargs") BRepBuilderAPI_Copy;
-		%feature("autodoc", "	* Constructs a copy framework and copies the shape S. Use the function Shape to access the result. If copyMesh is True, triangulation contained in original shape will be copied along with geometry (by default, triangulation gets lost). If copyGeom is False, only topological objects will be copied, while geometry and triangulation will be shared with original shape. Note: the constructed framework can be reused to copy other shapes: just specify them with the function Perform.
+		%feature("autodoc", "	* Constructs a copy framework and copies the shape S. Use the function Shape to access the result. If copyMesh is True, triangulation contained in original shape will be copied along with geometry --by default, triangulation gets lost--. If copyGeom is False, only topological objects will be copied, while geometry and triangulation will be shared with original shape. Note: the constructed framework can be reused to copy other shapes: just specify them with the function Perform.
 
 	:param S:
 	:type S: TopoDS_Shape &
@@ -2746,7 +2742,7 @@ class BRepBuilderAPI_Copy : public BRepBuilderAPI_ModifyShape {
 ") BRepBuilderAPI_Copy;
 		 BRepBuilderAPI_Copy (const TopoDS_Shape & S,const Standard_Boolean copyGeom = Standard_True,const Standard_Boolean copyMesh = Standard_False);
 		%feature("compactdefaultargs") Perform;
-		%feature("autodoc", "	* Copies the shape S. Use the function Shape to access the result. If copyMesh is True, triangulation contained in original shape will be copied along with geometry (by default, triangulation gets lost). If copyGeom is False, only topological objects will be copied, while geometry and triangulation will be shared with original shape.
+		%feature("autodoc", "	* Copies the shape S. Use the function Shape to access the result. If copyMesh is True, triangulation contained in original shape will be copied along with geometry --by default, triangulation gets lost--. If copyGeom is False, only topological objects will be copied, while geometry and triangulation will be shared with original shape.
 
 	:param S:
 	:type S: TopoDS_Shape &
@@ -2777,7 +2773,7 @@ class BRepBuilderAPI_GTransform : public BRepBuilderAPI_ModifyShape {
 ") BRepBuilderAPI_GTransform;
 		 BRepBuilderAPI_GTransform (const gp_GTrsf & T);
 		%feature("compactdefaultargs") BRepBuilderAPI_GTransform;
-		%feature("autodoc", "	* Constructs a framework for applying the geometric transformation T to a shape, and applies it to the shape S. - If the transformation T is direct and isometric (i.e. if the determinant of the vectorial part of T is equal to 1.), and if Copy equals false (default value), the resulting shape is the same as the original but with a new location assigned to it. - In all other cases, the transformation is applied to a duplicate of S. Use the function Shape to access the result. Note: the constructed framework can be reused to apply the same geometric transformation to other shapes: just specify them with the function Perform.
+		%feature("autodoc", "	* Constructs a framework for applying the geometric transformation T to a shape, and applies it to the shape S. - If the transformation T is direct and isometric --i.e. if the determinant of the vectorial part of T is equal to 1.--, and if Copy equals false --default value--, the resulting shape is the same as the original but with a new location assigned to it. - In all other cases, the transformation is applied to a duplicate of S. Use the function Shape to access the result. Note: the constructed framework can be reused to apply the same geometric transformation to other shapes: just specify them with the function Perform.
 
 	:param S:
 	:type S: TopoDS_Shape &
@@ -2789,7 +2785,7 @@ class BRepBuilderAPI_GTransform : public BRepBuilderAPI_ModifyShape {
 ") BRepBuilderAPI_GTransform;
 		 BRepBuilderAPI_GTransform (const TopoDS_Shape & S,const gp_GTrsf & T,const Standard_Boolean Copy = Standard_False);
 		%feature("compactdefaultargs") Perform;
-		%feature("autodoc", "	* Applies the geometric transformation defined at the time of construction of this framework to the shape S. - If the transformation T is direct and isometric (i.e. if the determinant of the vectorial part of T is equal to 1.), and if Copy equals false (default value), the resulting shape is the same as the original but with a new location assigned to it. - In all other cases, the transformation is applied to a duplicate of S. Use the function Shape to access the result. Note: this framework can be reused to apply the same geometric transformation to other shapes: just specify them by calling the function Perform again.
+		%feature("autodoc", "	* Applies the geometric transformation defined at the time of construction of this framework to the shape S. - If the transformation T is direct and isometric --i.e. if the determinant of the vectorial part of T is equal to 1.--, and if Copy equals false --default value--, the resulting shape is the same as the original but with a new location assigned to it. - In all other cases, the transformation is applied to a duplicate of S. Use the function Shape to access the result. Note: this framework can be reused to apply the same geometric transformation to other shapes: just specify them by calling the function Perform again.
 
 	:param S:
 	:type S: TopoDS_Shape &
@@ -2851,6 +2847,22 @@ class BRepBuilderAPI_NurbsConvert : public BRepBuilderAPI_ModifyShape {
 	:rtype: None
 ") Perform;
 		void Perform (const TopoDS_Shape & S,const Standard_Boolean Copy = Standard_False);
+		%feature("compactdefaultargs") Modified;
+		%feature("autodoc", "	* Returns the list of shapes modified from the shape <S>.
+
+	:param S:
+	:type S: TopoDS_Shape &
+	:rtype: TopTools_ListOfShape
+") Modified;
+		virtual const TopTools_ListOfShape & Modified (const TopoDS_Shape & S);
+		%feature("compactdefaultargs") ModifiedShape;
+		%feature("autodoc", "	* Returns the modified shape corresponding to <S>. S can correspond to the entire initial shape or to its subshape. Exceptions Standard_NoSuchObject if S is not the initial shape or a subshape of the initial shape to which the transformation has been applied.
+
+	:param S:
+	:type S: TopoDS_Shape &
+	:rtype: TopoDS_Shape
+") ModifiedShape;
+		virtual TopoDS_Shape ModifiedShape (const TopoDS_Shape & S);
 };
 
 
@@ -2871,7 +2883,7 @@ class BRepBuilderAPI_Transform : public BRepBuilderAPI_ModifyShape {
 ") BRepBuilderAPI_Transform;
 		 BRepBuilderAPI_Transform (const gp_Trsf & T);
 		%feature("compactdefaultargs") BRepBuilderAPI_Transform;
-		%feature("autodoc", "	* Creates a transformation from the gp_Trsf <T>, and applies it to the shape <S>. If the transformation is direct and isometric (determinant = 1) and <Copy> = Standard_False, the resulting shape is <S> on which a new location has been set. Otherwise, the transformation is applied on a duplication of <S>.
+		%feature("autodoc", "	* Creates a transformation from the gp_Trsf <T>, and applies it to the shape <S>. If the transformation is direct and isometric --determinant = 1-- and <Copy> = Standard_False, the resulting shape is <S> on which a new location has been set. Otherwise, the transformation is applied on a duplication of <S>.
 
 	:param S:
 	:type S: TopoDS_Shape &
@@ -2883,7 +2895,7 @@ class BRepBuilderAPI_Transform : public BRepBuilderAPI_ModifyShape {
 ") BRepBuilderAPI_Transform;
 		 BRepBuilderAPI_Transform (const TopoDS_Shape & S,const gp_Trsf & T,const Standard_Boolean Copy = Standard_False);
 		%feature("compactdefaultargs") Perform;
-		%feature("autodoc", "	* pplies the geometric transformation defined at the time of construction of this framework to the shape S. - If the transformation T is direct and isometric, in other words, if the determinant of the vectorial part of T is equal to 1., and if Copy equals false (the default value), the resulting shape is the same as the original but with a new location assigned to it. - In all other cases, the transformation is applied to a duplicate of S. Use the function Shape to access the result. Note: this framework can be reused to apply the same geometric transformation to other shapes. You only need to specify them by calling the function Perform again.
+		%feature("autodoc", "	* pplies the geometric transformation defined at the time of construction of this framework to the shape S. - If the transformation T is direct and isometric, in other words, if the determinant of the vectorial part of T is equal to 1., and if Copy equals false --the default value--, the resulting shape is the same as the original but with a new location assigned to it. - In all other cases, the transformation is applied to a duplicate of S. Use the function Shape to access the result. Note: this framework can be reused to apply the same geometric transformation to other shapes. You only need to specify them by calling the function Perform again.
 
 	:param S:
 	:type S: TopoDS_Shape &

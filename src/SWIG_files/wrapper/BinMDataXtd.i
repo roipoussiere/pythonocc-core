@@ -1,5 +1,5 @@
 /*
-Copyright 2008-2017 Thomas Paviot (tpaviot@gmail.com)
+Copyright 2008-2018 Thomas Paviot (tpaviot@gmail.com)
 
 
 This file is part of pythonOCC.
@@ -55,6 +55,9 @@ def register_handle(handle, base_object):
 
 /* typedefs */
 /* end typedefs declaration */
+
+/* templates */
+/* end templates declaration */
 
 /* public enums */
 /* end public enums declaration */
@@ -157,19 +160,20 @@ class Handle_BinMDataXtd_AxisDriver : public Handle_BinMDF_ADriver {
         static const Handle_BinMDataXtd_AxisDriver DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_BinMDataXtd_AxisDriver {
     BinMDataXtd_AxisDriver* _get_reference() {
-    return (BinMDataXtd_AxisDriver*)$self->Access();
+    return (BinMDataXtd_AxisDriver*)$self->get();
     }
 };
 
 %extend Handle_BinMDataXtd_AxisDriver {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend BinMDataXtd_AxisDriver {
@@ -244,19 +248,20 @@ class Handle_BinMDataXtd_ConstraintDriver : public Handle_BinMDF_ADriver {
         static const Handle_BinMDataXtd_ConstraintDriver DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_BinMDataXtd_ConstraintDriver {
     BinMDataXtd_ConstraintDriver* _get_reference() {
-    return (BinMDataXtd_ConstraintDriver*)$self->Access();
+    return (BinMDataXtd_ConstraintDriver*)$self->get();
     }
 };
 
 %extend Handle_BinMDataXtd_ConstraintDriver {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend BinMDataXtd_ConstraintDriver {
@@ -331,19 +336,20 @@ class Handle_BinMDataXtd_GeometryDriver : public Handle_BinMDF_ADriver {
         static const Handle_BinMDataXtd_GeometryDriver DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_BinMDataXtd_GeometryDriver {
     BinMDataXtd_GeometryDriver* _get_reference() {
-    return (BinMDataXtd_GeometryDriver*)$self->Access();
+    return (BinMDataXtd_GeometryDriver*)$self->get();
     }
 };
 
 %extend Handle_BinMDataXtd_GeometryDriver {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend BinMDataXtd_GeometryDriver {
@@ -418,19 +424,20 @@ class Handle_BinMDataXtd_PatternStdDriver : public Handle_BinMDF_ADriver {
         static const Handle_BinMDataXtd_PatternStdDriver DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_BinMDataXtd_PatternStdDriver {
     BinMDataXtd_PatternStdDriver* _get_reference() {
-    return (BinMDataXtd_PatternStdDriver*)$self->Access();
+    return (BinMDataXtd_PatternStdDriver*)$self->get();
     }
 };
 
 %extend Handle_BinMDataXtd_PatternStdDriver {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend BinMDataXtd_PatternStdDriver {
@@ -505,19 +512,20 @@ class Handle_BinMDataXtd_PlacementDriver : public Handle_BinMDF_ADriver {
         static const Handle_BinMDataXtd_PlacementDriver DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_BinMDataXtd_PlacementDriver {
     BinMDataXtd_PlacementDriver* _get_reference() {
-    return (BinMDataXtd_PlacementDriver*)$self->Access();
+    return (BinMDataXtd_PlacementDriver*)$self->get();
     }
 };
 
 %extend Handle_BinMDataXtd_PlacementDriver {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend BinMDataXtd_PlacementDriver {
@@ -592,19 +600,20 @@ class Handle_BinMDataXtd_PlaneDriver : public Handle_BinMDF_ADriver {
         static const Handle_BinMDataXtd_PlaneDriver DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_BinMDataXtd_PlaneDriver {
     BinMDataXtd_PlaneDriver* _get_reference() {
-    return (BinMDataXtd_PlaneDriver*)$self->Access();
+    return (BinMDataXtd_PlaneDriver*)$self->get();
     }
 };
 
 %extend Handle_BinMDataXtd_PlaneDriver {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend BinMDataXtd_PlaneDriver {
@@ -679,22 +688,199 @@ class Handle_BinMDataXtd_PointDriver : public Handle_BinMDF_ADriver {
         static const Handle_BinMDataXtd_PointDriver DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_BinMDataXtd_PointDriver {
     BinMDataXtd_PointDriver* _get_reference() {
-    return (BinMDataXtd_PointDriver*)$self->Access();
+    return (BinMDataXtd_PointDriver*)$self->get();
     }
 };
 
 %extend Handle_BinMDataXtd_PointDriver {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend BinMDataXtd_PointDriver {
+	%pythoncode {
+	__repr__ = _dumps_object
+	}
+};
+%nodefaultctor BinMDataXtd_PositionDriver;
+class BinMDataXtd_PositionDriver : public BinMDF_ADriver {
+	public:
+		%feature("compactdefaultargs") BinMDataXtd_PositionDriver;
+		%feature("autodoc", "	:param theMessageDriver:
+	:type theMessageDriver: Handle_CDM_MessageDriver &
+	:rtype: None
+") BinMDataXtd_PositionDriver;
+		 BinMDataXtd_PositionDriver (const Handle_CDM_MessageDriver & theMessageDriver);
+		%feature("compactdefaultargs") NewEmpty;
+		%feature("autodoc", "	:rtype: Handle_TDF_Attribute
+") NewEmpty;
+		Handle_TDF_Attribute NewEmpty ();
+		%feature("compactdefaultargs") Paste;
+		%feature("autodoc", "	:param Source:
+	:type Source: BinObjMgt_Persistent &
+	:param Target:
+	:type Target: Handle_TDF_Attribute &
+	:param RelocTable:
+	:type RelocTable: BinObjMgt_RRelocationTable &
+	:rtype: bool
+") Paste;
+		Standard_Boolean Paste (const BinObjMgt_Persistent & Source,const Handle_TDF_Attribute & Target,BinObjMgt_RRelocationTable & RelocTable);
+		%feature("compactdefaultargs") Paste;
+		%feature("autodoc", "	:param Source:
+	:type Source: Handle_TDF_Attribute &
+	:param Target:
+	:type Target: BinObjMgt_Persistent &
+	:param RelocTable:
+	:type RelocTable: BinObjMgt_SRelocationTable &
+	:rtype: None
+") Paste;
+		void Paste (const Handle_TDF_Attribute & Source,BinObjMgt_Persistent & Target,BinObjMgt_SRelocationTable & RelocTable);
+};
+
+
+%extend BinMDataXtd_PositionDriver {
+	%pythoncode {
+		def GetHandle(self):
+		    try:
+		        return self.thisHandle
+		    except:
+		        self.thisHandle = Handle_BinMDataXtd_PositionDriver(self)
+		        self.thisown = False
+		        return self.thisHandle
+	}
+};
+
+%pythonappend Handle_BinMDataXtd_PositionDriver::Handle_BinMDataXtd_PositionDriver %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
+%nodefaultctor Handle_BinMDataXtd_PositionDriver;
+class Handle_BinMDataXtd_PositionDriver : public Handle_BinMDF_ADriver {
+
+    public:
+        // constructors
+        Handle_BinMDataXtd_PositionDriver();
+        Handle_BinMDataXtd_PositionDriver(const Handle_BinMDataXtd_PositionDriver &aHandle);
+        Handle_BinMDataXtd_PositionDriver(const BinMDataXtd_PositionDriver *anItem);
+        void Nullify();
+        Standard_Boolean IsNull() const;
+        static const Handle_BinMDataXtd_PositionDriver DownCast(const Handle_Standard_Transient &AnObject);
+
+};
+
+%extend Handle_BinMDataXtd_PositionDriver {
+    BinMDataXtd_PositionDriver* _get_reference() {
+    return (BinMDataXtd_PositionDriver*)$self->get();
+    }
+};
+
+%extend Handle_BinMDataXtd_PositionDriver {
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
+};
+
+%extend BinMDataXtd_PositionDriver {
+	%pythoncode {
+	__repr__ = _dumps_object
+	}
+};
+%nodefaultctor BinMDataXtd_PresentationDriver;
+class BinMDataXtd_PresentationDriver : public BinMDF_ADriver {
+	public:
+		%feature("compactdefaultargs") BinMDataXtd_PresentationDriver;
+		%feature("autodoc", "	:param theMessageDriver:
+	:type theMessageDriver: Handle_CDM_MessageDriver &
+	:rtype: None
+") BinMDataXtd_PresentationDriver;
+		 BinMDataXtd_PresentationDriver (const Handle_CDM_MessageDriver & theMessageDriver);
+		%feature("compactdefaultargs") NewEmpty;
+		%feature("autodoc", "	:rtype: Handle_TDF_Attribute
+") NewEmpty;
+		Handle_TDF_Attribute NewEmpty ();
+		%feature("compactdefaultargs") Paste;
+		%feature("autodoc", "	:param Source:
+	:type Source: BinObjMgt_Persistent &
+	:param Target:
+	:type Target: Handle_TDF_Attribute &
+	:param RelocTable:
+	:type RelocTable: BinObjMgt_RRelocationTable &
+	:rtype: bool
+") Paste;
+		Standard_Boolean Paste (const BinObjMgt_Persistent & Source,const Handle_TDF_Attribute & Target,BinObjMgt_RRelocationTable & RelocTable);
+		%feature("compactdefaultargs") Paste;
+		%feature("autodoc", "	:param Source:
+	:type Source: Handle_TDF_Attribute &
+	:param Target:
+	:type Target: BinObjMgt_Persistent &
+	:param RelocTable:
+	:type RelocTable: BinObjMgt_SRelocationTable &
+	:rtype: None
+") Paste;
+		void Paste (const Handle_TDF_Attribute & Source,BinObjMgt_Persistent & Target,BinObjMgt_SRelocationTable & RelocTable);
+};
+
+
+%extend BinMDataXtd_PresentationDriver {
+	%pythoncode {
+		def GetHandle(self):
+		    try:
+		        return self.thisHandle
+		    except:
+		        self.thisHandle = Handle_BinMDataXtd_PresentationDriver(self)
+		        self.thisown = False
+		        return self.thisHandle
+	}
+};
+
+%pythonappend Handle_BinMDataXtd_PresentationDriver::Handle_BinMDataXtd_PresentationDriver %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
+%nodefaultctor Handle_BinMDataXtd_PresentationDriver;
+class Handle_BinMDataXtd_PresentationDriver : public Handle_BinMDF_ADriver {
+
+    public:
+        // constructors
+        Handle_BinMDataXtd_PresentationDriver();
+        Handle_BinMDataXtd_PresentationDriver(const Handle_BinMDataXtd_PresentationDriver &aHandle);
+        Handle_BinMDataXtd_PresentationDriver(const BinMDataXtd_PresentationDriver *anItem);
+        void Nullify();
+        Standard_Boolean IsNull() const;
+        static const Handle_BinMDataXtd_PresentationDriver DownCast(const Handle_Standard_Transient &AnObject);
+
+};
+
+%extend Handle_BinMDataXtd_PresentationDriver {
+    BinMDataXtd_PresentationDriver* _get_reference() {
+    return (BinMDataXtd_PresentationDriver*)$self->get();
+    }
+};
+
+%extend Handle_BinMDataXtd_PresentationDriver {
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
+};
+
+%extend BinMDataXtd_PresentationDriver {
 	%pythoncode {
 	__repr__ = _dumps_object
 	}
@@ -766,22 +952,111 @@ class Handle_BinMDataXtd_ShapeDriver : public Handle_BinMDF_ADriver {
         static const Handle_BinMDataXtd_ShapeDriver DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_BinMDataXtd_ShapeDriver {
     BinMDataXtd_ShapeDriver* _get_reference() {
-    return (BinMDataXtd_ShapeDriver*)$self->Access();
+    return (BinMDataXtd_ShapeDriver*)$self->get();
     }
 };
 
 %extend Handle_BinMDataXtd_ShapeDriver {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend BinMDataXtd_ShapeDriver {
+	%pythoncode {
+	__repr__ = _dumps_object
+	}
+};
+%nodefaultctor BinMDataXtd_TriangulationDriver;
+class BinMDataXtd_TriangulationDriver : public BinMDF_ADriver {
+	public:
+		%feature("compactdefaultargs") BinMDataXtd_TriangulationDriver;
+		%feature("autodoc", "	:param theMessageDriver:
+	:type theMessageDriver: Handle_CDM_MessageDriver &
+	:rtype: None
+") BinMDataXtd_TriangulationDriver;
+		 BinMDataXtd_TriangulationDriver (const Handle_CDM_MessageDriver & theMessageDriver);
+		%feature("compactdefaultargs") NewEmpty;
+		%feature("autodoc", "	:rtype: Handle_TDF_Attribute
+") NewEmpty;
+		virtual Handle_TDF_Attribute NewEmpty ();
+		%feature("compactdefaultargs") Paste;
+		%feature("autodoc", "	:param Source:
+	:type Source: BinObjMgt_Persistent &
+	:param Target:
+	:type Target: Handle_TDF_Attribute &
+	:param RelocTable:
+	:type RelocTable: BinObjMgt_RRelocationTable &
+	:rtype: bool
+") Paste;
+		virtual Standard_Boolean Paste (const BinObjMgt_Persistent & Source,const Handle_TDF_Attribute & Target,BinObjMgt_RRelocationTable & RelocTable);
+		%feature("compactdefaultargs") Paste;
+		%feature("autodoc", "	:param Source:
+	:type Source: Handle_TDF_Attribute &
+	:param Target:
+	:type Target: BinObjMgt_Persistent &
+	:param RelocTable:
+	:type RelocTable: BinObjMgt_SRelocationTable &
+	:rtype: void
+") Paste;
+		virtual void Paste (const Handle_TDF_Attribute & Source,BinObjMgt_Persistent & Target,BinObjMgt_SRelocationTable & RelocTable);
+};
+
+
+%extend BinMDataXtd_TriangulationDriver {
+	%pythoncode {
+		def GetHandle(self):
+		    try:
+		        return self.thisHandle
+		    except:
+		        self.thisHandle = Handle_BinMDataXtd_TriangulationDriver(self)
+		        self.thisown = False
+		        return self.thisHandle
+	}
+};
+
+%pythonappend Handle_BinMDataXtd_TriangulationDriver::Handle_BinMDataXtd_TriangulationDriver %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
+%nodefaultctor Handle_BinMDataXtd_TriangulationDriver;
+class Handle_BinMDataXtd_TriangulationDriver : public Handle_BinMDF_ADriver {
+
+    public:
+        // constructors
+        Handle_BinMDataXtd_TriangulationDriver();
+        Handle_BinMDataXtd_TriangulationDriver(const Handle_BinMDataXtd_TriangulationDriver &aHandle);
+        Handle_BinMDataXtd_TriangulationDriver(const BinMDataXtd_TriangulationDriver *anItem);
+        void Nullify();
+        Standard_Boolean IsNull() const;
+        static const Handle_BinMDataXtd_TriangulationDriver DownCast(const Handle_Standard_Transient &AnObject);
+
+};
+
+%extend Handle_BinMDataXtd_TriangulationDriver {
+    BinMDataXtd_TriangulationDriver* _get_reference() {
+    return (BinMDataXtd_TriangulationDriver*)$self->get();
+    }
+};
+
+%extend Handle_BinMDataXtd_TriangulationDriver {
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
+};
+
+%extend BinMDataXtd_TriangulationDriver {
 	%pythoncode {
 	__repr__ = _dumps_object
 	}

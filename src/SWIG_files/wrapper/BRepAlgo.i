@@ -1,5 +1,5 @@
 /*
-Copyright 2008-2017 Thomas Paviot (tpaviot@gmail.com)
+Copyright 2008-2018 Thomas Paviot (tpaviot@gmail.com)
 
 
 This file is part of pythonOCC.
@@ -56,6 +56,12 @@ def register_handle(handle, base_object):
 /* typedefs */
 /* end typedefs declaration */
 
+/* templates */
+%template(BRepAlgo_DataMapOfShapeBoolean) NCollection_DataMap <TopoDS_Shape , Standard_Boolean , TopTools_ShapeMapHasher>;
+%template(BRepAlgo_DataMapOfShapeInterference) NCollection_DataMap <TopoDS_Shape , Handle_TopOpeBRepDS_Interference , TopTools_ShapeMapHasher>;
+%template(BRepAlgo_SequenceOfSequenceOfInteger) NCollection_Sequence <TColStd_SequenceOfInteger>;
+/* end templates declaration */
+
 /* public enums */
 enum BRepAlgo_CheckStatus {
 	BRepAlgo_OK = 0,
@@ -110,7 +116,7 @@ class BRepAlgo {
 ") IsValid;
 		static Standard_Boolean IsValid (const TopTools_ListOfShape & theArgs,const TopoDS_Shape & theResult,const Standard_Boolean closedSolid = Standard_False,const Standard_Boolean GeomCtrl = Standard_True);
 		%feature("compactdefaultargs") IsTopologicallyValid;
-		%feature("autodoc", "	* Checks if the shape is 'correct'. If not, returns <Standard_False>, else returns <Standard_True>. This method differs from the previous one in the fact that no geometric contols (intersection of wires, pcurve validity) are performed.
+		%feature("autodoc", "	* Checks if the shape is 'correct'. If not, returns <Standard_False>, else returns <Standard_True>. This method differs from the previous one in the fact that no geometric contols --intersection of wires, pcurve validity-- are performed.
 
 	:param S:
 	:type S: TopoDS_Shape &
@@ -126,7 +132,7 @@ class BRepAlgo {
 	}
 };
 %nodefaultctor BRepAlgo_AsDes;
-class BRepAlgo_AsDes : public MMgt_TShared {
+class BRepAlgo_AsDes : public Standard_Transient {
 	public:
 		%feature("compactdefaultargs") BRepAlgo_AsDes;
 		%feature("autodoc", "	* Creates an empty AsDes.
@@ -213,7 +219,7 @@ class BRepAlgo_AsDes : public MMgt_TShared {
 ") Remove;
 		void Remove (const TopoDS_Shape & S);
 		%feature("compactdefaultargs") HasCommonDescendant;
-		%feature("autodoc", "	* Returns True if (S1> and <S2> has common Descendants. Stores in <LC> the Commons Descendants.
+		%feature("autodoc", "	* Returns True if --S1> and <S2> has common Descendants. Stores in <LC> the Commons Descendants.
 
 	:param S1:
 	:type S1: TopoDS_Shape &
@@ -246,7 +252,7 @@ class BRepAlgo_AsDes : public MMgt_TShared {
 %}
 
 %nodefaultctor Handle_BRepAlgo_AsDes;
-class Handle_BRepAlgo_AsDes : public Handle_MMgt_TShared {
+class Handle_BRepAlgo_AsDes : public Handle_Standard_Transient {
 
     public:
         // constructors
@@ -258,19 +264,20 @@ class Handle_BRepAlgo_AsDes : public Handle_MMgt_TShared {
         static const Handle_BRepAlgo_AsDes DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_BRepAlgo_AsDes {
     BRepAlgo_AsDes* _get_reference() {
-    return (BRepAlgo_AsDes*)$self->Access();
+    return (BRepAlgo_AsDes*)$self->get();
     }
 };
 
 %extend Handle_BRepAlgo_AsDes {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend BRepAlgo_AsDes {
@@ -281,10 +288,6 @@ class Handle_BRepAlgo_AsDes : public Handle_MMgt_TShared {
 %nodefaultctor BRepAlgo_BooleanOperation;
 class BRepAlgo_BooleanOperation : public BRepBuilderAPI_MakeShape {
 	public:
-		%feature("compactdefaultargs") Delete;
-		%feature("autodoc", "	:rtype: void
-") Delete;
-		virtual void Delete ();
 		%feature("compactdefaultargs") PerformDS;
 		%feature("autodoc", "	:rtype: None
 ") PerformDS;
@@ -371,11 +374,9 @@ class BRepAlgo_BooleanOperations {
 	:type Tol3D: float
 	:param Tol2D:
 	:type Tol2D: float
-	:param RelativeTol:
-	:type RelativeTol: bool
 	:rtype: None
 ") SetApproxParameters;
-		void SetApproxParameters (const Standard_Integer NbPntMax,const Standard_Real Tol3D,const Standard_Real Tol2D,const Standard_Boolean RelativeTol);
+		void SetApproxParameters (const Standard_Integer NbPntMax,const Standard_Real Tol3D,const Standard_Real Tol2D);
 		%feature("compactdefaultargs") Define;
 		%feature("autodoc", "	:param S1:
 	:type S1: TopoDS_Shape &
@@ -417,7 +418,7 @@ class BRepAlgo_BooleanOperations {
 ") Shape;
 		const TopoDS_Shape  Shape ();
 		%feature("compactdefaultargs") ShapeFrom;
-		%feature("autodoc", "	* Returns the shape(s) resulting of the boolean operation issued from the shape <S>.
+		%feature("autodoc", "	* Returns the shape--s-- resulting of the boolean operation issued from the shape <S>.
 
 	:param S:
 	:type S: TopoDS_Shape &
@@ -457,7 +458,7 @@ class BRepAlgo_BooleanOperations {
 ") ChangeBuilder;
 		Handle_TopOpeBRepBuild_HBuilder ChangeBuilder ();
 		%feature("compactdefaultargs") DataStructureAccess;
-		%feature("autodoc", "	* returns the member myDSA. It is useful to then access the method GetSectionEdgeSet (wich is a member of DSAccess)
+		%feature("autodoc", "	* returns the member myDSA. It is useful to then access the method GetSectionEdgeSet --wich is a member of DSAccess--
 
 	:rtype: BRepAlgo_DSAccess
 ") DataStructureAccess;
@@ -518,7 +519,7 @@ class BRepAlgo_DSAccess {
 ") Intersect;
 		void Intersect (const TopoDS_Shape & S1,const TopoDS_Shape & S2);
 		%feature("compactdefaultargs") SameDomain;
-		%feature("autodoc", "	* This method does the same thing as the previous, but faster. There is no intersection face/face 3D. The faces have the same support(surface). No test of tangency (that is why it is faster). Intersects in 2d the faces tangent F1 anf F2.
+		%feature("autodoc", "	* This method does the same thing as the previous, but faster. There is no intersection face/face 3D. The faces have the same support--surface--. No test of tangency --that is why it is faster--. Intersects in 2d the faces tangent F1 anf F2.
 
 	:param S1:
 	:type S1: TopoDS_Shape &
@@ -528,7 +529,7 @@ class BRepAlgo_DSAccess {
 ") SameDomain;
 		void SameDomain (const TopoDS_Shape & S1,const TopoDS_Shape & S2);
 		%feature("compactdefaultargs") GetSectionEdgeSet;
-		%feature("autodoc", "	* returns compounds of Edge connected with section, which contains sections between faces contained in S1 and S2. returns an empty list of Shape if S1 or S2 do not contain face. calls GetSectionEdgeSet() if it has not already been done
+		%feature("autodoc", "	* returns compounds of Edge connected with section, which contains sections between faces contained in S1 and S2. returns an empty list of Shape if S1 or S2 do not contain face. calls GetSectionEdgeSet---- if it has not already been done
 
 	:param S1:
 	:type S1: TopoDS_Shape &
@@ -560,7 +561,7 @@ class BRepAlgo_DSAccess {
 ") Wire;
 		const TopoDS_Shape  Wire (const TopoDS_Shape & Compound);
 		%feature("compactdefaultargs") SectionVertex;
-		%feature("autodoc", "	* NYI returns the vertex of section, which contains the section between face S1 and edge S2 (returns an empty Shape if S1 is not a face or if S2 is not an edge)
+		%feature("autodoc", "	* NYI returns the vertex of section, which contains the section between face S1 and edge S2 --returns an empty Shape if S1 is not a face or if S2 is not an edge--
 
 	:param S1:
 	:type S1: TopoDS_Shape &
@@ -610,7 +611,7 @@ class BRepAlgo_DSAccess {
 ") Merge;
 		const TopoDS_Shape  Merge (const TopAbs_State state1);
 		%feature("compactdefaultargs") Propagate;
-		%feature("autodoc", "	* NYI Propagation of a state starting from the shape FromShape = edge or vertex of section, face or Coumpound de section. LoadShape is either S1, or S2 (see the method Load). Propagation from FromShape, on the states <what> of LoadShape. Return a Wire in 2d, a Shell in 3d. Specifications are incomplete, to be redefined for the typologies correpsonding to <FromShape> and the result : exemple : FromShape resultat vertex  wire (or edge) edge of section face (or shell) compound of section shell ... ...
+		%feature("autodoc", "	* NYI Propagation of a state starting from the shape FromShape = edge or vertex of section, face or Coumpound de section. LoadShape is either S1, or S2 --see the method Load--. Propagation from FromShape, on the states <what> of LoadShape. Return a Wire in 2d, a Shell in 3d. Specifications are incomplete, to be redefined for the typologies correpsonding to <FromShape> and the result : exemple : FromShape resultat vertex  wire --or edge-- edge of section face --or shell-- compound of section shell ... ...
 
 	:param what:
 	:type what: TopAbs_State
@@ -622,7 +623,7 @@ class BRepAlgo_DSAccess {
 ") Propagate;
 		const TopoDS_Shape  Propagate (const TopAbs_State what,const TopoDS_Shape & FromShape,const TopoDS_Shape & LoadShape);
 		%feature("compactdefaultargs") PropagateFromSection;
-		%feature("autodoc", "	* SectionShape est soit un Vertex de section(NYI), soit une Edge de section. Propagation des shapes de section en partant de SectionShape. return un Compound de section.
+		%feature("autodoc", "	* SectionShape est soit un Vertex de section--NYI--, soit une Edge de section. Propagation des shapes de section en partant de SectionShape. return un Compound de section.
 
 	:param SectionShape:
 	:type SectionShape: TopoDS_Shape &
@@ -667,403 +668,8 @@ class BRepAlgo_DSAccess {
 	__repr__ = _dumps_object
 	}
 };
-%nodefaultctor BRepAlgo_DataMapIteratorOfDataMapOfShapeBoolean;
-class BRepAlgo_DataMapIteratorOfDataMapOfShapeBoolean : public TCollection_BasicMapIterator {
-	public:
-		%feature("compactdefaultargs") BRepAlgo_DataMapIteratorOfDataMapOfShapeBoolean;
-		%feature("autodoc", "	:rtype: None
-") BRepAlgo_DataMapIteratorOfDataMapOfShapeBoolean;
-		 BRepAlgo_DataMapIteratorOfDataMapOfShapeBoolean ();
-		%feature("compactdefaultargs") BRepAlgo_DataMapIteratorOfDataMapOfShapeBoolean;
-		%feature("autodoc", "	:param aMap:
-	:type aMap: BRepAlgo_DataMapOfShapeBoolean &
-	:rtype: None
-") BRepAlgo_DataMapIteratorOfDataMapOfShapeBoolean;
-		 BRepAlgo_DataMapIteratorOfDataMapOfShapeBoolean (const BRepAlgo_DataMapOfShapeBoolean & aMap);
-		%feature("compactdefaultargs") Initialize;
-		%feature("autodoc", "	:param aMap:
-	:type aMap: BRepAlgo_DataMapOfShapeBoolean &
-	:rtype: None
-") Initialize;
-		void Initialize (const BRepAlgo_DataMapOfShapeBoolean & aMap);
-		%feature("compactdefaultargs") Key;
-		%feature("autodoc", "	:rtype: TopoDS_Shape
-") Key;
-		const TopoDS_Shape  Key ();
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:rtype: bool
-") Value;
-		const Standard_Boolean & Value ();
-};
-
-
-%extend BRepAlgo_DataMapIteratorOfDataMapOfShapeBoolean {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor BRepAlgo_DataMapIteratorOfDataMapOfShapeInterference;
-class BRepAlgo_DataMapIteratorOfDataMapOfShapeInterference : public TCollection_BasicMapIterator {
-	public:
-		%feature("compactdefaultargs") BRepAlgo_DataMapIteratorOfDataMapOfShapeInterference;
-		%feature("autodoc", "	:rtype: None
-") BRepAlgo_DataMapIteratorOfDataMapOfShapeInterference;
-		 BRepAlgo_DataMapIteratorOfDataMapOfShapeInterference ();
-		%feature("compactdefaultargs") BRepAlgo_DataMapIteratorOfDataMapOfShapeInterference;
-		%feature("autodoc", "	:param aMap:
-	:type aMap: BRepAlgo_DataMapOfShapeInterference &
-	:rtype: None
-") BRepAlgo_DataMapIteratorOfDataMapOfShapeInterference;
-		 BRepAlgo_DataMapIteratorOfDataMapOfShapeInterference (const BRepAlgo_DataMapOfShapeInterference & aMap);
-		%feature("compactdefaultargs") Initialize;
-		%feature("autodoc", "	:param aMap:
-	:type aMap: BRepAlgo_DataMapOfShapeInterference &
-	:rtype: None
-") Initialize;
-		void Initialize (const BRepAlgo_DataMapOfShapeInterference & aMap);
-		%feature("compactdefaultargs") Key;
-		%feature("autodoc", "	:rtype: TopoDS_Shape
-") Key;
-		const TopoDS_Shape  Key ();
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:rtype: Handle_TopOpeBRepDS_Interference
-") Value;
-		Handle_TopOpeBRepDS_Interference Value ();
-};
-
-
-%extend BRepAlgo_DataMapIteratorOfDataMapOfShapeInterference {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor BRepAlgo_DataMapNodeOfDataMapOfShapeBoolean;
-class BRepAlgo_DataMapNodeOfDataMapOfShapeBoolean : public TCollection_MapNode {
-	public:
-		%feature("compactdefaultargs") BRepAlgo_DataMapNodeOfDataMapOfShapeBoolean;
-		%feature("autodoc", "	:param K:
-	:type K: TopoDS_Shape &
-	:param I:
-	:type I: bool
-	:param n:
-	:type n: TCollection_MapNodePtr &
-	:rtype: None
-") BRepAlgo_DataMapNodeOfDataMapOfShapeBoolean;
-		 BRepAlgo_DataMapNodeOfDataMapOfShapeBoolean (const TopoDS_Shape & K,const Standard_Boolean & I,const TCollection_MapNodePtr & n);
-		%feature("compactdefaultargs") Key;
-		%feature("autodoc", "	:rtype: TopoDS_Shape
-") Key;
-		TopoDS_Shape  Key ();
-
-            %feature("autodoc","1");
-            %extend {
-                Standard_Boolean GetValue() {
-                return (Standard_Boolean) $self->Value();
-                }
-            };
-            %feature("autodoc","1");
-            %extend {
-                void SetValue(Standard_Boolean value ) {
-                $self->Value()=value;
-                }
-            };
-            };
-
-
-%extend BRepAlgo_DataMapNodeOfDataMapOfShapeBoolean {
-	%pythoncode {
-		def GetHandle(self):
-		    try:
-		        return self.thisHandle
-		    except:
-		        self.thisHandle = Handle_BRepAlgo_DataMapNodeOfDataMapOfShapeBoolean(self)
-		        self.thisown = False
-		        return self.thisHandle
-	}
-};
-
-%pythonappend Handle_BRepAlgo_DataMapNodeOfDataMapOfShapeBoolean::Handle_BRepAlgo_DataMapNodeOfDataMapOfShapeBoolean %{
-    # register the handle in the base object
-    if len(args) > 0:
-        register_handle(self, args[0])
-%}
-
-%nodefaultctor Handle_BRepAlgo_DataMapNodeOfDataMapOfShapeBoolean;
-class Handle_BRepAlgo_DataMapNodeOfDataMapOfShapeBoolean : public Handle_TCollection_MapNode {
-
-    public:
-        // constructors
-        Handle_BRepAlgo_DataMapNodeOfDataMapOfShapeBoolean();
-        Handle_BRepAlgo_DataMapNodeOfDataMapOfShapeBoolean(const Handle_BRepAlgo_DataMapNodeOfDataMapOfShapeBoolean &aHandle);
-        Handle_BRepAlgo_DataMapNodeOfDataMapOfShapeBoolean(const BRepAlgo_DataMapNodeOfDataMapOfShapeBoolean *anItem);
-        void Nullify();
-        Standard_Boolean IsNull() const;
-        static const Handle_BRepAlgo_DataMapNodeOfDataMapOfShapeBoolean DownCast(const Handle_Standard_Transient &AnObject);
-
-};
-%extend Handle_BRepAlgo_DataMapNodeOfDataMapOfShapeBoolean {
-    BRepAlgo_DataMapNodeOfDataMapOfShapeBoolean* _get_reference() {
-    return (BRepAlgo_DataMapNodeOfDataMapOfShapeBoolean*)$self->Access();
-    }
-};
-
-%extend Handle_BRepAlgo_DataMapNodeOfDataMapOfShapeBoolean {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
-};
-
-%extend BRepAlgo_DataMapNodeOfDataMapOfShapeBoolean {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor BRepAlgo_DataMapNodeOfDataMapOfShapeInterference;
-class BRepAlgo_DataMapNodeOfDataMapOfShapeInterference : public TCollection_MapNode {
-	public:
-		%feature("compactdefaultargs") BRepAlgo_DataMapNodeOfDataMapOfShapeInterference;
-		%feature("autodoc", "	:param K:
-	:type K: TopoDS_Shape &
-	:param I:
-	:type I: Handle_TopOpeBRepDS_Interference &
-	:param n:
-	:type n: TCollection_MapNodePtr &
-	:rtype: None
-") BRepAlgo_DataMapNodeOfDataMapOfShapeInterference;
-		 BRepAlgo_DataMapNodeOfDataMapOfShapeInterference (const TopoDS_Shape & K,const Handle_TopOpeBRepDS_Interference & I,const TCollection_MapNodePtr & n);
-		%feature("compactdefaultargs") Key;
-		%feature("autodoc", "	:rtype: TopoDS_Shape
-") Key;
-		TopoDS_Shape  Key ();
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:rtype: Handle_TopOpeBRepDS_Interference
-") Value;
-		Handle_TopOpeBRepDS_Interference Value ();
-};
-
-
-%extend BRepAlgo_DataMapNodeOfDataMapOfShapeInterference {
-	%pythoncode {
-		def GetHandle(self):
-		    try:
-		        return self.thisHandle
-		    except:
-		        self.thisHandle = Handle_BRepAlgo_DataMapNodeOfDataMapOfShapeInterference(self)
-		        self.thisown = False
-		        return self.thisHandle
-	}
-};
-
-%pythonappend Handle_BRepAlgo_DataMapNodeOfDataMapOfShapeInterference::Handle_BRepAlgo_DataMapNodeOfDataMapOfShapeInterference %{
-    # register the handle in the base object
-    if len(args) > 0:
-        register_handle(self, args[0])
-%}
-
-%nodefaultctor Handle_BRepAlgo_DataMapNodeOfDataMapOfShapeInterference;
-class Handle_BRepAlgo_DataMapNodeOfDataMapOfShapeInterference : public Handle_TCollection_MapNode {
-
-    public:
-        // constructors
-        Handle_BRepAlgo_DataMapNodeOfDataMapOfShapeInterference();
-        Handle_BRepAlgo_DataMapNodeOfDataMapOfShapeInterference(const Handle_BRepAlgo_DataMapNodeOfDataMapOfShapeInterference &aHandle);
-        Handle_BRepAlgo_DataMapNodeOfDataMapOfShapeInterference(const BRepAlgo_DataMapNodeOfDataMapOfShapeInterference *anItem);
-        void Nullify();
-        Standard_Boolean IsNull() const;
-        static const Handle_BRepAlgo_DataMapNodeOfDataMapOfShapeInterference DownCast(const Handle_Standard_Transient &AnObject);
-
-};
-%extend Handle_BRepAlgo_DataMapNodeOfDataMapOfShapeInterference {
-    BRepAlgo_DataMapNodeOfDataMapOfShapeInterference* _get_reference() {
-    return (BRepAlgo_DataMapNodeOfDataMapOfShapeInterference*)$self->Access();
-    }
-};
-
-%extend Handle_BRepAlgo_DataMapNodeOfDataMapOfShapeInterference {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
-};
-
-%extend BRepAlgo_DataMapNodeOfDataMapOfShapeInterference {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor BRepAlgo_DataMapOfShapeBoolean;
-class BRepAlgo_DataMapOfShapeBoolean : public TCollection_BasicMap {
-	public:
-		%feature("compactdefaultargs") BRepAlgo_DataMapOfShapeBoolean;
-		%feature("autodoc", "	:param NbBuckets: default value is 1
-	:type NbBuckets: int
-	:rtype: None
-") BRepAlgo_DataMapOfShapeBoolean;
-		 BRepAlgo_DataMapOfShapeBoolean (const Standard_Integer NbBuckets = 1);
-		%feature("compactdefaultargs") Assign;
-		%feature("autodoc", "	:param Other:
-	:type Other: BRepAlgo_DataMapOfShapeBoolean &
-	:rtype: BRepAlgo_DataMapOfShapeBoolean
-") Assign;
-		BRepAlgo_DataMapOfShapeBoolean & Assign (const BRepAlgo_DataMapOfShapeBoolean & Other);
-		%feature("compactdefaultargs") operator =;
-		%feature("autodoc", "	:param Other:
-	:type Other: BRepAlgo_DataMapOfShapeBoolean &
-	:rtype: BRepAlgo_DataMapOfShapeBoolean
-") operator =;
-		BRepAlgo_DataMapOfShapeBoolean & operator = (const BRepAlgo_DataMapOfShapeBoolean & Other);
-		%feature("compactdefaultargs") ReSize;
-		%feature("autodoc", "	:param NbBuckets:
-	:type NbBuckets: int
-	:rtype: None
-") ReSize;
-		void ReSize (const Standard_Integer NbBuckets);
-		%feature("compactdefaultargs") Clear;
-		%feature("autodoc", "	:rtype: None
-") Clear;
-		void Clear ();
-		%feature("compactdefaultargs") Bind;
-		%feature("autodoc", "	:param K:
-	:type K: TopoDS_Shape &
-	:param I:
-	:type I: bool
-	:rtype: bool
-") Bind;
-		Standard_Boolean Bind (const TopoDS_Shape & K,const Standard_Boolean & I);
-		%feature("compactdefaultargs") IsBound;
-		%feature("autodoc", "	:param K:
-	:type K: TopoDS_Shape &
-	:rtype: bool
-") IsBound;
-		Standard_Boolean IsBound (const TopoDS_Shape & K);
-		%feature("compactdefaultargs") UnBind;
-		%feature("autodoc", "	:param K:
-	:type K: TopoDS_Shape &
-	:rtype: bool
-") UnBind;
-		Standard_Boolean UnBind (const TopoDS_Shape & K);
-		%feature("compactdefaultargs") Find;
-		%feature("autodoc", "	:param K:
-	:type K: TopoDS_Shape &
-	:rtype: bool
-") Find;
-		const Standard_Boolean & Find (const TopoDS_Shape & K);
-		%feature("compactdefaultargs") ChangeFind;
-		%feature("autodoc", "	:param K:
-	:type K: TopoDS_Shape &
-	:rtype: bool
-") ChangeFind;
-		Standard_Boolean & ChangeFind (const TopoDS_Shape & K);
-		%feature("compactdefaultargs") Find1;
-		%feature("autodoc", "	:param K:
-	:type K: TopoDS_Shape &
-	:rtype: Standard_Address
-") Find1;
-		Standard_Address Find1 (const TopoDS_Shape & K);
-		%feature("compactdefaultargs") ChangeFind1;
-		%feature("autodoc", "	:param K:
-	:type K: TopoDS_Shape &
-	:rtype: Standard_Address
-") ChangeFind1;
-		Standard_Address ChangeFind1 (const TopoDS_Shape & K);
-};
-
-
-%extend BRepAlgo_DataMapOfShapeBoolean {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor BRepAlgo_DataMapOfShapeInterference;
-class BRepAlgo_DataMapOfShapeInterference : public TCollection_BasicMap {
-	public:
-		%feature("compactdefaultargs") BRepAlgo_DataMapOfShapeInterference;
-		%feature("autodoc", "	:param NbBuckets: default value is 1
-	:type NbBuckets: int
-	:rtype: None
-") BRepAlgo_DataMapOfShapeInterference;
-		 BRepAlgo_DataMapOfShapeInterference (const Standard_Integer NbBuckets = 1);
-		%feature("compactdefaultargs") Assign;
-		%feature("autodoc", "	:param Other:
-	:type Other: BRepAlgo_DataMapOfShapeInterference &
-	:rtype: BRepAlgo_DataMapOfShapeInterference
-") Assign;
-		BRepAlgo_DataMapOfShapeInterference & Assign (const BRepAlgo_DataMapOfShapeInterference & Other);
-		%feature("compactdefaultargs") operator =;
-		%feature("autodoc", "	:param Other:
-	:type Other: BRepAlgo_DataMapOfShapeInterference &
-	:rtype: BRepAlgo_DataMapOfShapeInterference
-") operator =;
-		BRepAlgo_DataMapOfShapeInterference & operator = (const BRepAlgo_DataMapOfShapeInterference & Other);
-		%feature("compactdefaultargs") ReSize;
-		%feature("autodoc", "	:param NbBuckets:
-	:type NbBuckets: int
-	:rtype: None
-") ReSize;
-		void ReSize (const Standard_Integer NbBuckets);
-		%feature("compactdefaultargs") Clear;
-		%feature("autodoc", "	:rtype: None
-") Clear;
-		void Clear ();
-		%feature("compactdefaultargs") Bind;
-		%feature("autodoc", "	:param K:
-	:type K: TopoDS_Shape &
-	:param I:
-	:type I: Handle_TopOpeBRepDS_Interference &
-	:rtype: bool
-") Bind;
-		Standard_Boolean Bind (const TopoDS_Shape & K,const Handle_TopOpeBRepDS_Interference & I);
-		%feature("compactdefaultargs") IsBound;
-		%feature("autodoc", "	:param K:
-	:type K: TopoDS_Shape &
-	:rtype: bool
-") IsBound;
-		Standard_Boolean IsBound (const TopoDS_Shape & K);
-		%feature("compactdefaultargs") UnBind;
-		%feature("autodoc", "	:param K:
-	:type K: TopoDS_Shape &
-	:rtype: bool
-") UnBind;
-		Standard_Boolean UnBind (const TopoDS_Shape & K);
-		%feature("compactdefaultargs") Find;
-		%feature("autodoc", "	:param K:
-	:type K: TopoDS_Shape &
-	:rtype: Handle_TopOpeBRepDS_Interference
-") Find;
-		Handle_TopOpeBRepDS_Interference Find (const TopoDS_Shape & K);
-		%feature("compactdefaultargs") ChangeFind;
-		%feature("autodoc", "	:param K:
-	:type K: TopoDS_Shape &
-	:rtype: Handle_TopOpeBRepDS_Interference
-") ChangeFind;
-		Handle_TopOpeBRepDS_Interference ChangeFind (const TopoDS_Shape & K);
-		%feature("compactdefaultargs") Find1;
-		%feature("autodoc", "	:param K:
-	:type K: TopoDS_Shape &
-	:rtype: Standard_Address
-") Find1;
-		Standard_Address Find1 (const TopoDS_Shape & K);
-		%feature("compactdefaultargs") ChangeFind1;
-		%feature("autodoc", "	:param K:
-	:type K: TopoDS_Shape &
-	:rtype: Standard_Address
-") ChangeFind1;
-		Standard_Address ChangeFind1 (const TopoDS_Shape & K);
-};
-
-
-%extend BRepAlgo_DataMapOfShapeInterference {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
 %nodefaultctor BRepAlgo_EdgeConnector;
-class BRepAlgo_EdgeConnector : public MMgt_TShared {
+class BRepAlgo_EdgeConnector : public Standard_Transient {
 	public:
 		%feature("compactdefaultargs") BRepAlgo_EdgeConnector;
 		%feature("autodoc", "	:rtype: None
@@ -1108,7 +714,7 @@ class BRepAlgo_EdgeConnector : public MMgt_TShared {
 ") Done;
 		void Done ();
 		%feature("compactdefaultargs") IsDone;
-		%feature("autodoc", "	* NYI returns true if proceeded to MakeBlock()
+		%feature("autodoc", "	* NYI returns true if proceeded to MakeBlock----
 
 	:rtype: bool
 ") IsDone;
@@ -1143,7 +749,7 @@ class BRepAlgo_EdgeConnector : public MMgt_TShared {
 %}
 
 %nodefaultctor Handle_BRepAlgo_EdgeConnector;
-class Handle_BRepAlgo_EdgeConnector : public Handle_MMgt_TShared {
+class Handle_BRepAlgo_EdgeConnector : public Handle_Standard_Transient {
 
     public:
         // constructors
@@ -1155,19 +761,20 @@ class Handle_BRepAlgo_EdgeConnector : public Handle_MMgt_TShared {
         static const Handle_BRepAlgo_EdgeConnector DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_BRepAlgo_EdgeConnector {
     BRepAlgo_EdgeConnector* _get_reference() {
-    return (BRepAlgo_EdgeConnector*)$self->Access();
+    return (BRepAlgo_EdgeConnector*)$self->get();
     }
 };
 
 %extend Handle_BRepAlgo_EdgeConnector {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend BRepAlgo_EdgeConnector {
@@ -1183,7 +790,7 @@ class BRepAlgo_FaceRestrictor {
 ") BRepAlgo_FaceRestrictor;
 		 BRepAlgo_FaceRestrictor ();
 		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	* the surface of <F> will be the the surface of each new faces built. <Proj> is used to update pcurves on edges if necessary. See Add().
+		%feature("autodoc", "	* the surface of <F> will be the the surface of each new faces built. <Proj> is used to update pcurves on edges if necessary. See Add----.
 
 	:param F:
 	:type F: TopoDS_Face &
@@ -1336,7 +943,7 @@ class BRepAlgo_Image {
 ") HasImage;
 		Standard_Boolean HasImage (const TopoDS_Shape & S);
 		%feature("compactdefaultargs") Image;
-		%feature("autodoc", "	* Returns the Image of <S>. Returns <S> in the list if HasImage(S) is false.
+		%feature("autodoc", "	* Returns the Image of <S>. Returns <S> in the list if HasImage--S-- is false.
 
 	:param S:
 	:type S: TopoDS_Shape &
@@ -1344,7 +951,7 @@ class BRepAlgo_Image {
 ") Image;
 		const TopTools_ListOfShape & Image (const TopoDS_Shape & S);
 		%feature("compactdefaultargs") LastImage;
-		%feature("autodoc", "	* Stores in <L> the images of images of...images of <S>. <L> contains only <S> if HasImage(S) is false.
+		%feature("autodoc", "	* Stores in <L> the images of images of...images of <S>. <L> contains only <S> if HasImage--S-- is false.
 
 	:param S:
 	:type S: TopoDS_Shape &
@@ -1360,7 +967,7 @@ class BRepAlgo_Image {
 ") Compact;
 		void Compact ();
 		%feature("compactdefaultargs") Filter;
-		%feature("autodoc", "	* Deletes in the images the shape of type <ShapeType> which are not in <S>. Warning: Compact() must be call before.
+		%feature("autodoc", "	* Deletes in the images the shape of type <ShapeType> which are not in <S>. Warning: Compact---- must be call before.
 
 	:param S:
 	:type S: TopoDS_Shape &
@@ -1619,224 +1226,10 @@ class BRepAlgo_NormalProjection {
 	__repr__ = _dumps_object
 	}
 };
-%nodefaultctor BRepAlgo_SequenceNodeOfSequenceOfSequenceOfInteger;
-class BRepAlgo_SequenceNodeOfSequenceOfSequenceOfInteger : public TCollection_SeqNode {
-	public:
-		%feature("compactdefaultargs") BRepAlgo_SequenceNodeOfSequenceOfSequenceOfInteger;
-		%feature("autodoc", "	:param I:
-	:type I: TColStd_SequenceOfInteger &
-	:param n:
-	:type n: TCollection_SeqNodePtr &
-	:param p:
-	:type p: TCollection_SeqNodePtr &
-	:rtype: None
-") BRepAlgo_SequenceNodeOfSequenceOfSequenceOfInteger;
-		 BRepAlgo_SequenceNodeOfSequenceOfSequenceOfInteger (const TColStd_SequenceOfInteger & I,const TCollection_SeqNodePtr & n,const TCollection_SeqNodePtr & p);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:rtype: TColStd_SequenceOfInteger
-") Value;
-		TColStd_SequenceOfInteger & Value ();
-};
-
-
-%extend BRepAlgo_SequenceNodeOfSequenceOfSequenceOfInteger {
-	%pythoncode {
-		def GetHandle(self):
-		    try:
-		        return self.thisHandle
-		    except:
-		        self.thisHandle = Handle_BRepAlgo_SequenceNodeOfSequenceOfSequenceOfInteger(self)
-		        self.thisown = False
-		        return self.thisHandle
-	}
-};
-
-%pythonappend Handle_BRepAlgo_SequenceNodeOfSequenceOfSequenceOfInteger::Handle_BRepAlgo_SequenceNodeOfSequenceOfSequenceOfInteger %{
-    # register the handle in the base object
-    if len(args) > 0:
-        register_handle(self, args[0])
-%}
-
-%nodefaultctor Handle_BRepAlgo_SequenceNodeOfSequenceOfSequenceOfInteger;
-class Handle_BRepAlgo_SequenceNodeOfSequenceOfSequenceOfInteger : public Handle_TCollection_SeqNode {
-
-    public:
-        // constructors
-        Handle_BRepAlgo_SequenceNodeOfSequenceOfSequenceOfInteger();
-        Handle_BRepAlgo_SequenceNodeOfSequenceOfSequenceOfInteger(const Handle_BRepAlgo_SequenceNodeOfSequenceOfSequenceOfInteger &aHandle);
-        Handle_BRepAlgo_SequenceNodeOfSequenceOfSequenceOfInteger(const BRepAlgo_SequenceNodeOfSequenceOfSequenceOfInteger *anItem);
-        void Nullify();
-        Standard_Boolean IsNull() const;
-        static const Handle_BRepAlgo_SequenceNodeOfSequenceOfSequenceOfInteger DownCast(const Handle_Standard_Transient &AnObject);
-
-};
-%extend Handle_BRepAlgo_SequenceNodeOfSequenceOfSequenceOfInteger {
-    BRepAlgo_SequenceNodeOfSequenceOfSequenceOfInteger* _get_reference() {
-    return (BRepAlgo_SequenceNodeOfSequenceOfSequenceOfInteger*)$self->Access();
-    }
-};
-
-%extend Handle_BRepAlgo_SequenceNodeOfSequenceOfSequenceOfInteger {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
-};
-
-%extend BRepAlgo_SequenceNodeOfSequenceOfSequenceOfInteger {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor BRepAlgo_SequenceOfSequenceOfInteger;
-class BRepAlgo_SequenceOfSequenceOfInteger : public TCollection_BaseSequence {
-	public:
-		%feature("compactdefaultargs") BRepAlgo_SequenceOfSequenceOfInteger;
-		%feature("autodoc", "	:rtype: None
-") BRepAlgo_SequenceOfSequenceOfInteger;
-		 BRepAlgo_SequenceOfSequenceOfInteger ();
-		%feature("compactdefaultargs") BRepAlgo_SequenceOfSequenceOfInteger;
-		%feature("autodoc", "	:param Other:
-	:type Other: BRepAlgo_SequenceOfSequenceOfInteger &
-	:rtype: None
-") BRepAlgo_SequenceOfSequenceOfInteger;
-		 BRepAlgo_SequenceOfSequenceOfInteger (const BRepAlgo_SequenceOfSequenceOfInteger & Other);
-		%feature("compactdefaultargs") Clear;
-		%feature("autodoc", "	:rtype: None
-") Clear;
-		void Clear ();
-		%feature("compactdefaultargs") Assign;
-		%feature("autodoc", "	:param Other:
-	:type Other: BRepAlgo_SequenceOfSequenceOfInteger &
-	:rtype: BRepAlgo_SequenceOfSequenceOfInteger
-") Assign;
-		const BRepAlgo_SequenceOfSequenceOfInteger & Assign (const BRepAlgo_SequenceOfSequenceOfInteger & Other);
-		%feature("compactdefaultargs") operator =;
-		%feature("autodoc", "	:param Other:
-	:type Other: BRepAlgo_SequenceOfSequenceOfInteger &
-	:rtype: BRepAlgo_SequenceOfSequenceOfInteger
-") operator =;
-		const BRepAlgo_SequenceOfSequenceOfInteger & operator = (const BRepAlgo_SequenceOfSequenceOfInteger & Other);
-		%feature("compactdefaultargs") Append;
-		%feature("autodoc", "	:param T:
-	:type T: TColStd_SequenceOfInteger &
-	:rtype: None
-") Append;
-		void Append (const TColStd_SequenceOfInteger & T);
-		%feature("compactdefaultargs") Append;
-		%feature("autodoc", "	:param S:
-	:type S: BRepAlgo_SequenceOfSequenceOfInteger &
-	:rtype: None
-") Append;
-		void Append (BRepAlgo_SequenceOfSequenceOfInteger & S);
-		%feature("compactdefaultargs") Prepend;
-		%feature("autodoc", "	:param T:
-	:type T: TColStd_SequenceOfInteger &
-	:rtype: None
-") Prepend;
-		void Prepend (const TColStd_SequenceOfInteger & T);
-		%feature("compactdefaultargs") Prepend;
-		%feature("autodoc", "	:param S:
-	:type S: BRepAlgo_SequenceOfSequenceOfInteger &
-	:rtype: None
-") Prepend;
-		void Prepend (BRepAlgo_SequenceOfSequenceOfInteger & S);
-		%feature("compactdefaultargs") InsertBefore;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param T:
-	:type T: TColStd_SequenceOfInteger &
-	:rtype: None
-") InsertBefore;
-		void InsertBefore (const Standard_Integer Index,const TColStd_SequenceOfInteger & T);
-		%feature("compactdefaultargs") InsertBefore;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param S:
-	:type S: BRepAlgo_SequenceOfSequenceOfInteger &
-	:rtype: None
-") InsertBefore;
-		void InsertBefore (const Standard_Integer Index,BRepAlgo_SequenceOfSequenceOfInteger & S);
-		%feature("compactdefaultargs") InsertAfter;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param T:
-	:type T: TColStd_SequenceOfInteger &
-	:rtype: None
-") InsertAfter;
-		void InsertAfter (const Standard_Integer Index,const TColStd_SequenceOfInteger & T);
-		%feature("compactdefaultargs") InsertAfter;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param S:
-	:type S: BRepAlgo_SequenceOfSequenceOfInteger &
-	:rtype: None
-") InsertAfter;
-		void InsertAfter (const Standard_Integer Index,BRepAlgo_SequenceOfSequenceOfInteger & S);
-		%feature("compactdefaultargs") First;
-		%feature("autodoc", "	:rtype: TColStd_SequenceOfInteger
-") First;
-		const TColStd_SequenceOfInteger & First ();
-		%feature("compactdefaultargs") Last;
-		%feature("autodoc", "	:rtype: TColStd_SequenceOfInteger
-") Last;
-		const TColStd_SequenceOfInteger & Last ();
-		%feature("compactdefaultargs") Split;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param Sub:
-	:type Sub: BRepAlgo_SequenceOfSequenceOfInteger &
-	:rtype: None
-") Split;
-		void Split (const Standard_Integer Index,BRepAlgo_SequenceOfSequenceOfInteger & Sub);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: TColStd_SequenceOfInteger
-") Value;
-		const TColStd_SequenceOfInteger & Value (const Standard_Integer Index);
-		%feature("compactdefaultargs") SetValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param I:
-	:type I: TColStd_SequenceOfInteger &
-	:rtype: None
-") SetValue;
-		void SetValue (const Standard_Integer Index,const TColStd_SequenceOfInteger & I);
-		%feature("compactdefaultargs") ChangeValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: TColStd_SequenceOfInteger
-") ChangeValue;
-		TColStd_SequenceOfInteger & ChangeValue (const Standard_Integer Index);
-		%feature("compactdefaultargs") Remove;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: None
-") Remove;
-		void Remove (const Standard_Integer Index);
-		%feature("compactdefaultargs") Remove;
-		%feature("autodoc", "	:param FromIndex:
-	:type FromIndex: int
-	:param ToIndex:
-	:type ToIndex: int
-	:rtype: None
-") Remove;
-		void Remove (const Standard_Integer FromIndex,const Standard_Integer ToIndex);
-};
-
-
-%extend BRepAlgo_SequenceOfSequenceOfInteger {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
 class BRepAlgo_Tool {
 	public:
 		%feature("compactdefaultargs") Deboucle3D;
-		%feature("autodoc", "	* Remove the non valid part of an offsetshape 1 - Remove all the free boundary and the faces connex to such edges. 2 - Remove all the shapes not valid in the result (according to the side of offseting) in this verion only the first point is implemented.
+		%feature("autodoc", "	* Remove the non valid part of an offsetshape 1 - Remove all the free boundary and the faces connex to such edges. 2 - Remove all the shapes not valid in the result --according to the side of offseting-- in this verion only the first point is implemented.
 
 	:param S:
 	:type S: TopoDS_Shape &
@@ -1960,7 +1353,7 @@ class BRepAlgo_Section : public BRepAlgo_BooleanOperation {
 ") BRepAlgo_Section;
 		 BRepAlgo_Section (const Handle_Geom_Surface & Sf,const TopoDS_Shape & Sh,const Standard_Boolean PerformNow = Standard_True);
 		%feature("compactdefaultargs") BRepAlgo_Section;
-		%feature("autodoc", "	* This and the above algorithms construct a framework for computing the section lines of - the two shapes Sh1 and Sh2, or - the shape Sh and the plane Pl, or - the shape Sh and the surface Sf, or - the surface Sf and the shape Sh, or - the two surfaces Sf1 and Sf2, and builds the result if PerformNow equals true, its default value. If PerformNow equals false, the intersection will be computed later by the function Build. The constructed shape will be returned by the function Shape. This is a compound object composed of edges. These intersection edges may be built: - on new intersection lines, or - on coincident portions of edges in the two intersected shapes. These intersection edges are independent: they are not chained or grouped in wires. If no intersection edge exists, the result is an empty compound object. Note that other objects than TopoDS_Shape shapes involved in these syntaxes are converted into faces or shells before performing the computation of the intersection. A shape resulting from this conversion can be retrieved with the function Shape1 or Shape2. Parametric 2D curves on intersection edges No parametric 2D curve (pcurve) is defined for each elementary edge of the result. To attach such parametric curves to the constructed edges you may use a constructor with the PerformNow flag equal to false; then you use: - the function ComputePCurveOn1 to ask for the additional computation of a pcurve in the parametric space of the first shape, - the function ComputePCurveOn2 to ask for the additional computation of a pcurve in the parametric space of the second shape, - in the end, the function Build to construct the result. Note that as a result, pcurves will only be added on edges built on new intersection lines. Approximation of intersection edges The underlying 3D geometry attached to each elementary edge of the result is: - analytic where possible, provided the corresponding geometry corresponds to a type of analytic curve defined in the Geom package; for example, the intersection of a cylindrical shape with a plane gives an ellipse or a circle; - or elsewhere, given as a succession of points grouped together in a BSpline curve of degree 1. If you prefer to have an attached 3D geometry which is a BSpline approximation of the computed set of points on computed elementary intersection edges whose underlying geometry is not analytic, you may use a constructor with the PerformNow flag equal to false. Then you use: - the function Approximation to ask for this computation option, and - the function Build to construct the result. Note that as a result, approximations will only be computed on edges built on new intersection lines. Example You may also combine these computation options. In the following example: - each elementary edge of the computed intersection, built on a new intersection line, which does not correspond to an analytic Geom curve, will be approximated by a BSpline curve whose degree is not greater than 8. - each elementary edge built on a new intersection line, will have: - a pcurve in the parametric space of the shape S1, - no pcurve in the parametric space of the shape S2. // TopoDS_Shape S1 = ... , S2 = ... ; Standard_Boolean PerformNow = Standard_False; BRepAlgo_Section S ( S1, S2, PerformNow ); S.ComputePCurveOn1 (Standard_True); S.Approximation (Standard_True); S.Build(); TopoDS_Shape R = S.Shape();
+		%feature("autodoc", "	* This and the above algorithms construct a framework for computing the section lines of - the two shapes Sh1 and Sh2, or - the shape Sh and the plane Pl, or - the shape Sh and the surface Sf, or - the surface Sf and the shape Sh, or - the two surfaces Sf1 and Sf2, and builds the result if PerformNow equals true, its default value. If PerformNow equals false, the intersection will be computed later by the function Build. The constructed shape will be returned by the function Shape. This is a compound object composed of edges. These intersection edges may be built: - on new intersection lines, or - on coincident portions of edges in the two intersected shapes. These intersection edges are independent: they are not chained or grouped in wires. If no intersection edge exists, the result is an empty compound object. Note that other objects than TopoDS_Shape shapes involved in these syntaxes are converted into faces or shells before performing the computation of the intersection. A shape resulting from this conversion can be retrieved with the function Shape1 or Shape2. Parametric 2D curves on intersection edges No parametric 2D curve --pcurve-- is defined for each elementary edge of the result. To attach such parametric curves to the constructed edges you may use a constructor with the PerformNow flag equal to false; then you use: - the function ComputePCurveOn1 to ask for the additional computation of a pcurve in the parametric space of the first shape, - the function ComputePCurveOn2 to ask for the additional computation of a pcurve in the parametric space of the second shape, - in the end, the function Build to construct the result. Note that as a result, pcurves will only be added on edges built on new intersection lines. Approximation of intersection edges The underlying 3D geometry attached to each elementary edge of the result is: - analytic where possible, provided the corresponding geometry corresponds to a type of analytic curve defined in the Geom package; for example, the intersection of a cylindrical shape with a plane gives an ellipse or a circle; - or elsewhere, given as a succession of points grouped together in a BSpline curve of degree 1. If you prefer to have an attached 3D geometry which is a BSpline approximation of the computed set of points on computed elementary intersection edges whose underlying geometry is not analytic, you may use a constructor with the PerformNow flag equal to false. Then you use: - the function Approximation to ask for this computation option, and - the function Build to construct the result. Note that as a result, approximations will only be computed on edges built on new intersection lines. Example You may also combine these computation options. In the following example: - each elementary edge of the computed intersection, built on a new intersection line, which does not correspond to an analytic Geom curve, will be approximated by a BSpline curve whose degree is not greater than 8. - each elementary edge built on a new intersection line, will have: - a pcurve in the parametric space of the shape S1, - no pcurve in the parametric space of the shape S2. // TopoDS_Shape S1 = ... , S2 = ... ; Standard_Boolean PerformNow = Standard_False; BRepAlgo_Section S -- S1, S2, PerformNow --; S.ComputePCurveOn1 --Standard_True--; S.Approximation --Standard_True--; S.Build----; TopoDS_Shape R = S.Shape----;
 
 	:param Sf1:
 	:type Sf1: Handle_Geom_Surface &
@@ -2028,7 +1421,7 @@ class BRepAlgo_Section : public BRepAlgo_BooleanOperation {
 ") Approximation;
 		void Approximation (const Standard_Boolean B);
 		%feature("compactdefaultargs") ComputePCurveOn1;
-		%feature("autodoc", "	* Indicates if the Pcurve must be (or not) performed on first part.
+		%feature("autodoc", "	* Indicates if the Pcurve must be --or not-- performed on first part.
 
 	:param B:
 	:type B: bool
@@ -2036,7 +1429,7 @@ class BRepAlgo_Section : public BRepAlgo_BooleanOperation {
 ") ComputePCurveOn1;
 		void ComputePCurveOn1 (const Standard_Boolean B);
 		%feature("compactdefaultargs") ComputePCurveOn2;
-		%feature("autodoc", "	* Define options for the computation of further intersections which will be performed by the function Build in this framework. By default, no parametric 2D curve (pcurve) is defined for the elementary edges of the result. If ComputePCurve1 equals true, further computations performed in this framework with the function Build will attach an additional pcurve in the parametric space of the first shape to the constructed edges. If ComputePCurve2 equals true, the additional pcurve will be attached to the constructed edges in the parametric space of the second shape. These two functions may be used together. Note that as a result, pcurves will only be added onto edges built on new intersection lines.
+		%feature("autodoc", "	* Define options for the computation of further intersections which will be performed by the function Build in this framework. By default, no parametric 2D curve --pcurve-- is defined for the elementary edges of the result. If ComputePCurve1 equals true, further computations performed in this framework with the function Build will attach an additional pcurve in the parametric space of the first shape to the constructed edges. If ComputePCurve2 equals true, the additional pcurve will be attached to the constructed edges in the parametric space of the second shape. These two functions may be used together. Note that as a result, pcurves will only be added onto edges built on new intersection lines.
 
 	:param B:
 	:type B: bool
@@ -2044,7 +1437,7 @@ class BRepAlgo_Section : public BRepAlgo_BooleanOperation {
 ") ComputePCurveOn2;
 		void ComputePCurveOn2 (const Standard_Boolean B);
 		%feature("compactdefaultargs") Build;
-		%feature("autodoc", "	* Performs the computation of the section lines between the two parts defined at the time of construction of this framework or reinitialized with the Init1 and Init2 functions. The constructed shape will be returned by the function Shape. This is a compound object composed of edges. These intersection edges may be built: - on new intersection lines, or - on coincident portions of edges in the two intersected shapes. These intersection edges are independent: they are not chained or grouped into wires. If no intersection edge exists, the result is an empty compound object. The shapes involved in the construction of the section lines can be retrieved with the function Shape1 or Shape2. Note that other objects than TopoDS_Shape shapes given as arguments at the construction time of this framework, or to the Init1 or Init2 function, are converted into faces or shells before performing the computation of the intersection. Parametric 2D curves on intersection edges No parametric 2D curve (pcurve) is defined for the elementary edges of the result. To attach parametric curves like this to the constructed edges you have to use: - the function ComputePCurveOn1 to ask for the additional computation of a pcurve in the parametric space of the first shape, - the function ComputePCurveOn2 to ask for the additional computation of a pcurve in the parametric space of the second shape. This must be done before calling this function. Note that as a result, pcurves are added on edges built on new intersection lines only. Approximation of intersection edges The underlying 3D geometry attached to each elementary edge of the result is: - analytic where possible provided the corresponding geometry corresponds to a type of analytic curve defined in the Geom package; for example, the intersection of a cylindrical shape with a plane gives an ellipse or a circle; or - elsewhere, given as a succession of points grouped together in a BSpline curve of degree 1. If, on computed elementary intersection edges whose underlying geometry is not analytic, you prefer to have an attached 3D geometry which is a BSpline approximation of the computed set of points, you have to use the function Approximation to ask for this computation option before calling this function. You may also have combined these computation options: look at the example given above to illustrate the use of the constructors.
+		%feature("autodoc", "	* Performs the computation of the section lines between the two parts defined at the time of construction of this framework or reinitialized with the Init1 and Init2 functions. The constructed shape will be returned by the function Shape. This is a compound object composed of edges. These intersection edges may be built: - on new intersection lines, or - on coincident portions of edges in the two intersected shapes. These intersection edges are independent: they are not chained or grouped into wires. If no intersection edge exists, the result is an empty compound object. The shapes involved in the construction of the section lines can be retrieved with the function Shape1 or Shape2. Note that other objects than TopoDS_Shape shapes given as arguments at the construction time of this framework, or to the Init1 or Init2 function, are converted into faces or shells before performing the computation of the intersection. Parametric 2D curves on intersection edges No parametric 2D curve --pcurve-- is defined for the elementary edges of the result. To attach parametric curves like this to the constructed edges you have to use: - the function ComputePCurveOn1 to ask for the additional computation of a pcurve in the parametric space of the first shape, - the function ComputePCurveOn2 to ask for the additional computation of a pcurve in the parametric space of the second shape. This must be done before calling this function. Note that as a result, pcurves are added on edges built on new intersection lines only. Approximation of intersection edges The underlying 3D geometry attached to each elementary edge of the result is: - analytic where possible provided the corresponding geometry corresponds to a type of analytic curve defined in the Geom package; for example, the intersection of a cylindrical shape with a plane gives an ellipse or a circle; or - elsewhere, given as a succession of points grouped together in a BSpline curve of degree 1. If, on computed elementary intersection edges whose underlying geometry is not analytic, you prefer to have an attached 3D geometry which is a BSpline approximation of the computed set of points, you have to use the function Approximation to ask for this computation option before calling this function. You may also have combined these computation options: look at the example given above to illustrate the use of the constructors.
 
 	:rtype: None
 ") Build;

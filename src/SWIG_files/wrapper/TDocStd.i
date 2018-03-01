@@ -1,5 +1,5 @@
 /*
-Copyright 2008-2017 Thomas Paviot (tpaviot@gmail.com)
+Copyright 2008-2018 Thomas Paviot (tpaviot@gmail.com)
 
 
 This file is part of pythonOCC.
@@ -57,6 +57,12 @@ def register_handle(handle, base_object):
 typedef TDocStd_XLink * TDocStd_XLinkPtr;
 /* end typedefs declaration */
 
+/* templates */
+%template(TDocStd_LabelIDMapDataMap) NCollection_DataMap <TDF_Label , TDF_IDMap , TDF_LabelMapHasher>;
+%template(TDocStd_SequenceOfApplicationDelta) NCollection_Sequence <Handle_TDocStd_ApplicationDelta>;
+%template(TDocStd_SequenceOfDocument) NCollection_Sequence <Handle_TDocStd_Document>;
+/* end templates declaration */
+
 /* public enums */
 /* end public enums declaration */
 
@@ -82,24 +88,68 @@ class TDocStd {
 %nodefaultctor TDocStd_Application;
 class TDocStd_Application : public CDF_Application {
 	public:
+		%feature("compactdefaultargs") TDocStd_Application;
+		%feature("autodoc", "	* Constructs the new instance and registers it in CDM_Session
+
+	:rtype: None
+") TDocStd_Application;
+		 TDocStd_Application ();
 		%feature("compactdefaultargs") IsDriverLoaded;
 		%feature("autodoc", "	* Check if meta data driver was successfully loaded by the application constructor
 
 	:rtype: bool
 ") IsDriverLoaded;
 		Standard_Boolean IsDriverLoaded ();
+		%feature("compactdefaultargs") MessageDriver;
+		%feature("autodoc", "	* Redefines message driver, by default outputs to cout.
+
+	:rtype: Handle_CDM_MessageDriver
+") MessageDriver;
+		virtual Handle_CDM_MessageDriver MessageDriver ();
 		%feature("compactdefaultargs") Resources;
-		%feature("autodoc", "	* create (if not done) a Manager using ResourcesName method.
+		%feature("autodoc", "	* Returns resource manager defining supported persistent formats. //! Default implementation loads resource file with name ResourcesName----, unless field myResources is already initialized --either by previous call or in any other way--. //! The resource manager should define: //! * Format name for each file extension supported: - [Extension].FileFormat: [Format] //! * For each format supported --as returned by Formats------, its extension, description string, and --when applicable-- GUIDs of storage and retrieval plugins: - [Format].Description: [Description] - [Format].FileExtension: [Extension] - [Format].RetrievalPlugin: [GUID] --optional-- - [Format].StoragePlugin: [GUID] --optional--
 
 	:rtype: Handle_Resource_Manager
 ") Resources;
 		virtual Handle_Resource_Manager Resources ();
 		%feature("compactdefaultargs") ResourcesName;
-		%feature("autodoc", "	* Returns the name of the file containing the resources of this application. In a resource file, the application associates the schema name of the document with the storage and retrieval plug-ins that are to be loaded for each document. On retrieval, the application reads the schema name in the heading of the CSF file and loads the plug-in indicated in the resource file. This plug-in instantiates the actual driver for transient-persistent conversion. Your application can bring this process into play by defining a class which inherits CDF_Application and redefines the function which returns the appropriate resources file. At this point, the function Retrieve and the class CDF_Store can be called. This allows you to deal with storage and retrieval of - as well as copying and pasting - documents. To implement a class like this, several virtual functions should be redefined. In particular, you must redefine the abstract function Resources inherited from the superclass CDM_Application.
+		%feature("autodoc", "	* Returns the name of the file containing the resources of this application, for support of legacy method of loading formats data from resource files. //! Method DefineFormat---- can be used to define all necessary parameters explicitly without actually using resource files. //! In a resource file, the application associates the schema name of the document with the storage and retrieval plug-ins that are to be loaded for each document. On retrieval, the application reads the schema name in the heading of the CSF file and loads the plug-in indicated in the resource file. This plug-in instantiates the actual driver for transient-persistent conversion. Your application can bring this process into play by defining a class which inherits CDF_Application and redefines the function which returns the appropriate resources file. At this point, the function Retrieve and the class CDF_Store can be called. This allows you to deal with storage and retrieval of - as well as copying and pasting - documents. To implement a class like this, several virtual functions should be redefined. In particular, you must redefine the abstract function Resources inherited from the superclass CDM_Application. //! Default implementation returns empty string.
 
 	:rtype: char *
 ") ResourcesName;
 		virtual const char * ResourcesName ();
+		%feature("compactdefaultargs") DefineFormat;
+		%feature("autodoc", "	* Sets up resources and registers read and storage drivers for the specified format. @param theFormat - unique name for the format, used to identify it. @param theDescription - textual description of the format. @param theExtension - extension of the files in that format. The same extension can be used by several formats. @param theReader - instance of the read driver for the format.  Null value is allowed --no possibility to read--. @param theWriter - instance of the write driver for the format.  Null value is allowed --no possibility to write--.
+
+	:param theFormat:
+	:type theFormat: TCollection_AsciiString &
+	:param theDescription:
+	:type theDescription: TCollection_AsciiString &
+	:param theExtension:
+	:type theExtension: TCollection_AsciiString &
+	:param theReader:
+	:type theReader: Handle_PCDM_RetrievalDriver &
+	:param theWriter:
+	:type theWriter: Handle_PCDM_StorageDriver &
+	:rtype: None
+") DefineFormat;
+		void DefineFormat (const TCollection_AsciiString & theFormat,const TCollection_AsciiString & theDescription,const TCollection_AsciiString & theExtension,const Handle_PCDM_RetrievalDriver & theReader,const Handle_PCDM_StorageDriver & theWriter);
+		%feature("compactdefaultargs") ReadingFormats;
+		%feature("autodoc", "	* Returns the sequence of reading formats supported by the application. //! @param theFormats - sequence of reading formats. Output parameter.
+
+	:param theFormats:
+	:type theFormats: TColStd_SequenceOfAsciiString &
+	:rtype: None
+") ReadingFormats;
+		void ReadingFormats (TColStd_SequenceOfAsciiString & theFormats);
+		%feature("compactdefaultargs") WritingFormats;
+		%feature("autodoc", "	* Returns the sequence of writing formats supported by the application. //! @param theFormats - sequence of writing formats. Output parameter.
+
+	:param theFormats:
+	:type theFormats: TColStd_SequenceOfAsciiString &
+	:rtype: None
+") WritingFormats;
+		void WritingFormats (TColStd_SequenceOfAsciiString & theFormats);
 		%feature("compactdefaultargs") NbDocuments;
 		%feature("autodoc", "	* returns the number of documents handled by the current applicative session.
 
@@ -107,7 +157,7 @@ class TDocStd_Application : public CDF_Application {
 ") NbDocuments;
 		Standard_Integer NbDocuments ();
 		%feature("compactdefaultargs") GetDocument;
-		%feature("autodoc", "	* Constructs the new document aDoc. aDoc is identified by the index index which is any integer between 1 and n where n is the number of documents returned by NbDocument. Example Handle_TDocStd_Application anApp; if (!CafTest::Find(A)) return 1; Handle_TDocStd aDoc; Standard_Integer nbdoc = anApp->NbDocuments(); for (Standard_Integer i = 1; i <= nbdoc; i++) { aApp->GetDocument(i,aDoc);
+		%feature("autodoc", "	* Constructs the new document aDoc. aDoc is identified by the index index which is any integer between 1 and n where n is the number of documents returned by NbDocument. Example Handle_TDocStd_Application anApp; if --!CafTest::Find--A---- return 1; Handle_TDocStd aDoc; Standard_Integer nbdoc = anApp->NbDocuments----; for --Standard_Integer i = 1; i <= nbdoc; i++-- { aApp->GetDocument--i,aDoc--;
 
 	:param index:
 	:type index: int
@@ -116,14 +166,6 @@ class TDocStd_Application : public CDF_Application {
 	:rtype: None
 ") GetDocument;
 		void GetDocument (const Standard_Integer index,Handle_TDocStd_Document & aDoc);
-		%feature("compactdefaultargs") Formats;
-		%feature("autodoc", "	* Returns the format name Formats representing the format supported for application documents. This virtual function is to be redefined for each specific application.
-
-	:param Formats:
-	:type Formats: TColStd_SequenceOfExtendedString &
-	:rtype: void
-") Formats;
-		virtual void Formats (TColStd_SequenceOfExtendedString & Formats);
 		%feature("compactdefaultargs") NewDocument;
 		%feature("autodoc", "	* Constructs the empty new document aDoc. This document will have the format format. If InitDocument is redefined for a specific application, the new document is handled by the applicative session.
 
@@ -135,7 +177,7 @@ class TDocStd_Application : public CDF_Application {
 ") NewDocument;
 		virtual void NewDocument (const TCollection_ExtendedString & format,Handle_TDocStd_Document & aDoc);
 		%feature("compactdefaultargs") InitDocument;
-		%feature("autodoc", "	* Initialize the document aDoc for the applicative session. This virtual function is called by NewDocument and is to be redefined for each specific application. Modified flag (different of disk version) ============= to open/save a document =======================
+		%feature("autodoc", "	* Initialize the document aDoc for the applicative session. This virtual function is called by NewDocument and is to be redefined for each specific application. Modified flag --different of disk version-- ============= to open/save a document =======================
 
 	:param aDoc:
 	:type aDoc: Handle_TDocStd_Document &
@@ -151,7 +193,7 @@ class TDocStd_Application : public CDF_Application {
 ") Close;
 		void Close (const Handle_TDocStd_Document & aDoc);
 		%feature("compactdefaultargs") IsInSession;
-		%feature("autodoc", "	* Returns an index for the document found in the path path in this applicative session. If the returned value is 0, the document is not present in the applicative session. This method can be used for the interactive part of an application. For instance, on a call to Open, the document to be opened may already be in memory. IsInSession checks to see if this is the case. Open can be made to depend on the value of the index returned: if IsInSession returns 0, the document is opened; if it returns another value, a message is displayed asking the user if he wants to override the version of the document in memory. Example: Standard_Integer insession = A->IsInSession(aDoc); if (insession > 0) { cout << 'document ' << insession << ' is already in session' << endl; return 0; }
+		%feature("autodoc", "	* Returns an index for the document found in the path path in this applicative session. If the returned value is 0, the document is not present in the applicative session. This method can be used for the interactive part of an application. For instance, on a call to Open, the document to be opened may already be in memory. IsInSession checks to see if this is the case. Open can be made to depend on the value of the index returned: if IsInSession returns 0, the document is opened; if it returns another value, a message is displayed asking the user if he wants to override the version of the document in memory. Example: Standard_Integer insession = A->IsInSession--aDoc--; if --insession > 0-- { cout << 'document ' << insession << ' is already in session' << endl; return 0; }
 
 	:param path:
 	:type path: TCollection_ExtendedString &
@@ -168,6 +210,16 @@ class TDocStd_Application : public CDF_Application {
 	:rtype: PCDM_ReaderStatus
 ") Open;
 		PCDM_ReaderStatus Open (const TCollection_ExtendedString & path,Handle_TDocStd_Document & aDoc);
+		%feature("compactdefaultargs") Open;
+		%feature("autodoc", "	* Retrieves aDoc from standard SEEKABLE stream theIStream. the stream should support SEEK fuctionality
+
+	:param theIStream:
+	:type theIStream: Standard_IStream &
+	:param theDoc:
+	:type theDoc: Handle_TDocStd_Document &
+	:rtype: PCDM_ReaderStatus
+") Open;
+		PCDM_ReaderStatus Open (Standard_IStream & theIStream,Handle_TDocStd_Document & theDoc);
 		%feature("compactdefaultargs") SaveAs;
 		%feature("autodoc", "	* Save the active document in the file <name> in the path <path> ; o verwrites the file if it already exists.
 
@@ -178,6 +230,16 @@ class TDocStd_Application : public CDF_Application {
 	:rtype: PCDM_StoreStatus
 ") SaveAs;
 		PCDM_StoreStatus SaveAs (const Handle_TDocStd_Document & aDoc,const TCollection_ExtendedString & path);
+		%feature("compactdefaultargs") SaveAs;
+		%feature("autodoc", "	* Save theDoc to standard SEEKABLE stream theOStream. the stream should support SEEK fuctionality
+
+	:param theDoc:
+	:type theDoc: Handle_TDocStd_Document &
+	:param theOStream:
+	:type theOStream: Standard_OStream &
+	:rtype: PCDM_StoreStatus
+") SaveAs;
+		PCDM_StoreStatus SaveAs (const Handle_TDocStd_Document & theDoc,Standard_OStream & theOStream);
 		%feature("compactdefaultargs") Save;
 		%feature("autodoc", "	* Save aDoc active document. Exceptions: Standard_NotImplemented if the document was not retrieved in the applicative session by using Open.
 
@@ -198,6 +260,18 @@ class TDocStd_Application : public CDF_Application {
 	:rtype: PCDM_StoreStatus
 ") SaveAs;
 		PCDM_StoreStatus SaveAs (const Handle_TDocStd_Document & aDoc,const TCollection_ExtendedString & path,TCollection_ExtendedString & theStatusMessage);
+		%feature("compactdefaultargs") SaveAs;
+		%feature("autodoc", "	* Save theDoc TO standard SEEKABLE stream theOStream. the stream should support SEEK fuctionality
+
+	:param theDoc:
+	:type theDoc: Handle_TDocStd_Document &
+	:param theOStream:
+	:type theOStream: Standard_OStream &
+	:param theStatusMessage:
+	:type theStatusMessage: TCollection_ExtendedString &
+	:rtype: PCDM_StoreStatus
+") SaveAs;
+		PCDM_StoreStatus SaveAs (const Handle_TDocStd_Document & theDoc,Standard_OStream & theOStream,TCollection_ExtendedString & theStatusMessage);
 		%feature("compactdefaultargs") Save;
 		%feature("autodoc", "	* Save the document overwriting the previous file
 
@@ -208,6 +282,30 @@ class TDocStd_Application : public CDF_Application {
 	:rtype: PCDM_StoreStatus
 ") Save;
 		PCDM_StoreStatus Save (const Handle_TDocStd_Document & aDoc,TCollection_ExtendedString & theStatusMessage);
+		%feature("compactdefaultargs") OnOpenTransaction;
+		%feature("autodoc", "	* Notification that is fired at each OpenTransaction event.
+
+	:param theDoc:
+	:type theDoc: Handle_TDocStd_Document &
+	:rtype: void
+") OnOpenTransaction;
+		virtual void OnOpenTransaction (const Handle_TDocStd_Document & theDoc);
+		%feature("compactdefaultargs") OnCommitTransaction;
+		%feature("autodoc", "	* Notification that is fired at each CommitTransaction event.
+
+	:param theDoc:
+	:type theDoc: Handle_TDocStd_Document &
+	:rtype: void
+") OnCommitTransaction;
+		virtual void OnCommitTransaction (const Handle_TDocStd_Document & theDoc);
+		%feature("compactdefaultargs") OnAbortTransaction;
+		%feature("autodoc", "	* Notification that is fired at each AbortTransaction event.
+
+	:param theDoc:
+	:type theDoc: Handle_TDocStd_Document &
+	:rtype: void
+") OnAbortTransaction;
+		virtual void OnAbortTransaction (const Handle_TDocStd_Document & theDoc);
 };
 
 
@@ -242,19 +340,20 @@ class Handle_TDocStd_Application : public Handle_CDF_Application {
         static const Handle_TDocStd_Application DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_TDocStd_Application {
     TDocStd_Application* _get_reference() {
-    return (TDocStd_Application*)$self->Access();
+    return (TDocStd_Application*)$self->get();
     }
 };
 
 %extend Handle_TDocStd_Application {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend TDocStd_Application {
@@ -263,7 +362,7 @@ class Handle_TDocStd_Application : public Handle_CDF_Application {
 	}
 };
 %nodefaultctor TDocStd_ApplicationDelta;
-class TDocStd_ApplicationDelta : public MMgt_TShared {
+class TDocStd_ApplicationDelta : public Standard_Transient {
 	public:
 		%feature("compactdefaultargs") TDocStd_ApplicationDelta;
 		%feature("autodoc", "	:rtype: None
@@ -313,7 +412,7 @@ class TDocStd_ApplicationDelta : public MMgt_TShared {
 %}
 
 %nodefaultctor Handle_TDocStd_ApplicationDelta;
-class Handle_TDocStd_ApplicationDelta : public Handle_MMgt_TShared {
+class Handle_TDocStd_ApplicationDelta : public Handle_Standard_Transient {
 
     public:
         // constructors
@@ -325,19 +424,20 @@ class Handle_TDocStd_ApplicationDelta : public Handle_MMgt_TShared {
         static const Handle_TDocStd_ApplicationDelta DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_TDocStd_ApplicationDelta {
     TDocStd_ApplicationDelta* _get_reference() {
-    return (TDocStd_ApplicationDelta*)$self->Access();
+    return (TDocStd_ApplicationDelta*)$self->get();
     }
 };
 
 %extend Handle_TDocStd_ApplicationDelta {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend TDocStd_ApplicationDelta {
@@ -388,19 +488,20 @@ class Handle_TDocStd_CompoundDelta : public Handle_TDF_Delta {
         static const Handle_TDocStd_CompoundDelta DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_TDocStd_CompoundDelta {
     TDocStd_CompoundDelta* _get_reference() {
-    return (TDocStd_CompoundDelta*)$self->Access();
+    return (TDocStd_CompoundDelta*)$self->get();
     }
 };
 
 %extend Handle_TDocStd_CompoundDelta {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend TDocStd_CompoundDelta {
@@ -429,116 +530,6 @@ class TDocStd_Context {
 
 
 %extend TDocStd_Context {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor TDocStd_DataMapIteratorOfLabelIDMapDataMap;
-class TDocStd_DataMapIteratorOfLabelIDMapDataMap : public TCollection_BasicMapIterator {
-	public:
-		%feature("compactdefaultargs") TDocStd_DataMapIteratorOfLabelIDMapDataMap;
-		%feature("autodoc", "	:rtype: None
-") TDocStd_DataMapIteratorOfLabelIDMapDataMap;
-		 TDocStd_DataMapIteratorOfLabelIDMapDataMap ();
-		%feature("compactdefaultargs") TDocStd_DataMapIteratorOfLabelIDMapDataMap;
-		%feature("autodoc", "	:param aMap:
-	:type aMap: TDocStd_LabelIDMapDataMap &
-	:rtype: None
-") TDocStd_DataMapIteratorOfLabelIDMapDataMap;
-		 TDocStd_DataMapIteratorOfLabelIDMapDataMap (const TDocStd_LabelIDMapDataMap & aMap);
-		%feature("compactdefaultargs") Initialize;
-		%feature("autodoc", "	:param aMap:
-	:type aMap: TDocStd_LabelIDMapDataMap &
-	:rtype: None
-") Initialize;
-		void Initialize (const TDocStd_LabelIDMapDataMap & aMap);
-		%feature("compactdefaultargs") Key;
-		%feature("autodoc", "	:rtype: TDF_Label
-") Key;
-		const TDF_Label & Key ();
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:rtype: TDF_IDMap
-") Value;
-		const TDF_IDMap & Value ();
-};
-
-
-%extend TDocStd_DataMapIteratorOfLabelIDMapDataMap {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor TDocStd_DataMapNodeOfLabelIDMapDataMap;
-class TDocStd_DataMapNodeOfLabelIDMapDataMap : public TCollection_MapNode {
-	public:
-		%feature("compactdefaultargs") TDocStd_DataMapNodeOfLabelIDMapDataMap;
-		%feature("autodoc", "	:param K:
-	:type K: TDF_Label &
-	:param I:
-	:type I: TDF_IDMap &
-	:param n:
-	:type n: TCollection_MapNodePtr &
-	:rtype: None
-") TDocStd_DataMapNodeOfLabelIDMapDataMap;
-		 TDocStd_DataMapNodeOfLabelIDMapDataMap (const TDF_Label & K,const TDF_IDMap & I,const TCollection_MapNodePtr & n);
-		%feature("compactdefaultargs") Key;
-		%feature("autodoc", "	:rtype: TDF_Label
-") Key;
-		TDF_Label & Key ();
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:rtype: TDF_IDMap
-") Value;
-		TDF_IDMap & Value ();
-};
-
-
-%extend TDocStd_DataMapNodeOfLabelIDMapDataMap {
-	%pythoncode {
-		def GetHandle(self):
-		    try:
-		        return self.thisHandle
-		    except:
-		        self.thisHandle = Handle_TDocStd_DataMapNodeOfLabelIDMapDataMap(self)
-		        self.thisown = False
-		        return self.thisHandle
-	}
-};
-
-%pythonappend Handle_TDocStd_DataMapNodeOfLabelIDMapDataMap::Handle_TDocStd_DataMapNodeOfLabelIDMapDataMap %{
-    # register the handle in the base object
-    if len(args) > 0:
-        register_handle(self, args[0])
-%}
-
-%nodefaultctor Handle_TDocStd_DataMapNodeOfLabelIDMapDataMap;
-class Handle_TDocStd_DataMapNodeOfLabelIDMapDataMap : public Handle_TCollection_MapNode {
-
-    public:
-        // constructors
-        Handle_TDocStd_DataMapNodeOfLabelIDMapDataMap();
-        Handle_TDocStd_DataMapNodeOfLabelIDMapDataMap(const Handle_TDocStd_DataMapNodeOfLabelIDMapDataMap &aHandle);
-        Handle_TDocStd_DataMapNodeOfLabelIDMapDataMap(const TDocStd_DataMapNodeOfLabelIDMapDataMap *anItem);
-        void Nullify();
-        Standard_Boolean IsNull() const;
-        static const Handle_TDocStd_DataMapNodeOfLabelIDMapDataMap DownCast(const Handle_Standard_Transient &AnObject);
-
-};
-%extend Handle_TDocStd_DataMapNodeOfLabelIDMapDataMap {
-    TDocStd_DataMapNodeOfLabelIDMapDataMap* _get_reference() {
-    return (TDocStd_DataMapNodeOfLabelIDMapDataMap*)$self->Access();
-    }
-};
-
-%extend Handle_TDocStd_DataMapNodeOfLabelIDMapDataMap {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
-};
-
-%extend TDocStd_DataMapNodeOfLabelIDMapDataMap {
 	%pythoncode {
 	__repr__ = _dumps_object
 	}
@@ -581,7 +572,7 @@ class TDocStd_Document : public CDM_Document {
 ") SetSaved;
 		void SetSaved ();
 		%feature("compactdefaultargs") SetSavedTime;
-		%feature("autodoc", "	* Say to document what it is not saved. Use value, returned earlier by GetSavedTime().
+		%feature("autodoc", "	* Say to document what it is not saved. Use value, returned earlier by GetSavedTime----.
 
 	:param theTime:
 	:type theTime: int
@@ -589,7 +580,7 @@ class TDocStd_Document : public CDM_Document {
 ") SetSavedTime;
 		void SetSavedTime (const Standard_Integer theTime);
 		%feature("compactdefaultargs") GetSavedTime;
-		%feature("autodoc", "	* Returns value of <mySavedTime> to be used later in SetSavedTime()
+		%feature("autodoc", "	* Returns value of <mySavedTime> to be used later in SetSavedTime----
 
 	:rtype: int
 ") GetSavedTime;
@@ -717,7 +708,7 @@ class TDocStd_Document : public CDM_Document {
 ") GetAvailableUndos;
 		Standard_Integer GetAvailableUndos ();
 		%feature("compactdefaultargs") Undo;
-		%feature("autodoc", "	* Will UNDO one step, returns False if no undo was done (Undos == 0). Otherwise, true is returned and one step in the list of undoes is undone.
+		%feature("autodoc", "	* Will UNDO one step, returns False if no undo was done --Undos == 0--. Otherwise, true is returned and one step in the list of undoes is undone.
 
 	:rtype: bool
 ") Undo;
@@ -729,7 +720,7 @@ class TDocStd_Document : public CDM_Document {
 ") GetAvailableRedos;
 		Standard_Integer GetAvailableRedos ();
 		%feature("compactdefaultargs") Redo;
-		%feature("autodoc", "	* Will REDO one step, returns False if no redo was done (Redos == 0). Otherwise, true is returned, and one step in the list of redoes is done again.
+		%feature("autodoc", "	* Will REDO one step, returns False if no redo was done --Redos == 0--. Otherwise, true is returned, and one step in the list of redoes is done again.
 
 	:rtype: bool
 ") Redo;
@@ -775,7 +766,7 @@ class TDocStd_Document : public CDM_Document {
 ") Recompute;
 		void Recompute ();
 		%feature("compactdefaultargs") Update;
-		%feature("autodoc", "	* This method Update will be called to signal the end of the modified references list. The document should be recomputed and UpdateFromDocuments should be called. Update should returns True in case of success, false otherwise. In case of Failure, additional information can be given in ErrorString. Update the document by propagation ================================== Update the document from internal stored modifications. If you want to undoing this operation, please call NewCommand before. to change format (advanced programming) ================
+		%feature("autodoc", "	* This method Update will be called to signal the end of the modified references list. The document should be recomputed and UpdateFromDocuments should be called. Update should returns True in case of success, false otherwise. In case of Failure, additional information can be given in ErrorString. Update the document by propagation ================================== Update the document from internal stored modifications. If you want to undoing this operation, please call NewCommand before. to change format --advanced programming-- ================
 
 	:param aToDocument:
 	:type aToDocument: Handle_CDM_Document &
@@ -790,6 +781,20 @@ class TDocStd_Document : public CDM_Document {
 		%feature("autodoc", "	:rtype: TCollection_ExtendedString
 ") StorageFormat;
 		virtual TCollection_ExtendedString StorageFormat ();
+		%feature("compactdefaultargs") SetEmptyLabelsSavingMode;
+		%feature("autodoc", "	* Sets saving mode for empty labels. If Standard_True, empty labels will be saved.
+
+	:param isAllowed:
+	:type isAllowed: bool
+	:rtype: None
+") SetEmptyLabelsSavingMode;
+		void SetEmptyLabelsSavingMode (const Standard_Boolean isAllowed);
+		%feature("compactdefaultargs") EmptyLabelsSavingMode;
+		%feature("autodoc", "	* Returns saving mode for empty labels.
+
+	:rtype: bool
+") EmptyLabelsSavingMode;
+		Standard_Boolean EmptyLabelsSavingMode ();
 		%feature("compactdefaultargs") ChangeStorageFormat;
 		%feature("autodoc", "	* methods for the nested transaction mode
 
@@ -866,105 +871,23 @@ class Handle_TDocStd_Document : public Handle_CDM_Document {
         static const Handle_TDocStd_Document DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_TDocStd_Document {
     TDocStd_Document* _get_reference() {
-    return (TDocStd_Document*)$self->Access();
+    return (TDocStd_Document*)$self->get();
     }
 };
 
 %extend Handle_TDocStd_Document {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend TDocStd_Document {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor TDocStd_LabelIDMapDataMap;
-class TDocStd_LabelIDMapDataMap : public TCollection_BasicMap {
-	public:
-		%feature("compactdefaultargs") TDocStd_LabelIDMapDataMap;
-		%feature("autodoc", "	:param NbBuckets: default value is 1
-	:type NbBuckets: int
-	:rtype: None
-") TDocStd_LabelIDMapDataMap;
-		 TDocStd_LabelIDMapDataMap (const Standard_Integer NbBuckets = 1);
-		%feature("compactdefaultargs") Assign;
-		%feature("autodoc", "	:param Other:
-	:type Other: TDocStd_LabelIDMapDataMap &
-	:rtype: TDocStd_LabelIDMapDataMap
-") Assign;
-		TDocStd_LabelIDMapDataMap & Assign (const TDocStd_LabelIDMapDataMap & Other);
-		%feature("compactdefaultargs") operator =;
-		%feature("autodoc", "	:param Other:
-	:type Other: TDocStd_LabelIDMapDataMap &
-	:rtype: TDocStd_LabelIDMapDataMap
-") operator =;
-		TDocStd_LabelIDMapDataMap & operator = (const TDocStd_LabelIDMapDataMap & Other);
-		%feature("compactdefaultargs") ReSize;
-		%feature("autodoc", "	:param NbBuckets:
-	:type NbBuckets: int
-	:rtype: None
-") ReSize;
-		void ReSize (const Standard_Integer NbBuckets);
-		%feature("compactdefaultargs") Clear;
-		%feature("autodoc", "	:rtype: None
-") Clear;
-		void Clear ();
-		%feature("compactdefaultargs") Bind;
-		%feature("autodoc", "	:param K:
-	:type K: TDF_Label &
-	:param I:
-	:type I: TDF_IDMap &
-	:rtype: bool
-") Bind;
-		Standard_Boolean Bind (const TDF_Label & K,const TDF_IDMap & I);
-		%feature("compactdefaultargs") IsBound;
-		%feature("autodoc", "	:param K:
-	:type K: TDF_Label &
-	:rtype: bool
-") IsBound;
-		Standard_Boolean IsBound (const TDF_Label & K);
-		%feature("compactdefaultargs") UnBind;
-		%feature("autodoc", "	:param K:
-	:type K: TDF_Label &
-	:rtype: bool
-") UnBind;
-		Standard_Boolean UnBind (const TDF_Label & K);
-		%feature("compactdefaultargs") Find;
-		%feature("autodoc", "	:param K:
-	:type K: TDF_Label &
-	:rtype: TDF_IDMap
-") Find;
-		const TDF_IDMap & Find (const TDF_Label & K);
-		%feature("compactdefaultargs") ChangeFind;
-		%feature("autodoc", "	:param K:
-	:type K: TDF_Label &
-	:rtype: TDF_IDMap
-") ChangeFind;
-		TDF_IDMap & ChangeFind (const TDF_Label & K);
-		%feature("compactdefaultargs") Find1;
-		%feature("autodoc", "	:param K:
-	:type K: TDF_Label &
-	:rtype: Standard_Address
-") Find1;
-		Standard_Address Find1 (const TDF_Label & K);
-		%feature("compactdefaultargs") ChangeFind1;
-		%feature("autodoc", "	:param K:
-	:type K: TDF_Label &
-	:rtype: Standard_Address
-") ChangeFind1;
-		Standard_Address ChangeFind1 (const TDF_Label & K);
-};
-
-
-%extend TDocStd_LabelIDMapDataMap {
 	%pythoncode {
 	__repr__ = _dumps_object
 	}
@@ -1118,19 +1041,20 @@ class Handle_TDocStd_Modified : public Handle_TDF_Attribute {
         static const Handle_TDocStd_Modified DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_TDocStd_Modified {
     TDocStd_Modified* _get_reference() {
-    return (TDocStd_Modified*)$self->Access();
+    return (TDocStd_Modified*)$self->get();
     }
 };
 
 %extend Handle_TDocStd_Modified {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend TDocStd_Modified {
@@ -1139,7 +1063,7 @@ class Handle_TDocStd_Modified : public Handle_TDF_Attribute {
 	}
 };
 %nodefaultctor TDocStd_MultiTransactionManager;
-class TDocStd_MultiTransactionManager : public MMgt_TShared {
+class TDocStd_MultiTransactionManager : public Standard_Transient {
 	public:
 		%feature("compactdefaultargs") TDocStd_MultiTransactionManager;
 		%feature("autodoc", "	* Constructor
@@ -1162,13 +1086,13 @@ class TDocStd_MultiTransactionManager : public MMgt_TShared {
 ") GetUndoLimit;
 		Standard_Integer GetUndoLimit ();
 		%feature("compactdefaultargs") Undo;
-		%feature("autodoc", "	* Undoes the current transaction of the manager. It calls the Undo () method of the document being on top of the manager list of undos (list.First()) and moves the list item to the top of the list of manager redos (list.Prepend(item)).
+		%feature("autodoc", "	* Undoes the current transaction of the manager. It calls the Undo ---- method of the document being on top of the manager list of undos --list.First------ and moves the list item to the top of the list of manager redos --list.Prepend--item----.
 
 	:rtype: None
 ") Undo;
 		void Undo ();
 		%feature("compactdefaultargs") Redo;
-		%feature("autodoc", "	* Redoes the current transaction of the application. It calls the Redo () method of the document being on top of the manager list of redos (list.First()) and moves the list item to the top of the list of manager undos (list.Prepend(item)).
+		%feature("autodoc", "	* Redoes the current transaction of the application. It calls the Redo ---- method of the document being on top of the manager list of redos --list.First------ and moves the list item to the top of the list of manager undos --list.Prepend--item----.
 
 	:rtype: None
 ") Redo;
@@ -1315,7 +1239,7 @@ class TDocStd_MultiTransactionManager : public MMgt_TShared {
 %}
 
 %nodefaultctor Handle_TDocStd_MultiTransactionManager;
-class Handle_TDocStd_MultiTransactionManager : public Handle_MMgt_TShared {
+class Handle_TDocStd_MultiTransactionManager : public Handle_Standard_Transient {
 
     public:
         // constructors
@@ -1327,19 +1251,20 @@ class Handle_TDocStd_MultiTransactionManager : public Handle_MMgt_TShared {
         static const Handle_TDocStd_MultiTransactionManager DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_TDocStd_MultiTransactionManager {
     TDocStd_MultiTransactionManager* _get_reference() {
-    return (TDocStd_MultiTransactionManager*)$self->Access();
+    return (TDocStd_MultiTransactionManager*)$self->get();
     }
 };
 
 %extend Handle_TDocStd_MultiTransactionManager {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend TDocStd_MultiTransactionManager {
@@ -1450,19 +1375,20 @@ class Handle_TDocStd_Owner : public Handle_TDF_Attribute {
         static const Handle_TDocStd_Owner DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_TDocStd_Owner {
     TDocStd_Owner* _get_reference() {
-    return (TDocStd_Owner*)$self->Access();
+    return (TDocStd_Owner*)$self->get();
     }
 };
 
 %extend Handle_TDocStd_Owner {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend TDocStd_Owner {
@@ -1507,434 +1433,6 @@ class TDocStd_PathParser {
 
 
 %extend TDocStd_PathParser {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor TDocStd_SequenceNodeOfSequenceOfApplicationDelta;
-class TDocStd_SequenceNodeOfSequenceOfApplicationDelta : public TCollection_SeqNode {
-	public:
-		%feature("compactdefaultargs") TDocStd_SequenceNodeOfSequenceOfApplicationDelta;
-		%feature("autodoc", "	:param I:
-	:type I: Handle_TDocStd_ApplicationDelta &
-	:param n:
-	:type n: TCollection_SeqNodePtr &
-	:param p:
-	:type p: TCollection_SeqNodePtr &
-	:rtype: None
-") TDocStd_SequenceNodeOfSequenceOfApplicationDelta;
-		 TDocStd_SequenceNodeOfSequenceOfApplicationDelta (const Handle_TDocStd_ApplicationDelta & I,const TCollection_SeqNodePtr & n,const TCollection_SeqNodePtr & p);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:rtype: Handle_TDocStd_ApplicationDelta
-") Value;
-		Handle_TDocStd_ApplicationDelta Value ();
-};
-
-
-%extend TDocStd_SequenceNodeOfSequenceOfApplicationDelta {
-	%pythoncode {
-		def GetHandle(self):
-		    try:
-		        return self.thisHandle
-		    except:
-		        self.thisHandle = Handle_TDocStd_SequenceNodeOfSequenceOfApplicationDelta(self)
-		        self.thisown = False
-		        return self.thisHandle
-	}
-};
-
-%pythonappend Handle_TDocStd_SequenceNodeOfSequenceOfApplicationDelta::Handle_TDocStd_SequenceNodeOfSequenceOfApplicationDelta %{
-    # register the handle in the base object
-    if len(args) > 0:
-        register_handle(self, args[0])
-%}
-
-%nodefaultctor Handle_TDocStd_SequenceNodeOfSequenceOfApplicationDelta;
-class Handle_TDocStd_SequenceNodeOfSequenceOfApplicationDelta : public Handle_TCollection_SeqNode {
-
-    public:
-        // constructors
-        Handle_TDocStd_SequenceNodeOfSequenceOfApplicationDelta();
-        Handle_TDocStd_SequenceNodeOfSequenceOfApplicationDelta(const Handle_TDocStd_SequenceNodeOfSequenceOfApplicationDelta &aHandle);
-        Handle_TDocStd_SequenceNodeOfSequenceOfApplicationDelta(const TDocStd_SequenceNodeOfSequenceOfApplicationDelta *anItem);
-        void Nullify();
-        Standard_Boolean IsNull() const;
-        static const Handle_TDocStd_SequenceNodeOfSequenceOfApplicationDelta DownCast(const Handle_Standard_Transient &AnObject);
-
-};
-%extend Handle_TDocStd_SequenceNodeOfSequenceOfApplicationDelta {
-    TDocStd_SequenceNodeOfSequenceOfApplicationDelta* _get_reference() {
-    return (TDocStd_SequenceNodeOfSequenceOfApplicationDelta*)$self->Access();
-    }
-};
-
-%extend Handle_TDocStd_SequenceNodeOfSequenceOfApplicationDelta {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
-};
-
-%extend TDocStd_SequenceNodeOfSequenceOfApplicationDelta {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor TDocStd_SequenceNodeOfSequenceOfDocument;
-class TDocStd_SequenceNodeOfSequenceOfDocument : public TCollection_SeqNode {
-	public:
-		%feature("compactdefaultargs") TDocStd_SequenceNodeOfSequenceOfDocument;
-		%feature("autodoc", "	:param I:
-	:type I: Handle_TDocStd_Document &
-	:param n:
-	:type n: TCollection_SeqNodePtr &
-	:param p:
-	:type p: TCollection_SeqNodePtr &
-	:rtype: None
-") TDocStd_SequenceNodeOfSequenceOfDocument;
-		 TDocStd_SequenceNodeOfSequenceOfDocument (const Handle_TDocStd_Document & I,const TCollection_SeqNodePtr & n,const TCollection_SeqNodePtr & p);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:rtype: Handle_TDocStd_Document
-") Value;
-		Handle_TDocStd_Document Value ();
-};
-
-
-%extend TDocStd_SequenceNodeOfSequenceOfDocument {
-	%pythoncode {
-		def GetHandle(self):
-		    try:
-		        return self.thisHandle
-		    except:
-		        self.thisHandle = Handle_TDocStd_SequenceNodeOfSequenceOfDocument(self)
-		        self.thisown = False
-		        return self.thisHandle
-	}
-};
-
-%pythonappend Handle_TDocStd_SequenceNodeOfSequenceOfDocument::Handle_TDocStd_SequenceNodeOfSequenceOfDocument %{
-    # register the handle in the base object
-    if len(args) > 0:
-        register_handle(self, args[0])
-%}
-
-%nodefaultctor Handle_TDocStd_SequenceNodeOfSequenceOfDocument;
-class Handle_TDocStd_SequenceNodeOfSequenceOfDocument : public Handle_TCollection_SeqNode {
-
-    public:
-        // constructors
-        Handle_TDocStd_SequenceNodeOfSequenceOfDocument();
-        Handle_TDocStd_SequenceNodeOfSequenceOfDocument(const Handle_TDocStd_SequenceNodeOfSequenceOfDocument &aHandle);
-        Handle_TDocStd_SequenceNodeOfSequenceOfDocument(const TDocStd_SequenceNodeOfSequenceOfDocument *anItem);
-        void Nullify();
-        Standard_Boolean IsNull() const;
-        static const Handle_TDocStd_SequenceNodeOfSequenceOfDocument DownCast(const Handle_Standard_Transient &AnObject);
-
-};
-%extend Handle_TDocStd_SequenceNodeOfSequenceOfDocument {
-    TDocStd_SequenceNodeOfSequenceOfDocument* _get_reference() {
-    return (TDocStd_SequenceNodeOfSequenceOfDocument*)$self->Access();
-    }
-};
-
-%extend Handle_TDocStd_SequenceNodeOfSequenceOfDocument {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
-};
-
-%extend TDocStd_SequenceNodeOfSequenceOfDocument {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor TDocStd_SequenceOfApplicationDelta;
-class TDocStd_SequenceOfApplicationDelta : public TCollection_BaseSequence {
-	public:
-		%feature("compactdefaultargs") TDocStd_SequenceOfApplicationDelta;
-		%feature("autodoc", "	:rtype: None
-") TDocStd_SequenceOfApplicationDelta;
-		 TDocStd_SequenceOfApplicationDelta ();
-		%feature("compactdefaultargs") TDocStd_SequenceOfApplicationDelta;
-		%feature("autodoc", "	:param Other:
-	:type Other: TDocStd_SequenceOfApplicationDelta &
-	:rtype: None
-") TDocStd_SequenceOfApplicationDelta;
-		 TDocStd_SequenceOfApplicationDelta (const TDocStd_SequenceOfApplicationDelta & Other);
-		%feature("compactdefaultargs") Clear;
-		%feature("autodoc", "	:rtype: None
-") Clear;
-		void Clear ();
-		%feature("compactdefaultargs") Assign;
-		%feature("autodoc", "	:param Other:
-	:type Other: TDocStd_SequenceOfApplicationDelta &
-	:rtype: TDocStd_SequenceOfApplicationDelta
-") Assign;
-		const TDocStd_SequenceOfApplicationDelta & Assign (const TDocStd_SequenceOfApplicationDelta & Other);
-		%feature("compactdefaultargs") operator =;
-		%feature("autodoc", "	:param Other:
-	:type Other: TDocStd_SequenceOfApplicationDelta &
-	:rtype: TDocStd_SequenceOfApplicationDelta
-") operator =;
-		const TDocStd_SequenceOfApplicationDelta & operator = (const TDocStd_SequenceOfApplicationDelta & Other);
-		%feature("compactdefaultargs") Append;
-		%feature("autodoc", "	:param T:
-	:type T: Handle_TDocStd_ApplicationDelta &
-	:rtype: None
-") Append;
-		void Append (const Handle_TDocStd_ApplicationDelta & T);
-		%feature("compactdefaultargs") Append;
-		%feature("autodoc", "	:param S:
-	:type S: TDocStd_SequenceOfApplicationDelta &
-	:rtype: None
-") Append;
-		void Append (TDocStd_SequenceOfApplicationDelta & S);
-		%feature("compactdefaultargs") Prepend;
-		%feature("autodoc", "	:param T:
-	:type T: Handle_TDocStd_ApplicationDelta &
-	:rtype: None
-") Prepend;
-		void Prepend (const Handle_TDocStd_ApplicationDelta & T);
-		%feature("compactdefaultargs") Prepend;
-		%feature("autodoc", "	:param S:
-	:type S: TDocStd_SequenceOfApplicationDelta &
-	:rtype: None
-") Prepend;
-		void Prepend (TDocStd_SequenceOfApplicationDelta & S);
-		%feature("compactdefaultargs") InsertBefore;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param T:
-	:type T: Handle_TDocStd_ApplicationDelta &
-	:rtype: None
-") InsertBefore;
-		void InsertBefore (const Standard_Integer Index,const Handle_TDocStd_ApplicationDelta & T);
-		%feature("compactdefaultargs") InsertBefore;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param S:
-	:type S: TDocStd_SequenceOfApplicationDelta &
-	:rtype: None
-") InsertBefore;
-		void InsertBefore (const Standard_Integer Index,TDocStd_SequenceOfApplicationDelta & S);
-		%feature("compactdefaultargs") InsertAfter;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param T:
-	:type T: Handle_TDocStd_ApplicationDelta &
-	:rtype: None
-") InsertAfter;
-		void InsertAfter (const Standard_Integer Index,const Handle_TDocStd_ApplicationDelta & T);
-		%feature("compactdefaultargs") InsertAfter;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param S:
-	:type S: TDocStd_SequenceOfApplicationDelta &
-	:rtype: None
-") InsertAfter;
-		void InsertAfter (const Standard_Integer Index,TDocStd_SequenceOfApplicationDelta & S);
-		%feature("compactdefaultargs") First;
-		%feature("autodoc", "	:rtype: Handle_TDocStd_ApplicationDelta
-") First;
-		Handle_TDocStd_ApplicationDelta First ();
-		%feature("compactdefaultargs") Last;
-		%feature("autodoc", "	:rtype: Handle_TDocStd_ApplicationDelta
-") Last;
-		Handle_TDocStd_ApplicationDelta Last ();
-		%feature("compactdefaultargs") Split;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param Sub:
-	:type Sub: TDocStd_SequenceOfApplicationDelta &
-	:rtype: None
-") Split;
-		void Split (const Standard_Integer Index,TDocStd_SequenceOfApplicationDelta & Sub);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: Handle_TDocStd_ApplicationDelta
-") Value;
-		Handle_TDocStd_ApplicationDelta Value (const Standard_Integer Index);
-		%feature("compactdefaultargs") SetValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param I:
-	:type I: Handle_TDocStd_ApplicationDelta &
-	:rtype: None
-") SetValue;
-		void SetValue (const Standard_Integer Index,const Handle_TDocStd_ApplicationDelta & I);
-		%feature("compactdefaultargs") ChangeValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: Handle_TDocStd_ApplicationDelta
-") ChangeValue;
-		Handle_TDocStd_ApplicationDelta ChangeValue (const Standard_Integer Index);
-		%feature("compactdefaultargs") Remove;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: None
-") Remove;
-		void Remove (const Standard_Integer Index);
-		%feature("compactdefaultargs") Remove;
-		%feature("autodoc", "	:param FromIndex:
-	:type FromIndex: int
-	:param ToIndex:
-	:type ToIndex: int
-	:rtype: None
-") Remove;
-		void Remove (const Standard_Integer FromIndex,const Standard_Integer ToIndex);
-};
-
-
-%extend TDocStd_SequenceOfApplicationDelta {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor TDocStd_SequenceOfDocument;
-class TDocStd_SequenceOfDocument : public TCollection_BaseSequence {
-	public:
-		%feature("compactdefaultargs") TDocStd_SequenceOfDocument;
-		%feature("autodoc", "	:rtype: None
-") TDocStd_SequenceOfDocument;
-		 TDocStd_SequenceOfDocument ();
-		%feature("compactdefaultargs") TDocStd_SequenceOfDocument;
-		%feature("autodoc", "	:param Other:
-	:type Other: TDocStd_SequenceOfDocument &
-	:rtype: None
-") TDocStd_SequenceOfDocument;
-		 TDocStd_SequenceOfDocument (const TDocStd_SequenceOfDocument & Other);
-		%feature("compactdefaultargs") Clear;
-		%feature("autodoc", "	:rtype: None
-") Clear;
-		void Clear ();
-		%feature("compactdefaultargs") Assign;
-		%feature("autodoc", "	:param Other:
-	:type Other: TDocStd_SequenceOfDocument &
-	:rtype: TDocStd_SequenceOfDocument
-") Assign;
-		const TDocStd_SequenceOfDocument & Assign (const TDocStd_SequenceOfDocument & Other);
-		%feature("compactdefaultargs") operator =;
-		%feature("autodoc", "	:param Other:
-	:type Other: TDocStd_SequenceOfDocument &
-	:rtype: TDocStd_SequenceOfDocument
-") operator =;
-		const TDocStd_SequenceOfDocument & operator = (const TDocStd_SequenceOfDocument & Other);
-		%feature("compactdefaultargs") Append;
-		%feature("autodoc", "	:param T:
-	:type T: Handle_TDocStd_Document &
-	:rtype: None
-") Append;
-		void Append (const Handle_TDocStd_Document & T);
-		%feature("compactdefaultargs") Append;
-		%feature("autodoc", "	:param S:
-	:type S: TDocStd_SequenceOfDocument &
-	:rtype: None
-") Append;
-		void Append (TDocStd_SequenceOfDocument & S);
-		%feature("compactdefaultargs") Prepend;
-		%feature("autodoc", "	:param T:
-	:type T: Handle_TDocStd_Document &
-	:rtype: None
-") Prepend;
-		void Prepend (const Handle_TDocStd_Document & T);
-		%feature("compactdefaultargs") Prepend;
-		%feature("autodoc", "	:param S:
-	:type S: TDocStd_SequenceOfDocument &
-	:rtype: None
-") Prepend;
-		void Prepend (TDocStd_SequenceOfDocument & S);
-		%feature("compactdefaultargs") InsertBefore;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param T:
-	:type T: Handle_TDocStd_Document &
-	:rtype: None
-") InsertBefore;
-		void InsertBefore (const Standard_Integer Index,const Handle_TDocStd_Document & T);
-		%feature("compactdefaultargs") InsertBefore;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param S:
-	:type S: TDocStd_SequenceOfDocument &
-	:rtype: None
-") InsertBefore;
-		void InsertBefore (const Standard_Integer Index,TDocStd_SequenceOfDocument & S);
-		%feature("compactdefaultargs") InsertAfter;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param T:
-	:type T: Handle_TDocStd_Document &
-	:rtype: None
-") InsertAfter;
-		void InsertAfter (const Standard_Integer Index,const Handle_TDocStd_Document & T);
-		%feature("compactdefaultargs") InsertAfter;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param S:
-	:type S: TDocStd_SequenceOfDocument &
-	:rtype: None
-") InsertAfter;
-		void InsertAfter (const Standard_Integer Index,TDocStd_SequenceOfDocument & S);
-		%feature("compactdefaultargs") First;
-		%feature("autodoc", "	:rtype: Handle_TDocStd_Document
-") First;
-		Handle_TDocStd_Document First ();
-		%feature("compactdefaultargs") Last;
-		%feature("autodoc", "	:rtype: Handle_TDocStd_Document
-") Last;
-		Handle_TDocStd_Document Last ();
-		%feature("compactdefaultargs") Split;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param Sub:
-	:type Sub: TDocStd_SequenceOfDocument &
-	:rtype: None
-") Split;
-		void Split (const Standard_Integer Index,TDocStd_SequenceOfDocument & Sub);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: Handle_TDocStd_Document
-") Value;
-		Handle_TDocStd_Document Value (const Standard_Integer Index);
-		%feature("compactdefaultargs") SetValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param I:
-	:type I: Handle_TDocStd_Document &
-	:rtype: None
-") SetValue;
-		void SetValue (const Standard_Integer Index,const Handle_TDocStd_Document & I);
-		%feature("compactdefaultargs") ChangeValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: Handle_TDocStd_Document
-") ChangeValue;
-		Handle_TDocStd_Document ChangeValue (const Standard_Integer Index);
-		%feature("compactdefaultargs") Remove;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: None
-") Remove;
-		void Remove (const Standard_Integer Index);
-		%feature("compactdefaultargs") Remove;
-		%feature("autodoc", "	:param FromIndex:
-	:type FromIndex: int
-	:param ToIndex:
-	:type ToIndex: int
-	:rtype: None
-") Remove;
-		void Remove (const Standard_Integer FromIndex,const Standard_Integer ToIndex);
-};
-
-
-%extend TDocStd_SequenceOfDocument {
 	%pythoncode {
 	__repr__ = _dumps_object
 	}
@@ -2114,19 +1612,20 @@ class Handle_TDocStd_XLink : public Handle_TDF_Attribute {
         static const Handle_TDocStd_XLink DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_TDocStd_XLink {
     TDocStd_XLink* _get_reference() {
-    return (TDocStd_XLink*)$self->Access();
+    return (TDocStd_XLink*)$self->get();
     }
 };
 
 %extend Handle_TDocStd_XLink {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend TDocStd_XLink {
@@ -2296,19 +1795,20 @@ class Handle_TDocStd_XLinkRoot : public Handle_TDF_Attribute {
         static const Handle_TDocStd_XLinkRoot DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_TDocStd_XLinkRoot {
     TDocStd_XLinkRoot* _get_reference() {
-    return (TDocStd_XLinkRoot*)$self->Access();
+    return (TDocStd_XLinkRoot*)$self->get();
     }
 };
 
 %extend Handle_TDocStd_XLinkRoot {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend TDocStd_XLinkRoot {
@@ -2334,7 +1834,7 @@ class TDocStd_XLinkTool {
 ") CopyWithLink;
 		void CopyWithLink (const TDF_Label & intarget,const TDF_Label & fromsource);
 		%feature("compactdefaultargs") UpdateLink;
-		%feature("autodoc", "	* Update the external reference set at <L>. Example Handle_TDocStd_Document aDoc; if (!OCAFTest::GetDocument(1,aDoc)) return 1; Handle_TDataStd_Reference aRef; TDocStd_XLinkTool xlinktool; if (!OCAFTest::Find(aDoc,2),TDataStd_Reference::GetID(),aRef) return 1; xlinktool.UpdateLink(aRef->Label()); Exceptions Standard_DomainError if <L> has no XLink attribute.
+		%feature("autodoc", "	* Update the external reference set at <L>. Example Handle_TDocStd_Document aDoc; if --!OCAFTest::GetDocument--1,aDoc---- return 1; Handle_TDataStd_Reference aRef; TDocStd_XLinkTool xlinktool; if --!OCAFTest::Find--aDoc,2--,TDataStd_Reference::GetID----,aRef-- return 1; xlinktool.UpdateLink--aRef->Label------; Exceptions Standard_DomainError if <L> has no XLink attribute.
 
 	:param L:
 	:type L: TDF_Label &
@@ -2342,7 +1842,7 @@ class TDocStd_XLinkTool {
 ") UpdateLink;
 		void UpdateLink (const TDF_Label & L);
 		%feature("compactdefaultargs") Copy;
-		%feature("autodoc", "	* Copy the content of <fromsource> under <intarget>. Noone link is registred. noone check is done. Example Handle_TDocStd_Document DOC, XDOC; TDF_Label L, XL; TDocStd_XLinkTool xlinktool; xlinktool.Copy(L,XL); Exceptions: Standard_DomainError if the contents of fromsource are not entirely in the scope of this label, in other words, are not self-contained. !!! ==> Warning: If the document manages shapes use the next way: TDocStd_XLinkTool xlinktool; xlinktool.Copy(L,XL); TopTools_DataMapOfShapeShape M; TNaming::ChangeShapes(target,M);
+		%feature("autodoc", "	* Copy the content of <fromsource> under <intarget>. Noone link is registred. noone check is done. Example Handle_TDocStd_Document DOC, XDOC; TDF_Label L, XL; TDocStd_XLinkTool xlinktool; xlinktool.Copy--L,XL--; Exceptions: Standard_DomainError if the contents of fromsource are not entirely in the scope of this label, in other words, are not self-contained. !!! ==> Warning: If the document manages shapes use the next way: TDocStd_XLinkTool xlinktool; xlinktool.Copy--L,XL--; TopTools_DataMapOfShapeShape M; TNaming::ChangeShapes--target,M--;
 
 	:param intarget:
 	:type intarget: TDF_Label &

@@ -1,5 +1,5 @@
 /*
-Copyright 2008-2017 Thomas Paviot (tpaviot@gmail.com)
+Copyright 2008-2018 Thomas Paviot (tpaviot@gmail.com)
 
 
 This file is part of pythonOCC.
@@ -56,6 +56,9 @@ def register_handle(handle, base_object):
 /* typedefs */
 /* end typedefs declaration */
 
+/* templates */
+/* end templates declaration */
+
 /* public enums */
 /* end public enums declaration */
 
@@ -63,15 +66,19 @@ def register_handle(handle, base_object):
 class IntCurvesFace_Intersector {
 	public:
 		%feature("compactdefaultargs") IntCurvesFace_Intersector;
-		%feature("autodoc", "	* Load a Face. //! The Tolerance <Tol> is used to determine if the first point of the segment is near the face. In that case, the parameter of the intersection point on the line can be a negative value (greater than -Tol).
+		%feature("autodoc", "	* Load a Face. //! The Tolerance <Tol> is used to determine if the first point of the segment is near the face. In that case, the parameter of the intersection point on the line can be a negative value --greater than -Tol--. If aRestr = true UV bounding box of face is used to restrict it's underlined surface, otherwise surface is not restricted. If UseBToler = false then the 2d-point of intersection is classified with null-tolerance --relative to face--; otherwise it's using maximium between input tolerance--aTol-- and tolerances of face bounds --edges--.
 
 	:param F:
 	:type F: TopoDS_Face &
 	:param aTol:
 	:type aTol: float
+	:param aRestr: default value is Standard_True
+	:type aRestr: bool
+	:param UseBToler: default value is Standard_True
+	:type UseBToler: bool
 	:rtype: None
 ") IntCurvesFace_Intersector;
-		 IntCurvesFace_Intersector (const TopoDS_Face & F,const Standard_Real aTol);
+		 IntCurvesFace_Intersector (const TopoDS_Face & F,const Standard_Real aTol,const Standard_Boolean aRestr = Standard_True,const Standard_Boolean UseBToler = Standard_True);
 		%feature("compactdefaultargs") Perform;
 		%feature("autodoc", "	* Perform the intersection between the segment L and the loaded face. //! PInf is the smallest parameter on the line PSup is the highest parmaeter on the line //! For an infinite line PInf and PSup can be +/- RealLast.
 
@@ -153,7 +160,7 @@ class IntCurvesFace_Intersector {
 ") Transition;
 		IntCurveSurface_TransitionOnCurve Transition (const Standard_Integer I);
 		%feature("compactdefaultargs") State;
-		%feature("autodoc", "	* Returns the ith state of the point on the face. The values can be either TopAbs_IN ( the point is in the face) or TopAbs_ON ( the point is on a boudary of the face).
+		%feature("autodoc", "	* Returns the ith state of the point on the face. The values can be either TopAbs_IN -- the point is in the face-- or TopAbs_ON -- the point is on a boudary of the face--.
 
 	:param I:
 	:type I: int
@@ -176,6 +183,20 @@ class IntCurvesFace_Intersector {
 		%feature("autodoc", "	:rtype: Bnd_Box
 ") Bounding;
 		Bnd_Box Bounding ();
+		%feature("compactdefaultargs") SetUseBoundToler;
+		%feature("autodoc", "	* Sets the boundary tolerance flag
+
+	:param UseBToler:
+	:type UseBToler: bool
+	:rtype: None
+") SetUseBoundToler;
+		void SetUseBoundToler (Standard_Boolean UseBToler);
+		%feature("compactdefaultargs") GetUseBoundToler;
+		%feature("autodoc", "	* Returns the boundary tolerance flag
+
+	:rtype: bool
+") GetUseBoundToler;
+		Standard_Boolean GetUseBoundToler ();
 		%feature("compactdefaultargs") Destroy;
 		%feature("autodoc", "	:rtype: None
 ") Destroy;
@@ -290,7 +311,7 @@ class IntCurvesFace_ShapeIntersector {
 ") Transition;
 		IntCurveSurface_TransitionOnCurve Transition (const Standard_Integer I);
 		%feature("compactdefaultargs") State;
-		%feature("autodoc", "	* Returns the ith state of the point on the face. The values can be either TopAbs_IN ( the point is in the face) or TopAbs_ON ( the point is on a boudary of the face).
+		%feature("autodoc", "	* Returns the ith state of the point on the face. The values can be either TopAbs_IN -- the point is in the face-- or TopAbs_ON -- the point is on a boudary of the face--.
 
 	:param I:
 	:type I: int

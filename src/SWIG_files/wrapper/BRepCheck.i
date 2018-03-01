@@ -1,5 +1,5 @@
 /*
-Copyright 2008-2017 Thomas Paviot (tpaviot@gmail.com)
+Copyright 2008-2018 Thomas Paviot (tpaviot@gmail.com)
 
 
 This file is part of pythonOCC.
@@ -55,6 +55,12 @@ def register_handle(handle, base_object):
 
 /* typedefs */
 /* end typedefs declaration */
+
+/* templates */
+%template(BRepCheck_DataMapOfShapeListOfStatus) NCollection_DataMap <TopoDS_Shape , BRepCheck_ListOfStatus , TopTools_ShapeMapHasher>;
+%template(BRepCheck_ListOfStatus) NCollection_List <BRepCheck_Status>;
+%template(BRepCheck_DataMapOfShapeResult) NCollection_DataMap <TopoDS_Shape , Handle_BRepCheck_Result , TopTools_OrientedShapeMapHasher>;
+/* end templates declaration */
 
 /* public enums */
 enum BRepCheck_Status {
@@ -170,7 +176,7 @@ class BRepCheck_Analyzer {
 ") IsValid;
 		Standard_Boolean IsValid (const TopoDS_Shape & S);
 		%feature("compactdefaultargs") IsValid;
-		%feature("autodoc", "	* Returns true if no defect is detected on the shape S or any of its subshapes. Returns true if the shape S is valid. This function checks whether a given shape is valid by checking that: - the topology is correct - parameterization of edges in particular is correct. For the topology to be correct, the following conditions must be satisfied: - edges should have at least two vertices if they are not degenerate edges. The vertices should be within the range of the bounding edges at the tolerance specified in the vertex, - edges should share at least one face. The representation of the edges should be within the tolerance criterion assigned to them. - wires defining a face should not self-intersect and should be closed, - there should be one wire which contains all other wires inside a face, - wires should be correctly oriented with respect to each of the edges, - faces should be correctly oriented, in particular with respect to adjacent faces if these faces define a solid, - shells defining a solid should be closed. There should be one enclosing shell if the shape is a solid; To check parameterization of edge, there are 2 approaches depending on the edge?s contextual situation. - if the edge is either single, or it is in the context of a wire or a compound, its parameterization is defined by the parameterization of its 3D curve and is considered as valid. - If the edge is in the context of a face, it should have SameParameter and SameRange flags set to Standard_True. To check these flags, you should call the function BRep_Tool::SameParameter and BRep_Tool::SameRange for an edge. If at least one of these flags is set to Standard_False, the edge is considered as invalid without any additional check. If the edge is contained by a face, and it has SameParameter and SameRange flags set to Standard_True, IsValid checks whether representation of the edge on face, in context of which the edge is considered, has the same parameterization up to the tolerance value coded on the edge. For a given parameter t on the edge having C as a 3D curve and one PCurve P on a surface S (base surface of the reference face), this checks that |C(t) - S(P(t))| is less than or equal to tolerance, where tolerance is the tolerance value coded on the edge.
+		%feature("autodoc", "	* Returns true if no defect is detected on the shape S or any of its subshapes. Returns true if the shape S is valid. This function checks whether a given shape is valid by checking that: - the topology is correct - parameterization of edges in particular is correct. For the topology to be correct, the following conditions must be satisfied: - edges should have at least two vertices if they are not degenerate edges. The vertices should be within the range of the bounding edges at the tolerance specified in the vertex, - edges should share at least one face. The representation of the edges should be within the tolerance criterion assigned to them. - wires defining a face should not self-intersect and should be closed, - there should be one wire which contains all other wires inside a face, - wires should be correctly oriented with respect to each of the edges, - faces should be correctly oriented, in particular with respect to adjacent faces if these faces define a solid, - shells defining a solid should be closed. There should be one enclosing shell if the shape is a solid; To check parameterization of edge, there are 2 approaches depending on the edge?s contextual situation. - if the edge is either single, or it is in the context of a wire or a compound, its parameterization is defined by the parameterization of its 3D curve and is considered as valid. - If the edge is in the context of a face, it should have SameParameter and SameRange flags set to Standard_True. To check these flags, you should call the function BRep_Tool::SameParameter and BRep_Tool::SameRange for an edge. If at least one of these flags is set to Standard_False, the edge is considered as invalid without any additional check. If the edge is contained by a face, and it has SameParameter and SameRange flags set to Standard_True, IsValid checks whether representation of the edge on face, in context of which the edge is considered, has the same parameterization up to the tolerance value coded on the edge. For a given parameter t on the edge having C as a 3D curve and one PCurve P on a surface S --base surface of the reference face--, this checks that |C--t-- - S--P--t----| is less than or equal to tolerance, where tolerance is the tolerance value coded on the edge.
 
 	:rtype: bool
 ") IsValid;
@@ -189,637 +195,8 @@ class BRepCheck_Analyzer {
 	__repr__ = _dumps_object
 	}
 };
-%nodefaultctor BRepCheck_DataMapIteratorOfDataMapOfShapeListOfStatus;
-class BRepCheck_DataMapIteratorOfDataMapOfShapeListOfStatus : public TCollection_BasicMapIterator {
-	public:
-		%feature("compactdefaultargs") BRepCheck_DataMapIteratorOfDataMapOfShapeListOfStatus;
-		%feature("autodoc", "	:rtype: None
-") BRepCheck_DataMapIteratorOfDataMapOfShapeListOfStatus;
-		 BRepCheck_DataMapIteratorOfDataMapOfShapeListOfStatus ();
-		%feature("compactdefaultargs") BRepCheck_DataMapIteratorOfDataMapOfShapeListOfStatus;
-		%feature("autodoc", "	:param aMap:
-	:type aMap: BRepCheck_DataMapOfShapeListOfStatus &
-	:rtype: None
-") BRepCheck_DataMapIteratorOfDataMapOfShapeListOfStatus;
-		 BRepCheck_DataMapIteratorOfDataMapOfShapeListOfStatus (const BRepCheck_DataMapOfShapeListOfStatus & aMap);
-		%feature("compactdefaultargs") Initialize;
-		%feature("autodoc", "	:param aMap:
-	:type aMap: BRepCheck_DataMapOfShapeListOfStatus &
-	:rtype: None
-") Initialize;
-		void Initialize (const BRepCheck_DataMapOfShapeListOfStatus & aMap);
-		%feature("compactdefaultargs") Key;
-		%feature("autodoc", "	:rtype: TopoDS_Shape
-") Key;
-		const TopoDS_Shape  Key ();
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:rtype: BRepCheck_ListOfStatus
-") Value;
-		const BRepCheck_ListOfStatus & Value ();
-};
-
-
-%extend BRepCheck_DataMapIteratorOfDataMapOfShapeListOfStatus {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor BRepCheck_DataMapIteratorOfDataMapOfShapeResult;
-class BRepCheck_DataMapIteratorOfDataMapOfShapeResult : public TCollection_BasicMapIterator {
-	public:
-		%feature("compactdefaultargs") BRepCheck_DataMapIteratorOfDataMapOfShapeResult;
-		%feature("autodoc", "	:rtype: None
-") BRepCheck_DataMapIteratorOfDataMapOfShapeResult;
-		 BRepCheck_DataMapIteratorOfDataMapOfShapeResult ();
-		%feature("compactdefaultargs") BRepCheck_DataMapIteratorOfDataMapOfShapeResult;
-		%feature("autodoc", "	:param aMap:
-	:type aMap: BRepCheck_DataMapOfShapeResult &
-	:rtype: None
-") BRepCheck_DataMapIteratorOfDataMapOfShapeResult;
-		 BRepCheck_DataMapIteratorOfDataMapOfShapeResult (const BRepCheck_DataMapOfShapeResult & aMap);
-		%feature("compactdefaultargs") Initialize;
-		%feature("autodoc", "	:param aMap:
-	:type aMap: BRepCheck_DataMapOfShapeResult &
-	:rtype: None
-") Initialize;
-		void Initialize (const BRepCheck_DataMapOfShapeResult & aMap);
-		%feature("compactdefaultargs") Key;
-		%feature("autodoc", "	:rtype: TopoDS_Shape
-") Key;
-		const TopoDS_Shape  Key ();
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:rtype: Handle_BRepCheck_Result
-") Value;
-		Handle_BRepCheck_Result Value ();
-};
-
-
-%extend BRepCheck_DataMapIteratorOfDataMapOfShapeResult {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor BRepCheck_DataMapNodeOfDataMapOfShapeListOfStatus;
-class BRepCheck_DataMapNodeOfDataMapOfShapeListOfStatus : public TCollection_MapNode {
-	public:
-		%feature("compactdefaultargs") BRepCheck_DataMapNodeOfDataMapOfShapeListOfStatus;
-		%feature("autodoc", "	:param K:
-	:type K: TopoDS_Shape &
-	:param I:
-	:type I: BRepCheck_ListOfStatus &
-	:param n:
-	:type n: TCollection_MapNodePtr &
-	:rtype: None
-") BRepCheck_DataMapNodeOfDataMapOfShapeListOfStatus;
-		 BRepCheck_DataMapNodeOfDataMapOfShapeListOfStatus (const TopoDS_Shape & K,const BRepCheck_ListOfStatus & I,const TCollection_MapNodePtr & n);
-		%feature("compactdefaultargs") Key;
-		%feature("autodoc", "	:rtype: TopoDS_Shape
-") Key;
-		TopoDS_Shape  Key ();
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:rtype: BRepCheck_ListOfStatus
-") Value;
-		BRepCheck_ListOfStatus & Value ();
-};
-
-
-%extend BRepCheck_DataMapNodeOfDataMapOfShapeListOfStatus {
-	%pythoncode {
-		def GetHandle(self):
-		    try:
-		        return self.thisHandle
-		    except:
-		        self.thisHandle = Handle_BRepCheck_DataMapNodeOfDataMapOfShapeListOfStatus(self)
-		        self.thisown = False
-		        return self.thisHandle
-	}
-};
-
-%pythonappend Handle_BRepCheck_DataMapNodeOfDataMapOfShapeListOfStatus::Handle_BRepCheck_DataMapNodeOfDataMapOfShapeListOfStatus %{
-    # register the handle in the base object
-    if len(args) > 0:
-        register_handle(self, args[0])
-%}
-
-%nodefaultctor Handle_BRepCheck_DataMapNodeOfDataMapOfShapeListOfStatus;
-class Handle_BRepCheck_DataMapNodeOfDataMapOfShapeListOfStatus : public Handle_TCollection_MapNode {
-
-    public:
-        // constructors
-        Handle_BRepCheck_DataMapNodeOfDataMapOfShapeListOfStatus();
-        Handle_BRepCheck_DataMapNodeOfDataMapOfShapeListOfStatus(const Handle_BRepCheck_DataMapNodeOfDataMapOfShapeListOfStatus &aHandle);
-        Handle_BRepCheck_DataMapNodeOfDataMapOfShapeListOfStatus(const BRepCheck_DataMapNodeOfDataMapOfShapeListOfStatus *anItem);
-        void Nullify();
-        Standard_Boolean IsNull() const;
-        static const Handle_BRepCheck_DataMapNodeOfDataMapOfShapeListOfStatus DownCast(const Handle_Standard_Transient &AnObject);
-
-};
-%extend Handle_BRepCheck_DataMapNodeOfDataMapOfShapeListOfStatus {
-    BRepCheck_DataMapNodeOfDataMapOfShapeListOfStatus* _get_reference() {
-    return (BRepCheck_DataMapNodeOfDataMapOfShapeListOfStatus*)$self->Access();
-    }
-};
-
-%extend Handle_BRepCheck_DataMapNodeOfDataMapOfShapeListOfStatus {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
-};
-
-%extend BRepCheck_DataMapNodeOfDataMapOfShapeListOfStatus {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor BRepCheck_DataMapNodeOfDataMapOfShapeResult;
-class BRepCheck_DataMapNodeOfDataMapOfShapeResult : public TCollection_MapNode {
-	public:
-		%feature("compactdefaultargs") BRepCheck_DataMapNodeOfDataMapOfShapeResult;
-		%feature("autodoc", "	:param K:
-	:type K: TopoDS_Shape &
-	:param I:
-	:type I: Handle_BRepCheck_Result &
-	:param n:
-	:type n: TCollection_MapNodePtr &
-	:rtype: None
-") BRepCheck_DataMapNodeOfDataMapOfShapeResult;
-		 BRepCheck_DataMapNodeOfDataMapOfShapeResult (const TopoDS_Shape & K,const Handle_BRepCheck_Result & I,const TCollection_MapNodePtr & n);
-		%feature("compactdefaultargs") Key;
-		%feature("autodoc", "	:rtype: TopoDS_Shape
-") Key;
-		TopoDS_Shape  Key ();
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:rtype: Handle_BRepCheck_Result
-") Value;
-		Handle_BRepCheck_Result Value ();
-};
-
-
-%extend BRepCheck_DataMapNodeOfDataMapOfShapeResult {
-	%pythoncode {
-		def GetHandle(self):
-		    try:
-		        return self.thisHandle
-		    except:
-		        self.thisHandle = Handle_BRepCheck_DataMapNodeOfDataMapOfShapeResult(self)
-		        self.thisown = False
-		        return self.thisHandle
-	}
-};
-
-%pythonappend Handle_BRepCheck_DataMapNodeOfDataMapOfShapeResult::Handle_BRepCheck_DataMapNodeOfDataMapOfShapeResult %{
-    # register the handle in the base object
-    if len(args) > 0:
-        register_handle(self, args[0])
-%}
-
-%nodefaultctor Handle_BRepCheck_DataMapNodeOfDataMapOfShapeResult;
-class Handle_BRepCheck_DataMapNodeOfDataMapOfShapeResult : public Handle_TCollection_MapNode {
-
-    public:
-        // constructors
-        Handle_BRepCheck_DataMapNodeOfDataMapOfShapeResult();
-        Handle_BRepCheck_DataMapNodeOfDataMapOfShapeResult(const Handle_BRepCheck_DataMapNodeOfDataMapOfShapeResult &aHandle);
-        Handle_BRepCheck_DataMapNodeOfDataMapOfShapeResult(const BRepCheck_DataMapNodeOfDataMapOfShapeResult *anItem);
-        void Nullify();
-        Standard_Boolean IsNull() const;
-        static const Handle_BRepCheck_DataMapNodeOfDataMapOfShapeResult DownCast(const Handle_Standard_Transient &AnObject);
-
-};
-%extend Handle_BRepCheck_DataMapNodeOfDataMapOfShapeResult {
-    BRepCheck_DataMapNodeOfDataMapOfShapeResult* _get_reference() {
-    return (BRepCheck_DataMapNodeOfDataMapOfShapeResult*)$self->Access();
-    }
-};
-
-%extend Handle_BRepCheck_DataMapNodeOfDataMapOfShapeResult {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
-};
-
-%extend BRepCheck_DataMapNodeOfDataMapOfShapeResult {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor BRepCheck_DataMapOfShapeListOfStatus;
-class BRepCheck_DataMapOfShapeListOfStatus : public TCollection_BasicMap {
-	public:
-		%feature("compactdefaultargs") BRepCheck_DataMapOfShapeListOfStatus;
-		%feature("autodoc", "	:param NbBuckets: default value is 1
-	:type NbBuckets: int
-	:rtype: None
-") BRepCheck_DataMapOfShapeListOfStatus;
-		 BRepCheck_DataMapOfShapeListOfStatus (const Standard_Integer NbBuckets = 1);
-		%feature("compactdefaultargs") Assign;
-		%feature("autodoc", "	:param Other:
-	:type Other: BRepCheck_DataMapOfShapeListOfStatus &
-	:rtype: BRepCheck_DataMapOfShapeListOfStatus
-") Assign;
-		BRepCheck_DataMapOfShapeListOfStatus & Assign (const BRepCheck_DataMapOfShapeListOfStatus & Other);
-		%feature("compactdefaultargs") operator =;
-		%feature("autodoc", "	:param Other:
-	:type Other: BRepCheck_DataMapOfShapeListOfStatus &
-	:rtype: BRepCheck_DataMapOfShapeListOfStatus
-") operator =;
-		BRepCheck_DataMapOfShapeListOfStatus & operator = (const BRepCheck_DataMapOfShapeListOfStatus & Other);
-		%feature("compactdefaultargs") ReSize;
-		%feature("autodoc", "	:param NbBuckets:
-	:type NbBuckets: int
-	:rtype: None
-") ReSize;
-		void ReSize (const Standard_Integer NbBuckets);
-		%feature("compactdefaultargs") Clear;
-		%feature("autodoc", "	:rtype: None
-") Clear;
-		void Clear ();
-		%feature("compactdefaultargs") Bind;
-		%feature("autodoc", "	:param K:
-	:type K: TopoDS_Shape &
-	:param I:
-	:type I: BRepCheck_ListOfStatus &
-	:rtype: bool
-") Bind;
-		Standard_Boolean Bind (const TopoDS_Shape & K,const BRepCheck_ListOfStatus & I);
-		%feature("compactdefaultargs") IsBound;
-		%feature("autodoc", "	:param K:
-	:type K: TopoDS_Shape &
-	:rtype: bool
-") IsBound;
-		Standard_Boolean IsBound (const TopoDS_Shape & K);
-		%feature("compactdefaultargs") UnBind;
-		%feature("autodoc", "	:param K:
-	:type K: TopoDS_Shape &
-	:rtype: bool
-") UnBind;
-		Standard_Boolean UnBind (const TopoDS_Shape & K);
-		%feature("compactdefaultargs") Find;
-		%feature("autodoc", "	:param K:
-	:type K: TopoDS_Shape &
-	:rtype: BRepCheck_ListOfStatus
-") Find;
-		const BRepCheck_ListOfStatus & Find (const TopoDS_Shape & K);
-		%feature("compactdefaultargs") ChangeFind;
-		%feature("autodoc", "	:param K:
-	:type K: TopoDS_Shape &
-	:rtype: BRepCheck_ListOfStatus
-") ChangeFind;
-		BRepCheck_ListOfStatus & ChangeFind (const TopoDS_Shape & K);
-		%feature("compactdefaultargs") Find1;
-		%feature("autodoc", "	:param K:
-	:type K: TopoDS_Shape &
-	:rtype: Standard_Address
-") Find1;
-		Standard_Address Find1 (const TopoDS_Shape & K);
-		%feature("compactdefaultargs") ChangeFind1;
-		%feature("autodoc", "	:param K:
-	:type K: TopoDS_Shape &
-	:rtype: Standard_Address
-") ChangeFind1;
-		Standard_Address ChangeFind1 (const TopoDS_Shape & K);
-};
-
-
-%extend BRepCheck_DataMapOfShapeListOfStatus {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor BRepCheck_DataMapOfShapeResult;
-class BRepCheck_DataMapOfShapeResult : public TCollection_BasicMap {
-	public:
-		%feature("compactdefaultargs") BRepCheck_DataMapOfShapeResult;
-		%feature("autodoc", "	:param NbBuckets: default value is 1
-	:type NbBuckets: int
-	:rtype: None
-") BRepCheck_DataMapOfShapeResult;
-		 BRepCheck_DataMapOfShapeResult (const Standard_Integer NbBuckets = 1);
-		%feature("compactdefaultargs") Assign;
-		%feature("autodoc", "	:param Other:
-	:type Other: BRepCheck_DataMapOfShapeResult &
-	:rtype: BRepCheck_DataMapOfShapeResult
-") Assign;
-		BRepCheck_DataMapOfShapeResult & Assign (const BRepCheck_DataMapOfShapeResult & Other);
-		%feature("compactdefaultargs") operator =;
-		%feature("autodoc", "	:param Other:
-	:type Other: BRepCheck_DataMapOfShapeResult &
-	:rtype: BRepCheck_DataMapOfShapeResult
-") operator =;
-		BRepCheck_DataMapOfShapeResult & operator = (const BRepCheck_DataMapOfShapeResult & Other);
-		%feature("compactdefaultargs") ReSize;
-		%feature("autodoc", "	:param NbBuckets:
-	:type NbBuckets: int
-	:rtype: None
-") ReSize;
-		void ReSize (const Standard_Integer NbBuckets);
-		%feature("compactdefaultargs") Clear;
-		%feature("autodoc", "	:rtype: None
-") Clear;
-		void Clear ();
-		%feature("compactdefaultargs") Bind;
-		%feature("autodoc", "	:param K:
-	:type K: TopoDS_Shape &
-	:param I:
-	:type I: Handle_BRepCheck_Result &
-	:rtype: bool
-") Bind;
-		Standard_Boolean Bind (const TopoDS_Shape & K,const Handle_BRepCheck_Result & I);
-		%feature("compactdefaultargs") IsBound;
-		%feature("autodoc", "	:param K:
-	:type K: TopoDS_Shape &
-	:rtype: bool
-") IsBound;
-		Standard_Boolean IsBound (const TopoDS_Shape & K);
-		%feature("compactdefaultargs") UnBind;
-		%feature("autodoc", "	:param K:
-	:type K: TopoDS_Shape &
-	:rtype: bool
-") UnBind;
-		Standard_Boolean UnBind (const TopoDS_Shape & K);
-		%feature("compactdefaultargs") Find;
-		%feature("autodoc", "	:param K:
-	:type K: TopoDS_Shape &
-	:rtype: Handle_BRepCheck_Result
-") Find;
-		Handle_BRepCheck_Result Find (const TopoDS_Shape & K);
-		%feature("compactdefaultargs") ChangeFind;
-		%feature("autodoc", "	:param K:
-	:type K: TopoDS_Shape &
-	:rtype: Handle_BRepCheck_Result
-") ChangeFind;
-		Handle_BRepCheck_Result ChangeFind (const TopoDS_Shape & K);
-		%feature("compactdefaultargs") Find1;
-		%feature("autodoc", "	:param K:
-	:type K: TopoDS_Shape &
-	:rtype: Standard_Address
-") Find1;
-		Standard_Address Find1 (const TopoDS_Shape & K);
-		%feature("compactdefaultargs") ChangeFind1;
-		%feature("autodoc", "	:param K:
-	:type K: TopoDS_Shape &
-	:rtype: Standard_Address
-") ChangeFind1;
-		Standard_Address ChangeFind1 (const TopoDS_Shape & K);
-};
-
-
-%extend BRepCheck_DataMapOfShapeResult {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor BRepCheck_ListIteratorOfListOfStatus;
-class BRepCheck_ListIteratorOfListOfStatus {
-	public:
-		%feature("compactdefaultargs") BRepCheck_ListIteratorOfListOfStatus;
-		%feature("autodoc", "	:rtype: None
-") BRepCheck_ListIteratorOfListOfStatus;
-		 BRepCheck_ListIteratorOfListOfStatus ();
-		%feature("compactdefaultargs") BRepCheck_ListIteratorOfListOfStatus;
-		%feature("autodoc", "	:param L:
-	:type L: BRepCheck_ListOfStatus &
-	:rtype: None
-") BRepCheck_ListIteratorOfListOfStatus;
-		 BRepCheck_ListIteratorOfListOfStatus (const BRepCheck_ListOfStatus & L);
-		%feature("compactdefaultargs") Initialize;
-		%feature("autodoc", "	:param L:
-	:type L: BRepCheck_ListOfStatus &
-	:rtype: None
-") Initialize;
-		void Initialize (const BRepCheck_ListOfStatus & L);
-		%feature("compactdefaultargs") More;
-		%feature("autodoc", "	:rtype: bool
-") More;
-		Standard_Boolean More ();
-		%feature("compactdefaultargs") Next;
-		%feature("autodoc", "	:rtype: None
-") Next;
-		void Next ();
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:rtype: BRepCheck_Status
-") Value;
-		BRepCheck_Status  Value ();
-};
-
-
-%extend BRepCheck_ListIteratorOfListOfStatus {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor BRepCheck_ListNodeOfListOfStatus;
-class BRepCheck_ListNodeOfListOfStatus : public TCollection_MapNode {
-	public:
-		%feature("compactdefaultargs") BRepCheck_ListNodeOfListOfStatus;
-		%feature("autodoc", "	:param I:
-	:type I: BRepCheck_Status &
-	:param n:
-	:type n: TCollection_MapNodePtr &
-	:rtype: None
-") BRepCheck_ListNodeOfListOfStatus;
-		 BRepCheck_ListNodeOfListOfStatus (const BRepCheck_Status & I,const TCollection_MapNodePtr & n);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:rtype: BRepCheck_Status
-") Value;
-		BRepCheck_Status  Value ();
-};
-
-
-%extend BRepCheck_ListNodeOfListOfStatus {
-	%pythoncode {
-		def GetHandle(self):
-		    try:
-		        return self.thisHandle
-		    except:
-		        self.thisHandle = Handle_BRepCheck_ListNodeOfListOfStatus(self)
-		        self.thisown = False
-		        return self.thisHandle
-	}
-};
-
-%pythonappend Handle_BRepCheck_ListNodeOfListOfStatus::Handle_BRepCheck_ListNodeOfListOfStatus %{
-    # register the handle in the base object
-    if len(args) > 0:
-        register_handle(self, args[0])
-%}
-
-%nodefaultctor Handle_BRepCheck_ListNodeOfListOfStatus;
-class Handle_BRepCheck_ListNodeOfListOfStatus : public Handle_TCollection_MapNode {
-
-    public:
-        // constructors
-        Handle_BRepCheck_ListNodeOfListOfStatus();
-        Handle_BRepCheck_ListNodeOfListOfStatus(const Handle_BRepCheck_ListNodeOfListOfStatus &aHandle);
-        Handle_BRepCheck_ListNodeOfListOfStatus(const BRepCheck_ListNodeOfListOfStatus *anItem);
-        void Nullify();
-        Standard_Boolean IsNull() const;
-        static const Handle_BRepCheck_ListNodeOfListOfStatus DownCast(const Handle_Standard_Transient &AnObject);
-
-};
-%extend Handle_BRepCheck_ListNodeOfListOfStatus {
-    BRepCheck_ListNodeOfListOfStatus* _get_reference() {
-    return (BRepCheck_ListNodeOfListOfStatus*)$self->Access();
-    }
-};
-
-%extend Handle_BRepCheck_ListNodeOfListOfStatus {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
-};
-
-%extend BRepCheck_ListNodeOfListOfStatus {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor BRepCheck_ListOfStatus;
-class BRepCheck_ListOfStatus {
-	public:
-		%feature("compactdefaultargs") BRepCheck_ListOfStatus;
-		%feature("autodoc", "	:rtype: None
-") BRepCheck_ListOfStatus;
-		 BRepCheck_ListOfStatus ();
-		%feature("compactdefaultargs") BRepCheck_ListOfStatus;
-		%feature("autodoc", "	:param Other:
-	:type Other: BRepCheck_ListOfStatus &
-	:rtype: None
-") BRepCheck_ListOfStatus;
-		 BRepCheck_ListOfStatus (const BRepCheck_ListOfStatus & Other);
-		%feature("compactdefaultargs") Assign;
-		%feature("autodoc", "	:param Other:
-	:type Other: BRepCheck_ListOfStatus &
-	:rtype: None
-") Assign;
-		void Assign (const BRepCheck_ListOfStatus & Other);
-		%feature("compactdefaultargs") operator =;
-		%feature("autodoc", "	:param Other:
-	:type Other: BRepCheck_ListOfStatus &
-	:rtype: None
-") operator =;
-		void operator = (const BRepCheck_ListOfStatus & Other);
-		%feature("compactdefaultargs") Extent;
-		%feature("autodoc", "	:rtype: int
-") Extent;
-		Standard_Integer Extent ();
-		%feature("compactdefaultargs") Clear;
-		%feature("autodoc", "	:rtype: None
-") Clear;
-		void Clear ();
-		%feature("compactdefaultargs") IsEmpty;
-		%feature("autodoc", "	:rtype: bool
-") IsEmpty;
-		Standard_Boolean IsEmpty ();
-		%feature("compactdefaultargs") Prepend;
-		%feature("autodoc", "	:param I:
-	:type I: BRepCheck_Status &
-	:rtype: None
-") Prepend;
-		void Prepend (const BRepCheck_Status & I);
-		%feature("compactdefaultargs") Prepend;
-		%feature("autodoc", "	:param I:
-	:type I: BRepCheck_Status &
-	:param theIt:
-	:type theIt: BRepCheck_ListIteratorOfListOfStatus &
-	:rtype: None
-") Prepend;
-		void Prepend (const BRepCheck_Status & I,BRepCheck_ListIteratorOfListOfStatus & theIt);
-		%feature("compactdefaultargs") Prepend;
-		%feature("autodoc", "	:param Other:
-	:type Other: BRepCheck_ListOfStatus &
-	:rtype: None
-") Prepend;
-		void Prepend (BRepCheck_ListOfStatus & Other);
-		%feature("compactdefaultargs") Append;
-		%feature("autodoc", "	:param I:
-	:type I: BRepCheck_Status &
-	:rtype: None
-") Append;
-		void Append (const BRepCheck_Status & I);
-		%feature("compactdefaultargs") Append;
-		%feature("autodoc", "	:param I:
-	:type I: BRepCheck_Status &
-	:param theIt:
-	:type theIt: BRepCheck_ListIteratorOfListOfStatus &
-	:rtype: None
-") Append;
-		void Append (const BRepCheck_Status & I,BRepCheck_ListIteratorOfListOfStatus & theIt);
-		%feature("compactdefaultargs") Append;
-		%feature("autodoc", "	:param Other:
-	:type Other: BRepCheck_ListOfStatus &
-	:rtype: None
-") Append;
-		void Append (BRepCheck_ListOfStatus & Other);
-		%feature("compactdefaultargs") First;
-		%feature("autodoc", "	:rtype: BRepCheck_Status
-") First;
-		BRepCheck_Status  First ();
-		%feature("compactdefaultargs") Last;
-		%feature("autodoc", "	:rtype: BRepCheck_Status
-") Last;
-		BRepCheck_Status  Last ();
-		%feature("compactdefaultargs") RemoveFirst;
-		%feature("autodoc", "	:rtype: None
-") RemoveFirst;
-		void RemoveFirst ();
-		%feature("compactdefaultargs") Remove;
-		%feature("autodoc", "	:param It:
-	:type It: BRepCheck_ListIteratorOfListOfStatus &
-	:rtype: None
-") Remove;
-		void Remove (BRepCheck_ListIteratorOfListOfStatus & It);
-		%feature("compactdefaultargs") InsertBefore;
-		%feature("autodoc", "	:param I:
-	:type I: BRepCheck_Status &
-	:param It:
-	:type It: BRepCheck_ListIteratorOfListOfStatus &
-	:rtype: None
-") InsertBefore;
-		void InsertBefore (const BRepCheck_Status & I,BRepCheck_ListIteratorOfListOfStatus & It);
-		%feature("compactdefaultargs") InsertBefore;
-		%feature("autodoc", "	:param Other:
-	:type Other: BRepCheck_ListOfStatus &
-	:param It:
-	:type It: BRepCheck_ListIteratorOfListOfStatus &
-	:rtype: None
-") InsertBefore;
-		void InsertBefore (BRepCheck_ListOfStatus & Other,BRepCheck_ListIteratorOfListOfStatus & It);
-		%feature("compactdefaultargs") InsertAfter;
-		%feature("autodoc", "	:param I:
-	:type I: BRepCheck_Status &
-	:param It:
-	:type It: BRepCheck_ListIteratorOfListOfStatus &
-	:rtype: None
-") InsertAfter;
-		void InsertAfter (const BRepCheck_Status & I,BRepCheck_ListIteratorOfListOfStatus & It);
-		%feature("compactdefaultargs") InsertAfter;
-		%feature("autodoc", "	:param Other:
-	:type Other: BRepCheck_ListOfStatus &
-	:param It:
-	:type It: BRepCheck_ListIteratorOfListOfStatus &
-	:rtype: None
-") InsertAfter;
-		void InsertAfter (BRepCheck_ListOfStatus & Other,BRepCheck_ListIteratorOfListOfStatus & It);
-};
-
-
-%extend BRepCheck_ListOfStatus {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
 %nodefaultctor BRepCheck_Result;
-class BRepCheck_Result : public MMgt_TShared {
+class BRepCheck_Result : public Standard_Transient {
 	public:
 		%feature("compactdefaultargs") Init;
 		%feature("autodoc", "	:param S:
@@ -909,7 +286,7 @@ class BRepCheck_Result : public MMgt_TShared {
 %}
 
 %nodefaultctor Handle_BRepCheck_Result;
-class Handle_BRepCheck_Result : public Handle_MMgt_TShared {
+class Handle_BRepCheck_Result : public Handle_Standard_Transient {
 
     public:
         // constructors
@@ -921,19 +298,20 @@ class Handle_BRepCheck_Result : public Handle_MMgt_TShared {
         static const Handle_BRepCheck_Result DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_BRepCheck_Result {
     BRepCheck_Result* _get_reference() {
-    return (BRepCheck_Result*)$self->Access();
+    return (BRepCheck_Result*)$self->get();
     }
 };
 
 %extend Handle_BRepCheck_Result {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend BRepCheck_Result {
@@ -1028,19 +406,20 @@ class Handle_BRepCheck_Edge : public Handle_BRepCheck_Result {
         static const Handle_BRepCheck_Edge DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_BRepCheck_Edge {
     BRepCheck_Edge* _get_reference() {
-    return (BRepCheck_Edge*)$self->Access();
+    return (BRepCheck_Edge*)$self->get();
     }
 };
 
 %extend Handle_BRepCheck_Edge {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend BRepCheck_Edge {
@@ -1149,19 +528,20 @@ class Handle_BRepCheck_Face : public Handle_BRepCheck_Result {
         static const Handle_BRepCheck_Face DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_BRepCheck_Face {
     BRepCheck_Face* _get_reference() {
-    return (BRepCheck_Face*)$self->Access();
+    return (BRepCheck_Face*)$self->get();
     }
 };
 
 %extend Handle_BRepCheck_Face {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend BRepCheck_Face {
@@ -1256,19 +636,20 @@ class Handle_BRepCheck_Shell : public Handle_BRepCheck_Result {
         static const Handle_BRepCheck_Shell DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_BRepCheck_Shell {
     BRepCheck_Shell* _get_reference() {
-    return (BRepCheck_Shell*)$self->Access();
+    return (BRepCheck_Shell*)$self->get();
     }
 };
 
 %extend Handle_BRepCheck_Shell {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend BRepCheck_Shell {
@@ -1296,7 +677,7 @@ class BRepCheck_Solid : public BRepCheck_Result {
 ") InContext;
 		virtual void InContext (const TopoDS_Shape & theContextShape);
 		%feature("compactdefaultargs") Minimum;
-		%feature("autodoc", "	* Checks the solid per se. //! The scan area is: 1. Shells that overlaps each other Status: BRepCheck_InvalidImbricationOfShells //! 2. Detached parts of the solid (vertices, edges) that have non-internal orientation Status: BRepCheck_BadOrientationOfSubshape //! 3. For closed, non-internal shells: 3.1 Shells containing entities of the solid that are outside towards the shells Status: BRepCheck_SubshapeNotInShape //! 3.2 Shells that encloses other Shells (for non-holes) Status: BRepCheck_EnclosedRegion
+		%feature("autodoc", "	* Checks the solid per se. //! The scan area is: 1. Shells that overlaps each other Status: BRepCheck_InvalidImbricationOfShells //! 2. Detached parts of the solid --vertices, edges-- that have non-internal orientation Status: BRepCheck_BadOrientationOfSubshape //! 3. For closed, non-internal shells: 3.1 Shells containing entities of the solid that are outside towards the shells Status: BRepCheck_SubshapeNotInShape //! 3.2 Shells that encloses other Shells --for non-holes-- Status: BRepCheck_EnclosedRegion
 
 	:rtype: void
 ") Minimum;
@@ -1341,19 +722,20 @@ class Handle_BRepCheck_Solid : public Handle_BRepCheck_Result {
         static const Handle_BRepCheck_Solid DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_BRepCheck_Solid {
     BRepCheck_Solid* _get_reference() {
-    return (BRepCheck_Solid*)$self->Access();
+    return (BRepCheck_Solid*)$self->get();
     }
 };
 
 %extend Handle_BRepCheck_Solid {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend BRepCheck_Solid {
@@ -1422,19 +804,20 @@ class Handle_BRepCheck_Vertex : public Handle_BRepCheck_Result {
         static const Handle_BRepCheck_Vertex DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_BRepCheck_Vertex {
     BRepCheck_Vertex* _get_reference() {
-    return (BRepCheck_Vertex*)$self->Access();
+    return (BRepCheck_Vertex*)$self->get();
     }
 };
 
 %extend Handle_BRepCheck_Vertex {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend BRepCheck_Vertex {
@@ -1452,7 +835,7 @@ class BRepCheck_Wire : public BRepCheck_Result {
 ") BRepCheck_Wire;
 		 BRepCheck_Wire (const TopoDS_Wire & W);
 		%feature("compactdefaultargs") InContext;
-		%feature("autodoc", "	* if <ContextShape> is a face, consequently checks SelfIntersect(), Closed(), Orientation() and Closed2d until faulty is found
+		%feature("autodoc", "	* if <ContextShape> is a face, consequently checks SelfIntersect----, Closed----, Orientation---- and Closed2d until faulty is found
 
 	:param ContextShape:
 	:type ContextShape: TopoDS_Shape &
@@ -1472,7 +855,7 @@ class BRepCheck_Wire : public BRepCheck_Result {
 ") Blind;
 		void Blind ();
 		%feature("compactdefaultargs") Closed;
-		%feature("autodoc", "	* Checks if the oriented edges of the wire give a closed wire. If the wire is closed, returns BRepCheck_NoError. Warning : if the first and last edge are infinite, the wire will be considered as a closed one. If <Update> is set to Standard_True, registers the status in the list. May return (and registers): **BRepCheck_NotConnected, if wire is not topologically closed **BRepCheck_RedundantEdge, if an edge is in wire more than 3 times or in case of 2 occurences if not with FORWARD and REVERSED orientation. **BRepCheck_NoError
+		%feature("autodoc", "	* Checks if the oriented edges of the wire give a closed wire. If the wire is closed, returns BRepCheck_NoError. Warning : if the first and last edge are infinite, the wire will be considered as a closed one. If <Update> is set to Standard_True, registers the status in the list. May return --and registers--: **BRepCheck_NotConnected, if wire is not topologically closed **BRepCheck_RedundantEdge, if an edge is in wire more than 3 times or in case of 2 occurences if not with FORWARD and REVERSED orientation. **BRepCheck_NoError
 
 	:param Update: default value is Standard_False
 	:type Update: bool
@@ -1490,7 +873,7 @@ class BRepCheck_Wire : public BRepCheck_Result {
 ") Closed2d;
 		BRepCheck_Status Closed2d (const TopoDS_Face & F,const Standard_Boolean Update = Standard_False);
 		%feature("compactdefaultargs") Orientation;
-		%feature("autodoc", "	* Checks if the oriented edges of the wire are correctly oriented. An internal call is made to the method Closed. If no face exists, call the method with a null face (TopoDS_face()). If <Update> is set to Standard_True, registers the status in the list. May return (and registers): BRepCheck_InvalidDegeneratedFlag, BRepCheck_BadOrientationOfSubshape, BRepCheck_NotClosed, BRepCheck_NoError
+		%feature("autodoc", "	* Checks if the oriented edges of the wire are correctly oriented. An internal call is made to the method Closed. If no face exists, call the method with a null face --TopoDS_face------. If <Update> is set to Standard_True, registers the status in the list. May return --and registers--: BRepCheck_InvalidDegeneratedFlag, BRepCheck_BadOrientationOfSubshape, BRepCheck_NotClosed, BRepCheck_NoError
 
 	:param F:
 	:type F: TopoDS_Face &
@@ -1500,7 +883,7 @@ class BRepCheck_Wire : public BRepCheck_Result {
 ") Orientation;
 		BRepCheck_Status Orientation (const TopoDS_Face & F,const Standard_Boolean Update = Standard_False);
 		%feature("compactdefaultargs") SelfIntersect;
-		%feature("autodoc", "	* Checks if the wire intersect itself on the face <F>. <E1> and <E2> are the first intersecting edges found. <E2> may be a null edge when a self-intersecting edge is found.If <Update> is set to Standard_True, registers the status in the list. May return (and register): BRepCheck_EmptyWire, BRepCheck_SelfIntersectingWire, BRepCheck_NoCurveOnSurface, BRepCheck_NoError
+		%feature("autodoc", "	* Checks if the wire intersect itself on the face <F>. <E1> and <E2> are the first intersecting edges found. <E2> may be a null edge when a self-intersecting edge is found.If <Update> is set to Standard_True, registers the status in the list. May return --and register--: BRepCheck_EmptyWire, BRepCheck_SelfIntersectingWire, BRepCheck_NoCurveOnSurface, BRepCheck_NoError
 
 	:param F:
 	:type F: TopoDS_Face &
@@ -1514,13 +897,13 @@ class BRepCheck_Wire : public BRepCheck_Result {
 ") SelfIntersect;
 		BRepCheck_Status SelfIntersect (const TopoDS_Face & F,TopoDS_Edge & E1,TopoDS_Edge & E2,const Standard_Boolean Update = Standard_False);
 		%feature("compactdefaultargs") GeometricControls;
-		%feature("autodoc", "	* report SelfIntersect() check would be (is) done
+		%feature("autodoc", "	* report SelfIntersect---- check would be --is-- done
 
 	:rtype: bool
 ") GeometricControls;
 		Standard_Boolean GeometricControls ();
 		%feature("compactdefaultargs") GeometricControls;
-		%feature("autodoc", "	* set SelfIntersect() to be checked
+		%feature("autodoc", "	* set SelfIntersect---- to be checked
 
 	:param B:
 	:type B: bool
@@ -1569,19 +952,20 @@ class Handle_BRepCheck_Wire : public Handle_BRepCheck_Result {
         static const Handle_BRepCheck_Wire DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_BRepCheck_Wire {
     BRepCheck_Wire* _get_reference() {
-    return (BRepCheck_Wire*)$self->Access();
+    return (BRepCheck_Wire*)$self->get();
     }
 };
 
 %extend Handle_BRepCheck_Wire {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend BRepCheck_Wire {

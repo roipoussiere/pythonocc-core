@@ -1,5 +1,5 @@
 /*
-Copyright 2008-2017 Thomas Paviot (tpaviot@gmail.com)
+Copyright 2008-2018 Thomas Paviot (tpaviot@gmail.com)
 
 
 This file is part of pythonOCC.
@@ -56,70 +56,154 @@ def register_handle(handle, base_object):
 /* typedefs */
 /* end typedefs declaration */
 
+/* templates */
+/* end templates declaration */
+
 /* public enums */
 /* end public enums declaration */
 
 %rename(rwstl) RWStl;
+%nodefaultctor RWStl;
 class RWStl {
 	public:
 		%feature("compactdefaultargs") WriteBinary;
-		%feature("autodoc", "	* write the meshing in a file following the binary format of an STL file. Returns false if the cannot be opened;
+		%feature("autodoc", "	* Write triangulation to binary STL file. binary format of an STL file. Returns false if the cannot be opened;
 
-	:param aMesh:
-	:type aMesh: Handle_StlMesh_Mesh &
-	:param aPath:
-	:type aPath: OSD_Path &
-	:param aProgInd: default value is NULL
-	:type aProgInd: Handle_Message_ProgressIndicator &
+	:param theMesh:
+	:type theMesh: Handle_Poly_Triangulation &
+	:param thePath:
+	:type thePath: OSD_Path &
+	:param theProgInd: default value is Handle_Message_ProgressIndicator()
+	:type theProgInd: Handle_Message_ProgressIndicator &
 	:rtype: bool
 ") WriteBinary;
-		static Standard_Boolean WriteBinary (const Handle_StlMesh_Mesh & aMesh,const OSD_Path & aPath,const Handle_Message_ProgressIndicator & aProgInd = NULL);
+		static Standard_Boolean WriteBinary (const Handle_Poly_Triangulation & theMesh,const OSD_Path & thePath,const Handle_Message_ProgressIndicator & theProgInd = Handle_Message_ProgressIndicator());
 		%feature("compactdefaultargs") WriteAscii;
 		%feature("autodoc", "	* write the meshing in a file following the Ascii format of an STL file. Returns false if the cannot be opened;
 
-	:param aMesh:
-	:type aMesh: Handle_StlMesh_Mesh &
-	:param aPath:
-	:type aPath: OSD_Path &
-	:param aProgInd: default value is NULL
-	:type aProgInd: Handle_Message_ProgressIndicator &
+	:param theMesh:
+	:type theMesh: Handle_Poly_Triangulation &
+	:param thePath:
+	:type thePath: OSD_Path &
+	:param theProgInd: default value is Handle_Message_ProgressIndicator()
+	:type theProgInd: Handle_Message_ProgressIndicator &
 	:rtype: bool
 ") WriteAscii;
-		static Standard_Boolean WriteAscii (const Handle_StlMesh_Mesh & aMesh,const OSD_Path & aPath,const Handle_Message_ProgressIndicator & aProgInd = NULL);
+		static Standard_Boolean WriteAscii (const Handle_Poly_Triangulation & theMesh,const OSD_Path & thePath,const Handle_Message_ProgressIndicator & theProgInd = Handle_Message_ProgressIndicator());
 		%feature("compactdefaultargs") ReadFile;
-		%feature("autodoc", "	* This method will chwck if the file is a binary file or an AsciiFile testing the 5 first characters of the file wich are :'solid' in an ascii file. If we do not find that word we assume that it is a binary file.
+		%feature("autodoc", "	* Read specified STL file and returns its content as triangulation. In case of error, returns Null handle.
 
-	:param aPath:
-	:type aPath: OSD_Path &
-	:param aProgInd: default value is NULL
+	:param theFile:
+	:type theFile: OSD_Path &
+	:param aProgInd: default value is Handle_Message_ProgressIndicator()
 	:type aProgInd: Handle_Message_ProgressIndicator &
-	:rtype: Handle_StlMesh_Mesh
+	:rtype: Handle_Poly_Triangulation
 ") ReadFile;
-		static Handle_StlMesh_Mesh ReadFile (const OSD_Path & aPath,const Handle_Message_ProgressIndicator & aProgInd = NULL);
+		static Handle_Poly_Triangulation ReadFile (const OSD_Path & theFile,const Handle_Message_ProgressIndicator & aProgInd = Handle_Message_ProgressIndicator());
+		%feature("compactdefaultargs") ReadFile;
+		%feature("autodoc", "	* Read specified STL file and returns its content as triangulation. In case of error, returns Null handle.
+
+	:param theFile:
+	:type theFile: char *
+	:param aProgInd: default value is Handle_Message_ProgressIndicator()
+	:type aProgInd: Handle_Message_ProgressIndicator &
+	:rtype: Handle_Poly_Triangulation
+") ReadFile;
+		static Handle_Poly_Triangulation ReadFile (const char * theFile,const Handle_Message_ProgressIndicator & aProgInd = Handle_Message_ProgressIndicator());
 		%feature("compactdefaultargs") ReadBinary;
-		%feature("autodoc", "	* Read a meshing from a binary file Raises NoMoreObject from Standard if a statement does not contain the right number of tokens Raises TypeMisMatch if a token has not the good type (often real)
+		%feature("autodoc", "	* Read triangulation from a binary STL file In case of error, returns Null handle.
 
-	:param aPath:
-	:type aPath: OSD_Path &
-	:param aProgInd: default value is NULL
-	:type aProgInd: Handle_Message_ProgressIndicator &
-	:rtype: Handle_StlMesh_Mesh
+	:param thePath:
+	:type thePath: OSD_Path &
+	:param theProgInd: default value is Handle_Message_ProgressIndicator()
+	:type theProgInd: Handle_Message_ProgressIndicator &
+	:rtype: Handle_Poly_Triangulation
 ") ReadBinary;
-		static Handle_StlMesh_Mesh ReadBinary (const OSD_Path & aPath,const Handle_Message_ProgressIndicator & aProgInd = NULL);
+		static Handle_Poly_Triangulation ReadBinary (const OSD_Path & thePath,const Handle_Message_ProgressIndicator & theProgInd = Handle_Message_ProgressIndicator());
 		%feature("compactdefaultargs") ReadAscii;
-		%feature("autodoc", "	* Read a meshing from a binary file Raises NoMoreObject from Standard if a statement does not contain the right number of tokens Raises TypeMisMatch if a token has not the good type (often real) Raises MoMoreObject if a file is finished before having found the word endsolid;
+		%feature("autodoc", "	* Read triangulation from an Ascii STL file In case of error, returns Null handle.
 
-	:param aPath:
-	:type aPath: OSD_Path &
-	:param aProgInd: default value is NULL
-	:type aProgInd: Handle_Message_ProgressIndicator &
-	:rtype: Handle_StlMesh_Mesh
+	:param thePath:
+	:type thePath: OSD_Path &
+	:param theProgInd: default value is Handle_Message_ProgressIndicator()
+	:type theProgInd: Handle_Message_ProgressIndicator &
+	:rtype: Handle_Poly_Triangulation
 ") ReadAscii;
-		static Handle_StlMesh_Mesh ReadAscii (const OSD_Path & aPath,const Handle_Message_ProgressIndicator & aProgInd = NULL);
+		static Handle_Poly_Triangulation ReadAscii (const OSD_Path & thePath,const Handle_Message_ProgressIndicator & theProgInd = Handle_Message_ProgressIndicator());
 };
 
 
 %extend RWStl {
+	%pythoncode {
+	__repr__ = _dumps_object
+	}
+};
+%nodefaultctor RWStl_Reader;
+class RWStl_Reader : public Standard_Transient {
+	public:
+		%feature("compactdefaultargs") Read;
+		%feature("autodoc", "	* Reads data from STL file --either binary or Ascii--. This function supports reading multi-domain STL files formed by concatenation of several 'plain' files. The mesh nodes are not merged between domains. Unicode paths can be given in UTF-8 encoding. Format is recognized automatically by analysis of the file header. Returns true if success, false on error or user break.
+
+	:param theFile:
+	:type theFile: char *
+	:param theProgress:
+	:type theProgress: Handle_Message_ProgressIndicator &
+	:rtype: bool
+") Read;
+		Standard_Boolean Read (const char * theFile,const Handle_Message_ProgressIndicator & theProgress);
+
+        %feature("autodoc", "1");
+        %extend{
+            void IsAsciiFromString(std::string src) {
+            std::stringstream s(src);
+            self->IsAscii(s);}
+        };
+        		%feature("compactdefaultargs") ReadBinary;
+		%feature("autodoc", "	* Reads STL data from binary stream. The stream must be opened in binary mode. Stops after reading the number of triangles recorded in the file header. Returns true if success, false on error or user break.
+
+	:param theStream:
+	:type theStream: Standard_IStream &
+	:param theProgress:
+	:type theProgress: Handle_Message_ProgressIndicator &
+	:rtype: bool
+") ReadBinary;
+		Standard_Boolean ReadBinary (Standard_IStream & theStream,const Handle_Message_ProgressIndicator & theProgress);
+		%feature("compactdefaultargs") ReadAscii;
+		%feature("autodoc", "	* Reads data from the stream assumed to contain Ascii STL data. The stream can be opened either in binary or in Ascii mode. Reading stops at the position specified by theUntilPos, or end of file is reached, or when keyword 'endsolid' is found. Empty lines are not supported and will read to reading failure. If theUntilPos is non-zero, reads not more than until that position. Returns true if success, false on error or user break.
+
+	:param theStream:
+	:type theStream: Standard_IStream &
+	:param theUntilPos:
+	:type theUntilPos: std::streampos
+	:param theProgress:
+	:type theProgress: Handle_Message_ProgressIndicator &
+	:rtype: bool
+") ReadAscii;
+		Standard_Boolean ReadAscii (Standard_IStream & theStream,const std::streampos theUntilPos,const Handle_Message_ProgressIndicator & theProgress);
+		%feature("compactdefaultargs") AddNode;
+		%feature("autodoc", "	* Callback function to be implemented in descendant. Should create new node with specified coordinates in the target model, and return its ID as integer.
+
+	:param thePnt:
+	:type thePnt: gp_XYZ
+	:rtype: int
+") AddNode;
+		Standard_Integer AddNode (const gp_XYZ & thePnt);
+		%feature("compactdefaultargs") AddTriangle;
+		%feature("autodoc", "	* Callback function to be implemented in descendant. Should create new triangle built on specified nodes in the target model.
+
+	:param theN1:
+	:type theN1: int
+	:param theN2:
+	:type theN2: int
+	:param theN3:
+	:type theN3: int
+	:rtype: None
+") AddTriangle;
+		void AddTriangle (Standard_Integer theN1,Standard_Integer theN2,Standard_Integer theN3);
+};
+
+
+%extend RWStl_Reader {
 	%pythoncode {
 	__repr__ = _dumps_object
 	}

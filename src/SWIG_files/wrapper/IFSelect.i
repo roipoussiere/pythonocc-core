@@ -1,5 +1,5 @@
 /*
-Copyright 2008-2017 Thomas Paviot (tpaviot@gmail.com)
+Copyright 2008-2018 Thomas Paviot (tpaviot@gmail.com)
 
 
 This file is part of pythonOCC.
@@ -55,11 +55,15 @@ def register_handle(handle, base_object):
 
 /* typedefs */
 typedef IFSelect_ReturnStatus ( * IFSelect_ActFunc ) ( const Handle_IFSelect_SessionPilot & );
-typedef Handle_MoniTool_Option Handle_IFSelect_Option;
-typedef MoniTool_Option IFSelect_Option;
-typedef Handle_MoniTool_Profile Handle_IFSelect_Profile;
-typedef MoniTool_Profile IFSelect_Profile;
 /* end typedefs declaration */
+
+/* templates */
+%template(IFSelect_TSeqOfDispatch) NCollection_Sequence <Handle_IFSelect_Dispatch>;
+%template(IFSelect_SequenceOfInterfaceModel) NCollection_Sequence <Handle_Interface_InterfaceModel>;
+%template(IFSelect_SequenceOfGeneralModifier) NCollection_Sequence <Handle_IFSelect_GeneralModifier>;
+%template(IFSelect_SequenceOfAppliedModifiers) NCollection_Sequence <Handle_IFSelect_AppliedModifiers>;
+%template(IFSelect_TSeqOfSelection) NCollection_Sequence <Handle_IFSelect_Selection>;
+/* end templates declaration */
 
 /* public enums */
 enum IFSelect_PrintFail {
@@ -109,7 +113,7 @@ enum IFSelect_PrintCount {
 class IFSelect {
 	public:
 		%feature("compactdefaultargs") SaveSession;
-		%feature("autodoc", "	* Saves the state of a WorkSession from IFSelect, by using a SessionFile from IFSelect. Returns True if Done, False in case of Error on Writing. <file> gives the name of the File to be produced (this avoids to export the class SessionFile).
+		%feature("autodoc", "	* Saves the state of a WorkSession from IFSelect, by using a SessionFile from IFSelect. Returns True if Done, False in case of Error on Writing. <file> gives the name of the File to be produced --this avoids to export the class SessionFile--.
 
 	:param WS:
 	:type WS: Handle_IFSelect_WorkSession &
@@ -119,7 +123,7 @@ class IFSelect {
 ") SaveSession;
 		static Standard_Boolean SaveSession (const Handle_IFSelect_WorkSession & WS,const char * file);
 		%feature("compactdefaultargs") RestoreSession;
-		%feature("autodoc", "	* Restore the state of a WorkSession from IFSelect, by using a SessionFile from IFSelect. Returns True if Done, False in case of Error on Writing. <file> gives the name of the File to be used (this avoids to export the class SessionFile).
+		%feature("autodoc", "	* Restore the state of a WorkSession from IFSelect, by using a SessionFile from IFSelect. Returns True if Done, False in case of Error on Writing. <file> gives the name of the File to be used --this avoids to export the class SessionFile--.
 
 	:param WS:
 	:type WS: Handle_IFSelect_WorkSession &
@@ -137,7 +141,7 @@ class IFSelect {
 	}
 };
 %nodefaultctor IFSelect_Activator;
-class IFSelect_Activator : public MMgt_TShared {
+class IFSelect_Activator : public Standard_Transient {
 	public:
 		%feature("compactdefaultargs") Adding;
 		%feature("autodoc", "	* Records, in a Dictionary available for all the Activators, the command title an Activator can process, attached with its number, proper for this Activator <mode> allows to distinguish various execution modes 0: default mode; 1 : for xset
@@ -154,7 +158,7 @@ class IFSelect_Activator : public MMgt_TShared {
 ") Adding;
 		static void Adding (const Handle_IFSelect_Activator & actor,const Standard_Integer number,const char * command,const Standard_Integer mode);
 		%feature("compactdefaultargs") Add;
-		%feature("autodoc", "	* Allows a self-definition by an Activator of the Commands it processes, call the class method Adding (mode 0)
+		%feature("autodoc", "	* Allows a self-definition by an Activator of the Commands it processes, call the class method Adding --mode 0--
 
 	:param number:
 	:type number: int
@@ -164,7 +168,7 @@ class IFSelect_Activator : public MMgt_TShared {
 ") Add;
 		void Add (const Standard_Integer number,const char * command);
 		%feature("compactdefaultargs") AddSet;
-		%feature("autodoc", "	* Same as Add but specifies that this command is candidate for xset (creation of items, xset : named items; mode 1)
+		%feature("autodoc", "	* Same as Add but specifies that this command is candidate for xset --creation of items, xset : named items; mode 1--
 
 	:param number:
 	:type number: int
@@ -174,41 +178,13 @@ class IFSelect_Activator : public MMgt_TShared {
 ") AddSet;
 		void AddSet (const Standard_Integer number,const char * command);
 		%feature("compactdefaultargs") Remove;
-		%feature("autodoc", "	* Removes a Command, if it is recorded (else, does nothing)
+		%feature("autodoc", "	* Removes a Command, if it is recorded --else, does nothing--
 
 	:param command:
 	:type command: char *
 	:rtype: void
 ") Remove;
 		static void Remove (const char * command);
-		%feature("compactdefaultargs") SetAlias;
-		%feature("autodoc", "	* Records, for a configuration named <conf>, that the command <command> may be aliased by another command <alias> //! To be used by call to Alias (no automatic redirection) The configuration typically refers to a norm
-
-	:param conf:
-	:type conf: char *
-	:param command:
-	:type command: char *
-	:param aliasname:
-	:type aliasname: char *
-	:rtype: void
-") SetAlias;
-		static void SetAlias (const char * conf,const char * command,const char * aliasname);
-		%feature("compactdefaultargs") SetCurrentAlias;
-		%feature("autodoc", "	* Sets <conf> as current configuration for aliases
-
-	:param conf:
-	:type conf: char *
-	:rtype: void
-") SetCurrentAlias;
-		static void SetCurrentAlias (const char * conf);
-		%feature("compactdefaultargs") Alias;
-		%feature("autodoc", "	* Returns, in the current configuration, what alias has been recorded for <command> The returned string is empty if no alias is recorded
-
-	:param command:
-	:type command: char *
-	:rtype: TCollection_AsciiString
-") Alias;
-		static TCollection_AsciiString Alias (const char * command);
 		%feature("compactdefaultargs") Select;
 		%feature("autodoc", "	* Selects, for a Command given by its title, an actor with its command number. Returns True if found, False else
 
@@ -230,7 +206,7 @@ class IFSelect_Activator : public MMgt_TShared {
 ") Mode;
 		static Standard_Integer Mode (const char * command);
 		%feature("compactdefaultargs") Commands;
-		%feature("autodoc", "	* Returns, for a root of command title, the list of possible commands. <mode> : -1 (D) for all commands if <commands> is empty -1 + command : about a Group , >= 0 see Adding By default, it returns the whole list of known commands.
+		%feature("autodoc", "	* Returns, for a root of command title, the list of possible commands. <mode> : -1 --D-- for all commands if <commands> is empty -1 + command : about a Group , >= 0 see Adding By default, it returns the whole list of known commands.
 
 	:param mode: default value is -1
 	:type mode: int
@@ -240,7 +216,7 @@ class IFSelect_Activator : public MMgt_TShared {
 ") Commands;
 		static Handle_TColStd_HSequenceOfAsciiString Commands (const Standard_Integer mode = -1,const char * command = "");
 		%feature("compactdefaultargs") Do;
-		%feature("autodoc", "	* Tries to execute a Command Line. <number> is the number of the command for this Activator. It Must forecast to record the result of the execution, for need of Undo-Redo Must Returns : 0 for a void command (not to be recorded), 1 if execution OK, -1 if command incorrect, -2 if error on execution
+		%feature("autodoc", "	* Tries to execute a Command Line. <number> is the number of the command for this Activator. It Must forecast to record the result of the execution, for need of Undo-Redo Must Returns : 0 for a void command --not to be recorded--, 1 if execution OK, -1 if command incorrect, -2 if error on execution
 
 	:param number:
 	:type number: int
@@ -250,7 +226,7 @@ class IFSelect_Activator : public MMgt_TShared {
 ") Do;
 		virtual IFSelect_ReturnStatus Do (const Standard_Integer number,const Handle_IFSelect_SessionPilot & pilot);
 		%feature("compactdefaultargs") Help;
-		%feature("autodoc", "	* Sends a short help message for a given command identified by it number for this Activator (must take one line max)
+		%feature("autodoc", "	* Sends a short help message for a given command identified by it number for this Activator --must take one line max--
 
 	:param number:
 	:type number: int
@@ -297,7 +273,7 @@ class IFSelect_Activator : public MMgt_TShared {
 %}
 
 %nodefaultctor Handle_IFSelect_Activator;
-class Handle_IFSelect_Activator : public Handle_MMgt_TShared {
+class Handle_IFSelect_Activator : public Handle_Standard_Transient {
 
     public:
         // constructors
@@ -309,19 +285,20 @@ class Handle_IFSelect_Activator : public Handle_MMgt_TShared {
         static const Handle_IFSelect_Activator DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_IFSelect_Activator {
     IFSelect_Activator* _get_reference() {
-    return (IFSelect_Activator*)$self->Access();
+    return (IFSelect_Activator*)$self->get();
     }
 };
 
 %extend Handle_IFSelect_Activator {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend IFSelect_Activator {
@@ -330,7 +307,7 @@ class Handle_IFSelect_Activator : public Handle_MMgt_TShared {
 	}
 };
 %nodefaultctor IFSelect_AppliedModifiers;
-class IFSelect_AppliedModifiers : public MMgt_TShared {
+class IFSelect_AppliedModifiers : public Standard_Transient {
 	public:
 		%feature("compactdefaultargs") IFSelect_AppliedModifiers;
 		%feature("autodoc", "	* Creates an AppliedModifiers, ready to record up to <nbmax> modifiers, on a model of <nbent> entities
@@ -365,7 +342,7 @@ class IFSelect_AppliedModifiers : public MMgt_TShared {
 ") Count;
 		Standard_Integer Count ();
 		%feature("compactdefaultargs") Item;
-		%feature("autodoc", "	* Returns the description for applied modifier n0 <num> : the modifier itself, and the count of entities to be applied on. If no specific list of number has been defined, returns the total count of entities of the file If this count is zero, then the modifier applies to all the file (see below). Else, the numbers are then queried by calls to ItemNum between 1 and <entcount> Returns True if OK, False if <num> is out of range
+		%feature("autodoc", "	* Returns the description for applied modifier n0 <num> : the modifier itself, and the count of entities to be applied on. If no specific list of number has been defined, returns the total count of entities of the file If this count is zero, then the modifier applies to all the file --see below--. Else, the numbers are then queried by calls to ItemNum between 1 and <entcount> Returns True if OK, False if <num> is out of range
 
 	:param num:
 	:type num: int
@@ -377,7 +354,7 @@ class IFSelect_AppliedModifiers : public MMgt_TShared {
 ") Item;
 		Standard_Boolean Item (const Standard_Integer num,Handle_IFSelect_GeneralModifier & modif,Standard_Integer &OutValue);
 		%feature("compactdefaultargs") ItemNum;
-		%feature("autodoc", "	* Returns a numero of entity to be applied on, given its rank in the list. If no list is defined (i.e. for all the file), returns <nument> itself, to give all the entities of the file Returns 0 if <nument> out of range
+		%feature("autodoc", "	* Returns a numero of entity to be applied on, given its rank in the list. If no list is defined --i.e. for all the file--, returns <nument> itself, to give all the entities of the file Returns 0 if <nument> out of range
 
 	:param nument:
 	:type nument: int
@@ -385,7 +362,7 @@ class IFSelect_AppliedModifiers : public MMgt_TShared {
 ") ItemNum;
 		Standard_Integer ItemNum (const Standard_Integer nument);
 		%feature("compactdefaultargs") ItemList;
-		%feature("autodoc", "	* Returns the list of entities to be applied on (see Item) as a HSequence (IsForAll produces the complete list of all the entity numbers of the file
+		%feature("autodoc", "	* Returns the list of entities to be applied on --see Item-- as a HSequence --IsForAll produces the complete list of all the entity numbers of the file
 
 	:rtype: Handle_TColStd_HSequenceOfInteger
 ") ItemList;
@@ -418,7 +395,7 @@ class IFSelect_AppliedModifiers : public MMgt_TShared {
 %}
 
 %nodefaultctor Handle_IFSelect_AppliedModifiers;
-class Handle_IFSelect_AppliedModifiers : public Handle_MMgt_TShared {
+class Handle_IFSelect_AppliedModifiers : public Handle_Standard_Transient {
 
     public:
         // constructors
@@ -430,19 +407,20 @@ class Handle_IFSelect_AppliedModifiers : public Handle_MMgt_TShared {
         static const Handle_IFSelect_AppliedModifiers DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_IFSelect_AppliedModifiers {
     IFSelect_AppliedModifiers* _get_reference() {
-    return (IFSelect_AppliedModifiers*)$self->Access();
+    return (IFSelect_AppliedModifiers*)$self->get();
     }
 };
 
 %extend Handle_IFSelect_AppliedModifiers {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend IFSelect_AppliedModifiers {
@@ -454,7 +432,7 @@ class Handle_IFSelect_AppliedModifiers : public Handle_MMgt_TShared {
 class IFSelect_ContextModif {
 	public:
 		%feature("compactdefaultargs") IFSelect_ContextModif;
-		%feature("autodoc", "	* Prepares a ContextModif with these informations : - the graph established from original model (target passed directly to Modifier) - the CopyTool which detains the CopyControl, which maps starting (in original) and result (in target) entities - an optional file name (for file output) //! Such a ContextModif is considered to be applied on all transferred entities (no filter active)
+		%feature("autodoc", "	* Prepares a ContextModif with these informations : - the graph established from original model --target passed directly to Modifier-- - the CopyTool which detains the CopyControl, which maps starting --in original-- and result --in target-- entities - an optional file name --for file output-- //! Such a ContextModif is considered to be applied on all transferred entities --no filter active--
 
 	:param graph:
 	:type graph: Interface_Graph &
@@ -466,7 +444,7 @@ class IFSelect_ContextModif {
 ") IFSelect_ContextModif;
 		 IFSelect_ContextModif (const Interface_Graph & graph,const Interface_CopyTool & TC,const char * filename = "");
 		%feature("compactdefaultargs") IFSelect_ContextModif;
-		%feature("autodoc", "	* Prepares a ContextModif with these informations : - the graph established from original model (target passed directly to Modifier) - an optional file name (for file output) Here, no CopyControl, hence all entities are considered equal as starting and result //! Such a ContextModif is considered to be applied on all transferred entities (no filter active)
+		%feature("autodoc", "	* Prepares a ContextModif with these informations : - the graph established from original model --target passed directly to Modifier-- - an optional file name --for file output-- Here, no CopyControl, hence all entities are considered equal as starting and result //! Such a ContextModif is considered to be applied on all transferred entities --no filter active--
 
 	:param graph:
 	:type graph: Interface_Graph &
@@ -484,7 +462,7 @@ class IFSelect_ContextModif {
 ") Select;
 		void Select (Interface_EntityIterator & list);
 		%feature("compactdefaultargs") OriginalGraph;
-		%feature("autodoc", "	* Returns the original Graph (compared to OriginalModel, it gives more query capabilitites)
+		%feature("autodoc", "	* Returns the original Graph --compared to OriginalModel, it gives more query capabilitites--
 
 	:rtype: Interface_Graph
 ") OriginalGraph;
@@ -504,7 +482,7 @@ class IFSelect_ContextModif {
 ") SetProtocol;
 		void SetProtocol (const Handle_Interface_Protocol & proto);
 		%feature("compactdefaultargs") Protocol;
-		%feature("autodoc", "	* Returns the Protocol (Null if not set)
+		%feature("autodoc", "	* Returns the Protocol --Null if not set--
 
 	:rtype: Handle_Interface_Protocol
 ") Protocol;
@@ -516,7 +494,7 @@ class IFSelect_ContextModif {
 ") HasFileName;
 		Standard_Boolean HasFileName ();
 		%feature("compactdefaultargs") FileName;
-		%feature("autodoc", "	* Returns File Name (can be empty)
+		%feature("autodoc", "	* Returns File Name --can be empty--
 
 	:rtype: char *
 ") FileName;
@@ -528,13 +506,13 @@ class IFSelect_ContextModif {
 ") Control;
 		Handle_Interface_CopyControl Control ();
 		%feature("compactdefaultargs") IsForNone;
-		%feature("autodoc", "	* Returns True if Select has determined that a Modifier may not be run (filter defined and empty)
+		%feature("autodoc", "	* Returns True if Select has determined that a Modifier may not be run --filter defined and empty--
 
 	:rtype: bool
 ") IsForNone;
 		Standard_Boolean IsForNone ();
 		%feature("compactdefaultargs") IsForAll;
-		%feature("autodoc", "	* Returns True if no filter is defined : a Modifier has to work on all entities of the resulting (target) model
+		%feature("autodoc", "	* Returns True if no filter is defined : a Modifier has to work on all entities of the resulting --target-- model
 
 	:rtype: bool
 ") IsForAll;
@@ -598,13 +576,13 @@ class IFSelect_ContextModif {
 ") ValueOriginal;
 		Handle_Standard_Transient ValueOriginal ();
 		%feature("compactdefaultargs") ValueResult;
-		%feature("autodoc", "	* Returns the result counterpart of current selected item (in the target model)
+		%feature("autodoc", "	* Returns the result counterpart of current selected item --in the target model--
 
 	:rtype: Handle_Standard_Transient
 ") ValueResult;
 		Handle_Standard_Transient ValueResult ();
 		%feature("compactdefaultargs") TraceModifier;
-		%feature("autodoc", "	* Traces the application of a Modifier. Works with default trace File and Level. Fills the trace if default trace level is at least 1. Traces the Modifier (its Label) and its Selection if there is one (its Label). To be called after Select (because status IsForAll is printed) Worths to trace a global modification. See also Trace below
+		%feature("autodoc", "	* Traces the application of a Modifier. Works with default trace File and Level. Fills the trace if default trace level is at least 1. Traces the Modifier --its Label-- and its Selection if there is one --its Label--. To be called after Select --because status IsForAll is printed-- Worths to trace a global modification. See also Trace below
 
 	:param modif:
 	:type modif: Handle_IFSelect_GeneralModifier &
@@ -612,7 +590,7 @@ class IFSelect_ContextModif {
 ") TraceModifier;
 		void TraceModifier (const Handle_IFSelect_GeneralModifier & modif);
 		%feature("compactdefaultargs") Trace;
-		%feature("autodoc", "	* Traces the modification of the current entity (see above, ValueOriginal and ValueResult) for default trace level >= 2. To be called on each indivudual entity really modified <mess> is an optionnal additional message
+		%feature("autodoc", "	* Traces the modification of the current entity --see above, ValueOriginal and ValueResult-- for default trace level >= 2. To be called on each indivudual entity really modified <mess> is an optionnal additional message
 
 	:param mess: default value is ""
 	:type mess: char *
@@ -620,7 +598,7 @@ class IFSelect_ContextModif {
 ") Trace;
 		void Trace (const char * mess = "");
 		%feature("compactdefaultargs") AddCheck;
-		%feature("autodoc", "	* Adds a Check to the CheckList. If it is empty, nothing is done If it concerns an Entity from the Original Model (by SetEntity) to which another Check is attached, it is merged to it. Else, it is added or merged as to GlobalCheck.
+		%feature("autodoc", "	* Adds a Check to the CheckList. If it is empty, nothing is done If it concerns an Entity from the Original Model --by SetEntity-- to which another Check is attached, it is merged to it. Else, it is added or merged as to GlobalCheck.
 
 	:param check:
 	:type check: Handle_Interface_Check &
@@ -628,7 +606,7 @@ class IFSelect_ContextModif {
 ") AddCheck;
 		void AddCheck (const Handle_Interface_Check & check);
 		%feature("compactdefaultargs") AddWarning;
-		%feature("autodoc", "	* Adds a Warning Message for an Entity from the original Model If <start> is not an Entity from the original model (e.g. the model itself) this message is added to Global Check.
+		%feature("autodoc", "	* Adds a Warning Message for an Entity from the original Model If <start> is not an Entity from the original model --e.g. the model itself-- this message is added to Global Check.
 
 	:param start:
 	:type start: Handle_Standard_Transient &
@@ -640,7 +618,7 @@ class IFSelect_ContextModif {
 ") AddWarning;
 		void AddWarning (const Handle_Standard_Transient & start,const char * mess,const char * orig = "");
 		%feature("compactdefaultargs") AddFail;
-		%feature("autodoc", "	* Adds a Fail Message for an Entity from the original Model If <start> is not an Entity from the original model (e.g. the model itself) this message is added to Global Check.
+		%feature("autodoc", "	* Adds a Fail Message for an Entity from the original Model If <start> is not an Entity from the original model --e.g. the model itself-- this message is added to Global Check.
 
 	:param start:
 	:type start: Handle_Standard_Transient &
@@ -652,7 +630,7 @@ class IFSelect_ContextModif {
 ") AddFail;
 		void AddFail (const Handle_Standard_Transient & start,const char * mess,const char * orig = "");
 		%feature("compactdefaultargs") CCheck;
-		%feature("autodoc", "	* Returns a Check given an Entity number (in the original Model) by default a Global Check. Creates it the first time. It can then be acknowledged on the spot, in condition that the caller works by reference ('Interface_Check& check = ...')
+		%feature("autodoc", "	* Returns a Check given an Entity number --in the original Model-- by default a Global Check. Creates it the first time. It can then be acknowledged on the spot, in condition that the caller works by reference --'Interface_Check& check = ...'--
 
 	:param num: default value is 0
 	:type num: int
@@ -660,7 +638,7 @@ class IFSelect_ContextModif {
 ") CCheck;
 		Handle_Interface_Check CCheck (const Standard_Integer num = 0);
 		%feature("compactdefaultargs") CCheck;
-		%feature("autodoc", "	* Returns a Check attached to an Entity from the original Model It can then be acknowledged on the spot, in condition that the caller works by reference ('Interface_Check& check = ...')
+		%feature("autodoc", "	* Returns a Check attached to an Entity from the original Model It can then be acknowledged on the spot, in condition that the caller works by reference --'Interface_Check& check = ...'--
 
 	:param start:
 	:type start: Handle_Standard_Transient &
@@ -685,7 +663,7 @@ class IFSelect_ContextModif {
 class IFSelect_ContextWrite {
 	public:
 		%feature("compactdefaultargs") IFSelect_ContextWrite;
-		%feature("autodoc", "	* Prepares a ContextWrite with these informations : - the model which is to be written - the protocol to be used - the filename - an object AppliedModifiers to work. It gives a list of FileModifiers to be ran, and for each one it can give a restricted list of entities (in the model), else all the model is considered
+		%feature("autodoc", "	* Prepares a ContextWrite with these informations : - the model which is to be written - the protocol to be used - the filename - an object AppliedModifiers to work. It gives a list of FileModifiers to be ran, and for each one it can give a restricted list of entities --in the model--, else all the model is considered
 
 	:param model:
 	:type model: Handle_Interface_InterfaceModel &
@@ -805,7 +783,7 @@ class IFSelect_ContextWrite {
 ") Value;
 		Handle_Standard_Transient Value ();
 		%feature("compactdefaultargs") AddCheck;
-		%feature("autodoc", "	* Adds a Check to the CheckList. If it is empty, nothing is done If it concerns an Entity from the Model (by SetEntity) to which another Check is attached, it is merged to it. Else, it is added or merged as to GlobalCheck.
+		%feature("autodoc", "	* Adds a Check to the CheckList. If it is empty, nothing is done If it concerns an Entity from the Model --by SetEntity-- to which another Check is attached, it is merged to it. Else, it is added or merged as to GlobalCheck.
 
 	:param check:
 	:type check: Handle_Interface_Check &
@@ -813,7 +791,7 @@ class IFSelect_ContextWrite {
 ") AddCheck;
 		void AddCheck (const Handle_Interface_Check & check);
 		%feature("compactdefaultargs") AddWarning;
-		%feature("autodoc", "	* Adds a Warning Message for an Entity from the Model If <start> is not an Entity from the model (e.g. the model itself) this message is added to Global Check.
+		%feature("autodoc", "	* Adds a Warning Message for an Entity from the Model If <start> is not an Entity from the model --e.g. the model itself-- this message is added to Global Check.
 
 	:param start:
 	:type start: Handle_Standard_Transient &
@@ -825,7 +803,7 @@ class IFSelect_ContextWrite {
 ") AddWarning;
 		void AddWarning (const Handle_Standard_Transient & start,const char * mess,const char * orig = "");
 		%feature("compactdefaultargs") AddFail;
-		%feature("autodoc", "	* Adds a Fail Message for an Entity from the Model If <start> is not an Entity from the model (e.g. the model itself) this message is added to Global Check.
+		%feature("autodoc", "	* Adds a Fail Message for an Entity from the Model If <start> is not an Entity from the model --e.g. the model itself-- this message is added to Global Check.
 
 	:param start:
 	:type start: Handle_Standard_Transient &
@@ -837,7 +815,7 @@ class IFSelect_ContextWrite {
 ") AddFail;
 		void AddFail (const Handle_Standard_Transient & start,const char * mess,const char * orig = "");
 		%feature("compactdefaultargs") CCheck;
-		%feature("autodoc", "	* Returns a Check given an Entity number (in the Model) by default a Global Check. Creates it the first time. It can then be acknowledged on the spot, in condition that the caller works by reference ('Interface_Check& check = ...')
+		%feature("autodoc", "	* Returns a Check given an Entity number --in the Model-- by default a Global Check. Creates it the first time. It can then be acknowledged on the spot, in condition that the caller works by reference --'Interface_Check& check = ...'--
 
 	:param num: default value is 0
 	:type num: int
@@ -845,7 +823,7 @@ class IFSelect_ContextWrite {
 ") CCheck;
 		Handle_Interface_Check CCheck (const Standard_Integer num = 0);
 		%feature("compactdefaultargs") CCheck;
-		%feature("autodoc", "	* Returns a Check attached to an Entity from the Model It can then be acknowledged on the spot, in condition that the caller works by reference ('Interface_Check& check = ...')
+		%feature("autodoc", "	* Returns a Check attached to an Entity from the Model It can then be acknowledged on the spot, in condition that the caller works by reference --'Interface_Check& check = ...'--
 
 	:param start:
 	:type start: Handle_Standard_Transient &
@@ -867,10 +845,10 @@ class IFSelect_ContextWrite {
 	}
 };
 %nodefaultctor IFSelect_Dispatch;
-class IFSelect_Dispatch : public MMgt_TShared {
+class IFSelect_Dispatch : public Standard_Transient {
 	public:
 		%feature("compactdefaultargs") SetRootName;
-		%feature("autodoc", "	* Sets a Root Name as an HAsciiString To reset it, give a Null Handle (then, a ShareOut will have to define the Default Root Name)
+		%feature("autodoc", "	* Sets a Root Name as an HAsciiString To reset it, give a Null Handle --then, a ShareOut will have to define the Default Root Name--
 
 	:param name:
 	:type name: Handle_TCollection_HAsciiString &
@@ -878,7 +856,7 @@ class IFSelect_Dispatch : public MMgt_TShared {
 ") SetRootName;
 		void SetRootName (const Handle_TCollection_HAsciiString & name);
 		%feature("compactdefaultargs") HasRootName;
-		%feature("autodoc", "	* Returns True if a specific Root Name has been set (else, the Default Root Name has to be used)
+		%feature("autodoc", "	* Returns True if a specific Root Name has been set --else, the Default Root Name has to be used--
 
 	:rtype: bool
 ") HasRootName;
@@ -890,7 +868,7 @@ class IFSelect_Dispatch : public MMgt_TShared {
 ") RootName;
 		Handle_TCollection_HAsciiString RootName ();
 		%feature("compactdefaultargs") SetFinalSelection;
-		%feature("autodoc", "	* Stores (or Changes) the Final Selection for a Dispatch
+		%feature("autodoc", "	* Stores --or Changes-- the Final Selection for a Dispatch
 
 	:param sel:
 	:type sel: Handle_IFSelect_Selection &
@@ -904,19 +882,19 @@ class IFSelect_Dispatch : public MMgt_TShared {
 ") FinalSelection;
 		Handle_IFSelect_Selection FinalSelection ();
 		%feature("compactdefaultargs") Selections;
-		%feature("autodoc", "	* Returns the complete list of source Selections (starting from FinalSelection)
+		%feature("autodoc", "	* Returns the complete list of source Selections --starting from FinalSelection--
 
 	:rtype: IFSelect_SelectionIterator
 ") Selections;
 		IFSelect_SelectionIterator Selections ();
 		%feature("compactdefaultargs") CanHaveRemainder;
-		%feature("autodoc", "	* Returns True if a Dispatch can have a Remainder, i.e. if its criterium can let entities apart. It is a potential answer, remainder can be empty at run-time even if answer is True. (to attach a RemainderFromDispatch Selection is not allowed if answer is True). Default answer given here is False (can be redefined)
+		%feature("autodoc", "	* Returns True if a Dispatch can have a Remainder, i.e. if its criterium can let entities apart. It is a potential answer, remainder can be empty at run-time even if answer is True. --to attach a RemainderFromDispatch Selection is not allowed if answer is True--. Default answer given here is False --can be redefined--
 
 	:rtype: bool
 ") CanHaveRemainder;
 		virtual Standard_Boolean CanHaveRemainder ();
 		%feature("compactdefaultargs") LimitedMax;
-		%feature("autodoc", "	* Returns True if a Dispatch generates a count of Packets always less than or equal to a maximum value : it can be computed from the total count of Entities to be dispatched : <nbent>. If answer is False, no limited maximum is expected for account If answer is True, expected maximum is given in argument <max> Default answer given here is False (can be redefined)
+		%feature("autodoc", "	* Returns True if a Dispatch generates a count of Packets always less than or equal to a maximum value : it can be computed from the total count of Entities to be dispatched : <nbent>. If answer is False, no limited maximum is expected for account If answer is True, expected maximum is given in argument <max> Default answer given here is False --can be redefined--
 
 	:param nbent:
 	:type nbent: int
@@ -926,31 +904,21 @@ class IFSelect_Dispatch : public MMgt_TShared {
 ") LimitedMax;
 		virtual Standard_Boolean LimitedMax (const Standard_Integer nbent,Standard_Integer &OutValue);
 		%feature("compactdefaultargs") Label;
-		%feature("autodoc", "	* Returns a text which defines the way a Dispatch produces packets (which will become files) from its Input
+		%feature("autodoc", "	* Returns a text which defines the way a Dispatch produces packets --which will become files-- from its Input
 
 	:rtype: TCollection_AsciiString
 ") Label;
 		virtual TCollection_AsciiString Label ();
 		%feature("compactdefaultargs") GetEntities;
-		%feature("autodoc", "	* Gets Unique Root Entities from the Final Selection, given an input Graph This the starting step for an Evaluation (Packets - Remainder)
+		%feature("autodoc", "	* Gets Unique Root Entities from the Final Selection, given an input Graph This the starting step for an Evaluation --Packets - Remainder--
 
 	:param G:
 	:type G: Interface_Graph &
 	:rtype: Interface_EntityIterator
 ") GetEntities;
 		Interface_EntityIterator GetEntities (const Interface_Graph & G);
-		%feature("compactdefaultargs") PacketsCount;
-		%feature("autodoc", "	* Returns True if Count of Packets is actually known, and the value of the count in argument 'count'. Returns False if this count is unknown. Input is given as a Graph. This method is intended to be quick (used for file names) hence if this count is long to compute (that is, as a result of complete evaluation made by method Packets), it is preferable to answer 'unknown' by returning False Default answer if False. Can be redefined.
-
-	:param G:
-	:type G: Interface_Graph &
-	:param count:
-	:type count: int &
-	:rtype: int
-") PacketsCount;
-		virtual Standard_Integer PacketsCount (const Interface_Graph & G,Standard_Integer &OutValue);
 		%feature("compactdefaultargs") Packets;
-		%feature("autodoc", "	* Returns the list of produced Packets into argument <pack>. Each Packet corresponds to a Part, the Entities listed are the Roots given by the Selection. Input is given as a Graph. Thus, to create a file from a packet, it suffices to take the entities listed in a Part of Packets (that is, a Packet) without worrying about Shared entities This method can raise an Exception if data are not coherent
+		%feature("autodoc", "	* Returns the list of produced Packets into argument <pack>. Each Packet corresponds to a Part, the Entities listed are the Roots given by the Selection. Input is given as a Graph. Thus, to create a file from a packet, it suffices to take the entities listed in a Part of Packets --that is, a Packet-- without worrying about Shared entities This method can raise an Exception if data are not coherent
 
 	:param G:
 	:type G: Interface_Graph &
@@ -960,7 +928,7 @@ class IFSelect_Dispatch : public MMgt_TShared {
 ") Packets;
 		virtual void Packets (const Interface_Graph & G,IFGraph_SubPartsIterator & packs);
 		%feature("compactdefaultargs") Packeted;
-		%feature("autodoc", "	* Returns the list of all Input Entities (see GetEntities) which are put in a Packet. That is, Entities listed in GetEntities but not in Remainder (see below). Input is given as a Graph.
+		%feature("autodoc", "	* Returns the list of all Input Entities --see GetEntities-- which are put in a Packet. That is, Entities listed in GetEntities but not in Remainder --see below--. Input is given as a Graph.
 
 	:param G:
 	:type G: Interface_Graph &
@@ -968,7 +936,7 @@ class IFSelect_Dispatch : public MMgt_TShared {
 ") Packeted;
 		Interface_EntityIterator Packeted (const Interface_Graph & G);
 		%feature("compactdefaultargs") Remainder;
-		%feature("autodoc", "	* Returns Remainder which is a set of Entities. Can be empty. Default evaluation is empty (has to be redefined if CanHaveRemainder is redefined to return True).
+		%feature("autodoc", "	* Returns Remainder which is a set of Entities. Can be empty. Default evaluation is empty --has to be redefined if CanHaveRemainder is redefined to return True--.
 
 	:param G:
 	:type G: Interface_Graph &
@@ -997,7 +965,7 @@ class IFSelect_Dispatch : public MMgt_TShared {
 %}
 
 %nodefaultctor Handle_IFSelect_Dispatch;
-class Handle_IFSelect_Dispatch : public Handle_MMgt_TShared {
+class Handle_IFSelect_Dispatch : public Handle_Standard_Transient {
 
     public:
         // constructors
@@ -1009,19 +977,20 @@ class Handle_IFSelect_Dispatch : public Handle_MMgt_TShared {
         static const Handle_IFSelect_Dispatch DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_IFSelect_Dispatch {
     IFSelect_Dispatch* _get_reference() {
-    return (IFSelect_Dispatch*)$self->Access();
+    return (IFSelect_Dispatch*)$self->get();
     }
 };
 
 %extend Handle_IFSelect_Dispatch {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend IFSelect_Dispatch {
@@ -1030,7 +999,7 @@ class Handle_IFSelect_Dispatch : public Handle_MMgt_TShared {
 	}
 };
 %nodefaultctor IFSelect_EditForm;
-class IFSelect_EditForm : public MMgt_TShared {
+class IFSelect_EditForm : public Standard_Transient {
 	public:
 		%feature("compactdefaultargs") IFSelect_EditForm;
 		%feature("autodoc", "	* Creates a complete EditForm from an Editor A specific Label can be given
@@ -1152,7 +1121,7 @@ class IFSelect_EditForm : public MMgt_TShared {
 ") RankFromNumber;
 		Standard_Integer RankFromNumber (const Standard_Integer number);
 		%feature("compactdefaultargs") NameNumber;
-		%feature("autodoc", "	* Returns the Value Number in the Editor for a given Name i.e. the true ValueNumber which can be used in various methods of EditForm If it is not complete, for a recorded (in the Editor) but non-loaded name, returns negative value (- number)
+		%feature("autodoc", "	* Returns the Value Number in the Editor for a given Name i.e. the true ValueNumber which can be used in various methods of EditForm If it is not complete, for a recorded --in the Editor-- but non-loaded name, returns negative value --- number--
 
 	:param name:
 	:type name: char *
@@ -1160,7 +1129,7 @@ class IFSelect_EditForm : public MMgt_TShared {
 ") NameNumber;
 		Standard_Integer NameNumber (const char * name);
 		%feature("compactdefaultargs") NameRank;
-		%feature("autodoc", "	* Returns the Rank of Value in the EditForm for a given Name i.e. if it is not complete, for a recorded (in the Editor) but non-loaded name, returns 0
+		%feature("autodoc", "	* Returns the Rank of Value in the EditForm for a given Name i.e. if it is not complete, for a recorded --in the Editor-- but non-loaded name, returns 0
 
 	:param name:
 	:type name: char *
@@ -1174,7 +1143,7 @@ class IFSelect_EditForm : public MMgt_TShared {
 ") LoadDefault;
 		void LoadDefault ();
 		%feature("compactdefaultargs") LoadData;
-		%feature("autodoc", "	* Loads modifications to data Default uses Editor. Can be redefined Remark that <ent> and/or <model> may be null, according to the kind of Editor. Shortcuts are available for these cases, but they finally call LoadData (hence, just ignore non-used args)
+		%feature("autodoc", "	* Loads modifications to data Default uses Editor. Can be redefined Remark that <ent> and/or <model> may be null, according to the kind of Editor. Shortcuts are available for these cases, but they finally call LoadData --hence, just ignore non-used args--
 
 	:param ent:
 	:type ent: Handle_Standard_Transient &
@@ -1200,13 +1169,13 @@ class IFSelect_EditForm : public MMgt_TShared {
 ") LoadModel;
 		Standard_Boolean LoadModel (const Handle_Interface_InterfaceModel & model);
 		%feature("compactdefaultargs") LoadData;
-		%feature("autodoc", "	* Shortcut when both <ent> and <model> are not used (when the Editor works on fully static or global data)
+		%feature("autodoc", "	* Shortcut when both <ent> and <model> are not used --when the Editor works on fully static or global data--
 
 	:rtype: bool
 ") LoadData;
 		Standard_Boolean LoadData ();
 		%feature("compactdefaultargs") ListEditor;
-		%feature("autodoc", "	* Returns a ListEditor to edit the parameter <num> of the EditForm, if it is a List The Editor created it (by ListEditor) then loads it (by ListValue) For a single parameter, returns a Null Handle ...
+		%feature("autodoc", "	* Returns a ListEditor to edit the parameter <num> of the EditForm, if it is a List The Editor created it --by ListEditor-- then loads it --by ListValue-- For a single parameter, returns a Null Handle ...
 
 	:param num:
 	:type num: int
@@ -1214,7 +1183,7 @@ class IFSelect_EditForm : public MMgt_TShared {
 ") ListEditor;
 		Handle_IFSelect_ListEditor ListEditor (const Standard_Integer num);
 		%feature("compactdefaultargs") LoadValue;
-		%feature("autodoc", "	* Loads an original value (single). Called by the Editor only
+		%feature("autodoc", "	* Loads an original value --single--. Called by the Editor only
 
 	:param num:
 	:type num: int
@@ -1234,7 +1203,7 @@ class IFSelect_EditForm : public MMgt_TShared {
 ") LoadList;
 		void LoadList (const Standard_Integer num,const Handle_TColStd_HSequenceOfHAsciiString & list);
 		%feature("compactdefaultargs") OriginalValue;
-		%feature("autodoc", "	* From an edited value, returns its ... value (original one) Null means that this value is not defined <num> is for the EditForm, not the Editor It is for a single parameter. For a list, gives a Null Handle
+		%feature("autodoc", "	* From an edited value, returns its ... value --original one-- Null means that this value is not defined <num> is for the EditForm, not the Editor It is for a single parameter. For a list, gives a Null Handle
 
 	:param num:
 	:type num: int
@@ -1250,7 +1219,7 @@ class IFSelect_EditForm : public MMgt_TShared {
 ") OriginalList;
 		Handle_TColStd_HSequenceOfHAsciiString OriginalList (const Standard_Integer num);
 		%feature("compactdefaultargs") EditedValue;
-		%feature("autodoc", "	* Returns the Edited (i.e. Modified) Value (string for single) <num> reports to the EditForm If IsModified is False, returns OriginalValue Null with IsModified True : means that this value is not defined or has been removed It is for a single parameter. For a list, gives a Null Handle
+		%feature("autodoc", "	* Returns the Edited --i.e. Modified-- Value --string for single-- <num> reports to the EditForm If IsModified is False, returns OriginalValue Null with IsModified True : means that this value is not defined or has been removed It is for a single parameter. For a list, gives a Null Handle
 
 	:param num:
 	:type num: int
@@ -1266,7 +1235,7 @@ class IFSelect_EditForm : public MMgt_TShared {
 ") EditedList;
 		Handle_TColStd_HSequenceOfHAsciiString EditedList (const Standard_Integer num);
 		%feature("compactdefaultargs") IsModified;
-		%feature("autodoc", "	* Tells if a Value (of the EditForm) is modified (directly or through touching by Update)
+		%feature("autodoc", "	* Tells if a Value --of the EditForm-- is modified --directly or through touching by Update--
 
 	:param num:
 	:type num: int
@@ -1274,7 +1243,7 @@ class IFSelect_EditForm : public MMgt_TShared {
 ") IsModified;
 		Standard_Boolean IsModified (const Standard_Integer num);
 		%feature("compactdefaultargs") IsTouched;
-		%feature("autodoc", "	* Tells if a Value (of the EditForm) has been touched, i.e. not modified directly but by the modification of another one (by method Update from the Editor)
+		%feature("autodoc", "	* Tells if a Value --of the EditForm-- has been touched, i.e. not modified directly but by the modification of another one --by method Update from the Editor--
 
 	:param num:
 	:type num: int
@@ -1282,7 +1251,7 @@ class IFSelect_EditForm : public MMgt_TShared {
 ") IsTouched;
 		Standard_Boolean IsTouched (const Standard_Integer num);
 		%feature("compactdefaultargs") Modify;
-		%feature("autodoc", "	* Gives a new value for the item <num> of the EditForm, if it is a single parameter (for a list, just returns False) Null means to Remove it <enforce> True to overpass Protected or Computed Access Mode Calls the method Update from the Editor, which can touch other parameters (see NbTouched) Returns True if well recorded, False if this value is not allowed Warning : Does not apply immediately : will be applied by the method Apply
+		%feature("autodoc", "	* Gives a new value for the item <num> of the EditForm, if it is a single parameter --for a list, just returns False-- Null means to Remove it <enforce> True to overpass Protected or Computed Access Mode Calls the method Update from the Editor, which can touch other parameters --see NbTouched-- Returns True if well recorded, False if this value is not allowed Warning : Does not apply immediately : will be applied by the method Apply
 
 	:param num:
 	:type num: int
@@ -1294,7 +1263,7 @@ class IFSelect_EditForm : public MMgt_TShared {
 ") Modify;
 		Standard_Boolean Modify (const Standard_Integer num,const Handle_TCollection_HAsciiString & newval,const Standard_Boolean enforce = Standard_False);
 		%feature("compactdefaultargs") ModifyList;
-		%feature("autodoc", "	* Changes the value of an item of the EditForm, if it is a List (else, just returns False) The ListEditor contains the edited values of the list If no edition was recorded, just returns False Calls the method Update from the Editor, which can touch other parameters (see NbTouched) Returns True if well recorded, False if this value is not allowed Warning : Does not apply immediately : will be applied by the method Apply
+		%feature("autodoc", "	* Changes the value of an item of the EditForm, if it is a List --else, just returns False-- The ListEditor contains the edited values of the list If no edition was recorded, just returns False Calls the method Update from the Editor, which can touch other parameters --see NbTouched-- Returns True if well recorded, False if this value is not allowed Warning : Does not apply immediately : will be applied by the method Apply
 
 	:param num:
 	:type num: int
@@ -1318,7 +1287,7 @@ class IFSelect_EditForm : public MMgt_TShared {
 ") ModifyListValue;
 		Standard_Boolean ModifyListValue (const Standard_Integer num,const Handle_TColStd_HSequenceOfHAsciiString & list,const Standard_Boolean enforce = Standard_False);
 		%feature("compactdefaultargs") TouchList;
-		%feature("autodoc", "	* Acts as Touch but for a list Does not work (returns False) if <num> is for a single param
+		%feature("autodoc", "	* Acts as Touch but for a list Does not work --returns False-- if <num> is for a single param
 
 	:param num:
 	:type num: int
@@ -1328,7 +1297,7 @@ class IFSelect_EditForm : public MMgt_TShared {
 ") TouchList;
 		Standard_Boolean TouchList (const Standard_Integer num,const Handle_TColStd_HSequenceOfHAsciiString & newlist);
 		%feature("compactdefaultargs") ClearEdit;
-		%feature("autodoc", "	* Clears modification status : by default all, or one by its numbers (in the Editor)
+		%feature("autodoc", "	* Clears modification status : by default all, or one by its numbers --in the Editor--
 
 	:param num: default value is 0
 	:type num: int
@@ -1344,7 +1313,7 @@ class IFSelect_EditForm : public MMgt_TShared {
 ") PrintDefs;
 		void PrintDefs (const Handle_Message_Messenger & S);
 		%feature("compactdefaultargs") PrintValues;
-		%feature("autodoc", "	* Prints Values, according to what and alsolist <names> True : prints Long Names; False : prints Short Names <what> < 0 : prints Original Values (+ flag Modified) <what> > 0 : prints Final Values (+flag Modified) <what> = 0 : prints Modified Values (Original + Edited) <alsolist> False (D) : lists are printed only as their count <alsolist> True : lists are printed for all their items
+		%feature("autodoc", "	* Prints Values, according to what and alsolist <names> True : prints Long Names; False : prints Short Names <what> < 0 : prints Original Values --+ flag Modified-- <what> > 0 : prints Final Values --+flag Modified-- <what> = 0 : prints Modified Values --Original + Edited-- <alsolist> False --D-- : lists are printed only as their count <alsolist> True : lists are printed for all their items
 
 	:param S:
 	:type S: Handle_Message_Messenger &
@@ -1364,7 +1333,7 @@ class IFSelect_EditForm : public MMgt_TShared {
 ") Apply;
 		Standard_Boolean Apply ();
 		%feature("compactdefaultargs") Recognize;
-		%feature("autodoc", "	* Tells if this EditForm can work with its Editor and its actual Data (Entity and Model) Default uses Editor. Can be redefined
+		%feature("autodoc", "	* Tells if this EditForm can work with its Editor and its actual Data --Entity and Model-- Default uses Editor. Can be redefined
 
 	:rtype: bool
 ") Recognize;
@@ -1407,7 +1376,7 @@ class IFSelect_EditForm : public MMgt_TShared {
 %}
 
 %nodefaultctor Handle_IFSelect_EditForm;
-class Handle_IFSelect_EditForm : public Handle_MMgt_TShared {
+class Handle_IFSelect_EditForm : public Handle_Standard_Transient {
 
     public:
         // constructors
@@ -1419,19 +1388,20 @@ class Handle_IFSelect_EditForm : public Handle_MMgt_TShared {
         static const Handle_IFSelect_EditForm DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_IFSelect_EditForm {
     IFSelect_EditForm* _get_reference() {
-    return (IFSelect_EditForm*)$self->Access();
+    return (IFSelect_EditForm*)$self->get();
     }
 };
 
 %extend Handle_IFSelect_EditForm {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend IFSelect_EditForm {
@@ -1440,7 +1410,7 @@ class Handle_IFSelect_EditForm : public Handle_MMgt_TShared {
 	}
 };
 %nodefaultctor IFSelect_Editor;
-class IFSelect_Editor : public MMgt_TShared {
+class IFSelect_Editor : public Standard_Transient {
 	public:
 		%feature("compactdefaultargs") SetValue;
 		%feature("autodoc", "	* Sets a Typed Value for a given ident and short name, with an Edit Mode
@@ -1457,7 +1427,7 @@ class IFSelect_Editor : public MMgt_TShared {
 ") SetValue;
 		void SetValue (const Standard_Integer num,const Handle_Interface_TypedValue & typval,const char * shortname = "",const IFSelect_EditValue accessmode = IFSelect_Editable);
 		%feature("compactdefaultargs") SetList;
-		%feature("autodoc", "	* Sets a parameter to be a List max < 0 : not for a list (set when starting) max = 0 : list with no length limit (default for SetList) max > 0 : list limited to <max> items
+		%feature("autodoc", "	* Sets a parameter to be a List max < 0 : not for a list --set when starting-- max = 0 : list with no length limit --default for SetList-- max > 0 : list limited to <max> items
 
 	:param num:
 	:type num: int
@@ -1497,7 +1467,7 @@ class IFSelect_Editor : public MMgt_TShared {
 ") MaxList;
 		Standard_Integer MaxList (const Standard_Integer num);
 		%feature("compactdefaultargs") Name;
-		%feature("autodoc", "	* Returns the name of a Value (complete or short) from its ident Short Name can be empty
+		%feature("autodoc", "	* Returns the name of a Value --complete or short-- from its ident Short Name can be empty
 
 	:param num:
 	:type num: int
@@ -1515,7 +1485,7 @@ class IFSelect_Editor : public MMgt_TShared {
 ") EditMode;
 		IFSelect_EditValue EditMode (const Standard_Integer num);
 		%feature("compactdefaultargs") NameNumber;
-		%feature("autodoc", "	* Returns the number (ident) of a Value, from its name, short or complete. If not found, returns 0
+		%feature("autodoc", "	* Returns the number --ident-- of a Value, from its name, short or complete. If not found, returns 0
 
 	:param name:
 	:type name: char *
@@ -1551,7 +1521,7 @@ class IFSelect_Editor : public MMgt_TShared {
 ") Label;
 		virtual TCollection_AsciiString Label ();
 		%feature("compactdefaultargs") Form;
-		%feature("autodoc", "	* Builds and Returns an EditForm, empty (no data yet) Can be redefined to return a specific type of EditForm
+		%feature("autodoc", "	* Builds and Returns an EditForm, empty --no data yet-- Can be redefined to return a specific type of EditForm
 
 	:param readonly:
 	:type readonly: bool
@@ -1561,7 +1531,7 @@ class IFSelect_Editor : public MMgt_TShared {
 ") Form;
 		virtual Handle_IFSelect_EditForm Form (const Standard_Boolean readonly,const Standard_Boolean undoable = Standard_True);
 		%feature("compactdefaultargs") Recognize;
-		%feature("autodoc", "	* Tells if this Editor can work on this EditForm and its content (model, entity ?)
+		%feature("autodoc", "	* Tells if this Editor can work on this EditForm and its content --model, entity ?--
 
 	:param form:
 	:type form: Handle_IFSelect_EditForm &
@@ -1569,7 +1539,7 @@ class IFSelect_Editor : public MMgt_TShared {
 ") Recognize;
 		virtual Standard_Boolean Recognize (const Handle_IFSelect_EditForm & form);
 		%feature("compactdefaultargs") StringValue;
-		%feature("autodoc", "	* Returns the value of an EditForm, for a given item (if not a list. for a list, a Null String may be returned)
+		%feature("autodoc", "	* Returns the value of an EditForm, for a given item --if not a list. for a list, a Null String may be returned--
 
 	:param form:
 	:type form: Handle_IFSelect_EditForm &
@@ -1609,7 +1579,7 @@ class IFSelect_Editor : public MMgt_TShared {
 ") Load;
 		virtual Standard_Boolean Load (const Handle_IFSelect_EditForm & form,const Handle_Standard_Transient & ent,const Handle_Interface_InterfaceModel & model);
 		%feature("compactdefaultargs") Update;
-		%feature("autodoc", "	* Updates the EditForm when a parameter is modified I.E. default does nothing, can be redefined, as follows : Returns True when done (even if does nothing), False in case of refuse (for instance, if the new value is not suitable) <num> is the rank of the parameter for the EDITOR itself <enforce> True means that protected parameters can be touched //! If a parameter commands the value of other ones, when it is modified, it is necessary to touch them by Touch from EditForm
+		%feature("autodoc", "	* Updates the EditForm when a parameter is modified I.E. default does nothing, can be redefined, as follows : Returns True when done --even if does nothing--, False in case of refuse --for instance, if the new value is not suitable-- <num> is the rank of the parameter for the EDITOR itself <enforce> True means that protected parameters can be touched //! If a parameter commands the value of other ones, when it is modified, it is necessary to touch them by Touch from EditForm
 
 	:param form:
 	:type form: Handle_IFSelect_EditForm &
@@ -1670,7 +1640,7 @@ class IFSelect_Editor : public MMgt_TShared {
 %}
 
 %nodefaultctor Handle_IFSelect_Editor;
-class Handle_IFSelect_Editor : public Handle_MMgt_TShared {
+class Handle_IFSelect_Editor : public Handle_Standard_Transient {
 
     public:
         // constructors
@@ -1682,19 +1652,20 @@ class Handle_IFSelect_Editor : public Handle_MMgt_TShared {
         static const Handle_IFSelect_Editor DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_IFSelect_Editor {
     IFSelect_Editor* _get_reference() {
-    return (IFSelect_Editor*)$self->Access();
+    return (IFSelect_Editor*)$self->get();
     }
 };
 
 %extend Handle_IFSelect_Editor {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend IFSelect_Editor {
@@ -1705,7 +1676,7 @@ class Handle_IFSelect_Editor : public Handle_MMgt_TShared {
 class IFSelect_Functions {
 	public:
 		%feature("compactdefaultargs") GiveEntity;
-		%feature("autodoc", "	* Takes the name of an entity, either as argument, or (if <name> is empty) on keybord, and returns the entity name can be a label or a number (in alphanumeric), it is searched by NumberFromLabel from WorkSession. If <name> doesn't match en entity, a Null Handle is returned
+		%feature("autodoc", "	* Takes the name of an entity, either as argument, or --if <name> is empty-- on keybord, and returns the entity name can be a label or a number --in alphanumeric--, it is searched by NumberFromLabel from WorkSession. If <name> doesn't match en entity, a Null Handle is returned
 
 	:param WS:
 	:type WS: Handle_IFSelect_WorkSession &
@@ -1725,7 +1696,7 @@ class IFSelect_Functions {
 ") GiveEntityNumber;
 		static Standard_Integer GiveEntityNumber (const Handle_IFSelect_WorkSession & WS,const char * name = "");
 		%feature("compactdefaultargs") GiveList;
-		%feature("autodoc", "	* Computes a List of entities from a WorkSession and two idents, first and second, as follows : if <first> is a Number or Label of an entity : this entity if <first> is the name of a Selection in <WS>, and <second> not defined, the standard result of this Selection if <first> is for a Selection and <second> is defined, the standard result of this selection from the list computed with <second> (an entity or a selection) If <second> is erroneous, it is ignored
+		%feature("autodoc", "	* Computes a List of entities from a WorkSession and two idents, first and second, as follows : if <first> is a Number or Label of an entity : this entity if <first> is the name of a Selection in <WS>, and <second> not defined, the standard result of this Selection if <first> is for a Selection and <second> is defined, the standard result of this selection from the list computed with <second> --an entity or a selection-- If <second> is erroneous, it is ignored
 
 	:param WS:
 	:type WS: Handle_IFSelect_WorkSession &
@@ -1737,7 +1708,7 @@ class IFSelect_Functions {
 ") GiveList;
 		static Handle_TColStd_HSequenceOfTransient GiveList (const Handle_IFSelect_WorkSession & WS,const char * first = "",const char * second = "");
 		%feature("compactdefaultargs") GiveDispatch;
-		%feature("autodoc", "	* Evaluates and returns a Dispatch, from data of a WorkSession if <mode> is False, searches for exact name of Dispatch in WS Else (D), allows a parameter between brackets : ex.: dispatch_name(parameter) The parameter can be: an integer for DispPerCount or DispPerFiles or the name of a Signature for DispPerSignature Returns Null Handle if not found not well evaluated
+		%feature("autodoc", "	* Evaluates and returns a Dispatch, from data of a WorkSession if <mode> is False, searches for exact name of Dispatch in WS Else --D--, allows a parameter between brackets : ex.: dispatch_name--parameter-- The parameter can be: an integer for DispPerCount or DispPerFiles or the name of a Signature for DispPerSignature Returns Null Handle if not found not well evaluated
 
 	:param WS:
 	:type WS: Handle_IFSelect_WorkSession &
@@ -1749,7 +1720,7 @@ class IFSelect_Functions {
 ") GiveDispatch;
 		static Handle_IFSelect_Dispatch GiveDispatch (const Handle_IFSelect_WorkSession & WS,const char * name,const Standard_Boolean mode = Standard_True);
 		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	* Defines and loads all basic functions (as ActFunc)
+		%feature("autodoc", "	* Defines and loads all basic functions --as ActFunc--
 
 	:rtype: void
 ") Init;
@@ -1763,16 +1734,16 @@ class IFSelect_Functions {
 	}
 };
 %nodefaultctor IFSelect_GeneralModifier;
-class IFSelect_GeneralModifier : public MMgt_TShared {
+class IFSelect_GeneralModifier : public Standard_Transient {
 	public:
 		%feature("compactdefaultargs") MayChangeGraph;
-		%feature("autodoc", "	* Returns True if this modifier may change the graph of dependences (aknowledged at creation time)
+		%feature("autodoc", "	* Returns True if this modifier may change the graph of dependences --aknowledged at creation time--
 
 	:rtype: bool
 ") MayChangeGraph;
 		Standard_Boolean MayChangeGraph ();
 		%feature("compactdefaultargs") SetDispatch;
-		%feature("autodoc", "	* Attaches to a Dispatch. If <disp> is Null, Resets it (to apply the Modifier on every Dispatch)
+		%feature("autodoc", "	* Attaches to a Dispatch. If <disp> is Null, Resets it --to apply the Modifier on every Dispatch--
 
 	:param disp:
 	:type disp: Handle_IFSelect_Dispatch &
@@ -1786,7 +1757,7 @@ class IFSelect_GeneralModifier : public MMgt_TShared {
 ") Dispatch;
 		Handle_IFSelect_Dispatch Dispatch ();
 		%feature("compactdefaultargs") Applies;
-		%feature("autodoc", "	* Returns True if a Model obtained from the Dispatch <disp> is to be treated (apart from the Selection criterium) If Dispatch(me) is Null, returns True. Else, checks <disp>
+		%feature("autodoc", "	* Returns True if a Model obtained from the Dispatch <disp> is to be treated --apart from the Selection criterium-- If Dispatch--me-- is Null, returns True. Else, checks <disp>
 
 	:param disp:
 	:type disp: Handle_IFSelect_Dispatch &
@@ -1847,7 +1818,7 @@ class IFSelect_GeneralModifier : public MMgt_TShared {
 %}
 
 %nodefaultctor Handle_IFSelect_GeneralModifier;
-class Handle_IFSelect_GeneralModifier : public Handle_MMgt_TShared {
+class Handle_IFSelect_GeneralModifier : public Handle_Standard_Transient {
 
     public:
         // constructors
@@ -1859,19 +1830,20 @@ class Handle_IFSelect_GeneralModifier : public Handle_MMgt_TShared {
         static const Handle_IFSelect_GeneralModifier DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_IFSelect_GeneralModifier {
     IFSelect_GeneralModifier* _get_reference() {
-    return (IFSelect_GeneralModifier*)$self->Access();
+    return (IFSelect_GeneralModifier*)$self->get();
     }
 };
 
 %extend Handle_IFSelect_GeneralModifier {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend IFSelect_GeneralModifier {
@@ -1879,197 +1851,8 @@ class Handle_IFSelect_GeneralModifier : public Handle_MMgt_TShared {
 	__repr__ = _dumps_object
 	}
 };
-%nodefaultctor IFSelect_HSeqOfSelection;
-class IFSelect_HSeqOfSelection : public MMgt_TShared {
-	public:
-		%feature("compactdefaultargs") IFSelect_HSeqOfSelection;
-		%feature("autodoc", "	:rtype: None
-") IFSelect_HSeqOfSelection;
-		 IFSelect_HSeqOfSelection ();
-		%feature("compactdefaultargs") IsEmpty;
-		%feature("autodoc", "	:rtype: bool
-") IsEmpty;
-		Standard_Boolean IsEmpty ();
-		%feature("compactdefaultargs") Length;
-		%feature("autodoc", "	:rtype: int
-") Length;
-		Standard_Integer Length ();
-		%feature("compactdefaultargs") Clear;
-		%feature("autodoc", "	:rtype: None
-") Clear;
-		void Clear ();
-		%feature("compactdefaultargs") Append;
-		%feature("autodoc", "	:param anItem:
-	:type anItem: Handle_IFSelect_Selection &
-	:rtype: None
-") Append;
-		void Append (const Handle_IFSelect_Selection & anItem);
-		%feature("compactdefaultargs") Append;
-		%feature("autodoc", "	:param aSequence:
-	:type aSequence: Handle_IFSelect_HSeqOfSelection &
-	:rtype: None
-") Append;
-		void Append (const Handle_IFSelect_HSeqOfSelection & aSequence);
-		%feature("compactdefaultargs") Prepend;
-		%feature("autodoc", "	:param anItem:
-	:type anItem: Handle_IFSelect_Selection &
-	:rtype: None
-") Prepend;
-		void Prepend (const Handle_IFSelect_Selection & anItem);
-		%feature("compactdefaultargs") Prepend;
-		%feature("autodoc", "	:param aSequence:
-	:type aSequence: Handle_IFSelect_HSeqOfSelection &
-	:rtype: None
-") Prepend;
-		void Prepend (const Handle_IFSelect_HSeqOfSelection & aSequence);
-		%feature("compactdefaultargs") Reverse;
-		%feature("autodoc", "	:rtype: None
-") Reverse;
-		void Reverse ();
-		%feature("compactdefaultargs") InsertBefore;
-		%feature("autodoc", "	:param anIndex:
-	:type anIndex: int
-	:param anItem:
-	:type anItem: Handle_IFSelect_Selection &
-	:rtype: None
-") InsertBefore;
-		void InsertBefore (const Standard_Integer anIndex,const Handle_IFSelect_Selection & anItem);
-		%feature("compactdefaultargs") InsertBefore;
-		%feature("autodoc", "	:param anIndex:
-	:type anIndex: int
-	:param aSequence:
-	:type aSequence: Handle_IFSelect_HSeqOfSelection &
-	:rtype: None
-") InsertBefore;
-		void InsertBefore (const Standard_Integer anIndex,const Handle_IFSelect_HSeqOfSelection & aSequence);
-		%feature("compactdefaultargs") InsertAfter;
-		%feature("autodoc", "	:param anIndex:
-	:type anIndex: int
-	:param anItem:
-	:type anItem: Handle_IFSelect_Selection &
-	:rtype: None
-") InsertAfter;
-		void InsertAfter (const Standard_Integer anIndex,const Handle_IFSelect_Selection & anItem);
-		%feature("compactdefaultargs") InsertAfter;
-		%feature("autodoc", "	:param anIndex:
-	:type anIndex: int
-	:param aSequence:
-	:type aSequence: Handle_IFSelect_HSeqOfSelection &
-	:rtype: None
-") InsertAfter;
-		void InsertAfter (const Standard_Integer anIndex,const Handle_IFSelect_HSeqOfSelection & aSequence);
-		%feature("compactdefaultargs") Exchange;
-		%feature("autodoc", "	:param anIndex:
-	:type anIndex: int
-	:param anOtherIndex:
-	:type anOtherIndex: int
-	:rtype: None
-") Exchange;
-		void Exchange (const Standard_Integer anIndex,const Standard_Integer anOtherIndex);
-		%feature("compactdefaultargs") Split;
-		%feature("autodoc", "	:param anIndex:
-	:type anIndex: int
-	:rtype: Handle_IFSelect_HSeqOfSelection
-") Split;
-		Handle_IFSelect_HSeqOfSelection Split (const Standard_Integer anIndex);
-		%feature("compactdefaultargs") SetValue;
-		%feature("autodoc", "	:param anIndex:
-	:type anIndex: int
-	:param anItem:
-	:type anItem: Handle_IFSelect_Selection &
-	:rtype: None
-") SetValue;
-		void SetValue (const Standard_Integer anIndex,const Handle_IFSelect_Selection & anItem);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:param anIndex:
-	:type anIndex: int
-	:rtype: Handle_IFSelect_Selection
-") Value;
-		Handle_IFSelect_Selection Value (const Standard_Integer anIndex);
-		%feature("compactdefaultargs") ChangeValue;
-		%feature("autodoc", "	:param anIndex:
-	:type anIndex: int
-	:rtype: Handle_IFSelect_Selection
-") ChangeValue;
-		Handle_IFSelect_Selection ChangeValue (const Standard_Integer anIndex);
-		%feature("compactdefaultargs") Remove;
-		%feature("autodoc", "	:param anIndex:
-	:type anIndex: int
-	:rtype: None
-") Remove;
-		void Remove (const Standard_Integer anIndex);
-		%feature("compactdefaultargs") Remove;
-		%feature("autodoc", "	:param fromIndex:
-	:type fromIndex: int
-	:param toIndex:
-	:type toIndex: int
-	:rtype: None
-") Remove;
-		void Remove (const Standard_Integer fromIndex,const Standard_Integer toIndex);
-		%feature("compactdefaultargs") Sequence;
-		%feature("autodoc", "	:rtype: IFSelect_TSeqOfSelection
-") Sequence;
-		const IFSelect_TSeqOfSelection & Sequence ();
-		%feature("compactdefaultargs") ChangeSequence;
-		%feature("autodoc", "	:rtype: IFSelect_TSeqOfSelection
-") ChangeSequence;
-		IFSelect_TSeqOfSelection & ChangeSequence ();
-};
-
-
-%extend IFSelect_HSeqOfSelection {
-	%pythoncode {
-		def GetHandle(self):
-		    try:
-		        return self.thisHandle
-		    except:
-		        self.thisHandle = Handle_IFSelect_HSeqOfSelection(self)
-		        self.thisown = False
-		        return self.thisHandle
-	}
-};
-
-%pythonappend Handle_IFSelect_HSeqOfSelection::Handle_IFSelect_HSeqOfSelection %{
-    # register the handle in the base object
-    if len(args) > 0:
-        register_handle(self, args[0])
-%}
-
-%nodefaultctor Handle_IFSelect_HSeqOfSelection;
-class Handle_IFSelect_HSeqOfSelection : public Handle_MMgt_TShared {
-
-    public:
-        // constructors
-        Handle_IFSelect_HSeqOfSelection();
-        Handle_IFSelect_HSeqOfSelection(const Handle_IFSelect_HSeqOfSelection &aHandle);
-        Handle_IFSelect_HSeqOfSelection(const IFSelect_HSeqOfSelection *anItem);
-        void Nullify();
-        Standard_Boolean IsNull() const;
-        static const Handle_IFSelect_HSeqOfSelection DownCast(const Handle_Standard_Transient &AnObject);
-
-};
-%extend Handle_IFSelect_HSeqOfSelection {
-    IFSelect_HSeqOfSelection* _get_reference() {
-    return (IFSelect_HSeqOfSelection*)$self->Access();
-    }
-};
-
-%extend Handle_IFSelect_HSeqOfSelection {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
-};
-
-%extend IFSelect_HSeqOfSelection {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
 %nodefaultctor IFSelect_IntParam;
-class IFSelect_IntParam : public MMgt_TShared {
+class IFSelect_IntParam : public Standard_Transient {
 	public:
 		%feature("compactdefaultargs") IFSelect_IntParam;
 		%feature("autodoc", "	* Creates an IntParam. Initial value is set to zer
@@ -2121,7 +1904,7 @@ class IFSelect_IntParam : public MMgt_TShared {
 %}
 
 %nodefaultctor Handle_IFSelect_IntParam;
-class Handle_IFSelect_IntParam : public Handle_MMgt_TShared {
+class Handle_IFSelect_IntParam : public Handle_Standard_Transient {
 
     public:
         // constructors
@@ -2133,19 +1916,20 @@ class Handle_IFSelect_IntParam : public Handle_MMgt_TShared {
         static const Handle_IFSelect_IntParam DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_IFSelect_IntParam {
     IFSelect_IntParam* _get_reference() {
-    return (IFSelect_IntParam*)$self->Access();
+    return (IFSelect_IntParam*)$self->get();
     }
 };
 
 %extend Handle_IFSelect_IntParam {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend IFSelect_IntParam {
@@ -2154,7 +1938,7 @@ class Handle_IFSelect_IntParam : public Handle_MMgt_TShared {
 	}
 };
 %nodefaultctor IFSelect_ListEditor;
-class IFSelect_ListEditor : public MMgt_TShared {
+class IFSelect_ListEditor : public Standard_Transient {
 	public:
 		%feature("compactdefaultargs") IFSelect_ListEditor;
 		%feature("autodoc", "	* Creates a ListEditor with absolutely no constraint
@@ -2163,7 +1947,7 @@ class IFSelect_ListEditor : public MMgt_TShared {
 ") IFSelect_ListEditor;
 		 IFSelect_ListEditor ();
 		%feature("compactdefaultargs") IFSelect_ListEditor;
-		%feature("autodoc", "	* Creates a ListEditor, for which items of the list to edit are defined by <def>, and <max> describes max length : 0 (D) means no limit value > 0 means : no more the <max> items are allowed
+		%feature("autodoc", "	* Creates a ListEditor, for which items of the list to edit are defined by <def>, and <max> describes max length : 0 --D-- means no limit value > 0 means : no more the <max> items are allowed
 
 	:param def:
 	:type def: Handle_Interface_TypedValue &
@@ -2173,7 +1957,7 @@ class IFSelect_ListEditor : public MMgt_TShared {
 ") IFSelect_ListEditor;
 		 IFSelect_ListEditor (const Handle_Interface_TypedValue & def,const Standard_Integer max = 0);
 		%feature("compactdefaultargs") LoadModel;
-		%feature("autodoc", "	* Loads a Model. It is used to check items of type Entity(Ident)
+		%feature("autodoc", "	* Loads a Model. It is used to check items of type Entity--Ident--
 
 	:param model:
 	:type model: Handle_Interface_InterfaceModel &
@@ -2189,7 +1973,7 @@ class IFSelect_ListEditor : public MMgt_TShared {
 ") LoadValues;
 		void LoadValues (const Handle_TColStd_HSequenceOfHAsciiString & vals);
 		%feature("compactdefaultargs") SetTouched;
-		%feature("autodoc", "	* Declares this ListEditor to have been touched (whatever action)
+		%feature("autodoc", "	* Declares this ListEditor to have been touched --whatever action--
 
 	:rtype: None
 ") SetTouched;
@@ -2201,7 +1985,7 @@ class IFSelect_ListEditor : public MMgt_TShared {
 ") ClearEdit;
 		void ClearEdit ();
 		%feature("compactdefaultargs") LoadEdited;
-		%feature("autodoc", "	* Loads a new list to replace the older one, in once ! By default (can be redefined) checks the length of the list and the value of each item according to the def Items are all recorded as Modified //! If no def has been given at creation time, no check is done Returns True when done, False if checks have failed ... a specialisation may also lock it by returning always False ...
+		%feature("autodoc", "	* Loads a new list to replace the older one, in once ! By default --can be redefined-- checks the length of the list and the value of each item according to the def Items are all recorded as Modified //! If no def has been given at creation time, no check is done Returns True when done, False if checks have failed ... a specialisation may also lock it by returning always False ...
 
 	:param list:
 	:type list: Handle_TColStd_HSequenceOfHAsciiString &
@@ -2209,7 +1993,7 @@ class IFSelect_ListEditor : public MMgt_TShared {
 ") LoadEdited;
 		virtual Standard_Boolean LoadEdited (const Handle_TColStd_HSequenceOfHAsciiString & list);
 		%feature("compactdefaultargs") SetValue;
-		%feature("autodoc", "	* Sets a new value for the item <num> (in edited list) <val> may be a Null Handle, then the value will be cleared but not removed Returns True when done. False if <num> is out of range or if <val> does not satisfy the definition
+		%feature("autodoc", "	* Sets a new value for the item <num> --in edited list-- <val> may be a Null Handle, then the value will be cleared but not removed Returns True when done. False if <num> is out of range or if <val> does not satisfy the definition
 
 	:param num:
 	:type num: int
@@ -2219,7 +2003,7 @@ class IFSelect_ListEditor : public MMgt_TShared {
 ") SetValue;
 		virtual Standard_Boolean SetValue (const Standard_Integer num,const Handle_TCollection_HAsciiString & val);
 		%feature("compactdefaultargs") AddValue;
-		%feature("autodoc", "	* Adds a new item. By default appends (at the end of the list) Can insert before a given rank <num>, if positive Returns True when done. False if MaxLength may be overpassed or if <val> does not satisfy the definition
+		%feature("autodoc", "	* Adds a new item. By default appends --at the end of the list-- Can insert before a given rank <num>, if positive Returns True when done. False if MaxLength may be overpassed or if <val> does not satisfy the definition
 
 	:param val:
 	:type val: Handle_TCollection_HAsciiString &
@@ -2229,7 +2013,7 @@ class IFSelect_ListEditor : public MMgt_TShared {
 ") AddValue;
 		virtual Standard_Boolean AddValue (const Handle_TCollection_HAsciiString & val,const Standard_Integer atnum = 0);
 		%feature("compactdefaultargs") Remove;
-		%feature("autodoc", "	* Removes items from the list By default removes one item. Else, count given by <howmany> Remove from rank <num> included. By default, from the end Returns True when done, False (and does not work) if case of out of range of if <howmany> is greater than current length
+		%feature("autodoc", "	* Removes items from the list By default removes one item. Else, count given by <howmany> Remove from rank <num> included. By default, from the end Returns True when done, False --and does not work-- if case of out of range of if <howmany> is greater than current length
 
 	:param num: default value is 0
 	:type num: int
@@ -2251,7 +2035,7 @@ class IFSelect_ListEditor : public MMgt_TShared {
 ") EditedValues;
 		Handle_TColStd_HSequenceOfHAsciiString EditedValues ();
 		%feature("compactdefaultargs") NbValues;
-		%feature("autodoc", "	* Returns count of values, edited (D) or original
+		%feature("autodoc", "	* Returns count of values, edited --D-- or original
 
 	:param edited: default value is Standard_True
 	:type edited: bool
@@ -2259,7 +2043,7 @@ class IFSelect_ListEditor : public MMgt_TShared {
 ") NbValues;
 		Standard_Integer NbValues (const Standard_Boolean edited = Standard_True);
 		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	* Returns a value given its rank. Edited (D) or Original A Null String means the value is cleared but not removed
+		%feature("autodoc", "	* Returns a value given its rank. Edited --D-- or Original A Null String means the value is cleared but not removed
 
 	:param num:
 	:type num: int
@@ -2269,7 +2053,7 @@ class IFSelect_ListEditor : public MMgt_TShared {
 ") Value;
 		Handle_TCollection_HAsciiString Value (const Standard_Integer num,const Standard_Boolean edited = Standard_True);
 		%feature("compactdefaultargs") IsChanged;
-		%feature("autodoc", "	* Tells if a value (in edited list) has been changed, i.e. either modified-value, or added
+		%feature("autodoc", "	* Tells if a value --in edited list-- has been changed, i.e. either modified-value, or added
 
 	:param num:
 	:type num: int
@@ -2277,7 +2061,7 @@ class IFSelect_ListEditor : public MMgt_TShared {
 ") IsChanged;
 		Standard_Boolean IsChanged (const Standard_Integer num);
 		%feature("compactdefaultargs") IsModified;
-		%feature("autodoc", "	* Tells if a value (in edited list) has been modified-value (not added)
+		%feature("autodoc", "	* Tells if a value --in edited list-- has been modified-value --not added--
 
 	:param num:
 	:type num: int
@@ -2285,7 +2069,7 @@ class IFSelect_ListEditor : public MMgt_TShared {
 ") IsModified;
 		Standard_Boolean IsModified (const Standard_Integer num);
 		%feature("compactdefaultargs") IsAdded;
-		%feature("autodoc", "	* Tells if a value (in edited list) has been added (new one)
+		%feature("autodoc", "	* Tells if a value --in edited list-- has been added --new one--
 
 	:param num:
 	:type num: int
@@ -2293,7 +2077,7 @@ class IFSelect_ListEditor : public MMgt_TShared {
 ") IsAdded;
 		Standard_Boolean IsAdded (const Standard_Integer num);
 		%feature("compactdefaultargs") IsTouched;
-		%feature("autodoc", "	* Tells if at least one edition (SetValue-AddValue-Remove) has been recorded
+		%feature("autodoc", "	* Tells if at least one edition --SetValue-AddValue-Remove-- has been recorded
 
 	:rtype: bool
 ") IsTouched;
@@ -2320,7 +2104,7 @@ class IFSelect_ListEditor : public MMgt_TShared {
 %}
 
 %nodefaultctor Handle_IFSelect_ListEditor;
-class Handle_IFSelect_ListEditor : public Handle_MMgt_TShared {
+class Handle_IFSelect_ListEditor : public Handle_Standard_Transient {
 
     public:
         // constructors
@@ -2332,19 +2116,20 @@ class Handle_IFSelect_ListEditor : public Handle_MMgt_TShared {
         static const Handle_IFSelect_ListEditor DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_IFSelect_ListEditor {
     IFSelect_ListEditor* _get_reference() {
-    return (IFSelect_ListEditor*)$self->Access();
+    return (IFSelect_ListEditor*)$self->get();
     }
 };
 
 %extend Handle_IFSelect_ListEditor {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend IFSelect_ListEditor {
@@ -2353,7 +2138,7 @@ class Handle_IFSelect_ListEditor : public Handle_MMgt_TShared {
 	}
 };
 %nodefaultctor IFSelect_ModelCopier;
-class IFSelect_ModelCopier : public MMgt_TShared {
+class IFSelect_ModelCopier : public Standard_Transient {
 	public:
 		%feature("compactdefaultargs") IFSelect_ModelCopier;
 		%feature("autodoc", "	* Creates an empty ModelCopier
@@ -2376,7 +2161,7 @@ class IFSelect_ModelCopier : public MMgt_TShared {
 ") ClearResult;
 		void ClearResult ();
 		%feature("compactdefaultargs") AddFile;
-		%feature("autodoc", "	* Records a new File to be sent, as a couple (Name as AsciiString, Content as InterfaceModel) Returns True if Done, False if <filename> is already attached to another File
+		%feature("autodoc", "	* Records a new File to be sent, as a couple --Name as AsciiString, Content as InterfaceModel-- Returns True if Done, False if <filename> is already attached to another File
 
 	:param filename:
 	:type filename: TCollection_AsciiString &
@@ -2396,7 +2181,7 @@ class IFSelect_ModelCopier : public MMgt_TShared {
 ") NameFile;
 		Standard_Boolean NameFile (const Standard_Integer num,const TCollection_AsciiString & filename);
 		%feature("compactdefaultargs") ClearFile;
-		%feature("autodoc", "	* Clears the Name attached to a File which was formerly defined by a call to AddFile. This Clearing can be undone by a call to NameFile (with same <num>) Returns True if Done, False else : if <num> is out of range
+		%feature("autodoc", "	* Clears the Name attached to a File which was formerly defined by a call to AddFile. This Clearing can be undone by a call to NameFile --with same <num>-- Returns True if Done, False else : if <num> is out of range
 
 	:param num:
 	:type num: int
@@ -2434,7 +2219,7 @@ class IFSelect_ModelCopier : public MMgt_TShared {
 ") Copy;
 		Interface_CheckIterator Copy (IFSelect_ShareOutResult & eval,const Handle_IFSelect_WorkLibrary & WL,const Handle_Interface_Protocol & protocol);
 		%feature("compactdefaultargs") SendCopied;
-		%feature("autodoc", "	* Sends the formerly defined results (see method Copy) to files, then clears it Remark : A Null File Name cause file to be not produced
+		%feature("autodoc", "	* Sends the formerly defined results --see method Copy-- to files, then clears it Remark : A Null File Name cause file to be not produced
 
 	:param WL:
 	:type WL: Handle_IFSelect_WorkLibrary &
@@ -2444,7 +2229,7 @@ class IFSelect_ModelCopier : public MMgt_TShared {
 ") SendCopied;
 		Interface_CheckIterator SendCopied (const Handle_IFSelect_WorkLibrary & WL,const Handle_Interface_Protocol & protocol);
 		%feature("compactdefaultargs") Send;
-		%feature("autodoc", "	* Performs the Copy Operations (which include the Modifications) and Sends the result on files, without memorizing it. (the memorized result is ignored : neither queried not filled)
+		%feature("autodoc", "	* Performs the Copy Operations --which include the Modifications-- and Sends the result on files, without memorizing it. --the memorized result is ignored : neither queried not filled--
 
 	:param eval:
 	:type eval: IFSelect_ShareOutResult &
@@ -2456,7 +2241,7 @@ class IFSelect_ModelCopier : public MMgt_TShared {
 ") Send;
 		Interface_CheckIterator Send (IFSelect_ShareOutResult & eval,const Handle_IFSelect_WorkLibrary & WL,const Handle_Interface_Protocol & protocol);
 		%feature("compactdefaultargs") SendAll;
-		%feature("autodoc", "	* Sends a model (defined in <G>) into one file, without managing remaining data, already sent files, etc. Applies the Model and File Modifiers. Returns True if well done, False else
+		%feature("autodoc", "	* Sends a model --defined in <G>-- into one file, without managing remaining data, already sent files, etc. Applies the Model and File Modifiers. Returns True if well done, False else
 
 	:param filename:
 	:type filename: char *
@@ -2500,7 +2285,7 @@ class IFSelect_ModelCopier : public MMgt_TShared {
 ") CopiedRemaining;
 		void CopiedRemaining (const Interface_Graph & G,const Handle_IFSelect_WorkLibrary & WL,Interface_CopyTool & TC,Handle_Interface_InterfaceModel & newmod);
 		%feature("compactdefaultargs") SetRemaining;
-		%feature("autodoc", "	* Updates Graph status for remaining data, for each entity : - Entities just Sent to file or Copied (by CopiedRemaining) have their status set to 1 - the other keep their former status (1 for Send/Copied, 0 for Remaining) These status are computed by Copying/Sending/CopiedRemaining Then, SetRemaining updates graph status, and mustr be called just after one of these method has been called Returns True if done, False if remaining info if not in phase which the Graph (not same counts of items)
+		%feature("autodoc", "	* Updates Graph status for remaining data, for each entity : - Entities just Sent to file or Copied --by CopiedRemaining-- have their status set to 1 - the other keep their former status --1 for Send/Copied, 0 for Remaining-- These status are computed by Copying/Sending/CopiedRemaining Then, SetRemaining updates graph status, and mustr be called just after one of these method has been called Returns True if done, False if remaining info if not in phase which the Graph --not same counts of items--
 
 	:param CG:
 	:type CG: Interface_Graph &
@@ -2508,7 +2293,7 @@ class IFSelect_ModelCopier : public MMgt_TShared {
 ") SetRemaining;
 		Standard_Boolean SetRemaining (Interface_Graph & CG);
 		%feature("compactdefaultargs") NbFiles;
-		%feature("autodoc", "	* Returns the count of Files produced, i.e. the count of Models memorized (produced by the mmethod Copy) with their file names
+		%feature("autodoc", "	* Returns the count of Files produced, i.e. the count of Models memorized --produced by the mmethod Copy-- with their file names
 
 	:rtype: int
 ") NbFiles;
@@ -2556,7 +2341,7 @@ class IFSelect_ModelCopier : public MMgt_TShared {
 ") AddSentFile;
 		void AddSentFile (const char * filename);
 		%feature("compactdefaultargs") SentFiles;
-		%feature("autodoc", "	* Returns the list of recorded names of sent files. Can be empty (if no file has been sent). Returns a Null Handle if BeginSentFiles has stopped recording.
+		%feature("autodoc", "	* Returns the list of recorded names of sent files. Can be empty --if no file has been sent--. Returns a Null Handle if BeginSentFiles has stopped recording.
 
 	:rtype: Handle_TColStd_HSequenceOfHAsciiString
 ") SentFiles;
@@ -2583,7 +2368,7 @@ class IFSelect_ModelCopier : public MMgt_TShared {
 %}
 
 %nodefaultctor Handle_IFSelect_ModelCopier;
-class Handle_IFSelect_ModelCopier : public Handle_MMgt_TShared {
+class Handle_IFSelect_ModelCopier : public Handle_Standard_Transient {
 
     public:
         // constructors
@@ -2595,19 +2380,20 @@ class Handle_IFSelect_ModelCopier : public Handle_MMgt_TShared {
         static const Handle_IFSelect_ModelCopier DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_IFSelect_ModelCopier {
     IFSelect_ModelCopier* _get_reference() {
-    return (IFSelect_ModelCopier*)$self->Access();
+    return (IFSelect_ModelCopier*)$self->get();
     }
 };
 
 %extend Handle_IFSelect_ModelCopier {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend IFSelect_ModelCopier {
@@ -2616,7 +2402,7 @@ class Handle_IFSelect_ModelCopier : public Handle_MMgt_TShared {
 	}
 };
 %nodefaultctor IFSelect_PacketList;
-class IFSelect_PacketList : public MMgt_TShared {
+class IFSelect_PacketList : public Standard_Transient {
 	public:
 		%feature("compactdefaultargs") IFSelect_PacketList;
 		%feature("autodoc", "	* Creates a PackList, empty, ready to receive entities from a given Model
@@ -2707,7 +2493,7 @@ class IFSelect_PacketList : public MMgt_TShared {
 ") NbDuplicated;
 		Standard_Integer NbDuplicated (const Standard_Integer count,const Standard_Boolean andmore);
 		%feature("compactdefaultargs") Duplicated;
-		%feature("autodoc", "	* Returns a list of entities duplicated : <count> times, if <andmore> is False, or <count> or more times, if <andmore> is True Hence, count=2 & andmore=True gives all duplicated entities count=1 gives non-duplicated entities (in only one packet) count=0 gives remaining entities (in no packet at all)
+		%feature("autodoc", "	* Returns a list of entities duplicated : <count> times, if <andmore> is False, or <count> or more times, if <andmore> is True Hence, count=2 & andmore=True gives all duplicated entities count=1 gives non-duplicated entities --in only one packet-- count=0 gives remaining entities --in no packet at all--
 
 	:param count:
 	:type count: int
@@ -2738,7 +2524,7 @@ class IFSelect_PacketList : public MMgt_TShared {
 %}
 
 %nodefaultctor Handle_IFSelect_PacketList;
-class Handle_IFSelect_PacketList : public Handle_MMgt_TShared {
+class Handle_IFSelect_PacketList : public Handle_Standard_Transient {
 
     public:
         // constructors
@@ -2750,19 +2536,20 @@ class Handle_IFSelect_PacketList : public Handle_MMgt_TShared {
         static const Handle_IFSelect_PacketList DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_IFSelect_PacketList {
     IFSelect_PacketList* _get_reference() {
-    return (IFSelect_PacketList*)$self->Access();
+    return (IFSelect_PacketList*)$self->get();
     }
 };
 
 %extend Handle_IFSelect_PacketList {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend IFSelect_PacketList {
@@ -2771,7 +2558,7 @@ class Handle_IFSelect_PacketList : public Handle_MMgt_TShared {
 	}
 };
 %nodefaultctor IFSelect_Selection;
-class IFSelect_Selection : public MMgt_TShared {
+class IFSelect_Selection : public Standard_Transient {
 	public:
 		%feature("compactdefaultargs") RootResult;
 		%feature("autodoc", "	* Returns the list of selected entities, computed from Input given as a Graph. Specific to each class of Selection Note that uniqueness of each entity is not required here This method can raise an exception as necessary
@@ -2790,7 +2577,7 @@ class IFSelect_Selection : public MMgt_TShared {
 ") UniqueResult;
 		Interface_EntityIterator UniqueResult (const Interface_Graph & G);
 		%feature("compactdefaultargs") CompleteResult;
-		%feature("autodoc", "	* Returns the list of entities involved by a Selection, i.e. UniqueResult plus the shared entities (directly or not)
+		%feature("autodoc", "	* Returns the list of entities involved by a Selection, i.e. UniqueResult plus the shared entities --directly or not--
 
 	:param G:
 	:type G: Interface_Graph &
@@ -2798,7 +2585,7 @@ class IFSelect_Selection : public MMgt_TShared {
 ") CompleteResult;
 		virtual Interface_EntityIterator CompleteResult (const Interface_Graph & G);
 		%feature("compactdefaultargs") FillIterator;
-		%feature("autodoc", "	* Puts in an Iterator the Selections from which 'me' depends (there can be zero, or one, or a list). Specific to each class of Selection
+		%feature("autodoc", "	* Puts in an Iterator the Selections from which 'me' depends --there can be zero, or one, or a list--. Specific to each class of Selection
 
 	:param iter:
 	:type iter: IFSelect_SelectionIterator &
@@ -2806,7 +2593,7 @@ class IFSelect_Selection : public MMgt_TShared {
 ") FillIterator;
 		virtual void FillIterator (IFSelect_SelectionIterator & iter);
 		%feature("compactdefaultargs") Label;
-		%feature("autodoc", "	* Returns a text which defines the criterium applied by a Selection (can be used to be printed, displayed ...) Specific to each class
+		%feature("autodoc", "	* Returns a text which defines the criterium applied by a Selection --can be used to be printed, displayed ...-- Specific to each class
 
 	:rtype: TCollection_AsciiString
 ") Label;
@@ -2833,7 +2620,7 @@ class IFSelect_Selection : public MMgt_TShared {
 %}
 
 %nodefaultctor Handle_IFSelect_Selection;
-class Handle_IFSelect_Selection : public Handle_MMgt_TShared {
+class Handle_IFSelect_Selection : public Handle_Standard_Transient {
 
     public:
         // constructors
@@ -2845,19 +2632,20 @@ class Handle_IFSelect_Selection : public Handle_MMgt_TShared {
         static const Handle_IFSelect_Selection DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_IFSelect_Selection {
     IFSelect_Selection* _get_reference() {
-    return (IFSelect_Selection*)$self->Access();
+    return (IFSelect_Selection*)$self->get();
     }
 };
 
 %extend Handle_IFSelect_Selection {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend IFSelect_Selection {
@@ -2875,7 +2663,7 @@ class IFSelect_SelectionIterator {
 ") IFSelect_SelectionIterator;
 		 IFSelect_SelectionIterator ();
 		%feature("compactdefaultargs") IFSelect_SelectionIterator;
-		%feature("autodoc", "	* Creates an iterator from a Selection : it lists the Selections from which <sel> depends (given by its method FillIterator)
+		%feature("autodoc", "	* Creates an iterator from a Selection : it lists the Selections from which <sel> depends --given by its method FillIterator--
 
 	:param sel:
 	:type sel: Handle_IFSelect_Selection &
@@ -2883,7 +2671,7 @@ class IFSelect_SelectionIterator {
 ") IFSelect_SelectionIterator;
 		 IFSelect_SelectionIterator (const Handle_IFSelect_Selection & sel);
 		%feature("compactdefaultargs") AddFromIter;
-		%feature("autodoc", "	* Adds to an iterator the content of another one (each selection is present only once in the result)
+		%feature("autodoc", "	* Adds to an iterator the content of another one --each selection is present only once in the result--
 
 	:param iter:
 	:type iter: IFSelect_SelectionIterator &
@@ -2891,7 +2679,7 @@ class IFSelect_SelectionIterator {
 ") AddFromIter;
 		void AddFromIter (IFSelect_SelectionIterator & iter);
 		%feature("compactdefaultargs") AddItem;
-		%feature("autodoc", "	* Adds a Selection to an iterator (if not yet noted)
+		%feature("autodoc", "	* Adds a Selection to an iterator --if not yet noted--
 
 	:param sel:
 	:type sel: Handle_IFSelect_Selection &
@@ -2899,7 +2687,7 @@ class IFSelect_SelectionIterator {
 ") AddItem;
 		void AddItem (const Handle_IFSelect_Selection & sel);
 		%feature("compactdefaultargs") AddList;
-		%feature("autodoc", "	* Adds a list of Selections to an iterator (this list comes from the description of a Selection or a Dispatch, etc...)
+		%feature("autodoc", "	* Adds a list of Selections to an iterator --this list comes from the description of a Selection or a Dispatch, etc...--
 
 	:param list:
 	:type list: IFSelect_TSeqOfSelection &
@@ -2932,792 +2720,8 @@ class IFSelect_SelectionIterator {
 	__repr__ = _dumps_object
 	}
 };
-%nodefaultctor IFSelect_SequenceNodeOfSequenceOfAppliedModifiers;
-class IFSelect_SequenceNodeOfSequenceOfAppliedModifiers : public TCollection_SeqNode {
-	public:
-		%feature("compactdefaultargs") IFSelect_SequenceNodeOfSequenceOfAppliedModifiers;
-		%feature("autodoc", "	:param I:
-	:type I: Handle_IFSelect_AppliedModifiers &
-	:param n:
-	:type n: TCollection_SeqNodePtr &
-	:param p:
-	:type p: TCollection_SeqNodePtr &
-	:rtype: None
-") IFSelect_SequenceNodeOfSequenceOfAppliedModifiers;
-		 IFSelect_SequenceNodeOfSequenceOfAppliedModifiers (const Handle_IFSelect_AppliedModifiers & I,const TCollection_SeqNodePtr & n,const TCollection_SeqNodePtr & p);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:rtype: Handle_IFSelect_AppliedModifiers
-") Value;
-		Handle_IFSelect_AppliedModifiers Value ();
-};
-
-
-%extend IFSelect_SequenceNodeOfSequenceOfAppliedModifiers {
-	%pythoncode {
-		def GetHandle(self):
-		    try:
-		        return self.thisHandle
-		    except:
-		        self.thisHandle = Handle_IFSelect_SequenceNodeOfSequenceOfAppliedModifiers(self)
-		        self.thisown = False
-		        return self.thisHandle
-	}
-};
-
-%pythonappend Handle_IFSelect_SequenceNodeOfSequenceOfAppliedModifiers::Handle_IFSelect_SequenceNodeOfSequenceOfAppliedModifiers %{
-    # register the handle in the base object
-    if len(args) > 0:
-        register_handle(self, args[0])
-%}
-
-%nodefaultctor Handle_IFSelect_SequenceNodeOfSequenceOfAppliedModifiers;
-class Handle_IFSelect_SequenceNodeOfSequenceOfAppliedModifiers : public Handle_TCollection_SeqNode {
-
-    public:
-        // constructors
-        Handle_IFSelect_SequenceNodeOfSequenceOfAppliedModifiers();
-        Handle_IFSelect_SequenceNodeOfSequenceOfAppliedModifiers(const Handle_IFSelect_SequenceNodeOfSequenceOfAppliedModifiers &aHandle);
-        Handle_IFSelect_SequenceNodeOfSequenceOfAppliedModifiers(const IFSelect_SequenceNodeOfSequenceOfAppliedModifiers *anItem);
-        void Nullify();
-        Standard_Boolean IsNull() const;
-        static const Handle_IFSelect_SequenceNodeOfSequenceOfAppliedModifiers DownCast(const Handle_Standard_Transient &AnObject);
-
-};
-%extend Handle_IFSelect_SequenceNodeOfSequenceOfAppliedModifiers {
-    IFSelect_SequenceNodeOfSequenceOfAppliedModifiers* _get_reference() {
-    return (IFSelect_SequenceNodeOfSequenceOfAppliedModifiers*)$self->Access();
-    }
-};
-
-%extend Handle_IFSelect_SequenceNodeOfSequenceOfAppliedModifiers {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
-};
-
-%extend IFSelect_SequenceNodeOfSequenceOfAppliedModifiers {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor IFSelect_SequenceNodeOfSequenceOfGeneralModifier;
-class IFSelect_SequenceNodeOfSequenceOfGeneralModifier : public TCollection_SeqNode {
-	public:
-		%feature("compactdefaultargs") IFSelect_SequenceNodeOfSequenceOfGeneralModifier;
-		%feature("autodoc", "	:param I:
-	:type I: Handle_IFSelect_GeneralModifier &
-	:param n:
-	:type n: TCollection_SeqNodePtr &
-	:param p:
-	:type p: TCollection_SeqNodePtr &
-	:rtype: None
-") IFSelect_SequenceNodeOfSequenceOfGeneralModifier;
-		 IFSelect_SequenceNodeOfSequenceOfGeneralModifier (const Handle_IFSelect_GeneralModifier & I,const TCollection_SeqNodePtr & n,const TCollection_SeqNodePtr & p);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:rtype: Handle_IFSelect_GeneralModifier
-") Value;
-		Handle_IFSelect_GeneralModifier Value ();
-};
-
-
-%extend IFSelect_SequenceNodeOfSequenceOfGeneralModifier {
-	%pythoncode {
-		def GetHandle(self):
-		    try:
-		        return self.thisHandle
-		    except:
-		        self.thisHandle = Handle_IFSelect_SequenceNodeOfSequenceOfGeneralModifier(self)
-		        self.thisown = False
-		        return self.thisHandle
-	}
-};
-
-%pythonappend Handle_IFSelect_SequenceNodeOfSequenceOfGeneralModifier::Handle_IFSelect_SequenceNodeOfSequenceOfGeneralModifier %{
-    # register the handle in the base object
-    if len(args) > 0:
-        register_handle(self, args[0])
-%}
-
-%nodefaultctor Handle_IFSelect_SequenceNodeOfSequenceOfGeneralModifier;
-class Handle_IFSelect_SequenceNodeOfSequenceOfGeneralModifier : public Handle_TCollection_SeqNode {
-
-    public:
-        // constructors
-        Handle_IFSelect_SequenceNodeOfSequenceOfGeneralModifier();
-        Handle_IFSelect_SequenceNodeOfSequenceOfGeneralModifier(const Handle_IFSelect_SequenceNodeOfSequenceOfGeneralModifier &aHandle);
-        Handle_IFSelect_SequenceNodeOfSequenceOfGeneralModifier(const IFSelect_SequenceNodeOfSequenceOfGeneralModifier *anItem);
-        void Nullify();
-        Standard_Boolean IsNull() const;
-        static const Handle_IFSelect_SequenceNodeOfSequenceOfGeneralModifier DownCast(const Handle_Standard_Transient &AnObject);
-
-};
-%extend Handle_IFSelect_SequenceNodeOfSequenceOfGeneralModifier {
-    IFSelect_SequenceNodeOfSequenceOfGeneralModifier* _get_reference() {
-    return (IFSelect_SequenceNodeOfSequenceOfGeneralModifier*)$self->Access();
-    }
-};
-
-%extend Handle_IFSelect_SequenceNodeOfSequenceOfGeneralModifier {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
-};
-
-%extend IFSelect_SequenceNodeOfSequenceOfGeneralModifier {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor IFSelect_SequenceNodeOfSequenceOfInterfaceModel;
-class IFSelect_SequenceNodeOfSequenceOfInterfaceModel : public TCollection_SeqNode {
-	public:
-		%feature("compactdefaultargs") IFSelect_SequenceNodeOfSequenceOfInterfaceModel;
-		%feature("autodoc", "	:param I:
-	:type I: Handle_Interface_InterfaceModel &
-	:param n:
-	:type n: TCollection_SeqNodePtr &
-	:param p:
-	:type p: TCollection_SeqNodePtr &
-	:rtype: None
-") IFSelect_SequenceNodeOfSequenceOfInterfaceModel;
-		 IFSelect_SequenceNodeOfSequenceOfInterfaceModel (const Handle_Interface_InterfaceModel & I,const TCollection_SeqNodePtr & n,const TCollection_SeqNodePtr & p);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:rtype: Handle_Interface_InterfaceModel
-") Value;
-		Handle_Interface_InterfaceModel Value ();
-};
-
-
-%extend IFSelect_SequenceNodeOfSequenceOfInterfaceModel {
-	%pythoncode {
-		def GetHandle(self):
-		    try:
-		        return self.thisHandle
-		    except:
-		        self.thisHandle = Handle_IFSelect_SequenceNodeOfSequenceOfInterfaceModel(self)
-		        self.thisown = False
-		        return self.thisHandle
-	}
-};
-
-%pythonappend Handle_IFSelect_SequenceNodeOfSequenceOfInterfaceModel::Handle_IFSelect_SequenceNodeOfSequenceOfInterfaceModel %{
-    # register the handle in the base object
-    if len(args) > 0:
-        register_handle(self, args[0])
-%}
-
-%nodefaultctor Handle_IFSelect_SequenceNodeOfSequenceOfInterfaceModel;
-class Handle_IFSelect_SequenceNodeOfSequenceOfInterfaceModel : public Handle_TCollection_SeqNode {
-
-    public:
-        // constructors
-        Handle_IFSelect_SequenceNodeOfSequenceOfInterfaceModel();
-        Handle_IFSelect_SequenceNodeOfSequenceOfInterfaceModel(const Handle_IFSelect_SequenceNodeOfSequenceOfInterfaceModel &aHandle);
-        Handle_IFSelect_SequenceNodeOfSequenceOfInterfaceModel(const IFSelect_SequenceNodeOfSequenceOfInterfaceModel *anItem);
-        void Nullify();
-        Standard_Boolean IsNull() const;
-        static const Handle_IFSelect_SequenceNodeOfSequenceOfInterfaceModel DownCast(const Handle_Standard_Transient &AnObject);
-
-};
-%extend Handle_IFSelect_SequenceNodeOfSequenceOfInterfaceModel {
-    IFSelect_SequenceNodeOfSequenceOfInterfaceModel* _get_reference() {
-    return (IFSelect_SequenceNodeOfSequenceOfInterfaceModel*)$self->Access();
-    }
-};
-
-%extend Handle_IFSelect_SequenceNodeOfSequenceOfInterfaceModel {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
-};
-
-%extend IFSelect_SequenceNodeOfSequenceOfInterfaceModel {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor IFSelect_SequenceNodeOfTSeqOfDispatch;
-class IFSelect_SequenceNodeOfTSeqOfDispatch : public TCollection_SeqNode {
-	public:
-		%feature("compactdefaultargs") IFSelect_SequenceNodeOfTSeqOfDispatch;
-		%feature("autodoc", "	:param I:
-	:type I: Handle_IFSelect_Dispatch &
-	:param n:
-	:type n: TCollection_SeqNodePtr &
-	:param p:
-	:type p: TCollection_SeqNodePtr &
-	:rtype: None
-") IFSelect_SequenceNodeOfTSeqOfDispatch;
-		 IFSelect_SequenceNodeOfTSeqOfDispatch (const Handle_IFSelect_Dispatch & I,const TCollection_SeqNodePtr & n,const TCollection_SeqNodePtr & p);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:rtype: Handle_IFSelect_Dispatch
-") Value;
-		Handle_IFSelect_Dispatch Value ();
-};
-
-
-%extend IFSelect_SequenceNodeOfTSeqOfDispatch {
-	%pythoncode {
-		def GetHandle(self):
-		    try:
-		        return self.thisHandle
-		    except:
-		        self.thisHandle = Handle_IFSelect_SequenceNodeOfTSeqOfDispatch(self)
-		        self.thisown = False
-		        return self.thisHandle
-	}
-};
-
-%pythonappend Handle_IFSelect_SequenceNodeOfTSeqOfDispatch::Handle_IFSelect_SequenceNodeOfTSeqOfDispatch %{
-    # register the handle in the base object
-    if len(args) > 0:
-        register_handle(self, args[0])
-%}
-
-%nodefaultctor Handle_IFSelect_SequenceNodeOfTSeqOfDispatch;
-class Handle_IFSelect_SequenceNodeOfTSeqOfDispatch : public Handle_TCollection_SeqNode {
-
-    public:
-        // constructors
-        Handle_IFSelect_SequenceNodeOfTSeqOfDispatch();
-        Handle_IFSelect_SequenceNodeOfTSeqOfDispatch(const Handle_IFSelect_SequenceNodeOfTSeqOfDispatch &aHandle);
-        Handle_IFSelect_SequenceNodeOfTSeqOfDispatch(const IFSelect_SequenceNodeOfTSeqOfDispatch *anItem);
-        void Nullify();
-        Standard_Boolean IsNull() const;
-        static const Handle_IFSelect_SequenceNodeOfTSeqOfDispatch DownCast(const Handle_Standard_Transient &AnObject);
-
-};
-%extend Handle_IFSelect_SequenceNodeOfTSeqOfDispatch {
-    IFSelect_SequenceNodeOfTSeqOfDispatch* _get_reference() {
-    return (IFSelect_SequenceNodeOfTSeqOfDispatch*)$self->Access();
-    }
-};
-
-%extend Handle_IFSelect_SequenceNodeOfTSeqOfDispatch {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
-};
-
-%extend IFSelect_SequenceNodeOfTSeqOfDispatch {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor IFSelect_SequenceNodeOfTSeqOfSelection;
-class IFSelect_SequenceNodeOfTSeqOfSelection : public TCollection_SeqNode {
-	public:
-		%feature("compactdefaultargs") IFSelect_SequenceNodeOfTSeqOfSelection;
-		%feature("autodoc", "	:param I:
-	:type I: Handle_IFSelect_Selection &
-	:param n:
-	:type n: TCollection_SeqNodePtr &
-	:param p:
-	:type p: TCollection_SeqNodePtr &
-	:rtype: None
-") IFSelect_SequenceNodeOfTSeqOfSelection;
-		 IFSelect_SequenceNodeOfTSeqOfSelection (const Handle_IFSelect_Selection & I,const TCollection_SeqNodePtr & n,const TCollection_SeqNodePtr & p);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:rtype: Handle_IFSelect_Selection
-") Value;
-		Handle_IFSelect_Selection Value ();
-};
-
-
-%extend IFSelect_SequenceNodeOfTSeqOfSelection {
-	%pythoncode {
-		def GetHandle(self):
-		    try:
-		        return self.thisHandle
-		    except:
-		        self.thisHandle = Handle_IFSelect_SequenceNodeOfTSeqOfSelection(self)
-		        self.thisown = False
-		        return self.thisHandle
-	}
-};
-
-%pythonappend Handle_IFSelect_SequenceNodeOfTSeqOfSelection::Handle_IFSelect_SequenceNodeOfTSeqOfSelection %{
-    # register the handle in the base object
-    if len(args) > 0:
-        register_handle(self, args[0])
-%}
-
-%nodefaultctor Handle_IFSelect_SequenceNodeOfTSeqOfSelection;
-class Handle_IFSelect_SequenceNodeOfTSeqOfSelection : public Handle_TCollection_SeqNode {
-
-    public:
-        // constructors
-        Handle_IFSelect_SequenceNodeOfTSeqOfSelection();
-        Handle_IFSelect_SequenceNodeOfTSeqOfSelection(const Handle_IFSelect_SequenceNodeOfTSeqOfSelection &aHandle);
-        Handle_IFSelect_SequenceNodeOfTSeqOfSelection(const IFSelect_SequenceNodeOfTSeqOfSelection *anItem);
-        void Nullify();
-        Standard_Boolean IsNull() const;
-        static const Handle_IFSelect_SequenceNodeOfTSeqOfSelection DownCast(const Handle_Standard_Transient &AnObject);
-
-};
-%extend Handle_IFSelect_SequenceNodeOfTSeqOfSelection {
-    IFSelect_SequenceNodeOfTSeqOfSelection* _get_reference() {
-    return (IFSelect_SequenceNodeOfTSeqOfSelection*)$self->Access();
-    }
-};
-
-%extend Handle_IFSelect_SequenceNodeOfTSeqOfSelection {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
-};
-
-%extend IFSelect_SequenceNodeOfTSeqOfSelection {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor IFSelect_SequenceOfAppliedModifiers;
-class IFSelect_SequenceOfAppliedModifiers : public TCollection_BaseSequence {
-	public:
-		%feature("compactdefaultargs") IFSelect_SequenceOfAppliedModifiers;
-		%feature("autodoc", "	:rtype: None
-") IFSelect_SequenceOfAppliedModifiers;
-		 IFSelect_SequenceOfAppliedModifiers ();
-		%feature("compactdefaultargs") IFSelect_SequenceOfAppliedModifiers;
-		%feature("autodoc", "	:param Other:
-	:type Other: IFSelect_SequenceOfAppliedModifiers &
-	:rtype: None
-") IFSelect_SequenceOfAppliedModifiers;
-		 IFSelect_SequenceOfAppliedModifiers (const IFSelect_SequenceOfAppliedModifiers & Other);
-		%feature("compactdefaultargs") Clear;
-		%feature("autodoc", "	:rtype: None
-") Clear;
-		void Clear ();
-		%feature("compactdefaultargs") Assign;
-		%feature("autodoc", "	:param Other:
-	:type Other: IFSelect_SequenceOfAppliedModifiers &
-	:rtype: IFSelect_SequenceOfAppliedModifiers
-") Assign;
-		const IFSelect_SequenceOfAppliedModifiers & Assign (const IFSelect_SequenceOfAppliedModifiers & Other);
-		%feature("compactdefaultargs") operator =;
-		%feature("autodoc", "	:param Other:
-	:type Other: IFSelect_SequenceOfAppliedModifiers &
-	:rtype: IFSelect_SequenceOfAppliedModifiers
-") operator =;
-		const IFSelect_SequenceOfAppliedModifiers & operator = (const IFSelect_SequenceOfAppliedModifiers & Other);
-		%feature("compactdefaultargs") Append;
-		%feature("autodoc", "	:param T:
-	:type T: Handle_IFSelect_AppliedModifiers &
-	:rtype: None
-") Append;
-		void Append (const Handle_IFSelect_AppliedModifiers & T);
-		%feature("compactdefaultargs") Append;
-		%feature("autodoc", "	:param S:
-	:type S: IFSelect_SequenceOfAppliedModifiers &
-	:rtype: None
-") Append;
-		void Append (IFSelect_SequenceOfAppliedModifiers & S);
-		%feature("compactdefaultargs") Prepend;
-		%feature("autodoc", "	:param T:
-	:type T: Handle_IFSelect_AppliedModifiers &
-	:rtype: None
-") Prepend;
-		void Prepend (const Handle_IFSelect_AppliedModifiers & T);
-		%feature("compactdefaultargs") Prepend;
-		%feature("autodoc", "	:param S:
-	:type S: IFSelect_SequenceOfAppliedModifiers &
-	:rtype: None
-") Prepend;
-		void Prepend (IFSelect_SequenceOfAppliedModifiers & S);
-		%feature("compactdefaultargs") InsertBefore;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param T:
-	:type T: Handle_IFSelect_AppliedModifiers &
-	:rtype: None
-") InsertBefore;
-		void InsertBefore (const Standard_Integer Index,const Handle_IFSelect_AppliedModifiers & T);
-		%feature("compactdefaultargs") InsertBefore;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param S:
-	:type S: IFSelect_SequenceOfAppliedModifiers &
-	:rtype: None
-") InsertBefore;
-		void InsertBefore (const Standard_Integer Index,IFSelect_SequenceOfAppliedModifiers & S);
-		%feature("compactdefaultargs") InsertAfter;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param T:
-	:type T: Handle_IFSelect_AppliedModifiers &
-	:rtype: None
-") InsertAfter;
-		void InsertAfter (const Standard_Integer Index,const Handle_IFSelect_AppliedModifiers & T);
-		%feature("compactdefaultargs") InsertAfter;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param S:
-	:type S: IFSelect_SequenceOfAppliedModifiers &
-	:rtype: None
-") InsertAfter;
-		void InsertAfter (const Standard_Integer Index,IFSelect_SequenceOfAppliedModifiers & S);
-		%feature("compactdefaultargs") First;
-		%feature("autodoc", "	:rtype: Handle_IFSelect_AppliedModifiers
-") First;
-		Handle_IFSelect_AppliedModifiers First ();
-		%feature("compactdefaultargs") Last;
-		%feature("autodoc", "	:rtype: Handle_IFSelect_AppliedModifiers
-") Last;
-		Handle_IFSelect_AppliedModifiers Last ();
-		%feature("compactdefaultargs") Split;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param Sub:
-	:type Sub: IFSelect_SequenceOfAppliedModifiers &
-	:rtype: None
-") Split;
-		void Split (const Standard_Integer Index,IFSelect_SequenceOfAppliedModifiers & Sub);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: Handle_IFSelect_AppliedModifiers
-") Value;
-		Handle_IFSelect_AppliedModifiers Value (const Standard_Integer Index);
-		%feature("compactdefaultargs") SetValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param I:
-	:type I: Handle_IFSelect_AppliedModifiers &
-	:rtype: None
-") SetValue;
-		void SetValue (const Standard_Integer Index,const Handle_IFSelect_AppliedModifiers & I);
-		%feature("compactdefaultargs") ChangeValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: Handle_IFSelect_AppliedModifiers
-") ChangeValue;
-		Handle_IFSelect_AppliedModifiers ChangeValue (const Standard_Integer Index);
-		%feature("compactdefaultargs") Remove;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: None
-") Remove;
-		void Remove (const Standard_Integer Index);
-		%feature("compactdefaultargs") Remove;
-		%feature("autodoc", "	:param FromIndex:
-	:type FromIndex: int
-	:param ToIndex:
-	:type ToIndex: int
-	:rtype: None
-") Remove;
-		void Remove (const Standard_Integer FromIndex,const Standard_Integer ToIndex);
-};
-
-
-%extend IFSelect_SequenceOfAppliedModifiers {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor IFSelect_SequenceOfGeneralModifier;
-class IFSelect_SequenceOfGeneralModifier : public TCollection_BaseSequence {
-	public:
-		%feature("compactdefaultargs") IFSelect_SequenceOfGeneralModifier;
-		%feature("autodoc", "	:rtype: None
-") IFSelect_SequenceOfGeneralModifier;
-		 IFSelect_SequenceOfGeneralModifier ();
-		%feature("compactdefaultargs") IFSelect_SequenceOfGeneralModifier;
-		%feature("autodoc", "	:param Other:
-	:type Other: IFSelect_SequenceOfGeneralModifier &
-	:rtype: None
-") IFSelect_SequenceOfGeneralModifier;
-		 IFSelect_SequenceOfGeneralModifier (const IFSelect_SequenceOfGeneralModifier & Other);
-		%feature("compactdefaultargs") Clear;
-		%feature("autodoc", "	:rtype: None
-") Clear;
-		void Clear ();
-		%feature("compactdefaultargs") Assign;
-		%feature("autodoc", "	:param Other:
-	:type Other: IFSelect_SequenceOfGeneralModifier &
-	:rtype: IFSelect_SequenceOfGeneralModifier
-") Assign;
-		const IFSelect_SequenceOfGeneralModifier & Assign (const IFSelect_SequenceOfGeneralModifier & Other);
-		%feature("compactdefaultargs") operator =;
-		%feature("autodoc", "	:param Other:
-	:type Other: IFSelect_SequenceOfGeneralModifier &
-	:rtype: IFSelect_SequenceOfGeneralModifier
-") operator =;
-		const IFSelect_SequenceOfGeneralModifier & operator = (const IFSelect_SequenceOfGeneralModifier & Other);
-		%feature("compactdefaultargs") Append;
-		%feature("autodoc", "	:param T:
-	:type T: Handle_IFSelect_GeneralModifier &
-	:rtype: None
-") Append;
-		void Append (const Handle_IFSelect_GeneralModifier & T);
-		%feature("compactdefaultargs") Append;
-		%feature("autodoc", "	:param S:
-	:type S: IFSelect_SequenceOfGeneralModifier &
-	:rtype: None
-") Append;
-		void Append (IFSelect_SequenceOfGeneralModifier & S);
-		%feature("compactdefaultargs") Prepend;
-		%feature("autodoc", "	:param T:
-	:type T: Handle_IFSelect_GeneralModifier &
-	:rtype: None
-") Prepend;
-		void Prepend (const Handle_IFSelect_GeneralModifier & T);
-		%feature("compactdefaultargs") Prepend;
-		%feature("autodoc", "	:param S:
-	:type S: IFSelect_SequenceOfGeneralModifier &
-	:rtype: None
-") Prepend;
-		void Prepend (IFSelect_SequenceOfGeneralModifier & S);
-		%feature("compactdefaultargs") InsertBefore;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param T:
-	:type T: Handle_IFSelect_GeneralModifier &
-	:rtype: None
-") InsertBefore;
-		void InsertBefore (const Standard_Integer Index,const Handle_IFSelect_GeneralModifier & T);
-		%feature("compactdefaultargs") InsertBefore;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param S:
-	:type S: IFSelect_SequenceOfGeneralModifier &
-	:rtype: None
-") InsertBefore;
-		void InsertBefore (const Standard_Integer Index,IFSelect_SequenceOfGeneralModifier & S);
-		%feature("compactdefaultargs") InsertAfter;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param T:
-	:type T: Handle_IFSelect_GeneralModifier &
-	:rtype: None
-") InsertAfter;
-		void InsertAfter (const Standard_Integer Index,const Handle_IFSelect_GeneralModifier & T);
-		%feature("compactdefaultargs") InsertAfter;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param S:
-	:type S: IFSelect_SequenceOfGeneralModifier &
-	:rtype: None
-") InsertAfter;
-		void InsertAfter (const Standard_Integer Index,IFSelect_SequenceOfGeneralModifier & S);
-		%feature("compactdefaultargs") First;
-		%feature("autodoc", "	:rtype: Handle_IFSelect_GeneralModifier
-") First;
-		Handle_IFSelect_GeneralModifier First ();
-		%feature("compactdefaultargs") Last;
-		%feature("autodoc", "	:rtype: Handle_IFSelect_GeneralModifier
-") Last;
-		Handle_IFSelect_GeneralModifier Last ();
-		%feature("compactdefaultargs") Split;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param Sub:
-	:type Sub: IFSelect_SequenceOfGeneralModifier &
-	:rtype: None
-") Split;
-		void Split (const Standard_Integer Index,IFSelect_SequenceOfGeneralModifier & Sub);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: Handle_IFSelect_GeneralModifier
-") Value;
-		Handle_IFSelect_GeneralModifier Value (const Standard_Integer Index);
-		%feature("compactdefaultargs") SetValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param I:
-	:type I: Handle_IFSelect_GeneralModifier &
-	:rtype: None
-") SetValue;
-		void SetValue (const Standard_Integer Index,const Handle_IFSelect_GeneralModifier & I);
-		%feature("compactdefaultargs") ChangeValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: Handle_IFSelect_GeneralModifier
-") ChangeValue;
-		Handle_IFSelect_GeneralModifier ChangeValue (const Standard_Integer Index);
-		%feature("compactdefaultargs") Remove;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: None
-") Remove;
-		void Remove (const Standard_Integer Index);
-		%feature("compactdefaultargs") Remove;
-		%feature("autodoc", "	:param FromIndex:
-	:type FromIndex: int
-	:param ToIndex:
-	:type ToIndex: int
-	:rtype: None
-") Remove;
-		void Remove (const Standard_Integer FromIndex,const Standard_Integer ToIndex);
-};
-
-
-%extend IFSelect_SequenceOfGeneralModifier {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor IFSelect_SequenceOfInterfaceModel;
-class IFSelect_SequenceOfInterfaceModel : public TCollection_BaseSequence {
-	public:
-		%feature("compactdefaultargs") IFSelect_SequenceOfInterfaceModel;
-		%feature("autodoc", "	:rtype: None
-") IFSelect_SequenceOfInterfaceModel;
-		 IFSelect_SequenceOfInterfaceModel ();
-		%feature("compactdefaultargs") IFSelect_SequenceOfInterfaceModel;
-		%feature("autodoc", "	:param Other:
-	:type Other: IFSelect_SequenceOfInterfaceModel &
-	:rtype: None
-") IFSelect_SequenceOfInterfaceModel;
-		 IFSelect_SequenceOfInterfaceModel (const IFSelect_SequenceOfInterfaceModel & Other);
-		%feature("compactdefaultargs") Clear;
-		%feature("autodoc", "	:rtype: None
-") Clear;
-		void Clear ();
-		%feature("compactdefaultargs") Assign;
-		%feature("autodoc", "	:param Other:
-	:type Other: IFSelect_SequenceOfInterfaceModel &
-	:rtype: IFSelect_SequenceOfInterfaceModel
-") Assign;
-		const IFSelect_SequenceOfInterfaceModel & Assign (const IFSelect_SequenceOfInterfaceModel & Other);
-		%feature("compactdefaultargs") operator =;
-		%feature("autodoc", "	:param Other:
-	:type Other: IFSelect_SequenceOfInterfaceModel &
-	:rtype: IFSelect_SequenceOfInterfaceModel
-") operator =;
-		const IFSelect_SequenceOfInterfaceModel & operator = (const IFSelect_SequenceOfInterfaceModel & Other);
-		%feature("compactdefaultargs") Append;
-		%feature("autodoc", "	:param T:
-	:type T: Handle_Interface_InterfaceModel &
-	:rtype: None
-") Append;
-		void Append (const Handle_Interface_InterfaceModel & T);
-		%feature("compactdefaultargs") Append;
-		%feature("autodoc", "	:param S:
-	:type S: IFSelect_SequenceOfInterfaceModel &
-	:rtype: None
-") Append;
-		void Append (IFSelect_SequenceOfInterfaceModel & S);
-		%feature("compactdefaultargs") Prepend;
-		%feature("autodoc", "	:param T:
-	:type T: Handle_Interface_InterfaceModel &
-	:rtype: None
-") Prepend;
-		void Prepend (const Handle_Interface_InterfaceModel & T);
-		%feature("compactdefaultargs") Prepend;
-		%feature("autodoc", "	:param S:
-	:type S: IFSelect_SequenceOfInterfaceModel &
-	:rtype: None
-") Prepend;
-		void Prepend (IFSelect_SequenceOfInterfaceModel & S);
-		%feature("compactdefaultargs") InsertBefore;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param T:
-	:type T: Handle_Interface_InterfaceModel &
-	:rtype: None
-") InsertBefore;
-		void InsertBefore (const Standard_Integer Index,const Handle_Interface_InterfaceModel & T);
-		%feature("compactdefaultargs") InsertBefore;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param S:
-	:type S: IFSelect_SequenceOfInterfaceModel &
-	:rtype: None
-") InsertBefore;
-		void InsertBefore (const Standard_Integer Index,IFSelect_SequenceOfInterfaceModel & S);
-		%feature("compactdefaultargs") InsertAfter;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param T:
-	:type T: Handle_Interface_InterfaceModel &
-	:rtype: None
-") InsertAfter;
-		void InsertAfter (const Standard_Integer Index,const Handle_Interface_InterfaceModel & T);
-		%feature("compactdefaultargs") InsertAfter;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param S:
-	:type S: IFSelect_SequenceOfInterfaceModel &
-	:rtype: None
-") InsertAfter;
-		void InsertAfter (const Standard_Integer Index,IFSelect_SequenceOfInterfaceModel & S);
-		%feature("compactdefaultargs") First;
-		%feature("autodoc", "	:rtype: Handle_Interface_InterfaceModel
-") First;
-		Handle_Interface_InterfaceModel First ();
-		%feature("compactdefaultargs") Last;
-		%feature("autodoc", "	:rtype: Handle_Interface_InterfaceModel
-") Last;
-		Handle_Interface_InterfaceModel Last ();
-		%feature("compactdefaultargs") Split;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param Sub:
-	:type Sub: IFSelect_SequenceOfInterfaceModel &
-	:rtype: None
-") Split;
-		void Split (const Standard_Integer Index,IFSelect_SequenceOfInterfaceModel & Sub);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: Handle_Interface_InterfaceModel
-") Value;
-		Handle_Interface_InterfaceModel Value (const Standard_Integer Index);
-		%feature("compactdefaultargs") SetValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param I:
-	:type I: Handle_Interface_InterfaceModel &
-	:rtype: None
-") SetValue;
-		void SetValue (const Standard_Integer Index,const Handle_Interface_InterfaceModel & I);
-		%feature("compactdefaultargs") ChangeValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: Handle_Interface_InterfaceModel
-") ChangeValue;
-		Handle_Interface_InterfaceModel ChangeValue (const Standard_Integer Index);
-		%feature("compactdefaultargs") Remove;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: None
-") Remove;
-		void Remove (const Standard_Integer Index);
-		%feature("compactdefaultargs") Remove;
-		%feature("autodoc", "	:param FromIndex:
-	:type FromIndex: int
-	:param ToIndex:
-	:type ToIndex: int
-	:rtype: None
-") Remove;
-		void Remove (const Standard_Integer FromIndex,const Standard_Integer ToIndex);
-};
-
-
-%extend IFSelect_SequenceOfInterfaceModel {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
 %nodefaultctor IFSelect_SessionDumper;
-class IFSelect_SessionDumper : public MMgt_TShared {
+class IFSelect_SessionDumper : public Standard_Transient {
 	public:
 		%feature("compactdefaultargs") First;
 		%feature("autodoc", "	* Returns the First item of the Library of Dumper. The Next ones are then obtained by Next on the returned items
@@ -3732,7 +2736,7 @@ class IFSelect_SessionDumper : public MMgt_TShared {
 ") Next;
 		Handle_IFSelect_SessionDumper Next ();
 		%feature("compactdefaultargs") WriteOwn;
-		%feature("autodoc", "	* Writes the Own Parameters of a given Item, if it forecast to manage its Type. Returns True if it has recognized the Type of the Item (in this case, it is assumed to have written the Own Parameters if there are some), False else : in that case, SessionFile will try another SessionDumper in the Library. WriteOwn can use these methods from SessionFile : SendVoid, SendItem, SendText, and if necessary, WorkSession.
+		%feature("autodoc", "	* Writes the Own Parameters of a given Item, if it forecast to manage its Type. Returns True if it has recognized the Type of the Item --in this case, it is assumed to have written the Own Parameters if there are some--, False else : in that case, SessionFile will try another SessionDumper in the Library. WriteOwn can use these methods from SessionFile : SendVoid, SendItem, SendText, and if necessary, WorkSession.
 
 	:param file:
 	:type file: IFSelect_SessionFile &
@@ -3742,7 +2746,7 @@ class IFSelect_SessionDumper : public MMgt_TShared {
 ") WriteOwn;
 		virtual Standard_Boolean WriteOwn (IFSelect_SessionFile & file,const Handle_Standard_Transient & item);
 		%feature("compactdefaultargs") ReadOwn;
-		%feature("autodoc", "	* Recognizes a Type (given as <type>) then Creates an Item of this Type with the Own Parameter, as required. Returns True if it has recognized the Type (in this case, it is assumed to have created the Item, returned as <item>), False else : in that case, SessionFile will try another SessionDumper in the Library. ReadOwn can use these methods from SessionFile to access Own Parameters : NbOwnParams, IsVoid, IsText, TextValue, ItemValue
+		%feature("autodoc", "	* Recognizes a Type --given as <type>-- then Creates an Item of this Type with the Own Parameter, as required. Returns True if it has recognized the Type --in this case, it is assumed to have created the Item, returned as <item>--, False else : in that case, SessionFile will try another SessionDumper in the Library. ReadOwn can use these methods from SessionFile to access Own Parameters : NbOwnParams, IsVoid, IsText, TextValue, ItemValue
 
 	:param file:
 	:type file: IFSelect_SessionFile &
@@ -3775,7 +2779,7 @@ class IFSelect_SessionDumper : public MMgt_TShared {
 %}
 
 %nodefaultctor Handle_IFSelect_SessionDumper;
-class Handle_IFSelect_SessionDumper : public Handle_MMgt_TShared {
+class Handle_IFSelect_SessionDumper : public Handle_Standard_Transient {
 
     public:
         // constructors
@@ -3787,19 +2791,20 @@ class Handle_IFSelect_SessionDumper : public Handle_MMgt_TShared {
         static const Handle_IFSelect_SessionDumper DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_IFSelect_SessionDumper {
     IFSelect_SessionDumper* _get_reference() {
-    return (IFSelect_SessionDumper*)$self->Access();
+    return (IFSelect_SessionDumper*)$self->get();
     }
 };
 
 %extend Handle_IFSelect_SessionDumper {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend IFSelect_SessionDumper {
@@ -3819,7 +2824,7 @@ class IFSelect_SessionFile {
 ") IFSelect_SessionFile;
 		 IFSelect_SessionFile (const Handle_IFSelect_WorkSession & WS);
 		%feature("compactdefaultargs") IFSelect_SessionFile;
-		%feature("autodoc", "	* Creates a SessionFile which Writes the content of a WorkSession to a File (directly calls Write) Then, IsDone aknowledges on the result of the Operation. But such a SessionFile may not Read a File to a WorkSession.
+		%feature("autodoc", "	* Creates a SessionFile which Writes the content of a WorkSession to a File --directly calls Write-- Then, IsDone aknowledges on the result of the Operation. But such a SessionFile may not Read a File to a WorkSession.
 
 	:param WS:
 	:type WS: Handle_IFSelect_WorkSession &
@@ -3863,7 +2868,7 @@ class IFSelect_SessionFile {
 ") RemoveLastLine;
 		void RemoveLastLine ();
 		%feature("compactdefaultargs") WriteFile;
-		%feature("autodoc", "	* Writes the recorded lines to a file named <name> then clears the list of lines. Returns False (with no clearing) if the file could not be created
+		%feature("autodoc", "	* Writes the recorded lines to a file named <name> then clears the list of lines. Returns False --with no clearing-- if the file could not be created
 
 	:param name:
 	:type name: char *
@@ -3871,7 +2876,7 @@ class IFSelect_SessionFile {
 ") WriteFile;
 		Standard_Boolean WriteFile (const char * name);
 		%feature("compactdefaultargs") ReadFile;
-		%feature("autodoc", "	* Reads the recorded lines from a file named <name>, after having cleared the list (stops if RecognizeFile fails) Returns False (with no clearing) if the file could not be read
+		%feature("autodoc", "	* Reads the recorded lines from a file named <name>, after having cleared the list --stops if RecognizeFile fails-- Returns False --with no clearing-- if the file could not be read
 
 	:param name:
 	:type name: char *
@@ -3887,7 +2892,7 @@ class IFSelect_SessionFile {
 ") RecognizeFile;
 		Standard_Boolean RecognizeFile (const char * headerline);
 		%feature("compactdefaultargs") Write;
-		%feature("autodoc", "	* Performs a Write Operation from a WorkSession to a File i.e. calls WriteSession then WriteEnd, and WriteFile Returned Value is : 0 for OK, -1 File could not be created, >0 Error during Write (see WriteSession) IsDone can be called too (will return True for OK)
+		%feature("autodoc", "	* Performs a Write Operation from a WorkSession to a File i.e. calls WriteSession then WriteEnd, and WriteFile Returned Value is : 0 for OK, -1 File could not be created, >0 Error during Write --see WriteSession-- IsDone can be called too --will return True for OK--
 
 	:param filename:
 	:type filename: char *
@@ -3895,7 +2900,7 @@ class IFSelect_SessionFile {
 ") Write;
 		Standard_Integer Write (const char * filename);
 		%feature("compactdefaultargs") Read;
-		%feature("autodoc", "	* Performs a Read Operation from a file to a WorkSession i.e. calls ReadFile, then ReadSession and ReadEnd Returned Value is : 0 for OK, -1 File could not be opened, >0 Error during Read (see WriteSession) IsDone can be called too (will return True for OK)
+		%feature("autodoc", "	* Performs a Read Operation from a file to a WorkSession i.e. calls ReadFile, then ReadSession and ReadEnd Returned Value is : 0 for OK, -1 File could not be opened, >0 Error during Read --see WriteSession-- IsDone can be called too --will return True for OK--
 
 	:param filename:
 	:type filename: char *
@@ -3903,13 +2908,13 @@ class IFSelect_SessionFile {
 ") Read;
 		Standard_Integer Read (const char * filename);
 		%feature("compactdefaultargs") WriteSession;
-		%feature("autodoc", "	* Prepares the Write operation from a WorkSession (IFSelect) to a File, i.e. fills the list of lines (the file itself remains to be written; or NbLines/Line may be called) Important Remark : this excludes the reading of the last line, which is performed by WriteEnd Returns 0 if OK, status > 0 in case of error
+		%feature("autodoc", "	* Prepares the Write operation from a WorkSession --IFSelect-- to a File, i.e. fills the list of lines --the file itself remains to be written; or NbLines/Line may be called-- Important Remark : this excludes the reading of the last line, which is performed by WriteEnd Returns 0 if OK, status > 0 in case of error
 
 	:rtype: int
 ") WriteSession;
 		Standard_Integer WriteSession ();
 		%feature("compactdefaultargs") WriteEnd;
-		%feature("autodoc", "	* Writes the trailing line. It is separate from WriteSession, in order to allow to redefine WriteSession without touching WriteEnd (WriteSession defines the body of the file) WriteEnd fills the list of lines. Returns a status of error, 0 if OK, >0 else
+		%feature("autodoc", "	* Writes the trailing line. It is separate from WriteSession, in order to allow to redefine WriteSession without touching WriteEnd --WriteSession defines the body of the file-- WriteEnd fills the list of lines. Returns a status of error, 0 if OK, >0 else
 
 	:rtype: int
 ") WriteEnd;
@@ -3925,7 +2930,7 @@ class IFSelect_SessionFile {
 ") WriteLine;
 		void WriteLine (const char * line,const Standard_Character follow = 0);
 		%feature("compactdefaultargs") WriteOwn;
-		%feature("autodoc", "	* Writes the Parameters own to each type of Item. Uses the Library of SessionDumpers Returns True if Done, False if <item> could not be treated (hence it remains written with no Own Parameter)
+		%feature("autodoc", "	* Writes the Parameters own to each type of Item. Uses the Library of SessionDumpers Returns True if Done, False if <item> could not be treated --hence it remains written with no Own Parameter--
 
 	:param item:
 	:type item: Handle_Standard_Transient &
@@ -3933,13 +2938,13 @@ class IFSelect_SessionFile {
 ") WriteOwn;
 		Standard_Boolean WriteOwn (const Handle_Standard_Transient & item);
 		%feature("compactdefaultargs") ReadSession;
-		%feature("autodoc", "	* Performs a Read Operation from a File to a WorkSession, i.e. reads the list of line (which must have already been loaded, by ReadFile or by calls to AddLine) Important Remark : this excludes the reading of the last line, which is performed by ReadEnd Returns 0 for OK, >0 status for Read Error (not a suitable File, or WorkSession given as Immutable at Creation Time) IsDone can be called too (will return True for OK)
+		%feature("autodoc", "	* Performs a Read Operation from a File to a WorkSession, i.e. reads the list of line --which must have already been loaded, by ReadFile or by calls to AddLine-- Important Remark : this excludes the reading of the last line, which is performed by ReadEnd Returns 0 for OK, >0 status for Read Error --not a suitable File, or WorkSession given as Immutable at Creation Time-- IsDone can be called too --will return True for OK--
 
 	:rtype: int
 ") ReadSession;
 		Standard_Integer ReadSession ();
 		%feature("compactdefaultargs") ReadEnd;
-		%feature("autodoc", "	* Reads the end of a file (its last line). Returns 0 if OK, status >0 in case of error (not a suitable end line).
+		%feature("autodoc", "	* Reads the end of a file --its last line--. Returns 0 if OK, status >0 in case of error --not a suitable end line--.
 
 	:rtype: int
 ") ReadEnd;
@@ -3989,7 +2994,7 @@ class IFSelect_SessionFile {
 ") WorkSession;
 		Handle_IFSelect_WorkSession WorkSession ();
 		%feature("compactdefaultargs") NewItem;
-		%feature("autodoc", "	* At beginning of writing an Item, writes its basics : - either its name in the session if it has one - or its relative number of item in the file, else (preceeded by a '_') - then, its Dynamic Type (in the sense of cdl : pk_class) This basic description can be followed by the parameters which are used in the definition of the item.
+		%feature("autodoc", "	* At beginning of writing an Item, writes its basics : - either its name in the session if it has one - or its relative number of item in the file, else --preceeded by a '_'-- - then, its Dynamic Type --in the sense of cdl : pk_class-- This basic description can be followed by the parameters which are used in the definition of the item.
 
 	:param ident:
 	:type ident: int
@@ -3999,7 +3004,7 @@ class IFSelect_SessionFile {
 ") NewItem;
 		void NewItem (const Standard_Integer ident,const Handle_Standard_Transient & par);
 		%feature("compactdefaultargs") SetOwn;
-		%feature("autodoc", "	* Sets Parameters to be sent as Own if <mode> is True (their Name or Number or Void Mark or Text Value is preceeded by a Column sign ':') else they are sent normally Hence, the Own Parameter are clearly identified in the File
+		%feature("autodoc", "	* Sets Parameters to be sent as Own if <mode> is True --their Name or Number or Void Mark or Text Value is preceeded by a Column sign ':'-- else they are sent normally Hence, the Own Parameter are clearly identified in the File
 
 	:param mode:
 	:type mode: bool
@@ -4013,7 +3018,7 @@ class IFSelect_SessionFile {
 ") SendVoid;
 		void SendVoid ();
 		%feature("compactdefaultargs") SendItem;
-		%feature("autodoc", "	* During a Write action, commands to send the identification of a Parameter : if it is Null (undefined) it is send as Void ($) if it is Named in the WorkSession, its Name is sent preceeded by ':', else a relative Ident Number is sent preceeded by '#' (relative to the present Write, i.e. starting at one, without skip, and counted part from Named Items)
+		%feature("autodoc", "	* During a Write action, commands to send the identification of a Parameter : if it is Null --undefined-- it is send as Void --$-- if it is Named in the WorkSession, its Name is sent preceeded by ':', else a relative Ident Number is sent preceeded by '#' --relative to the present Write, i.e. starting at one, without skip, and counted part from Named Items--
 
 	:param par:
 	:type par: Handle_Standard_Transient &
@@ -4043,7 +3048,7 @@ class IFSelect_SessionFile {
 ") NbParams;
 		Standard_Integer NbParams ();
 		%feature("compactdefaultargs") IsVoid;
-		%feature("autodoc", "	* Returns True if a Parameter, given its rank in the Own List (see NbOwnParams), is Void. Returns also True if <num> is out of range (undefined parameters)
+		%feature("autodoc", "	* Returns True if a Parameter, given its rank in the Own List --see NbOwnParams--, is Void. Returns also True if <num> is out of range --undefined parameters--
 
 	:param num:
 	:type num: int
@@ -4051,7 +3056,7 @@ class IFSelect_SessionFile {
 ") IsVoid;
 		Standard_Boolean IsVoid (const Standard_Integer num);
 		%feature("compactdefaultargs") IsText;
-		%feature("autodoc", "	* Returns True if a Parameter, in the Own List (see NbOwnParams) is a Text (between '...'). Else it is an Item (Parameter, Selection, Dispatch ...), which can be Void.
+		%feature("autodoc", "	* Returns True if a Parameter, in the Own List --see NbOwnParams-- is a Text --between '...'--. Else it is an Item --Parameter, Selection, Dispatch ...--, which can be Void.
 
 	:param num:
 	:type num: int
@@ -4059,7 +3064,7 @@ class IFSelect_SessionFile {
 ") IsText;
 		Standard_Boolean IsText (const Standard_Integer num);
 		%feature("compactdefaultargs") ParamValue;
-		%feature("autodoc", "	* Returns a Parameter (alphanumeric item of a line) as it has been read
+		%feature("autodoc", "	* Returns a Parameter --alphanumeric item of a line-- as it has been read
 
 	:param num:
 	:type num: int
@@ -4067,7 +3072,7 @@ class IFSelect_SessionFile {
 ") ParamValue;
 		const TCollection_AsciiString & ParamValue (const Standard_Integer num);
 		%feature("compactdefaultargs") TextValue;
-		%feature("autodoc", "	* Returns the content of a Text Parameter (without the quotes). Returns an empty string if the Parameter is not a Text.
+		%feature("autodoc", "	* Returns the content of a Text Parameter --without the quotes--. Returns an empty string if the Parameter is not a Text.
 
 	:param num:
 	:type num: int
@@ -4083,7 +3088,7 @@ class IFSelect_SessionFile {
 ") ItemValue;
 		Handle_Standard_Transient ItemValue (const Standard_Integer num);
 		%feature("compactdefaultargs") Destroy;
-		%feature("autodoc", "	* Specific Destructor (closes the File if not yet done)
+		%feature("autodoc", "	* Specific Destructor --closes the File if not yet done--
 
 	:rtype: None
 ") Destroy;
@@ -4097,7 +3102,7 @@ class IFSelect_SessionFile {
 	}
 };
 %nodefaultctor IFSelect_ShareOut;
-class IFSelect_ShareOut : public MMgt_TShared {
+class IFSelect_ShareOut : public Standard_Transient {
 	public:
 		%feature("compactdefaultargs") IFSelect_ShareOut;
 		%feature("autodoc", "	* Creates an empty ShareOut
@@ -4106,7 +3111,7 @@ class IFSelect_ShareOut : public MMgt_TShared {
 ") IFSelect_ShareOut;
 		 IFSelect_ShareOut ();
 		%feature("compactdefaultargs") Clear;
-		%feature("autodoc", "	* Removes in one operation all the Dispatches with their Idents Also clears all informations about Names, and all Results but naming informations which are : - kept if <onlydisp> is True. - cleared if <onlydisp> is False (complete clearing) If <onlydisp> is True, that's all. Else, clears also Modifiers
+		%feature("autodoc", "	* Removes in one operation all the Dispatches with their Idents Also clears all informations about Names, and all Results but naming informations which are : - kept if <onlydisp> is True. - cleared if <onlydisp> is False --complete clearing-- If <onlydisp> is True, that's all. Else, clears also Modifiers
 
 	:param onlydisp:
 	:type onlydisp: bool
@@ -4114,7 +3119,7 @@ class IFSelect_ShareOut : public MMgt_TShared {
 ") Clear;
 		void Clear (const Standard_Boolean onlydisp);
 		%feature("compactdefaultargs") ClearResult;
-		%feature("autodoc", "	* Clears all data produced (apart from Dispatches, etc...) if <alsoname> is True, all is cleared. Else, informations about produced Names are kept (to maintain unicity of naming across clearings)
+		%feature("autodoc", "	* Clears all data produced --apart from Dispatches, etc...-- if <alsoname> is True, all is cleared. Else, informations about produced Names are kept --to maintain unicity of naming across clearings--
 
 	:param alsoname:
 	:type alsoname: bool
@@ -4122,7 +3127,7 @@ class IFSelect_ShareOut : public MMgt_TShared {
 ") ClearResult;
 		void ClearResult (const Standard_Boolean alsoname);
 		%feature("compactdefaultargs") RemoveItem;
-		%feature("autodoc", "	* Removes an item, which can be, either a Dispatch (removed from the list of Dispatches), or a GeneralModifier (removed from the list of Model Modifiers or from the list of File Modifiers according to its type). Returns True if done, False if has not been found or if it is neither a Dispatch, nor a Modifier.
+		%feature("autodoc", "	* Removes an item, which can be, either a Dispatch --removed from the list of Dispatches--, or a GeneralModifier --removed from the list of Model Modifiers or from the list of File Modifiers according to its type--. Returns True if done, False if has not been found or if it is neither a Dispatch, nor a Modifier.
 
 	:param item:
 	:type item: Handle_Standard_Transient &
@@ -4130,7 +3135,7 @@ class IFSelect_ShareOut : public MMgt_TShared {
 ") RemoveItem;
 		Standard_Boolean RemoveItem (const Handle_Standard_Transient & item);
 		%feature("compactdefaultargs") LastRun;
-		%feature("autodoc", "	* Returns the rank of last run item (ClearResult resets it to 0)
+		%feature("autodoc", "	* Returns the rank of last run item --ClearResult resets it to 0--
 
 	:rtype: int
 ") LastRun;
@@ -4150,7 +3155,7 @@ class IFSelect_ShareOut : public MMgt_TShared {
 ") NbDispatches;
 		Standard_Integer NbDispatches ();
 		%feature("compactdefaultargs") DispatchRank;
-		%feature("autodoc", "	* Returns the Rank of a Dispatch, given its Value (Handle). Returns 0 if the Dispatch is unknown in the ShareOut
+		%feature("autodoc", "	* Returns the Rank of a Dispatch, given its Value --Handle--. Returns 0 if the Dispatch is unknown in the ShareOut
 
 	:param disp:
 	:type disp: Handle_IFSelect_Dispatch &
@@ -4174,7 +3179,7 @@ class IFSelect_ShareOut : public MMgt_TShared {
 ") AddDispatch;
 		void AddDispatch (const Handle_IFSelect_Dispatch & disp);
 		%feature("compactdefaultargs") RemoveDispatch;
-		%feature("autodoc", "	* Removes a Dispatch, given its rank in the list Returns True if done, False if rank is not between (LastRun + 1) and (NbDispatches)
+		%feature("autodoc", "	* Removes a Dispatch, given its rank in the list Returns True if done, False if rank is not between --LastRun + 1-- and --NbDispatches--
 
 	:param rank:
 	:type rank: int
@@ -4182,7 +3187,7 @@ class IFSelect_ShareOut : public MMgt_TShared {
 ") RemoveDispatch;
 		Standard_Boolean RemoveDispatch (const Standard_Integer rank);
 		%feature("compactdefaultargs") AddModifier;
-		%feature("autodoc", "	* Sets a Modifier to be applied on all Dispatches to be run If <modifier> is a ModelModifier, adds it to the list of Model Modifiers; else to the list of File Modifiers By default (atnum = 0) at the end of the list, else at <atnum> Each Modifier is used, after each copy of a packet of Entities into a Model : its criteria are checked and if they are OK, the method Perform of this Modifier is run.
+		%feature("autodoc", "	* Sets a Modifier to be applied on all Dispatches to be run If <modifier> is a ModelModifier, adds it to the list of Model Modifiers; else to the list of File Modifiers By default --atnum = 0-- at the end of the list, else at <atnum> Each Modifier is used, after each copy of a packet of Entities into a Model : its criteria are checked and if they are OK, the method Perform of this Modifier is run.
 
 	:param modifier:
 	:type modifier: Handle_IFSelect_GeneralModifier &
@@ -4192,7 +3197,7 @@ class IFSelect_ShareOut : public MMgt_TShared {
 ") AddModifier;
 		void AddModifier (const Handle_IFSelect_GeneralModifier & modifier,const Standard_Integer atnum);
 		%feature("compactdefaultargs") AddModifier;
-		%feature("autodoc", "	* Sets a Modifier to be applied on the Dispatch <dispnum> If <modifier> is a ModelModifier, adds it to the list of Model Modifiers; else to the list of File Modifiers This is the same list as for all Dispatches, but the Modifier is qualified to be applied to one Dispatch only Then, <atnum> refers to the entire list By default (atnum = 0) at the end of the list, else at <atnum> Remark : if the Modifier was already in the list and if <atnum> = 0, the Modifier is not moved, but only qualified for a Dispatch
+		%feature("autodoc", "	* Sets a Modifier to be applied on the Dispatch <dispnum> If <modifier> is a ModelModifier, adds it to the list of Model Modifiers; else to the list of File Modifiers This is the same list as for all Dispatches, but the Modifier is qualified to be applied to one Dispatch only Then, <atnum> refers to the entire list By default --atnum = 0-- at the end of the list, else at <atnum> Remark : if the Modifier was already in the list and if <atnum> = 0, the Modifier is not moved, but only qualified for a Dispatch
 
 	:param modifier:
 	:type modifier: Handle_IFSelect_GeneralModifier &
@@ -4204,7 +3209,7 @@ class IFSelect_ShareOut : public MMgt_TShared {
 ") AddModifier;
 		void AddModifier (const Handle_IFSelect_GeneralModifier & modifier,const Standard_Integer dispnum,const Standard_Integer atnum);
 		%feature("compactdefaultargs") AddModif;
-		%feature("autodoc", "	* Adds a Modifier to the list of Modifiers : Model Modifiers if <formodel> is True, File Modifiers else (internal).
+		%feature("autodoc", "	* Adds a Modifier to the list of Modifiers : Model Modifiers if <formodel> is True, File Modifiers else --internal--.
 
 	:param modifier:
 	:type modifier: Handle_IFSelect_GeneralModifier &
@@ -4216,7 +3221,7 @@ class IFSelect_ShareOut : public MMgt_TShared {
 ") AddModif;
 		void AddModif (const Handle_IFSelect_GeneralModifier & modifier,const Standard_Boolean formodel,const Standard_Integer atnum = 0);
 		%feature("compactdefaultargs") NbModifiers;
-		%feature("autodoc", "	* Returns count of Modifiers (which apply to complete Models) : Model Modifiers if <formodel> is True, File Modifiers else
+		%feature("autodoc", "	* Returns count of Modifiers --which apply to complete Models-- : Model Modifiers if <formodel> is True, File Modifiers else
 
 	:param formodel:
 	:type formodel: bool
@@ -4260,7 +3265,7 @@ class IFSelect_ShareOut : public MMgt_TShared {
 ") RemoveModifier;
 		Standard_Boolean RemoveModifier (const Standard_Boolean formodel,const Standard_Integer num);
 		%feature("compactdefaultargs") ChangeModifierRank;
-		%feature("autodoc", "	* Changes the rank of a modifier in the list : Model Modifiers if <formodel> is True, File Modifiers else from <before> to <after> Returns True if done, False else (before or after out of range)
+		%feature("autodoc", "	* Changes the rank of a modifier in the list : Model Modifiers if <formodel> is True, File Modifiers else from <before> to <after> Returns True if done, False else --before or after out of range--
 
 	:param formodel:
 	:type formodel: bool
@@ -4272,7 +3277,7 @@ class IFSelect_ShareOut : public MMgt_TShared {
 ") ChangeModifierRank;
 		Standard_Boolean ChangeModifierRank (const Standard_Boolean formodel,const Standard_Integer befor,const Standard_Integer after);
 		%feature("compactdefaultargs") SetRootName;
-		%feature("autodoc", "	* Attaches a Root Name to a Dispatch given its rank, as an HAsciiString (standard form). A Null Handle resets this name. Returns True if OK, False if this Name is already attached, for a Dispatch or for Default, or <num> out of range
+		%feature("autodoc", "	* Attaches a Root Name to a Dispatch given its rank, as an HAsciiString --standard form--. A Null Handle resets this name. Returns True if OK, False if this Name is already attached, for a Dispatch or for Default, or <num> out of range
 
 	:param num:
 	:type num: int
@@ -4298,7 +3303,7 @@ class IFSelect_ShareOut : public MMgt_TShared {
 ") RootName;
 		Handle_TCollection_HAsciiString RootName (const Standard_Integer num);
 		%feature("compactdefaultargs") RootNumber;
-		%feature("autodoc", "	* Returns an integer value about a given root name : - positive : it's the rank of the Dispatch which has this name - null : this root name is unknown - negative (-1) : this root name is the default root name
+		%feature("autodoc", "	* Returns an integer value about a given root name : - positive : it's the rank of the Dispatch which has this name - null : this root name is unknown - negative ---1-- : this root name is the default root name
 
 	:param name:
 	:type name: Handle_TCollection_HAsciiString &
@@ -4306,7 +3311,7 @@ class IFSelect_ShareOut : public MMgt_TShared {
 ") RootNumber;
 		Standard_Integer RootNumber (const Handle_TCollection_HAsciiString & name);
 		%feature("compactdefaultargs") SetPrefix;
-		%feature("autodoc", "	* Defines or Changes the general Prefix (which is prepended to complete file name generated). If this method is not call, Prefix remains empty
+		%feature("autodoc", "	* Defines or Changes the general Prefix --which is prepended to complete file name generated--. If this method is not call, Prefix remains empty
 
 	:param pref:
 	:type pref: Handle_TCollection_HAsciiString &
@@ -4314,7 +3319,7 @@ class IFSelect_ShareOut : public MMgt_TShared {
 ") SetPrefix;
 		void SetPrefix (const Handle_TCollection_HAsciiString & pref);
 		%feature("compactdefaultargs") SetDefaultRootName;
-		%feature("autodoc", "	* Defines or Changes the Default Root Name to a new value (which is used for dispatches which have no attached root name). If this method is not called, DefaultRootName remains empty Returns True if OK, False if this Name is already attached, for a Dispatch or for Default
+		%feature("autodoc", "	* Defines or Changes the Default Root Name to a new value --which is used for dispatches which have no attached root name--. If this method is not called, DefaultRootName remains empty Returns True if OK, False if this Name is already attached, for a Dispatch or for Default
 
 	:param defrt:
 	:type defrt: Handle_TCollection_HAsciiString &
@@ -4322,7 +3327,7 @@ class IFSelect_ShareOut : public MMgt_TShared {
 ") SetDefaultRootName;
 		Standard_Boolean SetDefaultRootName (const Handle_TCollection_HAsciiString & defrt);
 		%feature("compactdefaultargs") SetExtension;
-		%feature("autodoc", "	* Defines or Changes the general Extension (which is appended to complete file name generated). If this method is not call, Extension remains empty
+		%feature("autodoc", "	* Defines or Changes the general Extension --which is appended to complete file name generated--. If this method is not call, Extension remains empty
 
 	:param ext:
 	:type ext: Handle_TCollection_HAsciiString &
@@ -4342,13 +3347,13 @@ class IFSelect_ShareOut : public MMgt_TShared {
 ") DefaultRootName;
 		Handle_TCollection_HAsciiString DefaultRootName ();
 		%feature("compactdefaultargs") Extension;
-		%feature("autodoc", "	* Returns the general Extension. Can be empty (not recommanded)
+		%feature("autodoc", "	* Returns the general Extension. Can be empty --not recommanded--
 
 	:rtype: Handle_TCollection_HAsciiString
 ") Extension;
 		Handle_TCollection_HAsciiString Extension ();
 		%feature("compactdefaultargs") FileName;
-		%feature("autodoc", "	* Computes the complete file name for a Packet of a Dispatch, given Dispatch Number (Rank), Packet Number, and Count of Packets generated by this Dispatch (0 if unknown) //! File Name is made of following strings, concatenated : General Prefix, Root Name for Dispatch, Packet Suffix, and General Extension. If no Root Name is specified for a Dispatch, DefaultRootName is considered (and pnum is not used, but <thenbdefs> is incremented and used Error if no Root is defined for this <idnum>
+		%feature("autodoc", "	* Computes the complete file name for a Packet of a Dispatch, given Dispatch Number --Rank--, Packet Number, and Count of Packets generated by this Dispatch --0 if unknown-- //! File Name is made of following strings, concatenated : General Prefix, Root Name for Dispatch, Packet Suffix, and General Extension. If no Root Name is specified for a Dispatch, DefaultRootName is considered --and pnum is not used, but <thenbdefs> is incremented and used Error if no Root is defined for this <idnum>
 
 	:param dnum:
 	:type dnum: int
@@ -4381,7 +3386,7 @@ class IFSelect_ShareOut : public MMgt_TShared {
 %}
 
 %nodefaultctor Handle_IFSelect_ShareOut;
-class Handle_IFSelect_ShareOut : public Handle_MMgt_TShared {
+class Handle_IFSelect_ShareOut : public Handle_Standard_Transient {
 
     public:
         // constructors
@@ -4393,19 +3398,20 @@ class Handle_IFSelect_ShareOut : public Handle_MMgt_TShared {
         static const Handle_IFSelect_ShareOut DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_IFSelect_ShareOut {
     IFSelect_ShareOut* _get_reference() {
-    return (IFSelect_ShareOut*)$self->Access();
+    return (IFSelect_ShareOut*)$self->get();
     }
 };
 
 %extend Handle_IFSelect_ShareOut {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend IFSelect_ShareOut {
@@ -4417,7 +3423,7 @@ class Handle_IFSelect_ShareOut : public Handle_MMgt_TShared {
 class IFSelect_ShareOutResult {
 	public:
 		%feature("compactdefaultargs") IFSelect_ShareOutResult;
-		%feature("autodoc", "	* Creates a ShareOutResult from a ShareOut, to work on a Model (without any more precision; uses Active Protocol)
+		%feature("autodoc", "	* Creates a ShareOutResult from a ShareOut, to work on a Model --without any more precision; uses Active Protocol--
 
 	:param sho:
 	:type sho: Handle_IFSelect_ShareOut &
@@ -4437,7 +3443,7 @@ class IFSelect_ShareOutResult {
 ") IFSelect_ShareOutResult;
 		 IFSelect_ShareOutResult (const Handle_IFSelect_ShareOut & sho,const Interface_Graph & G);
 		%feature("compactdefaultargs") IFSelect_ShareOutResult;
-		%feature("autodoc", "	* Creates a ShareOutResult from a unique Dispatch, to work on a Model. As if it was a ShareOut with only one Dispatch (without any more precision; uses Active Protocol) Allows to compute the effect of a single Dispatch
+		%feature("autodoc", "	* Creates a ShareOutResult from a unique Dispatch, to work on a Model. As if it was a ShareOut with only one Dispatch --without any more precision; uses Active Protocol-- Allows to compute the effect of a single Dispatch
 
 	:param disp:
 	:type disp: Handle_IFSelect_Dispatch &
@@ -4475,13 +3481,13 @@ class IFSelect_ShareOutResult {
 ") Reset;
 		void Reset ();
 		%feature("compactdefaultargs") Evaluate;
-		%feature("autodoc", "	* Evaluates the result of a ShareOut : determines Entities to be forgotten by the ShareOut, Entities to be transferred several times (duplicated), prepares an iteration on the packets to be produced Called the first time anyone question is asked, or after a call to Reset. Works by calling the method Prepare.
+		%feature("autodoc", "	* Evaluates the result of a ShareOut : determines Entities to be forgotten by the ShareOut, Entities to be transferred several times --duplicated--, prepares an iteration on the packets to be produced Called the first time anyone question is asked, or after a call to Reset. Works by calling the method Prepare.
 
 	:rtype: None
 ") Evaluate;
 		void Evaluate ();
 		%feature("compactdefaultargs") Packets;
-		%feature("autodoc", "	* Returns the list of recorded Packets, under two modes : - <complete> = False, the strict definition of Packets, i.e. for each one, the Root Entities, to be explicitely sent - <complete> = True (Default), the completely evaluated list, i.e. which really gives the destination of each entity : this mode allows to evaluate duplications Remark that to send packets, iteration remains preferable (file names are managed)
+		%feature("autodoc", "	* Returns the list of recorded Packets, under two modes : - <complete> = False, the strict definition of Packets, i.e. for each one, the Root Entities, to be explicitely sent - <complete> = True --Default--, the completely evaluated list, i.e. which really gives the destination of each entity : this mode allows to evaluate duplications Remark that to send packets, iteration remains preferable --file names are managed--
 
 	:param complete: default value is Standard_True
 	:type complete: bool
@@ -4489,13 +3495,13 @@ class IFSelect_ShareOutResult {
 ") Packets;
 		Handle_IFSelect_PacketList Packets (const Standard_Boolean complete = Standard_True);
 		%feature("compactdefaultargs") NbPackets;
-		%feature("autodoc", "	* Returns the total count of produced non empty packets (in out : calls Evaluate as necessary)
+		%feature("autodoc", "	* Returns the total count of produced non empty packets --in out : calls Evaluate as necessary--
 
 	:rtype: int
 ") NbPackets;
 		Standard_Integer NbPackets ();
 		%feature("compactdefaultargs") Prepare;
-		%feature("autodoc", "	* Prepares the iteration on the packets This method is called by Evaluate, but can be called anytime The iteration consists in taking each Dispatch of the ShareOut beginning by the first one, compute its packets, then iterate on these packets. Once all these packets are iterated, the iteration passes to the next Dispatch, or stops. For a creation from a unique Dispatch, same but with only this Dispatch. Each packet can be listed, or really transferred (producing a derived Model, from which a file can be generated) //! Prepare sets the iteration to the first Dispatch, first Packet
+		%feature("autodoc", "	* Prepares the iteration on the packets This method is called by Evaluate, but can be called anytime The iteration consists in taking each Dispatch of the ShareOut beginning by the first one, compute its packets, then iterate on these packets. Once all these packets are iterated, the iteration passes to the next Dispatch, or stops. For a creation from a unique Dispatch, same but with only this Dispatch. Each packet can be listed, or really transferred --producing a derived Model, from which a file can be generated-- //! Prepare sets the iteration to the first Dispatch, first Packet
 
 	:rtype: None
 ") Prepare;
@@ -4525,13 +3531,13 @@ class IFSelect_ShareOutResult {
 ") Dispatch;
 		Handle_IFSelect_Dispatch Dispatch ();
 		%feature("compactdefaultargs") DispatchRank;
-		%feature("autodoc", "	* Returns the Rank of the current Dispatch in the ShareOut Returns Zero if there is none (iteration finished)
+		%feature("autodoc", "	* Returns the Rank of the current Dispatch in the ShareOut Returns Zero if there is none --iteration finished--
 
 	:rtype: int
 ") DispatchRank;
 		Standard_Integer DispatchRank ();
 		%feature("compactdefaultargs") PacketsInDispatch;
-		%feature("autodoc", "	* Returns Number (rank) of current Packet in current Dispatch, and total count of Packets in current Dispatch, as arguments
+		%feature("autodoc", "	* Returns Number --rank-- of current Packet in current Dispatch, and total count of Packets in current Dispatch, as arguments
 
 	:param numpack:
 	:type numpack: int &
@@ -4541,19 +3547,19 @@ class IFSelect_ShareOutResult {
 ") PacketsInDispatch;
 		void PacketsInDispatch (Standard_Integer &OutValue,Standard_Integer &OutValue);
 		%feature("compactdefaultargs") PacketRoot;
-		%feature("autodoc", "	* Returns the list of Roots of the current Packet (never empty) (i.e. the Entities to be themselves asked for transfer) Error if there is none (iteration finished)
+		%feature("autodoc", "	* Returns the list of Roots of the current Packet --never empty-- --i.e. the Entities to be themselves asked for transfer-- Error if there is none --iteration finished--
 
 	:rtype: Interface_EntityIterator
 ") PacketRoot;
 		Interface_EntityIterator PacketRoot ();
 		%feature("compactdefaultargs") PacketContent;
-		%feature("autodoc", "	* Returns the complete content of the current Packet (i.e. with shared entities, which will also be put in the file)
+		%feature("autodoc", "	* Returns the complete content of the current Packet --i.e. with shared entities, which will also be put in the file--
 
 	:rtype: Interface_EntityIterator
 ") PacketContent;
 		Interface_EntityIterator PacketContent ();
 		%feature("compactdefaultargs") FileName;
-		%feature("autodoc", "	* Returns the File Name which corresponds to current Packet (computed by ShareOut) If current Packet has no associated name (see ShareOut), the returned value is Null
+		%feature("autodoc", "	* Returns the File Name which corresponds to current Packet --computed by ShareOut-- If current Packet has no associated name --see ShareOut--, the returned value is Null
 
 	:rtype: TCollection_AsciiString
 ") FileName;
@@ -4598,7 +3604,7 @@ class IFSelect_Signature : public Interface_SignType {
 ") IsIntCase;
 		Standard_Boolean IsIntCase (Standard_Boolean &OutValue,Standard_Integer &OutValue,Standard_Boolean &OutValue,Standard_Integer &OutValue);
 		%feature("compactdefaultargs") AddCase;
-		%feature("autodoc", "	* Adds a possible case To be called when creating, IF the list of possible cases for Value is known when starting For instance, for CDL types, rather do not fill this, but for a specific enumeration (such as a status), can be used
+		%feature("autodoc", "	* Adds a possible case To be called when creating, IF the list of possible cases for Value is known when starting For instance, for CDL types, rather do not fill this, but for a specific enumeration --such as a status--, can be used
 
 	:param acase:
 	:type acase: char *
@@ -4606,13 +3612,13 @@ class IFSelect_Signature : public Interface_SignType {
 ") AddCase;
 		void AddCase (const char * acase);
 		%feature("compactdefaultargs") CaseList;
-		%feature("autodoc", "	* Returns the predefined list of possible cases, filled by AddCase Null Handle if no predefined list (hence, to be counted) Useful to filter on really possible vase, for instance, or for a help
+		%feature("autodoc", "	* Returns the predefined list of possible cases, filled by AddCase Null Handle if no predefined list --hence, to be counted-- Useful to filter on really possible vase, for instance, or for a help
 
 	:rtype: Handle_TColStd_HSequenceOfAsciiString
 ") CaseList;
 		Handle_TColStd_HSequenceOfAsciiString CaseList ();
 		%feature("compactdefaultargs") Name;
-		%feature("autodoc", "	* Returns an identification of the Signature (a word), given at initialization time Returns the Signature for a Transient object. It is specific of each sub-class of Signature. For a Null Handle, it should provide '' It can work with the model which contains the entity
+		%feature("autodoc", "	* Returns an identification of the Signature --a word--, given at initialization time Returns the Signature for a Transient object. It is specific of each sub-class of Signature. For a Null Handle, it should provide '' It can work with the model which contains the entity
 
 	:rtype: char *
 ") Name;
@@ -4638,7 +3644,7 @@ class IFSelect_Signature : public Interface_SignType {
 ") Matches;
 		virtual Standard_Boolean Matches (const Handle_Standard_Transient & ent,const Handle_Interface_InterfaceModel & model,const TCollection_AsciiString & text,const Standard_Boolean exact);
 		%feature("compactdefaultargs") MatchValue;
-		%feature("autodoc", "	* Default procedure to tell if a value <val> matches a text with a criterium <exact>. <exact> = True requires equality, else only contained (no reg-exp)
+		%feature("autodoc", "	* Default procedure to tell if a value <val> matches a text with a criterium <exact>. <exact> = True requires equality, else only contained --no reg-exp--
 
 	:param val:
 	:type val: char *
@@ -4650,7 +3656,7 @@ class IFSelect_Signature : public Interface_SignType {
 ") MatchValue;
 		static Standard_Boolean MatchValue (const char * val,const TCollection_AsciiString & text,const Standard_Boolean exact);
 		%feature("compactdefaultargs") IntValue;
-		%feature("autodoc", "	* This procedure converts an Integer to a CString It is a convenient way when the value of a signature has the form of a simple integer value The value is to be used immediately (one buffer only, no copy)
+		%feature("autodoc", "	* This procedure converts an Integer to a CString It is a convenient way when the value of a signature has the form of a simple integer value The value is to be used immediately --one buffer only, no copy--
 
 	:param val:
 	:type val: int
@@ -4691,19 +3697,20 @@ class Handle_IFSelect_Signature : public Handle_Interface_SignType {
         static const Handle_IFSelect_Signature DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_IFSelect_Signature {
     IFSelect_Signature* _get_reference() {
-    return (IFSelect_Signature*)$self->Access();
+    return (IFSelect_Signature*)$self->get();
     }
 };
 
 %extend Handle_IFSelect_Signature {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend IFSelect_Signature {
@@ -4712,7 +3719,7 @@ class Handle_IFSelect_Signature : public Handle_Interface_SignType {
 	}
 };
 %nodefaultctor IFSelect_SignatureList;
-class IFSelect_SignatureList : public MMgt_TShared {
+class IFSelect_SignatureList : public Standard_Transient {
 	public:
 		%feature("compactdefaultargs") IFSelect_SignatureList;
 		%feature("autodoc", "	* Creates a SignatureList. If <withlist> is True, entities will be not only counted per signature, but also listed.
@@ -4748,7 +3755,7 @@ class IFSelect_SignatureList : public MMgt_TShared {
 ") Clear;
 		virtual void Clear ();
 		%feature("compactdefaultargs") Add;
-		%feature("autodoc", "	* Adds an entity with its signature, i.e. : - counts an item more for <sign> - if record-list status is set, records the entity Accepts a null entity (the signature is then for the global model). But if the string is empty, counts a Null item. //! If SignOnly Mode is set, this work is replaced by just setting LastValue
+		%feature("autodoc", "	* Adds an entity with its signature, i.e. : - counts an item more for <sign> - if record-list status is set, records the entity Accepts a null entity --the signature is then for the global model--. But if the string is empty, counts a Null item. //! If SignOnly Mode is set, this work is replaced by just setting LastValue
 
 	:param ent:
 	:type ent: Handle_Standard_Transient &
@@ -4758,7 +3765,7 @@ class IFSelect_SignatureList : public MMgt_TShared {
 ") Add;
 		void Add (const Handle_Standard_Transient & ent,const char * sign);
 		%feature("compactdefaultargs") LastValue;
-		%feature("autodoc", "	* Returns the last value recorded by Add (only if SignMode set) Cleared by Clear or Init
+		%feature("autodoc", "	* Returns the last value recorded by Add --only if SignMode set-- Cleared by Clear or Init
 
 	:rtype: char *
 ") LastValue;
@@ -4769,16 +3776,16 @@ class IFSelect_SignatureList : public MMgt_TShared {
 	:param name:
 	:type name: char *
 	:param count:
-	:type count: Handle_Dico_DictionaryOfInteger &
+	:type count: NCollection_IndexedDataMap<TCollection_AsciiString, int> &
 	:param list:
-	:type list: Handle_Dico_DictionaryOfTransient &
+	:type list: NCollection_IndexedDataMap<TCollection_AsciiString, Handle_Standard_Transient> &
 	:param nbnuls:
 	:type nbnuls: int
 	:rtype: None
 ") Init;
-		void Init (const char * name,const Handle_Dico_DictionaryOfInteger & count,const Handle_Dico_DictionaryOfTransient & list,const Standard_Integer nbnuls);
+		void Init (const char * name,const NCollection_IndexedDataMap<TCollection_AsciiString, Standard_Integer> & count,const NCollection_IndexedDataMap<TCollection_AsciiString, Handle_Standard_Transient> & list,const Standard_Integer nbnuls);
 		%feature("compactdefaultargs") List;
-		%feature("autodoc", "	* Returns the list of signatures, as a sequence of strings (but without their respective counts). It is ordered. By default, for all the signatures. If <root> is given non empty, for the signatures which begin by <root>
+		%feature("autodoc", "	* Returns the list of signatures, as a sequence of strings --but without their respective counts--. It is ordered. By default, for all the signatures. If <root> is given non empty, for the signatures which begin by <root>
 
 	:param root: default value is ""
 	:type root: char *
@@ -4814,7 +3821,7 @@ class IFSelect_SignatureList : public MMgt_TShared {
 ") Entities;
 		Handle_TColStd_HSequenceOfTransient Entities (const char * sign);
 		%feature("compactdefaultargs") SetName;
-		%feature("autodoc", "	* Defines a name for a SignatureList (used to print it)
+		%feature("autodoc", "	* Defines a name for a SignatureList --used to print it--
 
 	:param name:
 	:type name: char *
@@ -4822,13 +3829,13 @@ class IFSelect_SignatureList : public MMgt_TShared {
 ") SetName;
 		void SetName (const char * name);
 		%feature("compactdefaultargs") Name;
-		%feature("autodoc", "	* Returns the recorded Name. Remark : default is '...' (no SetName called)
+		%feature("autodoc", "	* Returns the recorded Name. Remark : default is '...' --no SetName called--
 
 	:rtype: char *
 ") Name;
 		virtual const char * Name ();
 		%feature("compactdefaultargs") PrintCount;
-		%feature("autodoc", "	* Prints the counts of items (not the list)
+		%feature("autodoc", "	* Prints the counts of items --not the list--
 
 	:param S:
 	:type S: Handle_Message_Messenger &
@@ -4836,7 +3843,7 @@ class IFSelect_SignatureList : public MMgt_TShared {
 ") PrintCount;
 		virtual void PrintCount (const Handle_Message_Messenger & S);
 		%feature("compactdefaultargs") PrintList;
-		%feature("autodoc", "	* Prints the lists of items, if they are present (else, prints a message 'no list available') Uses <model> to determine for each entity to be listed, its number, and its specific identifier (by PrintLabel) <mod> gives a mode for printing : - CountByItem : just count (as PrintCount) - ShortByItem : minimum i.e. count plus 5 first entity numbers - ShortByItem(D) complete list of entity numbers (0: 'Global') - EntitiesByItem : list of (entity number/PrintLabel from the model) other modes are ignored
+		%feature("autodoc", "	* Prints the lists of items, if they are present --else, prints a message 'no list available'-- Uses <model> to determine for each entity to be listed, its number, and its specific identifier --by PrintLabel-- <mod> gives a mode for printing : - CountByItem : just count --as PrintCount-- - ShortByItem : minimum i.e. count plus 5 first entity numbers - ShortByItem--D-- complete list of entity numbers --0: 'Global'-- - EntitiesByItem : list of --entity number/PrintLabel from the model-- other modes are ignored
 
 	:param S:
 	:type S: Handle_Message_Messenger &
@@ -4877,7 +3884,7 @@ class IFSelect_SignatureList : public MMgt_TShared {
 %}
 
 %nodefaultctor Handle_IFSelect_SignatureList;
-class Handle_IFSelect_SignatureList : public Handle_MMgt_TShared {
+class Handle_IFSelect_SignatureList : public Handle_Standard_Transient {
 
     public:
         // constructors
@@ -4889,19 +3896,20 @@ class Handle_IFSelect_SignatureList : public Handle_MMgt_TShared {
         static const Handle_IFSelect_SignatureList DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_IFSelect_SignatureList {
     IFSelect_SignatureList* _get_reference() {
-    return (IFSelect_SignatureList*)$self->Access();
+    return (IFSelect_SignatureList*)$self->get();
     }
 };
 
 %extend Handle_IFSelect_SignatureList {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend IFSelect_SignatureList {
@@ -4909,297 +3917,11 @@ class Handle_IFSelect_SignatureList : public Handle_MMgt_TShared {
 	__repr__ = _dumps_object
 	}
 };
-%nodefaultctor IFSelect_TSeqOfDispatch;
-class IFSelect_TSeqOfDispatch : public TCollection_BaseSequence {
-	public:
-		%feature("compactdefaultargs") IFSelect_TSeqOfDispatch;
-		%feature("autodoc", "	:rtype: None
-") IFSelect_TSeqOfDispatch;
-		 IFSelect_TSeqOfDispatch ();
-		%feature("compactdefaultargs") IFSelect_TSeqOfDispatch;
-		%feature("autodoc", "	:param Other:
-	:type Other: IFSelect_TSeqOfDispatch &
-	:rtype: None
-") IFSelect_TSeqOfDispatch;
-		 IFSelect_TSeqOfDispatch (const IFSelect_TSeqOfDispatch & Other);
-		%feature("compactdefaultargs") Clear;
-		%feature("autodoc", "	:rtype: None
-") Clear;
-		void Clear ();
-		%feature("compactdefaultargs") Assign;
-		%feature("autodoc", "	:param Other:
-	:type Other: IFSelect_TSeqOfDispatch &
-	:rtype: IFSelect_TSeqOfDispatch
-") Assign;
-		const IFSelect_TSeqOfDispatch & Assign (const IFSelect_TSeqOfDispatch & Other);
-		%feature("compactdefaultargs") operator =;
-		%feature("autodoc", "	:param Other:
-	:type Other: IFSelect_TSeqOfDispatch &
-	:rtype: IFSelect_TSeqOfDispatch
-") operator =;
-		const IFSelect_TSeqOfDispatch & operator = (const IFSelect_TSeqOfDispatch & Other);
-		%feature("compactdefaultargs") Append;
-		%feature("autodoc", "	:param T:
-	:type T: Handle_IFSelect_Dispatch &
-	:rtype: None
-") Append;
-		void Append (const Handle_IFSelect_Dispatch & T);
-		%feature("compactdefaultargs") Append;
-		%feature("autodoc", "	:param S:
-	:type S: IFSelect_TSeqOfDispatch &
-	:rtype: None
-") Append;
-		void Append (IFSelect_TSeqOfDispatch & S);
-		%feature("compactdefaultargs") Prepend;
-		%feature("autodoc", "	:param T:
-	:type T: Handle_IFSelect_Dispatch &
-	:rtype: None
-") Prepend;
-		void Prepend (const Handle_IFSelect_Dispatch & T);
-		%feature("compactdefaultargs") Prepend;
-		%feature("autodoc", "	:param S:
-	:type S: IFSelect_TSeqOfDispatch &
-	:rtype: None
-") Prepend;
-		void Prepend (IFSelect_TSeqOfDispatch & S);
-		%feature("compactdefaultargs") InsertBefore;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param T:
-	:type T: Handle_IFSelect_Dispatch &
-	:rtype: None
-") InsertBefore;
-		void InsertBefore (const Standard_Integer Index,const Handle_IFSelect_Dispatch & T);
-		%feature("compactdefaultargs") InsertBefore;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param S:
-	:type S: IFSelect_TSeqOfDispatch &
-	:rtype: None
-") InsertBefore;
-		void InsertBefore (const Standard_Integer Index,IFSelect_TSeqOfDispatch & S);
-		%feature("compactdefaultargs") InsertAfter;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param T:
-	:type T: Handle_IFSelect_Dispatch &
-	:rtype: None
-") InsertAfter;
-		void InsertAfter (const Standard_Integer Index,const Handle_IFSelect_Dispatch & T);
-		%feature("compactdefaultargs") InsertAfter;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param S:
-	:type S: IFSelect_TSeqOfDispatch &
-	:rtype: None
-") InsertAfter;
-		void InsertAfter (const Standard_Integer Index,IFSelect_TSeqOfDispatch & S);
-		%feature("compactdefaultargs") First;
-		%feature("autodoc", "	:rtype: Handle_IFSelect_Dispatch
-") First;
-		Handle_IFSelect_Dispatch First ();
-		%feature("compactdefaultargs") Last;
-		%feature("autodoc", "	:rtype: Handle_IFSelect_Dispatch
-") Last;
-		Handle_IFSelect_Dispatch Last ();
-		%feature("compactdefaultargs") Split;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param Sub:
-	:type Sub: IFSelect_TSeqOfDispatch &
-	:rtype: None
-") Split;
-		void Split (const Standard_Integer Index,IFSelect_TSeqOfDispatch & Sub);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: Handle_IFSelect_Dispatch
-") Value;
-		Handle_IFSelect_Dispatch Value (const Standard_Integer Index);
-		%feature("compactdefaultargs") SetValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param I:
-	:type I: Handle_IFSelect_Dispatch &
-	:rtype: None
-") SetValue;
-		void SetValue (const Standard_Integer Index,const Handle_IFSelect_Dispatch & I);
-		%feature("compactdefaultargs") ChangeValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: Handle_IFSelect_Dispatch
-") ChangeValue;
-		Handle_IFSelect_Dispatch ChangeValue (const Standard_Integer Index);
-		%feature("compactdefaultargs") Remove;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: None
-") Remove;
-		void Remove (const Standard_Integer Index);
-		%feature("compactdefaultargs") Remove;
-		%feature("autodoc", "	:param FromIndex:
-	:type FromIndex: int
-	:param ToIndex:
-	:type ToIndex: int
-	:rtype: None
-") Remove;
-		void Remove (const Standard_Integer FromIndex,const Standard_Integer ToIndex);
-};
-
-
-%extend IFSelect_TSeqOfDispatch {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor IFSelect_TSeqOfSelection;
-class IFSelect_TSeqOfSelection : public TCollection_BaseSequence {
-	public:
-		%feature("compactdefaultargs") IFSelect_TSeqOfSelection;
-		%feature("autodoc", "	:rtype: None
-") IFSelect_TSeqOfSelection;
-		 IFSelect_TSeqOfSelection ();
-		%feature("compactdefaultargs") IFSelect_TSeqOfSelection;
-		%feature("autodoc", "	:param Other:
-	:type Other: IFSelect_TSeqOfSelection &
-	:rtype: None
-") IFSelect_TSeqOfSelection;
-		 IFSelect_TSeqOfSelection (const IFSelect_TSeqOfSelection & Other);
-		%feature("compactdefaultargs") Clear;
-		%feature("autodoc", "	:rtype: None
-") Clear;
-		void Clear ();
-		%feature("compactdefaultargs") Assign;
-		%feature("autodoc", "	:param Other:
-	:type Other: IFSelect_TSeqOfSelection &
-	:rtype: IFSelect_TSeqOfSelection
-") Assign;
-		const IFSelect_TSeqOfSelection & Assign (const IFSelect_TSeqOfSelection & Other);
-		%feature("compactdefaultargs") operator =;
-		%feature("autodoc", "	:param Other:
-	:type Other: IFSelect_TSeqOfSelection &
-	:rtype: IFSelect_TSeqOfSelection
-") operator =;
-		const IFSelect_TSeqOfSelection & operator = (const IFSelect_TSeqOfSelection & Other);
-		%feature("compactdefaultargs") Append;
-		%feature("autodoc", "	:param T:
-	:type T: Handle_IFSelect_Selection &
-	:rtype: None
-") Append;
-		void Append (const Handle_IFSelect_Selection & T);
-		%feature("compactdefaultargs") Append;
-		%feature("autodoc", "	:param S:
-	:type S: IFSelect_TSeqOfSelection &
-	:rtype: None
-") Append;
-		void Append (IFSelect_TSeqOfSelection & S);
-		%feature("compactdefaultargs") Prepend;
-		%feature("autodoc", "	:param T:
-	:type T: Handle_IFSelect_Selection &
-	:rtype: None
-") Prepend;
-		void Prepend (const Handle_IFSelect_Selection & T);
-		%feature("compactdefaultargs") Prepend;
-		%feature("autodoc", "	:param S:
-	:type S: IFSelect_TSeqOfSelection &
-	:rtype: None
-") Prepend;
-		void Prepend (IFSelect_TSeqOfSelection & S);
-		%feature("compactdefaultargs") InsertBefore;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param T:
-	:type T: Handle_IFSelect_Selection &
-	:rtype: None
-") InsertBefore;
-		void InsertBefore (const Standard_Integer Index,const Handle_IFSelect_Selection & T);
-		%feature("compactdefaultargs") InsertBefore;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param S:
-	:type S: IFSelect_TSeqOfSelection &
-	:rtype: None
-") InsertBefore;
-		void InsertBefore (const Standard_Integer Index,IFSelect_TSeqOfSelection & S);
-		%feature("compactdefaultargs") InsertAfter;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param T:
-	:type T: Handle_IFSelect_Selection &
-	:rtype: None
-") InsertAfter;
-		void InsertAfter (const Standard_Integer Index,const Handle_IFSelect_Selection & T);
-		%feature("compactdefaultargs") InsertAfter;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param S:
-	:type S: IFSelect_TSeqOfSelection &
-	:rtype: None
-") InsertAfter;
-		void InsertAfter (const Standard_Integer Index,IFSelect_TSeqOfSelection & S);
-		%feature("compactdefaultargs") First;
-		%feature("autodoc", "	:rtype: Handle_IFSelect_Selection
-") First;
-		Handle_IFSelect_Selection First ();
-		%feature("compactdefaultargs") Last;
-		%feature("autodoc", "	:rtype: Handle_IFSelect_Selection
-") Last;
-		Handle_IFSelect_Selection Last ();
-		%feature("compactdefaultargs") Split;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param Sub:
-	:type Sub: IFSelect_TSeqOfSelection &
-	:rtype: None
-") Split;
-		void Split (const Standard_Integer Index,IFSelect_TSeqOfSelection & Sub);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: Handle_IFSelect_Selection
-") Value;
-		Handle_IFSelect_Selection Value (const Standard_Integer Index);
-		%feature("compactdefaultargs") SetValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param I:
-	:type I: Handle_IFSelect_Selection &
-	:rtype: None
-") SetValue;
-		void SetValue (const Standard_Integer Index,const Handle_IFSelect_Selection & I);
-		%feature("compactdefaultargs") ChangeValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: Handle_IFSelect_Selection
-") ChangeValue;
-		Handle_IFSelect_Selection ChangeValue (const Standard_Integer Index);
-		%feature("compactdefaultargs") Remove;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: None
-") Remove;
-		void Remove (const Standard_Integer Index);
-		%feature("compactdefaultargs") Remove;
-		%feature("autodoc", "	:param FromIndex:
-	:type FromIndex: int
-	:param ToIndex:
-	:type ToIndex: int
-	:rtype: None
-") Remove;
-		void Remove (const Standard_Integer FromIndex,const Standard_Integer ToIndex);
-};
-
-
-%extend IFSelect_TSeqOfSelection {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
 %nodefaultctor IFSelect_Transformer;
-class IFSelect_Transformer : public MMgt_TShared {
+class IFSelect_Transformer : public Standard_Transient {
 	public:
 		%feature("compactdefaultargs") Perform;
-		%feature("autodoc", "	* Performs a Transformation (defined by each sub-class) : <G> gives the input data (especially the starting model) and can be used for queries (by Selections, etc...) <protocol> allows to work with General Services as necessary (it applies to input data) If the change corresponds to a conversion to a new protocol, see also the method ChangeProtocol <checks> stores produced checks messages if any <newmod> gives the result of the transformation : - if it is Null (i.e. has not been affected), the transformation has been made on the spot, it is assumed to cause no change to the graph of dependances - if it equates the starting Model, it has been transformed on the spot (possibiliy some entities were replaced inside it) - if it is new, it corresponds to a new data set which replaces the starting one //! <self> is mutable to allow results for ChangeProtocol to be memorized if needed, and to store informations useful for the method Updated //! Returns True if Done, False if an Error occured : in this case, if a new data set has been produced, the transformation is ignored, else data may be corrupted.
+		%feature("autodoc", "	* Performs a Transformation --defined by each sub-class-- : <G> gives the input data --especially the starting model-- and can be used for queries --by Selections, etc...-- <protocol> allows to work with General Services as necessary --it applies to input data-- If the change corresponds to a conversion to a new protocol, see also the method ChangeProtocol <checks> stores produced checks messages if any <newmod> gives the result of the transformation : - if it is Null --i.e. has not been affected--, the transformation has been made on the spot, it is assumed to cause no change to the graph of dependances - if it equates the starting Model, it has been transformed on the spot --possibiliy some entities were replaced inside it-- - if it is new, it corresponds to a new data set which replaces the starting one //! <self> is mutable to allow results for ChangeProtocol to be memorized if needed, and to store informations useful for the method Updated //! Returns True if Done, False if an Error occured : in this case, if a new data set has been produced, the transformation is ignored, else data may be corrupted.
 
 	:param G:
 	:type G: Interface_Graph &
@@ -5221,7 +3943,7 @@ class IFSelect_Transformer : public MMgt_TShared {
 ") ChangeProtocol;
 		virtual Standard_Boolean ChangeProtocol (Handle_Interface_Protocol & newproto);
 		%feature("compactdefaultargs") Updated;
-		%feature("autodoc", "	* This method allows to know what happened to a starting entity after the last Perform. If <entfrom> (from starting model) has one and only one known item which corresponds in the new produced model, this method must return True and fill the argument <entto>. Else, it returns False.
+		%feature("autodoc", "	* This method allows to know what happened to a starting entity after the last Perform. If <entfrom> --from starting model-- has one and only one known item which corresponds in the new produced model, this method must return True and fill the argument <entto>. Else, it returns False.
 
 	:param entfrom:
 	:type entfrom: Handle_Standard_Transient &
@@ -5231,7 +3953,7 @@ class IFSelect_Transformer : public MMgt_TShared {
 ") Updated;
 		virtual Standard_Boolean Updated (const Handle_Standard_Transient & entfrom,Handle_Standard_Transient & entto);
 		%feature("compactdefaultargs") Label;
-		%feature("autodoc", "	* Returns a text which defines the way a Transformer works (to identify the transformation it performs)
+		%feature("autodoc", "	* Returns a text which defines the way a Transformer works --to identify the transformation it performs--
 
 	:rtype: TCollection_AsciiString
 ") Label;
@@ -5258,7 +3980,7 @@ class IFSelect_Transformer : public MMgt_TShared {
 %}
 
 %nodefaultctor Handle_IFSelect_Transformer;
-class Handle_IFSelect_Transformer : public Handle_MMgt_TShared {
+class Handle_IFSelect_Transformer : public Handle_Standard_Transient {
 
     public:
         // constructors
@@ -5270,19 +3992,20 @@ class Handle_IFSelect_Transformer : public Handle_MMgt_TShared {
         static const Handle_IFSelect_Transformer DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_IFSelect_Transformer {
     IFSelect_Transformer* _get_reference() {
-    return (IFSelect_Transformer*)$self->Access();
+    return (IFSelect_Transformer*)$self->get();
     }
 };
 
 %extend Handle_IFSelect_Transformer {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend IFSelect_Transformer {
@@ -5294,7 +4017,7 @@ class Handle_IFSelect_Transformer : public Handle_MMgt_TShared {
 class IFSelect_WorkLibrary : public Standard_Transient {
 	public:
 		%feature("compactdefaultargs") ReadFile;
-		%feature("autodoc", "	* Gives the way to Read a File and transfer it to a Model <mod> is the resulting Model, which has to be created by this method. In case of error, <mod> must be returned Null Return value is a status with free values. Simply, 0 is for 'Execution OK' The Protocol can be used to work (e.g. create the Model, read and recognize the Entities)
+		%feature("autodoc", "	* Gives the way to Read a File and transfer it to a Model <mod> is the resulting Model, which has to be created by this method. In case of error, <mod> must be returned Null Return value is a status with free values. Simply, 0 is for 'Execution OK' The Protocol can be used to work --e.g. create the Model, read and recognize the Entities--
 
 	:param name:
 	:type name: char *
@@ -5306,7 +4029,7 @@ class IFSelect_WorkLibrary : public Standard_Transient {
 ") ReadFile;
 		virtual Standard_Integer ReadFile (const char * name,Handle_Interface_InterfaceModel & model,const Handle_Interface_Protocol & protocol);
 		%feature("compactdefaultargs") WriteFile;
-		%feature("autodoc", "	* Gives the way to Write a File from a Model. <ctx> contains all necessary informations : the model, the protocol, the file name, and the list of File Modifiers to be applied, also with restricted list of selected entities for each one, if required. In return, it brings the produced check-list //! The WorkLibrary has to query <applied> to get then run the ContextWrite by looping like this (example) : for (numap = 1; numap <= ctx.NbModifiers(); numap ++) { ctx.SetModifier (numap); cast ctx.FileModifier() to specific type -> variable filemod if (!filemod.IsNull()) filemod->Perform (ctx,writer); filemod then works with ctx. It can, either act on the model itself (for instance on its header), or iterate on selected entities (Start/Next/More/Value) it can call AddFail or AddWarning, as necessary }
+		%feature("autodoc", "	* Gives the way to Write a File from a Model. <ctx> contains all necessary informations : the model, the protocol, the file name, and the list of File Modifiers to be applied, also with restricted list of selected entities for each one, if required. In return, it brings the produced check-list //! The WorkLibrary has to query <applied> to get then run the ContextWrite by looping like this --example-- : for --numap = 1; numap <= ctx.NbModifiers----; numap ++-- { ctx.SetModifier --numap--; cast ctx.FileModifier---- to specific type -> variable filemod if --!filemod.IsNull------ filemod->Perform --ctx,writer--; filemod then works with ctx. It can, either act on the model itself --for instance on its header--, or iterate on selected entities --Start/Next/More/Value-- it can call AddFail or AddWarning, as necessary }
 
 	:param ctx:
 	:type ctx: IFSelect_ContextWrite &
@@ -5314,7 +4037,7 @@ class IFSelect_WorkLibrary : public Standard_Transient {
 ") WriteFile;
 		virtual Standard_Boolean WriteFile (IFSelect_ContextWrite & ctx);
 		%feature("compactdefaultargs") CopyModel;
-		%feature("autodoc", "	* Performs the copy of entities from an original model to a new one. It must also copy headers if any. Returns True when done. The provided default works by copying the individual entities designated in the list, by using the general service class CopyTool. It can be redefined for a norm which, either implements Copy by another way (do not forget to Bind each copied result with its original entity in TC) and returns True, or does not know how to copy and returns False
+		%feature("autodoc", "	* Performs the copy of entities from an original model to a new one. It must also copy headers if any. Returns True when done. The provided default works by copying the individual entities designated in the list, by using the general service class CopyTool. It can be redefined for a norm which, either implements Copy by another way --do not forget to Bind each copied result with its original entity in TC-- and returns True, or does not know how to copy and returns False
 
 	:param original:
 	:type original: Handle_Interface_InterfaceModel &
@@ -5328,7 +4051,7 @@ class IFSelect_WorkLibrary : public Standard_Transient {
 ") CopyModel;
 		virtual Standard_Boolean CopyModel (const Handle_Interface_InterfaceModel & original,const Handle_Interface_InterfaceModel & newmodel,const Interface_EntityIterator & list,Interface_CopyTool & TC);
 		%feature("compactdefaultargs") DumpEntity;
-		%feature("autodoc", "	* Gives the way of dumping an entity under a form comprehensive for each norm. <model> helps to identify, number ... entities. <level> is to be interpreted for each norm (because of the formats which can be very different)
+		%feature("autodoc", "	* Gives the way of dumping an entity under a form comprehensive for each norm. <model> helps to identify, number ... entities. <level> is to be interpreted for each norm --because of the formats which can be very different--
 
 	:param model:
 	:type model: Handle_Interface_InterfaceModel &
@@ -5378,7 +4101,7 @@ class IFSelect_WorkLibrary : public Standard_Transient {
 ") DumpLevels;
 		void DumpLevels (Standard_Integer &OutValue,Standard_Integer &OutValue);
 		%feature("compactdefaultargs") SetDumpHelp;
-		%feature("autodoc", "	* Records a short line of help for a level (0 - max)
+		%feature("autodoc", "	* Records a short line of help for a level --0 - max--
 
 	:param level:
 	:type level: int
@@ -5429,19 +4152,20 @@ class Handle_IFSelect_WorkLibrary : public Handle_Standard_Transient {
         static const Handle_IFSelect_WorkLibrary DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_IFSelect_WorkLibrary {
     IFSelect_WorkLibrary* _get_reference() {
-    return (IFSelect_WorkLibrary*)$self->Access();
+    return (IFSelect_WorkLibrary*)$self->get();
     }
 };
 
 %extend Handle_IFSelect_WorkLibrary {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend IFSelect_WorkLibrary {
@@ -5450,10 +4174,11 @@ class Handle_IFSelect_WorkLibrary : public Handle_Standard_Transient {
 	}
 };
 %nodefaultctor IFSelect_WorkSession;
-class IFSelect_WorkSession : public MMgt_TShared {
+class IFSelect_WorkSession : public Standard_Transient {
 	public:
+		return theerrhand;
 		%feature("compactdefaultargs") IFSelect_WorkSession;
-		%feature("autodoc", "	* Creates a Work Session It provides default, empty ShareOut and ModelCopier, which can be replaced (if required, should be done just after creation).
+		%feature("autodoc", "	* Creates a Work Session It provides default, empty ShareOut and ModelCopier, which can be replaced --if required, should be done just after creation--.
 
 	:rtype: None
 ") IFSelect_WorkSession;
@@ -5473,7 +4198,7 @@ class IFSelect_WorkSession : public MMgt_TShared {
 ") SetShareOut;
 		void SetShareOut (const Handle_IFSelect_ShareOut & shareout);
 		%feature("compactdefaultargs") SetModeStat;
-		%feature("autodoc", "	* Set value of mode responsible for precence of selections after loading If mode set to true that different selections will be accessible after loading else selections will be not accessible after loading( for economy memory in applicatios)
+		%feature("autodoc", "	* Set value of mode responsible for precence of selections after loading If mode set to true that different selections will be accessible after loading else selections will be not accessible after loading-- for economy memory in applicatios--
 
 	:param theMode:
 	:type theMode: bool
@@ -5489,11 +4214,11 @@ class IFSelect_WorkSession : public MMgt_TShared {
 		%feature("compactdefaultargs") SetLibrary;
 		%feature("autodoc", "	* Sets a WorkLibrary, which will be used to Read and Write Files
 
-	:param lib:
-	:type lib: Handle_IFSelect_WorkLibrary &
+	:param theLib:
+	:type theLib: Handle_IFSelect_WorkLibrary &
 	:rtype: None
 ") SetLibrary;
-		void SetLibrary (const Handle_IFSelect_WorkLibrary & lib);
+		void SetLibrary (const Handle_IFSelect_WorkLibrary & theLib);
 		%feature("compactdefaultargs") WorkLibrary;
 		%feature("autodoc", "	* Returns the WorkLibrary. Null Handle if not yet set should be C++ : return const &
 
@@ -5515,7 +4240,7 @@ class IFSelect_WorkSession : public MMgt_TShared {
 ") Protocol;
 		Handle_Interface_Protocol Protocol ();
 		%feature("compactdefaultargs") SetSignType;
-		%feature("autodoc", "	* Sets a specific Signature to be the SignType, i.e. the Signature which will determine TypeName from the Model (basic function). It is recorded in the GTool This Signature is also set as 'xst-sign-type' (reserved name)
+		%feature("autodoc", "	* Sets a specific Signature to be the SignType, i.e. the Signature which will determine TypeName from the Model --basic function--. It is recorded in the GTool This Signature is also set as 'xst-sign-type' --reserved name--
 
 	:param signtype:
 	:type signtype: Handle_IFSelect_Signature &
@@ -5535,7 +4260,7 @@ class IFSelect_WorkSession : public MMgt_TShared {
 ") HasModel;
 		Standard_Boolean HasModel ();
 		%feature("compactdefaultargs") SetModel;
-		%feature("autodoc", "	* Sets a Model as input : this will be the Model from which the ShareOut will work if <clearpointed> is True (default) all SelectPointed items are cleared, else they must be managed by the caller Remark : SetModel clears the Graph, recomputes it if a Protocol is set and if the Model is not empty, of course
+		%feature("autodoc", "	* Sets a Model as input : this will be the Model from which the ShareOut will work if <clearpointed> is True --default-- all SelectPointed items are cleared, else they must be managed by the caller Remark : SetModel clears the Graph, recomputes it if a Protocol is set and if the Model is not empty, of course
 
 	:param model:
 	:type model: Handle_Interface_InterfaceModel &
@@ -5545,19 +4270,19 @@ class IFSelect_WorkSession : public MMgt_TShared {
 ") SetModel;
 		void SetModel (const Handle_Interface_InterfaceModel & model,const Standard_Boolean clearpointed = Standard_True);
 		%feature("compactdefaultargs") Model;
-		%feature("autodoc", "	* Returns the Model of the Work Session (Null Handle if none) should be C++ : return const &
+		%feature("autodoc", "	* Returns the Model of the Work Session --Null Handle if none-- should be C++ : return const &
 
 	:rtype: Handle_Interface_InterfaceModel
 ") Model;
 		Handle_Interface_InterfaceModel Model ();
 		%feature("compactdefaultargs") SetLoadedFile;
-		%feature("autodoc", "	* Stores the filename used for read for setting the model It is cleared by SetModel and ClearData(1)
+		%feature("autodoc", "	* Stores the filename used for read for setting the model It is cleared by SetModel and ClearData--1--
 
-	:param filename:
-	:type filename: char *
+	:param theFileName:
+	:type theFileName: char *
 	:rtype: None
 ") SetLoadedFile;
-		void SetLoadedFile (const char * filename);
+		void SetLoadedFile (const char * theFileName);
 		%feature("compactdefaultargs") LoadedFile;
 		%feature("autodoc", "	* Returns the filename used to load current model empty if unknown
 
@@ -5565,7 +4290,7 @@ class IFSelect_WorkSession : public MMgt_TShared {
 ") LoadedFile;
 		const char * LoadedFile ();
 		%feature("compactdefaultargs") ReadFile;
-		%feature("autodoc", "	* Reads a file with the WorkLibrary (sets Model and LoadedFile) Returns a integer status which can be : RetDone if OK, RetVoid if no Protocol not defined, RetError for file not found, RetFail if fail during read
+		%feature("autodoc", "	* Reads a file with the WorkLibrary --sets Model and LoadedFile-- Returns a integer status which can be : RetDone if OK, RetVoid if no Protocol not defined, RetError for file not found, RetFail if fail during read
 
 	:param filename:
 	:type filename: char *
@@ -5579,7 +4304,7 @@ class IFSelect_WorkSession : public MMgt_TShared {
 ") NbStartingEntities;
 		Standard_Integer NbStartingEntities ();
 		%feature("compactdefaultargs") StartingEntity;
-		%feature("autodoc", "	* Returns an Entity stored in the Model of the WorkSession (Null Handle is no Model or num out of range)
+		%feature("autodoc", "	* Returns an Entity stored in the Model of the WorkSession --Null Handle is no Model or num out of range--
 
 	:param num:
 	:type num: int
@@ -5587,7 +4312,7 @@ class IFSelect_WorkSession : public MMgt_TShared {
 ") StartingEntity;
 		Handle_Standard_Transient StartingEntity (const Standard_Integer num);
 		%feature("compactdefaultargs") StartingNumber;
-		%feature("autodoc", "	* Returns the Number of an Entity in the Model (0 if no Model set or <ent> not in the Model)
+		%feature("autodoc", "	* Returns the Number of an Entity in the Model --0 if no Model set or <ent> not in the Model--
 
 	:param ent:
 	:type ent: Handle_Standard_Transient &
@@ -5595,7 +4320,7 @@ class IFSelect_WorkSession : public MMgt_TShared {
 ") StartingNumber;
 		Standard_Integer StartingNumber (const Handle_Standard_Transient & ent);
 		%feature("compactdefaultargs") NumberFromLabel;
-		%feature("autodoc", "	* From a given label in Model, returns the corresponding number Starts from first entity by Default, may start after a given number : this number may be given negative, its absolute value is then considered. Hence a loop on NumberFromLabel may be programmed (stop test is : returned value positive or null) //! Returns 0 if not found, < 0 if more than one found (first found in negative). If <val> just gives an integer value, returns it
+		%feature("autodoc", "	* From a given label in Model, returns the corresponding number Starts from first entity by Default, may start after a given number : this number may be given negative, its absolute value is then considered. Hence a loop on NumberFromLabel may be programmed --stop test is : returned value positive or null-- //! Returns 0 if not found, < 0 if more than one found --first found in negative--. If <val> just gives an integer value, returns it
 
 	:param val:
 	:type val: char *
@@ -5621,7 +4346,7 @@ class IFSelect_WorkSession : public MMgt_TShared {
 ") EntityName;
 		Handle_TCollection_HAsciiString EntityName (const Handle_Standard_Transient & ent);
 		%feature("compactdefaultargs") CategoryNumber;
-		%feature("autodoc", "	* Returns the Category Number determined for an entity it is computed by the class Category An unknown entity (number 0) gives a value -1
+		%feature("autodoc", "	* Returns the Category Number determined for an entity it is computed by the class Category An unknown entity --number 0-- gives a value -1
 
 	:param ent:
 	:type ent: Handle_Standard_Transient &
@@ -5645,7 +4370,7 @@ class IFSelect_WorkSession : public MMgt_TShared {
 ") ValidityName;
 		const char * ValidityName (const Handle_Standard_Transient & ent);
 		%feature("compactdefaultargs") ClearData;
-		%feature("autodoc", "	* Clears recorded data (not the items) according mode : 1 : all Data : Model, Graph, CheckList, + ClearData 4 2 : Graph and CheckList (they will then be recomputed later) 3 : CheckList (it will be recomputed by ComputeCheck) 4 : just content of SelectPointed and Counters Plus 0 : does nothing but called by SetModel ClearData is virtual, hence it can be redefined to clear other data of a specialised Work Session
+		%feature("autodoc", "	* Clears recorded data --not the items-- according mode : 1 : all Data : Model, Graph, CheckList, + ClearData 4 2 : Graph and CheckList --they will then be recomputed later-- 3 : CheckList --it will be recomputed by ComputeCheck-- 4 : just content of SelectPointed and Counters Plus 0 : does nothing but called by SetModel ClearData is virtual, hence it can be redefined to clear other data of a specialised Work Session
 
 	:param mode:
 	:type mode: int
@@ -5653,7 +4378,7 @@ class IFSelect_WorkSession : public MMgt_TShared {
 ") ClearData;
 		virtual void ClearData (const Standard_Integer mode);
 		%feature("compactdefaultargs") ComputeGraph;
-		%feature("autodoc", "	* Computes the Graph used for Selections, Displays ... If a HGraph is already set, with same model as given by method Model, does nothing. Else, computes a new Graph. If <enforce> is given True, computes a new Graph anyway. Remark that a call to ClearGraph will cause ComputeGraph to really compute a new Graph Returns True if Graph is OK, False else (i.e. if no Protocol is set, or if Model is absent or empty).
+		%feature("autodoc", "	* Computes the Graph used for Selections, Displays ... If a HGraph is already set, with same model as given by method Model, does nothing. Else, computes a new Graph. If <enforce> is given True, computes a new Graph anyway. Remark that a call to ClearGraph will cause ComputeGraph to really compute a new Graph Returns True if Graph is OK, False else --i.e. if no Protocol is set, or if Model is absent or empty--.
 
 	:param enforce: default value is Standard_False
 	:type enforce: bool
@@ -5661,7 +4386,7 @@ class IFSelect_WorkSession : public MMgt_TShared {
 ") ComputeGraph;
 		Standard_Boolean ComputeGraph (const Standard_Boolean enforce = Standard_False);
 		%feature("compactdefaultargs") HGraph;
-		%feature("autodoc", "	* Returns the Computed Graph as HGraph (Null Handle if not set)
+		%feature("autodoc", "	* Returns the Computed Graph as HGraph --Null Handle if not set--
 
 	:rtype: Handle_Interface_HGraph
 ") HGraph;
@@ -5673,7 +4398,7 @@ class IFSelect_WorkSession : public MMgt_TShared {
 ") Graph;
 		const Interface_Graph & Graph ();
 		%feature("compactdefaultargs") Shareds;
-		%feature("autodoc", "	* Returns the list of entities shared by <ent> (can be empty) Returns a null Handle if <ent> is unknown
+		%feature("autodoc", "	* Returns the list of entities shared by <ent> --can be empty-- Returns a null Handle if <ent> is unknown
 
 	:param ent:
 	:type ent: Handle_Standard_Transient &
@@ -5681,7 +4406,7 @@ class IFSelect_WorkSession : public MMgt_TShared {
 ") Shareds;
 		Handle_TColStd_HSequenceOfTransient Shareds (const Handle_Standard_Transient & ent);
 		%feature("compactdefaultargs") Sharings;
-		%feature("autodoc", "	* Returns the list of entities sharing <ent> (can be empty) Returns a null Handle if <ent> is unknown
+		%feature("autodoc", "	* Returns the list of entities sharing <ent> --can be empty-- Returns a null Handle if <ent> is unknown
 
 	:param ent:
 	:type ent: Handle_Standard_Transient &
@@ -5689,13 +4414,13 @@ class IFSelect_WorkSession : public MMgt_TShared {
 ") Sharings;
 		Handle_TColStd_HSequenceOfTransient Sharings (const Handle_Standard_Transient & ent);
 		%feature("compactdefaultargs") IsLoaded;
-		%feature("autodoc", "	* Returns True if a Model is defined and really loaded (not empty), a Protocol is set and a Graph has been computed. In this case, the WorkSession can start to work
+		%feature("autodoc", "	* Returns True if a Model is defined and really loaded --not empty--, a Protocol is set and a Graph has been computed. In this case, the WorkSession can start to work
 
 	:rtype: bool
 ") IsLoaded;
 		Standard_Boolean IsLoaded ();
 		%feature("compactdefaultargs") ComputeCheck;
-		%feature("autodoc", "	* Computes the CheckList for the Model currently loaded It can then be used for displays, querries ... Returns True if OK, False else (i.e. no Protocol set, or Model absent). If <enforce> is False, works only if not already done or if a new Model has been loaded from last call. Remark : computation is enforced by every call to SetModel or RunTransformer
+		%feature("autodoc", "	* Computes the CheckList for the Model currently loaded It can then be used for displays, querries ... Returns True if OK, False else --i.e. no Protocol set, or Model absent--. If <enforce> is False, works only if not already done or if a new Model has been loaded from last call. Remark : computation is enforced by every call to SetModel or RunTransformer
 
 	:param enforce: default value is Standard_False
 	:type enforce: bool
@@ -5703,7 +4428,7 @@ class IFSelect_WorkSession : public MMgt_TShared {
 ") ComputeCheck;
 		Standard_Boolean ComputeCheck (const Standard_Boolean enforce = Standard_False);
 		%feature("compactdefaultargs") ModelCheckList;
-		%feature("autodoc", "	* Returns the Check List for the Model currently loaded : <complete> = True : complete (syntactic & semantic messages), computed if not yet done <complete> = False : only syntactic (check file form)
+		%feature("autodoc", "	* Returns the Check List for the Model currently loaded : <complete> = True : complete --syntactic & semantic messages--, computed if not yet done <complete> = False : only syntactic --check file form--
 
 	:param complete: default value is Standard_True
 	:type complete: bool
@@ -5711,7 +4436,7 @@ class IFSelect_WorkSession : public MMgt_TShared {
 ") ModelCheckList;
 		Interface_CheckIterator ModelCheckList (const Standard_Boolean complete = Standard_True);
 		%feature("compactdefaultargs") CheckOne;
-		%feature("autodoc", "	* Returns a Check for a single entity, under the form of a CheckIterator (this gives only one form for the user) if <ent> is Null or equates the current Model, it gives the Global Check, else the Check for the given entity <complete> as for ModelCheckList
+		%feature("autodoc", "	* Returns a Check for a single entity, under the form of a CheckIterator --this gives only one form for the user-- if <ent> is Null or equates the current Model, it gives the Global Check, else the Check for the given entity <complete> as for ModelCheckList
 
 	:param ent:
 	:type ent: Handle_Standard_Transient &
@@ -5721,7 +4446,7 @@ class IFSelect_WorkSession : public MMgt_TShared {
 ") CheckOne;
 		Interface_CheckIterator CheckOne (const Handle_Standard_Transient & ent,const Standard_Boolean complete = Standard_True);
 		%feature("compactdefaultargs") LastRunCheckList;
-		%feature("autodoc", "	* Returns the Check List produced by the last execution of either : EvaluateFile(for Split), SendSplit, SendAll, SendSelected, RunTransformer-RunModifier Cleared by SetModel or ClearData(1) The field is protected, hence a specialized WorkSession may fill it
+		%feature("autodoc", "	* Returns the Check List produced by the last execution of either : EvaluateFile--for Split--, SendSplit, SendAll, SendSelected, RunTransformer-RunModifier Cleared by SetModel or ClearData--1-- The field is protected, hence a specialized WorkSession may fill it
 
 	:rtype: Interface_CheckIterator
 ") LastRunCheckList;
@@ -5749,7 +4474,7 @@ class IFSelect_WorkSession : public MMgt_TShared {
 ") ItemIdent;
 		Standard_Integer ItemIdent (const Handle_Standard_Transient & item);
 		%feature("compactdefaultargs") NamedItem;
-		%feature("autodoc", "	* Returns the Item which corresponds to a Variable, given its Name (whatever the type of this Item). Returns a Null Handle if this Name is not recorded
+		%feature("autodoc", "	* Returns the Item which corresponds to a Variable, given its Name --whatever the type of this Item--. Returns a Null Handle if this Name is not recorded
 
 	:param name:
 	:type name: char *
@@ -5789,7 +4514,7 @@ class IFSelect_WorkSession : public MMgt_TShared {
 ") Name;
 		Handle_TCollection_HAsciiString Name (const Handle_Standard_Transient & item);
 		%feature("compactdefaultargs") AddItem;
-		%feature("autodoc", "	* Adds an Item and returns its attached Ident. Does nothing if <item> is already recorded (and returns its attached Ident) <active> if True commands call to SetActive (see below) Remark : the determined Ident is used if <item> is a Dispatch, to fill the ShareOut
+		%feature("autodoc", "	* Adds an Item and returns its attached Ident. Does nothing if <item> is already recorded --and returns its attached Ident-- <active> if True commands call to SetActive --see below-- Remark : the determined Ident is used if <item> is a Dispatch, to fill the ShareOut
 
 	:param item:
 	:type item: Handle_Standard_Transient &
@@ -5799,7 +4524,7 @@ class IFSelect_WorkSession : public MMgt_TShared {
 ") AddItem;
 		Standard_Integer AddItem (const Handle_Standard_Transient & item,const Standard_Boolean active = Standard_True);
 		%feature("compactdefaultargs") AddNamedItem;
-		%feature("autodoc", "	* Adds an Item with an attached Name. If the Name is already known in the WorkSession, the older item losts it Returns Ident if Done, 0 else, i.e. if <item> is null If <name> is empty, works as AddItem (i.e. with no name) If <item> is already known but with no attached Name, this method tries to attached a Name to it <active> if True commands call to SetActive (see below)
+		%feature("autodoc", "	* Adds an Item with an attached Name. If the Name is already known in the WorkSession, the older item losts it Returns Ident if Done, 0 else, i.e. if <item> is null If <name> is empty, works as AddItem --i.e. with no name-- If <item> is already known but with no attached Name, this method tries to attached a Name to it <active> if True commands call to SetActive --see below--
 
 	:param name:
 	:type name: char *
@@ -5811,7 +4536,7 @@ class IFSelect_WorkSession : public MMgt_TShared {
 ") AddNamedItem;
 		Standard_Integer AddNamedItem (const char * name,const Handle_Standard_Transient & item,const Standard_Boolean active = Standard_True);
 		%feature("compactdefaultargs") SetActive;
-		%feature("autodoc", "	* Following the type of <item> : - Dispatch : Adds or Removes it in the ShareOut & FileNaming - GeneralModifier : Adds or Removes it for final sending (i.e. in the ModelCopier) Returns True if it did something, False else (state unchanged)
+		%feature("autodoc", "	* Following the type of <item> : - Dispatch : Adds or Removes it in the ShareOut & FileNaming - GeneralModifier : Adds or Removes it for final sending --i.e. in the ModelCopier-- Returns True if it did something, False else --state unchanged--
 
 	:param item:
 	:type item: Handle_Standard_Transient &
@@ -5821,7 +4546,7 @@ class IFSelect_WorkSession : public MMgt_TShared {
 ") SetActive;
 		Standard_Boolean SetActive (const Handle_Standard_Transient & item,const Standard_Boolean mode);
 		%feature("compactdefaultargs") RemoveNamedItem;
-		%feature("autodoc", "	* Removes an Item from the Session, given its Name Returns True if Done, False else (Name not recorded) (Applies only on Item which are Named)
+		%feature("autodoc", "	* Removes an Item from the Session, given its Name Returns True if Done, False else --Name not recorded-- --Applies only on Item which are Named--
 
 	:param name:
 	:type name: char *
@@ -5829,7 +4554,7 @@ class IFSelect_WorkSession : public MMgt_TShared {
 ") RemoveNamedItem;
 		Standard_Boolean RemoveNamedItem (const char * name);
 		%feature("compactdefaultargs") RemoveName;
-		%feature("autodoc", "	* Removes a Name without removing the Item Returns True if Done, False else (Name not recorded)
+		%feature("autodoc", "	* Removes a Name without removing the Item Returns True if Done, False else --Name not recorded--
 
 	:param name:
 	:type name: char *
@@ -5851,7 +4576,7 @@ class IFSelect_WorkSession : public MMgt_TShared {
 ") ClearItems;
 		void ClearItems ();
 		%feature("compactdefaultargs") ItemLabel;
-		%feature("autodoc", "	* Returns a Label which illustrates the content of an Item, given its Ident. This Label is : - for a Text Parameter, 'Text:<text value>' - for an Integer Parameter, 'Integer:<integer value>' - for a Selection, a Dispatch or a Modifier, its Label (see these classes) - for any other kind of Variable, its cdl type
+		%feature("autodoc", "	* Returns a Label which illustrates the content of an Item, given its Ident. This Label is : - for a Text Parameter, 'Text:<text value>' - for an Integer Parameter, 'Integer:<integer value>' - for a Selection, a Dispatch or a Modifier, its Label --see these classes-- - for any other kind of Variable, its cdl type
 
 	:param id:
 	:type id: int
@@ -5859,7 +4584,7 @@ class IFSelect_WorkSession : public MMgt_TShared {
 ") ItemLabel;
 		Handle_TCollection_HAsciiString ItemLabel (const Standard_Integer id);
 		%feature("compactdefaultargs") ItemIdents;
-		%feature("autodoc", "	* Fills a Sequence with the List of Idents attached to the Items of which Type complies with (IsKind) <type> (alphabetic order) Remark : <type> = TYPE(Standard_Transient) gives all the Idents which are suitable in the WorkSession
+		%feature("autodoc", "	* Fills a Sequence with the List of Idents attached to the Items of which Type complies with --IsKind-- <type> --alphabetic order-- Remark : <type> = TYPE--Standard_Transient-- gives all the Idents which are suitable in the WorkSession
 
 	:param type:
 	:type type: Handle_Standard_Type &
@@ -5867,7 +4592,7 @@ class IFSelect_WorkSession : public MMgt_TShared {
 ") ItemIdents;
 		Handle_TColStd_HSequenceOfInteger ItemIdents (const Handle_Standard_Type & type);
 		%feature("compactdefaultargs") ItemNames;
-		%feature("autodoc", "	* Fills a Sequence with the list of the Names attached to Items of which Type complies with (IsKind) <type> (alphabetic order) Remark : <type> = TYPE(Standard_Transient) gives all the Names
+		%feature("autodoc", "	* Fills a Sequence with the list of the Names attached to Items of which Type complies with --IsKind-- <type> --alphabetic order-- Remark : <type> = TYPE--Standard_Transient-- gives all the Names
 
 	:param type:
 	:type type: Handle_Standard_Type &
@@ -5875,7 +4600,7 @@ class IFSelect_WorkSession : public MMgt_TShared {
 ") ItemNames;
 		Handle_TColStd_HSequenceOfHAsciiString ItemNames (const Handle_Standard_Type & type);
 		%feature("compactdefaultargs") ItemNamesForLabel;
-		%feature("autodoc", "	* Fills a Sequence with the NAMES of the control items, of which the label matches <label> (contain it) : see NextIdentForLabel Search mode is fixed to 'contained' If <label> is empty, returns all Names
+		%feature("autodoc", "	* Fills a Sequence with the NAMES of the control items, of which the label matches <label> --contain it-- : see NextIdentForLabel Search mode is fixed to 'contained' If <label> is empty, returns all Names
 
 	:param label:
 	:type label: char *
@@ -5883,7 +4608,7 @@ class IFSelect_WorkSession : public MMgt_TShared {
 ") ItemNamesForLabel;
 		Handle_TColStd_HSequenceOfHAsciiString ItemNamesForLabel (const char * label);
 		%feature("compactdefaultargs") NextIdentForLabel;
-		%feature("autodoc", "	* For query by Label with possible iterations Searches the Ident of which Item has a Label which matches a given one, the search starts from an initial Ident. Returns the first found Ident which follows <id>, or ZERO //! The search must start with <id> = 0, it returns the next Ident which matches. To iterate, call again this method which this returned value as <id>. Once an Ident has been returned, the Item can be obtained by the method Item //! <mode> precises the required matching mode : - 0 (Default) : <label> must match exactly with the Item Label - 1 : <label> must match the exact beginning (the end is free) - 2 : <label> must be at least once wherever in the Item Label - other values are ignored
+		%feature("autodoc", "	* For query by Label with possible iterations Searches the Ident of which Item has a Label which matches a given one, the search starts from an initial Ident. Returns the first found Ident which follows <id>, or ZERO //! The search must start with <id> = 0, it returns the next Ident which matches. To iterate, call again this method which this returned value as <id>. Once an Ident has been returned, the Item can be obtained by the method Item //! <mode> precises the required matching mode : - 0 --Default-- : <label> must match exactly with the Item Label - 1 : <label> must match the exact beginning --the end is free-- - 2 : <label> must be at least once wherever in the Item Label - other values are ignored
 
 	:param label:
 	:type label: char *
@@ -5905,7 +4630,7 @@ class IFSelect_WorkSession : public MMgt_TShared {
 ") NewParamFromStatic;
 		Handle_Standard_Transient NewParamFromStatic (const char * statname,const char * name = "");
 		%feature("compactdefaultargs") IntParam;
-		%feature("autodoc", "	* Returns an IntParam, given its Ident in the Session Null result if <id> is not suitable for an IntParam (undefined, or defined for another kind of variable)
+		%feature("autodoc", "	* Returns an IntParam, given its Ident in the Session Null result if <id> is not suitable for an IntParam --undefined, or defined for another kind of variable--
 
 	:param id:
 	:type id: int
@@ -5921,7 +4646,7 @@ class IFSelect_WorkSession : public MMgt_TShared {
 ") IntValue;
 		Standard_Integer IntValue (const Handle_IFSelect_IntParam & it);
 		%feature("compactdefaultargs") NewIntParam;
-		%feature("autodoc", "	* Creates a new IntParam. A Name can be set (Optional) Returns the created IntParam, or a Null Handle in case of Failure (see AddItem/AddNamedItem)
+		%feature("autodoc", "	* Creates a new IntParam. A Name can be set --Optional-- Returns the created IntParam, or a Null Handle in case of Failure --see AddItem/AddNamedItem--
 
 	:param name: default value is ""
 	:type name: char *
@@ -5939,7 +4664,7 @@ class IFSelect_WorkSession : public MMgt_TShared {
 ") SetIntValue;
 		Standard_Boolean SetIntValue (const Handle_IFSelect_IntParam & it,const Standard_Integer val);
 		%feature("compactdefaultargs") TextParam;
-		%feature("autodoc", "	* Returns a TextParam, given its Ident in the Session Null result if <id> is not suitable for a TextParam (undefined, or defined for another kind of variable)
+		%feature("autodoc", "	* Returns a TextParam, given its Ident in the Session Null result if <id> is not suitable for a TextParam --undefined, or defined for another kind of variable--
 
 	:param id:
 	:type id: int
@@ -5947,7 +4672,7 @@ class IFSelect_WorkSession : public MMgt_TShared {
 ") TextParam;
 		Handle_TCollection_HAsciiString TextParam (const Standard_Integer id);
 		%feature("compactdefaultargs") TextValue;
-		%feature("autodoc", "	* Returns Text Value of a TextParam (a String) or an empty string if <it> is not in the WorkSession
+		%feature("autodoc", "	* Returns Text Value of a TextParam --a String-- or an empty string if <it> is not in the WorkSession
 
 	:param par:
 	:type par: Handle_TCollection_HAsciiString &
@@ -5955,7 +4680,7 @@ class IFSelect_WorkSession : public MMgt_TShared {
 ") TextValue;
 		TCollection_AsciiString TextValue (const Handle_TCollection_HAsciiString & par);
 		%feature("compactdefaultargs") NewTextParam;
-		%feature("autodoc", "	* Creates a new (empty) TextParam. A Name can be set (Optional) Returns the created TextParam (as an HAsciiString), or a Null Handle in case of Failure (see AddItem/AddNamedItem)
+		%feature("autodoc", "	* Creates a new --empty-- TextParam. A Name can be set --Optional-- Returns the created TextParam --as an HAsciiString--, or a Null Handle in case of Failure --see AddItem/AddNamedItem--
 
 	:param name: default value is ""
 	:type name: char *
@@ -5963,7 +4688,7 @@ class IFSelect_WorkSession : public MMgt_TShared {
 ") NewTextParam;
 		Handle_TCollection_HAsciiString NewTextParam (const char * name = "");
 		%feature("compactdefaultargs") SetTextValue;
-		%feature("autodoc", "	* Changes the Text Value of a TextParam (an HAsciiString) Returns True if Done, False if <it> is not in the WorkSession
+		%feature("autodoc", "	* Changes the Text Value of a TextParam --an HAsciiString-- Returns True if Done, False if <it> is not in the WorkSession
 
 	:param par:
 	:type par: Handle_TCollection_HAsciiString &
@@ -5973,7 +4698,7 @@ class IFSelect_WorkSession : public MMgt_TShared {
 ") SetTextValue;
 		Standard_Boolean SetTextValue (const Handle_TCollection_HAsciiString & par,const char * val);
 		%feature("compactdefaultargs") Signature;
-		%feature("autodoc", "	* Returns a Signature, given its Ident in the Session Null result if <id> is not suitable for a Signature (undefined, or defined for another kind of variable)
+		%feature("autodoc", "	* Returns a Signature, given its Ident in the Session Null result if <id> is not suitable for a Signature --undefined, or defined for another kind of variable--
 
 	:param id:
 	:type id: int
@@ -5991,7 +4716,7 @@ class IFSelect_WorkSession : public MMgt_TShared {
 ") SignValue;
 		const char * SignValue (const Handle_IFSelect_Signature & sign,const Handle_Standard_Transient & ent);
 		%feature("compactdefaultargs") Selection;
-		%feature("autodoc", "	* Returns a Selection, given its Ident in the Session Null result if <id> is not suitable for a Selection (undefined, or defined for another kind of variable)
+		%feature("autodoc", "	* Returns a Selection, given its Ident in the Session Null result if <id> is not suitable for a Selection --undefined, or defined for another kind of variable--
 
 	:param id:
 	:type id: int
@@ -6007,7 +4732,7 @@ class IFSelect_WorkSession : public MMgt_TShared {
 ") EvalSelection;
 		Interface_EntityIterator EvalSelection (const Handle_IFSelect_Selection & sel);
 		%feature("compactdefaultargs") Sources;
-		%feature("autodoc", "	* Returns the Selections which are source of Selection, given its rank in the List of Selections (see SelectionIterator) Returned value is empty if <num> is out of range or if <sel> is not in the WorkSession
+		%feature("autodoc", "	* Returns the Selections which are source of Selection, given its rank in the List of Selections --see SelectionIterator-- Returned value is empty if <num> is out of range or if <sel> is not in the WorkSession
 
 	:param sel:
 	:type sel: Handle_IFSelect_Selection &
@@ -6015,7 +4740,7 @@ class IFSelect_WorkSession : public MMgt_TShared {
 ") Sources;
 		IFSelect_SelectionIterator Sources (const Handle_IFSelect_Selection & sel);
 		%feature("compactdefaultargs") SelectionResult;
-		%feature("autodoc", "	* Returns the result of a Selection, computed by EvalSelection (see above) under the form of a HSequence (hence, it can be used by a frontal-engine logic). It can be empty Returns a Null Handle if <sel> is not in the WorkSession
+		%feature("autodoc", "	* Returns the result of a Selection, computed by EvalSelection --see above-- under the form of a HSequence --hence, it can be used by a frontal-engine logic--. It can be empty Returns a Null Handle if <sel> is not in the WorkSession
 
 	:param sel:
 	:type sel: Handle_IFSelect_Selection &
@@ -6023,7 +4748,7 @@ class IFSelect_WorkSession : public MMgt_TShared {
 ") SelectionResult;
 		Handle_TColStd_HSequenceOfTransient SelectionResult (const Handle_IFSelect_Selection & sel);
 		%feature("compactdefaultargs") SelectionResultFromList;
-		%feature("autodoc", "	* Returns the result of a Selection, by forcing its input with a given list <list> (unless <list> is Null). RULES : <list> applies only for a SelectDeduct kind Selection : its Input is considered : if it is a SelectDeduct kind Selection, its Input is considered, etc... until an Input is not a Deduct/Extract : its result is replaced by <list> and all the chain of deductions is applied
+		%feature("autodoc", "	* Returns the result of a Selection, by forcing its input with a given list <list> --unless <list> is Null--. RULES : <list> applies only for a SelectDeduct kind Selection : its Input is considered : if it is a SelectDeduct kind Selection, its Input is considered, etc... until an Input is not a Deduct/Extract : its result is replaced by <list> and all the chain of deductions is applied
 
 	:param sel:
 	:type sel: Handle_IFSelect_Selection &
@@ -6033,7 +4758,7 @@ class IFSelect_WorkSession : public MMgt_TShared {
 ") SelectionResultFromList;
 		Handle_TColStd_HSequenceOfTransient SelectionResultFromList (const Handle_IFSelect_Selection & sel,const Handle_TColStd_HSequenceOfTransient & list);
 		%feature("compactdefaultargs") SetItemSelection;
-		%feature("autodoc", "	* Sets a Selection as input for an item, according its type : if <item> is a Dispatch : as Final Selection if <item> is a GeneralModifier (i.e. any kind of Modifier) : as Selection used to filter entities to modify <sel> Null causes this Selection to be nullified Returns False if <item> is not of a suitable type, or <item> or <sel> is not in the WorkSession
+		%feature("autodoc", "	* Sets a Selection as input for an item, according its type : if <item> is a Dispatch : as Final Selection if <item> is a GeneralModifier --i.e. any kind of Modifier-- : as Selection used to filter entities to modify <sel> Null causes this Selection to be nullified Returns False if <item> is not of a suitable type, or <item> or <sel> is not in the WorkSession
 
 	:param item:
 	:type item: Handle_Standard_Transient &
@@ -6059,7 +4784,7 @@ class IFSelect_WorkSession : public MMgt_TShared {
 ") ItemSelection;
 		Handle_IFSelect_Selection ItemSelection (const Handle_Standard_Transient & item);
 		%feature("compactdefaultargs") SignCounter;
-		%feature("autodoc", "	* Returns a SignCounter from its ident in the Session Null result if <id> is not suitable for a SignCounter (undefined, or defined for another kind of variable)
+		%feature("autodoc", "	* Returns a SignCounter from its ident in the Session Null result if <id> is not suitable for a SignCounter --undefined, or defined for another kind of variable--
 
 	:param id:
 	:type id: int
@@ -6077,7 +4802,7 @@ class IFSelect_WorkSession : public MMgt_TShared {
 ") ComputeCounter;
 		Standard_Boolean ComputeCounter (const Handle_IFSelect_SignCounter & counter,const Standard_Boolean forced = Standard_False);
 		%feature("compactdefaultargs") ComputeCounterFromList;
-		%feature("autodoc", "	* Computes the content of a SignCounter from an input list If <list> is Null, uses internal definition of the Counter : a Selection, else the whole Model (recomputation forced) If <clear> is True (D), starts from scratch Else, cumulates computations
+		%feature("autodoc", "	* Computes the content of a SignCounter from an input list If <list> is Null, uses internal definition of the Counter : a Selection, else the whole Model --recomputation forced-- If <clear> is True --D--, starts from scratch Else, cumulates computations
 
 	:param counter:
 	:type counter: Handle_IFSelect_SignCounter &
@@ -6103,7 +4828,7 @@ class IFSelect_WorkSession : public MMgt_TShared {
 ") ClearShareOut;
 		void ClearShareOut (const Standard_Boolean onlydisp);
 		%feature("compactdefaultargs") Dispatch;
-		%feature("autodoc", "	* Returns a Dispatch, given its Ident in the Session Null result if <id> is not suitable for a Dispatch (undefined, or defined for another kind of variable)
+		%feature("autodoc", "	* Returns a Dispatch, given its Ident in the Session Null result if <id> is not suitable for a Dispatch --undefined, or defined for another kind of variable--
 
 	:param id:
 	:type id: int
@@ -6133,7 +4858,7 @@ class IFSelect_WorkSession : public MMgt_TShared {
 ") SetModelCopier;
 		void SetModelCopier (const Handle_IFSelect_ModelCopier & copier);
 		%feature("compactdefaultargs") NbFinalModifiers;
-		%feature("autodoc", "	* Returns the count of Modifiers applied to final sending Model Modifiers if <formodel> is True, File Modifiers else (i.e. Modifiers which apply once the Models have been filled)
+		%feature("autodoc", "	* Returns the count of Modifiers applied to final sending Model Modifiers if <formodel> is True, File Modifiers else --i.e. Modifiers which apply once the Models have been filled--
 
 	:param formodel:
 	:type formodel: bool
@@ -6141,7 +4866,7 @@ class IFSelect_WorkSession : public MMgt_TShared {
 ") NbFinalModifiers;
 		Standard_Integer NbFinalModifiers (const Standard_Boolean formodel);
 		%feature("compactdefaultargs") FinalModifierIdents;
-		%feature("autodoc", "	* Fills a Sequence with a list of Idents, those attached to the Modifiers applied to final sending. Model Modifiers if <formodel> is True, File Modifiers else This list is given in the order in which they will be applied (which takes into account the Changes to Modifier Ranks)
+		%feature("autodoc", "	* Fills a Sequence with a list of Idents, those attached to the Modifiers applied to final sending. Model Modifiers if <formodel> is True, File Modifiers else This list is given in the order in which they will be applied --which takes into account the Changes to Modifier Ranks--
 
 	:param formodel:
 	:type formodel: bool
@@ -6149,7 +4874,7 @@ class IFSelect_WorkSession : public MMgt_TShared {
 ") FinalModifierIdents;
 		Handle_TColStd_HSequenceOfInteger FinalModifierIdents (const Standard_Boolean formodel);
 		%feature("compactdefaultargs") GeneralModifier;
-		%feature("autodoc", "	* Returns a Modifier, given its Ident in the Session Null result if <id> is not suitable for a Modifier (undefined, or defined for another kind of variable)
+		%feature("autodoc", "	* Returns a Modifier, given its Ident in the Session Null result if <id> is not suitable for a Modifier --undefined, or defined for another kind of variable--
 
 	:param id:
 	:type id: int
@@ -6157,7 +4882,7 @@ class IFSelect_WorkSession : public MMgt_TShared {
 ") GeneralModifier;
 		Handle_IFSelect_GeneralModifier GeneralModifier (const Standard_Integer id);
 		%feature("compactdefaultargs") ModelModifier;
-		%feature("autodoc", "	* Returns a Model Modifier, given its Ident in the Session, i.e. typed as a Modifier (not simply a GeneralModifier) Null result if <id> is not suitable for a Modifier (undefined, or defined for another kind of variable)
+		%feature("autodoc", "	* Returns a Model Modifier, given its Ident in the Session, i.e. typed as a Modifier --not simply a GeneralModifier-- Null result if <id> is not suitable for a Modifier --undefined, or defined for another kind of variable--
 
 	:param id:
 	:type id: int
@@ -6165,7 +4890,7 @@ class IFSelect_WorkSession : public MMgt_TShared {
 ") ModelModifier;
 		Handle_IFSelect_Modifier ModelModifier (const Standard_Integer id);
 		%feature("compactdefaultargs") ModifierRank;
-		%feature("autodoc", "	* Returns the Rank of a Modifier given its Ident. Model or File Modifier according its type (ModelModifier or not) Remember that Modifiers are applied sequencially following their Rank : first Model Modifiers then File Modifiers Rank is given by rank of call to AddItem and can be changed by ChangeModifierRank
+		%feature("autodoc", "	* Returns the Rank of a Modifier given its Ident. Model or File Modifier according its type --ModelModifier or not-- Remember that Modifiers are applied sequencially following their Rank : first Model Modifiers then File Modifiers Rank is given by rank of call to AddItem and can be changed by ChangeModifierRank
 
 	:param item:
 	:type item: Handle_IFSelect_GeneralModifier &
@@ -6191,7 +4916,7 @@ class IFSelect_WorkSession : public MMgt_TShared {
 ") ClearFinalModifiers;
 		void ClearFinalModifiers ();
 		%feature("compactdefaultargs") SetAppliedModifier;
-		%feature("autodoc", "	* Sets a GeneralModifier to be applied to an item : - item = ShareOut : applies for final sending (all dispatches) - item is a Dispatch : applies for this dispatch only Returns True if done, False if <modif> or <item> not in <self>
+		%feature("autodoc", "	* Sets a GeneralModifier to be applied to an item : - item = ShareOut : applies for final sending --all dispatches-- - item is a Dispatch : applies for this dispatch only Returns True if done, False if <modif> or <item> not in <self>
 
 	:param modif:
 	:type modif: Handle_IFSelect_GeneralModifier &
@@ -6217,7 +4942,7 @@ class IFSelect_WorkSession : public MMgt_TShared {
 ") UsesAppliedModifier;
 		Handle_Standard_Transient UsesAppliedModifier (const Handle_IFSelect_GeneralModifier & modif);
 		%feature("compactdefaultargs") Transformer;
-		%feature("autodoc", "	* Returns a Transformer, given its Ident in the Session Null result if <id> is not suitable for a Transformer (undefined, or defined for another kind of variable)
+		%feature("autodoc", "	* Returns a Transformer, given its Ident in the Session Null result if <id> is not suitable for a Transformer --undefined, or defined for another kind of variable--
 
 	:param id:
 	:type id: int
@@ -6225,7 +4950,7 @@ class IFSelect_WorkSession : public MMgt_TShared {
 ") Transformer;
 		Handle_IFSelect_Transformer Transformer (const Standard_Integer id);
 		%feature("compactdefaultargs") RunTransformer;
-		%feature("autodoc", "	* Runs a Transformer on starting Model, which can then be edited or replaced by a new one. The Protocol can also be changed. Fills LastRunCheckList //! Returned status is 0 if nothing done (<transf> or model undefined), positive if OK, negative else : 0 : Nothing done 1 : OK, edition on the spot with no change to the graph of dependances (purely local) 2 : OK, model edited on the spot (graph recomputed, may have changed), protocol unchanged 3 : OK, new model produced, same protocol 4 : OK, model edited on the spot (graph recomputed), but protocol has changed 5 : OK, new model produced, protocol has changed -1 : Error on the spot (slight changes), data may be corrupted (remark : corruption should not be profound) -2 : Error on edition the spot, data may be corrupted (checking them is recommanded) -3 : Error with a new data set, transformation ignored -4 : OK as 4, but graph of dependances count not be recomputed (the former one is kept) : check the protocol
+		%feature("autodoc", "	* Runs a Transformer on starting Model, which can then be edited or replaced by a new one. The Protocol can also be changed. Fills LastRunCheckList //! Returned status is 0 if nothing done --<transf> or model undefined--, positive if OK, negative else : 0 : Nothing done 1 : OK, edition on the spot with no change to the graph of dependances --purely local-- 2 : OK, model edited on the spot --graph recomputed, may have changed--, protocol unchanged 3 : OK, new model produced, same protocol 4 : OK, model edited on the spot --graph recomputed--, but protocol has changed 5 : OK, new model produced, protocol has changed -1 : Error on the spot --slight changes--, data may be corrupted --remark : corruption should not be profound-- -2 : Error on edition the spot, data may be corrupted --checking them is recommanded-- -3 : Error with a new data set, transformation ignored -4 : OK as 4, but graph of dependances count not be recomputed --the former one is kept-- : check the protocol
 
 	:param transf:
 	:type transf: Handle_IFSelect_Transformer &
@@ -6233,7 +4958,7 @@ class IFSelect_WorkSession : public MMgt_TShared {
 ") RunTransformer;
 		Standard_Integer RunTransformer (const Handle_IFSelect_Transformer & transf);
 		%feature("compactdefaultargs") RunModifier;
-		%feature("autodoc", "	* Runs a Modifier on Starting Model. It can modify entities, or add new ones. But the Model or the Protocol is unchanged. The Modifier is applied on each entity of the Model. See also RunModifierSelected Fills LastRunCheckList //! <copy> : if True, a new data set is produced which brings the modifications (Model + its Entities) if False, data are modified on the spot //! It works through a TransformStandard defined with <modif> Returned status as RunTransformer : 0 nothing done, >0 OK, <0 problem, but only between -3 and 3 (protocol unchanged) Remark : <copy> True will give <effect> = 3 or -3
+		%feature("autodoc", "	* Runs a Modifier on Starting Model. It can modify entities, or add new ones. But the Model or the Protocol is unchanged. The Modifier is applied on each entity of the Model. See also RunModifierSelected Fills LastRunCheckList //! <copy> : if True, a new data set is produced which brings the modifications --Model + its Entities-- if False, data are modified on the spot //! It works through a TransformStandard defined with <modif> Returned status as RunTransformer : 0 nothing done, >0 OK, <0 problem, but only between -3 and 3 --protocol unchanged-- Remark : <copy> True will give <effect> = 3 or -3
 
 	:param modif:
 	:type modif: Handle_IFSelect_Modifier &
@@ -6255,7 +4980,7 @@ class IFSelect_WorkSession : public MMgt_TShared {
 ") RunModifierSelected;
 		Standard_Integer RunModifierSelected (const Handle_IFSelect_Modifier & modif,const Handle_IFSelect_Selection & sel,const Standard_Boolean copy);
 		%feature("compactdefaultargs") NewTransformStandard;
-		%feature("autodoc", "	* Creates and returns a TransformStandard, empty, with its Copy Option (True = Copy, False = On the Spot) and an optional name. To a TransformStandard, the method SetAppliedModifier applies
+		%feature("autodoc", "	* Creates and returns a TransformStandard, empty, with its Copy Option --True = Copy, False = On the Spot-- and an optional name. To a TransformStandard, the method SetAppliedModifier applies
 
 	:param copy:
 	:type copy: bool
@@ -6265,7 +4990,7 @@ class IFSelect_WorkSession : public MMgt_TShared {
 ") NewTransformStandard;
 		Handle_IFSelect_Transformer NewTransformStandard (const Standard_Boolean copy,const char * name = "");
 		%feature("compactdefaultargs") SetModelContent;
-		%feature("autodoc", "	* Defines a new content from the former one If <keep> is True, it is given by entities selected by Selection <sel> (and all shared entities) Else, it is given by all the former content but entities selected by the Selection <sel> (and properly shared ones) Returns True if done. Returns False if the selected list (from <sel>) is empty, hence nothing is done
+		%feature("autodoc", "	* Defines a new content from the former one If <keep> is True, it is given by entities selected by Selection <sel> --and all shared entities-- Else, it is given by all the former content but entities selected by the Selection <sel> --and properly shared ones-- Returns True if done. Returns False if the selected list --from <sel>-- is empty, hence nothing is done
 
 	:param sel:
 	:type sel: Handle_IFSelect_Selection &
@@ -6293,7 +5018,7 @@ class IFSelect_WorkSession : public MMgt_TShared {
 ") FileExtension;
 		Handle_TCollection_HAsciiString FileExtension ();
 		%feature("compactdefaultargs") FileRoot;
-		%feature("autodoc", "	* Returns the File Root defined for a Dispatch. Null if no Root Name is defined for it (hence, no File will be produced)
+		%feature("autodoc", "	* Returns the File Root defined for a Dispatch. Null if no Root Name is defined for it --hence, no File will be produced--
 
 	:param disp:
 	:type disp: Handle_IFSelect_Dispatch &
@@ -6335,7 +5060,7 @@ class IFSelect_WorkSession : public MMgt_TShared {
 ") SetFileRoot;
 		Standard_Boolean SetFileRoot (const Handle_IFSelect_Dispatch & disp,const char * name);
 		%feature("compactdefaultargs") GiveFileRoot;
-		%feature("autodoc", "	* Extracts File Root Name from a given complete file name (uses OSD_Path)
+		%feature("autodoc", "	* Extracts File Root Name from a given complete file name --uses OSD_Path--
 
 	:param file:
 	:type file: char *
@@ -6343,7 +5068,7 @@ class IFSelect_WorkSession : public MMgt_TShared {
 ") GiveFileRoot;
 		const char * GiveFileRoot (const char * file);
 		%feature("compactdefaultargs") GiveFileComplete;
-		%feature("autodoc", "	* Completes a file name as required, with Prefix and Extension (if defined; for a non-defined item, completes nothing)
+		%feature("autodoc", "	* Completes a file name as required, with Prefix and Extension --if defined; for a non-defined item, completes nothing--
 
 	:param file:
 	:type file: char *
@@ -6351,13 +5076,13 @@ class IFSelect_WorkSession : public MMgt_TShared {
 ") GiveFileComplete;
 		const char * GiveFileComplete (const char * file);
 		%feature("compactdefaultargs") ClearFile;
-		%feature("autodoc", "	* Erases all stored data from the File Evaluation (i.e. ALL former naming informations are lost)
+		%feature("autodoc", "	* Erases all stored data from the File Evaluation --i.e. ALL former naming informations are lost--
 
 	:rtype: None
 ") ClearFile;
 		void ClearFile ();
 		%feature("compactdefaultargs") EvaluateFile;
-		%feature("autodoc", "	* Performs and stores a File Evaluation. The Results are a List of produced Models and a List of names (Strings), in parallel Fills LastRunCheckList
+		%feature("autodoc", "	* Performs and stores a File Evaluation. The Results are a List of produced Models and a List of names --Strings--, in parallel Fills LastRunCheckList
 
 	:rtype: None
 ") EvaluateFile;
@@ -6399,19 +5124,19 @@ class IFSelect_WorkSession : public MMgt_TShared {
 ") SentFiles;
 		Handle_TColStd_HSequenceOfHAsciiString SentFiles ();
 		%feature("compactdefaultargs") SendSplit;
-		%feature("autodoc", "	* Performs creation of derived files from the input Model Takes its data (sub-models and names), from result EvaluateFile if active, else by dynamic Evaluation (not stored) After SendSplit, result of EvaluateFile is Cleared Fills LastRunCheckList //! Works with the WorkLibrary which acts on specific type of Model and can work with File Modifiers (managed by the Model Copier) and a ModelCopier, which can work with Model Modifiers Returns False if, either WorkLibrary has failed on at least one sub-file, or the Work Session is badly conditionned (no Model defined, or FileNaming not in phase with ShareOut)
+		%feature("autodoc", "	* Performs creation of derived files from the input Model Takes its data --sub-models and names--, from result EvaluateFile if active, else by dynamic Evaluation --not stored-- After SendSplit, result of EvaluateFile is Cleared Fills LastRunCheckList //! Works with the WorkLibrary which acts on specific type of Model and can work with File Modifiers --managed by the Model Copier-- and a ModelCopier, which can work with Model Modifiers Returns False if, either WorkLibrary has failed on at least one sub-file, or the Work Session is badly conditionned --no Model defined, or FileNaming not in phase with ShareOut--
 
 	:rtype: bool
 ") SendSplit;
 		Standard_Boolean SendSplit ();
 		%feature("compactdefaultargs") EvalSplit;
-		%feature("autodoc", "	* Returns an Evaluation of the whole ShareOut definition : i.e. how the entities of the starting model are forecast to be sent to various files : list of packets according the dispatches, effective lists of roots for each packet (which determine the content of the corresponding file); plus evaluation of which entities are : forgotten (sent into no file), duplicated (sent into more than one file), sent into a given file. See the class PacketList for more details.
+		%feature("autodoc", "	* Returns an Evaluation of the whole ShareOut definition : i.e. how the entities of the starting model are forecast to be sent to various files : list of packets according the dispatches, effective lists of roots for each packet --which determine the content of the corresponding file--; plus evaluation of which entities are : forgotten --sent into no file--, duplicated --sent into more than one file--, sent into a given file. See the class PacketList for more details.
 
 	:rtype: Handle_IFSelect_PacketList
 ") EvalSplit;
 		Handle_IFSelect_PacketList EvalSplit ();
 		%feature("compactdefaultargs") SentList;
-		%feature("autodoc", "	* Returns the list of Entities sent in files, accourding the count of files each one has been sent (these counts are reset by SetModel or SetRemaining(Forget) ) stored in Graph Status <count> = -1 (default) is for ENtities sent at least once <count> = 0 is for the Remaining List (entities not yet sent) <count> = 1 is for entities sent in one and only one file (the ideal case) Remaining Data are computed on each Sending/Copying output files (see methods EvaluateFile and SendSplit) Graph Status is 0 for Remaining Entity, <count> for Sent into <count> files This status is set to 0 (not yet sent) for all by SetModel and by SetRemaining(mode=Forget,Display)
+		%feature("autodoc", "	* Returns the list of Entities sent in files, accourding the count of files each one has been sent --these counts are reset by SetModel or SetRemaining--Forget-- -- stored in Graph Status <count> = -1 --default-- is for ENtities sent at least once <count> = 0 is for the Remaining List --entities not yet sent-- <count> = 1 is for entities sent in one and only one file --the ideal case-- Remaining Data are computed on each Sending/Copying output files --see methods EvaluateFile and SendSplit-- Graph Status is 0 for Remaining Entity, <count> for Sent into <count> files This status is set to 0 --not yet sent-- for all by SetModel and by SetRemaining--mode=Forget,Display--
 
 	:param count: default value is -1
 	:type count: int
@@ -6425,7 +5150,7 @@ class IFSelect_WorkSession : public MMgt_TShared {
 ") MaxSendingCount;
 		Standard_Integer MaxSendingCount ();
 		%feature("compactdefaultargs") SetRemaining;
-		%feature("autodoc", "	* Processes Remaining data (after having sent files), mode : Forget : forget remaining info (i.e. clear all 'Sent' status) Compute : compute and keep remaining (does nothing if : remaining is empty or if no files has been sent) Display : display entities recorded as remaining Undo : restore former state of data (after Remaining(1) ) Returns True if OK, False else (i.e. mode = 2 and Remaining List is either empty or takes all the entities, or mode = 3 and no former computation of remaining data was done)
+		%feature("autodoc", "	* Processes Remaining data --after having sent files--, mode : Forget : forget remaining info --i.e. clear all 'Sent' status-- Compute : compute and keep remaining --does nothing if : remaining is empty or if no files has been sent-- Display : display entities recorded as remaining Undo : restore former state of data --after Remaining--1-- -- Returns True if OK, False else --i.e. mode = 2 and Remaining List is either empty or takes all the entities, or mode = 3 and no former computation of remaining data was done--
 
 	:param mode:
 	:type mode: IFSelect_RemainMode
@@ -6433,7 +5158,7 @@ class IFSelect_WorkSession : public MMgt_TShared {
 ") SetRemaining;
 		Standard_Boolean SetRemaining (const IFSelect_RemainMode mode);
 		%feature("compactdefaultargs") SendAll;
-		%feature("autodoc", "	* Sends the starting Model into one file, without splitting, managing remaining data or anything else. <computegraph> true commands the Graph to be recomputed before sending : required when a Model is filled in several steps //! The Model and File Modifiers recorded to be applied on sending files are. Returns a status of execution : Done if OK, Void if no data available, Error if errors occured (work library is not defined), errors during translation Fail if exception during translation is raised Stop if no disk space or disk, file is write protected Fills LastRunCheckList
+		%feature("autodoc", "	* Sends the starting Model into one file, without splitting, managing remaining data or anything else. <computegraph> true commands the Graph to be recomputed before sending : required when a Model is filled in several steps //! The Model and File Modifiers recorded to be applied on sending files are. Returns a status of execution : Done if OK, Void if no data available, Error if errors occured --work library is not defined--, errors during translation Fail if exception during translation is raised Stop if no disk space or disk, file is write protected Fills LastRunCheckList
 
 	:param filename:
 	:type filename: char *
@@ -6455,7 +5180,7 @@ class IFSelect_WorkSession : public MMgt_TShared {
 ") SendSelected;
 		IFSelect_ReturnStatus SendSelected (const char * filename,const Handle_IFSelect_Selection & sel,const Standard_Boolean computegraph = Standard_False);
 		%feature("compactdefaultargs") WriteFile;
-		%feature("autodoc", "	* Writes the current Interface Model globally to a File, and returns a write status which can be : Done OK, Fail file could not be written, Error no norm is selected Remark : It is a simple, one-file writing, other operations are available (such as splitting ...) which calls SendAll
+		%feature("autodoc", "	* Writes the current Interface Model globally to a File, and returns a write status which can be : Done OK, Fail file could not be written, Error no norm is selected Remark : It is a simple, one-file writing, other operations are available --such as splitting ...-- which calls SendAll
 
 	:param filename:
 	:type filename: char *
@@ -6463,7 +5188,7 @@ class IFSelect_WorkSession : public MMgt_TShared {
 ") WriteFile;
 		IFSelect_ReturnStatus WriteFile (const char * filename);
 		%feature("compactdefaultargs") WriteFile;
-		%feature("autodoc", "	* Writes a sub-part of the current Interface Model to a File, as defined by a Selection <sel>, recomputes the Graph, and returns a write status which can be : Done OK, Fail file could not be written, Error no norm is selected Remark : It is a simple, one-file writing, other operations are available (such as splitting ...) which calls SendSelected
+		%feature("autodoc", "	* Writes a sub-part of the current Interface Model to a File, as defined by a Selection <sel>, recomputes the Graph, and returns a write status which can be : Done OK, Fail file could not be written, Error no norm is selected Remark : It is a simple, one-file writing, other operations are available --such as splitting ...-- which calls SendSelected
 
 	:param filename:
 	:type filename: char *
@@ -6473,7 +5198,7 @@ class IFSelect_WorkSession : public MMgt_TShared {
 ") WriteFile;
 		IFSelect_ReturnStatus WriteFile (const char * filename,const Handle_IFSelect_Selection & sel);
 		%feature("compactdefaultargs") NbSources;
-		%feature("autodoc", "	* Returns the count of Input Selections known for a Selection, or 0 if <sel> not in the WorkSession. This count is one for a SelectDeduct / SelectExtract kind, two for SelectControl kind, variable for a SelectCombine (Union/Intersection), zero else
+		%feature("autodoc", "	* Returns the count of Input Selections known for a Selection, or 0 if <sel> not in the WorkSession. This count is one for a SelectDeduct / SelectExtract kind, two for SelectControl kind, variable for a SelectCombine --Union/Intersection--, zero else
 
 	:param sel:
 	:type sel: Handle_IFSelect_Selection &
@@ -6481,7 +5206,7 @@ class IFSelect_WorkSession : public MMgt_TShared {
 ") NbSources;
 		Standard_Integer NbSources (const Handle_IFSelect_Selection & sel);
 		%feature("compactdefaultargs") Source;
-		%feature("autodoc", "	* Returns the <num>th Input Selection of a Selection (see NbSources). Returns a Null Handle if <sel> is not in the WorkSession or if <num> is out of the range <1-NbSources> To obtain more details, see the method Sources
+		%feature("autodoc", "	* Returns the <num>th Input Selection of a Selection --see NbSources--. Returns a Null Handle if <sel> is not in the WorkSession or if <num> is out of the range <1-NbSources> To obtain more details, see the method Sources
 
 	:param sel:
 	:type sel: Handle_IFSelect_Selection &
@@ -6499,7 +5224,7 @@ class IFSelect_WorkSession : public MMgt_TShared {
 ") IsReversedSelectExtract;
 		Standard_Boolean IsReversedSelectExtract (const Handle_IFSelect_Selection & sel);
 		%feature("compactdefaultargs") ToggleSelectExtract;
-		%feature("autodoc", "	* Toggles the Sense (Direct <-> Reversed) of a SelectExtract Returns True if Done, False if <sel> is not a SelectExtract or is not in the WorkSession
+		%feature("autodoc", "	* Toggles the Sense --Direct <-> Reversed-- of a SelectExtract Returns True if Done, False if <sel> is not a SelectExtract or is not in the WorkSession
 
 	:param sel:
 	:type sel: Handle_IFSelect_Selection &
@@ -6507,7 +5232,7 @@ class IFSelect_WorkSession : public MMgt_TShared {
 ") ToggleSelectExtract;
 		Standard_Boolean ToggleSelectExtract (const Handle_IFSelect_Selection & sel);
 		%feature("compactdefaultargs") SetInputSelection;
-		%feature("autodoc", "	* Sets an Input Selection (as <input>) to a SelectExtract or a SelectDeduct (as <sel>). Returns True if Done, False if <sel> is neither a SelectExtract nor a SelectDeduct, or not in the WorkSession
+		%feature("autodoc", "	* Sets an Input Selection --as <input>-- to a SelectExtract or a SelectDeduct --as <sel>--. Returns True if Done, False if <sel> is neither a SelectExtract nor a SelectDeduct, or not in the WorkSession
 
 	:param sel:
 	:type sel: Handle_IFSelect_Selection &
@@ -6517,7 +5242,7 @@ class IFSelect_WorkSession : public MMgt_TShared {
 ") SetInputSelection;
 		Standard_Boolean SetInputSelection (const Handle_IFSelect_Selection & sel,const Handle_IFSelect_Selection & input);
 		%feature("compactdefaultargs") SetControl;
-		%feature("autodoc", "	* Sets an Input Selection, Main if <formain> is True, Second else (as <sc>) to a SelectControl (as <sel>). Returns True if Done, False if <sel> is not a SelectControl, or <sc> or <sel> is not in the WorkSession
+		%feature("autodoc", "	* Sets an Input Selection, Main if <formain> is True, Second else --as <sc>-- to a SelectControl --as <sel>--. Returns True if Done, False if <sel> is not a SelectControl, or <sc> or <sel> is not in the WorkSession
 
 	:param sel:
 	:type sel: Handle_IFSelect_Selection &
@@ -6529,7 +5254,7 @@ class IFSelect_WorkSession : public MMgt_TShared {
 ") SetControl;
 		Standard_Boolean SetControl (const Handle_IFSelect_Selection & sel,const Handle_IFSelect_Selection & sc,const Standard_Boolean formain = Standard_True);
 		%feature("compactdefaultargs") CombineAdd;
-		%feature("autodoc", "	* Adds an input selection to a SelectCombine (Union or Inters.). Returns new count of inputs for this SelectCombine if Done or 0 if <sel> is not kind of SelectCombine, or if <seladd> or <sel> is not in the WorkSession By default, adding is done at the end of the list Else, it is an insertion to rank <atnum> (usefull for Un-ReDo)
+		%feature("autodoc", "	* Adds an input selection to a SelectCombine --Union or Inters.--. Returns new count of inputs for this SelectCombine if Done or 0 if <sel> is not kind of SelectCombine, or if <seladd> or <sel> is not in the WorkSession By default, adding is done at the end of the list Else, it is an insertion to rank <atnum> --usefull for Un-ReDo--
 
 	:param selcomb:
 	:type selcomb: Handle_IFSelect_Selection &
@@ -6541,7 +5266,7 @@ class IFSelect_WorkSession : public MMgt_TShared {
 ") CombineAdd;
 		Standard_Integer CombineAdd (const Handle_IFSelect_Selection & selcomb,const Handle_IFSelect_Selection & seladd,const Standard_Integer atnum = 0);
 		%feature("compactdefaultargs") CombineRemove;
-		%feature("autodoc", "	* Removes an input selection from a SelectCombine (Union or Intersection). Returns True if done, False if <selcomb> is not kind of SelectCombine or <selrem> is not source of <selcomb>
+		%feature("autodoc", "	* Removes an input selection from a SelectCombine --Union or Intersection--. Returns True if done, False if <selcomb> is not kind of SelectCombine or <selrem> is not source of <selcomb>
 
 	:param selcomb:
 	:type selcomb: Handle_IFSelect_Selection &
@@ -6551,7 +5276,7 @@ class IFSelect_WorkSession : public MMgt_TShared {
 ") CombineRemove;
 		Standard_Boolean CombineRemove (const Handle_IFSelect_Selection & selcomb,const Handle_IFSelect_Selection & selrem);
 		%feature("compactdefaultargs") NewSelectPointed;
-		%feature("autodoc", "	* Creates a new Selection, of type SelectPointed, its content starts with <list>. A name must be given (can be empty)
+		%feature("autodoc", "	* Creates a new Selection, of type SelectPointed, its content starts with <list>. A name must be given --can be empty--
 
 	:param list:
 	:type list: Handle_TColStd_HSequenceOfTransient &
@@ -6561,7 +5286,7 @@ class IFSelect_WorkSession : public MMgt_TShared {
 ") NewSelectPointed;
 		Handle_IFSelect_Selection NewSelectPointed (const Handle_TColStd_HSequenceOfTransient & list,const char * name);
 		%feature("compactdefaultargs") SetSelectPointed;
-		%feature("autodoc", "	* Changes the content of a Selection of type SelectPointed According <mode> : 0 set <list> as new content (clear former) 1 : adds <list> to actual content -1 : removes <list> from actual content Returns True if done, False if <sel> is not a SelectPointed
+		%feature("autodoc", "	* Changes the content of a Selection of type SelectPointed According <mode> : 0 set <list> as new content --clear former-- 1 : adds <list> to actual content -1 : removes <list> from actual content Returns True if done, False if <sel> is not a SelectPointed
 
 	:param sel:
 	:type sel: Handle_IFSelect_Selection &
@@ -6573,7 +5298,7 @@ class IFSelect_WorkSession : public MMgt_TShared {
 ") SetSelectPointed;
 		Standard_Boolean SetSelectPointed (const Handle_IFSelect_Selection & sel,const Handle_TColStd_HSequenceOfTransient & list,const Standard_Integer mode);
 		%feature("compactdefaultargs") GiveSelection;
-		%feature("autodoc", "	* Returns a Selection from a Name : - the name of a Selection : this Selection - the name of a Signature + criteria between (..) : a new Selection from this Signature - an entity or a list of entities : a new SelectPointed Else, returns a Null Handle
+		%feature("autodoc", "	* Returns a Selection from a Name : - the name of a Selection : this Selection - the name of a Signature + criteria between --..-- : a new Selection from this Signature - an entity or a list of entities : a new SelectPointed Else, returns a Null Handle
 
 	:param selname:
 	:type selname: char *
@@ -6581,7 +5306,7 @@ class IFSelect_WorkSession : public MMgt_TShared {
 ") GiveSelection;
 		Handle_IFSelect_Selection GiveSelection (const char * selname);
 		%feature("compactdefaultargs") GiveList;
-		%feature("autodoc", "	* Determines a list of entities from an object : <obj> already HSequenceOfTransient : returned itself <obj> Selection : its Result of Evaluation is returned <obj> an entity of the Model : a HSequence which contains it else, an empty HSequence <obj> the Model it self : ALL its content (not only the roots)
+		%feature("autodoc", "	* Determines a list of entities from an object : <obj> already HSequenceOfTransient : returned itself <obj> Selection : its Result of Evaluation is returned <obj> an entity of the Model : a HSequence which contains it else, an empty HSequence <obj> the Model it self : ALL its content --not only the roots--
 
 	:param obj:
 	:type obj: Handle_Standard_Transient &
@@ -6589,7 +5314,7 @@ class IFSelect_WorkSession : public MMgt_TShared {
 ") GiveList;
 		Handle_TColStd_HSequenceOfTransient GiveList (const Handle_Standard_Transient & obj);
 		%feature("compactdefaultargs") GiveList;
-		%feature("autodoc", "	* Computes a List of entities from two alphanums, first and second, as follows : if <first> is a Number or Label of an entity : this entity if <first> is a list of Numbers/Labels : the list of entities if <first> is the name of a Selection in <WS>, and <second> not defined, the standard result of this Selection else, let's consider 'first second' : this whole phrase is splitted by blanks, as follows (RECURSIVE CALL) : - the leftest term is the final selection - the other terms define the result of the selection - and so on (the 'leftest minus one' is a selection, of which the input is given by the remaining ...)
+		%feature("autodoc", "	* Computes a List of entities from two alphanums, first and second, as follows : if <first> is a Number or Label of an entity : this entity if <first> is a list of Numbers/Labels : the list of entities if <first> is the name of a Selection in <WS>, and <second> not defined, the standard result of this Selection else, let's consider 'first second' : this whole phrase is splitted by blanks, as follows --RECURSIVE CALL-- : - the leftest term is the final selection - the other terms define the result of the selection - and so on --the 'leftest minus one' is a selection, of which the input is given by the remaining ...--
 
 	:param first:
 	:type first: char *
@@ -6599,7 +5324,7 @@ class IFSelect_WorkSession : public MMgt_TShared {
 ") GiveList;
 		Handle_TColStd_HSequenceOfTransient GiveList (const char * first,const char * second = "");
 		%feature("compactdefaultargs") GiveListFromList;
-		%feature("autodoc", "	* Computes a List of entities from the model as follows <first> beeing a Selection or a combination of Selections, <ent> beeing an entity or a list of entities (as a HSequenceOfTransient) : the standard result of this selection applied to this list if <ent> is Null, the standard definition of the selection is used (which contains a default input selection) if <selname> is erroneous, a null handle is returned //! REMARK : selname is processed as <first second> of preceeding GiveList
+		%feature("autodoc", "	* Computes a List of entities from the model as follows <first> beeing a Selection or a combination of Selections, <ent> beeing an entity or a list of entities --as a HSequenceOfTransient-- : the standard result of this selection applied to this list if <ent> is Null, the standard definition of the selection is used --which contains a default input selection-- if <selname> is erroneous, a null handle is returned //! REMARK : selname is processed as <first second> of preceeding GiveList
 
 	:param selname:
 	:type selname: char *
@@ -6629,7 +5354,7 @@ class IFSelect_WorkSession : public MMgt_TShared {
 ") QueryCheckList;
 		void QueryCheckList (const Interface_CheckIterator & chl);
 		%feature("compactdefaultargs") QueryCheckStatus;
-		%feature("autodoc", "	* Determines check status for an entity regarding last call to QueryCheckList : -1 : <ent> unknown in the model, ignored 0 : no check at all, immediate or inherited thru Graph 1 : immediate warning (no fail), no inherited check 2 : immediate fail, no inherited check +10 : idem but some inherited warning (no fail) +20 : idem but some inherited fail
+		%feature("autodoc", "	* Determines check status for an entity regarding last call to QueryCheckList : -1 : <ent> unknown in the model, ignored 0 : no check at all, immediate or inherited thru Graph 1 : immediate warning --no fail--, no inherited check 2 : immediate fail, no inherited check +10 : idem but some inherited warning --no fail-- +20 : idem but some inherited fail
 
 	:param ent:
 	:type ent: Handle_Standard_Transient &
@@ -6637,7 +5362,7 @@ class IFSelect_WorkSession : public MMgt_TShared {
 ") QueryCheckStatus;
 		Standard_Integer QueryCheckStatus (const Handle_Standard_Transient & ent);
 		%feature("compactdefaultargs") QueryParent;
-		%feature("autodoc", "	* Determines if <entdad> is parent of <entson> (in the graph), returns : -1 if no; 0 if <entdad> = <entson> 1 if immediate parent, > 1 if parent, gives count of steps
+		%feature("autodoc", "	* Determines if <entdad> is parent of <entson> --in the graph--, returns : -1 if no; 0 if <entdad> = <entson> 1 if immediate parent, > 1 if parent, gives count of steps
 
 	:param entdad:
 	:type entdad: Handle_Standard_Transient &
@@ -6647,17 +5372,17 @@ class IFSelect_WorkSession : public MMgt_TShared {
 ") QueryParent;
 		Standard_Integer QueryParent (const Handle_Standard_Transient & entdad,const Handle_Standard_Transient & entson);
 		%feature("compactdefaultargs") SetParams;
-		%feature("autodoc", "	* Sets a list of Parameters, i.e. TypedValue, to be handled through an Editor The two lists are parallel, if <params> is longer than <uses>, surnumeral parameters are for general use //! EditForms are created to handle these parameters (list, edit) on the basis of a ParamEditor xst-params-edit //! A use number dispatches the parameter to a given EditForm EditForms are defined as follows Name Use Means xst-params all All Parameters (complete list) xst-params-general 1 Generals xst-params-load 2 LoadFile (no Transfer) xst-params-send 3 SendFile (Write, no Transfer) xst-params-split 4 Split xst-param-read 5 Transfer on Reading xst-param-write 6 Transfer on Writing
+		%feature("autodoc", "	* Sets a list of Parameters, i.e. TypedValue, to be handled through an Editor The two lists are parallel, if <params> is longer than <uses>, surnumeral parameters are for general use //! EditForms are created to handle these parameters --list, edit-- on the basis of a ParamEditor xst-params-edit //! A use number dispatches the parameter to a given EditForm EditForms are defined as follows Name Use Means xst-params all All Parameters --complete list-- xst-params-general 1 Generals xst-params-load 2 LoadFile --no Transfer-- xst-params-send 3 SendFile --Write, no Transfer-- xst-params-split 4 Split xst-param-read 5 Transfer on Reading xst-param-write 6 Transfer on Writing
 
 	:param params:
-	:type params: TColStd_SequenceOfTransient &
+	:type params: NCollection_Vector<Handle_Standard_Transient> &
 	:param uselist:
-	:type uselist: TColStd_SequenceOfInteger &
+	:type uselist: NCollection_Vector<int> &
 	:rtype: None
 ") SetParams;
-		void SetParams (const TColStd_SequenceOfTransient & params,const TColStd_SequenceOfInteger & uselist);
+		void SetParams (const NCollection_Vector<Handle_Standard_Transient> & params,const NCollection_Vector<Standard_Integer> & uselist);
 		%feature("compactdefaultargs") TraceStatics;
-		%feature("autodoc", "	* Traces the Statics attached to a given use number If <use> is given positive (normal), the trace is embedded with a header and a trailer If <use> is negative, just values are printed (this allows to make compositions) Remark : use number 5 commands use -2 to be traced Remark : use numbers 4 and 6 command use -3 to be traced
+		%feature("autodoc", "	* Traces the Statics attached to a given use number If <use> is given positive --normal--, the trace is embedded with a header and a trailer If <use> is negative, just values are printed --this allows to make compositions-- Remark : use number 5 commands use -2 to be traced Remark : use numbers 4 and 6 command use -3 to be traced
 
 	:param use:
 	:type use: int
@@ -6667,7 +5392,7 @@ class IFSelect_WorkSession : public MMgt_TShared {
 ") TraceStatics;
 		void TraceStatics (const Standard_Integer use,const Standard_Integer mode = 0);
 		%feature("compactdefaultargs") DumpShare;
-		%feature("autodoc", "	* Dumps contents of the ShareOut (on 'cout')
+		%feature("autodoc", "	* Dumps contents of the ShareOut --on 'cout'--
 
 	:rtype: None
 ") DumpShare;
@@ -6681,7 +5406,7 @@ class IFSelect_WorkSession : public MMgt_TShared {
 ") ListItems;
 		void ListItems (const char * label = "");
 		%feature("compactdefaultargs") ListFinalModifiers;
-		%feature("autodoc", "	* Lists the Modifiers of the session (for each one, displays its Label). Listing is done following Ranks (Modifiers are invoked following their ranks) Model Modifiers if <formodel> is True, File Modifiers else
+		%feature("autodoc", "	* Lists the Modifiers of the session --for each one, displays its Label--. Listing is done following Ranks --Modifiers are invoked following their ranks-- Model Modifiers if <formodel> is True, File Modifiers else
 
 	:param formodel:
 	:type formodel: bool
@@ -6689,7 +5414,7 @@ class IFSelect_WorkSession : public MMgt_TShared {
 ") ListFinalModifiers;
 		void ListFinalModifiers (const Standard_Boolean formodel);
 		%feature("compactdefaultargs") DumpSelection;
-		%feature("autodoc", "	* Lists a Selection and its Sources (see SelectionIterator), given its rank in the list
+		%feature("autodoc", "	* Lists a Selection and its Sources --see SelectionIterator--, given its rank in the list
 
 	:param sel:
 	:type sel: Handle_IFSelect_Selection &
@@ -6697,7 +5422,7 @@ class IFSelect_WorkSession : public MMgt_TShared {
 ") DumpSelection;
 		void DumpSelection (const Handle_IFSelect_Selection & sel);
 		%feature("compactdefaultargs") DumpModel;
-		%feature("autodoc", "	* Lists the content of the Input Model (if there is one) According level : 0 -> gives only count of Entities and Roots 1 -> Lists also Roots; 2 -> Lists all Entities (by TraceType) 3 -> Performs a call to CheckList (Fails) and lists the result 4 -> as 3 but all CheckList (Fails + Warnings) 5,6,7 : as 3 but resp. Count,List,Labels by Fail 8,9,10 : as 4 but resp. Count,List,Labels by message
+		%feature("autodoc", "	* Lists the content of the Input Model --if there is one-- According level : 0 -> gives only count of Entities and Roots 1 -> Lists also Roots; 2 -> Lists all Entities --by TraceType-- 3 -> Performs a call to CheckList --Fails-- and lists the result 4 -> as 3 but all CheckList --Fails + Warnings-- 5,6,7 : as 3 but resp. Count,List,Labels by Fail 8,9,10 : as 4 but resp. Count,List,Labels by message
 
 	:param level:
 	:type level: int
@@ -6707,7 +5432,7 @@ class IFSelect_WorkSession : public MMgt_TShared {
 ") DumpModel;
 		void DumpModel (const Standard_Integer level,const Handle_Message_Messenger & S);
 		%feature("compactdefaultargs") TraceDumpModel;
-		%feature("autodoc", "	* Dumps the current Model (as inherited DumpModel), on currently defined Default Trace File (default is standard output)
+		%feature("autodoc", "	* Dumps the current Model --as inherited DumpModel--, on currently defined Default Trace File --default is standard output--
 
 	:param mode:
 	:type mode: int
@@ -6715,7 +5440,7 @@ class IFSelect_WorkSession : public MMgt_TShared {
 ") TraceDumpModel;
 		void TraceDumpModel (const Standard_Integer mode);
 		%feature("compactdefaultargs") DumpEntity;
-		%feature("autodoc", "	* Dumps a starting entity according to the current norm. To do this, it calls DumpEntity from WorkLibrary. <level> is to be interpreted for each norm : see specific classes of WorkLibrary for it. Generally, 0 if for very basic (only type ...), greater values give more and more details.
+		%feature("autodoc", "	* Dumps a starting entity according to the current norm. To do this, it calls DumpEntity from WorkLibrary. <level> is to be interpreted for each norm : see specific classes of WorkLibrary for it. Generally, 0 if for very basic --only type ...--, greater values give more and more details.
 
 	:param ent:
 	:type ent: Handle_Standard_Transient &
@@ -6727,7 +5452,7 @@ class IFSelect_WorkSession : public MMgt_TShared {
 ") DumpEntity;
 		void DumpEntity (const Handle_Standard_Transient & ent,const Standard_Integer level,const Handle_Message_Messenger & S);
 		%feature("compactdefaultargs") PrintEntityStatus;
-		%feature("autodoc", "	* Prints main informations about an entity : its number, type, validity (and checks if any), category, shareds and sharings.. mutable because it can recompute checks as necessary
+		%feature("autodoc", "	* Prints main informations about an entity : its number, type, validity --and checks if any--, category, shareds and sharings.. mutable because it can recompute checks as necessary
 
 	:param ent:
 	:type ent: Handle_Standard_Transient &
@@ -6737,7 +5462,7 @@ class IFSelect_WorkSession : public MMgt_TShared {
 ") PrintEntityStatus;
 		void PrintEntityStatus (const Handle_Standard_Transient & ent,const Handle_Message_Messenger & S);
 		%feature("compactdefaultargs") TraceDumpEntity;
-		%feature("autodoc", "	* Dumps an entity from the current Model as inherited DumpEntity on currently defined Default Trace File (<level> interpreted according to the Norm, see WorkLibrary)
+		%feature("autodoc", "	* Dumps an entity from the current Model as inherited DumpEntity on currently defined Default Trace File --<level> interpreted according to the Norm, see WorkLibrary--
 
 	:param ent:
 	:type ent: Handle_Standard_Transient &
@@ -6759,7 +5484,7 @@ class IFSelect_WorkSession : public MMgt_TShared {
 ") PrintCheckList;
 		void PrintCheckList (const Interface_CheckIterator & checklist,const Standard_Boolean failsonly,const IFSelect_PrintCount mode);
 		%feature("compactdefaultargs") PrintSignatureList;
-		%feature("autodoc", "	* Prints a SignatureList to the current Trace File, controlled with the current Model <mode> defines the mode of printing (see SignatureList)
+		%feature("autodoc", "	* Prints a SignatureList to the current Trace File, controlled with the current Model <mode> defines the mode of printing --see SignatureList--
 
 	:param signlist:
 	:type signlist: Handle_IFSelect_SignatureList &
@@ -6769,7 +5494,7 @@ class IFSelect_WorkSession : public MMgt_TShared {
 ") PrintSignatureList;
 		void PrintSignatureList (const Handle_IFSelect_SignatureList & signlist,const IFSelect_PrintCount mode);
 		%feature("compactdefaultargs") EvaluateSelection;
-		%feature("autodoc", "	* Displays the list of Entities selected by a Selection (i.e. the result of EvalSelection).
+		%feature("autodoc", "	* Displays the list of Entities selected by a Selection --i.e. the result of EvalSelection--.
 
 	:param sel:
 	:type sel: Handle_IFSelect_Selection &
@@ -6777,7 +5502,7 @@ class IFSelect_WorkSession : public MMgt_TShared {
 ") EvaluateSelection;
 		void EvaluateSelection (const Handle_IFSelect_Selection & sel);
 		%feature("compactdefaultargs") EvaluateDispatch;
-		%feature("autodoc", "	* Displays the result of applying a Dispatch on the input Model (also shows Remainder if there is) <mode> = 0 (default), displays nothing else <mode> = 1 : displays also duplicated entities (because of this dispatch) <mode> = 2 : displays the entities of the starting Model which are not taken by this dispatch (forgotten entities) <mode> = 3 : displays both duplicated and forgotten entities Remark : EvaluateComplete displays these data evaluated for for all the dispatches, if there are several
+		%feature("autodoc", "	* Displays the result of applying a Dispatch on the input Model --also shows Remainder if there is-- <mode> = 0 --default--, displays nothing else <mode> = 1 : displays also duplicated entities --because of this dispatch-- <mode> = 2 : displays the entities of the starting Model which are not taken by this dispatch --forgotten entities-- <mode> = 3 : displays both duplicated and forgotten entities Remark : EvaluateComplete displays these data evaluated for for all the dispatches, if there are several
 
 	:param disp:
 	:type disp: Handle_IFSelect_Dispatch &
@@ -6787,7 +5512,7 @@ class IFSelect_WorkSession : public MMgt_TShared {
 ") EvaluateDispatch;
 		void EvaluateDispatch (const Handle_IFSelect_Dispatch & disp,const Standard_Integer mode = 0);
 		%feature("compactdefaultargs") EvaluateComplete;
-		%feature("autodoc", "	* Displays the effect of applying the ShareOut on the input Model. <mode> = 0 (default) : displays only roots for each packet, <mode> = 1 : displays all entities for each packet, plus duplicated entities <mode> = 2 : same as <mode> = 1, plus displays forgotten entities (which are in no packet at all)
+		%feature("autodoc", "	* Displays the effect of applying the ShareOut on the input Model. <mode> = 0 --default-- : displays only roots for each packet, <mode> = 1 : displays all entities for each packet, plus duplicated entities <mode> = 2 : same as <mode> = 1, plus displays forgotten entities --which are in no packet at all--
 
 	:param mode: default value is 0
 	:type mode: int
@@ -6795,7 +5520,7 @@ class IFSelect_WorkSession : public MMgt_TShared {
 ") EvaluateComplete;
 		void EvaluateComplete (const Standard_Integer mode = 0);
 		%feature("compactdefaultargs") ListEntities;
-		%feature("autodoc", "	* Internal method which displays an EntityIterator <mode> 0 gives short display (only entity numbers) 1 gives a more complete trace (1 line per Entity) (can be used each time a trace has to be output from a list) 2 gives a form suitable for givelist : (n1,n2,n3...)
+		%feature("autodoc", "	* Internal method which displays an EntityIterator <mode> 0 gives short display --only entity numbers-- 1 gives a more complete trace --1 line per Entity-- --can be used each time a trace has to be output from a list-- 2 gives a form suitable for givelist : --n1,n2,n3...--
 
 	:param iter:
 	:type iter: Interface_EntityIterator &
@@ -6826,7 +5551,7 @@ class IFSelect_WorkSession : public MMgt_TShared {
 %}
 
 %nodefaultctor Handle_IFSelect_WorkSession;
-class Handle_IFSelect_WorkSession : public Handle_MMgt_TShared {
+class Handle_IFSelect_WorkSession : public Handle_Standard_Transient {
 
     public:
         // constructors
@@ -6838,19 +5563,20 @@ class Handle_IFSelect_WorkSession : public Handle_MMgt_TShared {
         static const Handle_IFSelect_WorkSession DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_IFSelect_WorkSession {
     IFSelect_WorkSession* _get_reference() {
-    return (IFSelect_WorkSession*)$self->Access();
+    return (IFSelect_WorkSession*)$self->get();
     }
 };
 
 %extend Handle_IFSelect_WorkSession {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend IFSelect_WorkSession {
@@ -6862,7 +5588,7 @@ class Handle_IFSelect_WorkSession : public Handle_MMgt_TShared {
 class IFSelect_Act : public IFSelect_Activator {
 	public:
 		%feature("compactdefaultargs") IFSelect_Act;
-		%feature("autodoc", "	* Creates an Act with a name, help and a function mode (Add or AddSet) is given when recording
+		%feature("autodoc", "	* Creates an Act with a name, help and a function mode --Add or AddSet-- is given when recording
 
 	:param name:
 	:type name: char *
@@ -6892,7 +5618,7 @@ class IFSelect_Act : public IFSelect_Activator {
 ") Help;
 		const char * Help (const Standard_Integer number);
 		%feature("compactdefaultargs") SetGroup;
-		%feature("autodoc", "	* Changes the default group name for the following Acts group empty means to come back to default from Activator Also a file name can be precised (to query by getsource)
+		%feature("autodoc", "	* Changes the default group name for the following Acts group empty means to come back to default from Activator Also a file name can be precised --to query by getsource--
 
 	:param group:
 	:type group: char *
@@ -6914,7 +5640,7 @@ class IFSelect_Act : public IFSelect_Activator {
 ") AddFunc;
 		static void AddFunc (const char * name,const char * help,const IFSelect_ActFunc func);
 		%feature("compactdefaultargs") AddFSet;
-		%feature("autodoc", "	* Adds a function with its name and help : creates an Act then records it as function for XSET (i.e. to create control item)
+		%feature("autodoc", "	* Adds a function with its name and help : creates an Act then records it as function for XSET --i.e. to create control item--
 
 	:param name:
 	:type name: char *
@@ -6959,19 +5685,20 @@ class Handle_IFSelect_Act : public Handle_IFSelect_Activator {
         static const Handle_IFSelect_Act DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_IFSelect_Act {
     IFSelect_Act* _get_reference() {
-    return (IFSelect_Act*)$self->Access();
+    return (IFSelect_Act*)$self->get();
     }
 };
 
 %extend Handle_IFSelect_Act {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend IFSelect_Act {
@@ -7044,19 +5771,20 @@ class Handle_IFSelect_BasicDumper : public Handle_IFSelect_SessionDumper {
         static const Handle_IFSelect_BasicDumper DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_IFSelect_BasicDumper {
     IFSelect_BasicDumper* _get_reference() {
-    return (IFSelect_BasicDumper*)$self->Access();
+    return (IFSelect_BasicDumper*)$self->get();
     }
 };
 
 %extend Handle_IFSelect_BasicDumper {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend IFSelect_BasicDumper {
@@ -7076,7 +5804,7 @@ class IFSelect_CheckCounter : public IFSelect_SignatureList {
 ") IFSelect_CheckCounter;
 		 IFSelect_CheckCounter (const Standard_Boolean withlist = Standard_False);
 		%feature("compactdefaultargs") SetSignature;
-		%feature("autodoc", "	* Sets a specific signature Else, the current SignType (in the model) is used
+		%feature("autodoc", "	* Sets a specific signature Else, the current SignType --in the model-- is used
 
 	:param sign:
 	:type sign: Handle_MoniTool_SignText &
@@ -7090,7 +5818,7 @@ class IFSelect_CheckCounter : public IFSelect_SignatureList {
 ") Signature;
 		Handle_MoniTool_SignText Signature ();
 		%feature("compactdefaultargs") Analyse;
-		%feature("autodoc", "	* Analyses a CheckIterator according a Model (which detains the entities for which the CheckIterator has messages), i.e. counts messages for entities If <original> is True, does not consider final messages but those before interpretation (such as inserting variables : integers, reals, strings) If <failsonly> is True, only Fails are considered Remark : global messages are recorded with a Null entity
+		%feature("autodoc", "	* Analyses a CheckIterator according a Model --which detains the entities for which the CheckIterator has messages--, i.e. counts messages for entities If <original> is True, does not consider final messages but those before interpretation --such as inserting variables : integers, reals, strings-- If <failsonly> is True, only Fails are considered Remark : global messages are recorded with a Null entity
 
 	:param list:
 	:type list: Interface_CheckIterator &
@@ -7137,19 +5865,20 @@ class Handle_IFSelect_CheckCounter : public Handle_IFSelect_SignatureList {
         static const Handle_IFSelect_CheckCounter DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_IFSelect_CheckCounter {
     IFSelect_CheckCounter* _get_reference() {
-    return (IFSelect_CheckCounter*)$self->Access();
+    return (IFSelect_CheckCounter*)$self->get();
     }
 };
 
 %extend Handle_IFSelect_CheckCounter {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend IFSelect_CheckCounter {
@@ -7182,16 +5911,6 @@ class IFSelect_DispGlobal : public IFSelect_Dispatch {
 	:rtype: bool
 ") LimitedMax;
 		virtual Standard_Boolean LimitedMax (const Standard_Integer nbent,Standard_Integer &OutValue);
-		%feature("compactdefaultargs") PacketsCount;
-		%feature("autodoc", "	* Returns True (count of packets is well known) and count is 1
-
-	:param G:
-	:type G: Interface_Graph &
-	:param count:
-	:type count: int &
-	:rtype: int
-") PacketsCount;
-		virtual Standard_Integer PacketsCount (const Interface_Graph & G,Standard_Integer &OutValue);
 		%feature("compactdefaultargs") Packets;
 		%feature("autodoc", "	* Computes the list of produced Packets. It is made of only ONE Packet, which gets the RootResult from the Final Selection. Remark : the inherited exception raising is never activated.
 
@@ -7236,19 +5955,20 @@ class Handle_IFSelect_DispGlobal : public Handle_IFSelect_Dispatch {
         static const Handle_IFSelect_DispGlobal DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_IFSelect_DispGlobal {
     IFSelect_DispGlobal* _get_reference() {
-    return (IFSelect_DispGlobal*)$self->Access();
+    return (IFSelect_DispGlobal*)$self->get();
     }
 };
 
 %extend Handle_IFSelect_DispGlobal {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend IFSelect_DispGlobal {
@@ -7260,7 +5980,7 @@ class Handle_IFSelect_DispGlobal : public Handle_IFSelect_Dispatch {
 class IFSelect_DispPerCount : public IFSelect_Dispatch {
 	public:
 		%feature("compactdefaultargs") IFSelect_DispPerCount;
-		%feature("autodoc", "	* Creates a DispPerCount with no Count (default value 1)
+		%feature("autodoc", "	* Creates a DispPerCount with no Count --default value 1--
 
 	:rtype: None
 ") IFSelect_DispPerCount;
@@ -7280,7 +6000,7 @@ class IFSelect_DispPerCount : public IFSelect_Dispatch {
 ") SetCount;
 		void SetCount (const Handle_IFSelect_IntParam & count);
 		%feature("compactdefaultargs") CountValue;
-		%feature("autodoc", "	* Returns the effective value of the count parameter (if Count Parameter not Set or value not positive, returns 1)
+		%feature("autodoc", "	* Returns the effective value of the count parameter --if Count Parameter not Set or value not positive, returns 1--
 
 	:rtype: int
 ") CountValue;
@@ -7301,16 +6021,6 @@ class IFSelect_DispPerCount : public IFSelect_Dispatch {
 	:rtype: bool
 ") LimitedMax;
 		virtual Standard_Boolean LimitedMax (const Standard_Integer nbent,Standard_Integer &OutValue);
-		%feature("compactdefaultargs") PacketsCount;
-		%feature("autodoc", "	* Returns True (count is easy to know) and count is computed from length of input list (RootResult from Final Selection)
-
-	:param G:
-	:type G: Interface_Graph &
-	:param count:
-	:type count: int &
-	:rtype: int
-") PacketsCount;
-		virtual Standard_Integer PacketsCount (const Interface_Graph & G,Standard_Integer &OutValue);
 		%feature("compactdefaultargs") Packets;
 		%feature("autodoc", "	* Computes the list of produced Packets. It defines Packets in order to have at most <Count> Entities per Packet, Entities are given by RootResult from the Final Selection.
 
@@ -7355,19 +6065,20 @@ class Handle_IFSelect_DispPerCount : public Handle_IFSelect_Dispatch {
         static const Handle_IFSelect_DispPerCount DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_IFSelect_DispPerCount {
     IFSelect_DispPerCount* _get_reference() {
-    return (IFSelect_DispPerCount*)$self->Access();
+    return (IFSelect_DispPerCount*)$self->get();
     }
 };
 
 %extend Handle_IFSelect_DispPerCount {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend IFSelect_DispPerCount {
@@ -7379,7 +6090,7 @@ class Handle_IFSelect_DispPerCount : public Handle_IFSelect_Dispatch {
 class IFSelect_DispPerFiles : public IFSelect_Dispatch {
 	public:
 		%feature("compactdefaultargs") IFSelect_DispPerFiles;
-		%feature("autodoc", "	* Creates a DispPerFiles with no Count (default value 1 file)
+		%feature("autodoc", "	* Creates a DispPerFiles with no Count --default value 1 file--
 
 	:rtype: None
 ") IFSelect_DispPerFiles;
@@ -7399,7 +6110,7 @@ class IFSelect_DispPerFiles : public IFSelect_Dispatch {
 ") SetCount;
 		void SetCount (const Handle_IFSelect_IntParam & count);
 		%feature("compactdefaultargs") CountValue;
-		%feature("autodoc", "	* Returns the effective value of the count parameter (if Count Parameter not Set or value not positive, returns 1)
+		%feature("autodoc", "	* Returns the effective value of the count parameter --if Count Parameter not Set or value not positive, returns 1--
 
 	:rtype: int
 ") CountValue;
@@ -7420,16 +6131,6 @@ class IFSelect_DispPerFiles : public IFSelect_Dispatch {
 	:rtype: bool
 ") LimitedMax;
 		virtual Standard_Boolean LimitedMax (const Standard_Integer nbent,Standard_Integer &OutValue);
-		%feature("compactdefaultargs") PacketsCount;
-		%feature("autodoc", "	* Returns True (count is easy to know) and count is the minimum value between length of input list and CountValue
-
-	:param G:
-	:type G: Interface_Graph &
-	:param count:
-	:type count: int &
-	:rtype: int
-") PacketsCount;
-		virtual Standard_Integer PacketsCount (const Interface_Graph & G,Standard_Integer &OutValue);
 		%feature("compactdefaultargs") Packets;
 		%feature("autodoc", "	* Computes the list of produced Packets. It defines Packets in order to have <Count> Packets, except if the input count of Entities is lower. Entities are given by RootResult from the Final Selection.
 
@@ -7474,19 +6175,20 @@ class Handle_IFSelect_DispPerFiles : public Handle_IFSelect_Dispatch {
         static const Handle_IFSelect_DispPerFiles DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_IFSelect_DispPerFiles {
     IFSelect_DispPerFiles* _get_reference() {
-    return (IFSelect_DispPerFiles*)$self->Access();
+    return (IFSelect_DispPerFiles*)$self->get();
     }
 };
 
 %extend Handle_IFSelect_DispPerFiles {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend IFSelect_DispPerFiles {
@@ -7519,16 +6221,6 @@ class IFSelect_DispPerOne : public IFSelect_Dispatch {
 	:rtype: bool
 ") LimitedMax;
 		virtual Standard_Boolean LimitedMax (const Standard_Integer nbent,Standard_Integer &OutValue);
-		%feature("compactdefaultargs") PacketsCount;
-		%feature("autodoc", "	* Returns True (count is easy to know) and count is the length of the input list (RootResult from FinalSelection)
-
-	:param G:
-	:type G: Interface_Graph &
-	:param count:
-	:type count: int &
-	:rtype: int
-") PacketsCount;
-		virtual Standard_Integer PacketsCount (const Interface_Graph & G,Standard_Integer &OutValue);
 		%feature("compactdefaultargs") Packets;
 		%feature("autodoc", "	* Returns the list of produced Packets. It defines one Packet per Entity given by RootResult from the Final Selection.
 
@@ -7573,19 +6265,20 @@ class Handle_IFSelect_DispPerOne : public Handle_IFSelect_Dispatch {
         static const Handle_IFSelect_DispPerOne DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_IFSelect_DispPerOne {
     IFSelect_DispPerOne* _get_reference() {
-    return (IFSelect_DispPerOne*)$self->Access();
+    return (IFSelect_DispPerOne*)$self->get();
     }
 };
 
 %extend Handle_IFSelect_DispPerOne {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend IFSelect_DispPerOne {
@@ -7597,7 +6290,7 @@ class Handle_IFSelect_DispPerOne : public Handle_IFSelect_Dispatch {
 class IFSelect_DispPerSignature : public IFSelect_Dispatch {
 	public:
 		%feature("compactdefaultargs") IFSelect_DispPerSignature;
-		%feature("autodoc", "	* Creates a DispPerSignature with no SignCounter (by default, produces only one packet)
+		%feature("autodoc", "	* Creates a DispPerSignature with no SignCounter --by default, produces only one packet--
 
 	:rtype: None
 ") IFSelect_DispPerSignature;
@@ -7639,7 +6332,7 @@ class IFSelect_DispPerSignature : public IFSelect_Dispatch {
 ") LimitedMax;
 		virtual Standard_Boolean LimitedMax (const Standard_Integer nbent,Standard_Integer &OutValue);
 		%feature("compactdefaultargs") Packets;
-		%feature("autodoc", "	* Computes the list of produced Packets. It defines Packets from the SignCounter, which sirts the input Entities per Signature (specific of the SignCounter).
+		%feature("autodoc", "	* Computes the list of produced Packets. It defines Packets from the SignCounter, which sirts the input Entities per Signature --specific of the SignCounter--.
 
 	:param G:
 	:type G: Interface_Graph &
@@ -7682,19 +6375,20 @@ class Handle_IFSelect_DispPerSignature : public Handle_IFSelect_Dispatch {
         static const Handle_IFSelect_DispPerSignature DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_IFSelect_DispPerSignature {
     IFSelect_DispPerSignature* _get_reference() {
-    return (IFSelect_DispPerSignature*)$self->Access();
+    return (IFSelect_DispPerSignature*)$self->get();
     }
 };
 
 %extend Handle_IFSelect_DispPerSignature {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend IFSelect_DispPerSignature {
@@ -7706,7 +6400,7 @@ class Handle_IFSelect_DispPerSignature : public Handle_IFSelect_Dispatch {
 class IFSelect_Modifier : public IFSelect_GeneralModifier {
 	public:
 		%feature("compactdefaultargs") Perform;
-		%feature("autodoc", "	* This deferred method defines the action specific to each class of Modifier. It is called by a ModelCopier, once the Model generated and filled. ModelCopier has already checked the criteria (Dispatch, Model Rank, Selection) before calling it. //! <ctx> detains informations about original data and selection. The result of copying, on which modifications are to be done, is <target>. <TC> allows to run additional copies as required //! In case of Error, use methods CCheck from the ContextModif to aknowledge an entity Check or a Global Check with messages
+		%feature("autodoc", "	* This deferred method defines the action specific to each class of Modifier. It is called by a ModelCopier, once the Model generated and filled. ModelCopier has already checked the criteria --Dispatch, Model Rank, Selection-- before calling it. //! <ctx> detains informations about original data and selection. The result of copying, on which modifications are to be done, is <target>. <TC> allows to run additional copies as required //! In case of Error, use methods CCheck from the ContextModif to aknowledge an entity Check or a Global Check with messages
 
 	:param ctx:
 	:type ctx: IFSelect_ContextModif &
@@ -7753,19 +6447,20 @@ class Handle_IFSelect_Modifier : public Handle_IFSelect_GeneralModifier {
         static const Handle_IFSelect_Modifier DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_IFSelect_Modifier {
     IFSelect_Modifier* _get_reference() {
-    return (IFSelect_Modifier*)$self->Access();
+    return (IFSelect_Modifier*)$self->get();
     }
 };
 
 %extend Handle_IFSelect_Modifier {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend IFSelect_Modifier {
@@ -7777,7 +6472,7 @@ class Handle_IFSelect_Modifier : public Handle_IFSelect_GeneralModifier {
 class IFSelect_ParamEditor : public IFSelect_Editor {
 	public:
 		%feature("compactdefaultargs") IFSelect_ParamEditor;
-		%feature("autodoc", "	* Creates a ParamEditor, empty, with a maximum count of params (default is 100) And a label, by default it will be 'Param Editor'
+		%feature("autodoc", "	* Creates a ParamEditor, empty, with a maximum count of params --default is 100-- And a label, by default it will be 'Param Editor'
 
 	:param nbmax: default value is 100
 	:type nbmax: int
@@ -7890,19 +6585,20 @@ class Handle_IFSelect_ParamEditor : public Handle_IFSelect_Editor {
         static const Handle_IFSelect_ParamEditor DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_IFSelect_ParamEditor {
     IFSelect_ParamEditor* _get_reference() {
-    return (IFSelect_ParamEditor*)$self->Access();
+    return (IFSelect_ParamEditor*)$self->get();
     }
 };
 
 %extend Handle_IFSelect_ParamEditor {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend IFSelect_ParamEditor {
@@ -7955,19 +6651,20 @@ class Handle_IFSelect_SelectBase : public Handle_IFSelect_Selection {
         static const Handle_IFSelect_SelectBase DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_IFSelect_SelectBase {
     IFSelect_SelectBase* _get_reference() {
-    return (IFSelect_SelectBase*)$self->Access();
+    return (IFSelect_SelectBase*)$self->get();
     }
 };
 
 %extend Handle_IFSelect_SelectBase {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend IFSelect_SelectBase {
@@ -8001,7 +6698,7 @@ class IFSelect_SelectCombine : public IFSelect_Selection {
 ") InputRank;
 		Standard_Integer InputRank (const Handle_IFSelect_Selection & sel);
 		%feature("compactdefaultargs") Add;
-		%feature("autodoc", "	* Adds a Selection to the filling list By default, adds it to the end of the list A Positive rank less then NbInputs gives an insertion rank (InsertBefore : the new <atnum>th item of the list is <sel>)
+		%feature("autodoc", "	* Adds a Selection to the filling list By default, adds it to the end of the list A Positive rank less then NbInputs gives an insertion rank --InsertBefore : the new <atnum>th item of the list is <sel>--
 
 	:param sel:
 	:type sel: Handle_IFSelect_Selection &
@@ -8068,19 +6765,20 @@ class Handle_IFSelect_SelectCombine : public Handle_IFSelect_Selection {
         static const Handle_IFSelect_SelectCombine DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_IFSelect_SelectCombine {
     IFSelect_SelectCombine* _get_reference() {
-    return (IFSelect_SelectCombine*)$self->Access();
+    return (IFSelect_SelectCombine*)$self->get();
     }
 };
 
 %extend Handle_IFSelect_SelectCombine {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend IFSelect_SelectCombine {
@@ -8167,19 +6865,20 @@ class Handle_IFSelect_SelectControl : public Handle_IFSelect_Selection {
         static const Handle_IFSelect_SelectControl DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_IFSelect_SelectControl {
     IFSelect_SelectControl* _get_reference() {
-    return (IFSelect_SelectControl*)$self->Access();
+    return (IFSelect_SelectControl*)$self->get();
     }
 };
 
 %extend Handle_IFSelect_SelectControl {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend IFSelect_SelectControl {
@@ -8272,19 +6971,20 @@ class Handle_IFSelect_SelectDeduct : public Handle_IFSelect_Selection {
         static const Handle_IFSelect_SelectDeduct DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_IFSelect_SelectDeduct {
     IFSelect_SelectDeduct* _get_reference() {
-    return (IFSelect_SelectDeduct*)$self->Access();
+    return (IFSelect_SelectDeduct*)$self->get();
     }
 };
 
 %extend Handle_IFSelect_SelectDeduct {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend IFSelect_SelectDeduct {
@@ -8296,7 +6996,7 @@ class Handle_IFSelect_SelectDeduct : public Handle_IFSelect_Selection {
 class IFSelect_SessionPilot : public IFSelect_Activator {
 	public:
 		%feature("compactdefaultargs") IFSelect_SessionPilot;
-		%feature("autodoc", "	* Creates an empty SessionPilot, with a prompt which will be displayed on querying commands. If not precised (''), this prompt is set to 'Test-XSTEP>'
+		%feature("autodoc", "	* Creates an empty SessionPilot, with a prompt which will be displayed on querying commands. If not precised --''--, this prompt is set to 'Test-XSTEP>'
 
 	:param prompt: default value is ""
 	:type prompt: char *
@@ -8310,7 +7010,7 @@ class IFSelect_SessionPilot : public IFSelect_Activator {
 ") Session;
 		Handle_IFSelect_WorkSession Session ();
 		%feature("compactdefaultargs") Library;
-		%feature("autodoc", "	* Returns the WorKlibrary (Null if not set). WorkLibrary is used to Read and Write Files, according to the Norm
+		%feature("autodoc", "	* Returns the WorKlibrary --Null if not set--. WorkLibrary is used to Read and Write Files, according to the Norm
 
 	:rtype: Handle_IFSelect_WorkLibrary
 ") Library;
@@ -8346,7 +7046,7 @@ class IFSelect_SessionPilot : public IFSelect_Activator {
 ") SetRecordMode;
 		void SetRecordMode (const Standard_Boolean mode);
 		%feature("compactdefaultargs") SetCommandLine;
-		%feature("autodoc", "	* Sets the value of the Command Line to be interpreted Also prepares the interpretation (splitting by blanks)
+		%feature("autodoc", "	* Sets the value of the Command Line to be interpreted Also prepares the interpretation --splitting by blanks--
 
 	:param command:
 	:type command: TCollection_AsciiString &
@@ -8360,7 +7060,7 @@ class IFSelect_SessionPilot : public IFSelect_Activator {
 ") CommandLine;
 		const TCollection_AsciiString & CommandLine ();
 		%feature("compactdefaultargs") CommandPart;
-		%feature("autodoc", "	* Returns the part of the command line which begins at argument <numarg> between 0 and NbWords-1 (by default, all the line) Empty string if out of range
+		%feature("autodoc", "	* Returns the part of the command line which begins at argument <numarg> between 0 and NbWords-1 --by default, all the line-- Empty string if out of range
 
 	:param numarg: default value is 0
 	:type numarg: int
@@ -8368,7 +7068,7 @@ class IFSelect_SessionPilot : public IFSelect_Activator {
 ") CommandPart;
 		const char * CommandPart (const Standard_Integer numarg = 0);
 		%feature("compactdefaultargs") NbWords;
-		%feature("autodoc", "	* Returns the count of words of the Command Line, separated by blanks : 0 if empty, one if a command without args, else it gives the count of args minus one. Warning : limited to 10 (command title + 9 args)
+		%feature("autodoc", "	* Returns the count of words of the Command Line, separated by blanks : 0 if empty, one if a command without args, else it gives the count of args minus one. Warning : limited to 10 --command title + 9 args--
 
 	:rtype: int
 ") NbWords;
@@ -8382,7 +7082,7 @@ class IFSelect_SessionPilot : public IFSelect_Activator {
 ") Word;
 		const TCollection_AsciiString & Word (const Standard_Integer num);
 		%feature("compactdefaultargs") Arg;
-		%feature("autodoc", "	* Returns a word given its rank, as a CString. As for Word, begins at 0 (the command name), etc...
+		%feature("autodoc", "	* Returns a word given its rank, as a CString. As for Word, begins at 0 --the command name--, etc...
 
 	:param num:
 	:type num: int
@@ -8404,7 +7104,7 @@ class IFSelect_SessionPilot : public IFSelect_Activator {
 ") NbCommands;
 		Standard_Integer NbCommands ();
 		%feature("compactdefaultargs") Command;
-		%feature("autodoc", "	* Returns a recorded Command, given its rank (from 1)
+		%feature("autodoc", "	* Returns a recorded Command, given its rank --from 1--
 
 	:param num:
 	:type num: int
@@ -8426,13 +7126,13 @@ class IFSelect_SessionPilot : public IFSelect_Activator {
 ") RecordedItem;
 		Handle_Standard_Transient RecordedItem ();
 		%feature("compactdefaultargs") Clear;
-		%feature("autodoc", "	* Clears the recorded informations (commands, objects)
+		%feature("autodoc", "	* Clears the recorded informations --commands, objects--
 
 	:rtype: None
 ") Clear;
 		void Clear ();
 		%feature("compactdefaultargs") ReadScript;
-		%feature("autodoc", "	* Reads commands from a Script File, named <file>. By default (file = ''), reads from standard input with a prompt Else (reading from a file), the read commands are displayed onto standard output. Allows nested reads. Reading is stopped either by command x or exit, or by reaching end of file Return Value follows the rules of Do : RetEnd for normal end, RetFail if script could not be opened
+		%feature("autodoc", "	* Reads commands from a Script File, named <file>. By default --file = ''--, reads from standard input with a prompt Else --reading from a file--, the read commands are displayed onto standard output. Allows nested reads. Reading is stopped either by command x or exit, or by reaching end of file Return Value follows the rules of Do : RetEnd for normal end, RetFail if script could not be opened
 
 	:param file: default value is ""
 	:type file: char *
@@ -8440,13 +7140,13 @@ class IFSelect_SessionPilot : public IFSelect_Activator {
 ") ReadScript;
 		IFSelect_ReturnStatus ReadScript (const char * file = "");
 		%feature("compactdefaultargs") Perform;
-		%feature("autodoc", "	* Executes the Command, itself (for built-in commands, which have priority) or by using the list of Activators. The value returned is : RetVoid if nothing done (void command) RetDone if execution OK, RetEnd if END OF SESSION, RetError if command unknown or incorrect, RetFail if error on execution If execution is OK and RecordMode is set, this Command Line is recorded to the list (see below).
+		%feature("autodoc", "	* Executes the Command, itself --for built-in commands, which have priority-- or by using the list of Activators. The value returned is : RetVoid if nothing done --void command-- RetDone if execution OK, RetEnd if END OF SESSION, RetError if command unknown or incorrect, RetFail if error on execution If execution is OK and RecordMode is set, this Command Line is recorded to the list --see below--.
 
 	:rtype: IFSelect_ReturnStatus
 ") Perform;
 		IFSelect_ReturnStatus Perform ();
 		%feature("compactdefaultargs") ExecuteAlias;
-		%feature("autodoc", "	* Executes the Commands, except that the command name (word 0) is aliased. The rest of the command line is unchanged If <alias> is empty, Executes with no change //! Error status is returned if the alias is unknown as command
+		%feature("autodoc", "	* Executes the Commands, except that the command name --word 0-- is aliased. The rest of the command line is unchanged If <alias> is empty, Executes with no change //! Error status is returned if the alias is unknown as command
 
 	:param aliasname:
 	:type aliasname: TCollection_AsciiString &
@@ -8474,7 +7174,7 @@ class IFSelect_SessionPilot : public IFSelect_Activator {
 ") ExecuteCounter;
 		IFSelect_ReturnStatus ExecuteCounter (const Handle_IFSelect_SignCounter & counter,const Standard_Integer numword,const IFSelect_PrintCount mode = IFSelect_CountByItem);
 		%feature("compactdefaultargs") Number;
-		%feature("autodoc", "	* Interprets a string value as an entity number : if it gives an integer, returns its value else, considers it as ENtityLabel (preferably case sensitive) in case of failure, returns 0
+		%feature("autodoc", "	* Interprets a string value as an entity number : if it gives an integer, returns its value else, considers it as ENtityLabel --preferably case sensitive-- in case of failure, returns 0
 
 	:param val:
 	:type val: char *
@@ -8482,7 +7182,7 @@ class IFSelect_SessionPilot : public IFSelect_Activator {
 ") Number;
 		Standard_Integer Number (const char * val);
 		%feature("compactdefaultargs") Do;
-		%feature("autodoc", "	* Processes specific commands, which are : x or exit for end of session ? or help for help messages xcommand to control command lines (Record Mode, List, Clear, File Output ...) xsource to execute a command file (no nesting allowed), in case of error, source is stopped and keyword recovers xstep is a simple prefix (useful in a wider environment, to avoid conflicts on command names) xset control commands which create items with names
+		%feature("autodoc", "	* Processes specific commands, which are : x or exit for end of session ? or help for help messages xcommand to control command lines --Record Mode, List, Clear, File Output ...-- xsource to execute a command file --no nesting allowed--, in case of error, source is stopped and keyword recovers xstep is a simple prefix --useful in a wider environment, to avoid conflicts on command names-- xset control commands which create items with names
 
 	:param number:
 	:type number: int
@@ -8492,7 +7192,7 @@ class IFSelect_SessionPilot : public IFSelect_Activator {
 ") Do;
 		IFSelect_ReturnStatus Do (const Standard_Integer number,const Handle_IFSelect_SessionPilot & session);
 		%feature("compactdefaultargs") Help;
-		%feature("autodoc", "	* Help for specific commands (apart from general command help)
+		%feature("autodoc", "	* Help for specific commands --apart from general command help--
 
 	:param number:
 	:type number: int
@@ -8533,19 +7233,20 @@ class Handle_IFSelect_SessionPilot : public Handle_IFSelect_Activator {
         static const Handle_IFSelect_SessionPilot DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_IFSelect_SessionPilot {
     IFSelect_SessionPilot* _get_reference() {
-    return (IFSelect_SessionPilot*)$self->Access();
+    return (IFSelect_SessionPilot*)$self->get();
     }
 };
 
 %extend Handle_IFSelect_SessionPilot {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend IFSelect_SessionPilot {
@@ -8606,19 +7307,20 @@ class Handle_IFSelect_SignCategory : public Handle_IFSelect_Signature {
         static const Handle_IFSelect_SignCategory DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_IFSelect_SignCategory {
     IFSelect_SignCategory* _get_reference() {
-    return (IFSelect_SignCategory*)$self->Access();
+    return (IFSelect_SignCategory*)$self->get();
     }
 };
 
 %extend Handle_IFSelect_SignCategory {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend IFSelect_SignCategory {
@@ -8630,7 +7332,7 @@ class Handle_IFSelect_SignCategory : public Handle_IFSelect_Signature {
 class IFSelect_SignCounter : public IFSelect_SignatureList {
 	public:
 		%feature("compactdefaultargs") IFSelect_SignCounter;
-		%feature("autodoc", "	* Creates a SignCounter, without proper Signature If <withmap> is True (default), added entities are counted only if they are not yet recorded in the map Map control can be set off if the input garantees uniqueness of data <withlist> is transmitted to SignatureList (option to list entities, not only to count them).
+		%feature("autodoc", "	* Creates a SignCounter, without proper Signature If <withmap> is True --default--, added entities are counted only if they are not yet recorded in the map Map control can be set off if the input garantees uniqueness of data <withlist> is transmitted to SignatureList --option to list entities, not only to count them--.
 
 	:param withmap: default value is Standard_True
 	:type withmap: bool
@@ -8666,7 +7368,7 @@ class IFSelect_SignCounter : public IFSelect_SignatureList {
 ") SetMap;
 		void SetMap (const Standard_Boolean withmap);
 		%feature("compactdefaultargs") AddEntity;
-		%feature("autodoc", "	* Adds an entity by considering its signature, which is given by call to method AddSign Returns True if added, False if already in the map (and map control status set)
+		%feature("autodoc", "	* Adds an entity by considering its signature, which is given by call to method AddSign Returns True if added, False if already in the map --and map control status set--
 
 	:param ent:
 	:type ent: Handle_Standard_Transient &
@@ -8676,7 +7378,7 @@ class IFSelect_SignCounter : public IFSelect_SignatureList {
 ") AddEntity;
 		virtual Standard_Boolean AddEntity (const Handle_Standard_Transient & ent,const Handle_Interface_InterfaceModel & model);
 		%feature("compactdefaultargs") AddSign;
-		%feature("autodoc", "	* Adds an entity (already filtered by Map) with its signature. This signature can be computed with the containing model. Its value is provided by the object Signature given at start, if no Signature is defined, it does nothing. //! Can be redefined (in this case, see also Sign)
+		%feature("autodoc", "	* Adds an entity --already filtered by Map-- with its signature. This signature can be computed with the containing model. Its value is provided by the object Signature given at start, if no Signature is defined, it does nothing. //! Can be redefined --in this case, see also Sign--
 
 	:param ent:
 	:type ent: Handle_Standard_Transient &
@@ -8724,7 +7426,7 @@ class IFSelect_SignCounter : public IFSelect_SignatureList {
 ") AddFromSelection;
 		void AddFromSelection (const Handle_IFSelect_Selection & sel,const Interface_Graph & G);
 		%feature("compactdefaultargs") SetSelection;
-		%feature("autodoc", "	* Sets a Selection as input : this causes content to be cleared then the Selection to be ready to compute (but not immediatly)
+		%feature("autodoc", "	* Sets a Selection as input : this causes content to be cleared then the Selection to be ready to compute --but not immediatly--
 
 	:param sel:
 	:type sel: Handle_IFSelect_Selection &
@@ -8738,7 +7440,7 @@ class IFSelect_SignCounter : public IFSelect_SignatureList {
 ") Selection;
 		Handle_IFSelect_Selection Selection ();
 		%feature("compactdefaultargs") SetSelMode;
-		%feature("autodoc", "	* Changes the mode of working with the selection : -1 just clears optimisation data and nothing else 0 clears it 1 inhibits it for computing (but no clearing) 2 sets it active for computing Default at creation is 0, after SetSelection (not null) is 2
+		%feature("autodoc", "	* Changes the mode of working with the selection : -1 just clears optimisation data and nothing else 0 clears it 1 inhibits it for computing --but no clearing-- 2 sets it active for computing Default at creation is 0, after SetSelection --not null-- is 2
 
 	:param selmode:
 	:type selmode: int
@@ -8752,7 +7454,7 @@ class IFSelect_SignCounter : public IFSelect_SignatureList {
 ") SelMode;
 		Standard_Integer SelMode ();
 		%feature("compactdefaultargs") ComputeSelected;
-		%feature("autodoc", "	* Computes from the selection result, if selection is active (mode 2). If selection is not defined (mode 0) or is inhibited (mode 1) does nothing. Returns True if computation is done (or optimised), False else This method is called by ComputeCounter from WorkSession //! If <forced> is True, recomputes systematically Else (D), if the counter was not cleared and if the former computed result started from the same total size of Graph and same count of selected entities : computation is not redone unless <forced> is given as True
+		%feature("autodoc", "	* Computes from the selection result, if selection is active --mode 2--. If selection is not defined --mode 0-- or is inhibited --mode 1-- does nothing. Returns True if computation is done --or optimised--, False else This method is called by ComputeCounter from WorkSession //! If <forced> is True, recomputes systematically Else --D--, if the counter was not cleared and if the former computed result started from the same total size of Graph and same count of selected entities : computation is not redone unless <forced> is given as True
 
 	:param G:
 	:type G: Interface_Graph &
@@ -8815,19 +7517,20 @@ class Handle_IFSelect_SignCounter : public Handle_IFSelect_SignatureList {
         static const Handle_IFSelect_SignCounter DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_IFSelect_SignCounter {
     IFSelect_SignCounter* _get_reference() {
-    return (IFSelect_SignCounter*)$self->Access();
+    return (IFSelect_SignCounter*)$self->get();
     }
 };
 
 %extend Handle_IFSelect_SignCounter {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend IFSelect_SignCounter {
@@ -8847,7 +7550,7 @@ class IFSelect_SignMultiple : public IFSelect_Signature {
 ") IFSelect_SignMultiple;
 		 IFSelect_SignMultiple (const char * name);
 		%feature("compactdefaultargs") Add;
-		%feature("autodoc", "	* Adds a Signature. Width, if given, gives the tabulation If <maxi> is True, it is a forced tabulation (overlength is replaced by a final dot) If <maxi> is False, just 3 blanks follow an overlength
+		%feature("autodoc", "	* Adds a Signature. Width, if given, gives the tabulation If <maxi> is True, it is a forced tabulation --overlength is replaced by a final dot-- If <maxi> is False, just 3 blanks follow an overlength
 
 	:param subsign:
 	:type subsign: Handle_IFSelect_Signature &
@@ -8869,7 +7572,7 @@ class IFSelect_SignMultiple : public IFSelect_Signature {
 ") Value;
 		const char * Value (const Handle_Standard_Transient & ent,const Handle_Interface_InterfaceModel & model);
 		%feature("compactdefaultargs") Matches;
-		%feature("autodoc", "	* Specialized Match Rule If <exact> is False, simply checks if at least one sub-item matches If <exact> is True, standard match with Value (i.e. tabulations must be respected)
+		%feature("autodoc", "	* Specialized Match Rule If <exact> is False, simply checks if at least one sub-item matches If <exact> is True, standard match with Value --i.e. tabulations must be respected--
 
 	:param ent:
 	:type ent: Handle_Standard_Transient &
@@ -8916,19 +7619,20 @@ class Handle_IFSelect_SignMultiple : public Handle_IFSelect_Signature {
         static const Handle_IFSelect_SignMultiple DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_IFSelect_SignMultiple {
     IFSelect_SignMultiple* _get_reference() {
-    return (IFSelect_SignMultiple*)$self->Access();
+    return (IFSelect_SignMultiple*)$self->get();
     }
 };
 
 %extend Handle_IFSelect_SignMultiple {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend IFSelect_SignMultiple {
@@ -8940,7 +7644,7 @@ class Handle_IFSelect_SignMultiple : public Handle_IFSelect_Signature {
 class IFSelect_SignType : public IFSelect_Signature {
 	public:
 		%feature("compactdefaultargs") IFSelect_SignType;
-		%feature("autodoc", "	* Returns a SignType <nopk> false (D) : complete dynamic type (name = Dynamic Type) <nopk> true : class type without pk (name = Class Type)
+		%feature("autodoc", "	* Returns a SignType <nopk> false --D-- : complete dynamic type --name = Dynamic Type-- <nopk> true : class type without pk --name = Class Type--
 
 	:param nopk: default value is Standard_False
 	:type nopk: bool
@@ -8991,19 +7695,20 @@ class Handle_IFSelect_SignType : public Handle_IFSelect_Signature {
         static const Handle_IFSelect_SignType DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_IFSelect_SignType {
     IFSelect_SignType* _get_reference() {
-    return (IFSelect_SignType*)$self->Access();
+    return (IFSelect_SignType*)$self->get();
     }
 };
 
 %extend Handle_IFSelect_SignType {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend IFSelect_SignType {
@@ -9021,7 +7726,7 @@ class IFSelect_SignValidity : public IFSelect_Signature {
 ") IFSelect_SignValidity;
 		 IFSelect_SignValidity ();
 		%feature("compactdefaultargs") CVal;
-		%feature("autodoc", "	* Returns the Signature for a Transient object, as a validity deducted from data (reports) stored in the model. Class method, can be called by any one
+		%feature("autodoc", "	* Returns the Signature for a Transient object, as a validity deducted from data --reports-- stored in the model. Class method, can be called by any one
 
 	:param ent:
 	:type ent: Handle_Standard_Transient &
@@ -9031,7 +7736,7 @@ class IFSelect_SignValidity : public IFSelect_Signature {
 ") CVal;
 		static const char * CVal (const Handle_Standard_Transient & ent,const Handle_Interface_InterfaceModel & model);
 		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	* Returns the Signature for a Transient object, as a validity deducted from data (reports) stored in the model Calls the class method CVal
+		%feature("autodoc", "	* Returns the Signature for a Transient object, as a validity deducted from data --reports-- stored in the model Calls the class method CVal
 
 	:param ent:
 	:type ent: Handle_Standard_Transient &
@@ -9074,19 +7779,20 @@ class Handle_IFSelect_SignValidity : public Handle_IFSelect_Signature {
         static const Handle_IFSelect_SignValidity DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_IFSelect_SignValidity {
     IFSelect_SignValidity* _get_reference() {
-    return (IFSelect_SignValidity*)$self->Access();
+    return (IFSelect_SignValidity*)$self->get();
     }
 };
 
 %extend Handle_IFSelect_SignValidity {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend IFSelect_SignValidity {
@@ -9118,7 +7824,7 @@ class IFSelect_TransformStandard : public IFSelect_Transformer {
 ") CopyOption;
 		Standard_Boolean CopyOption ();
 		%feature("compactdefaultargs") SetSelection;
-		%feature("autodoc", "	* Sets a Selection (or unsets if Null) This Selection then defines the list of entities on which the Modifiers will be applied If it is set, it has priority on Selections of Modifiers Else, for each Modifier its Selection is evaluated By default, all the Model is taken
+		%feature("autodoc", "	* Sets a Selection --or unsets if Null-- This Selection then defines the list of entities on which the Modifiers will be applied If it is set, it has priority on Selections of Modifiers Else, for each Modifier its Selection is evaluated By default, all the Model is taken
 
 	:param sel:
 	:type sel: Handle_IFSelect_Selection &
@@ -9154,7 +7860,7 @@ class IFSelect_TransformStandard : public IFSelect_Transformer {
 ") ModifierRank;
 		Standard_Integer ModifierRank (const Handle_IFSelect_Modifier & modif);
 		%feature("compactdefaultargs") AddModifier;
-		%feature("autodoc", "	* Adds a Modifier to the list : - <atnum> = 0 (default) : at the end of the list - <atnum> > 0 : at rank <atnum> Returns True if done, False if <atnum> is out of range
+		%feature("autodoc", "	* Adds a Modifier to the list : - <atnum> = 0 --default-- : at the end of the list - <atnum> > 0 : at rank <atnum> Returns True if done, False if <atnum> is out of range
 
 	:param modif:
 	:type modif: Handle_IFSelect_Modifier &
@@ -9180,7 +7886,7 @@ class IFSelect_TransformStandard : public IFSelect_Transformer {
 ") RemoveModifier;
 		Standard_Boolean RemoveModifier (const Standard_Integer num);
 		%feature("compactdefaultargs") Perform;
-		%feature("autodoc", "	* Performs the Standard Transformation, by calling Copy then ApplyModifiers (which can return an error status)
+		%feature("autodoc", "	* Performs the Standard Transformation, by calling Copy then ApplyModifiers --which can return an error status--
 
 	:param G:
 	:type G: Interface_Graph &
@@ -9206,7 +7912,7 @@ class IFSelect_TransformStandard : public IFSelect_Transformer {
 ") Copy;
 		void Copy (const Interface_Graph & G,Interface_CopyTool & TC,Handle_Interface_InterfaceModel & newmod);
 		%feature("compactdefaultargs") StandardCopy;
-		%feature("autodoc", "	* This is the standard action of Copy : its takes into account only the remaining entities (noted by Graph Status positive) and their proper dependances of course. Produces a new model.
+		%feature("autodoc", "	* This is the standard action of Copy : its takes into account only the remaining entities --noted by Graph Status positive-- and their proper dependances of course. Produces a new model.
 
 	:param G:
 	:type G: Interface_Graph &
@@ -9230,7 +7936,7 @@ class IFSelect_TransformStandard : public IFSelect_Transformer {
 ") OnTheSpot;
 		void OnTheSpot (const Interface_Graph & G,Interface_CopyTool & TC,Handle_Interface_InterfaceModel & newmod);
 		%feature("compactdefaultargs") ApplyModifiers;
-		%feature("autodoc", "	* Applies the modifiers sequencially. For each one, prepares required data (if a Selection is associated as a filter). For the option OnTheSpot, it determines if the graph may be changed and updates <newmod> if required If a Modifier causes an error (check 'HasFailed'), ApplyModifier stops : the following Modifiers are ignored
+		%feature("autodoc", "	* Applies the modifiers sequencially. For each one, prepares required data --if a Selection is associated as a filter--. For the option OnTheSpot, it determines if the graph may be changed and updates <newmod> if required If a Modifier causes an error --check 'HasFailed'--, ApplyModifier stops : the following Modifiers are ignored
 
 	:param G:
 	:type G: Interface_Graph &
@@ -9295,19 +8001,20 @@ class Handle_IFSelect_TransformStandard : public Handle_IFSelect_Transformer {
         static const Handle_IFSelect_TransformStandard DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_IFSelect_TransformStandard {
     IFSelect_TransformStandard* _get_reference() {
-    return (IFSelect_TransformStandard*)$self->Access();
+    return (IFSelect_TransformStandard*)$self->get();
     }
 };
 
 %extend Handle_IFSelect_TransformStandard {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend IFSelect_TransformStandard {
@@ -9386,19 +8093,20 @@ class Handle_IFSelect_GraphCounter : public Handle_IFSelect_SignCounter {
         static const Handle_IFSelect_GraphCounter DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_IFSelect_GraphCounter {
     IFSelect_GraphCounter* _get_reference() {
-    return (IFSelect_GraphCounter*)$self->Access();
+    return (IFSelect_GraphCounter*)$self->get();
     }
 };
 
 %extend Handle_IFSelect_GraphCounter {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend IFSelect_GraphCounter {
@@ -9477,19 +8185,20 @@ class Handle_IFSelect_ModifEditForm : public Handle_IFSelect_Modifier {
         static const Handle_IFSelect_ModifEditForm DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_IFSelect_ModifEditForm {
     IFSelect_ModifEditForm* _get_reference() {
-    return (IFSelect_ModifEditForm*)$self->Access();
+    return (IFSelect_ModifEditForm*)$self->get();
     }
 };
 
 %extend Handle_IFSelect_ModifEditForm {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend IFSelect_ModifEditForm {
@@ -9501,7 +8210,7 @@ class Handle_IFSelect_ModifEditForm : public Handle_IFSelect_Modifier {
 class IFSelect_ModifReorder : public IFSelect_Modifier {
 	public:
 		%feature("compactdefaultargs") IFSelect_ModifReorder;
-		%feature("autodoc", "	* Creates a ModifReorder. It may change the graph (it does !) If <rootlast> is True (D), roots are set at the end of packets Else, they are set at beginning (as done by AddWithRefs)
+		%feature("autodoc", "	* Creates a ModifReorder. It may change the graph --it does !-- If <rootlast> is True --D--, roots are set at the end of packets Else, they are set at beginning --as done by AddWithRefs--
 
 	:param rootlast: default value is Standard_True
 	:type rootlast: bool
@@ -9509,7 +8218,7 @@ class IFSelect_ModifReorder : public IFSelect_Modifier {
 ") IFSelect_ModifReorder;
 		 IFSelect_ModifReorder (const Standard_Boolean rootlast = Standard_True);
 		%feature("compactdefaultargs") Perform;
-		%feature("autodoc", "	* Acts by computing orders (by method All from ShareTool) then forcing them in the model. Remark that selection is ignored : ALL the model is processed in once
+		%feature("autodoc", "	* Acts by computing orders --by method All from ShareTool-- then forcing them in the model. Remark that selection is ignored : ALL the model is processed in once
 
 	:param ctx:
 	:type ctx: IFSelect_ContextModif &
@@ -9523,7 +8232,7 @@ class IFSelect_ModifReorder : public IFSelect_Modifier {
 ") Perform;
 		void Perform (IFSelect_ContextModif & ctx,const Handle_Interface_InterfaceModel & target,const Handle_Interface_Protocol & protocol,Interface_CopyTool & TC);
 		%feature("compactdefaultargs") Label;
-		%feature("autodoc", "	* Returns Label as 'Reorder, Roots (last or first)'
+		%feature("autodoc", "	* Returns Label as 'Reorder, Roots --last or first--'
 
 	:rtype: TCollection_AsciiString
 ") Label;
@@ -9562,19 +8271,20 @@ class Handle_IFSelect_ModifReorder : public Handle_IFSelect_Modifier {
         static const Handle_IFSelect_ModifReorder DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_IFSelect_ModifReorder {
     IFSelect_ModifReorder* _get_reference() {
-    return (IFSelect_ModifReorder*)$self->Access();
+    return (IFSelect_ModifReorder*)$self->get();
     }
 };
 
 %extend Handle_IFSelect_ModifReorder {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend IFSelect_ModifReorder {
@@ -9586,7 +8296,7 @@ class Handle_IFSelect_ModifReorder : public Handle_IFSelect_Modifier {
 class IFSelect_SelectAnyList : public IFSelect_SelectDeduct {
 	public:
 		%feature("compactdefaultargs") KeepInputEntity;
-		%feature("autodoc", "	* Keeps Input Entity, as having required type. It works by keeping in <iter>, only suitable Entities (SelectType can be used). Called by RootResult (which waits for ONE ENTITY MAX)
+		%feature("autodoc", "	* Keeps Input Entity, as having required type. It works by keeping in <iter>, only suitable Entities --SelectType can be used--. Called by RootResult --which waits for ONE ENTITY MAX--
 
 	:param iter:
 	:type iter: Interface_EntityIterator &
@@ -9612,7 +8322,7 @@ class IFSelect_SelectAnyList : public IFSelect_SelectDeduct {
 ") SetRange;
 		void SetRange (const Handle_IFSelect_IntParam & rankfrom,const Handle_IFSelect_IntParam & rankto);
 		%feature("compactdefaultargs") SetOne;
-		%feature("autodoc", "	* Sets a unique number (only one Entity will be sorted as True)
+		%feature("autodoc", "	* Sets a unique number --only one Entity will be sorted as True--
 
 	:param rank:
 	:type rank: Handle_IFSelect_IntParam &
@@ -9628,7 +8338,7 @@ class IFSelect_SelectAnyList : public IFSelect_SelectDeduct {
 ") SetFrom;
 		void SetFrom (const Handle_IFSelect_IntParam & rankfrom);
 		%feature("compactdefaultargs") SetUntil;
-		%feature("autodoc", "	* Sets an Upper limit but no lower limit (equivalent to lower 1)
+		%feature("autodoc", "	* Sets an Upper limit but no lower limit --equivalent to lower 1--
 
 	:param rankto:
 	:type rankto: Handle_IFSelect_IntParam &
@@ -9642,13 +8352,13 @@ class IFSelect_SelectAnyList : public IFSelect_SelectDeduct {
 ") HasLower;
 		Standard_Boolean HasLower ();
 		%feature("compactdefaultargs") Lower;
-		%feature("autodoc", "	* Returns Lower limit (if there is; else, value is senseless)
+		%feature("autodoc", "	* Returns Lower limit --if there is; else, value is senseless--
 
 	:rtype: Handle_IFSelect_IntParam
 ") Lower;
 		Handle_IFSelect_IntParam Lower ();
 		%feature("compactdefaultargs") LowerValue;
-		%feature("autodoc", "	* Returns Integer Value of Lower Limit (0 if none)
+		%feature("autodoc", "	* Returns Integer Value of Lower Limit --0 if none--
 
 	:rtype: int
 ") LowerValue;
@@ -9660,19 +8370,19 @@ class IFSelect_SelectAnyList : public IFSelect_SelectDeduct {
 ") HasUpper;
 		Standard_Boolean HasUpper ();
 		%feature("compactdefaultargs") Upper;
-		%feature("autodoc", "	* Returns Upper limit (if there is; else, value is senseless)
+		%feature("autodoc", "	* Returns Upper limit --if there is; else, value is senseless--
 
 	:rtype: Handle_IFSelect_IntParam
 ") Upper;
 		Handle_IFSelect_IntParam Upper ();
 		%feature("compactdefaultargs") UpperValue;
-		%feature("autodoc", "	* Returns Integer Value of Upper Limit (0 if none)
+		%feature("autodoc", "	* Returns Integer Value of Upper Limit --0 if none--
 
 	:rtype: int
 ") UpperValue;
 		Standard_Integer UpperValue ();
 		%feature("compactdefaultargs") RootResult;
-		%feature("autodoc", "	* Returns the list of selected entities (list of entities complying with rank criterium) Error if the input list has more than one Item
+		%feature("autodoc", "	* Returns the list of selected entities --list of entities complying with rank criterium-- Error if the input list has more than one Item
 
 	:param G:
 	:type G: Interface_Graph &
@@ -9739,19 +8449,20 @@ class Handle_IFSelect_SelectAnyList : public Handle_IFSelect_SelectDeduct {
         static const Handle_IFSelect_SelectAnyList DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_IFSelect_SelectAnyList {
     IFSelect_SelectAnyList* _get_reference() {
-    return (IFSelect_SelectAnyList*)$self->Access();
+    return (IFSelect_SelectAnyList*)$self->get();
     }
 };
 
 %extend Handle_IFSelect_SelectAnyList {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend IFSelect_SelectAnyList {
@@ -9816,19 +8527,20 @@ class Handle_IFSelect_SelectDiff : public Handle_IFSelect_SelectControl {
         static const Handle_IFSelect_SelectDiff DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_IFSelect_SelectDiff {
     IFSelect_SelectDiff* _get_reference() {
-    return (IFSelect_SelectDiff*)$self->Access();
+    return (IFSelect_SelectDiff*)$self->get();
     }
 };
 
 %extend Handle_IFSelect_SelectDiff {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend IFSelect_SelectDiff {
@@ -9846,7 +8558,7 @@ class IFSelect_SelectEntityNumber : public IFSelect_SelectBase {
 ") IFSelect_SelectEntityNumber;
 		 IFSelect_SelectEntityNumber ();
 		%feature("compactdefaultargs") SetNumber;
-		%feature("autodoc", "	* Sets Entity Number to be taken (initially, none is set : 0)
+		%feature("autodoc", "	* Sets Entity Number to be taken --initially, none is set : 0--
 
 	:param num:
 	:type num: Handle_IFSelect_IntParam &
@@ -9854,13 +8566,13 @@ class IFSelect_SelectEntityNumber : public IFSelect_SelectBase {
 ") SetNumber;
 		void SetNumber (const Handle_IFSelect_IntParam & num);
 		%feature("compactdefaultargs") Number;
-		%feature("autodoc", "	* Returns specified Number (as a Parameter)
+		%feature("autodoc", "	* Returns specified Number --as a Parameter--
 
 	:rtype: Handle_IFSelect_IntParam
 ") Number;
 		Handle_IFSelect_IntParam Number ();
 		%feature("compactdefaultargs") RootResult;
-		%feature("autodoc", "	* Returns the list of selected entities : the Entity having the specified Number (this result assures naturally uniqueness)
+		%feature("autodoc", "	* Returns the list of selected entities : the Entity having the specified Number --this result assures naturally uniqueness--
 
 	:param G:
 	:type G: Interface_Graph &
@@ -9907,19 +8619,20 @@ class Handle_IFSelect_SelectEntityNumber : public Handle_IFSelect_SelectBase {
         static const Handle_IFSelect_SelectEntityNumber DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_IFSelect_SelectEntityNumber {
     IFSelect_SelectEntityNumber* _get_reference() {
-    return (IFSelect_SelectEntityNumber*)$self->Access();
+    return (IFSelect_SelectEntityNumber*)$self->get();
     }
 };
 
 %extend Handle_IFSelect_SelectEntityNumber {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend IFSelect_SelectEntityNumber {
@@ -9945,7 +8658,7 @@ class IFSelect_SelectExplore : public IFSelect_SelectDeduct {
 ") RootResult;
 		Interface_EntityIterator RootResult (const Interface_Graph & G);
 		%feature("compactdefaultargs") Explore;
-		%feature("autodoc", "	* Analyses and, if required, Explores an entity, as follows : The explored list starts as empty, it has to be filled by this method. If it returns False, <ent> is rejected for result (this is to be used only as safety) If it returns True and <explored> remains empty, <ent> is taken itself for result, not explored If it returns True and <explored> is not empty, the content of this list is considered : If maximum level is attained, it is taken for result Else (or no max), each of its entity will be itself explored
+		%feature("autodoc", "	* Analyses and, if required, Explores an entity, as follows : The explored list starts as empty, it has to be filled by this method. If it returns False, <ent> is rejected for result --this is to be used only as safety-- If it returns True and <explored> remains empty, <ent> is taken itself for result, not explored If it returns True and <explored> is not empty, the content of this list is considered : If maximum level is attained, it is taken for result Else --or no max--, each of its entity will be itself explored
 
 	:param level:
 	:type level: int
@@ -9959,7 +8672,7 @@ class IFSelect_SelectExplore : public IFSelect_SelectDeduct {
 ") Explore;
 		virtual Standard_Boolean Explore (const Standard_Integer level,const Handle_Standard_Transient & ent,const Interface_Graph & G,Interface_EntityIterator & explored);
 		%feature("compactdefaultargs") Label;
-		%feature("autodoc", "	* Returns a text saying '(Recursive)' or '(Level nn)' plus specific criterium returned by ExploreLabel (see below)
+		%feature("autodoc", "	* Returns a text saying '--Recursive--' or '--Level nn--' plus specific criterium returned by ExploreLabel --see below--
 
 	:rtype: TCollection_AsciiString
 ") Label;
@@ -10004,19 +8717,20 @@ class Handle_IFSelect_SelectExplore : public Handle_IFSelect_SelectDeduct {
         static const Handle_IFSelect_SelectExplore DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_IFSelect_SelectExplore {
     IFSelect_SelectExplore* _get_reference() {
-    return (IFSelect_SelectExplore*)$self->Access();
+    return (IFSelect_SelectExplore*)$self->get();
     }
 };
 
 %extend Handle_IFSelect_SelectExplore {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend IFSelect_SelectExplore {
@@ -10034,7 +8748,7 @@ class IFSelect_SelectExtract : public IFSelect_SelectDeduct {
 ") IsDirect;
 		Standard_Boolean IsDirect ();
 		%feature("compactdefaultargs") SetDirect;
-		%feature("autodoc", "	* Sets Sort criterium sense to a new value (True : Direct , False : Reverse)
+		%feature("autodoc", "	* Sets Sort criterium sense to a new value --True : Direct , False : Reverse--
 
 	:param direct:
 	:type direct: bool
@@ -10050,7 +8764,7 @@ class IFSelect_SelectExtract : public IFSelect_SelectDeduct {
 ") RootResult;
 		virtual Interface_EntityIterator RootResult (const Interface_Graph & G);
 		%feature("compactdefaultargs") Sort;
-		%feature("autodoc", "	* Returns True for an Entity if it satisfies the Sort criterium It receives : - <rank>, the rank of the Entity in the Iteration, - <ent> , the Entity itself, and - <model>, the Starting Model Hence, the Entity to check is 'model->Value(num)' (but an InterfaceModel allows other checks) This method is specific to each class of SelectExtract
+		%feature("autodoc", "	* Returns True for an Entity if it satisfies the Sort criterium It receives : - <rank>, the rank of the Entity in the Iteration, - <ent> , the Entity itself, and - <model>, the Starting Model Hence, the Entity to check is 'model->Value--num--' --but an InterfaceModel allows other checks-- This method is specific to each class of SelectExtract
 
 	:param rank:
 	:type rank: int
@@ -10062,7 +8776,7 @@ class IFSelect_SelectExtract : public IFSelect_SelectDeduct {
 ") Sort;
 		virtual Standard_Boolean Sort (const Standard_Integer rank,const Handle_Standard_Transient & ent,const Handle_Interface_InterfaceModel & model);
 		%feature("compactdefaultargs") SortInGraph;
-		%feature("autodoc", "	* Works as Sort but works on the Graph Default directly calls Sort, but it can be redefined If SortInGraph is redefined, Sort should be defined even if not called (to avoid deferred methods in a final class)
+		%feature("autodoc", "	* Works as Sort but works on the Graph Default directly calls Sort, but it can be redefined If SortInGraph is redefined, Sort should be defined even if not called --to avoid deferred methods in a final class--
 
 	:param rank:
 	:type rank: int
@@ -10074,7 +8788,7 @@ class IFSelect_SelectExtract : public IFSelect_SelectDeduct {
 ") SortInGraph;
 		virtual Standard_Boolean SortInGraph (const Standard_Integer rank,const Handle_Standard_Transient & ent,const Interface_Graph & G);
 		%feature("compactdefaultargs") Label;
-		%feature("autodoc", "	* Returns a text saying 'Picked' or 'Removed', plus the specific criterium returned by ExtractLabel (see below)
+		%feature("autodoc", "	* Returns a text saying 'Picked' or 'Removed', plus the specific criterium returned by ExtractLabel --see below--
 
 	:rtype: TCollection_AsciiString
 ") Label;
@@ -10119,19 +8833,20 @@ class Handle_IFSelect_SelectExtract : public Handle_IFSelect_SelectDeduct {
         static const Handle_IFSelect_SelectExtract DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_IFSelect_SelectExtract {
     IFSelect_SelectExtract* _get_reference() {
-    return (IFSelect_SelectExtract*)$self->Access();
+    return (IFSelect_SelectExtract*)$self->get();
     }
 };
 
 %extend Handle_IFSelect_SelectExtract {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend IFSelect_SelectExtract {
@@ -10157,7 +8872,7 @@ class IFSelect_SelectIntersection : public IFSelect_SelectCombine {
 ") RootResult;
 		Interface_EntityIterator RootResult (const Interface_Graph & G);
 		%feature("compactdefaultargs") Label;
-		%feature("autodoc", "	* Returns a text defining the criterium : 'Intersection (AND)'
+		%feature("autodoc", "	* Returns a text defining the criterium : 'Intersection --AND--'
 
 	:rtype: TCollection_AsciiString
 ") Label;
@@ -10196,19 +8911,20 @@ class Handle_IFSelect_SelectIntersection : public Handle_IFSelect_SelectCombine 
         static const Handle_IFSelect_SelectIntersection DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_IFSelect_SelectIntersection {
     IFSelect_SelectIntersection* _get_reference() {
-    return (IFSelect_SelectIntersection*)$self->Access();
+    return (IFSelect_SelectIntersection*)$self->get();
     }
 };
 
 %extend Handle_IFSelect_SelectIntersection {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend IFSelect_SelectIntersection {
@@ -10226,7 +8942,7 @@ class IFSelect_SelectModelEntities : public IFSelect_SelectBase {
 ") IFSelect_SelectModelEntities;
 		 IFSelect_SelectModelEntities ();
 		%feature("compactdefaultargs") RootResult;
-		%feature("autodoc", "	* Returns the list of selected entities : the Entities of the Model (note that this result assures naturally uniqueness)
+		%feature("autodoc", "	* Returns the list of selected entities : the Entities of the Model --note that this result assures naturally uniqueness--
 
 	:param G:
 	:type G: Interface_Graph &
@@ -10234,7 +8950,7 @@ class IFSelect_SelectModelEntities : public IFSelect_SelectBase {
 ") RootResult;
 		Interface_EntityIterator RootResult (const Interface_Graph & G);
 		%feature("compactdefaultargs") CompleteResult;
-		%feature("autodoc", "	* The complete list of Entities (including shared ones) ... is exactly identical to RootResults in this case
+		%feature("autodoc", "	* The complete list of Entities --including shared ones-- ... is exactly identical to RootResults in this case
 
 	:param G:
 	:type G: Interface_Graph &
@@ -10281,19 +8997,20 @@ class Handle_IFSelect_SelectModelEntities : public Handle_IFSelect_SelectBase {
         static const Handle_IFSelect_SelectModelEntities DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_IFSelect_SelectModelEntities {
     IFSelect_SelectModelEntities* _get_reference() {
-    return (IFSelect_SelectModelEntities*)$self->Access();
+    return (IFSelect_SelectModelEntities*)$self->get();
     }
 };
 
 %extend Handle_IFSelect_SelectModelEntities {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend IFSelect_SelectModelEntities {
@@ -10311,7 +9028,7 @@ class IFSelect_SelectModelRoots : public IFSelect_SelectBase {
 ") IFSelect_SelectModelRoots;
 		 IFSelect_SelectModelRoots ();
 		%feature("compactdefaultargs") RootResult;
-		%feature("autodoc", "	* Returns the list of selected entities : the Roots of the Model (note that this result assures naturally uniqueness)
+		%feature("autodoc", "	* Returns the list of selected entities : the Roots of the Model --note that this result assures naturally uniqueness--
 
 	:param G:
 	:type G: Interface_Graph &
@@ -10358,19 +9075,20 @@ class Handle_IFSelect_SelectModelRoots : public Handle_IFSelect_SelectBase {
         static const Handle_IFSelect_SelectModelRoots DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_IFSelect_SelectModelRoots {
     IFSelect_SelectModelRoots* _get_reference() {
-    return (IFSelect_SelectModelRoots*)$self->Access();
+    return (IFSelect_SelectModelRoots*)$self->get();
     }
 };
 
 %extend Handle_IFSelect_SelectModelRoots {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend IFSelect_SelectModelRoots {
@@ -10432,7 +9150,7 @@ class IFSelect_SelectPointed : public IFSelect_SelectBase {
 ") Remove;
 		Standard_Boolean Remove (const Handle_Standard_Transient & item);
 		%feature("compactdefaultargs") Toggle;
-		%feature("autodoc", "	* Toggles status of an item : adds it if not pointed or removes it if already pointed. Returns the new status (Pointed or not)
+		%feature("autodoc", "	* Toggles status of an item : adds it if not pointed or removes it if already pointed. Returns the new status --Pointed or not--
 
 	:param item:
 	:type item: Handle_Standard_Transient &
@@ -10494,7 +9212,7 @@ class IFSelect_SelectPointed : public IFSelect_SelectBase {
 ") Update;
 		void Update (const Handle_Interface_CopyControl & control);
 		%feature("compactdefaultargs") Update;
-		%feature("autodoc", "	* Rebuilds the selected list, by querying a Transformer (same principle as from a CopyControl)
+		%feature("autodoc", "	* Rebuilds the selected list, by querying a Transformer --same principle as from a CopyControl--
 
 	:param trf:
 	:type trf: Handle_IFSelect_Transformer &
@@ -10502,7 +9220,7 @@ class IFSelect_SelectPointed : public IFSelect_SelectBase {
 ") Update;
 		void Update (const Handle_IFSelect_Transformer & trf);
 		%feature("compactdefaultargs") RootResult;
-		%feature("autodoc", "	* Returns the list of selected items. Only the selected entities which are present in the graph are given (this result assures uniqueness).
+		%feature("autodoc", "	* Returns the list of selected items. Only the selected entities which are present in the graph are given --this result assures uniqueness--.
 
 	:param G:
 	:type G: Interface_Graph &
@@ -10549,19 +9267,20 @@ class Handle_IFSelect_SelectPointed : public Handle_IFSelect_SelectBase {
         static const Handle_IFSelect_SelectPointed DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_IFSelect_SelectPointed {
     IFSelect_SelectPointed* _get_reference() {
-    return (IFSelect_SelectPointed*)$self->Access();
+    return (IFSelect_SelectPointed*)$self->get();
     }
 };
 
 %extend Handle_IFSelect_SelectPointed {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend IFSelect_SelectPointed {
@@ -10579,7 +9298,7 @@ class IFSelect_SelectShared : public IFSelect_SelectDeduct {
 ") IFSelect_SelectShared;
 		 IFSelect_SelectShared ();
 		%feature("compactdefaultargs") RootResult;
-		%feature("autodoc", "	* Returns the list of selected entities (list of entities shared by those of input list)
+		%feature("autodoc", "	* Returns the list of selected entities --list of entities shared by those of input list--
 
 	:param G:
 	:type G: Interface_Graph &
@@ -10587,7 +9306,7 @@ class IFSelect_SelectShared : public IFSelect_SelectDeduct {
 ") RootResult;
 		Interface_EntityIterator RootResult (const Interface_Graph & G);
 		%feature("compactdefaultargs") Label;
-		%feature("autodoc", "	* Returns a text defining the criterium : 'Shared (one level)'
+		%feature("autodoc", "	* Returns a text defining the criterium : 'Shared --one level--'
 
 	:rtype: TCollection_AsciiString
 ") Label;
@@ -10626,19 +9345,20 @@ class Handle_IFSelect_SelectShared : public Handle_IFSelect_SelectDeduct {
         static const Handle_IFSelect_SelectShared DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_IFSelect_SelectShared {
     IFSelect_SelectShared* _get_reference() {
-    return (IFSelect_SelectShared*)$self->Access();
+    return (IFSelect_SelectShared*)$self->get();
     }
 };
 
 %extend Handle_IFSelect_SelectShared {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend IFSelect_SelectShared {
@@ -10656,7 +9376,7 @@ class IFSelect_SelectSharing : public IFSelect_SelectDeduct {
 ") IFSelect_SelectSharing;
 		 IFSelect_SelectSharing ();
 		%feature("compactdefaultargs") RootResult;
-		%feature("autodoc", "	* Returns the list of selected entities (list of entities which share (level one) those of input list)
+		%feature("autodoc", "	* Returns the list of selected entities --list of entities which share --level one-- those of input list--
 
 	:param G:
 	:type G: Interface_Graph &
@@ -10664,7 +9384,7 @@ class IFSelect_SelectSharing : public IFSelect_SelectDeduct {
 ") RootResult;
 		Interface_EntityIterator RootResult (const Interface_Graph & G);
 		%feature("compactdefaultargs") Label;
-		%feature("autodoc", "	* Returns a text defining the criterium : 'Sharing (one level)'
+		%feature("autodoc", "	* Returns a text defining the criterium : 'Sharing --one level--'
 
 	:rtype: TCollection_AsciiString
 ") Label;
@@ -10703,19 +9423,20 @@ class Handle_IFSelect_SelectSharing : public Handle_IFSelect_SelectDeduct {
         static const Handle_IFSelect_SelectSharing DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_IFSelect_SelectSharing {
     IFSelect_SelectSharing* _get_reference() {
-    return (IFSelect_SelectSharing*)$self->Access();
+    return (IFSelect_SelectSharing*)$self->get();
     }
 };
 
 %extend Handle_IFSelect_SelectSharing {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend IFSelect_SelectSharing {
@@ -10741,7 +9462,7 @@ class IFSelect_SelectSuite : public IFSelect_SelectDeduct {
 ") AddInput;
 		Standard_Boolean AddInput (const Handle_IFSelect_Selection & item);
 		%feature("compactdefaultargs") AddPrevious;
-		%feature("autodoc", "	* Adds a new first item (prepends to the list). The Input is not touched If <item> is null, does nothing
+		%feature("autodoc", "	* Adds a new first item --prepends to the list--. The Input is not touched If <item> is null, does nothing
 
 	:param item:
 	:type item: Handle_IFSelect_SelectDeduct &
@@ -10749,7 +9470,7 @@ class IFSelect_SelectSuite : public IFSelect_SelectDeduct {
 ") AddPrevious;
 		void AddPrevious (const Handle_IFSelect_SelectDeduct & item);
 		%feature("compactdefaultargs") AddNext;
-		%feature("autodoc", "	* Adds a new last item (prepends to the list) If <item> is null, does nothing
+		%feature("autodoc", "	* Adds a new last item --prepends to the list-- If <item> is null, does nothing
 
 	:param item:
 	:type item: Handle_IFSelect_SelectDeduct &
@@ -10763,7 +9484,7 @@ class IFSelect_SelectSuite : public IFSelect_SelectDeduct {
 ") NbItems;
 		Standard_Integer NbItems ();
 		%feature("compactdefaultargs") Item;
-		%feature("autodoc", "	* Returns an item from its rank in the list (the Input is always apart)
+		%feature("autodoc", "	* Returns an item from its rank in the list --the Input is always apart--
 
 	:param num:
 	:type num: int
@@ -10779,7 +9500,7 @@ class IFSelect_SelectSuite : public IFSelect_SelectDeduct {
 ") SetLabel;
 		void SetLabel (const char * lab);
 		%feature("compactdefaultargs") RootResult;
-		%feature("autodoc", "	* Returns the list of selected entities To do this, once InputResult has been taken (if Input or Alternate has been defined, else the first Item gives it) : this result is set as alternate input for the first item, which computes its result : this result is set as alternate input for the second item, etc...
+		%feature("autodoc", "	* Returns the list of selected entities To do this, once InputResult has been taken --if Input or Alternate has been defined, else the first Item gives it-- : this result is set as alternate input for the first item, which computes its result : this result is set as alternate input for the second item, etc...
 
 	:param G:
 	:type G: Interface_Graph &
@@ -10826,19 +9547,20 @@ class Handle_IFSelect_SelectSuite : public Handle_IFSelect_SelectDeduct {
         static const Handle_IFSelect_SelectSuite DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_IFSelect_SelectSuite {
     IFSelect_SelectSuite* _get_reference() {
-    return (IFSelect_SelectSuite*)$self->Access();
+    return (IFSelect_SelectSuite*)$self->get();
     }
 };
 
 %extend Handle_IFSelect_SelectSuite {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend IFSelect_SelectSuite {
@@ -10864,7 +9586,7 @@ class IFSelect_SelectUnion : public IFSelect_SelectCombine {
 ") RootResult;
 		Interface_EntityIterator RootResult (const Interface_Graph & G);
 		%feature("compactdefaultargs") Label;
-		%feature("autodoc", "	* Returns a text defining the criterium : 'Union (OR)'
+		%feature("autodoc", "	* Returns a text defining the criterium : 'Union --OR--'
 
 	:rtype: TCollection_AsciiString
 ") Label;
@@ -10903,19 +9625,20 @@ class Handle_IFSelect_SelectUnion : public Handle_IFSelect_SelectCombine {
         static const Handle_IFSelect_SelectUnion DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_IFSelect_SelectUnion {
     IFSelect_SelectUnion* _get_reference() {
-    return (IFSelect_SelectUnion*)$self->Access();
+    return (IFSelect_SelectUnion*)$self->get();
     }
 };
 
 %extend Handle_IFSelect_SelectUnion {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend IFSelect_SelectUnion {
@@ -10978,19 +9701,20 @@ class Handle_IFSelect_SignAncestor : public Handle_IFSelect_SignType {
         static const Handle_IFSelect_SignAncestor DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_IFSelect_SignAncestor {
     IFSelect_SignAncestor* _get_reference() {
-    return (IFSelect_SignAncestor*)$self->Access();
+    return (IFSelect_SignAncestor*)$self->get();
     }
 };
 
 %extend Handle_IFSelect_SignAncestor {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend IFSelect_SignAncestor {
@@ -11008,7 +9732,7 @@ class IFSelect_SelectAnyType : public IFSelect_SelectExtract {
 ") TypeForMatch;
 		virtual Handle_Standard_Type TypeForMatch ();
 		%feature("compactdefaultargs") Sort;
-		%feature("autodoc", "	* Returns True for an Entity (model->Value(num)) which is kind of the choosen type, given by the method TypeForMatch. Criterium is IsKind.
+		%feature("autodoc", "	* Returns True for an Entity --model->Value--num---- which is kind of the choosen type, given by the method TypeForMatch. Criterium is IsKind.
 
 	:param rank:
 	:type rank: int
@@ -11053,19 +9777,20 @@ class Handle_IFSelect_SelectAnyType : public Handle_IFSelect_SelectExtract {
         static const Handle_IFSelect_SelectAnyType DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_IFSelect_SelectAnyType {
     IFSelect_SelectAnyType* _get_reference() {
-    return (IFSelect_SelectAnyType*)$self->Access();
+    return (IFSelect_SelectAnyType*)$self->get();
     }
 };
 
 %extend Handle_IFSelect_SelectAnyType {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend IFSelect_SelectAnyType {
@@ -11083,7 +9808,7 @@ class IFSelect_SelectErrorEntities : public IFSelect_SelectExtract {
 ") IFSelect_SelectErrorEntities;
 		 IFSelect_SelectErrorEntities ();
 		%feature("compactdefaultargs") Sort;
-		%feature("autodoc", "	* Returns True for an Entity which is qualified as 'Error', i.e. if <model> explicitly knows <ent> (through its Number) as Erroneous
+		%feature("autodoc", "	* Returns True for an Entity which is qualified as 'Error', i.e. if <model> explicitly knows <ent> --through its Number-- as Erroneous
 
 	:param rank:
 	:type rank: int
@@ -11134,19 +9859,20 @@ class Handle_IFSelect_SelectErrorEntities : public Handle_IFSelect_SelectExtract
         static const Handle_IFSelect_SelectErrorEntities DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_IFSelect_SelectErrorEntities {
     IFSelect_SelectErrorEntities* _get_reference() {
-    return (IFSelect_SelectErrorEntities*)$self->Access();
+    return (IFSelect_SelectErrorEntities*)$self->get();
     }
 };
 
 %extend Handle_IFSelect_SelectErrorEntities {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend IFSelect_SelectErrorEntities {
@@ -11172,7 +9898,7 @@ class IFSelect_SelectFlag : public IFSelect_SelectExtract {
 ") FlagName;
 		const char * FlagName ();
 		%feature("compactdefaultargs") RootResult;
-		%feature("autodoc", "	* Returns the list of selected entities. It is redefined to work on the graph itself (not queried by sort) //! An entity is selected if its flag is True on Direct mode, False on Reversed mode //! If flag does not exist for the given name, returns an empty result, whatever the Direct/Reversed sense
+		%feature("autodoc", "	* Returns the list of selected entities. It is redefined to work on the graph itself --not queried by sort-- //! An entity is selected if its flag is True on Direct mode, False on Reversed mode //! If flag does not exist for the given name, returns an empty result, whatever the Direct/Reversed sense
 
 	:param G:
 	:type G: Interface_Graph &
@@ -11231,19 +9957,20 @@ class Handle_IFSelect_SelectFlag : public Handle_IFSelect_SelectExtract {
         static const Handle_IFSelect_SelectFlag DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_IFSelect_SelectFlag {
     IFSelect_SelectFlag* _get_reference() {
-    return (IFSelect_SelectFlag*)$self->Access();
+    return (IFSelect_SelectFlag*)$self->get();
     }
 };
 
 %extend Handle_IFSelect_SelectFlag {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend IFSelect_SelectFlag {
@@ -11265,7 +9992,7 @@ class IFSelect_SelectInList : public IFSelect_SelectAnyList {
 ") ListedEntity;
 		virtual Handle_Standard_Transient ListedEntity (const Standard_Integer num,const Handle_Standard_Transient & ent);
 		%feature("compactdefaultargs") FillResult;
-		%feature("autodoc", "	* Puts into the result, the sub-entities of the list, from n1 to n2 included. Remark that adequation with Entity's type and length of list has already been made at this stage Called by RootResult; calls ListedEntity (see below)
+		%feature("autodoc", "	* Puts into the result, the sub-entities of the list, from n1 to n2 included. Remark that adequation with Entity's type and length of list has already been made at this stage Called by RootResult; calls ListedEntity --see below--
 
 	:param n1:
 	:type n1: int
@@ -11312,19 +10039,20 @@ class Handle_IFSelect_SelectInList : public Handle_IFSelect_SelectAnyList {
         static const Handle_IFSelect_SelectInList DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_IFSelect_SelectInList {
     IFSelect_SelectInList* _get_reference() {
-    return (IFSelect_SelectInList*)$self->Access();
+    return (IFSelect_SelectInList*)$self->get();
     }
 };
 
 %extend Handle_IFSelect_SelectInList {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend IFSelect_SelectInList {
@@ -11352,7 +10080,7 @@ class IFSelect_SelectRange : public IFSelect_SelectExtract {
 ") SetRange;
 		void SetRange (const Handle_IFSelect_IntParam & rankfrom,const Handle_IFSelect_IntParam & rankto);
 		%feature("compactdefaultargs") SetOne;
-		%feature("autodoc", "	* Sets a unique number (only one Entity will be sorted as True)
+		%feature("autodoc", "	* Sets a unique number --only one Entity will be sorted as True--
 
 	:param rank:
 	:type rank: Handle_IFSelect_IntParam &
@@ -11368,7 +10096,7 @@ class IFSelect_SelectRange : public IFSelect_SelectExtract {
 ") SetFrom;
 		void SetFrom (const Handle_IFSelect_IntParam & rankfrom);
 		%feature("compactdefaultargs") SetUntil;
-		%feature("autodoc", "	* Sets an Upper limit but no lower limit (equivalent to lower 1)
+		%feature("autodoc", "	* Sets an Upper limit but no lower limit --equivalent to lower 1--
 
 	:param rankto:
 	:type rankto: Handle_IFSelect_IntParam &
@@ -11382,13 +10110,13 @@ class IFSelect_SelectRange : public IFSelect_SelectExtract {
 ") HasLower;
 		Standard_Boolean HasLower ();
 		%feature("compactdefaultargs") Lower;
-		%feature("autodoc", "	* Returns Lower limit (if there is; else, value is senseless)
+		%feature("autodoc", "	* Returns Lower limit --if there is; else, value is senseless--
 
 	:rtype: Handle_IFSelect_IntParam
 ") Lower;
 		Handle_IFSelect_IntParam Lower ();
 		%feature("compactdefaultargs") LowerValue;
-		%feature("autodoc", "	* Returns Value of Lower Limit (0 if none is defined)
+		%feature("autodoc", "	* Returns Value of Lower Limit --0 if none is defined--
 
 	:rtype: int
 ") LowerValue;
@@ -11400,19 +10128,19 @@ class IFSelect_SelectRange : public IFSelect_SelectExtract {
 ") HasUpper;
 		Standard_Boolean HasUpper ();
 		%feature("compactdefaultargs") Upper;
-		%feature("autodoc", "	* Returns Upper limit (if there is; else, value is senseless)
+		%feature("autodoc", "	* Returns Upper limit --if there is; else, value is senseless--
 
 	:rtype: Handle_IFSelect_IntParam
 ") Upper;
 		Handle_IFSelect_IntParam Upper ();
 		%feature("compactdefaultargs") UpperValue;
-		%feature("autodoc", "	* Returns Value of Upper Limit (0 if none is defined)
+		%feature("autodoc", "	* Returns Value of Upper Limit --0 if none is defined--
 
 	:rtype: int
 ") UpperValue;
 		Standard_Integer UpperValue ();
 		%feature("compactdefaultargs") Sort;
-		%feature("autodoc", "	* Returns True for an Entity of which occurence number in the iteration is inside the selected Range (considers <rank>)
+		%feature("autodoc", "	* Returns True for an Entity of which occurence number in the iteration is inside the selected Range --considers <rank>--
 
 	:param rank:
 	:type rank: int
@@ -11463,19 +10191,20 @@ class Handle_IFSelect_SelectRange : public Handle_IFSelect_SelectExtract {
         static const Handle_IFSelect_SelectRange DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_IFSelect_SelectRange {
     IFSelect_SelectRange* _get_reference() {
-    return (IFSelect_SelectRange*)$self->Access();
+    return (IFSelect_SelectRange*)$self->get();
     }
 };
 
 %extend Handle_IFSelect_SelectRange {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend IFSelect_SelectRange {
@@ -11552,19 +10281,20 @@ class Handle_IFSelect_SelectRootComps : public Handle_IFSelect_SelectExtract {
         static const Handle_IFSelect_SelectRootComps DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_IFSelect_SelectRootComps {
     IFSelect_SelectRootComps* _get_reference() {
-    return (IFSelect_SelectRootComps*)$self->Access();
+    return (IFSelect_SelectRootComps*)$self->get();
     }
 };
 
 %extend Handle_IFSelect_SelectRootComps {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend IFSelect_SelectRootComps {
@@ -11641,19 +10371,20 @@ class Handle_IFSelect_SelectRoots : public Handle_IFSelect_SelectExtract {
         static const Handle_IFSelect_SelectRoots DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_IFSelect_SelectRoots {
     IFSelect_SelectRoots* _get_reference() {
-    return (IFSelect_SelectRoots*)$self->Access();
+    return (IFSelect_SelectRoots*)$self->get();
     }
 };
 
 %extend Handle_IFSelect_SelectRoots {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend IFSelect_SelectRoots {
@@ -11665,7 +10396,7 @@ class Handle_IFSelect_SelectRoots : public Handle_IFSelect_SelectExtract {
 class IFSelect_SelectSent : public IFSelect_SelectExtract {
 	public:
 		%feature("compactdefaultargs") IFSelect_SelectSent;
-		%feature("autodoc", "	* Creates a SelectSent : sentcount = 0 -> remaining (non-sent) entities sentcount = 1, atleast = True (D) -> sent (at least once) sentcount = 2, atleast = True -> duplicated (sent least twice) etc... sentcount = 1, atleast = False -> sent just once (non-dupl.d) sentcount = 2, atleast = False -> sent just twice etc...
+		%feature("autodoc", "	* Creates a SelectSent : sentcount = 0 -> remaining --non-sent-- entities sentcount = 1, atleast = True --D-- -> sent --at least once-- sentcount = 2, atleast = True -> duplicated --sent least twice-- etc... sentcount = 1, atleast = False -> sent just once --non-dupl.d-- sentcount = 2, atleast = False -> sent just twice etc...
 
 	:param sentcount: default value is 1
 	:type sentcount: int
@@ -11687,7 +10418,7 @@ class IFSelect_SelectSent : public IFSelect_SelectExtract {
 ") AtLeast;
 		Standard_Boolean AtLeast ();
 		%feature("compactdefaultargs") RootResult;
-		%feature("autodoc", "	* Returns the list of selected entities. It is redefined to work on the graph itself (not queried by sort) //! An entity is selected if its count complies to the query in Direct Mode, rejected in Reversed Mode //! Query works on the sending count recorded as status in Graph
+		%feature("autodoc", "	* Returns the list of selected entities. It is redefined to work on the graph itself --not queried by sort-- //! An entity is selected if its count complies to the query in Direct Mode, rejected in Reversed Mode //! Query works on the sending count recorded as status in Graph
 
 	:param G:
 	:type G: Interface_Graph &
@@ -11707,7 +10438,7 @@ class IFSelect_SelectSent : public IFSelect_SelectExtract {
 ") Sort;
 		Standard_Boolean Sort (const Standard_Integer rank,const Handle_Standard_Transient & ent,const Handle_Interface_InterfaceModel & model);
 		%feature("compactdefaultargs") ExtractLabel;
-		%feature("autodoc", "	* Returns a text defining the criterium : query : SentCount = 0 -> 'Remaining (non-sent) entities' SentCount = 1, AtLeast = True -> 'Sent entities' SentCount = 1, AtLeast = False -> 'Sent once (no duplicated)' SentCount = 2, AtLeast = True -> 'Sent several times entities' SentCount = 2, AtLeast = False -> 'Sent twice entities' SentCount > 2, AtLeast = True -> 'Sent at least <count> times entities' SentCount > 2, AtLeast = False -> 'Sent <count> times entities'
+		%feature("autodoc", "	* Returns a text defining the criterium : query : SentCount = 0 -> 'Remaining --non-sent-- entities' SentCount = 1, AtLeast = True -> 'Sent entities' SentCount = 1, AtLeast = False -> 'Sent once --no duplicated--' SentCount = 2, AtLeast = True -> 'Sent several times entities' SentCount = 2, AtLeast = False -> 'Sent twice entities' SentCount > 2, AtLeast = True -> 'Sent at least <count> times entities' SentCount > 2, AtLeast = False -> 'Sent <count> times entities'
 
 	:rtype: TCollection_AsciiString
 ") ExtractLabel;
@@ -11746,19 +10477,20 @@ class Handle_IFSelect_SelectSent : public Handle_IFSelect_SelectExtract {
         static const Handle_IFSelect_SelectSent DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_IFSelect_SelectSent {
     IFSelect_SelectSent* _get_reference() {
-    return (IFSelect_SelectSent*)$self->Access();
+    return (IFSelect_SelectSent*)$self->get();
     }
 };
 
 %extend Handle_IFSelect_SelectSent {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend IFSelect_SelectSent {
@@ -11770,7 +10502,7 @@ class Handle_IFSelect_SelectSent : public Handle_IFSelect_SelectExtract {
 class IFSelect_SelectSignature : public IFSelect_SelectExtract {
 	public:
 		%feature("compactdefaultargs") IFSelect_SelectSignature;
-		%feature("autodoc", "	* Creates a SelectSignature with its Signature and its Text to Match. <exact> if True requires exact match, if False requires <signtext> to be contained in the Signature of the entity (default is 'exact')
+		%feature("autodoc", "	* Creates a SelectSignature with its Signature and its Text to Match. <exact> if True requires exact match, if False requires <signtext> to be contained in the Signature of the entity --default is 'exact'--
 
 	:param matcher:
 	:type matcher: Handle_IFSelect_Signature &
@@ -11794,7 +10526,7 @@ class IFSelect_SelectSignature : public IFSelect_SelectExtract {
 ") IFSelect_SelectSignature;
 		 IFSelect_SelectSignature (const Handle_IFSelect_Signature & matcher,const TCollection_AsciiString & signtext,const Standard_Boolean exact = Standard_True);
 		%feature("compactdefaultargs") IFSelect_SelectSignature;
-		%feature("autodoc", "	* Creates a SelectSignature with a Counter, more precisely a SelectSignature. Which is used here to just give a Signature Value (by SignOnly Mode) Matching is the default provided by the class Signature
+		%feature("autodoc", "	* Creates a SelectSignature with a Counter, more precisely a SelectSignature. Which is used here to just give a Signature Value --by SignOnly Mode-- Matching is the default provided by the class Signature
 
 	:param matcher:
 	:type matcher: Handle_IFSelect_SignCounter &
@@ -11818,7 +10550,7 @@ class IFSelect_SelectSignature : public IFSelect_SelectExtract {
 ") Counter;
 		Handle_IFSelect_SignCounter Counter ();
 		%feature("compactdefaultargs") SortInGraph;
-		%feature("autodoc", "	* Returns True for an Entity (model->Value(num)) of which the signature matches the text given as creation time May also work with a Counter from the Graph
+		%feature("autodoc", "	* Returns True for an Entity --model->Value--num---- of which the signature matches the text given as creation time May also work with a Counter from the Graph
 
 	:param rank:
 	:type rank: int
@@ -11854,7 +10586,7 @@ class IFSelect_SelectSignature : public IFSelect_SelectExtract {
 ") IsExact;
 		Standard_Boolean IsExact ();
 		%feature("compactdefaultargs") ExtractLabel;
-		%feature("autodoc", "	* Returns a text defining the criterium. (it refers to the text and exact flag to be matched, and is qualified by the Name provided by the Signature)
+		%feature("autodoc", "	* Returns a text defining the criterium. --it refers to the text and exact flag to be matched, and is qualified by the Name provided by the Signature--
 
 	:rtype: TCollection_AsciiString
 ") ExtractLabel;
@@ -11893,19 +10625,20 @@ class Handle_IFSelect_SelectSignature : public Handle_IFSelect_SelectExtract {
         static const Handle_IFSelect_SelectSignature DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_IFSelect_SelectSignature {
     IFSelect_SelectSignature* _get_reference() {
-    return (IFSelect_SelectSignature*)$self->Access();
+    return (IFSelect_SelectSignature*)$self->get();
     }
 };
 
 %extend Handle_IFSelect_SelectSignature {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend IFSelect_SelectSignature {
@@ -11963,7 +10696,7 @@ class IFSelect_SelectSignedShared : public IFSelect_SelectExplore {
 ") Explore;
 		Standard_Boolean Explore (const Standard_Integer level,const Handle_Standard_Transient & ent,const Interface_Graph & G,Interface_EntityIterator & explored);
 		%feature("compactdefaultargs") ExploreLabel;
-		%feature("autodoc", "	* Returns a text defining the criterium. (it refers to the text and exact flag to be matched, and is qualified by the Name provided by the Signature)
+		%feature("autodoc", "	* Returns a text defining the criterium. --it refers to the text and exact flag to be matched, and is qualified by the Name provided by the Signature--
 
 	:rtype: TCollection_AsciiString
 ") ExploreLabel;
@@ -12002,19 +10735,20 @@ class Handle_IFSelect_SelectSignedShared : public Handle_IFSelect_SelectExplore 
         static const Handle_IFSelect_SelectSignedShared DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_IFSelect_SelectSignedShared {
     IFSelect_SelectSignedShared* _get_reference() {
-    return (IFSelect_SelectSignedShared*)$self->Access();
+    return (IFSelect_SelectSignedShared*)$self->get();
     }
 };
 
 %extend Handle_IFSelect_SelectSignedShared {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend IFSelect_SelectSignedShared {
@@ -12072,7 +10806,7 @@ class IFSelect_SelectSignedSharing : public IFSelect_SelectExplore {
 ") Explore;
 		Standard_Boolean Explore (const Standard_Integer level,const Handle_Standard_Transient & ent,const Interface_Graph & G,Interface_EntityIterator & explored);
 		%feature("compactdefaultargs") ExploreLabel;
-		%feature("autodoc", "	* Returns a text defining the criterium. (it refers to the text and exact flag to be matched, and is qualified by the Name provided by the Signature)
+		%feature("autodoc", "	* Returns a text defining the criterium. --it refers to the text and exact flag to be matched, and is qualified by the Name provided by the Signature--
 
 	:rtype: TCollection_AsciiString
 ") ExploreLabel;
@@ -12111,19 +10845,20 @@ class Handle_IFSelect_SelectSignedSharing : public Handle_IFSelect_SelectExplore
         static const Handle_IFSelect_SelectSignedSharing DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_IFSelect_SelectSignedSharing {
     IFSelect_SelectSignedSharing* _get_reference() {
-    return (IFSelect_SelectSignedSharing*)$self->Access();
+    return (IFSelect_SelectSignedSharing*)$self->get();
     }
 };
 
 %extend Handle_IFSelect_SelectSignedSharing {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend IFSelect_SelectSignedSharing {
@@ -12141,7 +10876,7 @@ class IFSelect_SelectUnknownEntities : public IFSelect_SelectExtract {
 ") IFSelect_SelectUnknownEntities;
 		 IFSelect_SelectUnknownEntities ();
 		%feature("compactdefaultargs") Sort;
-		%feature("autodoc", "	* Returns True for an Entity which is qualified as 'Unknown', i.e. if <model> known <ent> (through its Number) as Unknown
+		%feature("autodoc", "	* Returns True for an Entity which is qualified as 'Unknown', i.e. if <model> known <ent> --through its Number-- as Unknown
 
 	:param rank:
 	:type rank: int
@@ -12192,19 +10927,20 @@ class Handle_IFSelect_SelectUnknownEntities : public Handle_IFSelect_SelectExtra
         static const Handle_IFSelect_SelectUnknownEntities DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_IFSelect_SelectUnknownEntities {
     IFSelect_SelectUnknownEntities* _get_reference() {
-    return (IFSelect_SelectUnknownEntities*)$self->Access();
+    return (IFSelect_SelectUnknownEntities*)$self->get();
     }
 };
 
 %extend Handle_IFSelect_SelectUnknownEntities {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend IFSelect_SelectUnknownEntities {
@@ -12216,7 +10952,7 @@ class Handle_IFSelect_SelectUnknownEntities : public Handle_IFSelect_SelectExtra
 class IFSelect_SelectIncorrectEntities : public IFSelect_SelectFlag {
 	public:
 		%feature("compactdefaultargs") IFSelect_SelectIncorrectEntities;
-		%feature("autodoc", "	* Creates a SelectIncorrectEntities i.e. a SelectFlag('Incorrect')
+		%feature("autodoc", "	* Creates a SelectIncorrectEntities i.e. a SelectFlag--'Incorrect'--
 
 	:rtype: None
 ") IFSelect_SelectIncorrectEntities;
@@ -12255,19 +10991,20 @@ class Handle_IFSelect_SelectIncorrectEntities : public Handle_IFSelect_SelectFla
         static const Handle_IFSelect_SelectIncorrectEntities DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_IFSelect_SelectIncorrectEntities {
     IFSelect_SelectIncorrectEntities* _get_reference() {
-    return (IFSelect_SelectIncorrectEntities*)$self->Access();
+    return (IFSelect_SelectIncorrectEntities*)$self->get();
     }
 };
 
 %extend Handle_IFSelect_SelectIncorrectEntities {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend IFSelect_SelectIncorrectEntities {
@@ -12307,7 +11044,7 @@ class IFSelect_SelectType : public IFSelect_SelectAnyType {
 ") TypeForMatch;
 		Handle_Standard_Type TypeForMatch ();
 		%feature("compactdefaultargs") ExtractLabel;
-		%feature("autodoc", "	* Returns a text defining the criterium. (should by gotten from Type of Entity used for instantiation)
+		%feature("autodoc", "	* Returns a text defining the criterium. --should by gotten from Type of Entity used for instantiation--
 
 	:rtype: TCollection_AsciiString
 ") ExtractLabel;
@@ -12346,19 +11083,20 @@ class Handle_IFSelect_SelectType : public Handle_IFSelect_SelectAnyType {
         static const Handle_IFSelect_SelectType DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_IFSelect_SelectType {
     IFSelect_SelectType* _get_reference() {
-    return (IFSelect_SelectType*)$self->Access();
+    return (IFSelect_SelectType*)$self->get();
     }
 };
 
 %extend Handle_IFSelect_SelectType {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend IFSelect_SelectType {

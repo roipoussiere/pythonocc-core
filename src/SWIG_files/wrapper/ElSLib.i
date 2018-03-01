@@ -1,5 +1,5 @@
 /*
-Copyright 2008-2017 Thomas Paviot (tpaviot@gmail.com)
+Copyright 2008-2018 Thomas Paviot (tpaviot@gmail.com)
 
 
 This file is part of pythonOCC.
@@ -56,6 +56,9 @@ def register_handle(handle, base_object):
 /* typedefs */
 /* end typedefs declaration */
 
+/* templates */
+/* end templates declaration */
+
 /* public enums */
 /* end public enums declaration */
 
@@ -63,7 +66,7 @@ def register_handle(handle, base_object):
 class ElSLib {
 	public:
 		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	* For elementary surfaces from the gp package (planes, cones, cylinders, spheres and tori), computes the point of parameters (U, V).
+		%feature("autodoc", "	* For elementary surfaces from the gp package --planes, cones, cylinders, spheres and tori--, computes the point of parameters --U, V--.
 
 	:param U:
 	:type U: float
@@ -115,7 +118,7 @@ class ElSLib {
 ") Value;
 		static gp_Pnt Value (const Standard_Real U,const Standard_Real V,const gp_Torus & T);
 		%feature("compactdefaultargs") DN;
-		%feature("autodoc", "	* For elementary surfaces from the gp package (planes, cones, cylinders, spheres and tori), computes the derivative vector of order Nu and Nv in the u and v parametric directions respectively, at the point of parameters (U, V).
+		%feature("autodoc", "	* For elementary surfaces from the gp package --planes, cones, cylinders, spheres and tori--, computes the derivative vector of order Nu and Nv in the u and v parametric directions respectively, at the point of parameters --U, V--.
 
 	:param U:
 	:type U: float
@@ -187,7 +190,7 @@ class ElSLib {
 ") DN;
 		static gp_Vec DN (const Standard_Real U,const Standard_Real V,const gp_Torus & T,const Standard_Integer Nu,const Standard_Integer Nv);
 		%feature("compactdefaultargs") D0;
-		%feature("autodoc", "	* For elementary surfaces from the gp package (planes, cones, cylinders, spheres and tori), computes the point P of parameters (U, V).inline
+		%feature("autodoc", "	* For elementary surfaces from the gp package --planes, cones, cylinders, spheres and tori--, computes the point P of parameters --U, V--.inline
 
 	:param U:
 	:type U: float
@@ -249,7 +252,7 @@ class ElSLib {
 ") D0;
 		static void D0 (const Standard_Real U,const Standard_Real V,const gp_Torus & T,gp_Pnt & P);
 		%feature("compactdefaultargs") D1;
-		%feature("autodoc", "	* For elementary surfaces from the gp package (planes, cones, cylinders, spheres and tori), computes: - the point P of parameters (U, V), and - the first derivative vectors Vu and Vv at this point in the u and v parametric directions respectively.
+		%feature("autodoc", "	* For elementary surfaces from the gp package --planes, cones, cylinders, spheres and tori--, computes: - the point P of parameters --U, V--, and - the first derivative vectors Vu and Vv at this point in the u and v parametric directions respectively.
 
 	:param U:
 	:type U: float
@@ -331,7 +334,7 @@ class ElSLib {
 ") D1;
 		static void D1 (const Standard_Real U,const Standard_Real V,const gp_Torus & T,gp_Pnt & P,gp_Vec & Vu,gp_Vec & Vv);
 		%feature("compactdefaultargs") D2;
-		%feature("autodoc", "	* For elementary surfaces from the gp package (cones, cylinders, spheres and tori), computes: - the point P of parameters (U, V), and - the first derivative vectors Vu and Vv at this point in the u and v parametric directions respectively, and - the second derivative vectors Vuu, Vvv and Vuv at this point.
+		%feature("autodoc", "	* For elementary surfaces from the gp package --cones, cylinders, spheres and tori--, computes: - the point P of parameters --U, V--, and - the first derivative vectors Vu and Vv at this point in the u and v parametric directions respectively, and - the second derivative vectors Vuu, Vvv and Vuv at this point.
 
 	:param U:
 	:type U: float
@@ -421,7 +424,7 @@ class ElSLib {
 ") D2;
 		static void D2 (const Standard_Real U,const Standard_Real V,const gp_Torus & T,gp_Pnt & P,gp_Vec & Vu,gp_Vec & Vv,gp_Vec & Vuu,gp_Vec & Vvv,gp_Vec & Vuv);
 		%feature("compactdefaultargs") D3;
-		%feature("autodoc", "	* For elementary surfaces from the gp package (cones, cylinders, spheres and tori), computes: - the point P of parameters (U,V), and - the first derivative vectors Vu and Vv at this point in the u and v parametric directions respectively, and - the second derivative vectors Vuu, Vvv and Vuv at this point, and - the third derivative vectors Vuuu, Vvvv, Vuuv and Vuvv at this point.
+		%feature("autodoc", "	* For elementary surfaces from the gp package --cones, cylinders, spheres and tori--, computes: - the point P of parameters --U,V--, and - the first derivative vectors Vu and Vv at this point in the u and v parametric directions respectively, and - the second derivative vectors Vuu, Vvv and Vuv at this point, and - the third derivative vectors Vuuu, Vvvv, Vuuv and Vuvv at this point.
 
 	:param U:
 	:type U: float
@@ -1087,7 +1090,7 @@ class ElSLib {
 ") TorusD3;
 		static void TorusD3 (const Standard_Real U,const Standard_Real V,const gp_Ax3 & Pos,const Standard_Real MajorRadius,const Standard_Real MinorRadius,gp_Pnt & P,gp_Vec & Vu,gp_Vec & Vv,gp_Vec & Vuu,gp_Vec & Vvv,gp_Vec & Vuv,gp_Vec & Vuuu,gp_Vec & Vvvv,gp_Vec & Vuuv,gp_Vec & Vuvv);
 		%feature("compactdefaultargs") Parameters;
-		%feature("autodoc", "	* parametrization P (U, V) = Pl.Location() + U * Pl.XDirection() + V * Pl.YDirection()
+		%feature("autodoc", "	* parametrization P --U, V-- = Pl.Location---- + U * Pl.XDirection---- + V * Pl.YDirection----
 
 	:param Pl:
 	:type Pl: gp_Pln
@@ -1101,7 +1104,7 @@ class ElSLib {
 ") Parameters;
 		static void Parameters (const gp_Pln & Pl,const gp_Pnt & P,Standard_Real &OutValue,Standard_Real &OutValue);
 		%feature("compactdefaultargs") Parameters;
-		%feature("autodoc", "	* parametrization P (U, V) = Location + V * ZDirection + Radius * (Cos(U) * XDirection + Sin (U) * YDirection)
+		%feature("autodoc", "	* parametrization P --U, V-- = Location + V * ZDirection + Radius * --Cos--U-- * XDirection + Sin --U-- * YDirection--
 
 	:param C:
 	:type C: gp_Cylinder
@@ -1115,7 +1118,7 @@ class ElSLib {
 ") Parameters;
 		static void Parameters (const gp_Cylinder & C,const gp_Pnt & P,Standard_Real &OutValue,Standard_Real &OutValue);
 		%feature("compactdefaultargs") Parameters;
-		%feature("autodoc", "	* parametrization P (U, V) = Location + V * ZDirection + (Radius + V * Tan (SemiAngle)) * (Cos(U) * XDirection + Sin(U) * YDirection)
+		%feature("autodoc", "	* parametrization P --U, V-- = Location + V * ZDirection + --Radius + V * Tan --SemiAngle---- * --Cos--U-- * XDirection + Sin--U-- * YDirection--
 
 	:param C:
 	:type C: gp_Cone
@@ -1129,7 +1132,7 @@ class ElSLib {
 ") Parameters;
 		static void Parameters (const gp_Cone & C,const gp_Pnt & P,Standard_Real &OutValue,Standard_Real &OutValue);
 		%feature("compactdefaultargs") Parameters;
-		%feature("autodoc", "	* parametrization P (U, V) = Location + Radius * Cos (V) * (Cos (U) * XDirection + Sin (U) * YDirection) + Radius * Sin (V) * ZDirection
+		%feature("autodoc", "	* parametrization P --U, V-- = Location + Radius * Cos --V-- * --Cos --U-- * XDirection + Sin --U-- * YDirection-- + Radius * Sin --V-- * ZDirection
 
 	:param S:
 	:type S: gp_Sphere
@@ -1143,7 +1146,7 @@ class ElSLib {
 ") Parameters;
 		static void Parameters (const gp_Sphere & S,const gp_Pnt & P,Standard_Real &OutValue,Standard_Real &OutValue);
 		%feature("compactdefaultargs") Parameters;
-		%feature("autodoc", "	* parametrization P (U, V) = Location + (MajorRadius + MinorRadius * Cos(U)) * (Cos(V) * XDirection - Sin(V) * YDirection) + MinorRadius * Sin(U) * ZDirection
+		%feature("autodoc", "	* parametrization P --U, V-- = Location + --MajorRadius + MinorRadius * Cos--U---- * --Cos--V-- * XDirection - Sin--V-- * YDirection-- + MinorRadius * Sin--U-- * ZDirection
 
 	:param T:
 	:type T: gp_Torus
@@ -1157,7 +1160,7 @@ class ElSLib {
 ") Parameters;
 		static void Parameters (const gp_Torus & T,const gp_Pnt & P,Standard_Real &OutValue,Standard_Real &OutValue);
 		%feature("compactdefaultargs") PlaneParameters;
-		%feature("autodoc", "	* parametrization P (U, V) = Pl.Location() + U * Pl.XDirection() + V * Pl.YDirection()
+		%feature("autodoc", "	* parametrization P --U, V-- = Pl.Location---- + U * Pl.XDirection---- + V * Pl.YDirection----
 
 	:param Pos:
 	:type Pos: gp_Ax3
@@ -1171,7 +1174,7 @@ class ElSLib {
 ") PlaneParameters;
 		static void PlaneParameters (const gp_Ax3 & Pos,const gp_Pnt & P,Standard_Real &OutValue,Standard_Real &OutValue);
 		%feature("compactdefaultargs") CylinderParameters;
-		%feature("autodoc", "	* parametrization P (U, V) = Location + V * ZDirection + Radius * (Cos(U) * XDirection + Sin (U) * YDirection)
+		%feature("autodoc", "	* parametrization P --U, V-- = Location + V * ZDirection + Radius * --Cos--U-- * XDirection + Sin --U-- * YDirection--
 
 	:param Pos:
 	:type Pos: gp_Ax3
@@ -1187,7 +1190,7 @@ class ElSLib {
 ") CylinderParameters;
 		static void CylinderParameters (const gp_Ax3 & Pos,const Standard_Real Radius,const gp_Pnt & P,Standard_Real &OutValue,Standard_Real &OutValue);
 		%feature("compactdefaultargs") ConeParameters;
-		%feature("autodoc", "	* parametrization P (U, V) = Location + V * ZDirection + (Radius + V * Tan (SemiAngle)) * (Cos(U) * XDirection + Sin(U) * YDirection)
+		%feature("autodoc", "	* parametrization P --U, V-- = Location + V * ZDirection + --Radius + V * Tan --SemiAngle---- * --Cos--U-- * XDirection + Sin--U-- * YDirection--
 
 	:param Pos:
 	:type Pos: gp_Ax3
@@ -1205,7 +1208,7 @@ class ElSLib {
 ") ConeParameters;
 		static void ConeParameters (const gp_Ax3 & Pos,const Standard_Real Radius,const Standard_Real SAngle,const gp_Pnt & P,Standard_Real &OutValue,Standard_Real &OutValue);
 		%feature("compactdefaultargs") SphereParameters;
-		%feature("autodoc", "	* parametrization P (U, V) = Location + Radius * Cos (V) * (Cos (U) * XDirection + Sin (U) * YDirection) + Radius * Sin (V) * ZDirection
+		%feature("autodoc", "	* parametrization P --U, V-- = Location + Radius * Cos --V-- * --Cos --U-- * XDirection + Sin --U-- * YDirection-- + Radius * Sin --V-- * ZDirection
 
 	:param Pos:
 	:type Pos: gp_Ax3
@@ -1221,7 +1224,7 @@ class ElSLib {
 ") SphereParameters;
 		static void SphereParameters (const gp_Ax3 & Pos,const Standard_Real Radius,const gp_Pnt & P,Standard_Real &OutValue,Standard_Real &OutValue);
 		%feature("compactdefaultargs") TorusParameters;
-		%feature("autodoc", "	* parametrization P (U, V) = Location + (MajorRadius + MinorRadius * Cos(U)) * (Cos(V) * XDirection - Sin(V) * YDirection) + MinorRadius * Sin(U) * ZDirection
+		%feature("autodoc", "	* parametrization P --U, V-- = Location + --MajorRadius + MinorRadius * Cos--U---- * --Cos--V-- * XDirection - Sin--V-- * YDirection-- + MinorRadius * Sin--U-- * ZDirection
 
 	:param Pos:
 	:type Pos: gp_Ax3
@@ -1275,7 +1278,7 @@ class ElSLib {
 ") ConeUIso;
 		static gp_Lin ConeUIso (const gp_Ax3 & Pos,const Standard_Real Radius,const Standard_Real SAngle,const Standard_Real U);
 		%feature("compactdefaultargs") SphereUIso;
-		%feature("autodoc", "	* compute the U Isoparametric gp_Circ of the sphere, (the meridian is not trimmed).
+		%feature("autodoc", "	* compute the U Isoparametric gp_Circ of the sphere, --the meridian is not trimmed--.
 
 	:param Pos:
 	:type Pos: gp_Ax3
@@ -1337,7 +1340,7 @@ class ElSLib {
 ") ConeVIso;
 		static gp_Circ ConeVIso (const gp_Ax3 & Pos,const Standard_Real Radius,const Standard_Real SAngle,const Standard_Real V);
 		%feature("compactdefaultargs") SphereVIso;
-		%feature("autodoc", "	* compute the V Isoparametric gp_Circ of the sphere, (the meridian is not trimmed).
+		%feature("autodoc", "	* compute the V Isoparametric gp_Circ of the sphere, --the meridian is not trimmed--.
 
 	:param Pos:
 	:type Pos: gp_Ax3

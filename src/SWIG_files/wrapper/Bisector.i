@@ -1,5 +1,5 @@
 /*
-Copyright 2008-2017 Thomas Paviot (tpaviot@gmail.com)
+Copyright 2008-2018 Thomas Paviot (tpaviot@gmail.com)
 
 
 This file is part of pythonOCC.
@@ -55,6 +55,9 @@ def register_handle(handle, base_object):
 
 /* typedefs */
 /* end typedefs declaration */
+
+/* templates */
+/* end templates declaration */
 
 /* public enums */
 /* end public enums declaration */
@@ -268,19 +271,20 @@ class Handle_Bisector_Curve : public Handle_Geom2d_Curve {
         static const Handle_Bisector_Curve DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_Bisector_Curve {
     Bisector_Curve* _get_reference() {
-    return (Bisector_Curve*)$self->Access();
+    return (Bisector_Curve*)$self->get();
     }
 };
 
 %extend Handle_Bisector_Curve {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend Bisector_Curve {
@@ -918,19 +922,20 @@ class Handle_Bisector_BisecAna : public Handle_Bisector_Curve {
         static const Handle_Bisector_BisecAna DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_Bisector_BisecAna {
     Bisector_BisecAna* _get_reference() {
-    return (Bisector_BisecAna*)$self->Access();
+    return (Bisector_BisecAna*)$self->get();
     }
 };
 
 %extend Handle_Bisector_BisecAna {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend Bisector_BisecAna {
@@ -946,7 +951,7 @@ class Bisector_BisecCC : public Bisector_Curve {
 ") Bisector_BisecCC;
 		 Bisector_BisecCC ();
 		%feature("compactdefaultargs") Bisector_BisecCC;
-		%feature("autodoc", "	* Constructs the bisector between the curves <Cu1> and <Cu2>. //! <Side1> (resp <Side2>) = 1 if the bisector curve is on the left of <Cu1> (resp <Cu2>) else <Side1> (resp <Side2>) = -1. //! the Bisector is trimmed by the Point <Origin>. <DistMax> is used to trim the bisector.The distance between the points of the bisector and <Cu> is smaller than <DistMax>.
+		%feature("autodoc", "	* Constructs the bisector between the curves <Cu1> and <Cu2>. //! <Side1> --resp <Side2>-- = 1 if the bisector curve is on the left of <Cu1> --resp <Cu2>-- else <Side1> --resp <Side2>-- = -1. //! the Bisector is trimmed by the Point <Origin>. <DistMax> is used to trim the bisector.The distance between the points of the bisector and <Cu> is smaller than <DistMax>.
 
 	:param Cu1:
 	:type Cu1: Handle_Geom2d_Curve &
@@ -964,7 +969,7 @@ class Bisector_BisecCC : public Bisector_Curve {
 ") Bisector_BisecCC;
 		 Bisector_BisecCC (const Handle_Geom2d_Curve & Cu1,const Handle_Geom2d_Curve & Cu2,const Standard_Real Side1,const Standard_Real Side2,const gp_Pnt2d & Origin,const Standard_Real DistMax = 500);
 		%feature("compactdefaultargs") Perform;
-		%feature("autodoc", "	* Computes the bisector between the curves <Cu1> and <Cu2>. //! <Side1> (resp <Side2>) = 1 if the bisector curve is on the left of <Cu1> (resp <Cu2>) else <Side1> (resp <Side2>) = -1. //! the Bisector is trimmed by the Point <Origin>. //! <DistMax> is used to trim the bisector.The distance between the points of the bisector and <Cu> is smaller than <DistMax>.
+		%feature("autodoc", "	* Computes the bisector between the curves <Cu1> and <Cu2>. //! <Side1> --resp <Side2>-- = 1 if the bisector curve is on the left of <Cu1> --resp <Cu2>-- else <Side1> --resp <Side2>-- = -1. //! the Bisector is trimmed by the Point <Origin>. //! <DistMax> is used to trim the bisector.The distance between the points of the bisector and <Cu> is smaller than <DistMax>.
 
 	:param Cu1:
 	:type Cu1: Handle_Geom2d_Curve &
@@ -1229,19 +1234,20 @@ class Handle_Bisector_BisecCC : public Handle_Bisector_Curve {
         static const Handle_Bisector_BisecCC DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_Bisector_BisecCC {
     Bisector_BisecCC* _get_reference() {
-    return (Bisector_BisecCC*)$self->Access();
+    return (Bisector_BisecCC*)$self->get();
     }
 };
 
 %extend Handle_Bisector_BisecCC {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend Bisector_BisecCC {
@@ -1528,19 +1534,20 @@ class Handle_Bisector_BisecPC : public Handle_Bisector_Curve {
         static const Handle_Bisector_BisecPC DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_Bisector_BisecPC {
     Bisector_BisecPC* _get_reference() {
-    return (Bisector_BisecPC*)$self->Access();
+    return (Bisector_BisecPC*)$self->get();
     }
 };
 
 %extend Handle_Bisector_BisecPC {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend Bisector_BisecPC {

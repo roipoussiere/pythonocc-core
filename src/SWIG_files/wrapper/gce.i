@@ -1,5 +1,5 @@
 /*
-Copyright 2008-2017 Thomas Paviot (tpaviot@gmail.com)
+Copyright 2008-2018 Thomas Paviot (tpaviot@gmail.com)
 
 
 This file is part of pythonOCC.
@@ -55,6 +55,9 @@ def register_handle(handle, base_object):
 
 /* typedefs */
 /* end typedefs declaration */
+
+/* templates */
+/* end templates declaration */
 
 /* public enums */
 enum gce_ErrorType {
@@ -372,7 +375,7 @@ class gce_MakeTranslation {
 ") gce_MakeTranslation;
 		 gce_MakeTranslation (const gp_Vec & Vect);
 		%feature("compactdefaultargs") gce_MakeTranslation;
-		%feature("autodoc", "	* Constructs a translation along the vector (Point1,Point2) defined from the point Point1 to the point Point2.
+		%feature("autodoc", "	* Constructs a translation along the vector --Point1,Point2-- defined from the point Point1 to the point Point2.
 
 	:param Point1:
 	:type Point1: gp_Pnt
@@ -415,7 +418,7 @@ class gce_MakeTranslation2d {
 ") gce_MakeTranslation2d;
 		 gce_MakeTranslation2d (const gp_Vec2d & Vect);
 		%feature("compactdefaultargs") gce_MakeTranslation2d;
-		%feature("autodoc", "	* Constructs a translation along the vector (Point1,Point2) defined from the point Point1 to the point Point2.
+		%feature("autodoc", "	* Constructs a translation along the vector --Point1,Point2-- defined from the point Point1 to the point Point2.
 
 	:param Point1:
 	:type Point1: gp_Pnt2d
@@ -550,7 +553,7 @@ class gce_MakeCirc : public gce_Root {
 ") gce_MakeCirc;
 		 gce_MakeCirc (const gp_Pnt & Center,const gp_Pnt & Ptaxis,const Standard_Real Radius);
 		%feature("compactdefaultargs") gce_MakeCirc;
-		%feature("autodoc", "	* Makes a Circ from gp <TheCirc> with its center <Center> and its radius <Radius>. Warning The MakeCirc class does not prevent the construction of a circle with a null radius. If an error occurs (that is, when IsDone returns false), the Status function returns: - gce_Negative Radius if: - Radius is less than 0.0, or - Dist is less than 0.0 and the absolute value of Dist is greater than the radius of Circ; - gce_IntersectionError if the points P1, P2 and P3 are collinear, and the three are not coincident; - gce_ConfusedPoints if two of the three points P1, P2 and P3 are coincident; or - gce_NullAxis if Center and Ptaxis are coincident.
+		%feature("autodoc", "	* Makes a Circ from gp <TheCirc> with its center <Center> and its radius <Radius>. Warning The MakeCirc class does not prevent the construction of a circle with a null radius. If an error occurs --that is, when IsDone returns false--, the Status function returns: - gce_Negative Radius if: - Radius is less than 0.0, or - Dist is less than 0.0 and the absolute value of Dist is greater than the radius of Circ; - gce_IntersectionError if the points P1, P2 and P3 are collinear, and the three are not coincident; - gce_ConfusedPoints if two of the three points P1, P2 and P3 are coincident; or - gce_NullAxis if Center and Ptaxis are coincident.
 
 	:param Axis:
 	:type Axis: gp_Ax1
@@ -688,7 +691,7 @@ class gce_MakeCirc2d : public gce_Root {
 class gce_MakeCone : public gce_Root {
 	public:
 		%feature("compactdefaultargs") gce_MakeCone;
-		%feature("autodoc", "	* Creates an infinite conical surface. A2 locates the cone in the space and defines the reference plane of the surface. Ang is the conical surface semi-angle between 0 and PI/2 radians. Radius is the radius of the circle in the reference plane of the cone. If Radius is lower than 0.0 the status is ' If Ang < Resolution from gp or Ang >= (PI/2) - Resolution.
+		%feature("autodoc", "	* Creates an infinite conical surface. A2 locates the cone in the space and defines the reference plane of the surface. Ang is the conical surface semi-angle between 0 and PI/2 radians. Radius is the radius of the circle in the reference plane of the cone. If Radius is lower than 0.0 the status is ' If Ang < Resolution from gp or Ang >= --PI/2-- - Resolution.
 
 	:param A2:
 	:type A2: gp_Ax2
@@ -758,7 +761,7 @@ class gce_MakeCone : public gce_Root {
 ") gce_MakeCone;
 		 gce_MakeCone (const gp_Lin & Axis,const gp_Pnt & P1,const gp_Pnt & P2);
 		%feature("compactdefaultargs") gce_MakeCone;
-		%feature("autodoc", "	* Makes a Cone with two points and two radius. The axis of the solution is the line passing through <P1> and <P2>. <R1> is the radius of the section passing through <P1> and <R2> the radius of the section passing through <P2>. If <P1> and <P2> are confused we have the status 'NullAxis'. Warning If an error occurs (that is, when IsDone returns false), the Status function returns: - gce_NegativeRadius if Radius, R1 or R2 is less than 0.0; - gce_BadAngle if Ang is less than gp::Resolution() or greater than Pi/2.- gp::Resolution(); - gce_ConfusedPoints if P1 and P2 or P3 and P4 are coincident; - gce_NullAxis if the points P1 and P2, are coincident (5th syntax only); - gce_NullAngle if: - the vector joining P1 to P2 is parallel to either Axis or the line joining P3 to P4, or - R1 and R2 are equal, (that is, their difference is less than gp::Resolution()); or - gce_NullRadius if: - the vector joining P1 to P2 is perpendicular to the line joining P3 to P4, - the vector joining P1 to P2 is perpendicular to Axis, or - P1, P2, P3, and P4 are collinear.
+		%feature("autodoc", "	* Makes a Cone with two points and two radius. The axis of the solution is the line passing through <P1> and <P2>. <R1> is the radius of the section passing through <P1> and <R2> the radius of the section passing through <P2>. If <P1> and <P2> are confused we have the status 'NullAxis'. Warning If an error occurs --that is, when IsDone returns false--, the Status function returns: - gce_NegativeRadius if Radius, R1 or R2 is less than 0.0; - gce_BadAngle if Ang is less than gp::Resolution---- or greater than Pi/2.- gp::Resolution----; - gce_ConfusedPoints if P1 and P2 or P3 and P4 are coincident; - gce_NullAxis if the points P1 and P2, are coincident --5th syntax only--; - gce_NullAngle if: - the vector joining P1 to P2 is parallel to either Axis or the line joining P3 to P4, or - R1 and R2 are equal, --that is, their difference is less than gp::Resolution------; or - gce_NullRadius if: - the vector joining P1 to P2 is perpendicular to the line joining P3 to P4, - the vector joining P1 to P2 is perpendicular to Axis, or - P1, P2, P3, and P4 are collinear.
 
 	:param P1:
 	:type P1: gp_Pnt
@@ -849,7 +852,7 @@ class gce_MakeCylinder : public gce_Root {
 ") gce_MakeCylinder;
 		 gce_MakeCylinder (const gp_Ax1 & Axis,const Standard_Real Radius);
 		%feature("compactdefaultargs") gce_MakeCylinder;
-		%feature("autodoc", "	* Makes a Cylinder by its circular base. Warning If an error occurs (that is, when IsDone returns false), the Status function returns: - gce_NegativeRadius if: - Radius is less than 0.0, or - Dist is negative and has an absolute value which is greater than the radius of Cyl; or - gce_ConfusedPoints if points P1 and P2 are coincident.
+		%feature("autodoc", "	* Makes a Cylinder by its circular base. Warning If an error occurs --that is, when IsDone returns false--, the Status function returns: - gce_NegativeRadius if: - Radius is less than 0.0, or - Dist is negative and has an absolute value which is greater than the radius of Cyl; or - gce_ConfusedPoints if points P1 and P2 are coincident.
 
 	:param Circ:
 	:type Circ: gp_Circ
@@ -882,7 +885,7 @@ class gce_MakeCylinder : public gce_Root {
 class gce_MakeDir : public gce_Root {
 	public:
 		%feature("compactdefaultargs") gce_MakeDir;
-		%feature("autodoc", "	* Normalizes the vector V and creates a direction. Status is 'NullVector' if V.Magnitude() <= Resolution.
+		%feature("autodoc", "	* Normalizes the vector V and creates a direction. Status is 'NullVector' if V.Magnitude---- <= Resolution.
 
 	:param V:
 	:type V: gp_Vec
@@ -890,7 +893,7 @@ class gce_MakeDir : public gce_Root {
 ") gce_MakeDir;
 		 gce_MakeDir (const gp_Vec & V);
 		%feature("compactdefaultargs") gce_MakeDir;
-		%feature("autodoc", "	* Creates a direction from a triplet of coordinates. Status is 'NullVector' if Coord.Modulus() <= Resolution from gp.
+		%feature("autodoc", "	* Creates a direction from a triplet of coordinates. Status is 'NullVector' if Coord.Modulus---- <= Resolution from gp.
 
 	:param Coord:
 	:type Coord: gp_XYZ
@@ -898,7 +901,7 @@ class gce_MakeDir : public gce_Root {
 ") gce_MakeDir;
 		 gce_MakeDir (const gp_XYZ & Coord);
 		%feature("compactdefaultargs") gce_MakeDir;
-		%feature("autodoc", "	* Creates a direction with its 3 cartesian coordinates. Status is 'NullVector' if Sqrt(Xv*Xv + Yv*Yv + Zv*Zv) <= Resolution
+		%feature("autodoc", "	* Creates a direction with its 3 cartesian coordinates. Status is 'NullVector' if Sqrt--Xv*Xv + Yv*Yv + Zv*Zv-- <= Resolution
 
 	:param Xv:
 	:type Xv: float
@@ -910,7 +913,7 @@ class gce_MakeDir : public gce_Root {
 ") gce_MakeDir;
 		 gce_MakeDir (const Standard_Real Xv,const Standard_Real Yv,const Standard_Real Zv);
 		%feature("compactdefaultargs") gce_MakeDir;
-		%feature("autodoc", "	* Make a Dir from gp <TheDir> passing through 2 Pnt <P1>,<P2>. Status is 'ConfusedPoints' if <p1> and <P2> are confused. Warning If an error occurs (that is, when IsDone returns false), the Status function returns: - gce_ConfusedPoints if points P1 and P2 are coincident, or - gce_NullVector if one of the following is less than or equal to gp::Resolution(): - the magnitude of vector V, - the modulus of Coord, - Sqrt(Xv*Xv + Yv*Yv + Zv*Zv).
+		%feature("autodoc", "	* Make a Dir from gp <TheDir> passing through 2 Pnt <P1>,<P2>. Status is 'ConfusedPoints' if <p1> and <P2> are confused. Warning If an error occurs --that is, when IsDone returns false--, the Status function returns: - gce_ConfusedPoints if points P1 and P2 are coincident, or - gce_NullVector if one of the following is less than or equal to gp::Resolution----: - the magnitude of vector V, - the modulus of Coord, - Sqrt--Xv*Xv + Yv*Yv + Zv*Zv--.
 
 	:param P1:
 	:type P1: gp_Pnt
@@ -945,7 +948,7 @@ class gce_MakeDir : public gce_Root {
 class gce_MakeDir2d : public gce_Root {
 	public:
 		%feature("compactdefaultargs") gce_MakeDir2d;
-		%feature("autodoc", "	* Normalizes the vector V and creates a direction. Status is 'NullVector' if V.Magnitude() <= Resolution.
+		%feature("autodoc", "	* Normalizes the vector V and creates a direction. Status is 'NullVector' if V.Magnitude---- <= Resolution.
 
 	:param V:
 	:type V: gp_Vec2d
@@ -953,7 +956,7 @@ class gce_MakeDir2d : public gce_Root {
 ") gce_MakeDir2d;
 		 gce_MakeDir2d (const gp_Vec2d & V);
 		%feature("compactdefaultargs") gce_MakeDir2d;
-		%feature("autodoc", "	* Creates a direction from a triplet of coordinates. Status is 'NullVector' if Coord.Modulus() <= Resolution from gp.
+		%feature("autodoc", "	* Creates a direction from a triplet of coordinates. Status is 'NullVector' if Coord.Modulus---- <= Resolution from gp.
 
 	:param Coord:
 	:type Coord: gp_XY
@@ -961,7 +964,7 @@ class gce_MakeDir2d : public gce_Root {
 ") gce_MakeDir2d;
 		 gce_MakeDir2d (const gp_XY & Coord);
 		%feature("compactdefaultargs") gce_MakeDir2d;
-		%feature("autodoc", "	* Creates a direction with its 3 cartesian coordinates. Status is 'NullVector' if Sqrt(Xv*Xv + Yv*Yv ) <= Resolution
+		%feature("autodoc", "	* Creates a direction with its 3 cartesian coordinates. Status is 'NullVector' if Sqrt--Xv*Xv + Yv*Yv -- <= Resolution
 
 	:param Xv:
 	:type Xv: float
@@ -971,7 +974,7 @@ class gce_MakeDir2d : public gce_Root {
 ") gce_MakeDir2d;
 		 gce_MakeDir2d (const Standard_Real Xv,const Standard_Real Yv);
 		%feature("compactdefaultargs") gce_MakeDir2d;
-		%feature("autodoc", "	* Make a Dir2d from gp <TheDir> passing through 2 Pnt <P1>,<P2>. Status is 'ConfusedPoints' if <P1> and <P2> are confused. Warning If an error occurs (that is, when IsDone returns false), the Status function returns: - gce_ConfusedPoints if points P1 and P2 are coincident, or - gce_NullVector if one of the following is less than or equal to gp::Resolution(): - the magnitude of vector V, - the modulus of Coord, - Sqrt(Xv*Xv + Yv*Yv).
+		%feature("autodoc", "	* Make a Dir2d from gp <TheDir> passing through 2 Pnt <P1>,<P2>. Status is 'ConfusedPoints' if <P1> and <P2> are confused. Warning If an error occurs --that is, when IsDone returns false--, the Status function returns: - gce_ConfusedPoints if points P1 and P2 are coincident, or - gce_NullVector if one of the following is less than or equal to gp::Resolution----: - the magnitude of vector V, - the modulus of Coord, - Sqrt--Xv*Xv + Yv*Yv--.
 
 	:param P1:
 	:type P1: gp_Pnt2d
@@ -1018,7 +1021,7 @@ class gce_MakeElips : public gce_Root {
 ") gce_MakeElips;
 		 gce_MakeElips (const gp_Ax2 & A2,const Standard_Real MajorRadius,const Standard_Real MinorRadius);
 		%feature("compactdefaultargs") gce_MakeElips;
-		%feature("autodoc", "	* Make an ellipse with its center and two points. Warning The MakeElips class does not prevent the construction of an ellipse where the MajorRadius is equal to the MinorRadius. If an error occurs (that is, when IsDone returns false), the Status function returns: - gce_InvertRadius if MajorRadius is less than MinorRadius; - gce_NegativeRadius if MinorRadius is less than 0.0; - gce_NullAxis if the points S1 and Center are coincident; or - gce_InvertAxis if: - the major radius computed with Center and S1 is less than the minor radius computed with Center, S1 and S2, or - Center, S1 and S2 are collinear.
+		%feature("autodoc", "	* Make an ellipse with its center and two points. Warning The MakeElips class does not prevent the construction of an ellipse where the MajorRadius is equal to the MinorRadius. If an error occurs --that is, when IsDone returns false--, the Status function returns: - gce_InvertRadius if MajorRadius is less than MinorRadius; - gce_NegativeRadius if MinorRadius is less than 0.0; - gce_NullAxis if the points S1 and Center are coincident; or - gce_InvertAxis if: - the major radius computed with Center and S1 is less than the minor radius computed with Center, S1 and S2, or - Center, S1 and S2 are collinear.
 
 	:param S1:
 	:type S1: gp_Pnt
@@ -1081,7 +1084,7 @@ class gce_MakeElips2d : public gce_Root {
 ") gce_MakeElips2d;
 		 gce_MakeElips2d (const gp_Ax22d & A,const Standard_Real MajorRadius,const Standard_Real MinorRadius);
 		%feature("compactdefaultargs") gce_MakeElips2d;
-		%feature("autodoc", "	* Makes an Elips2d with its center and two points. The sense of parametrization is given by S1, S2, and Center. Depending on the constructor, the implicit orientation of the ellipse is: - the sense defined by A, - the sense defined by points Center, S1 and S2, - the trigonometric sense if Sense is not given or is true, or - the opposite if Sense is false. It is possible to construct an ellipse where the major and minor radii are equal. Warning If an error occurs (that is, when IsDone returns false), the Status function returns: - gce_InvertRadius if MajorRadius is less than MinorRadius, - gce_NegativeRadius if MajorRadius or MinorRadius is less than 0.0, - gce_NullAxis if points S1, S2 and Center are collinear, or - gce_InvertAxis if the major radius computed with Center and S1 is less than the minor radius computed with Center, S1 and S2.
+		%feature("autodoc", "	* Makes an Elips2d with its center and two points. The sense of parametrization is given by S1, S2, and Center. Depending on the constructor, the implicit orientation of the ellipse is: - the sense defined by A, - the sense defined by points Center, S1 and S2, - the trigonometric sense if Sense is not given or is true, or - the opposite if Sense is false. It is possible to construct an ellipse where the major and minor radii are equal. Warning If an error occurs --that is, when IsDone returns false--, the Status function returns: - gce_InvertRadius if MajorRadius is less than MinorRadius, - gce_NegativeRadius if MajorRadius or MinorRadius is less than 0.0, - gce_NullAxis if points S1, S2 and Center are collinear, or - gce_InvertAxis if the major radius computed with Center and S1 is less than the minor radius computed with Center, S1 and S2.
 
 	:param S1:
 	:type S1: gp_Pnt2d
@@ -1130,7 +1133,7 @@ class gce_MakeHypr : public gce_Root {
 ") gce_MakeHypr;
 		 gce_MakeHypr (const gp_Ax2 & A2,const Standard_Real MajorRadius,const Standard_Real MinorRadius);
 		%feature("compactdefaultargs") gce_MakeHypr;
-		%feature("autodoc", "	* Constructs a hyperbola - centered on the point Center, where: - the plane of the hyperbola is defined by Center, S1 and S2, - its major axis is defined by Center and S1, - its major radius is the distance between Center and S1, and - its minor radius is the distance between S2 and the major axis. Warning If an error occurs (that is, when IsDone returns false), the Status function returns: - gce_NegativeRadius if MajorRadius is less than 0.0; - gce_InvertRadius if: - the major radius (computed with Center, S1) is less than the minor radius (computed with Center, S1 and S2), or - MajorRadius is less than MinorRadius; or - gce_ColinearPoints if S1, S2 and Center are collinear.
+		%feature("autodoc", "	* Constructs a hyperbola - centered on the point Center, where: - the plane of the hyperbola is defined by Center, S1 and S2, - its major axis is defined by Center and S1, - its major radius is the distance between Center and S1, and - its minor radius is the distance between S2 and the major axis. Warning If an error occurs --that is, when IsDone returns false--, the Status function returns: - gce_NegativeRadius if MajorRadius is less than 0.0; - gce_InvertRadius if: - the major radius --computed with Center, S1-- is less than the minor radius --computed with Center, S1 and S2--, or - MajorRadius is less than MinorRadius; or - gce_ColinearPoints if S1, S2 and Center are collinear.
 
 	:param S1:
 	:type S1: gp_Pnt
@@ -1179,7 +1182,7 @@ class gce_MakeHypr2d : public gce_Root {
 ") gce_MakeHypr2d;
 		 gce_MakeHypr2d (const gp_Pnt2d & S1,const gp_Pnt2d & S2,const gp_Pnt2d & Center);
 		%feature("compactdefaultargs") gce_MakeHypr2d;
-		%feature("autodoc", "	* Constructs a hyperbola with major and minor radii MajorRadius and MinorRadius, where: - the center of the hyperbola is the origin of the axis MajorAxis, and - the major axis is defined by MajorAxis if Sense is true, or the opposite axis to MajorAxis if Sense is false; or - centered on the origin of the coordinate system A, with major and minor radii MajorRadius and MinorRadius, where its major axis is the 'X Axis' of A (A is the local coordinate system of the hyperbola).
+		%feature("autodoc", "	* Constructs a hyperbola with major and minor radii MajorRadius and MinorRadius, where: - the center of the hyperbola is the origin of the axis MajorAxis, and - the major axis is defined by MajorAxis if Sense is true, or the opposite axis to MajorAxis if Sense is false; or - centered on the origin of the coordinate system A, with major and minor radii MajorRadius and MinorRadius, where its major axis is the 'X Axis' of A --A is the local coordinate system of the hyperbola--.
 
 	:param MajorAxis:
 	:type MajorAxis: gp_Ax2d
@@ -1193,7 +1196,7 @@ class gce_MakeHypr2d : public gce_Root {
 ") gce_MakeHypr2d;
 		 gce_MakeHypr2d (const gp_Ax2d & MajorAxis,const Standard_Real MajorRadius,const Standard_Real MinorRadius,const Standard_Boolean Sense);
 		%feature("compactdefaultargs") gce_MakeHypr2d;
-		%feature("autodoc", "	* Creates a Hypr2d centered on the origin of the coordinate system A, with major and minor radii MajorRadius and MinorRadius, where its major axis is the 'X Axis' of A (A is the local coordinate system of the hyperbola).
+		%feature("autodoc", "	* Creates a Hypr2d centered on the origin of the coordinate system A, with major and minor radii MajorRadius and MinorRadius, where its major axis is the 'X Axis' of A --A is the local coordinate system of the hyperbola--.
 
 	:param A:
 	:type A: gp_Ax22d
@@ -1238,7 +1241,7 @@ class gce_MakeLin : public gce_Root {
 ") gce_MakeLin;
 		 gce_MakeLin (const gp_Ax1 & A1);
 		%feature("compactdefaultargs") gce_MakeLin;
-		%feature("autodoc", "	* <P> is the location point (origin) of the line and <V> is the direction of the line.
+		%feature("autodoc", "	* <P> is the location point --origin-- of the line and <V> is the direction of the line.
 
 	:param P:
 	:type P: gp_Pnt
@@ -1301,7 +1304,7 @@ class gce_MakeLin2d : public gce_Root {
 ") gce_MakeLin2d;
 		 gce_MakeLin2d (const gp_Ax2d & A);
 		%feature("compactdefaultargs") gce_MakeLin2d;
-		%feature("autodoc", "	* <P> is the location point (origin) of the line and <V> is the direction of the line.
+		%feature("autodoc", "	* <P> is the location point --origin-- of the line and <V> is the direction of the line.
 
 	:param P:
 	:type P: gp_Pnt2d
@@ -1311,7 +1314,7 @@ class gce_MakeLin2d : public gce_Root {
 ") gce_MakeLin2d;
 		 gce_MakeLin2d (const gp_Pnt2d & P,const gp_Dir2d & V);
 		%feature("compactdefaultargs") gce_MakeLin2d;
-		%feature("autodoc", "	* Creates the line from the equation A*X + B*Y + C = 0.0 the status is 'NullAxis'if Sqrt(A*A + B*B) <= Resolution from gp.
+		%feature("autodoc", "	* Creates the line from the equation A*X + B*Y + C = 0.0 the status is 'NullAxis'if Sqrt--A*A + B*B-- <= Resolution from gp.
 
 	:param A:
 	:type A: float
@@ -1343,7 +1346,7 @@ class gce_MakeLin2d : public gce_Root {
 ") gce_MakeLin2d;
 		 gce_MakeLin2d (const gp_Lin2d & Lin,const gp_Pnt2d & Point);
 		%feature("compactdefaultargs") gce_MakeLin2d;
-		%feature("autodoc", "	* Make a Lin2d from gp <TheLin> passing through 2 Pnt2d <P1>,<P2>. It returns false if <P1> and <P2> are confused. Warning If an error occurs (that is, when IsDone returns false), the Status function returns: - gce_NullAxis if Sqrt(A*A + B*B) is less than or equal to gp::Resolution(), or - gce_ConfusedPoints if points P1 and P2 are coincident.
+		%feature("autodoc", "	* Make a Lin2d from gp <TheLin> passing through 2 Pnt2d <P1>,<P2>. It returns false if <P1> and <P2> are confused. Warning If an error occurs --that is, when IsDone returns false--, the Status function returns: - gce_NullAxis if Sqrt--A*A + B*B-- is less than or equal to gp::Resolution----, or - gce_ConfusedPoints if points P1 and P2 are coincident.
 
 	:param P1:
 	:type P1: gp_Pnt2d
@@ -1388,7 +1391,7 @@ class gce_MakeParab : public gce_Root {
 ") gce_MakeParab;
 		 gce_MakeParab (const gp_Ax2 & A2,const Standard_Real Focal);
 		%feature("compactdefaultargs") gce_MakeParab;
-		%feature("autodoc", "	* D is the directrix of the parabola and F the focus point. The symmetry axis (XAxis) of the parabola is normal to the directrix and pass through the focus point F, but its location point is the vertex of the parabola. The YAxis of the parabola is parallel to D and its location point is the vertex of the parabola. The normal to the plane of the parabola is the cross product between the XAxis and the YAxis.
+		%feature("autodoc", "	* D is the directrix of the parabola and F the focus point. The symmetry axis --XAxis-- of the parabola is normal to the directrix and pass through the focus point F, but its location point is the vertex of the parabola. The YAxis of the parabola is parallel to D and its location point is the vertex of the parabola. The normal to the plane of the parabola is the cross product between the XAxis and the YAxis.
 
 	:param D:
 	:type D: gp_Ax1
@@ -1423,7 +1426,7 @@ class gce_MakeParab : public gce_Root {
 class gce_MakeParab2d : public gce_Root {
 	public:
 		%feature("compactdefaultargs") gce_MakeParab2d;
-		%feature("autodoc", "	* Creates a parabola with its axis of symmetry ('MirrorAxis') and its focal length. Warnings : It is possible to have Focal = 0. The status is 'NullFocalLength' Raised if Focal < 0.0
+		%feature("autodoc", "	* Creates a parabola with its axis of symmetry --'MirrorAxis'-- and its focal length. Warnings : It is possible to have Focal = 0. The status is 'NullFocalLength' Raised if Focal < 0.0
 
 	:param MirrorAxis:
 	:type MirrorAxis: gp_Ax2d
@@ -1457,17 +1460,7 @@ class gce_MakeParab2d : public gce_Root {
 ") gce_MakeParab2d;
 		 gce_MakeParab2d (const gp_Ax2d & D,const gp_Pnt2d & F,const Standard_Boolean Sense = Standard_True);
 		%feature("compactdefaultargs") gce_MakeParab2d;
-		%feature("autodoc", "	* Creates a parabola with the local coordinate system and the focus point. The sense of parametrization is given by Sense.
-
-	:param D:
-	:type D: gp_Ax22d
-	:param F:
-	:type F: gp_Pnt2d
-	:rtype: None
-") gce_MakeParab2d;
-		 gce_MakeParab2d (const gp_Ax22d & D,const gp_Pnt2d & F);
-		%feature("compactdefaultargs") gce_MakeParab2d;
-		%feature("autodoc", "	* Make an Parab2d with S1 as the Focal point and Center as the apex of the parabola Warning The MakeParab2d class does not prevent the construction of a parabola with a null focal distance. If an error occurs (that is, when IsDone returns false), the Status function returns: - gce_NullFocusLength if Focal is less than 0.0, or - gce_NullAxis if S1 and Center are coincident.
+		%feature("autodoc", "	* Make an Parab2d with S1 as the Focal point and Center as the apex of the parabola Warning The MakeParab2d class does not prevent the construction of a parabola with a null focal distance. If an error occurs --that is, when IsDone returns false--, the Status function returns: - gce_NullFocusLength if Focal is less than 0.0, or - gce_NullAxis if S1 and Center are coincident.
 
 	:param S1:
 	:type S1: gp_Pnt2d
@@ -1504,7 +1497,7 @@ class gce_MakeParab2d : public gce_Root {
 class gce_MakePln : public gce_Root {
 	public:
 		%feature("compactdefaultargs") gce_MakePln;
-		%feature("autodoc", "	* The coordinate system of the plane is defined with the axis placement A2. The 'Direction' of A2 defines the normal to the plane. The 'Location' of A2 defines the location (origin) of the plane. The 'XDirection' and 'YDirection' of A2 define the 'XAxis' and the 'YAxis' of the plane used to parametrize the plane.
+		%feature("autodoc", "	* The coordinate system of the plane is defined with the axis placement A2. The 'Direction' of A2 defines the normal to the plane. The 'Location' of A2 defines the location --origin-- of the plane. The 'XDirection' and 'YDirection' of A2 define the 'XAxis' and the 'YAxis' of the plane used to parametrize the plane.
 
 	:param A2:
 	:type A2: gp_Ax2
@@ -1522,7 +1515,7 @@ class gce_MakePln : public gce_Root {
 ") gce_MakePln;
 		 gce_MakePln (const gp_Pnt & P,const gp_Dir & V);
 		%feature("compactdefaultargs") gce_MakePln;
-		%feature("autodoc", "	* Creates a plane from its cartesian equation : A * X + B * Y + C * Z + D = 0.0 //! the status is 'BadEquation' if Sqrt (A*A + B*B + C*C) <= Resolution from gp.
+		%feature("autodoc", "	* Creates a plane from its cartesian equation : A * X + B * Y + C * Z + D = 0.0 //! the status is 'BadEquation' if Sqrt --A*A + B*B + C*C-- <= Resolution from gp.
 
 	:param A:
 	:type A: float
@@ -1578,7 +1571,7 @@ class gce_MakePln : public gce_Root {
 ") gce_MakePln;
 		 gce_MakePln (const gp_Pnt & P1,const gp_Pnt & P2);
 		%feature("compactdefaultargs") gce_MakePln;
-		%feature("autodoc", "	* Make a pln passing through the location of <Axis>and normal to the Direction of <Axis>. Warning - If an error occurs (that is, when IsDone returns false), the Status function returns: - gce_BadEquation if Sqrt(A*A + B*B + C*C) is less than or equal to gp::Resolution(), - gce_ConfusedPoints if P1 and P2 are coincident, or - gce_ColinearPoints if P1, P2 and P3 are collinear.
+		%feature("autodoc", "	* Make a pln passing through the location of <Axis>and normal to the Direction of <Axis>. Warning - If an error occurs --that is, when IsDone returns false--, the Status function returns: - gce_BadEquation if Sqrt--A*A + B*B + C*C-- is less than or equal to gp::Resolution----, - gce_ConfusedPoints if P1 and P2 are coincident, or - gce_ColinearPoints if P1, P2 and P3 are collinear.
 
 	:param Axis:
 	:type Axis: gp_Ax1

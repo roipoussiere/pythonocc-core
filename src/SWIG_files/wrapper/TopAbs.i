@@ -1,5 +1,5 @@
 /*
-Copyright 2008-2017 Thomas Paviot (tpaviot@gmail.com)
+Copyright 2008-2018 Thomas Paviot (tpaviot@gmail.com)
 
 
 This file is part of pythonOCC.
@@ -56,6 +56,9 @@ def register_handle(handle, base_object):
 /* typedefs */
 /* end typedefs declaration */
 
+/* templates */
+/* end templates declaration */
+
 /* public enums */
 enum TopAbs_Orientation {
 	TopAbs_FORWARD = 0,
@@ -89,7 +92,7 @@ enum TopAbs_State {
 class TopAbs {
 	public:
 		%feature("compactdefaultargs") Compose;
-		%feature("autodoc", "	* Compose the Orientation <Or1> and <Or2>. This composition is not symmetric (if you switch <Or1> and <Or2> the result is different). It assumes that <Or1> is the Orientation of a Shape S1 containing a Shape S2 of Orientation Or2. The result is the cumulated orientation of S2 in S1. The composition law is : //! \ Or2 FORWARD REVERSED INTERNAL EXTERNAL Or1 ------------------------------------- FORWARD | FORWARD REVERSED INTERNAL EXTERNAL | REVERSED | REVERSED FORWARD INTERNAL EXTERNAL | INTERNAL | INTERNAL INTERNAL INTERNAL INTERNAL | EXTERNAL | EXTERNAL EXTERNAL EXTERNAL EXTERNAL Note: The top corner in the table is the most important for the purposes of Open CASCADE topology and shape sharing.
+		%feature("autodoc", "	* Compose the Orientation <Or1> and <Or2>. This composition is not symmetric --if you switch <Or1> and <Or2> the result is different--. It assumes that <Or1> is the Orientation of a Shape S1 containing a Shape S2 of Orientation Or2. The result is the cumulated orientation of S2 in S1. The composition law is : //! \ Or2 FORWARD REVERSED INTERNAL EXTERNAL Or1 ------------------------------------- FORWARD | FORWARD REVERSED INTERNAL EXTERNAL | REVERSED | REVERSED FORWARD INTERNAL EXTERNAL | INTERNAL | INTERNAL INTERNAL INTERNAL INTERNAL | EXTERNAL | EXTERNAL EXTERNAL EXTERNAL EXTERNAL Note: The top corner in the table is the most important for the purposes of Open CASCADE topology and shape sharing.
 
 	:param Or1:
 	:type Or1: TopAbs_Orientation
@@ -115,25 +118,25 @@ class TopAbs {
 ") Complement;
 		static TopAbs_Orientation Complement (const TopAbs_Orientation Or);
 		%feature("compactdefaultargs") Print;
-		%feature("autodoc", "	* Prints the name of Shape <SEq> as a String on the Stream <S> and returns <S>.
+		%feature("autodoc", "	* Prints the name of Shape type as a String on the Stream.
 
-	:param SE:
-	:type SE: TopAbs_ShapeEnum
-	:param S:
-	:type S: Standard_OStream &
+	:param theShapeType:
+	:type theShapeType: TopAbs_ShapeEnum
+	:param theStream:
+	:type theStream: Standard_OStream &
 	:rtype: Standard_OStream
 ") Print;
-		static Standard_OStream & Print (const TopAbs_ShapeEnum SE,Standard_OStream & S);
+		static Standard_OStream & Print (const TopAbs_ShapeEnum theShapeType,Standard_OStream & theStream);
 		%feature("compactdefaultargs") Print;
-		%feature("autodoc", "	* Prints the name of the Orientation <Or> as a String on the Stream <S> and returns <S>.
+		%feature("autodoc", "	* Prints the name of the Orientation as a String on the Stream.
 
-	:param Or:
-	:type Or: TopAbs_Orientation
-	:param S:
-	:type S: Standard_OStream &
+	:param theOrientation:
+	:type theOrientation: TopAbs_Orientation
+	:param theStream:
+	:type theStream: Standard_OStream &
 	:rtype: Standard_OStream
 ") Print;
-		static Standard_OStream & Print (const TopAbs_Orientation Or,Standard_OStream & S);
+		static Standard_OStream & Print (const TopAbs_Orientation theOrientation,Standard_OStream & theStream);
 		%feature("compactdefaultargs") Print;
 		%feature("autodoc", "	* Prints the name of the State <St> as a String on the Stream <S> and returns <S>.
 
@@ -144,6 +147,40 @@ class TopAbs {
 	:rtype: Standard_OStream
 ") Print;
 		static Standard_OStream & Print (const TopAbs_State St,Standard_OStream & S);
+		%feature("compactdefaultargs") ShapeTypeToString;
+		%feature("autodoc", "	* Returns the string name for a given shape type. @param theType shape type returns string identifier from the list COMPOUND, COMPSOLID, SOLID, SHELL, FACE, WIRE, EDGE, VERTEX, SHAPE
+
+	:param theType:
+	:type theType: TopAbs_ShapeEnum
+	:rtype: char *
+") ShapeTypeToString;
+		static const char * ShapeTypeToString (TopAbs_ShapeEnum theType);
+		%feature("compactdefaultargs") ShapeTypeFromString;
+		%feature("autodoc", "	* Returns the shape type from the given string identifier --using case-insensitive comparison--. @param theTypeString string identifier returns shape type or TopAbs_SHAPE if string identifier is invalid
+
+	:param theTypeString:
+	:type theTypeString: char *
+	:rtype: TopAbs_ShapeEnum
+") ShapeTypeFromString;
+		static TopAbs_ShapeEnum ShapeTypeFromString (const char * theTypeString);
+		%feature("compactdefaultargs") ShapeTypeFromString;
+		%feature("autodoc", "	* Determines the shape type from the given string identifier --using case-insensitive comparison--. @param theTypeString string identifier @param theType detected shape type returns True if string identifier is known
+
+	:param theTypeString:
+	:type theTypeString: char *
+	:param theType:
+	:type theType: TopAbs_ShapeEnum &
+	:rtype: bool
+") ShapeTypeFromString;
+		static Standard_Boolean ShapeTypeFromString (const char * theTypeString,TopAbs_ShapeEnum & theType);
+		%feature("compactdefaultargs") ShapeOrientationToString;
+		%feature("autodoc", "	* Returns the string name for a given shape orientation. @param theOrientation shape orientation returns string identifier from the list FORWARD, REVERSED, INTERNAL, EXTERNAL
+
+	:param theOrientation:
+	:type theOrientation: TopAbs_Orientation
+	:rtype: char *
+") ShapeOrientationToString;
+		static const char * ShapeOrientationToString (TopAbs_Orientation theOrientation);
 };
 
 

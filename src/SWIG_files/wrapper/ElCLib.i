@@ -1,5 +1,5 @@
 /*
-Copyright 2008-2017 Thomas Paviot (tpaviot@gmail.com)
+Copyright 2008-2018 Thomas Paviot (tpaviot@gmail.com)
 
 
 This file is part of pythonOCC.
@@ -56,6 +56,9 @@ def register_handle(handle, base_object):
 /* typedefs */
 /* end typedefs declaration */
 
+/* templates */
+/* end templates declaration */
+
 /* public enums */
 /* end public enums declaration */
 
@@ -63,7 +66,7 @@ def register_handle(handle, base_object):
 class ElCLib {
 	public:
 		%feature("compactdefaultargs") InPeriod;
-		%feature("autodoc", "	* Return a value in the range <UFirst, ULast> by adding or removing the period <ULast - UFirst> to <U>.
+		%feature("autodoc", "	* Return a value in the range <UFirst, ULast> by adding or removing the period <ULast - UFirst> to <U>. ATTENTION!!! It is expected but not checked that --ULast > UFirst--
 
 	:param U:
 	:type U: float
@@ -91,7 +94,7 @@ class ElCLib {
 ") AdjustPeriodic;
 		static void AdjustPeriodic (const Standard_Real UFirst,const Standard_Real ULast,const Standard_Real Precision,Standard_Real &OutValue,Standard_Real &OutValue);
 		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	* For elementary curves (lines, circles and conics) from the gp package, computes the point of parameter U. The result is either: - a gp_Pnt point for a curve in 3D space, or - a gp_Pnt2d point for a curve in 2D space.
+		%feature("autodoc", "	* For elementary curves --lines, circles and conics-- from the gp package, computes the point of parameter U. The result is either: - a gp_Pnt point for a curve in 3D space, or - a gp_Pnt2d point for a curve in 2D space.
 
 	:param U:
 	:type U: float
@@ -133,7 +136,7 @@ class ElCLib {
 ") Value;
 		static gp_Pnt Value (const Standard_Real U,const gp_Parab & Prb);
 		%feature("compactdefaultargs") D1;
-		%feature("autodoc", "	* For elementary curves (lines, circles and conics) from the gp package, computes: - the point P of parameter U, and - the first derivative vector V1 at this point. The results P and V1 are either: - a gp_Pnt point and a gp_Vec vector, for a curve in 3D space, or - a gp_Pnt2d point and a gp_Vec2d vector, for a curve in 2D space.
+		%feature("autodoc", "	* For elementary curves --lines, circles and conics-- from the gp package, computes: - the point P of parameter U, and - the first derivative vector V1 at this point. The results P and V1 are either: - a gp_Pnt point and a gp_Vec vector, for a curve in 3D space, or - a gp_Pnt2d point and a gp_Vec2d vector, for a curve in 2D space.
 
 	:param U:
 	:type U: float
@@ -195,7 +198,7 @@ class ElCLib {
 ") D1;
 		static void D1 (const Standard_Real U,const gp_Parab & Prb,gp_Pnt & P,gp_Vec & V1);
 		%feature("compactdefaultargs") D2;
-		%feature("autodoc", "	* For elementary curves (circles and conics) from the gp package, computes: - the point P of parameter U, and - the first and second derivative vectors V1 and V2 at this point. The results, P, V1 and V2, are either: - a gp_Pnt point and two gp_Vec vectors, for a curve in 3D space, or - a gp_Pnt2d point and two gp_Vec2d vectors, for a curve in 2D space.
+		%feature("autodoc", "	* For elementary curves --circles and conics-- from the gp package, computes: - the point P of parameter U, and - the first and second derivative vectors V1 and V2 at this point. The results, P, V1 and V2, are either: - a gp_Pnt point and two gp_Vec vectors, for a curve in 3D space, or - a gp_Pnt2d point and two gp_Vec2d vectors, for a curve in 2D space.
 
 	:param U:
 	:type U: float
@@ -253,7 +256,7 @@ class ElCLib {
 ") D2;
 		static void D2 (const Standard_Real U,const gp_Parab & Prb,gp_Pnt & P,gp_Vec & V1,gp_Vec & V2);
 		%feature("compactdefaultargs") D3;
-		%feature("autodoc", "	* For elementary curves (circles, ellipses and hyperbolae) from the gp package, computes: - the point P of parameter U, and - the first, second and third derivative vectors V1, V2 and V3 at this point. The results, P, V1, V2 and V3, are either: - a gp_Pnt point and three gp_Vec vectors, for a curve in 3D space, or - a gp_Pnt2d point and three gp_Vec2d vectors, for a curve in 2D space.
+		%feature("autodoc", "	* For elementary curves --circles, ellipses and hyperbolae-- from the gp package, computes: - the point P of parameter U, and - the first, second and third derivative vectors V1, V2 and V3 at this point. The results, P, V1, V2 and V3, are either: - a gp_Pnt point and three gp_Vec vectors, for a curve in 3D space, or - a gp_Pnt2d point and three gp_Vec2d vectors, for a curve in 2D space.
 
 	:param U:
 	:type U: float
@@ -303,7 +306,7 @@ class ElCLib {
 ") D3;
 		static void D3 (const Standard_Real U,const gp_Hypr & H,gp_Pnt & P,gp_Vec & V1,gp_Vec & V2,gp_Vec & V3);
 		%feature("compactdefaultargs") DN;
-		%feature("autodoc", "	* For elementary curves (lines, circles and conics) from the gp package, computes the vector corresponding to the Nth derivative at the point of parameter U. The result is either: - a gp_Vec vector for a curve in 3D space, or - a gp_Vec2d vector for a curve in 2D space. In the following functions N is the order of derivation and should be greater than 0
+		%feature("autodoc", "	* For elementary curves --lines, circles and conics-- from the gp package, computes the vector corresponding to the Nth derivative at the point of parameter U. The result is either: - a gp_Vec vector for a curve in 3D space, or - a gp_Vec2d vector for a curve in 2D space. In the following functions N is the order of derivation and should be greater than 0
 
 	:param U:
 	:type U: float
@@ -1243,7 +1246,7 @@ class ElCLib {
 ") ParabolaDN;
 		static gp_Vec2d ParabolaDN (const Standard_Real U,const gp_Ax22d & Pos,const Standard_Real Focal,const Standard_Integer N);
 		%feature("compactdefaultargs") Parameter;
-		%feature("autodoc", "	* Computes the parameter value of the point P on the given curve. Note: In its local coordinate system, the parametric equation of the curve is given by the following: - for the line L: P(U) = Po + U*Vo where Po is the origin and Vo the unit vector of its positioning axis. - for the circle C: X(U) = Radius*Cos(U), Y(U) = Radius*Sin(U) - for the ellipse E: X(U) = MajorRadius*Cos(U). Y(U) = MinorRadius*Sin(U) - for the hyperbola H: X(U) = MajorRadius*Ch(U), Y(U) = MinorRadius*Sh(U) - for the parabola Prb: X(U) = U**2 / (2*p) Y(U) = U where p is the distance between the focus and the directrix. Warning The point P must be on the curve. These functions are not protected, however, and if point P is not on the curve, an exception may be raised.
+		%feature("autodoc", "	* Computes the parameter value of the point P on the given curve. Note: In its local coordinate system, the parametric equation of the curve is given by the following: - for the line L: P--U-- = Po + U*Vo where Po is the origin and Vo the unit vector of its positioning axis. - for the circle C: X--U-- = Radius*Cos--U--, Y--U-- = Radius*Sin--U-- - for the ellipse E: X--U-- = MajorRadius*Cos--U--. Y--U-- = MinorRadius*Sin--U-- - for the hyperbola H: X--U-- = MajorRadius*Ch--U--, Y--U-- = MinorRadius*Sh--U-- - for the parabola Prb: X--U-- = U**2 / --2*p-- Y--U-- = U where p is the distance between the focus and the directrix. Warning The point P must be on the curve. These functions are not protected, however, and if point P is not on the curve, an exception may be raised.
 
 	:param L:
 	:type L: gp_Lin
@@ -1253,7 +1256,7 @@ class ElCLib {
 ") Parameter;
 		static Standard_Real Parameter (const gp_Lin & L,const gp_Pnt & P);
 		%feature("compactdefaultargs") Parameter;
-		%feature("autodoc", "	* parametrization P (U) = L.Location() + U * L.Direction()
+		%feature("autodoc", "	* parametrization P --U-- = L.Location---- + U * L.Direction----
 
 	:param L:
 	:type L: gp_Lin2d
@@ -1271,7 +1274,7 @@ class ElCLib {
 ") Parameter;
 		static Standard_Real Parameter (const gp_Circ & C,const gp_Pnt & P);
 		%feature("compactdefaultargs") Parameter;
-		%feature("autodoc", "	* parametrization In the local coordinate system of the circle X (U) = Radius * Cos (U) Y (U) = Radius * Sin (U)
+		%feature("autodoc", "	* parametrization In the local coordinate system of the circle X --U-- = Radius * Cos --U-- Y --U-- = Radius * Sin --U--
 
 	:param C:
 	:type C: gp_Circ2d
@@ -1289,7 +1292,7 @@ class ElCLib {
 ") Parameter;
 		static Standard_Real Parameter (const gp_Elips & E,const gp_Pnt & P);
 		%feature("compactdefaultargs") Parameter;
-		%feature("autodoc", "	* parametrization In the local coordinate system of the Ellipse X (U) = MajorRadius * Cos (U) Y (U) = MinorRadius * Sin (U)
+		%feature("autodoc", "	* parametrization In the local coordinate system of the Ellipse X --U-- = MajorRadius * Cos --U-- Y --U-- = MinorRadius * Sin --U--
 
 	:param E:
 	:type E: gp_Elips2d
@@ -1307,7 +1310,7 @@ class ElCLib {
 ") Parameter;
 		static Standard_Real Parameter (const gp_Hypr & H,const gp_Pnt & P);
 		%feature("compactdefaultargs") Parameter;
-		%feature("autodoc", "	* parametrization In the local coordinate system of the Hyperbola X (U) = MajorRadius * Ch (U) Y (U) = MinorRadius * Sh (U)
+		%feature("autodoc", "	* parametrization In the local coordinate system of the Hyperbola X --U-- = MajorRadius * Ch --U-- Y --U-- = MinorRadius * Sh --U--
 
 	:param H:
 	:type H: gp_Hypr2d
@@ -1325,7 +1328,7 @@ class ElCLib {
 ") Parameter;
 		static Standard_Real Parameter (const gp_Parab & Prb,const gp_Pnt & P);
 		%feature("compactdefaultargs") Parameter;
-		%feature("autodoc", "	* parametrization In the local coordinate system of the parabola Y**2 = (2*P) * X where P is the distance between the focus and the directrix.
+		%feature("autodoc", "	* parametrization In the local coordinate system of the parabola Y**2 = --2*P-- * X where P is the distance between the focus and the directrix.
 
 	:param Prb:
 	:type Prb: gp_Parab2d
@@ -1343,7 +1346,7 @@ class ElCLib {
 ") LineParameter;
 		static Standard_Real LineParameter (const gp_Ax1 & Pos,const gp_Pnt & P);
 		%feature("compactdefaultargs") LineParameter;
-		%feature("autodoc", "	* parametrization P (U) = L.Location() + U * L.Direction()
+		%feature("autodoc", "	* parametrization P --U-- = L.Location---- + U * L.Direction----
 
 	:param Pos:
 	:type Pos: gp_Ax2d
@@ -1361,7 +1364,7 @@ class ElCLib {
 ") CircleParameter;
 		static Standard_Real CircleParameter (const gp_Ax2 & Pos,const gp_Pnt & P);
 		%feature("compactdefaultargs") CircleParameter;
-		%feature("autodoc", "	* Pos is the Axis of the Circle parametrization In the local coordinate system of the circle X (U) = Radius * Cos (U) Y (U) = Radius * Sin (U)
+		%feature("autodoc", "	* Pos is the Axis of the Circle parametrization In the local coordinate system of the circle X --U-- = Radius * Cos --U-- Y --U-- = Radius * Sin --U--
 
 	:param Pos:
 	:type Pos: gp_Ax22d
@@ -1383,7 +1386,7 @@ class ElCLib {
 ") EllipseParameter;
 		static Standard_Real EllipseParameter (const gp_Ax2 & Pos,const Standard_Real MajorRadius,const Standard_Real MinorRadius,const gp_Pnt & P);
 		%feature("compactdefaultargs") EllipseParameter;
-		%feature("autodoc", "	* Pos is the Axis of the Ellipse parametrization In the local coordinate system of the Ellipse X (U) = MajorRadius * Cos (U) Y (U) = MinorRadius * Sin (U)
+		%feature("autodoc", "	* Pos is the Axis of the Ellipse parametrization In the local coordinate system of the Ellipse X --U-- = MajorRadius * Cos --U-- Y --U-- = MinorRadius * Sin --U--
 
 	:param Pos:
 	:type Pos: gp_Ax22d
@@ -1409,7 +1412,7 @@ class ElCLib {
 ") HyperbolaParameter;
 		static Standard_Real HyperbolaParameter (const gp_Ax2 & Pos,const Standard_Real MajorRadius,const Standard_Real MinorRadius,const gp_Pnt & P);
 		%feature("compactdefaultargs") HyperbolaParameter;
-		%feature("autodoc", "	* Pos is the Axis of the Hyperbola parametrization In the local coordinate system of the Hyperbola X (U) = MajorRadius * Ch (U) Y (U) = MinorRadius * Sh (U)
+		%feature("autodoc", "	* Pos is the Axis of the Hyperbola parametrization In the local coordinate system of the Hyperbola X --U-- = MajorRadius * Ch --U-- Y --U-- = MinorRadius * Sh --U--
 
 	:param Pos:
 	:type Pos: gp_Ax22d
@@ -1431,7 +1434,7 @@ class ElCLib {
 ") ParabolaParameter;
 		static Standard_Real ParabolaParameter (const gp_Ax2 & Pos,const gp_Pnt & P);
 		%feature("compactdefaultargs") ParabolaParameter;
-		%feature("autodoc", "	* Pos is the mirror axis of the parabola parametrization In the local coordinate system of the parabola Y**2 = (2*P) * X where P is the distance between the focus and the directrix. The following functions build a 3d curve from a 2d curve at a given position defined with an Ax2.
+		%feature("autodoc", "	* Pos is the mirror axis of the parabola parametrization In the local coordinate system of the parabola Y**2 = --2*P-- * X where P is the distance between the focus and the directrix. The following functions build a 3d curve from a 2d curve at a given position defined with an Ax2.
 
 	:param Pos:
 	:type Pos: gp_Ax22d
@@ -1513,7 +1516,7 @@ class ElCLib {
 ") To3d;
 		static gp_Hypr To3d (const gp_Ax2 & Pos,const gp_Hypr2d & H);
 		%feature("compactdefaultargs") To3d;
-		%feature("autodoc", "	* These functions build a 3D geometric entity from a 2D geometric entity. The 'X Axis' and the 'Y Axis' of the global coordinate system (i.e. 2D space) are lined up respectively with the 'X Axis' and 'Y Axis' of the 3D coordinate system, Pos.
+		%feature("autodoc", "	* These functions build a 3D geometric entity from a 2D geometric entity. The 'X Axis' and the 'Y Axis' of the global coordinate system --i.e. 2D space-- are lined up respectively with the 'X Axis' and 'Y Axis' of the 3D coordinate system, Pos.
 
 	:param Pos:
 	:type Pos: gp_Ax2

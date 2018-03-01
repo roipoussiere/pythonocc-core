@@ -1,5 +1,5 @@
 /*
-Copyright 2008-2017 Thomas Paviot (tpaviot@gmail.com)
+Copyright 2008-2018 Thomas Paviot (tpaviot@gmail.com)
 
 
 This file is part of pythonOCC.
@@ -55,6 +55,21 @@ def register_handle(handle, base_object):
 
 /* typedefs */
 /* end typedefs declaration */
+
+/* templates */
+%template(BRepFill_SequenceOfEdgeFaceAndOrder) NCollection_Sequence <BRepFill_EdgeFaceAndOrder>;
+%template(BRepFill_DataMapOfOrientedShapeListOfShape) NCollection_DataMap <TopoDS_Shape , TopTools_ListOfShape , TopTools_OrientedShapeMapHasher>;
+%template(BRepFill_SequenceOfFaceAndOrder) NCollection_Sequence <BRepFill_FaceAndOrder>;
+%template(BRepFill_DataMapOfShapeSequenceOfPnt) NCollection_DataMap <TopoDS_Shape , TColgp_SequenceOfPnt , TopTools_ShapeMapHasher>;
+%template(BRepFill_IndexedDataMapOfOrientedShapeListOfShape) NCollection_IndexedDataMap <TopoDS_Shape , TopTools_ListOfShape , TopTools_OrientedShapeMapHasher>;
+%template(BRepFill_DataMapOfNodeDataMapOfShapeShape) NCollection_DataMap <Handle_MAT_Node , TopTools_DataMapOfShapeShape , TColStd_MapTransientHasher>;
+%template(BRepFill_ListOfOffsetWire) NCollection_List <BRepFill_OffsetWire>;
+%template(BRepFill_DataMapOfShapeSequenceOfReal) NCollection_DataMap <TopoDS_Shape , TColStd_SequenceOfReal , TopTools_ShapeMapHasher>;
+%template(BRepFill_DataMapOfShapeDataMapOfShapeListOfShape) NCollection_DataMap <TopoDS_Shape , TopTools_DataMapOfShapeListOfShape , TopTools_ShapeMapHasher>;
+%template(BRepFill_DataMapOfNodeShape) NCollection_DataMap <Handle_MAT_Node , TopoDS_Shape , TColStd_MapTransientHasher>;
+%template(BRepFill_DataMapOfShapeHArray2OfShape) NCollection_DataMap <TopoDS_Shape , Handle_TopTools_HArray2OfShape , TopTools_ShapeMapHasher>;
+%template(BRepFill_SequenceOfSection) NCollection_Sequence <BRepFill_Section>;
+/* end templates declaration */
 
 /* public enums */
 enum BRepFill_TypeOfContact {
@@ -244,6 +259,14 @@ class BRepFill_CompatibleWires {
 		%feature("autodoc", "	:rtype: TopTools_DataMapOfShapeListOfShape
 ") Generated;
 		const TopTools_DataMapOfShapeListOfShape & Generated ();
+		%feature("compactdefaultargs") IsDegeneratedFirstSection;
+		%feature("autodoc", "	:rtype: bool
+") IsDegeneratedFirstSection;
+		Standard_Boolean IsDegeneratedFirstSection ();
+		%feature("compactdefaultargs") IsDegeneratedLastSection;
+		%feature("autodoc", "	:rtype: bool
+") IsDegeneratedLastSection;
+		Standard_Boolean IsDegeneratedLastSection ();
 };
 
 
@@ -256,7 +279,9 @@ class BRepFill_CompatibleWires {
 class BRepFill_ComputeCLine {
 	public:
 		%feature("compactdefaultargs") BRepFill_ComputeCLine;
-		%feature("autodoc", "	:param Line:
+		%feature("autodoc", "	* The MultiLine <Line> will be approximated until tolerances will be reached. The approximation will be done from degreemin to degreemax with a cutting if the corresponding boolean is True.
+
+	:param Line:
 	:type Line: BRepFill_MultiLine &
 	:param degreemin: default value is 3
 	:type degreemin: int
@@ -276,7 +301,9 @@ class BRepFill_ComputeCLine {
 ") BRepFill_ComputeCLine;
 		 BRepFill_ComputeCLine (const BRepFill_MultiLine & Line,const Standard_Integer degreemin = 3,const Standard_Integer degreemax = 8,const Standard_Real Tolerance3d = 1.0e-5,const Standard_Real Tolerance2d = 1.0e-5,const Standard_Boolean cutting = Standard_False,const AppParCurves_Constraint FirstC = AppParCurves_TangencyPoint,const AppParCurves_Constraint LastC = AppParCurves_TangencyPoint);
 		%feature("compactdefaultargs") BRepFill_ComputeCLine;
-		%feature("autodoc", "	:param degreemin: default value is 3
+		%feature("autodoc", "	* Initializes the fields of the algorithm.
+
+	:param degreemin: default value is 3
 	:type degreemin: int
 	:param degreemax: default value is 8
 	:type degreemax: int
@@ -294,13 +321,17 @@ class BRepFill_ComputeCLine {
 ") BRepFill_ComputeCLine;
 		 BRepFill_ComputeCLine (const Standard_Integer degreemin = 3,const Standard_Integer degreemax = 8,const Standard_Real Tolerance3d = 1.0e-05,const Standard_Real Tolerance2d = 1.0e-05,const Standard_Boolean cutting = Standard_False,const AppParCurves_Constraint FirstC = AppParCurves_TangencyPoint,const AppParCurves_Constraint LastC = AppParCurves_TangencyPoint);
 		%feature("compactdefaultargs") Perform;
-		%feature("autodoc", "	:param Line:
+		%feature("autodoc", "	* runs the algorithm after having initialized the fields.
+
+	:param Line:
 	:type Line: BRepFill_MultiLine &
 	:rtype: None
 ") Perform;
 		void Perform (const BRepFill_MultiLine & Line);
 		%feature("compactdefaultargs") SetDegrees;
-		%feature("autodoc", "	:param degreemin:
+		%feature("autodoc", "	* changes the degrees of the approximation.
+
+	:param degreemin:
 	:type degreemin: int
 	:param degreemax:
 	:type degreemax: int
@@ -308,7 +339,9 @@ class BRepFill_ComputeCLine {
 ") SetDegrees;
 		void SetDegrees (const Standard_Integer degreemin,const Standard_Integer degreemax);
 		%feature("compactdefaultargs") SetTolerances;
-		%feature("autodoc", "	:param Tolerance3d:
+		%feature("autodoc", "	* Changes the tolerances of the approximation.
+
+	:param Tolerance3d:
 	:type Tolerance3d: float
 	:param Tolerance2d:
 	:type Tolerance2d: float
@@ -316,7 +349,9 @@ class BRepFill_ComputeCLine {
 ") SetTolerances;
 		void SetTolerances (const Standard_Real Tolerance3d,const Standard_Real Tolerance2d);
 		%feature("compactdefaultargs") SetConstraints;
-		%feature("autodoc", "	:param FirstC:
+		%feature("autodoc", "	* Changes the constraints of the approximation.
+
+	:param FirstC:
 	:type FirstC: AppParCurves_Constraint
 	:param LastC:
 	:type LastC: AppParCurves_Constraint
@@ -324,15 +359,21 @@ class BRepFill_ComputeCLine {
 ") SetConstraints;
 		void SetConstraints (const AppParCurves_Constraint FirstC,const AppParCurves_Constraint LastC);
 		%feature("compactdefaultargs") IsAllApproximated;
-		%feature("autodoc", "	:rtype: bool
+		%feature("autodoc", "	* returns False if at a moment of the approximation, the status NoApproximation has been sent by the user when more points were needed.
+
+	:rtype: bool
 ") IsAllApproximated;
 		Standard_Boolean IsAllApproximated ();
 		%feature("compactdefaultargs") IsToleranceReached;
-		%feature("autodoc", "	:rtype: bool
+		%feature("autodoc", "	* returns False if the status NoPointsAdded has been sent.
+
+	:rtype: bool
 ") IsToleranceReached;
 		Standard_Boolean IsToleranceReached ();
 		%feature("compactdefaultargs") Error;
-		%feature("autodoc", "	:param Index:
+		%feature("autodoc", "	* returns the tolerances 2d and 3d of the <Index> MultiCurve.
+
+	:param Index:
 	:type Index: int
 	:param tol3d:
 	:type tol3d: float &
@@ -342,11 +383,15 @@ class BRepFill_ComputeCLine {
 ") Error;
 		void Error (const Standard_Integer Index,Standard_Real &OutValue,Standard_Real &OutValue);
 		%feature("compactdefaultargs") NbMultiCurves;
-		%feature("autodoc", "	:rtype: int
+		%feature("autodoc", "	* Returns the number of MultiCurve doing the approximation of the MultiLine.
+
+	:rtype: int
 ") NbMultiCurves;
 		Standard_Integer NbMultiCurves ();
 		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:param Index: default value is 1
+		%feature("autodoc", "	* returns the approximation MultiCurve of range <Index>.
+
+	:param Index: default value is 1
 	:type Index: int
 	:rtype: AppParCurves_MultiCurve
 ") Value;
@@ -436,1373 +481,23 @@ class Handle_BRepFill_CurveConstraint : public Handle_GeomPlate_CurveConstraint 
         static const Handle_BRepFill_CurveConstraint DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_BRepFill_CurveConstraint {
     BRepFill_CurveConstraint* _get_reference() {
-    return (BRepFill_CurveConstraint*)$self->Access();
+    return (BRepFill_CurveConstraint*)$self->get();
     }
 };
 
 %extend Handle_BRepFill_CurveConstraint {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend BRepFill_CurveConstraint {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor BRepFill_DataMapIteratorOfDataMapOfNodeDataMapOfShapeShape;
-class BRepFill_DataMapIteratorOfDataMapOfNodeDataMapOfShapeShape : public TCollection_BasicMapIterator {
-	public:
-		%feature("compactdefaultargs") BRepFill_DataMapIteratorOfDataMapOfNodeDataMapOfShapeShape;
-		%feature("autodoc", "	:rtype: None
-") BRepFill_DataMapIteratorOfDataMapOfNodeDataMapOfShapeShape;
-		 BRepFill_DataMapIteratorOfDataMapOfNodeDataMapOfShapeShape ();
-		%feature("compactdefaultargs") BRepFill_DataMapIteratorOfDataMapOfNodeDataMapOfShapeShape;
-		%feature("autodoc", "	:param aMap:
-	:type aMap: BRepFill_DataMapOfNodeDataMapOfShapeShape &
-	:rtype: None
-") BRepFill_DataMapIteratorOfDataMapOfNodeDataMapOfShapeShape;
-		 BRepFill_DataMapIteratorOfDataMapOfNodeDataMapOfShapeShape (const BRepFill_DataMapOfNodeDataMapOfShapeShape & aMap);
-		%feature("compactdefaultargs") Initialize;
-		%feature("autodoc", "	:param aMap:
-	:type aMap: BRepFill_DataMapOfNodeDataMapOfShapeShape &
-	:rtype: None
-") Initialize;
-		void Initialize (const BRepFill_DataMapOfNodeDataMapOfShapeShape & aMap);
-		%feature("compactdefaultargs") Key;
-		%feature("autodoc", "	:rtype: Handle_MAT_Node
-") Key;
-		Handle_MAT_Node Key ();
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:rtype: TopTools_DataMapOfShapeShape
-") Value;
-		const TopTools_DataMapOfShapeShape & Value ();
-};
-
-
-%extend BRepFill_DataMapIteratorOfDataMapOfNodeDataMapOfShapeShape {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor BRepFill_DataMapIteratorOfDataMapOfNodeShape;
-class BRepFill_DataMapIteratorOfDataMapOfNodeShape : public TCollection_BasicMapIterator {
-	public:
-		%feature("compactdefaultargs") BRepFill_DataMapIteratorOfDataMapOfNodeShape;
-		%feature("autodoc", "	:rtype: None
-") BRepFill_DataMapIteratorOfDataMapOfNodeShape;
-		 BRepFill_DataMapIteratorOfDataMapOfNodeShape ();
-		%feature("compactdefaultargs") BRepFill_DataMapIteratorOfDataMapOfNodeShape;
-		%feature("autodoc", "	:param aMap:
-	:type aMap: BRepFill_DataMapOfNodeShape &
-	:rtype: None
-") BRepFill_DataMapIteratorOfDataMapOfNodeShape;
-		 BRepFill_DataMapIteratorOfDataMapOfNodeShape (const BRepFill_DataMapOfNodeShape & aMap);
-		%feature("compactdefaultargs") Initialize;
-		%feature("autodoc", "	:param aMap:
-	:type aMap: BRepFill_DataMapOfNodeShape &
-	:rtype: None
-") Initialize;
-		void Initialize (const BRepFill_DataMapOfNodeShape & aMap);
-		%feature("compactdefaultargs") Key;
-		%feature("autodoc", "	:rtype: Handle_MAT_Node
-") Key;
-		Handle_MAT_Node Key ();
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:rtype: TopoDS_Shape
-") Value;
-		const TopoDS_Shape  Value ();
-};
-
-
-%extend BRepFill_DataMapIteratorOfDataMapOfNodeShape {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor BRepFill_DataMapIteratorOfDataMapOfOrientedShapeListOfShape;
-class BRepFill_DataMapIteratorOfDataMapOfOrientedShapeListOfShape : public TCollection_BasicMapIterator {
-	public:
-		%feature("compactdefaultargs") BRepFill_DataMapIteratorOfDataMapOfOrientedShapeListOfShape;
-		%feature("autodoc", "	:rtype: None
-") BRepFill_DataMapIteratorOfDataMapOfOrientedShapeListOfShape;
-		 BRepFill_DataMapIteratorOfDataMapOfOrientedShapeListOfShape ();
-		%feature("compactdefaultargs") BRepFill_DataMapIteratorOfDataMapOfOrientedShapeListOfShape;
-		%feature("autodoc", "	:param aMap:
-	:type aMap: BRepFill_DataMapOfOrientedShapeListOfShape &
-	:rtype: None
-") BRepFill_DataMapIteratorOfDataMapOfOrientedShapeListOfShape;
-		 BRepFill_DataMapIteratorOfDataMapOfOrientedShapeListOfShape (const BRepFill_DataMapOfOrientedShapeListOfShape & aMap);
-		%feature("compactdefaultargs") Initialize;
-		%feature("autodoc", "	:param aMap:
-	:type aMap: BRepFill_DataMapOfOrientedShapeListOfShape &
-	:rtype: None
-") Initialize;
-		void Initialize (const BRepFill_DataMapOfOrientedShapeListOfShape & aMap);
-		%feature("compactdefaultargs") Key;
-		%feature("autodoc", "	:rtype: TopoDS_Shape
-") Key;
-		const TopoDS_Shape  Key ();
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:rtype: TopTools_ListOfShape
-") Value;
-		const TopTools_ListOfShape & Value ();
-};
-
-
-%extend BRepFill_DataMapIteratorOfDataMapOfOrientedShapeListOfShape {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor BRepFill_DataMapIteratorOfDataMapOfShapeDataMapOfShapeListOfShape;
-class BRepFill_DataMapIteratorOfDataMapOfShapeDataMapOfShapeListOfShape : public TCollection_BasicMapIterator {
-	public:
-		%feature("compactdefaultargs") BRepFill_DataMapIteratorOfDataMapOfShapeDataMapOfShapeListOfShape;
-		%feature("autodoc", "	:rtype: None
-") BRepFill_DataMapIteratorOfDataMapOfShapeDataMapOfShapeListOfShape;
-		 BRepFill_DataMapIteratorOfDataMapOfShapeDataMapOfShapeListOfShape ();
-		%feature("compactdefaultargs") BRepFill_DataMapIteratorOfDataMapOfShapeDataMapOfShapeListOfShape;
-		%feature("autodoc", "	:param aMap:
-	:type aMap: BRepFill_DataMapOfShapeDataMapOfShapeListOfShape &
-	:rtype: None
-") BRepFill_DataMapIteratorOfDataMapOfShapeDataMapOfShapeListOfShape;
-		 BRepFill_DataMapIteratorOfDataMapOfShapeDataMapOfShapeListOfShape (const BRepFill_DataMapOfShapeDataMapOfShapeListOfShape & aMap);
-		%feature("compactdefaultargs") Initialize;
-		%feature("autodoc", "	:param aMap:
-	:type aMap: BRepFill_DataMapOfShapeDataMapOfShapeListOfShape &
-	:rtype: None
-") Initialize;
-		void Initialize (const BRepFill_DataMapOfShapeDataMapOfShapeListOfShape & aMap);
-		%feature("compactdefaultargs") Key;
-		%feature("autodoc", "	:rtype: TopoDS_Shape
-") Key;
-		const TopoDS_Shape  Key ();
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:rtype: TopTools_DataMapOfShapeListOfShape
-") Value;
-		const TopTools_DataMapOfShapeListOfShape & Value ();
-};
-
-
-%extend BRepFill_DataMapIteratorOfDataMapOfShapeDataMapOfShapeListOfShape {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor BRepFill_DataMapIteratorOfDataMapOfShapeHArray2OfShape;
-class BRepFill_DataMapIteratorOfDataMapOfShapeHArray2OfShape : public TCollection_BasicMapIterator {
-	public:
-		%feature("compactdefaultargs") BRepFill_DataMapIteratorOfDataMapOfShapeHArray2OfShape;
-		%feature("autodoc", "	:rtype: None
-") BRepFill_DataMapIteratorOfDataMapOfShapeHArray2OfShape;
-		 BRepFill_DataMapIteratorOfDataMapOfShapeHArray2OfShape ();
-		%feature("compactdefaultargs") BRepFill_DataMapIteratorOfDataMapOfShapeHArray2OfShape;
-		%feature("autodoc", "	:param aMap:
-	:type aMap: BRepFill_DataMapOfShapeHArray2OfShape &
-	:rtype: None
-") BRepFill_DataMapIteratorOfDataMapOfShapeHArray2OfShape;
-		 BRepFill_DataMapIteratorOfDataMapOfShapeHArray2OfShape (const BRepFill_DataMapOfShapeHArray2OfShape & aMap);
-		%feature("compactdefaultargs") Initialize;
-		%feature("autodoc", "	:param aMap:
-	:type aMap: BRepFill_DataMapOfShapeHArray2OfShape &
-	:rtype: None
-") Initialize;
-		void Initialize (const BRepFill_DataMapOfShapeHArray2OfShape & aMap);
-		%feature("compactdefaultargs") Key;
-		%feature("autodoc", "	:rtype: TopoDS_Shape
-") Key;
-		const TopoDS_Shape  Key ();
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:rtype: Handle_TopTools_HArray2OfShape
-") Value;
-		Handle_TopTools_HArray2OfShape Value ();
-};
-
-
-%extend BRepFill_DataMapIteratorOfDataMapOfShapeHArray2OfShape {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor BRepFill_DataMapIteratorOfDataMapOfShapeSequenceOfPnt;
-class BRepFill_DataMapIteratorOfDataMapOfShapeSequenceOfPnt : public TCollection_BasicMapIterator {
-	public:
-		%feature("compactdefaultargs") BRepFill_DataMapIteratorOfDataMapOfShapeSequenceOfPnt;
-		%feature("autodoc", "	:rtype: None
-") BRepFill_DataMapIteratorOfDataMapOfShapeSequenceOfPnt;
-		 BRepFill_DataMapIteratorOfDataMapOfShapeSequenceOfPnt ();
-		%feature("compactdefaultargs") BRepFill_DataMapIteratorOfDataMapOfShapeSequenceOfPnt;
-		%feature("autodoc", "	:param aMap:
-	:type aMap: BRepFill_DataMapOfShapeSequenceOfPnt &
-	:rtype: None
-") BRepFill_DataMapIteratorOfDataMapOfShapeSequenceOfPnt;
-		 BRepFill_DataMapIteratorOfDataMapOfShapeSequenceOfPnt (const BRepFill_DataMapOfShapeSequenceOfPnt & aMap);
-		%feature("compactdefaultargs") Initialize;
-		%feature("autodoc", "	:param aMap:
-	:type aMap: BRepFill_DataMapOfShapeSequenceOfPnt &
-	:rtype: None
-") Initialize;
-		void Initialize (const BRepFill_DataMapOfShapeSequenceOfPnt & aMap);
-		%feature("compactdefaultargs") Key;
-		%feature("autodoc", "	:rtype: TopoDS_Shape
-") Key;
-		const TopoDS_Shape  Key ();
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:rtype: TColgp_SequenceOfPnt
-") Value;
-		const TColgp_SequenceOfPnt & Value ();
-};
-
-
-%extend BRepFill_DataMapIteratorOfDataMapOfShapeSequenceOfPnt {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor BRepFill_DataMapIteratorOfDataMapOfShapeSequenceOfReal;
-class BRepFill_DataMapIteratorOfDataMapOfShapeSequenceOfReal : public TCollection_BasicMapIterator {
-	public:
-		%feature("compactdefaultargs") BRepFill_DataMapIteratorOfDataMapOfShapeSequenceOfReal;
-		%feature("autodoc", "	:rtype: None
-") BRepFill_DataMapIteratorOfDataMapOfShapeSequenceOfReal;
-		 BRepFill_DataMapIteratorOfDataMapOfShapeSequenceOfReal ();
-		%feature("compactdefaultargs") BRepFill_DataMapIteratorOfDataMapOfShapeSequenceOfReal;
-		%feature("autodoc", "	:param aMap:
-	:type aMap: BRepFill_DataMapOfShapeSequenceOfReal &
-	:rtype: None
-") BRepFill_DataMapIteratorOfDataMapOfShapeSequenceOfReal;
-		 BRepFill_DataMapIteratorOfDataMapOfShapeSequenceOfReal (const BRepFill_DataMapOfShapeSequenceOfReal & aMap);
-		%feature("compactdefaultargs") Initialize;
-		%feature("autodoc", "	:param aMap:
-	:type aMap: BRepFill_DataMapOfShapeSequenceOfReal &
-	:rtype: None
-") Initialize;
-		void Initialize (const BRepFill_DataMapOfShapeSequenceOfReal & aMap);
-		%feature("compactdefaultargs") Key;
-		%feature("autodoc", "	:rtype: TopoDS_Shape
-") Key;
-		const TopoDS_Shape  Key ();
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:rtype: TColStd_SequenceOfReal
-") Value;
-		const TColStd_SequenceOfReal & Value ();
-};
-
-
-%extend BRepFill_DataMapIteratorOfDataMapOfShapeSequenceOfReal {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor BRepFill_DataMapNodeOfDataMapOfNodeDataMapOfShapeShape;
-class BRepFill_DataMapNodeOfDataMapOfNodeDataMapOfShapeShape : public TCollection_MapNode {
-	public:
-		%feature("compactdefaultargs") BRepFill_DataMapNodeOfDataMapOfNodeDataMapOfShapeShape;
-		%feature("autodoc", "	:param K:
-	:type K: Handle_MAT_Node &
-	:param I:
-	:type I: TopTools_DataMapOfShapeShape &
-	:param n:
-	:type n: TCollection_MapNodePtr &
-	:rtype: None
-") BRepFill_DataMapNodeOfDataMapOfNodeDataMapOfShapeShape;
-		 BRepFill_DataMapNodeOfDataMapOfNodeDataMapOfShapeShape (const Handle_MAT_Node & K,const TopTools_DataMapOfShapeShape & I,const TCollection_MapNodePtr & n);
-		%feature("compactdefaultargs") Key;
-		%feature("autodoc", "	:rtype: Handle_MAT_Node
-") Key;
-		Handle_MAT_Node Key ();
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:rtype: TopTools_DataMapOfShapeShape
-") Value;
-		TopTools_DataMapOfShapeShape & Value ();
-};
-
-
-%extend BRepFill_DataMapNodeOfDataMapOfNodeDataMapOfShapeShape {
-	%pythoncode {
-		def GetHandle(self):
-		    try:
-		        return self.thisHandle
-		    except:
-		        self.thisHandle = Handle_BRepFill_DataMapNodeOfDataMapOfNodeDataMapOfShapeShape(self)
-		        self.thisown = False
-		        return self.thisHandle
-	}
-};
-
-%pythonappend Handle_BRepFill_DataMapNodeOfDataMapOfNodeDataMapOfShapeShape::Handle_BRepFill_DataMapNodeOfDataMapOfNodeDataMapOfShapeShape %{
-    # register the handle in the base object
-    if len(args) > 0:
-        register_handle(self, args[0])
-%}
-
-%nodefaultctor Handle_BRepFill_DataMapNodeOfDataMapOfNodeDataMapOfShapeShape;
-class Handle_BRepFill_DataMapNodeOfDataMapOfNodeDataMapOfShapeShape : public Handle_TCollection_MapNode {
-
-    public:
-        // constructors
-        Handle_BRepFill_DataMapNodeOfDataMapOfNodeDataMapOfShapeShape();
-        Handle_BRepFill_DataMapNodeOfDataMapOfNodeDataMapOfShapeShape(const Handle_BRepFill_DataMapNodeOfDataMapOfNodeDataMapOfShapeShape &aHandle);
-        Handle_BRepFill_DataMapNodeOfDataMapOfNodeDataMapOfShapeShape(const BRepFill_DataMapNodeOfDataMapOfNodeDataMapOfShapeShape *anItem);
-        void Nullify();
-        Standard_Boolean IsNull() const;
-        static const Handle_BRepFill_DataMapNodeOfDataMapOfNodeDataMapOfShapeShape DownCast(const Handle_Standard_Transient &AnObject);
-
-};
-%extend Handle_BRepFill_DataMapNodeOfDataMapOfNodeDataMapOfShapeShape {
-    BRepFill_DataMapNodeOfDataMapOfNodeDataMapOfShapeShape* _get_reference() {
-    return (BRepFill_DataMapNodeOfDataMapOfNodeDataMapOfShapeShape*)$self->Access();
-    }
-};
-
-%extend Handle_BRepFill_DataMapNodeOfDataMapOfNodeDataMapOfShapeShape {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
-};
-
-%extend BRepFill_DataMapNodeOfDataMapOfNodeDataMapOfShapeShape {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor BRepFill_DataMapNodeOfDataMapOfNodeShape;
-class BRepFill_DataMapNodeOfDataMapOfNodeShape : public TCollection_MapNode {
-	public:
-		%feature("compactdefaultargs") BRepFill_DataMapNodeOfDataMapOfNodeShape;
-		%feature("autodoc", "	:param K:
-	:type K: Handle_MAT_Node &
-	:param I:
-	:type I: TopoDS_Shape &
-	:param n:
-	:type n: TCollection_MapNodePtr &
-	:rtype: None
-") BRepFill_DataMapNodeOfDataMapOfNodeShape;
-		 BRepFill_DataMapNodeOfDataMapOfNodeShape (const Handle_MAT_Node & K,const TopoDS_Shape & I,const TCollection_MapNodePtr & n);
-		%feature("compactdefaultargs") Key;
-		%feature("autodoc", "	:rtype: Handle_MAT_Node
-") Key;
-		Handle_MAT_Node Key ();
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:rtype: TopoDS_Shape
-") Value;
-		TopoDS_Shape  Value ();
-};
-
-
-%extend BRepFill_DataMapNodeOfDataMapOfNodeShape {
-	%pythoncode {
-		def GetHandle(self):
-		    try:
-		        return self.thisHandle
-		    except:
-		        self.thisHandle = Handle_BRepFill_DataMapNodeOfDataMapOfNodeShape(self)
-		        self.thisown = False
-		        return self.thisHandle
-	}
-};
-
-%pythonappend Handle_BRepFill_DataMapNodeOfDataMapOfNodeShape::Handle_BRepFill_DataMapNodeOfDataMapOfNodeShape %{
-    # register the handle in the base object
-    if len(args) > 0:
-        register_handle(self, args[0])
-%}
-
-%nodefaultctor Handle_BRepFill_DataMapNodeOfDataMapOfNodeShape;
-class Handle_BRepFill_DataMapNodeOfDataMapOfNodeShape : public Handle_TCollection_MapNode {
-
-    public:
-        // constructors
-        Handle_BRepFill_DataMapNodeOfDataMapOfNodeShape();
-        Handle_BRepFill_DataMapNodeOfDataMapOfNodeShape(const Handle_BRepFill_DataMapNodeOfDataMapOfNodeShape &aHandle);
-        Handle_BRepFill_DataMapNodeOfDataMapOfNodeShape(const BRepFill_DataMapNodeOfDataMapOfNodeShape *anItem);
-        void Nullify();
-        Standard_Boolean IsNull() const;
-        static const Handle_BRepFill_DataMapNodeOfDataMapOfNodeShape DownCast(const Handle_Standard_Transient &AnObject);
-
-};
-%extend Handle_BRepFill_DataMapNodeOfDataMapOfNodeShape {
-    BRepFill_DataMapNodeOfDataMapOfNodeShape* _get_reference() {
-    return (BRepFill_DataMapNodeOfDataMapOfNodeShape*)$self->Access();
-    }
-};
-
-%extend Handle_BRepFill_DataMapNodeOfDataMapOfNodeShape {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
-};
-
-%extend BRepFill_DataMapNodeOfDataMapOfNodeShape {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor BRepFill_DataMapNodeOfDataMapOfOrientedShapeListOfShape;
-class BRepFill_DataMapNodeOfDataMapOfOrientedShapeListOfShape : public TCollection_MapNode {
-	public:
-		%feature("compactdefaultargs") BRepFill_DataMapNodeOfDataMapOfOrientedShapeListOfShape;
-		%feature("autodoc", "	:param K:
-	:type K: TopoDS_Shape &
-	:param I:
-	:type I: TopTools_ListOfShape &
-	:param n:
-	:type n: TCollection_MapNodePtr &
-	:rtype: None
-") BRepFill_DataMapNodeOfDataMapOfOrientedShapeListOfShape;
-		 BRepFill_DataMapNodeOfDataMapOfOrientedShapeListOfShape (const TopoDS_Shape & K,const TopTools_ListOfShape & I,const TCollection_MapNodePtr & n);
-		%feature("compactdefaultargs") Key;
-		%feature("autodoc", "	:rtype: TopoDS_Shape
-") Key;
-		TopoDS_Shape  Key ();
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:rtype: TopTools_ListOfShape
-") Value;
-		TopTools_ListOfShape & Value ();
-};
-
-
-%extend BRepFill_DataMapNodeOfDataMapOfOrientedShapeListOfShape {
-	%pythoncode {
-		def GetHandle(self):
-		    try:
-		        return self.thisHandle
-		    except:
-		        self.thisHandle = Handle_BRepFill_DataMapNodeOfDataMapOfOrientedShapeListOfShape(self)
-		        self.thisown = False
-		        return self.thisHandle
-	}
-};
-
-%pythonappend Handle_BRepFill_DataMapNodeOfDataMapOfOrientedShapeListOfShape::Handle_BRepFill_DataMapNodeOfDataMapOfOrientedShapeListOfShape %{
-    # register the handle in the base object
-    if len(args) > 0:
-        register_handle(self, args[0])
-%}
-
-%nodefaultctor Handle_BRepFill_DataMapNodeOfDataMapOfOrientedShapeListOfShape;
-class Handle_BRepFill_DataMapNodeOfDataMapOfOrientedShapeListOfShape : public Handle_TCollection_MapNode {
-
-    public:
-        // constructors
-        Handle_BRepFill_DataMapNodeOfDataMapOfOrientedShapeListOfShape();
-        Handle_BRepFill_DataMapNodeOfDataMapOfOrientedShapeListOfShape(const Handle_BRepFill_DataMapNodeOfDataMapOfOrientedShapeListOfShape &aHandle);
-        Handle_BRepFill_DataMapNodeOfDataMapOfOrientedShapeListOfShape(const BRepFill_DataMapNodeOfDataMapOfOrientedShapeListOfShape *anItem);
-        void Nullify();
-        Standard_Boolean IsNull() const;
-        static const Handle_BRepFill_DataMapNodeOfDataMapOfOrientedShapeListOfShape DownCast(const Handle_Standard_Transient &AnObject);
-
-};
-%extend Handle_BRepFill_DataMapNodeOfDataMapOfOrientedShapeListOfShape {
-    BRepFill_DataMapNodeOfDataMapOfOrientedShapeListOfShape* _get_reference() {
-    return (BRepFill_DataMapNodeOfDataMapOfOrientedShapeListOfShape*)$self->Access();
-    }
-};
-
-%extend Handle_BRepFill_DataMapNodeOfDataMapOfOrientedShapeListOfShape {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
-};
-
-%extend BRepFill_DataMapNodeOfDataMapOfOrientedShapeListOfShape {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor BRepFill_DataMapNodeOfDataMapOfShapeDataMapOfShapeListOfShape;
-class BRepFill_DataMapNodeOfDataMapOfShapeDataMapOfShapeListOfShape : public TCollection_MapNode {
-	public:
-		%feature("compactdefaultargs") BRepFill_DataMapNodeOfDataMapOfShapeDataMapOfShapeListOfShape;
-		%feature("autodoc", "	:param K:
-	:type K: TopoDS_Shape &
-	:param I:
-	:type I: TopTools_DataMapOfShapeListOfShape &
-	:param n:
-	:type n: TCollection_MapNodePtr &
-	:rtype: None
-") BRepFill_DataMapNodeOfDataMapOfShapeDataMapOfShapeListOfShape;
-		 BRepFill_DataMapNodeOfDataMapOfShapeDataMapOfShapeListOfShape (const TopoDS_Shape & K,const TopTools_DataMapOfShapeListOfShape & I,const TCollection_MapNodePtr & n);
-		%feature("compactdefaultargs") Key;
-		%feature("autodoc", "	:rtype: TopoDS_Shape
-") Key;
-		TopoDS_Shape  Key ();
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:rtype: TopTools_DataMapOfShapeListOfShape
-") Value;
-		TopTools_DataMapOfShapeListOfShape & Value ();
-};
-
-
-%extend BRepFill_DataMapNodeOfDataMapOfShapeDataMapOfShapeListOfShape {
-	%pythoncode {
-		def GetHandle(self):
-		    try:
-		        return self.thisHandle
-		    except:
-		        self.thisHandle = Handle_BRepFill_DataMapNodeOfDataMapOfShapeDataMapOfShapeListOfShape(self)
-		        self.thisown = False
-		        return self.thisHandle
-	}
-};
-
-%pythonappend Handle_BRepFill_DataMapNodeOfDataMapOfShapeDataMapOfShapeListOfShape::Handle_BRepFill_DataMapNodeOfDataMapOfShapeDataMapOfShapeListOfShape %{
-    # register the handle in the base object
-    if len(args) > 0:
-        register_handle(self, args[0])
-%}
-
-%nodefaultctor Handle_BRepFill_DataMapNodeOfDataMapOfShapeDataMapOfShapeListOfShape;
-class Handle_BRepFill_DataMapNodeOfDataMapOfShapeDataMapOfShapeListOfShape : public Handle_TCollection_MapNode {
-
-    public:
-        // constructors
-        Handle_BRepFill_DataMapNodeOfDataMapOfShapeDataMapOfShapeListOfShape();
-        Handle_BRepFill_DataMapNodeOfDataMapOfShapeDataMapOfShapeListOfShape(const Handle_BRepFill_DataMapNodeOfDataMapOfShapeDataMapOfShapeListOfShape &aHandle);
-        Handle_BRepFill_DataMapNodeOfDataMapOfShapeDataMapOfShapeListOfShape(const BRepFill_DataMapNodeOfDataMapOfShapeDataMapOfShapeListOfShape *anItem);
-        void Nullify();
-        Standard_Boolean IsNull() const;
-        static const Handle_BRepFill_DataMapNodeOfDataMapOfShapeDataMapOfShapeListOfShape DownCast(const Handle_Standard_Transient &AnObject);
-
-};
-%extend Handle_BRepFill_DataMapNodeOfDataMapOfShapeDataMapOfShapeListOfShape {
-    BRepFill_DataMapNodeOfDataMapOfShapeDataMapOfShapeListOfShape* _get_reference() {
-    return (BRepFill_DataMapNodeOfDataMapOfShapeDataMapOfShapeListOfShape*)$self->Access();
-    }
-};
-
-%extend Handle_BRepFill_DataMapNodeOfDataMapOfShapeDataMapOfShapeListOfShape {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
-};
-
-%extend BRepFill_DataMapNodeOfDataMapOfShapeDataMapOfShapeListOfShape {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor BRepFill_DataMapNodeOfDataMapOfShapeHArray2OfShape;
-class BRepFill_DataMapNodeOfDataMapOfShapeHArray2OfShape : public TCollection_MapNode {
-	public:
-		%feature("compactdefaultargs") BRepFill_DataMapNodeOfDataMapOfShapeHArray2OfShape;
-		%feature("autodoc", "	:param K:
-	:type K: TopoDS_Shape &
-	:param I:
-	:type I: Handle_TopTools_HArray2OfShape &
-	:param n:
-	:type n: TCollection_MapNodePtr &
-	:rtype: None
-") BRepFill_DataMapNodeOfDataMapOfShapeHArray2OfShape;
-		 BRepFill_DataMapNodeOfDataMapOfShapeHArray2OfShape (const TopoDS_Shape & K,const Handle_TopTools_HArray2OfShape & I,const TCollection_MapNodePtr & n);
-		%feature("compactdefaultargs") Key;
-		%feature("autodoc", "	:rtype: TopoDS_Shape
-") Key;
-		TopoDS_Shape  Key ();
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:rtype: Handle_TopTools_HArray2OfShape
-") Value;
-		Handle_TopTools_HArray2OfShape Value ();
-};
-
-
-%extend BRepFill_DataMapNodeOfDataMapOfShapeHArray2OfShape {
-	%pythoncode {
-		def GetHandle(self):
-		    try:
-		        return self.thisHandle
-		    except:
-		        self.thisHandle = Handle_BRepFill_DataMapNodeOfDataMapOfShapeHArray2OfShape(self)
-		        self.thisown = False
-		        return self.thisHandle
-	}
-};
-
-%pythonappend Handle_BRepFill_DataMapNodeOfDataMapOfShapeHArray2OfShape::Handle_BRepFill_DataMapNodeOfDataMapOfShapeHArray2OfShape %{
-    # register the handle in the base object
-    if len(args) > 0:
-        register_handle(self, args[0])
-%}
-
-%nodefaultctor Handle_BRepFill_DataMapNodeOfDataMapOfShapeHArray2OfShape;
-class Handle_BRepFill_DataMapNodeOfDataMapOfShapeHArray2OfShape : public Handle_TCollection_MapNode {
-
-    public:
-        // constructors
-        Handle_BRepFill_DataMapNodeOfDataMapOfShapeHArray2OfShape();
-        Handle_BRepFill_DataMapNodeOfDataMapOfShapeHArray2OfShape(const Handle_BRepFill_DataMapNodeOfDataMapOfShapeHArray2OfShape &aHandle);
-        Handle_BRepFill_DataMapNodeOfDataMapOfShapeHArray2OfShape(const BRepFill_DataMapNodeOfDataMapOfShapeHArray2OfShape *anItem);
-        void Nullify();
-        Standard_Boolean IsNull() const;
-        static const Handle_BRepFill_DataMapNodeOfDataMapOfShapeHArray2OfShape DownCast(const Handle_Standard_Transient &AnObject);
-
-};
-%extend Handle_BRepFill_DataMapNodeOfDataMapOfShapeHArray2OfShape {
-    BRepFill_DataMapNodeOfDataMapOfShapeHArray2OfShape* _get_reference() {
-    return (BRepFill_DataMapNodeOfDataMapOfShapeHArray2OfShape*)$self->Access();
-    }
-};
-
-%extend Handle_BRepFill_DataMapNodeOfDataMapOfShapeHArray2OfShape {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
-};
-
-%extend BRepFill_DataMapNodeOfDataMapOfShapeHArray2OfShape {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor BRepFill_DataMapNodeOfDataMapOfShapeSequenceOfPnt;
-class BRepFill_DataMapNodeOfDataMapOfShapeSequenceOfPnt : public TCollection_MapNode {
-	public:
-		%feature("compactdefaultargs") BRepFill_DataMapNodeOfDataMapOfShapeSequenceOfPnt;
-		%feature("autodoc", "	:param K:
-	:type K: TopoDS_Shape &
-	:param I:
-	:type I: TColgp_SequenceOfPnt
-	:param n:
-	:type n: TCollection_MapNodePtr &
-	:rtype: None
-") BRepFill_DataMapNodeOfDataMapOfShapeSequenceOfPnt;
-		 BRepFill_DataMapNodeOfDataMapOfShapeSequenceOfPnt (const TopoDS_Shape & K,const TColgp_SequenceOfPnt & I,const TCollection_MapNodePtr & n);
-		%feature("compactdefaultargs") Key;
-		%feature("autodoc", "	:rtype: TopoDS_Shape
-") Key;
-		TopoDS_Shape  Key ();
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:rtype: TColgp_SequenceOfPnt
-") Value;
-		TColgp_SequenceOfPnt & Value ();
-};
-
-
-%extend BRepFill_DataMapNodeOfDataMapOfShapeSequenceOfPnt {
-	%pythoncode {
-		def GetHandle(self):
-		    try:
-		        return self.thisHandle
-		    except:
-		        self.thisHandle = Handle_BRepFill_DataMapNodeOfDataMapOfShapeSequenceOfPnt(self)
-		        self.thisown = False
-		        return self.thisHandle
-	}
-};
-
-%pythonappend Handle_BRepFill_DataMapNodeOfDataMapOfShapeSequenceOfPnt::Handle_BRepFill_DataMapNodeOfDataMapOfShapeSequenceOfPnt %{
-    # register the handle in the base object
-    if len(args) > 0:
-        register_handle(self, args[0])
-%}
-
-%nodefaultctor Handle_BRepFill_DataMapNodeOfDataMapOfShapeSequenceOfPnt;
-class Handle_BRepFill_DataMapNodeOfDataMapOfShapeSequenceOfPnt : public Handle_TCollection_MapNode {
-
-    public:
-        // constructors
-        Handle_BRepFill_DataMapNodeOfDataMapOfShapeSequenceOfPnt();
-        Handle_BRepFill_DataMapNodeOfDataMapOfShapeSequenceOfPnt(const Handle_BRepFill_DataMapNodeOfDataMapOfShapeSequenceOfPnt &aHandle);
-        Handle_BRepFill_DataMapNodeOfDataMapOfShapeSequenceOfPnt(const BRepFill_DataMapNodeOfDataMapOfShapeSequenceOfPnt *anItem);
-        void Nullify();
-        Standard_Boolean IsNull() const;
-        static const Handle_BRepFill_DataMapNodeOfDataMapOfShapeSequenceOfPnt DownCast(const Handle_Standard_Transient &AnObject);
-
-};
-%extend Handle_BRepFill_DataMapNodeOfDataMapOfShapeSequenceOfPnt {
-    BRepFill_DataMapNodeOfDataMapOfShapeSequenceOfPnt* _get_reference() {
-    return (BRepFill_DataMapNodeOfDataMapOfShapeSequenceOfPnt*)$self->Access();
-    }
-};
-
-%extend Handle_BRepFill_DataMapNodeOfDataMapOfShapeSequenceOfPnt {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
-};
-
-%extend BRepFill_DataMapNodeOfDataMapOfShapeSequenceOfPnt {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor BRepFill_DataMapNodeOfDataMapOfShapeSequenceOfReal;
-class BRepFill_DataMapNodeOfDataMapOfShapeSequenceOfReal : public TCollection_MapNode {
-	public:
-		%feature("compactdefaultargs") BRepFill_DataMapNodeOfDataMapOfShapeSequenceOfReal;
-		%feature("autodoc", "	:param K:
-	:type K: TopoDS_Shape &
-	:param I:
-	:type I: TColStd_SequenceOfReal &
-	:param n:
-	:type n: TCollection_MapNodePtr &
-	:rtype: None
-") BRepFill_DataMapNodeOfDataMapOfShapeSequenceOfReal;
-		 BRepFill_DataMapNodeOfDataMapOfShapeSequenceOfReal (const TopoDS_Shape & K,const TColStd_SequenceOfReal & I,const TCollection_MapNodePtr & n);
-		%feature("compactdefaultargs") Key;
-		%feature("autodoc", "	:rtype: TopoDS_Shape
-") Key;
-		TopoDS_Shape  Key ();
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:rtype: TColStd_SequenceOfReal
-") Value;
-		TColStd_SequenceOfReal & Value ();
-};
-
-
-%extend BRepFill_DataMapNodeOfDataMapOfShapeSequenceOfReal {
-	%pythoncode {
-		def GetHandle(self):
-		    try:
-		        return self.thisHandle
-		    except:
-		        self.thisHandle = Handle_BRepFill_DataMapNodeOfDataMapOfShapeSequenceOfReal(self)
-		        self.thisown = False
-		        return self.thisHandle
-	}
-};
-
-%pythonappend Handle_BRepFill_DataMapNodeOfDataMapOfShapeSequenceOfReal::Handle_BRepFill_DataMapNodeOfDataMapOfShapeSequenceOfReal %{
-    # register the handle in the base object
-    if len(args) > 0:
-        register_handle(self, args[0])
-%}
-
-%nodefaultctor Handle_BRepFill_DataMapNodeOfDataMapOfShapeSequenceOfReal;
-class Handle_BRepFill_DataMapNodeOfDataMapOfShapeSequenceOfReal : public Handle_TCollection_MapNode {
-
-    public:
-        // constructors
-        Handle_BRepFill_DataMapNodeOfDataMapOfShapeSequenceOfReal();
-        Handle_BRepFill_DataMapNodeOfDataMapOfShapeSequenceOfReal(const Handle_BRepFill_DataMapNodeOfDataMapOfShapeSequenceOfReal &aHandle);
-        Handle_BRepFill_DataMapNodeOfDataMapOfShapeSequenceOfReal(const BRepFill_DataMapNodeOfDataMapOfShapeSequenceOfReal *anItem);
-        void Nullify();
-        Standard_Boolean IsNull() const;
-        static const Handle_BRepFill_DataMapNodeOfDataMapOfShapeSequenceOfReal DownCast(const Handle_Standard_Transient &AnObject);
-
-};
-%extend Handle_BRepFill_DataMapNodeOfDataMapOfShapeSequenceOfReal {
-    BRepFill_DataMapNodeOfDataMapOfShapeSequenceOfReal* _get_reference() {
-    return (BRepFill_DataMapNodeOfDataMapOfShapeSequenceOfReal*)$self->Access();
-    }
-};
-
-%extend Handle_BRepFill_DataMapNodeOfDataMapOfShapeSequenceOfReal {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
-};
-
-%extend BRepFill_DataMapNodeOfDataMapOfShapeSequenceOfReal {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor BRepFill_DataMapOfNodeDataMapOfShapeShape;
-class BRepFill_DataMapOfNodeDataMapOfShapeShape : public TCollection_BasicMap {
-	public:
-		%feature("compactdefaultargs") BRepFill_DataMapOfNodeDataMapOfShapeShape;
-		%feature("autodoc", "	:param NbBuckets: default value is 1
-	:type NbBuckets: int
-	:rtype: None
-") BRepFill_DataMapOfNodeDataMapOfShapeShape;
-		 BRepFill_DataMapOfNodeDataMapOfShapeShape (const Standard_Integer NbBuckets = 1);
-		%feature("compactdefaultargs") Assign;
-		%feature("autodoc", "	:param Other:
-	:type Other: BRepFill_DataMapOfNodeDataMapOfShapeShape &
-	:rtype: BRepFill_DataMapOfNodeDataMapOfShapeShape
-") Assign;
-		BRepFill_DataMapOfNodeDataMapOfShapeShape & Assign (const BRepFill_DataMapOfNodeDataMapOfShapeShape & Other);
-		%feature("compactdefaultargs") operator =;
-		%feature("autodoc", "	:param Other:
-	:type Other: BRepFill_DataMapOfNodeDataMapOfShapeShape &
-	:rtype: BRepFill_DataMapOfNodeDataMapOfShapeShape
-") operator =;
-		BRepFill_DataMapOfNodeDataMapOfShapeShape & operator = (const BRepFill_DataMapOfNodeDataMapOfShapeShape & Other);
-		%feature("compactdefaultargs") ReSize;
-		%feature("autodoc", "	:param NbBuckets:
-	:type NbBuckets: int
-	:rtype: None
-") ReSize;
-		void ReSize (const Standard_Integer NbBuckets);
-		%feature("compactdefaultargs") Clear;
-		%feature("autodoc", "	:rtype: None
-") Clear;
-		void Clear ();
-		%feature("compactdefaultargs") Bind;
-		%feature("autodoc", "	:param K:
-	:type K: Handle_MAT_Node &
-	:param I:
-	:type I: TopTools_DataMapOfShapeShape &
-	:rtype: bool
-") Bind;
-		Standard_Boolean Bind (const Handle_MAT_Node & K,const TopTools_DataMapOfShapeShape & I);
-		%feature("compactdefaultargs") IsBound;
-		%feature("autodoc", "	:param K:
-	:type K: Handle_MAT_Node &
-	:rtype: bool
-") IsBound;
-		Standard_Boolean IsBound (const Handle_MAT_Node & K);
-		%feature("compactdefaultargs") UnBind;
-		%feature("autodoc", "	:param K:
-	:type K: Handle_MAT_Node &
-	:rtype: bool
-") UnBind;
-		Standard_Boolean UnBind (const Handle_MAT_Node & K);
-		%feature("compactdefaultargs") Find;
-		%feature("autodoc", "	:param K:
-	:type K: Handle_MAT_Node &
-	:rtype: TopTools_DataMapOfShapeShape
-") Find;
-		const TopTools_DataMapOfShapeShape & Find (const Handle_MAT_Node & K);
-		%feature("compactdefaultargs") ChangeFind;
-		%feature("autodoc", "	:param K:
-	:type K: Handle_MAT_Node &
-	:rtype: TopTools_DataMapOfShapeShape
-") ChangeFind;
-		TopTools_DataMapOfShapeShape & ChangeFind (const Handle_MAT_Node & K);
-		%feature("compactdefaultargs") Find1;
-		%feature("autodoc", "	:param K:
-	:type K: Handle_MAT_Node &
-	:rtype: Standard_Address
-") Find1;
-		Standard_Address Find1 (const Handle_MAT_Node & K);
-		%feature("compactdefaultargs") ChangeFind1;
-		%feature("autodoc", "	:param K:
-	:type K: Handle_MAT_Node &
-	:rtype: Standard_Address
-") ChangeFind1;
-		Standard_Address ChangeFind1 (const Handle_MAT_Node & K);
-};
-
-
-%extend BRepFill_DataMapOfNodeDataMapOfShapeShape {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor BRepFill_DataMapOfNodeShape;
-class BRepFill_DataMapOfNodeShape : public TCollection_BasicMap {
-	public:
-		%feature("compactdefaultargs") BRepFill_DataMapOfNodeShape;
-		%feature("autodoc", "	:param NbBuckets: default value is 1
-	:type NbBuckets: int
-	:rtype: None
-") BRepFill_DataMapOfNodeShape;
-		 BRepFill_DataMapOfNodeShape (const Standard_Integer NbBuckets = 1);
-		%feature("compactdefaultargs") Assign;
-		%feature("autodoc", "	:param Other:
-	:type Other: BRepFill_DataMapOfNodeShape &
-	:rtype: BRepFill_DataMapOfNodeShape
-") Assign;
-		BRepFill_DataMapOfNodeShape & Assign (const BRepFill_DataMapOfNodeShape & Other);
-		%feature("compactdefaultargs") operator =;
-		%feature("autodoc", "	:param Other:
-	:type Other: BRepFill_DataMapOfNodeShape &
-	:rtype: BRepFill_DataMapOfNodeShape
-") operator =;
-		BRepFill_DataMapOfNodeShape & operator = (const BRepFill_DataMapOfNodeShape & Other);
-		%feature("compactdefaultargs") ReSize;
-		%feature("autodoc", "	:param NbBuckets:
-	:type NbBuckets: int
-	:rtype: None
-") ReSize;
-		void ReSize (const Standard_Integer NbBuckets);
-		%feature("compactdefaultargs") Clear;
-		%feature("autodoc", "	:rtype: None
-") Clear;
-		void Clear ();
-		%feature("compactdefaultargs") Bind;
-		%feature("autodoc", "	:param K:
-	:type K: Handle_MAT_Node &
-	:param I:
-	:type I: TopoDS_Shape &
-	:rtype: bool
-") Bind;
-		Standard_Boolean Bind (const Handle_MAT_Node & K,const TopoDS_Shape & I);
-		%feature("compactdefaultargs") IsBound;
-		%feature("autodoc", "	:param K:
-	:type K: Handle_MAT_Node &
-	:rtype: bool
-") IsBound;
-		Standard_Boolean IsBound (const Handle_MAT_Node & K);
-		%feature("compactdefaultargs") UnBind;
-		%feature("autodoc", "	:param K:
-	:type K: Handle_MAT_Node &
-	:rtype: bool
-") UnBind;
-		Standard_Boolean UnBind (const Handle_MAT_Node & K);
-		%feature("compactdefaultargs") Find;
-		%feature("autodoc", "	:param K:
-	:type K: Handle_MAT_Node &
-	:rtype: TopoDS_Shape
-") Find;
-		const TopoDS_Shape  Find (const Handle_MAT_Node & K);
-		%feature("compactdefaultargs") ChangeFind;
-		%feature("autodoc", "	:param K:
-	:type K: Handle_MAT_Node &
-	:rtype: TopoDS_Shape
-") ChangeFind;
-		TopoDS_Shape  ChangeFind (const Handle_MAT_Node & K);
-		%feature("compactdefaultargs") Find1;
-		%feature("autodoc", "	:param K:
-	:type K: Handle_MAT_Node &
-	:rtype: Standard_Address
-") Find1;
-		Standard_Address Find1 (const Handle_MAT_Node & K);
-		%feature("compactdefaultargs") ChangeFind1;
-		%feature("autodoc", "	:param K:
-	:type K: Handle_MAT_Node &
-	:rtype: Standard_Address
-") ChangeFind1;
-		Standard_Address ChangeFind1 (const Handle_MAT_Node & K);
-};
-
-
-%extend BRepFill_DataMapOfNodeShape {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor BRepFill_DataMapOfOrientedShapeListOfShape;
-class BRepFill_DataMapOfOrientedShapeListOfShape : public TCollection_BasicMap {
-	public:
-		%feature("compactdefaultargs") BRepFill_DataMapOfOrientedShapeListOfShape;
-		%feature("autodoc", "	:param NbBuckets: default value is 1
-	:type NbBuckets: int
-	:rtype: None
-") BRepFill_DataMapOfOrientedShapeListOfShape;
-		 BRepFill_DataMapOfOrientedShapeListOfShape (const Standard_Integer NbBuckets = 1);
-		%feature("compactdefaultargs") Assign;
-		%feature("autodoc", "	:param Other:
-	:type Other: BRepFill_DataMapOfOrientedShapeListOfShape &
-	:rtype: BRepFill_DataMapOfOrientedShapeListOfShape
-") Assign;
-		BRepFill_DataMapOfOrientedShapeListOfShape & Assign (const BRepFill_DataMapOfOrientedShapeListOfShape & Other);
-		%feature("compactdefaultargs") operator =;
-		%feature("autodoc", "	:param Other:
-	:type Other: BRepFill_DataMapOfOrientedShapeListOfShape &
-	:rtype: BRepFill_DataMapOfOrientedShapeListOfShape
-") operator =;
-		BRepFill_DataMapOfOrientedShapeListOfShape & operator = (const BRepFill_DataMapOfOrientedShapeListOfShape & Other);
-		%feature("compactdefaultargs") ReSize;
-		%feature("autodoc", "	:param NbBuckets:
-	:type NbBuckets: int
-	:rtype: None
-") ReSize;
-		void ReSize (const Standard_Integer NbBuckets);
-		%feature("compactdefaultargs") Clear;
-		%feature("autodoc", "	:rtype: None
-") Clear;
-		void Clear ();
-		%feature("compactdefaultargs") Bind;
-		%feature("autodoc", "	:param K:
-	:type K: TopoDS_Shape &
-	:param I:
-	:type I: TopTools_ListOfShape &
-	:rtype: bool
-") Bind;
-		Standard_Boolean Bind (const TopoDS_Shape & K,const TopTools_ListOfShape & I);
-		%feature("compactdefaultargs") IsBound;
-		%feature("autodoc", "	:param K:
-	:type K: TopoDS_Shape &
-	:rtype: bool
-") IsBound;
-		Standard_Boolean IsBound (const TopoDS_Shape & K);
-		%feature("compactdefaultargs") UnBind;
-		%feature("autodoc", "	:param K:
-	:type K: TopoDS_Shape &
-	:rtype: bool
-") UnBind;
-		Standard_Boolean UnBind (const TopoDS_Shape & K);
-		%feature("compactdefaultargs") Find;
-		%feature("autodoc", "	:param K:
-	:type K: TopoDS_Shape &
-	:rtype: TopTools_ListOfShape
-") Find;
-		const TopTools_ListOfShape & Find (const TopoDS_Shape & K);
-		%feature("compactdefaultargs") ChangeFind;
-		%feature("autodoc", "	:param K:
-	:type K: TopoDS_Shape &
-	:rtype: TopTools_ListOfShape
-") ChangeFind;
-		TopTools_ListOfShape & ChangeFind (const TopoDS_Shape & K);
-		%feature("compactdefaultargs") Find1;
-		%feature("autodoc", "	:param K:
-	:type K: TopoDS_Shape &
-	:rtype: Standard_Address
-") Find1;
-		Standard_Address Find1 (const TopoDS_Shape & K);
-		%feature("compactdefaultargs") ChangeFind1;
-		%feature("autodoc", "	:param K:
-	:type K: TopoDS_Shape &
-	:rtype: Standard_Address
-") ChangeFind1;
-		Standard_Address ChangeFind1 (const TopoDS_Shape & K);
-};
-
-
-%extend BRepFill_DataMapOfOrientedShapeListOfShape {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor BRepFill_DataMapOfShapeDataMapOfShapeListOfShape;
-class BRepFill_DataMapOfShapeDataMapOfShapeListOfShape : public TCollection_BasicMap {
-	public:
-		%feature("compactdefaultargs") BRepFill_DataMapOfShapeDataMapOfShapeListOfShape;
-		%feature("autodoc", "	:param NbBuckets: default value is 1
-	:type NbBuckets: int
-	:rtype: None
-") BRepFill_DataMapOfShapeDataMapOfShapeListOfShape;
-		 BRepFill_DataMapOfShapeDataMapOfShapeListOfShape (const Standard_Integer NbBuckets = 1);
-		%feature("compactdefaultargs") Assign;
-		%feature("autodoc", "	:param Other:
-	:type Other: BRepFill_DataMapOfShapeDataMapOfShapeListOfShape &
-	:rtype: BRepFill_DataMapOfShapeDataMapOfShapeListOfShape
-") Assign;
-		BRepFill_DataMapOfShapeDataMapOfShapeListOfShape & Assign (const BRepFill_DataMapOfShapeDataMapOfShapeListOfShape & Other);
-		%feature("compactdefaultargs") operator =;
-		%feature("autodoc", "	:param Other:
-	:type Other: BRepFill_DataMapOfShapeDataMapOfShapeListOfShape &
-	:rtype: BRepFill_DataMapOfShapeDataMapOfShapeListOfShape
-") operator =;
-		BRepFill_DataMapOfShapeDataMapOfShapeListOfShape & operator = (const BRepFill_DataMapOfShapeDataMapOfShapeListOfShape & Other);
-		%feature("compactdefaultargs") ReSize;
-		%feature("autodoc", "	:param NbBuckets:
-	:type NbBuckets: int
-	:rtype: None
-") ReSize;
-		void ReSize (const Standard_Integer NbBuckets);
-		%feature("compactdefaultargs") Clear;
-		%feature("autodoc", "	:rtype: None
-") Clear;
-		void Clear ();
-		%feature("compactdefaultargs") Bind;
-		%feature("autodoc", "	:param K:
-	:type K: TopoDS_Shape &
-	:param I:
-	:type I: TopTools_DataMapOfShapeListOfShape &
-	:rtype: bool
-") Bind;
-		Standard_Boolean Bind (const TopoDS_Shape & K,const TopTools_DataMapOfShapeListOfShape & I);
-		%feature("compactdefaultargs") IsBound;
-		%feature("autodoc", "	:param K:
-	:type K: TopoDS_Shape &
-	:rtype: bool
-") IsBound;
-		Standard_Boolean IsBound (const TopoDS_Shape & K);
-		%feature("compactdefaultargs") UnBind;
-		%feature("autodoc", "	:param K:
-	:type K: TopoDS_Shape &
-	:rtype: bool
-") UnBind;
-		Standard_Boolean UnBind (const TopoDS_Shape & K);
-		%feature("compactdefaultargs") Find;
-		%feature("autodoc", "	:param K:
-	:type K: TopoDS_Shape &
-	:rtype: TopTools_DataMapOfShapeListOfShape
-") Find;
-		const TopTools_DataMapOfShapeListOfShape & Find (const TopoDS_Shape & K);
-		%feature("compactdefaultargs") ChangeFind;
-		%feature("autodoc", "	:param K:
-	:type K: TopoDS_Shape &
-	:rtype: TopTools_DataMapOfShapeListOfShape
-") ChangeFind;
-		TopTools_DataMapOfShapeListOfShape & ChangeFind (const TopoDS_Shape & K);
-		%feature("compactdefaultargs") Find1;
-		%feature("autodoc", "	:param K:
-	:type K: TopoDS_Shape &
-	:rtype: Standard_Address
-") Find1;
-		Standard_Address Find1 (const TopoDS_Shape & K);
-		%feature("compactdefaultargs") ChangeFind1;
-		%feature("autodoc", "	:param K:
-	:type K: TopoDS_Shape &
-	:rtype: Standard_Address
-") ChangeFind1;
-		Standard_Address ChangeFind1 (const TopoDS_Shape & K);
-};
-
-
-%extend BRepFill_DataMapOfShapeDataMapOfShapeListOfShape {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor BRepFill_DataMapOfShapeHArray2OfShape;
-class BRepFill_DataMapOfShapeHArray2OfShape : public TCollection_BasicMap {
-	public:
-		%feature("compactdefaultargs") BRepFill_DataMapOfShapeHArray2OfShape;
-		%feature("autodoc", "	:param NbBuckets: default value is 1
-	:type NbBuckets: int
-	:rtype: None
-") BRepFill_DataMapOfShapeHArray2OfShape;
-		 BRepFill_DataMapOfShapeHArray2OfShape (const Standard_Integer NbBuckets = 1);
-		%feature("compactdefaultargs") Assign;
-		%feature("autodoc", "	:param Other:
-	:type Other: BRepFill_DataMapOfShapeHArray2OfShape &
-	:rtype: BRepFill_DataMapOfShapeHArray2OfShape
-") Assign;
-		BRepFill_DataMapOfShapeHArray2OfShape & Assign (const BRepFill_DataMapOfShapeHArray2OfShape & Other);
-		%feature("compactdefaultargs") operator =;
-		%feature("autodoc", "	:param Other:
-	:type Other: BRepFill_DataMapOfShapeHArray2OfShape &
-	:rtype: BRepFill_DataMapOfShapeHArray2OfShape
-") operator =;
-		BRepFill_DataMapOfShapeHArray2OfShape & operator = (const BRepFill_DataMapOfShapeHArray2OfShape & Other);
-		%feature("compactdefaultargs") ReSize;
-		%feature("autodoc", "	:param NbBuckets:
-	:type NbBuckets: int
-	:rtype: None
-") ReSize;
-		void ReSize (const Standard_Integer NbBuckets);
-		%feature("compactdefaultargs") Clear;
-		%feature("autodoc", "	:rtype: None
-") Clear;
-		void Clear ();
-		%feature("compactdefaultargs") Bind;
-		%feature("autodoc", "	:param K:
-	:type K: TopoDS_Shape &
-	:param I:
-	:type I: Handle_TopTools_HArray2OfShape &
-	:rtype: bool
-") Bind;
-		Standard_Boolean Bind (const TopoDS_Shape & K,const Handle_TopTools_HArray2OfShape & I);
-		%feature("compactdefaultargs") IsBound;
-		%feature("autodoc", "	:param K:
-	:type K: TopoDS_Shape &
-	:rtype: bool
-") IsBound;
-		Standard_Boolean IsBound (const TopoDS_Shape & K);
-		%feature("compactdefaultargs") UnBind;
-		%feature("autodoc", "	:param K:
-	:type K: TopoDS_Shape &
-	:rtype: bool
-") UnBind;
-		Standard_Boolean UnBind (const TopoDS_Shape & K);
-		%feature("compactdefaultargs") Find;
-		%feature("autodoc", "	:param K:
-	:type K: TopoDS_Shape &
-	:rtype: Handle_TopTools_HArray2OfShape
-") Find;
-		Handle_TopTools_HArray2OfShape Find (const TopoDS_Shape & K);
-		%feature("compactdefaultargs") ChangeFind;
-		%feature("autodoc", "	:param K:
-	:type K: TopoDS_Shape &
-	:rtype: Handle_TopTools_HArray2OfShape
-") ChangeFind;
-		Handle_TopTools_HArray2OfShape ChangeFind (const TopoDS_Shape & K);
-		%feature("compactdefaultargs") Find1;
-		%feature("autodoc", "	:param K:
-	:type K: TopoDS_Shape &
-	:rtype: Standard_Address
-") Find1;
-		Standard_Address Find1 (const TopoDS_Shape & K);
-		%feature("compactdefaultargs") ChangeFind1;
-		%feature("autodoc", "	:param K:
-	:type K: TopoDS_Shape &
-	:rtype: Standard_Address
-") ChangeFind1;
-		Standard_Address ChangeFind1 (const TopoDS_Shape & K);
-};
-
-
-%extend BRepFill_DataMapOfShapeHArray2OfShape {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor BRepFill_DataMapOfShapeSequenceOfPnt;
-class BRepFill_DataMapOfShapeSequenceOfPnt : public TCollection_BasicMap {
-	public:
-		%feature("compactdefaultargs") BRepFill_DataMapOfShapeSequenceOfPnt;
-		%feature("autodoc", "	:param NbBuckets: default value is 1
-	:type NbBuckets: int
-	:rtype: None
-") BRepFill_DataMapOfShapeSequenceOfPnt;
-		 BRepFill_DataMapOfShapeSequenceOfPnt (const Standard_Integer NbBuckets = 1);
-		%feature("compactdefaultargs") Assign;
-		%feature("autodoc", "	:param Other:
-	:type Other: BRepFill_DataMapOfShapeSequenceOfPnt &
-	:rtype: BRepFill_DataMapOfShapeSequenceOfPnt
-") Assign;
-		BRepFill_DataMapOfShapeSequenceOfPnt & Assign (const BRepFill_DataMapOfShapeSequenceOfPnt & Other);
-		%feature("compactdefaultargs") operator =;
-		%feature("autodoc", "	:param Other:
-	:type Other: BRepFill_DataMapOfShapeSequenceOfPnt &
-	:rtype: BRepFill_DataMapOfShapeSequenceOfPnt
-") operator =;
-		BRepFill_DataMapOfShapeSequenceOfPnt & operator = (const BRepFill_DataMapOfShapeSequenceOfPnt & Other);
-		%feature("compactdefaultargs") ReSize;
-		%feature("autodoc", "	:param NbBuckets:
-	:type NbBuckets: int
-	:rtype: None
-") ReSize;
-		void ReSize (const Standard_Integer NbBuckets);
-		%feature("compactdefaultargs") Clear;
-		%feature("autodoc", "	:rtype: None
-") Clear;
-		void Clear ();
-		%feature("compactdefaultargs") Bind;
-		%feature("autodoc", "	:param K:
-	:type K: TopoDS_Shape &
-	:param I:
-	:type I: TColgp_SequenceOfPnt
-	:rtype: bool
-") Bind;
-		Standard_Boolean Bind (const TopoDS_Shape & K,const TColgp_SequenceOfPnt & I);
-		%feature("compactdefaultargs") IsBound;
-		%feature("autodoc", "	:param K:
-	:type K: TopoDS_Shape &
-	:rtype: bool
-") IsBound;
-		Standard_Boolean IsBound (const TopoDS_Shape & K);
-		%feature("compactdefaultargs") UnBind;
-		%feature("autodoc", "	:param K:
-	:type K: TopoDS_Shape &
-	:rtype: bool
-") UnBind;
-		Standard_Boolean UnBind (const TopoDS_Shape & K);
-		%feature("compactdefaultargs") Find;
-		%feature("autodoc", "	:param K:
-	:type K: TopoDS_Shape &
-	:rtype: TColgp_SequenceOfPnt
-") Find;
-		const TColgp_SequenceOfPnt & Find (const TopoDS_Shape & K);
-		%feature("compactdefaultargs") ChangeFind;
-		%feature("autodoc", "	:param K:
-	:type K: TopoDS_Shape &
-	:rtype: TColgp_SequenceOfPnt
-") ChangeFind;
-		TColgp_SequenceOfPnt & ChangeFind (const TopoDS_Shape & K);
-		%feature("compactdefaultargs") Find1;
-		%feature("autodoc", "	:param K:
-	:type K: TopoDS_Shape &
-	:rtype: Standard_Address
-") Find1;
-		Standard_Address Find1 (const TopoDS_Shape & K);
-		%feature("compactdefaultargs") ChangeFind1;
-		%feature("autodoc", "	:param K:
-	:type K: TopoDS_Shape &
-	:rtype: Standard_Address
-") ChangeFind1;
-		Standard_Address ChangeFind1 (const TopoDS_Shape & K);
-};
-
-
-%extend BRepFill_DataMapOfShapeSequenceOfPnt {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor BRepFill_DataMapOfShapeSequenceOfReal;
-class BRepFill_DataMapOfShapeSequenceOfReal : public TCollection_BasicMap {
-	public:
-		%feature("compactdefaultargs") BRepFill_DataMapOfShapeSequenceOfReal;
-		%feature("autodoc", "	:param NbBuckets: default value is 1
-	:type NbBuckets: int
-	:rtype: None
-") BRepFill_DataMapOfShapeSequenceOfReal;
-		 BRepFill_DataMapOfShapeSequenceOfReal (const Standard_Integer NbBuckets = 1);
-		%feature("compactdefaultargs") Assign;
-		%feature("autodoc", "	:param Other:
-	:type Other: BRepFill_DataMapOfShapeSequenceOfReal &
-	:rtype: BRepFill_DataMapOfShapeSequenceOfReal
-") Assign;
-		BRepFill_DataMapOfShapeSequenceOfReal & Assign (const BRepFill_DataMapOfShapeSequenceOfReal & Other);
-		%feature("compactdefaultargs") operator =;
-		%feature("autodoc", "	:param Other:
-	:type Other: BRepFill_DataMapOfShapeSequenceOfReal &
-	:rtype: BRepFill_DataMapOfShapeSequenceOfReal
-") operator =;
-		BRepFill_DataMapOfShapeSequenceOfReal & operator = (const BRepFill_DataMapOfShapeSequenceOfReal & Other);
-		%feature("compactdefaultargs") ReSize;
-		%feature("autodoc", "	:param NbBuckets:
-	:type NbBuckets: int
-	:rtype: None
-") ReSize;
-		void ReSize (const Standard_Integer NbBuckets);
-		%feature("compactdefaultargs") Clear;
-		%feature("autodoc", "	:rtype: None
-") Clear;
-		void Clear ();
-		%feature("compactdefaultargs") Bind;
-		%feature("autodoc", "	:param K:
-	:type K: TopoDS_Shape &
-	:param I:
-	:type I: TColStd_SequenceOfReal &
-	:rtype: bool
-") Bind;
-		Standard_Boolean Bind (const TopoDS_Shape & K,const TColStd_SequenceOfReal & I);
-		%feature("compactdefaultargs") IsBound;
-		%feature("autodoc", "	:param K:
-	:type K: TopoDS_Shape &
-	:rtype: bool
-") IsBound;
-		Standard_Boolean IsBound (const TopoDS_Shape & K);
-		%feature("compactdefaultargs") UnBind;
-		%feature("autodoc", "	:param K:
-	:type K: TopoDS_Shape &
-	:rtype: bool
-") UnBind;
-		Standard_Boolean UnBind (const TopoDS_Shape & K);
-		%feature("compactdefaultargs") Find;
-		%feature("autodoc", "	:param K:
-	:type K: TopoDS_Shape &
-	:rtype: TColStd_SequenceOfReal
-") Find;
-		const TColStd_SequenceOfReal & Find (const TopoDS_Shape & K);
-		%feature("compactdefaultargs") ChangeFind;
-		%feature("autodoc", "	:param K:
-	:type K: TopoDS_Shape &
-	:rtype: TColStd_SequenceOfReal
-") ChangeFind;
-		TColStd_SequenceOfReal & ChangeFind (const TopoDS_Shape & K);
-		%feature("compactdefaultargs") Find1;
-		%feature("autodoc", "	:param K:
-	:type K: TopoDS_Shape &
-	:rtype: Standard_Address
-") Find1;
-		Standard_Address Find1 (const TopoDS_Shape & K);
-		%feature("compactdefaultargs") ChangeFind1;
-		%feature("autodoc", "	:param K:
-	:type K: TopoDS_Shape &
-	:rtype: Standard_Address
-") ChangeFind1;
-		Standard_Address ChangeFind1 (const TopoDS_Shape & K);
-};
-
-
-%extend BRepFill_DataMapOfShapeSequenceOfReal {
 	%pythoncode {
 	__repr__ = _dumps_object
 	}
@@ -1863,7 +558,7 @@ class BRepFill_Draft {
 ") IsDone;
 		Standard_Boolean IsDone ();
 		%feature("compactdefaultargs") Shell;
-		%feature("autodoc", "	* Returns the draft surface To have the complete shape you have to use the Shape() methode.
+		%feature("autodoc", "	* Returns the draft surface To have the complete shape you have to use the Shape---- methode.
 
 	:rtype: TopoDS_Shell
 ") Shell;
@@ -2289,462 +984,8 @@ class BRepFill_Generator {
 	__repr__ = _dumps_object
 	}
 };
-%nodefaultctor BRepFill_IndexedDataMapNodeOfIndexedDataMapOfOrientedShapeListOfShape;
-class BRepFill_IndexedDataMapNodeOfIndexedDataMapOfOrientedShapeListOfShape : public TCollection_MapNode {
-	public:
-		%feature("compactdefaultargs") BRepFill_IndexedDataMapNodeOfIndexedDataMapOfOrientedShapeListOfShape;
-		%feature("autodoc", "	:param K1:
-	:type K1: TopoDS_Shape &
-	:param K2:
-	:type K2: int
-	:param I:
-	:type I: TopTools_ListOfShape &
-	:param n1:
-	:type n1: TCollection_MapNodePtr &
-	:param n2:
-	:type n2: TCollection_MapNodePtr &
-	:rtype: None
-") BRepFill_IndexedDataMapNodeOfIndexedDataMapOfOrientedShapeListOfShape;
-		 BRepFill_IndexedDataMapNodeOfIndexedDataMapOfOrientedShapeListOfShape (const TopoDS_Shape & K1,const Standard_Integer K2,const TopTools_ListOfShape & I,const TCollection_MapNodePtr & n1,const TCollection_MapNodePtr & n2);
-		%feature("compactdefaultargs") Key1;
-		%feature("autodoc", "	:rtype: TopoDS_Shape
-") Key1;
-		TopoDS_Shape  Key1 ();
-
-            %feature("autodoc","1");
-            %extend {
-                Standard_Integer GetKey2() {
-                return (Standard_Integer) $self->Key2();
-                }
-            };
-            %feature("autodoc","1");
-            %extend {
-                void SetKey2(Standard_Integer value ) {
-                $self->Key2()=value;
-                }
-            };
-            		%feature("compactdefaultargs") Next2;
-		%feature("autodoc", "	:rtype: TCollection_MapNodePtr
-") Next2;
-		TCollection_MapNodePtr & Next2 ();
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:rtype: TopTools_ListOfShape
-") Value;
-		TopTools_ListOfShape & Value ();
-};
-
-
-%extend BRepFill_IndexedDataMapNodeOfIndexedDataMapOfOrientedShapeListOfShape {
-	%pythoncode {
-		def GetHandle(self):
-		    try:
-		        return self.thisHandle
-		    except:
-		        self.thisHandle = Handle_BRepFill_IndexedDataMapNodeOfIndexedDataMapOfOrientedShapeListOfShape(self)
-		        self.thisown = False
-		        return self.thisHandle
-	}
-};
-
-%pythonappend Handle_BRepFill_IndexedDataMapNodeOfIndexedDataMapOfOrientedShapeListOfShape::Handle_BRepFill_IndexedDataMapNodeOfIndexedDataMapOfOrientedShapeListOfShape %{
-    # register the handle in the base object
-    if len(args) > 0:
-        register_handle(self, args[0])
-%}
-
-%nodefaultctor Handle_BRepFill_IndexedDataMapNodeOfIndexedDataMapOfOrientedShapeListOfShape;
-class Handle_BRepFill_IndexedDataMapNodeOfIndexedDataMapOfOrientedShapeListOfShape : public Handle_TCollection_MapNode {
-
-    public:
-        // constructors
-        Handle_BRepFill_IndexedDataMapNodeOfIndexedDataMapOfOrientedShapeListOfShape();
-        Handle_BRepFill_IndexedDataMapNodeOfIndexedDataMapOfOrientedShapeListOfShape(const Handle_BRepFill_IndexedDataMapNodeOfIndexedDataMapOfOrientedShapeListOfShape &aHandle);
-        Handle_BRepFill_IndexedDataMapNodeOfIndexedDataMapOfOrientedShapeListOfShape(const BRepFill_IndexedDataMapNodeOfIndexedDataMapOfOrientedShapeListOfShape *anItem);
-        void Nullify();
-        Standard_Boolean IsNull() const;
-        static const Handle_BRepFill_IndexedDataMapNodeOfIndexedDataMapOfOrientedShapeListOfShape DownCast(const Handle_Standard_Transient &AnObject);
-
-};
-%extend Handle_BRepFill_IndexedDataMapNodeOfIndexedDataMapOfOrientedShapeListOfShape {
-    BRepFill_IndexedDataMapNodeOfIndexedDataMapOfOrientedShapeListOfShape* _get_reference() {
-    return (BRepFill_IndexedDataMapNodeOfIndexedDataMapOfOrientedShapeListOfShape*)$self->Access();
-    }
-};
-
-%extend Handle_BRepFill_IndexedDataMapNodeOfIndexedDataMapOfOrientedShapeListOfShape {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
-};
-
-%extend BRepFill_IndexedDataMapNodeOfIndexedDataMapOfOrientedShapeListOfShape {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor BRepFill_IndexedDataMapOfOrientedShapeListOfShape;
-class BRepFill_IndexedDataMapOfOrientedShapeListOfShape : public TCollection_BasicMap {
-	public:
-		%feature("compactdefaultargs") BRepFill_IndexedDataMapOfOrientedShapeListOfShape;
-		%feature("autodoc", "	:param NbBuckets: default value is 1
-	:type NbBuckets: int
-	:rtype: None
-") BRepFill_IndexedDataMapOfOrientedShapeListOfShape;
-		 BRepFill_IndexedDataMapOfOrientedShapeListOfShape (const Standard_Integer NbBuckets = 1);
-		%feature("compactdefaultargs") Assign;
-		%feature("autodoc", "	:param Other:
-	:type Other: BRepFill_IndexedDataMapOfOrientedShapeListOfShape &
-	:rtype: BRepFill_IndexedDataMapOfOrientedShapeListOfShape
-") Assign;
-		BRepFill_IndexedDataMapOfOrientedShapeListOfShape & Assign (const BRepFill_IndexedDataMapOfOrientedShapeListOfShape & Other);
-		%feature("compactdefaultargs") operator =;
-		%feature("autodoc", "	:param Other:
-	:type Other: BRepFill_IndexedDataMapOfOrientedShapeListOfShape &
-	:rtype: BRepFill_IndexedDataMapOfOrientedShapeListOfShape
-") operator =;
-		BRepFill_IndexedDataMapOfOrientedShapeListOfShape & operator = (const BRepFill_IndexedDataMapOfOrientedShapeListOfShape & Other);
-		%feature("compactdefaultargs") ReSize;
-		%feature("autodoc", "	:param NbBuckets:
-	:type NbBuckets: int
-	:rtype: None
-") ReSize;
-		void ReSize (const Standard_Integer NbBuckets);
-		%feature("compactdefaultargs") Clear;
-		%feature("autodoc", "	:rtype: None
-") Clear;
-		void Clear ();
-		%feature("compactdefaultargs") Add;
-		%feature("autodoc", "	:param K:
-	:type K: TopoDS_Shape &
-	:param I:
-	:type I: TopTools_ListOfShape &
-	:rtype: int
-") Add;
-		Standard_Integer Add (const TopoDS_Shape & K,const TopTools_ListOfShape & I);
-		%feature("compactdefaultargs") Substitute;
-		%feature("autodoc", "	:param I:
-	:type I: int
-	:param K:
-	:type K: TopoDS_Shape &
-	:param T:
-	:type T: TopTools_ListOfShape &
-	:rtype: None
-") Substitute;
-		void Substitute (const Standard_Integer I,const TopoDS_Shape & K,const TopTools_ListOfShape & T);
-		%feature("compactdefaultargs") RemoveLast;
-		%feature("autodoc", "	:rtype: None
-") RemoveLast;
-		void RemoveLast ();
-		%feature("compactdefaultargs") Contains;
-		%feature("autodoc", "	:param K:
-	:type K: TopoDS_Shape &
-	:rtype: bool
-") Contains;
-		Standard_Boolean Contains (const TopoDS_Shape & K);
-		%feature("compactdefaultargs") FindKey;
-		%feature("autodoc", "	:param I:
-	:type I: int
-	:rtype: TopoDS_Shape
-") FindKey;
-		const TopoDS_Shape  FindKey (const Standard_Integer I);
-		%feature("compactdefaultargs") FindFromIndex;
-		%feature("autodoc", "	:param I:
-	:type I: int
-	:rtype: TopTools_ListOfShape
-") FindFromIndex;
-		const TopTools_ListOfShape & FindFromIndex (const Standard_Integer I);
-		%feature("compactdefaultargs") ChangeFromIndex;
-		%feature("autodoc", "	:param I:
-	:type I: int
-	:rtype: TopTools_ListOfShape
-") ChangeFromIndex;
-		TopTools_ListOfShape & ChangeFromIndex (const Standard_Integer I);
-		%feature("compactdefaultargs") FindIndex;
-		%feature("autodoc", "	:param K:
-	:type K: TopoDS_Shape &
-	:rtype: int
-") FindIndex;
-		Standard_Integer FindIndex (const TopoDS_Shape & K);
-		%feature("compactdefaultargs") FindFromKey;
-		%feature("autodoc", "	:param K:
-	:type K: TopoDS_Shape &
-	:rtype: TopTools_ListOfShape
-") FindFromKey;
-		const TopTools_ListOfShape & FindFromKey (const TopoDS_Shape & K);
-		%feature("compactdefaultargs") ChangeFromKey;
-		%feature("autodoc", "	:param K:
-	:type K: TopoDS_Shape &
-	:rtype: TopTools_ListOfShape
-") ChangeFromKey;
-		TopTools_ListOfShape & ChangeFromKey (const TopoDS_Shape & K);
-		%feature("compactdefaultargs") FindFromKey1;
-		%feature("autodoc", "	:param K:
-	:type K: TopoDS_Shape &
-	:rtype: Standard_Address
-") FindFromKey1;
-		Standard_Address FindFromKey1 (const TopoDS_Shape & K);
-		%feature("compactdefaultargs") ChangeFromKey1;
-		%feature("autodoc", "	:param K:
-	:type K: TopoDS_Shape &
-	:rtype: Standard_Address
-") ChangeFromKey1;
-		Standard_Address ChangeFromKey1 (const TopoDS_Shape & K);
-};
-
-
-%extend BRepFill_IndexedDataMapOfOrientedShapeListOfShape {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor BRepFill_ListIteratorOfListOfOffsetWire;
-class BRepFill_ListIteratorOfListOfOffsetWire {
-	public:
-		%feature("compactdefaultargs") BRepFill_ListIteratorOfListOfOffsetWire;
-		%feature("autodoc", "	:rtype: None
-") BRepFill_ListIteratorOfListOfOffsetWire;
-		 BRepFill_ListIteratorOfListOfOffsetWire ();
-		%feature("compactdefaultargs") BRepFill_ListIteratorOfListOfOffsetWire;
-		%feature("autodoc", "	:param L:
-	:type L: BRepFill_ListOfOffsetWire &
-	:rtype: None
-") BRepFill_ListIteratorOfListOfOffsetWire;
-		 BRepFill_ListIteratorOfListOfOffsetWire (const BRepFill_ListOfOffsetWire & L);
-		%feature("compactdefaultargs") Initialize;
-		%feature("autodoc", "	:param L:
-	:type L: BRepFill_ListOfOffsetWire &
-	:rtype: None
-") Initialize;
-		void Initialize (const BRepFill_ListOfOffsetWire & L);
-		%feature("compactdefaultargs") More;
-		%feature("autodoc", "	:rtype: bool
-") More;
-		Standard_Boolean More ();
-		%feature("compactdefaultargs") Next;
-		%feature("autodoc", "	:rtype: None
-") Next;
-		void Next ();
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:rtype: BRepFill_OffsetWire
-") Value;
-		BRepFill_OffsetWire & Value ();
-};
-
-
-%extend BRepFill_ListIteratorOfListOfOffsetWire {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor BRepFill_ListNodeOfListOfOffsetWire;
-class BRepFill_ListNodeOfListOfOffsetWire : public TCollection_MapNode {
-	public:
-		%feature("compactdefaultargs") BRepFill_ListNodeOfListOfOffsetWire;
-		%feature("autodoc", "	:param I:
-	:type I: BRepFill_OffsetWire &
-	:param n:
-	:type n: TCollection_MapNodePtr &
-	:rtype: None
-") BRepFill_ListNodeOfListOfOffsetWire;
-		 BRepFill_ListNodeOfListOfOffsetWire (const BRepFill_OffsetWire & I,const TCollection_MapNodePtr & n);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:rtype: BRepFill_OffsetWire
-") Value;
-		BRepFill_OffsetWire & Value ();
-};
-
-
-%extend BRepFill_ListNodeOfListOfOffsetWire {
-	%pythoncode {
-		def GetHandle(self):
-		    try:
-		        return self.thisHandle
-		    except:
-		        self.thisHandle = Handle_BRepFill_ListNodeOfListOfOffsetWire(self)
-		        self.thisown = False
-		        return self.thisHandle
-	}
-};
-
-%pythonappend Handle_BRepFill_ListNodeOfListOfOffsetWire::Handle_BRepFill_ListNodeOfListOfOffsetWire %{
-    # register the handle in the base object
-    if len(args) > 0:
-        register_handle(self, args[0])
-%}
-
-%nodefaultctor Handle_BRepFill_ListNodeOfListOfOffsetWire;
-class Handle_BRepFill_ListNodeOfListOfOffsetWire : public Handle_TCollection_MapNode {
-
-    public:
-        // constructors
-        Handle_BRepFill_ListNodeOfListOfOffsetWire();
-        Handle_BRepFill_ListNodeOfListOfOffsetWire(const Handle_BRepFill_ListNodeOfListOfOffsetWire &aHandle);
-        Handle_BRepFill_ListNodeOfListOfOffsetWire(const BRepFill_ListNodeOfListOfOffsetWire *anItem);
-        void Nullify();
-        Standard_Boolean IsNull() const;
-        static const Handle_BRepFill_ListNodeOfListOfOffsetWire DownCast(const Handle_Standard_Transient &AnObject);
-
-};
-%extend Handle_BRepFill_ListNodeOfListOfOffsetWire {
-    BRepFill_ListNodeOfListOfOffsetWire* _get_reference() {
-    return (BRepFill_ListNodeOfListOfOffsetWire*)$self->Access();
-    }
-};
-
-%extend Handle_BRepFill_ListNodeOfListOfOffsetWire {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
-};
-
-%extend BRepFill_ListNodeOfListOfOffsetWire {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor BRepFill_ListOfOffsetWire;
-class BRepFill_ListOfOffsetWire {
-	public:
-		%feature("compactdefaultargs") BRepFill_ListOfOffsetWire;
-		%feature("autodoc", "	:rtype: None
-") BRepFill_ListOfOffsetWire;
-		 BRepFill_ListOfOffsetWire ();
-		%feature("compactdefaultargs") BRepFill_ListOfOffsetWire;
-		%feature("autodoc", "	:param Other:
-	:type Other: BRepFill_ListOfOffsetWire &
-	:rtype: None
-") BRepFill_ListOfOffsetWire;
-		 BRepFill_ListOfOffsetWire (const BRepFill_ListOfOffsetWire & Other);
-		%feature("compactdefaultargs") Assign;
-		%feature("autodoc", "	:param Other:
-	:type Other: BRepFill_ListOfOffsetWire &
-	:rtype: None
-") Assign;
-		void Assign (const BRepFill_ListOfOffsetWire & Other);
-		%feature("compactdefaultargs") operator =;
-		%feature("autodoc", "	:param Other:
-	:type Other: BRepFill_ListOfOffsetWire &
-	:rtype: None
-") operator =;
-		void operator = (const BRepFill_ListOfOffsetWire & Other);
-		%feature("compactdefaultargs") Extent;
-		%feature("autodoc", "	:rtype: int
-") Extent;
-		Standard_Integer Extent ();
-		%feature("compactdefaultargs") Clear;
-		%feature("autodoc", "	:rtype: None
-") Clear;
-		void Clear ();
-		%feature("compactdefaultargs") IsEmpty;
-		%feature("autodoc", "	:rtype: bool
-") IsEmpty;
-		Standard_Boolean IsEmpty ();
-		%feature("compactdefaultargs") Prepend;
-		%feature("autodoc", "	:param I:
-	:type I: BRepFill_OffsetWire &
-	:rtype: None
-") Prepend;
-		void Prepend (const BRepFill_OffsetWire & I);
-		%feature("compactdefaultargs") Prepend;
-		%feature("autodoc", "	:param I:
-	:type I: BRepFill_OffsetWire &
-	:param theIt:
-	:type theIt: BRepFill_ListIteratorOfListOfOffsetWire &
-	:rtype: None
-") Prepend;
-		void Prepend (const BRepFill_OffsetWire & I,BRepFill_ListIteratorOfListOfOffsetWire & theIt);
-		%feature("compactdefaultargs") Prepend;
-		%feature("autodoc", "	:param Other:
-	:type Other: BRepFill_ListOfOffsetWire &
-	:rtype: None
-") Prepend;
-		void Prepend (BRepFill_ListOfOffsetWire & Other);
-		%feature("compactdefaultargs") Append;
-		%feature("autodoc", "	:param I:
-	:type I: BRepFill_OffsetWire &
-	:rtype: None
-") Append;
-		void Append (const BRepFill_OffsetWire & I);
-		%feature("compactdefaultargs") Append;
-		%feature("autodoc", "	:param I:
-	:type I: BRepFill_OffsetWire &
-	:param theIt:
-	:type theIt: BRepFill_ListIteratorOfListOfOffsetWire &
-	:rtype: None
-") Append;
-		void Append (const BRepFill_OffsetWire & I,BRepFill_ListIteratorOfListOfOffsetWire & theIt);
-		%feature("compactdefaultargs") Append;
-		%feature("autodoc", "	:param Other:
-	:type Other: BRepFill_ListOfOffsetWire &
-	:rtype: None
-") Append;
-		void Append (BRepFill_ListOfOffsetWire & Other);
-		%feature("compactdefaultargs") First;
-		%feature("autodoc", "	:rtype: BRepFill_OffsetWire
-") First;
-		BRepFill_OffsetWire & First ();
-		%feature("compactdefaultargs") Last;
-		%feature("autodoc", "	:rtype: BRepFill_OffsetWire
-") Last;
-		BRepFill_OffsetWire & Last ();
-		%feature("compactdefaultargs") RemoveFirst;
-		%feature("autodoc", "	:rtype: None
-") RemoveFirst;
-		void RemoveFirst ();
-		%feature("compactdefaultargs") Remove;
-		%feature("autodoc", "	:param It:
-	:type It: BRepFill_ListIteratorOfListOfOffsetWire &
-	:rtype: None
-") Remove;
-		void Remove (BRepFill_ListIteratorOfListOfOffsetWire & It);
-		%feature("compactdefaultargs") InsertBefore;
-		%feature("autodoc", "	:param I:
-	:type I: BRepFill_OffsetWire &
-	:param It:
-	:type It: BRepFill_ListIteratorOfListOfOffsetWire &
-	:rtype: None
-") InsertBefore;
-		void InsertBefore (const BRepFill_OffsetWire & I,BRepFill_ListIteratorOfListOfOffsetWire & It);
-		%feature("compactdefaultargs") InsertBefore;
-		%feature("autodoc", "	:param Other:
-	:type Other: BRepFill_ListOfOffsetWire &
-	:param It:
-	:type It: BRepFill_ListIteratorOfListOfOffsetWire &
-	:rtype: None
-") InsertBefore;
-		void InsertBefore (BRepFill_ListOfOffsetWire & Other,BRepFill_ListIteratorOfListOfOffsetWire & It);
-		%feature("compactdefaultargs") InsertAfter;
-		%feature("autodoc", "	:param I:
-	:type I: BRepFill_OffsetWire &
-	:param It:
-	:type It: BRepFill_ListIteratorOfListOfOffsetWire &
-	:rtype: None
-") InsertAfter;
-		void InsertAfter (const BRepFill_OffsetWire & I,BRepFill_ListIteratorOfListOfOffsetWire & It);
-		%feature("compactdefaultargs") InsertAfter;
-		%feature("autodoc", "	:param Other:
-	:type Other: BRepFill_ListOfOffsetWire &
-	:param It:
-	:type It: BRepFill_ListIteratorOfListOfOffsetWire &
-	:rtype: None
-") InsertAfter;
-		void InsertAfter (BRepFill_ListOfOffsetWire & Other,BRepFill_ListIteratorOfListOfOffsetWire & It);
-};
-
-
-%extend BRepFill_ListOfOffsetWire {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
 %nodefaultctor BRepFill_LocationLaw;
-class BRepFill_LocationLaw : public MMgt_TShared {
+class BRepFill_LocationLaw : public Standard_Transient {
 	public:
 		%feature("compactdefaultargs") GetStatus;
 		%feature("autodoc", "	* Return a error status, if the status is not PipeOk then it exist a parameter tlike the law is not valuable for t.
@@ -2789,7 +1030,7 @@ class BRepFill_LocationLaw : public MMgt_TShared {
 ") NbLaw;
 		Standard_Integer NbLaw ();
 		%feature("compactdefaultargs") Law;
-		%feature("autodoc", "	* Return the elementary Law of rank <Index> <Index> have to be in [1, NbLaw()]
+		%feature("autodoc", "	* Return the elementary Law of rank <Index> <Index> have to be in [1, NbLaw----]
 
 	:param Index:
 	:type Index: int
@@ -2803,7 +1044,7 @@ class BRepFill_LocationLaw : public MMgt_TShared {
 ") Wire;
 		const TopoDS_Wire  Wire ();
 		%feature("compactdefaultargs") Edge;
-		%feature("autodoc", "	* Return the Edge of rank <Index> in the path <Index> have to be in [1, NbLaw()]
+		%feature("autodoc", "	* Return the Edge of rank <Index> in the path <Index> have to be in [1, NbLaw----]
 
 	:param Index:
 	:type Index: int
@@ -2811,7 +1052,7 @@ class BRepFill_LocationLaw : public MMgt_TShared {
 ") Edge;
 		const TopoDS_Edge  Edge (const Standard_Integer Index);
 		%feature("compactdefaultargs") Vertex;
-		%feature("autodoc", "	* Return the vertex of rank <Index> in the path <Index> have to be in [0, NbLaw()]
+		%feature("autodoc", "	* Return the vertex of rank <Index> in the path <Index> have to be in [0, NbLaw----]
 
 	:param Index:
 	:type Index: int
@@ -2851,7 +1092,7 @@ class BRepFill_LocationLaw : public MMgt_TShared {
 ") IsClosed;
 		Standard_Boolean IsClosed ();
 		%feature("compactdefaultargs") IsG1;
-		%feature("autodoc", "	* Compute the Law's continuity beetween 2 edges of the path The result can be : -1 : Case Not connex 0 : It is connex (G0) 1 : It is tangent (G1)
+		%feature("autodoc", "	* Compute the Law's continuity beetween 2 edges of the path The result can be : -1 : Case Not connex 0 : It is connex --G0-- 1 : It is tangent --G1--
 
 	:param Index:
 	:type Index: int
@@ -2916,7 +1157,7 @@ class BRepFill_LocationLaw : public MMgt_TShared {
 %}
 
 %nodefaultctor Handle_BRepFill_LocationLaw;
-class Handle_BRepFill_LocationLaw : public Handle_MMgt_TShared {
+class Handle_BRepFill_LocationLaw : public Handle_Standard_Transient {
 
     public:
         // constructors
@@ -2928,19 +1169,20 @@ class Handle_BRepFill_LocationLaw : public Handle_MMgt_TShared {
         static const Handle_BRepFill_LocationLaw DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_BRepFill_LocationLaw {
     BRepFill_LocationLaw* _get_reference() {
-    return (BRepFill_LocationLaw*)$self->Access();
+    return (BRepFill_LocationLaw*)$self->get();
     }
 };
 
 %extend Handle_BRepFill_LocationLaw {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend BRepFill_LocationLaw {
@@ -3152,7 +1394,7 @@ class BRepFill_OffsetWire {
 ") Init;
 		void Init (const TopoDS_Face & Spine,const GeomAbs_JoinType Join = GeomAbs_Arc,const Standard_Boolean IsOpenResult = Standard_False);
 		%feature("compactdefaultargs") Perform;
-		%feature("autodoc", "	* Performs an OffsetWire at an altitude <Alt> from the face ( According to the orientation of the face)
+		%feature("autodoc", "	* Performs an OffsetWire at an altitude <Alt> from the face -- According to the orientation of the face--
 
 	:param Offset:
 	:type Offset: float
@@ -3268,6 +1510,16 @@ class BRepFill_Pipe {
 		%feature("autodoc", "	:rtype: TopoDS_Shape
 ") LastShape;
 		const TopoDS_Shape  LastShape ();
+		%feature("compactdefaultargs") Generated;
+		%feature("autodoc", "	* Returns the list of shapes generated from the shape <S>.
+
+	:param S:
+	:type S: TopoDS_Shape &
+	:param L:
+	:type L: TopTools_ListOfShape &
+	:rtype: None
+") Generated;
+		void Generated (const TopoDS_Shape & S,TopTools_ListOfShape & L);
 		%feature("compactdefaultargs") Face;
 		%feature("autodoc", "	* Returns the face created from an edge of the spine and an edge of the profile. if the edges are not in the spine or the profile
 
@@ -3313,7 +1565,7 @@ class BRepFill_Pipe {
 	}
 };
 %nodefaultctor BRepFill_PipeShell;
-class BRepFill_PipeShell : public MMgt_TShared {
+class BRepFill_PipeShell : public Standard_Transient {
 	public:
 		%feature("compactdefaultargs") BRepFill_PipeShell;
 		%feature("autodoc", "	* Set an sweep's mode If no mode are setted, the mode use in MakePipe is used
@@ -3453,14 +1705,14 @@ class BRepFill_PipeShell : public MMgt_TShared {
 	:rtype: None
 ") SetLaw;
 		void SetLaw (const TopoDS_Shape & Profile,const Handle_Law_Function & L,const TopoDS_Vertex & Location,const Standard_Boolean WithContact = Standard_False,const Standard_Boolean WithCorrection = Standard_False);
-		%feature("compactdefaultargs") Delete;
+		%feature("compactdefaultargs") DeleteProfile;
 		%feature("autodoc", "	* Delete an section.
 
 	:param Profile:
 	:type Profile: TopoDS_Shape &
 	:rtype: None
-") Delete;
-		void Delete (const TopoDS_Shape & Profile);
+") DeleteProfile;
+		void DeleteProfile (const TopoDS_Shape & Profile);
 		%feature("compactdefaultargs") IsReady;
 		%feature("autodoc", "	* Say if <self> is ready to build the shape return False if <self> do not have section definition
 
@@ -3506,7 +1758,7 @@ class BRepFill_PipeShell : public MMgt_TShared {
 ") Simulate;
 		void Simulate (const Standard_Integer NumberOfSection,TopTools_ListOfShape & Sections);
 		%feature("compactdefaultargs") Build;
-		%feature("autodoc", "	* Builds the resulting shape (redefined from MakeShape).
+		%feature("autodoc", "	* Builds the resulting shape --redefined from MakeShape--.
 
 	:rtype: bool
 ") Build;
@@ -3571,7 +1823,7 @@ class BRepFill_PipeShell : public MMgt_TShared {
 %}
 
 %nodefaultctor Handle_BRepFill_PipeShell;
-class Handle_BRepFill_PipeShell : public Handle_MMgt_TShared {
+class Handle_BRepFill_PipeShell : public Handle_Standard_Transient {
 
     public:
         // constructors
@@ -3583,19 +1835,20 @@ class Handle_BRepFill_PipeShell : public Handle_MMgt_TShared {
         static const Handle_BRepFill_PipeShell DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_BRepFill_PipeShell {
     BRepFill_PipeShell* _get_reference() {
-    return (BRepFill_PipeShell*)$self->Access();
+    return (BRepFill_PipeShell*)$self->get();
     }
 };
 
 %extend Handle_BRepFill_PipeShell {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend BRepFill_PipeShell {
@@ -3640,6 +1893,10 @@ class BRepFill_Section {
 		%feature("autodoc", "	:rtype: bool
 ") IsLaw;
 		Standard_Boolean IsLaw ();
+		%feature("compactdefaultargs") IsPunctual;
+		%feature("autodoc", "	:rtype: bool
+") IsPunctual;
+		Standard_Boolean IsPunctual ();
 		%feature("compactdefaultargs") WithContact;
 		%feature("autodoc", "	:rtype: bool
 ") WithContact;
@@ -3657,7 +1914,7 @@ class BRepFill_Section {
 	}
 };
 %nodefaultctor BRepFill_SectionLaw;
-class BRepFill_SectionLaw : public MMgt_TShared {
+class BRepFill_SectionLaw : public Standard_Transient {
 	public:
 		%feature("compactdefaultargs") NbLaw;
 		%feature("autodoc", "	:rtype: int
@@ -3669,6 +1926,12 @@ class BRepFill_SectionLaw : public MMgt_TShared {
 	:rtype: Handle_GeomFill_SectionLaw
 ") Law;
 		Handle_GeomFill_SectionLaw Law (const Standard_Integer Index);
+		%feature("compactdefaultargs") IndexOfEdge;
+		%feature("autodoc", "	:param anEdge:
+	:type anEdge: TopoDS_Shape &
+	:rtype: int
+") IndexOfEdge;
+		Standard_Integer IndexOfEdge (const TopoDS_Shape & anEdge);
 		%feature("compactdefaultargs") IsConstant;
 		%feature("autodoc", "	:rtype: bool
 ") IsConstant;
@@ -3681,8 +1944,12 @@ class BRepFill_SectionLaw : public MMgt_TShared {
 		%feature("autodoc", "	:rtype: bool
 ") IsVClosed;
 		Standard_Boolean IsVClosed ();
+		%feature("compactdefaultargs") IsDone;
+		%feature("autodoc", "	:rtype: bool
+") IsDone;
+		Standard_Boolean IsDone ();
 		%feature("compactdefaultargs") IsVertex;
-		%feature("autodoc", "	* Say if the input sahpe is a vertex.
+		%feature("autodoc", "	* Say if the input shape is a vertex.
 
 	:rtype: bool
 ") IsVertex;
@@ -3755,7 +2022,7 @@ class BRepFill_SectionLaw : public MMgt_TShared {
 %}
 
 %nodefaultctor Handle_BRepFill_SectionLaw;
-class Handle_BRepFill_SectionLaw : public Handle_MMgt_TShared {
+class Handle_BRepFill_SectionLaw : public Handle_Standard_Transient {
 
     public:
         // constructors
@@ -3767,19 +2034,20 @@ class Handle_BRepFill_SectionLaw : public Handle_MMgt_TShared {
         static const Handle_BRepFill_SectionLaw DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_BRepFill_SectionLaw {
     BRepFill_SectionLaw* _get_reference() {
-    return (BRepFill_SectionLaw*)$self->Access();
+    return (BRepFill_SectionLaw*)$self->get();
     }
 };
 
 %extend Handle_BRepFill_SectionLaw {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend BRepFill_SectionLaw {
@@ -3836,648 +2104,6 @@ class BRepFill_SectionPlacement {
 	__repr__ = _dumps_object
 	}
 };
-%nodefaultctor BRepFill_SequenceNodeOfSequenceOfEdgeFaceAndOrder;
-class BRepFill_SequenceNodeOfSequenceOfEdgeFaceAndOrder : public TCollection_SeqNode {
-	public:
-		%feature("compactdefaultargs") BRepFill_SequenceNodeOfSequenceOfEdgeFaceAndOrder;
-		%feature("autodoc", "	:param I:
-	:type I: BRepFill_EdgeFaceAndOrder &
-	:param n:
-	:type n: TCollection_SeqNodePtr &
-	:param p:
-	:type p: TCollection_SeqNodePtr &
-	:rtype: None
-") BRepFill_SequenceNodeOfSequenceOfEdgeFaceAndOrder;
-		 BRepFill_SequenceNodeOfSequenceOfEdgeFaceAndOrder (const BRepFill_EdgeFaceAndOrder & I,const TCollection_SeqNodePtr & n,const TCollection_SeqNodePtr & p);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:rtype: BRepFill_EdgeFaceAndOrder
-") Value;
-		BRepFill_EdgeFaceAndOrder & Value ();
-};
-
-
-%extend BRepFill_SequenceNodeOfSequenceOfEdgeFaceAndOrder {
-	%pythoncode {
-		def GetHandle(self):
-		    try:
-		        return self.thisHandle
-		    except:
-		        self.thisHandle = Handle_BRepFill_SequenceNodeOfSequenceOfEdgeFaceAndOrder(self)
-		        self.thisown = False
-		        return self.thisHandle
-	}
-};
-
-%pythonappend Handle_BRepFill_SequenceNodeOfSequenceOfEdgeFaceAndOrder::Handle_BRepFill_SequenceNodeOfSequenceOfEdgeFaceAndOrder %{
-    # register the handle in the base object
-    if len(args) > 0:
-        register_handle(self, args[0])
-%}
-
-%nodefaultctor Handle_BRepFill_SequenceNodeOfSequenceOfEdgeFaceAndOrder;
-class Handle_BRepFill_SequenceNodeOfSequenceOfEdgeFaceAndOrder : public Handle_TCollection_SeqNode {
-
-    public:
-        // constructors
-        Handle_BRepFill_SequenceNodeOfSequenceOfEdgeFaceAndOrder();
-        Handle_BRepFill_SequenceNodeOfSequenceOfEdgeFaceAndOrder(const Handle_BRepFill_SequenceNodeOfSequenceOfEdgeFaceAndOrder &aHandle);
-        Handle_BRepFill_SequenceNodeOfSequenceOfEdgeFaceAndOrder(const BRepFill_SequenceNodeOfSequenceOfEdgeFaceAndOrder *anItem);
-        void Nullify();
-        Standard_Boolean IsNull() const;
-        static const Handle_BRepFill_SequenceNodeOfSequenceOfEdgeFaceAndOrder DownCast(const Handle_Standard_Transient &AnObject);
-
-};
-%extend Handle_BRepFill_SequenceNodeOfSequenceOfEdgeFaceAndOrder {
-    BRepFill_SequenceNodeOfSequenceOfEdgeFaceAndOrder* _get_reference() {
-    return (BRepFill_SequenceNodeOfSequenceOfEdgeFaceAndOrder*)$self->Access();
-    }
-};
-
-%extend Handle_BRepFill_SequenceNodeOfSequenceOfEdgeFaceAndOrder {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
-};
-
-%extend BRepFill_SequenceNodeOfSequenceOfEdgeFaceAndOrder {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor BRepFill_SequenceNodeOfSequenceOfFaceAndOrder;
-class BRepFill_SequenceNodeOfSequenceOfFaceAndOrder : public TCollection_SeqNode {
-	public:
-		%feature("compactdefaultargs") BRepFill_SequenceNodeOfSequenceOfFaceAndOrder;
-		%feature("autodoc", "	:param I:
-	:type I: BRepFill_FaceAndOrder &
-	:param n:
-	:type n: TCollection_SeqNodePtr &
-	:param p:
-	:type p: TCollection_SeqNodePtr &
-	:rtype: None
-") BRepFill_SequenceNodeOfSequenceOfFaceAndOrder;
-		 BRepFill_SequenceNodeOfSequenceOfFaceAndOrder (const BRepFill_FaceAndOrder & I,const TCollection_SeqNodePtr & n,const TCollection_SeqNodePtr & p);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:rtype: BRepFill_FaceAndOrder
-") Value;
-		BRepFill_FaceAndOrder & Value ();
-};
-
-
-%extend BRepFill_SequenceNodeOfSequenceOfFaceAndOrder {
-	%pythoncode {
-		def GetHandle(self):
-		    try:
-		        return self.thisHandle
-		    except:
-		        self.thisHandle = Handle_BRepFill_SequenceNodeOfSequenceOfFaceAndOrder(self)
-		        self.thisown = False
-		        return self.thisHandle
-	}
-};
-
-%pythonappend Handle_BRepFill_SequenceNodeOfSequenceOfFaceAndOrder::Handle_BRepFill_SequenceNodeOfSequenceOfFaceAndOrder %{
-    # register the handle in the base object
-    if len(args) > 0:
-        register_handle(self, args[0])
-%}
-
-%nodefaultctor Handle_BRepFill_SequenceNodeOfSequenceOfFaceAndOrder;
-class Handle_BRepFill_SequenceNodeOfSequenceOfFaceAndOrder : public Handle_TCollection_SeqNode {
-
-    public:
-        // constructors
-        Handle_BRepFill_SequenceNodeOfSequenceOfFaceAndOrder();
-        Handle_BRepFill_SequenceNodeOfSequenceOfFaceAndOrder(const Handle_BRepFill_SequenceNodeOfSequenceOfFaceAndOrder &aHandle);
-        Handle_BRepFill_SequenceNodeOfSequenceOfFaceAndOrder(const BRepFill_SequenceNodeOfSequenceOfFaceAndOrder *anItem);
-        void Nullify();
-        Standard_Boolean IsNull() const;
-        static const Handle_BRepFill_SequenceNodeOfSequenceOfFaceAndOrder DownCast(const Handle_Standard_Transient &AnObject);
-
-};
-%extend Handle_BRepFill_SequenceNodeOfSequenceOfFaceAndOrder {
-    BRepFill_SequenceNodeOfSequenceOfFaceAndOrder* _get_reference() {
-    return (BRepFill_SequenceNodeOfSequenceOfFaceAndOrder*)$self->Access();
-    }
-};
-
-%extend Handle_BRepFill_SequenceNodeOfSequenceOfFaceAndOrder {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
-};
-
-%extend BRepFill_SequenceNodeOfSequenceOfFaceAndOrder {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor BRepFill_SequenceNodeOfSequenceOfSection;
-class BRepFill_SequenceNodeOfSequenceOfSection : public TCollection_SeqNode {
-	public:
-		%feature("compactdefaultargs") BRepFill_SequenceNodeOfSequenceOfSection;
-		%feature("autodoc", "	:param I:
-	:type I: BRepFill_Section &
-	:param n:
-	:type n: TCollection_SeqNodePtr &
-	:param p:
-	:type p: TCollection_SeqNodePtr &
-	:rtype: None
-") BRepFill_SequenceNodeOfSequenceOfSection;
-		 BRepFill_SequenceNodeOfSequenceOfSection (const BRepFill_Section & I,const TCollection_SeqNodePtr & n,const TCollection_SeqNodePtr & p);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:rtype: BRepFill_Section
-") Value;
-		BRepFill_Section & Value ();
-};
-
-
-%extend BRepFill_SequenceNodeOfSequenceOfSection {
-	%pythoncode {
-		def GetHandle(self):
-		    try:
-		        return self.thisHandle
-		    except:
-		        self.thisHandle = Handle_BRepFill_SequenceNodeOfSequenceOfSection(self)
-		        self.thisown = False
-		        return self.thisHandle
-	}
-};
-
-%pythonappend Handle_BRepFill_SequenceNodeOfSequenceOfSection::Handle_BRepFill_SequenceNodeOfSequenceOfSection %{
-    # register the handle in the base object
-    if len(args) > 0:
-        register_handle(self, args[0])
-%}
-
-%nodefaultctor Handle_BRepFill_SequenceNodeOfSequenceOfSection;
-class Handle_BRepFill_SequenceNodeOfSequenceOfSection : public Handle_TCollection_SeqNode {
-
-    public:
-        // constructors
-        Handle_BRepFill_SequenceNodeOfSequenceOfSection();
-        Handle_BRepFill_SequenceNodeOfSequenceOfSection(const Handle_BRepFill_SequenceNodeOfSequenceOfSection &aHandle);
-        Handle_BRepFill_SequenceNodeOfSequenceOfSection(const BRepFill_SequenceNodeOfSequenceOfSection *anItem);
-        void Nullify();
-        Standard_Boolean IsNull() const;
-        static const Handle_BRepFill_SequenceNodeOfSequenceOfSection DownCast(const Handle_Standard_Transient &AnObject);
-
-};
-%extend Handle_BRepFill_SequenceNodeOfSequenceOfSection {
-    BRepFill_SequenceNodeOfSequenceOfSection* _get_reference() {
-    return (BRepFill_SequenceNodeOfSequenceOfSection*)$self->Access();
-    }
-};
-
-%extend Handle_BRepFill_SequenceNodeOfSequenceOfSection {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
-};
-
-%extend BRepFill_SequenceNodeOfSequenceOfSection {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor BRepFill_SequenceOfEdgeFaceAndOrder;
-class BRepFill_SequenceOfEdgeFaceAndOrder : public TCollection_BaseSequence {
-	public:
-		%feature("compactdefaultargs") BRepFill_SequenceOfEdgeFaceAndOrder;
-		%feature("autodoc", "	:rtype: None
-") BRepFill_SequenceOfEdgeFaceAndOrder;
-		 BRepFill_SequenceOfEdgeFaceAndOrder ();
-		%feature("compactdefaultargs") BRepFill_SequenceOfEdgeFaceAndOrder;
-		%feature("autodoc", "	:param Other:
-	:type Other: BRepFill_SequenceOfEdgeFaceAndOrder &
-	:rtype: None
-") BRepFill_SequenceOfEdgeFaceAndOrder;
-		 BRepFill_SequenceOfEdgeFaceAndOrder (const BRepFill_SequenceOfEdgeFaceAndOrder & Other);
-		%feature("compactdefaultargs") Clear;
-		%feature("autodoc", "	:rtype: None
-") Clear;
-		void Clear ();
-		%feature("compactdefaultargs") Assign;
-		%feature("autodoc", "	:param Other:
-	:type Other: BRepFill_SequenceOfEdgeFaceAndOrder &
-	:rtype: BRepFill_SequenceOfEdgeFaceAndOrder
-") Assign;
-		const BRepFill_SequenceOfEdgeFaceAndOrder & Assign (const BRepFill_SequenceOfEdgeFaceAndOrder & Other);
-		%feature("compactdefaultargs") operator =;
-		%feature("autodoc", "	:param Other:
-	:type Other: BRepFill_SequenceOfEdgeFaceAndOrder &
-	:rtype: BRepFill_SequenceOfEdgeFaceAndOrder
-") operator =;
-		const BRepFill_SequenceOfEdgeFaceAndOrder & operator = (const BRepFill_SequenceOfEdgeFaceAndOrder & Other);
-		%feature("compactdefaultargs") Append;
-		%feature("autodoc", "	:param T:
-	:type T: BRepFill_EdgeFaceAndOrder &
-	:rtype: None
-") Append;
-		void Append (const BRepFill_EdgeFaceAndOrder & T);
-		%feature("compactdefaultargs") Append;
-		%feature("autodoc", "	:param S:
-	:type S: BRepFill_SequenceOfEdgeFaceAndOrder &
-	:rtype: None
-") Append;
-		void Append (BRepFill_SequenceOfEdgeFaceAndOrder & S);
-		%feature("compactdefaultargs") Prepend;
-		%feature("autodoc", "	:param T:
-	:type T: BRepFill_EdgeFaceAndOrder &
-	:rtype: None
-") Prepend;
-		void Prepend (const BRepFill_EdgeFaceAndOrder & T);
-		%feature("compactdefaultargs") Prepend;
-		%feature("autodoc", "	:param S:
-	:type S: BRepFill_SequenceOfEdgeFaceAndOrder &
-	:rtype: None
-") Prepend;
-		void Prepend (BRepFill_SequenceOfEdgeFaceAndOrder & S);
-		%feature("compactdefaultargs") InsertBefore;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param T:
-	:type T: BRepFill_EdgeFaceAndOrder &
-	:rtype: None
-") InsertBefore;
-		void InsertBefore (const Standard_Integer Index,const BRepFill_EdgeFaceAndOrder & T);
-		%feature("compactdefaultargs") InsertBefore;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param S:
-	:type S: BRepFill_SequenceOfEdgeFaceAndOrder &
-	:rtype: None
-") InsertBefore;
-		void InsertBefore (const Standard_Integer Index,BRepFill_SequenceOfEdgeFaceAndOrder & S);
-		%feature("compactdefaultargs") InsertAfter;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param T:
-	:type T: BRepFill_EdgeFaceAndOrder &
-	:rtype: None
-") InsertAfter;
-		void InsertAfter (const Standard_Integer Index,const BRepFill_EdgeFaceAndOrder & T);
-		%feature("compactdefaultargs") InsertAfter;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param S:
-	:type S: BRepFill_SequenceOfEdgeFaceAndOrder &
-	:rtype: None
-") InsertAfter;
-		void InsertAfter (const Standard_Integer Index,BRepFill_SequenceOfEdgeFaceAndOrder & S);
-		%feature("compactdefaultargs") First;
-		%feature("autodoc", "	:rtype: BRepFill_EdgeFaceAndOrder
-") First;
-		const BRepFill_EdgeFaceAndOrder & First ();
-		%feature("compactdefaultargs") Last;
-		%feature("autodoc", "	:rtype: BRepFill_EdgeFaceAndOrder
-") Last;
-		const BRepFill_EdgeFaceAndOrder & Last ();
-		%feature("compactdefaultargs") Split;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param Sub:
-	:type Sub: BRepFill_SequenceOfEdgeFaceAndOrder &
-	:rtype: None
-") Split;
-		void Split (const Standard_Integer Index,BRepFill_SequenceOfEdgeFaceAndOrder & Sub);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: BRepFill_EdgeFaceAndOrder
-") Value;
-		const BRepFill_EdgeFaceAndOrder & Value (const Standard_Integer Index);
-		%feature("compactdefaultargs") SetValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param I:
-	:type I: BRepFill_EdgeFaceAndOrder &
-	:rtype: None
-") SetValue;
-		void SetValue (const Standard_Integer Index,const BRepFill_EdgeFaceAndOrder & I);
-		%feature("compactdefaultargs") ChangeValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: BRepFill_EdgeFaceAndOrder
-") ChangeValue;
-		BRepFill_EdgeFaceAndOrder & ChangeValue (const Standard_Integer Index);
-		%feature("compactdefaultargs") Remove;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: None
-") Remove;
-		void Remove (const Standard_Integer Index);
-		%feature("compactdefaultargs") Remove;
-		%feature("autodoc", "	:param FromIndex:
-	:type FromIndex: int
-	:param ToIndex:
-	:type ToIndex: int
-	:rtype: None
-") Remove;
-		void Remove (const Standard_Integer FromIndex,const Standard_Integer ToIndex);
-};
-
-
-%extend BRepFill_SequenceOfEdgeFaceAndOrder {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor BRepFill_SequenceOfFaceAndOrder;
-class BRepFill_SequenceOfFaceAndOrder : public TCollection_BaseSequence {
-	public:
-		%feature("compactdefaultargs") BRepFill_SequenceOfFaceAndOrder;
-		%feature("autodoc", "	:rtype: None
-") BRepFill_SequenceOfFaceAndOrder;
-		 BRepFill_SequenceOfFaceAndOrder ();
-		%feature("compactdefaultargs") BRepFill_SequenceOfFaceAndOrder;
-		%feature("autodoc", "	:param Other:
-	:type Other: BRepFill_SequenceOfFaceAndOrder &
-	:rtype: None
-") BRepFill_SequenceOfFaceAndOrder;
-		 BRepFill_SequenceOfFaceAndOrder (const BRepFill_SequenceOfFaceAndOrder & Other);
-		%feature("compactdefaultargs") Clear;
-		%feature("autodoc", "	:rtype: None
-") Clear;
-		void Clear ();
-		%feature("compactdefaultargs") Assign;
-		%feature("autodoc", "	:param Other:
-	:type Other: BRepFill_SequenceOfFaceAndOrder &
-	:rtype: BRepFill_SequenceOfFaceAndOrder
-") Assign;
-		const BRepFill_SequenceOfFaceAndOrder & Assign (const BRepFill_SequenceOfFaceAndOrder & Other);
-		%feature("compactdefaultargs") operator =;
-		%feature("autodoc", "	:param Other:
-	:type Other: BRepFill_SequenceOfFaceAndOrder &
-	:rtype: BRepFill_SequenceOfFaceAndOrder
-") operator =;
-		const BRepFill_SequenceOfFaceAndOrder & operator = (const BRepFill_SequenceOfFaceAndOrder & Other);
-		%feature("compactdefaultargs") Append;
-		%feature("autodoc", "	:param T:
-	:type T: BRepFill_FaceAndOrder &
-	:rtype: None
-") Append;
-		void Append (const BRepFill_FaceAndOrder & T);
-		%feature("compactdefaultargs") Append;
-		%feature("autodoc", "	:param S:
-	:type S: BRepFill_SequenceOfFaceAndOrder &
-	:rtype: None
-") Append;
-		void Append (BRepFill_SequenceOfFaceAndOrder & S);
-		%feature("compactdefaultargs") Prepend;
-		%feature("autodoc", "	:param T:
-	:type T: BRepFill_FaceAndOrder &
-	:rtype: None
-") Prepend;
-		void Prepend (const BRepFill_FaceAndOrder & T);
-		%feature("compactdefaultargs") Prepend;
-		%feature("autodoc", "	:param S:
-	:type S: BRepFill_SequenceOfFaceAndOrder &
-	:rtype: None
-") Prepend;
-		void Prepend (BRepFill_SequenceOfFaceAndOrder & S);
-		%feature("compactdefaultargs") InsertBefore;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param T:
-	:type T: BRepFill_FaceAndOrder &
-	:rtype: None
-") InsertBefore;
-		void InsertBefore (const Standard_Integer Index,const BRepFill_FaceAndOrder & T);
-		%feature("compactdefaultargs") InsertBefore;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param S:
-	:type S: BRepFill_SequenceOfFaceAndOrder &
-	:rtype: None
-") InsertBefore;
-		void InsertBefore (const Standard_Integer Index,BRepFill_SequenceOfFaceAndOrder & S);
-		%feature("compactdefaultargs") InsertAfter;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param T:
-	:type T: BRepFill_FaceAndOrder &
-	:rtype: None
-") InsertAfter;
-		void InsertAfter (const Standard_Integer Index,const BRepFill_FaceAndOrder & T);
-		%feature("compactdefaultargs") InsertAfter;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param S:
-	:type S: BRepFill_SequenceOfFaceAndOrder &
-	:rtype: None
-") InsertAfter;
-		void InsertAfter (const Standard_Integer Index,BRepFill_SequenceOfFaceAndOrder & S);
-		%feature("compactdefaultargs") First;
-		%feature("autodoc", "	:rtype: BRepFill_FaceAndOrder
-") First;
-		const BRepFill_FaceAndOrder & First ();
-		%feature("compactdefaultargs") Last;
-		%feature("autodoc", "	:rtype: BRepFill_FaceAndOrder
-") Last;
-		const BRepFill_FaceAndOrder & Last ();
-		%feature("compactdefaultargs") Split;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param Sub:
-	:type Sub: BRepFill_SequenceOfFaceAndOrder &
-	:rtype: None
-") Split;
-		void Split (const Standard_Integer Index,BRepFill_SequenceOfFaceAndOrder & Sub);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: BRepFill_FaceAndOrder
-") Value;
-		const BRepFill_FaceAndOrder & Value (const Standard_Integer Index);
-		%feature("compactdefaultargs") SetValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param I:
-	:type I: BRepFill_FaceAndOrder &
-	:rtype: None
-") SetValue;
-		void SetValue (const Standard_Integer Index,const BRepFill_FaceAndOrder & I);
-		%feature("compactdefaultargs") ChangeValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: BRepFill_FaceAndOrder
-") ChangeValue;
-		BRepFill_FaceAndOrder & ChangeValue (const Standard_Integer Index);
-		%feature("compactdefaultargs") Remove;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: None
-") Remove;
-		void Remove (const Standard_Integer Index);
-		%feature("compactdefaultargs") Remove;
-		%feature("autodoc", "	:param FromIndex:
-	:type FromIndex: int
-	:param ToIndex:
-	:type ToIndex: int
-	:rtype: None
-") Remove;
-		void Remove (const Standard_Integer FromIndex,const Standard_Integer ToIndex);
-};
-
-
-%extend BRepFill_SequenceOfFaceAndOrder {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor BRepFill_SequenceOfSection;
-class BRepFill_SequenceOfSection : public TCollection_BaseSequence {
-	public:
-		%feature("compactdefaultargs") BRepFill_SequenceOfSection;
-		%feature("autodoc", "	:rtype: None
-") BRepFill_SequenceOfSection;
-		 BRepFill_SequenceOfSection ();
-		%feature("compactdefaultargs") BRepFill_SequenceOfSection;
-		%feature("autodoc", "	:param Other:
-	:type Other: BRepFill_SequenceOfSection &
-	:rtype: None
-") BRepFill_SequenceOfSection;
-		 BRepFill_SequenceOfSection (const BRepFill_SequenceOfSection & Other);
-		%feature("compactdefaultargs") Clear;
-		%feature("autodoc", "	:rtype: None
-") Clear;
-		void Clear ();
-		%feature("compactdefaultargs") Assign;
-		%feature("autodoc", "	:param Other:
-	:type Other: BRepFill_SequenceOfSection &
-	:rtype: BRepFill_SequenceOfSection
-") Assign;
-		const BRepFill_SequenceOfSection & Assign (const BRepFill_SequenceOfSection & Other);
-		%feature("compactdefaultargs") operator =;
-		%feature("autodoc", "	:param Other:
-	:type Other: BRepFill_SequenceOfSection &
-	:rtype: BRepFill_SequenceOfSection
-") operator =;
-		const BRepFill_SequenceOfSection & operator = (const BRepFill_SequenceOfSection & Other);
-		%feature("compactdefaultargs") Append;
-		%feature("autodoc", "	:param T:
-	:type T: BRepFill_Section &
-	:rtype: None
-") Append;
-		void Append (const BRepFill_Section & T);
-		%feature("compactdefaultargs") Append;
-		%feature("autodoc", "	:param S:
-	:type S: BRepFill_SequenceOfSection &
-	:rtype: None
-") Append;
-		void Append (BRepFill_SequenceOfSection & S);
-		%feature("compactdefaultargs") Prepend;
-		%feature("autodoc", "	:param T:
-	:type T: BRepFill_Section &
-	:rtype: None
-") Prepend;
-		void Prepend (const BRepFill_Section & T);
-		%feature("compactdefaultargs") Prepend;
-		%feature("autodoc", "	:param S:
-	:type S: BRepFill_SequenceOfSection &
-	:rtype: None
-") Prepend;
-		void Prepend (BRepFill_SequenceOfSection & S);
-		%feature("compactdefaultargs") InsertBefore;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param T:
-	:type T: BRepFill_Section &
-	:rtype: None
-") InsertBefore;
-		void InsertBefore (const Standard_Integer Index,const BRepFill_Section & T);
-		%feature("compactdefaultargs") InsertBefore;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param S:
-	:type S: BRepFill_SequenceOfSection &
-	:rtype: None
-") InsertBefore;
-		void InsertBefore (const Standard_Integer Index,BRepFill_SequenceOfSection & S);
-		%feature("compactdefaultargs") InsertAfter;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param T:
-	:type T: BRepFill_Section &
-	:rtype: None
-") InsertAfter;
-		void InsertAfter (const Standard_Integer Index,const BRepFill_Section & T);
-		%feature("compactdefaultargs") InsertAfter;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param S:
-	:type S: BRepFill_SequenceOfSection &
-	:rtype: None
-") InsertAfter;
-		void InsertAfter (const Standard_Integer Index,BRepFill_SequenceOfSection & S);
-		%feature("compactdefaultargs") First;
-		%feature("autodoc", "	:rtype: BRepFill_Section
-") First;
-		const BRepFill_Section & First ();
-		%feature("compactdefaultargs") Last;
-		%feature("autodoc", "	:rtype: BRepFill_Section
-") Last;
-		const BRepFill_Section & Last ();
-		%feature("compactdefaultargs") Split;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param Sub:
-	:type Sub: BRepFill_SequenceOfSection &
-	:rtype: None
-") Split;
-		void Split (const Standard_Integer Index,BRepFill_SequenceOfSection & Sub);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: BRepFill_Section
-") Value;
-		const BRepFill_Section & Value (const Standard_Integer Index);
-		%feature("compactdefaultargs") SetValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param I:
-	:type I: BRepFill_Section &
-	:rtype: None
-") SetValue;
-		void SetValue (const Standard_Integer Index,const BRepFill_Section & I);
-		%feature("compactdefaultargs") ChangeValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: BRepFill_Section
-") ChangeValue;
-		BRepFill_Section & ChangeValue (const Standard_Integer Index);
-		%feature("compactdefaultargs") Remove;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: None
-") Remove;
-		void Remove (const Standard_Integer Index);
-		%feature("compactdefaultargs") Remove;
-		%feature("autodoc", "	:param FromIndex:
-	:type FromIndex: int
-	:param ToIndex:
-	:type ToIndex: int
-	:rtype: None
-") Remove;
-		void Remove (const Standard_Integer FromIndex,const Standard_Integer ToIndex);
-};
-
-
-%extend BRepFill_SequenceOfSection {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
 %nodefaultctor BRepFill_Sweep;
 class BRepFill_Sweep {
 	public:
@@ -4500,7 +2126,7 @@ class BRepFill_Sweep {
 ") SetBounds;
 		void SetBounds (const TopoDS_Wire & FirstShape,const TopoDS_Wire & LastShape);
 		%feature("compactdefaultargs") SetTolerance;
-		%feature("autodoc", "	* Set Approximation Tolerance Tol3d : Tolerance to surface approximation Tol2d : Tolerance used to perform curve approximation Normaly the 2d curve are approximated with a tolerance given by the resolution on support surfaces, but if this tolerance is too large Tol2d is used. TolAngular : Tolerance (in radian) to control the angle beetween tangents on the section law and tangent of iso-v on approximed surface
+		%feature("autodoc", "	* Set Approximation Tolerance Tol3d : Tolerance to surface approximation Tol2d : Tolerance used to perform curve approximation Normaly the 2d curve are approximated with a tolerance given by the resolution on support surfaces, but if this tolerance is too large Tol2d is used. TolAngular : Tolerance --in radian-- to control the angle beetween tangents on the section law and tangent of iso-v on approximed surface
 
 	:param Tol3d:
 	:type Tol3d: float
@@ -4532,7 +2158,7 @@ class BRepFill_Sweep {
 ") SetForceApproxC1;
 		void SetForceApproxC1 (const Standard_Boolean ForceApproxC1);
 		%feature("compactdefaultargs") Build;
-		%feature("autodoc", "	* Build the Sweeep Surface Transition define Transition strategy Approx define Approximation Strategy - GeomFill_Section : The composed Function Location X Section is directly approximed. - GeomFill_Location : The location law is approximed, and the SweepSurface is bulid algebric composition of approximed location law and section law This option is Ok, if Section.Surface() methode is effective. Continuity : The continuity in v waiting on the surface Degmax : The maximum degree in v requiered on the surface Segmax : The maximum number of span in v requiered on the surface.
+		%feature("autodoc", "	* Build the Sweeep Surface Transition define Transition strategy Approx define Approximation Strategy - GeomFill_Section : The composed Function Location X Section is directly approximed. - GeomFill_Location : The location law is approximed, and the SweepSurface is bulid algebric composition of approximed location law and section law This option is Ok, if Section.Surface---- methode is effective. Continuity : The continuity in v waiting on the surface Degmax : The maximum degree in v requiered on the surface Segmax : The maximum number of span in v requiered on the surface.
 
 	:param ReversedEdges:
 	:type ReversedEdges: TopTools_MapOfShape &
@@ -4583,6 +2209,14 @@ class BRepFill_Sweep {
 		%feature("autodoc", "	:rtype: Handle_TopTools_HArray2OfShape
 ") Sections;
 		Handle_TopTools_HArray2OfShape Sections ();
+		%feature("compactdefaultargs") Tape;
+		%feature("autodoc", "	* returns the Tape corresponding to Index-th edge of section
+
+	:param Index:
+	:type Index: int
+	:rtype: TopoDS_Shape
+") Tape;
+		TopoDS_Shape Tape (const Standard_Integer Index);
 };
 
 
@@ -4615,13 +2249,23 @@ class BRepFill_TrimEdgeTool {
 	:type Edge1: TopoDS_Edge &
 	:param Edge2:
 	:type Edge2: TopoDS_Edge &
+	:param InitShape1:
+	:type InitShape1: TopoDS_Shape &
+	:param InitShape2:
+	:type InitShape2: TopoDS_Shape &
+	:param End1:
+	:type End1: TopoDS_Vertex &
+	:param End2:
+	:type End2: TopoDS_Vertex &
 	:param theJoinType:
 	:type theJoinType: GeomAbs_JoinType
+	:param IsOpenResult:
+	:type IsOpenResult: bool
 	:param Params:
 	:type Params: TColgp_SequenceOfPnt
 	:rtype: None
 ") IntersectWith;
-		void IntersectWith (const TopoDS_Edge & Edge1,const TopoDS_Edge & Edge2,const GeomAbs_JoinType theJoinType,TColgp_SequenceOfPnt & Params);
+		void IntersectWith (const TopoDS_Edge & Edge1,const TopoDS_Edge & Edge2,const TopoDS_Shape & InitShape1,const TopoDS_Shape & InitShape2,const TopoDS_Vertex & End1,const TopoDS_Vertex & End2,const GeomAbs_JoinType theJoinType,const Standard_Boolean IsOpenResult,TColgp_SequenceOfPnt & Params);
 		%feature("compactdefaultargs") AddOrConfuse;
 		%feature("autodoc", "	:param Start:
 	:type Start: bool
@@ -4741,7 +2385,7 @@ class BRepFill_TrimSurfaceTool {
 ") BRepFill_TrimSurfaceTool;
 		 BRepFill_TrimSurfaceTool (const Handle_Geom2d_Curve & Bis,const TopoDS_Face & Face1,const TopoDS_Face & Face2,const TopoDS_Edge & Edge1,const TopoDS_Edge & Edge2,const Standard_Boolean Inv1,const Standard_Boolean Inv2);
 		%feature("compactdefaultargs") IntersectWith;
-		%feature("autodoc", "	* Intersect <Bis> with the projection of the edges <EdgeOnFi> and returns the intersecting parameters on Bis and on the edges P.X() : Parameter on Bis P.Y() : Parameter on EdgeOnF1 P.Z() : Parameter on EdgeOnF2 raises if <Edge> is not a edge of Face1 or Face2.
+		%feature("autodoc", "	* Intersect <Bis> with the projection of the edges <EdgeOnFi> and returns the intersecting parameters on Bis and on the edges P.X---- : Parameter on Bis P.Y---- : Parameter on EdgeOnF1 P.Z---- : Parameter on EdgeOnF2 raises if <Edge> is not a edge of Face1 or Face2.
 
 	:param EdgeOnF1:
 	:type EdgeOnF1: TopoDS_Edge &
@@ -4753,7 +2397,7 @@ class BRepFill_TrimSurfaceTool {
 ") IntersectWith;
 		void IntersectWith (const TopoDS_Edge & EdgeOnF1,const TopoDS_Edge & EdgeOnF2,TColgp_SequenceOfPnt & Points);
 		%feature("compactdefaultargs") IsOnFace;
-		%feature("autodoc", "	* returns True if the Line (P, DZ) intersect the Faces
+		%feature("autodoc", "	* returns True if the Line --P, DZ-- intersect the Faces
 
 	:param Point:
 	:type Point: gp_Pnt2d
@@ -4839,19 +2483,20 @@ class Handle_BRepFill_ACRLaw : public Handle_BRepFill_LocationLaw {
         static const Handle_BRepFill_ACRLaw DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_BRepFill_ACRLaw {
     BRepFill_ACRLaw* _get_reference() {
-    return (BRepFill_ACRLaw*)$self->Access();
+    return (BRepFill_ACRLaw*)$self->get();
     }
 };
 
 %extend Handle_BRepFill_ACRLaw {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend BRepFill_ACRLaw {
@@ -4904,19 +2549,20 @@ class Handle_BRepFill_Edge3DLaw : public Handle_BRepFill_LocationLaw {
         static const Handle_BRepFill_Edge3DLaw DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_BRepFill_Edge3DLaw {
     BRepFill_Edge3DLaw* _get_reference() {
-    return (BRepFill_Edge3DLaw*)$self->Access();
+    return (BRepFill_Edge3DLaw*)$self->get();
     }
 };
 
 %extend Handle_BRepFill_Edge3DLaw {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend BRepFill_Edge3DLaw {
@@ -4975,19 +2621,20 @@ class Handle_BRepFill_EdgeOnSurfLaw : public Handle_BRepFill_LocationLaw {
         static const Handle_BRepFill_EdgeOnSurfLaw DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_BRepFill_EdgeOnSurfLaw {
     BRepFill_EdgeOnSurfLaw* _get_reference() {
-    return (BRepFill_EdgeOnSurfLaw*)$self->Access();
+    return (BRepFill_EdgeOnSurfLaw*)$self->get();
     }
 };
 
 %extend Handle_BRepFill_EdgeOnSurfLaw {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend BRepFill_EdgeOnSurfLaw {
@@ -5110,19 +2757,20 @@ class Handle_BRepFill_NSections : public Handle_BRepFill_SectionLaw {
         static const Handle_BRepFill_NSections DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_BRepFill_NSections {
     BRepFill_NSections* _get_reference() {
-    return (BRepFill_NSections*)$self->Access();
+    return (BRepFill_NSections*)$self->get();
     }
 };
 
 %extend Handle_BRepFill_NSections {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend BRepFill_NSections {
@@ -5255,19 +2903,20 @@ class Handle_BRepFill_ShapeLaw : public Handle_BRepFill_SectionLaw {
         static const Handle_BRepFill_ShapeLaw DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_BRepFill_ShapeLaw {
     BRepFill_ShapeLaw* _get_reference() {
-    return (BRepFill_ShapeLaw*)$self->Access();
+    return (BRepFill_ShapeLaw*)$self->get();
     }
 };
 
 %extend Handle_BRepFill_ShapeLaw {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend BRepFill_ShapeLaw {
@@ -5328,19 +2977,20 @@ class Handle_BRepFill_DraftLaw : public Handle_BRepFill_Edge3DLaw {
         static const Handle_BRepFill_DraftLaw DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_BRepFill_DraftLaw {
     BRepFill_DraftLaw* _get_reference() {
-    return (BRepFill_DraftLaw*)$self->Access();
+    return (BRepFill_DraftLaw*)$self->get();
     }
 };
 
 %extend Handle_BRepFill_DraftLaw {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend BRepFill_DraftLaw {

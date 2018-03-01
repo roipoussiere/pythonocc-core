@@ -1,5 +1,5 @@
 /*
-Copyright 2008-2017 Thomas Paviot (tpaviot@gmail.com)
+Copyright 2008-2018 Thomas Paviot (tpaviot@gmail.com)
 
 
 This file is part of pythonOCC.
@@ -55,8 +55,12 @@ def register_handle(handle, base_object):
 
 /* typedefs */
 typedef BRepBuilderAPI_Sewing BRepOffsetAPI_Sewing;
-typedef Handle_BRepBuilderAPI_Sewing Handle_BRepOffsetAPI_Sewing;
 /* end typedefs declaration */
+
+/* templates */
+%template(BRepOffsetAPI_SequenceOfSequenceOfShape) NCollection_Sequence <TopTools_SequenceOfShape>;
+%template(BRepOffsetAPI_SequenceOfSequenceOfReal) NCollection_Sequence <TColStd_SequenceOfReal>;
+/* end templates declaration */
 
 /* public enums */
 /* end public enums declaration */
@@ -129,7 +133,7 @@ class BRepOffsetAPI_DraftAngle : public BRepBuilderAPI_ModifyShape {
 ") ProblematicShape;
 		const TopoDS_Shape  ProblematicShape ();
 		%feature("compactdefaultargs") Status;
-		%feature("autodoc", "	* Returns an error status when an error has occured (Face, Edge or Vertex recomputaion problem). Otherwise returns Draft_NoError. The method may be called if AddDone returns Standard_False, or when IsDone returns Standard_False.
+		%feature("autodoc", "	* Returns an error status when an error has occured --Face, Edge or Vertex recomputaion problem--. Otherwise returns Draft_NoError. The method may be called if AddDone returns Standard_False, or when IsDone returns Standard_False.
 
 	:rtype: Draft_ErrorStatus
 ") Status;
@@ -149,7 +153,7 @@ class BRepOffsetAPI_DraftAngle : public BRepBuilderAPI_ModifyShape {
 ") ModifiedFaces;
 		const TopTools_ListOfShape & ModifiedFaces ();
 		%feature("compactdefaultargs") Build;
-		%feature("autodoc", "	* Builds the resulting shape (redefined from MakeShape).
+		%feature("autodoc", "	* Builds the resulting shape --redefined from MakeShape--.
 
 	:rtype: void
 ") Build;
@@ -174,6 +178,14 @@ class BRepOffsetAPI_DraftAngle : public BRepBuilderAPI_ModifyShape {
 	:rtype: TopTools_ListOfShape
 ") Modified;
 		virtual const TopTools_ListOfShape & Modified (const TopoDS_Shape & S);
+		%feature("compactdefaultargs") ModifiedShape;
+		%feature("autodoc", "	* Returns the modified shape corresponding to <S>. S can correspond to the entire initial shape or to its subshape. Raises exceptions Standard_NoSuchObject if S is not the initial shape or a subshape of the initial shape to which the transformation has been applied.
+
+	:param S:
+	:type S: TopoDS_Shape &
+	:rtype: TopoDS_Shape
+") ModifiedShape;
+		virtual TopoDS_Shape ModifiedShape (const TopoDS_Shape & S);
 };
 
 
@@ -186,7 +198,7 @@ class BRepOffsetAPI_DraftAngle : public BRepBuilderAPI_ModifyShape {
 class BRepOffsetAPI_FindContigousEdges {
 	public:
 		%feature("compactdefaultargs") BRepOffsetAPI_FindContigousEdges;
-		%feature("autodoc", "	* Initializes an algorithm for identifying contiguous edges on shapes with tolerance as the tolerance of contiguity (defaulted to 1.0e-6). This tolerance value is used to determine whether two edges or sections of edges are coincident. Use the function Add to define the shapes to be checked. Set option to false. This argument (defaulted to true) will serve in subsequent software releases for performing an analysis of degenerated shapes.
+		%feature("autodoc", "	* Initializes an algorithm for identifying contiguous edges on shapes with tolerance as the tolerance of contiguity --defaulted to 1.0e-6--. This tolerance value is used to determine whether two edges or sections of edges are coincident. Use the function Add to define the shapes to be checked. Set option to false. This argument --defaulted to true-- will serve in subsequent software releases for performing an analysis of degenerated shapes.
 
 	:param tolerance: default value is 1.0e-06
 	:type tolerance: float
@@ -272,7 +284,7 @@ class BRepOffsetAPI_FindContigousEdges {
 ") IsDegenerated;
 		Standard_Boolean IsDegenerated (const TopoDS_Shape & shape);
 		%feature("compactdefaultargs") IsModified;
-		%feature("autodoc", "	* Returns true if the copy of the initial shape shape was modified by the function Perform (i.e. if one or more of its edges was broken down into contiguous and non-contiguous sections). Warning Returns false if shape is not one of the initial shapes added to this algorithm.
+		%feature("autodoc", "	* Returns true if the copy of the initial shape shape was modified by the function Perform --i.e. if one or more of its edges was broken down into contiguous and non-contiguous sections--. Warning Returns false if shape is not one of the initial shapes added to this algorithm.
 
 	:param shape:
 	:type shape: TopoDS_Shape &
@@ -436,7 +448,7 @@ class BRepOffsetAPI_MakeEvolved : public BRepBuilderAPI_MakeShape {
 ") Evolved;
 		const BRepFill_Evolved & Evolved ();
 		%feature("compactdefaultargs") Build;
-		%feature("autodoc", "	* Builds the resulting shape (redefined from MakeShape).
+		%feature("autodoc", "	* Builds the resulting shape --redefined from MakeShape--.
 
 	:rtype: void
 ") Build;
@@ -539,7 +551,7 @@ class BRepOffsetAPI_MakeFilling : public BRepBuilderAPI_MakeShape {
 ") SetApproxParam;
 		void SetApproxParam (const Standard_Integer MaxDeg = 8,const Standard_Integer MaxSegments = 9);
 		%feature("compactdefaultargs") LoadInitSurface;
-		%feature("autodoc", "	* Loads the initial surface Surf to begin the construction of the surface. This optional function is useful if the surface resulting from construction for the algorithm is likely to be complex. The support surface of the face under construction is computed by a deformation of Surf which satisfies the given constraints. The set of bounding edges defines the wire of the face. If no initial surface is given, the algorithm computes it automatically. If the set of edges is not connected (Free constraint), missing edges are automatically computed. Important: the initial surface must have orthogonal local coordinates, i.e. partial derivatives dS/du and dS/dv must be orthogonal at each point of surface. If this condition breaks, distortions of resulting surface are possible.
+		%feature("autodoc", "	* Loads the initial surface Surf to begin the construction of the surface. This optional function is useful if the surface resulting from construction for the algorithm is likely to be complex. The support surface of the face under construction is computed by a deformation of Surf which satisfies the given constraints. The set of bounding edges defines the wire of the face. If no initial surface is given, the algorithm computes it automatically. If the set of edges is not connected --Free constraint--, missing edges are automatically computed. Important: the initial surface must have orthogonal local coordinates, i.e. partial derivatives dS/du and dS/dv must be orthogonal at each point of surface. If this condition breaks, distortions of resulting surface are possible.
 
 	:param Surf:
 	:type Surf: TopoDS_Face &
@@ -746,7 +758,7 @@ class BRepOffsetAPI_MakeOffset : public BRepBuilderAPI_MakeShape {
 ") Perform;
 		void Perform (const Standard_Real Offset,const Standard_Real Alt = 0.0);
 		%feature("compactdefaultargs") Build;
-		%feature("autodoc", "	* Builds the resulting shape (redefined from MakeShape).
+		%feature("autodoc", "	* Builds the resulting shape --redefined from MakeShape--.
 
 	:rtype: void
 ") Build;
@@ -771,11 +783,13 @@ class BRepOffsetAPI_MakeOffset : public BRepBuilderAPI_MakeShape {
 class BRepOffsetAPI_MakeOffsetShape : public BRepBuilderAPI_MakeShape {
 	public:
 		%feature("compactdefaultargs") BRepOffsetAPI_MakeOffsetShape;
-		%feature("autodoc", "	:rtype: None
+		%feature("autodoc", "	* Constructor does nothing.
+
+	:rtype: None
 ") BRepOffsetAPI_MakeOffsetShape;
 		 BRepOffsetAPI_MakeOffsetShape ();
 		%feature("compactdefaultargs") BRepOffsetAPI_MakeOffsetShape;
-		%feature("autodoc", "	* Constructs a shape parallel to the shape S, where - S may be a face, a shell, a solid or a compound of these shape kinds; - Offset is the offset value. The offset shape is constructed: - outside S, if Offset is positive, - inside S, if Offset is negative; - Tol defines the coincidence tolerance criterion for generated shapes; - Mode defines the construction type of parallels applied to the free edges of shape S; currently, only one construction type is implemented, namely the one where the free edges do not generate parallels; this corresponds to the default value BRepOffset_Skin; - Intersection specifies how the algorithm must work in order to limit the parallels to two adjacent shapes: - if Intersection is false (default value), the intersection is calculated with the parallels to the two adjacent shapes, - if Intersection is true, the intersection is calculated by taking all generated parallels into account; this computation method is more general as it avoids some self-intersections generated in the offset shape from features of small dimensions on shape S, however this method has not been completely implemented and therefore is not recommended for use; - SelfInter tells the algorithm whether a computation to eliminate self-intersections must be applied to the resulting shape; however, as this functionality is not yet implemented, it is recommended to use the default value (false); - Join defines how to fill the holes that may appear between parallels to the two adjacent faces. It may take values GeomAbs_Arc or GeomAbs_Intersection: - if Join is equal to GeomAbs_Arc, then pipes are generated between two free edges of two adjacent parallels, and spheres are generated on 'images' of vertices; it is the default value, - if Join is equal to GeomAbs_Intersection, then the parallels to the two adjacent faces are enlarged and intersected, so that there are no free edges on parallels to faces. Warnings 1. All the faces of the shape S should be based on the surfaces with continuity at least C1. 2. The offset value should be sufficiently small to avoid self-intersections in resulting shape. Otherwise these self-intersections may appear inside an offset face if its initial surface is not plane or sphere or cylinder, also some non-adjacent offset faces may intersect each other. Also, some offset surfaces may 'turn inside out'. 3. The algorithm may fail if the shape S contains vertices where more than 3 edges converge. 4. Since 3d-offset algorithm involves intersection of surfaces, it is under limitations of surface intersection algorithm. 5. A result cannot be generated if the underlying geometry of S is BSpline with continuity C0. Exceptions Geom_UndefinedDerivative if the underlying geometry of S is BSpline with continuity C0.
+		%feature("autodoc", "	* Deprecated constructor. Please avoid usage of this constructor.
 
 	:param S:
 	:type S: TopoDS_Shape &
@@ -791,15 +805,51 @@ class BRepOffsetAPI_MakeOffsetShape : public BRepBuilderAPI_MakeShape {
 	:type SelfInter: bool
 	:param Join: default value is GeomAbs_Arc
 	:type Join: GeomAbs_JoinType
+	:param RemoveIntEdges: default value is Standard_False
+	:type RemoveIntEdges: bool
 	:rtype: None
 ") BRepOffsetAPI_MakeOffsetShape;
-		 BRepOffsetAPI_MakeOffsetShape (const TopoDS_Shape & S,const Standard_Real Offset,const Standard_Real Tol,const BRepOffset_Mode Mode = BRepOffset_Skin,const Standard_Boolean Intersection = Standard_False,const Standard_Boolean SelfInter = Standard_False,const GeomAbs_JoinType Join = GeomAbs_Arc);
+		 BRepOffsetAPI_MakeOffsetShape (const TopoDS_Shape & S,const Standard_Real Offset,const Standard_Real Tol,const BRepOffset_Mode Mode = BRepOffset_Skin,const Standard_Boolean Intersection = Standard_False,const Standard_Boolean SelfInter = Standard_False,const GeomAbs_JoinType Join = GeomAbs_Arc,const Standard_Boolean RemoveIntEdges = Standard_False);
+		%feature("compactdefaultargs") PerformBySimple;
+		%feature("autodoc", "	* Constructs offset shape for the given one using simple algorithm without intersections computation.
+
+	:param theS:
+	:type theS: TopoDS_Shape &
+	:param theOffsetValue:
+	:type theOffsetValue: float
+	:rtype: None
+") PerformBySimple;
+		void PerformBySimple (const TopoDS_Shape & theS,const Standard_Real theOffsetValue);
+		%feature("compactdefaultargs") PerformByJoin;
+		%feature("autodoc", "	* Constructs a shape parallel to the shape S, where - S may be a face, a shell, a solid or a compound of these shape kinds; - Offset is the offset value. The offset shape is constructed: - outside S, if Offset is positive, - inside S, if Offset is negative; - Tol defines the coincidence tolerance criterion for generated shapes; - Mode defines the construction type of parallels applied to the free edges of shape S; currently, only one construction type is implemented, namely the one where the free edges do not generate parallels; this corresponds to the default value BRepOffset_Skin; - Intersection specifies how the algorithm must work in order to limit the parallels to two adjacent shapes: - if Intersection is false --default value--, the intersection is calculated with the parallels to the two adjacent shapes, - if Intersection is true, the intersection is calculated by taking all generated parallels into account; this computation method is more general as it avoids some self-intersections generated in the offset shape from features of small dimensions on shape S, however this method has not been completely implemented and therefore is not recommended for use; - SelfInter tells the algorithm whether a computation to eliminate self-intersections must be applied to the resulting shape; however, as this functionality is not yet implemented, it is recommended to use the default value --false--; - Join defines how to fill the holes that may appear between parallels to the two adjacent faces. It may take values GeomAbs_Arc or GeomAbs_Intersection: - if Join is equal to GeomAbs_Arc, then pipes are generated between two free edges of two adjacent parallels, and spheres are generated on 'images' of vertices; it is the default value, - if Join is equal to GeomAbs_Intersection, then the parallels to the two adjacent faces are enlarged and intersected, so that there are no free edges on parallels to faces. RemoveIntEdges flag defines whether to remove the INTERNAL edges from the result or not. Warnings 1. All the faces of the shape S should be based on the surfaces with continuity at least C1. 2. The offset value should be sufficiently small to avoid self-intersections in resulting shape. Otherwise these self-intersections may appear inside an offset face if its initial surface is not plane or sphere or cylinder, also some non-adjacent offset faces may intersect each other. Also, some offset surfaces may 'turn inside out'. 3. The algorithm may fail if the shape S contains vertices where more than 3 edges converge. 4. Since 3d-offset algorithm involves intersection of surfaces, it is under limitations of surface intersection algorithm. 5. A result cannot be generated if the underlying geometry of S is BSpline with continuity C0. Exceptions Geom_UndefinedDerivative if the underlying geometry of S is BSpline with continuity C0.
+
+	:param S:
+	:type S: TopoDS_Shape &
+	:param Offset:
+	:type Offset: float
+	:param Tol:
+	:type Tol: float
+	:param Mode: default value is BRepOffset_Skin
+	:type Mode: BRepOffset_Mode
+	:param Intersection: default value is Standard_False
+	:type Intersection: bool
+	:param SelfInter: default value is Standard_False
+	:type SelfInter: bool
+	:param Join: default value is GeomAbs_Arc
+	:type Join: GeomAbs_JoinType
+	:param RemoveIntEdges: default value is Standard_False
+	:type RemoveIntEdges: bool
+	:rtype: None
+") PerformByJoin;
+		void PerformByJoin (const TopoDS_Shape & S,const Standard_Real Offset,const Standard_Real Tol,const BRepOffset_Mode Mode = BRepOffset_Skin,const Standard_Boolean Intersection = Standard_False,const Standard_Boolean SelfInter = Standard_False,const GeomAbs_JoinType Join = GeomAbs_Arc,const Standard_Boolean RemoveIntEdges = Standard_False);
 		%feature("compactdefaultargs") MakeOffset;
-		%feature("autodoc", "	:rtype: BRepOffset_MakeOffset
+		%feature("autodoc", "	* Returns instance of the unrelying intersection / arc algorithm.
+
+	:rtype: BRepOffset_MakeOffset
 ") MakeOffset;
 		virtual const BRepOffset_MakeOffset & MakeOffset ();
 		%feature("compactdefaultargs") Build;
-		%feature("autodoc", "	* Builds the resulting shape (redefined from MakeShape).
+		%feature("autodoc", "	* Does nothing.
 
 	:rtype: void
 ") Build;
@@ -866,7 +916,7 @@ class BRepOffsetAPI_MakePipe : public BRepPrimAPI_MakeSweep {
 ") Pipe;
 		const BRepFill_Pipe & Pipe ();
 		%feature("compactdefaultargs") Build;
-		%feature("autodoc", "	* Builds the resulting shape (redefined from MakeShape).
+		%feature("autodoc", "	* Builds the resulting shape --redefined from MakeShape--.
 
 	:rtype: void
 ") Build;
@@ -883,6 +933,12 @@ class BRepOffsetAPI_MakePipe : public BRepPrimAPI_MakeSweep {
 	:rtype: TopoDS_Shape
 ") LastShape;
 		TopoDS_Shape LastShape ();
+		%feature("compactdefaultargs") Generated;
+		%feature("autodoc", "	:param S:
+	:type S: TopoDS_Shape &
+	:rtype: TopTools_ListOfShape
+") Generated;
+		virtual const TopTools_ListOfShape & Generated (const TopoDS_Shape & S);
 		%feature("compactdefaultargs") Generated;
 		%feature("autodoc", "	:param SSpine:
 	:type SSpine: TopoDS_Shape &
@@ -937,7 +993,7 @@ class BRepOffsetAPI_MakePipeShell : public BRepPrimAPI_MakeSweep {
 ") SetMode;
 		void SetMode (const gp_Ax2 & Axe);
 		%feature("compactdefaultargs") SetMode;
-		%feature("autodoc", "	* Sets a fixed BiNormal direction to perform the -- sweeping. Angular relations beetween the section(s) and <BiNormal> will be constant
+		%feature("autodoc", "	* Sets a fixed BiNormal direction to perform the -- sweeping. Angular relations beetween the section--s-- and <BiNormal> will be constant
 
 	:param BiNormal:
 	:type BiNormal: gp_Dir
@@ -965,7 +1021,7 @@ class BRepOffsetAPI_MakePipeShell : public BRepPrimAPI_MakeSweep {
 ") SetMode;
 		void SetMode (const TopoDS_Wire & AuxiliarySpine,const Standard_Boolean CurvilinearEquivalence,const BRepFill_TypeOfContact KeepContact = BRepFill_NoContact);
 		%feature("compactdefaultargs") Add;
-		%feature("autodoc", "	* Adds the section Profile to this framework. First and last sections may be punctual, so the shape Profile may be both wire and vertex. Correspondent point on spine is computed automatically. If WithContact is true, the section is translated to be in contact with the spine. If WithCorrection is true, the section is rotated to be orthogonal to the spine?s tangent in the correspondent point. This option has no sense if the section is punctual (Profile is of type TopoDS_Vertex).
+		%feature("autodoc", "	* Adds the section Profile to this framework. First and last sections may be punctual, so the shape Profile may be both wire and vertex. Correspondent point on spine is computed automatically. If WithContact is true, the section is translated to be in contact with the spine. If WithCorrection is true, the section is rotated to be orthogonal to the spine?s tangent in the correspondent point. This option has no sense if the section is punctual --Profile is of type TopoDS_Vertex--.
 
 	:param Profile:
 	:type Profile: TopoDS_Shape &
@@ -991,7 +1047,7 @@ class BRepOffsetAPI_MakePipeShell : public BRepPrimAPI_MakeSweep {
 ") Add;
 		void Add (const TopoDS_Shape & Profile,const TopoDS_Vertex & Location,const Standard_Boolean WithContact = Standard_False,const Standard_Boolean WithCorrection = Standard_False);
 		%feature("compactdefaultargs") SetLaw;
-		%feature("autodoc", "	* Sets the evolution law defined by the wire Profile with its position (Location, WithContact, WithCorrection are the same options as in methods Add) and a homotetic law defined by the function L. Warning: To be effective, it is not recommended to combine methods Add and SetLaw.
+		%feature("autodoc", "	* Sets the evolution law defined by the wire Profile with its position --Location, WithContact, WithCorrection are the same options as in methods Add-- and a homotetic law defined by the function L. Warning: To be effective, it is not recommended to combine methods Add and SetLaw.
 
 	:param Profile:
 	:type Profile: TopoDS_Shape &
@@ -1005,7 +1061,7 @@ class BRepOffsetAPI_MakePipeShell : public BRepPrimAPI_MakeSweep {
 ") SetLaw;
 		void SetLaw (const TopoDS_Shape & Profile,const Handle_Law_Function & L,const Standard_Boolean WithContact = Standard_False,const Standard_Boolean WithCorrection = Standard_False);
 		%feature("compactdefaultargs") SetLaw;
-		%feature("autodoc", "	* Sets the evolution law defined by the wire Profile with its position (Location, WithContact, WithCorrection are the same options as in methods Add) and a homotetic law defined by the function L. Warning: To be effective, it is not recommended to combine methods Add and SetLaw.
+		%feature("autodoc", "	* Sets the evolution law defined by the wire Profile with its position --Location, WithContact, WithCorrection are the same options as in methods Add-- and a homotetic law defined by the function L. Warning: To be effective, it is not recommended to combine methods Add and SetLaw.
 
 	:param Profile:
 	:type Profile: TopoDS_Shape &
@@ -1077,7 +1133,7 @@ class BRepOffsetAPI_MakePipeShell : public BRepPrimAPI_MakeSweep {
 ") SetForceApproxC1;
 		void SetForceApproxC1 (const Standard_Boolean ForceApproxC1);
 		%feature("compactdefaultargs") SetTransitionMode;
-		%feature("autodoc", "	* Sets the transition mode to manage discontinuities on the swept shape caused by fractures on the spine. The transition mode can be BRepBuilderAPI_Transformed (default value), BRepBuilderAPI_RightCorner, BRepBuilderAPI_RoundCorner: -  RepBuilderAPI_Transformed: discontinuities are treated by modification of the sweeping mode. The pipe is 'transformed' at the fractures of the spine. This mode assumes building a self-intersected shell. -  BRepBuilderAPI_RightCorner: discontinuities are treated like right corner. Two pieces of the pipe corresponding to two adjacent segments of the spine are extended and intersected at a fracture of the spine. -  BRepBuilderAPI_RoundCorner: discontinuities are treated like round corner. The corner is treated as rotation of the profile around an axis which passes through the point of the spine?s fracture. This axis is based on cross product of directions tangent to the adjacent segments of the spine at their common point. Warnings The mode BRepBuilderAPI_RightCorner provides a valid result if intersection of two pieces of the pipe (corresponding to two adjacent segments of the spine) in the neighborhood of the spine?s fracture is connected and planar. This condition can be violated if the spine is non-linear in some neighborhood of the fracture or if the profile was set with a scaling law. The last mode, BRepBuilderAPI_RoundCorner, will assuredly provide a good result only if a profile was set with option WithCorrection = True, i.e. it is strictly orthogonal to the spine.
+		%feature("autodoc", "	* Sets the transition mode to manage discontinuities on the swept shape caused by fractures on the spine. The transition mode can be BRepBuilderAPI_Transformed --default value--, BRepBuilderAPI_RightCorner, BRepBuilderAPI_RoundCorner: -  RepBuilderAPI_Transformed: discontinuities are treated by modification of the sweeping mode. The pipe is 'transformed' at the fractures of the spine. This mode assumes building a self-intersected shell. -  BRepBuilderAPI_RightCorner: discontinuities are treated like right corner. Two pieces of the pipe corresponding to two adjacent segments of the spine are extended and intersected at a fracture of the spine. -  BRepBuilderAPI_RoundCorner: discontinuities are treated like round corner. The corner is treated as rotation of the profile around an axis which passes through the point of the spine?s fracture. This axis is based on cross product of directions tangent to the adjacent segments of the spine at their common point. Warnings The mode BRepBuilderAPI_RightCorner provides a valid result if intersection of two pieces of the pipe --corresponding to two adjacent segments of the spine-- in the neighborhood of the spine?s fracture is connected and planar. This condition can be violated if the spine is non-linear in some neighborhood of the fracture or if the profile was set with a scaling law. The last mode, BRepBuilderAPI_RoundCorner, will assuredly provide a good result only if a profile was set with option WithCorrection = True, i.e. it is strictly orthogonal to the spine.
 
 	:param Mode: default value is BRepBuilderAPI_Transformed
 	:type Mode: BRepBuilderAPI_TransitionMode
@@ -1085,7 +1141,7 @@ class BRepOffsetAPI_MakePipeShell : public BRepPrimAPI_MakeSweep {
 ") SetTransitionMode;
 		void SetTransitionMode (const BRepBuilderAPI_TransitionMode Mode = BRepBuilderAPI_Transformed);
 		%feature("compactdefaultargs") Simulate;
-		%feature("autodoc", "	* Simulates the resulting shape by calculating its cross-sections. The spine is devided by this cross-sections into (NumberOfSection - 1) equal parts, the number of cross-sections is NumberOfSection. The cross-sections are wires and they are returned in the list Result. This gives a rapid preview of the resulting shape, which will be obtained using the settings you have provided. Raises NotDone if <self> it is not Ready
+		%feature("autodoc", "	* Simulates the resulting shape by calculating its cross-sections. The spine is devided by this cross-sections into --NumberOfSection - 1-- equal parts, the number of cross-sections is NumberOfSection. The cross-sections are wires and they are returned in the list Result. This gives a rapid preview of the resulting shape, which will be obtained using the settings you have provided. Raises NotDone if <self> it is not Ready
 
 	:param NumberOfSection:
 	:type NumberOfSection: int
@@ -1095,7 +1151,7 @@ class BRepOffsetAPI_MakePipeShell : public BRepPrimAPI_MakeSweep {
 ") Simulate;
 		void Simulate (const Standard_Integer NumberOfSection,TopTools_ListOfShape & Result);
 		%feature("compactdefaultargs") Build;
-		%feature("autodoc", "	* Builds the resulting shape (redefined from MakeShape).
+		%feature("autodoc", "	* Builds the resulting shape --redefined from MakeShape--.
 
 	:rtype: void
 ") Build;
@@ -1119,7 +1175,7 @@ class BRepOffsetAPI_MakePipeShell : public BRepPrimAPI_MakeSweep {
 ") LastShape;
 		virtual TopoDS_Shape LastShape ();
 		%feature("compactdefaultargs") Generated;
-		%feature("autodoc", "	* Returns a list of new shapes generated from the shape S by the shell-generating algorithm. This function is redefined from BRepOffsetAPI_MakeShape::Generated. S can be an edge of the given Spine (see Constructor), it can be an edge or a boundary vertex of a shape returned by the method FirstShape(), it can also be a Profile (see method Add()) closest to the beginning or the end of the Spine. If S is an edge of the given Spine, then method Generated() returns a list of generated faces and a list of edges from a free boundary (if it exists) of the resulting shell. If S is an edge of the start shape (see FirstShape()), method Generated() returns a list of faces generated along the whole spine from the given edge. If S is a boundary vertex of the start shape (see FirstShape()), method Generated() returns a list of edges from the free boundary of the resulting shell, generated along the whole spine. If S is a Profile closest to the beginning of the Spine, method Generated() returns the start shape, that can also be obtained by method FirstShape(). If S is a Profile closest to the end of the Spine, method Generated() returns the end shape, that can also be obtained by method LastShape().
+		%feature("autodoc", "	* Returns a list of new shapes generated from the shape S by the shell-generating algorithm. This function is redefined from BRepOffsetAPI_MakeShape::Generated. S can be an edge or a vertex of a given Profile --see methods Add--.
 
 	:param S:
 	:type S: TopoDS_Shape &
@@ -1175,7 +1231,7 @@ class BRepOffsetAPI_NormalProjection : public BRepBuilderAPI_MakeShape {
 ") BRepOffsetAPI_NormalProjection;
 		 BRepOffsetAPI_NormalProjection ();
 		%feature("compactdefaultargs") BRepOffsetAPI_NormalProjection;
-		%feature("autodoc", "	* Constructs a framework to define projection onto the basis shape S according to the normal from each point to be projected from the shape added to this framework by Add. Default parameters of the algorithm: Tol3D = 1.e-04, Tol2D =sqr(tol3d) , InternalContinuity = GeomAbs_C2, MaxDegree = 14, MaxSeg = 16.
+		%feature("autodoc", "	* Constructs a framework to define projection onto the basis shape S according to the normal from each point to be projected from the shape added to this framework by Add. Default parameters of the algorithm: Tol3D = 1.e-04, Tol2D =sqr--tol3d-- , InternalContinuity = GeomAbs_C2, MaxDegree = 14, MaxSeg = 16.
 
 	:param S:
 	:type S: TopoDS_Shape &
@@ -1245,7 +1301,7 @@ class BRepOffsetAPI_NormalProjection : public BRepBuilderAPI_MakeShape {
 ") Build;
 		virtual void Build ();
 		%feature("compactdefaultargs") IsDone;
-		%feature("autodoc", "	* Returns true if the object was correctly built by the shape construction algorithm. If at the construction time of the shape, the algorithm cannot be completed, or the original data is corrupted, IsDone returns false and therefore protects the use of functions to access the result of the construction (typically the Shape function).
+		%feature("autodoc", "	* Returns true if the object was correctly built by the shape construction algorithm. If at the construction time of the shape, the algorithm cannot be completed, or the original data is corrupted, IsDone returns false and therefore protects the use of functions to access the result of the construction --typically the Shape function--.
 
 	:rtype: bool
 ") IsDone;
@@ -1296,439 +1352,11 @@ class BRepOffsetAPI_NormalProjection : public BRepBuilderAPI_MakeShape {
 	__repr__ = _dumps_object
 	}
 };
-%nodefaultctor BRepOffsetAPI_SequenceNodeOfSequenceOfSequenceOfReal;
-class BRepOffsetAPI_SequenceNodeOfSequenceOfSequenceOfReal : public TCollection_SeqNode {
-	public:
-		%feature("compactdefaultargs") BRepOffsetAPI_SequenceNodeOfSequenceOfSequenceOfReal;
-		%feature("autodoc", "	:param I:
-	:type I: TColStd_SequenceOfReal &
-	:param n:
-	:type n: TCollection_SeqNodePtr &
-	:param p:
-	:type p: TCollection_SeqNodePtr &
-	:rtype: None
-") BRepOffsetAPI_SequenceNodeOfSequenceOfSequenceOfReal;
-		 BRepOffsetAPI_SequenceNodeOfSequenceOfSequenceOfReal (const TColStd_SequenceOfReal & I,const TCollection_SeqNodePtr & n,const TCollection_SeqNodePtr & p);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:rtype: TColStd_SequenceOfReal
-") Value;
-		TColStd_SequenceOfReal & Value ();
-};
-
-
-%extend BRepOffsetAPI_SequenceNodeOfSequenceOfSequenceOfReal {
-	%pythoncode {
-		def GetHandle(self):
-		    try:
-		        return self.thisHandle
-		    except:
-		        self.thisHandle = Handle_BRepOffsetAPI_SequenceNodeOfSequenceOfSequenceOfReal(self)
-		        self.thisown = False
-		        return self.thisHandle
-	}
-};
-
-%pythonappend Handle_BRepOffsetAPI_SequenceNodeOfSequenceOfSequenceOfReal::Handle_BRepOffsetAPI_SequenceNodeOfSequenceOfSequenceOfReal %{
-    # register the handle in the base object
-    if len(args) > 0:
-        register_handle(self, args[0])
-%}
-
-%nodefaultctor Handle_BRepOffsetAPI_SequenceNodeOfSequenceOfSequenceOfReal;
-class Handle_BRepOffsetAPI_SequenceNodeOfSequenceOfSequenceOfReal : public Handle_TCollection_SeqNode {
-
-    public:
-        // constructors
-        Handle_BRepOffsetAPI_SequenceNodeOfSequenceOfSequenceOfReal();
-        Handle_BRepOffsetAPI_SequenceNodeOfSequenceOfSequenceOfReal(const Handle_BRepOffsetAPI_SequenceNodeOfSequenceOfSequenceOfReal &aHandle);
-        Handle_BRepOffsetAPI_SequenceNodeOfSequenceOfSequenceOfReal(const BRepOffsetAPI_SequenceNodeOfSequenceOfSequenceOfReal *anItem);
-        void Nullify();
-        Standard_Boolean IsNull() const;
-        static const Handle_BRepOffsetAPI_SequenceNodeOfSequenceOfSequenceOfReal DownCast(const Handle_Standard_Transient &AnObject);
-
-};
-%extend Handle_BRepOffsetAPI_SequenceNodeOfSequenceOfSequenceOfReal {
-    BRepOffsetAPI_SequenceNodeOfSequenceOfSequenceOfReal* _get_reference() {
-    return (BRepOffsetAPI_SequenceNodeOfSequenceOfSequenceOfReal*)$self->Access();
-    }
-};
-
-%extend Handle_BRepOffsetAPI_SequenceNodeOfSequenceOfSequenceOfReal {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
-};
-
-%extend BRepOffsetAPI_SequenceNodeOfSequenceOfSequenceOfReal {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor BRepOffsetAPI_SequenceNodeOfSequenceOfSequenceOfShape;
-class BRepOffsetAPI_SequenceNodeOfSequenceOfSequenceOfShape : public TCollection_SeqNode {
-	public:
-		%feature("compactdefaultargs") BRepOffsetAPI_SequenceNodeOfSequenceOfSequenceOfShape;
-		%feature("autodoc", "	:param I:
-	:type I: TopTools_SequenceOfShape &
-	:param n:
-	:type n: TCollection_SeqNodePtr &
-	:param p:
-	:type p: TCollection_SeqNodePtr &
-	:rtype: None
-") BRepOffsetAPI_SequenceNodeOfSequenceOfSequenceOfShape;
-		 BRepOffsetAPI_SequenceNodeOfSequenceOfSequenceOfShape (const TopTools_SequenceOfShape & I,const TCollection_SeqNodePtr & n,const TCollection_SeqNodePtr & p);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:rtype: TopTools_SequenceOfShape
-") Value;
-		TopTools_SequenceOfShape & Value ();
-};
-
-
-%extend BRepOffsetAPI_SequenceNodeOfSequenceOfSequenceOfShape {
-	%pythoncode {
-		def GetHandle(self):
-		    try:
-		        return self.thisHandle
-		    except:
-		        self.thisHandle = Handle_BRepOffsetAPI_SequenceNodeOfSequenceOfSequenceOfShape(self)
-		        self.thisown = False
-		        return self.thisHandle
-	}
-};
-
-%pythonappend Handle_BRepOffsetAPI_SequenceNodeOfSequenceOfSequenceOfShape::Handle_BRepOffsetAPI_SequenceNodeOfSequenceOfSequenceOfShape %{
-    # register the handle in the base object
-    if len(args) > 0:
-        register_handle(self, args[0])
-%}
-
-%nodefaultctor Handle_BRepOffsetAPI_SequenceNodeOfSequenceOfSequenceOfShape;
-class Handle_BRepOffsetAPI_SequenceNodeOfSequenceOfSequenceOfShape : public Handle_TCollection_SeqNode {
-
-    public:
-        // constructors
-        Handle_BRepOffsetAPI_SequenceNodeOfSequenceOfSequenceOfShape();
-        Handle_BRepOffsetAPI_SequenceNodeOfSequenceOfSequenceOfShape(const Handle_BRepOffsetAPI_SequenceNodeOfSequenceOfSequenceOfShape &aHandle);
-        Handle_BRepOffsetAPI_SequenceNodeOfSequenceOfSequenceOfShape(const BRepOffsetAPI_SequenceNodeOfSequenceOfSequenceOfShape *anItem);
-        void Nullify();
-        Standard_Boolean IsNull() const;
-        static const Handle_BRepOffsetAPI_SequenceNodeOfSequenceOfSequenceOfShape DownCast(const Handle_Standard_Transient &AnObject);
-
-};
-%extend Handle_BRepOffsetAPI_SequenceNodeOfSequenceOfSequenceOfShape {
-    BRepOffsetAPI_SequenceNodeOfSequenceOfSequenceOfShape* _get_reference() {
-    return (BRepOffsetAPI_SequenceNodeOfSequenceOfSequenceOfShape*)$self->Access();
-    }
-};
-
-%extend Handle_BRepOffsetAPI_SequenceNodeOfSequenceOfSequenceOfShape {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
-};
-
-%extend BRepOffsetAPI_SequenceNodeOfSequenceOfSequenceOfShape {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor BRepOffsetAPI_SequenceOfSequenceOfReal;
-class BRepOffsetAPI_SequenceOfSequenceOfReal : public TCollection_BaseSequence {
-	public:
-		%feature("compactdefaultargs") BRepOffsetAPI_SequenceOfSequenceOfReal;
-		%feature("autodoc", "	:rtype: None
-") BRepOffsetAPI_SequenceOfSequenceOfReal;
-		 BRepOffsetAPI_SequenceOfSequenceOfReal ();
-		%feature("compactdefaultargs") BRepOffsetAPI_SequenceOfSequenceOfReal;
-		%feature("autodoc", "	:param Other:
-	:type Other: BRepOffsetAPI_SequenceOfSequenceOfReal &
-	:rtype: None
-") BRepOffsetAPI_SequenceOfSequenceOfReal;
-		 BRepOffsetAPI_SequenceOfSequenceOfReal (const BRepOffsetAPI_SequenceOfSequenceOfReal & Other);
-		%feature("compactdefaultargs") Clear;
-		%feature("autodoc", "	:rtype: None
-") Clear;
-		void Clear ();
-		%feature("compactdefaultargs") Assign;
-		%feature("autodoc", "	:param Other:
-	:type Other: BRepOffsetAPI_SequenceOfSequenceOfReal &
-	:rtype: BRepOffsetAPI_SequenceOfSequenceOfReal
-") Assign;
-		const BRepOffsetAPI_SequenceOfSequenceOfReal & Assign (const BRepOffsetAPI_SequenceOfSequenceOfReal & Other);
-		%feature("compactdefaultargs") operator =;
-		%feature("autodoc", "	:param Other:
-	:type Other: BRepOffsetAPI_SequenceOfSequenceOfReal &
-	:rtype: BRepOffsetAPI_SequenceOfSequenceOfReal
-") operator =;
-		const BRepOffsetAPI_SequenceOfSequenceOfReal & operator = (const BRepOffsetAPI_SequenceOfSequenceOfReal & Other);
-		%feature("compactdefaultargs") Append;
-		%feature("autodoc", "	:param T:
-	:type T: TColStd_SequenceOfReal &
-	:rtype: None
-") Append;
-		void Append (const TColStd_SequenceOfReal & T);
-		%feature("compactdefaultargs") Append;
-		%feature("autodoc", "	:param S:
-	:type S: BRepOffsetAPI_SequenceOfSequenceOfReal &
-	:rtype: None
-") Append;
-		void Append (BRepOffsetAPI_SequenceOfSequenceOfReal & S);
-		%feature("compactdefaultargs") Prepend;
-		%feature("autodoc", "	:param T:
-	:type T: TColStd_SequenceOfReal &
-	:rtype: None
-") Prepend;
-		void Prepend (const TColStd_SequenceOfReal & T);
-		%feature("compactdefaultargs") Prepend;
-		%feature("autodoc", "	:param S:
-	:type S: BRepOffsetAPI_SequenceOfSequenceOfReal &
-	:rtype: None
-") Prepend;
-		void Prepend (BRepOffsetAPI_SequenceOfSequenceOfReal & S);
-		%feature("compactdefaultargs") InsertBefore;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param T:
-	:type T: TColStd_SequenceOfReal &
-	:rtype: None
-") InsertBefore;
-		void InsertBefore (const Standard_Integer Index,const TColStd_SequenceOfReal & T);
-		%feature("compactdefaultargs") InsertBefore;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param S:
-	:type S: BRepOffsetAPI_SequenceOfSequenceOfReal &
-	:rtype: None
-") InsertBefore;
-		void InsertBefore (const Standard_Integer Index,BRepOffsetAPI_SequenceOfSequenceOfReal & S);
-		%feature("compactdefaultargs") InsertAfter;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param T:
-	:type T: TColStd_SequenceOfReal &
-	:rtype: None
-") InsertAfter;
-		void InsertAfter (const Standard_Integer Index,const TColStd_SequenceOfReal & T);
-		%feature("compactdefaultargs") InsertAfter;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param S:
-	:type S: BRepOffsetAPI_SequenceOfSequenceOfReal &
-	:rtype: None
-") InsertAfter;
-		void InsertAfter (const Standard_Integer Index,BRepOffsetAPI_SequenceOfSequenceOfReal & S);
-		%feature("compactdefaultargs") First;
-		%feature("autodoc", "	:rtype: TColStd_SequenceOfReal
-") First;
-		const TColStd_SequenceOfReal & First ();
-		%feature("compactdefaultargs") Last;
-		%feature("autodoc", "	:rtype: TColStd_SequenceOfReal
-") Last;
-		const TColStd_SequenceOfReal & Last ();
-		%feature("compactdefaultargs") Split;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param Sub:
-	:type Sub: BRepOffsetAPI_SequenceOfSequenceOfReal &
-	:rtype: None
-") Split;
-		void Split (const Standard_Integer Index,BRepOffsetAPI_SequenceOfSequenceOfReal & Sub);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: TColStd_SequenceOfReal
-") Value;
-		const TColStd_SequenceOfReal & Value (const Standard_Integer Index);
-		%feature("compactdefaultargs") SetValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param I:
-	:type I: TColStd_SequenceOfReal &
-	:rtype: None
-") SetValue;
-		void SetValue (const Standard_Integer Index,const TColStd_SequenceOfReal & I);
-		%feature("compactdefaultargs") ChangeValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: TColStd_SequenceOfReal
-") ChangeValue;
-		TColStd_SequenceOfReal & ChangeValue (const Standard_Integer Index);
-		%feature("compactdefaultargs") Remove;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: None
-") Remove;
-		void Remove (const Standard_Integer Index);
-		%feature("compactdefaultargs") Remove;
-		%feature("autodoc", "	:param FromIndex:
-	:type FromIndex: int
-	:param ToIndex:
-	:type ToIndex: int
-	:rtype: None
-") Remove;
-		void Remove (const Standard_Integer FromIndex,const Standard_Integer ToIndex);
-};
-
-
-%extend BRepOffsetAPI_SequenceOfSequenceOfReal {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor BRepOffsetAPI_SequenceOfSequenceOfShape;
-class BRepOffsetAPI_SequenceOfSequenceOfShape : public TCollection_BaseSequence {
-	public:
-		%feature("compactdefaultargs") BRepOffsetAPI_SequenceOfSequenceOfShape;
-		%feature("autodoc", "	:rtype: None
-") BRepOffsetAPI_SequenceOfSequenceOfShape;
-		 BRepOffsetAPI_SequenceOfSequenceOfShape ();
-		%feature("compactdefaultargs") BRepOffsetAPI_SequenceOfSequenceOfShape;
-		%feature("autodoc", "	:param Other:
-	:type Other: BRepOffsetAPI_SequenceOfSequenceOfShape &
-	:rtype: None
-") BRepOffsetAPI_SequenceOfSequenceOfShape;
-		 BRepOffsetAPI_SequenceOfSequenceOfShape (const BRepOffsetAPI_SequenceOfSequenceOfShape & Other);
-		%feature("compactdefaultargs") Clear;
-		%feature("autodoc", "	:rtype: None
-") Clear;
-		void Clear ();
-		%feature("compactdefaultargs") Assign;
-		%feature("autodoc", "	:param Other:
-	:type Other: BRepOffsetAPI_SequenceOfSequenceOfShape &
-	:rtype: BRepOffsetAPI_SequenceOfSequenceOfShape
-") Assign;
-		const BRepOffsetAPI_SequenceOfSequenceOfShape & Assign (const BRepOffsetAPI_SequenceOfSequenceOfShape & Other);
-		%feature("compactdefaultargs") operator =;
-		%feature("autodoc", "	:param Other:
-	:type Other: BRepOffsetAPI_SequenceOfSequenceOfShape &
-	:rtype: BRepOffsetAPI_SequenceOfSequenceOfShape
-") operator =;
-		const BRepOffsetAPI_SequenceOfSequenceOfShape & operator = (const BRepOffsetAPI_SequenceOfSequenceOfShape & Other);
-		%feature("compactdefaultargs") Append;
-		%feature("autodoc", "	:param T:
-	:type T: TopTools_SequenceOfShape &
-	:rtype: None
-") Append;
-		void Append (const TopTools_SequenceOfShape & T);
-		%feature("compactdefaultargs") Append;
-		%feature("autodoc", "	:param S:
-	:type S: BRepOffsetAPI_SequenceOfSequenceOfShape &
-	:rtype: None
-") Append;
-		void Append (BRepOffsetAPI_SequenceOfSequenceOfShape & S);
-		%feature("compactdefaultargs") Prepend;
-		%feature("autodoc", "	:param T:
-	:type T: TopTools_SequenceOfShape &
-	:rtype: None
-") Prepend;
-		void Prepend (const TopTools_SequenceOfShape & T);
-		%feature("compactdefaultargs") Prepend;
-		%feature("autodoc", "	:param S:
-	:type S: BRepOffsetAPI_SequenceOfSequenceOfShape &
-	:rtype: None
-") Prepend;
-		void Prepend (BRepOffsetAPI_SequenceOfSequenceOfShape & S);
-		%feature("compactdefaultargs") InsertBefore;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param T:
-	:type T: TopTools_SequenceOfShape &
-	:rtype: None
-") InsertBefore;
-		void InsertBefore (const Standard_Integer Index,const TopTools_SequenceOfShape & T);
-		%feature("compactdefaultargs") InsertBefore;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param S:
-	:type S: BRepOffsetAPI_SequenceOfSequenceOfShape &
-	:rtype: None
-") InsertBefore;
-		void InsertBefore (const Standard_Integer Index,BRepOffsetAPI_SequenceOfSequenceOfShape & S);
-		%feature("compactdefaultargs") InsertAfter;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param T:
-	:type T: TopTools_SequenceOfShape &
-	:rtype: None
-") InsertAfter;
-		void InsertAfter (const Standard_Integer Index,const TopTools_SequenceOfShape & T);
-		%feature("compactdefaultargs") InsertAfter;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param S:
-	:type S: BRepOffsetAPI_SequenceOfSequenceOfShape &
-	:rtype: None
-") InsertAfter;
-		void InsertAfter (const Standard_Integer Index,BRepOffsetAPI_SequenceOfSequenceOfShape & S);
-		%feature("compactdefaultargs") First;
-		%feature("autodoc", "	:rtype: TopTools_SequenceOfShape
-") First;
-		const TopTools_SequenceOfShape & First ();
-		%feature("compactdefaultargs") Last;
-		%feature("autodoc", "	:rtype: TopTools_SequenceOfShape
-") Last;
-		const TopTools_SequenceOfShape & Last ();
-		%feature("compactdefaultargs") Split;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param Sub:
-	:type Sub: BRepOffsetAPI_SequenceOfSequenceOfShape &
-	:rtype: None
-") Split;
-		void Split (const Standard_Integer Index,BRepOffsetAPI_SequenceOfSequenceOfShape & Sub);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: TopTools_SequenceOfShape
-") Value;
-		const TopTools_SequenceOfShape & Value (const Standard_Integer Index);
-		%feature("compactdefaultargs") SetValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param I:
-	:type I: TopTools_SequenceOfShape &
-	:rtype: None
-") SetValue;
-		void SetValue (const Standard_Integer Index,const TopTools_SequenceOfShape & I);
-		%feature("compactdefaultargs") ChangeValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: TopTools_SequenceOfShape
-") ChangeValue;
-		TopTools_SequenceOfShape & ChangeValue (const Standard_Integer Index);
-		%feature("compactdefaultargs") Remove;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: None
-") Remove;
-		void Remove (const Standard_Integer Index);
-		%feature("compactdefaultargs") Remove;
-		%feature("autodoc", "	:param FromIndex:
-	:type FromIndex: int
-	:param ToIndex:
-	:type ToIndex: int
-	:rtype: None
-") Remove;
-		void Remove (const Standard_Integer FromIndex,const Standard_Integer ToIndex);
-};
-
-
-%extend BRepOffsetAPI_SequenceOfSequenceOfShape {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
 %nodefaultctor BRepOffsetAPI_ThruSections;
 class BRepOffsetAPI_ThruSections : public BRepBuilderAPI_MakeShape {
 	public:
 		%feature("compactdefaultargs") BRepOffsetAPI_ThruSections;
-		%feature("autodoc", "	* Initializes an algorithm for building a shell or a solid passing through a set of sections, where: - isSolid is set to true if the construction algorithm is required to build a solid or to false if it is required to build a shell (the default value), - ruled is set to true if the faces generated between the edges of two consecutive wires are ruled surfaces or to false (the default value) if they are smoothed out by approximation, - pres3d defines the precision criterion used by the approximation algorithm; the default value is 1.0e-6. Use AddWire and AddVertex to define the successive sections of the shell or solid to be built.
+		%feature("autodoc", "	* Initializes an algorithm for building a shell or a solid passing through a set of sections, where: - isSolid is set to true if the construction algorithm is required to build a solid or to false if it is required to build a shell --the default value--, - ruled is set to true if the faces generated between the edges of two consecutive wires are ruled surfaces or to false --the default value-- if they are smoothed out by approximation, - pres3d defines the precision criterion used by the approximation algorithm; the default value is 1.0e-6. Use AddWire and AddVertex to define the successive sections of the shell or solid to be built.
 
 	:param isSolid: default value is Standard_False
 	:type isSolid: bool
@@ -1740,7 +1368,7 @@ class BRepOffsetAPI_ThruSections : public BRepBuilderAPI_MakeShape {
 ") BRepOffsetAPI_ThruSections;
 		 BRepOffsetAPI_ThruSections (const Standard_Boolean isSolid = Standard_False,const Standard_Boolean ruled = Standard_False,const Standard_Real pres3d = 1.0e-06);
 		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	* Initializes this algorithm for building a shell or a solid passing through a set of sections, where: - isSolid is set to true if this construction algorithm is required to build a solid or to false if it is required to build a shell. false is the default value; - ruled is set to true if the faces generated between the edges of two consecutive wires are ruled surfaces or to false (the default value) if they are smoothed out by approximation, - pres3d defines the precision criterion used by the approximation algorithm; the default value is 1.0e-6. Use AddWire and AddVertex to define the successive sections of the shell or solid to be built.
+		%feature("autodoc", "	* Initializes this algorithm for building a shell or a solid passing through a set of sections, where: - isSolid is set to true if this construction algorithm is required to build a solid or to false if it is required to build a shell. false is the default value; - ruled is set to true if the faces generated between the edges of two consecutive wires are ruled surfaces or to false --the default value-- if they are smoothed out by approximation, - pres3d defines the precision criterion used by the approximation algorithm; the default value is 1.0e-6. Use AddWire and AddVertex to define the successive sections of the shell or solid to be built.
 
 	:param isSolid: default value is Standard_False
 	:type isSolid: bool
@@ -1760,7 +1388,7 @@ class BRepOffsetAPI_ThruSections : public BRepBuilderAPI_MakeShape {
 ") AddWire;
 		void AddWire (const TopoDS_Wire & wire);
 		%feature("compactdefaultargs") AddVertex;
-		%feature("autodoc", "	* Adds the vertex Vertex (punctual section) to the set of sections through which the shell or solid is built. A vertex may be added to the set of sections only as first or last section. At least one wire must be added to the set of sections by the method AddWire. Use the Build function to construct the shape.
+		%feature("autodoc", "	* Adds the vertex Vertex --punctual section-- to the set of sections through which the shell or solid is built. A vertex may be added to the set of sections only as first or last section. At least one wire must be added to the set of sections by the method AddWire. Use the Build function to construct the shape.
 
 	:param aVertex:
 	:type aVertex: TopoDS_Vertex &
@@ -1879,6 +1507,14 @@ class BRepOffsetAPI_ThruSections : public BRepBuilderAPI_MakeShape {
 	:rtype: TopoDS_Shape
 ") GeneratedFace;
 		TopoDS_Shape GeneratedFace (const TopoDS_Shape & Edge);
+		%feature("compactdefaultargs") Generated;
+		%feature("autodoc", "	* Returns a list of new shapes generated from the shape S by the shell-generating algorithm. This function is redefined from BRepBuilderAPI_MakeShape::Generated. S can be an edge or a vertex of a given Profile --see methods AddWire and AddVertex--.
+
+	:param S:
+	:type S: TopoDS_Shape &
+	:rtype: TopTools_ListOfShape
+") Generated;
+		virtual const TopTools_ListOfShape & Generated (const TopoDS_Shape & S);
 };
 
 
@@ -1891,11 +1527,13 @@ class BRepOffsetAPI_ThruSections : public BRepBuilderAPI_MakeShape {
 class BRepOffsetAPI_MakeThickSolid : public BRepOffsetAPI_MakeOffsetShape {
 	public:
 		%feature("compactdefaultargs") BRepOffsetAPI_MakeThickSolid;
-		%feature("autodoc", "	:rtype: None
+		%feature("autodoc", "	* Constructor does nothing.
+
+	:rtype: None
 ") BRepOffsetAPI_MakeThickSolid;
 		 BRepOffsetAPI_MakeThickSolid ();
 		%feature("compactdefaultargs") BRepOffsetAPI_MakeThickSolid;
-		%feature("autodoc", "	* Constructs a hollowed solid from the solid S by removing the set of faces ClosingFaces from S, where: Offset defines the thickness of the walls. Its sign indicates which side of the surface of the solid the hollowed shape is built on; - Tol defines the tolerance criterion for coincidence in generated shapes; - Mode defines the construction type of parallels applied to free edges of shape S. Currently, only one construction type is implemented, namely the one where the free edges do not generate parallels; this corresponds to the default value BRepOffset_Skin; Intersection specifies how the algorithm must work in order to limit the parallels to two adjacent shapes: - if Intersection is false (default value), the intersection is calculated with the parallels to the two adjacent shapes, - if Intersection is true, the intersection is calculated by taking account of all parallels generated; this computation method is more general as it avoids self-intersections generated in the offset shape from features of small dimensions on shape S, however this method has not been completely implemented and therefore is not recommended for use; - SelfInter tells the algorithm whether a computation to eliminate self-intersections needs to be applied to the resulting shape. However, as this functionality is not yet implemented, you should use the default value (false); - Join defines how to fill the holes that may appear between parallels to the two adjacent faces. It may take values GeomAbs_Arc or GeomAbs_Intersection: - if Join is equal to GeomAbs_Arc, then pipes are generated between two free edges of two adjacent parallels, and spheres are generated on 'images' of vertices; it is the default value, - if Join is equal to GeomAbs_Intersection, then the parallels to the two adjacent faces are enlarged and intersected, so that there are no free edges on parallels to faces. Warnings Since the algorithm of MakeThickSolid is based on MakeOffsetShape algorithm, the warnings are the same as for MakeOffsetShape.
+		%feature("autodoc", "	* Deprecated constructor. Please avoid usage of this constructor.
 
 	:param S:
 	:type S: TopoDS_Shape &
@@ -1913,13 +1551,47 @@ class BRepOffsetAPI_MakeThickSolid : public BRepOffsetAPI_MakeOffsetShape {
 	:type SelfInter: bool
 	:param Join: default value is GeomAbs_Arc
 	:type Join: GeomAbs_JoinType
+	:param RemoveIntEdges: default value is Standard_False
+	:type RemoveIntEdges: bool
 	:rtype: None
 ") BRepOffsetAPI_MakeThickSolid;
-		 BRepOffsetAPI_MakeThickSolid (const TopoDS_Shape & S,const TopTools_ListOfShape & ClosingFaces,const Standard_Real Offset,const Standard_Real Tol,const BRepOffset_Mode Mode = BRepOffset_Skin,const Standard_Boolean Intersection = Standard_False,const Standard_Boolean SelfInter = Standard_False,const GeomAbs_JoinType Join = GeomAbs_Arc);
-		%feature("compactdefaultargs") Build;
-		%feature("autodoc", "	* Builds the resulting shape (redefined from MakeOffsetShape).
+		 BRepOffsetAPI_MakeThickSolid (const TopoDS_Shape & S,const TopTools_ListOfShape & ClosingFaces,const Standard_Real Offset,const Standard_Real Tol,const BRepOffset_Mode Mode = BRepOffset_Skin,const Standard_Boolean Intersection = Standard_False,const Standard_Boolean SelfInter = Standard_False,const GeomAbs_JoinType Join = GeomAbs_Arc,const Standard_Boolean RemoveIntEdges = Standard_False);
+		%feature("compactdefaultargs") MakeThickSolidBySimple;
+		%feature("autodoc", "	* Constructs solid using simple algorithm. According to its nature it is not possible to set list of the closing faces. This algorithm does not support faces removing. It is caused by fact that intersections are not computed during offset creation. Non-closed shell or face is expected as input.
 
-	:rtype: void
+	:param theS:
+	:type theS: TopoDS_Shape &
+	:param theOffsetValue:
+	:type theOffsetValue: float
+	:rtype: None
+") MakeThickSolidBySimple;
+		void MakeThickSolidBySimple (const TopoDS_Shape & theS,const Standard_Real theOffsetValue);
+		%feature("compactdefaultargs") MakeThickSolidByJoin;
+		%feature("autodoc", "	* Constructs a hollowed solid from the solid S by removing the set of faces ClosingFaces from S, where: Offset defines the thickness of the walls. Its sign indicates which side of the surface of the solid the hollowed shape is built on; - Tol defines the tolerance criterion for coincidence in generated shapes; - Mode defines the construction type of parallels applied to free edges of shape S. Currently, only one construction type is implemented, namely the one where the free edges do not generate parallels; this corresponds to the default value BRepOffset_Skin; Intersection specifies how the algorithm must work in order to limit the parallels to two adjacent shapes: - if Intersection is false --default value--, the intersection is calculated with the parallels to the two adjacent shapes, - if Intersection is true, the intersection is calculated by taking account of all parallels generated; this computation method is more general as it avoids self-intersections generated in the offset shape from features of small dimensions on shape S, however this method has not been completely implemented and therefore is not recommended for use; - SelfInter tells the algorithm whether a computation to eliminate self-intersections needs to be applied to the resulting shape. However, as this functionality is not yet implemented, you should use the default value --false--; - Join defines how to fill the holes that may appear between parallels to the two adjacent faces. It may take values GeomAbs_Arc or GeomAbs_Intersection: - if Join is equal to GeomAbs_Arc, then pipes are generated between two free edges of two adjacent parallels, and spheres are generated on 'images' of vertices; it is the default value, - if Join is equal to GeomAbs_Intersection, then the parallels to the two adjacent faces are enlarged and intersected, so that there are no free edges on parallels to faces. RemoveIntEdges flag defines whether to remove the INTERNAL edges from the result or not. Warnings Since the algorithm of MakeThickSolid is based on MakeOffsetShape algorithm, the warnings are the same as for MakeOffsetShape.
+
+	:param S:
+	:type S: TopoDS_Shape &
+	:param ClosingFaces:
+	:type ClosingFaces: TopTools_ListOfShape &
+	:param Offset:
+	:type Offset: float
+	:param Tol:
+	:type Tol: float
+	:param Mode: default value is BRepOffset_Skin
+	:type Mode: BRepOffset_Mode
+	:param Intersection: default value is Standard_False
+	:type Intersection: bool
+	:param SelfInter: default value is Standard_False
+	:type SelfInter: bool
+	:param Join: default value is GeomAbs_Arc
+	:type Join: GeomAbs_JoinType
+	:param RemoveIntEdges: default value is Standard_False
+	:type RemoveIntEdges: bool
+	:rtype: None
+") MakeThickSolidByJoin;
+		void MakeThickSolidByJoin (const TopoDS_Shape & S,const TopTools_ListOfShape & ClosingFaces,const Standard_Real Offset,const Standard_Real Tol,const BRepOffset_Mode Mode = BRepOffset_Skin,const Standard_Boolean Intersection = Standard_False,const Standard_Boolean SelfInter = Standard_False,const GeomAbs_JoinType Join = GeomAbs_Arc,const Standard_Boolean RemoveIntEdges = Standard_False);
+		%feature("compactdefaultargs") Build;
+		%feature("autodoc", "	:rtype: void
 ") Build;
 		virtual void Build ();
 		%feature("compactdefaultargs") Modified;

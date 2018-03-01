@@ -1,5 +1,5 @@
 /*
-Copyright 2008-2017 Thomas Paviot (tpaviot@gmail.com)
+Copyright 2008-2018 Thomas Paviot (tpaviot@gmail.com)
 
 
 This file is part of pythonOCC.
@@ -55,6 +55,12 @@ def register_handle(handle, base_object):
 
 /* typedefs */
 /* end typedefs declaration */
+
+/* templates */
+%template(Units_TksSequence) NCollection_Sequence <Handle_Units_Token>;
+%template(Units_QtsSequence) NCollection_Sequence <Handle_Units_Quantity>;
+%template(Units_UtsSequence) NCollection_Sequence <Handle_Units_Unit>;
+/* end templates declaration */
 
 /* public enums */
 /* end public enums declaration */
@@ -318,7 +324,7 @@ class Units_Explorer {
 	}
 };
 %nodefaultctor Units_Lexicon;
-class Units_Lexicon : public MMgt_TShared {
+class Units_Lexicon : public Standard_Transient {
 	public:
 		%feature("compactdefaultargs") Units_Lexicon;
 		%feature("autodoc", "	* Creates an empty instance of Lexicon.
@@ -329,29 +335,15 @@ class Units_Lexicon : public MMgt_TShared {
 		%feature("compactdefaultargs") Creates;
 		%feature("autodoc", "	* Reads the file <afilename> to create a sequence of tokens stored in <thesequenceoftokens>.
 
-	:param afilename:
-	:type afilename: char *
 	:rtype: None
 ") Creates;
-		void Creates (const char * afilename);
+		void Creates ();
 		%feature("compactdefaultargs") Sequence;
 		%feature("autodoc", "	* Returns the first item of the sequence of tokens.
 
 	:rtype: Handle_Units_TokensSequence
 ") Sequence;
 		Handle_Units_TokensSequence Sequence ();
-		%feature("compactdefaultargs") FileName;
-		%feature("autodoc", "	* Returns in a AsciiString from TCollection the name of the file.
-
-	:rtype: TCollection_AsciiString
-") FileName;
-		TCollection_AsciiString FileName ();
-		%feature("compactdefaultargs") UpToDate;
-		%feature("autodoc", "	* Returns true if the file has not changed since the creation of the Lexicon object. Returns false otherwise.
-
-	:rtype: bool
-") UpToDate;
-		virtual Standard_Boolean UpToDate ();
 		%feature("compactdefaultargs") AddToken;
 		%feature("autodoc", "	* Adds to the lexicon a new token with <aword>, <amean>, <avalue> as arguments. If there is already a token with the field <theword> equal to <aword>, the existing token is updated.
 
@@ -392,7 +384,7 @@ class Units_Lexicon : public MMgt_TShared {
 %}
 
 %nodefaultctor Handle_Units_Lexicon;
-class Handle_Units_Lexicon : public Handle_MMgt_TShared {
+class Handle_Units_Lexicon : public Handle_Standard_Transient {
 
     public:
         // constructors
@@ -404,19 +396,20 @@ class Handle_Units_Lexicon : public Handle_MMgt_TShared {
         static const Handle_Units_Lexicon DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_Units_Lexicon {
     Units_Lexicon* _get_reference() {
-    return (Units_Lexicon*)$self->Access();
+    return (Units_Lexicon*)$self->get();
     }
 };
 
 %extend Handle_Units_Lexicon {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend Units_Lexicon {
@@ -454,7 +447,7 @@ class Units_Measurement {
 ") Units_Measurement;
 		 Units_Measurement (const Standard_Real avalue,const char * aunit);
 		%feature("compactdefaultargs") Convert;
-		%feature("autodoc", "	* Converts (if possible) the measurement object into another unit. <aunit> must have the same dimensionality as the unit contained in the token <thetoken>.
+		%feature("autodoc", "	* Converts --if possible-- the measurement object into another unit. <aunit> must have the same dimensionality as the unit contained in the token <thetoken>.
 
 	:param aunit:
 	:type aunit: char *
@@ -486,7 +479,7 @@ class Units_Measurement {
 ") Token;
 		Handle_Units_Token Token ();
 		%feature("compactdefaultargs") Add;
-		%feature("autodoc", "	* Returns (if it is possible) a measurement which is the addition of <self> and <ameasurement>. The chosen returned unit is the unit of <self>.
+		%feature("autodoc", "	* Returns --if it is possible-- a measurement which is the addition of <self> and <ameasurement>. The chosen returned unit is the unit of <self>.
 
 	:param ameasurement:
 	:type ameasurement: Units_Measurement &
@@ -500,7 +493,7 @@ class Units_Measurement {
 ") operator +;
 		Units_Measurement operator + (const Units_Measurement & ameasurement);
 		%feature("compactdefaultargs") Subtract;
-		%feature("autodoc", "	* Returns (if it is possible) a measurement which is the subtraction of <self> and <ameasurement>. The chosen returned unit is the unit of <self>.
+		%feature("autodoc", "	* Returns --if it is possible-- a measurement which is the subtraction of <self> and <ameasurement>. The chosen returned unit is the unit of <self>.
 
 	:param ameasurement:
 	:type ameasurement: Units_Measurement &
@@ -595,338 +588,6 @@ class Units_Measurement {
 	__repr__ = _dumps_object
 	}
 };
-%nodefaultctor Units_QtsSequence;
-class Units_QtsSequence : public TCollection_BaseSequence {
-	public:
-		%feature("compactdefaultargs") Units_QtsSequence;
-		%feature("autodoc", "	:rtype: None
-") Units_QtsSequence;
-		 Units_QtsSequence ();
-		%feature("compactdefaultargs") Units_QtsSequence;
-		%feature("autodoc", "	:param Other:
-	:type Other: Units_QtsSequence &
-	:rtype: None
-") Units_QtsSequence;
-		 Units_QtsSequence (const Units_QtsSequence & Other);
-		%feature("compactdefaultargs") Clear;
-		%feature("autodoc", "	:rtype: None
-") Clear;
-		void Clear ();
-		%feature("compactdefaultargs") Assign;
-		%feature("autodoc", "	:param Other:
-	:type Other: Units_QtsSequence &
-	:rtype: Units_QtsSequence
-") Assign;
-		const Units_QtsSequence & Assign (const Units_QtsSequence & Other);
-		%feature("compactdefaultargs") operator =;
-		%feature("autodoc", "	:param Other:
-	:type Other: Units_QtsSequence &
-	:rtype: Units_QtsSequence
-") operator =;
-		const Units_QtsSequence & operator = (const Units_QtsSequence & Other);
-		%feature("compactdefaultargs") Append;
-		%feature("autodoc", "	:param T:
-	:type T: Handle_Units_Quantity &
-	:rtype: None
-") Append;
-		void Append (const Handle_Units_Quantity & T);
-		%feature("compactdefaultargs") Append;
-		%feature("autodoc", "	:param S:
-	:type S: Units_QtsSequence &
-	:rtype: None
-") Append;
-		void Append (Units_QtsSequence & S);
-		%feature("compactdefaultargs") Prepend;
-		%feature("autodoc", "	:param T:
-	:type T: Handle_Units_Quantity &
-	:rtype: None
-") Prepend;
-		void Prepend (const Handle_Units_Quantity & T);
-		%feature("compactdefaultargs") Prepend;
-		%feature("autodoc", "	:param S:
-	:type S: Units_QtsSequence &
-	:rtype: None
-") Prepend;
-		void Prepend (Units_QtsSequence & S);
-		%feature("compactdefaultargs") InsertBefore;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param T:
-	:type T: Handle_Units_Quantity &
-	:rtype: None
-") InsertBefore;
-		void InsertBefore (const Standard_Integer Index,const Handle_Units_Quantity & T);
-		%feature("compactdefaultargs") InsertBefore;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param S:
-	:type S: Units_QtsSequence &
-	:rtype: None
-") InsertBefore;
-		void InsertBefore (const Standard_Integer Index,Units_QtsSequence & S);
-		%feature("compactdefaultargs") InsertAfter;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param T:
-	:type T: Handle_Units_Quantity &
-	:rtype: None
-") InsertAfter;
-		void InsertAfter (const Standard_Integer Index,const Handle_Units_Quantity & T);
-		%feature("compactdefaultargs") InsertAfter;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param S:
-	:type S: Units_QtsSequence &
-	:rtype: None
-") InsertAfter;
-		void InsertAfter (const Standard_Integer Index,Units_QtsSequence & S);
-		%feature("compactdefaultargs") First;
-		%feature("autodoc", "	:rtype: Handle_Units_Quantity
-") First;
-		Handle_Units_Quantity First ();
-		%feature("compactdefaultargs") Last;
-		%feature("autodoc", "	:rtype: Handle_Units_Quantity
-") Last;
-		Handle_Units_Quantity Last ();
-		%feature("compactdefaultargs") Split;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param Sub:
-	:type Sub: Units_QtsSequence &
-	:rtype: None
-") Split;
-		void Split (const Standard_Integer Index,Units_QtsSequence & Sub);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: Handle_Units_Quantity
-") Value;
-		Handle_Units_Quantity Value (const Standard_Integer Index);
-		%feature("compactdefaultargs") SetValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param I:
-	:type I: Handle_Units_Quantity &
-	:rtype: None
-") SetValue;
-		void SetValue (const Standard_Integer Index,const Handle_Units_Quantity & I);
-		%feature("compactdefaultargs") ChangeValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: Handle_Units_Quantity
-") ChangeValue;
-		Handle_Units_Quantity ChangeValue (const Standard_Integer Index);
-		%feature("compactdefaultargs") Remove;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: None
-") Remove;
-		void Remove (const Standard_Integer Index);
-		%feature("compactdefaultargs") Remove;
-		%feature("autodoc", "	:param FromIndex:
-	:type FromIndex: int
-	:param ToIndex:
-	:type ToIndex: int
-	:rtype: None
-") Remove;
-		void Remove (const Standard_Integer FromIndex,const Standard_Integer ToIndex);
-};
-
-
-%extend Units_QtsSequence {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor Units_QuantitiesSequence;
-class Units_QuantitiesSequence : public MMgt_TShared {
-	public:
-		%feature("compactdefaultargs") Units_QuantitiesSequence;
-		%feature("autodoc", "	:rtype: None
-") Units_QuantitiesSequence;
-		 Units_QuantitiesSequence ();
-		%feature("compactdefaultargs") IsEmpty;
-		%feature("autodoc", "	:rtype: bool
-") IsEmpty;
-		Standard_Boolean IsEmpty ();
-		%feature("compactdefaultargs") Length;
-		%feature("autodoc", "	:rtype: int
-") Length;
-		Standard_Integer Length ();
-		%feature("compactdefaultargs") Clear;
-		%feature("autodoc", "	:rtype: None
-") Clear;
-		void Clear ();
-		%feature("compactdefaultargs") Append;
-		%feature("autodoc", "	:param anItem:
-	:type anItem: Handle_Units_Quantity &
-	:rtype: None
-") Append;
-		void Append (const Handle_Units_Quantity & anItem);
-		%feature("compactdefaultargs") Append;
-		%feature("autodoc", "	:param aSequence:
-	:type aSequence: Handle_Units_QuantitiesSequence &
-	:rtype: None
-") Append;
-		void Append (const Handle_Units_QuantitiesSequence & aSequence);
-		%feature("compactdefaultargs") Prepend;
-		%feature("autodoc", "	:param anItem:
-	:type anItem: Handle_Units_Quantity &
-	:rtype: None
-") Prepend;
-		void Prepend (const Handle_Units_Quantity & anItem);
-		%feature("compactdefaultargs") Prepend;
-		%feature("autodoc", "	:param aSequence:
-	:type aSequence: Handle_Units_QuantitiesSequence &
-	:rtype: None
-") Prepend;
-		void Prepend (const Handle_Units_QuantitiesSequence & aSequence);
-		%feature("compactdefaultargs") Reverse;
-		%feature("autodoc", "	:rtype: None
-") Reverse;
-		void Reverse ();
-		%feature("compactdefaultargs") InsertBefore;
-		%feature("autodoc", "	:param anIndex:
-	:type anIndex: int
-	:param anItem:
-	:type anItem: Handle_Units_Quantity &
-	:rtype: None
-") InsertBefore;
-		void InsertBefore (const Standard_Integer anIndex,const Handle_Units_Quantity & anItem);
-		%feature("compactdefaultargs") InsertBefore;
-		%feature("autodoc", "	:param anIndex:
-	:type anIndex: int
-	:param aSequence:
-	:type aSequence: Handle_Units_QuantitiesSequence &
-	:rtype: None
-") InsertBefore;
-		void InsertBefore (const Standard_Integer anIndex,const Handle_Units_QuantitiesSequence & aSequence);
-		%feature("compactdefaultargs") InsertAfter;
-		%feature("autodoc", "	:param anIndex:
-	:type anIndex: int
-	:param anItem:
-	:type anItem: Handle_Units_Quantity &
-	:rtype: None
-") InsertAfter;
-		void InsertAfter (const Standard_Integer anIndex,const Handle_Units_Quantity & anItem);
-		%feature("compactdefaultargs") InsertAfter;
-		%feature("autodoc", "	:param anIndex:
-	:type anIndex: int
-	:param aSequence:
-	:type aSequence: Handle_Units_QuantitiesSequence &
-	:rtype: None
-") InsertAfter;
-		void InsertAfter (const Standard_Integer anIndex,const Handle_Units_QuantitiesSequence & aSequence);
-		%feature("compactdefaultargs") Exchange;
-		%feature("autodoc", "	:param anIndex:
-	:type anIndex: int
-	:param anOtherIndex:
-	:type anOtherIndex: int
-	:rtype: None
-") Exchange;
-		void Exchange (const Standard_Integer anIndex,const Standard_Integer anOtherIndex);
-		%feature("compactdefaultargs") Split;
-		%feature("autodoc", "	:param anIndex:
-	:type anIndex: int
-	:rtype: Handle_Units_QuantitiesSequence
-") Split;
-		Handle_Units_QuantitiesSequence Split (const Standard_Integer anIndex);
-		%feature("compactdefaultargs") SetValue;
-		%feature("autodoc", "	:param anIndex:
-	:type anIndex: int
-	:param anItem:
-	:type anItem: Handle_Units_Quantity &
-	:rtype: None
-") SetValue;
-		void SetValue (const Standard_Integer anIndex,const Handle_Units_Quantity & anItem);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:param anIndex:
-	:type anIndex: int
-	:rtype: Handle_Units_Quantity
-") Value;
-		Handle_Units_Quantity Value (const Standard_Integer anIndex);
-		%feature("compactdefaultargs") ChangeValue;
-		%feature("autodoc", "	:param anIndex:
-	:type anIndex: int
-	:rtype: Handle_Units_Quantity
-") ChangeValue;
-		Handle_Units_Quantity ChangeValue (const Standard_Integer anIndex);
-		%feature("compactdefaultargs") Remove;
-		%feature("autodoc", "	:param anIndex:
-	:type anIndex: int
-	:rtype: None
-") Remove;
-		void Remove (const Standard_Integer anIndex);
-		%feature("compactdefaultargs") Remove;
-		%feature("autodoc", "	:param fromIndex:
-	:type fromIndex: int
-	:param toIndex:
-	:type toIndex: int
-	:rtype: None
-") Remove;
-		void Remove (const Standard_Integer fromIndex,const Standard_Integer toIndex);
-		%feature("compactdefaultargs") Sequence;
-		%feature("autodoc", "	:rtype: Units_QtsSequence
-") Sequence;
-		const Units_QtsSequence & Sequence ();
-		%feature("compactdefaultargs") ChangeSequence;
-		%feature("autodoc", "	:rtype: Units_QtsSequence
-") ChangeSequence;
-		Units_QtsSequence & ChangeSequence ();
-};
-
-
-%extend Units_QuantitiesSequence {
-	%pythoncode {
-		def GetHandle(self):
-		    try:
-		        return self.thisHandle
-		    except:
-		        self.thisHandle = Handle_Units_QuantitiesSequence(self)
-		        self.thisown = False
-		        return self.thisHandle
-	}
-};
-
-%pythonappend Handle_Units_QuantitiesSequence::Handle_Units_QuantitiesSequence %{
-    # register the handle in the base object
-    if len(args) > 0:
-        register_handle(self, args[0])
-%}
-
-%nodefaultctor Handle_Units_QuantitiesSequence;
-class Handle_Units_QuantitiesSequence : public Handle_MMgt_TShared {
-
-    public:
-        // constructors
-        Handle_Units_QuantitiesSequence();
-        Handle_Units_QuantitiesSequence(const Handle_Units_QuantitiesSequence &aHandle);
-        Handle_Units_QuantitiesSequence(const Units_QuantitiesSequence *anItem);
-        void Nullify();
-        Standard_Boolean IsNull() const;
-        static const Handle_Units_QuantitiesSequence DownCast(const Handle_Standard_Transient &AnObject);
-
-};
-%extend Handle_Units_QuantitiesSequence {
-    Units_QuantitiesSequence* _get_reference() {
-    return (Units_QuantitiesSequence*)$self->Access();
-    }
-};
-
-%extend Handle_Units_QuantitiesSequence {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
-};
-
-%extend Units_QuantitiesSequence {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
 %nodefaultctor Units_Sentence;
 class Units_Sentence {
 	public:
@@ -967,7 +628,7 @@ class Units_Sentence {
 ") Evaluate;
 		Handle_Units_Token Evaluate ();
 		%feature("compactdefaultargs") IsDone;
-		%feature("autodoc", "	* Return True if number of created tokens > 0 (i.e creation of sentence is succesfull)
+		%feature("autodoc", "	* Return True if number of created tokens > 0 --i.e creation of sentence is succesfull--
 
 	:rtype: bool
 ") IsDone;
@@ -986,364 +647,8 @@ class Units_Sentence {
 	__repr__ = _dumps_object
 	}
 };
-%nodefaultctor Units_SequenceNodeOfQtsSequence;
-class Units_SequenceNodeOfQtsSequence : public TCollection_SeqNode {
-	public:
-		%feature("compactdefaultargs") Units_SequenceNodeOfQtsSequence;
-		%feature("autodoc", "	:param I:
-	:type I: Handle_Units_Quantity &
-	:param n:
-	:type n: TCollection_SeqNodePtr &
-	:param p:
-	:type p: TCollection_SeqNodePtr &
-	:rtype: None
-") Units_SequenceNodeOfQtsSequence;
-		 Units_SequenceNodeOfQtsSequence (const Handle_Units_Quantity & I,const TCollection_SeqNodePtr & n,const TCollection_SeqNodePtr & p);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:rtype: Handle_Units_Quantity
-") Value;
-		Handle_Units_Quantity Value ();
-};
-
-
-%extend Units_SequenceNodeOfQtsSequence {
-	%pythoncode {
-		def GetHandle(self):
-		    try:
-		        return self.thisHandle
-		    except:
-		        self.thisHandle = Handle_Units_SequenceNodeOfQtsSequence(self)
-		        self.thisown = False
-		        return self.thisHandle
-	}
-};
-
-%pythonappend Handle_Units_SequenceNodeOfQtsSequence::Handle_Units_SequenceNodeOfQtsSequence %{
-    # register the handle in the base object
-    if len(args) > 0:
-        register_handle(self, args[0])
-%}
-
-%nodefaultctor Handle_Units_SequenceNodeOfQtsSequence;
-class Handle_Units_SequenceNodeOfQtsSequence : public Handle_TCollection_SeqNode {
-
-    public:
-        // constructors
-        Handle_Units_SequenceNodeOfQtsSequence();
-        Handle_Units_SequenceNodeOfQtsSequence(const Handle_Units_SequenceNodeOfQtsSequence &aHandle);
-        Handle_Units_SequenceNodeOfQtsSequence(const Units_SequenceNodeOfQtsSequence *anItem);
-        void Nullify();
-        Standard_Boolean IsNull() const;
-        static const Handle_Units_SequenceNodeOfQtsSequence DownCast(const Handle_Standard_Transient &AnObject);
-
-};
-%extend Handle_Units_SequenceNodeOfQtsSequence {
-    Units_SequenceNodeOfQtsSequence* _get_reference() {
-    return (Units_SequenceNodeOfQtsSequence*)$self->Access();
-    }
-};
-
-%extend Handle_Units_SequenceNodeOfQtsSequence {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
-};
-
-%extend Units_SequenceNodeOfQtsSequence {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor Units_SequenceNodeOfTksSequence;
-class Units_SequenceNodeOfTksSequence : public TCollection_SeqNode {
-	public:
-		%feature("compactdefaultargs") Units_SequenceNodeOfTksSequence;
-		%feature("autodoc", "	:param I:
-	:type I: Handle_Units_Token &
-	:param n:
-	:type n: TCollection_SeqNodePtr &
-	:param p:
-	:type p: TCollection_SeqNodePtr &
-	:rtype: None
-") Units_SequenceNodeOfTksSequence;
-		 Units_SequenceNodeOfTksSequence (const Handle_Units_Token & I,const TCollection_SeqNodePtr & n,const TCollection_SeqNodePtr & p);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:rtype: Handle_Units_Token
-") Value;
-		Handle_Units_Token Value ();
-};
-
-
-%extend Units_SequenceNodeOfTksSequence {
-	%pythoncode {
-		def GetHandle(self):
-		    try:
-		        return self.thisHandle
-		    except:
-		        self.thisHandle = Handle_Units_SequenceNodeOfTksSequence(self)
-		        self.thisown = False
-		        return self.thisHandle
-	}
-};
-
-%pythonappend Handle_Units_SequenceNodeOfTksSequence::Handle_Units_SequenceNodeOfTksSequence %{
-    # register the handle in the base object
-    if len(args) > 0:
-        register_handle(self, args[0])
-%}
-
-%nodefaultctor Handle_Units_SequenceNodeOfTksSequence;
-class Handle_Units_SequenceNodeOfTksSequence : public Handle_TCollection_SeqNode {
-
-    public:
-        // constructors
-        Handle_Units_SequenceNodeOfTksSequence();
-        Handle_Units_SequenceNodeOfTksSequence(const Handle_Units_SequenceNodeOfTksSequence &aHandle);
-        Handle_Units_SequenceNodeOfTksSequence(const Units_SequenceNodeOfTksSequence *anItem);
-        void Nullify();
-        Standard_Boolean IsNull() const;
-        static const Handle_Units_SequenceNodeOfTksSequence DownCast(const Handle_Standard_Transient &AnObject);
-
-};
-%extend Handle_Units_SequenceNodeOfTksSequence {
-    Units_SequenceNodeOfTksSequence* _get_reference() {
-    return (Units_SequenceNodeOfTksSequence*)$self->Access();
-    }
-};
-
-%extend Handle_Units_SequenceNodeOfTksSequence {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
-};
-
-%extend Units_SequenceNodeOfTksSequence {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor Units_SequenceNodeOfUtsSequence;
-class Units_SequenceNodeOfUtsSequence : public TCollection_SeqNode {
-	public:
-		%feature("compactdefaultargs") Units_SequenceNodeOfUtsSequence;
-		%feature("autodoc", "	:param I:
-	:type I: Handle_Units_Unit &
-	:param n:
-	:type n: TCollection_SeqNodePtr &
-	:param p:
-	:type p: TCollection_SeqNodePtr &
-	:rtype: None
-") Units_SequenceNodeOfUtsSequence;
-		 Units_SequenceNodeOfUtsSequence (const Handle_Units_Unit & I,const TCollection_SeqNodePtr & n,const TCollection_SeqNodePtr & p);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:rtype: Handle_Units_Unit
-") Value;
-		Handle_Units_Unit Value ();
-};
-
-
-%extend Units_SequenceNodeOfUtsSequence {
-	%pythoncode {
-		def GetHandle(self):
-		    try:
-		        return self.thisHandle
-		    except:
-		        self.thisHandle = Handle_Units_SequenceNodeOfUtsSequence(self)
-		        self.thisown = False
-		        return self.thisHandle
-	}
-};
-
-%pythonappend Handle_Units_SequenceNodeOfUtsSequence::Handle_Units_SequenceNodeOfUtsSequence %{
-    # register the handle in the base object
-    if len(args) > 0:
-        register_handle(self, args[0])
-%}
-
-%nodefaultctor Handle_Units_SequenceNodeOfUtsSequence;
-class Handle_Units_SequenceNodeOfUtsSequence : public Handle_TCollection_SeqNode {
-
-    public:
-        // constructors
-        Handle_Units_SequenceNodeOfUtsSequence();
-        Handle_Units_SequenceNodeOfUtsSequence(const Handle_Units_SequenceNodeOfUtsSequence &aHandle);
-        Handle_Units_SequenceNodeOfUtsSequence(const Units_SequenceNodeOfUtsSequence *anItem);
-        void Nullify();
-        Standard_Boolean IsNull() const;
-        static const Handle_Units_SequenceNodeOfUtsSequence DownCast(const Handle_Standard_Transient &AnObject);
-
-};
-%extend Handle_Units_SequenceNodeOfUtsSequence {
-    Units_SequenceNodeOfUtsSequence* _get_reference() {
-    return (Units_SequenceNodeOfUtsSequence*)$self->Access();
-    }
-};
-
-%extend Handle_Units_SequenceNodeOfUtsSequence {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
-};
-
-%extend Units_SequenceNodeOfUtsSequence {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor Units_TksSequence;
-class Units_TksSequence : public TCollection_BaseSequence {
-	public:
-		%feature("compactdefaultargs") Units_TksSequence;
-		%feature("autodoc", "	:rtype: None
-") Units_TksSequence;
-		 Units_TksSequence ();
-		%feature("compactdefaultargs") Units_TksSequence;
-		%feature("autodoc", "	:param Other:
-	:type Other: Units_TksSequence &
-	:rtype: None
-") Units_TksSequence;
-		 Units_TksSequence (const Units_TksSequence & Other);
-		%feature("compactdefaultargs") Clear;
-		%feature("autodoc", "	:rtype: None
-") Clear;
-		void Clear ();
-		%feature("compactdefaultargs") Assign;
-		%feature("autodoc", "	:param Other:
-	:type Other: Units_TksSequence &
-	:rtype: Units_TksSequence
-") Assign;
-		const Units_TksSequence & Assign (const Units_TksSequence & Other);
-		%feature("compactdefaultargs") operator =;
-		%feature("autodoc", "	:param Other:
-	:type Other: Units_TksSequence &
-	:rtype: Units_TksSequence
-") operator =;
-		const Units_TksSequence & operator = (const Units_TksSequence & Other);
-		%feature("compactdefaultargs") Append;
-		%feature("autodoc", "	:param T:
-	:type T: Handle_Units_Token &
-	:rtype: None
-") Append;
-		void Append (const Handle_Units_Token & T);
-		%feature("compactdefaultargs") Append;
-		%feature("autodoc", "	:param S:
-	:type S: Units_TksSequence &
-	:rtype: None
-") Append;
-		void Append (Units_TksSequence & S);
-		%feature("compactdefaultargs") Prepend;
-		%feature("autodoc", "	:param T:
-	:type T: Handle_Units_Token &
-	:rtype: None
-") Prepend;
-		void Prepend (const Handle_Units_Token & T);
-		%feature("compactdefaultargs") Prepend;
-		%feature("autodoc", "	:param S:
-	:type S: Units_TksSequence &
-	:rtype: None
-") Prepend;
-		void Prepend (Units_TksSequence & S);
-		%feature("compactdefaultargs") InsertBefore;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param T:
-	:type T: Handle_Units_Token &
-	:rtype: None
-") InsertBefore;
-		void InsertBefore (const Standard_Integer Index,const Handle_Units_Token & T);
-		%feature("compactdefaultargs") InsertBefore;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param S:
-	:type S: Units_TksSequence &
-	:rtype: None
-") InsertBefore;
-		void InsertBefore (const Standard_Integer Index,Units_TksSequence & S);
-		%feature("compactdefaultargs") InsertAfter;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param T:
-	:type T: Handle_Units_Token &
-	:rtype: None
-") InsertAfter;
-		void InsertAfter (const Standard_Integer Index,const Handle_Units_Token & T);
-		%feature("compactdefaultargs") InsertAfter;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param S:
-	:type S: Units_TksSequence &
-	:rtype: None
-") InsertAfter;
-		void InsertAfter (const Standard_Integer Index,Units_TksSequence & S);
-		%feature("compactdefaultargs") First;
-		%feature("autodoc", "	:rtype: Handle_Units_Token
-") First;
-		Handle_Units_Token First ();
-		%feature("compactdefaultargs") Last;
-		%feature("autodoc", "	:rtype: Handle_Units_Token
-") Last;
-		Handle_Units_Token Last ();
-		%feature("compactdefaultargs") Split;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param Sub:
-	:type Sub: Units_TksSequence &
-	:rtype: None
-") Split;
-		void Split (const Standard_Integer Index,Units_TksSequence & Sub);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: Handle_Units_Token
-") Value;
-		Handle_Units_Token Value (const Standard_Integer Index);
-		%feature("compactdefaultargs") SetValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param I:
-	:type I: Handle_Units_Token &
-	:rtype: None
-") SetValue;
-		void SetValue (const Standard_Integer Index,const Handle_Units_Token & I);
-		%feature("compactdefaultargs") ChangeValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: Handle_Units_Token
-") ChangeValue;
-		Handle_Units_Token ChangeValue (const Standard_Integer Index);
-		%feature("compactdefaultargs") Remove;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: None
-") Remove;
-		void Remove (const Standard_Integer Index);
-		%feature("compactdefaultargs") Remove;
-		%feature("autodoc", "	:param FromIndex:
-	:type FromIndex: int
-	:param ToIndex:
-	:type ToIndex: int
-	:rtype: None
-") Remove;
-		void Remove (const Standard_Integer FromIndex,const Standard_Integer ToIndex);
-};
-
-
-%extend Units_TksSequence {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
 %nodefaultctor Units_Token;
-class Units_Token : public MMgt_TShared {
+class Units_Token : public Standard_Transient {
 	public:
 		%feature("compactdefaultargs") Units_Token;
 		%feature("autodoc", "	* Creates and returns a empty token.
@@ -1613,12 +918,6 @@ class Units_Token : public MMgt_TShared {
 	:rtype: bool
 ") IsGreaterOrEqual;
 		Standard_Boolean IsGreaterOrEqual (const Handle_Units_Token & atoken);
-		%feature("compactdefaultargs") Destroy;
-		%feature("autodoc", "	* Destroies the Token
-
-	:rtype: void
-") Destroy;
-		virtual void Destroy ();
 		%feature("compactdefaultargs") Dump;
 		%feature("autodoc", "	* Useful for debugging
 
@@ -1651,7 +950,7 @@ class Units_Token : public MMgt_TShared {
 %}
 
 %nodefaultctor Handle_Units_Token;
-class Handle_Units_Token : public Handle_MMgt_TShared {
+class Handle_Units_Token : public Handle_Standard_Transient {
 
     public:
         // constructors
@@ -1663,19 +962,20 @@ class Handle_Units_Token : public Handle_MMgt_TShared {
         static const Handle_Units_Token DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_Units_Token {
     Units_Token* _get_reference() {
-    return (Units_Token*)$self->Access();
+    return (Units_Token*)$self->get();
     }
 };
 
 %extend Handle_Units_Token {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend Units_Token {
@@ -1683,197 +983,8 @@ class Handle_Units_Token : public Handle_MMgt_TShared {
 	__repr__ = _dumps_object
 	}
 };
-%nodefaultctor Units_TokensSequence;
-class Units_TokensSequence : public MMgt_TShared {
-	public:
-		%feature("compactdefaultargs") Units_TokensSequence;
-		%feature("autodoc", "	:rtype: None
-") Units_TokensSequence;
-		 Units_TokensSequence ();
-		%feature("compactdefaultargs") IsEmpty;
-		%feature("autodoc", "	:rtype: bool
-") IsEmpty;
-		Standard_Boolean IsEmpty ();
-		%feature("compactdefaultargs") Length;
-		%feature("autodoc", "	:rtype: int
-") Length;
-		Standard_Integer Length ();
-		%feature("compactdefaultargs") Clear;
-		%feature("autodoc", "	:rtype: None
-") Clear;
-		void Clear ();
-		%feature("compactdefaultargs") Append;
-		%feature("autodoc", "	:param anItem:
-	:type anItem: Handle_Units_Token &
-	:rtype: None
-") Append;
-		void Append (const Handle_Units_Token & anItem);
-		%feature("compactdefaultargs") Append;
-		%feature("autodoc", "	:param aSequence:
-	:type aSequence: Handle_Units_TokensSequence &
-	:rtype: None
-") Append;
-		void Append (const Handle_Units_TokensSequence & aSequence);
-		%feature("compactdefaultargs") Prepend;
-		%feature("autodoc", "	:param anItem:
-	:type anItem: Handle_Units_Token &
-	:rtype: None
-") Prepend;
-		void Prepend (const Handle_Units_Token & anItem);
-		%feature("compactdefaultargs") Prepend;
-		%feature("autodoc", "	:param aSequence:
-	:type aSequence: Handle_Units_TokensSequence &
-	:rtype: None
-") Prepend;
-		void Prepend (const Handle_Units_TokensSequence & aSequence);
-		%feature("compactdefaultargs") Reverse;
-		%feature("autodoc", "	:rtype: None
-") Reverse;
-		void Reverse ();
-		%feature("compactdefaultargs") InsertBefore;
-		%feature("autodoc", "	:param anIndex:
-	:type anIndex: int
-	:param anItem:
-	:type anItem: Handle_Units_Token &
-	:rtype: None
-") InsertBefore;
-		void InsertBefore (const Standard_Integer anIndex,const Handle_Units_Token & anItem);
-		%feature("compactdefaultargs") InsertBefore;
-		%feature("autodoc", "	:param anIndex:
-	:type anIndex: int
-	:param aSequence:
-	:type aSequence: Handle_Units_TokensSequence &
-	:rtype: None
-") InsertBefore;
-		void InsertBefore (const Standard_Integer anIndex,const Handle_Units_TokensSequence & aSequence);
-		%feature("compactdefaultargs") InsertAfter;
-		%feature("autodoc", "	:param anIndex:
-	:type anIndex: int
-	:param anItem:
-	:type anItem: Handle_Units_Token &
-	:rtype: None
-") InsertAfter;
-		void InsertAfter (const Standard_Integer anIndex,const Handle_Units_Token & anItem);
-		%feature("compactdefaultargs") InsertAfter;
-		%feature("autodoc", "	:param anIndex:
-	:type anIndex: int
-	:param aSequence:
-	:type aSequence: Handle_Units_TokensSequence &
-	:rtype: None
-") InsertAfter;
-		void InsertAfter (const Standard_Integer anIndex,const Handle_Units_TokensSequence & aSequence);
-		%feature("compactdefaultargs") Exchange;
-		%feature("autodoc", "	:param anIndex:
-	:type anIndex: int
-	:param anOtherIndex:
-	:type anOtherIndex: int
-	:rtype: None
-") Exchange;
-		void Exchange (const Standard_Integer anIndex,const Standard_Integer anOtherIndex);
-		%feature("compactdefaultargs") Split;
-		%feature("autodoc", "	:param anIndex:
-	:type anIndex: int
-	:rtype: Handle_Units_TokensSequence
-") Split;
-		Handle_Units_TokensSequence Split (const Standard_Integer anIndex);
-		%feature("compactdefaultargs") SetValue;
-		%feature("autodoc", "	:param anIndex:
-	:type anIndex: int
-	:param anItem:
-	:type anItem: Handle_Units_Token &
-	:rtype: None
-") SetValue;
-		void SetValue (const Standard_Integer anIndex,const Handle_Units_Token & anItem);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:param anIndex:
-	:type anIndex: int
-	:rtype: Handle_Units_Token
-") Value;
-		Handle_Units_Token Value (const Standard_Integer anIndex);
-		%feature("compactdefaultargs") ChangeValue;
-		%feature("autodoc", "	:param anIndex:
-	:type anIndex: int
-	:rtype: Handle_Units_Token
-") ChangeValue;
-		Handle_Units_Token ChangeValue (const Standard_Integer anIndex);
-		%feature("compactdefaultargs") Remove;
-		%feature("autodoc", "	:param anIndex:
-	:type anIndex: int
-	:rtype: None
-") Remove;
-		void Remove (const Standard_Integer anIndex);
-		%feature("compactdefaultargs") Remove;
-		%feature("autodoc", "	:param fromIndex:
-	:type fromIndex: int
-	:param toIndex:
-	:type toIndex: int
-	:rtype: None
-") Remove;
-		void Remove (const Standard_Integer fromIndex,const Standard_Integer toIndex);
-		%feature("compactdefaultargs") Sequence;
-		%feature("autodoc", "	:rtype: Units_TksSequence
-") Sequence;
-		const Units_TksSequence & Sequence ();
-		%feature("compactdefaultargs") ChangeSequence;
-		%feature("autodoc", "	:rtype: Units_TksSequence
-") ChangeSequence;
-		Units_TksSequence & ChangeSequence ();
-};
-
-
-%extend Units_TokensSequence {
-	%pythoncode {
-		def GetHandle(self):
-		    try:
-		        return self.thisHandle
-		    except:
-		        self.thisHandle = Handle_Units_TokensSequence(self)
-		        self.thisown = False
-		        return self.thisHandle
-	}
-};
-
-%pythonappend Handle_Units_TokensSequence::Handle_Units_TokensSequence %{
-    # register the handle in the base object
-    if len(args) > 0:
-        register_handle(self, args[0])
-%}
-
-%nodefaultctor Handle_Units_TokensSequence;
-class Handle_Units_TokensSequence : public Handle_MMgt_TShared {
-
-    public:
-        // constructors
-        Handle_Units_TokensSequence();
-        Handle_Units_TokensSequence(const Handle_Units_TokensSequence &aHandle);
-        Handle_Units_TokensSequence(const Units_TokensSequence *anItem);
-        void Nullify();
-        Standard_Boolean IsNull() const;
-        static const Handle_Units_TokensSequence DownCast(const Handle_Standard_Transient &AnObject);
-
-};
-%extend Handle_Units_TokensSequence {
-    Units_TokensSequence* _get_reference() {
-    return (Units_TokensSequence*)$self->Access();
-    }
-};
-
-%extend Handle_Units_TokensSequence {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
-};
-
-%extend Units_TokensSequence {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
 %nodefaultctor Units_Unit;
-class Units_Unit : public MMgt_TShared {
+class Units_Unit : public Standard_Transient {
 	public:
 		%feature("compactdefaultargs") Units_Unit;
 		%feature("autodoc", "	* Creates and returns a unit. <aname> is the name of the unit, <asymbol> is the usual abbreviation of the unit, and <avalue> is the value in relation to the International System of Units.
@@ -2001,7 +1112,7 @@ class Units_Unit : public MMgt_TShared {
 %}
 
 %nodefaultctor Handle_Units_Unit;
-class Handle_Units_Unit : public Handle_MMgt_TShared {
+class Handle_Units_Unit : public Handle_Standard_Transient {
 
     public:
         // constructors
@@ -2013,19 +1124,20 @@ class Handle_Units_Unit : public Handle_MMgt_TShared {
         static const Handle_Units_Unit DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_Units_Unit {
     Units_Unit* _get_reference() {
-    return (Units_Unit*)$self->Access();
+    return (Units_Unit*)$self->get();
     }
 };
 
 %extend Handle_Units_Unit {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend Units_Unit {
@@ -2034,7 +1146,7 @@ class Handle_Units_Unit : public Handle_MMgt_TShared {
 	}
 };
 %nodefaultctor Units_UnitsDictionary;
-class Units_UnitsDictionary : public MMgt_TShared {
+class Units_UnitsDictionary : public Standard_Transient {
 	public:
 		%feature("compactdefaultargs") Units_UnitsDictionary;
 		%feature("autodoc", "	* Returns an empty instance of UnitsDictionary.
@@ -2045,23 +1157,15 @@ class Units_UnitsDictionary : public MMgt_TShared {
 		%feature("compactdefaultargs") Creates;
 		%feature("autodoc", "	* Returns a UnitsDictionary object which contains the sequence of all the units you want to consider, physical quantity by physical quantity.
 
-	:param afilename:
-	:type afilename: char *
 	:rtype: None
 ") Creates;
-		void Creates (const char * afilename);
+		void Creates ();
 		%feature("compactdefaultargs") Sequence;
 		%feature("autodoc", "	* Returns the head of the sequence of physical quantities.
 
 	:rtype: Handle_Units_QuantitiesSequence
 ") Sequence;
 		Handle_Units_QuantitiesSequence Sequence ();
-		%feature("compactdefaultargs") UpToDate;
-		%feature("autodoc", "	* Returns true if there has been no modification of the file Units.dat since the creation of the dictionary object, false otherwise.
-
-	:rtype: bool
-") UpToDate;
-		Standard_Boolean UpToDate ();
 		%feature("compactdefaultargs") ActiveUnit;
 		%feature("autodoc", "	* Returns for <aquantity> the active unit.
 
@@ -2108,7 +1212,7 @@ class Units_UnitsDictionary : public MMgt_TShared {
 %}
 
 %nodefaultctor Handle_Units_UnitsDictionary;
-class Handle_Units_UnitsDictionary : public Handle_MMgt_TShared {
+class Handle_Units_UnitsDictionary : public Handle_Standard_Transient {
 
     public:
         // constructors
@@ -2120,19 +1224,20 @@ class Handle_Units_UnitsDictionary : public Handle_MMgt_TShared {
         static const Handle_Units_UnitsDictionary DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_Units_UnitsDictionary {
     Units_UnitsDictionary* _get_reference() {
-    return (Units_UnitsDictionary*)$self->Access();
+    return (Units_UnitsDictionary*)$self->get();
     }
 };
 
 %extend Handle_Units_UnitsDictionary {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend Units_UnitsDictionary {
@@ -2140,197 +1245,8 @@ class Handle_Units_UnitsDictionary : public Handle_MMgt_TShared {
 	__repr__ = _dumps_object
 	}
 };
-%nodefaultctor Units_UnitsSequence;
-class Units_UnitsSequence : public MMgt_TShared {
-	public:
-		%feature("compactdefaultargs") Units_UnitsSequence;
-		%feature("autodoc", "	:rtype: None
-") Units_UnitsSequence;
-		 Units_UnitsSequence ();
-		%feature("compactdefaultargs") IsEmpty;
-		%feature("autodoc", "	:rtype: bool
-") IsEmpty;
-		Standard_Boolean IsEmpty ();
-		%feature("compactdefaultargs") Length;
-		%feature("autodoc", "	:rtype: int
-") Length;
-		Standard_Integer Length ();
-		%feature("compactdefaultargs") Clear;
-		%feature("autodoc", "	:rtype: None
-") Clear;
-		void Clear ();
-		%feature("compactdefaultargs") Append;
-		%feature("autodoc", "	:param anItem:
-	:type anItem: Handle_Units_Unit &
-	:rtype: None
-") Append;
-		void Append (const Handle_Units_Unit & anItem);
-		%feature("compactdefaultargs") Append;
-		%feature("autodoc", "	:param aSequence:
-	:type aSequence: Handle_Units_UnitsSequence &
-	:rtype: None
-") Append;
-		void Append (const Handle_Units_UnitsSequence & aSequence);
-		%feature("compactdefaultargs") Prepend;
-		%feature("autodoc", "	:param anItem:
-	:type anItem: Handle_Units_Unit &
-	:rtype: None
-") Prepend;
-		void Prepend (const Handle_Units_Unit & anItem);
-		%feature("compactdefaultargs") Prepend;
-		%feature("autodoc", "	:param aSequence:
-	:type aSequence: Handle_Units_UnitsSequence &
-	:rtype: None
-") Prepend;
-		void Prepend (const Handle_Units_UnitsSequence & aSequence);
-		%feature("compactdefaultargs") Reverse;
-		%feature("autodoc", "	:rtype: None
-") Reverse;
-		void Reverse ();
-		%feature("compactdefaultargs") InsertBefore;
-		%feature("autodoc", "	:param anIndex:
-	:type anIndex: int
-	:param anItem:
-	:type anItem: Handle_Units_Unit &
-	:rtype: None
-") InsertBefore;
-		void InsertBefore (const Standard_Integer anIndex,const Handle_Units_Unit & anItem);
-		%feature("compactdefaultargs") InsertBefore;
-		%feature("autodoc", "	:param anIndex:
-	:type anIndex: int
-	:param aSequence:
-	:type aSequence: Handle_Units_UnitsSequence &
-	:rtype: None
-") InsertBefore;
-		void InsertBefore (const Standard_Integer anIndex,const Handle_Units_UnitsSequence & aSequence);
-		%feature("compactdefaultargs") InsertAfter;
-		%feature("autodoc", "	:param anIndex:
-	:type anIndex: int
-	:param anItem:
-	:type anItem: Handle_Units_Unit &
-	:rtype: None
-") InsertAfter;
-		void InsertAfter (const Standard_Integer anIndex,const Handle_Units_Unit & anItem);
-		%feature("compactdefaultargs") InsertAfter;
-		%feature("autodoc", "	:param anIndex:
-	:type anIndex: int
-	:param aSequence:
-	:type aSequence: Handle_Units_UnitsSequence &
-	:rtype: None
-") InsertAfter;
-		void InsertAfter (const Standard_Integer anIndex,const Handle_Units_UnitsSequence & aSequence);
-		%feature("compactdefaultargs") Exchange;
-		%feature("autodoc", "	:param anIndex:
-	:type anIndex: int
-	:param anOtherIndex:
-	:type anOtherIndex: int
-	:rtype: None
-") Exchange;
-		void Exchange (const Standard_Integer anIndex,const Standard_Integer anOtherIndex);
-		%feature("compactdefaultargs") Split;
-		%feature("autodoc", "	:param anIndex:
-	:type anIndex: int
-	:rtype: Handle_Units_UnitsSequence
-") Split;
-		Handle_Units_UnitsSequence Split (const Standard_Integer anIndex);
-		%feature("compactdefaultargs") SetValue;
-		%feature("autodoc", "	:param anIndex:
-	:type anIndex: int
-	:param anItem:
-	:type anItem: Handle_Units_Unit &
-	:rtype: None
-") SetValue;
-		void SetValue (const Standard_Integer anIndex,const Handle_Units_Unit & anItem);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:param anIndex:
-	:type anIndex: int
-	:rtype: Handle_Units_Unit
-") Value;
-		Handle_Units_Unit Value (const Standard_Integer anIndex);
-		%feature("compactdefaultargs") ChangeValue;
-		%feature("autodoc", "	:param anIndex:
-	:type anIndex: int
-	:rtype: Handle_Units_Unit
-") ChangeValue;
-		Handle_Units_Unit ChangeValue (const Standard_Integer anIndex);
-		%feature("compactdefaultargs") Remove;
-		%feature("autodoc", "	:param anIndex:
-	:type anIndex: int
-	:rtype: None
-") Remove;
-		void Remove (const Standard_Integer anIndex);
-		%feature("compactdefaultargs") Remove;
-		%feature("autodoc", "	:param fromIndex:
-	:type fromIndex: int
-	:param toIndex:
-	:type toIndex: int
-	:rtype: None
-") Remove;
-		void Remove (const Standard_Integer fromIndex,const Standard_Integer toIndex);
-		%feature("compactdefaultargs") Sequence;
-		%feature("autodoc", "	:rtype: Units_UtsSequence
-") Sequence;
-		const Units_UtsSequence & Sequence ();
-		%feature("compactdefaultargs") ChangeSequence;
-		%feature("autodoc", "	:rtype: Units_UtsSequence
-") ChangeSequence;
-		Units_UtsSequence & ChangeSequence ();
-};
-
-
-%extend Units_UnitsSequence {
-	%pythoncode {
-		def GetHandle(self):
-		    try:
-		        return self.thisHandle
-		    except:
-		        self.thisHandle = Handle_Units_UnitsSequence(self)
-		        self.thisown = False
-		        return self.thisHandle
-	}
-};
-
-%pythonappend Handle_Units_UnitsSequence::Handle_Units_UnitsSequence %{
-    # register the handle in the base object
-    if len(args) > 0:
-        register_handle(self, args[0])
-%}
-
-%nodefaultctor Handle_Units_UnitsSequence;
-class Handle_Units_UnitsSequence : public Handle_MMgt_TShared {
-
-    public:
-        // constructors
-        Handle_Units_UnitsSequence();
-        Handle_Units_UnitsSequence(const Handle_Units_UnitsSequence &aHandle);
-        Handle_Units_UnitsSequence(const Units_UnitsSequence *anItem);
-        void Nullify();
-        Standard_Boolean IsNull() const;
-        static const Handle_Units_UnitsSequence DownCast(const Handle_Standard_Transient &AnObject);
-
-};
-%extend Handle_Units_UnitsSequence {
-    Units_UnitsSequence* _get_reference() {
-    return (Units_UnitsSequence*)$self->Access();
-    }
-};
-
-%extend Handle_Units_UnitsSequence {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
-};
-
-%extend Units_UnitsSequence {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
 %nodefaultctor Units_UnitsSystem;
-class Units_UnitsSystem : public MMgt_TShared {
+class Units_UnitsSystem : public Standard_Transient {
 	public:
 		%feature("compactdefaultargs") Units_UnitsSystem;
 		%feature("autodoc", "	* Returns an instance of UnitsSystem initialized to the S.I. units system.
@@ -2468,7 +1384,7 @@ class Units_UnitsSystem : public MMgt_TShared {
 %}
 
 %nodefaultctor Handle_Units_UnitsSystem;
-class Handle_Units_UnitsSystem : public Handle_MMgt_TShared {
+class Handle_Units_UnitsSystem : public Handle_Standard_Transient {
 
     public:
         // constructors
@@ -2480,165 +1396,23 @@ class Handle_Units_UnitsSystem : public Handle_MMgt_TShared {
         static const Handle_Units_UnitsSystem DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_Units_UnitsSystem {
     Units_UnitsSystem* _get_reference() {
-    return (Units_UnitsSystem*)$self->Access();
+    return (Units_UnitsSystem*)$self->get();
     }
 };
 
 %extend Handle_Units_UnitsSystem {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend Units_UnitsSystem {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor Units_UtsSequence;
-class Units_UtsSequence : public TCollection_BaseSequence {
-	public:
-		%feature("compactdefaultargs") Units_UtsSequence;
-		%feature("autodoc", "	:rtype: None
-") Units_UtsSequence;
-		 Units_UtsSequence ();
-		%feature("compactdefaultargs") Units_UtsSequence;
-		%feature("autodoc", "	:param Other:
-	:type Other: Units_UtsSequence &
-	:rtype: None
-") Units_UtsSequence;
-		 Units_UtsSequence (const Units_UtsSequence & Other);
-		%feature("compactdefaultargs") Clear;
-		%feature("autodoc", "	:rtype: None
-") Clear;
-		void Clear ();
-		%feature("compactdefaultargs") Assign;
-		%feature("autodoc", "	:param Other:
-	:type Other: Units_UtsSequence &
-	:rtype: Units_UtsSequence
-") Assign;
-		const Units_UtsSequence & Assign (const Units_UtsSequence & Other);
-		%feature("compactdefaultargs") operator =;
-		%feature("autodoc", "	:param Other:
-	:type Other: Units_UtsSequence &
-	:rtype: Units_UtsSequence
-") operator =;
-		const Units_UtsSequence & operator = (const Units_UtsSequence & Other);
-		%feature("compactdefaultargs") Append;
-		%feature("autodoc", "	:param T:
-	:type T: Handle_Units_Unit &
-	:rtype: None
-") Append;
-		void Append (const Handle_Units_Unit & T);
-		%feature("compactdefaultargs") Append;
-		%feature("autodoc", "	:param S:
-	:type S: Units_UtsSequence &
-	:rtype: None
-") Append;
-		void Append (Units_UtsSequence & S);
-		%feature("compactdefaultargs") Prepend;
-		%feature("autodoc", "	:param T:
-	:type T: Handle_Units_Unit &
-	:rtype: None
-") Prepend;
-		void Prepend (const Handle_Units_Unit & T);
-		%feature("compactdefaultargs") Prepend;
-		%feature("autodoc", "	:param S:
-	:type S: Units_UtsSequence &
-	:rtype: None
-") Prepend;
-		void Prepend (Units_UtsSequence & S);
-		%feature("compactdefaultargs") InsertBefore;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param T:
-	:type T: Handle_Units_Unit &
-	:rtype: None
-") InsertBefore;
-		void InsertBefore (const Standard_Integer Index,const Handle_Units_Unit & T);
-		%feature("compactdefaultargs") InsertBefore;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param S:
-	:type S: Units_UtsSequence &
-	:rtype: None
-") InsertBefore;
-		void InsertBefore (const Standard_Integer Index,Units_UtsSequence & S);
-		%feature("compactdefaultargs") InsertAfter;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param T:
-	:type T: Handle_Units_Unit &
-	:rtype: None
-") InsertAfter;
-		void InsertAfter (const Standard_Integer Index,const Handle_Units_Unit & T);
-		%feature("compactdefaultargs") InsertAfter;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param S:
-	:type S: Units_UtsSequence &
-	:rtype: None
-") InsertAfter;
-		void InsertAfter (const Standard_Integer Index,Units_UtsSequence & S);
-		%feature("compactdefaultargs") First;
-		%feature("autodoc", "	:rtype: Handle_Units_Unit
-") First;
-		Handle_Units_Unit First ();
-		%feature("compactdefaultargs") Last;
-		%feature("autodoc", "	:rtype: Handle_Units_Unit
-") Last;
-		Handle_Units_Unit Last ();
-		%feature("compactdefaultargs") Split;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param Sub:
-	:type Sub: Units_UtsSequence &
-	:rtype: None
-") Split;
-		void Split (const Standard_Integer Index,Units_UtsSequence & Sub);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: Handle_Units_Unit
-") Value;
-		Handle_Units_Unit Value (const Standard_Integer Index);
-		%feature("compactdefaultargs") SetValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param I:
-	:type I: Handle_Units_Unit &
-	:rtype: None
-") SetValue;
-		void SetValue (const Standard_Integer Index,const Handle_Units_Unit & I);
-		%feature("compactdefaultargs") ChangeValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: Handle_Units_Unit
-") ChangeValue;
-		Handle_Units_Unit ChangeValue (const Standard_Integer Index);
-		%feature("compactdefaultargs") Remove;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: None
-") Remove;
-		void Remove (const Standard_Integer Index);
-		%feature("compactdefaultargs") Remove;
-		%feature("autodoc", "	:param FromIndex:
-	:type FromIndex: int
-	:param ToIndex:
-	:type ToIndex: int
-	:rtype: None
-") Remove;
-		void Remove (const Standard_Integer FromIndex,const Standard_Integer ToIndex);
-};
-
-
-%extend Units_UtsSequence {
 	%pythoncode {
 	__repr__ = _dumps_object
 	}
@@ -2709,12 +1483,6 @@ class Units_ShiftedToken : public Units_Token {
 	:rtype: float
 ") Divided;
 		virtual Standard_Real Divided (const Standard_Real avalue);
-		%feature("compactdefaultargs") Destroy;
-		%feature("autodoc", "	* Destroies the Token
-
-	:rtype: void
-") Destroy;
-		virtual void Destroy ();
 		%feature("compactdefaultargs") Dump;
 		%feature("autodoc", "	:param ashift:
 	:type ashift: int
@@ -2757,19 +1525,20 @@ class Handle_Units_ShiftedToken : public Handle_Units_Token {
         static const Handle_Units_ShiftedToken DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_Units_ShiftedToken {
     Units_ShiftedToken* _get_reference() {
-    return (Units_ShiftedToken*)$self->Access();
+    return (Units_ShiftedToken*)$self->get();
     }
 };
 
 %extend Handle_Units_ShiftedToken {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend Units_ShiftedToken {
@@ -2876,19 +1645,20 @@ class Handle_Units_ShiftedUnit : public Handle_Units_Unit {
         static const Handle_Units_ShiftedUnit DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_Units_ShiftedUnit {
     Units_ShiftedUnit* _get_reference() {
-    return (Units_ShiftedUnit*)$self->Access();
+    return (Units_ShiftedUnit*)$self->get();
     }
 };
 
 %extend Handle_Units_ShiftedUnit {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend Units_ShiftedUnit {
@@ -2951,27 +1721,11 @@ class Units_UnitsLexicon : public Units_Lexicon {
 		%feature("compactdefaultargs") Creates;
 		%feature("autodoc", "	* Reads the files <afilename1> and <afilename2> to create a sequence of tokens stored in <thesequenceoftokens>.
 
-	:param afilename1:
-	:type afilename1: char *
-	:param afilename2:
-	:type afilename2: char *
 	:param amode: default value is Standard_True
 	:type amode: bool
 	:rtype: None
 ") Creates;
-		void Creates (const char * afilename1,const char * afilename2,const Standard_Boolean amode = Standard_True);
-		%feature("compactdefaultargs") FileName2;
-		%feature("autodoc", "	* Returns in a AsciiString from TCollection the name of the file.
-
-	:rtype: TCollection_AsciiString
-") FileName2;
-		TCollection_AsciiString FileName2 ();
-		%feature("compactdefaultargs") UpToDate;
-		%feature("autodoc", "	* Returns true if the file has not changed since the creation of the Lexicon object. Returns false otherwise.
-
-	:rtype: bool
-") UpToDate;
-		virtual Standard_Boolean UpToDate ();
+		void Creates (const Standard_Boolean amode = Standard_True);
 		%feature("compactdefaultargs") Dump;
 		%feature("autodoc", "	* Useful for debugging.
 
@@ -3012,19 +1766,20 @@ class Handle_Units_UnitsLexicon : public Handle_Units_Lexicon {
         static const Handle_Units_UnitsLexicon DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_Units_UnitsLexicon {
     Units_UnitsLexicon* _get_reference() {
-    return (Units_UnitsLexicon*)$self->Access();
+    return (Units_UnitsLexicon*)$self->get();
     }
 };
 
 %extend Handle_Units_UnitsLexicon {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend Units_UnitsLexicon {

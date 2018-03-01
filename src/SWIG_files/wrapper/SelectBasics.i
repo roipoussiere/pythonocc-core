@@ -1,5 +1,5 @@
 /*
-Copyright 2008-2017 Thomas Paviot (tpaviot@gmail.com)
+Copyright 2008-2018 Thomas Paviot (tpaviot@gmail.com)
 
 
 This file is part of pythonOCC.
@@ -56,6 +56,9 @@ def register_handle(handle, base_object):
 /* typedefs */
 /* end typedefs declaration */
 
+/* templates */
+/* end templates declaration */
+
 /* public enums */
 /* end public enums declaration */
 
@@ -81,16 +84,16 @@ class SelectBasics {
 	}
 };
 %nodefaultctor SelectBasics_EntityOwner;
-class SelectBasics_EntityOwner : public MMgt_TShared {
+class SelectBasics_EntityOwner : public Standard_Transient {
 	public:
-		%feature("compactdefaultargs") Set;
+		%feature("compactdefaultargs") SetPriority;
 		%feature("autodoc", "	* sets the selectable priority of the owner
 
-	:param aPriority:
-	:type aPriority: int
+	:param thePriority:
+	:type thePriority: int
 	:rtype: None
-") Set;
-		void Set (const Standard_Integer aPriority);
+") SetPriority;
+		void SetPriority (const Standard_Integer thePriority);
 		%feature("compactdefaultargs") Priority;
 		%feature("autodoc", "	:rtype: int
 ") Priority;
@@ -113,6 +116,14 @@ class SelectBasics_EntityOwner : public MMgt_TShared {
 		%feature("autodoc", "	:rtype: TopLoc_Location
 ") Location;
 		virtual TopLoc_Location Location ();
+		%feature("compactdefaultargs") Set;
+		%feature("autodoc", "	* sets the selectable priority of the owner
+
+	:param thePriority:
+	:type thePriority: int
+	:rtype: None
+") Set;
+		void Set (const Standard_Integer thePriority);
 };
 
 
@@ -135,7 +146,7 @@ class SelectBasics_EntityOwner : public MMgt_TShared {
 %}
 
 %nodefaultctor Handle_SelectBasics_EntityOwner;
-class Handle_SelectBasics_EntityOwner : public Handle_MMgt_TShared {
+class Handle_SelectBasics_EntityOwner : public Handle_Standard_Transient {
 
     public:
         // constructors
@@ -147,19 +158,20 @@ class Handle_SelectBasics_EntityOwner : public Handle_MMgt_TShared {
         static const Handle_SelectBasics_EntityOwner DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_SelectBasics_EntityOwner {
     SelectBasics_EntityOwner* _get_reference() {
-    return (SelectBasics_EntityOwner*)$self->Access();
+    return (SelectBasics_EntityOwner*)$self->get();
     }
 };
 
 %extend Handle_SelectBasics_EntityOwner {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend SelectBasics_EntityOwner {
@@ -270,6 +282,18 @@ enum SelectionType {
 ") Overlaps;
 		Standard_Boolean Overlaps (const Handle_TColgp_HArray1OfPnt & theArrayOfPts,Standard_Integer theSensType,Standard_Real &OutValue);
 		%feature("compactdefaultargs") Overlaps;
+		%feature("autodoc", "	* Returns true if selecting volume is overlapped by planar convex polygon, which points are stored in theArrayOfPts, taking into account sensitivity type theSensType
+
+	:param theArrayOfPts:
+	:type theArrayOfPts: TColgp_Array1OfPnt
+	:param theSensType:
+	:type theSensType: int
+	:param theDepth:
+	:type theDepth: float &
+	:rtype: bool
+") Overlaps;
+		Standard_Boolean Overlaps (const TColgp_Array1OfPnt & theArrayOfPts,Standard_Integer theSensType,Standard_Real &OutValue);
+		%feature("compactdefaultargs") Overlaps;
 		%feature("autodoc", "	* Returns true if selecting volume is overlapped by line segment with start point at thePt1 and end point at thePt2
 
 	:param thePt1:
@@ -315,6 +339,26 @@ enum SelectionType {
 		%feature("autodoc", "	:rtype: bool
 ") IsOverlapAllowed;
 		Standard_Boolean IsOverlapAllowed ();
+		%feature("compactdefaultargs") GetNearPickedPnt;
+		%feature("autodoc", "	* Valid only for point and rectangular selection. Returns projection of 2d mouse picked point or projection of center of 2d rectangle --for point and rectangular selection correspondingly-- onto near view frustum plane
+
+	:rtype: gp_Pnt
+") GetNearPickedPnt;
+		gp_Pnt GetNearPickedPnt ();
+		%feature("compactdefaultargs") GetFarPickedPnt;
+		%feature("autodoc", "	* Valid only for point and rectangular selection. Returns projection of 2d mouse picked point or projection of center of 2d rectangle --for point and rectangular selection correspondingly-- onto far view frustum plane
+
+	:rtype: gp_Pnt
+") GetFarPickedPnt;
+		gp_Pnt GetFarPickedPnt ();
+		%feature("compactdefaultargs") GetPlanes;
+		%feature("autodoc", "	* Stores plane equation coefficients --in the following form: Ax + By + Cz + D = 0-- to the given vector
+
+	:param thePlaneEquations:
+	:type thePlaneEquations: NCollection_Vector<NCollection_Vec4<float> > &
+	:rtype: None
+") GetPlanes;
+		void GetPlanes (NCollection_Vector<NCollection_Vec4<Standard_Real> > & thePlaneEquations);
 };
 
 
@@ -324,7 +368,7 @@ enum SelectionType {
 	}
 };
 %nodefaultctor SelectBasics_SensitiveEntity;
-class SelectBasics_SensitiveEntity : public MMgt_TShared {
+class SelectBasics_SensitiveEntity : public Standard_Transient {
 	public:
 		%feature("compactdefaultargs") Set;
 		%feature("autodoc", "	* Sets owner of the entity
@@ -340,14 +384,6 @@ class SelectBasics_SensitiveEntity : public MMgt_TShared {
 	:rtype: Handle_SelectBasics_EntityOwner
 ") OwnerId;
 		Handle_SelectBasics_EntityOwner OwnerId ();
-		%feature("compactdefaultargs") SetSensitivityFactor;
-		%feature("autodoc", "	* Allows to manage the sensitivity of the entity
-
-	:param theSensFactor:
-	:type theSensFactor: int
-	:rtype: None
-") SetSensitivityFactor;
-		void SetSensitivityFactor (const Standard_Integer theSensFactor);
 		%feature("compactdefaultargs") Matches;
 		%feature("autodoc", "	* Checks whether the sensitive entity is overlapped by current selecting volume
 
@@ -357,49 +393,57 @@ class SelectBasics_SensitiveEntity : public MMgt_TShared {
 	:type thePickResult: SelectBasics_PickResult &
 	:rtype: bool
 ") Matches;
-		virtual Standard_Boolean Matches (SelectBasics_SelectingVolumeManager & theMgr,SelectBasics_PickResult & thePickResult);
+		Standard_Boolean Matches (SelectBasics_SelectingVolumeManager & theMgr,SelectBasics_PickResult & thePickResult);
 		%feature("compactdefaultargs") SensitivityFactor;
 		%feature("autodoc", "	* allows a better sensitivity for a specific entity in selection algorithms useful for small sized entities.
 
 	:rtype: int
 ") SensitivityFactor;
 		Standard_Integer SensitivityFactor ();
+		%feature("compactdefaultargs") SetSensitivityFactor;
+		%feature("autodoc", "	* Allows to manage sensitivity of a particular sensitive entity
+
+	:param theNewSens:
+	:type theNewSens: int
+	:rtype: None
+") SetSensitivityFactor;
+		void SetSensitivityFactor (const Standard_Integer theNewSens);
 		%feature("compactdefaultargs") NbSubElements;
 		%feature("autodoc", "	* Returns the number of sub-entities or elements in sensitive entity. Is used to determine if entity is complex and needs to pre-build BVH at the creation of sensitive entity step or is light-weighted so the tree can be build on demand with unnoticeable delay
 
 	:rtype: int
 ") NbSubElements;
-		virtual Standard_Integer NbSubElements ();
+		Standard_Integer NbSubElements ();
 		%feature("compactdefaultargs") BoundingBox;
 		%feature("autodoc", "	* Returns bounding box of sensitive entity
 
 	:rtype: Select3D_BndBox3d
 ") BoundingBox;
-		virtual Select3D_BndBox3d BoundingBox ();
+		Select3D_BndBox3d BoundingBox ();
 		%feature("compactdefaultargs") BVH;
 		%feature("autodoc", "	* Builds BVH tree for sensitive if it is needed
 
-	:rtype: void
+	:rtype: None
 ") BVH;
-		virtual void BVH ();
+		void BVH ();
 		%feature("compactdefaultargs") Clear;
 		%feature("autodoc", "	* Clears up all the resources and memory allocated
 
-	:rtype: void
+	:rtype: None
 ") Clear;
-		virtual void Clear ();
+		void Clear ();
 		%feature("compactdefaultargs") HasInitLocation;
-		%feature("autodoc", "	* Returns true if the shape corresponding to the entity has init location.
+		%feature("autodoc", "	* Returns true if the shape corresponding to the entity has init location
 
 	:rtype: bool
 ") HasInitLocation;
-		virtual Standard_Boolean HasInitLocation ();
+		Standard_Boolean HasInitLocation ();
 		%feature("compactdefaultargs") InvInitLocation;
 		%feature("autodoc", "	* Returns inversed location transformation matrix if the shape corresponding to this entity has init location set. Otherwise, returns identity matrix.
 
-	:rtype: gp_Trsf
+	:rtype: gp_GTrsf
 ") InvInitLocation;
-		virtual gp_Trsf InvInitLocation ();
+		gp_GTrsf InvInitLocation ();
 };
 
 
@@ -422,7 +466,7 @@ class SelectBasics_SensitiveEntity : public MMgt_TShared {
 %}
 
 %nodefaultctor Handle_SelectBasics_SensitiveEntity;
-class Handle_SelectBasics_SensitiveEntity : public Handle_MMgt_TShared {
+class Handle_SelectBasics_SensitiveEntity : public Handle_Standard_Transient {
 
     public:
         // constructors
@@ -434,19 +478,20 @@ class Handle_SelectBasics_SensitiveEntity : public Handle_MMgt_TShared {
         static const Handle_SelectBasics_SensitiveEntity DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_SelectBasics_SensitiveEntity {
     SelectBasics_SensitiveEntity* _get_reference() {
-    return (SelectBasics_SensitiveEntity*)$self->Access();
+    return (SelectBasics_SensitiveEntity*)$self->get();
     }
 };
 
 %extend Handle_SelectBasics_SensitiveEntity {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend SelectBasics_SensitiveEntity {

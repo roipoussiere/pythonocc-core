@@ -1,5 +1,5 @@
 /*
-Copyright 2008-2017 Thomas Paviot (tpaviot@gmail.com)
+Copyright 2008-2018 Thomas Paviot (tpaviot@gmail.com)
 
 
 This file is part of pythonOCC.
@@ -55,6 +55,9 @@ def register_handle(handle, base_object):
 
 /* typedefs */
 /* end typedefs declaration */
+
+/* templates */
+/* end templates declaration */
 
 /* public enums */
 /* end public enums declaration */
@@ -147,22 +150,111 @@ class Handle_XmlMXCAFDoc_AreaDriver : public Handle_XmlMDF_ADriver {
         static const Handle_XmlMXCAFDoc_AreaDriver DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_XmlMXCAFDoc_AreaDriver {
     XmlMXCAFDoc_AreaDriver* _get_reference() {
-    return (XmlMXCAFDoc_AreaDriver*)$self->Access();
+    return (XmlMXCAFDoc_AreaDriver*)$self->get();
     }
 };
 
 %extend Handle_XmlMXCAFDoc_AreaDriver {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend XmlMXCAFDoc_AreaDriver {
+	%pythoncode {
+	__repr__ = _dumps_object
+	}
+};
+%nodefaultctor XmlMXCAFDoc_AssemblyItemRefDriver;
+class XmlMXCAFDoc_AssemblyItemRefDriver : public XmlMDF_ADriver {
+	public:
+		%feature("compactdefaultargs") XmlMXCAFDoc_AssemblyItemRefDriver;
+		%feature("autodoc", "	:param theMessageDriver:
+	:type theMessageDriver: Handle_CDM_MessageDriver &
+	:rtype: None
+") XmlMXCAFDoc_AssemblyItemRefDriver;
+		 XmlMXCAFDoc_AssemblyItemRefDriver (const Handle_CDM_MessageDriver & theMessageDriver);
+		%feature("compactdefaultargs") NewEmpty;
+		%feature("autodoc", "	:rtype: Handle_TDF_Attribute
+") NewEmpty;
+		Handle_TDF_Attribute NewEmpty ();
+		%feature("compactdefaultargs") Paste;
+		%feature("autodoc", "	:param theSource:
+	:type theSource: XmlObjMgt_Persistent &
+	:param theTarget:
+	:type theTarget: Handle_TDF_Attribute &
+	:param theRelocTable:
+	:type theRelocTable: XmlObjMgt_RRelocationTable &
+	:rtype: bool
+") Paste;
+		Standard_Boolean Paste (const XmlObjMgt_Persistent & theSource,const Handle_TDF_Attribute & theTarget,XmlObjMgt_RRelocationTable & theRelocTable);
+		%feature("compactdefaultargs") Paste;
+		%feature("autodoc", "	:param theSource:
+	:type theSource: Handle_TDF_Attribute &
+	:param theTarget:
+	:type theTarget: XmlObjMgt_Persistent &
+	:param theRelocTable:
+	:type theRelocTable: XmlObjMgt_SRelocationTable &
+	:rtype: None
+") Paste;
+		void Paste (const Handle_TDF_Attribute & theSource,XmlObjMgt_Persistent & theTarget,XmlObjMgt_SRelocationTable & theRelocTable);
+};
+
+
+%extend XmlMXCAFDoc_AssemblyItemRefDriver {
+	%pythoncode {
+		def GetHandle(self):
+		    try:
+		        return self.thisHandle
+		    except:
+		        self.thisHandle = Handle_XmlMXCAFDoc_AssemblyItemRefDriver(self)
+		        self.thisown = False
+		        return self.thisHandle
+	}
+};
+
+%pythonappend Handle_XmlMXCAFDoc_AssemblyItemRefDriver::Handle_XmlMXCAFDoc_AssemblyItemRefDriver %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
+%nodefaultctor Handle_XmlMXCAFDoc_AssemblyItemRefDriver;
+class Handle_XmlMXCAFDoc_AssemblyItemRefDriver : public Handle_XmlMDF_ADriver {
+
+    public:
+        // constructors
+        Handle_XmlMXCAFDoc_AssemblyItemRefDriver();
+        Handle_XmlMXCAFDoc_AssemblyItemRefDriver(const Handle_XmlMXCAFDoc_AssemblyItemRefDriver &aHandle);
+        Handle_XmlMXCAFDoc_AssemblyItemRefDriver(const XmlMXCAFDoc_AssemblyItemRefDriver *anItem);
+        void Nullify();
+        Standard_Boolean IsNull() const;
+        static const Handle_XmlMXCAFDoc_AssemblyItemRefDriver DownCast(const Handle_Standard_Transient &AnObject);
+
+};
+
+%extend Handle_XmlMXCAFDoc_AssemblyItemRefDriver {
+    XmlMXCAFDoc_AssemblyItemRefDriver* _get_reference() {
+    return (XmlMXCAFDoc_AssemblyItemRefDriver*)$self->get();
+    }
+};
+
+%extend Handle_XmlMXCAFDoc_AssemblyItemRefDriver {
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
+};
+
+%extend XmlMXCAFDoc_AssemblyItemRefDriver {
 	%pythoncode {
 	__repr__ = _dumps_object
 	}
@@ -234,22 +326,111 @@ class Handle_XmlMXCAFDoc_CentroidDriver : public Handle_XmlMDF_ADriver {
         static const Handle_XmlMXCAFDoc_CentroidDriver DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_XmlMXCAFDoc_CentroidDriver {
     XmlMXCAFDoc_CentroidDriver* _get_reference() {
-    return (XmlMXCAFDoc_CentroidDriver*)$self->Access();
+    return (XmlMXCAFDoc_CentroidDriver*)$self->get();
     }
 };
 
 %extend Handle_XmlMXCAFDoc_CentroidDriver {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend XmlMXCAFDoc_CentroidDriver {
+	%pythoncode {
+	__repr__ = _dumps_object
+	}
+};
+%nodefaultctor XmlMXCAFDoc_ClippingPlaneToolDriver;
+class XmlMXCAFDoc_ClippingPlaneToolDriver : public XmlMDF_ADriver {
+	public:
+		%feature("compactdefaultargs") XmlMXCAFDoc_ClippingPlaneToolDriver;
+		%feature("autodoc", "	:param theMsgDriver:
+	:type theMsgDriver: Handle_CDM_MessageDriver &
+	:rtype: None
+") XmlMXCAFDoc_ClippingPlaneToolDriver;
+		 XmlMXCAFDoc_ClippingPlaneToolDriver (const Handle_CDM_MessageDriver & theMsgDriver);
+		%feature("compactdefaultargs") NewEmpty;
+		%feature("autodoc", "	:rtype: Handle_TDF_Attribute
+") NewEmpty;
+		virtual Handle_TDF_Attribute NewEmpty ();
+		%feature("compactdefaultargs") Paste;
+		%feature("autodoc", "	:param theSource:
+	:type theSource: XmlObjMgt_Persistent &
+	:param theTarget:
+	:type theTarget: Handle_TDF_Attribute &
+	:param theRelocTable:
+	:type theRelocTable: XmlObjMgt_RRelocationTable &
+	:rtype: bool
+") Paste;
+		virtual Standard_Boolean Paste (const XmlObjMgt_Persistent & theSource,const Handle_TDF_Attribute & theTarget,XmlObjMgt_RRelocationTable & theRelocTable);
+		%feature("compactdefaultargs") Paste;
+		%feature("autodoc", "	:param theSource:
+	:type theSource: Handle_TDF_Attribute &
+	:param theTarget:
+	:type theTarget: XmlObjMgt_Persistent &
+	:param theRelocTable:
+	:type theRelocTable: XmlObjMgt_SRelocationTable &
+	:rtype: void
+") Paste;
+		virtual void Paste (const Handle_TDF_Attribute & theSource,XmlObjMgt_Persistent & theTarget,XmlObjMgt_SRelocationTable & theRelocTable);
+};
+
+
+%extend XmlMXCAFDoc_ClippingPlaneToolDriver {
+	%pythoncode {
+		def GetHandle(self):
+		    try:
+		        return self.thisHandle
+		    except:
+		        self.thisHandle = Handle_XmlMXCAFDoc_ClippingPlaneToolDriver(self)
+		        self.thisown = False
+		        return self.thisHandle
+	}
+};
+
+%pythonappend Handle_XmlMXCAFDoc_ClippingPlaneToolDriver::Handle_XmlMXCAFDoc_ClippingPlaneToolDriver %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
+%nodefaultctor Handle_XmlMXCAFDoc_ClippingPlaneToolDriver;
+class Handle_XmlMXCAFDoc_ClippingPlaneToolDriver : public Handle_XmlMDF_ADriver {
+
+    public:
+        // constructors
+        Handle_XmlMXCAFDoc_ClippingPlaneToolDriver();
+        Handle_XmlMXCAFDoc_ClippingPlaneToolDriver(const Handle_XmlMXCAFDoc_ClippingPlaneToolDriver &aHandle);
+        Handle_XmlMXCAFDoc_ClippingPlaneToolDriver(const XmlMXCAFDoc_ClippingPlaneToolDriver *anItem);
+        void Nullify();
+        Standard_Boolean IsNull() const;
+        static const Handle_XmlMXCAFDoc_ClippingPlaneToolDriver DownCast(const Handle_Standard_Transient &AnObject);
+
+};
+
+%extend Handle_XmlMXCAFDoc_ClippingPlaneToolDriver {
+    XmlMXCAFDoc_ClippingPlaneToolDriver* _get_reference() {
+    return (XmlMXCAFDoc_ClippingPlaneToolDriver*)$self->get();
+    }
+};
+
+%extend Handle_XmlMXCAFDoc_ClippingPlaneToolDriver {
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
+};
+
+%extend XmlMXCAFDoc_ClippingPlaneToolDriver {
 	%pythoncode {
 	__repr__ = _dumps_object
 	}
@@ -321,19 +502,20 @@ class Handle_XmlMXCAFDoc_ColorDriver : public Handle_XmlMDF_ADriver {
         static const Handle_XmlMXCAFDoc_ColorDriver DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_XmlMXCAFDoc_ColorDriver {
     XmlMXCAFDoc_ColorDriver* _get_reference() {
-    return (XmlMXCAFDoc_ColorDriver*)$self->Access();
+    return (XmlMXCAFDoc_ColorDriver*)$self->get();
     }
 };
 
 %extend Handle_XmlMXCAFDoc_ColorDriver {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend XmlMXCAFDoc_ColorDriver {
@@ -408,19 +590,20 @@ class Handle_XmlMXCAFDoc_ColorToolDriver : public Handle_XmlMDF_ADriver {
         static const Handle_XmlMXCAFDoc_ColorToolDriver DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_XmlMXCAFDoc_ColorToolDriver {
     XmlMXCAFDoc_ColorToolDriver* _get_reference() {
-    return (XmlMXCAFDoc_ColorToolDriver*)$self->Access();
+    return (XmlMXCAFDoc_ColorToolDriver*)$self->get();
     }
 };
 
 %extend Handle_XmlMXCAFDoc_ColorToolDriver {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend XmlMXCAFDoc_ColorToolDriver {
@@ -495,19 +678,20 @@ class Handle_XmlMXCAFDoc_DatumDriver : public Handle_XmlMDF_ADriver {
         static const Handle_XmlMXCAFDoc_DatumDriver DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_XmlMXCAFDoc_DatumDriver {
     XmlMXCAFDoc_DatumDriver* _get_reference() {
-    return (XmlMXCAFDoc_DatumDriver*)$self->Access();
+    return (XmlMXCAFDoc_DatumDriver*)$self->get();
     }
 };
 
 %extend Handle_XmlMXCAFDoc_DatumDriver {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend XmlMXCAFDoc_DatumDriver {
@@ -582,19 +766,20 @@ class Handle_XmlMXCAFDoc_DimTolDriver : public Handle_XmlMDF_ADriver {
         static const Handle_XmlMXCAFDoc_DimTolDriver DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_XmlMXCAFDoc_DimTolDriver {
     XmlMXCAFDoc_DimTolDriver* _get_reference() {
-    return (XmlMXCAFDoc_DimTolDriver*)$self->Access();
+    return (XmlMXCAFDoc_DimTolDriver*)$self->get();
     }
 };
 
 %extend Handle_XmlMXCAFDoc_DimTolDriver {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend XmlMXCAFDoc_DimTolDriver {
@@ -669,19 +854,20 @@ class Handle_XmlMXCAFDoc_DimTolToolDriver : public Handle_XmlMDF_ADriver {
         static const Handle_XmlMXCAFDoc_DimTolToolDriver DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_XmlMXCAFDoc_DimTolToolDriver {
     XmlMXCAFDoc_DimTolToolDriver* _get_reference() {
-    return (XmlMXCAFDoc_DimTolToolDriver*)$self->Access();
+    return (XmlMXCAFDoc_DimTolToolDriver*)$self->get();
     }
 };
 
 %extend Handle_XmlMXCAFDoc_DimTolToolDriver {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend XmlMXCAFDoc_DimTolToolDriver {
@@ -756,19 +942,20 @@ class Handle_XmlMXCAFDoc_DocumentToolDriver : public Handle_XmlMDF_ADriver {
         static const Handle_XmlMXCAFDoc_DocumentToolDriver DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_XmlMXCAFDoc_DocumentToolDriver {
     XmlMXCAFDoc_DocumentToolDriver* _get_reference() {
-    return (XmlMXCAFDoc_DocumentToolDriver*)$self->Access();
+    return (XmlMXCAFDoc_DocumentToolDriver*)$self->get();
     }
 };
 
 %extend Handle_XmlMXCAFDoc_DocumentToolDriver {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend XmlMXCAFDoc_DocumentToolDriver {
@@ -843,19 +1030,20 @@ class Handle_XmlMXCAFDoc_GraphNodeDriver : public Handle_XmlMDF_ADriver {
         static const Handle_XmlMXCAFDoc_GraphNodeDriver DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_XmlMXCAFDoc_GraphNodeDriver {
     XmlMXCAFDoc_GraphNodeDriver* _get_reference() {
-    return (XmlMXCAFDoc_GraphNodeDriver*)$self->Access();
+    return (XmlMXCAFDoc_GraphNodeDriver*)$self->get();
     }
 };
 
 %extend Handle_XmlMXCAFDoc_GraphNodeDriver {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend XmlMXCAFDoc_GraphNodeDriver {
@@ -930,19 +1118,20 @@ class Handle_XmlMXCAFDoc_LayerToolDriver : public Handle_XmlMDF_ADriver {
         static const Handle_XmlMXCAFDoc_LayerToolDriver DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_XmlMXCAFDoc_LayerToolDriver {
     XmlMXCAFDoc_LayerToolDriver* _get_reference() {
-    return (XmlMXCAFDoc_LayerToolDriver*)$self->Access();
+    return (XmlMXCAFDoc_LayerToolDriver*)$self->get();
     }
 };
 
 %extend Handle_XmlMXCAFDoc_LayerToolDriver {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend XmlMXCAFDoc_LayerToolDriver {
@@ -1047,19 +1236,20 @@ class Handle_XmlMXCAFDoc_LocationDriver : public Handle_XmlMDF_ADriver {
         static const Handle_XmlMXCAFDoc_LocationDriver DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_XmlMXCAFDoc_LocationDriver {
     XmlMXCAFDoc_LocationDriver* _get_reference() {
-    return (XmlMXCAFDoc_LocationDriver*)$self->Access();
+    return (XmlMXCAFDoc_LocationDriver*)$self->get();
     }
 };
 
 %extend Handle_XmlMXCAFDoc_LocationDriver {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend XmlMXCAFDoc_LocationDriver {
@@ -1134,19 +1324,20 @@ class Handle_XmlMXCAFDoc_MaterialDriver : public Handle_XmlMDF_ADriver {
         static const Handle_XmlMXCAFDoc_MaterialDriver DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_XmlMXCAFDoc_MaterialDriver {
     XmlMXCAFDoc_MaterialDriver* _get_reference() {
-    return (XmlMXCAFDoc_MaterialDriver*)$self->Access();
+    return (XmlMXCAFDoc_MaterialDriver*)$self->get();
     }
 };
 
 %extend Handle_XmlMXCAFDoc_MaterialDriver {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend XmlMXCAFDoc_MaterialDriver {
@@ -1221,22 +1412,189 @@ class Handle_XmlMXCAFDoc_MaterialToolDriver : public Handle_XmlMDF_ADriver {
         static const Handle_XmlMXCAFDoc_MaterialToolDriver DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_XmlMXCAFDoc_MaterialToolDriver {
     XmlMXCAFDoc_MaterialToolDriver* _get_reference() {
-    return (XmlMXCAFDoc_MaterialToolDriver*)$self->Access();
+    return (XmlMXCAFDoc_MaterialToolDriver*)$self->get();
     }
 };
 
 %extend Handle_XmlMXCAFDoc_MaterialToolDriver {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend XmlMXCAFDoc_MaterialToolDriver {
+	%pythoncode {
+	__repr__ = _dumps_object
+	}
+};
+%nodefaultctor XmlMXCAFDoc_NoteDriver;
+class XmlMXCAFDoc_NoteDriver : public XmlMDF_ADriver {
+	public:
+		%feature("compactdefaultargs") Paste;
+		%feature("autodoc", "	:param theSource:
+	:type theSource: XmlObjMgt_Persistent &
+	:param theTarget:
+	:type theTarget: Handle_TDF_Attribute &
+	:param theRelocTable:
+	:type theRelocTable: XmlObjMgt_RRelocationTable &
+	:rtype: bool
+") Paste;
+		Standard_Boolean Paste (const XmlObjMgt_Persistent & theSource,const Handle_TDF_Attribute & theTarget,XmlObjMgt_RRelocationTable & theRelocTable);
+		%feature("compactdefaultargs") Paste;
+		%feature("autodoc", "	:param theSource:
+	:type theSource: Handle_TDF_Attribute &
+	:param theTarget:
+	:type theTarget: XmlObjMgt_Persistent &
+	:param theRelocTable:
+	:type theRelocTable: XmlObjMgt_SRelocationTable &
+	:rtype: None
+") Paste;
+		void Paste (const Handle_TDF_Attribute & theSource,XmlObjMgt_Persistent & theTarget,XmlObjMgt_SRelocationTable & theRelocTable);
+};
+
+
+%extend XmlMXCAFDoc_NoteDriver {
+	%pythoncode {
+		def GetHandle(self):
+		    try:
+		        return self.thisHandle
+		    except:
+		        self.thisHandle = Handle_XmlMXCAFDoc_NoteDriver(self)
+		        self.thisown = False
+		        return self.thisHandle
+	}
+};
+
+%pythonappend Handle_XmlMXCAFDoc_NoteDriver::Handle_XmlMXCAFDoc_NoteDriver %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
+%nodefaultctor Handle_XmlMXCAFDoc_NoteDriver;
+class Handle_XmlMXCAFDoc_NoteDriver : public Handle_XmlMDF_ADriver {
+
+    public:
+        // constructors
+        Handle_XmlMXCAFDoc_NoteDriver();
+        Handle_XmlMXCAFDoc_NoteDriver(const Handle_XmlMXCAFDoc_NoteDriver &aHandle);
+        Handle_XmlMXCAFDoc_NoteDriver(const XmlMXCAFDoc_NoteDriver *anItem);
+        void Nullify();
+        Standard_Boolean IsNull() const;
+        static const Handle_XmlMXCAFDoc_NoteDriver DownCast(const Handle_Standard_Transient &AnObject);
+
+};
+
+%extend Handle_XmlMXCAFDoc_NoteDriver {
+    XmlMXCAFDoc_NoteDriver* _get_reference() {
+    return (XmlMXCAFDoc_NoteDriver*)$self->get();
+    }
+};
+
+%extend Handle_XmlMXCAFDoc_NoteDriver {
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
+};
+
+%extend XmlMXCAFDoc_NoteDriver {
+	%pythoncode {
+	__repr__ = _dumps_object
+	}
+};
+%nodefaultctor XmlMXCAFDoc_NotesToolDriver;
+class XmlMXCAFDoc_NotesToolDriver : public XmlMDF_ADriver {
+	public:
+		%feature("compactdefaultargs") XmlMXCAFDoc_NotesToolDriver;
+		%feature("autodoc", "	:param theMsgDriver:
+	:type theMsgDriver: Handle_CDM_MessageDriver &
+	:rtype: None
+") XmlMXCAFDoc_NotesToolDriver;
+		 XmlMXCAFDoc_NotesToolDriver (const Handle_CDM_MessageDriver & theMsgDriver);
+		%feature("compactdefaultargs") NewEmpty;
+		%feature("autodoc", "	:rtype: Handle_TDF_Attribute
+") NewEmpty;
+		Handle_TDF_Attribute NewEmpty ();
+		%feature("compactdefaultargs") Paste;
+		%feature("autodoc", "	:param theSource:
+	:type theSource: XmlObjMgt_Persistent &
+	:param theTarget:
+	:type theTarget: Handle_TDF_Attribute &
+	:param theRelocTable:
+	:type theRelocTable: XmlObjMgt_RRelocationTable &
+	:rtype: bool
+") Paste;
+		Standard_Boolean Paste (const XmlObjMgt_Persistent & theSource,const Handle_TDF_Attribute & theTarget,XmlObjMgt_RRelocationTable & theRelocTable);
+		%feature("compactdefaultargs") Paste;
+		%feature("autodoc", "	:param theSource:
+	:type theSource: Handle_TDF_Attribute &
+	:param theTarget:
+	:type theTarget: XmlObjMgt_Persistent &
+	:param theRelocTable:
+	:type theRelocTable: XmlObjMgt_SRelocationTable &
+	:rtype: None
+") Paste;
+		void Paste (const Handle_TDF_Attribute & theSource,XmlObjMgt_Persistent & theTarget,XmlObjMgt_SRelocationTable & theRelocTable);
+};
+
+
+%extend XmlMXCAFDoc_NotesToolDriver {
+	%pythoncode {
+		def GetHandle(self):
+		    try:
+		        return self.thisHandle
+		    except:
+		        self.thisHandle = Handle_XmlMXCAFDoc_NotesToolDriver(self)
+		        self.thisown = False
+		        return self.thisHandle
+	}
+};
+
+%pythonappend Handle_XmlMXCAFDoc_NotesToolDriver::Handle_XmlMXCAFDoc_NotesToolDriver %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
+%nodefaultctor Handle_XmlMXCAFDoc_NotesToolDriver;
+class Handle_XmlMXCAFDoc_NotesToolDriver : public Handle_XmlMDF_ADriver {
+
+    public:
+        // constructors
+        Handle_XmlMXCAFDoc_NotesToolDriver();
+        Handle_XmlMXCAFDoc_NotesToolDriver(const Handle_XmlMXCAFDoc_NotesToolDriver &aHandle);
+        Handle_XmlMXCAFDoc_NotesToolDriver(const XmlMXCAFDoc_NotesToolDriver *anItem);
+        void Nullify();
+        Standard_Boolean IsNull() const;
+        static const Handle_XmlMXCAFDoc_NotesToolDriver DownCast(const Handle_Standard_Transient &AnObject);
+
+};
+
+%extend Handle_XmlMXCAFDoc_NotesToolDriver {
+    XmlMXCAFDoc_NotesToolDriver* _get_reference() {
+    return (XmlMXCAFDoc_NotesToolDriver*)$self->get();
+    }
+};
+
+%extend Handle_XmlMXCAFDoc_NotesToolDriver {
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
+};
+
+%extend XmlMXCAFDoc_NotesToolDriver {
 	%pythoncode {
 	__repr__ = _dumps_object
 	}
@@ -1308,22 +1666,111 @@ class Handle_XmlMXCAFDoc_ShapeToolDriver : public Handle_XmlMDF_ADriver {
         static const Handle_XmlMXCAFDoc_ShapeToolDriver DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_XmlMXCAFDoc_ShapeToolDriver {
     XmlMXCAFDoc_ShapeToolDriver* _get_reference() {
-    return (XmlMXCAFDoc_ShapeToolDriver*)$self->Access();
+    return (XmlMXCAFDoc_ShapeToolDriver*)$self->get();
     }
 };
 
 %extend Handle_XmlMXCAFDoc_ShapeToolDriver {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend XmlMXCAFDoc_ShapeToolDriver {
+	%pythoncode {
+	__repr__ = _dumps_object
+	}
+};
+%nodefaultctor XmlMXCAFDoc_ViewToolDriver;
+class XmlMXCAFDoc_ViewToolDriver : public XmlMDF_ADriver {
+	public:
+		%feature("compactdefaultargs") XmlMXCAFDoc_ViewToolDriver;
+		%feature("autodoc", "	:param theMsgDriver:
+	:type theMsgDriver: Handle_CDM_MessageDriver &
+	:rtype: None
+") XmlMXCAFDoc_ViewToolDriver;
+		 XmlMXCAFDoc_ViewToolDriver (const Handle_CDM_MessageDriver & theMsgDriver);
+		%feature("compactdefaultargs") NewEmpty;
+		%feature("autodoc", "	:rtype: Handle_TDF_Attribute
+") NewEmpty;
+		virtual Handle_TDF_Attribute NewEmpty ();
+		%feature("compactdefaultargs") Paste;
+		%feature("autodoc", "	:param theSource:
+	:type theSource: XmlObjMgt_Persistent &
+	:param theTarget:
+	:type theTarget: Handle_TDF_Attribute &
+	:param theRelocTable:
+	:type theRelocTable: XmlObjMgt_RRelocationTable &
+	:rtype: bool
+") Paste;
+		virtual Standard_Boolean Paste (const XmlObjMgt_Persistent & theSource,const Handle_TDF_Attribute & theTarget,XmlObjMgt_RRelocationTable & theRelocTable);
+		%feature("compactdefaultargs") Paste;
+		%feature("autodoc", "	:param theSource:
+	:type theSource: Handle_TDF_Attribute &
+	:param theTarget:
+	:type theTarget: XmlObjMgt_Persistent &
+	:param theRelocTable:
+	:type theRelocTable: XmlObjMgt_SRelocationTable &
+	:rtype: void
+") Paste;
+		virtual void Paste (const Handle_TDF_Attribute & theSource,XmlObjMgt_Persistent & theTarget,XmlObjMgt_SRelocationTable & theRelocTable);
+};
+
+
+%extend XmlMXCAFDoc_ViewToolDriver {
+	%pythoncode {
+		def GetHandle(self):
+		    try:
+		        return self.thisHandle
+		    except:
+		        self.thisHandle = Handle_XmlMXCAFDoc_ViewToolDriver(self)
+		        self.thisown = False
+		        return self.thisHandle
+	}
+};
+
+%pythonappend Handle_XmlMXCAFDoc_ViewToolDriver::Handle_XmlMXCAFDoc_ViewToolDriver %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
+%nodefaultctor Handle_XmlMXCAFDoc_ViewToolDriver;
+class Handle_XmlMXCAFDoc_ViewToolDriver : public Handle_XmlMDF_ADriver {
+
+    public:
+        // constructors
+        Handle_XmlMXCAFDoc_ViewToolDriver();
+        Handle_XmlMXCAFDoc_ViewToolDriver(const Handle_XmlMXCAFDoc_ViewToolDriver &aHandle);
+        Handle_XmlMXCAFDoc_ViewToolDriver(const XmlMXCAFDoc_ViewToolDriver *anItem);
+        void Nullify();
+        Standard_Boolean IsNull() const;
+        static const Handle_XmlMXCAFDoc_ViewToolDriver DownCast(const Handle_Standard_Transient &AnObject);
+
+};
+
+%extend Handle_XmlMXCAFDoc_ViewToolDriver {
+    XmlMXCAFDoc_ViewToolDriver* _get_reference() {
+    return (XmlMXCAFDoc_ViewToolDriver*)$self->get();
+    }
+};
+
+%extend Handle_XmlMXCAFDoc_ViewToolDriver {
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
+};
+
+%extend XmlMXCAFDoc_ViewToolDriver {
 	%pythoncode {
 	__repr__ = _dumps_object
 	}
@@ -1395,22 +1842,267 @@ class Handle_XmlMXCAFDoc_VolumeDriver : public Handle_XmlMDF_ADriver {
         static const Handle_XmlMXCAFDoc_VolumeDriver DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_XmlMXCAFDoc_VolumeDriver {
     XmlMXCAFDoc_VolumeDriver* _get_reference() {
-    return (XmlMXCAFDoc_VolumeDriver*)$self->Access();
+    return (XmlMXCAFDoc_VolumeDriver*)$self->get();
     }
 };
 
 %extend Handle_XmlMXCAFDoc_VolumeDriver {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend XmlMXCAFDoc_VolumeDriver {
+	%pythoncode {
+	__repr__ = _dumps_object
+	}
+};
+%nodefaultctor XmlMXCAFDoc_NoteBinDataDriver;
+class XmlMXCAFDoc_NoteBinDataDriver : public XmlMXCAFDoc_NoteDriver {
+	public:
+		%feature("compactdefaultargs") XmlMXCAFDoc_NoteBinDataDriver;
+		%feature("autodoc", "	:param theMessageDriver:
+	:type theMessageDriver: Handle_CDM_MessageDriver &
+	:rtype: None
+") XmlMXCAFDoc_NoteBinDataDriver;
+		 XmlMXCAFDoc_NoteBinDataDriver (const Handle_CDM_MessageDriver & theMessageDriver);
+		%feature("compactdefaultargs") NewEmpty;
+		%feature("autodoc", "	:rtype: Handle_TDF_Attribute
+") NewEmpty;
+		Handle_TDF_Attribute NewEmpty ();
+		%feature("compactdefaultargs") Paste;
+		%feature("autodoc", "	:param theSource:
+	:type theSource: XmlObjMgt_Persistent &
+	:param theTarget:
+	:type theTarget: Handle_TDF_Attribute &
+	:param theRelocTable:
+	:type theRelocTable: XmlObjMgt_RRelocationTable &
+	:rtype: bool
+") Paste;
+		Standard_Boolean Paste (const XmlObjMgt_Persistent & theSource,const Handle_TDF_Attribute & theTarget,XmlObjMgt_RRelocationTable & theRelocTable);
+		%feature("compactdefaultargs") Paste;
+		%feature("autodoc", "	:param theSource:
+	:type theSource: Handle_TDF_Attribute &
+	:param theTarget:
+	:type theTarget: XmlObjMgt_Persistent &
+	:param theRelocTable:
+	:type theRelocTable: XmlObjMgt_SRelocationTable &
+	:rtype: None
+") Paste;
+		void Paste (const Handle_TDF_Attribute & theSource,XmlObjMgt_Persistent & theTarget,XmlObjMgt_SRelocationTable & theRelocTable);
+};
+
+
+%extend XmlMXCAFDoc_NoteBinDataDriver {
+	%pythoncode {
+		def GetHandle(self):
+		    try:
+		        return self.thisHandle
+		    except:
+		        self.thisHandle = Handle_XmlMXCAFDoc_NoteBinDataDriver(self)
+		        self.thisown = False
+		        return self.thisHandle
+	}
+};
+
+%pythonappend Handle_XmlMXCAFDoc_NoteBinDataDriver::Handle_XmlMXCAFDoc_NoteBinDataDriver %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
+%nodefaultctor Handle_XmlMXCAFDoc_NoteBinDataDriver;
+class Handle_XmlMXCAFDoc_NoteBinDataDriver : public Handle_XmlMXCAFDoc_NoteDriver {
+
+    public:
+        // constructors
+        Handle_XmlMXCAFDoc_NoteBinDataDriver();
+        Handle_XmlMXCAFDoc_NoteBinDataDriver(const Handle_XmlMXCAFDoc_NoteBinDataDriver &aHandle);
+        Handle_XmlMXCAFDoc_NoteBinDataDriver(const XmlMXCAFDoc_NoteBinDataDriver *anItem);
+        void Nullify();
+        Standard_Boolean IsNull() const;
+        static const Handle_XmlMXCAFDoc_NoteBinDataDriver DownCast(const Handle_Standard_Transient &AnObject);
+
+};
+
+%extend Handle_XmlMXCAFDoc_NoteBinDataDriver {
+    XmlMXCAFDoc_NoteBinDataDriver* _get_reference() {
+    return (XmlMXCAFDoc_NoteBinDataDriver*)$self->get();
+    }
+};
+
+%extend Handle_XmlMXCAFDoc_NoteBinDataDriver {
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
+};
+
+%extend XmlMXCAFDoc_NoteBinDataDriver {
+	%pythoncode {
+	__repr__ = _dumps_object
+	}
+};
+%nodefaultctor XmlMXCAFDoc_NoteCommentDriver;
+class XmlMXCAFDoc_NoteCommentDriver : public XmlMXCAFDoc_NoteDriver {
+	public:
+		%feature("compactdefaultargs") XmlMXCAFDoc_NoteCommentDriver;
+		%feature("autodoc", "	:param theMessageDriver:
+	:type theMessageDriver: Handle_CDM_MessageDriver &
+	:rtype: None
+") XmlMXCAFDoc_NoteCommentDriver;
+		 XmlMXCAFDoc_NoteCommentDriver (const Handle_CDM_MessageDriver & theMessageDriver);
+		%feature("compactdefaultargs") NewEmpty;
+		%feature("autodoc", "	:rtype: Handle_TDF_Attribute
+") NewEmpty;
+		Handle_TDF_Attribute NewEmpty ();
+		%feature("compactdefaultargs") Paste;
+		%feature("autodoc", "	:param theSource:
+	:type theSource: XmlObjMgt_Persistent &
+	:param theTarget:
+	:type theTarget: Handle_TDF_Attribute &
+	:param theRelocTable:
+	:type theRelocTable: XmlObjMgt_RRelocationTable &
+	:rtype: bool
+") Paste;
+		Standard_Boolean Paste (const XmlObjMgt_Persistent & theSource,const Handle_TDF_Attribute & theTarget,XmlObjMgt_RRelocationTable & theRelocTable);
+		%feature("compactdefaultargs") Paste;
+		%feature("autodoc", "	:param theSource:
+	:type theSource: Handle_TDF_Attribute &
+	:param theTarget:
+	:type theTarget: XmlObjMgt_Persistent &
+	:param theRelocTable:
+	:type theRelocTable: XmlObjMgt_SRelocationTable &
+	:rtype: None
+") Paste;
+		void Paste (const Handle_TDF_Attribute & theSource,XmlObjMgt_Persistent & theTarget,XmlObjMgt_SRelocationTable & theRelocTable);
+};
+
+
+%extend XmlMXCAFDoc_NoteCommentDriver {
+	%pythoncode {
+		def GetHandle(self):
+		    try:
+		        return self.thisHandle
+		    except:
+		        self.thisHandle = Handle_XmlMXCAFDoc_NoteCommentDriver(self)
+		        self.thisown = False
+		        return self.thisHandle
+	}
+};
+
+%pythonappend Handle_XmlMXCAFDoc_NoteCommentDriver::Handle_XmlMXCAFDoc_NoteCommentDriver %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
+%nodefaultctor Handle_XmlMXCAFDoc_NoteCommentDriver;
+class Handle_XmlMXCAFDoc_NoteCommentDriver : public Handle_XmlMXCAFDoc_NoteDriver {
+
+    public:
+        // constructors
+        Handle_XmlMXCAFDoc_NoteCommentDriver();
+        Handle_XmlMXCAFDoc_NoteCommentDriver(const Handle_XmlMXCAFDoc_NoteCommentDriver &aHandle);
+        Handle_XmlMXCAFDoc_NoteCommentDriver(const XmlMXCAFDoc_NoteCommentDriver *anItem);
+        void Nullify();
+        Standard_Boolean IsNull() const;
+        static const Handle_XmlMXCAFDoc_NoteCommentDriver DownCast(const Handle_Standard_Transient &AnObject);
+
+};
+
+%extend Handle_XmlMXCAFDoc_NoteCommentDriver {
+    XmlMXCAFDoc_NoteCommentDriver* _get_reference() {
+    return (XmlMXCAFDoc_NoteCommentDriver*)$self->get();
+    }
+};
+
+%extend Handle_XmlMXCAFDoc_NoteCommentDriver {
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
+};
+
+%extend XmlMXCAFDoc_NoteCommentDriver {
+	%pythoncode {
+	__repr__ = _dumps_object
+	}
+};
+%nodefaultctor XmlMXCAFDoc_NoteBalloonDriver;
+class XmlMXCAFDoc_NoteBalloonDriver : public XmlMXCAFDoc_NoteCommentDriver {
+	public:
+		%feature("compactdefaultargs") XmlMXCAFDoc_NoteBalloonDriver;
+		%feature("autodoc", "	:param theMessageDriver:
+	:type theMessageDriver: Handle_CDM_MessageDriver &
+	:rtype: None
+") XmlMXCAFDoc_NoteBalloonDriver;
+		 XmlMXCAFDoc_NoteBalloonDriver (const Handle_CDM_MessageDriver & theMessageDriver);
+		%feature("compactdefaultargs") NewEmpty;
+		%feature("autodoc", "	:rtype: Handle_TDF_Attribute
+") NewEmpty;
+		Handle_TDF_Attribute NewEmpty ();
+};
+
+
+%extend XmlMXCAFDoc_NoteBalloonDriver {
+	%pythoncode {
+		def GetHandle(self):
+		    try:
+		        return self.thisHandle
+		    except:
+		        self.thisHandle = Handle_XmlMXCAFDoc_NoteBalloonDriver(self)
+		        self.thisown = False
+		        return self.thisHandle
+	}
+};
+
+%pythonappend Handle_XmlMXCAFDoc_NoteBalloonDriver::Handle_XmlMXCAFDoc_NoteBalloonDriver %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
+%nodefaultctor Handle_XmlMXCAFDoc_NoteBalloonDriver;
+class Handle_XmlMXCAFDoc_NoteBalloonDriver : public Handle_XmlMXCAFDoc_NoteCommentDriver {
+
+    public:
+        // constructors
+        Handle_XmlMXCAFDoc_NoteBalloonDriver();
+        Handle_XmlMXCAFDoc_NoteBalloonDriver(const Handle_XmlMXCAFDoc_NoteBalloonDriver &aHandle);
+        Handle_XmlMXCAFDoc_NoteBalloonDriver(const XmlMXCAFDoc_NoteBalloonDriver *anItem);
+        void Nullify();
+        Standard_Boolean IsNull() const;
+        static const Handle_XmlMXCAFDoc_NoteBalloonDriver DownCast(const Handle_Standard_Transient &AnObject);
+
+};
+
+%extend Handle_XmlMXCAFDoc_NoteBalloonDriver {
+    XmlMXCAFDoc_NoteBalloonDriver* _get_reference() {
+    return (XmlMXCAFDoc_NoteBalloonDriver*)$self->get();
+    }
+};
+
+%extend Handle_XmlMXCAFDoc_NoteBalloonDriver {
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
+};
+
+%extend XmlMXCAFDoc_NoteBalloonDriver {
 	%pythoncode {
 	__repr__ = _dumps_object
 	}

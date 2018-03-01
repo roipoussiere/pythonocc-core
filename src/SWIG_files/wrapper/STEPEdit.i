@@ -1,5 +1,5 @@
 /*
-Copyright 2008-2017 Thomas Paviot (tpaviot@gmail.com)
+Copyright 2008-2018 Thomas Paviot (tpaviot@gmail.com)
 
 
 This file is part of pythonOCC.
@@ -56,6 +56,9 @@ def register_handle(handle, base_object):
 /* typedefs */
 /* end typedefs declaration */
 
+/* templates */
+/* end templates declaration */
+
 /* public enums */
 /* end public enums declaration */
 
@@ -63,7 +66,7 @@ def register_handle(handle, base_object):
 class STEPEdit {
 	public:
 		%feature("compactdefaultargs") Protocol;
-		%feature("autodoc", "	* Returns a Protocol fit for STEP (creates the first time)
+		%feature("autodoc", "	* Returns a Protocol fit for STEP --creates the first time--
 
 	:rtype: Handle_Interface_Protocol
 ") Protocol;
@@ -75,7 +78,7 @@ class STEPEdit {
 ") NewModel;
 		static Handle_StepData_StepModel NewModel ();
 		%feature("compactdefaultargs") SignType;
-		%feature("autodoc", "	* Returns a SignType fit for STEP (creates the first time)
+		%feature("autodoc", "	* Returns a SignType fit for STEP --creates the first time--
 
 	:rtype: Handle_IFSelect_Signature
 ") SignType;
@@ -87,13 +90,13 @@ class STEPEdit {
 ") NewSelectSDR;
 		static Handle_IFSelect_SelectSignature NewSelectSDR ();
 		%feature("compactdefaultargs") NewSelectPlacedItem;
-		%feature("autodoc", "	* Creates a Selection for Placed Items, i.e. MappedItem or ContextDependentShapeRepresentation, which itself refers to a RepresentationRelationship with possible subtypes (Shape... and/or ...WithTransformation) By default in the whole StepModel
+		%feature("autodoc", "	* Creates a Selection for Placed Items, i.e. MappedItem or ContextDependentShapeRepresentation, which itself refers to a RepresentationRelationship with possible subtypes --Shape... and/or ...WithTransformation-- By default in the whole StepModel
 
 	:rtype: Handle_IFSelect_SelectSignature
 ") NewSelectPlacedItem;
 		static Handle_IFSelect_SelectSignature NewSelectPlacedItem ();
 		%feature("compactdefaultargs") NewSelectShapeRepr;
-		%feature("autodoc", "	* Creates a Selection for ShapeRepresentation and its sub-types, plus ContextDependentShapeRepresentation (which is not a sub-type of ShapeRepresentation) By default in the whole StepModel
+		%feature("autodoc", "	* Creates a Selection for ShapeRepresentation and its sub-types, plus ContextDependentShapeRepresentation --which is not a sub-type of ShapeRepresentation-- By default in the whole StepModel
 
 	:rtype: Handle_IFSelect_SelectSignature
 ") NewSelectShapeRepr;
@@ -185,19 +188,20 @@ class Handle_STEPEdit_EditContext : public Handle_IFSelect_Editor {
         static const Handle_STEPEdit_EditContext DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_STEPEdit_EditContext {
     STEPEdit_EditContext* _get_reference() {
-    return (STEPEdit_EditContext*)$self->Access();
+    return (STEPEdit_EditContext*)$self->get();
     }
 };
 
 %extend Handle_STEPEdit_EditContext {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend STEPEdit_EditContext {
@@ -284,19 +288,20 @@ class Handle_STEPEdit_EditSDR : public Handle_IFSelect_Editor {
         static const Handle_STEPEdit_EditSDR DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_STEPEdit_EditSDR {
     STEPEdit_EditSDR* _get_reference() {
-    return (STEPEdit_EditSDR*)$self->Access();
+    return (STEPEdit_EditSDR*)$self->get();
     }
 };
 
 %extend Handle_STEPEdit_EditSDR {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend STEPEdit_EditSDR {

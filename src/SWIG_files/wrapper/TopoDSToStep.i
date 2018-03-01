@@ -1,5 +1,5 @@
 /*
-Copyright 2008-2017 Thomas Paviot (tpaviot@gmail.com)
+Copyright 2008-2018 Thomas Paviot (tpaviot@gmail.com)
 
 
 This file is part of pythonOCC.
@@ -55,6 +55,9 @@ def register_handle(handle, base_object):
 
 /* typedefs */
 /* end typedefs declaration */
+
+/* templates */
+/* end templates declaration */
 
 /* public enums */
 enum TopoDSToStep_MakeEdgeError {
@@ -132,7 +135,7 @@ class TopoDSToStep {
 ") DecodeVertexError;
 		static Handle_TCollection_HAsciiString DecodeVertexError (const TopoDSToStep_MakeVertexError E);
 		%feature("compactdefaultargs") AddResult;
-		%feature("autodoc", "	* Adds an entity into the list of results (binders) for shape stored in FinderProcess
+		%feature("autodoc", "	* Adds an entity into the list of results --binders-- for shape stored in FinderProcess
 
 	:param FP:
 	:type FP: Handle_Transfer_FinderProcess &
@@ -144,7 +147,7 @@ class TopoDSToStep {
 ") AddResult;
 		static void AddResult (const Handle_Transfer_FinderProcess & FP,const TopoDS_Shape & Shape,const Handle_Standard_Transient & entity);
 		%feature("compactdefaultargs") AddResult;
-		%feature("autodoc", "	* Adds all entities recorded in Tool into the map of results (binders) stored in FinderProcess
+		%feature("autodoc", "	* Adds all entities recorded in Tool into the map of results --binders-- stored in FinderProcess
 
 	:param FP:
 	:type FP: Handle_Transfer_FinderProcess &
@@ -321,7 +324,7 @@ class TopoDSToStep_Tool {
 ") Map;
 		const MoniTool_DataMapOfShapeTransient & Map ();
 		%feature("compactdefaultargs") PCurveMode;
-		%feature("autodoc", "	* Returns mode for writing pcurves (initialized by parameter write.surfacecurve.mode)
+		%feature("autodoc", "	* Returns mode for writing pcurves --initialized by parameter write.surfacecurve.mode--
 
 	:rtype: int
 ") PCurveMode;

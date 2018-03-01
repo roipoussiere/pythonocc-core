@@ -1,5 +1,5 @@
 /*
-Copyright 2008-2017 Thomas Paviot (tpaviot@gmail.com)
+Copyright 2008-2018 Thomas Paviot (tpaviot@gmail.com)
 
 
 This file is part of pythonOCC.
@@ -57,6 +57,9 @@ def register_handle(handle, base_object):
 typedef Standard_Boolean ( * ShapeProcess_OperFunc ) ( const Handle_ShapeProcess_Context & context );
 /* end typedefs declaration */
 
+/* templates */
+/* end templates declaration */
+
 /* public enums */
 /* end public enums declaration */
 
@@ -84,7 +87,7 @@ class ShapeProcess {
 ") FindOperator;
 		static Standard_Boolean FindOperator (const char * name,Handle_ShapeProcess_Operator & op);
 		%feature("compactdefaultargs") Perform;
-		%feature("autodoc", "	* Performs a specified sequence of operators on Context Resource file and other data should be already loaded to Context (including description of sequence seq)
+		%feature("autodoc", "	* Performs a specified sequence of operators on Context Resource file and other data should be already loaded to Context --including description of sequence seq--
 
 	:param context:
 	:type context: Handle_ShapeProcess_Context &
@@ -102,7 +105,7 @@ class ShapeProcess {
 	}
 };
 %nodefaultctor ShapeProcess_Context;
-class ShapeProcess_Context : public MMgt_TShared {
+class ShapeProcess_Context : public Standard_Transient {
 	public:
 		%feature("compactdefaultargs") ShapeProcess_Context;
 		%feature("autodoc", "	* Creates an empty tool
@@ -111,7 +114,7 @@ class ShapeProcess_Context : public MMgt_TShared {
 ") ShapeProcess_Context;
 		 ShapeProcess_Context ();
 		%feature("compactdefaultargs") ShapeProcess_Context;
-		%feature("autodoc", "	* Creates a new tool and initialises by name of resource file and (if specified) starting scope Calls method Init()
+		%feature("autodoc", "	* Creates a new tool and initialises by name of resource file and --if specified-- starting scope Calls method Init----
 
 	:param file:
 	:type file: char *
@@ -121,7 +124,7 @@ class ShapeProcess_Context : public MMgt_TShared {
 ") ShapeProcess_Context;
 		 ShapeProcess_Context (const char * file,const char * scope = "");
 		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	* Initialises a tool by loading resource file and (if specified) sets starting scope Returns False if resource file not found
+		%feature("autodoc", "	* Initialises a tool by loading resource file and --if specified-- sets starting scope Returns False if resource file not found
 
 	:param file:
 	:type file: char *
@@ -145,7 +148,7 @@ class ShapeProcess_Context : public MMgt_TShared {
 ") ResourceManager;
 		Handle_Resource_Manager ResourceManager ();
 		%feature("compactdefaultargs") SetScope;
-		%feature("autodoc", "	* Set a new (sub)scope
+		%feature("autodoc", "	* Set a new --sub--scope
 
 	:param scope:
 	:type scope: char *
@@ -298,7 +301,7 @@ class ShapeProcess_Context : public MMgt_TShared {
 %}
 
 %nodefaultctor Handle_ShapeProcess_Context;
-class Handle_ShapeProcess_Context : public Handle_MMgt_TShared {
+class Handle_ShapeProcess_Context : public Handle_Standard_Transient {
 
     public:
         // constructors
@@ -310,270 +313,23 @@ class Handle_ShapeProcess_Context : public Handle_MMgt_TShared {
         static const Handle_ShapeProcess_Context DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_ShapeProcess_Context {
     ShapeProcess_Context* _get_reference() {
-    return (ShapeProcess_Context*)$self->Access();
+    return (ShapeProcess_Context*)$self->get();
     }
 };
 
 %extend Handle_ShapeProcess_Context {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend ShapeProcess_Context {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor ShapeProcess_DictionaryOfOperator;
-class ShapeProcess_DictionaryOfOperator : public MMgt_TShared {
-	public:
-		%feature("compactdefaultargs") ShapeProcess_DictionaryOfOperator;
-		%feature("autodoc", "	:rtype: None
-") ShapeProcess_DictionaryOfOperator;
-		 ShapeProcess_DictionaryOfOperator ();
-		%feature("compactdefaultargs") HasItem;
-		%feature("autodoc", "	:param name:
-	:type name: char *
-	:param exact: default value is Standard_False
-	:type exact: bool
-	:rtype: bool
-") HasItem;
-		Standard_Boolean HasItem (const char * name,const Standard_Boolean exact = Standard_False);
-		%feature("compactdefaultargs") HasItem;
-		%feature("autodoc", "	:param name:
-	:type name: TCollection_AsciiString &
-	:param exact: default value is Standard_True
-	:type exact: bool
-	:rtype: bool
-") HasItem;
-		Standard_Boolean HasItem (const TCollection_AsciiString & name,const Standard_Boolean exact = Standard_True);
-		%feature("compactdefaultargs") Item;
-		%feature("autodoc", "	:param name:
-	:type name: char *
-	:param exact: default value is Standard_True
-	:type exact: bool
-	:rtype: Handle_ShapeProcess_Operator
-") Item;
-		Handle_ShapeProcess_Operator Item (const char * name,const Standard_Boolean exact = Standard_True);
-		%feature("compactdefaultargs") Item;
-		%feature("autodoc", "	:param name:
-	:type name: TCollection_AsciiString &
-	:param exact: default value is Standard_True
-	:type exact: bool
-	:rtype: Handle_ShapeProcess_Operator
-") Item;
-		Handle_ShapeProcess_Operator Item (const TCollection_AsciiString & name,const Standard_Boolean exact = Standard_True);
-		%feature("compactdefaultargs") GetItem;
-		%feature("autodoc", "	:param name:
-	:type name: char *
-	:param anitem:
-	:type anitem: Handle_ShapeProcess_Operator &
-	:param exact: default value is Standard_True
-	:type exact: bool
-	:rtype: bool
-") GetItem;
-		Standard_Boolean GetItem (const char * name,Handle_ShapeProcess_Operator & anitem,const Standard_Boolean exact = Standard_True);
-		%feature("compactdefaultargs") GetItem;
-		%feature("autodoc", "	:param name:
-	:type name: TCollection_AsciiString &
-	:param anitem:
-	:type anitem: Handle_ShapeProcess_Operator &
-	:param exact: default value is Standard_True
-	:type exact: bool
-	:rtype: bool
-") GetItem;
-		Standard_Boolean GetItem (const TCollection_AsciiString & name,Handle_ShapeProcess_Operator & anitem,const Standard_Boolean exact = Standard_True);
-		%feature("compactdefaultargs") SetItem;
-		%feature("autodoc", "	:param name:
-	:type name: char *
-	:param anitem:
-	:type anitem: Handle_ShapeProcess_Operator &
-	:param exact: default value is Standard_True
-	:type exact: bool
-	:rtype: None
-") SetItem;
-		void SetItem (const char * name,const Handle_ShapeProcess_Operator & anitem,const Standard_Boolean exact = Standard_True);
-		%feature("compactdefaultargs") SetItem;
-		%feature("autodoc", "	:param name:
-	:type name: TCollection_AsciiString &
-	:param anitem:
-	:type anitem: Handle_ShapeProcess_Operator &
-	:param exact: default value is Standard_True
-	:type exact: bool
-	:rtype: None
-") SetItem;
-		void SetItem (const TCollection_AsciiString & name,const Handle_ShapeProcess_Operator & anitem,const Standard_Boolean exact = Standard_True);
-		%feature("compactdefaultargs") NewItem;
-		%feature("autodoc", "	:param name:
-	:type name: char *
-	:param isvalued:
-	:type isvalued: bool
-	:param exact: default value is Standard_True
-	:type exact: bool
-	:rtype: Handle_ShapeProcess_Operator
-") NewItem;
-		Handle_ShapeProcess_Operator NewItem (const char * name,Standard_Boolean &OutValue,const Standard_Boolean exact = Standard_True);
-		%feature("compactdefaultargs") NewItem;
-		%feature("autodoc", "	:param name:
-	:type name: TCollection_AsciiString &
-	:param isvalued:
-	:type isvalued: bool
-	:param exact: default value is Standard_True
-	:type exact: bool
-	:rtype: Handle_ShapeProcess_Operator
-") NewItem;
-		Handle_ShapeProcess_Operator NewItem (const TCollection_AsciiString & name,Standard_Boolean &OutValue,const Standard_Boolean exact = Standard_True);
-		%feature("compactdefaultargs") RemoveItem;
-		%feature("autodoc", "	:param name:
-	:type name: char *
-	:param cln: default value is Standard_True
-	:type cln: bool
-	:param exact: default value is Standard_True
-	:type exact: bool
-	:rtype: bool
-") RemoveItem;
-		Standard_Boolean RemoveItem (const char * name,const Standard_Boolean cln = Standard_True,const Standard_Boolean exact = Standard_True);
-		%feature("compactdefaultargs") RemoveItem;
-		%feature("autodoc", "	:param name:
-	:type name: TCollection_AsciiString &
-	:param cln: default value is Standard_True
-	:type cln: bool
-	:param exact: default value is Standard_True
-	:type exact: bool
-	:rtype: bool
-") RemoveItem;
-		Standard_Boolean RemoveItem (const TCollection_AsciiString & name,const Standard_Boolean cln = Standard_True,const Standard_Boolean exact = Standard_True);
-		%feature("compactdefaultargs") Clean;
-		%feature("autodoc", "	:rtype: None
-") Clean;
-		void Clean ();
-		%feature("compactdefaultargs") IsEmpty;
-		%feature("autodoc", "	:rtype: bool
-") IsEmpty;
-		Standard_Boolean IsEmpty ();
-		%feature("compactdefaultargs") Clear;
-		%feature("autodoc", "	:rtype: None
-") Clear;
-		void Clear ();
-		%feature("compactdefaultargs") Copy;
-		%feature("autodoc", "	:rtype: Handle_ShapeProcess_DictionaryOfOperator
-") Copy;
-		Handle_ShapeProcess_DictionaryOfOperator Copy ();
-		%feature("compactdefaultargs") Complete;
-		%feature("autodoc", "	:param acell:
-	:type acell: Handle_ShapeProcess_DictionaryOfOperator &
-	:rtype: bool
-") Complete;
-		Standard_Boolean Complete (Handle_ShapeProcess_DictionaryOfOperator & acell);
-};
-
-
-%extend ShapeProcess_DictionaryOfOperator {
-	%pythoncode {
-		def GetHandle(self):
-		    try:
-		        return self.thisHandle
-		    except:
-		        self.thisHandle = Handle_ShapeProcess_DictionaryOfOperator(self)
-		        self.thisown = False
-		        return self.thisHandle
-	}
-};
-
-%pythonappend Handle_ShapeProcess_DictionaryOfOperator::Handle_ShapeProcess_DictionaryOfOperator %{
-    # register the handle in the base object
-    if len(args) > 0:
-        register_handle(self, args[0])
-%}
-
-%nodefaultctor Handle_ShapeProcess_DictionaryOfOperator;
-class Handle_ShapeProcess_DictionaryOfOperator : public Handle_MMgt_TShared {
-
-    public:
-        // constructors
-        Handle_ShapeProcess_DictionaryOfOperator();
-        Handle_ShapeProcess_DictionaryOfOperator(const Handle_ShapeProcess_DictionaryOfOperator &aHandle);
-        Handle_ShapeProcess_DictionaryOfOperator(const ShapeProcess_DictionaryOfOperator *anItem);
-        void Nullify();
-        Standard_Boolean IsNull() const;
-        static const Handle_ShapeProcess_DictionaryOfOperator DownCast(const Handle_Standard_Transient &AnObject);
-
-};
-%extend Handle_ShapeProcess_DictionaryOfOperator {
-    ShapeProcess_DictionaryOfOperator* _get_reference() {
-    return (ShapeProcess_DictionaryOfOperator*)$self->Access();
-    }
-};
-
-%extend Handle_ShapeProcess_DictionaryOfOperator {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
-};
-
-%extend ShapeProcess_DictionaryOfOperator {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor ShapeProcess_IteratorOfDictionaryOfOperator;
-class ShapeProcess_IteratorOfDictionaryOfOperator {
-	public:
-		%feature("compactdefaultargs") ShapeProcess_IteratorOfDictionaryOfOperator;
-		%feature("autodoc", "	:param acell:
-	:type acell: Handle_ShapeProcess_DictionaryOfOperator &
-	:rtype: None
-") ShapeProcess_IteratorOfDictionaryOfOperator;
-		 ShapeProcess_IteratorOfDictionaryOfOperator (const Handle_ShapeProcess_DictionaryOfOperator & acell);
-		%feature("compactdefaultargs") ShapeProcess_IteratorOfDictionaryOfOperator;
-		%feature("autodoc", "	:param acell:
-	:type acell: Handle_ShapeProcess_DictionaryOfOperator &
-	:param basename:
-	:type basename: char *
-	:rtype: None
-") ShapeProcess_IteratorOfDictionaryOfOperator;
-		 ShapeProcess_IteratorOfDictionaryOfOperator (const Handle_ShapeProcess_DictionaryOfOperator & acell,const char * basename);
-		%feature("compactdefaultargs") ShapeProcess_IteratorOfDictionaryOfOperator;
-		%feature("autodoc", "	:param acell:
-	:type acell: Handle_ShapeProcess_DictionaryOfOperator &
-	:param basename:
-	:type basename: TCollection_AsciiString &
-	:rtype: None
-") ShapeProcess_IteratorOfDictionaryOfOperator;
-		 ShapeProcess_IteratorOfDictionaryOfOperator (const Handle_ShapeProcess_DictionaryOfOperator & acell,const TCollection_AsciiString & basename);
-		%feature("compactdefaultargs") Start;
-		%feature("autodoc", "	:rtype: None
-") Start;
-		void Start ();
-		%feature("compactdefaultargs") More;
-		%feature("autodoc", "	:rtype: bool
-") More;
-		Standard_Boolean More ();
-		%feature("compactdefaultargs") Next;
-		%feature("autodoc", "	:rtype: None
-") Next;
-		void Next ();
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:rtype: Handle_ShapeProcess_Operator
-") Value;
-		Handle_ShapeProcess_Operator Value ();
-		%feature("compactdefaultargs") Name;
-		%feature("autodoc", "	:rtype: TCollection_AsciiString
-") Name;
-		TCollection_AsciiString Name ();
-};
-
-
-%extend ShapeProcess_IteratorOfDictionaryOfOperator {
 	%pythoncode {
 	__repr__ = _dumps_object
 	}
@@ -587,7 +343,7 @@ class ShapeProcess_OperLibrary {
 ") Init;
 		static void Init ();
 		%feature("compactdefaultargs") ApplyModifier;
-		%feature("autodoc", "	* Applies BRepTools_Modification to a shape, taking into account sharing of components of compounds.
+		%feature("autodoc", "	* Applies BRepTools_Modification to a shape, taking into account sharing of components of compounds. if theMutableInput vat is set to true then imput shape S can be modified during the modification process.
 
 	:param S:
 	:type S: TopoDS_Shape &
@@ -599,9 +355,11 @@ class ShapeProcess_OperLibrary {
 	:type map: TopTools_DataMapOfShapeShape &
 	:param msg: default value is 0
 	:type msg: Handle_ShapeExtend_MsgRegistrator &
+	:param theMutableInput: default value is Standard_False
+	:type theMutableInput: bool
 	:rtype: TopoDS_Shape
 ") ApplyModifier;
-		static TopoDS_Shape ApplyModifier (const TopoDS_Shape & S,const Handle_ShapeProcess_ShapeContext & context,const Handle_BRepTools_Modification & M,TopTools_DataMapOfShapeShape & map,const Handle_ShapeExtend_MsgRegistrator & msg = 0);
+		static TopoDS_Shape ApplyModifier (const TopoDS_Shape & S,const Handle_ShapeProcess_ShapeContext & context,const Handle_BRepTools_Modification & M,TopTools_DataMapOfShapeShape & map,const Handle_ShapeExtend_MsgRegistrator & msg = 0,Standard_Boolean theMutableInput = Standard_False);
 };
 
 
@@ -611,7 +369,7 @@ class ShapeProcess_OperLibrary {
 	}
 };
 %nodefaultctor ShapeProcess_Operator;
-class ShapeProcess_Operator : public MMgt_TShared {
+class ShapeProcess_Operator : public Standard_Transient {
 	public:
 		%feature("compactdefaultargs") Perform;
 		%feature("autodoc", "	* Performs operation and eventually records changes in the context
@@ -643,7 +401,7 @@ class ShapeProcess_Operator : public MMgt_TShared {
 %}
 
 %nodefaultctor Handle_ShapeProcess_Operator;
-class Handle_ShapeProcess_Operator : public Handle_MMgt_TShared {
+class Handle_ShapeProcess_Operator : public Handle_Standard_Transient {
 
     public:
         // constructors
@@ -655,103 +413,23 @@ class Handle_ShapeProcess_Operator : public Handle_MMgt_TShared {
         static const Handle_ShapeProcess_Operator DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_ShapeProcess_Operator {
     ShapeProcess_Operator* _get_reference() {
-    return (ShapeProcess_Operator*)$self->Access();
+    return (ShapeProcess_Operator*)$self->get();
     }
 };
 
 %extend Handle_ShapeProcess_Operator {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend ShapeProcess_Operator {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor ShapeProcess_StackItemOfDictionaryOfOperator;
-class ShapeProcess_StackItemOfDictionaryOfOperator : public MMgt_TShared {
-	public:
-		%feature("compactdefaultargs") ShapeProcess_StackItemOfDictionaryOfOperator;
-		%feature("autodoc", "	:rtype: None
-") ShapeProcess_StackItemOfDictionaryOfOperator;
-		 ShapeProcess_StackItemOfDictionaryOfOperator ();
-		%feature("compactdefaultargs") ShapeProcess_StackItemOfDictionaryOfOperator;
-		%feature("autodoc", "	:param previous:
-	:type previous: Handle_ShapeProcess_StackItemOfDictionaryOfOperator &
-	:rtype: None
-") ShapeProcess_StackItemOfDictionaryOfOperator;
-		 ShapeProcess_StackItemOfDictionaryOfOperator (const Handle_ShapeProcess_StackItemOfDictionaryOfOperator & previous);
-		%feature("compactdefaultargs") Previous;
-		%feature("autodoc", "	:rtype: Handle_ShapeProcess_StackItemOfDictionaryOfOperator
-") Previous;
-		Handle_ShapeProcess_StackItemOfDictionaryOfOperator Previous ();
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:rtype: Handle_ShapeProcess_DictionaryOfOperator
-") Value;
-		Handle_ShapeProcess_DictionaryOfOperator Value ();
-		%feature("compactdefaultargs") SetValue;
-		%feature("autodoc", "	:param cval:
-	:type cval: Handle_ShapeProcess_DictionaryOfOperator &
-	:rtype: None
-") SetValue;
-		void SetValue (const Handle_ShapeProcess_DictionaryOfOperator & cval);
-};
-
-
-%extend ShapeProcess_StackItemOfDictionaryOfOperator {
-	%pythoncode {
-		def GetHandle(self):
-		    try:
-		        return self.thisHandle
-		    except:
-		        self.thisHandle = Handle_ShapeProcess_StackItemOfDictionaryOfOperator(self)
-		        self.thisown = False
-		        return self.thisHandle
-	}
-};
-
-%pythonappend Handle_ShapeProcess_StackItemOfDictionaryOfOperator::Handle_ShapeProcess_StackItemOfDictionaryOfOperator %{
-    # register the handle in the base object
-    if len(args) > 0:
-        register_handle(self, args[0])
-%}
-
-%nodefaultctor Handle_ShapeProcess_StackItemOfDictionaryOfOperator;
-class Handle_ShapeProcess_StackItemOfDictionaryOfOperator : public Handle_MMgt_TShared {
-
-    public:
-        // constructors
-        Handle_ShapeProcess_StackItemOfDictionaryOfOperator();
-        Handle_ShapeProcess_StackItemOfDictionaryOfOperator(const Handle_ShapeProcess_StackItemOfDictionaryOfOperator &aHandle);
-        Handle_ShapeProcess_StackItemOfDictionaryOfOperator(const ShapeProcess_StackItemOfDictionaryOfOperator *anItem);
-        void Nullify();
-        Standard_Boolean IsNull() const;
-        static const Handle_ShapeProcess_StackItemOfDictionaryOfOperator DownCast(const Handle_Standard_Transient &AnObject);
-
-};
-%extend Handle_ShapeProcess_StackItemOfDictionaryOfOperator {
-    ShapeProcess_StackItemOfDictionaryOfOperator* _get_reference() {
-    return (ShapeProcess_StackItemOfDictionaryOfOperator*)$self->Access();
-    }
-};
-
-%extend Handle_ShapeProcess_StackItemOfDictionaryOfOperator {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
-};
-
-%extend ShapeProcess_StackItemOfDictionaryOfOperator {
 	%pythoncode {
 	__repr__ = _dumps_object
 	}
@@ -828,7 +506,7 @@ class ShapeProcess_ShapeContext : public ShapeProcess_Context {
 ") GetDetalisation;
 		TopAbs_ShapeEnum GetDetalisation ();
 		%feature("compactdefaultargs") SetResult;
-		%feature("autodoc", "	* Sets a new result shape NOTE: this method should be used very carefully to keep consistency of modifications It is recommended to use RecordModification() methods with explicit definition of mapping from current result to a new one
+		%feature("autodoc", "	* Sets a new result shape NOTE: this method should be used very carefully to keep consistency of modifications It is recommended to use RecordModification---- methods with explicit definition of mapping from current result to a new one
 
 	:param S:
 	:type S: TopoDS_Shape &
@@ -858,7 +536,7 @@ class ShapeProcess_ShapeContext : public ShapeProcess_Context {
 ") RecordModification;
 		void RecordModification (const Handle_ShapeBuild_ReShape & repl);
 		%feature("compactdefaultargs") RecordModification;
-		%feature("autodoc", "	* Records modifications and resets result accordingly NOTE: modification of resulting shape should be explicitly defined in the maps along with modifications of subshapes //! In the last function, sh is the shape on which Modifier was run. It can be different from the whole shape, but in that case result as a whole should be reset later either by call to SetResult(), or by another call to RecordModification() which contains mapping of current result to a new one explicitly
+		%feature("autodoc", "	* Records modifications and resets result accordingly NOTE: modification of resulting shape should be explicitly defined in the maps along with modifications of subshapes //! In the last function, sh is the shape on which Modifier was run. It can be different from the whole shape, but in that case result as a whole should be reset later either by call to SetResult----, or by another call to RecordModification---- which contains mapping of current result to a new one explicitly
 
 	:param sh:
 	:type sh: TopoDS_Shape &
@@ -870,7 +548,7 @@ class ShapeProcess_ShapeContext : public ShapeProcess_Context {
 ") RecordModification;
 		void RecordModification (const TopoDS_Shape & sh,const BRepTools_Modifier & repl,const Handle_ShapeExtend_MsgRegistrator & msg = 0);
 		%feature("compactdefaultargs") AddMessage;
-		%feature("autodoc", "	* Record a message for shape S Shape S should be one of subshapes of original shape (or whole one), but not one of intermediate shapes Records only if Message() is not Null
+		%feature("autodoc", "	* Record a message for shape S Shape S should be one of subshapes of original shape --or whole one--, but not one of intermediate shapes Records only if Message---- is not Null
 
 	:param S:
 	:type S: TopoDS_Shape &
@@ -907,6 +585,20 @@ class ShapeProcess_ShapeContext : public ShapeProcess_Context {
 	:rtype: None
 ") PrintStatistics;
 		void PrintStatistics ();
+		%feature("compactdefaultargs") SetNonManifold;
+		%feature("autodoc", "	* Set NonManifold flag
+
+	:param theNonManifold:
+	:type theNonManifold: bool
+	:rtype: None
+") SetNonManifold;
+		void SetNonManifold (Standard_Boolean theNonManifold);
+		%feature("compactdefaultargs") IsNonManifold;
+		%feature("autodoc", "	* Get NonManifold flag
+
+	:rtype: bool
+") IsNonManifold;
+		Standard_Boolean IsNonManifold ();
 };
 
 
@@ -941,19 +633,20 @@ class Handle_ShapeProcess_ShapeContext : public Handle_ShapeProcess_Context {
         static const Handle_ShapeProcess_ShapeContext DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_ShapeProcess_ShapeContext {
     ShapeProcess_ShapeContext* _get_reference() {
-    return (ShapeProcess_ShapeContext*)$self->Access();
+    return (ShapeProcess_ShapeContext*)$self->get();
     }
 };
 
 %extend Handle_ShapeProcess_ShapeContext {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend ShapeProcess_ShapeContext {
@@ -965,7 +658,7 @@ class Handle_ShapeProcess_ShapeContext : public Handle_ShapeProcess_Context {
 class ShapeProcess_UOperator : public ShapeProcess_Operator {
 	public:
 		%feature("compactdefaultargs") ShapeProcess_UOperator;
-		%feature("autodoc", "	* Creates operator with implementation defined as OperFunc (static function)
+		%feature("autodoc", "	* Creates operator with implementation defined as OperFunc --static function--
 
 	:param func:
 	:type func: ShapeProcess_OperFunc
@@ -1014,19 +707,20 @@ class Handle_ShapeProcess_UOperator : public Handle_ShapeProcess_Operator {
         static const Handle_ShapeProcess_UOperator DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_ShapeProcess_UOperator {
     ShapeProcess_UOperator* _get_reference() {
-    return (ShapeProcess_UOperator*)$self->Access();
+    return (ShapeProcess_UOperator*)$self->get();
     }
 };
 
 %extend Handle_ShapeProcess_UOperator {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend ShapeProcess_UOperator {

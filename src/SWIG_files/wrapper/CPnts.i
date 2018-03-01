@@ -1,5 +1,5 @@
 /*
-Copyright 2008-2017 Thomas Paviot (tpaviot@gmail.com)
+Copyright 2008-2018 Thomas Paviot (tpaviot@gmail.com)
 
 
 This file is part of pythonOCC.
@@ -56,6 +56,9 @@ def register_handle(handle, base_object):
 /* typedefs */
 typedef Standard_Real ( * CPnts_RealFunction ) ( const Standard_Real , 	 	 	 	 	 const Standard_Address );
 /* end typedefs declaration */
+
+/* templates */
+/* end templates declaration */
 
 /* public enums */
 /* end public enums declaration */
@@ -315,7 +318,7 @@ class CPnts_AbscissaPoint {
 ") Perform;
 		void Perform (const Standard_Real Abscissa,const Standard_Real U0,const Standard_Real Resolution);
 		%feature("compactdefaultargs") Perform;
-		%feature("autodoc", "	* Computes the point at the distance <Abscissa> of the curve. U0 is the parameter of the point from which the distance is measured and Ui is the starting value for the iterative process (should be close to the final solution).
+		%feature("autodoc", "	* Computes the point at the distance <Abscissa> of the curve. U0 is the parameter of the point from which the distance is measured and Ui is the starting value for the iterative process --should be close to the final solution--.
 
 	:param Abscissa:
 	:type Abscissa: float
@@ -329,7 +332,7 @@ class CPnts_AbscissaPoint {
 ") Perform;
 		void Perform (const Standard_Real Abscissa,const Standard_Real U0,const Standard_Real Ui,const Standard_Real Resolution);
 		%feature("compactdefaultargs") AdvPerform;
-		%feature("autodoc", "	* Computes the point at the distance <Abscissa> of the curve; performs more appropriate tolerance managment; to use this method in right way it is necessary to call empty consructor. then call method Init with Tolerance = Resolution, then call AdvPermorm. U0 is the parameter of the point from which the distance is measured and Ui is the starting value for the iterative process (should be close to the final solution).
+		%feature("autodoc", "	* Computes the point at the distance <Abscissa> of the curve; performs more appropriate tolerance managment; to use this method in right way it is necessary to call empty consructor. then call method Init with Tolerance = Resolution, then call AdvPermorm. U0 is the parameter of the point from which the distance is measured and Ui is the starting value for the iterative process --should be close to the final solution--.
 
 	:param Abscissa:
 	:type Abscissa: float
@@ -378,7 +381,7 @@ class CPnts_MyGaussFunction : public math_Function {
 ") CPnts_MyGaussFunction;
 		 CPnts_MyGaussFunction ();
 		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	* F is a pointer on a function D is a client data //! Each value is computed with F(D)
+		%feature("autodoc", "	* F is a pointer on a function D is a client data //! Each value is computed with F--D--
 
 	:param F:
 	:type F: CPnts_RealFunction &
@@ -423,7 +426,7 @@ class CPnts_MyRootFunction : public math_FunctionWithDerivative {
 ") Init;
 		void Init (const CPnts_RealFunction & F,const Standard_Address D,const Standard_Integer Order);
 		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	* We want to solve Integral(X0,X,F(X,D)) = L
+		%feature("autodoc", "	* We want to solve Integral--X0,X,F--X,D---- = L
 
 	:param X0:
 	:type X0: float
@@ -433,7 +436,7 @@ class CPnts_MyRootFunction : public math_FunctionWithDerivative {
 ") Init;
 		void Init (const Standard_Real X0,const Standard_Real L);
 		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	* We want to solve Integral(X0,X,F(X,D)) = L with given tolerance
+		%feature("autodoc", "	* We want to solve Integral--X0,X,F--X,D---- = L with given tolerance
 
 	:param X0:
 	:type X0: float
@@ -445,7 +448,7 @@ class CPnts_MyRootFunction : public math_FunctionWithDerivative {
 ") Init;
 		void Init (const Standard_Real X0,const Standard_Real L,const Standard_Real Tol);
 		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	* This is Integral(X0,X,F(X,D)) - L
+		%feature("autodoc", "	* This is Integral--X0,X,F--X,D---- - L
 
 	:param X:
 	:type X: float
@@ -455,7 +458,7 @@ class CPnts_MyRootFunction : public math_FunctionWithDerivative {
 ") Value;
 		Standard_Boolean Value (const Standard_Real X,Standard_Real &OutValue);
 		%feature("compactdefaultargs") Derivative;
-		%feature("autodoc", "	* This is F(X,D)
+		%feature("autodoc", "	* This is F--X,D--
 
 	:param X:
 	:type X: float
@@ -492,7 +495,7 @@ class CPnts_UniformDeflection {
 ") CPnts_UniformDeflection;
 		 CPnts_UniformDeflection ();
 		%feature("compactdefaultargs") CPnts_UniformDeflection;
-		%feature("autodoc", "	* Computes a uniform deflection distribution of points on the curve <C>. <Deflection> defines the constant deflection value. The algorithm computes the number of points and the points. The curve <C> must be at least C2 else the computation can fail. If just some parts of the curve is C2 it is better to give the parameters bounds and to use the below constructor . if <WithControl> is True, the algorithm controls the estimate deflection when the curve is singular at the point P(u),the algorithm computes the next point as P(u + Max(CurrentStep,Abs(LastParameter-FirstParameter))) if the singularity is at the first point ,the next point calculated is the P(LastParameter)
+		%feature("autodoc", "	* Computes a uniform deflection distribution of points on the curve <C>. <Deflection> defines the constant deflection value. The algorithm computes the number of points and the points. The curve <C> must be at least C2 else the computation can fail. If just some parts of the curve is C2 it is better to give the parameters bounds and to use the below constructor . if <WithControl> is True, the algorithm controls the estimate deflection when the curve is singular at the point P--u--,the algorithm computes the next point as P--u + Max--CurrentStep,Abs--LastParameter-FirstParameter------ if the singularity is at the first point ,the next point calculated is the P--LastParameter--
 
 	:param C:
 	:type C: Adaptor3d_Curve &
@@ -620,7 +623,7 @@ class CPnts_UniformDeflection {
 ") Initialize;
 		void Initialize (const Adaptor2d_Curve2d & C,const Standard_Real Deflection,const Standard_Real U1,const Standard_Real U2,const Standard_Real Resolution,const Standard_Boolean WithControl);
 		%feature("compactdefaultargs") IsAllDone;
-		%feature("autodoc", "	* To know if all the calculus were done successfully (ie all the points have been computed). The calculus can fail if the Curve is not C1 in the considered domain. Returns True if the calculus was successful.
+		%feature("autodoc", "	* To know if all the calculus were done successfully --ie all the points have been computed--. The calculus can fail if the Curve is not C1 in the considered domain. Returns True if the calculus was successful.
 
 	:rtype: bool
 ") IsAllDone;

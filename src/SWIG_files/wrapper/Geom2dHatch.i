@@ -1,5 +1,5 @@
 /*
-Copyright 2008-2017 Thomas Paviot (tpaviot@gmail.com)
+Copyright 2008-2018 Thomas Paviot (tpaviot@gmail.com)
 
 
 This file is part of pythonOCC.
@@ -56,6 +56,11 @@ def register_handle(handle, base_object):
 /* typedefs */
 /* end typedefs declaration */
 
+/* templates */
+%template(Geom2dHatch_MapOfElements) NCollection_DataMap <Standard_Integer , Geom2dHatch_Element , TColStd_MapIntegerHasher>;
+%template(Geom2dHatch_Hatchings) NCollection_DataMap <Standard_Integer , Geom2dHatch_Hatching , TColStd_MapIntegerHasher>;
+/* end templates declaration */
+
 /* public enums */
 /* end public enums declaration */
 
@@ -63,11 +68,15 @@ def register_handle(handle, base_object):
 class Geom2dHatch_Classifier {
 	public:
 		%feature("compactdefaultargs") Geom2dHatch_Classifier;
-		%feature("autodoc", "	:rtype: None
+		%feature("autodoc", "	* Empty constructor, undefined algorithm.
+
+	:rtype: None
 ") Geom2dHatch_Classifier;
 		 Geom2dHatch_Classifier ();
 		%feature("compactdefaultargs") Geom2dHatch_Classifier;
-		%feature("autodoc", "	:param F:
+		%feature("autodoc", "	* Creates an algorithm to classify the Point P with Tolerance <T> on the face described by <F>.
+
+	:param F:
 	:type F: Geom2dHatch_Elements &
 	:param P:
 	:type P: gp_Pnt2d
@@ -77,7 +86,9 @@ class Geom2dHatch_Classifier {
 ") Geom2dHatch_Classifier;
 		 Geom2dHatch_Classifier (Geom2dHatch_Elements & F,const gp_Pnt2d & P,const Standard_Real Tol);
 		%feature("compactdefaultargs") Perform;
-		%feature("autodoc", "	:param F:
+		%feature("autodoc", "	* Classify the Point P with Tolerance <T> on the face described by <F>.
+
+	:param F:
 	:type F: Geom2dHatch_Elements &
 	:param P:
 	:type P: gp_Pnt2d
@@ -87,271 +98,45 @@ class Geom2dHatch_Classifier {
 ") Perform;
 		void Perform (Geom2dHatch_Elements & F,const gp_Pnt2d & P,const Standard_Real Tol);
 		%feature("compactdefaultargs") State;
-		%feature("autodoc", "	:rtype: TopAbs_State
+		%feature("autodoc", "	* Returns the result of the classification.
+
+	:rtype: TopAbs_State
 ") State;
 		TopAbs_State State ();
 		%feature("compactdefaultargs") Rejected;
-		%feature("autodoc", "	:rtype: bool
+		%feature("autodoc", "	* Returns True when the state was computed by a rejection. The state is OUT.
+
+	:rtype: bool
 ") Rejected;
 		Standard_Boolean Rejected ();
 		%feature("compactdefaultargs") NoWires;
-		%feature("autodoc", "	:rtype: bool
+		%feature("autodoc", "	* Returns True if the face contains no wire. The state is IN.
+
+	:rtype: bool
 ") NoWires;
 		Standard_Boolean NoWires ();
 		%feature("compactdefaultargs") Edge;
-		%feature("autodoc", "	:rtype: Geom2dAdaptor_Curve
+		%feature("autodoc", "	* Returns the Edge used to determine the classification. When the State is ON this is the Edge containing the point.
+
+	:rtype: Geom2dAdaptor_Curve
 ") Edge;
 		const Geom2dAdaptor_Curve & Edge ();
 		%feature("compactdefaultargs") EdgeParameter;
-		%feature("autodoc", "	:rtype: float
+		%feature("autodoc", "	* Returns the parameter on Edge---- used to determine the classification.
+
+	:rtype: float
 ") EdgeParameter;
 		Standard_Real EdgeParameter ();
 		%feature("compactdefaultargs") Position;
-		%feature("autodoc", "	:rtype: IntRes2d_Position
+		%feature("autodoc", "	* Returns the position of the point on the edge returned by Edge.
+
+	:rtype: IntRes2d_Position
 ") Position;
 		IntRes2d_Position Position ();
 };
 
 
 %extend Geom2dHatch_Classifier {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor Geom2dHatch_DataMapIteratorOfHatchings;
-class Geom2dHatch_DataMapIteratorOfHatchings : public TCollection_BasicMapIterator {
-	public:
-		%feature("compactdefaultargs") Geom2dHatch_DataMapIteratorOfHatchings;
-		%feature("autodoc", "	:rtype: None
-") Geom2dHatch_DataMapIteratorOfHatchings;
-		 Geom2dHatch_DataMapIteratorOfHatchings ();
-		%feature("compactdefaultargs") Geom2dHatch_DataMapIteratorOfHatchings;
-		%feature("autodoc", "	:param aMap:
-	:type aMap: Geom2dHatch_Hatchings &
-	:rtype: None
-") Geom2dHatch_DataMapIteratorOfHatchings;
-		 Geom2dHatch_DataMapIteratorOfHatchings (const Geom2dHatch_Hatchings & aMap);
-		%feature("compactdefaultargs") Initialize;
-		%feature("autodoc", "	:param aMap:
-	:type aMap: Geom2dHatch_Hatchings &
-	:rtype: None
-") Initialize;
-		void Initialize (const Geom2dHatch_Hatchings & aMap);
-		%feature("compactdefaultargs") Key;
-		%feature("autodoc", "	:rtype: int
-") Key;
-		const Standard_Integer & Key ();
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:rtype: Geom2dHatch_Hatching
-") Value;
-		const Geom2dHatch_Hatching & Value ();
-};
-
-
-%extend Geom2dHatch_DataMapIteratorOfHatchings {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor Geom2dHatch_DataMapIteratorOfMapOfElements;
-class Geom2dHatch_DataMapIteratorOfMapOfElements : public TCollection_BasicMapIterator {
-	public:
-		%feature("compactdefaultargs") Geom2dHatch_DataMapIteratorOfMapOfElements;
-		%feature("autodoc", "	:rtype: None
-") Geom2dHatch_DataMapIteratorOfMapOfElements;
-		 Geom2dHatch_DataMapIteratorOfMapOfElements ();
-		%feature("compactdefaultargs") Geom2dHatch_DataMapIteratorOfMapOfElements;
-		%feature("autodoc", "	:param aMap:
-	:type aMap: Geom2dHatch_MapOfElements &
-	:rtype: None
-") Geom2dHatch_DataMapIteratorOfMapOfElements;
-		 Geom2dHatch_DataMapIteratorOfMapOfElements (const Geom2dHatch_MapOfElements & aMap);
-		%feature("compactdefaultargs") Initialize;
-		%feature("autodoc", "	:param aMap:
-	:type aMap: Geom2dHatch_MapOfElements &
-	:rtype: None
-") Initialize;
-		void Initialize (const Geom2dHatch_MapOfElements & aMap);
-		%feature("compactdefaultargs") Key;
-		%feature("autodoc", "	:rtype: int
-") Key;
-		const Standard_Integer & Key ();
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:rtype: Geom2dHatch_Element
-") Value;
-		const Geom2dHatch_Element & Value ();
-};
-
-
-%extend Geom2dHatch_DataMapIteratorOfMapOfElements {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor Geom2dHatch_DataMapNodeOfHatchings;
-class Geom2dHatch_DataMapNodeOfHatchings : public TCollection_MapNode {
-	public:
-		%feature("compactdefaultargs") Geom2dHatch_DataMapNodeOfHatchings;
-		%feature("autodoc", "	:param K:
-	:type K: int &
-	:param I:
-	:type I: Geom2dHatch_Hatching &
-	:param n:
-	:type n: TCollection_MapNodePtr &
-	:rtype: None
-") Geom2dHatch_DataMapNodeOfHatchings;
-		 Geom2dHatch_DataMapNodeOfHatchings (const Standard_Integer & K,const Geom2dHatch_Hatching & I,const TCollection_MapNodePtr & n);
-
-            %feature("autodoc","1");
-            %extend {
-                Standard_Integer GetKey() {
-                return (Standard_Integer) $self->Key();
-                }
-            };
-            %feature("autodoc","1");
-            %extend {
-                void SetKey(Standard_Integer value ) {
-                $self->Key()=value;
-                }
-            };
-            		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:rtype: Geom2dHatch_Hatching
-") Value;
-		Geom2dHatch_Hatching & Value ();
-};
-
-
-%extend Geom2dHatch_DataMapNodeOfHatchings {
-	%pythoncode {
-		def GetHandle(self):
-		    try:
-		        return self.thisHandle
-		    except:
-		        self.thisHandle = Handle_Geom2dHatch_DataMapNodeOfHatchings(self)
-		        self.thisown = False
-		        return self.thisHandle
-	}
-};
-
-%pythonappend Handle_Geom2dHatch_DataMapNodeOfHatchings::Handle_Geom2dHatch_DataMapNodeOfHatchings %{
-    # register the handle in the base object
-    if len(args) > 0:
-        register_handle(self, args[0])
-%}
-
-%nodefaultctor Handle_Geom2dHatch_DataMapNodeOfHatchings;
-class Handle_Geom2dHatch_DataMapNodeOfHatchings : public Handle_TCollection_MapNode {
-
-    public:
-        // constructors
-        Handle_Geom2dHatch_DataMapNodeOfHatchings();
-        Handle_Geom2dHatch_DataMapNodeOfHatchings(const Handle_Geom2dHatch_DataMapNodeOfHatchings &aHandle);
-        Handle_Geom2dHatch_DataMapNodeOfHatchings(const Geom2dHatch_DataMapNodeOfHatchings *anItem);
-        void Nullify();
-        Standard_Boolean IsNull() const;
-        static const Handle_Geom2dHatch_DataMapNodeOfHatchings DownCast(const Handle_Standard_Transient &AnObject);
-
-};
-%extend Handle_Geom2dHatch_DataMapNodeOfHatchings {
-    Geom2dHatch_DataMapNodeOfHatchings* _get_reference() {
-    return (Geom2dHatch_DataMapNodeOfHatchings*)$self->Access();
-    }
-};
-
-%extend Handle_Geom2dHatch_DataMapNodeOfHatchings {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
-};
-
-%extend Geom2dHatch_DataMapNodeOfHatchings {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor Geom2dHatch_DataMapNodeOfMapOfElements;
-class Geom2dHatch_DataMapNodeOfMapOfElements : public TCollection_MapNode {
-	public:
-		%feature("compactdefaultargs") Geom2dHatch_DataMapNodeOfMapOfElements;
-		%feature("autodoc", "	:param K:
-	:type K: int &
-	:param I:
-	:type I: Geom2dHatch_Element &
-	:param n:
-	:type n: TCollection_MapNodePtr &
-	:rtype: None
-") Geom2dHatch_DataMapNodeOfMapOfElements;
-		 Geom2dHatch_DataMapNodeOfMapOfElements (const Standard_Integer & K,const Geom2dHatch_Element & I,const TCollection_MapNodePtr & n);
-
-            %feature("autodoc","1");
-            %extend {
-                Standard_Integer GetKey() {
-                return (Standard_Integer) $self->Key();
-                }
-            };
-            %feature("autodoc","1");
-            %extend {
-                void SetKey(Standard_Integer value ) {
-                $self->Key()=value;
-                }
-            };
-            		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:rtype: Geom2dHatch_Element
-") Value;
-		Geom2dHatch_Element & Value ();
-};
-
-
-%extend Geom2dHatch_DataMapNodeOfMapOfElements {
-	%pythoncode {
-		def GetHandle(self):
-		    try:
-		        return self.thisHandle
-		    except:
-		        self.thisHandle = Handle_Geom2dHatch_DataMapNodeOfMapOfElements(self)
-		        self.thisown = False
-		        return self.thisHandle
-	}
-};
-
-%pythonappend Handle_Geom2dHatch_DataMapNodeOfMapOfElements::Handle_Geom2dHatch_DataMapNodeOfMapOfElements %{
-    # register the handle in the base object
-    if len(args) > 0:
-        register_handle(self, args[0])
-%}
-
-%nodefaultctor Handle_Geom2dHatch_DataMapNodeOfMapOfElements;
-class Handle_Geom2dHatch_DataMapNodeOfMapOfElements : public Handle_TCollection_MapNode {
-
-    public:
-        // constructors
-        Handle_Geom2dHatch_DataMapNodeOfMapOfElements();
-        Handle_Geom2dHatch_DataMapNodeOfMapOfElements(const Handle_Geom2dHatch_DataMapNodeOfMapOfElements &aHandle);
-        Handle_Geom2dHatch_DataMapNodeOfMapOfElements(const Geom2dHatch_DataMapNodeOfMapOfElements *anItem);
-        void Nullify();
-        Standard_Boolean IsNull() const;
-        static const Handle_Geom2dHatch_DataMapNodeOfMapOfElements DownCast(const Handle_Standard_Transient &AnObject);
-
-};
-%extend Handle_Geom2dHatch_DataMapNodeOfMapOfElements {
-    Geom2dHatch_DataMapNodeOfMapOfElements* _get_reference() {
-    return (Geom2dHatch_DataMapNodeOfMapOfElements*)$self->Access();
-    }
-};
-
-%extend Handle_Geom2dHatch_DataMapNodeOfMapOfElements {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
-};
-
-%extend Geom2dHatch_DataMapNodeOfMapOfElements {
 	%pythoncode {
 	__repr__ = _dumps_object
 	}
@@ -464,6 +249,12 @@ class Geom2dHatch_Elements {
 	:rtype: Geom2dHatch_Element
 ") ChangeFind;
 		Geom2dHatch_Element & ChangeFind (const Standard_Integer K);
+		%feature("compactdefaultargs") CheckPoint;
+		%feature("autodoc", "	:param P:
+	:type P: gp_Pnt2d
+	:rtype: bool
+") CheckPoint;
+		Standard_Boolean CheckPoint (gp_Pnt2d & P);
 		%feature("compactdefaultargs") Reject;
 		%feature("autodoc", "	:param P:
 	:type P: gp_Pnt2d
@@ -550,11 +341,15 @@ class Geom2dHatch_Elements {
 class Geom2dHatch_FClass2dOfClassifier {
 	public:
 		%feature("compactdefaultargs") Geom2dHatch_FClass2dOfClassifier;
-		%feature("autodoc", "	:rtype: None
+		%feature("autodoc", "	* Creates an undefined classifier.
+
+	:rtype: None
 ") Geom2dHatch_FClass2dOfClassifier;
 		 Geom2dHatch_FClass2dOfClassifier ();
 		%feature("compactdefaultargs") Reset;
-		%feature("autodoc", "	:param L:
+		%feature("autodoc", "	* Starts a classification process. The point to classify is the origin of the line <L>. <P> is the original length of the segment on <L> used to compute intersections. <Tol> is the tolerance attached to the line segment in intersections.
+
+	:param L:
 	:type L: gp_Lin2d
 	:param P:
 	:type P: float
@@ -564,7 +359,9 @@ class Geom2dHatch_FClass2dOfClassifier {
 ") Reset;
 		void Reset (const gp_Lin2d & L,const Standard_Real P,const Standard_Real Tol);
 		%feature("compactdefaultargs") Compare;
-		%feature("autodoc", "	:param E:
+		%feature("autodoc", "	* Updates the classification process with the edge <E> from the boundary.
+
+	:param E:
 	:type E: Geom2dAdaptor_Curve &
 	:param Or:
 	:type Or: TopAbs_Orientation
@@ -572,23 +369,33 @@ class Geom2dHatch_FClass2dOfClassifier {
 ") Compare;
 		void Compare (const Geom2dAdaptor_Curve & E,const TopAbs_Orientation Or);
 		%feature("compactdefaultargs") Parameter;
-		%feature("autodoc", "	:rtype: float
+		%feature("autodoc", "	* Returns the current value of the parameter.
+
+	:rtype: float
 ") Parameter;
 		Standard_Real Parameter ();
 		%feature("compactdefaultargs") Intersector;
-		%feature("autodoc", "	:rtype: Geom2dHatch_Intersector
+		%feature("autodoc", "	* Returns the intersecting algorithm.
+
+	:rtype: Geom2dHatch_Intersector
 ") Intersector;
 		Geom2dHatch_Intersector & Intersector ();
 		%feature("compactdefaultargs") ClosestIntersection;
-		%feature("autodoc", "	:rtype: int
+		%feature("autodoc", "	* Returns 0 if the last compared edge had no relevant intersection. Else returns the index of this intersection in the last intersection algorithm.
+
+	:rtype: int
 ") ClosestIntersection;
 		Standard_Integer ClosestIntersection ();
 		%feature("compactdefaultargs") State;
-		%feature("autodoc", "	:rtype: TopAbs_State
+		%feature("autodoc", "	* Returns the current state of the point.
+
+	:rtype: TopAbs_State
 ") State;
 		TopAbs_State State ();
 		%feature("compactdefaultargs") IsHeadOrEnd;
-		%feature("autodoc", "	:rtype: bool
+		%feature("autodoc", "	* Returns the Standard_True if the closest intersection point represents head or end of the edge. Returns Standard_False otherwise.
+
+	:rtype: bool
 ") IsHeadOrEnd;
 		Standard_Boolean IsHeadOrEnd ();
 };
@@ -718,6 +525,16 @@ class Geom2dHatch_Hatcher {
 	:rtype: int
 ") AddElement;
 		Standard_Integer AddElement (const Geom2dAdaptor_Curve & Curve,const TopAbs_Orientation Orientation = TopAbs_FORWARD);
+		%feature("compactdefaultargs") AddElement;
+		%feature("autodoc", "	* Adds an element to the hatcher and returns its index.
+
+	:param Curve:
+	:type Curve: Handle_Geom2d_Curve &
+	:param Orientation: default value is TopAbs_FORWARD
+	:type Orientation: TopAbs_Orientation
+	:rtype: int
+") AddElement;
+		Standard_Integer AddElement (const Handle_Geom2d_Curve & Curve,const TopAbs_Orientation Orientation = TopAbs_FORWARD);
 		%feature("compactdefaultargs") RemElement;
 		%feature("autodoc", "	* Removes the IndE-th element from the hatcher.
 
@@ -944,11 +761,11 @@ class Geom2dHatch_Hatching {
 		%feature("compactdefaultargs") Status;
 		%feature("autodoc", "	* Sets the error status.
 
-	:param Status:
-	:type Status: HatchGen_ErrorStatus
+	:param theStatus:
+	:type theStatus: HatchGen_ErrorStatus
 	:rtype: None
 ") Status;
-		void Status (const HatchGen_ErrorStatus Status);
+		void Status (const HatchGen_ErrorStatus theStatus);
 		%feature("compactdefaultargs") Status;
 		%feature("autodoc", "	* Returns the error status.
 
@@ -1051,89 +868,6 @@ class Geom2dHatch_Hatching {
 	__repr__ = _dumps_object
 	}
 };
-%nodefaultctor Geom2dHatch_Hatchings;
-class Geom2dHatch_Hatchings : public TCollection_BasicMap {
-	public:
-		%feature("compactdefaultargs") Geom2dHatch_Hatchings;
-		%feature("autodoc", "	:param NbBuckets: default value is 1
-	:type NbBuckets: int
-	:rtype: None
-") Geom2dHatch_Hatchings;
-		 Geom2dHatch_Hatchings (const Standard_Integer NbBuckets = 1);
-		%feature("compactdefaultargs") Assign;
-		%feature("autodoc", "	:param Other:
-	:type Other: Geom2dHatch_Hatchings &
-	:rtype: Geom2dHatch_Hatchings
-") Assign;
-		Geom2dHatch_Hatchings & Assign (const Geom2dHatch_Hatchings & Other);
-		%feature("compactdefaultargs") operator =;
-		%feature("autodoc", "	:param Other:
-	:type Other: Geom2dHatch_Hatchings &
-	:rtype: Geom2dHatch_Hatchings
-") operator =;
-		Geom2dHatch_Hatchings & operator = (const Geom2dHatch_Hatchings & Other);
-		%feature("compactdefaultargs") ReSize;
-		%feature("autodoc", "	:param NbBuckets:
-	:type NbBuckets: int
-	:rtype: None
-") ReSize;
-		void ReSize (const Standard_Integer NbBuckets);
-		%feature("compactdefaultargs") Clear;
-		%feature("autodoc", "	:rtype: None
-") Clear;
-		void Clear ();
-		%feature("compactdefaultargs") Bind;
-		%feature("autodoc", "	:param K:
-	:type K: int &
-	:param I:
-	:type I: Geom2dHatch_Hatching &
-	:rtype: bool
-") Bind;
-		Standard_Boolean Bind (const Standard_Integer & K,const Geom2dHatch_Hatching & I);
-		%feature("compactdefaultargs") IsBound;
-		%feature("autodoc", "	:param K:
-	:type K: int &
-	:rtype: bool
-") IsBound;
-		Standard_Boolean IsBound (const Standard_Integer & K);
-		%feature("compactdefaultargs") UnBind;
-		%feature("autodoc", "	:param K:
-	:type K: int &
-	:rtype: bool
-") UnBind;
-		Standard_Boolean UnBind (const Standard_Integer & K);
-		%feature("compactdefaultargs") Find;
-		%feature("autodoc", "	:param K:
-	:type K: int &
-	:rtype: Geom2dHatch_Hatching
-") Find;
-		const Geom2dHatch_Hatching & Find (const Standard_Integer & K);
-		%feature("compactdefaultargs") ChangeFind;
-		%feature("autodoc", "	:param K:
-	:type K: int &
-	:rtype: Geom2dHatch_Hatching
-") ChangeFind;
-		Geom2dHatch_Hatching & ChangeFind (const Standard_Integer & K);
-		%feature("compactdefaultargs") Find1;
-		%feature("autodoc", "	:param K:
-	:type K: int &
-	:rtype: Standard_Address
-") Find1;
-		Standard_Address Find1 (const Standard_Integer & K);
-		%feature("compactdefaultargs") ChangeFind1;
-		%feature("autodoc", "	:param K:
-	:type K: int &
-	:rtype: Standard_Address
-") ChangeFind1;
-		Standard_Address ChangeFind1 (const Standard_Integer & K);
-};
-
-
-%extend Geom2dHatch_Hatchings {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
 %nodefaultctor Geom2dHatch_Intersector;
 class Geom2dHatch_Intersector : public Geom2dInt_GInter {
 	public:
@@ -1190,7 +924,7 @@ class Geom2dHatch_Intersector : public Geom2dInt_GInter {
 ") Geom2dHatch_Intersector;
 		 Geom2dHatch_Intersector ();
 		%feature("compactdefaultargs") Perform;
-		%feature("autodoc", "	* Performs the intersection between the 2d line segment (<L>, <P>) and the Curve <E>. The line segment is the part of the 2d line <L> of parameter range [0, <P>] (P is positive and can be RealLast()). Tol is the Tolerance on the segment. The order is relevant, the first argument is the segment, the second the Edge.
+		%feature("autodoc", "	* Performs the intersection between the 2d line segment --<L>, <P>-- and the Curve <E>. The line segment is the part of the 2d line <L> of parameter range [0, <P>] --P is positive and can be RealLast------. Tol is the Tolerance on the segment. The order is relevant, the first argument is the segment, the second the Edge.
 
 	:param L:
 	:type L: gp_Lin2d
@@ -1223,89 +957,6 @@ class Geom2dHatch_Intersector : public Geom2dInt_GInter {
 
 
 %extend Geom2dHatch_Intersector {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor Geom2dHatch_MapOfElements;
-class Geom2dHatch_MapOfElements : public TCollection_BasicMap {
-	public:
-		%feature("compactdefaultargs") Geom2dHatch_MapOfElements;
-		%feature("autodoc", "	:param NbBuckets: default value is 1
-	:type NbBuckets: int
-	:rtype: None
-") Geom2dHatch_MapOfElements;
-		 Geom2dHatch_MapOfElements (const Standard_Integer NbBuckets = 1);
-		%feature("compactdefaultargs") Assign;
-		%feature("autodoc", "	:param Other:
-	:type Other: Geom2dHatch_MapOfElements &
-	:rtype: Geom2dHatch_MapOfElements
-") Assign;
-		Geom2dHatch_MapOfElements & Assign (const Geom2dHatch_MapOfElements & Other);
-		%feature("compactdefaultargs") operator =;
-		%feature("autodoc", "	:param Other:
-	:type Other: Geom2dHatch_MapOfElements &
-	:rtype: Geom2dHatch_MapOfElements
-") operator =;
-		Geom2dHatch_MapOfElements & operator = (const Geom2dHatch_MapOfElements & Other);
-		%feature("compactdefaultargs") ReSize;
-		%feature("autodoc", "	:param NbBuckets:
-	:type NbBuckets: int
-	:rtype: None
-") ReSize;
-		void ReSize (const Standard_Integer NbBuckets);
-		%feature("compactdefaultargs") Clear;
-		%feature("autodoc", "	:rtype: None
-") Clear;
-		void Clear ();
-		%feature("compactdefaultargs") Bind;
-		%feature("autodoc", "	:param K:
-	:type K: int &
-	:param I:
-	:type I: Geom2dHatch_Element &
-	:rtype: bool
-") Bind;
-		Standard_Boolean Bind (const Standard_Integer & K,const Geom2dHatch_Element & I);
-		%feature("compactdefaultargs") IsBound;
-		%feature("autodoc", "	:param K:
-	:type K: int &
-	:rtype: bool
-") IsBound;
-		Standard_Boolean IsBound (const Standard_Integer & K);
-		%feature("compactdefaultargs") UnBind;
-		%feature("autodoc", "	:param K:
-	:type K: int &
-	:rtype: bool
-") UnBind;
-		Standard_Boolean UnBind (const Standard_Integer & K);
-		%feature("compactdefaultargs") Find;
-		%feature("autodoc", "	:param K:
-	:type K: int &
-	:rtype: Geom2dHatch_Element
-") Find;
-		const Geom2dHatch_Element & Find (const Standard_Integer & K);
-		%feature("compactdefaultargs") ChangeFind;
-		%feature("autodoc", "	:param K:
-	:type K: int &
-	:rtype: Geom2dHatch_Element
-") ChangeFind;
-		Geom2dHatch_Element & ChangeFind (const Standard_Integer & K);
-		%feature("compactdefaultargs") Find1;
-		%feature("autodoc", "	:param K:
-	:type K: int &
-	:rtype: Standard_Address
-") Find1;
-		Standard_Address Find1 (const Standard_Integer & K);
-		%feature("compactdefaultargs") ChangeFind1;
-		%feature("autodoc", "	:param K:
-	:type K: int &
-	:rtype: Standard_Address
-") ChangeFind1;
-		Standard_Address ChangeFind1 (const Standard_Integer & K);
-};
-
-
-%extend Geom2dHatch_MapOfElements {
 	%pythoncode {
 	__repr__ = _dumps_object
 	}

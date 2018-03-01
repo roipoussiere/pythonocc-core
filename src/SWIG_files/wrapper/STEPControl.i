@@ -1,5 +1,5 @@
 /*
-Copyright 2008-2017 Thomas Paviot (tpaviot@gmail.com)
+Copyright 2008-2018 Thomas Paviot (tpaviot@gmail.com)
 
 
 This file is part of pythonOCC.
@@ -55,6 +55,9 @@ def register_handle(handle, base_object):
 
 /* typedefs */
 /* end typedefs declaration */
+
+/* templates */
+/* end templates declaration */
 
 /* public enums */
 enum STEPControl_StepModelType {
@@ -112,13 +115,13 @@ class STEPControl_ActorRead : public Transfer_ActorOfTransientProcess {
 ") PrepareUnits;
 		void PrepareUnits (const Handle_StepRepr_Representation & rep,const Handle_Transfer_TransientProcess & TP);
 		%feature("compactdefaultargs") ResetUnits;
-		%feature("autodoc", "	* reset units and tolerances context to default (mm, radians, read.precision.val, etc.)
+		%feature("autodoc", "	* reset units and tolerances context to default --mm, radians, read.precision.val, etc.--
 
 	:rtype: None
 ") ResetUnits;
 		void ResetUnits ();
 		%feature("compactdefaultargs") ComputeTransformation;
-		%feature("autodoc", "	* Computes transformation defined by two axis placements (in MAPPED_ITEM or ITEM_DEFINED_TRANSFORMATION) taking into account their representation contexts (i.e. units, which may be different) Returns True if transformation is computed and is not an identity.
+		%feature("autodoc", "	* Computes transformation defined by two axis placements --in MAPPED_ITEM or ITEM_DEFINED_TRANSFORMATION-- taking into account their representation contexts --i.e. units, which may be different-- Returns True if transformation is computed and is not an identity.
 
 	:param Origin:
 	:type Origin: Handle_StepGeom_Axis2Placement3d &
@@ -181,19 +184,20 @@ class Handle_STEPControl_ActorRead : public Handle_Transfer_ActorOfTransientProc
         static const Handle_STEPControl_ActorRead DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_STEPControl_ActorRead {
     STEPControl_ActorRead* _get_reference() {
-    return (STEPControl_ActorRead*)$self->Access();
+    return (STEPControl_ActorRead*)$self->get();
     }
 };
 
 %extend Handle_STEPControl_ActorRead {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend STEPControl_ActorRead {
@@ -330,19 +334,20 @@ class Handle_STEPControl_ActorWrite : public Handle_Transfer_ActorOfFinderProces
         static const Handle_STEPControl_ActorWrite DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_STEPControl_ActorWrite {
     STEPControl_ActorWrite* _get_reference() {
-    return (STEPControl_ActorWrite*)$self->Access();
+    return (STEPControl_ActorWrite*)$self->get();
     }
 };
 
 %extend Handle_STEPControl_ActorWrite {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend STEPControl_ActorWrite {
@@ -354,7 +359,7 @@ class Handle_STEPControl_ActorWrite : public Handle_Transfer_ActorOfFinderProces
 class STEPControl_Controller : public XSControl_Controller {
 	public:
 		%feature("compactdefaultargs") STEPControl_Controller;
-		%feature("autodoc", "	* Initializes the use of STEP Norm (the first time) and returns a Controller
+		%feature("autodoc", "	* Initializes the use of STEP Norm --the first time-- and returns a Controller
 
 	:rtype: None
 ") STEPControl_Controller;
@@ -365,14 +370,6 @@ class STEPControl_Controller : public XSControl_Controller {
 	:rtype: Handle_Interface_InterfaceModel
 ") NewModel;
 		Handle_Interface_InterfaceModel NewModel ();
-		%feature("compactdefaultargs") ActorRead;
-		%feature("autodoc", "	* Returns a new Actor for Read attached to the pair (norm,appli) It is a PmsToTopoDSAct_Actor
-
-	:param model:
-	:type model: Handle_Interface_InterfaceModel &
-	:rtype: Handle_Transfer_ActorOfTransientProcess
-") ActorRead;
-		Handle_Transfer_ActorOfTransientProcess ActorRead (const Handle_Interface_InterfaceModel & model);
 		%feature("compactdefaultargs") Customise;
 		%feature("autodoc", "	:param WS:
 	:type WS: Handle_XSControl_WorkSession &
@@ -380,7 +377,7 @@ class STEPControl_Controller : public XSControl_Controller {
 ") Customise;
 		virtual void Customise (Handle_XSControl_WorkSession & WS);
 		%feature("compactdefaultargs") TransferWriteShape;
-		%feature("autodoc", "	* Takes one Shape and transfers it to the InterfaceModel (already created by NewModel for instance) <modeshape> is to be interpreted by each kind of XstepAdaptor Returns a status : 0 OK 1 No result 2 Fail -1 bad modeshape -2 bad model (requires a StepModel) modeshape : 1 Facetted BRep, 2 Shell, 3 Manifold Solid
+		%feature("autodoc", "	* Takes one Shape and transfers it to the InterfaceModel --already created by NewModel for instance-- <modeshape> is to be interpreted by each kind of XstepAdaptor Returns a status : 0 OK 1 No result 2 Fail -1 bad modeshape -2 bad model --requires a StepModel-- modeshape : 1 Facetted BRep, 2 Shell, 3 Manifold Solid
 
 	:param shape:
 	:type shape: TopoDS_Shape &
@@ -433,19 +430,20 @@ class Handle_STEPControl_Controller : public Handle_XSControl_Controller {
         static const Handle_STEPControl_Controller DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_STEPControl_Controller {
     STEPControl_Controller* _get_reference() {
-    return (STEPControl_Controller*)$self->Access();
+    return (STEPControl_Controller*)$self->get();
     }
 };
 
 %extend Handle_STEPControl_Controller {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend STEPControl_Controller {
@@ -473,7 +471,7 @@ class STEPControl_Reader : public XSControl_Reader {
 ") STEPControl_Reader;
 		 STEPControl_Reader (const Handle_XSControl_WorkSession & WS,const Standard_Boolean scratch = Standard_True);
 		%feature("compactdefaultargs") StepModel;
-		%feature("autodoc", "	* Returns the model as a StepModel. It can then be consulted (header, product)
+		%feature("autodoc", "	* Returns the model as a StepModel. It can then be consulted --header, product--
 
 	:rtype: Handle_StepData_StepModel
 ") StepModel;
@@ -487,7 +485,7 @@ class STEPControl_Reader : public XSControl_Reader {
 ") TransferRoot;
 		Standard_Boolean TransferRoot (const Standard_Integer num = 1);
 		%feature("compactdefaultargs") NbRootsForTransfer;
-		%feature("autodoc", "	* Determines the list of root entities from Model which are candidate for a transfer to a Shape (type of entities is PRODUCT)
+		%feature("autodoc", "	* Determines the list of root entities from Model which are candidate for a transfer to a Shape --type of entities is PRODUCT--
 
 	:rtype: int
 ") NbRootsForTransfer;
@@ -522,7 +520,7 @@ class STEPControl_Writer {
 ") STEPControl_Writer;
 		 STEPControl_Writer ();
 		%feature("compactdefaultargs") STEPControl_Writer;
-		%feature("autodoc", "	* Creates a Writer from an already existing Session If <scratch> is True (D), clears already recorded data
+		%feature("autodoc", "	* Creates a Writer from an already existing Session If <scratch> is True --D--, clears already recorded data
 
 	:param WS:
 	:type WS: Handle_XSControl_WorkSession &
@@ -590,7 +588,7 @@ class STEPControl_Writer {
 ") Write;
 		IFSelect_ReturnStatus Write (const char * filename);
 		%feature("compactdefaultargs") PrintStatsTransfer;
-		%feature("autodoc", "	* Displays the statistics for the last translation. what defines the kind of statistics that are displayed: - 0 gives general statistics (number of translated roots, number of warnings, number of fail messages), - 1 gives root results, - 2 gives statistics for all checked entities, - 3 gives the list of translated entities, - 4 gives warning and fail messages, - 5 gives fail messages only. mode is used according to the use of what. If what is 0, mode is ignored. If what is 1, 2 or 3, mode defines the following: - 0 lists the numbers of STEP entities in a STEP model, - 1 gives the number, identifier, type and result type for each STEP entity and/or its status (fail, warning, etc.), - 2 gives maximum information for each STEP entity (i.e. checks), - 3 gives the number of entities by the type of a STEP entity, - 4 gives the number of of STEP entities per result type and/or status, - 5 gives the number of pairs (STEP or result type and status), - 6 gives the number of pairs (STEP or result type and status) AND the list of entity numbers in the STEP model.
+		%feature("autodoc", "	* Displays the statistics for the last translation. what defines the kind of statistics that are displayed: - 0 gives general statistics --number of translated roots, number of warnings, number of fail messages--, - 1 gives root results, - 2 gives statistics for all checked entities, - 3 gives the list of translated entities, - 4 gives warning and fail messages, - 5 gives fail messages only. mode is used according to the use of what. If what is 0, mode is ignored. If what is 1, 2 or 3, mode defines the following: - 0 lists the numbers of STEP entities in a STEP model, - 1 gives the number, identifier, type and result type for each STEP entity and/or its status --fail, warning, etc.--, - 2 gives maximum information for each STEP entity --i.e. checks--, - 3 gives the number of entities by the type of a STEP entity, - 4 gives the number of of STEP entities per result type and/or status, - 5 gives the number of pairs --STEP or result type and status--, - 6 gives the number of pairs --STEP or result type and status-- AND the list of entity numbers in the STEP model.
 
 	:param what:
 	:type what: int

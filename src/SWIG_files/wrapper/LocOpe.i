@@ -1,5 +1,5 @@
 /*
-Copyright 2008-2017 Thomas Paviot (tpaviot@gmail.com)
+Copyright 2008-2018 Thomas Paviot (tpaviot@gmail.com)
 
 
 This file is part of pythonOCC.
@@ -55,6 +55,13 @@ def register_handle(handle, base_object):
 
 /* typedefs */
 /* end typedefs declaration */
+
+/* templates */
+%template(LocOpe_DataMapOfShapePnt) NCollection_DataMap <TopoDS_Shape , gp_Pnt , TopTools_ShapeMapHasher>;
+%template(LocOpe_SequenceOfPntFace) NCollection_Sequence <LocOpe_PntFace>;
+%template(LocOpe_SequenceOfLin) NCollection_Sequence <gp_Lin>;
+%template(LocOpe_SequenceOfCirc) NCollection_Sequence <gp_Circ>;
+/* end templates declaration */
 
 /* public enums */
 enum LocOpe_Operation {
@@ -124,7 +131,7 @@ class LocOpe_BuildShape {
 ") LocOpe_BuildShape;
 		 LocOpe_BuildShape ();
 		%feature("compactdefaultargs") LocOpe_BuildShape;
-		%feature("autodoc", "	* Builds shape(s) from the list <L>. Uses only the faces of <L>.
+		%feature("autodoc", "	* Builds shape--s-- from the list <L>. Uses only the faces of <L>.
 
 	:param L:
 	:type L: TopTools_ListOfShape &
@@ -132,7 +139,7 @@ class LocOpe_BuildShape {
 ") LocOpe_BuildShape;
 		 LocOpe_BuildShape (const TopTools_ListOfShape & L);
 		%feature("compactdefaultargs") Perform;
-		%feature("autodoc", "	* Builds shape(s) from the list <L>. Uses only the faces of <L>.
+		%feature("autodoc", "	* Builds shape--s-- from the list <L>. Uses only the faces of <L>.
 
 	:param L:
 	:type L: TopTools_ListOfShape &
@@ -258,7 +265,7 @@ class LocOpe_CSIntersector {
 ") Point;
 		const LocOpe_PntFace & Point (const Standard_Integer I,const Standard_Integer Index);
 		%feature("compactdefaultargs") LocalizeAfter;
-		%feature("autodoc", "	* On the element of range <I>, searches the first intersection point located after the parameter <From>, wich orientation is not TopAbs_EXTERNAL. If found, returns <Standard_True>. <Or> contains the orientation of the point, <IndFrom> and <IndTo> represents the interval of index in the sequence of intersection point corresponding to the point. (IndFrom <= IndTo). <Tol> is used to determine if 2 parameters are equal. //! Otherwise, returns <Standard_False>.
+		%feature("autodoc", "	* On the element of range <I>, searches the first intersection point located after the parameter <From>, wich orientation is not TopAbs_EXTERNAL. If found, returns <Standard_True>. <Or> contains the orientation of the point, <IndFrom> and <IndTo> represents the interval of index in the sequence of intersection point corresponding to the point. --IndFrom <= IndTo--. <Tol> is used to determine if 2 parameters are equal. //! Otherwise, returns <Standard_False>.
 
 	:param I:
 	:type I: int
@@ -276,7 +283,7 @@ class LocOpe_CSIntersector {
 ") LocalizeAfter;
 		Standard_Boolean LocalizeAfter (const Standard_Integer I,const Standard_Real From,const Standard_Real Tol,TopAbs_Orientation & Or,Standard_Integer &OutValue,Standard_Integer &OutValue);
 		%feature("compactdefaultargs") LocalizeBefore;
-		%feature("autodoc", "	* On the element of range <I>, searches the first intersection point located before the parameter <From>, wich orientation is not TopAbs_EXTERNAL. If found, returns <Standard_True>. <Or> contains the orientation of the point, <IndFrom> and <IndTo> represents the interval of index in the sequence of intersection point corresponding to the point (IndFrom <= IndTo). <Tol> is used to determine if 2 parameters are equal. //! Otherwise, returns <Standard_False>.
+		%feature("autodoc", "	* On the element of range <I>, searches the first intersection point located before the parameter <From>, wich orientation is not TopAbs_EXTERNAL. If found, returns <Standard_True>. <Or> contains the orientation of the point, <IndFrom> and <IndTo> represents the interval of index in the sequence of intersection point corresponding to the point --IndFrom <= IndTo--. <Tol> is used to determine if 2 parameters are equal. //! Otherwise, returns <Standard_False>.
 
 	:param I:
 	:type I: int
@@ -294,7 +301,7 @@ class LocOpe_CSIntersector {
 ") LocalizeBefore;
 		Standard_Boolean LocalizeBefore (const Standard_Integer I,const Standard_Real From,const Standard_Real Tol,TopAbs_Orientation & Or,Standard_Integer &OutValue,Standard_Integer &OutValue);
 		%feature("compactdefaultargs") LocalizeAfter;
-		%feature("autodoc", "	* On the element of range <I>, searches the first intersection point located after the index <FromInd> ( >= FromInd + 1), wich orientation is not TopAbs_EXTERNAL. If found, returns <Standard_True>. <Or> contains the orientation of the point, <IndFrom> and <IndTo> represents the interval of index in the sequence of intersection point corresponding to the point. (IndFrom <= IndTo). <Tol> is used to determine if 2 parameters are equal. //! Otherwise, returns <Standard_False>.
+		%feature("autodoc", "	* On the element of range <I>, searches the first intersection point located after the index <FromInd> -- >= FromInd + 1--, wich orientation is not TopAbs_EXTERNAL. If found, returns <Standard_True>. <Or> contains the orientation of the point, <IndFrom> and <IndTo> represents the interval of index in the sequence of intersection point corresponding to the point. --IndFrom <= IndTo--. <Tol> is used to determine if 2 parameters are equal. //! Otherwise, returns <Standard_False>.
 
 	:param I:
 	:type I: int
@@ -312,7 +319,7 @@ class LocOpe_CSIntersector {
 ") LocalizeAfter;
 		Standard_Boolean LocalizeAfter (const Standard_Integer I,const Standard_Integer FromInd,const Standard_Real Tol,TopAbs_Orientation & Or,Standard_Integer &OutValue,Standard_Integer &OutValue);
 		%feature("compactdefaultargs") LocalizeBefore;
-		%feature("autodoc", "	* On the element of range <I>, searches the first intersection point located before the index <FromInd> ( <= FromInd -1), wich orientation is not TopAbs_EXTERNAL. If found, returns <Standard_True>. <Or> contains the orientation of the point, <IndFrom> and <IndTo> represents the interval of index in the sequence of intersection point corresponding to the point (IndFrom <= IndTo). <Tol> is used to determine if 2 parameters are equal. //! Otherwise, returns <Standard_False>.
+		%feature("autodoc", "	* On the element of range <I>, searches the first intersection point located before the index <FromInd> -- <= FromInd -1--, wich orientation is not TopAbs_EXTERNAL. If found, returns <Standard_True>. <Or> contains the orientation of the point, <IndFrom> and <IndTo> represents the interval of index in the sequence of intersection point corresponding to the point --IndFrom <= IndTo--. <Tol> is used to determine if 2 parameters are equal. //! Otherwise, returns <Standard_False>.
 
 	:param I:
 	:type I: int
@@ -411,7 +418,7 @@ class LocOpe_CurveShapeIntersector {
 ") Point;
 		const LocOpe_PntFace & Point (const Standard_Integer Index);
 		%feature("compactdefaultargs") LocalizeAfter;
-		%feature("autodoc", "	* Searches the first intersection point located after the parameter <From>, wich orientation is not TopAbs_EXTERNAL. If found, returns <Standard_True>. <Or> contains the orientation of the point, <IndFrom> and <IndTo> represents the interval of index in the sequence of intersection point corresponding to the point. (IndFrom <= IndTo). //! Otherwise, returns <Standard_False>.
+		%feature("autodoc", "	* Searches the first intersection point located after the parameter <From>, wich orientation is not TopAbs_EXTERNAL. If found, returns <Standard_True>. <Or> contains the orientation of the point, <IndFrom> and <IndTo> represents the interval of index in the sequence of intersection point corresponding to the point. --IndFrom <= IndTo--. //! Otherwise, returns <Standard_False>.
 
 	:param From:
 	:type From: float
@@ -425,7 +432,7 @@ class LocOpe_CurveShapeIntersector {
 ") LocalizeAfter;
 		Standard_Boolean LocalizeAfter (const Standard_Real From,TopAbs_Orientation & Or,Standard_Integer &OutValue,Standard_Integer &OutValue);
 		%feature("compactdefaultargs") LocalizeBefore;
-		%feature("autodoc", "	* Searches the first intersection point located before the parameter <From>, wich orientation is not TopAbs_EXTERNAL. If found, returns <Standard_True>. <Or> contains the orientation of the point, <IndFrom> and <IndTo> represents the interval of index in the sequence of intersection point corresponding to the point (IndFrom <= IndTo). //! Otherwise, returns <Standard_False>.
+		%feature("autodoc", "	* Searches the first intersection point located before the parameter <From>, wich orientation is not TopAbs_EXTERNAL. If found, returns <Standard_True>. <Or> contains the orientation of the point, <IndFrom> and <IndTo> represents the interval of index in the sequence of intersection point corresponding to the point --IndFrom <= IndTo--. //! Otherwise, returns <Standard_False>.
 
 	:param From:
 	:type From: float
@@ -439,7 +446,7 @@ class LocOpe_CurveShapeIntersector {
 ") LocalizeBefore;
 		Standard_Boolean LocalizeBefore (const Standard_Real From,TopAbs_Orientation & Or,Standard_Integer &OutValue,Standard_Integer &OutValue);
 		%feature("compactdefaultargs") LocalizeAfter;
-		%feature("autodoc", "	* Searches the first intersection point located after the index <FromInd> ( >= FromInd + 1), wich orientation is not TopAbs_EXTERNAL. If found, returns <Standard_True>. <Or> contains the orientation of the point, <IndFrom> and <IndTo> represents the interval of index in the sequence of intersection point corresponding to the point. (IndFrom <= IndTo). //! Otherwise, returns <Standard_False>.
+		%feature("autodoc", "	* Searches the first intersection point located after the index <FromInd> -- >= FromInd + 1--, wich orientation is not TopAbs_EXTERNAL. If found, returns <Standard_True>. <Or> contains the orientation of the point, <IndFrom> and <IndTo> represents the interval of index in the sequence of intersection point corresponding to the point. --IndFrom <= IndTo--. //! Otherwise, returns <Standard_False>.
 
 	:param FromInd:
 	:type FromInd: int
@@ -453,7 +460,7 @@ class LocOpe_CurveShapeIntersector {
 ") LocalizeAfter;
 		Standard_Boolean LocalizeAfter (const Standard_Integer FromInd,TopAbs_Orientation & Or,Standard_Integer &OutValue,Standard_Integer &OutValue);
 		%feature("compactdefaultargs") LocalizeBefore;
-		%feature("autodoc", "	* Searches the first intersection point located before the index <FromInd> ( <= FromInd -1), wich orientation is not TopAbs_EXTERNAL. If found, returns <Standard_True>. <Or> contains the orientation of the point, <IndFrom> and <IndTo> represents the interval of index in the sequence of intersection point corresponding to the point (IndFrom <= IndTo). //! Otherwise, returns <Standard_False>.
+		%feature("autodoc", "	* Searches the first intersection point located before the index <FromInd> -- <= FromInd -1--, wich orientation is not TopAbs_EXTERNAL. If found, returns <Standard_True>. <Or> contains the orientation of the point, <IndFrom> and <IndTo> represents the interval of index in the sequence of intersection point corresponding to the point --IndFrom <= IndTo--. //! Otherwise, returns <Standard_False>.
 
 	:param FromInd:
 	:type FromInd: int
@@ -543,199 +550,6 @@ class LocOpe_DPrism {
 
 
 %extend LocOpe_DPrism {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor LocOpe_DataMapIteratorOfDataMapOfShapePnt;
-class LocOpe_DataMapIteratorOfDataMapOfShapePnt : public TCollection_BasicMapIterator {
-	public:
-		%feature("compactdefaultargs") LocOpe_DataMapIteratorOfDataMapOfShapePnt;
-		%feature("autodoc", "	:rtype: None
-") LocOpe_DataMapIteratorOfDataMapOfShapePnt;
-		 LocOpe_DataMapIteratorOfDataMapOfShapePnt ();
-		%feature("compactdefaultargs") LocOpe_DataMapIteratorOfDataMapOfShapePnt;
-		%feature("autodoc", "	:param aMap:
-	:type aMap: LocOpe_DataMapOfShapePnt &
-	:rtype: None
-") LocOpe_DataMapIteratorOfDataMapOfShapePnt;
-		 LocOpe_DataMapIteratorOfDataMapOfShapePnt (const LocOpe_DataMapOfShapePnt & aMap);
-		%feature("compactdefaultargs") Initialize;
-		%feature("autodoc", "	:param aMap:
-	:type aMap: LocOpe_DataMapOfShapePnt &
-	:rtype: None
-") Initialize;
-		void Initialize (const LocOpe_DataMapOfShapePnt & aMap);
-		%feature("compactdefaultargs") Key;
-		%feature("autodoc", "	:rtype: TopoDS_Shape
-") Key;
-		const TopoDS_Shape  Key ();
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:rtype: gp_Pnt
-") Value;
-		const gp_Pnt  Value ();
-};
-
-
-%extend LocOpe_DataMapIteratorOfDataMapOfShapePnt {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor LocOpe_DataMapNodeOfDataMapOfShapePnt;
-class LocOpe_DataMapNodeOfDataMapOfShapePnt : public TCollection_MapNode {
-	public:
-		%feature("compactdefaultargs") LocOpe_DataMapNodeOfDataMapOfShapePnt;
-		%feature("autodoc", "	:param K:
-	:type K: TopoDS_Shape &
-	:param I:
-	:type I: gp_Pnt
-	:param n:
-	:type n: TCollection_MapNodePtr &
-	:rtype: None
-") LocOpe_DataMapNodeOfDataMapOfShapePnt;
-		 LocOpe_DataMapNodeOfDataMapOfShapePnt (const TopoDS_Shape & K,const gp_Pnt & I,const TCollection_MapNodePtr & n);
-		%feature("compactdefaultargs") Key;
-		%feature("autodoc", "	:rtype: TopoDS_Shape
-") Key;
-		TopoDS_Shape  Key ();
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:rtype: gp_Pnt
-") Value;
-		gp_Pnt  Value ();
-};
-
-
-%extend LocOpe_DataMapNodeOfDataMapOfShapePnt {
-	%pythoncode {
-		def GetHandle(self):
-		    try:
-		        return self.thisHandle
-		    except:
-		        self.thisHandle = Handle_LocOpe_DataMapNodeOfDataMapOfShapePnt(self)
-		        self.thisown = False
-		        return self.thisHandle
-	}
-};
-
-%pythonappend Handle_LocOpe_DataMapNodeOfDataMapOfShapePnt::Handle_LocOpe_DataMapNodeOfDataMapOfShapePnt %{
-    # register the handle in the base object
-    if len(args) > 0:
-        register_handle(self, args[0])
-%}
-
-%nodefaultctor Handle_LocOpe_DataMapNodeOfDataMapOfShapePnt;
-class Handle_LocOpe_DataMapNodeOfDataMapOfShapePnt : public Handle_TCollection_MapNode {
-
-    public:
-        // constructors
-        Handle_LocOpe_DataMapNodeOfDataMapOfShapePnt();
-        Handle_LocOpe_DataMapNodeOfDataMapOfShapePnt(const Handle_LocOpe_DataMapNodeOfDataMapOfShapePnt &aHandle);
-        Handle_LocOpe_DataMapNodeOfDataMapOfShapePnt(const LocOpe_DataMapNodeOfDataMapOfShapePnt *anItem);
-        void Nullify();
-        Standard_Boolean IsNull() const;
-        static const Handle_LocOpe_DataMapNodeOfDataMapOfShapePnt DownCast(const Handle_Standard_Transient &AnObject);
-
-};
-%extend Handle_LocOpe_DataMapNodeOfDataMapOfShapePnt {
-    LocOpe_DataMapNodeOfDataMapOfShapePnt* _get_reference() {
-    return (LocOpe_DataMapNodeOfDataMapOfShapePnt*)$self->Access();
-    }
-};
-
-%extend Handle_LocOpe_DataMapNodeOfDataMapOfShapePnt {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
-};
-
-%extend LocOpe_DataMapNodeOfDataMapOfShapePnt {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor LocOpe_DataMapOfShapePnt;
-class LocOpe_DataMapOfShapePnt : public TCollection_BasicMap {
-	public:
-		%feature("compactdefaultargs") LocOpe_DataMapOfShapePnt;
-		%feature("autodoc", "	:param NbBuckets: default value is 1
-	:type NbBuckets: int
-	:rtype: None
-") LocOpe_DataMapOfShapePnt;
-		 LocOpe_DataMapOfShapePnt (const Standard_Integer NbBuckets = 1);
-		%feature("compactdefaultargs") Assign;
-		%feature("autodoc", "	:param Other:
-	:type Other: LocOpe_DataMapOfShapePnt &
-	:rtype: LocOpe_DataMapOfShapePnt
-") Assign;
-		LocOpe_DataMapOfShapePnt & Assign (const LocOpe_DataMapOfShapePnt & Other);
-		%feature("compactdefaultargs") operator =;
-		%feature("autodoc", "	:param Other:
-	:type Other: LocOpe_DataMapOfShapePnt &
-	:rtype: LocOpe_DataMapOfShapePnt
-") operator =;
-		LocOpe_DataMapOfShapePnt & operator = (const LocOpe_DataMapOfShapePnt & Other);
-		%feature("compactdefaultargs") ReSize;
-		%feature("autodoc", "	:param NbBuckets:
-	:type NbBuckets: int
-	:rtype: None
-") ReSize;
-		void ReSize (const Standard_Integer NbBuckets);
-		%feature("compactdefaultargs") Clear;
-		%feature("autodoc", "	:rtype: None
-") Clear;
-		void Clear ();
-		%feature("compactdefaultargs") Bind;
-		%feature("autodoc", "	:param K:
-	:type K: TopoDS_Shape &
-	:param I:
-	:type I: gp_Pnt
-	:rtype: bool
-") Bind;
-		Standard_Boolean Bind (const TopoDS_Shape & K,const gp_Pnt & I);
-		%feature("compactdefaultargs") IsBound;
-		%feature("autodoc", "	:param K:
-	:type K: TopoDS_Shape &
-	:rtype: bool
-") IsBound;
-		Standard_Boolean IsBound (const TopoDS_Shape & K);
-		%feature("compactdefaultargs") UnBind;
-		%feature("autodoc", "	:param K:
-	:type K: TopoDS_Shape &
-	:rtype: bool
-") UnBind;
-		Standard_Boolean UnBind (const TopoDS_Shape & K);
-		%feature("compactdefaultargs") Find;
-		%feature("autodoc", "	:param K:
-	:type K: TopoDS_Shape &
-	:rtype: gp_Pnt
-") Find;
-		const gp_Pnt  Find (const TopoDS_Shape & K);
-		%feature("compactdefaultargs") ChangeFind;
-		%feature("autodoc", "	:param K:
-	:type K: TopoDS_Shape &
-	:rtype: gp_Pnt
-") ChangeFind;
-		gp_Pnt  ChangeFind (const TopoDS_Shape & K);
-		%feature("compactdefaultargs") Find1;
-		%feature("autodoc", "	:param K:
-	:type K: TopoDS_Shape &
-	:rtype: Standard_Address
-") Find1;
-		Standard_Address Find1 (const TopoDS_Shape & K);
-		%feature("compactdefaultargs") ChangeFind1;
-		%feature("autodoc", "	:param K:
-	:type K: TopoDS_Shape &
-	:rtype: Standard_Address
-") ChangeFind1;
-		Standard_Address ChangeFind1 (const TopoDS_Shape & K);
-};
-
-
-%extend LocOpe_DataMapOfShapePnt {
 	%pythoncode {
 	__repr__ = _dumps_object
 	}
@@ -839,7 +653,7 @@ class LocOpe_FindEdgesInFace {
 	}
 };
 %nodefaultctor LocOpe_GeneratedShape;
-class LocOpe_GeneratedShape : public MMgt_TShared {
+class LocOpe_GeneratedShape : public Standard_Transient {
 	public:
 		%feature("compactdefaultargs") GeneratingEdges;
 		%feature("autodoc", "	:rtype: TopTools_ListOfShape
@@ -889,7 +703,7 @@ class LocOpe_GeneratedShape : public MMgt_TShared {
 %}
 
 %nodefaultctor Handle_LocOpe_GeneratedShape;
-class Handle_LocOpe_GeneratedShape : public Handle_MMgt_TShared {
+class Handle_LocOpe_GeneratedShape : public Handle_Standard_Transient {
 
     public:
         // constructors
@@ -901,19 +715,20 @@ class Handle_LocOpe_GeneratedShape : public Handle_MMgt_TShared {
         static const Handle_LocOpe_GeneratedShape DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_LocOpe_GeneratedShape {
     LocOpe_GeneratedShape* _get_reference() {
-    return (LocOpe_GeneratedShape*)$self->Access();
+    return (LocOpe_GeneratedShape*)$self->get();
     }
 };
 
 %extend Handle_LocOpe_GeneratedShape {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend LocOpe_GeneratedShape {
@@ -969,7 +784,7 @@ class LocOpe_Generator {
 ") Shape;
 		const TopoDS_Shape  Shape ();
 		%feature("compactdefaultargs") DescendantFace;
-		%feature("autodoc", "	* Returns the descendant face of <F>. <F> may belong to the original shape or to the 'generated' shape. The returned face may be a null shape (when <F> disappears).
+		%feature("autodoc", "	* Returns the descendant face of <F>. <F> may belong to the original shape or to the 'generated' shape. The returned face may be a null shape --when <F> disappears--.
 
 	:param F:
 	:type F: TopoDS_Face &
@@ -1065,79 +880,6 @@ class LocOpe_Gluer {
 
 
 %extend LocOpe_Gluer {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor LocOpe_HBuilder;
-class LocOpe_HBuilder : public TopOpeBRepBuild_HBuilder {
-	public:
-		%feature("compactdefaultargs") LocOpe_HBuilder;
-		%feature("autodoc", "	:param BT:
-	:type BT: TopOpeBRepDS_BuildTool &
-	:rtype: None
-") LocOpe_HBuilder;
-		 LocOpe_HBuilder (const TopOpeBRepDS_BuildTool & BT);
-		%feature("compactdefaultargs") Classify;
-		%feature("autodoc", "	:rtype: bool
-") Classify;
-		Standard_Boolean Classify ();
-		%feature("compactdefaultargs") Classify;
-		%feature("autodoc", "	:param B:
-	:type B: bool
-	:rtype: None
-") Classify;
-		void Classify (const Standard_Boolean B);
-};
-
-
-%extend LocOpe_HBuilder {
-	%pythoncode {
-		def GetHandle(self):
-		    try:
-		        return self.thisHandle
-		    except:
-		        self.thisHandle = Handle_LocOpe_HBuilder(self)
-		        self.thisown = False
-		        return self.thisHandle
-	}
-};
-
-%pythonappend Handle_LocOpe_HBuilder::Handle_LocOpe_HBuilder %{
-    # register the handle in the base object
-    if len(args) > 0:
-        register_handle(self, args[0])
-%}
-
-%nodefaultctor Handle_LocOpe_HBuilder;
-class Handle_LocOpe_HBuilder : public Handle_TopOpeBRepBuild_HBuilder {
-
-    public:
-        // constructors
-        Handle_LocOpe_HBuilder();
-        Handle_LocOpe_HBuilder(const Handle_LocOpe_HBuilder &aHandle);
-        Handle_LocOpe_HBuilder(const LocOpe_HBuilder *anItem);
-        void Nullify();
-        Standard_Boolean IsNull() const;
-        static const Handle_LocOpe_HBuilder DownCast(const Handle_Standard_Transient &AnObject);
-
-};
-%extend Handle_LocOpe_HBuilder {
-    LocOpe_HBuilder* _get_reference() {
-    return (LocOpe_HBuilder*)$self->Access();
-    }
-};
-
-%extend Handle_LocOpe_HBuilder {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
-};
-
-%extend LocOpe_HBuilder {
 	%pythoncode {
 	__repr__ = _dumps_object
 	}
@@ -1422,648 +1164,6 @@ class LocOpe_Prism {
 	__repr__ = _dumps_object
 	}
 };
-%nodefaultctor LocOpe_SequenceNodeOfSequenceOfCirc;
-class LocOpe_SequenceNodeOfSequenceOfCirc : public TCollection_SeqNode {
-	public:
-		%feature("compactdefaultargs") LocOpe_SequenceNodeOfSequenceOfCirc;
-		%feature("autodoc", "	:param I:
-	:type I: gp_Circ
-	:param n:
-	:type n: TCollection_SeqNodePtr &
-	:param p:
-	:type p: TCollection_SeqNodePtr &
-	:rtype: None
-") LocOpe_SequenceNodeOfSequenceOfCirc;
-		 LocOpe_SequenceNodeOfSequenceOfCirc (const gp_Circ & I,const TCollection_SeqNodePtr & n,const TCollection_SeqNodePtr & p);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:rtype: gp_Circ
-") Value;
-		gp_Circ  Value ();
-};
-
-
-%extend LocOpe_SequenceNodeOfSequenceOfCirc {
-	%pythoncode {
-		def GetHandle(self):
-		    try:
-		        return self.thisHandle
-		    except:
-		        self.thisHandle = Handle_LocOpe_SequenceNodeOfSequenceOfCirc(self)
-		        self.thisown = False
-		        return self.thisHandle
-	}
-};
-
-%pythonappend Handle_LocOpe_SequenceNodeOfSequenceOfCirc::Handle_LocOpe_SequenceNodeOfSequenceOfCirc %{
-    # register the handle in the base object
-    if len(args) > 0:
-        register_handle(self, args[0])
-%}
-
-%nodefaultctor Handle_LocOpe_SequenceNodeOfSequenceOfCirc;
-class Handle_LocOpe_SequenceNodeOfSequenceOfCirc : public Handle_TCollection_SeqNode {
-
-    public:
-        // constructors
-        Handle_LocOpe_SequenceNodeOfSequenceOfCirc();
-        Handle_LocOpe_SequenceNodeOfSequenceOfCirc(const Handle_LocOpe_SequenceNodeOfSequenceOfCirc &aHandle);
-        Handle_LocOpe_SequenceNodeOfSequenceOfCirc(const LocOpe_SequenceNodeOfSequenceOfCirc *anItem);
-        void Nullify();
-        Standard_Boolean IsNull() const;
-        static const Handle_LocOpe_SequenceNodeOfSequenceOfCirc DownCast(const Handle_Standard_Transient &AnObject);
-
-};
-%extend Handle_LocOpe_SequenceNodeOfSequenceOfCirc {
-    LocOpe_SequenceNodeOfSequenceOfCirc* _get_reference() {
-    return (LocOpe_SequenceNodeOfSequenceOfCirc*)$self->Access();
-    }
-};
-
-%extend Handle_LocOpe_SequenceNodeOfSequenceOfCirc {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
-};
-
-%extend LocOpe_SequenceNodeOfSequenceOfCirc {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor LocOpe_SequenceNodeOfSequenceOfLin;
-class LocOpe_SequenceNodeOfSequenceOfLin : public TCollection_SeqNode {
-	public:
-		%feature("compactdefaultargs") LocOpe_SequenceNodeOfSequenceOfLin;
-		%feature("autodoc", "	:param I:
-	:type I: gp_Lin
-	:param n:
-	:type n: TCollection_SeqNodePtr &
-	:param p:
-	:type p: TCollection_SeqNodePtr &
-	:rtype: None
-") LocOpe_SequenceNodeOfSequenceOfLin;
-		 LocOpe_SequenceNodeOfSequenceOfLin (const gp_Lin & I,const TCollection_SeqNodePtr & n,const TCollection_SeqNodePtr & p);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:rtype: gp_Lin
-") Value;
-		gp_Lin  Value ();
-};
-
-
-%extend LocOpe_SequenceNodeOfSequenceOfLin {
-	%pythoncode {
-		def GetHandle(self):
-		    try:
-		        return self.thisHandle
-		    except:
-		        self.thisHandle = Handle_LocOpe_SequenceNodeOfSequenceOfLin(self)
-		        self.thisown = False
-		        return self.thisHandle
-	}
-};
-
-%pythonappend Handle_LocOpe_SequenceNodeOfSequenceOfLin::Handle_LocOpe_SequenceNodeOfSequenceOfLin %{
-    # register the handle in the base object
-    if len(args) > 0:
-        register_handle(self, args[0])
-%}
-
-%nodefaultctor Handle_LocOpe_SequenceNodeOfSequenceOfLin;
-class Handle_LocOpe_SequenceNodeOfSequenceOfLin : public Handle_TCollection_SeqNode {
-
-    public:
-        // constructors
-        Handle_LocOpe_SequenceNodeOfSequenceOfLin();
-        Handle_LocOpe_SequenceNodeOfSequenceOfLin(const Handle_LocOpe_SequenceNodeOfSequenceOfLin &aHandle);
-        Handle_LocOpe_SequenceNodeOfSequenceOfLin(const LocOpe_SequenceNodeOfSequenceOfLin *anItem);
-        void Nullify();
-        Standard_Boolean IsNull() const;
-        static const Handle_LocOpe_SequenceNodeOfSequenceOfLin DownCast(const Handle_Standard_Transient &AnObject);
-
-};
-%extend Handle_LocOpe_SequenceNodeOfSequenceOfLin {
-    LocOpe_SequenceNodeOfSequenceOfLin* _get_reference() {
-    return (LocOpe_SequenceNodeOfSequenceOfLin*)$self->Access();
-    }
-};
-
-%extend Handle_LocOpe_SequenceNodeOfSequenceOfLin {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
-};
-
-%extend LocOpe_SequenceNodeOfSequenceOfLin {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor LocOpe_SequenceNodeOfSequenceOfPntFace;
-class LocOpe_SequenceNodeOfSequenceOfPntFace : public TCollection_SeqNode {
-	public:
-		%feature("compactdefaultargs") LocOpe_SequenceNodeOfSequenceOfPntFace;
-		%feature("autodoc", "	:param I:
-	:type I: LocOpe_PntFace &
-	:param n:
-	:type n: TCollection_SeqNodePtr &
-	:param p:
-	:type p: TCollection_SeqNodePtr &
-	:rtype: None
-") LocOpe_SequenceNodeOfSequenceOfPntFace;
-		 LocOpe_SequenceNodeOfSequenceOfPntFace (const LocOpe_PntFace & I,const TCollection_SeqNodePtr & n,const TCollection_SeqNodePtr & p);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:rtype: LocOpe_PntFace
-") Value;
-		LocOpe_PntFace & Value ();
-};
-
-
-%extend LocOpe_SequenceNodeOfSequenceOfPntFace {
-	%pythoncode {
-		def GetHandle(self):
-		    try:
-		        return self.thisHandle
-		    except:
-		        self.thisHandle = Handle_LocOpe_SequenceNodeOfSequenceOfPntFace(self)
-		        self.thisown = False
-		        return self.thisHandle
-	}
-};
-
-%pythonappend Handle_LocOpe_SequenceNodeOfSequenceOfPntFace::Handle_LocOpe_SequenceNodeOfSequenceOfPntFace %{
-    # register the handle in the base object
-    if len(args) > 0:
-        register_handle(self, args[0])
-%}
-
-%nodefaultctor Handle_LocOpe_SequenceNodeOfSequenceOfPntFace;
-class Handle_LocOpe_SequenceNodeOfSequenceOfPntFace : public Handle_TCollection_SeqNode {
-
-    public:
-        // constructors
-        Handle_LocOpe_SequenceNodeOfSequenceOfPntFace();
-        Handle_LocOpe_SequenceNodeOfSequenceOfPntFace(const Handle_LocOpe_SequenceNodeOfSequenceOfPntFace &aHandle);
-        Handle_LocOpe_SequenceNodeOfSequenceOfPntFace(const LocOpe_SequenceNodeOfSequenceOfPntFace *anItem);
-        void Nullify();
-        Standard_Boolean IsNull() const;
-        static const Handle_LocOpe_SequenceNodeOfSequenceOfPntFace DownCast(const Handle_Standard_Transient &AnObject);
-
-};
-%extend Handle_LocOpe_SequenceNodeOfSequenceOfPntFace {
-    LocOpe_SequenceNodeOfSequenceOfPntFace* _get_reference() {
-    return (LocOpe_SequenceNodeOfSequenceOfPntFace*)$self->Access();
-    }
-};
-
-%extend Handle_LocOpe_SequenceNodeOfSequenceOfPntFace {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
-};
-
-%extend LocOpe_SequenceNodeOfSequenceOfPntFace {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor LocOpe_SequenceOfCirc;
-class LocOpe_SequenceOfCirc : public TCollection_BaseSequence {
-	public:
-		%feature("compactdefaultargs") LocOpe_SequenceOfCirc;
-		%feature("autodoc", "	:rtype: None
-") LocOpe_SequenceOfCirc;
-		 LocOpe_SequenceOfCirc ();
-		%feature("compactdefaultargs") LocOpe_SequenceOfCirc;
-		%feature("autodoc", "	:param Other:
-	:type Other: LocOpe_SequenceOfCirc &
-	:rtype: None
-") LocOpe_SequenceOfCirc;
-		 LocOpe_SequenceOfCirc (const LocOpe_SequenceOfCirc & Other);
-		%feature("compactdefaultargs") Clear;
-		%feature("autodoc", "	:rtype: None
-") Clear;
-		void Clear ();
-		%feature("compactdefaultargs") Assign;
-		%feature("autodoc", "	:param Other:
-	:type Other: LocOpe_SequenceOfCirc &
-	:rtype: LocOpe_SequenceOfCirc
-") Assign;
-		const LocOpe_SequenceOfCirc & Assign (const LocOpe_SequenceOfCirc & Other);
-		%feature("compactdefaultargs") operator =;
-		%feature("autodoc", "	:param Other:
-	:type Other: LocOpe_SequenceOfCirc &
-	:rtype: LocOpe_SequenceOfCirc
-") operator =;
-		const LocOpe_SequenceOfCirc & operator = (const LocOpe_SequenceOfCirc & Other);
-		%feature("compactdefaultargs") Append;
-		%feature("autodoc", "	:param T:
-	:type T: gp_Circ
-	:rtype: None
-") Append;
-		void Append (const gp_Circ & T);
-		%feature("compactdefaultargs") Append;
-		%feature("autodoc", "	:param S:
-	:type S: LocOpe_SequenceOfCirc &
-	:rtype: None
-") Append;
-		void Append (LocOpe_SequenceOfCirc & S);
-		%feature("compactdefaultargs") Prepend;
-		%feature("autodoc", "	:param T:
-	:type T: gp_Circ
-	:rtype: None
-") Prepend;
-		void Prepend (const gp_Circ & T);
-		%feature("compactdefaultargs") Prepend;
-		%feature("autodoc", "	:param S:
-	:type S: LocOpe_SequenceOfCirc &
-	:rtype: None
-") Prepend;
-		void Prepend (LocOpe_SequenceOfCirc & S);
-		%feature("compactdefaultargs") InsertBefore;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param T:
-	:type T: gp_Circ
-	:rtype: None
-") InsertBefore;
-		void InsertBefore (const Standard_Integer Index,const gp_Circ & T);
-		%feature("compactdefaultargs") InsertBefore;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param S:
-	:type S: LocOpe_SequenceOfCirc &
-	:rtype: None
-") InsertBefore;
-		void InsertBefore (const Standard_Integer Index,LocOpe_SequenceOfCirc & S);
-		%feature("compactdefaultargs") InsertAfter;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param T:
-	:type T: gp_Circ
-	:rtype: None
-") InsertAfter;
-		void InsertAfter (const Standard_Integer Index,const gp_Circ & T);
-		%feature("compactdefaultargs") InsertAfter;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param S:
-	:type S: LocOpe_SequenceOfCirc &
-	:rtype: None
-") InsertAfter;
-		void InsertAfter (const Standard_Integer Index,LocOpe_SequenceOfCirc & S);
-		%feature("compactdefaultargs") First;
-		%feature("autodoc", "	:rtype: gp_Circ
-") First;
-		const gp_Circ  First ();
-		%feature("compactdefaultargs") Last;
-		%feature("autodoc", "	:rtype: gp_Circ
-") Last;
-		const gp_Circ  Last ();
-		%feature("compactdefaultargs") Split;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param Sub:
-	:type Sub: LocOpe_SequenceOfCirc &
-	:rtype: None
-") Split;
-		void Split (const Standard_Integer Index,LocOpe_SequenceOfCirc & Sub);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: gp_Circ
-") Value;
-		const gp_Circ  Value (const Standard_Integer Index);
-		%feature("compactdefaultargs") SetValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param I:
-	:type I: gp_Circ
-	:rtype: None
-") SetValue;
-		void SetValue (const Standard_Integer Index,const gp_Circ & I);
-		%feature("compactdefaultargs") ChangeValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: gp_Circ
-") ChangeValue;
-		gp_Circ  ChangeValue (const Standard_Integer Index);
-		%feature("compactdefaultargs") Remove;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: None
-") Remove;
-		void Remove (const Standard_Integer Index);
-		%feature("compactdefaultargs") Remove;
-		%feature("autodoc", "	:param FromIndex:
-	:type FromIndex: int
-	:param ToIndex:
-	:type ToIndex: int
-	:rtype: None
-") Remove;
-		void Remove (const Standard_Integer FromIndex,const Standard_Integer ToIndex);
-};
-
-
-%extend LocOpe_SequenceOfCirc {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor LocOpe_SequenceOfLin;
-class LocOpe_SequenceOfLin : public TCollection_BaseSequence {
-	public:
-		%feature("compactdefaultargs") LocOpe_SequenceOfLin;
-		%feature("autodoc", "	:rtype: None
-") LocOpe_SequenceOfLin;
-		 LocOpe_SequenceOfLin ();
-		%feature("compactdefaultargs") LocOpe_SequenceOfLin;
-		%feature("autodoc", "	:param Other:
-	:type Other: LocOpe_SequenceOfLin &
-	:rtype: None
-") LocOpe_SequenceOfLin;
-		 LocOpe_SequenceOfLin (const LocOpe_SequenceOfLin & Other);
-		%feature("compactdefaultargs") Clear;
-		%feature("autodoc", "	:rtype: None
-") Clear;
-		void Clear ();
-		%feature("compactdefaultargs") Assign;
-		%feature("autodoc", "	:param Other:
-	:type Other: LocOpe_SequenceOfLin &
-	:rtype: LocOpe_SequenceOfLin
-") Assign;
-		const LocOpe_SequenceOfLin & Assign (const LocOpe_SequenceOfLin & Other);
-		%feature("compactdefaultargs") operator =;
-		%feature("autodoc", "	:param Other:
-	:type Other: LocOpe_SequenceOfLin &
-	:rtype: LocOpe_SequenceOfLin
-") operator =;
-		const LocOpe_SequenceOfLin & operator = (const LocOpe_SequenceOfLin & Other);
-		%feature("compactdefaultargs") Append;
-		%feature("autodoc", "	:param T:
-	:type T: gp_Lin
-	:rtype: None
-") Append;
-		void Append (const gp_Lin & T);
-		%feature("compactdefaultargs") Append;
-		%feature("autodoc", "	:param S:
-	:type S: LocOpe_SequenceOfLin &
-	:rtype: None
-") Append;
-		void Append (LocOpe_SequenceOfLin & S);
-		%feature("compactdefaultargs") Prepend;
-		%feature("autodoc", "	:param T:
-	:type T: gp_Lin
-	:rtype: None
-") Prepend;
-		void Prepend (const gp_Lin & T);
-		%feature("compactdefaultargs") Prepend;
-		%feature("autodoc", "	:param S:
-	:type S: LocOpe_SequenceOfLin &
-	:rtype: None
-") Prepend;
-		void Prepend (LocOpe_SequenceOfLin & S);
-		%feature("compactdefaultargs") InsertBefore;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param T:
-	:type T: gp_Lin
-	:rtype: None
-") InsertBefore;
-		void InsertBefore (const Standard_Integer Index,const gp_Lin & T);
-		%feature("compactdefaultargs") InsertBefore;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param S:
-	:type S: LocOpe_SequenceOfLin &
-	:rtype: None
-") InsertBefore;
-		void InsertBefore (const Standard_Integer Index,LocOpe_SequenceOfLin & S);
-		%feature("compactdefaultargs") InsertAfter;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param T:
-	:type T: gp_Lin
-	:rtype: None
-") InsertAfter;
-		void InsertAfter (const Standard_Integer Index,const gp_Lin & T);
-		%feature("compactdefaultargs") InsertAfter;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param S:
-	:type S: LocOpe_SequenceOfLin &
-	:rtype: None
-") InsertAfter;
-		void InsertAfter (const Standard_Integer Index,LocOpe_SequenceOfLin & S);
-		%feature("compactdefaultargs") First;
-		%feature("autodoc", "	:rtype: gp_Lin
-") First;
-		const gp_Lin  First ();
-		%feature("compactdefaultargs") Last;
-		%feature("autodoc", "	:rtype: gp_Lin
-") Last;
-		const gp_Lin  Last ();
-		%feature("compactdefaultargs") Split;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param Sub:
-	:type Sub: LocOpe_SequenceOfLin &
-	:rtype: None
-") Split;
-		void Split (const Standard_Integer Index,LocOpe_SequenceOfLin & Sub);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: gp_Lin
-") Value;
-		const gp_Lin  Value (const Standard_Integer Index);
-		%feature("compactdefaultargs") SetValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param I:
-	:type I: gp_Lin
-	:rtype: None
-") SetValue;
-		void SetValue (const Standard_Integer Index,const gp_Lin & I);
-		%feature("compactdefaultargs") ChangeValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: gp_Lin
-") ChangeValue;
-		gp_Lin  ChangeValue (const Standard_Integer Index);
-		%feature("compactdefaultargs") Remove;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: None
-") Remove;
-		void Remove (const Standard_Integer Index);
-		%feature("compactdefaultargs") Remove;
-		%feature("autodoc", "	:param FromIndex:
-	:type FromIndex: int
-	:param ToIndex:
-	:type ToIndex: int
-	:rtype: None
-") Remove;
-		void Remove (const Standard_Integer FromIndex,const Standard_Integer ToIndex);
-};
-
-
-%extend LocOpe_SequenceOfLin {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor LocOpe_SequenceOfPntFace;
-class LocOpe_SequenceOfPntFace : public TCollection_BaseSequence {
-	public:
-		%feature("compactdefaultargs") LocOpe_SequenceOfPntFace;
-		%feature("autodoc", "	:rtype: None
-") LocOpe_SequenceOfPntFace;
-		 LocOpe_SequenceOfPntFace ();
-		%feature("compactdefaultargs") LocOpe_SequenceOfPntFace;
-		%feature("autodoc", "	:param Other:
-	:type Other: LocOpe_SequenceOfPntFace &
-	:rtype: None
-") LocOpe_SequenceOfPntFace;
-		 LocOpe_SequenceOfPntFace (const LocOpe_SequenceOfPntFace & Other);
-		%feature("compactdefaultargs") Clear;
-		%feature("autodoc", "	:rtype: None
-") Clear;
-		void Clear ();
-		%feature("compactdefaultargs") Assign;
-		%feature("autodoc", "	:param Other:
-	:type Other: LocOpe_SequenceOfPntFace &
-	:rtype: LocOpe_SequenceOfPntFace
-") Assign;
-		const LocOpe_SequenceOfPntFace & Assign (const LocOpe_SequenceOfPntFace & Other);
-		%feature("compactdefaultargs") operator =;
-		%feature("autodoc", "	:param Other:
-	:type Other: LocOpe_SequenceOfPntFace &
-	:rtype: LocOpe_SequenceOfPntFace
-") operator =;
-		const LocOpe_SequenceOfPntFace & operator = (const LocOpe_SequenceOfPntFace & Other);
-		%feature("compactdefaultargs") Append;
-		%feature("autodoc", "	:param T:
-	:type T: LocOpe_PntFace &
-	:rtype: None
-") Append;
-		void Append (const LocOpe_PntFace & T);
-		%feature("compactdefaultargs") Append;
-		%feature("autodoc", "	:param S:
-	:type S: LocOpe_SequenceOfPntFace &
-	:rtype: None
-") Append;
-		void Append (LocOpe_SequenceOfPntFace & S);
-		%feature("compactdefaultargs") Prepend;
-		%feature("autodoc", "	:param T:
-	:type T: LocOpe_PntFace &
-	:rtype: None
-") Prepend;
-		void Prepend (const LocOpe_PntFace & T);
-		%feature("compactdefaultargs") Prepend;
-		%feature("autodoc", "	:param S:
-	:type S: LocOpe_SequenceOfPntFace &
-	:rtype: None
-") Prepend;
-		void Prepend (LocOpe_SequenceOfPntFace & S);
-		%feature("compactdefaultargs") InsertBefore;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param T:
-	:type T: LocOpe_PntFace &
-	:rtype: None
-") InsertBefore;
-		void InsertBefore (const Standard_Integer Index,const LocOpe_PntFace & T);
-		%feature("compactdefaultargs") InsertBefore;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param S:
-	:type S: LocOpe_SequenceOfPntFace &
-	:rtype: None
-") InsertBefore;
-		void InsertBefore (const Standard_Integer Index,LocOpe_SequenceOfPntFace & S);
-		%feature("compactdefaultargs") InsertAfter;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param T:
-	:type T: LocOpe_PntFace &
-	:rtype: None
-") InsertAfter;
-		void InsertAfter (const Standard_Integer Index,const LocOpe_PntFace & T);
-		%feature("compactdefaultargs") InsertAfter;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param S:
-	:type S: LocOpe_SequenceOfPntFace &
-	:rtype: None
-") InsertAfter;
-		void InsertAfter (const Standard_Integer Index,LocOpe_SequenceOfPntFace & S);
-		%feature("compactdefaultargs") First;
-		%feature("autodoc", "	:rtype: LocOpe_PntFace
-") First;
-		const LocOpe_PntFace & First ();
-		%feature("compactdefaultargs") Last;
-		%feature("autodoc", "	:rtype: LocOpe_PntFace
-") Last;
-		const LocOpe_PntFace & Last ();
-		%feature("compactdefaultargs") Split;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param Sub:
-	:type Sub: LocOpe_SequenceOfPntFace &
-	:rtype: None
-") Split;
-		void Split (const Standard_Integer Index,LocOpe_SequenceOfPntFace & Sub);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: LocOpe_PntFace
-") Value;
-		const LocOpe_PntFace & Value (const Standard_Integer Index);
-		%feature("compactdefaultargs") SetValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param I:
-	:type I: LocOpe_PntFace &
-	:rtype: None
-") SetValue;
-		void SetValue (const Standard_Integer Index,const LocOpe_PntFace & I);
-		%feature("compactdefaultargs") ChangeValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: LocOpe_PntFace
-") ChangeValue;
-		LocOpe_PntFace & ChangeValue (const Standard_Integer Index);
-		%feature("compactdefaultargs") Remove;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: None
-") Remove;
-		void Remove (const Standard_Integer Index);
-		%feature("compactdefaultargs") Remove;
-		%feature("autodoc", "	:param FromIndex:
-	:type FromIndex: int
-	:param ToIndex:
-	:type ToIndex: int
-	:rtype: None
-") Remove;
-		void Remove (const Standard_Integer FromIndex,const Standard_Integer ToIndex);
-};
-
-
-%extend LocOpe_SequenceOfPntFace {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
 %nodefaultctor LocOpe_SplitDrafts;
 class LocOpe_SplitDrafts {
 	public:
@@ -2090,7 +1190,7 @@ class LocOpe_SplitDrafts {
 ") Init;
 		void Init (const TopoDS_Shape & S);
 		%feature("compactdefaultargs") Perform;
-		%feature("autodoc", "	* Splits the face <F> of the former given shape with the wire <W>. The wire is assumed to lie on the face. Puts a draft angle on both parts of the wire. <Extractg>, <Nplg>, <Angleg> define the arguments for the left part of the wire. <Extractd>, <Npld>, <Angled> define the arguments for the right part of the wire. The draft angle is measured with the direction <Extract>. <Npl> defines the neutral plane (points belonging to the neutral plane are not modified). <Angle> is the value of the draft angle. If <ModifyLeft> is set to <Standard_False>, no draft angle is applied to the left part of the wire. If <ModifyRight> is set to <Standard_False>,no draft angle is applied to the right part of the wire.
+		%feature("autodoc", "	* Splits the face <F> of the former given shape with the wire <W>. The wire is assumed to lie on the face. Puts a draft angle on both parts of the wire. <Extractg>, <Nplg>, <Angleg> define the arguments for the left part of the wire. <Extractd>, <Npld>, <Angled> define the arguments for the right part of the wire. The draft angle is measured with the direction <Extract>. <Npl> defines the neutral plane --points belonging to the neutral plane are not modified--. <Angle> is the value of the draft angle. If <ModifyLeft> is set to <Standard_False>, no draft angle is applied to the left part of the wire. If <ModifyRight> is set to <Standard_False>,no draft angle is applied to the right part of the wire.
 
 	:param F:
 	:type F: TopoDS_Face &
@@ -2116,7 +1216,7 @@ class LocOpe_SplitDrafts {
 ") Perform;
 		void Perform (const TopoDS_Face & F,const TopoDS_Wire & W,const gp_Dir & Extractg,const gp_Pln & NPlg,const Standard_Real Angleg,const gp_Dir & Extractd,const gp_Pln & NPld,const Standard_Real Angled,const Standard_Boolean ModifyLeft = Standard_True,const Standard_Boolean ModifyRight = Standard_True);
 		%feature("compactdefaultargs") Perform;
-		%feature("autodoc", "	* Splits the face <F> of the former given shape with the wire <W>. The wire is assumed to lie on the face. Puts a draft angle on the left part of the wire. The draft angle is measured with the direction <Extract>. <Npl> defines the neutral plane (points belonging to the neutral plane are not modified). <Angle> is the value of the draft angle.
+		%feature("autodoc", "	* Splits the face <F> of the former given shape with the wire <W>. The wire is assumed to lie on the face. Puts a draft angle on the left part of the wire. The draft angle is measured with the direction <Extract>. <Npl> defines the neutral plane --points belonging to the neutral plane are not modified--. <Angle> is the value of the draft angle.
 
 	:param F:
 	:type F: TopoDS_Face &
@@ -2215,9 +1315,9 @@ class LocOpe_SplitShape {
 	:type W: TopoDS_Wire &
 	:param F:
 	:type F: TopoDS_Face &
-	:rtype: None
+	:rtype: bool
 ") Add;
-		void Add (const TopoDS_Wire & W,const TopoDS_Face & F);
+		Standard_Boolean Add (const TopoDS_Wire & W,const TopoDS_Face & F);
 		%feature("compactdefaultargs") Add;
 		%feature("autodoc", "	* Adds the list of wires <Lwires> on the face <F>.
 
@@ -2225,9 +1325,9 @@ class LocOpe_SplitShape {
 	:type Lwires: TopTools_ListOfShape &
 	:param F:
 	:type F: TopoDS_Face &
-	:rtype: None
+	:rtype: bool
 ") Add;
-		void Add (const TopTools_ListOfShape & Lwires,const TopoDS_Face & F);
+		Standard_Boolean Add (const TopTools_ListOfShape & Lwires,const TopoDS_Face & F);
 		%feature("compactdefaultargs") Shape;
 		%feature("autodoc", "	* Returns the 'original' shape.
 
@@ -2314,7 +1414,7 @@ class LocOpe_Spliter {
 ") DirectLeft;
 		const TopTools_ListOfShape & DirectLeft ();
 		%feature("compactdefaultargs") Left;
-		%feature("autodoc", "	* Returns the faces of the 'left' part on the shape. (It is build from DirectLeft, with the faces connected to this set, and so on...).
+		%feature("autodoc", "	* Returns the faces of the 'left' part on the shape. --It is build from DirectLeft, with the faces connected to this set, and so on...--.
 
 	:rtype: TopTools_ListOfShape
 ") Left;
@@ -2336,7 +1436,7 @@ class LocOpe_Spliter {
 	}
 };
 %nodefaultctor LocOpe_WiresOnShape;
-class LocOpe_WiresOnShape : public MMgt_TShared {
+class LocOpe_WiresOnShape : public Standard_Transient {
 	public:
 		%feature("compactdefaultargs") LocOpe_WiresOnShape;
 		%feature("autodoc", "	:param S:
@@ -2350,8 +1450,16 @@ class LocOpe_WiresOnShape : public MMgt_TShared {
 	:rtype: None
 ") Init;
 		void Init (const TopoDS_Shape & S);
+		%feature("compactdefaultargs") Add;
+		%feature("autodoc", "	* Add splitting edges or wires for whole initial shape withot additional specification edge->face, edge->edge This method puts edge on the corresponding faces from initial shape
+
+	:param theEdges:
+	:type theEdges: TopTools_SequenceOfShape &
+	:rtype: bool
+") Add;
+		Standard_Boolean Add (const TopTools_SequenceOfShape & theEdges);
 		%feature("compactdefaultargs") SetCheckInterior;
-		%feature("autodoc", "	* Set the flag of check internal intersections default value is True (to check)
+		%feature("autodoc", "	* Set the flag of check internal intersections default value is True --to check--
 
 	:param ToCheckInterior:
 	:type ToCheckInterior: bool
@@ -2492,7 +1600,7 @@ class LocOpe_WiresOnShape : public MMgt_TShared {
 %}
 
 %nodefaultctor Handle_LocOpe_WiresOnShape;
-class Handle_LocOpe_WiresOnShape : public Handle_MMgt_TShared {
+class Handle_LocOpe_WiresOnShape : public Handle_Standard_Transient {
 
     public:
         // constructors
@@ -2504,19 +1612,20 @@ class Handle_LocOpe_WiresOnShape : public Handle_MMgt_TShared {
         static const Handle_LocOpe_WiresOnShape DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_LocOpe_WiresOnShape {
     LocOpe_WiresOnShape* _get_reference() {
-    return (LocOpe_WiresOnShape*)$self->Access();
+    return (LocOpe_WiresOnShape*)$self->get();
     }
 };
 
 %extend Handle_LocOpe_WiresOnShape {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend LocOpe_WiresOnShape {
@@ -2609,19 +1718,20 @@ class Handle_LocOpe_GluedShape : public Handle_LocOpe_GeneratedShape {
         static const Handle_LocOpe_GluedShape DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_LocOpe_GluedShape {
     LocOpe_GluedShape* _get_reference() {
-    return (LocOpe_GluedShape*)$self->Access();
+    return (LocOpe_GluedShape*)$self->get();
     }
 };
 
 %extend Handle_LocOpe_GluedShape {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend LocOpe_GluedShape {

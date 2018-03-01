@@ -1,5 +1,5 @@
 /*
-Copyright 2008-2017 Thomas Paviot (tpaviot@gmail.com)
+Copyright 2008-2018 Thomas Paviot (tpaviot@gmail.com)
 
 
 This file is part of pythonOCC.
@@ -55,6 +55,10 @@ def register_handle(handle, base_object):
 
 /* typedefs */
 /* end typedefs declaration */
+
+/* templates */
+%template(Blend_SequenceOfPoint) NCollection_Sequence <Blend_Point>;
+/* end templates declaration */
 
 /* public enums */
 enum Blend_Status {
@@ -211,7 +215,7 @@ class Blend_AppFunction : public math_FunctionSetWithDerivatives {
 ") GetMinimalWeight;
 		virtual void GetMinimalWeight (TColStd_Array1OfReal & Weigths);
 		%feature("compactdefaultargs") NbIntervals;
-		%feature("autodoc", "	* Returns the number of intervals for continuity <S>. May be one if Continuity(me) >= <S>
+		%feature("autodoc", "	* Returns the number of intervals for continuity <S>. May be one if Continuity--me-- >= <S>
 
 	:param S:
 	:type S: GeomAbs_Shape
@@ -219,7 +223,7 @@ class Blend_AppFunction : public math_FunctionSetWithDerivatives {
 ") NbIntervals;
 		virtual Standard_Integer NbIntervals (const GeomAbs_Shape S);
 		%feature("compactdefaultargs") Intervals;
-		%feature("autodoc", "	* Stores in <T> the parameters bounding the intervals of continuity <S>. //! The array must provide enough room to accomodate for the parameters. i.e. T.Length() > NbIntervals() raises OutOfRange from Standard
+		%feature("autodoc", "	* Stores in <T> the parameters bounding the intervals of continuity <S>. //! The array must provide enough room to accomodate for the parameters. i.e. T.Length---- > NbIntervals---- raises OutOfRange from Standard
 
 	:param T:
 	:type T: TColStd_Array1OfReal &
@@ -1083,220 +1087,6 @@ class Blend_Point {
 	__repr__ = _dumps_object
 	}
 };
-%nodefaultctor Blend_SequenceNodeOfSequenceOfPoint;
-class Blend_SequenceNodeOfSequenceOfPoint : public TCollection_SeqNode {
-	public:
-		%feature("compactdefaultargs") Blend_SequenceNodeOfSequenceOfPoint;
-		%feature("autodoc", "	:param I:
-	:type I: Blend_Point &
-	:param n:
-	:type n: TCollection_SeqNodePtr &
-	:param p:
-	:type p: TCollection_SeqNodePtr &
-	:rtype: None
-") Blend_SequenceNodeOfSequenceOfPoint;
-		 Blend_SequenceNodeOfSequenceOfPoint (const Blend_Point & I,const TCollection_SeqNodePtr & n,const TCollection_SeqNodePtr & p);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:rtype: Blend_Point
-") Value;
-		Blend_Point & Value ();
-};
-
-
-%extend Blend_SequenceNodeOfSequenceOfPoint {
-	%pythoncode {
-		def GetHandle(self):
-		    try:
-		        return self.thisHandle
-		    except:
-		        self.thisHandle = Handle_Blend_SequenceNodeOfSequenceOfPoint(self)
-		        self.thisown = False
-		        return self.thisHandle
-	}
-};
-
-%pythonappend Handle_Blend_SequenceNodeOfSequenceOfPoint::Handle_Blend_SequenceNodeOfSequenceOfPoint %{
-    # register the handle in the base object
-    if len(args) > 0:
-        register_handle(self, args[0])
-%}
-
-%nodefaultctor Handle_Blend_SequenceNodeOfSequenceOfPoint;
-class Handle_Blend_SequenceNodeOfSequenceOfPoint : public Handle_TCollection_SeqNode {
-
-    public:
-        // constructors
-        Handle_Blend_SequenceNodeOfSequenceOfPoint();
-        Handle_Blend_SequenceNodeOfSequenceOfPoint(const Handle_Blend_SequenceNodeOfSequenceOfPoint &aHandle);
-        Handle_Blend_SequenceNodeOfSequenceOfPoint(const Blend_SequenceNodeOfSequenceOfPoint *anItem);
-        void Nullify();
-        Standard_Boolean IsNull() const;
-        static const Handle_Blend_SequenceNodeOfSequenceOfPoint DownCast(const Handle_Standard_Transient &AnObject);
-
-};
-%extend Handle_Blend_SequenceNodeOfSequenceOfPoint {
-    Blend_SequenceNodeOfSequenceOfPoint* _get_reference() {
-    return (Blend_SequenceNodeOfSequenceOfPoint*)$self->Access();
-    }
-};
-
-%extend Handle_Blend_SequenceNodeOfSequenceOfPoint {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
-};
-
-%extend Blend_SequenceNodeOfSequenceOfPoint {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor Blend_SequenceOfPoint;
-class Blend_SequenceOfPoint : public TCollection_BaseSequence {
-	public:
-		%feature("compactdefaultargs") Blend_SequenceOfPoint;
-		%feature("autodoc", "	:rtype: None
-") Blend_SequenceOfPoint;
-		 Blend_SequenceOfPoint ();
-		%feature("compactdefaultargs") Blend_SequenceOfPoint;
-		%feature("autodoc", "	:param Other:
-	:type Other: Blend_SequenceOfPoint &
-	:rtype: None
-") Blend_SequenceOfPoint;
-		 Blend_SequenceOfPoint (const Blend_SequenceOfPoint & Other);
-		%feature("compactdefaultargs") Clear;
-		%feature("autodoc", "	:rtype: None
-") Clear;
-		void Clear ();
-		%feature("compactdefaultargs") Assign;
-		%feature("autodoc", "	:param Other:
-	:type Other: Blend_SequenceOfPoint &
-	:rtype: Blend_SequenceOfPoint
-") Assign;
-		const Blend_SequenceOfPoint & Assign (const Blend_SequenceOfPoint & Other);
-		%feature("compactdefaultargs") operator =;
-		%feature("autodoc", "	:param Other:
-	:type Other: Blend_SequenceOfPoint &
-	:rtype: Blend_SequenceOfPoint
-") operator =;
-		const Blend_SequenceOfPoint & operator = (const Blend_SequenceOfPoint & Other);
-		%feature("compactdefaultargs") Append;
-		%feature("autodoc", "	:param T:
-	:type T: Blend_Point &
-	:rtype: None
-") Append;
-		void Append (const Blend_Point & T);
-		%feature("compactdefaultargs") Append;
-		%feature("autodoc", "	:param S:
-	:type S: Blend_SequenceOfPoint &
-	:rtype: None
-") Append;
-		void Append (Blend_SequenceOfPoint & S);
-		%feature("compactdefaultargs") Prepend;
-		%feature("autodoc", "	:param T:
-	:type T: Blend_Point &
-	:rtype: None
-") Prepend;
-		void Prepend (const Blend_Point & T);
-		%feature("compactdefaultargs") Prepend;
-		%feature("autodoc", "	:param S:
-	:type S: Blend_SequenceOfPoint &
-	:rtype: None
-") Prepend;
-		void Prepend (Blend_SequenceOfPoint & S);
-		%feature("compactdefaultargs") InsertBefore;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param T:
-	:type T: Blend_Point &
-	:rtype: None
-") InsertBefore;
-		void InsertBefore (const Standard_Integer Index,const Blend_Point & T);
-		%feature("compactdefaultargs") InsertBefore;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param S:
-	:type S: Blend_SequenceOfPoint &
-	:rtype: None
-") InsertBefore;
-		void InsertBefore (const Standard_Integer Index,Blend_SequenceOfPoint & S);
-		%feature("compactdefaultargs") InsertAfter;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param T:
-	:type T: Blend_Point &
-	:rtype: None
-") InsertAfter;
-		void InsertAfter (const Standard_Integer Index,const Blend_Point & T);
-		%feature("compactdefaultargs") InsertAfter;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param S:
-	:type S: Blend_SequenceOfPoint &
-	:rtype: None
-") InsertAfter;
-		void InsertAfter (const Standard_Integer Index,Blend_SequenceOfPoint & S);
-		%feature("compactdefaultargs") First;
-		%feature("autodoc", "	:rtype: Blend_Point
-") First;
-		const Blend_Point & First ();
-		%feature("compactdefaultargs") Last;
-		%feature("autodoc", "	:rtype: Blend_Point
-") Last;
-		const Blend_Point & Last ();
-		%feature("compactdefaultargs") Split;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param Sub:
-	:type Sub: Blend_SequenceOfPoint &
-	:rtype: None
-") Split;
-		void Split (const Standard_Integer Index,Blend_SequenceOfPoint & Sub);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: Blend_Point
-") Value;
-		const Blend_Point & Value (const Standard_Integer Index);
-		%feature("compactdefaultargs") SetValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param I:
-	:type I: Blend_Point &
-	:rtype: None
-") SetValue;
-		void SetValue (const Standard_Integer Index,const Blend_Point & I);
-		%feature("compactdefaultargs") ChangeValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: Blend_Point
-") ChangeValue;
-		Blend_Point & ChangeValue (const Standard_Integer Index);
-		%feature("compactdefaultargs") Remove;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: None
-") Remove;
-		void Remove (const Standard_Integer Index);
-		%feature("compactdefaultargs") Remove;
-		%feature("autodoc", "	:param FromIndex:
-	:type FromIndex: int
-	:param ToIndex:
-	:type ToIndex: int
-	:rtype: None
-") Remove;
-		void Remove (const Standard_Integer FromIndex,const Standard_Integer ToIndex);
-};
-
-
-%extend Blend_SequenceOfPoint {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
 %nodefaultctor Blend_SurfCurvFuncInv;
 class Blend_SurfCurvFuncInv : public math_FunctionSetWithDerivatives {
 	public:
@@ -1487,7 +1277,7 @@ class Blend_SurfPointFuncInv : public math_FunctionSetWithDerivatives {
 class Blend_CSFunction : public Blend_AppFunction {
 	public:
 		%feature("compactdefaultargs") NbVariables;
-		%feature("autodoc", "	* Returns 3 (default value). Can be redefined.
+		%feature("autodoc", "	* Returns 3 --default value--. Can be redefined.
 
 	:rtype: int
 ") NbVariables;
@@ -1645,7 +1435,7 @@ class Blend_CSFunction : public Blend_AppFunction {
 ") TangentOnC;
 		virtual const gp_Vec  TangentOnC ();
 		%feature("compactdefaultargs") Tangent;
-		%feature("autodoc", "	* Returns the tangent vector at the section, at the beginning and the end of the section, and returns the normal (of the surfaces) at these points.
+		%feature("autodoc", "	* Returns the tangent vector at the section, at the beginning and the end of the section, and returns the normal --of the surfaces-- at these points.
 
 	:param U:
 	:type U: float
@@ -1872,13 +1662,13 @@ class Blend_Function : public Blend_AppFunction {
 ") Pnt2;
 		const gp_Pnt  Pnt2 ();
 		%feature("compactdefaultargs") PointOnS1;
-		%feature("autodoc", "	* Returns the point on the first surface, at parameter Sol(1),Sol(2) (Sol is the vector used in the call of IsSolution.
+		%feature("autodoc", "	* Returns the point on the first surface, at parameter Sol--1--,Sol--2-- --Sol is the vector used in the call of IsSolution.
 
 	:rtype: gp_Pnt
 ") PointOnS1;
 		virtual const gp_Pnt  PointOnS1 ();
 		%feature("compactdefaultargs") PointOnS2;
-		%feature("autodoc", "	* Returns the point on the second surface, at parameter Sol(3),Sol(4) (Sol is the vector used in the call of IsSolution.
+		%feature("autodoc", "	* Returns the point on the second surface, at parameter Sol--3--,Sol--4-- --Sol is the vector used in the call of IsSolution.
 
 	:rtype: gp_Pnt
 ") PointOnS2;
@@ -1914,7 +1704,7 @@ class Blend_Function : public Blend_AppFunction {
 ") Tangent2dOnS2;
 		virtual const gp_Vec2d  Tangent2dOnS2 ();
 		%feature("compactdefaultargs") Tangent;
-		%feature("autodoc", "	* Returns the tangent vector at the section, at the beginning and the end of the section, and returns the normal (of the surfaces) at these points.
+		%feature("autodoc", "	* Returns the tangent vector at the section, at the beginning and the end of the section, and returns the normal --of the surfaces-- at these points.
 
 	:param U1:
 	:type U1: float
@@ -2053,7 +1843,7 @@ class Blend_Function : public Blend_AppFunction {
 class Blend_RstRstFunction : public Blend_AppFunction {
 	public:
 		%feature("compactdefaultargs") NbVariables;
-		%feature("autodoc", "	* Returns 2 (default value). Can be redefined.
+		%feature("autodoc", "	* Returns 2 --default value--. Can be redefined.
 
 	:rtype: int
 ") NbVariables;
@@ -2265,7 +2055,7 @@ class Blend_RstRstFunction : public Blend_AppFunction {
 ") GetMinimalWeight;
 		virtual void GetMinimalWeight (TColStd_Array1OfReal & Weigths);
 		%feature("compactdefaultargs") NbIntervals;
-		%feature("autodoc", "	* Returns the number of intervals for continuity <S>. May be one if Continuity(me) >= <S>
+		%feature("autodoc", "	* Returns the number of intervals for continuity <S>. May be one if Continuity--me-- >= <S>
 
 	:param S:
 	:type S: GeomAbs_Shape
@@ -2273,7 +2063,7 @@ class Blend_RstRstFunction : public Blend_AppFunction {
 ") NbIntervals;
 		virtual Standard_Integer NbIntervals (const GeomAbs_Shape S);
 		%feature("compactdefaultargs") Intervals;
-		%feature("autodoc", "	* Stores in <T> the parameters bounding the intervals of continuity <S>. //! The array must provide enough room to accomodate for the parameters. i.e. T.Length() > NbIntervals()
+		%feature("autodoc", "	* Stores in <T> the parameters bounding the intervals of continuity <S>. //! The array must provide enough room to accomodate for the parameters. i.e. T.Length---- > NbIntervals----
 
 	:param T:
 	:type T: TColStd_Array1OfReal &
@@ -2392,7 +2182,7 @@ class Blend_RstRstFunction : public Blend_AppFunction {
 class Blend_SurfRstFunction : public Blend_AppFunction {
 	public:
 		%feature("compactdefaultargs") NbVariables;
-		%feature("autodoc", "	* Returns 3 (default value). Can be redefined.
+		%feature("autodoc", "	* Returns 3 --default value--. Can be redefined.
 
 	:rtype: int
 ") NbVariables;
@@ -2594,7 +2384,7 @@ class Blend_SurfRstFunction : public Blend_AppFunction {
 ") GetMinimalWeight;
 		virtual void GetMinimalWeight (TColStd_Array1OfReal & Weigths);
 		%feature("compactdefaultargs") NbIntervals;
-		%feature("autodoc", "	* Returns the number of intervals for continuity <S>. May be one if Continuity(me) >= <S>
+		%feature("autodoc", "	* Returns the number of intervals for continuity <S>. May be one if Continuity--me-- >= <S>
 
 	:param S:
 	:type S: GeomAbs_Shape
@@ -2602,7 +2392,7 @@ class Blend_SurfRstFunction : public Blend_AppFunction {
 ") NbIntervals;
 		virtual Standard_Integer NbIntervals (const GeomAbs_Shape S);
 		%feature("compactdefaultargs") Intervals;
-		%feature("autodoc", "	* Stores in <T> the parameters bounding the intervals of continuity <S>. //! The array must provide enough room to accomodate for the parameters. i.e. T.Length() > NbIntervals()
+		%feature("autodoc", "	* Stores in <T> the parameters bounding the intervals of continuity <S>. //! The array must provide enough room to accomodate for the parameters. i.e. T.Length---- > NbIntervals----
 
 	:param T:
 	:type T: TColStd_Array1OfReal &

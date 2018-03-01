@@ -1,5 +1,5 @@
 /*
-Copyright 2008-2017 Thomas Paviot (tpaviot@gmail.com)
+Copyright 2008-2018 Thomas Paviot (tpaviot@gmail.com)
 
 
 This file is part of pythonOCC.
@@ -54,9 +54,13 @@ def register_handle(handle, base_object):
 };
 
 /* typedefs */
-typedef void Convert_CosAndSinEvalFunction ( Standard_Real , 	 	 	 	 	 const Standard_Integer , 	 	 	 	 	 const TColgp_Array1OfPnt2d & , 	 	 	 	 	 const TColStd_Array1OfReal & , 	 	 	 	 	 const TColStd_Array1OfInteger & , 	 	 	 	 	 Standard_Real Result [ 2 ] );
+typedef void Convert_CosAndSinEvalFunction ( Standard_Real , 	 	 	 	 	 const Standard_Integer , 	 	 	 	 	 const TColgp_Array1OfPnt2d & , 	 	 	 	 	 const TColStd_Array1OfReal & , 	 	 	 	 	 const TColStd_Array1OfInteger * , 	 	 	 	 	 Standard_Real Result [ 2 ] );
 typedef TColgp_SequenceOfArray1OfPnt2d Convert_SequenceOfArray1OfPoles2d;
 /* end typedefs declaration */
+
+/* templates */
+%template(Convert_SequenceOfArray1OfPoles) NCollection_Sequence <Handle_TColgp_HArray1OfPnt>;
+/* end templates declaration */
 
 /* public enums */
 enum Convert_ParameterisationType {
@@ -76,7 +80,7 @@ enum Convert_ParameterisationType {
 class Convert_CompBezierCurves2dToBSplineCurve2d {
 	public:
 		%feature("compactdefaultargs") Convert_CompBezierCurves2dToBSplineCurve2d;
-		%feature("autodoc", "	* Constructs a framework for converting a sequence of adjacent non-rational Bezier curves into a BSpline curve. Knots will be created on the computed BSpline curve at each junction point of two consecutive Bezier curves. The degree of continuity of the BSpline curve will be increased at the junction point of two consecutive Bezier curves if their tangent vectors at this point are parallel. AngularTolerance (given in radians, and defaulted to 1.0 e-4) will be used to check the parallelism of the two tangent vectors. Use the following functions: - AddCurve to define in sequence the adjacent Bezier curves to be converted, - Perform to compute the data needed to build the BSpline curve, - and the available consultation functions to access the computed data. This data may be used to construct the BSpline curve.
+		%feature("autodoc", "	* Constructs a framework for converting a sequence of adjacent non-rational Bezier curves into a BSpline curve. Knots will be created on the computed BSpline curve at each junction point of two consecutive Bezier curves. The degree of continuity of the BSpline curve will be increased at the junction point of two consecutive Bezier curves if their tangent vectors at this point are parallel. AngularTolerance --given in radians, and defaulted to 1.0 e-4-- will be used to check the parallelism of the two tangent vectors. Use the following functions: - AddCurve to define in sequence the adjacent Bezier curves to be converted, - Perform to compute the data needed to build the BSpline curve, - and the available consultation functions to access the computed data. This data may be used to construct the BSpline curve.
 
 	:param AngularTolerance: default value is 1.0e-4
 	:type AngularTolerance: float
@@ -84,7 +88,7 @@ class Convert_CompBezierCurves2dToBSplineCurve2d {
 ") Convert_CompBezierCurves2dToBSplineCurve2d;
 		 Convert_CompBezierCurves2dToBSplineCurve2d (const Standard_Real AngularTolerance = 1.0e-4);
 		%feature("compactdefaultargs") AddCurve;
-		%feature("autodoc", "	* Adds the Bezier curve defined by the table of poles Poles, to the sequence (still contained in this framework) of adjacent Bezier curves to be converted into a BSpline curve. Only polynomial (i.e. non-rational) Bezier curves are converted using this framework. If this is not the first call to the function (i.e. if this framework still contains data in its sequence of Bezier curves), the degree of continuity of the BSpline curve will be increased at the time of computation at the first point of the added Bezier curve (i.e. the first point of the Poles table). This will be the case if the tangent vector of the curve at this point is parallel to the tangent vector at the end point of the preceding Bezier curve in the sequence of Bezier curves still contained in this framework. An angular tolerance given at the time of construction of this framework, will be used to check the parallelism of the two tangent vectors. This checking procedure, and all the relative computations will be performed by the function Perform. When the sequence of adjacent Bezier curves is complete, use the following functions: - Perform to compute the data needed to build the BSpline curve, - and the available consultation functions to access the computed data. This data may be used to construct the BSpline curve. Warning The sequence of Bezier curves treated by this framework is automatically initialized with the first Bezier curve when the function is first called. During subsequent use of this function, ensure that the first point of the added Bezier curve (i.e. the first point of the Poles table) is coincident with the last point of the sequence (i.e. the last point of the preceding Bezier curve in the sequence) of Bezier curves still contained in this framework. An error may occur at the time of computation if this condition is not satisfied. Particular care must be taken with respect to the above, as this condition is not checked either when defining the sequence of Bezier curves or at the time of computation.
+		%feature("autodoc", "	* Adds the Bezier curve defined by the table of poles Poles, to the sequence --still contained in this framework-- of adjacent Bezier curves to be converted into a BSpline curve. Only polynomial --i.e. non-rational-- Bezier curves are converted using this framework. If this is not the first call to the function --i.e. if this framework still contains data in its sequence of Bezier curves--, the degree of continuity of the BSpline curve will be increased at the time of computation at the first point of the added Bezier curve --i.e. the first point of the Poles table--. This will be the case if the tangent vector of the curve at this point is parallel to the tangent vector at the end point of the preceding Bezier curve in the sequence of Bezier curves still contained in this framework. An angular tolerance given at the time of construction of this framework, will be used to check the parallelism of the two tangent vectors. This checking procedure, and all the relative computations will be performed by the function Perform. When the sequence of adjacent Bezier curves is complete, use the following functions: - Perform to compute the data needed to build the BSpline curve, - and the available consultation functions to access the computed data. This data may be used to construct the BSpline curve. Warning The sequence of Bezier curves treated by this framework is automatically initialized with the first Bezier curve when the function is first called. During subsequent use of this function, ensure that the first point of the added Bezier curve --i.e. the first point of the Poles table-- is coincident with the last point of the sequence --i.e. the last point of the preceding Bezier curve in the sequence-- of Bezier curves still contained in this framework. An error may occur at the time of computation if this condition is not satisfied. Particular care must be taken with respect to the above, as this condition is not checked either when defining the sequence of Bezier curves or at the time of computation.
 
 	:param Poles:
 	:type Poles: TColgp_Array1OfPnt2d
@@ -98,19 +102,19 @@ class Convert_CompBezierCurves2dToBSplineCurve2d {
 ") Perform;
 		void Perform ();
 		%feature("compactdefaultargs") Degree;
-		%feature("autodoc", "	* Returns the degree of the BSpline curve whose data is computed in this framework. Warning Take particular care not to use this function before the computation is performed (Perform function), as this condition is not checked and an error may therefore occur.
+		%feature("autodoc", "	* Returns the degree of the BSpline curve whose data is computed in this framework. Warning Take particular care not to use this function before the computation is performed --Perform function--, as this condition is not checked and an error may therefore occur.
 
 	:rtype: int
 ") Degree;
 		Standard_Integer Degree ();
 		%feature("compactdefaultargs") NbPoles;
-		%feature("autodoc", "	* Returns the number of poles of the BSpline curve whose data is computed in this framework. Warning Take particular care not to use this function before the computation is performed (Perform function), as this condition is not checked and an error may therefore occur.
+		%feature("autodoc", "	* Returns the number of poles of the BSpline curve whose data is computed in this framework. Warning Take particular care not to use this function before the computation is performed --Perform function--, as this condition is not checked and an error may therefore occur.
 
 	:rtype: int
 ") NbPoles;
 		Standard_Integer NbPoles ();
 		%feature("compactdefaultargs") Poles;
-		%feature("autodoc", "	* Loads the Poles table with the poles of the BSpline curve whose data is computed in this framework. Warning - Do not use this function before the computation is performed (Perform function). - The length of the Poles array must be equal to the number of poles of the BSpline curve whose data is computed in this framework. Particular care must be taken with respect to the above, as these conditions are not checked, and an error may occur.
+		%feature("autodoc", "	* Loads the Poles table with the poles of the BSpline curve whose data is computed in this framework. Warning - Do not use this function before the computation is performed --Perform function--. - The length of the Poles array must be equal to the number of poles of the BSpline curve whose data is computed in this framework. Particular care must be taken with respect to the above, as these conditions are not checked, and an error may occur.
 
 	:param Poles:
 	:type Poles: TColgp_Array1OfPnt2d
@@ -118,13 +122,13 @@ class Convert_CompBezierCurves2dToBSplineCurve2d {
 ") Poles;
 		void Poles (TColgp_Array1OfPnt2d & Poles);
 		%feature("compactdefaultargs") NbKnots;
-		%feature("autodoc", "	* Returns the number of knots of the BSpline curve whose data is computed in this framework. Warning Take particular care not to use this function before the computation is performed (Perform function), as this condition is not checked and an error may therefore occur.
+		%feature("autodoc", "	* Returns the number of knots of the BSpline curve whose data is computed in this framework. Warning Take particular care not to use this function before the computation is performed --Perform function--, as this condition is not checked and an error may therefore occur.
 
 	:rtype: int
 ") NbKnots;
 		Standard_Integer NbKnots ();
 		%feature("compactdefaultargs") KnotsAndMults;
-		%feature("autodoc", "	* Loads the Knots table with the knots and the Mults table with the corresponding multiplicities of the BSpline curve whose data is computed in this framework. Warning - Do not use this function before the computation is performed (Perform function). - The length of the Knots and Mults arrays must be equal to the number of knots in the BSpline curve whose data is computed in this framework. Particular care must be taken with respect to the above as these conditions are not checked, and an error may occur.
+		%feature("autodoc", "	* Loads the Knots table with the knots and the Mults table with the corresponding multiplicities of the BSpline curve whose data is computed in this framework. Warning - Do not use this function before the computation is performed --Perform function--. - The length of the Knots and Mults arrays must be equal to the number of knots in the BSpline curve whose data is computed in this framework. Particular care must be taken with respect to the above as these conditions are not checked, and an error may occur.
 
 	:param Knots:
 	:type Knots: TColStd_Array1OfReal &
@@ -145,7 +149,7 @@ class Convert_CompBezierCurves2dToBSplineCurve2d {
 class Convert_CompBezierCurvesToBSplineCurve {
 	public:
 		%feature("compactdefaultargs") Convert_CompBezierCurvesToBSplineCurve;
-		%feature("autodoc", "	* Constructs a framework for converting a sequence of adjacent non-rational Bezier curves into a BSpline curve. Knots will be created on the computed BSpline curve at each junction point of two consecutive Bezier curves. The degree of continuity of the BSpline curve will be increased at the junction point of two consecutive Bezier curves if their tangent vectors at this point are parallel. AngularTolerance (given in radians, and defaulted to 1.0 e-4) will be used to check the parallelism of the two tangent vectors. Use the following functions: - AddCurve to define in sequence the adjacent Bezier curves to be converted, - Perform to compute the data needed to build the BSpline curve, - and the available consultation functions to access the computed data. This data may be used to construct the BSpline curve.
+		%feature("autodoc", "	* Constructs a framework for converting a sequence of adjacent non-rational Bezier curves into a BSpline curve. Knots will be created on the computed BSpline curve at each junction point of two consecutive Bezier curves. The degree of continuity of the BSpline curve will be increased at the junction point of two consecutive Bezier curves if their tangent vectors at this point are parallel. AngularTolerance --given in radians, and defaulted to 1.0 e-4-- will be used to check the parallelism of the two tangent vectors. Use the following functions: - AddCurve to define in sequence the adjacent Bezier curves to be converted, - Perform to compute the data needed to build the BSpline curve, - and the available consultation functions to access the computed data. This data may be used to construct the BSpline curve.
 
 	:param AngularTolerance: default value is 1.0e-4
 	:type AngularTolerance: float
@@ -153,7 +157,7 @@ class Convert_CompBezierCurvesToBSplineCurve {
 ") Convert_CompBezierCurvesToBSplineCurve;
 		 Convert_CompBezierCurvesToBSplineCurve (const Standard_Real AngularTolerance = 1.0e-4);
 		%feature("compactdefaultargs") AddCurve;
-		%feature("autodoc", "	* Adds the Bezier curve defined by the table of poles Poles, to the sequence (still contained in this framework) of adjacent Bezier curves to be converted into a BSpline curve. Only polynomial (i.e. non-rational) Bezier curves are converted using this framework. If this is not the first call to the function (i.e. if this framework still contains data in its Bezier curve sequence), the degree of continuity of the BSpline curve will be increased at the time of computation at the first point of the added Bezier curve (i.e. the first point of the Poles table). This will be the case if the tangent vector of the curve at this point is parallel to the tangent vector at the end point of the preceding Bezier curve in the Bezier curve sequence still contained in this framework. An angular tolerance given at the time of construction of this framework will be used to check the parallelism of the two tangent vectors. This checking procedure and all related computations will be performed by the Perform function. When the adjacent Bezier curve sequence is complete, use the following functions: - Perform to compute the data needed to build the BSpline curve, - and the available consultation functions to access the computed data. This data may be used to construct the BSpline curve. Warning The Bezier curve sequence treated by this framework is automatically initialized with the first Bezier curve when the function is first called. During subsequent use of this function, ensure that the first point of the added Bezier curve (i.e. the first point of the Poles table) is coincident with the last point of the Bezier curve sequence (i.e. the last point of the preceding Bezier curve in the sequence) still contained in this framework. An error may occur at the time of computation if this condition is not satisfied. Particular care must be taken with respect to the above, as this condition is not checked either when defining the Bezier curve sequence or at the time of computation.
+		%feature("autodoc", "	* Adds the Bezier curve defined by the table of poles Poles, to the sequence --still contained in this framework-- of adjacent Bezier curves to be converted into a BSpline curve. Only polynomial --i.e. non-rational-- Bezier curves are converted using this framework. If this is not the first call to the function --i.e. if this framework still contains data in its Bezier curve sequence--, the degree of continuity of the BSpline curve will be increased at the time of computation at the first point of the added Bezier curve --i.e. the first point of the Poles table--. This will be the case if the tangent vector of the curve at this point is parallel to the tangent vector at the end point of the preceding Bezier curve in the Bezier curve sequence still contained in this framework. An angular tolerance given at the time of construction of this framework will be used to check the parallelism of the two tangent vectors. This checking procedure and all related computations will be performed by the Perform function. When the adjacent Bezier curve sequence is complete, use the following functions: - Perform to compute the data needed to build the BSpline curve, - and the available consultation functions to access the computed data. This data may be used to construct the BSpline curve. Warning The Bezier curve sequence treated by this framework is automatically initialized with the first Bezier curve when the function is first called. During subsequent use of this function, ensure that the first point of the added Bezier curve --i.e. the first point of the Poles table-- is coincident with the last point of the Bezier curve sequence --i.e. the last point of the preceding Bezier curve in the sequence-- still contained in this framework. An error may occur at the time of computation if this condition is not satisfied. Particular care must be taken with respect to the above, as this condition is not checked either when defining the Bezier curve sequence or at the time of computation.
 
 	:param Poles:
 	:type Poles: TColgp_Array1OfPnt
@@ -167,19 +171,19 @@ class Convert_CompBezierCurvesToBSplineCurve {
 ") Perform;
 		void Perform ();
 		%feature("compactdefaultargs") Degree;
-		%feature("autodoc", "	* Returns the degree of the BSpline curve whose data is computed in this framework. Warning Take particular care not to use this function before the computation is performed (Perform function), as this condition is not checked and an error may therefore occur.
+		%feature("autodoc", "	* Returns the degree of the BSpline curve whose data is computed in this framework. Warning Take particular care not to use this function before the computation is performed --Perform function--, as this condition is not checked and an error may therefore occur.
 
 	:rtype: int
 ") Degree;
 		Standard_Integer Degree ();
 		%feature("compactdefaultargs") NbPoles;
-		%feature("autodoc", "	* Returns the number of poles of the BSpline curve whose data is computed in this framework. Warning Take particular care not to use this function before the computation is performed (Perform function), as this condition is not checked and an error may therefore occur.
+		%feature("autodoc", "	* Returns the number of poles of the BSpline curve whose data is computed in this framework. Warning Take particular care not to use this function before the computation is performed --Perform function--, as this condition is not checked and an error may therefore occur.
 
 	:rtype: int
 ") NbPoles;
 		Standard_Integer NbPoles ();
 		%feature("compactdefaultargs") Poles;
-		%feature("autodoc", "	* Loads the Poles table with the poles of the BSpline curve whose data is computed in this framework. Warning - Do not use this function before the computation is performed (Perform function). - The length of the Poles array must be equal to the number of poles of the BSpline curve whose data is computed in this framework. Particular care must be taken with respect to the above, as these conditions are not checked, and an error may occur.
+		%feature("autodoc", "	* Loads the Poles table with the poles of the BSpline curve whose data is computed in this framework. Warning - Do not use this function before the computation is performed --Perform function--. - The length of the Poles array must be equal to the number of poles of the BSpline curve whose data is computed in this framework. Particular care must be taken with respect to the above, as these conditions are not checked, and an error may occur.
 
 	:param Poles:
 	:type Poles: TColgp_Array1OfPnt
@@ -187,13 +191,13 @@ class Convert_CompBezierCurvesToBSplineCurve {
 ") Poles;
 		void Poles (TColgp_Array1OfPnt & Poles);
 		%feature("compactdefaultargs") NbKnots;
-		%feature("autodoc", "	* Returns the number of knots of the BSpline curve whose data is computed in this framework. Warning Take particular care not to use this function before the computation is performed (Perform function), as this condition is not checked and an error may therefore occur.
+		%feature("autodoc", "	* Returns the number of knots of the BSpline curve whose data is computed in this framework. Warning Take particular care not to use this function before the computation is performed --Perform function--, as this condition is not checked and an error may therefore occur.
 
 	:rtype: int
 ") NbKnots;
 		Standard_Integer NbKnots ();
 		%feature("compactdefaultargs") KnotsAndMults;
-		%feature("autodoc", "	* - loads the Knots table with the knots, - and loads the Mults table with the corresponding multiplicities of the BSpline curve whose data is computed in this framework. Warning - Do not use this function before the computation is performed (Perform function). - The length of the Knots and Mults arrays must be equal to the number of knots in the BSpline curve whose data is computed in this framework. Particular care must be taken with respect to the above as these conditions are not checked, and an error may occur.
+		%feature("autodoc", "	* - loads the Knots table with the knots, - and loads the Mults table with the corresponding multiplicities of the BSpline curve whose data is computed in this framework. Warning - Do not use this function before the computation is performed --Perform function--. - The length of the Knots and Mults arrays must be equal to the number of knots in the BSpline curve whose data is computed in this framework. Particular care must be taken with respect to the above as these conditions are not checked, and an error may occur.
 
 	:param Knots:
 	:type Knots: TColStd_Array1OfReal &
@@ -214,7 +218,7 @@ class Convert_CompBezierCurvesToBSplineCurve {
 class Convert_CompPolynomialToPoles {
 	public:
 		%feature("compactdefaultargs") Convert_CompPolynomialToPoles;
-		%feature("autodoc", "	* Warning! Continuity can be at MOST the maximum degree of the polynomial functions TrueIntervals : this is the true parameterisation for the composite curve that is : the curve has myContinuity if the nth curve is parameterized between myTrueIntervals(n) and myTrueIntervals(n+1) //! Coefficients have to be the implicit 'c form': Coefficients[Numcurves][MaxDegree+1][Dimension] //! Warning! The NumberOfCoefficient of an polynome is his degree + 1 Example: To convert the linear function f(x) = 2*x + 1 on the domaine [2,5] to BSpline with the bound [-1,1]. Arguments are : NumCurves = 1; Continuity = 1; Dimension = 1; MaxDegree = 1; NumCoeffPerCurve [1] = {2}; Coefficients[2] = {1, 2}; PolynomialIntervals[1,2] = {{2,5}} TrueIntervals[2] = {-1, 1}
+		%feature("autodoc", "	* Warning! Continuity can be at MOST the maximum degree of the polynomial functions TrueIntervals : this is the true parameterisation for the composite curve that is : the curve has myContinuity if the nth curve is parameterized between myTrueIntervals--n-- and myTrueIntervals--n+1-- //! Coefficients have to be the implicit 'c form': Coefficients[Numcurves][MaxDegree+1][Dimension] //! Warning! The NumberOfCoefficient of an polynome is his degree + 1 Example: To convert the linear function f--x-- = 2*x + 1 on the domaine [2,5] to BSpline with the bound [-1,1]. Arguments are : NumCurves = 1; Continuity = 1; Dimension = 1; MaxDegree = 1; NumCoeffPerCurve [1] = {2}; Coefficients[2] = {1, 2}; PolynomialIntervals[1,2] = {{2,5}} TrueIntervals[2] = {-1, 1}
 
 	:param NumCurves:
 	:type NumCurves: int
@@ -478,7 +482,7 @@ class Convert_ElementarySurfaceToBSplineSurface {
 ") IsVPeriodic;
 		Standard_Boolean IsVPeriodic ();
 		%feature("compactdefaultargs") Pole;
-		%feature("autodoc", "	* Returns the pole of index (UIndex,VIndex) to the poles table of the BSpline surface whose data is computed in this framework. Exceptions Standard_OutOfRange if, for the BSpline surface whose data is computed in this framework: - UIndex is outside the bounds of the poles table in the u parametric direction, or - VIndex is outside the bounds of the poles table in the v parametric direction.
+		%feature("autodoc", "	* Returns the pole of index --UIndex,VIndex-- to the poles table of the BSpline surface whose data is computed in this framework. Exceptions Standard_OutOfRange if, for the BSpline surface whose data is computed in this framework: - UIndex is outside the bounds of the poles table in the u parametric direction, or - VIndex is outside the bounds of the poles table in the v parametric direction.
 
 	:param UIndex:
 	:type UIndex: int
@@ -488,7 +492,7 @@ class Convert_ElementarySurfaceToBSplineSurface {
 ") Pole;
 		gp_Pnt Pole (const Standard_Integer UIndex,const Standard_Integer VIndex);
 		%feature("compactdefaultargs") Weight;
-		%feature("autodoc", "	* Returns the weight of the pole of index (UIndex,VIndex) to the poles table of the BSpline surface whose data is computed in this framework. Exceptions Standard_OutOfRange if, for the BSpline surface whose data is computed in this framework: - UIndex is outside the bounds of the poles table in the u parametric direction, or - VIndex is outside the bounds of the poles table in the v parametric direction.
+		%feature("autodoc", "	* Returns the weight of the pole of index --UIndex,VIndex-- to the poles table of the BSpline surface whose data is computed in this framework. Exceptions Standard_OutOfRange if, for the BSpline surface whose data is computed in this framework: - UIndex is outside the bounds of the poles table in the u parametric direction, or - VIndex is outside the bounds of the poles table in the v parametric direction.
 
 	:param UIndex:
 	:type UIndex: int
@@ -674,220 +678,6 @@ class Convert_GridPolynomialToPoles {
 
 
 %extend Convert_GridPolynomialToPoles {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor Convert_SequenceNodeOfSequenceOfArray1OfPoles;
-class Convert_SequenceNodeOfSequenceOfArray1OfPoles : public TCollection_SeqNode {
-	public:
-		%feature("compactdefaultargs") Convert_SequenceNodeOfSequenceOfArray1OfPoles;
-		%feature("autodoc", "	:param I:
-	:type I: Handle_TColgp_HArray1OfPnt
-	:param n:
-	:type n: TCollection_SeqNodePtr &
-	:param p:
-	:type p: TCollection_SeqNodePtr &
-	:rtype: None
-") Convert_SequenceNodeOfSequenceOfArray1OfPoles;
-		 Convert_SequenceNodeOfSequenceOfArray1OfPoles (const Handle_TColgp_HArray1OfPnt & I,const TCollection_SeqNodePtr & n,const TCollection_SeqNodePtr & p);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:rtype: Handle_TColgp_HArray1OfPnt
-") Value;
-		Handle_TColgp_HArray1OfPnt Value ();
-};
-
-
-%extend Convert_SequenceNodeOfSequenceOfArray1OfPoles {
-	%pythoncode {
-		def GetHandle(self):
-		    try:
-		        return self.thisHandle
-		    except:
-		        self.thisHandle = Handle_Convert_SequenceNodeOfSequenceOfArray1OfPoles(self)
-		        self.thisown = False
-		        return self.thisHandle
-	}
-};
-
-%pythonappend Handle_Convert_SequenceNodeOfSequenceOfArray1OfPoles::Handle_Convert_SequenceNodeOfSequenceOfArray1OfPoles %{
-    # register the handle in the base object
-    if len(args) > 0:
-        register_handle(self, args[0])
-%}
-
-%nodefaultctor Handle_Convert_SequenceNodeOfSequenceOfArray1OfPoles;
-class Handle_Convert_SequenceNodeOfSequenceOfArray1OfPoles : public Handle_TCollection_SeqNode {
-
-    public:
-        // constructors
-        Handle_Convert_SequenceNodeOfSequenceOfArray1OfPoles();
-        Handle_Convert_SequenceNodeOfSequenceOfArray1OfPoles(const Handle_Convert_SequenceNodeOfSequenceOfArray1OfPoles &aHandle);
-        Handle_Convert_SequenceNodeOfSequenceOfArray1OfPoles(const Convert_SequenceNodeOfSequenceOfArray1OfPoles *anItem);
-        void Nullify();
-        Standard_Boolean IsNull() const;
-        static const Handle_Convert_SequenceNodeOfSequenceOfArray1OfPoles DownCast(const Handle_Standard_Transient &AnObject);
-
-};
-%extend Handle_Convert_SequenceNodeOfSequenceOfArray1OfPoles {
-    Convert_SequenceNodeOfSequenceOfArray1OfPoles* _get_reference() {
-    return (Convert_SequenceNodeOfSequenceOfArray1OfPoles*)$self->Access();
-    }
-};
-
-%extend Handle_Convert_SequenceNodeOfSequenceOfArray1OfPoles {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
-};
-
-%extend Convert_SequenceNodeOfSequenceOfArray1OfPoles {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor Convert_SequenceOfArray1OfPoles;
-class Convert_SequenceOfArray1OfPoles : public TCollection_BaseSequence {
-	public:
-		%feature("compactdefaultargs") Convert_SequenceOfArray1OfPoles;
-		%feature("autodoc", "	:rtype: None
-") Convert_SequenceOfArray1OfPoles;
-		 Convert_SequenceOfArray1OfPoles ();
-		%feature("compactdefaultargs") Convert_SequenceOfArray1OfPoles;
-		%feature("autodoc", "	:param Other:
-	:type Other: Convert_SequenceOfArray1OfPoles &
-	:rtype: None
-") Convert_SequenceOfArray1OfPoles;
-		 Convert_SequenceOfArray1OfPoles (const Convert_SequenceOfArray1OfPoles & Other);
-		%feature("compactdefaultargs") Clear;
-		%feature("autodoc", "	:rtype: None
-") Clear;
-		void Clear ();
-		%feature("compactdefaultargs") Assign;
-		%feature("autodoc", "	:param Other:
-	:type Other: Convert_SequenceOfArray1OfPoles &
-	:rtype: Convert_SequenceOfArray1OfPoles
-") Assign;
-		const Convert_SequenceOfArray1OfPoles & Assign (const Convert_SequenceOfArray1OfPoles & Other);
-		%feature("compactdefaultargs") operator =;
-		%feature("autodoc", "	:param Other:
-	:type Other: Convert_SequenceOfArray1OfPoles &
-	:rtype: Convert_SequenceOfArray1OfPoles
-") operator =;
-		const Convert_SequenceOfArray1OfPoles & operator = (const Convert_SequenceOfArray1OfPoles & Other);
-		%feature("compactdefaultargs") Append;
-		%feature("autodoc", "	:param T:
-	:type T: Handle_TColgp_HArray1OfPnt
-	:rtype: None
-") Append;
-		void Append (const Handle_TColgp_HArray1OfPnt & T);
-		%feature("compactdefaultargs") Append;
-		%feature("autodoc", "	:param S:
-	:type S: Convert_SequenceOfArray1OfPoles &
-	:rtype: None
-") Append;
-		void Append (Convert_SequenceOfArray1OfPoles & S);
-		%feature("compactdefaultargs") Prepend;
-		%feature("autodoc", "	:param T:
-	:type T: Handle_TColgp_HArray1OfPnt
-	:rtype: None
-") Prepend;
-		void Prepend (const Handle_TColgp_HArray1OfPnt & T);
-		%feature("compactdefaultargs") Prepend;
-		%feature("autodoc", "	:param S:
-	:type S: Convert_SequenceOfArray1OfPoles &
-	:rtype: None
-") Prepend;
-		void Prepend (Convert_SequenceOfArray1OfPoles & S);
-		%feature("compactdefaultargs") InsertBefore;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param T:
-	:type T: Handle_TColgp_HArray1OfPnt
-	:rtype: None
-") InsertBefore;
-		void InsertBefore (const Standard_Integer Index,const Handle_TColgp_HArray1OfPnt & T);
-		%feature("compactdefaultargs") InsertBefore;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param S:
-	:type S: Convert_SequenceOfArray1OfPoles &
-	:rtype: None
-") InsertBefore;
-		void InsertBefore (const Standard_Integer Index,Convert_SequenceOfArray1OfPoles & S);
-		%feature("compactdefaultargs") InsertAfter;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param T:
-	:type T: Handle_TColgp_HArray1OfPnt
-	:rtype: None
-") InsertAfter;
-		void InsertAfter (const Standard_Integer Index,const Handle_TColgp_HArray1OfPnt & T);
-		%feature("compactdefaultargs") InsertAfter;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param S:
-	:type S: Convert_SequenceOfArray1OfPoles &
-	:rtype: None
-") InsertAfter;
-		void InsertAfter (const Standard_Integer Index,Convert_SequenceOfArray1OfPoles & S);
-		%feature("compactdefaultargs") First;
-		%feature("autodoc", "	:rtype: Handle_TColgp_HArray1OfPnt
-") First;
-		Handle_TColgp_HArray1OfPnt First ();
-		%feature("compactdefaultargs") Last;
-		%feature("autodoc", "	:rtype: Handle_TColgp_HArray1OfPnt
-") Last;
-		Handle_TColgp_HArray1OfPnt Last ();
-		%feature("compactdefaultargs") Split;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param Sub:
-	:type Sub: Convert_SequenceOfArray1OfPoles &
-	:rtype: None
-") Split;
-		void Split (const Standard_Integer Index,Convert_SequenceOfArray1OfPoles & Sub);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: Handle_TColgp_HArray1OfPnt
-") Value;
-		Handle_TColgp_HArray1OfPnt Value (const Standard_Integer Index);
-		%feature("compactdefaultargs") SetValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param I:
-	:type I: Handle_TColgp_HArray1OfPnt
-	:rtype: None
-") SetValue;
-		void SetValue (const Standard_Integer Index,const Handle_TColgp_HArray1OfPnt & I);
-		%feature("compactdefaultargs") ChangeValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: Handle_TColgp_HArray1OfPnt
-") ChangeValue;
-		Handle_TColgp_HArray1OfPnt ChangeValue (const Standard_Integer Index);
-		%feature("compactdefaultargs") Remove;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: None
-") Remove;
-		void Remove (const Standard_Integer Index);
-		%feature("compactdefaultargs") Remove;
-		%feature("autodoc", "	:param FromIndex:
-	:type FromIndex: int
-	:param ToIndex:
-	:type ToIndex: int
-	:rtype: None
-") Remove;
-		void Remove (const Standard_Integer FromIndex,const Standard_Integer ToIndex);
-};
-
-
-%extend Convert_SequenceOfArray1OfPoles {
 	%pythoncode {
 	__repr__ = _dumps_object
 	}

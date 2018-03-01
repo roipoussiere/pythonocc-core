@@ -1,5 +1,5 @@
 /*
-Copyright 2008-2017 Thomas Paviot (tpaviot@gmail.com)
+Copyright 2008-2018 Thomas Paviot (tpaviot@gmail.com)
 
 
 This file is part of pythonOCC.
@@ -56,6 +56,11 @@ def register_handle(handle, base_object):
 /* typedefs */
 /* end typedefs declaration */
 
+/* templates */
+%template(STEPConstruct_DataMapOfPointTransient) NCollection_DataMap <gp_Pnt , Handle_Standard_Transient , STEPConstruct_PointHasher>;
+%template(STEPConstruct_DataMapOfAsciiStringTransient) NCollection_DataMap <TCollection_AsciiString , Handle_Standard_Transient , TCollection_AsciiString>;
+/* end templates declaration */
+
 /* public enums */
 /* end public enums declaration */
 
@@ -63,7 +68,7 @@ def register_handle(handle, base_object):
 class STEPConstruct {
 	public:
 		%feature("compactdefaultargs") FindEntity;
-		%feature("autodoc", "	* Returns STEP entity of the (sub)type of RepresentationItem which is a result of the tranalation of the Shape, or Null if no result is recorded
+		%feature("autodoc", "	* Returns STEP entity of the --sub--type of RepresentationItem which is a result of the tranalation of the Shape, or Null if no result is recorded
 
 	:param FinderProcess:
 	:type FinderProcess: Handle_Transfer_FinderProcess &
@@ -73,7 +78,7 @@ class STEPConstruct {
 ") FindEntity;
 		static Handle_StepRepr_RepresentationItem FindEntity (const Handle_Transfer_FinderProcess & FinderProcess,const TopoDS_Shape & Shape);
 		%feature("compactdefaultargs") FindEntity;
-		%feature("autodoc", "	* The same as above, but in the case if item not found, repeats search on the same shape without location. The Loc corresponds to the location with which result is found (either location of the Shape, or Null)
+		%feature("autodoc", "	* The same as above, but in the case if item not found, repeats search on the same shape without location. The Loc corresponds to the location with which result is found --either location of the Shape, or Null--
 
 	:param FinderProcess:
 	:type FinderProcess: Handle_Transfer_FinderProcess &
@@ -85,7 +90,7 @@ class STEPConstruct {
 ") FindEntity;
 		static Handle_StepRepr_RepresentationItem FindEntity (const Handle_Transfer_FinderProcess & FinderProcess,const TopoDS_Shape & Shape,TopLoc_Location & Loc);
 		%feature("compactdefaultargs") FindShape;
-		%feature("autodoc", "	* Returns Shape resulting from given STEP entity (Null if not mapped)
+		%feature("autodoc", "	* Returns Shape resulting from given STEP entity --Null if not mapped--
 
 	:param TransientProcess:
 	:type TransientProcess: Handle_Transfer_TransientProcess &
@@ -210,7 +215,7 @@ class STEPConstruct_AP203Context {
 ") RoleApprover;
 		Handle_StepBasic_ApprovalRole RoleApprover ();
 		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	* Takes SDR (part) which brings all standard data around part (common for AP203 and AP214) and creates all the additional entities required for AP203
+		%feature("autodoc", "	* Takes SDR --part-- which brings all standard data around part --common for AP203 and AP214-- and creates all the additional entities required for AP203
 
 	:param sdr:
 	:type sdr: Handle_StepShape_ShapeDefinitionRepresentation &
@@ -218,7 +223,7 @@ class STEPConstruct_AP203Context {
 ") Init;
 		void Init (const Handle_StepShape_ShapeDefinitionRepresentation & sdr);
 		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	* Takes tool which describes standard data around part (common for AP203 and AP214) and creates all the additional entities required for AP203 //! The created entities can be obtained by calls to methods GetCreator(), GetDesignOwner(), GetDesignSupplier(), GetClassificationOfficer(), GetSecurity(), GetCreationDate(), GetClassificationDate(), GetApproval(), GetApprover(), GetApprovalDateTime(), GetProductCategoryRelationship()
+		%feature("autodoc", "	* Takes tool which describes standard data around part --common for AP203 and AP214-- and creates all the additional entities required for AP203 //! The created entities can be obtained by calls to methods GetCreator----, GetDesignOwner----, GetDesignSupplier----, GetClassificationOfficer----, GetSecurity----, GetCreationDate----, GetClassificationDate----, GetApproval----, GetApprover----, GetApprovalDateTime----, GetProductCategoryRelationship----
 
 	:param SDRTool:
 	:type SDRTool: STEPConstruct_Part &
@@ -226,7 +231,7 @@ class STEPConstruct_AP203Context {
 ") Init;
 		void Init (const STEPConstruct_Part & SDRTool);
 		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	* Takes NAUO which describes assembly link to component and creates the security_classification entity associated to it as required by the AP203 //! Instantiated (or existing previously) entities concerned can be obtained by calls to methods GetClassificationOfficer(), GetSecurity(), GetClassificationDate(), GetApproval(), GetApprover(), GetApprovalDateTime() Takes tool which describes standard data around part (common for AP203 and AP214) and takes from model (or creates if missing) all the additional entities required by AP203
+		%feature("autodoc", "	* Takes NAUO which describes assembly link to component and creates the security_classification entity associated to it as required by the AP203 //! Instantiated --or existing previously-- entities concerned can be obtained by calls to methods GetClassificationOfficer----, GetSecurity----, GetClassificationDate----, GetApproval----, GetApprover----, GetApprovalDateTime---- Takes tool which describes standard data around part --common for AP203 and AP214-- and takes from model --or creates if missing-- all the additional entities required by AP203
 
 	:param nauo:
 	:type nauo: Handle_StepRepr_NextAssemblyUsageOccurrence &
@@ -274,7 +279,7 @@ class STEPConstruct_AP203Context {
 ") GetApprovalDateTime;
 		Handle_StepBasic_ApprovalDateTime GetApprovalDateTime ();
 		%feature("compactdefaultargs") GetProductCategoryRelationship;
-		%feature("autodoc", "	* Return entities (roots) instantiated for the part by method Init
+		%feature("autodoc", "	* Return entities --roots-- instantiated for the part by method Init
 
 	:rtype: Handle_StepBasic_ProductCategoryRelationship
 ") GetProductCategoryRelationship;
@@ -286,7 +291,7 @@ class STEPConstruct_AP203Context {
 ") Clear;
 		void Clear ();
 		%feature("compactdefaultargs") InitRoles;
-		%feature("autodoc", "	* Initializes constant fields (shared entities)
+		%feature("autodoc", "	* Initializes constant fields --shared entities--
 
 	:rtype: None
 ") InitRoles;
@@ -327,7 +332,7 @@ class STEPConstruct_Assembly {
 ") STEPConstruct_Assembly;
 		 STEPConstruct_Assembly ();
 		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	* Initialises with starting values Ax0 : origin axis (typically, standard XYZ) Loc : location to which place the item Makes a MappedItem Resulting Value is returned by ItemValue
+		%feature("autodoc", "	* Initialises with starting values Ax0 : origin axis --typically, standard XYZ-- Loc : location to which place the item Makes a MappedItem Resulting Value is returned by ItemValue
 
 	:param aSR:
 	:type aSR: Handle_StepShape_ShapeDefinitionRepresentation &
@@ -341,7 +346,7 @@ class STEPConstruct_Assembly {
 ") Init;
 		void Init (const Handle_StepShape_ShapeDefinitionRepresentation & aSR,const Handle_StepShape_ShapeDefinitionRepresentation & SDR0,const Handle_StepGeom_Axis2Placement3d & Ax0,const Handle_StepGeom_Axis2Placement3d & Loc);
 		%feature("compactdefaultargs") MakeRelationship;
-		%feature("autodoc", "	* Make a (ShapeRepresentationRelationship,...WithTransformation) Resulting Value is returned by ItemValue
+		%feature("autodoc", "	* Make a --ShapeRepresentationRelationship,...WithTransformation-- Resulting Value is returned by ItemValue
 
 	:rtype: None
 ") MakeRelationship;
@@ -365,15 +370,15 @@ class STEPConstruct_Assembly {
 ") GetNAUO;
 		Handle_StepRepr_NextAssemblyUsageOccurrence GetNAUO ();
 		%feature("compactdefaultargs") CheckSRRReversesNAUO;
-		%feature("autodoc", "	* Checks whether SRR's definition of assembly and component contradicts with NAUO definition or not, according to model schema (AP214 or AP203)
+		%feature("autodoc", "	* Checks whether SRR's definition of assembly and component contradicts with NAUO definition or not, according to model schema --AP214 or AP203--
 
-	:param Model:
-	:type Model: Handle_Interface_InterfaceModel &
+	:param theGraph:
+	:type theGraph: Interface_Graph &
 	:param CDSR:
 	:type CDSR: Handle_StepShape_ContextDependentShapeRepresentation &
 	:rtype: bool
 ") CheckSRRReversesNAUO;
-		static Standard_Boolean CheckSRRReversesNAUO (const Handle_Interface_InterfaceModel & Model,const Handle_StepShape_ContextDependentShapeRepresentation & CDSR);
+		static Standard_Boolean CheckSRRReversesNAUO (const Interface_Graph & theGraph,const Handle_StepShape_ContextDependentShapeRepresentation & CDSR);
 };
 
 
@@ -425,6 +430,12 @@ class STEPConstruct_ContextTool {
 	:rtype: bool
 ") IsAP214;
 		Standard_Boolean IsAP214 ();
+		%feature("compactdefaultargs") IsAP242;
+		%feature("autodoc", "	* Returns True if APD.schema_name is ap242_managed_model_based_3d_engineering
+
+	:rtype: bool
+") IsAP242;
+		Standard_Boolean IsAP242 ();
 		%feature("compactdefaultargs") GetACstatus;
 		%feature("autodoc", "	:rtype: Handle_TCollection_HAsciiString
 ") GetACstatus;
@@ -528,7 +539,7 @@ class STEPConstruct_ContextTool {
 ") GetProductName;
 		Handle_TCollection_HAsciiString GetProductName ();
 		%feature("compactdefaultargs") GetRootsForPart;
-		%feature("autodoc", "	* Produces and returns a full list of root entities required for part identified by SDRTool (including SDR itself)
+		%feature("autodoc", "	* Produces and returns a full list of root entities required for part identified by SDRTool --including SDR itself--
 
 	:param SDRTool:
 	:type SDRTool: STEPConstruct_Part &
@@ -536,7 +547,7 @@ class STEPConstruct_ContextTool {
 ") GetRootsForPart;
 		Handle_TColStd_HSequenceOfTransient GetRootsForPart (const STEPConstruct_Part & SDRTool);
 		%feature("compactdefaultargs") GetRootsForAssemblyLink;
-		%feature("autodoc", "	* Produces and returns a full list of root entities required for assembly link identified by assembly (including NAUO and CDSR)
+		%feature("autodoc", "	* Produces and returns a full list of root entities required for assembly link identified by assembly --including NAUO and CDSR--
 
 	:param assembly:
 	:type assembly: STEPConstruct_Assembly &
@@ -547,392 +558,6 @@ class STEPConstruct_ContextTool {
 
 
 %extend STEPConstruct_ContextTool {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor STEPConstruct_DataMapIteratorOfDataMapOfAsciiStringTransient;
-class STEPConstruct_DataMapIteratorOfDataMapOfAsciiStringTransient : public TCollection_BasicMapIterator {
-	public:
-		%feature("compactdefaultargs") STEPConstruct_DataMapIteratorOfDataMapOfAsciiStringTransient;
-		%feature("autodoc", "	:rtype: None
-") STEPConstruct_DataMapIteratorOfDataMapOfAsciiStringTransient;
-		 STEPConstruct_DataMapIteratorOfDataMapOfAsciiStringTransient ();
-		%feature("compactdefaultargs") STEPConstruct_DataMapIteratorOfDataMapOfAsciiStringTransient;
-		%feature("autodoc", "	:param aMap:
-	:type aMap: STEPConstruct_DataMapOfAsciiStringTransient &
-	:rtype: None
-") STEPConstruct_DataMapIteratorOfDataMapOfAsciiStringTransient;
-		 STEPConstruct_DataMapIteratorOfDataMapOfAsciiStringTransient (const STEPConstruct_DataMapOfAsciiStringTransient & aMap);
-		%feature("compactdefaultargs") Initialize;
-		%feature("autodoc", "	:param aMap:
-	:type aMap: STEPConstruct_DataMapOfAsciiStringTransient &
-	:rtype: None
-") Initialize;
-		void Initialize (const STEPConstruct_DataMapOfAsciiStringTransient & aMap);
-		%feature("compactdefaultargs") Key;
-		%feature("autodoc", "	:rtype: TCollection_AsciiString
-") Key;
-		const TCollection_AsciiString & Key ();
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:rtype: Handle_Standard_Transient
-") Value;
-		Handle_Standard_Transient Value ();
-};
-
-
-%extend STEPConstruct_DataMapIteratorOfDataMapOfAsciiStringTransient {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor STEPConstruct_DataMapIteratorOfDataMapOfPointTransient;
-class STEPConstruct_DataMapIteratorOfDataMapOfPointTransient : public TCollection_BasicMapIterator {
-	public:
-		%feature("compactdefaultargs") STEPConstruct_DataMapIteratorOfDataMapOfPointTransient;
-		%feature("autodoc", "	:rtype: None
-") STEPConstruct_DataMapIteratorOfDataMapOfPointTransient;
-		 STEPConstruct_DataMapIteratorOfDataMapOfPointTransient ();
-		%feature("compactdefaultargs") STEPConstruct_DataMapIteratorOfDataMapOfPointTransient;
-		%feature("autodoc", "	:param aMap:
-	:type aMap: STEPConstruct_DataMapOfPointTransient &
-	:rtype: None
-") STEPConstruct_DataMapIteratorOfDataMapOfPointTransient;
-		 STEPConstruct_DataMapIteratorOfDataMapOfPointTransient (const STEPConstruct_DataMapOfPointTransient & aMap);
-		%feature("compactdefaultargs") Initialize;
-		%feature("autodoc", "	:param aMap:
-	:type aMap: STEPConstruct_DataMapOfPointTransient &
-	:rtype: None
-") Initialize;
-		void Initialize (const STEPConstruct_DataMapOfPointTransient & aMap);
-		%feature("compactdefaultargs") Key;
-		%feature("autodoc", "	:rtype: gp_Pnt
-") Key;
-		const gp_Pnt  Key ();
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:rtype: Handle_Standard_Transient
-") Value;
-		Handle_Standard_Transient Value ();
-};
-
-
-%extend STEPConstruct_DataMapIteratorOfDataMapOfPointTransient {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor STEPConstruct_DataMapNodeOfDataMapOfAsciiStringTransient;
-class STEPConstruct_DataMapNodeOfDataMapOfAsciiStringTransient : public TCollection_MapNode {
-	public:
-		%feature("compactdefaultargs") STEPConstruct_DataMapNodeOfDataMapOfAsciiStringTransient;
-		%feature("autodoc", "	:param K:
-	:type K: TCollection_AsciiString &
-	:param I:
-	:type I: Handle_Standard_Transient &
-	:param n:
-	:type n: TCollection_MapNodePtr &
-	:rtype: None
-") STEPConstruct_DataMapNodeOfDataMapOfAsciiStringTransient;
-		 STEPConstruct_DataMapNodeOfDataMapOfAsciiStringTransient (const TCollection_AsciiString & K,const Handle_Standard_Transient & I,const TCollection_MapNodePtr & n);
-		%feature("compactdefaultargs") Key;
-		%feature("autodoc", "	:rtype: TCollection_AsciiString
-") Key;
-		TCollection_AsciiString & Key ();
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:rtype: Handle_Standard_Transient
-") Value;
-		Handle_Standard_Transient Value ();
-};
-
-
-%extend STEPConstruct_DataMapNodeOfDataMapOfAsciiStringTransient {
-	%pythoncode {
-		def GetHandle(self):
-		    try:
-		        return self.thisHandle
-		    except:
-		        self.thisHandle = Handle_STEPConstruct_DataMapNodeOfDataMapOfAsciiStringTransient(self)
-		        self.thisown = False
-		        return self.thisHandle
-	}
-};
-
-%pythonappend Handle_STEPConstruct_DataMapNodeOfDataMapOfAsciiStringTransient::Handle_STEPConstruct_DataMapNodeOfDataMapOfAsciiStringTransient %{
-    # register the handle in the base object
-    if len(args) > 0:
-        register_handle(self, args[0])
-%}
-
-%nodefaultctor Handle_STEPConstruct_DataMapNodeOfDataMapOfAsciiStringTransient;
-class Handle_STEPConstruct_DataMapNodeOfDataMapOfAsciiStringTransient : public Handle_TCollection_MapNode {
-
-    public:
-        // constructors
-        Handle_STEPConstruct_DataMapNodeOfDataMapOfAsciiStringTransient();
-        Handle_STEPConstruct_DataMapNodeOfDataMapOfAsciiStringTransient(const Handle_STEPConstruct_DataMapNodeOfDataMapOfAsciiStringTransient &aHandle);
-        Handle_STEPConstruct_DataMapNodeOfDataMapOfAsciiStringTransient(const STEPConstruct_DataMapNodeOfDataMapOfAsciiStringTransient *anItem);
-        void Nullify();
-        Standard_Boolean IsNull() const;
-        static const Handle_STEPConstruct_DataMapNodeOfDataMapOfAsciiStringTransient DownCast(const Handle_Standard_Transient &AnObject);
-
-};
-%extend Handle_STEPConstruct_DataMapNodeOfDataMapOfAsciiStringTransient {
-    STEPConstruct_DataMapNodeOfDataMapOfAsciiStringTransient* _get_reference() {
-    return (STEPConstruct_DataMapNodeOfDataMapOfAsciiStringTransient*)$self->Access();
-    }
-};
-
-%extend Handle_STEPConstruct_DataMapNodeOfDataMapOfAsciiStringTransient {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
-};
-
-%extend STEPConstruct_DataMapNodeOfDataMapOfAsciiStringTransient {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor STEPConstruct_DataMapNodeOfDataMapOfPointTransient;
-class STEPConstruct_DataMapNodeOfDataMapOfPointTransient : public TCollection_MapNode {
-	public:
-		%feature("compactdefaultargs") STEPConstruct_DataMapNodeOfDataMapOfPointTransient;
-		%feature("autodoc", "	:param K:
-	:type K: gp_Pnt
-	:param I:
-	:type I: Handle_Standard_Transient &
-	:param n:
-	:type n: TCollection_MapNodePtr &
-	:rtype: None
-") STEPConstruct_DataMapNodeOfDataMapOfPointTransient;
-		 STEPConstruct_DataMapNodeOfDataMapOfPointTransient (const gp_Pnt & K,const Handle_Standard_Transient & I,const TCollection_MapNodePtr & n);
-		%feature("compactdefaultargs") Key;
-		%feature("autodoc", "	:rtype: gp_Pnt
-") Key;
-		gp_Pnt  Key ();
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:rtype: Handle_Standard_Transient
-") Value;
-		Handle_Standard_Transient Value ();
-};
-
-
-%extend STEPConstruct_DataMapNodeOfDataMapOfPointTransient {
-	%pythoncode {
-		def GetHandle(self):
-		    try:
-		        return self.thisHandle
-		    except:
-		        self.thisHandle = Handle_STEPConstruct_DataMapNodeOfDataMapOfPointTransient(self)
-		        self.thisown = False
-		        return self.thisHandle
-	}
-};
-
-%pythonappend Handle_STEPConstruct_DataMapNodeOfDataMapOfPointTransient::Handle_STEPConstruct_DataMapNodeOfDataMapOfPointTransient %{
-    # register the handle in the base object
-    if len(args) > 0:
-        register_handle(self, args[0])
-%}
-
-%nodefaultctor Handle_STEPConstruct_DataMapNodeOfDataMapOfPointTransient;
-class Handle_STEPConstruct_DataMapNodeOfDataMapOfPointTransient : public Handle_TCollection_MapNode {
-
-    public:
-        // constructors
-        Handle_STEPConstruct_DataMapNodeOfDataMapOfPointTransient();
-        Handle_STEPConstruct_DataMapNodeOfDataMapOfPointTransient(const Handle_STEPConstruct_DataMapNodeOfDataMapOfPointTransient &aHandle);
-        Handle_STEPConstruct_DataMapNodeOfDataMapOfPointTransient(const STEPConstruct_DataMapNodeOfDataMapOfPointTransient *anItem);
-        void Nullify();
-        Standard_Boolean IsNull() const;
-        static const Handle_STEPConstruct_DataMapNodeOfDataMapOfPointTransient DownCast(const Handle_Standard_Transient &AnObject);
-
-};
-%extend Handle_STEPConstruct_DataMapNodeOfDataMapOfPointTransient {
-    STEPConstruct_DataMapNodeOfDataMapOfPointTransient* _get_reference() {
-    return (STEPConstruct_DataMapNodeOfDataMapOfPointTransient*)$self->Access();
-    }
-};
-
-%extend Handle_STEPConstruct_DataMapNodeOfDataMapOfPointTransient {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
-};
-
-%extend STEPConstruct_DataMapNodeOfDataMapOfPointTransient {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor STEPConstruct_DataMapOfAsciiStringTransient;
-class STEPConstruct_DataMapOfAsciiStringTransient : public TCollection_BasicMap {
-	public:
-		%feature("compactdefaultargs") STEPConstruct_DataMapOfAsciiStringTransient;
-		%feature("autodoc", "	:param NbBuckets: default value is 1
-	:type NbBuckets: int
-	:rtype: None
-") STEPConstruct_DataMapOfAsciiStringTransient;
-		 STEPConstruct_DataMapOfAsciiStringTransient (const Standard_Integer NbBuckets = 1);
-		%feature("compactdefaultargs") Assign;
-		%feature("autodoc", "	:param Other:
-	:type Other: STEPConstruct_DataMapOfAsciiStringTransient &
-	:rtype: STEPConstruct_DataMapOfAsciiStringTransient
-") Assign;
-		STEPConstruct_DataMapOfAsciiStringTransient & Assign (const STEPConstruct_DataMapOfAsciiStringTransient & Other);
-		%feature("compactdefaultargs") operator =;
-		%feature("autodoc", "	:param Other:
-	:type Other: STEPConstruct_DataMapOfAsciiStringTransient &
-	:rtype: STEPConstruct_DataMapOfAsciiStringTransient
-") operator =;
-		STEPConstruct_DataMapOfAsciiStringTransient & operator = (const STEPConstruct_DataMapOfAsciiStringTransient & Other);
-		%feature("compactdefaultargs") ReSize;
-		%feature("autodoc", "	:param NbBuckets:
-	:type NbBuckets: int
-	:rtype: None
-") ReSize;
-		void ReSize (const Standard_Integer NbBuckets);
-		%feature("compactdefaultargs") Clear;
-		%feature("autodoc", "	:rtype: None
-") Clear;
-		void Clear ();
-		%feature("compactdefaultargs") Bind;
-		%feature("autodoc", "	:param K:
-	:type K: TCollection_AsciiString &
-	:param I:
-	:type I: Handle_Standard_Transient &
-	:rtype: bool
-") Bind;
-		Standard_Boolean Bind (const TCollection_AsciiString & K,const Handle_Standard_Transient & I);
-		%feature("compactdefaultargs") IsBound;
-		%feature("autodoc", "	:param K:
-	:type K: TCollection_AsciiString &
-	:rtype: bool
-") IsBound;
-		Standard_Boolean IsBound (const TCollection_AsciiString & K);
-		%feature("compactdefaultargs") UnBind;
-		%feature("autodoc", "	:param K:
-	:type K: TCollection_AsciiString &
-	:rtype: bool
-") UnBind;
-		Standard_Boolean UnBind (const TCollection_AsciiString & K);
-		%feature("compactdefaultargs") Find;
-		%feature("autodoc", "	:param K:
-	:type K: TCollection_AsciiString &
-	:rtype: Handle_Standard_Transient
-") Find;
-		Handle_Standard_Transient Find (const TCollection_AsciiString & K);
-		%feature("compactdefaultargs") ChangeFind;
-		%feature("autodoc", "	:param K:
-	:type K: TCollection_AsciiString &
-	:rtype: Handle_Standard_Transient
-") ChangeFind;
-		Handle_Standard_Transient ChangeFind (const TCollection_AsciiString & K);
-		%feature("compactdefaultargs") Find1;
-		%feature("autodoc", "	:param K:
-	:type K: TCollection_AsciiString &
-	:rtype: Standard_Address
-") Find1;
-		Standard_Address Find1 (const TCollection_AsciiString & K);
-		%feature("compactdefaultargs") ChangeFind1;
-		%feature("autodoc", "	:param K:
-	:type K: TCollection_AsciiString &
-	:rtype: Standard_Address
-") ChangeFind1;
-		Standard_Address ChangeFind1 (const TCollection_AsciiString & K);
-};
-
-
-%extend STEPConstruct_DataMapOfAsciiStringTransient {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor STEPConstruct_DataMapOfPointTransient;
-class STEPConstruct_DataMapOfPointTransient : public TCollection_BasicMap {
-	public:
-		%feature("compactdefaultargs") STEPConstruct_DataMapOfPointTransient;
-		%feature("autodoc", "	:param NbBuckets: default value is 1
-	:type NbBuckets: int
-	:rtype: None
-") STEPConstruct_DataMapOfPointTransient;
-		 STEPConstruct_DataMapOfPointTransient (const Standard_Integer NbBuckets = 1);
-		%feature("compactdefaultargs") Assign;
-		%feature("autodoc", "	:param Other:
-	:type Other: STEPConstruct_DataMapOfPointTransient &
-	:rtype: STEPConstruct_DataMapOfPointTransient
-") Assign;
-		STEPConstruct_DataMapOfPointTransient & Assign (const STEPConstruct_DataMapOfPointTransient & Other);
-		%feature("compactdefaultargs") operator =;
-		%feature("autodoc", "	:param Other:
-	:type Other: STEPConstruct_DataMapOfPointTransient &
-	:rtype: STEPConstruct_DataMapOfPointTransient
-") operator =;
-		STEPConstruct_DataMapOfPointTransient & operator = (const STEPConstruct_DataMapOfPointTransient & Other);
-		%feature("compactdefaultargs") ReSize;
-		%feature("autodoc", "	:param NbBuckets:
-	:type NbBuckets: int
-	:rtype: None
-") ReSize;
-		void ReSize (const Standard_Integer NbBuckets);
-		%feature("compactdefaultargs") Clear;
-		%feature("autodoc", "	:rtype: None
-") Clear;
-		void Clear ();
-		%feature("compactdefaultargs") Bind;
-		%feature("autodoc", "	:param K:
-	:type K: gp_Pnt
-	:param I:
-	:type I: Handle_Standard_Transient &
-	:rtype: bool
-") Bind;
-		Standard_Boolean Bind (const gp_Pnt & K,const Handle_Standard_Transient & I);
-		%feature("compactdefaultargs") IsBound;
-		%feature("autodoc", "	:param K:
-	:type K: gp_Pnt
-	:rtype: bool
-") IsBound;
-		Standard_Boolean IsBound (const gp_Pnt & K);
-		%feature("compactdefaultargs") UnBind;
-		%feature("autodoc", "	:param K:
-	:type K: gp_Pnt
-	:rtype: bool
-") UnBind;
-		Standard_Boolean UnBind (const gp_Pnt & K);
-		%feature("compactdefaultargs") Find;
-		%feature("autodoc", "	:param K:
-	:type K: gp_Pnt
-	:rtype: Handle_Standard_Transient
-") Find;
-		Handle_Standard_Transient Find (const gp_Pnt & K);
-		%feature("compactdefaultargs") ChangeFind;
-		%feature("autodoc", "	:param K:
-	:type K: gp_Pnt
-	:rtype: Handle_Standard_Transient
-") ChangeFind;
-		Handle_Standard_Transient ChangeFind (const gp_Pnt & K);
-		%feature("compactdefaultargs") Find1;
-		%feature("autodoc", "	:param K:
-	:type K: gp_Pnt
-	:rtype: Standard_Address
-") Find1;
-		Standard_Address Find1 (const gp_Pnt & K);
-		%feature("compactdefaultargs") ChangeFind1;
-		%feature("autodoc", "	:param K:
-	:type K: gp_Pnt
-	:rtype: Standard_Address
-") ChangeFind1;
-		Standard_Address ChangeFind1 (const gp_Pnt & K);
-};
-
-
-%extend STEPConstruct_DataMapOfPointTransient {
 	%pythoncode {
 	__repr__ = _dumps_object
 	}
@@ -971,7 +596,7 @@ class STEPConstruct_Part {
 ") SDRValue;
 		Handle_StepShape_ShapeDefinitionRepresentation SDRValue ();
 		%feature("compactdefaultargs") SRValue;
-		%feature("autodoc", "	* Returns SDR->UsedRepresentation() or Null if not done
+		%feature("autodoc", "	* Returns SDR->UsedRepresentation---- or Null if not done
 
 	:rtype: Handle_StepShape_ShapeRepresentation
 ") SRValue;
@@ -1220,13 +845,13 @@ class STEPConstruct_Tool {
 ") WS;
 		Handle_XSControl_WorkSession WS ();
 		%feature("compactdefaultargs") Model;
-		%feature("autodoc", "	* Returns current model (Null if not loaded)
+		%feature("autodoc", "	* Returns current model --Null if not loaded--
 
 	:rtype: Handle_Interface_InterfaceModel
 ") Model;
 		Handle_Interface_InterfaceModel Model ();
 		%feature("compactdefaultargs") Graph;
-		%feature("autodoc", "	* Returns current graph (recomputing if necessary)
+		%feature("autodoc", "	* Returns current graph --recomputing if necessary--
 
 	:param recompute: default value is Standard_False
 	:type recompute: bool
@@ -1234,13 +859,13 @@ class STEPConstruct_Tool {
 ") Graph;
 		const Interface_Graph & Graph (const Standard_Boolean recompute = Standard_False);
 		%feature("compactdefaultargs") TransientProcess;
-		%feature("autodoc", "	* Returns TransientProcess (reading; Null if not loaded)
+		%feature("autodoc", "	* Returns TransientProcess --reading; Null if not loaded--
 
 	:rtype: Handle_Transfer_TransientProcess
 ") TransientProcess;
 		Handle_Transfer_TransientProcess TransientProcess ();
 		%feature("compactdefaultargs") FinderProcess;
-		%feature("autodoc", "	* Returns FinderProcess (writing; Null if not loaded)
+		%feature("autodoc", "	* Returns FinderProcess --writing; Null if not loaded--
 
 	:rtype: Handle_Transfer_FinderProcess
 ") FinderProcess;
@@ -1263,7 +888,7 @@ class STEPConstruct_UnitContext {
 ") STEPConstruct_UnitContext;
 		 STEPConstruct_UnitContext ();
 		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	* Creates new context (units are MM and radians, uncertainty equal to Tol3d)
+		%feature("autodoc", "	* Creates new context --units are MM and radians, uncertainty equal to Tol3d--
 
 	:param Tol3d:
 	:type Tol3d: float
@@ -1277,7 +902,7 @@ class STEPConstruct_UnitContext {
 ") IsDone;
 		Standard_Boolean IsDone ();
 		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	* Returns context (or Null if not done)
+		%feature("autodoc", "	* Returns context --or Null if not done--
 
 	:rtype: Handle_StepGeom_GeomRepContextAndGlobUnitAssCtxAndGlobUncertaintyAssCtx
 ") Value;
@@ -1297,7 +922,7 @@ class STEPConstruct_UnitContext {
 ") ComputeFactors;
 		Standard_Integer ComputeFactors (const Handle_StepBasic_NamedUnit & aUnit);
 		%feature("compactdefaultargs") ComputeTolerance;
-		%feature("autodoc", "	* Computes the uncertainty value (for length)
+		%feature("autodoc", "	* Computes the uncertainty value --for length--
 
 	:param aContext:
 	:type aContext: Handle_StepRepr_GlobalUncertaintyAssignedContext &
@@ -1323,7 +948,7 @@ class STEPConstruct_UnitContext {
 ") SolidAngleFactor;
 		Standard_Real SolidAngleFactor ();
 		%feature("compactdefaultargs") Uncertainty;
-		%feature("autodoc", "	* Returns the Uncertainty value (for length) It has been converted with LengthFactor
+		%feature("autodoc", "	* Returns the Uncertainty value --for length-- It has been converted with LengthFactor
 
 	:rtype: float
 ") Uncertainty;
@@ -1341,7 +966,7 @@ class STEPConstruct_UnitContext {
 ") VolumeFactor;
 		Standard_Real VolumeFactor ();
 		%feature("compactdefaultargs") HasUncertainty;
-		%feature("autodoc", "	* Tells if a Uncertainty (for length) is recorded
+		%feature("autodoc", "	* Tells if a Uncertainty --for length-- is recorded
 
 	:rtype: bool
 ") HasUncertainty;
@@ -1377,7 +1002,7 @@ class STEPConstruct_UnitContext {
 ") VolumeDone;
 		Standard_Boolean VolumeDone ();
 		%feature("compactdefaultargs") StatusMessage;
-		%feature("autodoc", "	* Returns a message for a given status (0 - empty) This message can then be added as warning for transfer
+		%feature("autodoc", "	* Returns a message for a given status --0 - empty-- This message can then be added as warning for transfer
 
 	:param status:
 	:type status: int
@@ -1385,7 +1010,7 @@ class STEPConstruct_UnitContext {
 ") StatusMessage;
 		const char * StatusMessage (const Standard_Integer status);
 		%feature("compactdefaultargs") ConvertSiPrefix;
-		%feature("autodoc", "	* Convert SI prefix defined by enumertaion to corresponding real factor (e.g. 1e6 for mega)
+		%feature("autodoc", "	* Convert SI prefix defined by enumertaion to corresponding real factor --e.g. 1e6 for mega--
 
 	:param aPrefix:
 	:type aPrefix: StepBasic_SiPrefix
@@ -1426,7 +1051,7 @@ class STEPConstruct_ExternRefs : public STEPConstruct_Tool {
 ") Init;
 		Standard_Boolean Init (const Handle_XSControl_WorkSession & WS);
 		%feature("compactdefaultargs") Clear;
-		%feature("autodoc", "	* Clears internal fields (list of defined extern refs)
+		%feature("autodoc", "	* Clears internal fields --list of defined extern refs--
 
 	:rtype: None
 ") Clear;
@@ -1480,7 +1105,7 @@ class STEPConstruct_ExternRefs : public STEPConstruct_Tool {
 ") AddExternRef;
 		Standard_Integer AddExternRef (const char * filename,const Handle_StepBasic_ProductDefinition & PD,const char * format);
 		%feature("compactdefaultargs") checkAP214Shared;
-		%feature("autodoc", "	* Check (create if it is null) all shared entities for the model
+		%feature("autodoc", "	* Check --create if it is null-- all shared entities for the model
 
 	:rtype: None
 ") checkAP214Shared;
@@ -1581,7 +1206,7 @@ class STEPConstruct_Styles : public STEPConstruct_Tool {
 ") AddStyle;
 		Handle_StepVisual_StyledItem AddStyle (const Handle_StepRepr_RepresentationItem & item,const Handle_StepVisual_PresentationStyleAssignment & PSA,const Handle_StepVisual_StyledItem & Override);
 		%feature("compactdefaultargs") AddStyle;
-		%feature("autodoc", "	* Create a style linking giving PSA to the Shape, and add it to the sequence of stored styles. If Override is not Null, then the resulting style will be of the subtype OverridingStyledItem. The Sape is used to find corresponding STEP entity by call to STEPConstruct::FindEntity(), then previous method is called.
+		%feature("autodoc", "	* Create a style linking giving PSA to the Shape, and add it to the sequence of stored styles. If Override is not Null, then the resulting style will be of the subtype OverridingStyledItem. The Sape is used to find corresponding STEP entity by call to STEPConstruct::FindEntity----, then previous method is called.
 
 	:param Shape:
 	:type Shape: TopoDS_Shape &
@@ -1615,7 +1240,7 @@ class STEPConstruct_Styles : public STEPConstruct_Tool {
 ") CreateNAUOSRD;
 		Standard_Boolean CreateNAUOSRD (const Handle_StepRepr_RepresentationContext & Context,const Handle_StepShape_ContextDependentShapeRepresentation & CDSR,const Handle_StepRepr_ProductDefinitionShape & initPDS);
 		%feature("compactdefaultargs") FindContext;
-		%feature("autodoc", "	* Searches the STEP model for the RepresentationContext in which given shape is defined. This context (if found) can be used then in call to CreateMDGPR()
+		%feature("autodoc", "	* Searches the STEP model for the RepresentationContext in which given shape is defined. This context --if found-- can be used then in call to CreateMDGPR----
 
 	:param Shape:
 	:type Shape: TopoDS_Shape &
@@ -1623,13 +1248,13 @@ class STEPConstruct_Styles : public STEPConstruct_Tool {
 ") FindContext;
 		Handle_StepRepr_RepresentationContext FindContext (const TopoDS_Shape & Shape);
 		%feature("compactdefaultargs") LoadStyles;
-		%feature("autodoc", "	* Searches the STEP model for the MDGPR or DM entities (which bring styles) and fills sequence of styles
+		%feature("autodoc", "	* Searches the STEP model for the MDGPR or DM entities --which bring styles-- and fills sequence of styles
 
 	:rtype: bool
 ") LoadStyles;
 		Standard_Boolean LoadStyles ();
 		%feature("compactdefaultargs") LoadInvisStyles;
-		%feature("autodoc", "	* Searches the STEP model for the INISIBILITY enteties (which bring styles) and fills out sequence of styles
+		%feature("autodoc", "	* Searches the STEP model for the INISIBILITY enteties --which bring styles-- and fills out sequence of styles
 
 	:param InvSyles:
 	:type InvSyles: Handle_TColStd_HSequenceOfTransient &
@@ -1637,7 +1262,7 @@ class STEPConstruct_Styles : public STEPConstruct_Tool {
 ") LoadInvisStyles;
 		Standard_Boolean LoadInvisStyles (Handle_TColStd_HSequenceOfTransient & InvSyles);
 		%feature("compactdefaultargs") MakeColorPSA;
-		%feature("autodoc", "	* Create a PresentationStyleAssignment entity which defines two colors (for filling surfaces and curves) if isForNAUO true then returns PresentationStyleByContext
+		%feature("autodoc", "	* Create a PresentationStyleAssignment entity which defines two colors --for filling surfaces and curves-- if isForNAUO true then returns PresentationStyleByContext
 
 	:param item:
 	:type item: Handle_StepRepr_RepresentationItem &
@@ -1661,7 +1286,7 @@ class STEPConstruct_Styles : public STEPConstruct_Tool {
 ") GetColorPSA;
 		Handle_StepVisual_PresentationStyleAssignment GetColorPSA (const Handle_StepRepr_RepresentationItem & item,const Handle_StepVisual_Colour & Col);
 		%feature("compactdefaultargs") GetColors;
-		%feature("autodoc", "	* Extract color definitions from the style entity For each type of color supported, result can be either NULL if it is not defined by that style, or last definition (if they are 1 or more)
+		%feature("autodoc", "	* Extract color definitions from the style entity For each type of color supported, result can be either NULL if it is not defined by that style, or last definition --if they are 1 or more--
 
 	:param style:
 	:type style: Handle_StepVisual_StyledItem &
@@ -1740,7 +1365,7 @@ class STEPConstruct_ValidationProps : public STEPConstruct_Tool {
 ") Init;
 		Standard_Boolean Init (const Handle_XSControl_WorkSession & WS);
 		%feature("compactdefaultargs") AddProp;
-		%feature("autodoc", "	* General method for adding (writing) a validation property for shape which should be already mapped on writing itself. It uses FindTarget() to find target STEP entity resulting from given shape, and associated context Returns True if success, False in case of fail
+		%feature("autodoc", "	* General method for adding --writing-- a validation property for shape which should be already mapped on writing itself. It uses FindTarget---- to find target STEP entity resulting from given shape, and associated context Returns True if success, False in case of fail
 
 	:param Shape:
 	:type Shape: TopoDS_Shape &
@@ -1754,7 +1379,7 @@ class STEPConstruct_ValidationProps : public STEPConstruct_Tool {
 ") AddProp;
 		Standard_Boolean AddProp (const TopoDS_Shape & Shape,const Handle_StepRepr_RepresentationItem & Prop,const char * Descr,const Standard_Boolean instance = Standard_False);
 		%feature("compactdefaultargs") AddProp;
-		%feature("autodoc", "	* General method for adding (writing) a validation property for shape which should be already mapped on writing itself. It takes target and Context entities which correspond to shape Returns True if success, False in case of fail
+		%feature("autodoc", "	* General method for adding --writing-- a validation property for shape which should be already mapped on writing itself. It takes target and Context entities which correspond to shape Returns True if success, False in case of fail
 
 	:param target:
 	:type target: StepRepr_CharacterizedDefinition &
@@ -1768,7 +1393,7 @@ class STEPConstruct_ValidationProps : public STEPConstruct_Tool {
 ") AddProp;
 		Standard_Boolean AddProp (const StepRepr_CharacterizedDefinition & target,const Handle_StepRepr_RepresentationContext & Context,const Handle_StepRepr_RepresentationItem & Prop,const char * Descr);
 		%feature("compactdefaultargs") AddArea;
-		%feature("autodoc", "	* Adds surface area property for given shape (already mapped). Returns True if success, False in case of fail
+		%feature("autodoc", "	* Adds surface area property for given shape --already mapped--. Returns True if success, False in case of fail
 
 	:param Shape:
 	:type Shape: TopoDS_Shape &
@@ -1778,7 +1403,7 @@ class STEPConstruct_ValidationProps : public STEPConstruct_Tool {
 ") AddArea;
 		Standard_Boolean AddArea (const TopoDS_Shape & Shape,const Standard_Real Area);
 		%feature("compactdefaultargs") AddVolume;
-		%feature("autodoc", "	* Adds volume property for given shape (already mapped). Returns True if success, False in case of fail
+		%feature("autodoc", "	* Adds volume property for given shape --already mapped--. Returns True if success, False in case of fail
 
 	:param Shape:
 	:type Shape: TopoDS_Shape &
@@ -1788,7 +1413,7 @@ class STEPConstruct_ValidationProps : public STEPConstruct_Tool {
 ") AddVolume;
 		Standard_Boolean AddVolume (const TopoDS_Shape & Shape,const Standard_Real Vol);
 		%feature("compactdefaultargs") AddCentroid;
-		%feature("autodoc", "	* Adds centroid property for given shape (already mapped). Returns True if success, False in case of fail If instance is True, then centroid is assigned to an instance of component in assembly
+		%feature("autodoc", "	* Adds centroid property for given shape --already mapped--. Returns True if success, False in case of fail If instance is True, then centroid is assigned to an instance of component in assembly
 
 	:param Shape:
 	:type Shape: TopoDS_Shape &
@@ -1822,7 +1447,7 @@ class STEPConstruct_ValidationProps : public STEPConstruct_Tool {
 ") LoadProps;
 		Standard_Boolean LoadProps (TColStd_SequenceOfTransient & seq);
 		%feature("compactdefaultargs") GetPropNAUO;
-		%feature("autodoc", "	* Returns CDSR associated with given PpD or NULL if not found (when, try GetPropSDR)
+		%feature("autodoc", "	* Returns CDSR associated with given PpD or NULL if not found --when, try GetPropSDR--
 
 	:param PD:
 	:type PD: Handle_StepRepr_PropertyDefinition &
@@ -1830,7 +1455,7 @@ class STEPConstruct_ValidationProps : public STEPConstruct_Tool {
 ") GetPropNAUO;
 		Handle_StepRepr_NextAssemblyUsageOccurrence GetPropNAUO (const Handle_StepRepr_PropertyDefinition & PD);
 		%feature("compactdefaultargs") GetPropPD;
-		%feature("autodoc", "	* Returns SDR associated with given PpD or NULL if not found (when, try GetPropCDSR)
+		%feature("autodoc", "	* Returns SDR associated with given PpD or NULL if not found --when, try GetPropCDSR--
 
 	:param PD:
 	:type PD: Handle_StepRepr_PropertyDefinition &
@@ -1854,7 +1479,7 @@ class STEPConstruct_ValidationProps : public STEPConstruct_Tool {
 ") GetPropShape;
 		TopoDS_Shape GetPropShape (const Handle_StepRepr_PropertyDefinition & PD);
 		%feature("compactdefaultargs") GetPropReal;
-		%feature("autodoc", "	* Returns value of Real-Valued property (Area or Volume) If Property is neither Area nor Volume, returns False Else returns True and isArea indicates whether property is area or volume
+		%feature("autodoc", "	* Returns value of Real-Valued property --Area or Volume-- If Property is neither Area nor Volume, returns False Else returns True and isArea indicates whether property is area or volume
 
 	:param item:
 	:type item: Handle_StepRepr_RepresentationItem &
@@ -1866,7 +1491,7 @@ class STEPConstruct_ValidationProps : public STEPConstruct_Tool {
 ") GetPropReal;
 		Standard_Boolean GetPropReal (const Handle_StepRepr_RepresentationItem & item,Standard_Real &OutValue,Standard_Boolean &OutValue);
 		%feature("compactdefaultargs") GetPropPnt;
-		%feature("autodoc", "	* Returns value of Centriod property (or False if it is not)
+		%feature("autodoc", "	* Returns value of Centriod property --or False if it is not--
 
 	:param item:
 	:type item: Handle_StepRepr_RepresentationItem &
@@ -1878,7 +1503,7 @@ class STEPConstruct_ValidationProps : public STEPConstruct_Tool {
 ") GetPropPnt;
 		Standard_Boolean GetPropPnt (const Handle_StepRepr_RepresentationItem & item,const Handle_StepRepr_RepresentationContext & Context,gp_Pnt & Pnt);
 		%feature("compactdefaultargs") SetAssemblyShape;
-		%feature("autodoc", "	* Sets current assembly shape SDR (for FindCDSR calls)
+		%feature("autodoc", "	* Sets current assembly shape SDR --for FindCDSR calls--
 
 	:param shape:
 	:type shape: TopoDS_Shape &

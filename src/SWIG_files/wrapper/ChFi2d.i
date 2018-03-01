@@ -1,5 +1,5 @@
 /*
-Copyright 2008-2017 Thomas Paviot (tpaviot@gmail.com)
+Copyright 2008-2018 Thomas Paviot (tpaviot@gmail.com)
 
 
 This file is part of pythonOCC.
@@ -56,6 +56,9 @@ def register_handle(handle, base_object):
 /* typedefs */
 /* end typedefs declaration */
 
+/* templates */
+/* end templates declaration */
+
 /* public enums */
 enum ChFi2d_ConstructionError {
 	ChFi2d_NotPlanar = 0,
@@ -91,13 +94,13 @@ class ChFi2d {
 class ChFi2d_AnaFilletAlgo {
 	public:
 		%feature("compactdefaultargs") ChFi2d_AnaFilletAlgo;
-		%feature("autodoc", "	* An empty constructor. Use the method Init() to initialize the class.
+		%feature("autodoc", "	* An empty constructor. Use the method Init---- to initialize the class.
 
 	:rtype: None
 ") ChFi2d_AnaFilletAlgo;
 		 ChFi2d_AnaFilletAlgo ();
 		%feature("compactdefaultargs") ChFi2d_AnaFilletAlgo;
-		%feature("autodoc", "	* A constructor. It expects a wire consisting of two edges of type (any combination of): - segment - arc of circle.
+		%feature("autodoc", "	* A constructor. It expects a wire consisting of two edges of type --any combination of--: - segment - arc of circle.
 
 	:param theWire:
 	:type theWire: TopoDS_Wire &
@@ -149,7 +152,7 @@ class ChFi2d_AnaFilletAlgo {
 ") Perform;
 		Standard_Boolean Perform (const Standard_Real radius);
 		%feature("compactdefaultargs") Result;
-		%feature("autodoc", "	* Retrieves a result (fillet and shrinked neighbours).
+		%feature("autodoc", "	* Retrieves a result --fillet and shrinked neighbours--.
 
 	:param e1:
 	:type e1: TopoDS_Edge &
@@ -430,7 +433,7 @@ class ChFi2d_ChamferAPI {
 class ChFi2d_FilletAPI {
 	public:
 		%feature("compactdefaultargs") ChFi2d_FilletAPI;
-		%feature("autodoc", "	* An empty constructor of the fillet algorithm. Call a method Init() to initialize the algorithm before calling of a Perform() method.
+		%feature("autodoc", "	* An empty constructor of the fillet algorithm. Call a method Init---- to initialize the algorithm before calling of a Perform---- method.
 
 	:rtype: None
 ") ChFi2d_FilletAPI;
@@ -488,7 +491,7 @@ class ChFi2d_FilletAPI {
 ") Perform;
 		Standard_Boolean Perform (const Standard_Real theRadius);
 		%feature("compactdefaultargs") NbResults;
-		%feature("autodoc", "	* Returns number of possible solutions. <thePoint> chooses a particular fillet in case of several fillets may be constructed (for example, a circle intersecting a segment in 2 points). Put the intersecting (or common) point of the edges.
+		%feature("autodoc", "	* Returns number of possible solutions. <thePoint> chooses a particular fillet in case of several fillets may be constructed --for example, a circle intersecting a segment in 2 points--. Put the intersecting --or common-- point of the edges.
 
 	:param thePoint:
 	:type thePoint: gp_Pnt
@@ -496,7 +499,7 @@ class ChFi2d_FilletAPI {
 ") NbResults;
 		Standard_Integer NbResults (const gp_Pnt & thePoint);
 		%feature("compactdefaultargs") Result;
-		%feature("autodoc", "	* Returns result (fillet edge, modified edge1, modified edge2), nearest to the given point <thePoint> if iSolution == -1 <thePoint> chooses a particular fillet in case of several fillets may be constructed (for example, a circle intersecting a segment in 2 points). Put the intersecting (or common) point of the edges.
+		%feature("autodoc", "	* Returns result --fillet edge, modified edge1, modified edge2--, nearest to the given point <thePoint> if iSolution == -1 <thePoint> chooses a particular fillet in case of several fillets may be constructed --for example, a circle intersecting a segment in 2 points--. Put the intersecting --or common-- point of the edges.
 
 	:param thePoint:
 	:type thePoint: gp_Pnt
@@ -521,7 +524,7 @@ class ChFi2d_FilletAPI {
 class ChFi2d_FilletAlgo {
 	public:
 		%feature("compactdefaultargs") ChFi2d_FilletAlgo;
-		%feature("autodoc", "	* An empty constructor of the fillet algorithm. Call a method Init() to initialize the algorithm before calling of a Perform() method.
+		%feature("autodoc", "	* An empty constructor of the fillet algorithm. Call a method Init---- to initialize the algorithm before calling of a Perform---- method.
 
 	:rtype: None
 ") ChFi2d_FilletAlgo;
@@ -579,7 +582,7 @@ class ChFi2d_FilletAlgo {
 ") Perform;
 		Standard_Boolean Perform (const Standard_Real theRadius);
 		%feature("compactdefaultargs") NbResults;
-		%feature("autodoc", "	* Returns number of possible solutions. <thePoint> chooses a particular fillet in case of several fillets may be constructed (for example, a circle intersecting a segment in 2 points). Put the intersecting (or common) point of the edges.
+		%feature("autodoc", "	* Returns number of possible solutions. <thePoint> chooses a particular fillet in case of several fillets may be constructed --for example, a circle intersecting a segment in 2 points--. Put the intersecting --or common-- point of the edges.
 
 	:param thePoint:
 	:type thePoint: gp_Pnt
@@ -587,7 +590,7 @@ class ChFi2d_FilletAlgo {
 ") NbResults;
 		Standard_Integer NbResults (const gp_Pnt & thePoint);
 		%feature("compactdefaultargs") Result;
-		%feature("autodoc", "	* Returns result (fillet edge, modified edge1, modified edge2), neares to the given point <thePoint> if iSolution == -1. <thePoint> chooses a particular fillet in case of several fillets may be constructed (for example, a circle intersecting a segment in 2 points). Put the intersecting (or common) point of the edges.
+		%feature("autodoc", "	* Returns result --fillet edge, modified edge1, modified edge2--, neares to the given point <thePoint> if iSolution == -1. <thePoint> chooses a particular fillet in case of several fillets may be constructed --for example, a circle intersecting a segment in 2 points--. Put the intersecting --or common-- point of the edges.
 
 	:param thePoint:
 	:type thePoint: gp_Pnt

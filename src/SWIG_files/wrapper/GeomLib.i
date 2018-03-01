@@ -1,5 +1,5 @@
 /*
-Copyright 2008-2017 Thomas Paviot (tpaviot@gmail.com)
+Copyright 2008-2018 Thomas Paviot (tpaviot@gmail.com)
 
 
 This file is part of pythonOCC.
@@ -57,6 +57,10 @@ def register_handle(handle, base_object):
 typedef GeomLib_DenominatorMultiplier * GeomLib_DenominatorMultiplierPtr;
 /* end typedefs declaration */
 
+/* templates */
+%template(GeomLib_Array1OfMat) NCollection_Array1 <gp_Mat>;
+/* end templates declaration */
+
 /* public enums */
 enum GeomLib_InterpolationErrors {
 	GeomLib_NoError = 0,
@@ -81,7 +85,7 @@ class GeomLib {
 ") To3d;
 		static Handle_Geom_Curve To3d (const gp_Ax2 & Position,const Handle_Geom2d_Curve & Curve2d);
 		%feature("compactdefaultargs") GTransform;
-		%feature("autodoc", "	* Computes the curve 3d from package Geom corresponding to the curve 3d from package Geom, transformed with the transformation <GTrsf> WARNING : this method may return a null Handle if it's impossible to compute the transformation of a curve. It's not implemented when : 1) the curve is an infinite parabola or hyperbola 2) the curve is an offsetcurve
+		%feature("autodoc", "	* Computes the curve 3d from package Geom corresponding to the curve 3d from package Geom, transformed with the transformation <GTrsf> WARNING : this method may return a null Handle if it's impossible to compute the transformation of a curve. It's not implemented when : 1-- the curve is an infinite parabola or hyperbola 2-- the curve is an offsetcurve
 
 	:param Curve:
 	:type Curve: Handle_Geom2d_Curve &
@@ -179,7 +183,7 @@ class GeomLib {
 ") ExtendSurfByLength;
 		static void ExtendSurfByLength (Handle_Geom_BoundedSurface & Surf,const Standard_Real Length,const Standard_Integer Cont,const Standard_Boolean InU,const Standard_Boolean After);
 		%feature("compactdefaultargs") AxeOfInertia;
-		%feature("autodoc", "	* Compute axes of inertia, of some points -- -- -- <Axe>.Location() is the BaryCentre -- -- -- -- -- <Axe>.XDirection is the axe of upper inertia -- -- -- -- <Axe>.Direction is the Normal to the average plane -- -- -- IsSingular is True if points are on line -- Tol is used to determine singular cases.
+		%feature("autodoc", "	* Compute axes of inertia, of some points -- -- -- <Axe>.Location---- is the BaryCentre -- -- -- -- -- <Axe>.XDirection is the axe of upper inertia -- -- -- -- <Axe>.Direction is the Normal to the average plane -- -- -- IsSingular is True if points are on line -- Tol is used to determine singular cases.
 
 	:param Points:
 	:type Points: TColgp_Array1OfPnt
@@ -304,97 +308,80 @@ class GeomLib {
 	:rtype: int
 ") NormEstim;
 		static Standard_Integer NormEstim (const Handle_Geom_Surface & S,const gp_Pnt2d & UV,const Standard_Real Tol,gp_Dir & N);
+		%feature("compactdefaultargs") IsClosed;
+		%feature("autodoc", "	* This method defines if opposite boundaries of surface coincide with given tolerance
+
+	:param S:
+	:type S: Handle_Geom_Surface &
+	:param Tol:
+	:type Tol: float
+	:param isUClosed:
+	:type isUClosed: bool
+	:param isVClosed:
+	:type isVClosed: bool
+	:rtype: void
+") IsClosed;
+		static void IsClosed (const Handle_Geom_Surface & S,const Standard_Real Tol,Standard_Boolean &OutValue,Standard_Boolean &OutValue);
+		%feature("compactdefaultargs") IsBSplUClosed;
+		%feature("autodoc", "	* Returns true if the poles of U1 isoline and the poles of U2 isoline of surface are identical according to tolerance criterion. For rational surfaces Weights--i--*Poles--i-- are checked.
+
+	:param S:
+	:type S: Handle_Geom_BSplineSurface &
+	:param U1:
+	:type U1: float
+	:param U2:
+	:type U2: float
+	:param Tol:
+	:type Tol: float
+	:rtype: bool
+") IsBSplUClosed;
+		static Standard_Boolean IsBSplUClosed (const Handle_Geom_BSplineSurface & S,const Standard_Real U1,const Standard_Real U2,const Standard_Real Tol);
+		%feature("compactdefaultargs") IsBSplVClosed;
+		%feature("autodoc", "	* Returns true if the poles of V1 isoline and the poles of V2 isoline of surface are identical according to tolerance criterion. For rational surfaces Weights--i--*Poles--i-- are checked.
+
+	:param S:
+	:type S: Handle_Geom_BSplineSurface &
+	:param V1:
+	:type V1: float
+	:param V2:
+	:type V2: float
+	:param Tol:
+	:type Tol: float
+	:rtype: bool
+") IsBSplVClosed;
+		static Standard_Boolean IsBSplVClosed (const Handle_Geom_BSplineSurface & S,const Standard_Real V1,const Standard_Real V2,const Standard_Real Tol);
+		%feature("compactdefaultargs") IsBzUClosed;
+		%feature("autodoc", "	* Returns true if the poles of U1 isoline and the poles of U2 isoline of surface are identical according to tolerance criterion.
+
+	:param S:
+	:type S: Handle_Geom_BezierSurface &
+	:param U1:
+	:type U1: float
+	:param U2:
+	:type U2: float
+	:param Tol:
+	:type Tol: float
+	:rtype: bool
+") IsBzUClosed;
+		static Standard_Boolean IsBzUClosed (const Handle_Geom_BezierSurface & S,const Standard_Real U1,const Standard_Real U2,const Standard_Real Tol);
+		%feature("compactdefaultargs") IsBzVClosed;
+		%feature("autodoc", "	* Returns true if the poles of V1 isoline and the poles of V2 isoline of surface are identical according to tolerance criterion.
+
+	:param S:
+	:type S: Handle_Geom_BezierSurface &
+	:param V1:
+	:type V1: float
+	:param V2:
+	:type V2: float
+	:param Tol:
+	:type Tol: float
+	:rtype: bool
+") IsBzVClosed;
+		static Standard_Boolean IsBzVClosed (const Handle_Geom_BezierSurface & S,const Standard_Real V1,const Standard_Real V2,const Standard_Real Tol);
 };
 
 
 %extend GeomLib {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor GeomLib_Array1OfMat;
-class GeomLib_Array1OfMat {
-	public:
-		%feature("compactdefaultargs") GeomLib_Array1OfMat;
-		%feature("autodoc", "	:param Low:
-	:type Low: int
-	:param Up:
-	:type Up: int
-	:rtype: None
-") GeomLib_Array1OfMat;
-		 GeomLib_Array1OfMat (const Standard_Integer Low,const Standard_Integer Up);
-		%feature("compactdefaultargs") GeomLib_Array1OfMat;
-		%feature("autodoc", "	:param Item:
-	:type Item: gp_Mat
-	:param Low:
-	:type Low: int
-	:param Up:
-	:type Up: int
-	:rtype: None
-") GeomLib_Array1OfMat;
-		 GeomLib_Array1OfMat (const gp_Mat & Item,const Standard_Integer Low,const Standard_Integer Up);
-		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	:param V:
-	:type V: gp_Mat
-	:rtype: None
-") Init;
-		void Init (const gp_Mat & V);
-		%feature("compactdefaultargs") Destroy;
-		%feature("autodoc", "	:rtype: None
-") Destroy;
-		void Destroy ();
-		%feature("compactdefaultargs") IsAllocated;
-		%feature("autodoc", "	:rtype: bool
-") IsAllocated;
-		Standard_Boolean IsAllocated ();
-		%feature("compactdefaultargs") Assign;
-		%feature("autodoc", "	:param Other:
-	:type Other: GeomLib_Array1OfMat &
-	:rtype: GeomLib_Array1OfMat
-") Assign;
-		const GeomLib_Array1OfMat & Assign (const GeomLib_Array1OfMat & Other);
-		%feature("compactdefaultargs") operator =;
-		%feature("autodoc", "	:param Other:
-	:type Other: GeomLib_Array1OfMat &
-	:rtype: GeomLib_Array1OfMat
-") operator =;
-		const GeomLib_Array1OfMat & operator = (const GeomLib_Array1OfMat & Other);
-		%feature("compactdefaultargs") Length;
-		%feature("autodoc", "	:rtype: int
-") Length;
-		Standard_Integer Length ();
-		%feature("compactdefaultargs") Lower;
-		%feature("autodoc", "	:rtype: int
-") Lower;
-		Standard_Integer Lower ();
-		%feature("compactdefaultargs") Upper;
-		%feature("autodoc", "	:rtype: int
-") Upper;
-		Standard_Integer Upper ();
-		%feature("compactdefaultargs") SetValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param Value:
-	:type Value: gp_Mat
-	:rtype: None
-") SetValue;
-		void SetValue (const Standard_Integer Index,const gp_Mat & Value);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: gp_Mat
-") Value;
-		const gp_Mat  Value (const Standard_Integer Index);
-		%feature("compactdefaultargs") ChangeValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: gp_Mat
-") ChangeValue;
-		gp_Mat  ChangeValue (const Standard_Integer Index);
-};
-
-
-%extend GeomLib_Array1OfMat {
 	%pythoncode {
 	__repr__ = _dumps_object
 	}
@@ -501,11 +488,124 @@ class GeomLib_CheckBSplineCurve {
 	__repr__ = _dumps_object
 	}
 };
+%nodefaultctor GeomLib_CheckCurveOnSurface;
+class GeomLib_CheckCurveOnSurface {
+	public:
+		%feature("compactdefaultargs") GeomLib_CheckCurveOnSurface;
+		%feature("autodoc", "	* Default contructor
+
+	:param :
+	:type : void
+	:rtype: None
+") GeomLib_CheckCurveOnSurface;
+		 GeomLib_CheckCurveOnSurface (void );
+		%feature("compactdefaultargs") GeomLib_CheckCurveOnSurface;
+		%feature("autodoc", "	* Contructor
+
+	:param theCurve:
+	:type theCurve: Handle_Geom_Curve &
+	:param theSurface:
+	:type theSurface: Handle_Geom_Surface &
+	:param theFirst:
+	:type theFirst: float
+	:param theLast:
+	:type theLast: float
+	:param theTolRange: default value is Precision::PConfusion()
+	:type theTolRange: float
+	:rtype: None
+") GeomLib_CheckCurveOnSurface;
+		 GeomLib_CheckCurveOnSurface (const Handle_Geom_Curve & theCurve,const Handle_Geom_Surface & theSurface,const Standard_Real theFirst,const Standard_Real theLast,const Standard_Real theTolRange = Precision::PConfusion());
+		%feature("compactdefaultargs") Init;
+		%feature("autodoc", "	* Sets the data for the algorithm
+
+	:param theCurve:
+	:type theCurve: Handle_Geom_Curve &
+	:param theSurface:
+	:type theSurface: Handle_Geom_Surface &
+	:param theFirst:
+	:type theFirst: float
+	:param theLast:
+	:type theLast: float
+	:param theTolRange: default value is Precision::PConfusion()
+	:type theTolRange: float
+	:rtype: None
+") Init;
+		void Init (const Handle_Geom_Curve & theCurve,const Handle_Geom_Surface & theSurface,const Standard_Real theFirst,const Standard_Real theLast,const Standard_Real theTolRange = Precision::PConfusion());
+		%feature("compactdefaultargs") Init;
+		%feature("autodoc", "	* Initializes all members by dafault values
+
+	:rtype: None
+") Init;
+		void Init ();
+		%feature("compactdefaultargs") Perform;
+		%feature("autodoc", "	* Computes the max distance for the 3d curve <myCurve> and 2d curve <thePCurve> If isTheMultyTheadDisabled == True then computation will be made without any parallelization.
+
+	:param thePCurve:
+	:type thePCurve: Handle_Geom2d_Curve &
+	:param isTheMultyTheradDisabled: default value is Standard_False
+	:type isTheMultyTheradDisabled: bool
+	:rtype: None
+") Perform;
+		void Perform (const Handle_Geom2d_Curve & thePCurve,const Standard_Boolean isTheMultyTheradDisabled = Standard_False);
+		%feature("compactdefaultargs") Curve;
+		%feature("autodoc", "	* Returns my3DCurve
+
+	:rtype: Handle_Geom_Curve
+") Curve;
+		Handle_Geom_Curve Curve ();
+		%feature("compactdefaultargs") Surface;
+		%feature("autodoc", "	* Returns mySurface
+
+	:rtype: Handle_Geom_Surface
+") Surface;
+		Handle_Geom_Surface Surface ();
+		%feature("compactdefaultargs") Range;
+		%feature("autodoc", "	* Returns first and last parameter of the curves --2D- and 3D-curves are considered to have same range--
+
+	:param theFirst:
+	:type theFirst: float &
+	:param theLast:
+	:type theLast: float &
+	:rtype: None
+") Range;
+		void Range (Standard_Real &OutValue,Standard_Real &OutValue);
+		%feature("compactdefaultargs") IsDone;
+		%feature("autodoc", "	* Returns true if the max distance has been found
+
+	:rtype: bool
+") IsDone;
+		Standard_Boolean IsDone ();
+		%feature("compactdefaultargs") ErrorStatus;
+		%feature("autodoc", "	* Returns error status The possible values are: 0 - OK; 1 - null curve or surface or 2d curve; 2 - invalid parametric range; 3 - error in calculations.
+
+	:rtype: int
+") ErrorStatus;
+		Standard_Integer ErrorStatus ();
+		%feature("compactdefaultargs") MaxDistance;
+		%feature("autodoc", "	* Returns max distance
+
+	:rtype: float
+") MaxDistance;
+		Standard_Real MaxDistance ();
+		%feature("compactdefaultargs") MaxParameter;
+		%feature("autodoc", "	* Returns parameter in which the distance is maximal
+
+	:rtype: float
+") MaxParameter;
+		Standard_Real MaxParameter ();
+};
+
+
+%extend GeomLib_CheckCurveOnSurface {
+	%pythoncode {
+	__repr__ = _dumps_object
+	}
+};
 %nodefaultctor GeomLib_DenominatorMultiplier;
 class GeomLib_DenominatorMultiplier {
 	public:
 		%feature("compactdefaultargs") GeomLib_DenominatorMultiplier;
-		%feature("autodoc", "	* if the surface is rational this will define the evaluator of a real function of 2 variables a(u,v) such that if we define a new surface by : a(u,v) * N(u,v) NewF(u,v) = ---------------- a(u,v) * D(u,v)
+		%feature("autodoc", "	* if the surface is rational this will define the evaluator of a real function of 2 variables a--u,v-- such that if we define a new surface by : a--u,v-- * N--u,v-- NewF--u,v-- = ---------------- a--u,v-- * D--u,v--
 
 	:param Surface:
 	:type Surface: Handle_Geom_BSplineSurface &
@@ -515,7 +615,7 @@ class GeomLib_DenominatorMultiplier {
 ") GeomLib_DenominatorMultiplier;
 		 GeomLib_DenominatorMultiplier (const Handle_Geom_BSplineSurface & Surface,const TColStd_Array1OfReal & KnotVector);
 		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	* Returns the value of a(UParameter,VParameter)= //! H0(UParameter)/Denominator(Umin,Vparameter) //! D Denominator(Umin,Vparameter) - ------------------------------[H1(u)]/(Denominator(Umin,Vparameter)^2) D U //! + H3(UParameter)/Denominator(Umax,Vparameter) //! D Denominator(Umax,Vparameter) - ------------------------------[H2(u)]/(Denominator(Umax,Vparameter)^2) D U
+		%feature("autodoc", "	* Returns the value of a--UParameter,VParameter--= //! H0--UParameter--/Denominator--Umin,Vparameter-- //! D Denominator--Umin,Vparameter-- - ------------------------------[H1--u--]/--Denominator--Umin,Vparameter--^2-- D U //! + H3--UParameter--/Denominator--Umax,Vparameter-- //! D Denominator--Umax,Vparameter-- - ------------------------------[H2--u--]/--Denominator--Umax,Vparameter--^2-- D U
 
 	:param UParameter:
 	:type UParameter: float
@@ -618,7 +718,7 @@ class GeomLib_LogSample : public math_FunctionSample {
 ") GeomLib_LogSample;
 		 GeomLib_LogSample (const Standard_Real A,const Standard_Real B,const Standard_Integer N);
 		%feature("compactdefaultargs") GetParameter;
-		%feature("autodoc", "	* Returns the value of parameter of the point of range Index : A + ((Index-1)/(NbPoints-1))*B. An exception is raised if Index<=0 or Index>NbPoints.
+		%feature("autodoc", "	* Returns the value of parameter of the point of range Index : A + ----Index-1--/--NbPoints-1----*B. An exception is raised if Index<=0 or Index>NbPoints.
 
 	:param Index:
 	:type Index: int
@@ -770,49 +870,49 @@ class GeomLib_PolyFunc : public math_FunctionWithDerivative {
 class GeomLib_Tool {
 	public:
 		%feature("compactdefaultargs") Parameter;
-		%feature("autodoc", "	* Extracts the parameter of a 3D point lying on a 3D curve or at a distance less than the tolerance value.
+		%feature("autodoc", "	* Extracts the parameter of a 3D point lying on a 3D curve or at a distance less than the MaxDist value.
 
 	:param Curve:
 	:type Curve: Handle_Geom_Curve &
 	:param Point:
 	:type Point: gp_Pnt
-	:param Tolerance:
-	:type Tolerance: float
+	:param MaxDist:
+	:type MaxDist: float
 	:param U:
 	:type U: float &
 	:rtype: bool
 ") Parameter;
-		static Standard_Boolean Parameter (const Handle_Geom_Curve & Curve,const gp_Pnt & Point,const Standard_Real Tolerance,Standard_Real &OutValue);
+		static Standard_Boolean Parameter (const Handle_Geom_Curve & Curve,const gp_Pnt & Point,const Standard_Real MaxDist,Standard_Real &OutValue);
 		%feature("compactdefaultargs") Parameters;
-		%feature("autodoc", "	* Extracts the parameter of a 3D point lying on a surface or at a distance less than the tolerance value.
+		%feature("autodoc", "	* Extracts the parameter of a 3D point lying on a surface or at a distance less than the MaxDist value.
 
 	:param Surface:
 	:type Surface: Handle_Geom_Surface &
 	:param Point:
 	:type Point: gp_Pnt
-	:param Tolerance:
-	:type Tolerance: float
+	:param MaxDist:
+	:type MaxDist: float
 	:param U:
 	:type U: float &
 	:param V:
 	:type V: float &
 	:rtype: bool
 ") Parameters;
-		static Standard_Boolean Parameters (const Handle_Geom_Surface & Surface,const gp_Pnt & Point,const Standard_Real Tolerance,Standard_Real &OutValue,Standard_Real &OutValue);
+		static Standard_Boolean Parameters (const Handle_Geom_Surface & Surface,const gp_Pnt & Point,const Standard_Real MaxDist,Standard_Real &OutValue,Standard_Real &OutValue);
 		%feature("compactdefaultargs") Parameter;
-		%feature("autodoc", "	* Extracts the parameter of a 2D point lying on a 2D curve or at a distance less than the tolerance value.
+		%feature("autodoc", "	* Extracts the parameter of a 2D point lying on a 2D curve or at a distance less than the MaxDist value.
 
 	:param Curve:
 	:type Curve: Handle_Geom2d_Curve &
 	:param Point:
 	:type Point: gp_Pnt2d
-	:param Tolerance:
-	:type Tolerance: float
+	:param MaxDist:
+	:type MaxDist: float
 	:param U:
 	:type U: float &
 	:rtype: bool
 ") Parameter;
-		static Standard_Boolean Parameter (const Handle_Geom2d_Curve & Curve,const gp_Pnt2d & Point,const Standard_Real Tolerance,Standard_Real &OutValue);
+		static Standard_Boolean Parameter (const Handle_Geom2d_Curve & Curve,const gp_Pnt2d & Point,const Standard_Real MaxDist,Standard_Real &OutValue);
 };
 
 

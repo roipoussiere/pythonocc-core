@@ -1,5 +1,5 @@
 /*
-Copyright 2008-2017 Thomas Paviot (tpaviot@gmail.com)
+Copyright 2008-2018 Thomas Paviot (tpaviot@gmail.com)
 
 
 This file is part of pythonOCC.
@@ -56,11 +56,14 @@ def register_handle(handle, base_object):
 /* typedefs */
 /* end typedefs declaration */
 
+/* templates */
+/* end templates declaration */
+
 /* public enums */
 /* end public enums declaration */
 
 %nodefaultctor IntStart_SITopolTool;
-class IntStart_SITopolTool : public MMgt_TShared {
+class IntStart_SITopolTool : public Standard_Transient {
 	public:
 		%feature("compactdefaultargs") Classify;
 		%feature("autodoc", "	:param P:
@@ -92,7 +95,7 @@ class IntStart_SITopolTool : public MMgt_TShared {
 %}
 
 %nodefaultctor Handle_IntStart_SITopolTool;
-class Handle_IntStart_SITopolTool : public Handle_MMgt_TShared {
+class Handle_IntStart_SITopolTool : public Handle_Standard_Transient {
 
     public:
         // constructors
@@ -104,19 +107,20 @@ class Handle_IntStart_SITopolTool : public Handle_MMgt_TShared {
         static const Handle_IntStart_SITopolTool DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_IntStart_SITopolTool {
     IntStart_SITopolTool* _get_reference() {
-    return (IntStart_SITopolTool*)$self->Access();
+    return (IntStart_SITopolTool*)$self->get();
     }
 };
 
 %extend Handle_IntStart_SITopolTool {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend IntStart_SITopolTool {

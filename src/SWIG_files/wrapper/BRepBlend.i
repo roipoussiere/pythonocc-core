@@ -1,5 +1,5 @@
 /*
-Copyright 2008-2017 Thomas Paviot (tpaviot@gmail.com)
+Copyright 2008-2018 Thomas Paviot (tpaviot@gmail.com)
 
 
 This file is part of pythonOCC.
@@ -67,6 +67,11 @@ typedef BlendFunc_CSCircular BRepBlend_CSCircular;
 typedef BlendFunc_ConstRadInv BRepBlend_ConstRadInv;
 typedef BlendFunc_EvolRadInv BRepBlend_EvolRadInv;
 /* end typedefs declaration */
+
+/* templates */
+%template(BRepBlend_SequenceOfLine) NCollection_Sequence <Handle_BRepBlend_Line>;
+%template(BRepBlend_SequenceOfPointOnRst) NCollection_Sequence <BRepBlend_PointOnRst>;
+/* end templates declaration */
 
 /* public enums */
 /* end public enums declaration */
@@ -187,7 +192,7 @@ class BRepBlend_AppFuncRoot : public Approx_SweepFunction {
 ") IsRational;
 		virtual Standard_Boolean IsRational ();
 		%feature("compactdefaultargs") NbIntervals;
-		%feature("autodoc", "	* Returns the number of intervals for continuity <S>. May be one if Continuity(me) >= <S>
+		%feature("autodoc", "	* Returns the number of intervals for continuity <S>. May be one if Continuity--me-- >= <S>
 
 	:param S:
 	:type S: GeomAbs_Shape
@@ -195,7 +200,7 @@ class BRepBlend_AppFuncRoot : public Approx_SweepFunction {
 ") NbIntervals;
 		virtual Standard_Integer NbIntervals (const GeomAbs_Shape S);
 		%feature("compactdefaultargs") Intervals;
-		%feature("autodoc", "	* Stores in <T> the parameters bounding the intervals of continuity <S>. //! The array must provide enough room to accomodate for the parameters. i.e. T.Length() > NbIntervals()
+		%feature("autodoc", "	* Stores in <T> the parameters bounding the intervals of continuity <S>. //! The array must provide enough room to accomodate for the parameters. i.e. T.Length---- > NbIntervals----
 
 	:param T:
 	:type T: TColStd_Array1OfReal &
@@ -229,7 +234,7 @@ class BRepBlend_AppFuncRoot : public Approx_SweepFunction {
 ") Resolution;
 		virtual void Resolution (const Standard_Integer Index,const Standard_Real Tol,Standard_Real &OutValue,Standard_Real &OutValue);
 		%feature("compactdefaultargs") GetTolerance;
-		%feature("autodoc", "	* Returns the tolerance to reach in approximation to respecte BoundTol error at the Boundary AngleTol tangent error at the Boundary (in radian) SurfTol error inside the surface.
+		%feature("autodoc", "	* Returns the tolerance to reach in approximation to respecte BoundTol error at the Boundary AngleTol tangent error at the Boundary --in radian-- SurfTol error inside the surface.
 
 	:param BoundTol:
 	:type BoundTol: float
@@ -243,7 +248,7 @@ class BRepBlend_AppFuncRoot : public Approx_SweepFunction {
 ") GetTolerance;
 		virtual void GetTolerance (const Standard_Real BoundTol,const Standard_Real SurfTol,const Standard_Real AngleTol,TColStd_Array1OfReal & Tol3d);
 		%feature("compactdefaultargs") SetTolerance;
-		%feature("autodoc", "	* Is usfull, if (me) have to be run numerical algorithme to perform D0, D1 or D2
+		%feature("autodoc", "	* Is usfull, if --me-- have to be run numerical algorithme to perform D0, D1 or D2
 
 	:param Tol3d:
 	:type Tol3d: float
@@ -326,19 +331,20 @@ class Handle_BRepBlend_AppFuncRoot : public Handle_Approx_SweepFunction {
         static const Handle_BRepBlend_AppFuncRoot DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_BRepBlend_AppFuncRoot {
     BRepBlend_AppFuncRoot* _get_reference() {
-    return (BRepBlend_AppFuncRoot*)$self->Access();
+    return (BRepBlend_AppFuncRoot*)$self->get();
     }
 };
 
 %extend Handle_BRepBlend_AppFuncRoot {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend BRepBlend_AppFuncRoot {
@@ -386,19 +392,25 @@ class BRepBlend_AppSurf : public AppBlend_Approx {
 ") Init;
 		void Init (const Standard_Integer Degmin,const Standard_Integer Degmax,const Standard_Real Tol3d,const Standard_Real Tol2d,const Standard_Integer NbIt,const Standard_Boolean KnownParameters = Standard_False);
 		%feature("compactdefaultargs") SetParType;
-		%feature("autodoc", "	:param ParType:
+		%feature("autodoc", "	* Define the type of parametrization used in the approximation
+
+	:param ParType:
 	:type ParType: Approx_ParametrizationType
 	:rtype: None
 ") SetParType;
 		void SetParType (const Approx_ParametrizationType ParType);
 		%feature("compactdefaultargs") SetContinuity;
-		%feature("autodoc", "	:param C:
+		%feature("autodoc", "	* Define the Continuity used in the approximation
+
+	:param C:
 	:type C: GeomAbs_Shape
 	:rtype: None
 ") SetContinuity;
 		void SetContinuity (const GeomAbs_Shape C);
 		%feature("compactdefaultargs") SetCriteriumWeight;
-		%feature("autodoc", "	:param W1:
+		%feature("autodoc", "	* define the Weights associed to the criterium used in the optimization. //! if Wi <= 0
+
+	:param W1:
 	:type W1: float
 	:param W2:
 	:type W2: float
@@ -408,15 +420,21 @@ class BRepBlend_AppSurf : public AppBlend_Approx {
 ") SetCriteriumWeight;
 		void SetCriteriumWeight (const Standard_Real W1,const Standard_Real W2,const Standard_Real W3);
 		%feature("compactdefaultargs") ParType;
-		%feature("autodoc", "	:rtype: Approx_ParametrizationType
+		%feature("autodoc", "	* returns the type of parametrization used in the approximation
+
+	:rtype: Approx_ParametrizationType
 ") ParType;
 		Approx_ParametrizationType ParType ();
 		%feature("compactdefaultargs") Continuity;
-		%feature("autodoc", "	:rtype: GeomAbs_Shape
+		%feature("autodoc", "	* returns the Continuity used in the approximation
+
+	:rtype: GeomAbs_Shape
 ") Continuity;
 		GeomAbs_Shape Continuity ();
 		%feature("compactdefaultargs") CriteriumWeight;
-		%feature("autodoc", "	:param W1:
+		%feature("autodoc", "	* returns the Weights --as percent-- associed to the criterium used in the optimization.
+
+	:param W1:
 	:type W1: float &
 	:param W2:
 	:type W2: float &
@@ -591,7 +609,7 @@ class BRepBlend_AppSurf : public AppBlend_Approx {
 class BRepBlend_AppSurface : public AppBlend_Approx {
 	public:
 		%feature("compactdefaultargs") BRepBlend_AppSurface;
-		%feature("autodoc", "	* Approximation of the new Surface (and eventually the 2d Curves on the support surfaces). Normaly the 2d curve are approximated with an tolerance given by the resolution on support surfaces, but if this tolerance is too large Tol2d is used.
+		%feature("autodoc", "	* Approximation of the new Surface --and eventually the 2d Curves on the support surfaces--. Normaly the 2d curve are approximated with an tolerance given by the resolution on support surfaces, but if this tolerance is too large Tol2d is used.
 
 	:param Funct:
 	:type Funct: Handle_Approx_SweepFunction &
@@ -613,7 +631,7 @@ class BRepBlend_AppSurface : public AppBlend_Approx {
 	:type Segmax: int
 	:rtype: None
 ") BRepBlend_AppSurface;
-		 BRepBlend_AppSurface (Handle_Approx_SweepFunction & Funct,const Standard_Real First,const Standard_Real Last,const Standard_Real Tol3d,const Standard_Real Tol2d,const Standard_Real TolAngular,const GeomAbs_Shape Continuity = GeomAbs_C0,const Standard_Integer Degmax = 11,const Standard_Integer Segmax = 50);
+		 BRepBlend_AppSurface (const Handle_Approx_SweepFunction & Funct,const Standard_Real First,const Standard_Real Last,const Standard_Real Tol3d,const Standard_Real Tol2d,const Standard_Real TolAngular,const GeomAbs_Shape Continuity = GeomAbs_C0,const Standard_Integer Degmax = 11,const Standard_Integer Segmax = 50);
 		%feature("compactdefaultargs") IsDone;
 		%feature("autodoc", "	:rtype: bool
 ") IsDone;
@@ -815,7 +833,7 @@ class BRepBlend_BlendTool {
 ") Parameter;
 		static Standard_Real Parameter (const Handle_Adaptor3d_HVertex & V,const Handle_Adaptor2d_HCurve2d & A);
 		%feature("compactdefaultargs") Tolerance;
-		%feature("autodoc", "	* Returns the parametric tolerance on the arc A used to consider that the vertex and another point meet, i-e if Abs(Parameter(Vertex)-Parameter(OtherPnt))<= Tolerance, the points are 'merged'.
+		%feature("autodoc", "	* Returns the parametric tolerance on the arc A used to consider that the vertex and another point meet, i-e if Abs--Parameter--Vertex---Parameter--OtherPnt----<= Tolerance, the points are 'merged'.
 
 	:param V:
 	:type V: Handle_Adaptor3d_HVertex &
@@ -1236,7 +1254,7 @@ class BRepBlend_Extremity {
 ") Vertex;
 		Handle_Adaptor3d_HVertex Vertex ();
 		%feature("compactdefaultargs") NbPointOnRst;
-		%feature("autodoc", "	* Returns the number of arc containing the extremity. If the method returns 0, the point is inside the surface. Otherwise, the extremity lies on at least 1 arc, and all the information (arc, parameter, transitions) are given by the point on restriction (PointOnRst) returned by the next method.
+		%feature("autodoc", "	* Returns the number of arc containing the extremity. If the method returns 0, the point is inside the surface. Otherwise, the extremity lies on at least 1 arc, and all the information --arc, parameter, transitions-- are given by the point on restriction --PointOnRst-- returned by the next method.
 
 	:rtype: int
 ") NbPointOnRst;
@@ -1264,7 +1282,7 @@ class BRepBlend_Extremity {
 	}
 };
 %nodefaultctor BRepBlend_Line;
-class BRepBlend_Line : public MMgt_TShared {
+class BRepBlend_Line : public Standard_Transient {
 	public:
 		%feature("compactdefaultargs") BRepBlend_Line;
 		%feature("autodoc", "	:rtype: None
@@ -1365,7 +1383,7 @@ class BRepBlend_Line : public MMgt_TShared {
 ") Point;
 		const Blend_Point & Point (const Standard_Integer Index);
 		%feature("compactdefaultargs") TransitionOnS1;
-		%feature("autodoc", "	* Returns the type of the transition of the line defined on the first surface. The transition is 'constant' along the line. The transition is IN if the line is oriented in such a way that the system of vectors (N,DRac,T) is right-handed, where N is the normal to the first surface at a point P, DRac is a vector tangent to the blending patch, oriented towards the valid part of this patch, T is the tangent to the line on S1 at P. The transitioon is OUT when the system of vectors is left-handed.
+		%feature("autodoc", "	* Returns the type of the transition of the line defined on the first surface. The transition is 'constant' along the line. The transition is IN if the line is oriented in such a way that the system of vectors --N,DRac,T-- is right-handed, where N is the normal to the first surface at a point P, DRac is a vector tangent to the blending patch, oriented towards the valid part of this patch, T is the tangent to the line on S1 at P. The transitioon is OUT when the system of vectors is left-handed.
 
 	:rtype: IntSurf_TypeTrans
 ") TransitionOnS1;
@@ -1428,7 +1446,7 @@ class BRepBlend_Line : public MMgt_TShared {
 %}
 
 %nodefaultctor Handle_BRepBlend_Line;
-class Handle_BRepBlend_Line : public Handle_MMgt_TShared {
+class Handle_BRepBlend_Line : public Handle_Standard_Transient {
 
     public:
         // constructors
@@ -1440,19 +1458,20 @@ class Handle_BRepBlend_Line : public Handle_MMgt_TShared {
         static const Handle_BRepBlend_Line DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_BRepBlend_Line {
     BRepBlend_Line* _get_reference() {
-    return (BRepBlend_Line*)$self->Access();
+    return (BRepBlend_Line*)$self->get();
     }
 };
 
 %extend Handle_BRepBlend_Line {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend BRepBlend_Line {
@@ -1510,13 +1529,13 @@ class BRepBlend_PointOnRst {
 ") TransitionOnLine;
 		const IntSurf_Transition & TransitionOnLine ();
 		%feature("compactdefaultargs") TransitionOnArc;
-		%feature("autodoc", "	* Returns the transition of the point on the arc returned by Arc().
+		%feature("autodoc", "	* Returns the transition of the point on the arc returned by Arc----.
 
 	:rtype: IntSurf_Transition
 ") TransitionOnArc;
 		const IntSurf_Transition & TransitionOnArc ();
 		%feature("compactdefaultargs") ParameterOnArc;
-		%feature("autodoc", "	* Returns the parameter of the point on the arc returned by the method Arc().
+		%feature("autodoc", "	* Returns the parameter of the point on the arc returned by the method Arc----.
 
 	:rtype: float
 ") ParameterOnArc;
@@ -1785,7 +1804,7 @@ class BRepBlend_RstRstConstRad : public Blend_RstRstFunction {
 ") GetMinimalWeight;
 		void GetMinimalWeight (TColStd_Array1OfReal & Weigths);
 		%feature("compactdefaultargs") NbIntervals;
-		%feature("autodoc", "	* Returns the number of intervals for continuity <S>. May be one if Continuity(me) >= <S>
+		%feature("autodoc", "	* Returns the number of intervals for continuity <S>. May be one if Continuity--me-- >= <S>
 
 	:param S:
 	:type S: GeomAbs_Shape
@@ -1793,7 +1812,7 @@ class BRepBlend_RstRstConstRad : public Blend_RstRstFunction {
 ") NbIntervals;
 		Standard_Integer NbIntervals (const GeomAbs_Shape S);
 		%feature("compactdefaultargs") Intervals;
-		%feature("autodoc", "	* Stores in <T> the parameters bounding the intervals of continuity <S>. The array must provide enough room to accomodate for the parameters. i.e. T.Length() > NbIntervals()
+		%feature("autodoc", "	* Stores in <T> the parameters bounding the intervals of continuity <S>. The array must provide enough room to accomodate for the parameters. i.e. T.Length---- > NbIntervals----
 
 	:param T:
 	:type T: TColStd_Array1OfReal &
@@ -2176,7 +2195,7 @@ class BRepBlend_RstRstEvolRad : public Blend_RstRstFunction {
 ") GetMinimalWeight;
 		void GetMinimalWeight (TColStd_Array1OfReal & Weigths);
 		%feature("compactdefaultargs") NbIntervals;
-		%feature("autodoc", "	* Returns the number of intervals for continuity <S>. May be one if Continuity(me) >= <S>
+		%feature("autodoc", "	* Returns the number of intervals for continuity <S>. May be one if Continuity--me-- >= <S>
 
 	:param S:
 	:type S: GeomAbs_Shape
@@ -2184,7 +2203,7 @@ class BRepBlend_RstRstEvolRad : public Blend_RstRstFunction {
 ") NbIntervals;
 		Standard_Integer NbIntervals (const GeomAbs_Shape S);
 		%feature("compactdefaultargs") Intervals;
-		%feature("autodoc", "	* Stores in <T> the parameters bounding the intervals of continuity <S>. The array must provide enough room to accomodate for the parameters. i.e. T.Length() > NbIntervals()
+		%feature("autodoc", "	* Stores in <T> the parameters bounding the intervals of continuity <S>. The array must provide enough room to accomodate for the parameters. i.e. T.Length---- > NbIntervals----
 
 	:param T:
 	:type T: TColStd_Array1OfReal &
@@ -2440,434 +2459,6 @@ class BRepBlend_RstRstLineBuilder {
 
 
 %extend BRepBlend_RstRstLineBuilder {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor BRepBlend_SequenceNodeOfSequenceOfLine;
-class BRepBlend_SequenceNodeOfSequenceOfLine : public TCollection_SeqNode {
-	public:
-		%feature("compactdefaultargs") BRepBlend_SequenceNodeOfSequenceOfLine;
-		%feature("autodoc", "	:param I:
-	:type I: Handle_BRepBlend_Line &
-	:param n:
-	:type n: TCollection_SeqNodePtr &
-	:param p:
-	:type p: TCollection_SeqNodePtr &
-	:rtype: None
-") BRepBlend_SequenceNodeOfSequenceOfLine;
-		 BRepBlend_SequenceNodeOfSequenceOfLine (const Handle_BRepBlend_Line & I,const TCollection_SeqNodePtr & n,const TCollection_SeqNodePtr & p);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:rtype: Handle_BRepBlend_Line
-") Value;
-		Handle_BRepBlend_Line Value ();
-};
-
-
-%extend BRepBlend_SequenceNodeOfSequenceOfLine {
-	%pythoncode {
-		def GetHandle(self):
-		    try:
-		        return self.thisHandle
-		    except:
-		        self.thisHandle = Handle_BRepBlend_SequenceNodeOfSequenceOfLine(self)
-		        self.thisown = False
-		        return self.thisHandle
-	}
-};
-
-%pythonappend Handle_BRepBlend_SequenceNodeOfSequenceOfLine::Handle_BRepBlend_SequenceNodeOfSequenceOfLine %{
-    # register the handle in the base object
-    if len(args) > 0:
-        register_handle(self, args[0])
-%}
-
-%nodefaultctor Handle_BRepBlend_SequenceNodeOfSequenceOfLine;
-class Handle_BRepBlend_SequenceNodeOfSequenceOfLine : public Handle_TCollection_SeqNode {
-
-    public:
-        // constructors
-        Handle_BRepBlend_SequenceNodeOfSequenceOfLine();
-        Handle_BRepBlend_SequenceNodeOfSequenceOfLine(const Handle_BRepBlend_SequenceNodeOfSequenceOfLine &aHandle);
-        Handle_BRepBlend_SequenceNodeOfSequenceOfLine(const BRepBlend_SequenceNodeOfSequenceOfLine *anItem);
-        void Nullify();
-        Standard_Boolean IsNull() const;
-        static const Handle_BRepBlend_SequenceNodeOfSequenceOfLine DownCast(const Handle_Standard_Transient &AnObject);
-
-};
-%extend Handle_BRepBlend_SequenceNodeOfSequenceOfLine {
-    BRepBlend_SequenceNodeOfSequenceOfLine* _get_reference() {
-    return (BRepBlend_SequenceNodeOfSequenceOfLine*)$self->Access();
-    }
-};
-
-%extend Handle_BRepBlend_SequenceNodeOfSequenceOfLine {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
-};
-
-%extend BRepBlend_SequenceNodeOfSequenceOfLine {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor BRepBlend_SequenceNodeOfSequenceOfPointOnRst;
-class BRepBlend_SequenceNodeOfSequenceOfPointOnRst : public TCollection_SeqNode {
-	public:
-		%feature("compactdefaultargs") BRepBlend_SequenceNodeOfSequenceOfPointOnRst;
-		%feature("autodoc", "	:param I:
-	:type I: BRepBlend_PointOnRst &
-	:param n:
-	:type n: TCollection_SeqNodePtr &
-	:param p:
-	:type p: TCollection_SeqNodePtr &
-	:rtype: None
-") BRepBlend_SequenceNodeOfSequenceOfPointOnRst;
-		 BRepBlend_SequenceNodeOfSequenceOfPointOnRst (const BRepBlend_PointOnRst & I,const TCollection_SeqNodePtr & n,const TCollection_SeqNodePtr & p);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:rtype: BRepBlend_PointOnRst
-") Value;
-		BRepBlend_PointOnRst & Value ();
-};
-
-
-%extend BRepBlend_SequenceNodeOfSequenceOfPointOnRst {
-	%pythoncode {
-		def GetHandle(self):
-		    try:
-		        return self.thisHandle
-		    except:
-		        self.thisHandle = Handle_BRepBlend_SequenceNodeOfSequenceOfPointOnRst(self)
-		        self.thisown = False
-		        return self.thisHandle
-	}
-};
-
-%pythonappend Handle_BRepBlend_SequenceNodeOfSequenceOfPointOnRst::Handle_BRepBlend_SequenceNodeOfSequenceOfPointOnRst %{
-    # register the handle in the base object
-    if len(args) > 0:
-        register_handle(self, args[0])
-%}
-
-%nodefaultctor Handle_BRepBlend_SequenceNodeOfSequenceOfPointOnRst;
-class Handle_BRepBlend_SequenceNodeOfSequenceOfPointOnRst : public Handle_TCollection_SeqNode {
-
-    public:
-        // constructors
-        Handle_BRepBlend_SequenceNodeOfSequenceOfPointOnRst();
-        Handle_BRepBlend_SequenceNodeOfSequenceOfPointOnRst(const Handle_BRepBlend_SequenceNodeOfSequenceOfPointOnRst &aHandle);
-        Handle_BRepBlend_SequenceNodeOfSequenceOfPointOnRst(const BRepBlend_SequenceNodeOfSequenceOfPointOnRst *anItem);
-        void Nullify();
-        Standard_Boolean IsNull() const;
-        static const Handle_BRepBlend_SequenceNodeOfSequenceOfPointOnRst DownCast(const Handle_Standard_Transient &AnObject);
-
-};
-%extend Handle_BRepBlend_SequenceNodeOfSequenceOfPointOnRst {
-    BRepBlend_SequenceNodeOfSequenceOfPointOnRst* _get_reference() {
-    return (BRepBlend_SequenceNodeOfSequenceOfPointOnRst*)$self->Access();
-    }
-};
-
-%extend Handle_BRepBlend_SequenceNodeOfSequenceOfPointOnRst {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
-};
-
-%extend BRepBlend_SequenceNodeOfSequenceOfPointOnRst {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor BRepBlend_SequenceOfLine;
-class BRepBlend_SequenceOfLine : public TCollection_BaseSequence {
-	public:
-		%feature("compactdefaultargs") BRepBlend_SequenceOfLine;
-		%feature("autodoc", "	:rtype: None
-") BRepBlend_SequenceOfLine;
-		 BRepBlend_SequenceOfLine ();
-		%feature("compactdefaultargs") BRepBlend_SequenceOfLine;
-		%feature("autodoc", "	:param Other:
-	:type Other: BRepBlend_SequenceOfLine &
-	:rtype: None
-") BRepBlend_SequenceOfLine;
-		 BRepBlend_SequenceOfLine (const BRepBlend_SequenceOfLine & Other);
-		%feature("compactdefaultargs") Clear;
-		%feature("autodoc", "	:rtype: None
-") Clear;
-		void Clear ();
-		%feature("compactdefaultargs") Assign;
-		%feature("autodoc", "	:param Other:
-	:type Other: BRepBlend_SequenceOfLine &
-	:rtype: BRepBlend_SequenceOfLine
-") Assign;
-		const BRepBlend_SequenceOfLine & Assign (const BRepBlend_SequenceOfLine & Other);
-		%feature("compactdefaultargs") operator =;
-		%feature("autodoc", "	:param Other:
-	:type Other: BRepBlend_SequenceOfLine &
-	:rtype: BRepBlend_SequenceOfLine
-") operator =;
-		const BRepBlend_SequenceOfLine & operator = (const BRepBlend_SequenceOfLine & Other);
-		%feature("compactdefaultargs") Append;
-		%feature("autodoc", "	:param T:
-	:type T: Handle_BRepBlend_Line &
-	:rtype: None
-") Append;
-		void Append (const Handle_BRepBlend_Line & T);
-		%feature("compactdefaultargs") Append;
-		%feature("autodoc", "	:param S:
-	:type S: BRepBlend_SequenceOfLine &
-	:rtype: None
-") Append;
-		void Append (BRepBlend_SequenceOfLine & S);
-		%feature("compactdefaultargs") Prepend;
-		%feature("autodoc", "	:param T:
-	:type T: Handle_BRepBlend_Line &
-	:rtype: None
-") Prepend;
-		void Prepend (const Handle_BRepBlend_Line & T);
-		%feature("compactdefaultargs") Prepend;
-		%feature("autodoc", "	:param S:
-	:type S: BRepBlend_SequenceOfLine &
-	:rtype: None
-") Prepend;
-		void Prepend (BRepBlend_SequenceOfLine & S);
-		%feature("compactdefaultargs") InsertBefore;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param T:
-	:type T: Handle_BRepBlend_Line &
-	:rtype: None
-") InsertBefore;
-		void InsertBefore (const Standard_Integer Index,const Handle_BRepBlend_Line & T);
-		%feature("compactdefaultargs") InsertBefore;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param S:
-	:type S: BRepBlend_SequenceOfLine &
-	:rtype: None
-") InsertBefore;
-		void InsertBefore (const Standard_Integer Index,BRepBlend_SequenceOfLine & S);
-		%feature("compactdefaultargs") InsertAfter;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param T:
-	:type T: Handle_BRepBlend_Line &
-	:rtype: None
-") InsertAfter;
-		void InsertAfter (const Standard_Integer Index,const Handle_BRepBlend_Line & T);
-		%feature("compactdefaultargs") InsertAfter;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param S:
-	:type S: BRepBlend_SequenceOfLine &
-	:rtype: None
-") InsertAfter;
-		void InsertAfter (const Standard_Integer Index,BRepBlend_SequenceOfLine & S);
-		%feature("compactdefaultargs") First;
-		%feature("autodoc", "	:rtype: Handle_BRepBlend_Line
-") First;
-		Handle_BRepBlend_Line First ();
-		%feature("compactdefaultargs") Last;
-		%feature("autodoc", "	:rtype: Handle_BRepBlend_Line
-") Last;
-		Handle_BRepBlend_Line Last ();
-		%feature("compactdefaultargs") Split;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param Sub:
-	:type Sub: BRepBlend_SequenceOfLine &
-	:rtype: None
-") Split;
-		void Split (const Standard_Integer Index,BRepBlend_SequenceOfLine & Sub);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: Handle_BRepBlend_Line
-") Value;
-		Handle_BRepBlend_Line Value (const Standard_Integer Index);
-		%feature("compactdefaultargs") SetValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param I:
-	:type I: Handle_BRepBlend_Line &
-	:rtype: None
-") SetValue;
-		void SetValue (const Standard_Integer Index,const Handle_BRepBlend_Line & I);
-		%feature("compactdefaultargs") ChangeValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: Handle_BRepBlend_Line
-") ChangeValue;
-		Handle_BRepBlend_Line ChangeValue (const Standard_Integer Index);
-		%feature("compactdefaultargs") Remove;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: None
-") Remove;
-		void Remove (const Standard_Integer Index);
-		%feature("compactdefaultargs") Remove;
-		%feature("autodoc", "	:param FromIndex:
-	:type FromIndex: int
-	:param ToIndex:
-	:type ToIndex: int
-	:rtype: None
-") Remove;
-		void Remove (const Standard_Integer FromIndex,const Standard_Integer ToIndex);
-};
-
-
-%extend BRepBlend_SequenceOfLine {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor BRepBlend_SequenceOfPointOnRst;
-class BRepBlend_SequenceOfPointOnRst : public TCollection_BaseSequence {
-	public:
-		%feature("compactdefaultargs") BRepBlend_SequenceOfPointOnRst;
-		%feature("autodoc", "	:rtype: None
-") BRepBlend_SequenceOfPointOnRst;
-		 BRepBlend_SequenceOfPointOnRst ();
-		%feature("compactdefaultargs") BRepBlend_SequenceOfPointOnRst;
-		%feature("autodoc", "	:param Other:
-	:type Other: BRepBlend_SequenceOfPointOnRst &
-	:rtype: None
-") BRepBlend_SequenceOfPointOnRst;
-		 BRepBlend_SequenceOfPointOnRst (const BRepBlend_SequenceOfPointOnRst & Other);
-		%feature("compactdefaultargs") Clear;
-		%feature("autodoc", "	:rtype: None
-") Clear;
-		void Clear ();
-		%feature("compactdefaultargs") Assign;
-		%feature("autodoc", "	:param Other:
-	:type Other: BRepBlend_SequenceOfPointOnRst &
-	:rtype: BRepBlend_SequenceOfPointOnRst
-") Assign;
-		const BRepBlend_SequenceOfPointOnRst & Assign (const BRepBlend_SequenceOfPointOnRst & Other);
-		%feature("compactdefaultargs") operator =;
-		%feature("autodoc", "	:param Other:
-	:type Other: BRepBlend_SequenceOfPointOnRst &
-	:rtype: BRepBlend_SequenceOfPointOnRst
-") operator =;
-		const BRepBlend_SequenceOfPointOnRst & operator = (const BRepBlend_SequenceOfPointOnRst & Other);
-		%feature("compactdefaultargs") Append;
-		%feature("autodoc", "	:param T:
-	:type T: BRepBlend_PointOnRst &
-	:rtype: None
-") Append;
-		void Append (const BRepBlend_PointOnRst & T);
-		%feature("compactdefaultargs") Append;
-		%feature("autodoc", "	:param S:
-	:type S: BRepBlend_SequenceOfPointOnRst &
-	:rtype: None
-") Append;
-		void Append (BRepBlend_SequenceOfPointOnRst & S);
-		%feature("compactdefaultargs") Prepend;
-		%feature("autodoc", "	:param T:
-	:type T: BRepBlend_PointOnRst &
-	:rtype: None
-") Prepend;
-		void Prepend (const BRepBlend_PointOnRst & T);
-		%feature("compactdefaultargs") Prepend;
-		%feature("autodoc", "	:param S:
-	:type S: BRepBlend_SequenceOfPointOnRst &
-	:rtype: None
-") Prepend;
-		void Prepend (BRepBlend_SequenceOfPointOnRst & S);
-		%feature("compactdefaultargs") InsertBefore;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param T:
-	:type T: BRepBlend_PointOnRst &
-	:rtype: None
-") InsertBefore;
-		void InsertBefore (const Standard_Integer Index,const BRepBlend_PointOnRst & T);
-		%feature("compactdefaultargs") InsertBefore;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param S:
-	:type S: BRepBlend_SequenceOfPointOnRst &
-	:rtype: None
-") InsertBefore;
-		void InsertBefore (const Standard_Integer Index,BRepBlend_SequenceOfPointOnRst & S);
-		%feature("compactdefaultargs") InsertAfter;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param T:
-	:type T: BRepBlend_PointOnRst &
-	:rtype: None
-") InsertAfter;
-		void InsertAfter (const Standard_Integer Index,const BRepBlend_PointOnRst & T);
-		%feature("compactdefaultargs") InsertAfter;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param S:
-	:type S: BRepBlend_SequenceOfPointOnRst &
-	:rtype: None
-") InsertAfter;
-		void InsertAfter (const Standard_Integer Index,BRepBlend_SequenceOfPointOnRst & S);
-		%feature("compactdefaultargs") First;
-		%feature("autodoc", "	:rtype: BRepBlend_PointOnRst
-") First;
-		const BRepBlend_PointOnRst & First ();
-		%feature("compactdefaultargs") Last;
-		%feature("autodoc", "	:rtype: BRepBlend_PointOnRst
-") Last;
-		const BRepBlend_PointOnRst & Last ();
-		%feature("compactdefaultargs") Split;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param Sub:
-	:type Sub: BRepBlend_SequenceOfPointOnRst &
-	:rtype: None
-") Split;
-		void Split (const Standard_Integer Index,BRepBlend_SequenceOfPointOnRst & Sub);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: BRepBlend_PointOnRst
-") Value;
-		const BRepBlend_PointOnRst & Value (const Standard_Integer Index);
-		%feature("compactdefaultargs") SetValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param I:
-	:type I: BRepBlend_PointOnRst &
-	:rtype: None
-") SetValue;
-		void SetValue (const Standard_Integer Index,const BRepBlend_PointOnRst & I);
-		%feature("compactdefaultargs") ChangeValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: BRepBlend_PointOnRst
-") ChangeValue;
-		BRepBlend_PointOnRst & ChangeValue (const Standard_Integer Index);
-		%feature("compactdefaultargs") Remove;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: None
-") Remove;
-		void Remove (const Standard_Integer Index);
-		%feature("compactdefaultargs") Remove;
-		%feature("autodoc", "	:param FromIndex:
-	:type FromIndex: int
-	:param ToIndex:
-	:type ToIndex: int
-	:rtype: None
-") Remove;
-		void Remove (const Standard_Integer FromIndex,const Standard_Integer ToIndex);
-};
-
-
-%extend BRepBlend_SequenceOfPointOnRst {
 	%pythoncode {
 	__repr__ = _dumps_object
 	}
@@ -3514,7 +3105,7 @@ class BRepBlend_SurfRstConstRad : public Blend_SurfRstFunction {
 ") GetMinimalWeight;
 		void GetMinimalWeight (TColStd_Array1OfReal & Weigths);
 		%feature("compactdefaultargs") NbIntervals;
-		%feature("autodoc", "	* Returns the number of intervals for continuity <S>. May be one if Continuity(me) >= <S>
+		%feature("autodoc", "	* Returns the number of intervals for continuity <S>. May be one if Continuity--me-- >= <S>
 
 	:param S:
 	:type S: GeomAbs_Shape
@@ -3522,7 +3113,7 @@ class BRepBlend_SurfRstConstRad : public Blend_SurfRstFunction {
 ") NbIntervals;
 		Standard_Integer NbIntervals (const GeomAbs_Shape S);
 		%feature("compactdefaultargs") Intervals;
-		%feature("autodoc", "	* Stores in <T> the parameters bounding the intervals of continuity <S>. The array must provide enough room to accomodate for the parameters. i.e. T.Length() > NbIntervals()
+		%feature("autodoc", "	* Stores in <T> the parameters bounding the intervals of continuity <S>. The array must provide enough room to accomodate for the parameters. i.e. T.Length---- > NbIntervals----
 
 	:param T:
 	:type T: TColStd_Array1OfReal &
@@ -3875,7 +3466,7 @@ class BRepBlend_SurfRstEvolRad : public Blend_SurfRstFunction {
 ") GetMinimalWeight;
 		void GetMinimalWeight (TColStd_Array1OfReal & Weigths);
 		%feature("compactdefaultargs") NbIntervals;
-		%feature("autodoc", "	* Returns the number of intervals for continuity <S>. May be one if Continuity(me) >= <S>
+		%feature("autodoc", "	* Returns the number of intervals for continuity <S>. May be one if Continuity--me-- >= <S>
 
 	:param S:
 	:type S: GeomAbs_Shape
@@ -3883,7 +3474,7 @@ class BRepBlend_SurfRstEvolRad : public Blend_SurfRstFunction {
 ") NbIntervals;
 		Standard_Integer NbIntervals (const GeomAbs_Shape S);
 		%feature("compactdefaultargs") Intervals;
-		%feature("autodoc", "	* Stores in <T> the parameters bounding the intervals of continuity <S>. The array must provide enough room to accomodate for the parameters. i.e. T.Length() > NbIntervals()
+		%feature("autodoc", "	* Stores in <T> the parameters bounding the intervals of continuity <S>. The array must provide enough room to accomodate for the parameters. i.e. T.Length---- > NbIntervals----
 
 	:param T:
 	:type T: TColStd_Array1OfReal &
@@ -4157,7 +3748,9 @@ class BRepBlend_Walking {
 ") BRepBlend_Walking;
 		 BRepBlend_Walking (const Handle_Adaptor3d_HSurface & Surf1,const Handle_Adaptor3d_HSurface & Surf2,const Handle_Adaptor3d_TopolTool & Domain1,const Handle_Adaptor3d_TopolTool & Domain2,const Handle_ChFiDS_HElSpine & HGuide);
 		%feature("compactdefaultargs") SetDomainsToRecadre;
-		%feature("autodoc", "	:param RecDomain1:
+		%feature("autodoc", "	* To define different domains for control and clipping.
+
+	:param RecDomain1:
 	:type RecDomain1: Handle_Adaptor3d_TopolTool &
 	:param RecDomain2:
 	:type RecDomain2: Handle_Adaptor3d_TopolTool &
@@ -4165,7 +3758,9 @@ class BRepBlend_Walking {
 ") SetDomainsToRecadre;
 		void SetDomainsToRecadre (const Handle_Adaptor3d_TopolTool & RecDomain1,const Handle_Adaptor3d_TopolTool & RecDomain2);
 		%feature("compactdefaultargs") AddSingularPoint;
-		%feature("autodoc", "	:param P:
+		%feature("autodoc", "	* To define singular points computed before walking.
+
+	:param P:
 	:type P: Blend_Point &
 	:rtype: None
 ") AddSingularPoint;
@@ -4387,19 +3982,20 @@ class Handle_BRepBlend_AppFunc : public Handle_BRepBlend_AppFuncRoot {
         static const Handle_BRepBlend_AppFunc DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_BRepBlend_AppFunc {
     BRepBlend_AppFunc* _get_reference() {
-    return (BRepBlend_AppFunc*)$self->Access();
+    return (BRepBlend_AppFunc*)$self->get();
     }
 };
 
 %extend Handle_BRepBlend_AppFunc {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend BRepBlend_AppFunc {
@@ -4476,19 +4072,20 @@ class Handle_BRepBlend_AppFuncRst : public Handle_BRepBlend_AppFuncRoot {
         static const Handle_BRepBlend_AppFuncRst DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_BRepBlend_AppFuncRst {
     BRepBlend_AppFuncRst* _get_reference() {
-    return (BRepBlend_AppFuncRst*)$self->Access();
+    return (BRepBlend_AppFuncRst*)$self->get();
     }
 };
 
 %extend Handle_BRepBlend_AppFuncRst {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend BRepBlend_AppFuncRst {
@@ -4565,19 +4162,20 @@ class Handle_BRepBlend_AppFuncRstRst : public Handle_BRepBlend_AppFuncRoot {
         static const Handle_BRepBlend_AppFuncRstRst DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_BRepBlend_AppFuncRstRst {
     BRepBlend_AppFuncRstRst* _get_reference() {
-    return (BRepBlend_AppFuncRstRst*)$self->Access();
+    return (BRepBlend_AppFuncRstRst*)$self->get();
     }
 };
 
 %extend Handle_BRepBlend_AppFuncRstRst {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend BRepBlend_AppFuncRstRst {

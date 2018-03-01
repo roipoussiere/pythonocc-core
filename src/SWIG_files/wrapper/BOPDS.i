@@ -1,5 +1,5 @@
 /*
-Copyright 2008-2017 Thomas Paviot (tpaviot@gmail.com)
+Copyright 2008-2018 Thomas Paviot (tpaviot@gmail.com)
 
 
 This file is part of pythonOCC.
@@ -39,6 +39,8 @@ along with pythonOCC.  If not, see <http://www.gnu.org/licenses/>.
 %include BOPDS_headers.i
 
 
+%include "BOPCol_NCVector.hxx";
+
 %pythoncode {
 def register_handle(handle, base_object):
     """
@@ -54,64 +56,71 @@ def register_handle(handle, base_object):
 };
 
 /* typedefs */
-typedef NCollection_Map <BOPDS_PassKey , BOPDS_PassKeyMapHasher> BOPDS_MapOfPassKey;
-typedef BOPCol_NCVector <BOPDS_InterfVZ> BOPDS_VectorOfInterfVZ;
-typedef NCollection_DataMap <Handle_BOPDS_PaveBlock , BOPCol_ListOfInteger , TColStd_MapTransientHasher> BOPDS_DataMapOfPaveBlockListOfInteger;
-typedef NCollection_List <BOPDS_Pave> BOPDS_ListOfPave;
 typedef BOPDS_DataMapOfPaveBlockListOfPaveBlock::Iterator BOPDS_DataMapIteratorOfDataMapOfPaveBlockListOfPaveBlock;
-typedef BOPCol_NCVector <BOPDS_InterfEZ> BOPDS_VectorOfInterfEZ;
-typedef BOPCol_NCVector <BOPDS_InterfVV> BOPDS_VectorOfInterfVV;
-typedef BOPCol_NCVector <BOPDS_InterfEE> BOPDS_VectorOfInterfEE;
-typedef BOPCol_NCVector <BOPDS_InterfEF> BOPDS_VectorOfInterfEF;
 typedef BOPDS_IteratorSI * BOPDS_PIteratorSI;
-typedef BOPCol_NCVector <BOPDS_InterfZZ> BOPDS_VectorOfInterfZZ;
-typedef BOPCol_NCVector <BOPDS_InterfVE> BOPDS_VectorOfInterfVE;
 typedef BOPDS_DataMapOfShapeCoupleOfPaveBlocks::Iterator BOPDS_DataMapIteratorOfDataMapOfShapeCoupleOfPaveBlocks;
-typedef BOPCol_NCVector <BOPDS_InterfVF> BOPDS_VectorOfInterfVF;
 typedef BOPDS_ListOfPave::Iterator BOPDS_ListIteratorOfListOfPave;
-typedef BOPCol_NCVector <BOPDS_Curve> BOPDS_VectorOfCurve;
-typedef BOPCol_NCVector <BOPDS_ShapeInfo> BOPDS_VectorOfShapeInfo;
-typedef NCollection_Map <Handle_BOPDS_PaveBlock , TColStd_MapTransientHasher> BOPDS_MapOfPaveBlock;
-typedef BOPCol_NCVector <BOPDS_IndexRange> BOPDS_VectorOfIndexRange;
-typedef BOPCol_NCVector <BOPDS_InterfFF> BOPDS_VectorOfInterfFF;
-typedef NCollection_Array1 <BOPDS_Pave> BOPDS_VectorOfPave;
-typedef BOPCol_NCVector <BOPDS_InterfFZ> BOPDS_VectorOfInterfFZ;
-typedef NCollection_DataMap <Standard_Integer , BOPDS_ListOfPaveBlock , TColStd_MapIntegerHasher> BOPDS_DataMapOfIntegerListOfPaveBlock;
 typedef BOPDS_DataMapOfPassKeyListOfPaveBlock::Iterator BOPDS_DataMapIteratorOfDataMapOfPassKeyListOfPaveBlock;
 typedef BOPDS_MapOfPassKeyBoolean::Iterator BOPDS_MapIteratorMapOfPassKeyBoolean;
-typedef NCollection_Map <BOPDS_PassKeyBoolean , BOPDS_PassKeyMapHasher> BOPDS_MapOfPassKeyBoolean;
 typedef BOPDS_DS * BOPDS_PDS;
 typedef BOPDS_ListOfPassKeyBoolean::Iterator BOPDS_ListIteratorOfListOfPassKeyBoolean;
-typedef NCollection_IndexedMap <Handle_BOPDS_PaveBlock , TColStd_MapTransientHasher> BOPDS_IndexedMapOfPaveBlock;
+typedef BOPDS_MapOfPassKey::Iterator BOPDS_MapIteratorMapOfPassKey;
 typedef BOPDS_Iterator * BOPDS_PIterator;
 typedef BOPDS_DataMapOfPaveBlockCommonBlock::Iterator BOPDS_DataMapIteratorOfDataMapOfPaveBlockCommonBlock;
-typedef BOPDS_MapOfPassKey::Iterator BOPDS_MapIteratorMapOfPassKey;
-typedef BOPDS_MapOfCommonBlock::Iterator BOPDS_MapIteratorOfMapOfCommonBlock;
-typedef NCollection_DataMap <BOPDS_PassKey , BOPDS_ListOfPaveBlock , BOPDS_PassKeyMapHasher> BOPDS_DataMapOfPassKeyListOfPaveBlock;
-typedef NCollection_Map <Handle_BOPDS_CommonBlock , TColStd_MapTransientHasher> BOPDS_MapOfCommonBlock;
 typedef BOPDS_ListOfPaveBlock::Iterator BOPDS_ListIteratorOfListOfPaveBlock;
-typedef NCollection_Map <BOPDS_Pave , BOPDS_PaveMapHasher> BOPDS_MapOfPave;
-typedef BOPCol_NCVector <BOPDS_ListOfPaveBlock> BOPDS_VectorOfListOfPaveBlock;
-typedef NCollection_IndexedDataMap <Handle_BOPDS_PaveBlock , BOPCol_ListOfInteger , TColStd_MapTransientHasher> BOPDS_IndexedDataMapOfPaveBlockListOfInteger;
-typedef BOPCol_NCVector <BOPDS_Point> BOPDS_VectorOfPoint;
 typedef BOPDS_DataMapOfPaveBlockListOfInteger::Iterator BOPDS_DataMapIteratorOfDataMapOfPaveBlockListOfInteger;
-typedef NCollection_DataMap <Handle_BOPDS_PaveBlock , BOPDS_ListOfPaveBlock , TColStd_MapTransientHasher> BOPDS_DataMapOfPaveBlockListOfPaveBlock;
+typedef BOPDS_MapOfCommonBlock::Iterator BOPDS_MapIteratorOfMapOfCommonBlock;
 typedef BOPDS_MapOfPaveBlock::Iterator BOPDS_MapIteratorOfMapOfPaveBlock;
-typedef NCollection_List <Handle_BOPDS_PaveBlock> BOPDS_ListOfPaveBlock;
-typedef NCollection_DataMap <TopoDS_Shape , BOPDS_CoupleOfPaveBlocks , TopTools_ShapeMapHasher> BOPDS_DataMapOfShapeCoupleOfPaveBlocks;
-typedef NCollection_IndexedDataMap <TopoDS_Shape , BOPDS_CoupleOfPaveBlocks , TopTools_ShapeMapHasher> BOPDS_IndexedDataMapOfShapeCoupleOfPaveBlocks;
-typedef BOPCol_NCVector <BOPDS_FaceInfo> BOPDS_VectorOfFaceInfo;
-typedef NCollection_IndexedDataMap <Handle_BOPDS_PaveBlock , BOPDS_ListOfPaveBlock , TColStd_MapTransientHasher> BOPDS_IndexedDataMapOfPaveBlockListOfPaveBlock;
-typedef BOPCol_NCVector <BOPDS_ListOfPassKeyBoolean> BOPDS_VectorOfListOfPassKeyBoolean;
+typedef BOPDS_MapOfPair::Iterator BOPDS_MapIteratorOfMapOfPair;
 typedef BOPDS_MapOfPave::Iterator BOPDS_MapIteratorOfMapOfPave;
-typedef NCollection_List <BOPDS_PassKeyBoolean> BOPDS_ListOfPassKeyBoolean;
 /* end typedefs declaration */
+
+/* templates */
+%template(BOPDS_MapOfPassKey) NCollection_Map <BOPDS_PassKey , BOPDS_PassKeyMapHasher>;
+%template(BOPDS_VectorOfInterfVZ) BOPCol_NCVector <BOPDS_InterfVZ>;
+%template(BOPDS_DataMapOfPaveBlockListOfInteger) NCollection_DataMap <Handle_BOPDS_PaveBlock , BOPCol_ListOfInteger , TColStd_MapTransientHasher>;
+%template(BOPDS_ListOfPave) NCollection_List <BOPDS_Pave>;
+%template(BOPDS_VectorOfInterfEZ) BOPCol_NCVector <BOPDS_InterfEZ>;
+%template(BOPDS_VectorOfInterfVV) BOPCol_NCVector <BOPDS_InterfVV>;
+%template(BOPDS_VectorOfInterfEE) BOPCol_NCVector <BOPDS_InterfEE>;
+%template(BOPDS_VectorOfInterfEF) BOPCol_NCVector <BOPDS_InterfEF>;
+%template(BOPDS_VectorOfInterfZZ) BOPCol_NCVector <BOPDS_InterfZZ>;
+%template(BOPDS_VectorOfVectorOfPair) BOPCol_NCVector <BOPDS_VectorOfPair>;
+%template(BOPDS_VectorOfInterfVE) BOPCol_NCVector <BOPDS_InterfVE>;
+%template(BOPDS_VectorOfInterfVF) BOPCol_NCVector <BOPDS_InterfVF>;
+%template(BOPDS_MapOfPair) NCollection_Map <BOPDS_Pair , BOPDS_PairMapHasher>;
+%template(BOPDS_VectorOfCurve) BOPCol_NCVector <BOPDS_Curve>;
+%template(BOPDS_VectorOfShapeInfo) BOPCol_NCVector <BOPDS_ShapeInfo>;
+%template(BOPDS_MapOfPaveBlock) NCollection_Map <Handle_BOPDS_PaveBlock , TColStd_MapTransientHasher>;
+%template(BOPDS_VectorOfIndexRange) BOPCol_NCVector <BOPDS_IndexRange>;
+%template(BOPDS_VectorOfInterfFF) BOPCol_NCVector <BOPDS_InterfFF>;
+%template(BOPDS_VectorOfPave) NCollection_Array1 <BOPDS_Pave>;
+%template(BOPDS_VectorOfInterfFZ) BOPCol_NCVector <BOPDS_InterfFZ>;
+%template(BOPDS_VectorOfPair) BOPCol_NCVector <BOPDS_Pair>;
+%template(BOPDS_MapOfPassKeyBoolean) NCollection_Map <BOPDS_PassKeyBoolean , BOPDS_PassKeyMapHasher>;
+%template(BOPDS_DataMapOfIntegerListOfPaveBlock) NCollection_DataMap <Standard_Integer , BOPDS_ListOfPaveBlock , TColStd_MapIntegerHasher>;
+%template(BOPDS_IndexedMapOfPaveBlock) NCollection_IndexedMap <Handle_BOPDS_PaveBlock , TColStd_MapTransientHasher>;
+%template(BOPDS_DataMapOfPassKeyListOfPaveBlock) NCollection_DataMap <BOPDS_PassKey , BOPDS_ListOfPaveBlock , BOPDS_PassKeyMapHasher>;
+%template(BOPDS_MapOfCommonBlock) NCollection_Map <Handle_BOPDS_CommonBlock , TColStd_MapTransientHasher>;
+%template(BOPDS_MapOfPave) NCollection_Map <BOPDS_Pave , BOPDS_PaveMapHasher>;
+%template(BOPDS_DataMapOfPaveBlockListOfPaveBlock) NCollection_DataMap <Handle_BOPDS_PaveBlock , BOPDS_ListOfPaveBlock , TColStd_MapTransientHasher>;
+%template(BOPDS_VectorOfListOfPaveBlock) BOPCol_NCVector <BOPDS_ListOfPaveBlock>;
+%template(BOPDS_IndexedDataMapOfPaveBlockListOfInteger) NCollection_IndexedDataMap <Handle_BOPDS_PaveBlock , BOPCol_ListOfInteger , TColStd_MapTransientHasher>;
+%template(BOPDS_VectorOfPoint) BOPCol_NCVector <BOPDS_Point>;
+%template(BOPDS_ListOfPaveBlock) NCollection_List <Handle_BOPDS_PaveBlock>;
+%template(BOPDS_DataMapOfShapeCoupleOfPaveBlocks) NCollection_DataMap <TopoDS_Shape , BOPDS_CoupleOfPaveBlocks , TopTools_ShapeMapHasher>;
+%template(BOPDS_IndexedDataMapOfShapeCoupleOfPaveBlocks) NCollection_IndexedDataMap <TopoDS_Shape , BOPDS_CoupleOfPaveBlocks , TopTools_ShapeMapHasher>;
+%template(BOPDS_VectorOfFaceInfo) BOPCol_NCVector <BOPDS_FaceInfo>;
+%template(BOPDS_IndexedDataMapOfPaveBlockListOfPaveBlock) NCollection_IndexedDataMap <Handle_BOPDS_PaveBlock , BOPDS_ListOfPaveBlock , TColStd_MapTransientHasher>;
+%template(BOPDS_VectorOfListOfPassKeyBoolean) BOPCol_NCVector <BOPDS_ListOfPassKeyBoolean>;
+%template(BOPDS_ListOfPassKeyBoolean) NCollection_List <BOPDS_PassKeyBoolean>;
+/* end templates declaration */
 
 /* public enums */
 /* end public enums declaration */
 
 %nodefaultctor BOPDS_CommonBlock;
-class BOPDS_CommonBlock : public MMgt_TShared {
+class BOPDS_CommonBlock : public Standard_Transient {
 	public:
 		%feature("compactdefaultargs") BOPDS_CommonBlock;
 		%feature("autodoc", "	* Empty contructor
@@ -135,14 +144,14 @@ class BOPDS_CommonBlock : public MMgt_TShared {
 	:rtype: None
 ") AddPaveBlock;
 		void AddPaveBlock (const Handle_BOPDS_PaveBlock & aPB);
-		%feature("compactdefaultargs") AddPaveBlocks;
+		%feature("compactdefaultargs") SetPaveBlocks;
 		%feature("autodoc", "	* Modifier Adds the list of pave blocks <aLPB> to the list of pave blocks of the common block
 
 	:param aLPB:
 	:type aLPB: BOPDS_ListOfPaveBlock &
 	:rtype: None
-") AddPaveBlocks;
-		void AddPaveBlocks (const BOPDS_ListOfPaveBlock & aLPB);
+") SetPaveBlocks;
+		void SetPaveBlocks (const BOPDS_ListOfPaveBlock & aLPB);
 		%feature("compactdefaultargs") AddFace;
 		%feature("autodoc", "	* Modifier Adds the index of the face <aF> to the list of indices of faces of the common block
 
@@ -151,14 +160,22 @@ class BOPDS_CommonBlock : public MMgt_TShared {
 	:rtype: None
 ") AddFace;
 		void AddFace (const Standard_Integer aF);
-		%feature("compactdefaultargs") AddFaces;
-		%feature("autodoc", "	* Modifier Adds the list of indices of faces <aLF> to the list of indices of faces of the common block
+		%feature("compactdefaultargs") SetFaces;
+		%feature("autodoc", "	* Modifier Sets the list of indices of faces <aLF> of the common block
 
 	:param aLF:
 	:type aLF: BOPCol_ListOfInteger &
 	:rtype: None
-") AddFaces;
-		void AddFaces (const BOPCol_ListOfInteger & aLF);
+") SetFaces;
+		void SetFaces (const BOPCol_ListOfInteger & aLF);
+		%feature("compactdefaultargs") AppendFaces;
+		%feature("autodoc", "	* Modifier Appends the list of indices of faces <aLF> to the list of indices of faces of the common block --the input list is emptied--
+
+	:param aLF:
+	:type aLF: BOPCol_ListOfInteger &
+	:rtype: None
+") AppendFaces;
+		void AppendFaces (BOPCol_ListOfInteger & aLF);
 		%feature("compactdefaultargs") PaveBlocks;
 		%feature("autodoc", "	* Selector Returns the list of pave blocks of the common block
 
@@ -257,7 +274,7 @@ class BOPDS_CommonBlock : public MMgt_TShared {
 %}
 
 %nodefaultctor Handle_BOPDS_CommonBlock;
-class Handle_BOPDS_CommonBlock : public Handle_MMgt_TShared {
+class Handle_BOPDS_CommonBlock : public Handle_Standard_Transient {
 
     public:
         // constructors
@@ -269,19 +286,20 @@ class Handle_BOPDS_CommonBlock : public Handle_MMgt_TShared {
         static const Handle_BOPDS_CommonBlock DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_BOPDS_CommonBlock {
     BOPDS_CommonBlock* _get_reference() {
-    return (BOPDS_CommonBlock*)$self->Access();
+    return (BOPDS_CommonBlock*)$self->get();
     }
 };
 
 %extend Handle_BOPDS_CommonBlock {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend BOPDS_CommonBlock {
@@ -384,6 +402,20 @@ class BOPDS_CoupleOfPaveBlocks {
 	:rtype: Handle_BOPDS_PaveBlock
 ") PaveBlock2;
 		Handle_BOPDS_PaveBlock PaveBlock2 ();
+		%feature("compactdefaultargs") SetTolerance;
+		%feature("autodoc", "	* /** * Sets the tolerance associated with this couple */
+
+	:param theTol:
+	:type theTol: float
+	:rtype: None
+") SetTolerance;
+		void SetTolerance (const Standard_Real theTol);
+		%feature("compactdefaultargs") Tolerance;
+		%feature("autodoc", "	* /** * Returns the tolerance associated with this couple */
+
+	:rtype: float
+") Tolerance;
+		Standard_Real Tolerance ();
 };
 
 
@@ -491,6 +523,26 @@ class BOPDS_Curve {
 	:rtype: bool
 ") HasEdge;
 		Standard_Boolean HasEdge ();
+		%feature("compactdefaultargs") SetTolerance;
+		%feature("autodoc", "	* Sets the tolerance for the curve.
+
+	:param theTol:
+	:type theTol: float
+	:rtype: None
+") SetTolerance;
+		void SetTolerance (const Standard_Real theTol);
+		%feature("compactdefaultargs") Tolerance;
+		%feature("autodoc", "	* Returns the tolerance of the curve
+
+	:rtype: float
+") Tolerance;
+		Standard_Real Tolerance ();
+		%feature("compactdefaultargs") TangentialTolerance;
+		%feature("autodoc", "	* Returns the tangential tolerance of the curve
+
+	:rtype: float
+") TangentialTolerance;
+		Standard_Real TangentialTolerance ();
 };
 
 
@@ -545,9 +597,11 @@ class BOPDS_DS {
 		%feature("compactdefaultargs") Init;
 		%feature("autodoc", "	* Initializes the data structure for the arguments
 
+	:param theFuzz: default value is Precision::Confusion()
+	:type theFuzz: float
 	:rtype: None
 ") Init;
-		void Init ();
+		void Init (const Standard_Real theFuzz = Precision::Confusion());
 		%feature("compactdefaultargs") NbShapes;
 		%feature("autodoc", "	* Selector Returns the total number of shapes stored
 
@@ -693,9 +747,11 @@ class BOPDS_DS {
 
 	:param theCB:
 	:type theCB: Handle_BOPDS_CommonBlock &
+	:param theFuzz:
+	:type theFuzz: float
 	:rtype: None
 ") UpdateCommonBlock;
-		void UpdateCommonBlock (const Handle_BOPDS_CommonBlock & theCB);
+		void UpdateCommonBlock (const Handle_BOPDS_CommonBlock & theCB,const Standard_Real theFuzz);
 		%feature("compactdefaultargs") IsCommonBlock;
 		%feature("autodoc", "	* Query Returns true if the pave block is common block
 
@@ -824,20 +880,22 @@ class BOPDS_DS {
 	:rtype: None
 ") RefineFaceInfoOn;
 		void RefineFaceInfoOn ();
-		%feature("compactdefaultargs") VerticesOnIn;
-		%feature("autodoc", "	* Returns the indices of vertices and pave blocks that are On/In for the faces with indices theF1, theF2
+		%feature("compactdefaultargs") SubShapesOnIn;
+		%feature("autodoc", "	* Returns information about ON/IN subshapes of the given faces. @param theMVOnIn the indices of ON/IN vertices from both faces @param thePBOnIn all On/In pave blocks from both faces @param theCommonPB the common pave blocks --that are shared by both faces--.
 
 	:param theF1:
 	:type theF1: int
 	:param theF2:
 	:type theF2: int
-	:param theMI:
-	:type theMI: BOPCol_MapOfInteger &
-	:param aMPB:
-	:type aMPB: BOPDS_IndexedMapOfPaveBlock &
+	:param theMVOnIn:
+	:type theMVOnIn: BOPCol_MapOfInteger &
+	:param thePBOnIn:
+	:type thePBOnIn: BOPDS_IndexedMapOfPaveBlock &
+	:param theCommonPB:
+	:type theCommonPB: BOPDS_MapOfPaveBlock &
 	:rtype: None
-") VerticesOnIn;
-		void VerticesOnIn (const Standard_Integer theF1,const Standard_Integer theF2,BOPCol_MapOfInteger & theMI,BOPDS_IndexedMapOfPaveBlock & aMPB);
+") SubShapesOnIn;
+		void SubShapesOnIn (const Standard_Integer theF1,const Standard_Integer theF2,BOPCol_MapOfInteger & theMVOnIn,BOPDS_IndexedMapOfPaveBlock & thePBOnIn,BOPDS_MapOfPaveBlock & theCommonPB);
 		%feature("compactdefaultargs") SharedEdges;
 		%feature("autodoc", "	* Returns the indices of edges that are shared for the faces with indices theF1, theF2 //! same domain shapes
 
@@ -973,7 +1031,7 @@ class BOPDS_DS {
 ") HasInterf;
 		Standard_Boolean HasInterf (const Standard_Integer theI1,const Standard_Integer theI2);
 		%feature("compactdefaultargs") HasInterfShapeSubShapes;
-		%feature("autodoc", "	* Query Returns true if the shape with index theI1 is interfered with any sub-shape of the shape with index theI2 (theFlag=true) all sub-shapes of the shape with index theI2 (theFlag=false)
+		%feature("autodoc", "	* Query Returns true if the shape with index theI1 is interfered with any sub-shape of the shape with index theI2 --theFlag=true-- all sub-shapes of the shape with index theI2 --theFlag=false--
 
 	:param theI1:
 	:type theI1: int
@@ -997,27 +1055,13 @@ class BOPDS_DS {
 		%feature("compactdefaultargs") Interferences;
 		%feature("autodoc", "	* Selector Returns the table of interferences //! debug
 
-	:rtype: BOPDS_MapOfPassKey
+	:rtype: BOPDS_MapOfPair
 ") Interferences;
-		const BOPDS_MapOfPassKey & Interferences ();
+		const BOPDS_MapOfPair & Interferences ();
 		%feature("compactdefaultargs") Dump;
 		%feature("autodoc", "	:rtype: None
 ") Dump;
 		void Dump ();
-		%feature("compactdefaultargs") SortPaveBlocks;
-		%feature("autodoc", "	:param theCB:
-	:type theCB: Handle_BOPDS_CommonBlock &
-	:rtype: None
-") SortPaveBlocks;
-		void SortPaveBlocks (const Handle_BOPDS_CommonBlock & theCB);
-		%feature("compactdefaultargs") IsToSort;
-		%feature("autodoc", "	:param theCB:
-	:type theCB: Handle_BOPDS_CommonBlock &
-	:param theI:
-	:type theI: int &
-	:rtype: bool
-") IsToSort;
-		Standard_Boolean IsToSort (const Handle_BOPDS_CommonBlock & theCB,Standard_Integer &OutValue);
 		%feature("compactdefaultargs") IsSubShape;
 		%feature("autodoc", "	:param theI1:
 	:type theI1: int
@@ -1043,29 +1087,53 @@ class BOPDS_DS {
 	:type theIndex: int
 	:param theTolerance:
 	:type theTolerance: float
-	:rtype: None
-") UpdateEdgeTolerance;
-		void UpdateEdgeTolerance (const Standard_Integer theIndex,const Standard_Real theTolerance);
-		%feature("compactdefaultargs") SetFuzzyValue;
-		%feature("autodoc", "	* Sets the extended tolerance
-
-	:param theFuzz:
+	:param theFuzz: default value is Precision::Confusion()
 	:type theFuzz: float
 	:rtype: None
-") SetFuzzyValue;
-		void SetFuzzyValue (const Standard_Real theFuzz);
-		%feature("compactdefaultargs") FuzzyValue;
-		%feature("autodoc", "	* Returns the extended tolerance
-
-	:rtype: float
-") FuzzyValue;
-		Standard_Real FuzzyValue ();
-		%feature("compactdefaultargs") SetDefaultTolerances;
-		%feature("autodoc", "	* Reverts the tolerance values of unchanged entities to default values.
+") UpdateEdgeTolerance;
+		void UpdateEdgeTolerance (const Standard_Integer theIndex,const Standard_Real theTolerance,const Standard_Real theFuzz = Precision::Confusion());
+		%feature("compactdefaultargs") UpdatePaveBlocksWithSDVertices;
+		%feature("autodoc", "	* Update the pave blocks for all shapes in data structure
 
 	:rtype: None
-") SetDefaultTolerances;
-		void SetDefaultTolerances ();
+") UpdatePaveBlocksWithSDVertices;
+		void UpdatePaveBlocksWithSDVertices ();
+		%feature("compactdefaultargs") UpdatePaveBlockWithSDVertices;
+		%feature("autodoc", "	* Update the pave block for all shapes in data structure
+
+	:param thePB:
+	:type thePB: Handle_BOPDS_PaveBlock &
+	:rtype: None
+") UpdatePaveBlockWithSDVertices;
+		void UpdatePaveBlockWithSDVertices (const Handle_BOPDS_PaveBlock & thePB);
+		%feature("compactdefaultargs") UpdateCommonBlockWithSDVertices;
+		%feature("autodoc", "	* Update the pave block of the common block for all shapes in data structure
+
+	:param theCB:
+	:type theCB: Handle_BOPDS_CommonBlock &
+	:rtype: None
+") UpdateCommonBlockWithSDVertices;
+		void UpdateCommonBlockWithSDVertices (const Handle_BOPDS_CommonBlock & theCB);
+		%feature("compactdefaultargs") InitPaveBlocksForVertex;
+		%feature("autodoc", "	:param theNV:
+	:type theNV: int
+	:rtype: None
+") InitPaveBlocksForVertex;
+		void InitPaveBlocksForVertex (const Standard_Integer theNV);
+		%feature("compactdefaultargs") ReleasePaveBlocks;
+		%feature("autodoc", "	* Clears information about PaveBlocks for the untouched edges
+
+	:rtype: None
+") ReleasePaveBlocks;
+		void ReleasePaveBlocks ();
+		%feature("compactdefaultargs") IsValidShrunkData;
+		%feature("autodoc", "	* Checks if the existing shrunk data of the pave block is still valid. The shrunk data may become invalid if e.g. the vertices of the pave block have been replaced with the new one with bigger tolerances, or the tolerances of the existing vertices have been increased.
+
+	:param thePB:
+	:type thePB: Handle_BOPDS_PaveBlock &
+	:rtype: bool
+") IsValidShrunkData;
+		Standard_Boolean IsValidShrunkData (const Handle_BOPDS_PaveBlock & thePB);
 };
 
 
@@ -1320,17 +1388,15 @@ class BOPDS_Iterator {
 ") Next;
 		void Next ();
 		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	* Returns indices (DS) of intersected shapes theIndex1 - the index of the first shape theIndex2 - the index of the second shape theWithSubShape - flag. True if the sub-shapes of shapes are intersected
+		%feature("autodoc", "	* Returns indices --DS-- of intersected shapes theIndex1 - the index of the first shape theIndex2 - the index of the second shape
 
 	:param theIndex1:
 	:type theIndex1: int &
 	:param theIndex2:
 	:type theIndex2: int &
-	:param theWithSubShape:
-	:type theWithSubShape: bool
 	:rtype: None
 ") Value;
-		void Value (Standard_Integer &OutValue,Standard_Integer &OutValue,Standard_Boolean &OutValue);
+		void Value (Standard_Integer &OutValue,Standard_Integer &OutValue);
 		%feature("compactdefaultargs") Prepare;
 		%feature("autodoc", "	* Perform the intersection algorithm and prepare the results to be used
 
@@ -1367,6 +1433,105 @@ class BOPDS_Iterator {
 
 
 %extend BOPDS_Iterator {
+	%pythoncode {
+	__repr__ = _dumps_object
+	}
+};
+%nodefaultctor BOPDS_Pair;
+class BOPDS_Pair {
+	public:
+		%feature("compactdefaultargs") BOPDS_Pair;
+		%feature("autodoc", "	:rtype: None
+") BOPDS_Pair;
+		 BOPDS_Pair ();
+		%feature("compactdefaultargs") BOPDS_Pair;
+		%feature("autodoc", "	:param theIndex1:
+	:type theIndex1: int
+	:param theIndex2:
+	:type theIndex2: int
+	:rtype: None
+") BOPDS_Pair;
+		 BOPDS_Pair (const Standard_Integer theIndex1,const Standard_Integer theIndex2);
+		%feature("compactdefaultargs") SetIndices;
+		%feature("autodoc", "	* Sets the indices
+
+	:param theIndex1:
+	:type theIndex1: int
+	:param theIndex2:
+	:type theIndex2: int
+	:rtype: None
+") SetIndices;
+		void SetIndices (const Standard_Integer theIndex1,const Standard_Integer theIndex2);
+		%feature("compactdefaultargs") Indices;
+		%feature("autodoc", "	* Gets the indices
+
+	:param theIndex1:
+	:type theIndex1: int &
+	:param theIndex2:
+	:type theIndex2: int &
+	:rtype: None
+") Indices;
+		void Indices (Standard_Integer &OutValue,Standard_Integer &OutValue);
+		%feature("compactdefaultargs") operator <;
+		%feature("autodoc", "	* Operator less
+
+	:param theOther:
+	:type theOther: BOPDS_Pair &
+	:rtype: bool
+") operator <;
+		Standard_Boolean operator < (const BOPDS_Pair & theOther);
+		%feature("compactdefaultargs") IsEqual;
+		%feature("autodoc", "	* Returns true if the Pair is equal to <the theOther>
+
+	:param theOther:
+	:type theOther: BOPDS_Pair &
+	:rtype: bool
+") IsEqual;
+		Standard_Boolean IsEqual (const BOPDS_Pair & theOther);
+		%feature("compactdefaultargs") HashCode;
+		%feature("autodoc", "	* Returns hash code
+
+	:param theUpper:
+	:type theUpper: int
+	:rtype: int
+") HashCode;
+		Standard_Integer HashCode (const Standard_Integer theUpper);
+
+        %extend {
+            Standard_Integer __hash__() {
+            return $self->HashCode(2147483647);
+            }
+        };
+        };
+
+
+%extend BOPDS_Pair {
+	%pythoncode {
+	__repr__ = _dumps_object
+	}
+};
+class BOPDS_PairMapHasher {
+	public:
+		%feature("compactdefaultargs") HashCode;
+		%feature("autodoc", "	:param thePair:
+	:type thePair: BOPDS_Pair &
+	:param Upper:
+	:type Upper: int
+	:rtype: int
+") HashCode;
+		static Standard_Integer HashCode (const BOPDS_Pair & thePair,const Standard_Integer Upper);
+		%feature("compactdefaultargs") IsEqual;
+		%feature("autodoc", "	:param thePair1:
+	:type thePair1: BOPDS_Pair &
+	:param thePair2:
+	:type thePair2: BOPDS_Pair &
+	:rtype: bool
+") IsEqual;
+		static Standard_Boolean IsEqual (const BOPDS_Pair & thePair1,const BOPDS_Pair & thePair2);
+};
+
+
+%extend BOPDS_PairMapHasher {
 	%pythoncode {
 	__repr__ = _dumps_object
 	}
@@ -1642,7 +1807,7 @@ class BOPDS_Pave {
 	}
 };
 %nodefaultctor BOPDS_PaveBlock;
-class BOPDS_PaveBlock : public MMgt_TShared {
+class BOPDS_PaveBlock : public Standard_Transient {
 	public:
 		%feature("compactdefaultargs") BOPDS_PaveBlock;
 		%feature("autodoc", "	* Empty contructor
@@ -1769,13 +1934,13 @@ class BOPDS_PaveBlock : public MMgt_TShared {
 ") IsToUpdate;
 		Standard_Boolean IsToUpdate ();
 		%feature("compactdefaultargs") AppendExtPave;
-		%feature("autodoc", "	* Modifier Appends extra paves <theLP>
+		%feature("autodoc", "	* Modifier Appends extra paves <thePave>
 
-	:param theLP:
-	:type theLP: BOPDS_Pave &
+	:param thePave:
+	:type thePave: BOPDS_Pave &
 	:rtype: None
 ") AppendExtPave;
-		void AppendExtPave (const BOPDS_Pave & theLP);
+		void AppendExtPave (const BOPDS_Pave & thePave);
 		%feature("compactdefaultargs") AppendExtPave1;
 		%feature("autodoc", "	* Modifier Appends extra pave <thePave>
 
@@ -1784,6 +1949,14 @@ class BOPDS_PaveBlock : public MMgt_TShared {
 	:rtype: None
 ") AppendExtPave1;
 		void AppendExtPave1 (const BOPDS_Pave & thePave);
+		%feature("compactdefaultargs") RemoveExtPave;
+		%feature("autodoc", "	* Modifier Removes a pave with the given vertex number from extra paves
+
+	:param theVertNum:
+	:type theVertNum: int
+	:rtype: None
+") RemoveExtPave;
+		void RemoveExtPave (const Standard_Integer theVertNum);
 		%feature("compactdefaultargs") ExtPaves;
 		%feature("autodoc", "	* Selector Returns the extra paves
 
@@ -1819,7 +1992,7 @@ class BOPDS_PaveBlock : public MMgt_TShared {
 ") ContainsParameter;
 		Standard_Boolean ContainsParameter (const Standard_Real thePrm,const Standard_Real theTol,Standard_Integer &OutValue);
 		%feature("compactdefaultargs") SetShrunkData;
-		%feature("autodoc", "	* Modifier Sets the shrunk data for the pave block <theTS1>, <theTS2> - shrunk range <theBox> - the bounding box
+		%feature("autodoc", "	* Modifier Sets the shrunk data for the pave block <theTS1>, <theTS2> - shrunk range <theBox> - the bounding box <theIsSplittable> - defines whether the edge can be split
 
 	:param theTS1:
 	:type theTS1: float
@@ -1827,11 +2000,13 @@ class BOPDS_PaveBlock : public MMgt_TShared {
 	:type theTS2: float
 	:param theBox:
 	:type theBox: Bnd_Box &
+	:param theIsSplittable:
+	:type theIsSplittable: bool
 	:rtype: None
 ") SetShrunkData;
-		void SetShrunkData (const Standard_Real theTS1,const Standard_Real theTS2,const Bnd_Box & theBox);
+		void SetShrunkData (const Standard_Real theTS1,const Standard_Real theTS2,const Bnd_Box & theBox,const Standard_Boolean theIsSplittable);
 		%feature("compactdefaultargs") ShrunkData;
-		%feature("autodoc", "	* Selector Returns the shrunk data for the pave block <theTS1>, <theTS2> - shrunk range <theBox> - the bounding box
+		%feature("autodoc", "	* Selector Returns the shrunk data for the pave block <theTS1>, <theTS2> - shrunk range <theBox> - the bounding box <theIsSplittable> - defines whether the edge can be split
 
 	:param theTS1:
 	:type theTS1: float &
@@ -1839,9 +2014,11 @@ class BOPDS_PaveBlock : public MMgt_TShared {
 	:type theTS2: float &
 	:param theBox:
 	:type theBox: Bnd_Box &
+	:param theIsSplittable:
+	:type theIsSplittable: bool
 	:rtype: None
 ") ShrunkData;
-		void ShrunkData (Standard_Real &OutValue,Standard_Real &OutValue,Bnd_Box & theBox);
+		void ShrunkData (Standard_Real &OutValue,Standard_Real &OutValue,Bnd_Box & theBox,Standard_Boolean &OutValue);
 		%feature("compactdefaultargs") HasShrunkData;
 		%feature("autodoc", "	* Query Returns true if the pave block contains the shrunk data
 
@@ -1852,6 +2029,12 @@ class BOPDS_PaveBlock : public MMgt_TShared {
 		%feature("autodoc", "	:rtype: None
 ") Dump;
 		void Dump ();
+		%feature("compactdefaultargs") IsSplittable;
+		%feature("autodoc", "	* Query Returns False if the pave block has a too short shrunk range and cannot be split, otherwise returns True
+
+	:rtype: bool
+") IsSplittable;
+		Standard_Boolean IsSplittable ();
 };
 
 
@@ -1874,7 +2057,7 @@ class BOPDS_PaveBlock : public MMgt_TShared {
 %}
 
 %nodefaultctor Handle_BOPDS_PaveBlock;
-class Handle_BOPDS_PaveBlock : public Handle_MMgt_TShared {
+class Handle_BOPDS_PaveBlock : public Handle_Standard_Transient {
 
     public:
         // constructors
@@ -1886,19 +2069,20 @@ class Handle_BOPDS_PaveBlock : public Handle_MMgt_TShared {
         static const Handle_BOPDS_PaveBlock DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_BOPDS_PaveBlock {
     BOPDS_PaveBlock* _get_reference() {
-    return (BOPDS_PaveBlock*)$self->Access();
+    return (BOPDS_PaveBlock*)$self->get();
     }
 };
 
 %extend Handle_BOPDS_PaveBlock {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend BOPDS_PaveBlock {
@@ -2164,13 +2348,13 @@ class BOPDS_ShapeInfo {
 class BOPDS_SubIterator {
 	public:
 		%feature("compactdefaultargs") BOPDS_SubIterator;
-		%feature("autodoc", "	* Empty contructor
+		%feature("autodoc", "	* Empty constructor
 
 	:rtype: None
 ") BOPDS_SubIterator;
 		 BOPDS_SubIterator ();
 		%feature("compactdefaultargs") BOPDS_SubIterator;
-		%feature("autodoc", "	* Contructor theAllocator - the allocator to manage the memory
+		%feature("autodoc", "	* Constructor theAllocator - the allocator to manage the memory
 
 	:param theAllocator:
 	:type theAllocator: BOPCol_BaseAllocator &
@@ -2178,7 +2362,7 @@ class BOPDS_SubIterator {
 ") BOPDS_SubIterator;
 		 BOPDS_SubIterator (const BOPCol_BaseAllocator & theAllocator);
 		%feature("compactdefaultargs") SetDS;
-		%feature("autodoc", "	* Modifier Sets the data structure <pDS> to process
+		%feature("autodoc", "	* Sets the data structure <pDS> to process. It is used to access the shapes and their bounding boxes.
 
 	:param pDS:
 	:type pDS: BOPDS_PDS &
@@ -2186,13 +2370,13 @@ class BOPDS_SubIterator {
 ") SetDS;
 		void SetDS (const BOPDS_PDS & pDS);
 		%feature("compactdefaultargs") DS;
-		%feature("autodoc", "	* Selector Returns the data structure
+		%feature("autodoc", "	* Returns the data structure
 
 	:rtype: BOPDS_DS
 ") DS;
 		const BOPDS_DS & DS ();
 		%feature("compactdefaultargs") SetSubSet1;
-		%feature("autodoc", "	* Modifier Sets the first set of indices <theLI> to process
+		%feature("autodoc", "	* Sets the first set of indices <theLI> to process
 
 	:param theLI:
 	:type theLI: BOPCol_ListOfInteger &
@@ -2200,13 +2384,13 @@ class BOPDS_SubIterator {
 ") SetSubSet1;
 		void SetSubSet1 (const BOPCol_ListOfInteger & theLI);
 		%feature("compactdefaultargs") SubSet1;
-		%feature("autodoc", "	* Selector Returns the first set of indices to process
+		%feature("autodoc", "	* Returns the first set of indices to process
 
 	:rtype: BOPCol_ListOfInteger
 ") SubSet1;
 		const BOPCol_ListOfInteger & SubSet1 ();
 		%feature("compactdefaultargs") SetSubSet2;
-		%feature("autodoc", "	* Modifier Sets the second set of indices <theLI> to process
+		%feature("autodoc", "	* Sets the second set of indices <theLI> to process
 
 	:param theLI:
 	:type theLI: BOPCol_ListOfInteger &
@@ -2214,7 +2398,7 @@ class BOPDS_SubIterator {
 ") SetSubSet2;
 		void SetSubSet2 (const BOPCol_ListOfInteger & theLI);
 		%feature("compactdefaultargs") SubSet2;
-		%feature("autodoc", "	* Selector Returns the second set of indices to process
+		%feature("autodoc", "	* Returns the second set of indices to process
 
 	:rtype: BOPCol_ListOfInteger
 ") SubSet2;
@@ -2226,7 +2410,7 @@ class BOPDS_SubIterator {
 ") Initialize;
 		void Initialize ();
 		%feature("compactdefaultargs") More;
-		%feature("autodoc", "	* Returns true if still there are pairs of intersected shapes
+		%feature("autodoc", "	* Returns true if there are more pairs of intersected shapes
 
 	:rtype: bool
 ") More;
@@ -2238,7 +2422,7 @@ class BOPDS_SubIterator {
 ") Next;
 		void Next ();
 		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	* Returns indices (DS) of intersected shapes theIndex1 - the index of the first shape theIndex2 - the index of the second shape
+		%feature("autodoc", "	* Returns indices --DS-- of intersected shapes theIndex1 - the index of the first shape theIndex2 - the index of the second shape
 
 	:param theIndex1:
 	:type theIndex1: int &
@@ -2253,6 +2437,12 @@ class BOPDS_SubIterator {
 	:rtype: void
 ") Prepare;
 		virtual void Prepare ();
+		%feature("compactdefaultargs") ExpectedLength;
+		%feature("autodoc", "	* Returns the number of interfering pairs
+
+	:rtype: int
+") ExpectedLength;
+		Standard_Integer ExpectedLength ();
 };
 
 
@@ -2441,34 +2631,6 @@ class BOPDS_InterfFF : public BOPDS_Interf {
 	:rtype: bool
 ") TangentFaces;
 		Standard_Boolean TangentFaces ();
-		%feature("compactdefaultargs") SetTolR3D;
-		%feature("autodoc", "	* /** * Modifier * Sets the value of 3D tolerance * @param theTol * 3D tolerance */
-
-	:param theTol:
-	:type theTol: float
-	:rtype: None
-") SetTolR3D;
-		void SetTolR3D (const Standard_Real theTol);
-		%feature("compactdefaultargs") TolR3D;
-		%feature("autodoc", "	* /** * Selector * Returns the value of 3D tolerance * returns * 3D tolerance */
-
-	:rtype: float
-") TolR3D;
-		Standard_Real TolR3D ();
-		%feature("compactdefaultargs") SetTolR2D;
-		%feature("autodoc", "	* /** * Modifier * Sets the value of 2D tolerance * @param theTol * 2D tolerance */
-
-	:param theTol:
-	:type theTol: float
-	:rtype: None
-") SetTolR2D;
-		void SetTolR2D (const Standard_Real theTol);
-		%feature("compactdefaultargs") TolR2D;
-		%feature("autodoc", "	* /** * Selector * Returns the value of 2D tolerance * returns * 2D tolerance */
-
-	:rtype: float
-") TolR2D;
-		Standard_Real TolR2D ();
 		%feature("compactdefaultargs") Curves;
 		%feature("autodoc", "	* /** * Selector * Returns the intersection curves * returns * intersection curves */
 

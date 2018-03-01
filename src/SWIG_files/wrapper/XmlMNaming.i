@@ -1,5 +1,5 @@
 /*
-Copyright 2008-2017 Thomas Paviot (tpaviot@gmail.com)
+Copyright 2008-2018 Thomas Paviot (tpaviot@gmail.com)
 
 
 This file is part of pythonOCC.
@@ -55,6 +55,9 @@ def register_handle(handle, base_object):
 
 /* typedefs */
 /* end typedefs declaration */
+
+/* templates */
+/* end templates declaration */
 
 /* public enums */
 /* end public enums declaration */
@@ -185,19 +188,20 @@ class Handle_XmlMNaming_NamedShapeDriver : public Handle_XmlMDF_ADriver {
         static const Handle_XmlMNaming_NamedShapeDriver DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_XmlMNaming_NamedShapeDriver {
     XmlMNaming_NamedShapeDriver* _get_reference() {
-    return (XmlMNaming_NamedShapeDriver*)$self->Access();
+    return (XmlMNaming_NamedShapeDriver*)$self->get();
     }
 };
 
 %extend Handle_XmlMNaming_NamedShapeDriver {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend XmlMNaming_NamedShapeDriver {
@@ -272,19 +276,20 @@ class Handle_XmlMNaming_NamingDriver : public Handle_XmlMDF_ADriver {
         static const Handle_XmlMNaming_NamingDriver DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_XmlMNaming_NamingDriver {
     XmlMNaming_NamingDriver* _get_reference() {
-    return (XmlMNaming_NamingDriver*)$self->Access();
+    return (XmlMNaming_NamingDriver*)$self->get();
     }
 };
 
 %extend Handle_XmlMNaming_NamingDriver {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend XmlMNaming_NamingDriver {
@@ -347,50 +352,6 @@ class XmlMNaming_Shape1 {
 	:rtype: None
 ") SetVertex;
 		void SetVertex (const TopoDS_Shape & theVertex);
-		%feature("compactdefaultargs") XmlMNaming_Shape1;
-		%feature("autodoc", "	:rtype: None
-") XmlMNaming_Shape1;
-		 XmlMNaming_Shape1 ();
-		%feature("compactdefaultargs") _CSFDB_GetXmlMNaming_Shape1myElement;
-		%feature("autodoc", "	:rtype: XmlObjMgt_Element
-") _CSFDB_GetXmlMNaming_Shape1myElement;
-		XmlObjMgt_Element _CSFDB_GetXmlMNaming_Shape1myElement ();
-		%feature("compactdefaultargs") _CSFDB_SetXmlMNaming_Shape1myElement;
-		%feature("autodoc", "	:param p:
-	:type p: XmlObjMgt_Element
-	:rtype: None
-") _CSFDB_SetXmlMNaming_Shape1myElement;
-		void _CSFDB_SetXmlMNaming_Shape1myElement (const XmlObjMgt_Element p);
-		%feature("compactdefaultargs") _CSFDB_GetXmlMNaming_Shape1myTShapeID;
-		%feature("autodoc", "	:rtype: int
-") _CSFDB_GetXmlMNaming_Shape1myTShapeID;
-		Standard_Integer _CSFDB_GetXmlMNaming_Shape1myTShapeID ();
-		%feature("compactdefaultargs") _CSFDB_SetXmlMNaming_Shape1myTShapeID;
-		%feature("autodoc", "	:param p:
-	:type p: int
-	:rtype: None
-") _CSFDB_SetXmlMNaming_Shape1myTShapeID;
-		void _CSFDB_SetXmlMNaming_Shape1myTShapeID (const Standard_Integer p);
-		%feature("compactdefaultargs") _CSFDB_GetXmlMNaming_Shape1myLocID;
-		%feature("autodoc", "	:rtype: int
-") _CSFDB_GetXmlMNaming_Shape1myLocID;
-		Standard_Integer _CSFDB_GetXmlMNaming_Shape1myLocID ();
-		%feature("compactdefaultargs") _CSFDB_SetXmlMNaming_Shape1myLocID;
-		%feature("autodoc", "	:param p:
-	:type p: int
-	:rtype: None
-") _CSFDB_SetXmlMNaming_Shape1myLocID;
-		void _CSFDB_SetXmlMNaming_Shape1myLocID (const Standard_Integer p);
-		%feature("compactdefaultargs") _CSFDB_GetXmlMNaming_Shape1myOrientation;
-		%feature("autodoc", "	:rtype: TopAbs_Orientation
-") _CSFDB_GetXmlMNaming_Shape1myOrientation;
-		TopAbs_Orientation _CSFDB_GetXmlMNaming_Shape1myOrientation ();
-		%feature("compactdefaultargs") _CSFDB_SetXmlMNaming_Shape1myOrientation;
-		%feature("autodoc", "	:param p:
-	:type p: TopAbs_Orientation
-	:rtype: None
-") _CSFDB_SetXmlMNaming_Shape1myOrientation;
-		void _CSFDB_SetXmlMNaming_Shape1myOrientation (const TopAbs_Orientation p);
 };
 
 

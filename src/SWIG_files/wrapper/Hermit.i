@@ -1,5 +1,5 @@
 /*
-Copyright 2008-2017 Thomas Paviot (tpaviot@gmail.com)
+Copyright 2008-2018 Thomas Paviot (tpaviot@gmail.com)
 
 
 This file is part of pythonOCC.
@@ -56,6 +56,9 @@ def register_handle(handle, base_object):
 /* typedefs */
 /* end typedefs declaration */
 
+/* templates */
+/* end templates declaration */
+
 /* public enums */
 /* end public enums declaration */
 
@@ -63,7 +66,7 @@ def register_handle(handle, base_object):
 class Hermit {
 	public:
 		%feature("compactdefaultargs") Solution;
-		%feature("autodoc", "	* returns the correct spline a(u) which will be multiplicated with BS later.
+		%feature("autodoc", "	* returns the correct spline a--u-- which will be multiplicated with BS later.
 
 	:param BS:
 	:type BS: Handle_Geom_BSplineCurve &
@@ -75,7 +78,7 @@ class Hermit {
 ") Solution;
 		static Handle_Geom2d_BSplineCurve Solution (const Handle_Geom_BSplineCurve & BS,const Standard_Real TolPoles = 0.000001,const Standard_Real TolKnots = 0.000001);
 		%feature("compactdefaultargs") Solution;
-		%feature("autodoc", "	* returns the correct spline a(u) which will be multiplicated with BS later.
+		%feature("autodoc", "	* returns the correct spline a--u-- which will be multiplicated with BS later.
 
 	:param BS:
 	:type BS: Handle_Geom2d_BSplineCurve &
@@ -87,7 +90,7 @@ class Hermit {
 ") Solution;
 		static Handle_Geom2d_BSplineCurve Solution (const Handle_Geom2d_BSplineCurve & BS,const Standard_Real TolPoles = 0.000001,const Standard_Real TolKnots = 0.000001);
 		%feature("compactdefaultargs") Solutionbis;
-		%feature("autodoc", "	* returns the knots to insert to a(u) to stay with a constant sign and in the tolerances.
+		%feature("autodoc", "	* returns the knots to insert to a--u-- to stay with a constant sign and in the tolerances.
 
 	:param BS:
 	:type BS: Handle_Geom_BSplineCurve &

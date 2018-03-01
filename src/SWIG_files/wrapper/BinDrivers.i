@@ -1,5 +1,5 @@
 /*
-Copyright 2008-2017 Thomas Paviot (tpaviot@gmail.com)
+Copyright 2008-2018 Thomas Paviot (tpaviot@gmail.com)
 
 
 This file is part of pythonOCC.
@@ -56,6 +56,9 @@ def register_handle(handle, base_object):
 /* typedefs */
 /* end typedefs declaration */
 
+/* templates */
+/* end templates declaration */
+
 /* public enums */
 enum BinDrivers_Marker {
 	BinDrivers_ENDATTRLIST = - 1,
@@ -65,6 +68,7 @@ enum BinDrivers_Marker {
 /* end public enums declaration */
 
 %rename(bindrivers) BinDrivers;
+%nodefaultctor BinDrivers;
 class BinDrivers {
 	public:
 		%feature("compactdefaultargs") Factory;
@@ -72,7 +76,15 @@ class BinDrivers {
 	:type theGUID: Standard_GUID &
 	:rtype: Handle_Standard_Transient
 ") Factory;
-		static Handle_Standard_Transient Factory (const Standard_GUID & theGUID);
+		Handle_Standard_Transient Factory (const Standard_GUID & theGUID);
+		%feature("compactdefaultargs") DefineFormat;
+		%feature("autodoc", "	* Defines format 'BinOcaf' and registers its read and write drivers in the specified application
+
+	:param theApp:
+	:type theApp: Handle_TDocStd_Application &
+	:rtype: void
+") DefineFormat;
+		static void DefineFormat (const Handle_TDocStd_Application & theApp);
 		%feature("compactdefaultargs") AttributeDrivers;
 		%feature("autodoc", "	* Creates the table of drivers of types supported
 
@@ -128,6 +140,12 @@ class BinDrivers_DocumentRetrievalDriver : public BinLDrivers_DocumentRetrievalD
 	:rtype: void
 ") CheckShapeSection;
 		virtual void CheckShapeSection (const Storage_Position & thePos,Standard_IStream & theIS);
+		%feature("compactdefaultargs") Clear;
+		%feature("autodoc", "	* Clears the NamedShape driver
+
+	:rtype: void
+") Clear;
+		virtual void Clear ();
 		%feature("compactdefaultargs") PropagateDocumentVersion;
 		%feature("autodoc", "	:param theVersion:
 	:type theVersion: int
@@ -168,19 +186,20 @@ class Handle_BinDrivers_DocumentRetrievalDriver : public Handle_BinLDrivers_Docu
         static const Handle_BinDrivers_DocumentRetrievalDriver DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_BinDrivers_DocumentRetrievalDriver {
     BinDrivers_DocumentRetrievalDriver* _get_reference() {
-    return (BinDrivers_DocumentRetrievalDriver*)$self->Access();
+    return (BinDrivers_DocumentRetrievalDriver*)$self->get();
     }
 };
 
 %extend Handle_BinDrivers_DocumentRetrievalDriver {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend BinDrivers_DocumentRetrievalDriver {
@@ -213,6 +232,22 @@ class BinDrivers_DocumentStorageDriver : public BinLDrivers_DocumentStorageDrive
 	:rtype: void
 ") WriteShapeSection;
 		virtual void WriteShapeSection (BinLDrivers_DocumentSection & theDocSection,Standard_OStream & theOS);
+		%feature("compactdefaultargs") IsWithTriangles;
+		%feature("autodoc", "	* Return true if shape should be stored with triangles.
+
+	:rtype: bool
+") IsWithTriangles;
+		Standard_Boolean IsWithTriangles ();
+		%feature("compactdefaultargs") SetWithTriangles;
+		%feature("autodoc", "	* Set if triangulation should be stored or not.
+
+	:param theMessageDriver:
+	:type theMessageDriver: Handle_CDM_MessageDriver &
+	:param theWithTriangulation:
+	:type theWithTriangulation: bool
+	:rtype: None
+") SetWithTriangles;
+		void SetWithTriangles (const Handle_CDM_MessageDriver & theMessageDriver,const Standard_Boolean theWithTriangulation);
 };
 
 
@@ -247,19 +282,20 @@ class Handle_BinDrivers_DocumentStorageDriver : public Handle_BinLDrivers_Docume
         static const Handle_BinDrivers_DocumentStorageDriver DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_BinDrivers_DocumentStorageDriver {
     BinDrivers_DocumentStorageDriver* _get_reference() {
-    return (BinDrivers_DocumentStorageDriver*)$self->Access();
+    return (BinDrivers_DocumentStorageDriver*)$self->get();
     }
 };
 
 %extend Handle_BinDrivers_DocumentStorageDriver {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend BinDrivers_DocumentStorageDriver {

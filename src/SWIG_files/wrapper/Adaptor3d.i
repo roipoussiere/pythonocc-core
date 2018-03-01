@@ -1,5 +1,5 @@
 /*
-Copyright 2008-2017 Thomas Paviot (tpaviot@gmail.com)
+Copyright 2008-2018 Thomas Paviot (tpaviot@gmail.com)
 
 
 This file is part of pythonOCC.
@@ -59,6 +59,9 @@ typedef Adaptor3d_Curve * Adaptor3d_CurvePtr;
 typedef Adaptor3d_CurveOnSurface * Adaptor3d_CurveOnSurfacePtr;
 /* end typedefs declaration */
 
+/* templates */
+/* end templates declaration */
+
 /* public enums */
 /* end public enums declaration */
 
@@ -77,7 +80,7 @@ class Adaptor3d_Curve {
 ") Continuity;
 		virtual GeomAbs_Shape Continuity ();
 		%feature("compactdefaultargs") NbIntervals;
-		%feature("autodoc", "	* Returns the number of intervals for continuity <S>. May be one if Continuity(me) >= <S>
+		%feature("autodoc", "	* Returns the number of intervals for continuity <S>. May be one if Continuity--me-- >= <S>
 
 	:param S:
 	:type S: GeomAbs_Shape
@@ -85,7 +88,7 @@ class Adaptor3d_Curve {
 ") NbIntervals;
 		virtual Standard_Integer NbIntervals (const GeomAbs_Shape S);
 		%feature("compactdefaultargs") Intervals;
-		%feature("autodoc", "	* Stores in <T> the parameters bounding the intervals of continuity <S>. //! The array must provide enough room to accomodate for the parameters. i.e. T.Length() > NbIntervals()
+		%feature("autodoc", "	* Stores in <T> the parameters bounding the intervals of continuity <S>. //! The array must provide enough room to accomodate for the parameters. i.e. T.Length---- > NbIntervals----
 
 	:param T:
 	:type T: TColStd_Array1OfReal &
@@ -246,6 +249,10 @@ class Adaptor3d_Curve {
 		%feature("autodoc", "	:rtype: Handle_Geom_BSplineCurve
 ") BSpline;
 		virtual Handle_Geom_BSplineCurve BSpline ();
+		%feature("compactdefaultargs") OffsetCurve;
+		%feature("autodoc", "	:rtype: Handle_Geom_OffsetCurve
+") OffsetCurve;
+		virtual Handle_Geom_OffsetCurve OffsetCurve ();
 };
 
 
@@ -255,7 +262,7 @@ class Adaptor3d_Curve {
 	}
 };
 %nodefaultctor Adaptor3d_HCurve;
-class Adaptor3d_HCurve : public MMgt_TShared {
+class Adaptor3d_HCurve : public Standard_Transient {
 	public:
 		%feature("compactdefaultargs") Curve;
 		%feature("autodoc", "	* Returns a pointer to the Curve inside the HCurve.
@@ -288,7 +295,7 @@ class Adaptor3d_HCurve : public MMgt_TShared {
 ") NbIntervals;
 		Standard_Integer NbIntervals (const GeomAbs_Shape S);
 		%feature("compactdefaultargs") Intervals;
-		%feature("autodoc", "	* Stores in <T> the parameters bounding the intervals of continuity <S>. //! The array must provide enough room to accomodate for the parameters. i.e. T.Length() > NbIntervals()
+		%feature("autodoc", "	* Stores in <T> the parameters bounding the intervals of continuity <S>. //! The array must provide enough room to accomodate for the parameters. i.e. T.Length---- > NbIntervals----
 
 	:param T:
 	:type T: TColStd_Array1OfReal &
@@ -433,6 +440,10 @@ class Adaptor3d_HCurve : public MMgt_TShared {
 		%feature("autodoc", "	:rtype: Handle_Geom_BSplineCurve
 ") BSpline;
 		Handle_Geom_BSplineCurve BSpline ();
+		%feature("compactdefaultargs") OffsetCurve;
+		%feature("autodoc", "	:rtype: Handle_Geom_OffsetCurve
+") OffsetCurve;
+		Handle_Geom_OffsetCurve OffsetCurve ();
 };
 
 
@@ -455,7 +466,7 @@ class Adaptor3d_HCurve : public MMgt_TShared {
 %}
 
 %nodefaultctor Handle_Adaptor3d_HCurve;
-class Handle_Adaptor3d_HCurve : public Handle_MMgt_TShared {
+class Handle_Adaptor3d_HCurve : public Handle_Standard_Transient {
 
     public:
         // constructors
@@ -467,19 +478,20 @@ class Handle_Adaptor3d_HCurve : public Handle_MMgt_TShared {
         static const Handle_Adaptor3d_HCurve DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_Adaptor3d_HCurve {
     Adaptor3d_HCurve* _get_reference() {
-    return (Adaptor3d_HCurve*)$self->Access();
+    return (Adaptor3d_HCurve*)$self->get();
     }
 };
 
 %extend Handle_Adaptor3d_HCurve {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend Adaptor3d_HCurve {
@@ -487,89 +499,8 @@ class Handle_Adaptor3d_HCurve : public Handle_MMgt_TShared {
 	__repr__ = _dumps_object
 	}
 };
-%nodefaultctor Adaptor3d_HOffsetCurve;
-class Adaptor3d_HOffsetCurve : public Adaptor2d_HCurve2d {
-	public:
-		%feature("compactdefaultargs") Adaptor3d_HOffsetCurve;
-		%feature("autodoc", "	:rtype: None
-") Adaptor3d_HOffsetCurve;
-		 Adaptor3d_HOffsetCurve ();
-		%feature("compactdefaultargs") Adaptor3d_HOffsetCurve;
-		%feature("autodoc", "	:param C:
-	:type C: Adaptor3d_OffsetCurve &
-	:rtype: None
-") Adaptor3d_HOffsetCurve;
-		 Adaptor3d_HOffsetCurve (const Adaptor3d_OffsetCurve & C);
-		%feature("compactdefaultargs") Set;
-		%feature("autodoc", "	:param C:
-	:type C: Adaptor3d_OffsetCurve &
-	:rtype: None
-") Set;
-		void Set (const Adaptor3d_OffsetCurve & C);
-		%feature("compactdefaultargs") Curve2d;
-		%feature("autodoc", "	:rtype: Adaptor2d_Curve2d
-") Curve2d;
-		const Adaptor2d_Curve2d & Curve2d ();
-		%feature("compactdefaultargs") ChangeCurve2d;
-		%feature("autodoc", "	:rtype: Adaptor3d_OffsetCurve
-") ChangeCurve2d;
-		Adaptor3d_OffsetCurve & ChangeCurve2d ();
-};
-
-
-%extend Adaptor3d_HOffsetCurve {
-	%pythoncode {
-		def GetHandle(self):
-		    try:
-		        return self.thisHandle
-		    except:
-		        self.thisHandle = Handle_Adaptor3d_HOffsetCurve(self)
-		        self.thisown = False
-		        return self.thisHandle
-	}
-};
-
-%pythonappend Handle_Adaptor3d_HOffsetCurve::Handle_Adaptor3d_HOffsetCurve %{
-    # register the handle in the base object
-    if len(args) > 0:
-        register_handle(self, args[0])
-%}
-
-%nodefaultctor Handle_Adaptor3d_HOffsetCurve;
-class Handle_Adaptor3d_HOffsetCurve : public Handle_Adaptor2d_HCurve2d {
-
-    public:
-        // constructors
-        Handle_Adaptor3d_HOffsetCurve();
-        Handle_Adaptor3d_HOffsetCurve(const Handle_Adaptor3d_HOffsetCurve &aHandle);
-        Handle_Adaptor3d_HOffsetCurve(const Adaptor3d_HOffsetCurve *anItem);
-        void Nullify();
-        Standard_Boolean IsNull() const;
-        static const Handle_Adaptor3d_HOffsetCurve DownCast(const Handle_Standard_Transient &AnObject);
-
-};
-%extend Handle_Adaptor3d_HOffsetCurve {
-    Adaptor3d_HOffsetCurve* _get_reference() {
-    return (Adaptor3d_HOffsetCurve*)$self->Access();
-    }
-};
-
-%extend Handle_Adaptor3d_HOffsetCurve {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
-};
-
-%extend Adaptor3d_HOffsetCurve {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
 %nodefaultctor Adaptor3d_HSurface;
-class Adaptor3d_HSurface : public MMgt_TShared {
+class Adaptor3d_HSurface : public Standard_Transient {
 	public:
 		%feature("compactdefaultargs") Surface;
 		%feature("autodoc", "	* Returns a reference to the Surface inside the HSurface.
@@ -883,7 +814,7 @@ class Adaptor3d_HSurface : public MMgt_TShared {
 %}
 
 %nodefaultctor Handle_Adaptor3d_HSurface;
-class Handle_Adaptor3d_HSurface : public Handle_MMgt_TShared {
+class Handle_Adaptor3d_HSurface : public Handle_Standard_Transient {
 
     public:
         // constructors
@@ -895,19 +826,20 @@ class Handle_Adaptor3d_HSurface : public Handle_MMgt_TShared {
         static const Handle_Adaptor3d_HSurface DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_Adaptor3d_HSurface {
     Adaptor3d_HSurface* _get_reference() {
-    return (Adaptor3d_HSurface*)$self->Access();
+    return (Adaptor3d_HSurface*)$self->get();
     }
 };
 
 %extend Handle_Adaptor3d_HSurface {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend Adaptor3d_HSurface {
@@ -1280,7 +1212,7 @@ class Adaptor3d_HSurfaceTool {
 	}
 };
 %nodefaultctor Adaptor3d_HVertex;
-class Adaptor3d_HVertex : public MMgt_TShared {
+class Adaptor3d_HVertex : public Standard_Transient {
 	public:
 		%feature("compactdefaultargs") Adaptor3d_HVertex;
 		%feature("autodoc", "	:rtype: None
@@ -1307,7 +1239,7 @@ class Adaptor3d_HVertex : public MMgt_TShared {
 ") Parameter;
 		virtual Standard_Real Parameter (const Handle_Adaptor2d_HCurve2d & C);
 		%feature("compactdefaultargs") Resolution;
-		%feature("autodoc", "	* Parametric resolution (2d).
+		%feature("autodoc", "	* Parametric resolution --2d--.
 
 	:param C:
 	:type C: Handle_Adaptor2d_HCurve2d &
@@ -1346,7 +1278,7 @@ class Adaptor3d_HVertex : public MMgt_TShared {
 %}
 
 %nodefaultctor Handle_Adaptor3d_HVertex;
-class Handle_Adaptor3d_HVertex : public Handle_MMgt_TShared {
+class Handle_Adaptor3d_HVertex : public Handle_Standard_Transient {
 
     public:
         // constructors
@@ -1358,19 +1290,20 @@ class Handle_Adaptor3d_HVertex : public Handle_MMgt_TShared {
         static const Handle_Adaptor3d_HVertex DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_Adaptor3d_HVertex {
     Adaptor3d_HVertex* _get_reference() {
-    return (Adaptor3d_HVertex*)$self->Access();
+    return (Adaptor3d_HVertex*)$self->get();
     }
 };
 
 %extend Handle_Adaptor3d_HVertex {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend Adaptor3d_HVertex {
@@ -1382,7 +1315,7 @@ class Handle_Adaptor3d_HVertex : public Handle_MMgt_TShared {
 class Adaptor3d_InterFunc : public math_FunctionWithDerivative {
 	public:
 		%feature("compactdefaultargs") Adaptor3d_InterFunc;
-		%feature("autodoc", "	* build the function U(t)=FixVal if Fix =1 or V(t)=FixVal if Fix=2
+		%feature("autodoc", "	* build the function U--t--=FixVal if Fix =1 or V--t--=FixVal if Fix=2
 
 	:param C:
 	:type C: Handle_Adaptor2d_HCurve2d &
@@ -1433,273 +1366,6 @@ class Adaptor3d_InterFunc : public math_FunctionWithDerivative {
 	__repr__ = _dumps_object
 	}
 };
-%nodefaultctor Adaptor3d_OffsetCurve;
-class Adaptor3d_OffsetCurve : public Adaptor2d_Curve2d {
-	public:
-		%feature("compactdefaultargs") Adaptor3d_OffsetCurve;
-		%feature("autodoc", "	* The Offset is set to 0.
-
-	:rtype: None
-") Adaptor3d_OffsetCurve;
-		 Adaptor3d_OffsetCurve ();
-		%feature("compactdefaultargs") Adaptor3d_OffsetCurve;
-		%feature("autodoc", "	* The curve is loaded. The Offset is set to 0.
-
-	:param C:
-	:type C: Handle_Adaptor2d_HCurve2d &
-	:rtype: None
-") Adaptor3d_OffsetCurve;
-		 Adaptor3d_OffsetCurve (const Handle_Adaptor2d_HCurve2d & C);
-		%feature("compactdefaultargs") Adaptor3d_OffsetCurve;
-		%feature("autodoc", "	* Creates an OffsetCurve curve. The Offset is set to Offset.
-
-	:param C:
-	:type C: Handle_Adaptor2d_HCurve2d &
-	:param Offset:
-	:type Offset: float
-	:rtype: None
-") Adaptor3d_OffsetCurve;
-		 Adaptor3d_OffsetCurve (const Handle_Adaptor2d_HCurve2d & C,const Standard_Real Offset);
-		%feature("compactdefaultargs") Adaptor3d_OffsetCurve;
-		%feature("autodoc", "	* Create an Offset curve. WFirst,WLast define the bounds of the Offset curve.
-
-	:param C:
-	:type C: Handle_Adaptor2d_HCurve2d &
-	:param Offset:
-	:type Offset: float
-	:param WFirst:
-	:type WFirst: float
-	:param WLast:
-	:type WLast: float
-	:rtype: None
-") Adaptor3d_OffsetCurve;
-		 Adaptor3d_OffsetCurve (const Handle_Adaptor2d_HCurve2d & C,const Standard_Real Offset,const Standard_Real WFirst,const Standard_Real WLast);
-		%feature("compactdefaultargs") Load;
-		%feature("autodoc", "	* Changes the curve. The Offset is reset to 0.
-
-	:param S:
-	:type S: Handle_Adaptor2d_HCurve2d &
-	:rtype: None
-") Load;
-		void Load (const Handle_Adaptor2d_HCurve2d & S);
-		%feature("compactdefaultargs") Load;
-		%feature("autodoc", "	* Changes the Offset on the current Curve.
-
-	:param Offset:
-	:type Offset: float
-	:rtype: None
-") Load;
-		void Load (const Standard_Real Offset);
-		%feature("compactdefaultargs") Load;
-		%feature("autodoc", "	* Changes the Offset Curve on the current Curve.
-
-	:param Offset:
-	:type Offset: float
-	:param WFirst:
-	:type WFirst: float
-	:param WLast:
-	:type WLast: float
-	:rtype: None
-") Load;
-		void Load (const Standard_Real Offset,const Standard_Real WFirst,const Standard_Real WLast);
-		%feature("compactdefaultargs") Curve;
-		%feature("autodoc", "	:rtype: Handle_Adaptor2d_HCurve2d
-") Curve;
-		Handle_Adaptor2d_HCurve2d Curve ();
-		%feature("compactdefaultargs") Offset;
-		%feature("autodoc", "	:rtype: float
-") Offset;
-		Standard_Real Offset ();
-		%feature("compactdefaultargs") FirstParameter;
-		%feature("autodoc", "	:rtype: float
-") FirstParameter;
-		Standard_Real FirstParameter ();
-		%feature("compactdefaultargs") LastParameter;
-		%feature("autodoc", "	:rtype: float
-") LastParameter;
-		Standard_Real LastParameter ();
-		%feature("compactdefaultargs") Continuity;
-		%feature("autodoc", "	:rtype: GeomAbs_Shape
-") Continuity;
-		GeomAbs_Shape Continuity ();
-		%feature("compactdefaultargs") NbIntervals;
-		%feature("autodoc", "	* If necessary, breaks the curve in intervals of continuity <S>. And returns the number of intervals.
-
-	:param S:
-	:type S: GeomAbs_Shape
-	:rtype: int
-") NbIntervals;
-		Standard_Integer NbIntervals (const GeomAbs_Shape S);
-		%feature("compactdefaultargs") Intervals;
-		%feature("autodoc", "	* Stores in <T> the parameters bounding the intervals of continuity <S>. //! The array must provide enough room to accomodate for the parameters. i.e. T.Length() > NbIntervals()
-
-	:param T:
-	:type T: TColStd_Array1OfReal &
-	:param S:
-	:type S: GeomAbs_Shape
-	:rtype: None
-") Intervals;
-		void Intervals (TColStd_Array1OfReal & T,const GeomAbs_Shape S);
-		%feature("compactdefaultargs") Trim;
-		%feature("autodoc", "	* Returns a curve equivalent of <self> between parameters <First> and <Last>. <Tol> is used to test for 3d points confusion. If <First> >= <Last>
-
-	:param First:
-	:type First: float
-	:param Last:
-	:type Last: float
-	:param Tol:
-	:type Tol: float
-	:rtype: Handle_Adaptor2d_HCurve2d
-") Trim;
-		Handle_Adaptor2d_HCurve2d Trim (const Standard_Real First,const Standard_Real Last,const Standard_Real Tol);
-		%feature("compactdefaultargs") IsClosed;
-		%feature("autodoc", "	:rtype: bool
-") IsClosed;
-		Standard_Boolean IsClosed ();
-		%feature("compactdefaultargs") IsPeriodic;
-		%feature("autodoc", "	:rtype: bool
-") IsPeriodic;
-		Standard_Boolean IsPeriodic ();
-		%feature("compactdefaultargs") Period;
-		%feature("autodoc", "	:rtype: float
-") Period;
-		Standard_Real Period ();
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	* Computes the point of parameter U on the curve.
-
-	:param U:
-	:type U: float
-	:rtype: gp_Pnt2d
-") Value;
-		gp_Pnt2d Value (const Standard_Real U);
-		%feature("compactdefaultargs") D0;
-		%feature("autodoc", "	* Computes the point of parameter U on the curve.
-
-	:param U:
-	:type U: float
-	:param P:
-	:type P: gp_Pnt2d
-	:rtype: None
-") D0;
-		void D0 (const Standard_Real U,gp_Pnt2d & P);
-		%feature("compactdefaultargs") D1;
-		%feature("autodoc", "	* Computes the point of parameter U on the curve with its first derivative. Raised if the continuity of the current interval is not C1.
-
-	:param U:
-	:type U: float
-	:param P:
-	:type P: gp_Pnt2d
-	:param V:
-	:type V: gp_Vec2d
-	:rtype: None
-") D1;
-		void D1 (const Standard_Real U,gp_Pnt2d & P,gp_Vec2d & V);
-		%feature("compactdefaultargs") D2;
-		%feature("autodoc", "	* Returns the point P of parameter U, the first and second derivatives V1 and V2. Raised if the continuity of the current interval is not C2.
-
-	:param U:
-	:type U: float
-	:param P:
-	:type P: gp_Pnt2d
-	:param V1:
-	:type V1: gp_Vec2d
-	:param V2:
-	:type V2: gp_Vec2d
-	:rtype: None
-") D2;
-		void D2 (const Standard_Real U,gp_Pnt2d & P,gp_Vec2d & V1,gp_Vec2d & V2);
-		%feature("compactdefaultargs") D3;
-		%feature("autodoc", "	* Returns the point P of parameter U, the first, the second and the third derivative. Raised if the continuity of the current interval is not C3.
-
-	:param U:
-	:type U: float
-	:param P:
-	:type P: gp_Pnt2d
-	:param V1:
-	:type V1: gp_Vec2d
-	:param V2:
-	:type V2: gp_Vec2d
-	:param V3:
-	:type V3: gp_Vec2d
-	:rtype: None
-") D3;
-		void D3 (const Standard_Real U,gp_Pnt2d & P,gp_Vec2d & V1,gp_Vec2d & V2,gp_Vec2d & V3);
-		%feature("compactdefaultargs") DN;
-		%feature("autodoc", "	* The returned vector gives the value of the derivative for the order of derivation N. Raised if the continuity of the current interval is not CN. Raised if N < 1.
-
-	:param U:
-	:type U: float
-	:param N:
-	:type N: int
-	:rtype: gp_Vec2d
-") DN;
-		gp_Vec2d DN (const Standard_Real U,const Standard_Integer N);
-		%feature("compactdefaultargs") Resolution;
-		%feature("autodoc", "	* Returns the parametric resolution corresponding to the real space resolution <R3d>.
-
-	:param R3d:
-	:type R3d: float
-	:rtype: float
-") Resolution;
-		Standard_Real Resolution (const Standard_Real R3d);
-		%feature("compactdefaultargs") GetType;
-		%feature("autodoc", "	* Returns the type of the curve in the current interval : Line, Circle, Ellipse, Hyperbola, Parabola, BezierCurve, BSplineCurve, OtherCurve.
-
-	:rtype: GeomAbs_CurveType
-") GetType;
-		GeomAbs_CurveType GetType ();
-		%feature("compactdefaultargs") Line;
-		%feature("autodoc", "	:rtype: gp_Lin2d
-") Line;
-		gp_Lin2d Line ();
-		%feature("compactdefaultargs") Circle;
-		%feature("autodoc", "	:rtype: gp_Circ2d
-") Circle;
-		gp_Circ2d Circle ();
-		%feature("compactdefaultargs") Ellipse;
-		%feature("autodoc", "	:rtype: gp_Elips2d
-") Ellipse;
-		gp_Elips2d Ellipse ();
-		%feature("compactdefaultargs") Hyperbola;
-		%feature("autodoc", "	:rtype: gp_Hypr2d
-") Hyperbola;
-		gp_Hypr2d Hyperbola ();
-		%feature("compactdefaultargs") Parabola;
-		%feature("autodoc", "	:rtype: gp_Parab2d
-") Parabola;
-		gp_Parab2d Parabola ();
-		%feature("compactdefaultargs") Degree;
-		%feature("autodoc", "	:rtype: int
-") Degree;
-		Standard_Integer Degree ();
-		%feature("compactdefaultargs") IsRational;
-		%feature("autodoc", "	:rtype: bool
-") IsRational;
-		Standard_Boolean IsRational ();
-		%feature("compactdefaultargs") NbPoles;
-		%feature("autodoc", "	:rtype: int
-") NbPoles;
-		Standard_Integer NbPoles ();
-		%feature("compactdefaultargs") NbKnots;
-		%feature("autodoc", "	:rtype: int
-") NbKnots;
-		Standard_Integer NbKnots ();
-		%feature("compactdefaultargs") Bezier;
-		%feature("autodoc", "	:rtype: Handle_Geom2d_BezierCurve
-") Bezier;
-		Handle_Geom2d_BezierCurve Bezier ();
-		%feature("compactdefaultargs") BSpline;
-		%feature("autodoc", "	:rtype: Handle_Geom2d_BSplineCurve
-") BSpline;
-		Handle_Geom2d_BSplineCurve BSpline ();
-};
-
-
-%extend Adaptor3d_OffsetCurve {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
 class Adaptor3d_Surface {
 	public:
 		%feature("compactdefaultargs") FirstUParameter;
@@ -1727,7 +1393,7 @@ class Adaptor3d_Surface {
 ") VContinuity;
 		virtual GeomAbs_Shape VContinuity ();
 		%feature("compactdefaultargs") NbUIntervals;
-		%feature("autodoc", "	* Returns the number of U intervals for continuity <S>. May be one if UContinuity(me) >= <S>
+		%feature("autodoc", "	* Returns the number of U intervals for continuity <S>. May be one if UContinuity--me-- >= <S>
 
 	:param S:
 	:type S: GeomAbs_Shape
@@ -1735,7 +1401,7 @@ class Adaptor3d_Surface {
 ") NbUIntervals;
 		virtual Standard_Integer NbUIntervals (const GeomAbs_Shape S);
 		%feature("compactdefaultargs") NbVIntervals;
-		%feature("autodoc", "	* Returns the number of V intervals for continuity <S>. May be one if VContinuity(me) >= <S>
+		%feature("autodoc", "	* Returns the number of V intervals for continuity <S>. May be one if VContinuity--me-- >= <S>
 
 	:param S:
 	:type S: GeomAbs_Shape
@@ -1901,7 +1567,7 @@ class Adaptor3d_Surface {
 ") D3;
 		virtual void D3 (const Standard_Real U,const Standard_Real V,gp_Pnt & P,gp_Vec & D1U,gp_Vec & D1V,gp_Vec & D2U,gp_Vec & D2V,gp_Vec & D2UV,gp_Vec & D3U,gp_Vec & D3V,gp_Vec & D3UUV,gp_Vec & D3UVV);
 		%feature("compactdefaultargs") DN;
-		%feature("autodoc", "	* Computes the derivative of order Nu in the direction U and Nv in the direction V at the point P(U, V). Raised if the current U interval is not not CNu and the current V interval is not CNv. Raised if Nu + Nv < 1 or Nu < 0 or Nv < 0.
+		%feature("autodoc", "	* Computes the derivative of order Nu in the direction U and Nv in the direction V at the point P--U, V--. Raised if the current U interval is not not CNu and the current V interval is not CNv. Raised if Nu + Nv < 1 or Nu < 0 or Nv < 0.
 
 	:param U:
 	:type U: float
@@ -2025,7 +1691,7 @@ class Adaptor3d_Surface {
 	}
 };
 %nodefaultctor Adaptor3d_TopolTool;
-class Adaptor3d_TopolTool : public MMgt_TShared {
+class Adaptor3d_TopolTool : public Standard_Transient {
 	public:
 		%feature("compactdefaultargs") Adaptor3d_TopolTool;
 		%feature("autodoc", "	:rtype: None
@@ -2218,7 +1884,7 @@ class Adaptor3d_TopolTool : public MMgt_TShared {
 ") Edge;
 		virtual Standard_Address Edge ();
 		%feature("compactdefaultargs") SamplePnts;
-		%feature("autodoc", "	* compute the sample-points for the intersections algorithms by adaptive algorithm for BSpline surfaces. For other surfaces algorithm is the same as in method ComputeSamplePoints(), but only fill arrays of U and V sample parameters; theDefl is a requred deflection theNUmin, theNVmin are minimal nb points for U and V.
+		%feature("autodoc", "	* compute the sample-points for the intersections algorithms by adaptive algorithm for BSpline surfaces. For other surfaces algorithm is the same as in method ComputeSamplePoints----, but only fill arrays of U and V sample parameters; theDefl is a requred deflection theNUmin, theNVmin are minimal nb points for U and V.
 
 	:param theDefl:
 	:type theDefl: float
@@ -2269,7 +1935,7 @@ class Adaptor3d_TopolTool : public MMgt_TShared {
 %}
 
 %nodefaultctor Handle_Adaptor3d_TopolTool;
-class Handle_Adaptor3d_TopolTool : public Handle_MMgt_TShared {
+class Handle_Adaptor3d_TopolTool : public Handle_Standard_Transient {
 
     public:
         // constructors
@@ -2281,19 +1947,20 @@ class Handle_Adaptor3d_TopolTool : public Handle_MMgt_TShared {
         static const Handle_Adaptor3d_TopolTool DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_Adaptor3d_TopolTool {
     Adaptor3d_TopolTool* _get_reference() {
-    return (Adaptor3d_TopolTool*)$self->Access();
+    return (Adaptor3d_TopolTool*)$self->get();
     }
 };
 
 %extend Handle_Adaptor3d_TopolTool {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend Adaptor3d_TopolTool {
@@ -2340,6 +2007,16 @@ class Adaptor3d_CurveOnSurface : public Adaptor3d_Curve {
 	:rtype: None
 ") Load;
 		void Load (const Handle_Adaptor2d_HCurve2d & C);
+		%feature("compactdefaultargs") Load;
+		%feature("autodoc", "	* Load both curve and surface.
+
+	:param C:
+	:type C: Handle_Adaptor2d_HCurve2d &
+	:param S:
+	:type S: Handle_Adaptor3d_HSurface &
+	:rtype: None
+") Load;
+		void Load (const Handle_Adaptor2d_HCurve2d & C,const Handle_Adaptor3d_HSurface & S);
 		%feature("compactdefaultargs") GetCurve;
 		%feature("autodoc", "	:rtype: Handle_Adaptor2d_HCurve2d
 ") GetCurve;
@@ -2369,7 +2046,7 @@ class Adaptor3d_CurveOnSurface : public Adaptor3d_Curve {
 ") Continuity;
 		GeomAbs_Shape Continuity ();
 		%feature("compactdefaultargs") NbIntervals;
-		%feature("autodoc", "	* Returns the number of intervals for continuity <S>. May be one if Continuity(me) >= <S>
+		%feature("autodoc", "	* Returns the number of intervals for continuity <S>. May be one if Continuity--me-- >= <S>
 
 	:param S:
 	:type S: GeomAbs_Shape
@@ -2377,7 +2054,7 @@ class Adaptor3d_CurveOnSurface : public Adaptor3d_Curve {
 ") NbIntervals;
 		Standard_Integer NbIntervals (const GeomAbs_Shape S);
 		%feature("compactdefaultargs") Intervals;
-		%feature("autodoc", "	* Stores in <T> the parameters bounding the intervals of continuity <S>. //! The array must provide enough room to accomodate for the parameters. i.e. T.Length() > NbIntervals()
+		%feature("autodoc", "	* Stores in <T> the parameters bounding the intervals of continuity <S>. //! The array must provide enough room to accomodate for the parameters. i.e. T.Length---- > NbIntervals----
 
 	:param T:
 	:type T: TColStd_Array1OfReal &
@@ -2550,31 +2227,43 @@ class Adaptor3d_CurveOnSurface : public Adaptor3d_Curve {
 class Adaptor3d_HCurveOnSurface : public Adaptor3d_HCurve {
 	public:
 		%feature("compactdefaultargs") Adaptor3d_HCurveOnSurface;
-		%feature("autodoc", "	:rtype: None
+		%feature("autodoc", "	* Creates an empty GenHCurve.
+
+	:rtype: None
 ") Adaptor3d_HCurveOnSurface;
 		 Adaptor3d_HCurveOnSurface ();
 		%feature("compactdefaultargs") Adaptor3d_HCurveOnSurface;
-		%feature("autodoc", "	:param C:
+		%feature("autodoc", "	* Creates a GenHCurve from a Curve
+
+	:param C:
 	:type C: Adaptor3d_CurveOnSurface &
 	:rtype: None
 ") Adaptor3d_HCurveOnSurface;
 		 Adaptor3d_HCurveOnSurface (const Adaptor3d_CurveOnSurface & C);
 		%feature("compactdefaultargs") Set;
-		%feature("autodoc", "	:param C:
+		%feature("autodoc", "	* Sets the field of the GenHCurve.
+
+	:param C:
 	:type C: Adaptor3d_CurveOnSurface &
 	:rtype: None
 ") Set;
 		void Set (const Adaptor3d_CurveOnSurface & C);
 		%feature("compactdefaultargs") Curve;
-		%feature("autodoc", "	:rtype: Adaptor3d_Curve
+		%feature("autodoc", "	* Returns the curve used to create the GenHCurve. This is redefined from HCurve, cannot be inline.
+
+	:rtype: Adaptor3d_Curve
 ") Curve;
 		const Adaptor3d_Curve & Curve ();
 		%feature("compactdefaultargs") GetCurve;
-		%feature("autodoc", "	:rtype: Adaptor3d_Curve
+		%feature("autodoc", "	* Returns the curve used to create the GenHCurve. This is redefined from HCurve, cannot be inline.
+
+	:rtype: Adaptor3d_Curve
 ") GetCurve;
 		Adaptor3d_Curve & GetCurve ();
 		%feature("compactdefaultargs") ChangeCurve;
-		%feature("autodoc", "	:rtype: Adaptor3d_CurveOnSurface
+		%feature("autodoc", "	* Returns the curve used to create the GenHCurve.
+
+	:rtype: Adaptor3d_CurveOnSurface
 ") ChangeCurve;
 		Adaptor3d_CurveOnSurface & ChangeCurve ();
 };
@@ -2611,19 +2300,20 @@ class Handle_Adaptor3d_HCurveOnSurface : public Handle_Adaptor3d_HCurve {
         static const Handle_Adaptor3d_HCurveOnSurface DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_Adaptor3d_HCurveOnSurface {
     Adaptor3d_HCurveOnSurface* _get_reference() {
-    return (Adaptor3d_HCurveOnSurface*)$self->Access();
+    return (Adaptor3d_HCurveOnSurface*)$self->get();
     }
 };
 
 %extend Handle_Adaptor3d_HCurveOnSurface {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend Adaptor3d_HCurveOnSurface {
@@ -2635,31 +2325,43 @@ class Handle_Adaptor3d_HCurveOnSurface : public Handle_Adaptor3d_HCurve {
 class Adaptor3d_HIsoCurve : public Adaptor3d_HCurve {
 	public:
 		%feature("compactdefaultargs") Adaptor3d_HIsoCurve;
-		%feature("autodoc", "	:rtype: None
+		%feature("autodoc", "	* Creates an empty GenHCurve.
+
+	:rtype: None
 ") Adaptor3d_HIsoCurve;
 		 Adaptor3d_HIsoCurve ();
 		%feature("compactdefaultargs") Adaptor3d_HIsoCurve;
-		%feature("autodoc", "	:param C:
+		%feature("autodoc", "	* Creates a GenHCurve from a Curve
+
+	:param C:
 	:type C: Adaptor3d_IsoCurve &
 	:rtype: None
 ") Adaptor3d_HIsoCurve;
 		 Adaptor3d_HIsoCurve (const Adaptor3d_IsoCurve & C);
 		%feature("compactdefaultargs") Set;
-		%feature("autodoc", "	:param C:
+		%feature("autodoc", "	* Sets the field of the GenHCurve.
+
+	:param C:
 	:type C: Adaptor3d_IsoCurve &
 	:rtype: None
 ") Set;
 		void Set (const Adaptor3d_IsoCurve & C);
 		%feature("compactdefaultargs") Curve;
-		%feature("autodoc", "	:rtype: Adaptor3d_Curve
+		%feature("autodoc", "	* Returns the curve used to create the GenHCurve. This is redefined from HCurve, cannot be inline.
+
+	:rtype: Adaptor3d_Curve
 ") Curve;
 		const Adaptor3d_Curve & Curve ();
 		%feature("compactdefaultargs") GetCurve;
-		%feature("autodoc", "	:rtype: Adaptor3d_Curve
+		%feature("autodoc", "	* Returns the curve used to create the GenHCurve. This is redefined from HCurve, cannot be inline.
+
+	:rtype: Adaptor3d_Curve
 ") GetCurve;
 		Adaptor3d_Curve & GetCurve ();
 		%feature("compactdefaultargs") ChangeCurve;
-		%feature("autodoc", "	:rtype: Adaptor3d_IsoCurve
+		%feature("autodoc", "	* Returns the curve used to create the GenHCurve.
+
+	:rtype: Adaptor3d_IsoCurve
 ") ChangeCurve;
 		Adaptor3d_IsoCurve & ChangeCurve ();
 };
@@ -2696,184 +2398,23 @@ class Handle_Adaptor3d_HIsoCurve : public Handle_Adaptor3d_HCurve {
         static const Handle_Adaptor3d_HIsoCurve DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_Adaptor3d_HIsoCurve {
     Adaptor3d_HIsoCurve* _get_reference() {
-    return (Adaptor3d_HIsoCurve*)$self->Access();
+    return (Adaptor3d_HIsoCurve*)$self->get();
     }
 };
 
 %extend Handle_Adaptor3d_HIsoCurve {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend Adaptor3d_HIsoCurve {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor Adaptor3d_HSurfaceOfLinearExtrusion;
-class Adaptor3d_HSurfaceOfLinearExtrusion : public Adaptor3d_HSurface {
-	public:
-		%feature("compactdefaultargs") Adaptor3d_HSurfaceOfLinearExtrusion;
-		%feature("autodoc", "	:rtype: None
-") Adaptor3d_HSurfaceOfLinearExtrusion;
-		 Adaptor3d_HSurfaceOfLinearExtrusion ();
-		%feature("compactdefaultargs") Adaptor3d_HSurfaceOfLinearExtrusion;
-		%feature("autodoc", "	:param S:
-	:type S: Adaptor3d_SurfaceOfLinearExtrusion &
-	:rtype: None
-") Adaptor3d_HSurfaceOfLinearExtrusion;
-		 Adaptor3d_HSurfaceOfLinearExtrusion (const Adaptor3d_SurfaceOfLinearExtrusion & S);
-		%feature("compactdefaultargs") Set;
-		%feature("autodoc", "	:param S:
-	:type S: Adaptor3d_SurfaceOfLinearExtrusion &
-	:rtype: None
-") Set;
-		void Set (const Adaptor3d_SurfaceOfLinearExtrusion & S);
-		%feature("compactdefaultargs") Surface;
-		%feature("autodoc", "	:rtype: Adaptor3d_Surface
-") Surface;
-		const Adaptor3d_Surface & Surface ();
-		%feature("compactdefaultargs") ChangeSurface;
-		%feature("autodoc", "	:rtype: Adaptor3d_SurfaceOfLinearExtrusion
-") ChangeSurface;
-		Adaptor3d_SurfaceOfLinearExtrusion & ChangeSurface ();
-};
-
-
-%extend Adaptor3d_HSurfaceOfLinearExtrusion {
-	%pythoncode {
-		def GetHandle(self):
-		    try:
-		        return self.thisHandle
-		    except:
-		        self.thisHandle = Handle_Adaptor3d_HSurfaceOfLinearExtrusion(self)
-		        self.thisown = False
-		        return self.thisHandle
-	}
-};
-
-%pythonappend Handle_Adaptor3d_HSurfaceOfLinearExtrusion::Handle_Adaptor3d_HSurfaceOfLinearExtrusion %{
-    # register the handle in the base object
-    if len(args) > 0:
-        register_handle(self, args[0])
-%}
-
-%nodefaultctor Handle_Adaptor3d_HSurfaceOfLinearExtrusion;
-class Handle_Adaptor3d_HSurfaceOfLinearExtrusion : public Handle_Adaptor3d_HSurface {
-
-    public:
-        // constructors
-        Handle_Adaptor3d_HSurfaceOfLinearExtrusion();
-        Handle_Adaptor3d_HSurfaceOfLinearExtrusion(const Handle_Adaptor3d_HSurfaceOfLinearExtrusion &aHandle);
-        Handle_Adaptor3d_HSurfaceOfLinearExtrusion(const Adaptor3d_HSurfaceOfLinearExtrusion *anItem);
-        void Nullify();
-        Standard_Boolean IsNull() const;
-        static const Handle_Adaptor3d_HSurfaceOfLinearExtrusion DownCast(const Handle_Standard_Transient &AnObject);
-
-};
-%extend Handle_Adaptor3d_HSurfaceOfLinearExtrusion {
-    Adaptor3d_HSurfaceOfLinearExtrusion* _get_reference() {
-    return (Adaptor3d_HSurfaceOfLinearExtrusion*)$self->Access();
-    }
-};
-
-%extend Handle_Adaptor3d_HSurfaceOfLinearExtrusion {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
-};
-
-%extend Adaptor3d_HSurfaceOfLinearExtrusion {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor Adaptor3d_HSurfaceOfRevolution;
-class Adaptor3d_HSurfaceOfRevolution : public Adaptor3d_HSurface {
-	public:
-		%feature("compactdefaultargs") Adaptor3d_HSurfaceOfRevolution;
-		%feature("autodoc", "	:rtype: None
-") Adaptor3d_HSurfaceOfRevolution;
-		 Adaptor3d_HSurfaceOfRevolution ();
-		%feature("compactdefaultargs") Adaptor3d_HSurfaceOfRevolution;
-		%feature("autodoc", "	:param S:
-	:type S: Adaptor3d_SurfaceOfRevolution &
-	:rtype: None
-") Adaptor3d_HSurfaceOfRevolution;
-		 Adaptor3d_HSurfaceOfRevolution (const Adaptor3d_SurfaceOfRevolution & S);
-		%feature("compactdefaultargs") Set;
-		%feature("autodoc", "	:param S:
-	:type S: Adaptor3d_SurfaceOfRevolution &
-	:rtype: None
-") Set;
-		void Set (const Adaptor3d_SurfaceOfRevolution & S);
-		%feature("compactdefaultargs") Surface;
-		%feature("autodoc", "	:rtype: Adaptor3d_Surface
-") Surface;
-		const Adaptor3d_Surface & Surface ();
-		%feature("compactdefaultargs") ChangeSurface;
-		%feature("autodoc", "	:rtype: Adaptor3d_SurfaceOfRevolution
-") ChangeSurface;
-		Adaptor3d_SurfaceOfRevolution & ChangeSurface ();
-};
-
-
-%extend Adaptor3d_HSurfaceOfRevolution {
-	%pythoncode {
-		def GetHandle(self):
-		    try:
-		        return self.thisHandle
-		    except:
-		        self.thisHandle = Handle_Adaptor3d_HSurfaceOfRevolution(self)
-		        self.thisown = False
-		        return self.thisHandle
-	}
-};
-
-%pythonappend Handle_Adaptor3d_HSurfaceOfRevolution::Handle_Adaptor3d_HSurfaceOfRevolution %{
-    # register the handle in the base object
-    if len(args) > 0:
-        register_handle(self, args[0])
-%}
-
-%nodefaultctor Handle_Adaptor3d_HSurfaceOfRevolution;
-class Handle_Adaptor3d_HSurfaceOfRevolution : public Handle_Adaptor3d_HSurface {
-
-    public:
-        // constructors
-        Handle_Adaptor3d_HSurfaceOfRevolution();
-        Handle_Adaptor3d_HSurfaceOfRevolution(const Handle_Adaptor3d_HSurfaceOfRevolution &aHandle);
-        Handle_Adaptor3d_HSurfaceOfRevolution(const Adaptor3d_HSurfaceOfRevolution *anItem);
-        void Nullify();
-        Standard_Boolean IsNull() const;
-        static const Handle_Adaptor3d_HSurfaceOfRevolution DownCast(const Handle_Standard_Transient &AnObject);
-
-};
-%extend Handle_Adaptor3d_HSurfaceOfRevolution {
-    Adaptor3d_HSurfaceOfRevolution* _get_reference() {
-    return (Adaptor3d_HSurfaceOfRevolution*)$self->Access();
-    }
-};
-
-%extend Handle_Adaptor3d_HSurfaceOfRevolution {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
-};
-
-%extend Adaptor3d_HSurfaceOfRevolution {
 	%pythoncode {
 	__repr__ = _dumps_object
 	}
@@ -2896,7 +2437,7 @@ class Adaptor3d_IsoCurve : public Adaptor3d_Curve {
 ") Adaptor3d_IsoCurve;
 		 Adaptor3d_IsoCurve (const Handle_Adaptor3d_HSurface & S);
 		%feature("compactdefaultargs") Adaptor3d_IsoCurve;
-		%feature("autodoc", "	* Creates an IsoCurve curve. Iso defines the type (isoU or isoU) Param defines the value of the iso. The bounds of the iso are the bounds of the surface.
+		%feature("autodoc", "	* Creates an IsoCurve curve. Iso defines the type --isoU or isoU-- Param defines the value of the iso. The bounds of the iso are the bounds of the surface.
 
 	:param S:
 	:type S: Handle_Adaptor3d_HSurface &
@@ -2908,7 +2449,7 @@ class Adaptor3d_IsoCurve : public Adaptor3d_Curve {
 ") Adaptor3d_IsoCurve;
 		 Adaptor3d_IsoCurve (const Handle_Adaptor3d_HSurface & S,const GeomAbs_IsoType Iso,const Standard_Real Param);
 		%feature("compactdefaultargs") Adaptor3d_IsoCurve;
-		%feature("autodoc", "	* Create an IsoCurve curve. Iso defines the type (isoU or isov). Param defines the value of the iso. WFirst,WLast define the bounds of the iso.
+		%feature("autodoc", "	* Create an IsoCurve curve. Iso defines the type --isoU or isov--. Param defines the value of the iso. WFirst,WLast define the bounds of the iso.
 
 	:param S:
 	:type S: Handle_Adaptor3d_HSurface &
@@ -2980,7 +2521,7 @@ class Adaptor3d_IsoCurve : public Adaptor3d_Curve {
 ") Continuity;
 		GeomAbs_Shape Continuity ();
 		%feature("compactdefaultargs") NbIntervals;
-		%feature("autodoc", "	* Returns the number of intervals for continuity <S>. May be one if Continuity(me) >= <S>
+		%feature("autodoc", "	* Returns the number of intervals for continuity <S>. May be one if Continuity--me-- >= <S>
 
 	:param S:
 	:type S: GeomAbs_Shape
@@ -2988,7 +2529,7 @@ class Adaptor3d_IsoCurve : public Adaptor3d_Curve {
 ") NbIntervals;
 		Standard_Integer NbIntervals (const GeomAbs_Shape S);
 		%feature("compactdefaultargs") Intervals;
-		%feature("autodoc", "	* Stores in <T> the parameters bounding the intervals of continuity <S>. //! The array must provide enough room to accomodate for the parameters. i.e. T.Length() > NbIntervals()
+		%feature("autodoc", "	* Stores in <T> the parameters bounding the intervals of continuity <S>. //! The array must provide enough room to accomodate for the parameters. i.e. T.Length---- > NbIntervals----
 
 	:param T:
 	:type T: TColStd_Array1OfReal &
@@ -3153,726 +2694,6 @@ class Adaptor3d_IsoCurve : public Adaptor3d_Curve {
 
 
 %extend Adaptor3d_IsoCurve {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor Adaptor3d_SurfaceOfLinearExtrusion;
-class Adaptor3d_SurfaceOfLinearExtrusion : public Adaptor3d_Surface {
-	public:
-		%feature("compactdefaultargs") Adaptor3d_SurfaceOfLinearExtrusion;
-		%feature("autodoc", "	:rtype: None
-") Adaptor3d_SurfaceOfLinearExtrusion;
-		 Adaptor3d_SurfaceOfLinearExtrusion ();
-		%feature("compactdefaultargs") Adaptor3d_SurfaceOfLinearExtrusion;
-		%feature("autodoc", "	* The Curve is loaded.
-
-	:param C:
-	:type C: Handle_Adaptor3d_HCurve &
-	:rtype: None
-") Adaptor3d_SurfaceOfLinearExtrusion;
-		 Adaptor3d_SurfaceOfLinearExtrusion (const Handle_Adaptor3d_HCurve & C);
-		%feature("compactdefaultargs") Adaptor3d_SurfaceOfLinearExtrusion;
-		%feature("autodoc", "	* Thew Curve and the Direction are loaded.
-
-	:param C:
-	:type C: Handle_Adaptor3d_HCurve &
-	:param V:
-	:type V: gp_Dir
-	:rtype: None
-") Adaptor3d_SurfaceOfLinearExtrusion;
-		 Adaptor3d_SurfaceOfLinearExtrusion (const Handle_Adaptor3d_HCurve & C,const gp_Dir & V);
-		%feature("compactdefaultargs") Load;
-		%feature("autodoc", "	* Changes the Curve
-
-	:param C:
-	:type C: Handle_Adaptor3d_HCurve &
-	:rtype: None
-") Load;
-		void Load (const Handle_Adaptor3d_HCurve & C);
-		%feature("compactdefaultargs") Load;
-		%feature("autodoc", "	* Changes the Direction
-
-	:param V:
-	:type V: gp_Dir
-	:rtype: None
-") Load;
-		void Load (const gp_Dir & V);
-		%feature("compactdefaultargs") FirstUParameter;
-		%feature("autodoc", "	:rtype: float
-") FirstUParameter;
-		Standard_Real FirstUParameter ();
-		%feature("compactdefaultargs") LastUParameter;
-		%feature("autodoc", "	:rtype: float
-") LastUParameter;
-		Standard_Real LastUParameter ();
-		%feature("compactdefaultargs") FirstVParameter;
-		%feature("autodoc", "	:rtype: float
-") FirstVParameter;
-		Standard_Real FirstVParameter ();
-		%feature("compactdefaultargs") LastVParameter;
-		%feature("autodoc", "	:rtype: float
-") LastVParameter;
-		Standard_Real LastVParameter ();
-		%feature("compactdefaultargs") UContinuity;
-		%feature("autodoc", "	:rtype: GeomAbs_Shape
-") UContinuity;
-		GeomAbs_Shape UContinuity ();
-		%feature("compactdefaultargs") VContinuity;
-		%feature("autodoc", "	* Return CN.
-
-	:rtype: GeomAbs_Shape
-") VContinuity;
-		GeomAbs_Shape VContinuity ();
-		%feature("compactdefaultargs") NbUIntervals;
-		%feature("autodoc", "	* Returns the number of U intervals for continuity <S>. May be one if UContinuity(me) >= <S>
-
-	:param S:
-	:type S: GeomAbs_Shape
-	:rtype: int
-") NbUIntervals;
-		Standard_Integer NbUIntervals (const GeomAbs_Shape S);
-		%feature("compactdefaultargs") NbVIntervals;
-		%feature("autodoc", "	* Returns the number of V intervals for continuity <S>. May be one if VContinuity(me) >= <S>
-
-	:param S:
-	:type S: GeomAbs_Shape
-	:rtype: int
-") NbVIntervals;
-		Standard_Integer NbVIntervals (const GeomAbs_Shape S);
-		%feature("compactdefaultargs") UIntervals;
-		%feature("autodoc", "	* Returns the intervals with the requested continuity in the U direction.
-
-	:param T:
-	:type T: TColStd_Array1OfReal &
-	:param S:
-	:type S: GeomAbs_Shape
-	:rtype: None
-") UIntervals;
-		void UIntervals (TColStd_Array1OfReal & T,const GeomAbs_Shape S);
-		%feature("compactdefaultargs") VIntervals;
-		%feature("autodoc", "	* Returns the intervals with the requested continuity in the V direction.
-
-	:param T:
-	:type T: TColStd_Array1OfReal &
-	:param S:
-	:type S: GeomAbs_Shape
-	:rtype: None
-") VIntervals;
-		void VIntervals (TColStd_Array1OfReal & T,const GeomAbs_Shape S);
-		%feature("compactdefaultargs") UTrim;
-		%feature("autodoc", "	* Returns a surface trimmed in the U direction equivalent of <self> between parameters <First> and <Last>. <Tol> is used to test for 3d points confusion. If <First> >= <Last>
-
-	:param First:
-	:type First: float
-	:param Last:
-	:type Last: float
-	:param Tol:
-	:type Tol: float
-	:rtype: Handle_Adaptor3d_HSurface
-") UTrim;
-		Handle_Adaptor3d_HSurface UTrim (const Standard_Real First,const Standard_Real Last,const Standard_Real Tol);
-		%feature("compactdefaultargs") VTrim;
-		%feature("autodoc", "	* Returns a surface trimmed in the V direction between parameters <First> and <Last>. <Tol> is used to test for 3d points confusion. If <First> >= <Last>
-
-	:param First:
-	:type First: float
-	:param Last:
-	:type Last: float
-	:param Tol:
-	:type Tol: float
-	:rtype: Handle_Adaptor3d_HSurface
-") VTrim;
-		Handle_Adaptor3d_HSurface VTrim (const Standard_Real First,const Standard_Real Last,const Standard_Real Tol);
-		%feature("compactdefaultargs") IsUClosed;
-		%feature("autodoc", "	:rtype: bool
-") IsUClosed;
-		Standard_Boolean IsUClosed ();
-		%feature("compactdefaultargs") IsVClosed;
-		%feature("autodoc", "	:rtype: bool
-") IsVClosed;
-		Standard_Boolean IsVClosed ();
-		%feature("compactdefaultargs") IsUPeriodic;
-		%feature("autodoc", "	:rtype: bool
-") IsUPeriodic;
-		Standard_Boolean IsUPeriodic ();
-		%feature("compactdefaultargs") UPeriod;
-		%feature("autodoc", "	:rtype: float
-") UPeriod;
-		Standard_Real UPeriod ();
-		%feature("compactdefaultargs") IsVPeriodic;
-		%feature("autodoc", "	:rtype: bool
-") IsVPeriodic;
-		Standard_Boolean IsVPeriodic ();
-		%feature("compactdefaultargs") VPeriod;
-		%feature("autodoc", "	:rtype: float
-") VPeriod;
-		Standard_Real VPeriod ();
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	* Computes the point of parameters U,V on the surface.
-
-	:param U:
-	:type U: float
-	:param V:
-	:type V: float
-	:rtype: gp_Pnt
-") Value;
-		gp_Pnt Value (const Standard_Real U,const Standard_Real V);
-		%feature("compactdefaultargs") D0;
-		%feature("autodoc", "	* Computes the point of parameters U,V on the surface.
-
-	:param U:
-	:type U: float
-	:param V:
-	:type V: float
-	:param P:
-	:type P: gp_Pnt
-	:rtype: None
-") D0;
-		void D0 (const Standard_Real U,const Standard_Real V,gp_Pnt & P);
-		%feature("compactdefaultargs") D1;
-		%feature("autodoc", "	* Computes the point and the first derivatives on the surface. Raised if the continuity of the current intervals is not C1.
-
-	:param U:
-	:type U: float
-	:param V:
-	:type V: float
-	:param P:
-	:type P: gp_Pnt
-	:param D1U:
-	:type D1U: gp_Vec
-	:param D1V:
-	:type D1V: gp_Vec
-	:rtype: None
-") D1;
-		void D1 (const Standard_Real U,const Standard_Real V,gp_Pnt & P,gp_Vec & D1U,gp_Vec & D1V);
-		%feature("compactdefaultargs") D2;
-		%feature("autodoc", "	* Computes the point, the first and second derivatives on the surface. Raised if the continuity of the current intervals is not C2.
-
-	:param U:
-	:type U: float
-	:param V:
-	:type V: float
-	:param P:
-	:type P: gp_Pnt
-	:param D1U:
-	:type D1U: gp_Vec
-	:param D1V:
-	:type D1V: gp_Vec
-	:param D2U:
-	:type D2U: gp_Vec
-	:param D2V:
-	:type D2V: gp_Vec
-	:param D2UV:
-	:type D2UV: gp_Vec
-	:rtype: None
-") D2;
-		void D2 (const Standard_Real U,const Standard_Real V,gp_Pnt & P,gp_Vec & D1U,gp_Vec & D1V,gp_Vec & D2U,gp_Vec & D2V,gp_Vec & D2UV);
-		%feature("compactdefaultargs") D3;
-		%feature("autodoc", "	* Computes the point, the first, second and third derivatives on the surface. Raised if the continuity of the current intervals is not C3.
-
-	:param U:
-	:type U: float
-	:param V:
-	:type V: float
-	:param P:
-	:type P: gp_Pnt
-	:param D1U:
-	:type D1U: gp_Vec
-	:param D1V:
-	:type D1V: gp_Vec
-	:param D2U:
-	:type D2U: gp_Vec
-	:param D2V:
-	:type D2V: gp_Vec
-	:param D2UV:
-	:type D2UV: gp_Vec
-	:param D3U:
-	:type D3U: gp_Vec
-	:param D3V:
-	:type D3V: gp_Vec
-	:param D3UUV:
-	:type D3UUV: gp_Vec
-	:param D3UVV:
-	:type D3UVV: gp_Vec
-	:rtype: None
-") D3;
-		void D3 (const Standard_Real U,const Standard_Real V,gp_Pnt & P,gp_Vec & D1U,gp_Vec & D1V,gp_Vec & D2U,gp_Vec & D2V,gp_Vec & D2UV,gp_Vec & D3U,gp_Vec & D3V,gp_Vec & D3UUV,gp_Vec & D3UVV);
-		%feature("compactdefaultargs") DN;
-		%feature("autodoc", "	* Computes the derivative of order Nu in the direction U and Nv in the direction V at the point P(U, V). Raised if the current U interval is not not CNu and the current V interval is not CNv. Raised if Nu + Nv < 1 or Nu < 0 or Nv < 0.
-
-	:param U:
-	:type U: float
-	:param V:
-	:type V: float
-	:param Nu:
-	:type Nu: int
-	:param Nv:
-	:type Nv: int
-	:rtype: gp_Vec
-") DN;
-		gp_Vec DN (const Standard_Real U,const Standard_Real V,const Standard_Integer Nu,const Standard_Integer Nv);
-		%feature("compactdefaultargs") UResolution;
-		%feature("autodoc", "	* Returns the parametric U resolution corresponding to the real space resolution <R3d>.
-
-	:param R3d:
-	:type R3d: float
-	:rtype: float
-") UResolution;
-		Standard_Real UResolution (const Standard_Real R3d);
-		%feature("compactdefaultargs") VResolution;
-		%feature("autodoc", "	* Returns the parametric V resolution corresponding to the real space resolution <R3d>.
-
-	:param R3d:
-	:type R3d: float
-	:rtype: float
-") VResolution;
-		Standard_Real VResolution (const Standard_Real R3d);
-		%feature("compactdefaultargs") GetType;
-		%feature("autodoc", "	* Returns the type of the surface : Plane, Cylinder, Cone, Sphere, Torus, BezierSurface, BSplineSurface, SurfaceOfRevolution, SurfaceOfExtrusion, OtherSurface
-
-	:rtype: GeomAbs_SurfaceType
-") GetType;
-		GeomAbs_SurfaceType GetType ();
-		%feature("compactdefaultargs") Plane;
-		%feature("autodoc", "	:rtype: gp_Pln
-") Plane;
-		gp_Pln Plane ();
-		%feature("compactdefaultargs") Cylinder;
-		%feature("autodoc", "	:rtype: gp_Cylinder
-") Cylinder;
-		gp_Cylinder Cylinder ();
-		%feature("compactdefaultargs") Cone;
-		%feature("autodoc", "	:rtype: gp_Cone
-") Cone;
-		gp_Cone Cone ();
-		%feature("compactdefaultargs") Sphere;
-		%feature("autodoc", "	:rtype: gp_Sphere
-") Sphere;
-		gp_Sphere Sphere ();
-		%feature("compactdefaultargs") Torus;
-		%feature("autodoc", "	:rtype: gp_Torus
-") Torus;
-		gp_Torus Torus ();
-		%feature("compactdefaultargs") UDegree;
-		%feature("autodoc", "	:rtype: int
-") UDegree;
-		Standard_Integer UDegree ();
-		%feature("compactdefaultargs") NbUPoles;
-		%feature("autodoc", "	:rtype: int
-") NbUPoles;
-		Standard_Integer NbUPoles ();
-		%feature("compactdefaultargs") VDegree;
-		%feature("autodoc", "	:rtype: int
-") VDegree;
-		Standard_Integer VDegree ();
-		%feature("compactdefaultargs") NbVPoles;
-		%feature("autodoc", "	:rtype: int
-") NbVPoles;
-		Standard_Integer NbVPoles ();
-		%feature("compactdefaultargs") NbUKnots;
-		%feature("autodoc", "	:rtype: int
-") NbUKnots;
-		Standard_Integer NbUKnots ();
-		%feature("compactdefaultargs") NbVKnots;
-		%feature("autodoc", "	:rtype: int
-") NbVKnots;
-		Standard_Integer NbVKnots ();
-		%feature("compactdefaultargs") IsURational;
-		%feature("autodoc", "	:rtype: bool
-") IsURational;
-		Standard_Boolean IsURational ();
-		%feature("compactdefaultargs") IsVRational;
-		%feature("autodoc", "	:rtype: bool
-") IsVRational;
-		Standard_Boolean IsVRational ();
-		%feature("compactdefaultargs") Bezier;
-		%feature("autodoc", "	:rtype: Handle_Geom_BezierSurface
-") Bezier;
-		Handle_Geom_BezierSurface Bezier ();
-		%feature("compactdefaultargs") BSpline;
-		%feature("autodoc", "	:rtype: Handle_Geom_BSplineSurface
-") BSpline;
-		Handle_Geom_BSplineSurface BSpline ();
-		%feature("compactdefaultargs") AxeOfRevolution;
-		%feature("autodoc", "	:rtype: gp_Ax1
-") AxeOfRevolution;
-		gp_Ax1 AxeOfRevolution ();
-		%feature("compactdefaultargs") Direction;
-		%feature("autodoc", "	:rtype: gp_Dir
-") Direction;
-		gp_Dir Direction ();
-		%feature("compactdefaultargs") BasisCurve;
-		%feature("autodoc", "	:rtype: Handle_Adaptor3d_HCurve
-") BasisCurve;
-		Handle_Adaptor3d_HCurve BasisCurve ();
-};
-
-
-%extend Adaptor3d_SurfaceOfLinearExtrusion {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor Adaptor3d_SurfaceOfRevolution;
-class Adaptor3d_SurfaceOfRevolution : public Adaptor3d_Surface {
-	public:
-		%feature("compactdefaultargs") Adaptor3d_SurfaceOfRevolution;
-		%feature("autodoc", "	:rtype: None
-") Adaptor3d_SurfaceOfRevolution;
-		 Adaptor3d_SurfaceOfRevolution ();
-		%feature("compactdefaultargs") Adaptor3d_SurfaceOfRevolution;
-		%feature("autodoc", "	* The Curve is loaded.
-
-	:param C:
-	:type C: Handle_Adaptor3d_HCurve &
-	:rtype: None
-") Adaptor3d_SurfaceOfRevolution;
-		 Adaptor3d_SurfaceOfRevolution (const Handle_Adaptor3d_HCurve & C);
-		%feature("compactdefaultargs") Adaptor3d_SurfaceOfRevolution;
-		%feature("autodoc", "	* The Curve and the Direction are loaded.
-
-	:param C:
-	:type C: Handle_Adaptor3d_HCurve &
-	:param V:
-	:type V: gp_Ax1
-	:rtype: None
-") Adaptor3d_SurfaceOfRevolution;
-		 Adaptor3d_SurfaceOfRevolution (const Handle_Adaptor3d_HCurve & C,const gp_Ax1 & V);
-		%feature("compactdefaultargs") Load;
-		%feature("autodoc", "	* Changes the Curve
-
-	:param C:
-	:type C: Handle_Adaptor3d_HCurve &
-	:rtype: None
-") Load;
-		void Load (const Handle_Adaptor3d_HCurve & C);
-		%feature("compactdefaultargs") Load;
-		%feature("autodoc", "	* Changes the Direction
-
-	:param V:
-	:type V: gp_Ax1
-	:rtype: None
-") Load;
-		void Load (const gp_Ax1 & V);
-		%feature("compactdefaultargs") AxeOfRevolution;
-		%feature("autodoc", "	:rtype: gp_Ax1
-") AxeOfRevolution;
-		gp_Ax1 AxeOfRevolution ();
-		%feature("compactdefaultargs") FirstUParameter;
-		%feature("autodoc", "	:rtype: float
-") FirstUParameter;
-		Standard_Real FirstUParameter ();
-		%feature("compactdefaultargs") LastUParameter;
-		%feature("autodoc", "	:rtype: float
-") LastUParameter;
-		Standard_Real LastUParameter ();
-		%feature("compactdefaultargs") FirstVParameter;
-		%feature("autodoc", "	:rtype: float
-") FirstVParameter;
-		Standard_Real FirstVParameter ();
-		%feature("compactdefaultargs") LastVParameter;
-		%feature("autodoc", "	:rtype: float
-") LastVParameter;
-		Standard_Real LastVParameter ();
-		%feature("compactdefaultargs") UContinuity;
-		%feature("autodoc", "	:rtype: GeomAbs_Shape
-") UContinuity;
-		GeomAbs_Shape UContinuity ();
-		%feature("compactdefaultargs") VContinuity;
-		%feature("autodoc", "	* Return CN.
-
-	:rtype: GeomAbs_Shape
-") VContinuity;
-		GeomAbs_Shape VContinuity ();
-		%feature("compactdefaultargs") NbUIntervals;
-		%feature("autodoc", "	* Returns the number of U intervals for continuity <S>. May be one if UContinuity(me) >= <S>
-
-	:param S:
-	:type S: GeomAbs_Shape
-	:rtype: int
-") NbUIntervals;
-		Standard_Integer NbUIntervals (const GeomAbs_Shape S);
-		%feature("compactdefaultargs") NbVIntervals;
-		%feature("autodoc", "	* Returns the number of V intervals for continuity <S>. May be one if VContinuity(me) >= <S>
-
-	:param S:
-	:type S: GeomAbs_Shape
-	:rtype: int
-") NbVIntervals;
-		Standard_Integer NbVIntervals (const GeomAbs_Shape S);
-		%feature("compactdefaultargs") UIntervals;
-		%feature("autodoc", "	* Returns the intervals with the requested continuity in the U direction.
-
-	:param T:
-	:type T: TColStd_Array1OfReal &
-	:param S:
-	:type S: GeomAbs_Shape
-	:rtype: None
-") UIntervals;
-		void UIntervals (TColStd_Array1OfReal & T,const GeomAbs_Shape S);
-		%feature("compactdefaultargs") VIntervals;
-		%feature("autodoc", "	* Returns the intervals with the requested continuity in the V direction.
-
-	:param T:
-	:type T: TColStd_Array1OfReal &
-	:param S:
-	:type S: GeomAbs_Shape
-	:rtype: None
-") VIntervals;
-		void VIntervals (TColStd_Array1OfReal & T,const GeomAbs_Shape S);
-		%feature("compactdefaultargs") UTrim;
-		%feature("autodoc", "	* Returns a surface trimmed in the U direction equivalent of <self> between parameters <First> and <Last>. <Tol> is used to test for 3d points confusion. If <First> >= <Last>
-
-	:param First:
-	:type First: float
-	:param Last:
-	:type Last: float
-	:param Tol:
-	:type Tol: float
-	:rtype: Handle_Adaptor3d_HSurface
-") UTrim;
-		Handle_Adaptor3d_HSurface UTrim (const Standard_Real First,const Standard_Real Last,const Standard_Real Tol);
-		%feature("compactdefaultargs") VTrim;
-		%feature("autodoc", "	* Returns a surface trimmed in the V direction between parameters <First> and <Last>. <Tol> is used to test for 3d points confusion. If <First> >= <Last>
-
-	:param First:
-	:type First: float
-	:param Last:
-	:type Last: float
-	:param Tol:
-	:type Tol: float
-	:rtype: Handle_Adaptor3d_HSurface
-") VTrim;
-		Handle_Adaptor3d_HSurface VTrim (const Standard_Real First,const Standard_Real Last,const Standard_Real Tol);
-		%feature("compactdefaultargs") IsUClosed;
-		%feature("autodoc", "	:rtype: bool
-") IsUClosed;
-		Standard_Boolean IsUClosed ();
-		%feature("compactdefaultargs") IsVClosed;
-		%feature("autodoc", "	:rtype: bool
-") IsVClosed;
-		Standard_Boolean IsVClosed ();
-		%feature("compactdefaultargs") IsUPeriodic;
-		%feature("autodoc", "	:rtype: bool
-") IsUPeriodic;
-		Standard_Boolean IsUPeriodic ();
-		%feature("compactdefaultargs") UPeriod;
-		%feature("autodoc", "	:rtype: float
-") UPeriod;
-		Standard_Real UPeriod ();
-		%feature("compactdefaultargs") IsVPeriodic;
-		%feature("autodoc", "	:rtype: bool
-") IsVPeriodic;
-		Standard_Boolean IsVPeriodic ();
-		%feature("compactdefaultargs") VPeriod;
-		%feature("autodoc", "	:rtype: float
-") VPeriod;
-		Standard_Real VPeriod ();
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	* Computes the point of parameters U,V on the surface.
-
-	:param U:
-	:type U: float
-	:param V:
-	:type V: float
-	:rtype: gp_Pnt
-") Value;
-		gp_Pnt Value (const Standard_Real U,const Standard_Real V);
-		%feature("compactdefaultargs") D0;
-		%feature("autodoc", "	* Computes the point of parameters U,V on the surface.
-
-	:param U:
-	:type U: float
-	:param V:
-	:type V: float
-	:param P:
-	:type P: gp_Pnt
-	:rtype: None
-") D0;
-		void D0 (const Standard_Real U,const Standard_Real V,gp_Pnt & P);
-		%feature("compactdefaultargs") D1;
-		%feature("autodoc", "	* Computes the point and the first derivatives on the surface. Raised if the continuity of the current intervals is not C1.
-
-	:param U:
-	:type U: float
-	:param V:
-	:type V: float
-	:param P:
-	:type P: gp_Pnt
-	:param D1U:
-	:type D1U: gp_Vec
-	:param D1V:
-	:type D1V: gp_Vec
-	:rtype: None
-") D1;
-		void D1 (const Standard_Real U,const Standard_Real V,gp_Pnt & P,gp_Vec & D1U,gp_Vec & D1V);
-		%feature("compactdefaultargs") D2;
-		%feature("autodoc", "	* Computes the point, the first and second derivatives on the surface. Raised if the continuity of the current intervals is not C2.
-
-	:param U:
-	:type U: float
-	:param V:
-	:type V: float
-	:param P:
-	:type P: gp_Pnt
-	:param D1U:
-	:type D1U: gp_Vec
-	:param D1V:
-	:type D1V: gp_Vec
-	:param D2U:
-	:type D2U: gp_Vec
-	:param D2V:
-	:type D2V: gp_Vec
-	:param D2UV:
-	:type D2UV: gp_Vec
-	:rtype: None
-") D2;
-		void D2 (const Standard_Real U,const Standard_Real V,gp_Pnt & P,gp_Vec & D1U,gp_Vec & D1V,gp_Vec & D2U,gp_Vec & D2V,gp_Vec & D2UV);
-		%feature("compactdefaultargs") D3;
-		%feature("autodoc", "	* Computes the point, the first, second and third derivatives on the surface. Raised if the continuity of the current intervals is not C3.
-
-	:param U:
-	:type U: float
-	:param V:
-	:type V: float
-	:param P:
-	:type P: gp_Pnt
-	:param D1U:
-	:type D1U: gp_Vec
-	:param D1V:
-	:type D1V: gp_Vec
-	:param D2U:
-	:type D2U: gp_Vec
-	:param D2V:
-	:type D2V: gp_Vec
-	:param D2UV:
-	:type D2UV: gp_Vec
-	:param D3U:
-	:type D3U: gp_Vec
-	:param D3V:
-	:type D3V: gp_Vec
-	:param D3UUV:
-	:type D3UUV: gp_Vec
-	:param D3UVV:
-	:type D3UVV: gp_Vec
-	:rtype: None
-") D3;
-		void D3 (const Standard_Real U,const Standard_Real V,gp_Pnt & P,gp_Vec & D1U,gp_Vec & D1V,gp_Vec & D2U,gp_Vec & D2V,gp_Vec & D2UV,gp_Vec & D3U,gp_Vec & D3V,gp_Vec & D3UUV,gp_Vec & D3UVV);
-		%feature("compactdefaultargs") DN;
-		%feature("autodoc", "	* Computes the derivative of order Nu in the direction U and Nv in the direction V at the point P(U, V). Raised if the current U interval is not not CNu and the current V interval is not CNv. Raised if Nu + Nv < 1 or Nu < 0 or Nv < 0.
-
-	:param U:
-	:type U: float
-	:param V:
-	:type V: float
-	:param Nu:
-	:type Nu: int
-	:param Nv:
-	:type Nv: int
-	:rtype: gp_Vec
-") DN;
-		gp_Vec DN (const Standard_Real U,const Standard_Real V,const Standard_Integer Nu,const Standard_Integer Nv);
-		%feature("compactdefaultargs") UResolution;
-		%feature("autodoc", "	* Returns the parametric U resolution corresponding to the real space resolution <R3d>.
-
-	:param R3d:
-	:type R3d: float
-	:rtype: float
-") UResolution;
-		Standard_Real UResolution (const Standard_Real R3d);
-		%feature("compactdefaultargs") VResolution;
-		%feature("autodoc", "	* Returns the parametric V resolution corresponding to the real space resolution <R3d>.
-
-	:param R3d:
-	:type R3d: float
-	:rtype: float
-") VResolution;
-		Standard_Real VResolution (const Standard_Real R3d);
-		%feature("compactdefaultargs") GetType;
-		%feature("autodoc", "	* Returns the type of the surface : Plane, Cylinder, Cone, Sphere, Torus, BezierSurface, BSplineSurface, SurfaceOfRevolution, SurfaceOfExtrusion, OtherSurface
-
-	:rtype: GeomAbs_SurfaceType
-") GetType;
-		GeomAbs_SurfaceType GetType ();
-		%feature("compactdefaultargs") Plane;
-		%feature("autodoc", "	:rtype: gp_Pln
-") Plane;
-		gp_Pln Plane ();
-		%feature("compactdefaultargs") Cylinder;
-		%feature("autodoc", "	:rtype: gp_Cylinder
-") Cylinder;
-		gp_Cylinder Cylinder ();
-		%feature("compactdefaultargs") Cone;
-		%feature("autodoc", "	* Apex of the Cone = Cone.Position().Location() ==> ReferenceRadius = 0.
-
-	:rtype: gp_Cone
-") Cone;
-		gp_Cone Cone ();
-		%feature("compactdefaultargs") Sphere;
-		%feature("autodoc", "	:rtype: gp_Sphere
-") Sphere;
-		gp_Sphere Sphere ();
-		%feature("compactdefaultargs") Torus;
-		%feature("autodoc", "	:rtype: gp_Torus
-") Torus;
-		gp_Torus Torus ();
-		%feature("compactdefaultargs") UDegree;
-		%feature("autodoc", "	:rtype: int
-") UDegree;
-		Standard_Integer UDegree ();
-		%feature("compactdefaultargs") NbUPoles;
-		%feature("autodoc", "	:rtype: int
-") NbUPoles;
-		Standard_Integer NbUPoles ();
-		%feature("compactdefaultargs") VDegree;
-		%feature("autodoc", "	:rtype: int
-") VDegree;
-		Standard_Integer VDegree ();
-		%feature("compactdefaultargs") NbVPoles;
-		%feature("autodoc", "	:rtype: int
-") NbVPoles;
-		Standard_Integer NbVPoles ();
-		%feature("compactdefaultargs") NbUKnots;
-		%feature("autodoc", "	:rtype: int
-") NbUKnots;
-		Standard_Integer NbUKnots ();
-		%feature("compactdefaultargs") NbVKnots;
-		%feature("autodoc", "	:rtype: int
-") NbVKnots;
-		Standard_Integer NbVKnots ();
-		%feature("compactdefaultargs") IsURational;
-		%feature("autodoc", "	:rtype: bool
-") IsURational;
-		Standard_Boolean IsURational ();
-		%feature("compactdefaultargs") IsVRational;
-		%feature("autodoc", "	:rtype: bool
-") IsVRational;
-		Standard_Boolean IsVRational ();
-		%feature("compactdefaultargs") Bezier;
-		%feature("autodoc", "	:rtype: Handle_Geom_BezierSurface
-") Bezier;
-		Handle_Geom_BezierSurface Bezier ();
-		%feature("compactdefaultargs") BSpline;
-		%feature("autodoc", "	:rtype: Handle_Geom_BSplineSurface
-") BSpline;
-		Handle_Geom_BSplineSurface BSpline ();
-		%feature("compactdefaultargs") Axis;
-		%feature("autodoc", "	:rtype: gp_Ax3
-") Axis;
-		gp_Ax3 Axis ();
-		%feature("compactdefaultargs") Direction;
-		%feature("autodoc", "	:rtype: gp_Dir
-") Direction;
-		gp_Dir Direction ();
-		%feature("compactdefaultargs") BasisCurve;
-		%feature("autodoc", "	:rtype: Handle_Adaptor3d_HCurve
-") BasisCurve;
-		Handle_Adaptor3d_HCurve BasisCurve ();
-};
-
-
-%extend Adaptor3d_SurfaceOfRevolution {
 	%pythoncode {
 	__repr__ = _dumps_object
 	}

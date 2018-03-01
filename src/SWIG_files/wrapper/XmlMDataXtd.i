@@ -1,5 +1,5 @@
 /*
-Copyright 2008-2017 Thomas Paviot (tpaviot@gmail.com)
+Copyright 2008-2018 Thomas Paviot (tpaviot@gmail.com)
 
 
 This file is part of pythonOCC.
@@ -55,6 +55,9 @@ def register_handle(handle, base_object):
 
 /* typedefs */
 /* end typedefs declaration */
+
+/* templates */
+/* end templates declaration */
 
 /* public enums */
 /* end public enums declaration */
@@ -157,19 +160,20 @@ class Handle_XmlMDataXtd_AxisDriver : public Handle_XmlMDF_ADriver {
         static const Handle_XmlMDataXtd_AxisDriver DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_XmlMDataXtd_AxisDriver {
     XmlMDataXtd_AxisDriver* _get_reference() {
-    return (XmlMDataXtd_AxisDriver*)$self->Access();
+    return (XmlMDataXtd_AxisDriver*)$self->get();
     }
 };
 
 %extend Handle_XmlMDataXtd_AxisDriver {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend XmlMDataXtd_AxisDriver {
@@ -244,19 +248,20 @@ class Handle_XmlMDataXtd_ConstraintDriver : public Handle_XmlMDF_ADriver {
         static const Handle_XmlMDataXtd_ConstraintDriver DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_XmlMDataXtd_ConstraintDriver {
     XmlMDataXtd_ConstraintDriver* _get_reference() {
-    return (XmlMDataXtd_ConstraintDriver*)$self->Access();
+    return (XmlMDataXtd_ConstraintDriver*)$self->get();
     }
 };
 
 %extend Handle_XmlMDataXtd_ConstraintDriver {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend XmlMDataXtd_ConstraintDriver {
@@ -331,19 +336,20 @@ class Handle_XmlMDataXtd_GeometryDriver : public Handle_XmlMDF_ADriver {
         static const Handle_XmlMDataXtd_GeometryDriver DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_XmlMDataXtd_GeometryDriver {
     XmlMDataXtd_GeometryDriver* _get_reference() {
-    return (XmlMDataXtd_GeometryDriver*)$self->Access();
+    return (XmlMDataXtd_GeometryDriver*)$self->get();
     }
 };
 
 %extend Handle_XmlMDataXtd_GeometryDriver {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend XmlMDataXtd_GeometryDriver {
@@ -418,19 +424,20 @@ class Handle_XmlMDataXtd_PatternStdDriver : public Handle_XmlMDF_ADriver {
         static const Handle_XmlMDataXtd_PatternStdDriver DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_XmlMDataXtd_PatternStdDriver {
     XmlMDataXtd_PatternStdDriver* _get_reference() {
-    return (XmlMDataXtd_PatternStdDriver*)$self->Access();
+    return (XmlMDataXtd_PatternStdDriver*)$self->get();
     }
 };
 
 %extend Handle_XmlMDataXtd_PatternStdDriver {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend XmlMDataXtd_PatternStdDriver {
@@ -505,19 +512,20 @@ class Handle_XmlMDataXtd_PlacementDriver : public Handle_XmlMDF_ADriver {
         static const Handle_XmlMDataXtd_PlacementDriver DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_XmlMDataXtd_PlacementDriver {
     XmlMDataXtd_PlacementDriver* _get_reference() {
-    return (XmlMDataXtd_PlacementDriver*)$self->Access();
+    return (XmlMDataXtd_PlacementDriver*)$self->get();
     }
 };
 
 %extend Handle_XmlMDataXtd_PlacementDriver {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend XmlMDataXtd_PlacementDriver {
@@ -592,19 +600,20 @@ class Handle_XmlMDataXtd_PlaneDriver : public Handle_XmlMDF_ADriver {
         static const Handle_XmlMDataXtd_PlaneDriver DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_XmlMDataXtd_PlaneDriver {
     XmlMDataXtd_PlaneDriver* _get_reference() {
-    return (XmlMDataXtd_PlaneDriver*)$self->Access();
+    return (XmlMDataXtd_PlaneDriver*)$self->get();
     }
 };
 
 %extend Handle_XmlMDataXtd_PlaneDriver {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend XmlMDataXtd_PlaneDriver {
@@ -679,22 +688,199 @@ class Handle_XmlMDataXtd_PointDriver : public Handle_XmlMDF_ADriver {
         static const Handle_XmlMDataXtd_PointDriver DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_XmlMDataXtd_PointDriver {
     XmlMDataXtd_PointDriver* _get_reference() {
-    return (XmlMDataXtd_PointDriver*)$self->Access();
+    return (XmlMDataXtd_PointDriver*)$self->get();
     }
 };
 
 %extend Handle_XmlMDataXtd_PointDriver {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend XmlMDataXtd_PointDriver {
+	%pythoncode {
+	__repr__ = _dumps_object
+	}
+};
+%nodefaultctor XmlMDataXtd_PositionDriver;
+class XmlMDataXtd_PositionDriver : public XmlMDF_ADriver {
+	public:
+		%feature("compactdefaultargs") XmlMDataXtd_PositionDriver;
+		%feature("autodoc", "	:param theMessageDriver:
+	:type theMessageDriver: Handle_CDM_MessageDriver &
+	:rtype: None
+") XmlMDataXtd_PositionDriver;
+		 XmlMDataXtd_PositionDriver (const Handle_CDM_MessageDriver & theMessageDriver);
+		%feature("compactdefaultargs") NewEmpty;
+		%feature("autodoc", "	:rtype: Handle_TDF_Attribute
+") NewEmpty;
+		Handle_TDF_Attribute NewEmpty ();
+		%feature("compactdefaultargs") Paste;
+		%feature("autodoc", "	:param Source:
+	:type Source: XmlObjMgt_Persistent &
+	:param Target:
+	:type Target: Handle_TDF_Attribute &
+	:param RelocTable:
+	:type RelocTable: XmlObjMgt_RRelocationTable &
+	:rtype: bool
+") Paste;
+		Standard_Boolean Paste (const XmlObjMgt_Persistent & Source,const Handle_TDF_Attribute & Target,XmlObjMgt_RRelocationTable & RelocTable);
+		%feature("compactdefaultargs") Paste;
+		%feature("autodoc", "	:param Source:
+	:type Source: Handle_TDF_Attribute &
+	:param Target:
+	:type Target: XmlObjMgt_Persistent &
+	:param RelocTable:
+	:type RelocTable: XmlObjMgt_SRelocationTable &
+	:rtype: None
+") Paste;
+		void Paste (const Handle_TDF_Attribute & Source,XmlObjMgt_Persistent & Target,XmlObjMgt_SRelocationTable & RelocTable);
+};
+
+
+%extend XmlMDataXtd_PositionDriver {
+	%pythoncode {
+		def GetHandle(self):
+		    try:
+		        return self.thisHandle
+		    except:
+		        self.thisHandle = Handle_XmlMDataXtd_PositionDriver(self)
+		        self.thisown = False
+		        return self.thisHandle
+	}
+};
+
+%pythonappend Handle_XmlMDataXtd_PositionDriver::Handle_XmlMDataXtd_PositionDriver %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
+%nodefaultctor Handle_XmlMDataXtd_PositionDriver;
+class Handle_XmlMDataXtd_PositionDriver : public Handle_XmlMDF_ADriver {
+
+    public:
+        // constructors
+        Handle_XmlMDataXtd_PositionDriver();
+        Handle_XmlMDataXtd_PositionDriver(const Handle_XmlMDataXtd_PositionDriver &aHandle);
+        Handle_XmlMDataXtd_PositionDriver(const XmlMDataXtd_PositionDriver *anItem);
+        void Nullify();
+        Standard_Boolean IsNull() const;
+        static const Handle_XmlMDataXtd_PositionDriver DownCast(const Handle_Standard_Transient &AnObject);
+
+};
+
+%extend Handle_XmlMDataXtd_PositionDriver {
+    XmlMDataXtd_PositionDriver* _get_reference() {
+    return (XmlMDataXtd_PositionDriver*)$self->get();
+    }
+};
+
+%extend Handle_XmlMDataXtd_PositionDriver {
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
+};
+
+%extend XmlMDataXtd_PositionDriver {
+	%pythoncode {
+	__repr__ = _dumps_object
+	}
+};
+%nodefaultctor XmlMDataXtd_PresentationDriver;
+class XmlMDataXtd_PresentationDriver : public XmlMDF_ADriver {
+	public:
+		%feature("compactdefaultargs") XmlMDataXtd_PresentationDriver;
+		%feature("autodoc", "	:param theMessageDriver:
+	:type theMessageDriver: Handle_CDM_MessageDriver &
+	:rtype: None
+") XmlMDataXtd_PresentationDriver;
+		 XmlMDataXtd_PresentationDriver (const Handle_CDM_MessageDriver & theMessageDriver);
+		%feature("compactdefaultargs") NewEmpty;
+		%feature("autodoc", "	:rtype: Handle_TDF_Attribute
+") NewEmpty;
+		Handle_TDF_Attribute NewEmpty ();
+		%feature("compactdefaultargs") Paste;
+		%feature("autodoc", "	:param Source:
+	:type Source: XmlObjMgt_Persistent &
+	:param Target:
+	:type Target: Handle_TDF_Attribute &
+	:param RelocTable:
+	:type RelocTable: XmlObjMgt_RRelocationTable &
+	:rtype: bool
+") Paste;
+		Standard_Boolean Paste (const XmlObjMgt_Persistent & Source,const Handle_TDF_Attribute & Target,XmlObjMgt_RRelocationTable & RelocTable);
+		%feature("compactdefaultargs") Paste;
+		%feature("autodoc", "	:param Source:
+	:type Source: Handle_TDF_Attribute &
+	:param Target:
+	:type Target: XmlObjMgt_Persistent &
+	:param RelocTable:
+	:type RelocTable: XmlObjMgt_SRelocationTable &
+	:rtype: None
+") Paste;
+		void Paste (const Handle_TDF_Attribute & Source,XmlObjMgt_Persistent & Target,XmlObjMgt_SRelocationTable & RelocTable);
+};
+
+
+%extend XmlMDataXtd_PresentationDriver {
+	%pythoncode {
+		def GetHandle(self):
+		    try:
+		        return self.thisHandle
+		    except:
+		        self.thisHandle = Handle_XmlMDataXtd_PresentationDriver(self)
+		        self.thisown = False
+		        return self.thisHandle
+	}
+};
+
+%pythonappend Handle_XmlMDataXtd_PresentationDriver::Handle_XmlMDataXtd_PresentationDriver %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
+%nodefaultctor Handle_XmlMDataXtd_PresentationDriver;
+class Handle_XmlMDataXtd_PresentationDriver : public Handle_XmlMDF_ADriver {
+
+    public:
+        // constructors
+        Handle_XmlMDataXtd_PresentationDriver();
+        Handle_XmlMDataXtd_PresentationDriver(const Handle_XmlMDataXtd_PresentationDriver &aHandle);
+        Handle_XmlMDataXtd_PresentationDriver(const XmlMDataXtd_PresentationDriver *anItem);
+        void Nullify();
+        Standard_Boolean IsNull() const;
+        static const Handle_XmlMDataXtd_PresentationDriver DownCast(const Handle_Standard_Transient &AnObject);
+
+};
+
+%extend Handle_XmlMDataXtd_PresentationDriver {
+    XmlMDataXtd_PresentationDriver* _get_reference() {
+    return (XmlMDataXtd_PresentationDriver*)$self->get();
+    }
+};
+
+%extend Handle_XmlMDataXtd_PresentationDriver {
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
+};
+
+%extend XmlMDataXtd_PresentationDriver {
 	%pythoncode {
 	__repr__ = _dumps_object
 	}
@@ -766,22 +952,111 @@ class Handle_XmlMDataXtd_ShapeDriver : public Handle_XmlMDF_ADriver {
         static const Handle_XmlMDataXtd_ShapeDriver DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_XmlMDataXtd_ShapeDriver {
     XmlMDataXtd_ShapeDriver* _get_reference() {
-    return (XmlMDataXtd_ShapeDriver*)$self->Access();
+    return (XmlMDataXtd_ShapeDriver*)$self->get();
     }
 };
 
 %extend Handle_XmlMDataXtd_ShapeDriver {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend XmlMDataXtd_ShapeDriver {
+	%pythoncode {
+	__repr__ = _dumps_object
+	}
+};
+%nodefaultctor XmlMDataXtd_TriangulationDriver;
+class XmlMDataXtd_TriangulationDriver : public XmlMDF_ADriver {
+	public:
+		%feature("compactdefaultargs") XmlMDataXtd_TriangulationDriver;
+		%feature("autodoc", "	:param theMessageDriver:
+	:type theMessageDriver: Handle_CDM_MessageDriver &
+	:rtype: None
+") XmlMDataXtd_TriangulationDriver;
+		 XmlMDataXtd_TriangulationDriver (const Handle_CDM_MessageDriver & theMessageDriver);
+		%feature("compactdefaultargs") NewEmpty;
+		%feature("autodoc", "	:rtype: Handle_TDF_Attribute
+") NewEmpty;
+		Handle_TDF_Attribute NewEmpty ();
+		%feature("compactdefaultargs") Paste;
+		%feature("autodoc", "	:param Source:
+	:type Source: XmlObjMgt_Persistent &
+	:param Target:
+	:type Target: Handle_TDF_Attribute &
+	:param RelocTable:
+	:type RelocTable: XmlObjMgt_RRelocationTable &
+	:rtype: bool
+") Paste;
+		Standard_Boolean Paste (const XmlObjMgt_Persistent & Source,const Handle_TDF_Attribute & Target,XmlObjMgt_RRelocationTable & RelocTable);
+		%feature("compactdefaultargs") Paste;
+		%feature("autodoc", "	:param Source:
+	:type Source: Handle_TDF_Attribute &
+	:param Target:
+	:type Target: XmlObjMgt_Persistent &
+	:param RelocTable:
+	:type RelocTable: XmlObjMgt_SRelocationTable &
+	:rtype: None
+") Paste;
+		void Paste (const Handle_TDF_Attribute & Source,XmlObjMgt_Persistent & Target,XmlObjMgt_SRelocationTable & RelocTable);
+};
+
+
+%extend XmlMDataXtd_TriangulationDriver {
+	%pythoncode {
+		def GetHandle(self):
+		    try:
+		        return self.thisHandle
+		    except:
+		        self.thisHandle = Handle_XmlMDataXtd_TriangulationDriver(self)
+		        self.thisown = False
+		        return self.thisHandle
+	}
+};
+
+%pythonappend Handle_XmlMDataXtd_TriangulationDriver::Handle_XmlMDataXtd_TriangulationDriver %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
+%nodefaultctor Handle_XmlMDataXtd_TriangulationDriver;
+class Handle_XmlMDataXtd_TriangulationDriver : public Handle_XmlMDF_ADriver {
+
+    public:
+        // constructors
+        Handle_XmlMDataXtd_TriangulationDriver();
+        Handle_XmlMDataXtd_TriangulationDriver(const Handle_XmlMDataXtd_TriangulationDriver &aHandle);
+        Handle_XmlMDataXtd_TriangulationDriver(const XmlMDataXtd_TriangulationDriver *anItem);
+        void Nullify();
+        Standard_Boolean IsNull() const;
+        static const Handle_XmlMDataXtd_TriangulationDriver DownCast(const Handle_Standard_Transient &AnObject);
+
+};
+
+%extend Handle_XmlMDataXtd_TriangulationDriver {
+    XmlMDataXtd_TriangulationDriver* _get_reference() {
+    return (XmlMDataXtd_TriangulationDriver*)$self->get();
+    }
+};
+
+%extend Handle_XmlMDataXtd_TriangulationDriver {
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
+};
+
+%extend XmlMDataXtd_TriangulationDriver {
 	%pythoncode {
 	__repr__ = _dumps_object
 	}

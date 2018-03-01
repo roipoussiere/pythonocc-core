@@ -1,5 +1,5 @@
 /*
-Copyright 2008-2017 Thomas Paviot (tpaviot@gmail.com)
+Copyright 2008-2018 Thomas Paviot (tpaviot@gmail.com)
 
 
 This file is part of pythonOCC.
@@ -55,6 +55,10 @@ def register_handle(handle, base_object):
 
 /* typedefs */
 /* end typedefs declaration */
+
+/* templates */
+%template(ProjLib_SequenceOfHSequenceOfPnt) NCollection_Sequence <Handle_TColgp_HSequenceOfPnt>;
+/* end templates declaration */
 
 /* public enums */
 /* end public enums declaration */
@@ -190,6 +194,16 @@ class ProjLib {
 	:rtype: gp_Lin2d
 ") Project;
 		static gp_Lin2d Project (const gp_Torus & To,const gp_Circ & Ci);
+		%feature("compactdefaultargs") MakePCurveOfType;
+		%feature("autodoc", "	* Make empty P-Curve <aC> of relevant to <PC> type
+
+	:param PC:
+	:type PC: ProjLib_ProjectedCurve &
+	:param aC:
+	:type aC: Handle_Geom2d_Curve &
+	:rtype: void
+") MakePCurveOfType;
+		static void MakePCurveOfType (const ProjLib_ProjectedCurve & PC,Handle_Geom2d_Curve & aC);
 };
 
 
@@ -220,7 +234,7 @@ class ProjLib_CompProjectedCurve : public Adaptor2d_Curve2d {
 ") ProjLib_CompProjectedCurve;
 		 ProjLib_CompProjectedCurve (const Handle_Adaptor3d_HSurface & S,const Handle_Adaptor3d_HCurve & C,const Standard_Real TolU,const Standard_Real TolV);
 		%feature("compactdefaultargs") ProjLib_CompProjectedCurve;
-		%feature("autodoc", "	* this constructor tries to optimize the search using the assamption that maximum distance between surface and curve less or equal then MaxDist. if MaxDist < 0 then algorithm works as above.
+		%feature("autodoc", "	* this constructor tries to optimize the search using the assumption that maximum distance between surface and curve less or equal then MaxDist. if MaxDist < 0 then algorithm works as above.
 
 	:param S:
 	:type S: Handle_Adaptor3d_HSurface &
@@ -292,7 +306,7 @@ class ProjLib_CompProjectedCurve : public Adaptor2d_Curve2d {
 ") Bounds;
 		void Bounds (const Standard_Integer Index,Standard_Real &OutValue,Standard_Real &OutValue);
 		%feature("compactdefaultargs") IsSinglePnt;
-		%feature("autodoc", "	* returns True if part of projection with number Index is a single point and writes its coordinats in P
+		%feature("autodoc", "	* returns True if part of projection with number Index is a single point and writes its coordinates in P
 
 	:param Index:
 	:type Index: int
@@ -408,7 +422,7 @@ class ProjLib_CompProjectedCurve : public Adaptor2d_Curve2d {
 ") Trim;
 		Handle_Adaptor2d_HCurve2d Trim (const Standard_Real FirstParam,const Standard_Real LastParam,const Standard_Real Tol);
 		%feature("compactdefaultargs") Intervals;
-		%feature("autodoc", "	* Returns the parameters corresponding to S discontinuities. //! The array must provide enough room to accomodate for the parameters. i.e. T.Length() > NbIntervals()
+		%feature("autodoc", "	* Returns the parameters corresponding to S discontinuities. //! The array must provide enough room to accommodate for the parameters. i.e. T.Length---- > NbIntervals----
 
 	:param T:
 	:type T: TColStd_Array1OfReal &
@@ -575,27 +589,37 @@ class ProjLib_ComputeApproxOnPolarSurface {
 class ProjLib_HCompProjectedCurve : public Adaptor2d_HCurve2d {
 	public:
 		%feature("compactdefaultargs") ProjLib_HCompProjectedCurve;
-		%feature("autodoc", "	:rtype: None
+		%feature("autodoc", "	* Creates an empty GenHCurve2d.
+
+	:rtype: None
 ") ProjLib_HCompProjectedCurve;
 		 ProjLib_HCompProjectedCurve ();
 		%feature("compactdefaultargs") ProjLib_HCompProjectedCurve;
-		%feature("autodoc", "	:param C:
+		%feature("autodoc", "	* Creates a GenHCurve2d from a Curve
+
+	:param C:
 	:type C: ProjLib_CompProjectedCurve &
 	:rtype: None
 ") ProjLib_HCompProjectedCurve;
 		 ProjLib_HCompProjectedCurve (const ProjLib_CompProjectedCurve & C);
 		%feature("compactdefaultargs") Set;
-		%feature("autodoc", "	:param C:
+		%feature("autodoc", "	* Sets the field of the GenHCurve2d.
+
+	:param C:
 	:type C: ProjLib_CompProjectedCurve &
 	:rtype: None
 ") Set;
 		void Set (const ProjLib_CompProjectedCurve & C);
 		%feature("compactdefaultargs") Curve2d;
-		%feature("autodoc", "	:rtype: Adaptor2d_Curve2d
+		%feature("autodoc", "	* Returns the curve used to create the GenHCurve2d. This is redefined from HCurve2d, cannot be inline.
+
+	:rtype: Adaptor2d_Curve2d
 ") Curve2d;
 		const Adaptor2d_Curve2d & Curve2d ();
 		%feature("compactdefaultargs") ChangeCurve2d;
-		%feature("autodoc", "	:rtype: ProjLib_CompProjectedCurve
+		%feature("autodoc", "	* Returns the curve used to create the GenHCurve.
+
+	:rtype: ProjLib_CompProjectedCurve
 ") ChangeCurve2d;
 		ProjLib_CompProjectedCurve & ChangeCurve2d ();
 };
@@ -632,19 +656,20 @@ class Handle_ProjLib_HCompProjectedCurve : public Handle_Adaptor2d_HCurve2d {
         static const Handle_ProjLib_HCompProjectedCurve DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_ProjLib_HCompProjectedCurve {
     ProjLib_HCompProjectedCurve* _get_reference() {
-    return (ProjLib_HCompProjectedCurve*)$self->Access();
+    return (ProjLib_HCompProjectedCurve*)$self->get();
     }
 };
 
 %extend Handle_ProjLib_HCompProjectedCurve {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend ProjLib_HCompProjectedCurve {
@@ -656,27 +681,37 @@ class Handle_ProjLib_HCompProjectedCurve : public Handle_Adaptor2d_HCurve2d {
 class ProjLib_HProjectedCurve : public Adaptor2d_HCurve2d {
 	public:
 		%feature("compactdefaultargs") ProjLib_HProjectedCurve;
-		%feature("autodoc", "	:rtype: None
+		%feature("autodoc", "	* Creates an empty GenHCurve2d.
+
+	:rtype: None
 ") ProjLib_HProjectedCurve;
 		 ProjLib_HProjectedCurve ();
 		%feature("compactdefaultargs") ProjLib_HProjectedCurve;
-		%feature("autodoc", "	:param C:
+		%feature("autodoc", "	* Creates a GenHCurve2d from a Curve
+
+	:param C:
 	:type C: ProjLib_ProjectedCurve &
 	:rtype: None
 ") ProjLib_HProjectedCurve;
 		 ProjLib_HProjectedCurve (const ProjLib_ProjectedCurve & C);
 		%feature("compactdefaultargs") Set;
-		%feature("autodoc", "	:param C:
+		%feature("autodoc", "	* Sets the field of the GenHCurve2d.
+
+	:param C:
 	:type C: ProjLib_ProjectedCurve &
 	:rtype: None
 ") Set;
 		void Set (const ProjLib_ProjectedCurve & C);
 		%feature("compactdefaultargs") Curve2d;
-		%feature("autodoc", "	:rtype: Adaptor2d_Curve2d
+		%feature("autodoc", "	* Returns the curve used to create the GenHCurve2d. This is redefined from HCurve2d, cannot be inline.
+
+	:rtype: Adaptor2d_Curve2d
 ") Curve2d;
 		const Adaptor2d_Curve2d & Curve2d ();
 		%feature("compactdefaultargs") ChangeCurve2d;
-		%feature("autodoc", "	:rtype: ProjLib_ProjectedCurve
+		%feature("autodoc", "	* Returns the curve used to create the GenHCurve.
+
+	:rtype: ProjLib_ProjectedCurve
 ") ChangeCurve2d;
 		ProjLib_ProjectedCurve & ChangeCurve2d ();
 };
@@ -713,211 +748,23 @@ class Handle_ProjLib_HProjectedCurve : public Handle_Adaptor2d_HCurve2d {
         static const Handle_ProjLib_HProjectedCurve DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_ProjLib_HProjectedCurve {
     ProjLib_HProjectedCurve* _get_reference() {
-    return (ProjLib_HProjectedCurve*)$self->Access();
+    return (ProjLib_HProjectedCurve*)$self->get();
     }
 };
 
 %extend Handle_ProjLib_HProjectedCurve {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend ProjLib_HProjectedCurve {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor ProjLib_HSequenceOfHSequenceOfPnt;
-class ProjLib_HSequenceOfHSequenceOfPnt : public MMgt_TShared {
-	public:
-		%feature("compactdefaultargs") ProjLib_HSequenceOfHSequenceOfPnt;
-		%feature("autodoc", "	:rtype: None
-") ProjLib_HSequenceOfHSequenceOfPnt;
-		 ProjLib_HSequenceOfHSequenceOfPnt ();
-		%feature("compactdefaultargs") IsEmpty;
-		%feature("autodoc", "	:rtype: bool
-") IsEmpty;
-		Standard_Boolean IsEmpty ();
-		%feature("compactdefaultargs") Length;
-		%feature("autodoc", "	:rtype: int
-") Length;
-		Standard_Integer Length ();
-		%feature("compactdefaultargs") Clear;
-		%feature("autodoc", "	:rtype: None
-") Clear;
-		void Clear ();
-		%feature("compactdefaultargs") Append;
-		%feature("autodoc", "	:param anItem:
-	:type anItem: Handle_TColgp_HSequenceOfPnt
-	:rtype: None
-") Append;
-		void Append (const Handle_TColgp_HSequenceOfPnt & anItem);
-		%feature("compactdefaultargs") Append;
-		%feature("autodoc", "	:param aSequence:
-	:type aSequence: Handle_ProjLib_HSequenceOfHSequenceOfPnt &
-	:rtype: None
-") Append;
-		void Append (const Handle_ProjLib_HSequenceOfHSequenceOfPnt & aSequence);
-		%feature("compactdefaultargs") Prepend;
-		%feature("autodoc", "	:param anItem:
-	:type anItem: Handle_TColgp_HSequenceOfPnt
-	:rtype: None
-") Prepend;
-		void Prepend (const Handle_TColgp_HSequenceOfPnt & anItem);
-		%feature("compactdefaultargs") Prepend;
-		%feature("autodoc", "	:param aSequence:
-	:type aSequence: Handle_ProjLib_HSequenceOfHSequenceOfPnt &
-	:rtype: None
-") Prepend;
-		void Prepend (const Handle_ProjLib_HSequenceOfHSequenceOfPnt & aSequence);
-		%feature("compactdefaultargs") Reverse;
-		%feature("autodoc", "	:rtype: None
-") Reverse;
-		void Reverse ();
-		%feature("compactdefaultargs") InsertBefore;
-		%feature("autodoc", "	:param anIndex:
-	:type anIndex: int
-	:param anItem:
-	:type anItem: Handle_TColgp_HSequenceOfPnt
-	:rtype: None
-") InsertBefore;
-		void InsertBefore (const Standard_Integer anIndex,const Handle_TColgp_HSequenceOfPnt & anItem);
-		%feature("compactdefaultargs") InsertBefore;
-		%feature("autodoc", "	:param anIndex:
-	:type anIndex: int
-	:param aSequence:
-	:type aSequence: Handle_ProjLib_HSequenceOfHSequenceOfPnt &
-	:rtype: None
-") InsertBefore;
-		void InsertBefore (const Standard_Integer anIndex,const Handle_ProjLib_HSequenceOfHSequenceOfPnt & aSequence);
-		%feature("compactdefaultargs") InsertAfter;
-		%feature("autodoc", "	:param anIndex:
-	:type anIndex: int
-	:param anItem:
-	:type anItem: Handle_TColgp_HSequenceOfPnt
-	:rtype: None
-") InsertAfter;
-		void InsertAfter (const Standard_Integer anIndex,const Handle_TColgp_HSequenceOfPnt & anItem);
-		%feature("compactdefaultargs") InsertAfter;
-		%feature("autodoc", "	:param anIndex:
-	:type anIndex: int
-	:param aSequence:
-	:type aSequence: Handle_ProjLib_HSequenceOfHSequenceOfPnt &
-	:rtype: None
-") InsertAfter;
-		void InsertAfter (const Standard_Integer anIndex,const Handle_ProjLib_HSequenceOfHSequenceOfPnt & aSequence);
-		%feature("compactdefaultargs") Exchange;
-		%feature("autodoc", "	:param anIndex:
-	:type anIndex: int
-	:param anOtherIndex:
-	:type anOtherIndex: int
-	:rtype: None
-") Exchange;
-		void Exchange (const Standard_Integer anIndex,const Standard_Integer anOtherIndex);
-		%feature("compactdefaultargs") Split;
-		%feature("autodoc", "	:param anIndex:
-	:type anIndex: int
-	:rtype: Handle_ProjLib_HSequenceOfHSequenceOfPnt
-") Split;
-		Handle_ProjLib_HSequenceOfHSequenceOfPnt Split (const Standard_Integer anIndex);
-		%feature("compactdefaultargs") SetValue;
-		%feature("autodoc", "	:param anIndex:
-	:type anIndex: int
-	:param anItem:
-	:type anItem: Handle_TColgp_HSequenceOfPnt
-	:rtype: None
-") SetValue;
-		void SetValue (const Standard_Integer anIndex,const Handle_TColgp_HSequenceOfPnt & anItem);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:param anIndex:
-	:type anIndex: int
-	:rtype: Handle_TColgp_HSequenceOfPnt
-") Value;
-		Handle_TColgp_HSequenceOfPnt Value (const Standard_Integer anIndex);
-		%feature("compactdefaultargs") ChangeValue;
-		%feature("autodoc", "	:param anIndex:
-	:type anIndex: int
-	:rtype: Handle_TColgp_HSequenceOfPnt
-") ChangeValue;
-		Handle_TColgp_HSequenceOfPnt ChangeValue (const Standard_Integer anIndex);
-		%feature("compactdefaultargs") Remove;
-		%feature("autodoc", "	:param anIndex:
-	:type anIndex: int
-	:rtype: None
-") Remove;
-		void Remove (const Standard_Integer anIndex);
-		%feature("compactdefaultargs") Remove;
-		%feature("autodoc", "	:param fromIndex:
-	:type fromIndex: int
-	:param toIndex:
-	:type toIndex: int
-	:rtype: None
-") Remove;
-		void Remove (const Standard_Integer fromIndex,const Standard_Integer toIndex);
-		%feature("compactdefaultargs") Sequence;
-		%feature("autodoc", "	:rtype: ProjLib_SequenceOfHSequenceOfPnt
-") Sequence;
-		const ProjLib_SequenceOfHSequenceOfPnt & Sequence ();
-		%feature("compactdefaultargs") ChangeSequence;
-		%feature("autodoc", "	:rtype: ProjLib_SequenceOfHSequenceOfPnt
-") ChangeSequence;
-		ProjLib_SequenceOfHSequenceOfPnt & ChangeSequence ();
-};
-
-
-%extend ProjLib_HSequenceOfHSequenceOfPnt {
-	%pythoncode {
-		def GetHandle(self):
-		    try:
-		        return self.thisHandle
-		    except:
-		        self.thisHandle = Handle_ProjLib_HSequenceOfHSequenceOfPnt(self)
-		        self.thisown = False
-		        return self.thisHandle
-	}
-};
-
-%pythonappend Handle_ProjLib_HSequenceOfHSequenceOfPnt::Handle_ProjLib_HSequenceOfHSequenceOfPnt %{
-    # register the handle in the base object
-    if len(args) > 0:
-        register_handle(self, args[0])
-%}
-
-%nodefaultctor Handle_ProjLib_HSequenceOfHSequenceOfPnt;
-class Handle_ProjLib_HSequenceOfHSequenceOfPnt : public Handle_MMgt_TShared {
-
-    public:
-        // constructors
-        Handle_ProjLib_HSequenceOfHSequenceOfPnt();
-        Handle_ProjLib_HSequenceOfHSequenceOfPnt(const Handle_ProjLib_HSequenceOfHSequenceOfPnt &aHandle);
-        Handle_ProjLib_HSequenceOfHSequenceOfPnt(const ProjLib_HSequenceOfHSequenceOfPnt *anItem);
-        void Nullify();
-        Standard_Boolean IsNull() const;
-        static const Handle_ProjLib_HSequenceOfHSequenceOfPnt DownCast(const Handle_Standard_Transient &AnObject);
-
-};
-%extend Handle_ProjLib_HSequenceOfHSequenceOfPnt {
-    ProjLib_HSequenceOfHSequenceOfPnt* _get_reference() {
-    return (ProjLib_HSequenceOfHSequenceOfPnt*)$self->Access();
-    }
-};
-
-%extend Handle_ProjLib_HSequenceOfHSequenceOfPnt {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
-};
-
-%extend ProjLib_HSequenceOfHSequenceOfPnt {
 	%pythoncode {
 	__repr__ = _dumps_object
 	}
@@ -1009,7 +856,7 @@ class ProjLib_PrjResolve {
 ") ProjLib_PrjResolve;
 		 ProjLib_PrjResolve (const Adaptor3d_Curve & C,const Adaptor3d_Surface & S,const Standard_Integer Fix);
 		%feature("compactdefaultargs") Perform;
-		%feature("autodoc", "	* Calculates the ort from C(t) to S with a close point. The close point is defined by the parameter values U0 and V0. The function F(u,v)=distance(S(u,v),C(t)) has an extremum when gradient(F)=0. The algorithm searchs a zero near the close point.
+		%feature("autodoc", "	* Calculates the ort from C--t-- to S with a close point. The close point is defined by the parameter values U0 and V0. The function F--u,v--=distance--S--u,v--,C--t---- has an extremum when gradient--F--=0. The algorithm searchs a zero near the close point.
 
 	:param t:
 	:type t: float
@@ -1078,7 +925,7 @@ class ProjLib_ProjectOnPlane : public Adaptor3d_Curve {
 ") ProjLib_ProjectOnPlane;
 		 ProjLib_ProjectOnPlane (const gp_Ax3 & Pl,const gp_Dir & D);
 		%feature("compactdefaultargs") Load;
-		%feature("autodoc", "	* Sets the Curve and perform the projection. if <KeepParametrization> is true, the parametrization of the Projected Curve <PC> will be the same as the parametrization of the initial curve <C>. It meens: proj(C(u)) = PC(u) for each u. Otherwize, the parametrization may change.
+		%feature("autodoc", "	* Sets the Curve and perform the projection. if <KeepParametrization> is true, the parametrization of the Projected Curve <PC> will be the same as the parametrization of the initial curve <C>. It meens: proj--C--u---- = PC--u-- for each u. Otherwize, the parametrization may change.
 
 	:param C:
 	:type C: Handle_Adaptor3d_HCurve &
@@ -1101,6 +948,10 @@ class ProjLib_ProjectOnPlane : public Adaptor3d_Curve {
 		%feature("autodoc", "	:rtype: Handle_Adaptor3d_HCurve
 ") GetCurve;
 		Handle_Adaptor3d_HCurve GetCurve ();
+		%feature("compactdefaultargs") GetResult;
+		%feature("autodoc", "	:rtype: Handle_GeomAdaptor_HCurve
+") GetResult;
+		Handle_GeomAdaptor_HCurve GetResult ();
 		%feature("compactdefaultargs") FirstParameter;
 		%feature("autodoc", "	:rtype: float
 ") FirstParameter;
@@ -1122,7 +973,7 @@ class ProjLib_ProjectOnPlane : public Adaptor3d_Curve {
 ") NbIntervals;
 		Standard_Integer NbIntervals (const GeomAbs_Shape S);
 		%feature("compactdefaultargs") Intervals;
-		%feature("autodoc", "	* Stores in <T> the parameters bounding the intervals of continuity <S>. //! The array must provide enough room to accomodate for the parameters. i.e. T.Length() > NbIntervals()
+		%feature("autodoc", "	* Stores in <T> the parameters bounding the intervals of continuity <S>. //! The array must provide enough room to accomodate for the parameters. i.e. T.Length---- > NbIntervals----
 
 	:param T:
 	:type T: TColStd_Array1OfReal &
@@ -1312,10 +1163,6 @@ class ProjLib_ProjectOnSurface {
 	:rtype: None
 ") ProjLib_ProjectOnSurface;
 		 ProjLib_ProjectOnSurface (const Handle_Adaptor3d_HSurface & S);
-		%feature("compactdefaultargs") Delete;
-		%feature("autodoc", "	:rtype: void
-") Delete;
-		virtual void Delete ();
 		%feature("compactdefaultargs") IsDone;
 		%feature("autodoc", "	:rtype: bool
 ") IsDone;
@@ -1398,7 +1245,7 @@ class ProjLib_ProjectedCurve : public Adaptor2d_Curve2d {
 ") NbIntervals;
 		Standard_Integer NbIntervals (const GeomAbs_Shape S);
 		%feature("compactdefaultargs") Intervals;
-		%feature("autodoc", "	* Stores in <T> the parameters bounding the intervals of continuity <S>. //! The array must provide enough room to accomodate for the parameters. i.e. T.Length() > NbIntervals()
+		%feature("autodoc", "	* Stores in <T> the parameters bounding the intervals of continuity <S>. //! The array must provide enough room to accomodate for the parameters. i.e. T.Length---- > NbIntervals----
 
 	:param T:
 	:type T: TColStd_Array1OfReal &
@@ -1710,220 +1557,6 @@ class ProjLib_Projector {
 
 
 %extend ProjLib_Projector {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor ProjLib_SequenceNodeOfSequenceOfHSequenceOfPnt;
-class ProjLib_SequenceNodeOfSequenceOfHSequenceOfPnt : public TCollection_SeqNode {
-	public:
-		%feature("compactdefaultargs") ProjLib_SequenceNodeOfSequenceOfHSequenceOfPnt;
-		%feature("autodoc", "	:param I:
-	:type I: Handle_TColgp_HSequenceOfPnt
-	:param n:
-	:type n: TCollection_SeqNodePtr &
-	:param p:
-	:type p: TCollection_SeqNodePtr &
-	:rtype: None
-") ProjLib_SequenceNodeOfSequenceOfHSequenceOfPnt;
-		 ProjLib_SequenceNodeOfSequenceOfHSequenceOfPnt (const Handle_TColgp_HSequenceOfPnt & I,const TCollection_SeqNodePtr & n,const TCollection_SeqNodePtr & p);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:rtype: Handle_TColgp_HSequenceOfPnt
-") Value;
-		Handle_TColgp_HSequenceOfPnt Value ();
-};
-
-
-%extend ProjLib_SequenceNodeOfSequenceOfHSequenceOfPnt {
-	%pythoncode {
-		def GetHandle(self):
-		    try:
-		        return self.thisHandle
-		    except:
-		        self.thisHandle = Handle_ProjLib_SequenceNodeOfSequenceOfHSequenceOfPnt(self)
-		        self.thisown = False
-		        return self.thisHandle
-	}
-};
-
-%pythonappend Handle_ProjLib_SequenceNodeOfSequenceOfHSequenceOfPnt::Handle_ProjLib_SequenceNodeOfSequenceOfHSequenceOfPnt %{
-    # register the handle in the base object
-    if len(args) > 0:
-        register_handle(self, args[0])
-%}
-
-%nodefaultctor Handle_ProjLib_SequenceNodeOfSequenceOfHSequenceOfPnt;
-class Handle_ProjLib_SequenceNodeOfSequenceOfHSequenceOfPnt : public Handle_TCollection_SeqNode {
-
-    public:
-        // constructors
-        Handle_ProjLib_SequenceNodeOfSequenceOfHSequenceOfPnt();
-        Handle_ProjLib_SequenceNodeOfSequenceOfHSequenceOfPnt(const Handle_ProjLib_SequenceNodeOfSequenceOfHSequenceOfPnt &aHandle);
-        Handle_ProjLib_SequenceNodeOfSequenceOfHSequenceOfPnt(const ProjLib_SequenceNodeOfSequenceOfHSequenceOfPnt *anItem);
-        void Nullify();
-        Standard_Boolean IsNull() const;
-        static const Handle_ProjLib_SequenceNodeOfSequenceOfHSequenceOfPnt DownCast(const Handle_Standard_Transient &AnObject);
-
-};
-%extend Handle_ProjLib_SequenceNodeOfSequenceOfHSequenceOfPnt {
-    ProjLib_SequenceNodeOfSequenceOfHSequenceOfPnt* _get_reference() {
-    return (ProjLib_SequenceNodeOfSequenceOfHSequenceOfPnt*)$self->Access();
-    }
-};
-
-%extend Handle_ProjLib_SequenceNodeOfSequenceOfHSequenceOfPnt {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
-};
-
-%extend ProjLib_SequenceNodeOfSequenceOfHSequenceOfPnt {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor ProjLib_SequenceOfHSequenceOfPnt;
-class ProjLib_SequenceOfHSequenceOfPnt : public TCollection_BaseSequence {
-	public:
-		%feature("compactdefaultargs") ProjLib_SequenceOfHSequenceOfPnt;
-		%feature("autodoc", "	:rtype: None
-") ProjLib_SequenceOfHSequenceOfPnt;
-		 ProjLib_SequenceOfHSequenceOfPnt ();
-		%feature("compactdefaultargs") ProjLib_SequenceOfHSequenceOfPnt;
-		%feature("autodoc", "	:param Other:
-	:type Other: ProjLib_SequenceOfHSequenceOfPnt &
-	:rtype: None
-") ProjLib_SequenceOfHSequenceOfPnt;
-		 ProjLib_SequenceOfHSequenceOfPnt (const ProjLib_SequenceOfHSequenceOfPnt & Other);
-		%feature("compactdefaultargs") Clear;
-		%feature("autodoc", "	:rtype: None
-") Clear;
-		void Clear ();
-		%feature("compactdefaultargs") Assign;
-		%feature("autodoc", "	:param Other:
-	:type Other: ProjLib_SequenceOfHSequenceOfPnt &
-	:rtype: ProjLib_SequenceOfHSequenceOfPnt
-") Assign;
-		const ProjLib_SequenceOfHSequenceOfPnt & Assign (const ProjLib_SequenceOfHSequenceOfPnt & Other);
-		%feature("compactdefaultargs") operator =;
-		%feature("autodoc", "	:param Other:
-	:type Other: ProjLib_SequenceOfHSequenceOfPnt &
-	:rtype: ProjLib_SequenceOfHSequenceOfPnt
-") operator =;
-		const ProjLib_SequenceOfHSequenceOfPnt & operator = (const ProjLib_SequenceOfHSequenceOfPnt & Other);
-		%feature("compactdefaultargs") Append;
-		%feature("autodoc", "	:param T:
-	:type T: Handle_TColgp_HSequenceOfPnt
-	:rtype: None
-") Append;
-		void Append (const Handle_TColgp_HSequenceOfPnt & T);
-		%feature("compactdefaultargs") Append;
-		%feature("autodoc", "	:param S:
-	:type S: ProjLib_SequenceOfHSequenceOfPnt &
-	:rtype: None
-") Append;
-		void Append (ProjLib_SequenceOfHSequenceOfPnt & S);
-		%feature("compactdefaultargs") Prepend;
-		%feature("autodoc", "	:param T:
-	:type T: Handle_TColgp_HSequenceOfPnt
-	:rtype: None
-") Prepend;
-		void Prepend (const Handle_TColgp_HSequenceOfPnt & T);
-		%feature("compactdefaultargs") Prepend;
-		%feature("autodoc", "	:param S:
-	:type S: ProjLib_SequenceOfHSequenceOfPnt &
-	:rtype: None
-") Prepend;
-		void Prepend (ProjLib_SequenceOfHSequenceOfPnt & S);
-		%feature("compactdefaultargs") InsertBefore;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param T:
-	:type T: Handle_TColgp_HSequenceOfPnt
-	:rtype: None
-") InsertBefore;
-		void InsertBefore (const Standard_Integer Index,const Handle_TColgp_HSequenceOfPnt & T);
-		%feature("compactdefaultargs") InsertBefore;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param S:
-	:type S: ProjLib_SequenceOfHSequenceOfPnt &
-	:rtype: None
-") InsertBefore;
-		void InsertBefore (const Standard_Integer Index,ProjLib_SequenceOfHSequenceOfPnt & S);
-		%feature("compactdefaultargs") InsertAfter;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param T:
-	:type T: Handle_TColgp_HSequenceOfPnt
-	:rtype: None
-") InsertAfter;
-		void InsertAfter (const Standard_Integer Index,const Handle_TColgp_HSequenceOfPnt & T);
-		%feature("compactdefaultargs") InsertAfter;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param S:
-	:type S: ProjLib_SequenceOfHSequenceOfPnt &
-	:rtype: None
-") InsertAfter;
-		void InsertAfter (const Standard_Integer Index,ProjLib_SequenceOfHSequenceOfPnt & S);
-		%feature("compactdefaultargs") First;
-		%feature("autodoc", "	:rtype: Handle_TColgp_HSequenceOfPnt
-") First;
-		Handle_TColgp_HSequenceOfPnt First ();
-		%feature("compactdefaultargs") Last;
-		%feature("autodoc", "	:rtype: Handle_TColgp_HSequenceOfPnt
-") Last;
-		Handle_TColgp_HSequenceOfPnt Last ();
-		%feature("compactdefaultargs") Split;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param Sub:
-	:type Sub: ProjLib_SequenceOfHSequenceOfPnt &
-	:rtype: None
-") Split;
-		void Split (const Standard_Integer Index,ProjLib_SequenceOfHSequenceOfPnt & Sub);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: Handle_TColgp_HSequenceOfPnt
-") Value;
-		Handle_TColgp_HSequenceOfPnt Value (const Standard_Integer Index);
-		%feature("compactdefaultargs") SetValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param I:
-	:type I: Handle_TColgp_HSequenceOfPnt
-	:rtype: None
-") SetValue;
-		void SetValue (const Standard_Integer Index,const Handle_TColgp_HSequenceOfPnt & I);
-		%feature("compactdefaultargs") ChangeValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: Handle_TColgp_HSequenceOfPnt
-") ChangeValue;
-		Handle_TColgp_HSequenceOfPnt ChangeValue (const Standard_Integer Index);
-		%feature("compactdefaultargs") Remove;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: None
-") Remove;
-		void Remove (const Standard_Integer Index);
-		%feature("compactdefaultargs") Remove;
-		%feature("autodoc", "	:param FromIndex:
-	:type FromIndex: int
-	:param ToIndex:
-	:type ToIndex: int
-	:rtype: None
-") Remove;
-		void Remove (const Standard_Integer FromIndex,const Standard_Integer ToIndex);
-};
-
-
-%extend ProjLib_SequenceOfHSequenceOfPnt {
 	%pythoncode {
 	__repr__ = _dumps_object
 	}

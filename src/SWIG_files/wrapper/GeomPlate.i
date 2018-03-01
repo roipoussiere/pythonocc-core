@@ -1,5 +1,5 @@
 /*
-Copyright 2008-2017 Thomas Paviot (tpaviot@gmail.com)
+Copyright 2008-2018 Thomas Paviot (tpaviot@gmail.com)
 
 
 This file is part of pythonOCC.
@@ -56,6 +56,14 @@ def register_handle(handle, base_object):
 /* typedefs */
 /* end typedefs declaration */
 
+/* templates */
+%template(GeomPlate_Array1OfSequenceOfReal) NCollection_Array1 <TColStd_SequenceOfReal>;
+%template(GeomPlate_SequenceOfPointConstraint) NCollection_Sequence <Handle_GeomPlate_PointConstraint>;
+%template(GeomPlate_SequenceOfAij) NCollection_Sequence <GeomPlate_Aij>;
+%template(GeomPlate_Array1OfHCurve) NCollection_Array1 <Handle_Adaptor3d_HCurve>;
+%template(GeomPlate_SequenceOfCurveConstraint) NCollection_Sequence <Handle_GeomPlate_CurveConstraint>;
+/* end templates declaration */
+
 /* public enums */
 /* end public enums declaration */
 
@@ -80,180 +88,6 @@ class GeomPlate_Aij {
 
 
 %extend GeomPlate_Aij {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor GeomPlate_Array1OfHCurveOnSurface;
-class GeomPlate_Array1OfHCurveOnSurface {
-	public:
-		%feature("compactdefaultargs") GeomPlate_Array1OfHCurveOnSurface;
-		%feature("autodoc", "	:param Low:
-	:type Low: int
-	:param Up:
-	:type Up: int
-	:rtype: None
-") GeomPlate_Array1OfHCurveOnSurface;
-		 GeomPlate_Array1OfHCurveOnSurface (const Standard_Integer Low,const Standard_Integer Up);
-		%feature("compactdefaultargs") GeomPlate_Array1OfHCurveOnSurface;
-		%feature("autodoc", "	:param Item:
-	:type Item: Handle_Adaptor3d_HCurveOnSurface &
-	:param Low:
-	:type Low: int
-	:param Up:
-	:type Up: int
-	:rtype: None
-") GeomPlate_Array1OfHCurveOnSurface;
-		 GeomPlate_Array1OfHCurveOnSurface (const Handle_Adaptor3d_HCurveOnSurface & Item,const Standard_Integer Low,const Standard_Integer Up);
-		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	:param V:
-	:type V: Handle_Adaptor3d_HCurveOnSurface &
-	:rtype: None
-") Init;
-		void Init (const Handle_Adaptor3d_HCurveOnSurface & V);
-		%feature("compactdefaultargs") Destroy;
-		%feature("autodoc", "	:rtype: None
-") Destroy;
-		void Destroy ();
-		%feature("compactdefaultargs") IsAllocated;
-		%feature("autodoc", "	:rtype: bool
-") IsAllocated;
-		Standard_Boolean IsAllocated ();
-		%feature("compactdefaultargs") Assign;
-		%feature("autodoc", "	:param Other:
-	:type Other: GeomPlate_Array1OfHCurveOnSurface &
-	:rtype: GeomPlate_Array1OfHCurveOnSurface
-") Assign;
-		const GeomPlate_Array1OfHCurveOnSurface & Assign (const GeomPlate_Array1OfHCurveOnSurface & Other);
-		%feature("compactdefaultargs") operator =;
-		%feature("autodoc", "	:param Other:
-	:type Other: GeomPlate_Array1OfHCurveOnSurface &
-	:rtype: GeomPlate_Array1OfHCurveOnSurface
-") operator =;
-		const GeomPlate_Array1OfHCurveOnSurface & operator = (const GeomPlate_Array1OfHCurveOnSurface & Other);
-		%feature("compactdefaultargs") Length;
-		%feature("autodoc", "	:rtype: int
-") Length;
-		Standard_Integer Length ();
-		%feature("compactdefaultargs") Lower;
-		%feature("autodoc", "	:rtype: int
-") Lower;
-		Standard_Integer Lower ();
-		%feature("compactdefaultargs") Upper;
-		%feature("autodoc", "	:rtype: int
-") Upper;
-		Standard_Integer Upper ();
-		%feature("compactdefaultargs") SetValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param Value:
-	:type Value: Handle_Adaptor3d_HCurveOnSurface &
-	:rtype: None
-") SetValue;
-		void SetValue (const Standard_Integer Index,const Handle_Adaptor3d_HCurveOnSurface & Value);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: Handle_Adaptor3d_HCurveOnSurface
-") Value;
-		Handle_Adaptor3d_HCurveOnSurface Value (const Standard_Integer Index);
-		%feature("compactdefaultargs") ChangeValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: Handle_Adaptor3d_HCurveOnSurface
-") ChangeValue;
-		Handle_Adaptor3d_HCurveOnSurface ChangeValue (const Standard_Integer Index);
-};
-
-
-%extend GeomPlate_Array1OfHCurveOnSurface {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor GeomPlate_Array1OfSequenceOfReal;
-class GeomPlate_Array1OfSequenceOfReal {
-	public:
-		%feature("compactdefaultargs") GeomPlate_Array1OfSequenceOfReal;
-		%feature("autodoc", "	:param Low:
-	:type Low: int
-	:param Up:
-	:type Up: int
-	:rtype: None
-") GeomPlate_Array1OfSequenceOfReal;
-		 GeomPlate_Array1OfSequenceOfReal (const Standard_Integer Low,const Standard_Integer Up);
-		%feature("compactdefaultargs") GeomPlate_Array1OfSequenceOfReal;
-		%feature("autodoc", "	:param Item:
-	:type Item: TColStd_SequenceOfReal &
-	:param Low:
-	:type Low: int
-	:param Up:
-	:type Up: int
-	:rtype: None
-") GeomPlate_Array1OfSequenceOfReal;
-		 GeomPlate_Array1OfSequenceOfReal (const TColStd_SequenceOfReal & Item,const Standard_Integer Low,const Standard_Integer Up);
-		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	:param V:
-	:type V: TColStd_SequenceOfReal &
-	:rtype: None
-") Init;
-		void Init (const TColStd_SequenceOfReal & V);
-		%feature("compactdefaultargs") Destroy;
-		%feature("autodoc", "	:rtype: None
-") Destroy;
-		void Destroy ();
-		%feature("compactdefaultargs") IsAllocated;
-		%feature("autodoc", "	:rtype: bool
-") IsAllocated;
-		Standard_Boolean IsAllocated ();
-		%feature("compactdefaultargs") Assign;
-		%feature("autodoc", "	:param Other:
-	:type Other: GeomPlate_Array1OfSequenceOfReal &
-	:rtype: GeomPlate_Array1OfSequenceOfReal
-") Assign;
-		const GeomPlate_Array1OfSequenceOfReal & Assign (const GeomPlate_Array1OfSequenceOfReal & Other);
-		%feature("compactdefaultargs") operator =;
-		%feature("autodoc", "	:param Other:
-	:type Other: GeomPlate_Array1OfSequenceOfReal &
-	:rtype: GeomPlate_Array1OfSequenceOfReal
-") operator =;
-		const GeomPlate_Array1OfSequenceOfReal & operator = (const GeomPlate_Array1OfSequenceOfReal & Other);
-		%feature("compactdefaultargs") Length;
-		%feature("autodoc", "	:rtype: int
-") Length;
-		Standard_Integer Length ();
-		%feature("compactdefaultargs") Lower;
-		%feature("autodoc", "	:rtype: int
-") Lower;
-		Standard_Integer Lower ();
-		%feature("compactdefaultargs") Upper;
-		%feature("autodoc", "	:rtype: int
-") Upper;
-		Standard_Integer Upper ();
-		%feature("compactdefaultargs") SetValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param Value:
-	:type Value: TColStd_SequenceOfReal &
-	:rtype: None
-") SetValue;
-		void SetValue (const Standard_Integer Index,const TColStd_SequenceOfReal & Value);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: TColStd_SequenceOfReal
-") Value;
-		const TColStd_SequenceOfReal & Value (const Standard_Integer Index);
-		%feature("compactdefaultargs") ChangeValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: TColStd_SequenceOfReal
-") ChangeValue;
-		TColStd_SequenceOfReal & ChangeValue (const Standard_Integer Index);
-};
-
-
-%extend GeomPlate_Array1OfSequenceOfReal {
 	%pythoncode {
 	__repr__ = _dumps_object
 	}
@@ -356,7 +190,7 @@ class GeomPlate_BuildPlateSurface {
 	:param NPoints:
 	:type NPoints: Handle_TColStd_HArray1OfInteger &
 	:param TabCurve:
-	:type TabCurve: Handle_GeomPlate_HArray1OfHCurveOnSurface &
+	:type TabCurve: Handle_GeomPlate_HArray1OfHCurve &
 	:param Tang:
 	:type Tang: Handle_TColStd_HArray1OfInteger &
 	:param Degree:
@@ -375,7 +209,7 @@ class GeomPlate_BuildPlateSurface {
 	:type Anisotropie: bool
 	:rtype: None
 ") GeomPlate_BuildPlateSurface;
-		 GeomPlate_BuildPlateSurface (const Handle_TColStd_HArray1OfInteger & NPoints,const Handle_GeomPlate_HArray1OfHCurveOnSurface & TabCurve,const Handle_TColStd_HArray1OfInteger & Tang,const Standard_Integer Degree,const Standard_Integer NbIter = 3,const Standard_Real Tol2d = 0.00001,const Standard_Real Tol3d = 0.0001,const Standard_Real TolAng = 0.01,const Standard_Real TolCurv = 0.1,const Standard_Boolean Anisotropie = Standard_False);
+		 GeomPlate_BuildPlateSurface (const Handle_TColStd_HArray1OfInteger & NPoints,const Handle_GeomPlate_HArray1OfHCurve & TabCurve,const Handle_TColStd_HArray1OfInteger & Tang,const Standard_Integer Degree,const Standard_Integer NbIter = 3,const Standard_Real Tol2d = 0.00001,const Standard_Real Tol3d = 0.0001,const Standard_Real TolAng = 0.01,const Standard_Real TolCurv = 0.1,const Standard_Boolean Anisotropie = Standard_False);
 		%feature("compactdefaultargs") GeomPlate_BuildPlateSurface;
 		%feature("autodoc", "	:param Surf:
 	:type Surf: Handle_Geom_Surface &
@@ -583,7 +417,7 @@ class GeomPlate_BuildPlateSurface {
 	}
 };
 %nodefaultctor GeomPlate_CurveConstraint;
-class GeomPlate_CurveConstraint : public MMgt_TShared {
+class GeomPlate_CurveConstraint : public Standard_Transient {
 	public:
 		%feature("compactdefaultargs") GeomPlate_CurveConstraint;
 		%feature("autodoc", "	* Initializes an empty curve constraint object.
@@ -595,7 +429,7 @@ class GeomPlate_CurveConstraint : public MMgt_TShared {
 		%feature("autodoc", "	* Create a constraint Order is the order of the constraint. The possible values for order are -1,0,1,2. Order i means constraints Gi Npt is the number of points associated with the constraint. TolDist is the maximum error to satisfy for G0 constraints TolAng is the maximum error to satisfy for G1 constraints TolCurv is the maximum error to satisfy for G2 constraints These errors can be replaced by laws of criterion. Raises ConstructionError if Order is not -1 , 0, 1, 2
 
 	:param Boundary:
-	:type Boundary: Handle_Adaptor3d_HCurveOnSurface &
+	:type Boundary: Handle_Adaptor3d_HCurve &
 	:param Order:
 	:type Order: int
 	:param NPt: default value is 10
@@ -608,21 +442,7 @@ class GeomPlate_CurveConstraint : public MMgt_TShared {
 	:type TolCurv: float
 	:rtype: None
 ") GeomPlate_CurveConstraint;
-		 GeomPlate_CurveConstraint (const Handle_Adaptor3d_HCurveOnSurface & Boundary,const Standard_Integer Order,const Standard_Integer NPt = 10,const Standard_Real TolDist = 0.0001,const Standard_Real TolAng = 0.01,const Standard_Real TolCurv = 0.1);
-		%feature("compactdefaultargs") GeomPlate_CurveConstraint;
-		%feature("autodoc", "	* Create a constraint Order is the order of the constraint. The possible values for order are -1,0. Order i means constraints Gi Npt is the number of points associated with the constraint. TolDist is the maximum error to satisfy for G0 constraints These errors can be replaced by laws of criterion. Raises ConstructionError if Order is not 0 or -1
-
-	:param Boundary:
-	:type Boundary: Handle_Adaptor3d_HCurve &
-	:param Tang:
-	:type Tang: int
-	:param NPt: default value is 10
-	:type NPt: int
-	:param TolDist: default value is 0.0001
-	:type TolDist: float
-	:rtype: None
-") GeomPlate_CurveConstraint;
-		 GeomPlate_CurveConstraint (const Handle_Adaptor3d_HCurve & Boundary,const Standard_Integer Tang,const Standard_Integer NPt = 10,const Standard_Real TolDist = 0.0001);
+		 GeomPlate_CurveConstraint (const Handle_Adaptor3d_HCurve & Boundary,const Standard_Integer Order,const Standard_Integer NPt = 10,const Standard_Real TolDist = 0.0001,const Standard_Real TolAng = 0.01,const Standard_Real TolCurv = 0.1);
 		%feature("compactdefaultargs") SetOrder;
 		%feature("autodoc", "	* Allows you to set the order of continuity required for the constraints: G0, G1, and G2, controlled respectively by G0Criterion G1Criterion and G2Criterion.
 
@@ -811,7 +631,7 @@ class GeomPlate_CurveConstraint : public MMgt_TShared {
 %}
 
 %nodefaultctor Handle_GeomPlate_CurveConstraint;
-class Handle_GeomPlate_CurveConstraint : public Handle_MMgt_TShared {
+class Handle_GeomPlate_CurveConstraint : public Handle_Standard_Transient {
 
     public:
         // constructors
@@ -823,642 +643,23 @@ class Handle_GeomPlate_CurveConstraint : public Handle_MMgt_TShared {
         static const Handle_GeomPlate_CurveConstraint DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_GeomPlate_CurveConstraint {
     GeomPlate_CurveConstraint* _get_reference() {
-    return (GeomPlate_CurveConstraint*)$self->Access();
+    return (GeomPlate_CurveConstraint*)$self->get();
     }
 };
 
 %extend Handle_GeomPlate_CurveConstraint {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend GeomPlate_CurveConstraint {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor GeomPlate_HArray1OfHCurveOnSurface;
-class GeomPlate_HArray1OfHCurveOnSurface : public MMgt_TShared {
-	public:
-		%feature("compactdefaultargs") GeomPlate_HArray1OfHCurveOnSurface;
-		%feature("autodoc", "	:param Low:
-	:type Low: int
-	:param Up:
-	:type Up: int
-	:rtype: None
-") GeomPlate_HArray1OfHCurveOnSurface;
-		 GeomPlate_HArray1OfHCurveOnSurface (const Standard_Integer Low,const Standard_Integer Up);
-		%feature("compactdefaultargs") GeomPlate_HArray1OfHCurveOnSurface;
-		%feature("autodoc", "	:param Low:
-	:type Low: int
-	:param Up:
-	:type Up: int
-	:param V:
-	:type V: Handle_Adaptor3d_HCurveOnSurface &
-	:rtype: None
-") GeomPlate_HArray1OfHCurveOnSurface;
-		 GeomPlate_HArray1OfHCurveOnSurface (const Standard_Integer Low,const Standard_Integer Up,const Handle_Adaptor3d_HCurveOnSurface & V);
-		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	:param V:
-	:type V: Handle_Adaptor3d_HCurveOnSurface &
-	:rtype: None
-") Init;
-		void Init (const Handle_Adaptor3d_HCurveOnSurface & V);
-		%feature("compactdefaultargs") Length;
-		%feature("autodoc", "	:rtype: int
-") Length;
-		Standard_Integer Length ();
-		%feature("compactdefaultargs") Lower;
-		%feature("autodoc", "	:rtype: int
-") Lower;
-		Standard_Integer Lower ();
-		%feature("compactdefaultargs") Upper;
-		%feature("autodoc", "	:rtype: int
-") Upper;
-		Standard_Integer Upper ();
-		%feature("compactdefaultargs") SetValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param Value:
-	:type Value: Handle_Adaptor3d_HCurveOnSurface &
-	:rtype: None
-") SetValue;
-		void SetValue (const Standard_Integer Index,const Handle_Adaptor3d_HCurveOnSurface & Value);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: Handle_Adaptor3d_HCurveOnSurface
-") Value;
-		Handle_Adaptor3d_HCurveOnSurface Value (const Standard_Integer Index);
-		%feature("compactdefaultargs") ChangeValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: Handle_Adaptor3d_HCurveOnSurface
-") ChangeValue;
-		Handle_Adaptor3d_HCurveOnSurface ChangeValue (const Standard_Integer Index);
-		%feature("compactdefaultargs") Array1;
-		%feature("autodoc", "	:rtype: GeomPlate_Array1OfHCurveOnSurface
-") Array1;
-		const GeomPlate_Array1OfHCurveOnSurface & Array1 ();
-		%feature("compactdefaultargs") ChangeArray1;
-		%feature("autodoc", "	:rtype: GeomPlate_Array1OfHCurveOnSurface
-") ChangeArray1;
-		GeomPlate_Array1OfHCurveOnSurface & ChangeArray1 ();
-};
-
-
-%extend GeomPlate_HArray1OfHCurveOnSurface {
-	%pythoncode {
-		def GetHandle(self):
-		    try:
-		        return self.thisHandle
-		    except:
-		        self.thisHandle = Handle_GeomPlate_HArray1OfHCurveOnSurface(self)
-		        self.thisown = False
-		        return self.thisHandle
-	}
-};
-
-%pythonappend Handle_GeomPlate_HArray1OfHCurveOnSurface::Handle_GeomPlate_HArray1OfHCurveOnSurface %{
-    # register the handle in the base object
-    if len(args) > 0:
-        register_handle(self, args[0])
-%}
-
-%nodefaultctor Handle_GeomPlate_HArray1OfHCurveOnSurface;
-class Handle_GeomPlate_HArray1OfHCurveOnSurface : public Handle_MMgt_TShared {
-
-    public:
-        // constructors
-        Handle_GeomPlate_HArray1OfHCurveOnSurface();
-        Handle_GeomPlate_HArray1OfHCurveOnSurface(const Handle_GeomPlate_HArray1OfHCurveOnSurface &aHandle);
-        Handle_GeomPlate_HArray1OfHCurveOnSurface(const GeomPlate_HArray1OfHCurveOnSurface *anItem);
-        void Nullify();
-        Standard_Boolean IsNull() const;
-        static const Handle_GeomPlate_HArray1OfHCurveOnSurface DownCast(const Handle_Standard_Transient &AnObject);
-
-};
-%extend Handle_GeomPlate_HArray1OfHCurveOnSurface {
-    GeomPlate_HArray1OfHCurveOnSurface* _get_reference() {
-    return (GeomPlate_HArray1OfHCurveOnSurface*)$self->Access();
-    }
-};
-
-%extend Handle_GeomPlate_HArray1OfHCurveOnSurface {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
-};
-
-%extend GeomPlate_HArray1OfHCurveOnSurface {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor GeomPlate_HArray1OfSequenceOfReal;
-class GeomPlate_HArray1OfSequenceOfReal : public MMgt_TShared {
-	public:
-		%feature("compactdefaultargs") GeomPlate_HArray1OfSequenceOfReal;
-		%feature("autodoc", "	:param Low:
-	:type Low: int
-	:param Up:
-	:type Up: int
-	:rtype: None
-") GeomPlate_HArray1OfSequenceOfReal;
-		 GeomPlate_HArray1OfSequenceOfReal (const Standard_Integer Low,const Standard_Integer Up);
-		%feature("compactdefaultargs") GeomPlate_HArray1OfSequenceOfReal;
-		%feature("autodoc", "	:param Low:
-	:type Low: int
-	:param Up:
-	:type Up: int
-	:param V:
-	:type V: TColStd_SequenceOfReal &
-	:rtype: None
-") GeomPlate_HArray1OfSequenceOfReal;
-		 GeomPlate_HArray1OfSequenceOfReal (const Standard_Integer Low,const Standard_Integer Up,const TColStd_SequenceOfReal & V);
-		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	:param V:
-	:type V: TColStd_SequenceOfReal &
-	:rtype: None
-") Init;
-		void Init (const TColStd_SequenceOfReal & V);
-		%feature("compactdefaultargs") Length;
-		%feature("autodoc", "	:rtype: int
-") Length;
-		Standard_Integer Length ();
-		%feature("compactdefaultargs") Lower;
-		%feature("autodoc", "	:rtype: int
-") Lower;
-		Standard_Integer Lower ();
-		%feature("compactdefaultargs") Upper;
-		%feature("autodoc", "	:rtype: int
-") Upper;
-		Standard_Integer Upper ();
-		%feature("compactdefaultargs") SetValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param Value:
-	:type Value: TColStd_SequenceOfReal &
-	:rtype: None
-") SetValue;
-		void SetValue (const Standard_Integer Index,const TColStd_SequenceOfReal & Value);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: TColStd_SequenceOfReal
-") Value;
-		const TColStd_SequenceOfReal & Value (const Standard_Integer Index);
-		%feature("compactdefaultargs") ChangeValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: TColStd_SequenceOfReal
-") ChangeValue;
-		TColStd_SequenceOfReal & ChangeValue (const Standard_Integer Index);
-		%feature("compactdefaultargs") Array1;
-		%feature("autodoc", "	:rtype: GeomPlate_Array1OfSequenceOfReal
-") Array1;
-		const GeomPlate_Array1OfSequenceOfReal & Array1 ();
-		%feature("compactdefaultargs") ChangeArray1;
-		%feature("autodoc", "	:rtype: GeomPlate_Array1OfSequenceOfReal
-") ChangeArray1;
-		GeomPlate_Array1OfSequenceOfReal & ChangeArray1 ();
-};
-
-
-%extend GeomPlate_HArray1OfSequenceOfReal {
-	%pythoncode {
-		def GetHandle(self):
-		    try:
-		        return self.thisHandle
-		    except:
-		        self.thisHandle = Handle_GeomPlate_HArray1OfSequenceOfReal(self)
-		        self.thisown = False
-		        return self.thisHandle
-	}
-};
-
-%pythonappend Handle_GeomPlate_HArray1OfSequenceOfReal::Handle_GeomPlate_HArray1OfSequenceOfReal %{
-    # register the handle in the base object
-    if len(args) > 0:
-        register_handle(self, args[0])
-%}
-
-%nodefaultctor Handle_GeomPlate_HArray1OfSequenceOfReal;
-class Handle_GeomPlate_HArray1OfSequenceOfReal : public Handle_MMgt_TShared {
-
-    public:
-        // constructors
-        Handle_GeomPlate_HArray1OfSequenceOfReal();
-        Handle_GeomPlate_HArray1OfSequenceOfReal(const Handle_GeomPlate_HArray1OfSequenceOfReal &aHandle);
-        Handle_GeomPlate_HArray1OfSequenceOfReal(const GeomPlate_HArray1OfSequenceOfReal *anItem);
-        void Nullify();
-        Standard_Boolean IsNull() const;
-        static const Handle_GeomPlate_HArray1OfSequenceOfReal DownCast(const Handle_Standard_Transient &AnObject);
-
-};
-%extend Handle_GeomPlate_HArray1OfSequenceOfReal {
-    GeomPlate_HArray1OfSequenceOfReal* _get_reference() {
-    return (GeomPlate_HArray1OfSequenceOfReal*)$self->Access();
-    }
-};
-
-%extend Handle_GeomPlate_HArray1OfSequenceOfReal {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
-};
-
-%extend GeomPlate_HArray1OfSequenceOfReal {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor GeomPlate_HSequenceOfCurveConstraint;
-class GeomPlate_HSequenceOfCurveConstraint : public MMgt_TShared {
-	public:
-		%feature("compactdefaultargs") GeomPlate_HSequenceOfCurveConstraint;
-		%feature("autodoc", "	:rtype: None
-") GeomPlate_HSequenceOfCurveConstraint;
-		 GeomPlate_HSequenceOfCurveConstraint ();
-		%feature("compactdefaultargs") IsEmpty;
-		%feature("autodoc", "	:rtype: bool
-") IsEmpty;
-		Standard_Boolean IsEmpty ();
-		%feature("compactdefaultargs") Length;
-		%feature("autodoc", "	:rtype: int
-") Length;
-		Standard_Integer Length ();
-		%feature("compactdefaultargs") Clear;
-		%feature("autodoc", "	:rtype: None
-") Clear;
-		void Clear ();
-		%feature("compactdefaultargs") Append;
-		%feature("autodoc", "	:param anItem:
-	:type anItem: Handle_GeomPlate_CurveConstraint &
-	:rtype: None
-") Append;
-		void Append (const Handle_GeomPlate_CurveConstraint & anItem);
-		%feature("compactdefaultargs") Append;
-		%feature("autodoc", "	:param aSequence:
-	:type aSequence: Handle_GeomPlate_HSequenceOfCurveConstraint &
-	:rtype: None
-") Append;
-		void Append (const Handle_GeomPlate_HSequenceOfCurveConstraint & aSequence);
-		%feature("compactdefaultargs") Prepend;
-		%feature("autodoc", "	:param anItem:
-	:type anItem: Handle_GeomPlate_CurveConstraint &
-	:rtype: None
-") Prepend;
-		void Prepend (const Handle_GeomPlate_CurveConstraint & anItem);
-		%feature("compactdefaultargs") Prepend;
-		%feature("autodoc", "	:param aSequence:
-	:type aSequence: Handle_GeomPlate_HSequenceOfCurveConstraint &
-	:rtype: None
-") Prepend;
-		void Prepend (const Handle_GeomPlate_HSequenceOfCurveConstraint & aSequence);
-		%feature("compactdefaultargs") Reverse;
-		%feature("autodoc", "	:rtype: None
-") Reverse;
-		void Reverse ();
-		%feature("compactdefaultargs") InsertBefore;
-		%feature("autodoc", "	:param anIndex:
-	:type anIndex: int
-	:param anItem:
-	:type anItem: Handle_GeomPlate_CurveConstraint &
-	:rtype: None
-") InsertBefore;
-		void InsertBefore (const Standard_Integer anIndex,const Handle_GeomPlate_CurveConstraint & anItem);
-		%feature("compactdefaultargs") InsertBefore;
-		%feature("autodoc", "	:param anIndex:
-	:type anIndex: int
-	:param aSequence:
-	:type aSequence: Handle_GeomPlate_HSequenceOfCurveConstraint &
-	:rtype: None
-") InsertBefore;
-		void InsertBefore (const Standard_Integer anIndex,const Handle_GeomPlate_HSequenceOfCurveConstraint & aSequence);
-		%feature("compactdefaultargs") InsertAfter;
-		%feature("autodoc", "	:param anIndex:
-	:type anIndex: int
-	:param anItem:
-	:type anItem: Handle_GeomPlate_CurveConstraint &
-	:rtype: None
-") InsertAfter;
-		void InsertAfter (const Standard_Integer anIndex,const Handle_GeomPlate_CurveConstraint & anItem);
-		%feature("compactdefaultargs") InsertAfter;
-		%feature("autodoc", "	:param anIndex:
-	:type anIndex: int
-	:param aSequence:
-	:type aSequence: Handle_GeomPlate_HSequenceOfCurveConstraint &
-	:rtype: None
-") InsertAfter;
-		void InsertAfter (const Standard_Integer anIndex,const Handle_GeomPlate_HSequenceOfCurveConstraint & aSequence);
-		%feature("compactdefaultargs") Exchange;
-		%feature("autodoc", "	:param anIndex:
-	:type anIndex: int
-	:param anOtherIndex:
-	:type anOtherIndex: int
-	:rtype: None
-") Exchange;
-		void Exchange (const Standard_Integer anIndex,const Standard_Integer anOtherIndex);
-		%feature("compactdefaultargs") Split;
-		%feature("autodoc", "	:param anIndex:
-	:type anIndex: int
-	:rtype: Handle_GeomPlate_HSequenceOfCurveConstraint
-") Split;
-		Handle_GeomPlate_HSequenceOfCurveConstraint Split (const Standard_Integer anIndex);
-		%feature("compactdefaultargs") SetValue;
-		%feature("autodoc", "	:param anIndex:
-	:type anIndex: int
-	:param anItem:
-	:type anItem: Handle_GeomPlate_CurveConstraint &
-	:rtype: None
-") SetValue;
-		void SetValue (const Standard_Integer anIndex,const Handle_GeomPlate_CurveConstraint & anItem);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:param anIndex:
-	:type anIndex: int
-	:rtype: Handle_GeomPlate_CurveConstraint
-") Value;
-		Handle_GeomPlate_CurveConstraint Value (const Standard_Integer anIndex);
-		%feature("compactdefaultargs") ChangeValue;
-		%feature("autodoc", "	:param anIndex:
-	:type anIndex: int
-	:rtype: Handle_GeomPlate_CurveConstraint
-") ChangeValue;
-		Handle_GeomPlate_CurveConstraint ChangeValue (const Standard_Integer anIndex);
-		%feature("compactdefaultargs") Remove;
-		%feature("autodoc", "	:param anIndex:
-	:type anIndex: int
-	:rtype: None
-") Remove;
-		void Remove (const Standard_Integer anIndex);
-		%feature("compactdefaultargs") Remove;
-		%feature("autodoc", "	:param fromIndex:
-	:type fromIndex: int
-	:param toIndex:
-	:type toIndex: int
-	:rtype: None
-") Remove;
-		void Remove (const Standard_Integer fromIndex,const Standard_Integer toIndex);
-		%feature("compactdefaultargs") Sequence;
-		%feature("autodoc", "	:rtype: GeomPlate_SequenceOfCurveConstraint
-") Sequence;
-		const GeomPlate_SequenceOfCurveConstraint & Sequence ();
-		%feature("compactdefaultargs") ChangeSequence;
-		%feature("autodoc", "	:rtype: GeomPlate_SequenceOfCurveConstraint
-") ChangeSequence;
-		GeomPlate_SequenceOfCurveConstraint & ChangeSequence ();
-};
-
-
-%extend GeomPlate_HSequenceOfCurveConstraint {
-	%pythoncode {
-		def GetHandle(self):
-		    try:
-		        return self.thisHandle
-		    except:
-		        self.thisHandle = Handle_GeomPlate_HSequenceOfCurveConstraint(self)
-		        self.thisown = False
-		        return self.thisHandle
-	}
-};
-
-%pythonappend Handle_GeomPlate_HSequenceOfCurveConstraint::Handle_GeomPlate_HSequenceOfCurveConstraint %{
-    # register the handle in the base object
-    if len(args) > 0:
-        register_handle(self, args[0])
-%}
-
-%nodefaultctor Handle_GeomPlate_HSequenceOfCurveConstraint;
-class Handle_GeomPlate_HSequenceOfCurveConstraint : public Handle_MMgt_TShared {
-
-    public:
-        // constructors
-        Handle_GeomPlate_HSequenceOfCurveConstraint();
-        Handle_GeomPlate_HSequenceOfCurveConstraint(const Handle_GeomPlate_HSequenceOfCurveConstraint &aHandle);
-        Handle_GeomPlate_HSequenceOfCurveConstraint(const GeomPlate_HSequenceOfCurveConstraint *anItem);
-        void Nullify();
-        Standard_Boolean IsNull() const;
-        static const Handle_GeomPlate_HSequenceOfCurveConstraint DownCast(const Handle_Standard_Transient &AnObject);
-
-};
-%extend Handle_GeomPlate_HSequenceOfCurveConstraint {
-    GeomPlate_HSequenceOfCurveConstraint* _get_reference() {
-    return (GeomPlate_HSequenceOfCurveConstraint*)$self->Access();
-    }
-};
-
-%extend Handle_GeomPlate_HSequenceOfCurveConstraint {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
-};
-
-%extend GeomPlate_HSequenceOfCurveConstraint {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor GeomPlate_HSequenceOfPointConstraint;
-class GeomPlate_HSequenceOfPointConstraint : public MMgt_TShared {
-	public:
-		%feature("compactdefaultargs") GeomPlate_HSequenceOfPointConstraint;
-		%feature("autodoc", "	:rtype: None
-") GeomPlate_HSequenceOfPointConstraint;
-		 GeomPlate_HSequenceOfPointConstraint ();
-		%feature("compactdefaultargs") IsEmpty;
-		%feature("autodoc", "	:rtype: bool
-") IsEmpty;
-		Standard_Boolean IsEmpty ();
-		%feature("compactdefaultargs") Length;
-		%feature("autodoc", "	:rtype: int
-") Length;
-		Standard_Integer Length ();
-		%feature("compactdefaultargs") Clear;
-		%feature("autodoc", "	:rtype: None
-") Clear;
-		void Clear ();
-		%feature("compactdefaultargs") Append;
-		%feature("autodoc", "	:param anItem:
-	:type anItem: Handle_GeomPlate_PointConstraint &
-	:rtype: None
-") Append;
-		void Append (const Handle_GeomPlate_PointConstraint & anItem);
-		%feature("compactdefaultargs") Append;
-		%feature("autodoc", "	:param aSequence:
-	:type aSequence: Handle_GeomPlate_HSequenceOfPointConstraint &
-	:rtype: None
-") Append;
-		void Append (const Handle_GeomPlate_HSequenceOfPointConstraint & aSequence);
-		%feature("compactdefaultargs") Prepend;
-		%feature("autodoc", "	:param anItem:
-	:type anItem: Handle_GeomPlate_PointConstraint &
-	:rtype: None
-") Prepend;
-		void Prepend (const Handle_GeomPlate_PointConstraint & anItem);
-		%feature("compactdefaultargs") Prepend;
-		%feature("autodoc", "	:param aSequence:
-	:type aSequence: Handle_GeomPlate_HSequenceOfPointConstraint &
-	:rtype: None
-") Prepend;
-		void Prepend (const Handle_GeomPlate_HSequenceOfPointConstraint & aSequence);
-		%feature("compactdefaultargs") Reverse;
-		%feature("autodoc", "	:rtype: None
-") Reverse;
-		void Reverse ();
-		%feature("compactdefaultargs") InsertBefore;
-		%feature("autodoc", "	:param anIndex:
-	:type anIndex: int
-	:param anItem:
-	:type anItem: Handle_GeomPlate_PointConstraint &
-	:rtype: None
-") InsertBefore;
-		void InsertBefore (const Standard_Integer anIndex,const Handle_GeomPlate_PointConstraint & anItem);
-		%feature("compactdefaultargs") InsertBefore;
-		%feature("autodoc", "	:param anIndex:
-	:type anIndex: int
-	:param aSequence:
-	:type aSequence: Handle_GeomPlate_HSequenceOfPointConstraint &
-	:rtype: None
-") InsertBefore;
-		void InsertBefore (const Standard_Integer anIndex,const Handle_GeomPlate_HSequenceOfPointConstraint & aSequence);
-		%feature("compactdefaultargs") InsertAfter;
-		%feature("autodoc", "	:param anIndex:
-	:type anIndex: int
-	:param anItem:
-	:type anItem: Handle_GeomPlate_PointConstraint &
-	:rtype: None
-") InsertAfter;
-		void InsertAfter (const Standard_Integer anIndex,const Handle_GeomPlate_PointConstraint & anItem);
-		%feature("compactdefaultargs") InsertAfter;
-		%feature("autodoc", "	:param anIndex:
-	:type anIndex: int
-	:param aSequence:
-	:type aSequence: Handle_GeomPlate_HSequenceOfPointConstraint &
-	:rtype: None
-") InsertAfter;
-		void InsertAfter (const Standard_Integer anIndex,const Handle_GeomPlate_HSequenceOfPointConstraint & aSequence);
-		%feature("compactdefaultargs") Exchange;
-		%feature("autodoc", "	:param anIndex:
-	:type anIndex: int
-	:param anOtherIndex:
-	:type anOtherIndex: int
-	:rtype: None
-") Exchange;
-		void Exchange (const Standard_Integer anIndex,const Standard_Integer anOtherIndex);
-		%feature("compactdefaultargs") Split;
-		%feature("autodoc", "	:param anIndex:
-	:type anIndex: int
-	:rtype: Handle_GeomPlate_HSequenceOfPointConstraint
-") Split;
-		Handle_GeomPlate_HSequenceOfPointConstraint Split (const Standard_Integer anIndex);
-		%feature("compactdefaultargs") SetValue;
-		%feature("autodoc", "	:param anIndex:
-	:type anIndex: int
-	:param anItem:
-	:type anItem: Handle_GeomPlate_PointConstraint &
-	:rtype: None
-") SetValue;
-		void SetValue (const Standard_Integer anIndex,const Handle_GeomPlate_PointConstraint & anItem);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:param anIndex:
-	:type anIndex: int
-	:rtype: Handle_GeomPlate_PointConstraint
-") Value;
-		Handle_GeomPlate_PointConstraint Value (const Standard_Integer anIndex);
-		%feature("compactdefaultargs") ChangeValue;
-		%feature("autodoc", "	:param anIndex:
-	:type anIndex: int
-	:rtype: Handle_GeomPlate_PointConstraint
-") ChangeValue;
-		Handle_GeomPlate_PointConstraint ChangeValue (const Standard_Integer anIndex);
-		%feature("compactdefaultargs") Remove;
-		%feature("autodoc", "	:param anIndex:
-	:type anIndex: int
-	:rtype: None
-") Remove;
-		void Remove (const Standard_Integer anIndex);
-		%feature("compactdefaultargs") Remove;
-		%feature("autodoc", "	:param fromIndex:
-	:type fromIndex: int
-	:param toIndex:
-	:type toIndex: int
-	:rtype: None
-") Remove;
-		void Remove (const Standard_Integer fromIndex,const Standard_Integer toIndex);
-		%feature("compactdefaultargs") Sequence;
-		%feature("autodoc", "	:rtype: GeomPlate_SequenceOfPointConstraint
-") Sequence;
-		const GeomPlate_SequenceOfPointConstraint & Sequence ();
-		%feature("compactdefaultargs") ChangeSequence;
-		%feature("autodoc", "	:rtype: GeomPlate_SequenceOfPointConstraint
-") ChangeSequence;
-		GeomPlate_SequenceOfPointConstraint & ChangeSequence ();
-};
-
-
-%extend GeomPlate_HSequenceOfPointConstraint {
-	%pythoncode {
-		def GetHandle(self):
-		    try:
-		        return self.thisHandle
-		    except:
-		        self.thisHandle = Handle_GeomPlate_HSequenceOfPointConstraint(self)
-		        self.thisown = False
-		        return self.thisHandle
-	}
-};
-
-%pythonappend Handle_GeomPlate_HSequenceOfPointConstraint::Handle_GeomPlate_HSequenceOfPointConstraint %{
-    # register the handle in the base object
-    if len(args) > 0:
-        register_handle(self, args[0])
-%}
-
-%nodefaultctor Handle_GeomPlate_HSequenceOfPointConstraint;
-class Handle_GeomPlate_HSequenceOfPointConstraint : public Handle_MMgt_TShared {
-
-    public:
-        // constructors
-        Handle_GeomPlate_HSequenceOfPointConstraint();
-        Handle_GeomPlate_HSequenceOfPointConstraint(const Handle_GeomPlate_HSequenceOfPointConstraint &aHandle);
-        Handle_GeomPlate_HSequenceOfPointConstraint(const GeomPlate_HSequenceOfPointConstraint *anItem);
-        void Nullify();
-        Standard_Boolean IsNull() const;
-        static const Handle_GeomPlate_HSequenceOfPointConstraint DownCast(const Handle_Standard_Transient &AnObject);
-
-};
-%extend Handle_GeomPlate_HSequenceOfPointConstraint {
-    GeomPlate_HSequenceOfPointConstraint* _get_reference() {
-    return (GeomPlate_HSequenceOfPointConstraint*)$self->Access();
-    }
-};
-
-%extend Handle_GeomPlate_HSequenceOfPointConstraint {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
-};
-
-%extend GeomPlate_HSequenceOfPointConstraint {
 	%pythoncode {
 	__repr__ = _dumps_object
 	}
@@ -1467,7 +668,7 @@ class Handle_GeomPlate_HSequenceOfPointConstraint : public Handle_MMgt_TShared {
 class GeomPlate_MakeApprox {
 	public:
 		%feature("compactdefaultargs") GeomPlate_MakeApprox;
-		%feature("autodoc", "	* Converts SurfPlate into a Geom_BSplineSurface with n Bezier pieces (n<=Nbmax) of degree <= dgmax and an approximation error < Tol3d if possible the criterion CritPlate is satisfied if possible
+		%feature("autodoc", "	* Converts SurfPlate into a Geom_BSplineSurface with n Bezier pieces --n<=Nbmax-- of degree <= dgmax and an approximation error < Tol3d if possible the criterion CritPlate is satisfied if possible
 
 	:param SurfPlate:
 	:type SurfPlate: Handle_GeomPlate_Surface &
@@ -1487,7 +688,7 @@ class GeomPlate_MakeApprox {
 ") GeomPlate_MakeApprox;
 		 GeomPlate_MakeApprox (const Handle_GeomPlate_Surface & SurfPlate,const AdvApp2Var_Criterion & PlateCrit,const Standard_Real Tol3d,const Standard_Integer Nbmax,const Standard_Integer dgmax,const GeomAbs_Shape Continuity = GeomAbs_C1,const Standard_Real EnlargeCoeff = 1.1);
 		%feature("compactdefaultargs") GeomPlate_MakeApprox;
-		%feature("autodoc", "	* Converts SurfPlate into a Geom_BSplineSurface with n Bezier pieces (n<=Nbmax) of degree <= dgmax and an approximation error < Tol3d if possible if CritOrder = -1 , no criterion is used if CritOrder = 0 , a PlateG0Criterion is used with max value > 10*dmax if CritOrder = 1 , a PlateG1Criterion is used with max value > 10*dmax WARNING : for CritOrder = 0 or 1, only the constraints points of SurfPlate are used to evaluate the value of the criterion
+		%feature("autodoc", "	* Converts SurfPlate into a Geom_BSplineSurface with n Bezier pieces --n<=Nbmax-- of degree <= dgmax and an approximation error < Tol3d if possible if CritOrder = -1 , no criterion is used if CritOrder = 0 , a PlateG0Criterion is used with max value > 10*dmax if CritOrder = 1 , a PlateG1Criterion is used with max value > 10*dmax WARNING : for CritOrder = 0 or 1, only the constraints points of SurfPlate are used to evaluate the value of the criterion
 
 	:param SurfPlate:
 	:type SurfPlate: Handle_GeomPlate_Surface &
@@ -1613,7 +814,7 @@ class GeomPlate_PlateG1Criterion : public AdvApp2Var_Criterion {
 	}
 };
 %nodefaultctor GeomPlate_PointConstraint;
-class GeomPlate_PointConstraint : public MMgt_TShared {
+class GeomPlate_PointConstraint : public Standard_Transient {
 	public:
 		%feature("compactdefaultargs") GeomPlate_PointConstraint;
 		%feature("autodoc", "	* Constructs a point constraint object defined by Pt, a 3D point Order gives the order of constraint, one of: - -1 i.e. none, or 0 i.e.G0 when assigned to Pt - -1 i.e. none, 0 i.e. G0, 1 i.e. G1, 2 i.e. G2 when assigned to U, V and Surf. In this constructor, only TolDist is given. Distance tolerance represents the greatest distance allowed between the constraint and the target surface. Angular tolerance represents the largest angle allowed between the constraint and the target surface. Curvature tolerance represents the greatest difference in curvature allowed between the constraint and the target surface. Raises ConstructionError if Order is not 0 or -1
@@ -1773,7 +974,7 @@ class GeomPlate_PointConstraint : public MMgt_TShared {
 %}
 
 %nodefaultctor Handle_GeomPlate_PointConstraint;
-class Handle_GeomPlate_PointConstraint : public Handle_MMgt_TShared {
+class Handle_GeomPlate_PointConstraint : public Handle_Standard_Transient {
 
     public:
         // constructors
@@ -1785,664 +986,23 @@ class Handle_GeomPlate_PointConstraint : public Handle_MMgt_TShared {
         static const Handle_GeomPlate_PointConstraint DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_GeomPlate_PointConstraint {
     GeomPlate_PointConstraint* _get_reference() {
-    return (GeomPlate_PointConstraint*)$self->Access();
+    return (GeomPlate_PointConstraint*)$self->get();
     }
 };
 
 %extend Handle_GeomPlate_PointConstraint {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend GeomPlate_PointConstraint {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor GeomPlate_SequenceNodeOfSequenceOfAij;
-class GeomPlate_SequenceNodeOfSequenceOfAij : public TCollection_SeqNode {
-	public:
-		%feature("compactdefaultargs") GeomPlate_SequenceNodeOfSequenceOfAij;
-		%feature("autodoc", "	:param I:
-	:type I: GeomPlate_Aij &
-	:param n:
-	:type n: TCollection_SeqNodePtr &
-	:param p:
-	:type p: TCollection_SeqNodePtr &
-	:rtype: None
-") GeomPlate_SequenceNodeOfSequenceOfAij;
-		 GeomPlate_SequenceNodeOfSequenceOfAij (const GeomPlate_Aij & I,const TCollection_SeqNodePtr & n,const TCollection_SeqNodePtr & p);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:rtype: GeomPlate_Aij
-") Value;
-		GeomPlate_Aij & Value ();
-};
-
-
-%extend GeomPlate_SequenceNodeOfSequenceOfAij {
-	%pythoncode {
-		def GetHandle(self):
-		    try:
-		        return self.thisHandle
-		    except:
-		        self.thisHandle = Handle_GeomPlate_SequenceNodeOfSequenceOfAij(self)
-		        self.thisown = False
-		        return self.thisHandle
-	}
-};
-
-%pythonappend Handle_GeomPlate_SequenceNodeOfSequenceOfAij::Handle_GeomPlate_SequenceNodeOfSequenceOfAij %{
-    # register the handle in the base object
-    if len(args) > 0:
-        register_handle(self, args[0])
-%}
-
-%nodefaultctor Handle_GeomPlate_SequenceNodeOfSequenceOfAij;
-class Handle_GeomPlate_SequenceNodeOfSequenceOfAij : public Handle_TCollection_SeqNode {
-
-    public:
-        // constructors
-        Handle_GeomPlate_SequenceNodeOfSequenceOfAij();
-        Handle_GeomPlate_SequenceNodeOfSequenceOfAij(const Handle_GeomPlate_SequenceNodeOfSequenceOfAij &aHandle);
-        Handle_GeomPlate_SequenceNodeOfSequenceOfAij(const GeomPlate_SequenceNodeOfSequenceOfAij *anItem);
-        void Nullify();
-        Standard_Boolean IsNull() const;
-        static const Handle_GeomPlate_SequenceNodeOfSequenceOfAij DownCast(const Handle_Standard_Transient &AnObject);
-
-};
-%extend Handle_GeomPlate_SequenceNodeOfSequenceOfAij {
-    GeomPlate_SequenceNodeOfSequenceOfAij* _get_reference() {
-    return (GeomPlate_SequenceNodeOfSequenceOfAij*)$self->Access();
-    }
-};
-
-%extend Handle_GeomPlate_SequenceNodeOfSequenceOfAij {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
-};
-
-%extend GeomPlate_SequenceNodeOfSequenceOfAij {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor GeomPlate_SequenceNodeOfSequenceOfCurveConstraint;
-class GeomPlate_SequenceNodeOfSequenceOfCurveConstraint : public TCollection_SeqNode {
-	public:
-		%feature("compactdefaultargs") GeomPlate_SequenceNodeOfSequenceOfCurveConstraint;
-		%feature("autodoc", "	:param I:
-	:type I: Handle_GeomPlate_CurveConstraint &
-	:param n:
-	:type n: TCollection_SeqNodePtr &
-	:param p:
-	:type p: TCollection_SeqNodePtr &
-	:rtype: None
-") GeomPlate_SequenceNodeOfSequenceOfCurveConstraint;
-		 GeomPlate_SequenceNodeOfSequenceOfCurveConstraint (const Handle_GeomPlate_CurveConstraint & I,const TCollection_SeqNodePtr & n,const TCollection_SeqNodePtr & p);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:rtype: Handle_GeomPlate_CurveConstraint
-") Value;
-		Handle_GeomPlate_CurveConstraint Value ();
-};
-
-
-%extend GeomPlate_SequenceNodeOfSequenceOfCurveConstraint {
-	%pythoncode {
-		def GetHandle(self):
-		    try:
-		        return self.thisHandle
-		    except:
-		        self.thisHandle = Handle_GeomPlate_SequenceNodeOfSequenceOfCurveConstraint(self)
-		        self.thisown = False
-		        return self.thisHandle
-	}
-};
-
-%pythonappend Handle_GeomPlate_SequenceNodeOfSequenceOfCurveConstraint::Handle_GeomPlate_SequenceNodeOfSequenceOfCurveConstraint %{
-    # register the handle in the base object
-    if len(args) > 0:
-        register_handle(self, args[0])
-%}
-
-%nodefaultctor Handle_GeomPlate_SequenceNodeOfSequenceOfCurveConstraint;
-class Handle_GeomPlate_SequenceNodeOfSequenceOfCurveConstraint : public Handle_TCollection_SeqNode {
-
-    public:
-        // constructors
-        Handle_GeomPlate_SequenceNodeOfSequenceOfCurveConstraint();
-        Handle_GeomPlate_SequenceNodeOfSequenceOfCurveConstraint(const Handle_GeomPlate_SequenceNodeOfSequenceOfCurveConstraint &aHandle);
-        Handle_GeomPlate_SequenceNodeOfSequenceOfCurveConstraint(const GeomPlate_SequenceNodeOfSequenceOfCurveConstraint *anItem);
-        void Nullify();
-        Standard_Boolean IsNull() const;
-        static const Handle_GeomPlate_SequenceNodeOfSequenceOfCurveConstraint DownCast(const Handle_Standard_Transient &AnObject);
-
-};
-%extend Handle_GeomPlate_SequenceNodeOfSequenceOfCurveConstraint {
-    GeomPlate_SequenceNodeOfSequenceOfCurveConstraint* _get_reference() {
-    return (GeomPlate_SequenceNodeOfSequenceOfCurveConstraint*)$self->Access();
-    }
-};
-
-%extend Handle_GeomPlate_SequenceNodeOfSequenceOfCurveConstraint {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
-};
-
-%extend GeomPlate_SequenceNodeOfSequenceOfCurveConstraint {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor GeomPlate_SequenceNodeOfSequenceOfPointConstraint;
-class GeomPlate_SequenceNodeOfSequenceOfPointConstraint : public TCollection_SeqNode {
-	public:
-		%feature("compactdefaultargs") GeomPlate_SequenceNodeOfSequenceOfPointConstraint;
-		%feature("autodoc", "	:param I:
-	:type I: Handle_GeomPlate_PointConstraint &
-	:param n:
-	:type n: TCollection_SeqNodePtr &
-	:param p:
-	:type p: TCollection_SeqNodePtr &
-	:rtype: None
-") GeomPlate_SequenceNodeOfSequenceOfPointConstraint;
-		 GeomPlate_SequenceNodeOfSequenceOfPointConstraint (const Handle_GeomPlate_PointConstraint & I,const TCollection_SeqNodePtr & n,const TCollection_SeqNodePtr & p);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:rtype: Handle_GeomPlate_PointConstraint
-") Value;
-		Handle_GeomPlate_PointConstraint Value ();
-};
-
-
-%extend GeomPlate_SequenceNodeOfSequenceOfPointConstraint {
-	%pythoncode {
-		def GetHandle(self):
-		    try:
-		        return self.thisHandle
-		    except:
-		        self.thisHandle = Handle_GeomPlate_SequenceNodeOfSequenceOfPointConstraint(self)
-		        self.thisown = False
-		        return self.thisHandle
-	}
-};
-
-%pythonappend Handle_GeomPlate_SequenceNodeOfSequenceOfPointConstraint::Handle_GeomPlate_SequenceNodeOfSequenceOfPointConstraint %{
-    # register the handle in the base object
-    if len(args) > 0:
-        register_handle(self, args[0])
-%}
-
-%nodefaultctor Handle_GeomPlate_SequenceNodeOfSequenceOfPointConstraint;
-class Handle_GeomPlate_SequenceNodeOfSequenceOfPointConstraint : public Handle_TCollection_SeqNode {
-
-    public:
-        // constructors
-        Handle_GeomPlate_SequenceNodeOfSequenceOfPointConstraint();
-        Handle_GeomPlate_SequenceNodeOfSequenceOfPointConstraint(const Handle_GeomPlate_SequenceNodeOfSequenceOfPointConstraint &aHandle);
-        Handle_GeomPlate_SequenceNodeOfSequenceOfPointConstraint(const GeomPlate_SequenceNodeOfSequenceOfPointConstraint *anItem);
-        void Nullify();
-        Standard_Boolean IsNull() const;
-        static const Handle_GeomPlate_SequenceNodeOfSequenceOfPointConstraint DownCast(const Handle_Standard_Transient &AnObject);
-
-};
-%extend Handle_GeomPlate_SequenceNodeOfSequenceOfPointConstraint {
-    GeomPlate_SequenceNodeOfSequenceOfPointConstraint* _get_reference() {
-    return (GeomPlate_SequenceNodeOfSequenceOfPointConstraint*)$self->Access();
-    }
-};
-
-%extend Handle_GeomPlate_SequenceNodeOfSequenceOfPointConstraint {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
-};
-
-%extend GeomPlate_SequenceNodeOfSequenceOfPointConstraint {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor GeomPlate_SequenceOfAij;
-class GeomPlate_SequenceOfAij : public TCollection_BaseSequence {
-	public:
-		%feature("compactdefaultargs") GeomPlate_SequenceOfAij;
-		%feature("autodoc", "	:rtype: None
-") GeomPlate_SequenceOfAij;
-		 GeomPlate_SequenceOfAij ();
-		%feature("compactdefaultargs") GeomPlate_SequenceOfAij;
-		%feature("autodoc", "	:param Other:
-	:type Other: GeomPlate_SequenceOfAij &
-	:rtype: None
-") GeomPlate_SequenceOfAij;
-		 GeomPlate_SequenceOfAij (const GeomPlate_SequenceOfAij & Other);
-		%feature("compactdefaultargs") Clear;
-		%feature("autodoc", "	:rtype: None
-") Clear;
-		void Clear ();
-		%feature("compactdefaultargs") Assign;
-		%feature("autodoc", "	:param Other:
-	:type Other: GeomPlate_SequenceOfAij &
-	:rtype: GeomPlate_SequenceOfAij
-") Assign;
-		const GeomPlate_SequenceOfAij & Assign (const GeomPlate_SequenceOfAij & Other);
-		%feature("compactdefaultargs") operator =;
-		%feature("autodoc", "	:param Other:
-	:type Other: GeomPlate_SequenceOfAij &
-	:rtype: GeomPlate_SequenceOfAij
-") operator =;
-		const GeomPlate_SequenceOfAij & operator = (const GeomPlate_SequenceOfAij & Other);
-		%feature("compactdefaultargs") Append;
-		%feature("autodoc", "	:param T:
-	:type T: GeomPlate_Aij &
-	:rtype: None
-") Append;
-		void Append (const GeomPlate_Aij & T);
-		%feature("compactdefaultargs") Append;
-		%feature("autodoc", "	:param S:
-	:type S: GeomPlate_SequenceOfAij &
-	:rtype: None
-") Append;
-		void Append (GeomPlate_SequenceOfAij & S);
-		%feature("compactdefaultargs") Prepend;
-		%feature("autodoc", "	:param T:
-	:type T: GeomPlate_Aij &
-	:rtype: None
-") Prepend;
-		void Prepend (const GeomPlate_Aij & T);
-		%feature("compactdefaultargs") Prepend;
-		%feature("autodoc", "	:param S:
-	:type S: GeomPlate_SequenceOfAij &
-	:rtype: None
-") Prepend;
-		void Prepend (GeomPlate_SequenceOfAij & S);
-		%feature("compactdefaultargs") InsertBefore;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param T:
-	:type T: GeomPlate_Aij &
-	:rtype: None
-") InsertBefore;
-		void InsertBefore (const Standard_Integer Index,const GeomPlate_Aij & T);
-		%feature("compactdefaultargs") InsertBefore;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param S:
-	:type S: GeomPlate_SequenceOfAij &
-	:rtype: None
-") InsertBefore;
-		void InsertBefore (const Standard_Integer Index,GeomPlate_SequenceOfAij & S);
-		%feature("compactdefaultargs") InsertAfter;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param T:
-	:type T: GeomPlate_Aij &
-	:rtype: None
-") InsertAfter;
-		void InsertAfter (const Standard_Integer Index,const GeomPlate_Aij & T);
-		%feature("compactdefaultargs") InsertAfter;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param S:
-	:type S: GeomPlate_SequenceOfAij &
-	:rtype: None
-") InsertAfter;
-		void InsertAfter (const Standard_Integer Index,GeomPlate_SequenceOfAij & S);
-		%feature("compactdefaultargs") First;
-		%feature("autodoc", "	:rtype: GeomPlate_Aij
-") First;
-		const GeomPlate_Aij & First ();
-		%feature("compactdefaultargs") Last;
-		%feature("autodoc", "	:rtype: GeomPlate_Aij
-") Last;
-		const GeomPlate_Aij & Last ();
-		%feature("compactdefaultargs") Split;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param Sub:
-	:type Sub: GeomPlate_SequenceOfAij &
-	:rtype: None
-") Split;
-		void Split (const Standard_Integer Index,GeomPlate_SequenceOfAij & Sub);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: GeomPlate_Aij
-") Value;
-		const GeomPlate_Aij & Value (const Standard_Integer Index);
-		%feature("compactdefaultargs") SetValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param I:
-	:type I: GeomPlate_Aij &
-	:rtype: None
-") SetValue;
-		void SetValue (const Standard_Integer Index,const GeomPlate_Aij & I);
-		%feature("compactdefaultargs") ChangeValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: GeomPlate_Aij
-") ChangeValue;
-		GeomPlate_Aij & ChangeValue (const Standard_Integer Index);
-		%feature("compactdefaultargs") Remove;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: None
-") Remove;
-		void Remove (const Standard_Integer Index);
-		%feature("compactdefaultargs") Remove;
-		%feature("autodoc", "	:param FromIndex:
-	:type FromIndex: int
-	:param ToIndex:
-	:type ToIndex: int
-	:rtype: None
-") Remove;
-		void Remove (const Standard_Integer FromIndex,const Standard_Integer ToIndex);
-};
-
-
-%extend GeomPlate_SequenceOfAij {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor GeomPlate_SequenceOfCurveConstraint;
-class GeomPlate_SequenceOfCurveConstraint : public TCollection_BaseSequence {
-	public:
-		%feature("compactdefaultargs") GeomPlate_SequenceOfCurveConstraint;
-		%feature("autodoc", "	:rtype: None
-") GeomPlate_SequenceOfCurveConstraint;
-		 GeomPlate_SequenceOfCurveConstraint ();
-		%feature("compactdefaultargs") GeomPlate_SequenceOfCurveConstraint;
-		%feature("autodoc", "	:param Other:
-	:type Other: GeomPlate_SequenceOfCurveConstraint &
-	:rtype: None
-") GeomPlate_SequenceOfCurveConstraint;
-		 GeomPlate_SequenceOfCurveConstraint (const GeomPlate_SequenceOfCurveConstraint & Other);
-		%feature("compactdefaultargs") Clear;
-		%feature("autodoc", "	:rtype: None
-") Clear;
-		void Clear ();
-		%feature("compactdefaultargs") Assign;
-		%feature("autodoc", "	:param Other:
-	:type Other: GeomPlate_SequenceOfCurveConstraint &
-	:rtype: GeomPlate_SequenceOfCurveConstraint
-") Assign;
-		const GeomPlate_SequenceOfCurveConstraint & Assign (const GeomPlate_SequenceOfCurveConstraint & Other);
-		%feature("compactdefaultargs") operator =;
-		%feature("autodoc", "	:param Other:
-	:type Other: GeomPlate_SequenceOfCurveConstraint &
-	:rtype: GeomPlate_SequenceOfCurveConstraint
-") operator =;
-		const GeomPlate_SequenceOfCurveConstraint & operator = (const GeomPlate_SequenceOfCurveConstraint & Other);
-		%feature("compactdefaultargs") Append;
-		%feature("autodoc", "	:param T:
-	:type T: Handle_GeomPlate_CurveConstraint &
-	:rtype: None
-") Append;
-		void Append (const Handle_GeomPlate_CurveConstraint & T);
-		%feature("compactdefaultargs") Append;
-		%feature("autodoc", "	:param S:
-	:type S: GeomPlate_SequenceOfCurveConstraint &
-	:rtype: None
-") Append;
-		void Append (GeomPlate_SequenceOfCurveConstraint & S);
-		%feature("compactdefaultargs") Prepend;
-		%feature("autodoc", "	:param T:
-	:type T: Handle_GeomPlate_CurveConstraint &
-	:rtype: None
-") Prepend;
-		void Prepend (const Handle_GeomPlate_CurveConstraint & T);
-		%feature("compactdefaultargs") Prepend;
-		%feature("autodoc", "	:param S:
-	:type S: GeomPlate_SequenceOfCurveConstraint &
-	:rtype: None
-") Prepend;
-		void Prepend (GeomPlate_SequenceOfCurveConstraint & S);
-		%feature("compactdefaultargs") InsertBefore;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param T:
-	:type T: Handle_GeomPlate_CurveConstraint &
-	:rtype: None
-") InsertBefore;
-		void InsertBefore (const Standard_Integer Index,const Handle_GeomPlate_CurveConstraint & T);
-		%feature("compactdefaultargs") InsertBefore;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param S:
-	:type S: GeomPlate_SequenceOfCurveConstraint &
-	:rtype: None
-") InsertBefore;
-		void InsertBefore (const Standard_Integer Index,GeomPlate_SequenceOfCurveConstraint & S);
-		%feature("compactdefaultargs") InsertAfter;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param T:
-	:type T: Handle_GeomPlate_CurveConstraint &
-	:rtype: None
-") InsertAfter;
-		void InsertAfter (const Standard_Integer Index,const Handle_GeomPlate_CurveConstraint & T);
-		%feature("compactdefaultargs") InsertAfter;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param S:
-	:type S: GeomPlate_SequenceOfCurveConstraint &
-	:rtype: None
-") InsertAfter;
-		void InsertAfter (const Standard_Integer Index,GeomPlate_SequenceOfCurveConstraint & S);
-		%feature("compactdefaultargs") First;
-		%feature("autodoc", "	:rtype: Handle_GeomPlate_CurveConstraint
-") First;
-		Handle_GeomPlate_CurveConstraint First ();
-		%feature("compactdefaultargs") Last;
-		%feature("autodoc", "	:rtype: Handle_GeomPlate_CurveConstraint
-") Last;
-		Handle_GeomPlate_CurveConstraint Last ();
-		%feature("compactdefaultargs") Split;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param Sub:
-	:type Sub: GeomPlate_SequenceOfCurveConstraint &
-	:rtype: None
-") Split;
-		void Split (const Standard_Integer Index,GeomPlate_SequenceOfCurveConstraint & Sub);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: Handle_GeomPlate_CurveConstraint
-") Value;
-		Handle_GeomPlate_CurveConstraint Value (const Standard_Integer Index);
-		%feature("compactdefaultargs") SetValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param I:
-	:type I: Handle_GeomPlate_CurveConstraint &
-	:rtype: None
-") SetValue;
-		void SetValue (const Standard_Integer Index,const Handle_GeomPlate_CurveConstraint & I);
-		%feature("compactdefaultargs") ChangeValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: Handle_GeomPlate_CurveConstraint
-") ChangeValue;
-		Handle_GeomPlate_CurveConstraint ChangeValue (const Standard_Integer Index);
-		%feature("compactdefaultargs") Remove;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: None
-") Remove;
-		void Remove (const Standard_Integer Index);
-		%feature("compactdefaultargs") Remove;
-		%feature("autodoc", "	:param FromIndex:
-	:type FromIndex: int
-	:param ToIndex:
-	:type ToIndex: int
-	:rtype: None
-") Remove;
-		void Remove (const Standard_Integer FromIndex,const Standard_Integer ToIndex);
-};
-
-
-%extend GeomPlate_SequenceOfCurveConstraint {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor GeomPlate_SequenceOfPointConstraint;
-class GeomPlate_SequenceOfPointConstraint : public TCollection_BaseSequence {
-	public:
-		%feature("compactdefaultargs") GeomPlate_SequenceOfPointConstraint;
-		%feature("autodoc", "	:rtype: None
-") GeomPlate_SequenceOfPointConstraint;
-		 GeomPlate_SequenceOfPointConstraint ();
-		%feature("compactdefaultargs") GeomPlate_SequenceOfPointConstraint;
-		%feature("autodoc", "	:param Other:
-	:type Other: GeomPlate_SequenceOfPointConstraint &
-	:rtype: None
-") GeomPlate_SequenceOfPointConstraint;
-		 GeomPlate_SequenceOfPointConstraint (const GeomPlate_SequenceOfPointConstraint & Other);
-		%feature("compactdefaultargs") Clear;
-		%feature("autodoc", "	:rtype: None
-") Clear;
-		void Clear ();
-		%feature("compactdefaultargs") Assign;
-		%feature("autodoc", "	:param Other:
-	:type Other: GeomPlate_SequenceOfPointConstraint &
-	:rtype: GeomPlate_SequenceOfPointConstraint
-") Assign;
-		const GeomPlate_SequenceOfPointConstraint & Assign (const GeomPlate_SequenceOfPointConstraint & Other);
-		%feature("compactdefaultargs") operator =;
-		%feature("autodoc", "	:param Other:
-	:type Other: GeomPlate_SequenceOfPointConstraint &
-	:rtype: GeomPlate_SequenceOfPointConstraint
-") operator =;
-		const GeomPlate_SequenceOfPointConstraint & operator = (const GeomPlate_SequenceOfPointConstraint & Other);
-		%feature("compactdefaultargs") Append;
-		%feature("autodoc", "	:param T:
-	:type T: Handle_GeomPlate_PointConstraint &
-	:rtype: None
-") Append;
-		void Append (const Handle_GeomPlate_PointConstraint & T);
-		%feature("compactdefaultargs") Append;
-		%feature("autodoc", "	:param S:
-	:type S: GeomPlate_SequenceOfPointConstraint &
-	:rtype: None
-") Append;
-		void Append (GeomPlate_SequenceOfPointConstraint & S);
-		%feature("compactdefaultargs") Prepend;
-		%feature("autodoc", "	:param T:
-	:type T: Handle_GeomPlate_PointConstraint &
-	:rtype: None
-") Prepend;
-		void Prepend (const Handle_GeomPlate_PointConstraint & T);
-		%feature("compactdefaultargs") Prepend;
-		%feature("autodoc", "	:param S:
-	:type S: GeomPlate_SequenceOfPointConstraint &
-	:rtype: None
-") Prepend;
-		void Prepend (GeomPlate_SequenceOfPointConstraint & S);
-		%feature("compactdefaultargs") InsertBefore;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param T:
-	:type T: Handle_GeomPlate_PointConstraint &
-	:rtype: None
-") InsertBefore;
-		void InsertBefore (const Standard_Integer Index,const Handle_GeomPlate_PointConstraint & T);
-		%feature("compactdefaultargs") InsertBefore;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param S:
-	:type S: GeomPlate_SequenceOfPointConstraint &
-	:rtype: None
-") InsertBefore;
-		void InsertBefore (const Standard_Integer Index,GeomPlate_SequenceOfPointConstraint & S);
-		%feature("compactdefaultargs") InsertAfter;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param T:
-	:type T: Handle_GeomPlate_PointConstraint &
-	:rtype: None
-") InsertAfter;
-		void InsertAfter (const Standard_Integer Index,const Handle_GeomPlate_PointConstraint & T);
-		%feature("compactdefaultargs") InsertAfter;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param S:
-	:type S: GeomPlate_SequenceOfPointConstraint &
-	:rtype: None
-") InsertAfter;
-		void InsertAfter (const Standard_Integer Index,GeomPlate_SequenceOfPointConstraint & S);
-		%feature("compactdefaultargs") First;
-		%feature("autodoc", "	:rtype: Handle_GeomPlate_PointConstraint
-") First;
-		Handle_GeomPlate_PointConstraint First ();
-		%feature("compactdefaultargs") Last;
-		%feature("autodoc", "	:rtype: Handle_GeomPlate_PointConstraint
-") Last;
-		Handle_GeomPlate_PointConstraint Last ();
-		%feature("compactdefaultargs") Split;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param Sub:
-	:type Sub: GeomPlate_SequenceOfPointConstraint &
-	:rtype: None
-") Split;
-		void Split (const Standard_Integer Index,GeomPlate_SequenceOfPointConstraint & Sub);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: Handle_GeomPlate_PointConstraint
-") Value;
-		Handle_GeomPlate_PointConstraint Value (const Standard_Integer Index);
-		%feature("compactdefaultargs") SetValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param I:
-	:type I: Handle_GeomPlate_PointConstraint &
-	:rtype: None
-") SetValue;
-		void SetValue (const Standard_Integer Index,const Handle_GeomPlate_PointConstraint & I);
-		%feature("compactdefaultargs") ChangeValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: Handle_GeomPlate_PointConstraint
-") ChangeValue;
-		Handle_GeomPlate_PointConstraint ChangeValue (const Standard_Integer Index);
-		%feature("compactdefaultargs") Remove;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: None
-") Remove;
-		void Remove (const Standard_Integer Index);
-		%feature("compactdefaultargs") Remove;
-		%feature("autodoc", "	:param FromIndex:
-	:type FromIndex: int
-	:param ToIndex:
-	:type ToIndex: int
-	:rtype: None
-") Remove;
-		void Remove (const Standard_Integer FromIndex,const Standard_Integer ToIndex);
-};
-
-
-%extend GeomPlate_SequenceOfPointConstraint {
 	%pythoncode {
 	__repr__ = _dumps_object
 	}
@@ -2465,7 +1025,7 @@ class GeomPlate_Surface : public Geom_Surface {
 ") UReverse;
 		void UReverse ();
 		%feature("compactdefaultargs") UReversedParameter;
-		%feature("autodoc", "	* Return the parameter on the Ureversed surface for the point of parameter U on <self>. //! me->UReversed()->Value(me->UReversedParameter(U),V) //! is the same point as //! me->Value(U,V)
+		%feature("autodoc", "	* Return the parameter on the Ureversed surface for the point of parameter U on <self>. //! me->UReversed----->Value--me->UReversedParameter--U--,V-- //! is the same point as //! me->Value--U,V--
 
 	:param U:
 	:type U: float
@@ -2479,7 +1039,7 @@ class GeomPlate_Surface : public Geom_Surface {
 ") VReverse;
 		void VReverse ();
 		%feature("compactdefaultargs") VReversedParameter;
-		%feature("autodoc", "	* Return the parameter on the Vreversed surface for the point of parameter V on <self>. //! me->VReversed()->Value(U,me->VReversedParameter(V)) //! is the same point as //! me->Value(U,V)
+		%feature("autodoc", "	* Return the parameter on the Vreversed surface for the point of parameter V on <self>. //! me->VReversed----->Value--U,me->VReversedParameter--V---- //! is the same point as //! me->Value--U,V--
 
 	:param V:
 	:type V: float
@@ -2487,7 +1047,7 @@ class GeomPlate_Surface : public Geom_Surface {
 ") VReversedParameter;
 		Standard_Real VReversedParameter (const Standard_Real V);
 		%feature("compactdefaultargs") TransformParameters;
-		%feature("autodoc", "	* Computes the parameters on the transformed surface for the transform of the point of parameters U,V on <self>. //! me->Transformed(T)->Value(U',V') //! is the same point as //! me->Value(U,V).Transformed(T) //! Where U',V' are the new values of U,V after calling //! me->TranformParameters(U,V,T) //! This methods does not change <U> and <V> //! It can be redefined. For example on the Plane, Cylinder, Cone, Revolved and Extruded surfaces.
+		%feature("autodoc", "	* Computes the parameters on the transformed surface for the transform of the point of parameters U,V on <self>. //! me->Transformed--T--->Value--U',V'-- //! is the same point as //! me->Value--U,V--.Transformed--T-- //! Where U',V' are the new values of U,V after calling //! me->TranformParameters--U,V,T-- //! This methods does not change <U> and <V> //! It can be redefined. For example on the Plane, Cylinder, Cone, Revolved and Extruded surfaces.
 
 	:param U:
 	:type U: float &
@@ -2499,7 +1059,7 @@ class GeomPlate_Surface : public Geom_Surface {
 ") TransformParameters;
 		virtual void TransformParameters (Standard_Real &OutValue,Standard_Real &OutValue,const gp_Trsf & T);
 		%feature("compactdefaultargs") ParametricTransformation;
-		%feature("autodoc", "	* Returns a 2d transformation used to find the new parameters of a point on the transformed surface. //! me->Transformed(T)->Value(U',V') //! is the same point as //! me->Value(U,V).Transformed(T) //! Where U',V' are obtained by transforming U,V with th 2d transformation returned by //! me->ParametricTransformation(T) //! This methods returns an identity transformation //! It can be redefined. For example on the Plane, Cylinder, Cone, Revolved and Extruded surfaces.
+		%feature("autodoc", "	* Returns a 2d transformation used to find the new parameters of a point on the transformed surface. //! me->Transformed--T--->Value--U',V'-- //! is the same point as //! me->Value--U,V--.Transformed--T-- //! Where U',V' are obtained by transforming U,V with th 2d transformation returned by //! me->ParametricTransformation--T-- //! This methods returns an identity transformation //! It can be redefined. For example on the Plane, Cylinder, Cone, Revolved and Extruded surfaces.
 
 	:param T:
 	:type T: gp_Trsf
@@ -2519,19 +1079,19 @@ class GeomPlate_Surface : public Geom_Surface {
 ") Bounds;
 		void Bounds (Standard_Real &OutValue,Standard_Real &OutValue,Standard_Real &OutValue,Standard_Real &OutValue);
 		%feature("compactdefaultargs") IsUClosed;
-		%feature("autodoc", "	* Is the surface closed in the parametric direction U ? Returns True if for each parameter V the distance between the point P (UFirst, V) and P (ULast, V) is lower or equal to Resolution from gp. UFirst and ULast are the parametric bounds in the U direction.
+		%feature("autodoc", "	* Is the surface closed in the parametric direction U ? Returns True if for each parameter V the distance between the point P --UFirst, V-- and P --ULast, V-- is lower or equal to Resolution from gp. UFirst and ULast are the parametric bounds in the U direction.
 
 	:rtype: bool
 ") IsUClosed;
 		Standard_Boolean IsUClosed ();
 		%feature("compactdefaultargs") IsVClosed;
-		%feature("autodoc", "	* Is the surface closed in the parametric direction V ? Returns True if for each parameter U the distance between the point P (U, VFirst) and P (U, VLast) is lower or equal to Resolution from gp. VFirst and VLast are the parametric bounds in the V direction.
+		%feature("autodoc", "	* Is the surface closed in the parametric direction V ? Returns True if for each parameter U the distance between the point P --U, VFirst-- and P --U, VLast-- is lower or equal to Resolution from gp. VFirst and VLast are the parametric bounds in the V direction.
 
 	:rtype: bool
 ") IsVClosed;
 		Standard_Boolean IsVClosed ();
 		%feature("compactdefaultargs") IsUPeriodic;
-		%feature("autodoc", "	* Is the parametrization of a surface periodic in the direction U ? It is possible only if the surface is closed in this parametric direction and if the following relation is satisfied : for each parameter V the distance between the point P (U, V) and the point P (U + T, V) is lower or equal to Resolution from package gp. T is the parametric period and must be a constant.
+		%feature("autodoc", "	* Is the parametrization of a surface periodic in the direction U ? It is possible only if the surface is closed in this parametric direction and if the following relation is satisfied : for each parameter V the distance between the point P --U, V-- and the point P --U + T, V-- is lower or equal to Resolution from package gp. T is the parametric period and must be a constant.
 
 	:rtype: bool
 ") IsUPeriodic;
@@ -2543,7 +1103,7 @@ class GeomPlate_Surface : public Geom_Surface {
 ") UPeriod;
 		virtual Standard_Real UPeriod ();
 		%feature("compactdefaultargs") IsVPeriodic;
-		%feature("autodoc", "	* Is the parametrization of a surface periodic in the direction U ? It is possible only if the surface is closed in this parametric direction and if the following relation is satisfied : for each parameter V the distance between the point P (U, V) and the point P (U + T, V) is lower or equal to Resolution from package gp. T is the parametric period and must be a constant.
+		%feature("autodoc", "	* Is the parametrization of a surface periodic in the direction U ? It is possible only if the surface is closed in this parametric direction and if the following relation is satisfied : for each parameter V the distance between the point P --U, V-- and the point P --U + T, V-- is lower or equal to Resolution from package gp. T is the parametric period and must be a constant.
 
 	:rtype: bool
 ") IsVPeriodic;
@@ -2673,7 +1233,7 @@ class GeomPlate_Surface : public Geom_Surface {
 ") D3;
 		void D3 (const Standard_Real U,const Standard_Real V,gp_Pnt & P,gp_Vec & D1U,gp_Vec & D1V,gp_Vec & D2U,gp_Vec & D2V,gp_Vec & D2UV,gp_Vec & D3U,gp_Vec & D3V,gp_Vec & D3UUV,gp_Vec & D3UVV);
 		%feature("compactdefaultargs") DN;
-		%feature("autodoc", "	* ---Purpose ; Computes the derivative of order Nu in the direction U and Nv in the direction V at the point P(U, V). //! Raised if the continuity of the surface is not CNu in the U direction or not CNv in the V direction. Raised if Nu + Nv < 1 or Nu < 0 or Nv < 0.
+		%feature("autodoc", "	* ---Purpose ; Computes the derivative of order Nu in the direction U and Nv in the direction V at the point P--U, V--. //! Raised if the continuity of the surface is not CNu in the U direction or not CNv in the V direction. Raised if Nu + Nv < 1 or Nu < 0 or Nv < 0.
 
 	:param U:
 	:type U: float
@@ -2691,7 +1251,7 @@ class GeomPlate_Surface : public Geom_Surface {
 ") Copy;
 		Handle_Geom_Geometry Copy ();
 		%feature("compactdefaultargs") Transform;
-		%feature("autodoc", "	* Transformation of a geometric object. This tansformation can be a translation, a rotation, a symmetry, a scaling or a complex transformation obtained by combination of the previous elementaries transformations. (see class Transformation of the package Geom).
+		%feature("autodoc", "	* Transformation of a geometric object. This tansformation can be a translation, a rotation, a symmetry, a scaling or a complex transformation obtained by combination of the previous elementaries transformations. --see class Transformation of the package Geom--.
 
 	:param T:
 	:type T: gp_Trsf
@@ -2766,19 +1326,20 @@ class Handle_GeomPlate_Surface : public Handle_Geom_Surface {
         static const Handle_GeomPlate_Surface DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_GeomPlate_Surface {
     GeomPlate_Surface* _get_reference() {
-    return (GeomPlate_Surface*)$self->Access();
+    return (GeomPlate_Surface*)$self->get();
     }
 };
 
 %extend Handle_GeomPlate_Surface {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend GeomPlate_Surface {

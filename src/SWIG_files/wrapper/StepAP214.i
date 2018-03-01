@@ -1,5 +1,5 @@
 /*
-Copyright 2008-2017 Thomas Paviot (tpaviot@gmail.com)
+Copyright 2008-2018 Thomas Paviot (tpaviot@gmail.com)
 
 
 This file is part of pythonOCC.
@@ -56,6 +56,26 @@ def register_handle(handle, base_object):
 /* typedefs */
 /* end typedefs declaration */
 
+/* templates */
+%template(StepAP214_Array1OfExternalIdentificationItem) NCollection_Array1 <StepAP214_ExternalIdentificationItem>;
+%template(StepAP214_Array1OfDateAndTimeItem) NCollection_Array1 <StepAP214_DateAndTimeItem>;
+%template(StepAP214_Array1OfAutoDesignPresentedItemSelect) NCollection_Array1 <StepAP214_AutoDesignPresentedItemSelect>;
+%template(StepAP214_Array1OfAutoDesignDateAndTimeItem) NCollection_Array1 <StepAP214_AutoDesignDateAndTimeItem>;
+%template(StepAP214_Array1OfAutoDesignDateAndPersonItem) NCollection_Array1 <StepAP214_AutoDesignDateAndPersonItem>;
+%template(StepAP214_Array1OfApprovalItem) NCollection_Array1 <StepAP214_ApprovalItem>;
+%template(StepAP214_Array1OfDocumentReferenceItem) NCollection_Array1 <StepAP214_DocumentReferenceItem>;
+%template(StepAP214_Array1OfOrganizationItem) NCollection_Array1 <StepAP214_OrganizationItem>;
+%template(StepAP214_Array1OfAutoDesignReferencingItem) NCollection_Array1 <StepAP214_AutoDesignReferencingItem>;
+%template(StepAP214_Array1OfAutoDesignGeneralOrgItem) NCollection_Array1 <StepAP214_AutoDesignGeneralOrgItem>;
+%template(StepAP214_Array1OfDateItem) NCollection_Array1 <StepAP214_DateItem>;
+%template(StepAP214_Array1OfAutoDesignGroupedItem) NCollection_Array1 <StepAP214_AutoDesignGroupedItem>;
+%template(StepAP214_Array1OfGroupItem) NCollection_Array1 <StepAP214_GroupItem>;
+%template(StepAP214_Array1OfPersonAndOrganizationItem) NCollection_Array1 <StepAP214_PersonAndOrganizationItem>;
+%template(StepAP214_Array1OfPresentedItemSelect) NCollection_Array1 <StepAP214_PresentedItemSelect>;
+%template(StepAP214_Array1OfSecurityClassificationItem) NCollection_Array1 <StepAP214_SecurityClassificationItem>;
+%template(StepAP214_Array1OfAutoDesignDatedItem) NCollection_Array1 <StepAP214_AutoDesignDatedItem>;
+/* end templates declaration */
+
 /* public enums */
 /* end public enums declaration */
 
@@ -88,17 +108,11 @@ class StepAP214_AppliedApprovalAssignment : public StepBasic_ApprovalAssignment 
 		%feature("compactdefaultargs") Init;
 		%feature("autodoc", "	:param aAssignedApproval:
 	:type aAssignedApproval: Handle_StepBasic_Approval &
-	:rtype: void
-") Init;
-		virtual void Init (const Handle_StepBasic_Approval & aAssignedApproval);
-		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	:param aAssignedApproval:
-	:type aAssignedApproval: Handle_StepBasic_Approval &
 	:param aItems:
 	:type aItems: Handle_StepAP214_HArray1OfApprovalItem &
-	:rtype: void
+	:rtype: None
 ") Init;
-		virtual void Init (const Handle_StepBasic_Approval & aAssignedApproval,const Handle_StepAP214_HArray1OfApprovalItem & aItems);
+		void Init (const Handle_StepBasic_Approval & aAssignedApproval,const Handle_StepAP214_HArray1OfApprovalItem & aItems);
 		%feature("compactdefaultargs") SetItems;
 		%feature("autodoc", "	:param aItems:
 	:type aItems: Handle_StepAP214_HArray1OfApprovalItem &
@@ -153,19 +167,20 @@ class Handle_StepAP214_AppliedApprovalAssignment : public Handle_StepBasic_Appro
         static const Handle_StepAP214_AppliedApprovalAssignment DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_StepAP214_AppliedApprovalAssignment {
     StepAP214_AppliedApprovalAssignment* _get_reference() {
-    return (StepAP214_AppliedApprovalAssignment*)$self->Access();
+    return (StepAP214_AppliedApprovalAssignment*)$self->get();
     }
 };
 
 %extend Handle_StepAP214_AppliedApprovalAssignment {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend StepAP214_AppliedApprovalAssignment {
@@ -187,19 +202,11 @@ class StepAP214_AppliedDateAndTimeAssignment : public StepBasic_DateAndTimeAssig
 	:type aAssignedDateAndTime: Handle_StepBasic_DateAndTime &
 	:param aRole:
 	:type aRole: Handle_StepBasic_DateTimeRole &
-	:rtype: void
-") Init;
-		virtual void Init (const Handle_StepBasic_DateAndTime & aAssignedDateAndTime,const Handle_StepBasic_DateTimeRole & aRole);
-		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	:param aAssignedDateAndTime:
-	:type aAssignedDateAndTime: Handle_StepBasic_DateAndTime &
-	:param aRole:
-	:type aRole: Handle_StepBasic_DateTimeRole &
 	:param aItems:
 	:type aItems: Handle_StepAP214_HArray1OfDateAndTimeItem &
-	:rtype: void
+	:rtype: None
 ") Init;
-		virtual void Init (const Handle_StepBasic_DateAndTime & aAssignedDateAndTime,const Handle_StepBasic_DateTimeRole & aRole,const Handle_StepAP214_HArray1OfDateAndTimeItem & aItems);
+		void Init (const Handle_StepBasic_DateAndTime & aAssignedDateAndTime,const Handle_StepBasic_DateTimeRole & aRole,const Handle_StepAP214_HArray1OfDateAndTimeItem & aItems);
 		%feature("compactdefaultargs") SetItems;
 		%feature("autodoc", "	:param aItems:
 	:type aItems: Handle_StepAP214_HArray1OfDateAndTimeItem &
@@ -254,19 +261,20 @@ class Handle_StepAP214_AppliedDateAndTimeAssignment : public Handle_StepBasic_Da
         static const Handle_StepAP214_AppliedDateAndTimeAssignment DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_StepAP214_AppliedDateAndTimeAssignment {
     StepAP214_AppliedDateAndTimeAssignment* _get_reference() {
-    return (StepAP214_AppliedDateAndTimeAssignment*)$self->Access();
+    return (StepAP214_AppliedDateAndTimeAssignment*)$self->get();
     }
 };
 
 %extend Handle_StepAP214_AppliedDateAndTimeAssignment {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend StepAP214_AppliedDateAndTimeAssignment {
@@ -288,19 +296,11 @@ class StepAP214_AppliedDateAssignment : public StepBasic_DateAssignment {
 	:type aAssignedDate: Handle_StepBasic_Date &
 	:param aRole:
 	:type aRole: Handle_StepBasic_DateRole &
-	:rtype: void
-") Init;
-		virtual void Init (const Handle_StepBasic_Date & aAssignedDate,const Handle_StepBasic_DateRole & aRole);
-		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	:param aAssignedDate:
-	:type aAssignedDate: Handle_StepBasic_Date &
-	:param aRole:
-	:type aRole: Handle_StepBasic_DateRole &
 	:param aItems:
 	:type aItems: Handle_StepAP214_HArray1OfDateItem &
-	:rtype: void
+	:rtype: None
 ") Init;
-		virtual void Init (const Handle_StepBasic_Date & aAssignedDate,const Handle_StepBasic_DateRole & aRole,const Handle_StepAP214_HArray1OfDateItem & aItems);
+		void Init (const Handle_StepBasic_Date & aAssignedDate,const Handle_StepBasic_DateRole & aRole,const Handle_StepAP214_HArray1OfDateItem & aItems);
 		%feature("compactdefaultargs") SetItems;
 		%feature("autodoc", "	:param aItems:
 	:type aItems: Handle_StepAP214_HArray1OfDateItem &
@@ -355,19 +355,20 @@ class Handle_StepAP214_AppliedDateAssignment : public Handle_StepBasic_DateAssig
         static const Handle_StepAP214_AppliedDateAssignment DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_StepAP214_AppliedDateAssignment {
     StepAP214_AppliedDateAssignment* _get_reference() {
-    return (StepAP214_AppliedDateAssignment*)$self->Access();
+    return (StepAP214_AppliedDateAssignment*)$self->get();
     }
 };
 
 %extend Handle_StepAP214_AppliedDateAssignment {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend StepAP214_AppliedDateAssignment {
@@ -446,19 +447,20 @@ class Handle_StepAP214_AppliedDocumentReference : public Handle_StepBasic_Docume
         static const Handle_StepAP214_AppliedDocumentReference DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_StepAP214_AppliedDocumentReference {
     StepAP214_AppliedDocumentReference* _get_reference() {
-    return (StepAP214_AppliedDocumentReference*)$self->Access();
+    return (StepAP214_AppliedDocumentReference*)$self->get();
     }
 };
 
 %extend Handle_StepAP214_AppliedDocumentReference {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend StepAP214_AppliedDocumentReference {
@@ -476,7 +478,7 @@ class StepAP214_AppliedExternalIdentificationAssignment : public StepBasic_Exter
 ") StepAP214_AppliedExternalIdentificationAssignment;
 		 StepAP214_AppliedExternalIdentificationAssignment ();
 		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	* Initialize all fields (own and inherited)
+		%feature("autodoc", "	* Initialize all fields --own and inherited--
 
 	:param aIdentificationAssignment_AssignedId:
 	:type aIdentificationAssignment_AssignedId: Handle_TCollection_HAsciiString &
@@ -537,19 +539,20 @@ class Handle_StepAP214_AppliedExternalIdentificationAssignment : public Handle_S
         static const Handle_StepAP214_AppliedExternalIdentificationAssignment DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_StepAP214_AppliedExternalIdentificationAssignment {
     StepAP214_AppliedExternalIdentificationAssignment* _get_reference() {
-    return (StepAP214_AppliedExternalIdentificationAssignment*)$self->Access();
+    return (StepAP214_AppliedExternalIdentificationAssignment*)$self->get();
     }
 };
 
 %extend Handle_StepAP214_AppliedExternalIdentificationAssignment {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend StepAP214_AppliedExternalIdentificationAssignment {
@@ -567,7 +570,7 @@ class StepAP214_AppliedGroupAssignment : public StepBasic_GroupAssignment {
 ") StepAP214_AppliedGroupAssignment;
 		 StepAP214_AppliedGroupAssignment ();
 		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	* Initialize all fields (own and inherited)
+		%feature("autodoc", "	* Initialize all fields --own and inherited--
 
 	:param aGroupAssignment_AssignedGroup:
 	:type aGroupAssignment_AssignedGroup: Handle_StepBasic_Group &
@@ -624,19 +627,20 @@ class Handle_StepAP214_AppliedGroupAssignment : public Handle_StepBasic_GroupAss
         static const Handle_StepAP214_AppliedGroupAssignment DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_StepAP214_AppliedGroupAssignment {
     StepAP214_AppliedGroupAssignment* _get_reference() {
-    return (StepAP214_AppliedGroupAssignment*)$self->Access();
+    return (StepAP214_AppliedGroupAssignment*)$self->get();
     }
 };
 
 %extend Handle_StepAP214_AppliedGroupAssignment {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend StepAP214_AppliedGroupAssignment {
@@ -658,19 +662,11 @@ class StepAP214_AppliedOrganizationAssignment : public StepBasic_OrganizationAss
 	:type aAssignedOrganization: Handle_StepBasic_Organization &
 	:param aRole:
 	:type aRole: Handle_StepBasic_OrganizationRole &
-	:rtype: void
-") Init;
-		virtual void Init (const Handle_StepBasic_Organization & aAssignedOrganization,const Handle_StepBasic_OrganizationRole & aRole);
-		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	:param aAssignedOrganization:
-	:type aAssignedOrganization: Handle_StepBasic_Organization &
-	:param aRole:
-	:type aRole: Handle_StepBasic_OrganizationRole &
 	:param aItems:
 	:type aItems: Handle_StepAP214_HArray1OfOrganizationItem &
-	:rtype: void
+	:rtype: None
 ") Init;
-		virtual void Init (const Handle_StepBasic_Organization & aAssignedOrganization,const Handle_StepBasic_OrganizationRole & aRole,const Handle_StepAP214_HArray1OfOrganizationItem & aItems);
+		void Init (const Handle_StepBasic_Organization & aAssignedOrganization,const Handle_StepBasic_OrganizationRole & aRole,const Handle_StepAP214_HArray1OfOrganizationItem & aItems);
 		%feature("compactdefaultargs") SetItems;
 		%feature("autodoc", "	:param aItems:
 	:type aItems: Handle_StepAP214_HArray1OfOrganizationItem &
@@ -725,19 +721,20 @@ class Handle_StepAP214_AppliedOrganizationAssignment : public Handle_StepBasic_O
         static const Handle_StepAP214_AppliedOrganizationAssignment DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_StepAP214_AppliedOrganizationAssignment {
     StepAP214_AppliedOrganizationAssignment* _get_reference() {
-    return (StepAP214_AppliedOrganizationAssignment*)$self->Access();
+    return (StepAP214_AppliedOrganizationAssignment*)$self->get();
     }
 };
 
 %extend Handle_StepAP214_AppliedOrganizationAssignment {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend StepAP214_AppliedOrganizationAssignment {
@@ -759,19 +756,11 @@ class StepAP214_AppliedPersonAndOrganizationAssignment : public StepBasic_Person
 	:type aAssignedPersonAndOrganization: Handle_StepBasic_PersonAndOrganization &
 	:param aRole:
 	:type aRole: Handle_StepBasic_PersonAndOrganizationRole &
-	:rtype: void
-") Init;
-		virtual void Init (const Handle_StepBasic_PersonAndOrganization & aAssignedPersonAndOrganization,const Handle_StepBasic_PersonAndOrganizationRole & aRole);
-		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	:param aAssignedPersonAndOrganization:
-	:type aAssignedPersonAndOrganization: Handle_StepBasic_PersonAndOrganization &
-	:param aRole:
-	:type aRole: Handle_StepBasic_PersonAndOrganizationRole &
 	:param aItems:
 	:type aItems: Handle_StepAP214_HArray1OfPersonAndOrganizationItem &
-	:rtype: void
+	:rtype: None
 ") Init;
-		virtual void Init (const Handle_StepBasic_PersonAndOrganization & aAssignedPersonAndOrganization,const Handle_StepBasic_PersonAndOrganizationRole & aRole,const Handle_StepAP214_HArray1OfPersonAndOrganizationItem & aItems);
+		void Init (const Handle_StepBasic_PersonAndOrganization & aAssignedPersonAndOrganization,const Handle_StepBasic_PersonAndOrganizationRole & aRole,const Handle_StepAP214_HArray1OfPersonAndOrganizationItem & aItems);
 		%feature("compactdefaultargs") SetItems;
 		%feature("autodoc", "	:param aItems:
 	:type aItems: Handle_StepAP214_HArray1OfPersonAndOrganizationItem &
@@ -826,19 +815,20 @@ class Handle_StepAP214_AppliedPersonAndOrganizationAssignment : public Handle_St
         static const Handle_StepAP214_AppliedPersonAndOrganizationAssignment DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_StepAP214_AppliedPersonAndOrganizationAssignment {
     StepAP214_AppliedPersonAndOrganizationAssignment* _get_reference() {
-    return (StepAP214_AppliedPersonAndOrganizationAssignment*)$self->Access();
+    return (StepAP214_AppliedPersonAndOrganizationAssignment*)$self->get();
     }
 };
 
 %extend Handle_StepAP214_AppliedPersonAndOrganizationAssignment {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend StepAP214_AppliedPersonAndOrganizationAssignment {
@@ -858,9 +848,9 @@ class StepAP214_AppliedPresentedItem : public StepVisual_PresentedItem {
 		%feature("compactdefaultargs") Init;
 		%feature("autodoc", "	:param aItems:
 	:type aItems: Handle_StepAP214_HArray1OfPresentedItemSelect &
-	:rtype: void
+	:rtype: None
 ") Init;
-		virtual void Init (const Handle_StepAP214_HArray1OfPresentedItemSelect & aItems);
+		void Init (const Handle_StepAP214_HArray1OfPresentedItemSelect & aItems);
 		%feature("compactdefaultargs") SetItems;
 		%feature("autodoc", "	:param aItems:
 	:type aItems: Handle_StepAP214_HArray1OfPresentedItemSelect &
@@ -915,19 +905,20 @@ class Handle_StepAP214_AppliedPresentedItem : public Handle_StepVisual_Presented
         static const Handle_StepAP214_AppliedPresentedItem DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_StepAP214_AppliedPresentedItem {
     StepAP214_AppliedPresentedItem* _get_reference() {
-    return (StepAP214_AppliedPresentedItem*)$self->Access();
+    return (StepAP214_AppliedPresentedItem*)$self->get();
     }
 };
 
 %extend Handle_StepAP214_AppliedPresentedItem {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend StepAP214_AppliedPresentedItem {
@@ -947,17 +938,11 @@ class StepAP214_AppliedSecurityClassificationAssignment : public StepBasic_Secur
 		%feature("compactdefaultargs") Init;
 		%feature("autodoc", "	:param aAssignedSecurityClassification:
 	:type aAssignedSecurityClassification: Handle_StepBasic_SecurityClassification &
-	:rtype: void
-") Init;
-		virtual void Init (const Handle_StepBasic_SecurityClassification & aAssignedSecurityClassification);
-		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	:param aAssignedSecurityClassification:
-	:type aAssignedSecurityClassification: Handle_StepBasic_SecurityClassification &
 	:param aItems:
 	:type aItems: Handle_StepAP214_HArray1OfSecurityClassificationItem &
-	:rtype: void
+	:rtype: None
 ") Init;
-		virtual void Init (const Handle_StepBasic_SecurityClassification & aAssignedSecurityClassification,const Handle_StepAP214_HArray1OfSecurityClassificationItem & aItems);
+		void Init (const Handle_StepBasic_SecurityClassification & aAssignedSecurityClassification,const Handle_StepAP214_HArray1OfSecurityClassificationItem & aItems);
 		%feature("compactdefaultargs") SetItems;
 		%feature("autodoc", "	:param aItems:
 	:type aItems: Handle_StepAP214_HArray1OfSecurityClassificationItem &
@@ -1012,19 +997,20 @@ class Handle_StepAP214_AppliedSecurityClassificationAssignment : public Handle_S
         static const Handle_StepAP214_AppliedSecurityClassificationAssignment DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_StepAP214_AppliedSecurityClassificationAssignment {
     StepAP214_AppliedSecurityClassificationAssignment* _get_reference() {
-    return (StepAP214_AppliedSecurityClassificationAssignment*)$self->Access();
+    return (StepAP214_AppliedSecurityClassificationAssignment*)$self->get();
     }
 };
 
 %extend Handle_StepAP214_AppliedSecurityClassificationAssignment {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend StepAP214_AppliedSecurityClassificationAssignment {
@@ -1042,7 +1028,7 @@ class StepAP214_ApprovalItem : public StepData_SelectType {
 ") StepAP214_ApprovalItem;
 		 StepAP214_ApprovalItem ();
 		%feature("compactdefaultargs") CaseNum;
-		%feature("autodoc", "	* Recognizes a ApprovalItem Kind Entity that is : 1 -> AssemblyComponentUsageSubstitute 2 -> DocumentFile 3 -> MaterialDesignation 4 -> MechanicalDesignGeometricPresentationRepresentation 5 -> PresentationArea 6 -> Product 7 -> ProductDefinition 8 -> ProductDefinitionFormation 9 -> ProductDefinitionRelationship 10 -> PropertyDefinition 11 -> ShapeRepresentation 12 -> SecurityClassification 0 else
+		%feature("autodoc", "	* Recognizes a ApprovalItem Kind Entity that is : 1 -> AssemblyComponentUsageSubstitute 2 -> DocumentFile 3 -> MaterialDesignation 4 -> MechanicalDesignGeometricPresentationRepresentation 5 -> PresentationArea 6 -> Product 7 -> ProductDefinition 8 -> ProductDefinitionFormation 9 -> ProductDefinitionRelationship 10 -> PropertyDefinition 11 -> ShapeRepresentation 12 -> SecurityClassification 13 -> ConfigurationItem 14 -> Date 15 -> Document 16 -> Effectivity 17 -> Group 18 -> GroupRelationship 19 -> ProductDefinitionFormationRelationship 20 -> Representation 21 -> ShapeAspectRelationship 0 else
 
 	:param ent:
 	:type ent: Handle_Standard_Transient &
@@ -1050,1560 +1036,135 @@ class StepAP214_ApprovalItem : public StepData_SelectType {
 ") CaseNum;
 		virtual Standard_Integer CaseNum (const Handle_Standard_Transient & ent);
 		%feature("compactdefaultargs") AssemblyComponentUsageSubstitute;
-		%feature("autodoc", "	* returns Value as a AssemblyComponentUsageSubstitute (Null if another type)
+		%feature("autodoc", "	* returns Value as a AssemblyComponentUsageSubstitute --Null if another type--
 
 	:rtype: Handle_StepRepr_AssemblyComponentUsageSubstitute
 ") AssemblyComponentUsageSubstitute;
 		virtual Handle_StepRepr_AssemblyComponentUsageSubstitute AssemblyComponentUsageSubstitute ();
 		%feature("compactdefaultargs") DocumentFile;
-		%feature("autodoc", "	* returns Value as a DocumentFile (Null if another type)
+		%feature("autodoc", "	* returns Value as a DocumentFile --Null if another type--
 
 	:rtype: Handle_StepBasic_DocumentFile
 ") DocumentFile;
 		virtual Handle_StepBasic_DocumentFile DocumentFile ();
 		%feature("compactdefaultargs") MaterialDesignation;
-		%feature("autodoc", "	* returns Value as a MaterialDesignation (Null if another type)
+		%feature("autodoc", "	* returns Value as a MaterialDesignation --Null if another type--
 
 	:rtype: Handle_StepRepr_MaterialDesignation
 ") MaterialDesignation;
 		virtual Handle_StepRepr_MaterialDesignation MaterialDesignation ();
 		%feature("compactdefaultargs") MechanicalDesignGeometricPresentationRepresentation;
-		%feature("autodoc", "	* returns Value as a MechanicalDesignGeometricPresentationRepresentation (Null if another type)
+		%feature("autodoc", "	* returns Value as a MechanicalDesignGeometricPresentationRepresentation --Null if another type--
 
 	:rtype: Handle_StepVisual_MechanicalDesignGeometricPresentationRepresentation
 ") MechanicalDesignGeometricPresentationRepresentation;
 		virtual Handle_StepVisual_MechanicalDesignGeometricPresentationRepresentation MechanicalDesignGeometricPresentationRepresentation ();
 		%feature("compactdefaultargs") PresentationArea;
-		%feature("autodoc", "	* returns Value as a PresentationArea (Null if another type)
+		%feature("autodoc", "	* returns Value as a PresentationArea --Null if another type--
 
 	:rtype: Handle_StepVisual_PresentationArea
 ") PresentationArea;
 		virtual Handle_StepVisual_PresentationArea PresentationArea ();
 		%feature("compactdefaultargs") Product;
-		%feature("autodoc", "	* returns Value as a Product (Null if another type)
+		%feature("autodoc", "	* returns Value as a Product --Null if another type--
 
 	:rtype: Handle_StepBasic_Product
 ") Product;
 		virtual Handle_StepBasic_Product Product ();
 		%feature("compactdefaultargs") ProductDefinition;
-		%feature("autodoc", "	* returns Value as a ProductDefinition (Null if another type)
+		%feature("autodoc", "	* returns Value as a ProductDefinition --Null if another type--
 
 	:rtype: Handle_StepBasic_ProductDefinition
 ") ProductDefinition;
 		virtual Handle_StepBasic_ProductDefinition ProductDefinition ();
 		%feature("compactdefaultargs") ProductDefinitionFormation;
-		%feature("autodoc", "	* returns Value as a ProductDefinitionFormation (Null if another type)
+		%feature("autodoc", "	* returns Value as a ProductDefinitionFormation --Null if another type--
 
 	:rtype: Handle_StepBasic_ProductDefinitionFormation
 ") ProductDefinitionFormation;
 		virtual Handle_StepBasic_ProductDefinitionFormation ProductDefinitionFormation ();
 		%feature("compactdefaultargs") ProductDefinitionRelationship;
-		%feature("autodoc", "	* returns Value as aProductDefinitionRelationship (Null if another type)
+		%feature("autodoc", "	* returns Value as aProductDefinitionRelationship --Null if another type--
 
 	:rtype: Handle_StepBasic_ProductDefinitionRelationship
 ") ProductDefinitionRelationship;
 		virtual Handle_StepBasic_ProductDefinitionRelationship ProductDefinitionRelationship ();
 		%feature("compactdefaultargs") PropertyDefinition;
-		%feature("autodoc", "	* returns Value as a PropertyDefinition (Null if another type)
+		%feature("autodoc", "	* returns Value as a PropertyDefinition --Null if another type--
 
 	:rtype: Handle_StepRepr_PropertyDefinition
 ") PropertyDefinition;
 		virtual Handle_StepRepr_PropertyDefinition PropertyDefinition ();
 		%feature("compactdefaultargs") ShapeRepresentation;
-		%feature("autodoc", "	* returns Value as a ShapeRepresentation (Null if another type)
+		%feature("autodoc", "	* returns Value as a ShapeRepresentation --Null if another type--
 
 	:rtype: Handle_StepShape_ShapeRepresentation
 ") ShapeRepresentation;
 		virtual Handle_StepShape_ShapeRepresentation ShapeRepresentation ();
 		%feature("compactdefaultargs") SecurityClassification;
-		%feature("autodoc", "	* returns Value as a SecurityClassification (Null if another type)
+		%feature("autodoc", "	* returns Value as a SecurityClassification --Null if another type--
 
 	:rtype: Handle_StepBasic_SecurityClassification
 ") SecurityClassification;
 		virtual Handle_StepBasic_SecurityClassification SecurityClassification ();
+		%feature("compactdefaultargs") ConfigurationItem;
+		%feature("autodoc", "	* returns Value as a ConfigurationItem --Null if another type--
+
+	:rtype: Handle_StepRepr_ConfigurationItem
+") ConfigurationItem;
+		virtual Handle_StepRepr_ConfigurationItem ConfigurationItem ();
+		%feature("compactdefaultargs") Date;
+		%feature("autodoc", "	* returns Value as a Date --Null if another type--
+
+	:rtype: Handle_StepBasic_Date
+") Date;
+		virtual Handle_StepBasic_Date Date ();
+		%feature("compactdefaultargs") Document;
+		%feature("autodoc", "	* returns Value as a Document --Null if another type--
+
+	:rtype: Handle_StepBasic_Document
+") Document;
+		virtual Handle_StepBasic_Document Document ();
+		%feature("compactdefaultargs") Effectivity;
+		%feature("autodoc", "	* returns Value as a Effectivity --Null if another type--
+
+	:rtype: Handle_StepBasic_Effectivity
+") Effectivity;
+		virtual Handle_StepBasic_Effectivity Effectivity ();
+		%feature("compactdefaultargs") Group;
+		%feature("autodoc", "	* returns Value as a Group --Null if another type--
+
+	:rtype: Handle_StepBasic_Group
+") Group;
+		virtual Handle_StepBasic_Group Group ();
+		%feature("compactdefaultargs") GroupRelationship;
+		%feature("autodoc", "	* returns Value as a GroupRelationship --Null if another type--
+
+	:rtype: Handle_StepBasic_GroupRelationship
+") GroupRelationship;
+		virtual Handle_StepBasic_GroupRelationship GroupRelationship ();
+		%feature("compactdefaultargs") ProductDefinitionFormationRelationship;
+		%feature("autodoc", "	* returns Value as a ProductDefinitionFormationRelationship --Null if another type--
+
+	:rtype: Handle_StepBasic_ProductDefinitionFormationRelationship
+") ProductDefinitionFormationRelationship;
+		virtual Handle_StepBasic_ProductDefinitionFormationRelationship ProductDefinitionFormationRelationship ();
+		%feature("compactdefaultargs") Representation;
+		%feature("autodoc", "	* returns Value as a Representation --Null if another type--
+
+	:rtype: Handle_StepRepr_Representation
+") Representation;
+		virtual Handle_StepRepr_Representation Representation ();
+		%feature("compactdefaultargs") ShapeAspectRelationship;
+		%feature("autodoc", "	* returns Value as a ShapeAspectRelationship --Null if another type--
+
+	:rtype: Handle_StepRepr_ShapeAspectRelationship
+") ShapeAspectRelationship;
+		virtual Handle_StepRepr_ShapeAspectRelationship ShapeAspectRelationship ();
 };
 
 
 %extend StepAP214_ApprovalItem {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor StepAP214_Array1OfApprovalItem;
-class StepAP214_Array1OfApprovalItem {
-	public:
-		%feature("compactdefaultargs") StepAP214_Array1OfApprovalItem;
-		%feature("autodoc", "	:param Low:
-	:type Low: int
-	:param Up:
-	:type Up: int
-	:rtype: None
-") StepAP214_Array1OfApprovalItem;
-		 StepAP214_Array1OfApprovalItem (const Standard_Integer Low,const Standard_Integer Up);
-		%feature("compactdefaultargs") StepAP214_Array1OfApprovalItem;
-		%feature("autodoc", "	:param Item:
-	:type Item: StepAP214_ApprovalItem &
-	:param Low:
-	:type Low: int
-	:param Up:
-	:type Up: int
-	:rtype: None
-") StepAP214_Array1OfApprovalItem;
-		 StepAP214_Array1OfApprovalItem (const StepAP214_ApprovalItem & Item,const Standard_Integer Low,const Standard_Integer Up);
-		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	:param V:
-	:type V: StepAP214_ApprovalItem &
-	:rtype: None
-") Init;
-		void Init (const StepAP214_ApprovalItem & V);
-		%feature("compactdefaultargs") Destroy;
-		%feature("autodoc", "	:rtype: None
-") Destroy;
-		void Destroy ();
-		%feature("compactdefaultargs") IsAllocated;
-		%feature("autodoc", "	:rtype: bool
-") IsAllocated;
-		Standard_Boolean IsAllocated ();
-		%feature("compactdefaultargs") Assign;
-		%feature("autodoc", "	:param Other:
-	:type Other: StepAP214_Array1OfApprovalItem &
-	:rtype: StepAP214_Array1OfApprovalItem
-") Assign;
-		const StepAP214_Array1OfApprovalItem & Assign (const StepAP214_Array1OfApprovalItem & Other);
-		%feature("compactdefaultargs") operator =;
-		%feature("autodoc", "	:param Other:
-	:type Other: StepAP214_Array1OfApprovalItem &
-	:rtype: StepAP214_Array1OfApprovalItem
-") operator =;
-		const StepAP214_Array1OfApprovalItem & operator = (const StepAP214_Array1OfApprovalItem & Other);
-		%feature("compactdefaultargs") Length;
-		%feature("autodoc", "	:rtype: int
-") Length;
-		Standard_Integer Length ();
-		%feature("compactdefaultargs") Lower;
-		%feature("autodoc", "	:rtype: int
-") Lower;
-		Standard_Integer Lower ();
-		%feature("compactdefaultargs") Upper;
-		%feature("autodoc", "	:rtype: int
-") Upper;
-		Standard_Integer Upper ();
-		%feature("compactdefaultargs") SetValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param Value:
-	:type Value: StepAP214_ApprovalItem &
-	:rtype: None
-") SetValue;
-		void SetValue (const Standard_Integer Index,const StepAP214_ApprovalItem & Value);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: StepAP214_ApprovalItem
-") Value;
-		const StepAP214_ApprovalItem & Value (const Standard_Integer Index);
-		%feature("compactdefaultargs") ChangeValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: StepAP214_ApprovalItem
-") ChangeValue;
-		StepAP214_ApprovalItem & ChangeValue (const Standard_Integer Index);
-};
-
-
-%extend StepAP214_Array1OfApprovalItem {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor StepAP214_Array1OfAutoDesignDateAndPersonItem;
-class StepAP214_Array1OfAutoDesignDateAndPersonItem {
-	public:
-		%feature("compactdefaultargs") StepAP214_Array1OfAutoDesignDateAndPersonItem;
-		%feature("autodoc", "	:param Low:
-	:type Low: int
-	:param Up:
-	:type Up: int
-	:rtype: None
-") StepAP214_Array1OfAutoDesignDateAndPersonItem;
-		 StepAP214_Array1OfAutoDesignDateAndPersonItem (const Standard_Integer Low,const Standard_Integer Up);
-		%feature("compactdefaultargs") StepAP214_Array1OfAutoDesignDateAndPersonItem;
-		%feature("autodoc", "	:param Item:
-	:type Item: StepAP214_AutoDesignDateAndPersonItem &
-	:param Low:
-	:type Low: int
-	:param Up:
-	:type Up: int
-	:rtype: None
-") StepAP214_Array1OfAutoDesignDateAndPersonItem;
-		 StepAP214_Array1OfAutoDesignDateAndPersonItem (const StepAP214_AutoDesignDateAndPersonItem & Item,const Standard_Integer Low,const Standard_Integer Up);
-		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	:param V:
-	:type V: StepAP214_AutoDesignDateAndPersonItem &
-	:rtype: None
-") Init;
-		void Init (const StepAP214_AutoDesignDateAndPersonItem & V);
-		%feature("compactdefaultargs") Destroy;
-		%feature("autodoc", "	:rtype: None
-") Destroy;
-		void Destroy ();
-		%feature("compactdefaultargs") IsAllocated;
-		%feature("autodoc", "	:rtype: bool
-") IsAllocated;
-		Standard_Boolean IsAllocated ();
-		%feature("compactdefaultargs") Assign;
-		%feature("autodoc", "	:param Other:
-	:type Other: StepAP214_Array1OfAutoDesignDateAndPersonItem &
-	:rtype: StepAP214_Array1OfAutoDesignDateAndPersonItem
-") Assign;
-		const StepAP214_Array1OfAutoDesignDateAndPersonItem & Assign (const StepAP214_Array1OfAutoDesignDateAndPersonItem & Other);
-		%feature("compactdefaultargs") operator =;
-		%feature("autodoc", "	:param Other:
-	:type Other: StepAP214_Array1OfAutoDesignDateAndPersonItem &
-	:rtype: StepAP214_Array1OfAutoDesignDateAndPersonItem
-") operator =;
-		const StepAP214_Array1OfAutoDesignDateAndPersonItem & operator = (const StepAP214_Array1OfAutoDesignDateAndPersonItem & Other);
-		%feature("compactdefaultargs") Length;
-		%feature("autodoc", "	:rtype: int
-") Length;
-		Standard_Integer Length ();
-		%feature("compactdefaultargs") Lower;
-		%feature("autodoc", "	:rtype: int
-") Lower;
-		Standard_Integer Lower ();
-		%feature("compactdefaultargs") Upper;
-		%feature("autodoc", "	:rtype: int
-") Upper;
-		Standard_Integer Upper ();
-		%feature("compactdefaultargs") SetValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param Value:
-	:type Value: StepAP214_AutoDesignDateAndPersonItem &
-	:rtype: None
-") SetValue;
-		void SetValue (const Standard_Integer Index,const StepAP214_AutoDesignDateAndPersonItem & Value);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: StepAP214_AutoDesignDateAndPersonItem
-") Value;
-		const StepAP214_AutoDesignDateAndPersonItem & Value (const Standard_Integer Index);
-		%feature("compactdefaultargs") ChangeValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: StepAP214_AutoDesignDateAndPersonItem
-") ChangeValue;
-		StepAP214_AutoDesignDateAndPersonItem & ChangeValue (const Standard_Integer Index);
-};
-
-
-%extend StepAP214_Array1OfAutoDesignDateAndPersonItem {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor StepAP214_Array1OfAutoDesignDateAndTimeItem;
-class StepAP214_Array1OfAutoDesignDateAndTimeItem {
-	public:
-		%feature("compactdefaultargs") StepAP214_Array1OfAutoDesignDateAndTimeItem;
-		%feature("autodoc", "	:param Low:
-	:type Low: int
-	:param Up:
-	:type Up: int
-	:rtype: None
-") StepAP214_Array1OfAutoDesignDateAndTimeItem;
-		 StepAP214_Array1OfAutoDesignDateAndTimeItem (const Standard_Integer Low,const Standard_Integer Up);
-		%feature("compactdefaultargs") StepAP214_Array1OfAutoDesignDateAndTimeItem;
-		%feature("autodoc", "	:param Item:
-	:type Item: StepAP214_AutoDesignDateAndTimeItem &
-	:param Low:
-	:type Low: int
-	:param Up:
-	:type Up: int
-	:rtype: None
-") StepAP214_Array1OfAutoDesignDateAndTimeItem;
-		 StepAP214_Array1OfAutoDesignDateAndTimeItem (const StepAP214_AutoDesignDateAndTimeItem & Item,const Standard_Integer Low,const Standard_Integer Up);
-		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	:param V:
-	:type V: StepAP214_AutoDesignDateAndTimeItem &
-	:rtype: None
-") Init;
-		void Init (const StepAP214_AutoDesignDateAndTimeItem & V);
-		%feature("compactdefaultargs") Destroy;
-		%feature("autodoc", "	:rtype: None
-") Destroy;
-		void Destroy ();
-		%feature("compactdefaultargs") IsAllocated;
-		%feature("autodoc", "	:rtype: bool
-") IsAllocated;
-		Standard_Boolean IsAllocated ();
-		%feature("compactdefaultargs") Assign;
-		%feature("autodoc", "	:param Other:
-	:type Other: StepAP214_Array1OfAutoDesignDateAndTimeItem &
-	:rtype: StepAP214_Array1OfAutoDesignDateAndTimeItem
-") Assign;
-		const StepAP214_Array1OfAutoDesignDateAndTimeItem & Assign (const StepAP214_Array1OfAutoDesignDateAndTimeItem & Other);
-		%feature("compactdefaultargs") operator =;
-		%feature("autodoc", "	:param Other:
-	:type Other: StepAP214_Array1OfAutoDesignDateAndTimeItem &
-	:rtype: StepAP214_Array1OfAutoDesignDateAndTimeItem
-") operator =;
-		const StepAP214_Array1OfAutoDesignDateAndTimeItem & operator = (const StepAP214_Array1OfAutoDesignDateAndTimeItem & Other);
-		%feature("compactdefaultargs") Length;
-		%feature("autodoc", "	:rtype: int
-") Length;
-		Standard_Integer Length ();
-		%feature("compactdefaultargs") Lower;
-		%feature("autodoc", "	:rtype: int
-") Lower;
-		Standard_Integer Lower ();
-		%feature("compactdefaultargs") Upper;
-		%feature("autodoc", "	:rtype: int
-") Upper;
-		Standard_Integer Upper ();
-		%feature("compactdefaultargs") SetValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param Value:
-	:type Value: StepAP214_AutoDesignDateAndTimeItem &
-	:rtype: None
-") SetValue;
-		void SetValue (const Standard_Integer Index,const StepAP214_AutoDesignDateAndTimeItem & Value);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: StepAP214_AutoDesignDateAndTimeItem
-") Value;
-		const StepAP214_AutoDesignDateAndTimeItem & Value (const Standard_Integer Index);
-		%feature("compactdefaultargs") ChangeValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: StepAP214_AutoDesignDateAndTimeItem
-") ChangeValue;
-		StepAP214_AutoDesignDateAndTimeItem & ChangeValue (const Standard_Integer Index);
-};
-
-
-%extend StepAP214_Array1OfAutoDesignDateAndTimeItem {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor StepAP214_Array1OfAutoDesignDatedItem;
-class StepAP214_Array1OfAutoDesignDatedItem {
-	public:
-		%feature("compactdefaultargs") StepAP214_Array1OfAutoDesignDatedItem;
-		%feature("autodoc", "	:param Low:
-	:type Low: int
-	:param Up:
-	:type Up: int
-	:rtype: None
-") StepAP214_Array1OfAutoDesignDatedItem;
-		 StepAP214_Array1OfAutoDesignDatedItem (const Standard_Integer Low,const Standard_Integer Up);
-		%feature("compactdefaultargs") StepAP214_Array1OfAutoDesignDatedItem;
-		%feature("autodoc", "	:param Item:
-	:type Item: StepAP214_AutoDesignDatedItem &
-	:param Low:
-	:type Low: int
-	:param Up:
-	:type Up: int
-	:rtype: None
-") StepAP214_Array1OfAutoDesignDatedItem;
-		 StepAP214_Array1OfAutoDesignDatedItem (const StepAP214_AutoDesignDatedItem & Item,const Standard_Integer Low,const Standard_Integer Up);
-		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	:param V:
-	:type V: StepAP214_AutoDesignDatedItem &
-	:rtype: None
-") Init;
-		void Init (const StepAP214_AutoDesignDatedItem & V);
-		%feature("compactdefaultargs") Destroy;
-		%feature("autodoc", "	:rtype: None
-") Destroy;
-		void Destroy ();
-		%feature("compactdefaultargs") IsAllocated;
-		%feature("autodoc", "	:rtype: bool
-") IsAllocated;
-		Standard_Boolean IsAllocated ();
-		%feature("compactdefaultargs") Assign;
-		%feature("autodoc", "	:param Other:
-	:type Other: StepAP214_Array1OfAutoDesignDatedItem &
-	:rtype: StepAP214_Array1OfAutoDesignDatedItem
-") Assign;
-		const StepAP214_Array1OfAutoDesignDatedItem & Assign (const StepAP214_Array1OfAutoDesignDatedItem & Other);
-		%feature("compactdefaultargs") operator =;
-		%feature("autodoc", "	:param Other:
-	:type Other: StepAP214_Array1OfAutoDesignDatedItem &
-	:rtype: StepAP214_Array1OfAutoDesignDatedItem
-") operator =;
-		const StepAP214_Array1OfAutoDesignDatedItem & operator = (const StepAP214_Array1OfAutoDesignDatedItem & Other);
-		%feature("compactdefaultargs") Length;
-		%feature("autodoc", "	:rtype: int
-") Length;
-		Standard_Integer Length ();
-		%feature("compactdefaultargs") Lower;
-		%feature("autodoc", "	:rtype: int
-") Lower;
-		Standard_Integer Lower ();
-		%feature("compactdefaultargs") Upper;
-		%feature("autodoc", "	:rtype: int
-") Upper;
-		Standard_Integer Upper ();
-		%feature("compactdefaultargs") SetValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param Value:
-	:type Value: StepAP214_AutoDesignDatedItem &
-	:rtype: None
-") SetValue;
-		void SetValue (const Standard_Integer Index,const StepAP214_AutoDesignDatedItem & Value);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: StepAP214_AutoDesignDatedItem
-") Value;
-		const StepAP214_AutoDesignDatedItem & Value (const Standard_Integer Index);
-		%feature("compactdefaultargs") ChangeValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: StepAP214_AutoDesignDatedItem
-") ChangeValue;
-		StepAP214_AutoDesignDatedItem & ChangeValue (const Standard_Integer Index);
-};
-
-
-%extend StepAP214_Array1OfAutoDesignDatedItem {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor StepAP214_Array1OfAutoDesignGeneralOrgItem;
-class StepAP214_Array1OfAutoDesignGeneralOrgItem {
-	public:
-		%feature("compactdefaultargs") StepAP214_Array1OfAutoDesignGeneralOrgItem;
-		%feature("autodoc", "	:param Low:
-	:type Low: int
-	:param Up:
-	:type Up: int
-	:rtype: None
-") StepAP214_Array1OfAutoDesignGeneralOrgItem;
-		 StepAP214_Array1OfAutoDesignGeneralOrgItem (const Standard_Integer Low,const Standard_Integer Up);
-		%feature("compactdefaultargs") StepAP214_Array1OfAutoDesignGeneralOrgItem;
-		%feature("autodoc", "	:param Item:
-	:type Item: StepAP214_AutoDesignGeneralOrgItem &
-	:param Low:
-	:type Low: int
-	:param Up:
-	:type Up: int
-	:rtype: None
-") StepAP214_Array1OfAutoDesignGeneralOrgItem;
-		 StepAP214_Array1OfAutoDesignGeneralOrgItem (const StepAP214_AutoDesignGeneralOrgItem & Item,const Standard_Integer Low,const Standard_Integer Up);
-		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	:param V:
-	:type V: StepAP214_AutoDesignGeneralOrgItem &
-	:rtype: None
-") Init;
-		void Init (const StepAP214_AutoDesignGeneralOrgItem & V);
-		%feature("compactdefaultargs") Destroy;
-		%feature("autodoc", "	:rtype: None
-") Destroy;
-		void Destroy ();
-		%feature("compactdefaultargs") IsAllocated;
-		%feature("autodoc", "	:rtype: bool
-") IsAllocated;
-		Standard_Boolean IsAllocated ();
-		%feature("compactdefaultargs") Assign;
-		%feature("autodoc", "	:param Other:
-	:type Other: StepAP214_Array1OfAutoDesignGeneralOrgItem &
-	:rtype: StepAP214_Array1OfAutoDesignGeneralOrgItem
-") Assign;
-		const StepAP214_Array1OfAutoDesignGeneralOrgItem & Assign (const StepAP214_Array1OfAutoDesignGeneralOrgItem & Other);
-		%feature("compactdefaultargs") operator =;
-		%feature("autodoc", "	:param Other:
-	:type Other: StepAP214_Array1OfAutoDesignGeneralOrgItem &
-	:rtype: StepAP214_Array1OfAutoDesignGeneralOrgItem
-") operator =;
-		const StepAP214_Array1OfAutoDesignGeneralOrgItem & operator = (const StepAP214_Array1OfAutoDesignGeneralOrgItem & Other);
-		%feature("compactdefaultargs") Length;
-		%feature("autodoc", "	:rtype: int
-") Length;
-		Standard_Integer Length ();
-		%feature("compactdefaultargs") Lower;
-		%feature("autodoc", "	:rtype: int
-") Lower;
-		Standard_Integer Lower ();
-		%feature("compactdefaultargs") Upper;
-		%feature("autodoc", "	:rtype: int
-") Upper;
-		Standard_Integer Upper ();
-		%feature("compactdefaultargs") SetValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param Value:
-	:type Value: StepAP214_AutoDesignGeneralOrgItem &
-	:rtype: None
-") SetValue;
-		void SetValue (const Standard_Integer Index,const StepAP214_AutoDesignGeneralOrgItem & Value);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: StepAP214_AutoDesignGeneralOrgItem
-") Value;
-		const StepAP214_AutoDesignGeneralOrgItem & Value (const Standard_Integer Index);
-		%feature("compactdefaultargs") ChangeValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: StepAP214_AutoDesignGeneralOrgItem
-") ChangeValue;
-		StepAP214_AutoDesignGeneralOrgItem & ChangeValue (const Standard_Integer Index);
-};
-
-
-%extend StepAP214_Array1OfAutoDesignGeneralOrgItem {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor StepAP214_Array1OfAutoDesignGroupedItem;
-class StepAP214_Array1OfAutoDesignGroupedItem {
-	public:
-		%feature("compactdefaultargs") StepAP214_Array1OfAutoDesignGroupedItem;
-		%feature("autodoc", "	:param Low:
-	:type Low: int
-	:param Up:
-	:type Up: int
-	:rtype: None
-") StepAP214_Array1OfAutoDesignGroupedItem;
-		 StepAP214_Array1OfAutoDesignGroupedItem (const Standard_Integer Low,const Standard_Integer Up);
-		%feature("compactdefaultargs") StepAP214_Array1OfAutoDesignGroupedItem;
-		%feature("autodoc", "	:param Item:
-	:type Item: StepAP214_AutoDesignGroupedItem &
-	:param Low:
-	:type Low: int
-	:param Up:
-	:type Up: int
-	:rtype: None
-") StepAP214_Array1OfAutoDesignGroupedItem;
-		 StepAP214_Array1OfAutoDesignGroupedItem (const StepAP214_AutoDesignGroupedItem & Item,const Standard_Integer Low,const Standard_Integer Up);
-		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	:param V:
-	:type V: StepAP214_AutoDesignGroupedItem &
-	:rtype: None
-") Init;
-		void Init (const StepAP214_AutoDesignGroupedItem & V);
-		%feature("compactdefaultargs") Destroy;
-		%feature("autodoc", "	:rtype: None
-") Destroy;
-		void Destroy ();
-		%feature("compactdefaultargs") IsAllocated;
-		%feature("autodoc", "	:rtype: bool
-") IsAllocated;
-		Standard_Boolean IsAllocated ();
-		%feature("compactdefaultargs") Assign;
-		%feature("autodoc", "	:param Other:
-	:type Other: StepAP214_Array1OfAutoDesignGroupedItem &
-	:rtype: StepAP214_Array1OfAutoDesignGroupedItem
-") Assign;
-		const StepAP214_Array1OfAutoDesignGroupedItem & Assign (const StepAP214_Array1OfAutoDesignGroupedItem & Other);
-		%feature("compactdefaultargs") operator =;
-		%feature("autodoc", "	:param Other:
-	:type Other: StepAP214_Array1OfAutoDesignGroupedItem &
-	:rtype: StepAP214_Array1OfAutoDesignGroupedItem
-") operator =;
-		const StepAP214_Array1OfAutoDesignGroupedItem & operator = (const StepAP214_Array1OfAutoDesignGroupedItem & Other);
-		%feature("compactdefaultargs") Length;
-		%feature("autodoc", "	:rtype: int
-") Length;
-		Standard_Integer Length ();
-		%feature("compactdefaultargs") Lower;
-		%feature("autodoc", "	:rtype: int
-") Lower;
-		Standard_Integer Lower ();
-		%feature("compactdefaultargs") Upper;
-		%feature("autodoc", "	:rtype: int
-") Upper;
-		Standard_Integer Upper ();
-		%feature("compactdefaultargs") SetValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param Value:
-	:type Value: StepAP214_AutoDesignGroupedItem &
-	:rtype: None
-") SetValue;
-		void SetValue (const Standard_Integer Index,const StepAP214_AutoDesignGroupedItem & Value);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: StepAP214_AutoDesignGroupedItem
-") Value;
-		const StepAP214_AutoDesignGroupedItem & Value (const Standard_Integer Index);
-		%feature("compactdefaultargs") ChangeValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: StepAP214_AutoDesignGroupedItem
-") ChangeValue;
-		StepAP214_AutoDesignGroupedItem & ChangeValue (const Standard_Integer Index);
-};
-
-
-%extend StepAP214_Array1OfAutoDesignGroupedItem {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor StepAP214_Array1OfAutoDesignPresentedItemSelect;
-class StepAP214_Array1OfAutoDesignPresentedItemSelect {
-	public:
-		%feature("compactdefaultargs") StepAP214_Array1OfAutoDesignPresentedItemSelect;
-		%feature("autodoc", "	:param Low:
-	:type Low: int
-	:param Up:
-	:type Up: int
-	:rtype: None
-") StepAP214_Array1OfAutoDesignPresentedItemSelect;
-		 StepAP214_Array1OfAutoDesignPresentedItemSelect (const Standard_Integer Low,const Standard_Integer Up);
-		%feature("compactdefaultargs") StepAP214_Array1OfAutoDesignPresentedItemSelect;
-		%feature("autodoc", "	:param Item:
-	:type Item: StepAP214_AutoDesignPresentedItemSelect &
-	:param Low:
-	:type Low: int
-	:param Up:
-	:type Up: int
-	:rtype: None
-") StepAP214_Array1OfAutoDesignPresentedItemSelect;
-		 StepAP214_Array1OfAutoDesignPresentedItemSelect (const StepAP214_AutoDesignPresentedItemSelect & Item,const Standard_Integer Low,const Standard_Integer Up);
-		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	:param V:
-	:type V: StepAP214_AutoDesignPresentedItemSelect &
-	:rtype: None
-") Init;
-		void Init (const StepAP214_AutoDesignPresentedItemSelect & V);
-		%feature("compactdefaultargs") Destroy;
-		%feature("autodoc", "	:rtype: None
-") Destroy;
-		void Destroy ();
-		%feature("compactdefaultargs") IsAllocated;
-		%feature("autodoc", "	:rtype: bool
-") IsAllocated;
-		Standard_Boolean IsAllocated ();
-		%feature("compactdefaultargs") Assign;
-		%feature("autodoc", "	:param Other:
-	:type Other: StepAP214_Array1OfAutoDesignPresentedItemSelect &
-	:rtype: StepAP214_Array1OfAutoDesignPresentedItemSelect
-") Assign;
-		const StepAP214_Array1OfAutoDesignPresentedItemSelect & Assign (const StepAP214_Array1OfAutoDesignPresentedItemSelect & Other);
-		%feature("compactdefaultargs") operator =;
-		%feature("autodoc", "	:param Other:
-	:type Other: StepAP214_Array1OfAutoDesignPresentedItemSelect &
-	:rtype: StepAP214_Array1OfAutoDesignPresentedItemSelect
-") operator =;
-		const StepAP214_Array1OfAutoDesignPresentedItemSelect & operator = (const StepAP214_Array1OfAutoDesignPresentedItemSelect & Other);
-		%feature("compactdefaultargs") Length;
-		%feature("autodoc", "	:rtype: int
-") Length;
-		Standard_Integer Length ();
-		%feature("compactdefaultargs") Lower;
-		%feature("autodoc", "	:rtype: int
-") Lower;
-		Standard_Integer Lower ();
-		%feature("compactdefaultargs") Upper;
-		%feature("autodoc", "	:rtype: int
-") Upper;
-		Standard_Integer Upper ();
-		%feature("compactdefaultargs") SetValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param Value:
-	:type Value: StepAP214_AutoDesignPresentedItemSelect &
-	:rtype: None
-") SetValue;
-		void SetValue (const Standard_Integer Index,const StepAP214_AutoDesignPresentedItemSelect & Value);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: StepAP214_AutoDesignPresentedItemSelect
-") Value;
-		const StepAP214_AutoDesignPresentedItemSelect & Value (const Standard_Integer Index);
-		%feature("compactdefaultargs") ChangeValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: StepAP214_AutoDesignPresentedItemSelect
-") ChangeValue;
-		StepAP214_AutoDesignPresentedItemSelect & ChangeValue (const Standard_Integer Index);
-};
-
-
-%extend StepAP214_Array1OfAutoDesignPresentedItemSelect {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor StepAP214_Array1OfAutoDesignReferencingItem;
-class StepAP214_Array1OfAutoDesignReferencingItem {
-	public:
-		%feature("compactdefaultargs") StepAP214_Array1OfAutoDesignReferencingItem;
-		%feature("autodoc", "	:param Low:
-	:type Low: int
-	:param Up:
-	:type Up: int
-	:rtype: None
-") StepAP214_Array1OfAutoDesignReferencingItem;
-		 StepAP214_Array1OfAutoDesignReferencingItem (const Standard_Integer Low,const Standard_Integer Up);
-		%feature("compactdefaultargs") StepAP214_Array1OfAutoDesignReferencingItem;
-		%feature("autodoc", "	:param Item:
-	:type Item: StepAP214_AutoDesignReferencingItem &
-	:param Low:
-	:type Low: int
-	:param Up:
-	:type Up: int
-	:rtype: None
-") StepAP214_Array1OfAutoDesignReferencingItem;
-		 StepAP214_Array1OfAutoDesignReferencingItem (const StepAP214_AutoDesignReferencingItem & Item,const Standard_Integer Low,const Standard_Integer Up);
-		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	:param V:
-	:type V: StepAP214_AutoDesignReferencingItem &
-	:rtype: None
-") Init;
-		void Init (const StepAP214_AutoDesignReferencingItem & V);
-		%feature("compactdefaultargs") Destroy;
-		%feature("autodoc", "	:rtype: None
-") Destroy;
-		void Destroy ();
-		%feature("compactdefaultargs") IsAllocated;
-		%feature("autodoc", "	:rtype: bool
-") IsAllocated;
-		Standard_Boolean IsAllocated ();
-		%feature("compactdefaultargs") Assign;
-		%feature("autodoc", "	:param Other:
-	:type Other: StepAP214_Array1OfAutoDesignReferencingItem &
-	:rtype: StepAP214_Array1OfAutoDesignReferencingItem
-") Assign;
-		const StepAP214_Array1OfAutoDesignReferencingItem & Assign (const StepAP214_Array1OfAutoDesignReferencingItem & Other);
-		%feature("compactdefaultargs") operator =;
-		%feature("autodoc", "	:param Other:
-	:type Other: StepAP214_Array1OfAutoDesignReferencingItem &
-	:rtype: StepAP214_Array1OfAutoDesignReferencingItem
-") operator =;
-		const StepAP214_Array1OfAutoDesignReferencingItem & operator = (const StepAP214_Array1OfAutoDesignReferencingItem & Other);
-		%feature("compactdefaultargs") Length;
-		%feature("autodoc", "	:rtype: int
-") Length;
-		Standard_Integer Length ();
-		%feature("compactdefaultargs") Lower;
-		%feature("autodoc", "	:rtype: int
-") Lower;
-		Standard_Integer Lower ();
-		%feature("compactdefaultargs") Upper;
-		%feature("autodoc", "	:rtype: int
-") Upper;
-		Standard_Integer Upper ();
-		%feature("compactdefaultargs") SetValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param Value:
-	:type Value: StepAP214_AutoDesignReferencingItem &
-	:rtype: None
-") SetValue;
-		void SetValue (const Standard_Integer Index,const StepAP214_AutoDesignReferencingItem & Value);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: StepAP214_AutoDesignReferencingItem
-") Value;
-		const StepAP214_AutoDesignReferencingItem & Value (const Standard_Integer Index);
-		%feature("compactdefaultargs") ChangeValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: StepAP214_AutoDesignReferencingItem
-") ChangeValue;
-		StepAP214_AutoDesignReferencingItem & ChangeValue (const Standard_Integer Index);
-};
-
-
-%extend StepAP214_Array1OfAutoDesignReferencingItem {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor StepAP214_Array1OfDateAndTimeItem;
-class StepAP214_Array1OfDateAndTimeItem {
-	public:
-		%feature("compactdefaultargs") StepAP214_Array1OfDateAndTimeItem;
-		%feature("autodoc", "	:param Low:
-	:type Low: int
-	:param Up:
-	:type Up: int
-	:rtype: None
-") StepAP214_Array1OfDateAndTimeItem;
-		 StepAP214_Array1OfDateAndTimeItem (const Standard_Integer Low,const Standard_Integer Up);
-		%feature("compactdefaultargs") StepAP214_Array1OfDateAndTimeItem;
-		%feature("autodoc", "	:param Item:
-	:type Item: StepAP214_DateAndTimeItem &
-	:param Low:
-	:type Low: int
-	:param Up:
-	:type Up: int
-	:rtype: None
-") StepAP214_Array1OfDateAndTimeItem;
-		 StepAP214_Array1OfDateAndTimeItem (const StepAP214_DateAndTimeItem & Item,const Standard_Integer Low,const Standard_Integer Up);
-		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	:param V:
-	:type V: StepAP214_DateAndTimeItem &
-	:rtype: None
-") Init;
-		void Init (const StepAP214_DateAndTimeItem & V);
-		%feature("compactdefaultargs") Destroy;
-		%feature("autodoc", "	:rtype: None
-") Destroy;
-		void Destroy ();
-		%feature("compactdefaultargs") IsAllocated;
-		%feature("autodoc", "	:rtype: bool
-") IsAllocated;
-		Standard_Boolean IsAllocated ();
-		%feature("compactdefaultargs") Assign;
-		%feature("autodoc", "	:param Other:
-	:type Other: StepAP214_Array1OfDateAndTimeItem &
-	:rtype: StepAP214_Array1OfDateAndTimeItem
-") Assign;
-		const StepAP214_Array1OfDateAndTimeItem & Assign (const StepAP214_Array1OfDateAndTimeItem & Other);
-		%feature("compactdefaultargs") operator =;
-		%feature("autodoc", "	:param Other:
-	:type Other: StepAP214_Array1OfDateAndTimeItem &
-	:rtype: StepAP214_Array1OfDateAndTimeItem
-") operator =;
-		const StepAP214_Array1OfDateAndTimeItem & operator = (const StepAP214_Array1OfDateAndTimeItem & Other);
-		%feature("compactdefaultargs") Length;
-		%feature("autodoc", "	:rtype: int
-") Length;
-		Standard_Integer Length ();
-		%feature("compactdefaultargs") Lower;
-		%feature("autodoc", "	:rtype: int
-") Lower;
-		Standard_Integer Lower ();
-		%feature("compactdefaultargs") Upper;
-		%feature("autodoc", "	:rtype: int
-") Upper;
-		Standard_Integer Upper ();
-		%feature("compactdefaultargs") SetValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param Value:
-	:type Value: StepAP214_DateAndTimeItem &
-	:rtype: None
-") SetValue;
-		void SetValue (const Standard_Integer Index,const StepAP214_DateAndTimeItem & Value);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: StepAP214_DateAndTimeItem
-") Value;
-		const StepAP214_DateAndTimeItem & Value (const Standard_Integer Index);
-		%feature("compactdefaultargs") ChangeValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: StepAP214_DateAndTimeItem
-") ChangeValue;
-		StepAP214_DateAndTimeItem & ChangeValue (const Standard_Integer Index);
-};
-
-
-%extend StepAP214_Array1OfDateAndTimeItem {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor StepAP214_Array1OfDateItem;
-class StepAP214_Array1OfDateItem {
-	public:
-		%feature("compactdefaultargs") StepAP214_Array1OfDateItem;
-		%feature("autodoc", "	:param Low:
-	:type Low: int
-	:param Up:
-	:type Up: int
-	:rtype: None
-") StepAP214_Array1OfDateItem;
-		 StepAP214_Array1OfDateItem (const Standard_Integer Low,const Standard_Integer Up);
-		%feature("compactdefaultargs") StepAP214_Array1OfDateItem;
-		%feature("autodoc", "	:param Item:
-	:type Item: StepAP214_DateItem &
-	:param Low:
-	:type Low: int
-	:param Up:
-	:type Up: int
-	:rtype: None
-") StepAP214_Array1OfDateItem;
-		 StepAP214_Array1OfDateItem (const StepAP214_DateItem & Item,const Standard_Integer Low,const Standard_Integer Up);
-		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	:param V:
-	:type V: StepAP214_DateItem &
-	:rtype: None
-") Init;
-		void Init (const StepAP214_DateItem & V);
-		%feature("compactdefaultargs") Destroy;
-		%feature("autodoc", "	:rtype: None
-") Destroy;
-		void Destroy ();
-		%feature("compactdefaultargs") IsAllocated;
-		%feature("autodoc", "	:rtype: bool
-") IsAllocated;
-		Standard_Boolean IsAllocated ();
-		%feature("compactdefaultargs") Assign;
-		%feature("autodoc", "	:param Other:
-	:type Other: StepAP214_Array1OfDateItem &
-	:rtype: StepAP214_Array1OfDateItem
-") Assign;
-		const StepAP214_Array1OfDateItem & Assign (const StepAP214_Array1OfDateItem & Other);
-		%feature("compactdefaultargs") operator =;
-		%feature("autodoc", "	:param Other:
-	:type Other: StepAP214_Array1OfDateItem &
-	:rtype: StepAP214_Array1OfDateItem
-") operator =;
-		const StepAP214_Array1OfDateItem & operator = (const StepAP214_Array1OfDateItem & Other);
-		%feature("compactdefaultargs") Length;
-		%feature("autodoc", "	:rtype: int
-") Length;
-		Standard_Integer Length ();
-		%feature("compactdefaultargs") Lower;
-		%feature("autodoc", "	:rtype: int
-") Lower;
-		Standard_Integer Lower ();
-		%feature("compactdefaultargs") Upper;
-		%feature("autodoc", "	:rtype: int
-") Upper;
-		Standard_Integer Upper ();
-		%feature("compactdefaultargs") SetValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param Value:
-	:type Value: StepAP214_DateItem &
-	:rtype: None
-") SetValue;
-		void SetValue (const Standard_Integer Index,const StepAP214_DateItem & Value);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: StepAP214_DateItem
-") Value;
-		const StepAP214_DateItem & Value (const Standard_Integer Index);
-		%feature("compactdefaultargs") ChangeValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: StepAP214_DateItem
-") ChangeValue;
-		StepAP214_DateItem & ChangeValue (const Standard_Integer Index);
-};
-
-
-%extend StepAP214_Array1OfDateItem {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor StepAP214_Array1OfDocumentReferenceItem;
-class StepAP214_Array1OfDocumentReferenceItem {
-	public:
-		%feature("compactdefaultargs") StepAP214_Array1OfDocumentReferenceItem;
-		%feature("autodoc", "	:param Low:
-	:type Low: int
-	:param Up:
-	:type Up: int
-	:rtype: None
-") StepAP214_Array1OfDocumentReferenceItem;
-		 StepAP214_Array1OfDocumentReferenceItem (const Standard_Integer Low,const Standard_Integer Up);
-		%feature("compactdefaultargs") StepAP214_Array1OfDocumentReferenceItem;
-		%feature("autodoc", "	:param Item:
-	:type Item: StepAP214_DocumentReferenceItem &
-	:param Low:
-	:type Low: int
-	:param Up:
-	:type Up: int
-	:rtype: None
-") StepAP214_Array1OfDocumentReferenceItem;
-		 StepAP214_Array1OfDocumentReferenceItem (const StepAP214_DocumentReferenceItem & Item,const Standard_Integer Low,const Standard_Integer Up);
-		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	:param V:
-	:type V: StepAP214_DocumentReferenceItem &
-	:rtype: None
-") Init;
-		void Init (const StepAP214_DocumentReferenceItem & V);
-		%feature("compactdefaultargs") Destroy;
-		%feature("autodoc", "	:rtype: None
-") Destroy;
-		void Destroy ();
-		%feature("compactdefaultargs") IsAllocated;
-		%feature("autodoc", "	:rtype: bool
-") IsAllocated;
-		Standard_Boolean IsAllocated ();
-		%feature("compactdefaultargs") Assign;
-		%feature("autodoc", "	:param Other:
-	:type Other: StepAP214_Array1OfDocumentReferenceItem &
-	:rtype: StepAP214_Array1OfDocumentReferenceItem
-") Assign;
-		const StepAP214_Array1OfDocumentReferenceItem & Assign (const StepAP214_Array1OfDocumentReferenceItem & Other);
-		%feature("compactdefaultargs") operator =;
-		%feature("autodoc", "	:param Other:
-	:type Other: StepAP214_Array1OfDocumentReferenceItem &
-	:rtype: StepAP214_Array1OfDocumentReferenceItem
-") operator =;
-		const StepAP214_Array1OfDocumentReferenceItem & operator = (const StepAP214_Array1OfDocumentReferenceItem & Other);
-		%feature("compactdefaultargs") Length;
-		%feature("autodoc", "	:rtype: int
-") Length;
-		Standard_Integer Length ();
-		%feature("compactdefaultargs") Lower;
-		%feature("autodoc", "	:rtype: int
-") Lower;
-		Standard_Integer Lower ();
-		%feature("compactdefaultargs") Upper;
-		%feature("autodoc", "	:rtype: int
-") Upper;
-		Standard_Integer Upper ();
-		%feature("compactdefaultargs") SetValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param Value:
-	:type Value: StepAP214_DocumentReferenceItem &
-	:rtype: None
-") SetValue;
-		void SetValue (const Standard_Integer Index,const StepAP214_DocumentReferenceItem & Value);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: StepAP214_DocumentReferenceItem
-") Value;
-		const StepAP214_DocumentReferenceItem & Value (const Standard_Integer Index);
-		%feature("compactdefaultargs") ChangeValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: StepAP214_DocumentReferenceItem
-") ChangeValue;
-		StepAP214_DocumentReferenceItem & ChangeValue (const Standard_Integer Index);
-};
-
-
-%extend StepAP214_Array1OfDocumentReferenceItem {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor StepAP214_Array1OfExternalIdentificationItem;
-class StepAP214_Array1OfExternalIdentificationItem {
-	public:
-		%feature("compactdefaultargs") StepAP214_Array1OfExternalIdentificationItem;
-		%feature("autodoc", "	:param Low:
-	:type Low: int
-	:param Up:
-	:type Up: int
-	:rtype: None
-") StepAP214_Array1OfExternalIdentificationItem;
-		 StepAP214_Array1OfExternalIdentificationItem (const Standard_Integer Low,const Standard_Integer Up);
-		%feature("compactdefaultargs") StepAP214_Array1OfExternalIdentificationItem;
-		%feature("autodoc", "	:param Item:
-	:type Item: StepAP214_ExternalIdentificationItem &
-	:param Low:
-	:type Low: int
-	:param Up:
-	:type Up: int
-	:rtype: None
-") StepAP214_Array1OfExternalIdentificationItem;
-		 StepAP214_Array1OfExternalIdentificationItem (const StepAP214_ExternalIdentificationItem & Item,const Standard_Integer Low,const Standard_Integer Up);
-		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	:param V:
-	:type V: StepAP214_ExternalIdentificationItem &
-	:rtype: None
-") Init;
-		void Init (const StepAP214_ExternalIdentificationItem & V);
-		%feature("compactdefaultargs") Destroy;
-		%feature("autodoc", "	:rtype: None
-") Destroy;
-		void Destroy ();
-		%feature("compactdefaultargs") IsAllocated;
-		%feature("autodoc", "	:rtype: bool
-") IsAllocated;
-		Standard_Boolean IsAllocated ();
-		%feature("compactdefaultargs") Assign;
-		%feature("autodoc", "	:param Other:
-	:type Other: StepAP214_Array1OfExternalIdentificationItem &
-	:rtype: StepAP214_Array1OfExternalIdentificationItem
-") Assign;
-		const StepAP214_Array1OfExternalIdentificationItem & Assign (const StepAP214_Array1OfExternalIdentificationItem & Other);
-		%feature("compactdefaultargs") operator =;
-		%feature("autodoc", "	:param Other:
-	:type Other: StepAP214_Array1OfExternalIdentificationItem &
-	:rtype: StepAP214_Array1OfExternalIdentificationItem
-") operator =;
-		const StepAP214_Array1OfExternalIdentificationItem & operator = (const StepAP214_Array1OfExternalIdentificationItem & Other);
-		%feature("compactdefaultargs") Length;
-		%feature("autodoc", "	:rtype: int
-") Length;
-		Standard_Integer Length ();
-		%feature("compactdefaultargs") Lower;
-		%feature("autodoc", "	:rtype: int
-") Lower;
-		Standard_Integer Lower ();
-		%feature("compactdefaultargs") Upper;
-		%feature("autodoc", "	:rtype: int
-") Upper;
-		Standard_Integer Upper ();
-		%feature("compactdefaultargs") SetValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param Value:
-	:type Value: StepAP214_ExternalIdentificationItem &
-	:rtype: None
-") SetValue;
-		void SetValue (const Standard_Integer Index,const StepAP214_ExternalIdentificationItem & Value);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: StepAP214_ExternalIdentificationItem
-") Value;
-		const StepAP214_ExternalIdentificationItem & Value (const Standard_Integer Index);
-		%feature("compactdefaultargs") ChangeValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: StepAP214_ExternalIdentificationItem
-") ChangeValue;
-		StepAP214_ExternalIdentificationItem & ChangeValue (const Standard_Integer Index);
-};
-
-
-%extend StepAP214_Array1OfExternalIdentificationItem {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor StepAP214_Array1OfGroupItem;
-class StepAP214_Array1OfGroupItem {
-	public:
-		%feature("compactdefaultargs") StepAP214_Array1OfGroupItem;
-		%feature("autodoc", "	:param Low:
-	:type Low: int
-	:param Up:
-	:type Up: int
-	:rtype: None
-") StepAP214_Array1OfGroupItem;
-		 StepAP214_Array1OfGroupItem (const Standard_Integer Low,const Standard_Integer Up);
-		%feature("compactdefaultargs") StepAP214_Array1OfGroupItem;
-		%feature("autodoc", "	:param Item:
-	:type Item: StepAP214_GroupItem &
-	:param Low:
-	:type Low: int
-	:param Up:
-	:type Up: int
-	:rtype: None
-") StepAP214_Array1OfGroupItem;
-		 StepAP214_Array1OfGroupItem (const StepAP214_GroupItem & Item,const Standard_Integer Low,const Standard_Integer Up);
-		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	:param V:
-	:type V: StepAP214_GroupItem &
-	:rtype: None
-") Init;
-		void Init (const StepAP214_GroupItem & V);
-		%feature("compactdefaultargs") Destroy;
-		%feature("autodoc", "	:rtype: None
-") Destroy;
-		void Destroy ();
-		%feature("compactdefaultargs") IsAllocated;
-		%feature("autodoc", "	:rtype: bool
-") IsAllocated;
-		Standard_Boolean IsAllocated ();
-		%feature("compactdefaultargs") Assign;
-		%feature("autodoc", "	:param Other:
-	:type Other: StepAP214_Array1OfGroupItem &
-	:rtype: StepAP214_Array1OfGroupItem
-") Assign;
-		const StepAP214_Array1OfGroupItem & Assign (const StepAP214_Array1OfGroupItem & Other);
-		%feature("compactdefaultargs") operator =;
-		%feature("autodoc", "	:param Other:
-	:type Other: StepAP214_Array1OfGroupItem &
-	:rtype: StepAP214_Array1OfGroupItem
-") operator =;
-		const StepAP214_Array1OfGroupItem & operator = (const StepAP214_Array1OfGroupItem & Other);
-		%feature("compactdefaultargs") Length;
-		%feature("autodoc", "	:rtype: int
-") Length;
-		Standard_Integer Length ();
-		%feature("compactdefaultargs") Lower;
-		%feature("autodoc", "	:rtype: int
-") Lower;
-		Standard_Integer Lower ();
-		%feature("compactdefaultargs") Upper;
-		%feature("autodoc", "	:rtype: int
-") Upper;
-		Standard_Integer Upper ();
-		%feature("compactdefaultargs") SetValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param Value:
-	:type Value: StepAP214_GroupItem &
-	:rtype: None
-") SetValue;
-		void SetValue (const Standard_Integer Index,const StepAP214_GroupItem & Value);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: StepAP214_GroupItem
-") Value;
-		const StepAP214_GroupItem & Value (const Standard_Integer Index);
-		%feature("compactdefaultargs") ChangeValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: StepAP214_GroupItem
-") ChangeValue;
-		StepAP214_GroupItem & ChangeValue (const Standard_Integer Index);
-};
-
-
-%extend StepAP214_Array1OfGroupItem {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor StepAP214_Array1OfOrganizationItem;
-class StepAP214_Array1OfOrganizationItem {
-	public:
-		%feature("compactdefaultargs") StepAP214_Array1OfOrganizationItem;
-		%feature("autodoc", "	:param Low:
-	:type Low: int
-	:param Up:
-	:type Up: int
-	:rtype: None
-") StepAP214_Array1OfOrganizationItem;
-		 StepAP214_Array1OfOrganizationItem (const Standard_Integer Low,const Standard_Integer Up);
-		%feature("compactdefaultargs") StepAP214_Array1OfOrganizationItem;
-		%feature("autodoc", "	:param Item:
-	:type Item: StepAP214_OrganizationItem &
-	:param Low:
-	:type Low: int
-	:param Up:
-	:type Up: int
-	:rtype: None
-") StepAP214_Array1OfOrganizationItem;
-		 StepAP214_Array1OfOrganizationItem (const StepAP214_OrganizationItem & Item,const Standard_Integer Low,const Standard_Integer Up);
-		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	:param V:
-	:type V: StepAP214_OrganizationItem &
-	:rtype: None
-") Init;
-		void Init (const StepAP214_OrganizationItem & V);
-		%feature("compactdefaultargs") Destroy;
-		%feature("autodoc", "	:rtype: None
-") Destroy;
-		void Destroy ();
-		%feature("compactdefaultargs") IsAllocated;
-		%feature("autodoc", "	:rtype: bool
-") IsAllocated;
-		Standard_Boolean IsAllocated ();
-		%feature("compactdefaultargs") Assign;
-		%feature("autodoc", "	:param Other:
-	:type Other: StepAP214_Array1OfOrganizationItem &
-	:rtype: StepAP214_Array1OfOrganizationItem
-") Assign;
-		const StepAP214_Array1OfOrganizationItem & Assign (const StepAP214_Array1OfOrganizationItem & Other);
-		%feature("compactdefaultargs") operator =;
-		%feature("autodoc", "	:param Other:
-	:type Other: StepAP214_Array1OfOrganizationItem &
-	:rtype: StepAP214_Array1OfOrganizationItem
-") operator =;
-		const StepAP214_Array1OfOrganizationItem & operator = (const StepAP214_Array1OfOrganizationItem & Other);
-		%feature("compactdefaultargs") Length;
-		%feature("autodoc", "	:rtype: int
-") Length;
-		Standard_Integer Length ();
-		%feature("compactdefaultargs") Lower;
-		%feature("autodoc", "	:rtype: int
-") Lower;
-		Standard_Integer Lower ();
-		%feature("compactdefaultargs") Upper;
-		%feature("autodoc", "	:rtype: int
-") Upper;
-		Standard_Integer Upper ();
-		%feature("compactdefaultargs") SetValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param Value:
-	:type Value: StepAP214_OrganizationItem &
-	:rtype: None
-") SetValue;
-		void SetValue (const Standard_Integer Index,const StepAP214_OrganizationItem & Value);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: StepAP214_OrganizationItem
-") Value;
-		const StepAP214_OrganizationItem & Value (const Standard_Integer Index);
-		%feature("compactdefaultargs") ChangeValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: StepAP214_OrganizationItem
-") ChangeValue;
-		StepAP214_OrganizationItem & ChangeValue (const Standard_Integer Index);
-};
-
-
-%extend StepAP214_Array1OfOrganizationItem {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor StepAP214_Array1OfPersonAndOrganizationItem;
-class StepAP214_Array1OfPersonAndOrganizationItem {
-	public:
-		%feature("compactdefaultargs") StepAP214_Array1OfPersonAndOrganizationItem;
-		%feature("autodoc", "	:param Low:
-	:type Low: int
-	:param Up:
-	:type Up: int
-	:rtype: None
-") StepAP214_Array1OfPersonAndOrganizationItem;
-		 StepAP214_Array1OfPersonAndOrganizationItem (const Standard_Integer Low,const Standard_Integer Up);
-		%feature("compactdefaultargs") StepAP214_Array1OfPersonAndOrganizationItem;
-		%feature("autodoc", "	:param Item:
-	:type Item: StepAP214_PersonAndOrganizationItem &
-	:param Low:
-	:type Low: int
-	:param Up:
-	:type Up: int
-	:rtype: None
-") StepAP214_Array1OfPersonAndOrganizationItem;
-		 StepAP214_Array1OfPersonAndOrganizationItem (const StepAP214_PersonAndOrganizationItem & Item,const Standard_Integer Low,const Standard_Integer Up);
-		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	:param V:
-	:type V: StepAP214_PersonAndOrganizationItem &
-	:rtype: None
-") Init;
-		void Init (const StepAP214_PersonAndOrganizationItem & V);
-		%feature("compactdefaultargs") Destroy;
-		%feature("autodoc", "	:rtype: None
-") Destroy;
-		void Destroy ();
-		%feature("compactdefaultargs") IsAllocated;
-		%feature("autodoc", "	:rtype: bool
-") IsAllocated;
-		Standard_Boolean IsAllocated ();
-		%feature("compactdefaultargs") Assign;
-		%feature("autodoc", "	:param Other:
-	:type Other: StepAP214_Array1OfPersonAndOrganizationItem &
-	:rtype: StepAP214_Array1OfPersonAndOrganizationItem
-") Assign;
-		const StepAP214_Array1OfPersonAndOrganizationItem & Assign (const StepAP214_Array1OfPersonAndOrganizationItem & Other);
-		%feature("compactdefaultargs") operator =;
-		%feature("autodoc", "	:param Other:
-	:type Other: StepAP214_Array1OfPersonAndOrganizationItem &
-	:rtype: StepAP214_Array1OfPersonAndOrganizationItem
-") operator =;
-		const StepAP214_Array1OfPersonAndOrganizationItem & operator = (const StepAP214_Array1OfPersonAndOrganizationItem & Other);
-		%feature("compactdefaultargs") Length;
-		%feature("autodoc", "	:rtype: int
-") Length;
-		Standard_Integer Length ();
-		%feature("compactdefaultargs") Lower;
-		%feature("autodoc", "	:rtype: int
-") Lower;
-		Standard_Integer Lower ();
-		%feature("compactdefaultargs") Upper;
-		%feature("autodoc", "	:rtype: int
-") Upper;
-		Standard_Integer Upper ();
-		%feature("compactdefaultargs") SetValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param Value:
-	:type Value: StepAP214_PersonAndOrganizationItem &
-	:rtype: None
-") SetValue;
-		void SetValue (const Standard_Integer Index,const StepAP214_PersonAndOrganizationItem & Value);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: StepAP214_PersonAndOrganizationItem
-") Value;
-		const StepAP214_PersonAndOrganizationItem & Value (const Standard_Integer Index);
-		%feature("compactdefaultargs") ChangeValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: StepAP214_PersonAndOrganizationItem
-") ChangeValue;
-		StepAP214_PersonAndOrganizationItem & ChangeValue (const Standard_Integer Index);
-};
-
-
-%extend StepAP214_Array1OfPersonAndOrganizationItem {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor StepAP214_Array1OfPresentedItemSelect;
-class StepAP214_Array1OfPresentedItemSelect {
-	public:
-		%feature("compactdefaultargs") StepAP214_Array1OfPresentedItemSelect;
-		%feature("autodoc", "	:param Low:
-	:type Low: int
-	:param Up:
-	:type Up: int
-	:rtype: None
-") StepAP214_Array1OfPresentedItemSelect;
-		 StepAP214_Array1OfPresentedItemSelect (const Standard_Integer Low,const Standard_Integer Up);
-		%feature("compactdefaultargs") StepAP214_Array1OfPresentedItemSelect;
-		%feature("autodoc", "	:param Item:
-	:type Item: StepAP214_PresentedItemSelect &
-	:param Low:
-	:type Low: int
-	:param Up:
-	:type Up: int
-	:rtype: None
-") StepAP214_Array1OfPresentedItemSelect;
-		 StepAP214_Array1OfPresentedItemSelect (const StepAP214_PresentedItemSelect & Item,const Standard_Integer Low,const Standard_Integer Up);
-		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	:param V:
-	:type V: StepAP214_PresentedItemSelect &
-	:rtype: None
-") Init;
-		void Init (const StepAP214_PresentedItemSelect & V);
-		%feature("compactdefaultargs") Destroy;
-		%feature("autodoc", "	:rtype: None
-") Destroy;
-		void Destroy ();
-		%feature("compactdefaultargs") IsAllocated;
-		%feature("autodoc", "	:rtype: bool
-") IsAllocated;
-		Standard_Boolean IsAllocated ();
-		%feature("compactdefaultargs") Assign;
-		%feature("autodoc", "	:param Other:
-	:type Other: StepAP214_Array1OfPresentedItemSelect &
-	:rtype: StepAP214_Array1OfPresentedItemSelect
-") Assign;
-		const StepAP214_Array1OfPresentedItemSelect & Assign (const StepAP214_Array1OfPresentedItemSelect & Other);
-		%feature("compactdefaultargs") operator =;
-		%feature("autodoc", "	:param Other:
-	:type Other: StepAP214_Array1OfPresentedItemSelect &
-	:rtype: StepAP214_Array1OfPresentedItemSelect
-") operator =;
-		const StepAP214_Array1OfPresentedItemSelect & operator = (const StepAP214_Array1OfPresentedItemSelect & Other);
-		%feature("compactdefaultargs") Length;
-		%feature("autodoc", "	:rtype: int
-") Length;
-		Standard_Integer Length ();
-		%feature("compactdefaultargs") Lower;
-		%feature("autodoc", "	:rtype: int
-") Lower;
-		Standard_Integer Lower ();
-		%feature("compactdefaultargs") Upper;
-		%feature("autodoc", "	:rtype: int
-") Upper;
-		Standard_Integer Upper ();
-		%feature("compactdefaultargs") SetValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param Value:
-	:type Value: StepAP214_PresentedItemSelect &
-	:rtype: None
-") SetValue;
-		void SetValue (const Standard_Integer Index,const StepAP214_PresentedItemSelect & Value);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: StepAP214_PresentedItemSelect
-") Value;
-		const StepAP214_PresentedItemSelect & Value (const Standard_Integer Index);
-		%feature("compactdefaultargs") ChangeValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: StepAP214_PresentedItemSelect
-") ChangeValue;
-		StepAP214_PresentedItemSelect & ChangeValue (const Standard_Integer Index);
-};
-
-
-%extend StepAP214_Array1OfPresentedItemSelect {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor StepAP214_Array1OfSecurityClassificationItem;
-class StepAP214_Array1OfSecurityClassificationItem {
-	public:
-		%feature("compactdefaultargs") StepAP214_Array1OfSecurityClassificationItem;
-		%feature("autodoc", "	:param Low:
-	:type Low: int
-	:param Up:
-	:type Up: int
-	:rtype: None
-") StepAP214_Array1OfSecurityClassificationItem;
-		 StepAP214_Array1OfSecurityClassificationItem (const Standard_Integer Low,const Standard_Integer Up);
-		%feature("compactdefaultargs") StepAP214_Array1OfSecurityClassificationItem;
-		%feature("autodoc", "	:param Item:
-	:type Item: StepAP214_SecurityClassificationItem &
-	:param Low:
-	:type Low: int
-	:param Up:
-	:type Up: int
-	:rtype: None
-") StepAP214_Array1OfSecurityClassificationItem;
-		 StepAP214_Array1OfSecurityClassificationItem (const StepAP214_SecurityClassificationItem & Item,const Standard_Integer Low,const Standard_Integer Up);
-		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	:param V:
-	:type V: StepAP214_SecurityClassificationItem &
-	:rtype: None
-") Init;
-		void Init (const StepAP214_SecurityClassificationItem & V);
-		%feature("compactdefaultargs") Destroy;
-		%feature("autodoc", "	:rtype: None
-") Destroy;
-		void Destroy ();
-		%feature("compactdefaultargs") IsAllocated;
-		%feature("autodoc", "	:rtype: bool
-") IsAllocated;
-		Standard_Boolean IsAllocated ();
-		%feature("compactdefaultargs") Assign;
-		%feature("autodoc", "	:param Other:
-	:type Other: StepAP214_Array1OfSecurityClassificationItem &
-	:rtype: StepAP214_Array1OfSecurityClassificationItem
-") Assign;
-		const StepAP214_Array1OfSecurityClassificationItem & Assign (const StepAP214_Array1OfSecurityClassificationItem & Other);
-		%feature("compactdefaultargs") operator =;
-		%feature("autodoc", "	:param Other:
-	:type Other: StepAP214_Array1OfSecurityClassificationItem &
-	:rtype: StepAP214_Array1OfSecurityClassificationItem
-") operator =;
-		const StepAP214_Array1OfSecurityClassificationItem & operator = (const StepAP214_Array1OfSecurityClassificationItem & Other);
-		%feature("compactdefaultargs") Length;
-		%feature("autodoc", "	:rtype: int
-") Length;
-		Standard_Integer Length ();
-		%feature("compactdefaultargs") Lower;
-		%feature("autodoc", "	:rtype: int
-") Lower;
-		Standard_Integer Lower ();
-		%feature("compactdefaultargs") Upper;
-		%feature("autodoc", "	:rtype: int
-") Upper;
-		Standard_Integer Upper ();
-		%feature("compactdefaultargs") SetValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param Value:
-	:type Value: StepAP214_SecurityClassificationItem &
-	:rtype: None
-") SetValue;
-		void SetValue (const Standard_Integer Index,const StepAP214_SecurityClassificationItem & Value);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: StepAP214_SecurityClassificationItem
-") Value;
-		const StepAP214_SecurityClassificationItem & Value (const Standard_Integer Index);
-		%feature("compactdefaultargs") ChangeValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: StepAP214_SecurityClassificationItem
-") ChangeValue;
-		StepAP214_SecurityClassificationItem & ChangeValue (const Standard_Integer Index);
-};
-
-
-%extend StepAP214_Array1OfSecurityClassificationItem {
 	%pythoncode {
 	__repr__ = _dumps_object
 	}
@@ -2622,19 +1183,11 @@ class StepAP214_AutoDesignActualDateAndTimeAssignment : public StepBasic_DateAnd
 	:type aAssignedDateAndTime: Handle_StepBasic_DateAndTime &
 	:param aRole:
 	:type aRole: Handle_StepBasic_DateTimeRole &
-	:rtype: void
-") Init;
-		virtual void Init (const Handle_StepBasic_DateAndTime & aAssignedDateAndTime,const Handle_StepBasic_DateTimeRole & aRole);
-		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	:param aAssignedDateAndTime:
-	:type aAssignedDateAndTime: Handle_StepBasic_DateAndTime &
-	:param aRole:
-	:type aRole: Handle_StepBasic_DateTimeRole &
 	:param aItems:
 	:type aItems: Handle_StepAP214_HArray1OfAutoDesignDateAndTimeItem &
-	:rtype: void
+	:rtype: None
 ") Init;
-		virtual void Init (const Handle_StepBasic_DateAndTime & aAssignedDateAndTime,const Handle_StepBasic_DateTimeRole & aRole,const Handle_StepAP214_HArray1OfAutoDesignDateAndTimeItem & aItems);
+		void Init (const Handle_StepBasic_DateAndTime & aAssignedDateAndTime,const Handle_StepBasic_DateTimeRole & aRole,const Handle_StepAP214_HArray1OfAutoDesignDateAndTimeItem & aItems);
 		%feature("compactdefaultargs") SetItems;
 		%feature("autodoc", "	:param aItems:
 	:type aItems: Handle_StepAP214_HArray1OfAutoDesignDateAndTimeItem &
@@ -2689,19 +1242,20 @@ class Handle_StepAP214_AutoDesignActualDateAndTimeAssignment : public Handle_Ste
         static const Handle_StepAP214_AutoDesignActualDateAndTimeAssignment DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_StepAP214_AutoDesignActualDateAndTimeAssignment {
     StepAP214_AutoDesignActualDateAndTimeAssignment* _get_reference() {
-    return (StepAP214_AutoDesignActualDateAndTimeAssignment*)$self->Access();
+    return (StepAP214_AutoDesignActualDateAndTimeAssignment*)$self->get();
     }
 };
 
 %extend Handle_StepAP214_AutoDesignActualDateAndTimeAssignment {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend StepAP214_AutoDesignActualDateAndTimeAssignment {
@@ -2723,19 +1277,11 @@ class StepAP214_AutoDesignActualDateAssignment : public StepBasic_DateAssignment
 	:type aAssignedDate: Handle_StepBasic_Date &
 	:param aRole:
 	:type aRole: Handle_StepBasic_DateRole &
-	:rtype: void
-") Init;
-		virtual void Init (const Handle_StepBasic_Date & aAssignedDate,const Handle_StepBasic_DateRole & aRole);
-		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	:param aAssignedDate:
-	:type aAssignedDate: Handle_StepBasic_Date &
-	:param aRole:
-	:type aRole: Handle_StepBasic_DateRole &
 	:param aItems:
 	:type aItems: Handle_StepAP214_HArray1OfAutoDesignDatedItem &
-	:rtype: void
+	:rtype: None
 ") Init;
-		virtual void Init (const Handle_StepBasic_Date & aAssignedDate,const Handle_StepBasic_DateRole & aRole,const Handle_StepAP214_HArray1OfAutoDesignDatedItem & aItems);
+		void Init (const Handle_StepBasic_Date & aAssignedDate,const Handle_StepBasic_DateRole & aRole,const Handle_StepAP214_HArray1OfAutoDesignDatedItem & aItems);
 		%feature("compactdefaultargs") SetItems;
 		%feature("autodoc", "	:param aItems:
 	:type aItems: Handle_StepAP214_HArray1OfAutoDesignDatedItem &
@@ -2790,19 +1336,20 @@ class Handle_StepAP214_AutoDesignActualDateAssignment : public Handle_StepBasic_
         static const Handle_StepAP214_AutoDesignActualDateAssignment DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_StepAP214_AutoDesignActualDateAssignment {
     StepAP214_AutoDesignActualDateAssignment* _get_reference() {
-    return (StepAP214_AutoDesignActualDateAssignment*)$self->Access();
+    return (StepAP214_AutoDesignActualDateAssignment*)$self->get();
     }
 };
 
 %extend Handle_StepAP214_AutoDesignActualDateAssignment {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend StepAP214_AutoDesignActualDateAssignment {
@@ -2822,17 +1369,11 @@ class StepAP214_AutoDesignApprovalAssignment : public StepBasic_ApprovalAssignme
 		%feature("compactdefaultargs") Init;
 		%feature("autodoc", "	:param aAssignedApproval:
 	:type aAssignedApproval: Handle_StepBasic_Approval &
-	:rtype: void
-") Init;
-		virtual void Init (const Handle_StepBasic_Approval & aAssignedApproval);
-		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	:param aAssignedApproval:
-	:type aAssignedApproval: Handle_StepBasic_Approval &
 	:param aItems:
 	:type aItems: Handle_StepAP214_HArray1OfAutoDesignGeneralOrgItem &
-	:rtype: void
+	:rtype: None
 ") Init;
-		virtual void Init (const Handle_StepBasic_Approval & aAssignedApproval,const Handle_StepAP214_HArray1OfAutoDesignGeneralOrgItem & aItems);
+		void Init (const Handle_StepBasic_Approval & aAssignedApproval,const Handle_StepAP214_HArray1OfAutoDesignGeneralOrgItem & aItems);
 		%feature("compactdefaultargs") SetItems;
 		%feature("autodoc", "	:param aItems:
 	:type aItems: Handle_StepAP214_HArray1OfAutoDesignGeneralOrgItem &
@@ -2887,19 +1428,20 @@ class Handle_StepAP214_AutoDesignApprovalAssignment : public Handle_StepBasic_Ap
         static const Handle_StepAP214_AutoDesignApprovalAssignment DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_StepAP214_AutoDesignApprovalAssignment {
     StepAP214_AutoDesignApprovalAssignment* _get_reference() {
-    return (StepAP214_AutoDesignApprovalAssignment*)$self->Access();
+    return (StepAP214_AutoDesignApprovalAssignment*)$self->get();
     }
 };
 
 %extend Handle_StepAP214_AutoDesignApprovalAssignment {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend StepAP214_AutoDesignApprovalAssignment {
@@ -2921,19 +1463,11 @@ class StepAP214_AutoDesignDateAndPersonAssignment : public StepBasic_PersonAndOr
 	:type aAssignedPersonAndOrganization: Handle_StepBasic_PersonAndOrganization &
 	:param aRole:
 	:type aRole: Handle_StepBasic_PersonAndOrganizationRole &
-	:rtype: void
-") Init;
-		virtual void Init (const Handle_StepBasic_PersonAndOrganization & aAssignedPersonAndOrganization,const Handle_StepBasic_PersonAndOrganizationRole & aRole);
-		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	:param aAssignedPersonAndOrganization:
-	:type aAssignedPersonAndOrganization: Handle_StepBasic_PersonAndOrganization &
-	:param aRole:
-	:type aRole: Handle_StepBasic_PersonAndOrganizationRole &
 	:param aItems:
 	:type aItems: Handle_StepAP214_HArray1OfAutoDesignDateAndPersonItem &
-	:rtype: void
+	:rtype: None
 ") Init;
-		virtual void Init (const Handle_StepBasic_PersonAndOrganization & aAssignedPersonAndOrganization,const Handle_StepBasic_PersonAndOrganizationRole & aRole,const Handle_StepAP214_HArray1OfAutoDesignDateAndPersonItem & aItems);
+		void Init (const Handle_StepBasic_PersonAndOrganization & aAssignedPersonAndOrganization,const Handle_StepBasic_PersonAndOrganizationRole & aRole,const Handle_StepAP214_HArray1OfAutoDesignDateAndPersonItem & aItems);
 		%feature("compactdefaultargs") SetItems;
 		%feature("autodoc", "	:param aItems:
 	:type aItems: Handle_StepAP214_HArray1OfAutoDesignDateAndPersonItem &
@@ -2988,19 +1522,20 @@ class Handle_StepAP214_AutoDesignDateAndPersonAssignment : public Handle_StepBas
         static const Handle_StepAP214_AutoDesignDateAndPersonAssignment DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_StepAP214_AutoDesignDateAndPersonAssignment {
     StepAP214_AutoDesignDateAndPersonAssignment* _get_reference() {
-    return (StepAP214_AutoDesignDateAndPersonAssignment*)$self->Access();
+    return (StepAP214_AutoDesignDateAndPersonAssignment*)$self->get();
     }
 };
 
 %extend Handle_StepAP214_AutoDesignDateAndPersonAssignment {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend StepAP214_AutoDesignDateAndPersonAssignment {
@@ -3087,13 +1622,13 @@ class StepAP214_AutoDesignDateAndTimeItem : public StepData_SelectType {
 ") CaseNum;
 		Standard_Integer CaseNum (const Handle_Standard_Transient & ent);
 		%feature("compactdefaultargs") ApprovalPersonOrganization;
-		%feature("autodoc", "	* returns Value as a ApprovalPersonOrganization (Null if another type)
+		%feature("autodoc", "	* returns Value as a ApprovalPersonOrganization --Null if another type--
 
 	:rtype: Handle_StepBasic_ApprovalPersonOrganization
 ") ApprovalPersonOrganization;
 		Handle_StepBasic_ApprovalPersonOrganization ApprovalPersonOrganization ();
 		%feature("compactdefaultargs") AutoDesignDateAndPersonAssignment;
-		%feature("autodoc", "	* returns Value as a AutoDesignDateAndPersonAssignment (Null if another type)
+		%feature("autodoc", "	* returns Value as a AutoDesignDateAndPersonAssignment --Null if another type--
 
 	:rtype: Handle_StepAP214_AutoDesignDateAndPersonAssignment
 ") AutoDesignDateAndPersonAssignment;
@@ -3128,13 +1663,13 @@ class StepAP214_AutoDesignDatedItem : public StepData_SelectType {
 ") CaseNum;
 		Standard_Integer CaseNum (const Handle_Standard_Transient & ent);
 		%feature("compactdefaultargs") ApprovalPersonOrganization;
-		%feature("autodoc", "	* returns Value as a ApprovalPersonOrganization (Null if another type)
+		%feature("autodoc", "	* returns Value as a ApprovalPersonOrganization --Null if another type--
 
 	:rtype: Handle_StepBasic_ApprovalPersonOrganization
 ") ApprovalPersonOrganization;
 		Handle_StepBasic_ApprovalPersonOrganization ApprovalPersonOrganization ();
 		%feature("compactdefaultargs") AutoDesignDateAndPersonAssignment;
-		%feature("autodoc", "	* returns Value as a AutoDesignDateAndPersonAssignment (Null if another type)
+		%feature("autodoc", "	* returns Value as a AutoDesignDateAndPersonAssignment --Null if another type--
 
 	:rtype: Handle_StepAP214_AutoDesignDateAndPersonAssignment
 ") AutoDesignDateAndPersonAssignment;
@@ -3224,19 +1759,20 @@ class Handle_StepAP214_AutoDesignDocumentReference : public Handle_StepBasic_Doc
         static const Handle_StepAP214_AutoDesignDocumentReference DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_StepAP214_AutoDesignDocumentReference {
     StepAP214_AutoDesignDocumentReference* _get_reference() {
-    return (StepAP214_AutoDesignDocumentReference*)$self->Access();
+    return (StepAP214_AutoDesignDocumentReference*)$self->get();
     }
 };
 
 %extend Handle_StepAP214_AutoDesignDocumentReference {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend StepAP214_AutoDesignDocumentReference {
@@ -3262,43 +1798,43 @@ class StepAP214_AutoDesignGeneralOrgItem : public StepData_SelectType {
 ") CaseNum;
 		Standard_Integer CaseNum (const Handle_Standard_Transient & ent);
 		%feature("compactdefaultargs") Product;
-		%feature("autodoc", "	* returns Value as a Product (Null if another type)
+		%feature("autodoc", "	* returns Value as a Product --Null if another type--
 
 	:rtype: Handle_StepBasic_Product
 ") Product;
 		Handle_StepBasic_Product Product ();
 		%feature("compactdefaultargs") ProductDefinition;
-		%feature("autodoc", "	* returns Value as a ProductDefinition (Null if another type)
+		%feature("autodoc", "	* returns Value as a ProductDefinition --Null if another type--
 
 	:rtype: Handle_StepBasic_ProductDefinition
 ") ProductDefinition;
 		Handle_StepBasic_ProductDefinition ProductDefinition ();
 		%feature("compactdefaultargs") ProductDefinitionFormation;
-		%feature("autodoc", "	* returns Value as a ProductDefinitionFormation (Null if another type)
+		%feature("autodoc", "	* returns Value as a ProductDefinitionFormation --Null if another type--
 
 	:rtype: Handle_StepBasic_ProductDefinitionFormation
 ") ProductDefinitionFormation;
 		Handle_StepBasic_ProductDefinitionFormation ProductDefinitionFormation ();
 		%feature("compactdefaultargs") ProductDefinitionRelationship;
-		%feature("autodoc", "	* returns Value as a ProductDefinitionRelationship (Null if another type)
+		%feature("autodoc", "	* returns Value as a ProductDefinitionRelationship --Null if another type--
 
 	:rtype: Handle_StepBasic_ProductDefinitionRelationship
 ") ProductDefinitionRelationship;
 		Handle_StepBasic_ProductDefinitionRelationship ProductDefinitionRelationship ();
 		%feature("compactdefaultargs") ProductDefinitionWithAssociatedDocuments;
-		%feature("autodoc", "	* returns Value as a ProductDefinitionWithAssociatedDocuments (Null if another type)
+		%feature("autodoc", "	* returns Value as a ProductDefinitionWithAssociatedDocuments --Null if another type--
 
 	:rtype: Handle_StepBasic_ProductDefinitionWithAssociatedDocuments
 ") ProductDefinitionWithAssociatedDocuments;
 		Handle_StepBasic_ProductDefinitionWithAssociatedDocuments ProductDefinitionWithAssociatedDocuments ();
 		%feature("compactdefaultargs") Representation;
-		%feature("autodoc", "	* returns Value as a Representation (Null if another type)
+		%feature("autodoc", "	* returns Value as a Representation --Null if another type--
 
 	:rtype: Handle_StepRepr_Representation
 ") Representation;
 		Handle_StepRepr_Representation Representation ();
 		%feature("compactdefaultargs") ExternallyDefinedRepresentation;
-		%feature("autodoc", "	* returns Value as a Representation (Null if another type)
+		%feature("autodoc", "	* returns Value as a Representation --Null if another type--
 
 	:rtype: Handle_StepRepr_ExternallyDefinedRepresentation
 ") ExternallyDefinedRepresentation;
@@ -3329,9 +1865,9 @@ class StepAP214_AutoDesignGroupAssignment : public StepBasic_GroupAssignment {
 	:type aAssignedGroup: Handle_StepBasic_Group &
 	:param aItems:
 	:type aItems: Handle_StepAP214_HArray1OfAutoDesignGroupedItem &
-	:rtype: void
+	:rtype: None
 ") Init;
-		virtual void Init (const Handle_StepBasic_Group & aAssignedGroup,const Handle_StepAP214_HArray1OfAutoDesignGroupedItem & aItems);
+		void Init (const Handle_StepBasic_Group & aAssignedGroup,const Handle_StepAP214_HArray1OfAutoDesignGroupedItem & aItems);
 		%feature("compactdefaultargs") SetItems;
 		%feature("autodoc", "	:param aItems:
 	:type aItems: Handle_StepAP214_HArray1OfAutoDesignGroupedItem &
@@ -3386,19 +1922,20 @@ class Handle_StepAP214_AutoDesignGroupAssignment : public Handle_StepBasic_Group
         static const Handle_StepAP214_AutoDesignGroupAssignment DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_StepAP214_AutoDesignGroupAssignment {
     StepAP214_AutoDesignGroupAssignment* _get_reference() {
-    return (StepAP214_AutoDesignGroupAssignment*)$self->Access();
+    return (StepAP214_AutoDesignGroupAssignment*)$self->get();
     }
 };
 
 %extend Handle_StepAP214_AutoDesignGroupAssignment {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend StepAP214_AutoDesignGroupAssignment {
@@ -3424,67 +1961,67 @@ class StepAP214_AutoDesignGroupedItem : public StepData_SelectType {
 ") CaseNum;
 		Standard_Integer CaseNum (const Handle_Standard_Transient & ent);
 		%feature("compactdefaultargs") AdvancedBrepShapeRepresentation;
-		%feature("autodoc", "	* returns Value as a AdvancedBrepShapeRepresentation (Null if another type)
+		%feature("autodoc", "	* returns Value as a AdvancedBrepShapeRepresentation --Null if another type--
 
 	:rtype: Handle_StepShape_AdvancedBrepShapeRepresentation
 ") AdvancedBrepShapeRepresentation;
 		Handle_StepShape_AdvancedBrepShapeRepresentation AdvancedBrepShapeRepresentation ();
 		%feature("compactdefaultargs") CsgShapeRepresentation;
-		%feature("autodoc", "	* returns Value as a CsgShapeRepresentation (Null if another type)
+		%feature("autodoc", "	* returns Value as a CsgShapeRepresentation --Null if another type--
 
 	:rtype: Handle_StepShape_CsgShapeRepresentation
 ") CsgShapeRepresentation;
 		Handle_StepShape_CsgShapeRepresentation CsgShapeRepresentation ();
 		%feature("compactdefaultargs") FacetedBrepShapeRepresentation;
-		%feature("autodoc", "	* returns Value as a FacetedBrepShapeRepresentation (Null if another type)
+		%feature("autodoc", "	* returns Value as a FacetedBrepShapeRepresentation --Null if another type--
 
 	:rtype: Handle_StepShape_FacetedBrepShapeRepresentation
 ") FacetedBrepShapeRepresentation;
 		Handle_StepShape_FacetedBrepShapeRepresentation FacetedBrepShapeRepresentation ();
 		%feature("compactdefaultargs") GeometricallyBoundedSurfaceShapeRepresentation;
-		%feature("autodoc", "	* returns Value as a GeometricallyBoundedSurfaceShapeRepresentation (Null if another type)
+		%feature("autodoc", "	* returns Value as a GeometricallyBoundedSurfaceShapeRepresentation --Null if another type--
 
 	:rtype: Handle_StepShape_GeometricallyBoundedSurfaceShapeRepresentation
 ") GeometricallyBoundedSurfaceShapeRepresentation;
 		Handle_StepShape_GeometricallyBoundedSurfaceShapeRepresentation GeometricallyBoundedSurfaceShapeRepresentation ();
 		%feature("compactdefaultargs") GeometricallyBoundedWireframeShapeRepresentation;
-		%feature("autodoc", "	* returns Value as a GeometricallyBoundedWireframeShapeRepresentation (Null if another type)
+		%feature("autodoc", "	* returns Value as a GeometricallyBoundedWireframeShapeRepresentation --Null if another type--
 
 	:rtype: Handle_StepShape_GeometricallyBoundedWireframeShapeRepresentation
 ") GeometricallyBoundedWireframeShapeRepresentation;
 		Handle_StepShape_GeometricallyBoundedWireframeShapeRepresentation GeometricallyBoundedWireframeShapeRepresentation ();
 		%feature("compactdefaultargs") ManifoldSurfaceShapeRepresentation;
-		%feature("autodoc", "	* returns Value as a ManifoldSurfaceShapeRepresentation (Null if another type)
+		%feature("autodoc", "	* returns Value as a ManifoldSurfaceShapeRepresentation --Null if another type--
 
 	:rtype: Handle_StepShape_ManifoldSurfaceShapeRepresentation
 ") ManifoldSurfaceShapeRepresentation;
 		Handle_StepShape_ManifoldSurfaceShapeRepresentation ManifoldSurfaceShapeRepresentation ();
 		%feature("compactdefaultargs") Representation;
-		%feature("autodoc", "	* returns Value as a Representation (Null if another type)
+		%feature("autodoc", "	* returns Value as a Representation --Null if another type--
 
 	:rtype: Handle_StepRepr_Representation
 ") Representation;
 		Handle_StepRepr_Representation Representation ();
 		%feature("compactdefaultargs") RepresentationItem;
-		%feature("autodoc", "	* returns Value as a RepresentationItem (Null if another type)
+		%feature("autodoc", "	* returns Value as a RepresentationItem --Null if another type--
 
 	:rtype: Handle_StepRepr_RepresentationItem
 ") RepresentationItem;
 		Handle_StepRepr_RepresentationItem RepresentationItem ();
 		%feature("compactdefaultargs") ShapeAspect;
-		%feature("autodoc", "	* returns Value as a ShapeAspect (Null if another type)
+		%feature("autodoc", "	* returns Value as a ShapeAspect --Null if another type--
 
 	:rtype: Handle_StepRepr_ShapeAspect
 ") ShapeAspect;
 		Handle_StepRepr_ShapeAspect ShapeAspect ();
 		%feature("compactdefaultargs") ShapeRepresentation;
-		%feature("autodoc", "	* returns Value as a ShapeRepresentation (Null if another type)
+		%feature("autodoc", "	* returns Value as a ShapeRepresentation --Null if another type--
 
 	:rtype: Handle_StepShape_ShapeRepresentation
 ") ShapeRepresentation;
 		Handle_StepShape_ShapeRepresentation ShapeRepresentation ();
 		%feature("compactdefaultargs") TemplateInstance;
-		%feature("autodoc", "	* returns Value as a TemplateInstance (Null if another type)
+		%feature("autodoc", "	* returns Value as a TemplateInstance --Null if another type--
 
 	:rtype: Handle_StepVisual_TemplateInstance
 ") TemplateInstance;
@@ -3511,19 +2048,11 @@ class StepAP214_AutoDesignNominalDateAndTimeAssignment : public StepBasic_DateAn
 	:type aAssignedDateAndTime: Handle_StepBasic_DateAndTime &
 	:param aRole:
 	:type aRole: Handle_StepBasic_DateTimeRole &
-	:rtype: void
-") Init;
-		virtual void Init (const Handle_StepBasic_DateAndTime & aAssignedDateAndTime,const Handle_StepBasic_DateTimeRole & aRole);
-		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	:param aAssignedDateAndTime:
-	:type aAssignedDateAndTime: Handle_StepBasic_DateAndTime &
-	:param aRole:
-	:type aRole: Handle_StepBasic_DateTimeRole &
 	:param aItems:
 	:type aItems: Handle_StepAP214_HArray1OfAutoDesignDateAndTimeItem &
-	:rtype: void
+	:rtype: None
 ") Init;
-		virtual void Init (const Handle_StepBasic_DateAndTime & aAssignedDateAndTime,const Handle_StepBasic_DateTimeRole & aRole,const Handle_StepAP214_HArray1OfAutoDesignDateAndTimeItem & aItems);
+		void Init (const Handle_StepBasic_DateAndTime & aAssignedDateAndTime,const Handle_StepBasic_DateTimeRole & aRole,const Handle_StepAP214_HArray1OfAutoDesignDateAndTimeItem & aItems);
 		%feature("compactdefaultargs") SetItems;
 		%feature("autodoc", "	:param aItems:
 	:type aItems: Handle_StepAP214_HArray1OfAutoDesignDateAndTimeItem &
@@ -3578,19 +2107,20 @@ class Handle_StepAP214_AutoDesignNominalDateAndTimeAssignment : public Handle_St
         static const Handle_StepAP214_AutoDesignNominalDateAndTimeAssignment DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_StepAP214_AutoDesignNominalDateAndTimeAssignment {
     StepAP214_AutoDesignNominalDateAndTimeAssignment* _get_reference() {
-    return (StepAP214_AutoDesignNominalDateAndTimeAssignment*)$self->Access();
+    return (StepAP214_AutoDesignNominalDateAndTimeAssignment*)$self->get();
     }
 };
 
 %extend Handle_StepAP214_AutoDesignNominalDateAndTimeAssignment {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend StepAP214_AutoDesignNominalDateAndTimeAssignment {
@@ -3612,19 +2142,11 @@ class StepAP214_AutoDesignNominalDateAssignment : public StepBasic_DateAssignmen
 	:type aAssignedDate: Handle_StepBasic_Date &
 	:param aRole:
 	:type aRole: Handle_StepBasic_DateRole &
-	:rtype: void
-") Init;
-		virtual void Init (const Handle_StepBasic_Date & aAssignedDate,const Handle_StepBasic_DateRole & aRole);
-		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	:param aAssignedDate:
-	:type aAssignedDate: Handle_StepBasic_Date &
-	:param aRole:
-	:type aRole: Handle_StepBasic_DateRole &
 	:param aItems:
 	:type aItems: Handle_StepAP214_HArray1OfAutoDesignDatedItem &
-	:rtype: void
+	:rtype: None
 ") Init;
-		virtual void Init (const Handle_StepBasic_Date & aAssignedDate,const Handle_StepBasic_DateRole & aRole,const Handle_StepAP214_HArray1OfAutoDesignDatedItem & aItems);
+		void Init (const Handle_StepBasic_Date & aAssignedDate,const Handle_StepBasic_DateRole & aRole,const Handle_StepAP214_HArray1OfAutoDesignDatedItem & aItems);
 		%feature("compactdefaultargs") SetItems;
 		%feature("autodoc", "	:param aItems:
 	:type aItems: Handle_StepAP214_HArray1OfAutoDesignDatedItem &
@@ -3679,19 +2201,20 @@ class Handle_StepAP214_AutoDesignNominalDateAssignment : public Handle_StepBasic
         static const Handle_StepAP214_AutoDesignNominalDateAssignment DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_StepAP214_AutoDesignNominalDateAssignment {
     StepAP214_AutoDesignNominalDateAssignment* _get_reference() {
-    return (StepAP214_AutoDesignNominalDateAssignment*)$self->Access();
+    return (StepAP214_AutoDesignNominalDateAssignment*)$self->get();
     }
 };
 
 %extend Handle_StepAP214_AutoDesignNominalDateAssignment {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend StepAP214_AutoDesignNominalDateAssignment {
@@ -3713,19 +2236,11 @@ class StepAP214_AutoDesignOrganizationAssignment : public StepBasic_Organization
 	:type aAssignedOrganization: Handle_StepBasic_Organization &
 	:param aRole:
 	:type aRole: Handle_StepBasic_OrganizationRole &
-	:rtype: void
-") Init;
-		virtual void Init (const Handle_StepBasic_Organization & aAssignedOrganization,const Handle_StepBasic_OrganizationRole & aRole);
-		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	:param aAssignedOrganization:
-	:type aAssignedOrganization: Handle_StepBasic_Organization &
-	:param aRole:
-	:type aRole: Handle_StepBasic_OrganizationRole &
 	:param aItems:
 	:type aItems: Handle_StepAP214_HArray1OfAutoDesignGeneralOrgItem &
-	:rtype: void
+	:rtype: None
 ") Init;
-		virtual void Init (const Handle_StepBasic_Organization & aAssignedOrganization,const Handle_StepBasic_OrganizationRole & aRole,const Handle_StepAP214_HArray1OfAutoDesignGeneralOrgItem & aItems);
+		void Init (const Handle_StepBasic_Organization & aAssignedOrganization,const Handle_StepBasic_OrganizationRole & aRole,const Handle_StepAP214_HArray1OfAutoDesignGeneralOrgItem & aItems);
 		%feature("compactdefaultargs") SetItems;
 		%feature("autodoc", "	:param aItems:
 	:type aItems: Handle_StepAP214_HArray1OfAutoDesignGeneralOrgItem &
@@ -3780,19 +2295,20 @@ class Handle_StepAP214_AutoDesignOrganizationAssignment : public Handle_StepBasi
         static const Handle_StepAP214_AutoDesignOrganizationAssignment DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_StepAP214_AutoDesignOrganizationAssignment {
     StepAP214_AutoDesignOrganizationAssignment* _get_reference() {
-    return (StepAP214_AutoDesignOrganizationAssignment*)$self->Access();
+    return (StepAP214_AutoDesignOrganizationAssignment*)$self->get();
     }
 };
 
 %extend Handle_StepAP214_AutoDesignOrganizationAssignment {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend StepAP214_AutoDesignOrganizationAssignment {
@@ -3814,19 +2330,11 @@ class StepAP214_AutoDesignPersonAndOrganizationAssignment : public StepBasic_Per
 	:type aAssignedPersonAndOrganization: Handle_StepBasic_PersonAndOrganization &
 	:param aRole:
 	:type aRole: Handle_StepBasic_PersonAndOrganizationRole &
-	:rtype: void
-") Init;
-		virtual void Init (const Handle_StepBasic_PersonAndOrganization & aAssignedPersonAndOrganization,const Handle_StepBasic_PersonAndOrganizationRole & aRole);
-		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	:param aAssignedPersonAndOrganization:
-	:type aAssignedPersonAndOrganization: Handle_StepBasic_PersonAndOrganization &
-	:param aRole:
-	:type aRole: Handle_StepBasic_PersonAndOrganizationRole &
 	:param aItems:
 	:type aItems: Handle_StepAP214_HArray1OfAutoDesignGeneralOrgItem &
-	:rtype: void
+	:rtype: None
 ") Init;
-		virtual void Init (const Handle_StepBasic_PersonAndOrganization & aAssignedPersonAndOrganization,const Handle_StepBasic_PersonAndOrganizationRole & aRole,const Handle_StepAP214_HArray1OfAutoDesignGeneralOrgItem & aItems);
+		void Init (const Handle_StepBasic_PersonAndOrganization & aAssignedPersonAndOrganization,const Handle_StepBasic_PersonAndOrganizationRole & aRole,const Handle_StepAP214_HArray1OfAutoDesignGeneralOrgItem & aItems);
 		%feature("compactdefaultargs") SetItems;
 		%feature("autodoc", "	:param aItems:
 	:type aItems: Handle_StepAP214_HArray1OfAutoDesignGeneralOrgItem &
@@ -3881,19 +2389,20 @@ class Handle_StepAP214_AutoDesignPersonAndOrganizationAssignment : public Handle
         static const Handle_StepAP214_AutoDesignPersonAndOrganizationAssignment DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_StepAP214_AutoDesignPersonAndOrganizationAssignment {
     StepAP214_AutoDesignPersonAndOrganizationAssignment* _get_reference() {
-    return (StepAP214_AutoDesignPersonAndOrganizationAssignment*)$self->Access();
+    return (StepAP214_AutoDesignPersonAndOrganizationAssignment*)$self->get();
     }
 };
 
 %extend Handle_StepAP214_AutoDesignPersonAndOrganizationAssignment {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend StepAP214_AutoDesignPersonAndOrganizationAssignment {
@@ -3913,9 +2422,9 @@ class StepAP214_AutoDesignPresentedItem : public StepVisual_PresentedItem {
 		%feature("compactdefaultargs") Init;
 		%feature("autodoc", "	:param aItems:
 	:type aItems: Handle_StepAP214_HArray1OfAutoDesignPresentedItemSelect &
-	:rtype: void
+	:rtype: None
 ") Init;
-		virtual void Init (const Handle_StepAP214_HArray1OfAutoDesignPresentedItemSelect & aItems);
+		void Init (const Handle_StepAP214_HArray1OfAutoDesignPresentedItemSelect & aItems);
 		%feature("compactdefaultargs") SetItems;
 		%feature("autodoc", "	:param aItems:
 	:type aItems: Handle_StepAP214_HArray1OfAutoDesignPresentedItemSelect &
@@ -3970,19 +2479,20 @@ class Handle_StepAP214_AutoDesignPresentedItem : public Handle_StepVisual_Presen
         static const Handle_StepAP214_AutoDesignPresentedItem DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_StepAP214_AutoDesignPresentedItem {
     StepAP214_AutoDesignPresentedItem* _get_reference() {
-    return (StepAP214_AutoDesignPresentedItem*)$self->Access();
+    return (StepAP214_AutoDesignPresentedItem*)$self->get();
     }
 };
 
 %extend Handle_StepAP214_AutoDesignPresentedItem {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend StepAP214_AutoDesignPresentedItem {
@@ -4008,37 +2518,37 @@ class StepAP214_AutoDesignPresentedItemSelect : public StepData_SelectType {
 ") CaseNum;
 		Standard_Integer CaseNum (const Handle_Standard_Transient & ent);
 		%feature("compactdefaultargs") ProductDefinitionRelationship;
-		%feature("autodoc", "	* returns Value as a ProductDefinitionRelationship (Null if another type)
+		%feature("autodoc", "	* returns Value as a ProductDefinitionRelationship --Null if another type--
 
 	:rtype: Handle_StepBasic_ProductDefinitionRelationship
 ") ProductDefinitionRelationship;
 		Handle_StepBasic_ProductDefinitionRelationship ProductDefinitionRelationship ();
 		%feature("compactdefaultargs") ProductDefinition;
-		%feature("autodoc", "	* returns Value as a ProductDefinition (Null if another type)
+		%feature("autodoc", "	* returns Value as a ProductDefinition --Null if another type--
 
 	:rtype: Handle_StepBasic_ProductDefinition
 ") ProductDefinition;
 		Handle_StepBasic_ProductDefinition ProductDefinition ();
 		%feature("compactdefaultargs") ProductDefinitionShape;
-		%feature("autodoc", "	* returns Value as a ProductDefinitionShape (Null if another type)
+		%feature("autodoc", "	* returns Value as a ProductDefinitionShape --Null if another type--
 
 	:rtype: Handle_StepRepr_ProductDefinitionShape
 ") ProductDefinitionShape;
 		Handle_StepRepr_ProductDefinitionShape ProductDefinitionShape ();
 		%feature("compactdefaultargs") RepresentationRelationship;
-		%feature("autodoc", "	* returns Value as a RepresentationRelationship (Null if another type)
+		%feature("autodoc", "	* returns Value as a RepresentationRelationship --Null if another type--
 
 	:rtype: Handle_StepRepr_RepresentationRelationship
 ") RepresentationRelationship;
 		Handle_StepRepr_RepresentationRelationship RepresentationRelationship ();
 		%feature("compactdefaultargs") ShapeAspect;
-		%feature("autodoc", "	* returns Value as a ShapeAspect (Null if another type)
+		%feature("autodoc", "	* returns Value as a ShapeAspect --Null if another type--
 
 	:rtype: Handle_StepRepr_ShapeAspect
 ") ShapeAspect;
 		Handle_StepRepr_ShapeAspect ShapeAspect ();
 		%feature("compactdefaultargs") DocumentRelationship;
-		%feature("autodoc", "	* returns Value as a DocumentRelationship (Null if another type)
+		%feature("autodoc", "	* returns Value as a DocumentRelationship --Null if another type--
 
 	:rtype: Handle_StepBasic_DocumentRelationship
 ") DocumentRelationship;
@@ -4144,17 +2654,11 @@ class StepAP214_AutoDesignSecurityClassificationAssignment : public StepBasic_Se
 		%feature("compactdefaultargs") Init;
 		%feature("autodoc", "	:param aAssignedSecurityClassification:
 	:type aAssignedSecurityClassification: Handle_StepBasic_SecurityClassification &
-	:rtype: void
-") Init;
-		virtual void Init (const Handle_StepBasic_SecurityClassification & aAssignedSecurityClassification);
-		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	:param aAssignedSecurityClassification:
-	:type aAssignedSecurityClassification: Handle_StepBasic_SecurityClassification &
 	:param aItems:
 	:type aItems: Handle_StepBasic_HArray1OfApproval &
-	:rtype: void
+	:rtype: None
 ") Init;
-		virtual void Init (const Handle_StepBasic_SecurityClassification & aAssignedSecurityClassification,const Handle_StepBasic_HArray1OfApproval & aItems);
+		void Init (const Handle_StepBasic_SecurityClassification & aAssignedSecurityClassification,const Handle_StepBasic_HArray1OfApproval & aItems);
 		%feature("compactdefaultargs") SetItems;
 		%feature("autodoc", "	:param aItems:
 	:type aItems: Handle_StepBasic_HArray1OfApproval &
@@ -4209,19 +2713,20 @@ class Handle_StepAP214_AutoDesignSecurityClassificationAssignment : public Handl
         static const Handle_StepAP214_AutoDesignSecurityClassificationAssignment DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_StepAP214_AutoDesignSecurityClassificationAssignment {
     StepAP214_AutoDesignSecurityClassificationAssignment* _get_reference() {
-    return (StepAP214_AutoDesignSecurityClassificationAssignment*)$self->Access();
+    return (StepAP214_AutoDesignSecurityClassificationAssignment*)$self->get();
     }
 };
 
 %extend Handle_StepAP214_AutoDesignSecurityClassificationAssignment {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend StepAP214_AutoDesignSecurityClassificationAssignment {
@@ -4272,19 +2777,20 @@ class Handle_StepAP214_Class : public Handle_StepBasic_Group {
         static const Handle_StepAP214_Class DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_StepAP214_Class {
     StepAP214_Class* _get_reference() {
-    return (StepAP214_Class*)$self->Access();
+    return (StepAP214_Class*)$self->get();
     }
 };
 
 %extend Handle_StepAP214_Class {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend StepAP214_Class {
@@ -4310,59 +2816,125 @@ class StepAP214_DocumentReferenceItem : public StepData_SelectType {
 ") CaseNum;
 		Standard_Integer CaseNum (const Handle_Standard_Transient & ent);
 		%feature("compactdefaultargs") Approval;
-		%feature("autodoc", "	* returns Value as a Approval (Null if another type)
+		%feature("autodoc", "	* returns Value as a Approval --Null if another type--
 
 	:rtype: Handle_StepBasic_Approval
 ") Approval;
 		Handle_StepBasic_Approval Approval ();
 		%feature("compactdefaultargs") DescriptiveRepresentationItem;
-		%feature("autodoc", "	* returns Value as a (Null if another type)
+		%feature("autodoc", "	* returns Value as a --Null if another type--
 
 	:rtype: Handle_StepRepr_DescriptiveRepresentationItem
 ") DescriptiveRepresentationItem;
 		Handle_StepRepr_DescriptiveRepresentationItem DescriptiveRepresentationItem ();
 		%feature("compactdefaultargs") MaterialDesignation;
-		%feature("autodoc", "	* returns Value as a MaterialDesignation (Null if another type)
+		%feature("autodoc", "	* returns Value as a MaterialDesignation --Null if another type--
 
 	:rtype: Handle_StepRepr_MaterialDesignation
 ") MaterialDesignation;
 		Handle_StepRepr_MaterialDesignation MaterialDesignation ();
 		%feature("compactdefaultargs") ProductDefinition;
-		%feature("autodoc", "	* returns Value as a ProductDefinition (Null if another type)
+		%feature("autodoc", "	* returns Value as a ProductDefinition --Null if another type--
 
 	:rtype: Handle_StepBasic_ProductDefinition
 ") ProductDefinition;
 		Handle_StepBasic_ProductDefinition ProductDefinition ();
 		%feature("compactdefaultargs") ProductDefinitionRelationship;
-		%feature("autodoc", "	* returns Value as aProductDefinitionRelationship (Null if another type)
+		%feature("autodoc", "	* returns Value as aProductDefinitionRelationship --Null if another type--
 
 	:rtype: Handle_StepBasic_ProductDefinitionRelationship
 ") ProductDefinitionRelationship;
 		Handle_StepBasic_ProductDefinitionRelationship ProductDefinitionRelationship ();
 		%feature("compactdefaultargs") PropertyDefinition;
-		%feature("autodoc", "	* returns Value as a PropertyDefinition (Null if another type)
+		%feature("autodoc", "	* returns Value as a PropertyDefinition --Null if another type--
 
 	:rtype: Handle_StepRepr_PropertyDefinition
 ") PropertyDefinition;
 		Handle_StepRepr_PropertyDefinition PropertyDefinition ();
 		%feature("compactdefaultargs") Representation;
-		%feature("autodoc", "	* returns Value as a Representation (Null if another type)
+		%feature("autodoc", "	* returns Value as a Representation --Null if another type--
 
 	:rtype: Handle_StepRepr_Representation
 ") Representation;
 		Handle_StepRepr_Representation Representation ();
 		%feature("compactdefaultargs") ShapeAspect;
-		%feature("autodoc", "	* returns Value as a ShapeAspect (Null if another type)
+		%feature("autodoc", "	* returns Value as a ShapeAspect --Null if another type--
 
 	:rtype: Handle_StepRepr_ShapeAspect
 ") ShapeAspect;
 		Handle_StepRepr_ShapeAspect ShapeAspect ();
 		%feature("compactdefaultargs") ShapeAspectRelationship;
-		%feature("autodoc", "	* returns Value as a ShapeAspectRelationship (Null if another type)
+		%feature("autodoc", "	* returns Value as a ShapeAspectRelationship --Null if another type--
 
 	:rtype: Handle_StepRepr_ShapeAspectRelationship
 ") ShapeAspectRelationship;
 		Handle_StepRepr_ShapeAspectRelationship ShapeAspectRelationship ();
+		%feature("compactdefaultargs") AppliedExternalIdentificationAssignment;
+		%feature("autodoc", "	* returns Value as a AppliedExternalIdentificationAssignment --Null if another type--
+
+	:rtype: Handle_StepAP214_AppliedExternalIdentificationAssignment
+") AppliedExternalIdentificationAssignment;
+		Handle_StepAP214_AppliedExternalIdentificationAssignment AppliedExternalIdentificationAssignment ();
+		%feature("compactdefaultargs") AssemblyComponentUsage;
+		%feature("autodoc", "	* returns Value as a AssemblyComponentUsage --Null if another type--
+
+	:rtype: Handle_StepRepr_AssemblyComponentUsage
+") AssemblyComponentUsage;
+		Handle_StepRepr_AssemblyComponentUsage AssemblyComponentUsage ();
+		%feature("compactdefaultargs") CharacterizedObject;
+		%feature("autodoc", "	* returns Value as a CharacterizedObject --Null if another type--
+
+	:rtype: Handle_StepBasic_CharacterizedObject
+") CharacterizedObject;
+		Handle_StepBasic_CharacterizedObject CharacterizedObject ();
+		%feature("compactdefaultargs") DimensionalSize;
+		%feature("autodoc", "	* returns Value as a DimensionalSize --Null if another type--
+
+	:rtype: Handle_StepShape_DimensionalSize
+") DimensionalSize;
+		Handle_StepShape_DimensionalSize DimensionalSize ();
+		%feature("compactdefaultargs") ExternallyDefinedItem;
+		%feature("autodoc", "	* returns Value as a ExternallyDefinedItem --Null if another type--
+
+	:rtype: Handle_StepBasic_ExternallyDefinedItem
+") ExternallyDefinedItem;
+		Handle_StepBasic_ExternallyDefinedItem ExternallyDefinedItem ();
+		%feature("compactdefaultargs") Group;
+		%feature("autodoc", "	* returns Value as a Group --Null if another type--
+
+	:rtype: Handle_StepBasic_Group
+") Group;
+		Handle_StepBasic_Group Group ();
+		%feature("compactdefaultargs") GroupRelationship;
+		%feature("autodoc", "	* returns Value as a GroupRelationship --Null if another type--
+
+	:rtype: Handle_StepBasic_GroupRelationship
+") GroupRelationship;
+		Handle_StepBasic_GroupRelationship GroupRelationship ();
+		%feature("compactdefaultargs") MeasureRepresentationItem;
+		%feature("autodoc", "	* returns Value as a MeasureRepresentationItem --Null if another type--
+
+	:rtype: Handle_StepRepr_MeasureRepresentationItem
+") MeasureRepresentationItem;
+		Handle_StepRepr_MeasureRepresentationItem MeasureRepresentationItem ();
+		%feature("compactdefaultargs") ProductCategory;
+		%feature("autodoc", "	* returns Value as a ProductCategory --Null if another type--
+
+	:rtype: Handle_StepBasic_ProductCategory
+") ProductCategory;
+		Handle_StepBasic_ProductCategory ProductCategory ();
+		%feature("compactdefaultargs") ProductDefinitionContext;
+		%feature("autodoc", "	* returns Value as a ProductDefinitionContext --Null if another type--
+
+	:rtype: Handle_StepBasic_ProductDefinitionContext
+") ProductDefinitionContext;
+		Handle_StepBasic_ProductDefinitionContext ProductDefinitionContext ();
+		%feature("compactdefaultargs") RepresentationItem;
+		%feature("autodoc", "	* returns Value as a RepresentationItem --Null if another type--
+
+	:rtype: Handle_StepRepr_RepresentationItem
+") RepresentationItem;
+		Handle_StepRepr_RepresentationItem RepresentationItem ();
 };
 
 
@@ -4381,7 +2953,7 @@ class StepAP214_ExternalIdentificationItem : public StepData_SelectType {
 ") StepAP214_ExternalIdentificationItem;
 		 StepAP214_ExternalIdentificationItem ();
 		%feature("compactdefaultargs") CaseNum;
-		%feature("autodoc", "	* Recognizes a kind of ExternalIdentificationItem select type 1 -> DocumentFile from StepBasic 2 -> ExternallyDefinedClass from StepAP214 3 -> ExternallyDefinedGeneralProperty from StepAP214 4 -> ProductDefinition from StepBasic 0 else
+		%feature("autodoc", "	* Recognizes a kind of ExternalIdentificationItem select type 1 -> DocumentFile from StepBasic 2 -> ExternallyDefinedClass from StepAP214 3 -> ExternallyDefinedGeneralProperty from StepAP214 4 -> ProductDefinition from StepBasic 5 -> AppliedOrganizationAssignment from AP214 6 -> AppliedPersonAndOrganizationAssignment from AP214 7 -> Approval from StepBasic 8 -> ApprovalStatus from StepBasic 9 -> ExternalSource from StepBasic 10 -> OrganizationalAddress from StepBasic 11 -> SecurityClassification from StepBasic 12 -> TrimmedCurve from StepGeom 13 -> VersionedActionRequest from StepBasic 14 -> DateAndTimeAssignment from StepBasic 15 -> DateAssignment from StepBasic 0 else
 
 	:param ent:
 	:type ent: Handle_Standard_Transient &
@@ -4389,29 +2961,95 @@ class StepAP214_ExternalIdentificationItem : public StepData_SelectType {
 ") CaseNum;
 		Standard_Integer CaseNum (const Handle_Standard_Transient & ent);
 		%feature("compactdefaultargs") DocumentFile;
-		%feature("autodoc", "	* Returns Value as DocumentFile (or Null if another type)
+		%feature("autodoc", "	* Returns Value as DocumentFile --or Null if another type--
 
 	:rtype: Handle_StepBasic_DocumentFile
 ") DocumentFile;
 		Handle_StepBasic_DocumentFile DocumentFile ();
 		%feature("compactdefaultargs") ExternallyDefinedClass;
-		%feature("autodoc", "	* Returns Value as ExternallyDefinedClass (or Null if another type)
+		%feature("autodoc", "	* Returns Value as ExternallyDefinedClass --or Null if another type--
 
 	:rtype: Handle_StepAP214_ExternallyDefinedClass
 ") ExternallyDefinedClass;
 		Handle_StepAP214_ExternallyDefinedClass ExternallyDefinedClass ();
 		%feature("compactdefaultargs") ExternallyDefinedGeneralProperty;
-		%feature("autodoc", "	* Returns Value as ExternallyDefinedGeneralProperty (or Null if another type)
+		%feature("autodoc", "	* Returns Value as ExternallyDefinedGeneralProperty --or Null if another type--
 
 	:rtype: Handle_StepAP214_ExternallyDefinedGeneralProperty
 ") ExternallyDefinedGeneralProperty;
 		Handle_StepAP214_ExternallyDefinedGeneralProperty ExternallyDefinedGeneralProperty ();
 		%feature("compactdefaultargs") ProductDefinition;
-		%feature("autodoc", "	* Returns Value as ProductDefinition (or Null if another type)
+		%feature("autodoc", "	* Returns Value as ProductDefinition --or Null if another type--
 
 	:rtype: Handle_StepBasic_ProductDefinition
 ") ProductDefinition;
 		Handle_StepBasic_ProductDefinition ProductDefinition ();
+		%feature("compactdefaultargs") AppliedOrganizationAssignment;
+		%feature("autodoc", "	* Returns Value as AppliedOrganizationAssignment --or Null if another type--
+
+	:rtype: Handle_StepAP214_AppliedOrganizationAssignment
+") AppliedOrganizationAssignment;
+		Handle_StepAP214_AppliedOrganizationAssignment AppliedOrganizationAssignment ();
+		%feature("compactdefaultargs") AppliedPersonAndOrganizationAssignment;
+		%feature("autodoc", "	* Returns Value as AppliedPersonAndOrganizationAssignment --or Null if another type--
+
+	:rtype: Handle_StepAP214_AppliedPersonAndOrganizationAssignment
+") AppliedPersonAndOrganizationAssignment;
+		Handle_StepAP214_AppliedPersonAndOrganizationAssignment AppliedPersonAndOrganizationAssignment ();
+		%feature("compactdefaultargs") Approval;
+		%feature("autodoc", "	* Returns Value as Approval --or Null if another type--
+
+	:rtype: Handle_StepBasic_Approval
+") Approval;
+		Handle_StepBasic_Approval Approval ();
+		%feature("compactdefaultargs") ApprovalStatus;
+		%feature("autodoc", "	* Returns Value as ApprovalStatus --or Null if another type--
+
+	:rtype: Handle_StepBasic_ApprovalStatus
+") ApprovalStatus;
+		Handle_StepBasic_ApprovalStatus ApprovalStatus ();
+		%feature("compactdefaultargs") ExternalSource;
+		%feature("autodoc", "	* Returns Value as ExternalSource --or Null if another type--
+
+	:rtype: Handle_StepBasic_ExternalSource
+") ExternalSource;
+		Handle_StepBasic_ExternalSource ExternalSource ();
+		%feature("compactdefaultargs") OrganizationalAddress;
+		%feature("autodoc", "	* Returns Value as OrganizationalAddress --or Null if another type--
+
+	:rtype: Handle_StepBasic_OrganizationalAddress
+") OrganizationalAddress;
+		Handle_StepBasic_OrganizationalAddress OrganizationalAddress ();
+		%feature("compactdefaultargs") SecurityClassification;
+		%feature("autodoc", "	* Returns Value as SecurityClassification --or Null if another type--
+
+	:rtype: Handle_StepBasic_SecurityClassification
+") SecurityClassification;
+		Handle_StepBasic_SecurityClassification SecurityClassification ();
+		%feature("compactdefaultargs") TrimmedCurve;
+		%feature("autodoc", "	* Returns Value as TrimmedCurve --or Null if another type--
+
+	:rtype: Handle_StepGeom_TrimmedCurve
+") TrimmedCurve;
+		Handle_StepGeom_TrimmedCurve TrimmedCurve ();
+		%feature("compactdefaultargs") VersionedActionRequest;
+		%feature("autodoc", "	* Returns Value as VersionedActionRequest --or Null if another type--
+
+	:rtype: Handle_StepBasic_VersionedActionRequest
+") VersionedActionRequest;
+		Handle_StepBasic_VersionedActionRequest VersionedActionRequest ();
+		%feature("compactdefaultargs") DateAndTimeAssignment;
+		%feature("autodoc", "	* Returns Value as DateAndTimeAssignment --or Null if another type--
+
+	:rtype: Handle_StepBasic_DateAndTimeAssignment
+") DateAndTimeAssignment;
+		Handle_StepBasic_DateAndTimeAssignment DateAndTimeAssignment ();
+		%feature("compactdefaultargs") DateAssignment;
+		%feature("autodoc", "	* Returns Value as DateAssignment --or Null if another type--
+
+	:rtype: Handle_StepBasic_DateAssignment
+") DateAssignment;
+		Handle_StepBasic_DateAssignment DateAssignment ();
 };
 
 
@@ -4430,7 +3068,7 @@ class StepAP214_ExternallyDefinedGeneralProperty : public StepBasic_GeneralPrope
 ") StepAP214_ExternallyDefinedGeneralProperty;
 		 StepAP214_ExternallyDefinedGeneralProperty ();
 		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	* Initialize all fields (own and inherited)
+		%feature("autodoc", "	* Initialize all fields --own and inherited--
 
 	:param aGeneralProperty_Id:
 	:type aGeneralProperty_Id: Handle_TCollection_HAsciiString &
@@ -4495,19 +3133,20 @@ class Handle_StepAP214_ExternallyDefinedGeneralProperty : public Handle_StepBasi
         static const Handle_StepAP214_ExternallyDefinedGeneralProperty DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_StepAP214_ExternallyDefinedGeneralProperty {
     StepAP214_ExternallyDefinedGeneralProperty* _get_reference() {
-    return (StepAP214_ExternallyDefinedGeneralProperty*)$self->Access();
+    return (StepAP214_ExternallyDefinedGeneralProperty*)$self->get();
     }
 };
 
 %extend Handle_StepAP214_ExternallyDefinedGeneralProperty {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend StepAP214_ExternallyDefinedGeneralProperty {
@@ -4525,7 +3164,7 @@ class StepAP214_GroupItem : public StepData_SelectType {
 ") StepAP214_GroupItem;
 		 StepAP214_GroupItem ();
 		%feature("compactdefaultargs") CaseNum;
-		%feature("autodoc", "	* Recognizes a GroupItem Kind Entity that is : 1 -> GeometricRepresentationItem 0 else
+		%feature("autodoc", "	* Recognizes a GroupItem Kind Entity that is : 1 -> GeometricRepresentationItem 2 -> GroupRelationship 3 -> MappedItem 4 -> ProductDefinition 5 -> ProductDefinitionFormation 6 -> PropertyDefinitionRepresentation 7 -> Representation 8 -> RepresentationItem 9 -> RepresentationRelationshipWithTransformation 10 -> ShapeAspect 11 -> ShapeAspectRelationship 12 -> ShapeRepresentationRelationship 13 -> StyledItem 14 -> TopologicalRepresentationItem 0 else
 
 	:param ent:
 	:type ent: Handle_Standard_Transient &
@@ -4533,2072 +3172,93 @@ class StepAP214_GroupItem : public StepData_SelectType {
 ") CaseNum;
 		virtual Standard_Integer CaseNum (const Handle_Standard_Transient & ent);
 		%feature("compactdefaultargs") GeometricRepresentationItem;
-		%feature("autodoc", "	* returns Value as a GeometricRepresentationItem (Null if another type)
+		%feature("autodoc", "	* returns Value as a GeometricRepresentationItem --Null if another type--
 
 	:rtype: Handle_StepGeom_GeometricRepresentationItem
 ") GeometricRepresentationItem;
 		virtual Handle_StepGeom_GeometricRepresentationItem GeometricRepresentationItem ();
+		%feature("compactdefaultargs") GroupRelationship;
+		%feature("autodoc", "	* returns Value as a GroupRelationship --Null if another type--
+
+	:rtype: Handle_StepBasic_GroupRelationship
+") GroupRelationship;
+		virtual Handle_StepBasic_GroupRelationship GroupRelationship ();
+		%feature("compactdefaultargs") MappedItem;
+		%feature("autodoc", "	* returns Value as a MappedItem --Null if another type--
+
+	:rtype: Handle_StepRepr_MappedItem
+") MappedItem;
+		virtual Handle_StepRepr_MappedItem MappedItem ();
+		%feature("compactdefaultargs") ProductDefinition;
+		%feature("autodoc", "	* returns Value as a ProductDefinition --Null if another type--
+
+	:rtype: Handle_StepBasic_ProductDefinition
+") ProductDefinition;
+		virtual Handle_StepBasic_ProductDefinition ProductDefinition ();
+		%feature("compactdefaultargs") ProductDefinitionFormation;
+		%feature("autodoc", "	* returns Value as a ProductDefinitionFormation --Null if another type--
+
+	:rtype: Handle_StepBasic_ProductDefinitionFormation
+") ProductDefinitionFormation;
+		virtual Handle_StepBasic_ProductDefinitionFormation ProductDefinitionFormation ();
+		%feature("compactdefaultargs") PropertyDefinitionRepresentation;
+		%feature("autodoc", "	* returns Value as a PropertyDefinitionRepresentation --Null if another type--
+
+	:rtype: Handle_StepRepr_PropertyDefinitionRepresentation
+") PropertyDefinitionRepresentation;
+		virtual Handle_StepRepr_PropertyDefinitionRepresentation PropertyDefinitionRepresentation ();
+		%feature("compactdefaultargs") Representation;
+		%feature("autodoc", "	* returns Value as a Representation --Null if another type--
+
+	:rtype: Handle_StepRepr_Representation
+") Representation;
+		virtual Handle_StepRepr_Representation Representation ();
+		%feature("compactdefaultargs") RepresentationItem;
+		%feature("autodoc", "	* returns Value as a RepresentationItem --Null if another type--
+
+	:rtype: Handle_StepRepr_RepresentationItem
+") RepresentationItem;
+		virtual Handle_StepRepr_RepresentationItem RepresentationItem ();
+		%feature("compactdefaultargs") RepresentationRelationshipWithTransformation;
+		%feature("autodoc", "	* returns Value as a RepresentationRelationshipWithTransformation --Null if another type--
+
+	:rtype: Handle_StepRepr_RepresentationRelationshipWithTransformation
+") RepresentationRelationshipWithTransformation;
+		virtual Handle_StepRepr_RepresentationRelationshipWithTransformation RepresentationRelationshipWithTransformation ();
+		%feature("compactdefaultargs") ShapeAspect;
+		%feature("autodoc", "	* returns Value as a ShapeAspect --Null if another type--
+
+	:rtype: Handle_StepRepr_ShapeAspect
+") ShapeAspect;
+		virtual Handle_StepRepr_ShapeAspect ShapeAspect ();
+		%feature("compactdefaultargs") ShapeAspectRelationship;
+		%feature("autodoc", "	* returns Value as a ShapeAspectRelationship --Null if another type--
+
+	:rtype: Handle_StepRepr_ShapeAspectRelationship
+") ShapeAspectRelationship;
+		virtual Handle_StepRepr_ShapeAspectRelationship ShapeAspectRelationship ();
+		%feature("compactdefaultargs") ShapeRepresentationRelationship;
+		%feature("autodoc", "	* returns Value as a ShapeRepresentationRelationship --Null if another type--
+
+	:rtype: Handle_StepRepr_ShapeRepresentationRelationship
+") ShapeRepresentationRelationship;
+		virtual Handle_StepRepr_ShapeRepresentationRelationship ShapeRepresentationRelationship ();
+		%feature("compactdefaultargs") StyledItem;
+		%feature("autodoc", "	* returns Value as a StyledItem --Null if another type--
+
+	:rtype: Handle_StepVisual_StyledItem
+") StyledItem;
+		virtual Handle_StepVisual_StyledItem StyledItem ();
+		%feature("compactdefaultargs") TopologicalRepresentationItem;
+		%feature("autodoc", "	* returns Value as a TopologicalRepresentationItem --Null if another type--
+
+	:rtype: Handle_StepShape_TopologicalRepresentationItem
+") TopologicalRepresentationItem;
+		virtual Handle_StepShape_TopologicalRepresentationItem TopologicalRepresentationItem ();
 };
 
 
 %extend StepAP214_GroupItem {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor StepAP214_HArray1OfApprovalItem;
-class StepAP214_HArray1OfApprovalItem : public MMgt_TShared {
-	public:
-		%feature("compactdefaultargs") StepAP214_HArray1OfApprovalItem;
-		%feature("autodoc", "	:param Low:
-	:type Low: int
-	:param Up:
-	:type Up: int
-	:rtype: None
-") StepAP214_HArray1OfApprovalItem;
-		 StepAP214_HArray1OfApprovalItem (const Standard_Integer Low,const Standard_Integer Up);
-		%feature("compactdefaultargs") StepAP214_HArray1OfApprovalItem;
-		%feature("autodoc", "	:param Low:
-	:type Low: int
-	:param Up:
-	:type Up: int
-	:param V:
-	:type V: StepAP214_ApprovalItem &
-	:rtype: None
-") StepAP214_HArray1OfApprovalItem;
-		 StepAP214_HArray1OfApprovalItem (const Standard_Integer Low,const Standard_Integer Up,const StepAP214_ApprovalItem & V);
-		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	:param V:
-	:type V: StepAP214_ApprovalItem &
-	:rtype: None
-") Init;
-		void Init (const StepAP214_ApprovalItem & V);
-		%feature("compactdefaultargs") Length;
-		%feature("autodoc", "	:rtype: int
-") Length;
-		Standard_Integer Length ();
-		%feature("compactdefaultargs") Lower;
-		%feature("autodoc", "	:rtype: int
-") Lower;
-		Standard_Integer Lower ();
-		%feature("compactdefaultargs") Upper;
-		%feature("autodoc", "	:rtype: int
-") Upper;
-		Standard_Integer Upper ();
-		%feature("compactdefaultargs") SetValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param Value:
-	:type Value: StepAP214_ApprovalItem &
-	:rtype: None
-") SetValue;
-		void SetValue (const Standard_Integer Index,const StepAP214_ApprovalItem & Value);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: StepAP214_ApprovalItem
-") Value;
-		const StepAP214_ApprovalItem & Value (const Standard_Integer Index);
-		%feature("compactdefaultargs") ChangeValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: StepAP214_ApprovalItem
-") ChangeValue;
-		StepAP214_ApprovalItem & ChangeValue (const Standard_Integer Index);
-		%feature("compactdefaultargs") Array1;
-		%feature("autodoc", "	:rtype: StepAP214_Array1OfApprovalItem
-") Array1;
-		const StepAP214_Array1OfApprovalItem & Array1 ();
-		%feature("compactdefaultargs") ChangeArray1;
-		%feature("autodoc", "	:rtype: StepAP214_Array1OfApprovalItem
-") ChangeArray1;
-		StepAP214_Array1OfApprovalItem & ChangeArray1 ();
-};
-
-
-%extend StepAP214_HArray1OfApprovalItem {
-	%pythoncode {
-		def GetHandle(self):
-		    try:
-		        return self.thisHandle
-		    except:
-		        self.thisHandle = Handle_StepAP214_HArray1OfApprovalItem(self)
-		        self.thisown = False
-		        return self.thisHandle
-	}
-};
-
-%pythonappend Handle_StepAP214_HArray1OfApprovalItem::Handle_StepAP214_HArray1OfApprovalItem %{
-    # register the handle in the base object
-    if len(args) > 0:
-        register_handle(self, args[0])
-%}
-
-%nodefaultctor Handle_StepAP214_HArray1OfApprovalItem;
-class Handle_StepAP214_HArray1OfApprovalItem : public Handle_MMgt_TShared {
-
-    public:
-        // constructors
-        Handle_StepAP214_HArray1OfApprovalItem();
-        Handle_StepAP214_HArray1OfApprovalItem(const Handle_StepAP214_HArray1OfApprovalItem &aHandle);
-        Handle_StepAP214_HArray1OfApprovalItem(const StepAP214_HArray1OfApprovalItem *anItem);
-        void Nullify();
-        Standard_Boolean IsNull() const;
-        static const Handle_StepAP214_HArray1OfApprovalItem DownCast(const Handle_Standard_Transient &AnObject);
-
-};
-%extend Handle_StepAP214_HArray1OfApprovalItem {
-    StepAP214_HArray1OfApprovalItem* _get_reference() {
-    return (StepAP214_HArray1OfApprovalItem*)$self->Access();
-    }
-};
-
-%extend Handle_StepAP214_HArray1OfApprovalItem {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
-};
-
-%extend StepAP214_HArray1OfApprovalItem {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor StepAP214_HArray1OfAutoDesignDateAndPersonItem;
-class StepAP214_HArray1OfAutoDesignDateAndPersonItem : public MMgt_TShared {
-	public:
-		%feature("compactdefaultargs") StepAP214_HArray1OfAutoDesignDateAndPersonItem;
-		%feature("autodoc", "	:param Low:
-	:type Low: int
-	:param Up:
-	:type Up: int
-	:rtype: None
-") StepAP214_HArray1OfAutoDesignDateAndPersonItem;
-		 StepAP214_HArray1OfAutoDesignDateAndPersonItem (const Standard_Integer Low,const Standard_Integer Up);
-		%feature("compactdefaultargs") StepAP214_HArray1OfAutoDesignDateAndPersonItem;
-		%feature("autodoc", "	:param Low:
-	:type Low: int
-	:param Up:
-	:type Up: int
-	:param V:
-	:type V: StepAP214_AutoDesignDateAndPersonItem &
-	:rtype: None
-") StepAP214_HArray1OfAutoDesignDateAndPersonItem;
-		 StepAP214_HArray1OfAutoDesignDateAndPersonItem (const Standard_Integer Low,const Standard_Integer Up,const StepAP214_AutoDesignDateAndPersonItem & V);
-		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	:param V:
-	:type V: StepAP214_AutoDesignDateAndPersonItem &
-	:rtype: None
-") Init;
-		void Init (const StepAP214_AutoDesignDateAndPersonItem & V);
-		%feature("compactdefaultargs") Length;
-		%feature("autodoc", "	:rtype: int
-") Length;
-		Standard_Integer Length ();
-		%feature("compactdefaultargs") Lower;
-		%feature("autodoc", "	:rtype: int
-") Lower;
-		Standard_Integer Lower ();
-		%feature("compactdefaultargs") Upper;
-		%feature("autodoc", "	:rtype: int
-") Upper;
-		Standard_Integer Upper ();
-		%feature("compactdefaultargs") SetValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param Value:
-	:type Value: StepAP214_AutoDesignDateAndPersonItem &
-	:rtype: None
-") SetValue;
-		void SetValue (const Standard_Integer Index,const StepAP214_AutoDesignDateAndPersonItem & Value);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: StepAP214_AutoDesignDateAndPersonItem
-") Value;
-		const StepAP214_AutoDesignDateAndPersonItem & Value (const Standard_Integer Index);
-		%feature("compactdefaultargs") ChangeValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: StepAP214_AutoDesignDateAndPersonItem
-") ChangeValue;
-		StepAP214_AutoDesignDateAndPersonItem & ChangeValue (const Standard_Integer Index);
-		%feature("compactdefaultargs") Array1;
-		%feature("autodoc", "	:rtype: StepAP214_Array1OfAutoDesignDateAndPersonItem
-") Array1;
-		const StepAP214_Array1OfAutoDesignDateAndPersonItem & Array1 ();
-		%feature("compactdefaultargs") ChangeArray1;
-		%feature("autodoc", "	:rtype: StepAP214_Array1OfAutoDesignDateAndPersonItem
-") ChangeArray1;
-		StepAP214_Array1OfAutoDesignDateAndPersonItem & ChangeArray1 ();
-};
-
-
-%extend StepAP214_HArray1OfAutoDesignDateAndPersonItem {
-	%pythoncode {
-		def GetHandle(self):
-		    try:
-		        return self.thisHandle
-		    except:
-		        self.thisHandle = Handle_StepAP214_HArray1OfAutoDesignDateAndPersonItem(self)
-		        self.thisown = False
-		        return self.thisHandle
-	}
-};
-
-%pythonappend Handle_StepAP214_HArray1OfAutoDesignDateAndPersonItem::Handle_StepAP214_HArray1OfAutoDesignDateAndPersonItem %{
-    # register the handle in the base object
-    if len(args) > 0:
-        register_handle(self, args[0])
-%}
-
-%nodefaultctor Handle_StepAP214_HArray1OfAutoDesignDateAndPersonItem;
-class Handle_StepAP214_HArray1OfAutoDesignDateAndPersonItem : public Handle_MMgt_TShared {
-
-    public:
-        // constructors
-        Handle_StepAP214_HArray1OfAutoDesignDateAndPersonItem();
-        Handle_StepAP214_HArray1OfAutoDesignDateAndPersonItem(const Handle_StepAP214_HArray1OfAutoDesignDateAndPersonItem &aHandle);
-        Handle_StepAP214_HArray1OfAutoDesignDateAndPersonItem(const StepAP214_HArray1OfAutoDesignDateAndPersonItem *anItem);
-        void Nullify();
-        Standard_Boolean IsNull() const;
-        static const Handle_StepAP214_HArray1OfAutoDesignDateAndPersonItem DownCast(const Handle_Standard_Transient &AnObject);
-
-};
-%extend Handle_StepAP214_HArray1OfAutoDesignDateAndPersonItem {
-    StepAP214_HArray1OfAutoDesignDateAndPersonItem* _get_reference() {
-    return (StepAP214_HArray1OfAutoDesignDateAndPersonItem*)$self->Access();
-    }
-};
-
-%extend Handle_StepAP214_HArray1OfAutoDesignDateAndPersonItem {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
-};
-
-%extend StepAP214_HArray1OfAutoDesignDateAndPersonItem {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor StepAP214_HArray1OfAutoDesignDateAndTimeItem;
-class StepAP214_HArray1OfAutoDesignDateAndTimeItem : public MMgt_TShared {
-	public:
-		%feature("compactdefaultargs") StepAP214_HArray1OfAutoDesignDateAndTimeItem;
-		%feature("autodoc", "	:param Low:
-	:type Low: int
-	:param Up:
-	:type Up: int
-	:rtype: None
-") StepAP214_HArray1OfAutoDesignDateAndTimeItem;
-		 StepAP214_HArray1OfAutoDesignDateAndTimeItem (const Standard_Integer Low,const Standard_Integer Up);
-		%feature("compactdefaultargs") StepAP214_HArray1OfAutoDesignDateAndTimeItem;
-		%feature("autodoc", "	:param Low:
-	:type Low: int
-	:param Up:
-	:type Up: int
-	:param V:
-	:type V: StepAP214_AutoDesignDateAndTimeItem &
-	:rtype: None
-") StepAP214_HArray1OfAutoDesignDateAndTimeItem;
-		 StepAP214_HArray1OfAutoDesignDateAndTimeItem (const Standard_Integer Low,const Standard_Integer Up,const StepAP214_AutoDesignDateAndTimeItem & V);
-		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	:param V:
-	:type V: StepAP214_AutoDesignDateAndTimeItem &
-	:rtype: None
-") Init;
-		void Init (const StepAP214_AutoDesignDateAndTimeItem & V);
-		%feature("compactdefaultargs") Length;
-		%feature("autodoc", "	:rtype: int
-") Length;
-		Standard_Integer Length ();
-		%feature("compactdefaultargs") Lower;
-		%feature("autodoc", "	:rtype: int
-") Lower;
-		Standard_Integer Lower ();
-		%feature("compactdefaultargs") Upper;
-		%feature("autodoc", "	:rtype: int
-") Upper;
-		Standard_Integer Upper ();
-		%feature("compactdefaultargs") SetValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param Value:
-	:type Value: StepAP214_AutoDesignDateAndTimeItem &
-	:rtype: None
-") SetValue;
-		void SetValue (const Standard_Integer Index,const StepAP214_AutoDesignDateAndTimeItem & Value);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: StepAP214_AutoDesignDateAndTimeItem
-") Value;
-		const StepAP214_AutoDesignDateAndTimeItem & Value (const Standard_Integer Index);
-		%feature("compactdefaultargs") ChangeValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: StepAP214_AutoDesignDateAndTimeItem
-") ChangeValue;
-		StepAP214_AutoDesignDateAndTimeItem & ChangeValue (const Standard_Integer Index);
-		%feature("compactdefaultargs") Array1;
-		%feature("autodoc", "	:rtype: StepAP214_Array1OfAutoDesignDateAndTimeItem
-") Array1;
-		const StepAP214_Array1OfAutoDesignDateAndTimeItem & Array1 ();
-		%feature("compactdefaultargs") ChangeArray1;
-		%feature("autodoc", "	:rtype: StepAP214_Array1OfAutoDesignDateAndTimeItem
-") ChangeArray1;
-		StepAP214_Array1OfAutoDesignDateAndTimeItem & ChangeArray1 ();
-};
-
-
-%extend StepAP214_HArray1OfAutoDesignDateAndTimeItem {
-	%pythoncode {
-		def GetHandle(self):
-		    try:
-		        return self.thisHandle
-		    except:
-		        self.thisHandle = Handle_StepAP214_HArray1OfAutoDesignDateAndTimeItem(self)
-		        self.thisown = False
-		        return self.thisHandle
-	}
-};
-
-%pythonappend Handle_StepAP214_HArray1OfAutoDesignDateAndTimeItem::Handle_StepAP214_HArray1OfAutoDesignDateAndTimeItem %{
-    # register the handle in the base object
-    if len(args) > 0:
-        register_handle(self, args[0])
-%}
-
-%nodefaultctor Handle_StepAP214_HArray1OfAutoDesignDateAndTimeItem;
-class Handle_StepAP214_HArray1OfAutoDesignDateAndTimeItem : public Handle_MMgt_TShared {
-
-    public:
-        // constructors
-        Handle_StepAP214_HArray1OfAutoDesignDateAndTimeItem();
-        Handle_StepAP214_HArray1OfAutoDesignDateAndTimeItem(const Handle_StepAP214_HArray1OfAutoDesignDateAndTimeItem &aHandle);
-        Handle_StepAP214_HArray1OfAutoDesignDateAndTimeItem(const StepAP214_HArray1OfAutoDesignDateAndTimeItem *anItem);
-        void Nullify();
-        Standard_Boolean IsNull() const;
-        static const Handle_StepAP214_HArray1OfAutoDesignDateAndTimeItem DownCast(const Handle_Standard_Transient &AnObject);
-
-};
-%extend Handle_StepAP214_HArray1OfAutoDesignDateAndTimeItem {
-    StepAP214_HArray1OfAutoDesignDateAndTimeItem* _get_reference() {
-    return (StepAP214_HArray1OfAutoDesignDateAndTimeItem*)$self->Access();
-    }
-};
-
-%extend Handle_StepAP214_HArray1OfAutoDesignDateAndTimeItem {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
-};
-
-%extend StepAP214_HArray1OfAutoDesignDateAndTimeItem {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor StepAP214_HArray1OfAutoDesignDatedItem;
-class StepAP214_HArray1OfAutoDesignDatedItem : public MMgt_TShared {
-	public:
-		%feature("compactdefaultargs") StepAP214_HArray1OfAutoDesignDatedItem;
-		%feature("autodoc", "	:param Low:
-	:type Low: int
-	:param Up:
-	:type Up: int
-	:rtype: None
-") StepAP214_HArray1OfAutoDesignDatedItem;
-		 StepAP214_HArray1OfAutoDesignDatedItem (const Standard_Integer Low,const Standard_Integer Up);
-		%feature("compactdefaultargs") StepAP214_HArray1OfAutoDesignDatedItem;
-		%feature("autodoc", "	:param Low:
-	:type Low: int
-	:param Up:
-	:type Up: int
-	:param V:
-	:type V: StepAP214_AutoDesignDatedItem &
-	:rtype: None
-") StepAP214_HArray1OfAutoDesignDatedItem;
-		 StepAP214_HArray1OfAutoDesignDatedItem (const Standard_Integer Low,const Standard_Integer Up,const StepAP214_AutoDesignDatedItem & V);
-		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	:param V:
-	:type V: StepAP214_AutoDesignDatedItem &
-	:rtype: None
-") Init;
-		void Init (const StepAP214_AutoDesignDatedItem & V);
-		%feature("compactdefaultargs") Length;
-		%feature("autodoc", "	:rtype: int
-") Length;
-		Standard_Integer Length ();
-		%feature("compactdefaultargs") Lower;
-		%feature("autodoc", "	:rtype: int
-") Lower;
-		Standard_Integer Lower ();
-		%feature("compactdefaultargs") Upper;
-		%feature("autodoc", "	:rtype: int
-") Upper;
-		Standard_Integer Upper ();
-		%feature("compactdefaultargs") SetValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param Value:
-	:type Value: StepAP214_AutoDesignDatedItem &
-	:rtype: None
-") SetValue;
-		void SetValue (const Standard_Integer Index,const StepAP214_AutoDesignDatedItem & Value);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: StepAP214_AutoDesignDatedItem
-") Value;
-		const StepAP214_AutoDesignDatedItem & Value (const Standard_Integer Index);
-		%feature("compactdefaultargs") ChangeValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: StepAP214_AutoDesignDatedItem
-") ChangeValue;
-		StepAP214_AutoDesignDatedItem & ChangeValue (const Standard_Integer Index);
-		%feature("compactdefaultargs") Array1;
-		%feature("autodoc", "	:rtype: StepAP214_Array1OfAutoDesignDatedItem
-") Array1;
-		const StepAP214_Array1OfAutoDesignDatedItem & Array1 ();
-		%feature("compactdefaultargs") ChangeArray1;
-		%feature("autodoc", "	:rtype: StepAP214_Array1OfAutoDesignDatedItem
-") ChangeArray1;
-		StepAP214_Array1OfAutoDesignDatedItem & ChangeArray1 ();
-};
-
-
-%extend StepAP214_HArray1OfAutoDesignDatedItem {
-	%pythoncode {
-		def GetHandle(self):
-		    try:
-		        return self.thisHandle
-		    except:
-		        self.thisHandle = Handle_StepAP214_HArray1OfAutoDesignDatedItem(self)
-		        self.thisown = False
-		        return self.thisHandle
-	}
-};
-
-%pythonappend Handle_StepAP214_HArray1OfAutoDesignDatedItem::Handle_StepAP214_HArray1OfAutoDesignDatedItem %{
-    # register the handle in the base object
-    if len(args) > 0:
-        register_handle(self, args[0])
-%}
-
-%nodefaultctor Handle_StepAP214_HArray1OfAutoDesignDatedItem;
-class Handle_StepAP214_HArray1OfAutoDesignDatedItem : public Handle_MMgt_TShared {
-
-    public:
-        // constructors
-        Handle_StepAP214_HArray1OfAutoDesignDatedItem();
-        Handle_StepAP214_HArray1OfAutoDesignDatedItem(const Handle_StepAP214_HArray1OfAutoDesignDatedItem &aHandle);
-        Handle_StepAP214_HArray1OfAutoDesignDatedItem(const StepAP214_HArray1OfAutoDesignDatedItem *anItem);
-        void Nullify();
-        Standard_Boolean IsNull() const;
-        static const Handle_StepAP214_HArray1OfAutoDesignDatedItem DownCast(const Handle_Standard_Transient &AnObject);
-
-};
-%extend Handle_StepAP214_HArray1OfAutoDesignDatedItem {
-    StepAP214_HArray1OfAutoDesignDatedItem* _get_reference() {
-    return (StepAP214_HArray1OfAutoDesignDatedItem*)$self->Access();
-    }
-};
-
-%extend Handle_StepAP214_HArray1OfAutoDesignDatedItem {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
-};
-
-%extend StepAP214_HArray1OfAutoDesignDatedItem {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor StepAP214_HArray1OfAutoDesignGeneralOrgItem;
-class StepAP214_HArray1OfAutoDesignGeneralOrgItem : public MMgt_TShared {
-	public:
-		%feature("compactdefaultargs") StepAP214_HArray1OfAutoDesignGeneralOrgItem;
-		%feature("autodoc", "	:param Low:
-	:type Low: int
-	:param Up:
-	:type Up: int
-	:rtype: None
-") StepAP214_HArray1OfAutoDesignGeneralOrgItem;
-		 StepAP214_HArray1OfAutoDesignGeneralOrgItem (const Standard_Integer Low,const Standard_Integer Up);
-		%feature("compactdefaultargs") StepAP214_HArray1OfAutoDesignGeneralOrgItem;
-		%feature("autodoc", "	:param Low:
-	:type Low: int
-	:param Up:
-	:type Up: int
-	:param V:
-	:type V: StepAP214_AutoDesignGeneralOrgItem &
-	:rtype: None
-") StepAP214_HArray1OfAutoDesignGeneralOrgItem;
-		 StepAP214_HArray1OfAutoDesignGeneralOrgItem (const Standard_Integer Low,const Standard_Integer Up,const StepAP214_AutoDesignGeneralOrgItem & V);
-		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	:param V:
-	:type V: StepAP214_AutoDesignGeneralOrgItem &
-	:rtype: None
-") Init;
-		void Init (const StepAP214_AutoDesignGeneralOrgItem & V);
-		%feature("compactdefaultargs") Length;
-		%feature("autodoc", "	:rtype: int
-") Length;
-		Standard_Integer Length ();
-		%feature("compactdefaultargs") Lower;
-		%feature("autodoc", "	:rtype: int
-") Lower;
-		Standard_Integer Lower ();
-		%feature("compactdefaultargs") Upper;
-		%feature("autodoc", "	:rtype: int
-") Upper;
-		Standard_Integer Upper ();
-		%feature("compactdefaultargs") SetValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param Value:
-	:type Value: StepAP214_AutoDesignGeneralOrgItem &
-	:rtype: None
-") SetValue;
-		void SetValue (const Standard_Integer Index,const StepAP214_AutoDesignGeneralOrgItem & Value);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: StepAP214_AutoDesignGeneralOrgItem
-") Value;
-		const StepAP214_AutoDesignGeneralOrgItem & Value (const Standard_Integer Index);
-		%feature("compactdefaultargs") ChangeValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: StepAP214_AutoDesignGeneralOrgItem
-") ChangeValue;
-		StepAP214_AutoDesignGeneralOrgItem & ChangeValue (const Standard_Integer Index);
-		%feature("compactdefaultargs") Array1;
-		%feature("autodoc", "	:rtype: StepAP214_Array1OfAutoDesignGeneralOrgItem
-") Array1;
-		const StepAP214_Array1OfAutoDesignGeneralOrgItem & Array1 ();
-		%feature("compactdefaultargs") ChangeArray1;
-		%feature("autodoc", "	:rtype: StepAP214_Array1OfAutoDesignGeneralOrgItem
-") ChangeArray1;
-		StepAP214_Array1OfAutoDesignGeneralOrgItem & ChangeArray1 ();
-};
-
-
-%extend StepAP214_HArray1OfAutoDesignGeneralOrgItem {
-	%pythoncode {
-		def GetHandle(self):
-		    try:
-		        return self.thisHandle
-		    except:
-		        self.thisHandle = Handle_StepAP214_HArray1OfAutoDesignGeneralOrgItem(self)
-		        self.thisown = False
-		        return self.thisHandle
-	}
-};
-
-%pythonappend Handle_StepAP214_HArray1OfAutoDesignGeneralOrgItem::Handle_StepAP214_HArray1OfAutoDesignGeneralOrgItem %{
-    # register the handle in the base object
-    if len(args) > 0:
-        register_handle(self, args[0])
-%}
-
-%nodefaultctor Handle_StepAP214_HArray1OfAutoDesignGeneralOrgItem;
-class Handle_StepAP214_HArray1OfAutoDesignGeneralOrgItem : public Handle_MMgt_TShared {
-
-    public:
-        // constructors
-        Handle_StepAP214_HArray1OfAutoDesignGeneralOrgItem();
-        Handle_StepAP214_HArray1OfAutoDesignGeneralOrgItem(const Handle_StepAP214_HArray1OfAutoDesignGeneralOrgItem &aHandle);
-        Handle_StepAP214_HArray1OfAutoDesignGeneralOrgItem(const StepAP214_HArray1OfAutoDesignGeneralOrgItem *anItem);
-        void Nullify();
-        Standard_Boolean IsNull() const;
-        static const Handle_StepAP214_HArray1OfAutoDesignGeneralOrgItem DownCast(const Handle_Standard_Transient &AnObject);
-
-};
-%extend Handle_StepAP214_HArray1OfAutoDesignGeneralOrgItem {
-    StepAP214_HArray1OfAutoDesignGeneralOrgItem* _get_reference() {
-    return (StepAP214_HArray1OfAutoDesignGeneralOrgItem*)$self->Access();
-    }
-};
-
-%extend Handle_StepAP214_HArray1OfAutoDesignGeneralOrgItem {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
-};
-
-%extend StepAP214_HArray1OfAutoDesignGeneralOrgItem {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor StepAP214_HArray1OfAutoDesignGroupedItem;
-class StepAP214_HArray1OfAutoDesignGroupedItem : public MMgt_TShared {
-	public:
-		%feature("compactdefaultargs") StepAP214_HArray1OfAutoDesignGroupedItem;
-		%feature("autodoc", "	:param Low:
-	:type Low: int
-	:param Up:
-	:type Up: int
-	:rtype: None
-") StepAP214_HArray1OfAutoDesignGroupedItem;
-		 StepAP214_HArray1OfAutoDesignGroupedItem (const Standard_Integer Low,const Standard_Integer Up);
-		%feature("compactdefaultargs") StepAP214_HArray1OfAutoDesignGroupedItem;
-		%feature("autodoc", "	:param Low:
-	:type Low: int
-	:param Up:
-	:type Up: int
-	:param V:
-	:type V: StepAP214_AutoDesignGroupedItem &
-	:rtype: None
-") StepAP214_HArray1OfAutoDesignGroupedItem;
-		 StepAP214_HArray1OfAutoDesignGroupedItem (const Standard_Integer Low,const Standard_Integer Up,const StepAP214_AutoDesignGroupedItem & V);
-		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	:param V:
-	:type V: StepAP214_AutoDesignGroupedItem &
-	:rtype: None
-") Init;
-		void Init (const StepAP214_AutoDesignGroupedItem & V);
-		%feature("compactdefaultargs") Length;
-		%feature("autodoc", "	:rtype: int
-") Length;
-		Standard_Integer Length ();
-		%feature("compactdefaultargs") Lower;
-		%feature("autodoc", "	:rtype: int
-") Lower;
-		Standard_Integer Lower ();
-		%feature("compactdefaultargs") Upper;
-		%feature("autodoc", "	:rtype: int
-") Upper;
-		Standard_Integer Upper ();
-		%feature("compactdefaultargs") SetValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param Value:
-	:type Value: StepAP214_AutoDesignGroupedItem &
-	:rtype: None
-") SetValue;
-		void SetValue (const Standard_Integer Index,const StepAP214_AutoDesignGroupedItem & Value);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: StepAP214_AutoDesignGroupedItem
-") Value;
-		const StepAP214_AutoDesignGroupedItem & Value (const Standard_Integer Index);
-		%feature("compactdefaultargs") ChangeValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: StepAP214_AutoDesignGroupedItem
-") ChangeValue;
-		StepAP214_AutoDesignGroupedItem & ChangeValue (const Standard_Integer Index);
-		%feature("compactdefaultargs") Array1;
-		%feature("autodoc", "	:rtype: StepAP214_Array1OfAutoDesignGroupedItem
-") Array1;
-		const StepAP214_Array1OfAutoDesignGroupedItem & Array1 ();
-		%feature("compactdefaultargs") ChangeArray1;
-		%feature("autodoc", "	:rtype: StepAP214_Array1OfAutoDesignGroupedItem
-") ChangeArray1;
-		StepAP214_Array1OfAutoDesignGroupedItem & ChangeArray1 ();
-};
-
-
-%extend StepAP214_HArray1OfAutoDesignGroupedItem {
-	%pythoncode {
-		def GetHandle(self):
-		    try:
-		        return self.thisHandle
-		    except:
-		        self.thisHandle = Handle_StepAP214_HArray1OfAutoDesignGroupedItem(self)
-		        self.thisown = False
-		        return self.thisHandle
-	}
-};
-
-%pythonappend Handle_StepAP214_HArray1OfAutoDesignGroupedItem::Handle_StepAP214_HArray1OfAutoDesignGroupedItem %{
-    # register the handle in the base object
-    if len(args) > 0:
-        register_handle(self, args[0])
-%}
-
-%nodefaultctor Handle_StepAP214_HArray1OfAutoDesignGroupedItem;
-class Handle_StepAP214_HArray1OfAutoDesignGroupedItem : public Handle_MMgt_TShared {
-
-    public:
-        // constructors
-        Handle_StepAP214_HArray1OfAutoDesignGroupedItem();
-        Handle_StepAP214_HArray1OfAutoDesignGroupedItem(const Handle_StepAP214_HArray1OfAutoDesignGroupedItem &aHandle);
-        Handle_StepAP214_HArray1OfAutoDesignGroupedItem(const StepAP214_HArray1OfAutoDesignGroupedItem *anItem);
-        void Nullify();
-        Standard_Boolean IsNull() const;
-        static const Handle_StepAP214_HArray1OfAutoDesignGroupedItem DownCast(const Handle_Standard_Transient &AnObject);
-
-};
-%extend Handle_StepAP214_HArray1OfAutoDesignGroupedItem {
-    StepAP214_HArray1OfAutoDesignGroupedItem* _get_reference() {
-    return (StepAP214_HArray1OfAutoDesignGroupedItem*)$self->Access();
-    }
-};
-
-%extend Handle_StepAP214_HArray1OfAutoDesignGroupedItem {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
-};
-
-%extend StepAP214_HArray1OfAutoDesignGroupedItem {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor StepAP214_HArray1OfAutoDesignPresentedItemSelect;
-class StepAP214_HArray1OfAutoDesignPresentedItemSelect : public MMgt_TShared {
-	public:
-		%feature("compactdefaultargs") StepAP214_HArray1OfAutoDesignPresentedItemSelect;
-		%feature("autodoc", "	:param Low:
-	:type Low: int
-	:param Up:
-	:type Up: int
-	:rtype: None
-") StepAP214_HArray1OfAutoDesignPresentedItemSelect;
-		 StepAP214_HArray1OfAutoDesignPresentedItemSelect (const Standard_Integer Low,const Standard_Integer Up);
-		%feature("compactdefaultargs") StepAP214_HArray1OfAutoDesignPresentedItemSelect;
-		%feature("autodoc", "	:param Low:
-	:type Low: int
-	:param Up:
-	:type Up: int
-	:param V:
-	:type V: StepAP214_AutoDesignPresentedItemSelect &
-	:rtype: None
-") StepAP214_HArray1OfAutoDesignPresentedItemSelect;
-		 StepAP214_HArray1OfAutoDesignPresentedItemSelect (const Standard_Integer Low,const Standard_Integer Up,const StepAP214_AutoDesignPresentedItemSelect & V);
-		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	:param V:
-	:type V: StepAP214_AutoDesignPresentedItemSelect &
-	:rtype: None
-") Init;
-		void Init (const StepAP214_AutoDesignPresentedItemSelect & V);
-		%feature("compactdefaultargs") Length;
-		%feature("autodoc", "	:rtype: int
-") Length;
-		Standard_Integer Length ();
-		%feature("compactdefaultargs") Lower;
-		%feature("autodoc", "	:rtype: int
-") Lower;
-		Standard_Integer Lower ();
-		%feature("compactdefaultargs") Upper;
-		%feature("autodoc", "	:rtype: int
-") Upper;
-		Standard_Integer Upper ();
-		%feature("compactdefaultargs") SetValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param Value:
-	:type Value: StepAP214_AutoDesignPresentedItemSelect &
-	:rtype: None
-") SetValue;
-		void SetValue (const Standard_Integer Index,const StepAP214_AutoDesignPresentedItemSelect & Value);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: StepAP214_AutoDesignPresentedItemSelect
-") Value;
-		const StepAP214_AutoDesignPresentedItemSelect & Value (const Standard_Integer Index);
-		%feature("compactdefaultargs") ChangeValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: StepAP214_AutoDesignPresentedItemSelect
-") ChangeValue;
-		StepAP214_AutoDesignPresentedItemSelect & ChangeValue (const Standard_Integer Index);
-		%feature("compactdefaultargs") Array1;
-		%feature("autodoc", "	:rtype: StepAP214_Array1OfAutoDesignPresentedItemSelect
-") Array1;
-		const StepAP214_Array1OfAutoDesignPresentedItemSelect & Array1 ();
-		%feature("compactdefaultargs") ChangeArray1;
-		%feature("autodoc", "	:rtype: StepAP214_Array1OfAutoDesignPresentedItemSelect
-") ChangeArray1;
-		StepAP214_Array1OfAutoDesignPresentedItemSelect & ChangeArray1 ();
-};
-
-
-%extend StepAP214_HArray1OfAutoDesignPresentedItemSelect {
-	%pythoncode {
-		def GetHandle(self):
-		    try:
-		        return self.thisHandle
-		    except:
-		        self.thisHandle = Handle_StepAP214_HArray1OfAutoDesignPresentedItemSelect(self)
-		        self.thisown = False
-		        return self.thisHandle
-	}
-};
-
-%pythonappend Handle_StepAP214_HArray1OfAutoDesignPresentedItemSelect::Handle_StepAP214_HArray1OfAutoDesignPresentedItemSelect %{
-    # register the handle in the base object
-    if len(args) > 0:
-        register_handle(self, args[0])
-%}
-
-%nodefaultctor Handle_StepAP214_HArray1OfAutoDesignPresentedItemSelect;
-class Handle_StepAP214_HArray1OfAutoDesignPresentedItemSelect : public Handle_MMgt_TShared {
-
-    public:
-        // constructors
-        Handle_StepAP214_HArray1OfAutoDesignPresentedItemSelect();
-        Handle_StepAP214_HArray1OfAutoDesignPresentedItemSelect(const Handle_StepAP214_HArray1OfAutoDesignPresentedItemSelect &aHandle);
-        Handle_StepAP214_HArray1OfAutoDesignPresentedItemSelect(const StepAP214_HArray1OfAutoDesignPresentedItemSelect *anItem);
-        void Nullify();
-        Standard_Boolean IsNull() const;
-        static const Handle_StepAP214_HArray1OfAutoDesignPresentedItemSelect DownCast(const Handle_Standard_Transient &AnObject);
-
-};
-%extend Handle_StepAP214_HArray1OfAutoDesignPresentedItemSelect {
-    StepAP214_HArray1OfAutoDesignPresentedItemSelect* _get_reference() {
-    return (StepAP214_HArray1OfAutoDesignPresentedItemSelect*)$self->Access();
-    }
-};
-
-%extend Handle_StepAP214_HArray1OfAutoDesignPresentedItemSelect {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
-};
-
-%extend StepAP214_HArray1OfAutoDesignPresentedItemSelect {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor StepAP214_HArray1OfAutoDesignReferencingItem;
-class StepAP214_HArray1OfAutoDesignReferencingItem : public MMgt_TShared {
-	public:
-		%feature("compactdefaultargs") StepAP214_HArray1OfAutoDesignReferencingItem;
-		%feature("autodoc", "	:param Low:
-	:type Low: int
-	:param Up:
-	:type Up: int
-	:rtype: None
-") StepAP214_HArray1OfAutoDesignReferencingItem;
-		 StepAP214_HArray1OfAutoDesignReferencingItem (const Standard_Integer Low,const Standard_Integer Up);
-		%feature("compactdefaultargs") StepAP214_HArray1OfAutoDesignReferencingItem;
-		%feature("autodoc", "	:param Low:
-	:type Low: int
-	:param Up:
-	:type Up: int
-	:param V:
-	:type V: StepAP214_AutoDesignReferencingItem &
-	:rtype: None
-") StepAP214_HArray1OfAutoDesignReferencingItem;
-		 StepAP214_HArray1OfAutoDesignReferencingItem (const Standard_Integer Low,const Standard_Integer Up,const StepAP214_AutoDesignReferencingItem & V);
-		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	:param V:
-	:type V: StepAP214_AutoDesignReferencingItem &
-	:rtype: None
-") Init;
-		void Init (const StepAP214_AutoDesignReferencingItem & V);
-		%feature("compactdefaultargs") Length;
-		%feature("autodoc", "	:rtype: int
-") Length;
-		Standard_Integer Length ();
-		%feature("compactdefaultargs") Lower;
-		%feature("autodoc", "	:rtype: int
-") Lower;
-		Standard_Integer Lower ();
-		%feature("compactdefaultargs") Upper;
-		%feature("autodoc", "	:rtype: int
-") Upper;
-		Standard_Integer Upper ();
-		%feature("compactdefaultargs") SetValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param Value:
-	:type Value: StepAP214_AutoDesignReferencingItem &
-	:rtype: None
-") SetValue;
-		void SetValue (const Standard_Integer Index,const StepAP214_AutoDesignReferencingItem & Value);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: StepAP214_AutoDesignReferencingItem
-") Value;
-		const StepAP214_AutoDesignReferencingItem & Value (const Standard_Integer Index);
-		%feature("compactdefaultargs") ChangeValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: StepAP214_AutoDesignReferencingItem
-") ChangeValue;
-		StepAP214_AutoDesignReferencingItem & ChangeValue (const Standard_Integer Index);
-		%feature("compactdefaultargs") Array1;
-		%feature("autodoc", "	:rtype: StepAP214_Array1OfAutoDesignReferencingItem
-") Array1;
-		const StepAP214_Array1OfAutoDesignReferencingItem & Array1 ();
-		%feature("compactdefaultargs") ChangeArray1;
-		%feature("autodoc", "	:rtype: StepAP214_Array1OfAutoDesignReferencingItem
-") ChangeArray1;
-		StepAP214_Array1OfAutoDesignReferencingItem & ChangeArray1 ();
-};
-
-
-%extend StepAP214_HArray1OfAutoDesignReferencingItem {
-	%pythoncode {
-		def GetHandle(self):
-		    try:
-		        return self.thisHandle
-		    except:
-		        self.thisHandle = Handle_StepAP214_HArray1OfAutoDesignReferencingItem(self)
-		        self.thisown = False
-		        return self.thisHandle
-	}
-};
-
-%pythonappend Handle_StepAP214_HArray1OfAutoDesignReferencingItem::Handle_StepAP214_HArray1OfAutoDesignReferencingItem %{
-    # register the handle in the base object
-    if len(args) > 0:
-        register_handle(self, args[0])
-%}
-
-%nodefaultctor Handle_StepAP214_HArray1OfAutoDesignReferencingItem;
-class Handle_StepAP214_HArray1OfAutoDesignReferencingItem : public Handle_MMgt_TShared {
-
-    public:
-        // constructors
-        Handle_StepAP214_HArray1OfAutoDesignReferencingItem();
-        Handle_StepAP214_HArray1OfAutoDesignReferencingItem(const Handle_StepAP214_HArray1OfAutoDesignReferencingItem &aHandle);
-        Handle_StepAP214_HArray1OfAutoDesignReferencingItem(const StepAP214_HArray1OfAutoDesignReferencingItem *anItem);
-        void Nullify();
-        Standard_Boolean IsNull() const;
-        static const Handle_StepAP214_HArray1OfAutoDesignReferencingItem DownCast(const Handle_Standard_Transient &AnObject);
-
-};
-%extend Handle_StepAP214_HArray1OfAutoDesignReferencingItem {
-    StepAP214_HArray1OfAutoDesignReferencingItem* _get_reference() {
-    return (StepAP214_HArray1OfAutoDesignReferencingItem*)$self->Access();
-    }
-};
-
-%extend Handle_StepAP214_HArray1OfAutoDesignReferencingItem {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
-};
-
-%extend StepAP214_HArray1OfAutoDesignReferencingItem {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor StepAP214_HArray1OfDateAndTimeItem;
-class StepAP214_HArray1OfDateAndTimeItem : public MMgt_TShared {
-	public:
-		%feature("compactdefaultargs") StepAP214_HArray1OfDateAndTimeItem;
-		%feature("autodoc", "	:param Low:
-	:type Low: int
-	:param Up:
-	:type Up: int
-	:rtype: None
-") StepAP214_HArray1OfDateAndTimeItem;
-		 StepAP214_HArray1OfDateAndTimeItem (const Standard_Integer Low,const Standard_Integer Up);
-		%feature("compactdefaultargs") StepAP214_HArray1OfDateAndTimeItem;
-		%feature("autodoc", "	:param Low:
-	:type Low: int
-	:param Up:
-	:type Up: int
-	:param V:
-	:type V: StepAP214_DateAndTimeItem &
-	:rtype: None
-") StepAP214_HArray1OfDateAndTimeItem;
-		 StepAP214_HArray1OfDateAndTimeItem (const Standard_Integer Low,const Standard_Integer Up,const StepAP214_DateAndTimeItem & V);
-		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	:param V:
-	:type V: StepAP214_DateAndTimeItem &
-	:rtype: None
-") Init;
-		void Init (const StepAP214_DateAndTimeItem & V);
-		%feature("compactdefaultargs") Length;
-		%feature("autodoc", "	:rtype: int
-") Length;
-		Standard_Integer Length ();
-		%feature("compactdefaultargs") Lower;
-		%feature("autodoc", "	:rtype: int
-") Lower;
-		Standard_Integer Lower ();
-		%feature("compactdefaultargs") Upper;
-		%feature("autodoc", "	:rtype: int
-") Upper;
-		Standard_Integer Upper ();
-		%feature("compactdefaultargs") SetValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param Value:
-	:type Value: StepAP214_DateAndTimeItem &
-	:rtype: None
-") SetValue;
-		void SetValue (const Standard_Integer Index,const StepAP214_DateAndTimeItem & Value);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: StepAP214_DateAndTimeItem
-") Value;
-		const StepAP214_DateAndTimeItem & Value (const Standard_Integer Index);
-		%feature("compactdefaultargs") ChangeValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: StepAP214_DateAndTimeItem
-") ChangeValue;
-		StepAP214_DateAndTimeItem & ChangeValue (const Standard_Integer Index);
-		%feature("compactdefaultargs") Array1;
-		%feature("autodoc", "	:rtype: StepAP214_Array1OfDateAndTimeItem
-") Array1;
-		const StepAP214_Array1OfDateAndTimeItem & Array1 ();
-		%feature("compactdefaultargs") ChangeArray1;
-		%feature("autodoc", "	:rtype: StepAP214_Array1OfDateAndTimeItem
-") ChangeArray1;
-		StepAP214_Array1OfDateAndTimeItem & ChangeArray1 ();
-};
-
-
-%extend StepAP214_HArray1OfDateAndTimeItem {
-	%pythoncode {
-		def GetHandle(self):
-		    try:
-		        return self.thisHandle
-		    except:
-		        self.thisHandle = Handle_StepAP214_HArray1OfDateAndTimeItem(self)
-		        self.thisown = False
-		        return self.thisHandle
-	}
-};
-
-%pythonappend Handle_StepAP214_HArray1OfDateAndTimeItem::Handle_StepAP214_HArray1OfDateAndTimeItem %{
-    # register the handle in the base object
-    if len(args) > 0:
-        register_handle(self, args[0])
-%}
-
-%nodefaultctor Handle_StepAP214_HArray1OfDateAndTimeItem;
-class Handle_StepAP214_HArray1OfDateAndTimeItem : public Handle_MMgt_TShared {
-
-    public:
-        // constructors
-        Handle_StepAP214_HArray1OfDateAndTimeItem();
-        Handle_StepAP214_HArray1OfDateAndTimeItem(const Handle_StepAP214_HArray1OfDateAndTimeItem &aHandle);
-        Handle_StepAP214_HArray1OfDateAndTimeItem(const StepAP214_HArray1OfDateAndTimeItem *anItem);
-        void Nullify();
-        Standard_Boolean IsNull() const;
-        static const Handle_StepAP214_HArray1OfDateAndTimeItem DownCast(const Handle_Standard_Transient &AnObject);
-
-};
-%extend Handle_StepAP214_HArray1OfDateAndTimeItem {
-    StepAP214_HArray1OfDateAndTimeItem* _get_reference() {
-    return (StepAP214_HArray1OfDateAndTimeItem*)$self->Access();
-    }
-};
-
-%extend Handle_StepAP214_HArray1OfDateAndTimeItem {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
-};
-
-%extend StepAP214_HArray1OfDateAndTimeItem {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor StepAP214_HArray1OfDateItem;
-class StepAP214_HArray1OfDateItem : public MMgt_TShared {
-	public:
-		%feature("compactdefaultargs") StepAP214_HArray1OfDateItem;
-		%feature("autodoc", "	:param Low:
-	:type Low: int
-	:param Up:
-	:type Up: int
-	:rtype: None
-") StepAP214_HArray1OfDateItem;
-		 StepAP214_HArray1OfDateItem (const Standard_Integer Low,const Standard_Integer Up);
-		%feature("compactdefaultargs") StepAP214_HArray1OfDateItem;
-		%feature("autodoc", "	:param Low:
-	:type Low: int
-	:param Up:
-	:type Up: int
-	:param V:
-	:type V: StepAP214_DateItem &
-	:rtype: None
-") StepAP214_HArray1OfDateItem;
-		 StepAP214_HArray1OfDateItem (const Standard_Integer Low,const Standard_Integer Up,const StepAP214_DateItem & V);
-		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	:param V:
-	:type V: StepAP214_DateItem &
-	:rtype: None
-") Init;
-		void Init (const StepAP214_DateItem & V);
-		%feature("compactdefaultargs") Length;
-		%feature("autodoc", "	:rtype: int
-") Length;
-		Standard_Integer Length ();
-		%feature("compactdefaultargs") Lower;
-		%feature("autodoc", "	:rtype: int
-") Lower;
-		Standard_Integer Lower ();
-		%feature("compactdefaultargs") Upper;
-		%feature("autodoc", "	:rtype: int
-") Upper;
-		Standard_Integer Upper ();
-		%feature("compactdefaultargs") SetValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param Value:
-	:type Value: StepAP214_DateItem &
-	:rtype: None
-") SetValue;
-		void SetValue (const Standard_Integer Index,const StepAP214_DateItem & Value);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: StepAP214_DateItem
-") Value;
-		const StepAP214_DateItem & Value (const Standard_Integer Index);
-		%feature("compactdefaultargs") ChangeValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: StepAP214_DateItem
-") ChangeValue;
-		StepAP214_DateItem & ChangeValue (const Standard_Integer Index);
-		%feature("compactdefaultargs") Array1;
-		%feature("autodoc", "	:rtype: StepAP214_Array1OfDateItem
-") Array1;
-		const StepAP214_Array1OfDateItem & Array1 ();
-		%feature("compactdefaultargs") ChangeArray1;
-		%feature("autodoc", "	:rtype: StepAP214_Array1OfDateItem
-") ChangeArray1;
-		StepAP214_Array1OfDateItem & ChangeArray1 ();
-};
-
-
-%extend StepAP214_HArray1OfDateItem {
-	%pythoncode {
-		def GetHandle(self):
-		    try:
-		        return self.thisHandle
-		    except:
-		        self.thisHandle = Handle_StepAP214_HArray1OfDateItem(self)
-		        self.thisown = False
-		        return self.thisHandle
-	}
-};
-
-%pythonappend Handle_StepAP214_HArray1OfDateItem::Handle_StepAP214_HArray1OfDateItem %{
-    # register the handle in the base object
-    if len(args) > 0:
-        register_handle(self, args[0])
-%}
-
-%nodefaultctor Handle_StepAP214_HArray1OfDateItem;
-class Handle_StepAP214_HArray1OfDateItem : public Handle_MMgt_TShared {
-
-    public:
-        // constructors
-        Handle_StepAP214_HArray1OfDateItem();
-        Handle_StepAP214_HArray1OfDateItem(const Handle_StepAP214_HArray1OfDateItem &aHandle);
-        Handle_StepAP214_HArray1OfDateItem(const StepAP214_HArray1OfDateItem *anItem);
-        void Nullify();
-        Standard_Boolean IsNull() const;
-        static const Handle_StepAP214_HArray1OfDateItem DownCast(const Handle_Standard_Transient &AnObject);
-
-};
-%extend Handle_StepAP214_HArray1OfDateItem {
-    StepAP214_HArray1OfDateItem* _get_reference() {
-    return (StepAP214_HArray1OfDateItem*)$self->Access();
-    }
-};
-
-%extend Handle_StepAP214_HArray1OfDateItem {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
-};
-
-%extend StepAP214_HArray1OfDateItem {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor StepAP214_HArray1OfDocumentReferenceItem;
-class StepAP214_HArray1OfDocumentReferenceItem : public MMgt_TShared {
-	public:
-		%feature("compactdefaultargs") StepAP214_HArray1OfDocumentReferenceItem;
-		%feature("autodoc", "	:param Low:
-	:type Low: int
-	:param Up:
-	:type Up: int
-	:rtype: None
-") StepAP214_HArray1OfDocumentReferenceItem;
-		 StepAP214_HArray1OfDocumentReferenceItem (const Standard_Integer Low,const Standard_Integer Up);
-		%feature("compactdefaultargs") StepAP214_HArray1OfDocumentReferenceItem;
-		%feature("autodoc", "	:param Low:
-	:type Low: int
-	:param Up:
-	:type Up: int
-	:param V:
-	:type V: StepAP214_DocumentReferenceItem &
-	:rtype: None
-") StepAP214_HArray1OfDocumentReferenceItem;
-		 StepAP214_HArray1OfDocumentReferenceItem (const Standard_Integer Low,const Standard_Integer Up,const StepAP214_DocumentReferenceItem & V);
-		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	:param V:
-	:type V: StepAP214_DocumentReferenceItem &
-	:rtype: None
-") Init;
-		void Init (const StepAP214_DocumentReferenceItem & V);
-		%feature("compactdefaultargs") Length;
-		%feature("autodoc", "	:rtype: int
-") Length;
-		Standard_Integer Length ();
-		%feature("compactdefaultargs") Lower;
-		%feature("autodoc", "	:rtype: int
-") Lower;
-		Standard_Integer Lower ();
-		%feature("compactdefaultargs") Upper;
-		%feature("autodoc", "	:rtype: int
-") Upper;
-		Standard_Integer Upper ();
-		%feature("compactdefaultargs") SetValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param Value:
-	:type Value: StepAP214_DocumentReferenceItem &
-	:rtype: None
-") SetValue;
-		void SetValue (const Standard_Integer Index,const StepAP214_DocumentReferenceItem & Value);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: StepAP214_DocumentReferenceItem
-") Value;
-		const StepAP214_DocumentReferenceItem & Value (const Standard_Integer Index);
-		%feature("compactdefaultargs") ChangeValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: StepAP214_DocumentReferenceItem
-") ChangeValue;
-		StepAP214_DocumentReferenceItem & ChangeValue (const Standard_Integer Index);
-		%feature("compactdefaultargs") Array1;
-		%feature("autodoc", "	:rtype: StepAP214_Array1OfDocumentReferenceItem
-") Array1;
-		const StepAP214_Array1OfDocumentReferenceItem & Array1 ();
-		%feature("compactdefaultargs") ChangeArray1;
-		%feature("autodoc", "	:rtype: StepAP214_Array1OfDocumentReferenceItem
-") ChangeArray1;
-		StepAP214_Array1OfDocumentReferenceItem & ChangeArray1 ();
-};
-
-
-%extend StepAP214_HArray1OfDocumentReferenceItem {
-	%pythoncode {
-		def GetHandle(self):
-		    try:
-		        return self.thisHandle
-		    except:
-		        self.thisHandle = Handle_StepAP214_HArray1OfDocumentReferenceItem(self)
-		        self.thisown = False
-		        return self.thisHandle
-	}
-};
-
-%pythonappend Handle_StepAP214_HArray1OfDocumentReferenceItem::Handle_StepAP214_HArray1OfDocumentReferenceItem %{
-    # register the handle in the base object
-    if len(args) > 0:
-        register_handle(self, args[0])
-%}
-
-%nodefaultctor Handle_StepAP214_HArray1OfDocumentReferenceItem;
-class Handle_StepAP214_HArray1OfDocumentReferenceItem : public Handle_MMgt_TShared {
-
-    public:
-        // constructors
-        Handle_StepAP214_HArray1OfDocumentReferenceItem();
-        Handle_StepAP214_HArray1OfDocumentReferenceItem(const Handle_StepAP214_HArray1OfDocumentReferenceItem &aHandle);
-        Handle_StepAP214_HArray1OfDocumentReferenceItem(const StepAP214_HArray1OfDocumentReferenceItem *anItem);
-        void Nullify();
-        Standard_Boolean IsNull() const;
-        static const Handle_StepAP214_HArray1OfDocumentReferenceItem DownCast(const Handle_Standard_Transient &AnObject);
-
-};
-%extend Handle_StepAP214_HArray1OfDocumentReferenceItem {
-    StepAP214_HArray1OfDocumentReferenceItem* _get_reference() {
-    return (StepAP214_HArray1OfDocumentReferenceItem*)$self->Access();
-    }
-};
-
-%extend Handle_StepAP214_HArray1OfDocumentReferenceItem {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
-};
-
-%extend StepAP214_HArray1OfDocumentReferenceItem {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor StepAP214_HArray1OfExternalIdentificationItem;
-class StepAP214_HArray1OfExternalIdentificationItem : public MMgt_TShared {
-	public:
-		%feature("compactdefaultargs") StepAP214_HArray1OfExternalIdentificationItem;
-		%feature("autodoc", "	:param Low:
-	:type Low: int
-	:param Up:
-	:type Up: int
-	:rtype: None
-") StepAP214_HArray1OfExternalIdentificationItem;
-		 StepAP214_HArray1OfExternalIdentificationItem (const Standard_Integer Low,const Standard_Integer Up);
-		%feature("compactdefaultargs") StepAP214_HArray1OfExternalIdentificationItem;
-		%feature("autodoc", "	:param Low:
-	:type Low: int
-	:param Up:
-	:type Up: int
-	:param V:
-	:type V: StepAP214_ExternalIdentificationItem &
-	:rtype: None
-") StepAP214_HArray1OfExternalIdentificationItem;
-		 StepAP214_HArray1OfExternalIdentificationItem (const Standard_Integer Low,const Standard_Integer Up,const StepAP214_ExternalIdentificationItem & V);
-		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	:param V:
-	:type V: StepAP214_ExternalIdentificationItem &
-	:rtype: None
-") Init;
-		void Init (const StepAP214_ExternalIdentificationItem & V);
-		%feature("compactdefaultargs") Length;
-		%feature("autodoc", "	:rtype: int
-") Length;
-		Standard_Integer Length ();
-		%feature("compactdefaultargs") Lower;
-		%feature("autodoc", "	:rtype: int
-") Lower;
-		Standard_Integer Lower ();
-		%feature("compactdefaultargs") Upper;
-		%feature("autodoc", "	:rtype: int
-") Upper;
-		Standard_Integer Upper ();
-		%feature("compactdefaultargs") SetValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param Value:
-	:type Value: StepAP214_ExternalIdentificationItem &
-	:rtype: None
-") SetValue;
-		void SetValue (const Standard_Integer Index,const StepAP214_ExternalIdentificationItem & Value);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: StepAP214_ExternalIdentificationItem
-") Value;
-		const StepAP214_ExternalIdentificationItem & Value (const Standard_Integer Index);
-		%feature("compactdefaultargs") ChangeValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: StepAP214_ExternalIdentificationItem
-") ChangeValue;
-		StepAP214_ExternalIdentificationItem & ChangeValue (const Standard_Integer Index);
-		%feature("compactdefaultargs") Array1;
-		%feature("autodoc", "	:rtype: StepAP214_Array1OfExternalIdentificationItem
-") Array1;
-		const StepAP214_Array1OfExternalIdentificationItem & Array1 ();
-		%feature("compactdefaultargs") ChangeArray1;
-		%feature("autodoc", "	:rtype: StepAP214_Array1OfExternalIdentificationItem
-") ChangeArray1;
-		StepAP214_Array1OfExternalIdentificationItem & ChangeArray1 ();
-};
-
-
-%extend StepAP214_HArray1OfExternalIdentificationItem {
-	%pythoncode {
-		def GetHandle(self):
-		    try:
-		        return self.thisHandle
-		    except:
-		        self.thisHandle = Handle_StepAP214_HArray1OfExternalIdentificationItem(self)
-		        self.thisown = False
-		        return self.thisHandle
-	}
-};
-
-%pythonappend Handle_StepAP214_HArray1OfExternalIdentificationItem::Handle_StepAP214_HArray1OfExternalIdentificationItem %{
-    # register the handle in the base object
-    if len(args) > 0:
-        register_handle(self, args[0])
-%}
-
-%nodefaultctor Handle_StepAP214_HArray1OfExternalIdentificationItem;
-class Handle_StepAP214_HArray1OfExternalIdentificationItem : public Handle_MMgt_TShared {
-
-    public:
-        // constructors
-        Handle_StepAP214_HArray1OfExternalIdentificationItem();
-        Handle_StepAP214_HArray1OfExternalIdentificationItem(const Handle_StepAP214_HArray1OfExternalIdentificationItem &aHandle);
-        Handle_StepAP214_HArray1OfExternalIdentificationItem(const StepAP214_HArray1OfExternalIdentificationItem *anItem);
-        void Nullify();
-        Standard_Boolean IsNull() const;
-        static const Handle_StepAP214_HArray1OfExternalIdentificationItem DownCast(const Handle_Standard_Transient &AnObject);
-
-};
-%extend Handle_StepAP214_HArray1OfExternalIdentificationItem {
-    StepAP214_HArray1OfExternalIdentificationItem* _get_reference() {
-    return (StepAP214_HArray1OfExternalIdentificationItem*)$self->Access();
-    }
-};
-
-%extend Handle_StepAP214_HArray1OfExternalIdentificationItem {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
-};
-
-%extend StepAP214_HArray1OfExternalIdentificationItem {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor StepAP214_HArray1OfGroupItem;
-class StepAP214_HArray1OfGroupItem : public MMgt_TShared {
-	public:
-		%feature("compactdefaultargs") StepAP214_HArray1OfGroupItem;
-		%feature("autodoc", "	:param Low:
-	:type Low: int
-	:param Up:
-	:type Up: int
-	:rtype: None
-") StepAP214_HArray1OfGroupItem;
-		 StepAP214_HArray1OfGroupItem (const Standard_Integer Low,const Standard_Integer Up);
-		%feature("compactdefaultargs") StepAP214_HArray1OfGroupItem;
-		%feature("autodoc", "	:param Low:
-	:type Low: int
-	:param Up:
-	:type Up: int
-	:param V:
-	:type V: StepAP214_GroupItem &
-	:rtype: None
-") StepAP214_HArray1OfGroupItem;
-		 StepAP214_HArray1OfGroupItem (const Standard_Integer Low,const Standard_Integer Up,const StepAP214_GroupItem & V);
-		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	:param V:
-	:type V: StepAP214_GroupItem &
-	:rtype: None
-") Init;
-		void Init (const StepAP214_GroupItem & V);
-		%feature("compactdefaultargs") Length;
-		%feature("autodoc", "	:rtype: int
-") Length;
-		Standard_Integer Length ();
-		%feature("compactdefaultargs") Lower;
-		%feature("autodoc", "	:rtype: int
-") Lower;
-		Standard_Integer Lower ();
-		%feature("compactdefaultargs") Upper;
-		%feature("autodoc", "	:rtype: int
-") Upper;
-		Standard_Integer Upper ();
-		%feature("compactdefaultargs") SetValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param Value:
-	:type Value: StepAP214_GroupItem &
-	:rtype: None
-") SetValue;
-		void SetValue (const Standard_Integer Index,const StepAP214_GroupItem & Value);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: StepAP214_GroupItem
-") Value;
-		const StepAP214_GroupItem & Value (const Standard_Integer Index);
-		%feature("compactdefaultargs") ChangeValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: StepAP214_GroupItem
-") ChangeValue;
-		StepAP214_GroupItem & ChangeValue (const Standard_Integer Index);
-		%feature("compactdefaultargs") Array1;
-		%feature("autodoc", "	:rtype: StepAP214_Array1OfGroupItem
-") Array1;
-		const StepAP214_Array1OfGroupItem & Array1 ();
-		%feature("compactdefaultargs") ChangeArray1;
-		%feature("autodoc", "	:rtype: StepAP214_Array1OfGroupItem
-") ChangeArray1;
-		StepAP214_Array1OfGroupItem & ChangeArray1 ();
-};
-
-
-%extend StepAP214_HArray1OfGroupItem {
-	%pythoncode {
-		def GetHandle(self):
-		    try:
-		        return self.thisHandle
-		    except:
-		        self.thisHandle = Handle_StepAP214_HArray1OfGroupItem(self)
-		        self.thisown = False
-		        return self.thisHandle
-	}
-};
-
-%pythonappend Handle_StepAP214_HArray1OfGroupItem::Handle_StepAP214_HArray1OfGroupItem %{
-    # register the handle in the base object
-    if len(args) > 0:
-        register_handle(self, args[0])
-%}
-
-%nodefaultctor Handle_StepAP214_HArray1OfGroupItem;
-class Handle_StepAP214_HArray1OfGroupItem : public Handle_MMgt_TShared {
-
-    public:
-        // constructors
-        Handle_StepAP214_HArray1OfGroupItem();
-        Handle_StepAP214_HArray1OfGroupItem(const Handle_StepAP214_HArray1OfGroupItem &aHandle);
-        Handle_StepAP214_HArray1OfGroupItem(const StepAP214_HArray1OfGroupItem *anItem);
-        void Nullify();
-        Standard_Boolean IsNull() const;
-        static const Handle_StepAP214_HArray1OfGroupItem DownCast(const Handle_Standard_Transient &AnObject);
-
-};
-%extend Handle_StepAP214_HArray1OfGroupItem {
-    StepAP214_HArray1OfGroupItem* _get_reference() {
-    return (StepAP214_HArray1OfGroupItem*)$self->Access();
-    }
-};
-
-%extend Handle_StepAP214_HArray1OfGroupItem {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
-};
-
-%extend StepAP214_HArray1OfGroupItem {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor StepAP214_HArray1OfOrganizationItem;
-class StepAP214_HArray1OfOrganizationItem : public MMgt_TShared {
-	public:
-		%feature("compactdefaultargs") StepAP214_HArray1OfOrganizationItem;
-		%feature("autodoc", "	:param Low:
-	:type Low: int
-	:param Up:
-	:type Up: int
-	:rtype: None
-") StepAP214_HArray1OfOrganizationItem;
-		 StepAP214_HArray1OfOrganizationItem (const Standard_Integer Low,const Standard_Integer Up);
-		%feature("compactdefaultargs") StepAP214_HArray1OfOrganizationItem;
-		%feature("autodoc", "	:param Low:
-	:type Low: int
-	:param Up:
-	:type Up: int
-	:param V:
-	:type V: StepAP214_OrganizationItem &
-	:rtype: None
-") StepAP214_HArray1OfOrganizationItem;
-		 StepAP214_HArray1OfOrganizationItem (const Standard_Integer Low,const Standard_Integer Up,const StepAP214_OrganizationItem & V);
-		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	:param V:
-	:type V: StepAP214_OrganizationItem &
-	:rtype: None
-") Init;
-		void Init (const StepAP214_OrganizationItem & V);
-		%feature("compactdefaultargs") Length;
-		%feature("autodoc", "	:rtype: int
-") Length;
-		Standard_Integer Length ();
-		%feature("compactdefaultargs") Lower;
-		%feature("autodoc", "	:rtype: int
-") Lower;
-		Standard_Integer Lower ();
-		%feature("compactdefaultargs") Upper;
-		%feature("autodoc", "	:rtype: int
-") Upper;
-		Standard_Integer Upper ();
-		%feature("compactdefaultargs") SetValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param Value:
-	:type Value: StepAP214_OrganizationItem &
-	:rtype: None
-") SetValue;
-		void SetValue (const Standard_Integer Index,const StepAP214_OrganizationItem & Value);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: StepAP214_OrganizationItem
-") Value;
-		const StepAP214_OrganizationItem & Value (const Standard_Integer Index);
-		%feature("compactdefaultargs") ChangeValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: StepAP214_OrganizationItem
-") ChangeValue;
-		StepAP214_OrganizationItem & ChangeValue (const Standard_Integer Index);
-		%feature("compactdefaultargs") Array1;
-		%feature("autodoc", "	:rtype: StepAP214_Array1OfOrganizationItem
-") Array1;
-		const StepAP214_Array1OfOrganizationItem & Array1 ();
-		%feature("compactdefaultargs") ChangeArray1;
-		%feature("autodoc", "	:rtype: StepAP214_Array1OfOrganizationItem
-") ChangeArray1;
-		StepAP214_Array1OfOrganizationItem & ChangeArray1 ();
-};
-
-
-%extend StepAP214_HArray1OfOrganizationItem {
-	%pythoncode {
-		def GetHandle(self):
-		    try:
-		        return self.thisHandle
-		    except:
-		        self.thisHandle = Handle_StepAP214_HArray1OfOrganizationItem(self)
-		        self.thisown = False
-		        return self.thisHandle
-	}
-};
-
-%pythonappend Handle_StepAP214_HArray1OfOrganizationItem::Handle_StepAP214_HArray1OfOrganizationItem %{
-    # register the handle in the base object
-    if len(args) > 0:
-        register_handle(self, args[0])
-%}
-
-%nodefaultctor Handle_StepAP214_HArray1OfOrganizationItem;
-class Handle_StepAP214_HArray1OfOrganizationItem : public Handle_MMgt_TShared {
-
-    public:
-        // constructors
-        Handle_StepAP214_HArray1OfOrganizationItem();
-        Handle_StepAP214_HArray1OfOrganizationItem(const Handle_StepAP214_HArray1OfOrganizationItem &aHandle);
-        Handle_StepAP214_HArray1OfOrganizationItem(const StepAP214_HArray1OfOrganizationItem *anItem);
-        void Nullify();
-        Standard_Boolean IsNull() const;
-        static const Handle_StepAP214_HArray1OfOrganizationItem DownCast(const Handle_Standard_Transient &AnObject);
-
-};
-%extend Handle_StepAP214_HArray1OfOrganizationItem {
-    StepAP214_HArray1OfOrganizationItem* _get_reference() {
-    return (StepAP214_HArray1OfOrganizationItem*)$self->Access();
-    }
-};
-
-%extend Handle_StepAP214_HArray1OfOrganizationItem {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
-};
-
-%extend StepAP214_HArray1OfOrganizationItem {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor StepAP214_HArray1OfPersonAndOrganizationItem;
-class StepAP214_HArray1OfPersonAndOrganizationItem : public MMgt_TShared {
-	public:
-		%feature("compactdefaultargs") StepAP214_HArray1OfPersonAndOrganizationItem;
-		%feature("autodoc", "	:param Low:
-	:type Low: int
-	:param Up:
-	:type Up: int
-	:rtype: None
-") StepAP214_HArray1OfPersonAndOrganizationItem;
-		 StepAP214_HArray1OfPersonAndOrganizationItem (const Standard_Integer Low,const Standard_Integer Up);
-		%feature("compactdefaultargs") StepAP214_HArray1OfPersonAndOrganizationItem;
-		%feature("autodoc", "	:param Low:
-	:type Low: int
-	:param Up:
-	:type Up: int
-	:param V:
-	:type V: StepAP214_PersonAndOrganizationItem &
-	:rtype: None
-") StepAP214_HArray1OfPersonAndOrganizationItem;
-		 StepAP214_HArray1OfPersonAndOrganizationItem (const Standard_Integer Low,const Standard_Integer Up,const StepAP214_PersonAndOrganizationItem & V);
-		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	:param V:
-	:type V: StepAP214_PersonAndOrganizationItem &
-	:rtype: None
-") Init;
-		void Init (const StepAP214_PersonAndOrganizationItem & V);
-		%feature("compactdefaultargs") Length;
-		%feature("autodoc", "	:rtype: int
-") Length;
-		Standard_Integer Length ();
-		%feature("compactdefaultargs") Lower;
-		%feature("autodoc", "	:rtype: int
-") Lower;
-		Standard_Integer Lower ();
-		%feature("compactdefaultargs") Upper;
-		%feature("autodoc", "	:rtype: int
-") Upper;
-		Standard_Integer Upper ();
-		%feature("compactdefaultargs") SetValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param Value:
-	:type Value: StepAP214_PersonAndOrganizationItem &
-	:rtype: None
-") SetValue;
-		void SetValue (const Standard_Integer Index,const StepAP214_PersonAndOrganizationItem & Value);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: StepAP214_PersonAndOrganizationItem
-") Value;
-		const StepAP214_PersonAndOrganizationItem & Value (const Standard_Integer Index);
-		%feature("compactdefaultargs") ChangeValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: StepAP214_PersonAndOrganizationItem
-") ChangeValue;
-		StepAP214_PersonAndOrganizationItem & ChangeValue (const Standard_Integer Index);
-		%feature("compactdefaultargs") Array1;
-		%feature("autodoc", "	:rtype: StepAP214_Array1OfPersonAndOrganizationItem
-") Array1;
-		const StepAP214_Array1OfPersonAndOrganizationItem & Array1 ();
-		%feature("compactdefaultargs") ChangeArray1;
-		%feature("autodoc", "	:rtype: StepAP214_Array1OfPersonAndOrganizationItem
-") ChangeArray1;
-		StepAP214_Array1OfPersonAndOrganizationItem & ChangeArray1 ();
-};
-
-
-%extend StepAP214_HArray1OfPersonAndOrganizationItem {
-	%pythoncode {
-		def GetHandle(self):
-		    try:
-		        return self.thisHandle
-		    except:
-		        self.thisHandle = Handle_StepAP214_HArray1OfPersonAndOrganizationItem(self)
-		        self.thisown = False
-		        return self.thisHandle
-	}
-};
-
-%pythonappend Handle_StepAP214_HArray1OfPersonAndOrganizationItem::Handle_StepAP214_HArray1OfPersonAndOrganizationItem %{
-    # register the handle in the base object
-    if len(args) > 0:
-        register_handle(self, args[0])
-%}
-
-%nodefaultctor Handle_StepAP214_HArray1OfPersonAndOrganizationItem;
-class Handle_StepAP214_HArray1OfPersonAndOrganizationItem : public Handle_MMgt_TShared {
-
-    public:
-        // constructors
-        Handle_StepAP214_HArray1OfPersonAndOrganizationItem();
-        Handle_StepAP214_HArray1OfPersonAndOrganizationItem(const Handle_StepAP214_HArray1OfPersonAndOrganizationItem &aHandle);
-        Handle_StepAP214_HArray1OfPersonAndOrganizationItem(const StepAP214_HArray1OfPersonAndOrganizationItem *anItem);
-        void Nullify();
-        Standard_Boolean IsNull() const;
-        static const Handle_StepAP214_HArray1OfPersonAndOrganizationItem DownCast(const Handle_Standard_Transient &AnObject);
-
-};
-%extend Handle_StepAP214_HArray1OfPersonAndOrganizationItem {
-    StepAP214_HArray1OfPersonAndOrganizationItem* _get_reference() {
-    return (StepAP214_HArray1OfPersonAndOrganizationItem*)$self->Access();
-    }
-};
-
-%extend Handle_StepAP214_HArray1OfPersonAndOrganizationItem {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
-};
-
-%extend StepAP214_HArray1OfPersonAndOrganizationItem {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor StepAP214_HArray1OfPresentedItemSelect;
-class StepAP214_HArray1OfPresentedItemSelect : public MMgt_TShared {
-	public:
-		%feature("compactdefaultargs") StepAP214_HArray1OfPresentedItemSelect;
-		%feature("autodoc", "	:param Low:
-	:type Low: int
-	:param Up:
-	:type Up: int
-	:rtype: None
-") StepAP214_HArray1OfPresentedItemSelect;
-		 StepAP214_HArray1OfPresentedItemSelect (const Standard_Integer Low,const Standard_Integer Up);
-		%feature("compactdefaultargs") StepAP214_HArray1OfPresentedItemSelect;
-		%feature("autodoc", "	:param Low:
-	:type Low: int
-	:param Up:
-	:type Up: int
-	:param V:
-	:type V: StepAP214_PresentedItemSelect &
-	:rtype: None
-") StepAP214_HArray1OfPresentedItemSelect;
-		 StepAP214_HArray1OfPresentedItemSelect (const Standard_Integer Low,const Standard_Integer Up,const StepAP214_PresentedItemSelect & V);
-		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	:param V:
-	:type V: StepAP214_PresentedItemSelect &
-	:rtype: None
-") Init;
-		void Init (const StepAP214_PresentedItemSelect & V);
-		%feature("compactdefaultargs") Length;
-		%feature("autodoc", "	:rtype: int
-") Length;
-		Standard_Integer Length ();
-		%feature("compactdefaultargs") Lower;
-		%feature("autodoc", "	:rtype: int
-") Lower;
-		Standard_Integer Lower ();
-		%feature("compactdefaultargs") Upper;
-		%feature("autodoc", "	:rtype: int
-") Upper;
-		Standard_Integer Upper ();
-		%feature("compactdefaultargs") SetValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param Value:
-	:type Value: StepAP214_PresentedItemSelect &
-	:rtype: None
-") SetValue;
-		void SetValue (const Standard_Integer Index,const StepAP214_PresentedItemSelect & Value);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: StepAP214_PresentedItemSelect
-") Value;
-		const StepAP214_PresentedItemSelect & Value (const Standard_Integer Index);
-		%feature("compactdefaultargs") ChangeValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: StepAP214_PresentedItemSelect
-") ChangeValue;
-		StepAP214_PresentedItemSelect & ChangeValue (const Standard_Integer Index);
-		%feature("compactdefaultargs") Array1;
-		%feature("autodoc", "	:rtype: StepAP214_Array1OfPresentedItemSelect
-") Array1;
-		const StepAP214_Array1OfPresentedItemSelect & Array1 ();
-		%feature("compactdefaultargs") ChangeArray1;
-		%feature("autodoc", "	:rtype: StepAP214_Array1OfPresentedItemSelect
-") ChangeArray1;
-		StepAP214_Array1OfPresentedItemSelect & ChangeArray1 ();
-};
-
-
-%extend StepAP214_HArray1OfPresentedItemSelect {
-	%pythoncode {
-		def GetHandle(self):
-		    try:
-		        return self.thisHandle
-		    except:
-		        self.thisHandle = Handle_StepAP214_HArray1OfPresentedItemSelect(self)
-		        self.thisown = False
-		        return self.thisHandle
-	}
-};
-
-%pythonappend Handle_StepAP214_HArray1OfPresentedItemSelect::Handle_StepAP214_HArray1OfPresentedItemSelect %{
-    # register the handle in the base object
-    if len(args) > 0:
-        register_handle(self, args[0])
-%}
-
-%nodefaultctor Handle_StepAP214_HArray1OfPresentedItemSelect;
-class Handle_StepAP214_HArray1OfPresentedItemSelect : public Handle_MMgt_TShared {
-
-    public:
-        // constructors
-        Handle_StepAP214_HArray1OfPresentedItemSelect();
-        Handle_StepAP214_HArray1OfPresentedItemSelect(const Handle_StepAP214_HArray1OfPresentedItemSelect &aHandle);
-        Handle_StepAP214_HArray1OfPresentedItemSelect(const StepAP214_HArray1OfPresentedItemSelect *anItem);
-        void Nullify();
-        Standard_Boolean IsNull() const;
-        static const Handle_StepAP214_HArray1OfPresentedItemSelect DownCast(const Handle_Standard_Transient &AnObject);
-
-};
-%extend Handle_StepAP214_HArray1OfPresentedItemSelect {
-    StepAP214_HArray1OfPresentedItemSelect* _get_reference() {
-    return (StepAP214_HArray1OfPresentedItemSelect*)$self->Access();
-    }
-};
-
-%extend Handle_StepAP214_HArray1OfPresentedItemSelect {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
-};
-
-%extend StepAP214_HArray1OfPresentedItemSelect {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor StepAP214_HArray1OfSecurityClassificationItem;
-class StepAP214_HArray1OfSecurityClassificationItem : public MMgt_TShared {
-	public:
-		%feature("compactdefaultargs") StepAP214_HArray1OfSecurityClassificationItem;
-		%feature("autodoc", "	:param Low:
-	:type Low: int
-	:param Up:
-	:type Up: int
-	:rtype: None
-") StepAP214_HArray1OfSecurityClassificationItem;
-		 StepAP214_HArray1OfSecurityClassificationItem (const Standard_Integer Low,const Standard_Integer Up);
-		%feature("compactdefaultargs") StepAP214_HArray1OfSecurityClassificationItem;
-		%feature("autodoc", "	:param Low:
-	:type Low: int
-	:param Up:
-	:type Up: int
-	:param V:
-	:type V: StepAP214_SecurityClassificationItem &
-	:rtype: None
-") StepAP214_HArray1OfSecurityClassificationItem;
-		 StepAP214_HArray1OfSecurityClassificationItem (const Standard_Integer Low,const Standard_Integer Up,const StepAP214_SecurityClassificationItem & V);
-		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	:param V:
-	:type V: StepAP214_SecurityClassificationItem &
-	:rtype: None
-") Init;
-		void Init (const StepAP214_SecurityClassificationItem & V);
-		%feature("compactdefaultargs") Length;
-		%feature("autodoc", "	:rtype: int
-") Length;
-		Standard_Integer Length ();
-		%feature("compactdefaultargs") Lower;
-		%feature("autodoc", "	:rtype: int
-") Lower;
-		Standard_Integer Lower ();
-		%feature("compactdefaultargs") Upper;
-		%feature("autodoc", "	:rtype: int
-") Upper;
-		Standard_Integer Upper ();
-		%feature("compactdefaultargs") SetValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param Value:
-	:type Value: StepAP214_SecurityClassificationItem &
-	:rtype: None
-") SetValue;
-		void SetValue (const Standard_Integer Index,const StepAP214_SecurityClassificationItem & Value);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: StepAP214_SecurityClassificationItem
-") Value;
-		const StepAP214_SecurityClassificationItem & Value (const Standard_Integer Index);
-		%feature("compactdefaultargs") ChangeValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: StepAP214_SecurityClassificationItem
-") ChangeValue;
-		StepAP214_SecurityClassificationItem & ChangeValue (const Standard_Integer Index);
-		%feature("compactdefaultargs") Array1;
-		%feature("autodoc", "	:rtype: StepAP214_Array1OfSecurityClassificationItem
-") Array1;
-		const StepAP214_Array1OfSecurityClassificationItem & Array1 ();
-		%feature("compactdefaultargs") ChangeArray1;
-		%feature("autodoc", "	:rtype: StepAP214_Array1OfSecurityClassificationItem
-") ChangeArray1;
-		StepAP214_Array1OfSecurityClassificationItem & ChangeArray1 ();
-};
-
-
-%extend StepAP214_HArray1OfSecurityClassificationItem {
-	%pythoncode {
-		def GetHandle(self):
-		    try:
-		        return self.thisHandle
-		    except:
-		        self.thisHandle = Handle_StepAP214_HArray1OfSecurityClassificationItem(self)
-		        self.thisown = False
-		        return self.thisHandle
-	}
-};
-
-%pythonappend Handle_StepAP214_HArray1OfSecurityClassificationItem::Handle_StepAP214_HArray1OfSecurityClassificationItem %{
-    # register the handle in the base object
-    if len(args) > 0:
-        register_handle(self, args[0])
-%}
-
-%nodefaultctor Handle_StepAP214_HArray1OfSecurityClassificationItem;
-class Handle_StepAP214_HArray1OfSecurityClassificationItem : public Handle_MMgt_TShared {
-
-    public:
-        // constructors
-        Handle_StepAP214_HArray1OfSecurityClassificationItem();
-        Handle_StepAP214_HArray1OfSecurityClassificationItem(const Handle_StepAP214_HArray1OfSecurityClassificationItem &aHandle);
-        Handle_StepAP214_HArray1OfSecurityClassificationItem(const StepAP214_HArray1OfSecurityClassificationItem *anItem);
-        void Nullify();
-        Standard_Boolean IsNull() const;
-        static const Handle_StepAP214_HArray1OfSecurityClassificationItem DownCast(const Handle_Standard_Transient &AnObject);
-
-};
-%extend Handle_StepAP214_HArray1OfSecurityClassificationItem {
-    StepAP214_HArray1OfSecurityClassificationItem* _get_reference() {
-    return (StepAP214_HArray1OfSecurityClassificationItem*)$self->Access();
-    }
-};
-
-%extend Handle_StepAP214_HArray1OfSecurityClassificationItem {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
-};
-
-%extend StepAP214_HArray1OfSecurityClassificationItem {
 	%pythoncode {
 	__repr__ = _dumps_object
 	}
@@ -6621,13 +3281,13 @@ class StepAP214_PresentedItemSelect : public StepData_SelectType {
 ") CaseNum;
 		Standard_Integer CaseNum (const Handle_Standard_Transient & ent);
 		%feature("compactdefaultargs") ProductDefinitionRelationship;
-		%feature("autodoc", "	* returns Value as a ProductDefinitionRelationship (Null if another type)
+		%feature("autodoc", "	* returns Value as a ProductDefinitionRelationship --Null if another type--
 
 	:rtype: Handle_StepBasic_ProductDefinitionRelationship
 ") ProductDefinitionRelationship;
 		Handle_StepBasic_ProductDefinitionRelationship ProductDefinitionRelationship ();
 		%feature("compactdefaultargs") ProductDefinition;
-		%feature("autodoc", "	* returns Value as a ProductDefinition (Null if another type)
+		%feature("autodoc", "	* returns Value as a ProductDefinition --Null if another type--
 
 	:rtype: Handle_StepBasic_ProductDefinition
 ") ProductDefinition;
@@ -6660,13 +3320,13 @@ class StepAP214_Protocol : public StepData_Protocol {
 ") SchemaName;
 		virtual const char * SchemaName ();
 		%feature("compactdefaultargs") NbResources;
-		%feature("autodoc", "	* Returns count of Protocol used as Resources (level one)
+		%feature("autodoc", "	* Returns count of Protocol used as Resources --level one--
 
 	:rtype: int
 ") NbResources;
 		virtual Standard_Integer NbResources ();
 		%feature("compactdefaultargs") Resource;
-		%feature("autodoc", "	* Returns a Resource, given its rank (between 1 and NbResources)
+		%feature("autodoc", "	* Returns a Resource, given its rank --between 1 and NbResources--
 
 	:param num:
 	:type num: int
@@ -6707,19 +3367,20 @@ class Handle_StepAP214_Protocol : public Handle_StepData_Protocol {
         static const Handle_StepAP214_Protocol DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_StepAP214_Protocol {
     StepAP214_Protocol* _get_reference() {
-    return (StepAP214_Protocol*)$self->Access();
+    return (StepAP214_Protocol*)$self->get();
     }
 };
 
 %extend Handle_StepAP214_Protocol {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend StepAP214_Protocol {
@@ -6737,7 +3398,7 @@ class StepAP214_RepItemGroup : public StepBasic_Group {
 ") StepAP214_RepItemGroup;
 		 StepAP214_RepItemGroup ();
 		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	* Initialize all fields (own and inherited)
+		%feature("autodoc", "	* Initialize all fields --own and inherited--
 
 	:param aGroup_Name:
 	:type aGroup_Name: Handle_TCollection_HAsciiString &
@@ -6798,19 +3459,20 @@ class Handle_StepAP214_RepItemGroup : public Handle_StepBasic_Group {
         static const Handle_StepAP214_RepItemGroup DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_StepAP214_RepItemGroup {
     StepAP214_RepItemGroup* _get_reference() {
-    return (StepAP214_RepItemGroup*)$self->Access();
+    return (StepAP214_RepItemGroup*)$self->get();
     }
 };
 
 %extend Handle_StepAP214_RepItemGroup {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend StepAP214_RepItemGroup {
@@ -6865,29 +3527,23 @@ class StepAP214_DateAndTimeItem : public StepAP214_ApprovalItem {
 ") CaseNum;
 		virtual Standard_Integer CaseNum (const Handle_Standard_Transient & ent);
 		%feature("compactdefaultargs") ApprovalPersonOrganization;
-		%feature("autodoc", "	* returns Value as a ApprovalPersonOrganization (Null if another type)
+		%feature("autodoc", "	* returns Value as a ApprovalPersonOrganization --Null if another type--
 
 	:rtype: Handle_StepBasic_ApprovalPersonOrganization
 ") ApprovalPersonOrganization;
 		Handle_StepBasic_ApprovalPersonOrganization ApprovalPersonOrganization ();
 		%feature("compactdefaultargs") AppliedPersonAndOrganizationAssignment;
-		%feature("autodoc", "	* returns Value as a AppliedDateAndPersonAssignment (Null if another type)
+		%feature("autodoc", "	* returns Value as a AppliedDateAndPersonAssignment --Null if another type--
 
 	:rtype: Handle_StepAP214_AppliedPersonAndOrganizationAssignment
 ") AppliedPersonAndOrganizationAssignment;
 		Handle_StepAP214_AppliedPersonAndOrganizationAssignment AppliedPersonAndOrganizationAssignment ();
 		%feature("compactdefaultargs") AppliedOrganizationAssignment;
-		%feature("autodoc", "	* returns Value as a AppliedOrganizationAssignment (Null if another type)
+		%feature("autodoc", "	* returns Value as a AppliedOrganizationAssignment --Null if another type--
 
 	:rtype: Handle_StepAP214_AppliedOrganizationAssignment
 ") AppliedOrganizationAssignment;
 		Handle_StepAP214_AppliedOrganizationAssignment AppliedOrganizationAssignment ();
-		%feature("compactdefaultargs") Effectivity;
-		%feature("autodoc", "	* returns Value as a Effectivity (Null if another type)
-
-	:rtype: Handle_StepBasic_Effectivity
-") Effectivity;
-		Handle_StepBasic_Effectivity Effectivity ();
 };
 
 
@@ -6906,7 +3562,7 @@ class StepAP214_DateItem : public StepAP214_ApprovalItem {
 ") StepAP214_DateItem;
 		 StepAP214_DateItem ();
 		%feature("compactdefaultargs") CaseNum;
-		%feature("autodoc", "	* Recognizes a DateItem Kind Entity that is : 1 -> ApprovalPersonOrganization 2 -> AppliedDateAndPersonAssignment 3 -> AppliedOrganizationAssignment 4 -> AssemblyComponentUsageSubstitute 5 -> DocumentFile 6 -> Effectivity 7 -> MaterialDesignation 8 -> MechanicalDesignGeometricPresentationRepresentation 9 -> PresentationArea 10 -> Product 11 -> ProductDefinition 12 -> ProductDefinitionFormation 13 -> ProductDefinitionRelationship 14 -> PropertyDefinition 15 -> ShapeRepresentation 0 else
+		%feature("autodoc", "	* Recognizes a DateItem Kind Entity that is : 1 -> ApprovalPersonOrganization 2 -> AppliedDateAndPersonAssignment 3 -> AppliedOrganizationAssignment 4 -> AssemblyComponentUsageSubstitute 5 -> DocumentFile 6 -> Effectivity 7 -> MaterialDesignation 8 -> MechanicalDesignGeometricPresentationRepresentation 9 -> PresentationArea 10 -> Product 11 -> ProductDefinition 12 -> ProductDefinitionFormation 13 -> ProductDefinitionRelationship 14 -> PropertyDefinition 15 -> ShapeRepresentation 16 -> AppliedSecurityClassificationAssignment 17 -> Document 0 else
 
 	:param ent:
 	:type ent: Handle_Standard_Transient &
@@ -6914,29 +3570,29 @@ class StepAP214_DateItem : public StepAP214_ApprovalItem {
 ") CaseNum;
 		virtual Standard_Integer CaseNum (const Handle_Standard_Transient & ent);
 		%feature("compactdefaultargs") ApprovalPersonOrganization;
-		%feature("autodoc", "	* returns Value as a ApprovalPersonOrganization (Null if another type)
+		%feature("autodoc", "	* returns Value as a ApprovalPersonOrganization --Null if another type--
 
 	:rtype: Handle_StepBasic_ApprovalPersonOrganization
 ") ApprovalPersonOrganization;
 		Handle_StepBasic_ApprovalPersonOrganization ApprovalPersonOrganization ();
 		%feature("compactdefaultargs") AppliedPersonAndOrganizationAssignment;
-		%feature("autodoc", "	* returns Value as a AppliedDateAndPersonAssignment (Null if another type)
+		%feature("autodoc", "	* returns Value as a AppliedDateAndPersonAssignment --Null if another type--
 
 	:rtype: Handle_StepAP214_AppliedPersonAndOrganizationAssignment
 ") AppliedPersonAndOrganizationAssignment;
 		Handle_StepAP214_AppliedPersonAndOrganizationAssignment AppliedPersonAndOrganizationAssignment ();
 		%feature("compactdefaultargs") AppliedOrganizationAssignment;
-		%feature("autodoc", "	* returns Value as a AppliedOrganizationAssignment (Null if another type)
+		%feature("autodoc", "	* returns Value as a AppliedOrganizationAssignment --Null if another type--
 
 	:rtype: Handle_StepAP214_AppliedOrganizationAssignment
 ") AppliedOrganizationAssignment;
 		Handle_StepAP214_AppliedOrganizationAssignment AppliedOrganizationAssignment ();
-		%feature("compactdefaultargs") Effectivity;
-		%feature("autodoc", "	* returns Value as a Effectivity (Null if another type)
+		%feature("compactdefaultargs") AppliedSecurityClassificationAssignment;
+		%feature("autodoc", "	* returns Value as a AppliedSecurityClassificationAssignment --Null if another type--
 
-	:rtype: Handle_StepBasic_Effectivity
-") Effectivity;
-		Handle_StepBasic_Effectivity Effectivity ();
+	:rtype: Handle_StepAP214_AppliedSecurityClassificationAssignment
+") AppliedSecurityClassificationAssignment;
+		Handle_StepAP214_AppliedSecurityClassificationAssignment AppliedSecurityClassificationAssignment ();
 };
 
 
@@ -6955,7 +3611,7 @@ class StepAP214_ExternallyDefinedClass : public StepAP214_Class {
 ") StepAP214_ExternallyDefinedClass;
 		 StepAP214_ExternallyDefinedClass ();
 		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	* Initialize all fields (own and inherited)
+		%feature("autodoc", "	* Initialize all fields --own and inherited--
 
 	:param aGroup_Name:
 	:type aGroup_Name: Handle_TCollection_HAsciiString &
@@ -7018,19 +3674,20 @@ class Handle_StepAP214_ExternallyDefinedClass : public Handle_StepAP214_Class {
         static const Handle_StepAP214_ExternallyDefinedClass DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_StepAP214_ExternallyDefinedClass {
     StepAP214_ExternallyDefinedClass* _get_reference() {
-    return (StepAP214_ExternallyDefinedClass*)$self->Access();
+    return (StepAP214_ExternallyDefinedClass*)$self->get();
     }
 };
 
 %extend Handle_StepAP214_ExternallyDefinedClass {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend StepAP214_ExternallyDefinedClass {
@@ -7056,17 +3713,23 @@ class StepAP214_OrganizationItem : public StepAP214_ApprovalItem {
 ") CaseNum;
 		virtual Standard_Integer CaseNum (const Handle_Standard_Transient & ent);
 		%feature("compactdefaultargs") AppliedOrganizationAssignment;
-		%feature("autodoc", "	* returns Value as a AppliedOrganizationAssignment (Null if another type)
+		%feature("autodoc", "	* returns Value as a AppliedOrganizationAssignment --Null if another type--
 
 	:rtype: Handle_StepAP214_AppliedOrganizationAssignment
 ") AppliedOrganizationAssignment;
 		Handle_StepAP214_AppliedOrganizationAssignment AppliedOrganizationAssignment ();
 		%feature("compactdefaultargs") Approval;
-		%feature("autodoc", "	* returns Value as a Approval (Null if another type)
+		%feature("autodoc", "	* returns Value as a Approval --Null if another type--
 
 	:rtype: Handle_StepBasic_Approval
 ") Approval;
 		Handle_StepBasic_Approval Approval ();
+		%feature("compactdefaultargs") AppliedSecurityClassificationAssignment;
+		%feature("autodoc", "	* returns Value as a AppliedSecurityClassificationAssignment --Null if another type--
+
+	:rtype: Handle_StepAP214_AppliedSecurityClassificationAssignment
+") AppliedSecurityClassificationAssignment;
+		Handle_StepAP214_AppliedSecurityClassificationAssignment AppliedSecurityClassificationAssignment ();
 };
 
 
@@ -7085,7 +3748,7 @@ class StepAP214_PersonAndOrganizationItem : public StepAP214_ApprovalItem {
 ") StepAP214_PersonAndOrganizationItem;
 		 StepAP214_PersonAndOrganizationItem ();
 		%feature("compactdefaultargs") CaseNum;
-		%feature("autodoc", "	* Recognizes a APersonAndOrganizationItem Kind Entity that is : 1 -> AppliedOrganizationAssignment 2 -> AssemblyComponentUsageSubstitute 3 -> DocumentFile 4 -> MaterialDesignation 5 -> MechanicalDesignGeometricPresentationRepresentation 6 -> PresentationArea 7 -> Product 8 -> ProductDefinition 9 -> ProductDefinitionFormation 10 -> ProductDefinitionRelationship 11 -> PropertyDefinition 12 -> ShapeRepresentation 13 -> SecurityClassification 0 else
+		%feature("autodoc", "	* Recognizes a APersonAndOrganizationItem Kind Entity that is : 1 -> AppliedOrganizationAssignment 2 -> AssemblyComponentUsageSubstitute 3 -> DocumentFile 4 -> MaterialDesignation 5 -> MechanicalDesignGeometricPresentationRepresentation 6 -> PresentationArea 7 -> Product 8 -> ProductDefinition 9 -> ProductDefinitionFormation 10 -> ProductDefinitionRelationship 11 -> PropertyDefinition 12 -> ShapeRepresentation 13 -> SecurityClassification 14 -> AppliedSecurityClassificationAssignment 15 -> Approval 0 else
 
 	:param ent:
 	:type ent: Handle_Standard_Transient &
@@ -7093,11 +3756,23 @@ class StepAP214_PersonAndOrganizationItem : public StepAP214_ApprovalItem {
 ") CaseNum;
 		virtual Standard_Integer CaseNum (const Handle_Standard_Transient & ent);
 		%feature("compactdefaultargs") AppliedOrganizationAssignment;
-		%feature("autodoc", "	* returns Value as a AppliedOrganizationAssignment (Null if another type)
+		%feature("autodoc", "	* returns Value as a AppliedOrganizationAssignment --Null if another type--
 
 	:rtype: Handle_StepAP214_AppliedOrganizationAssignment
 ") AppliedOrganizationAssignment;
 		Handle_StepAP214_AppliedOrganizationAssignment AppliedOrganizationAssignment ();
+		%feature("compactdefaultargs") AppliedSecurityClassificationAssignment;
+		%feature("autodoc", "	* returns Value as a AppliedSecurityClassificationAssignment --Null if another type--
+
+	:rtype: Handle_StepAP214_AppliedSecurityClassificationAssignment
+") AppliedSecurityClassificationAssignment;
+		Handle_StepAP214_AppliedSecurityClassificationAssignment AppliedSecurityClassificationAssignment ();
+		%feature("compactdefaultargs") Approval;
+		%feature("autodoc", "	* returns Value as a Approval --Null if another type--
+
+	:rtype: Handle_StepBasic_Approval
+") Approval;
+		Handle_StepBasic_Approval Approval ();
 };
 
 
@@ -7115,6 +3790,74 @@ class StepAP214_SecurityClassificationItem : public StepAP214_ApprovalItem {
 	:rtype: None
 ") StepAP214_SecurityClassificationItem;
 		 StepAP214_SecurityClassificationItem ();
+		%feature("compactdefaultargs") CaseNum;
+		%feature("autodoc", "	* Recognizes a SecurityClassificationItem Kind Entity that is : 1 -> Action 2 -> AssemblyComponentUsage 3 -> AssemblyComponentUsageSubstitute 4 -> ConfigurationDesign 5 -> ConfigurationEffectivity 6 -> Document 7 -> DocumentFile 8 -> DraughtingModel 9 -> GeneralProperty 10 -> MakeFromUsageOption 11 -> MaterialDesignation 12 -> MechanicalDesignGeometricPresentationRepresentation 13 -> PresentationArea 14 -> Product 15 -> ProductConcept 16 -> ProductDefinition 17 -> ProductDefinitionFormation 18 -> ProductDefinitionRelationship 19 -> ProductDefinitionUsage 20 -> PropertyDefinition 21 -> ShapeRepresentation 22 -> VersionedActionRequest 0 else
+
+	:param ent:
+	:type ent: Handle_Standard_Transient &
+	:rtype: int
+") CaseNum;
+		virtual Standard_Integer CaseNum (const Handle_Standard_Transient & ent);
+		%feature("compactdefaultargs") Action;
+		%feature("autodoc", "	* returns Value as a Action --Null if another type--
+
+	:rtype: Handle_StepBasic_Action
+") Action;
+		virtual Handle_StepBasic_Action Action ();
+		%feature("compactdefaultargs") AssemblyComponentUsage;
+		%feature("autodoc", "	* returns Value as a AssemblyComponentUsage --Null if another type--
+
+	:rtype: Handle_StepRepr_AssemblyComponentUsage
+") AssemblyComponentUsage;
+		virtual Handle_StepRepr_AssemblyComponentUsage AssemblyComponentUsage ();
+		%feature("compactdefaultargs") ConfigurationDesign;
+		%feature("autodoc", "	* returns Value as a ConfigurationDesign --Null if another type--
+
+	:rtype: Handle_StepRepr_ConfigurationDesign
+") ConfigurationDesign;
+		virtual Handle_StepRepr_ConfigurationDesign ConfigurationDesign ();
+		%feature("compactdefaultargs") ConfigurationEffectivity;
+		%feature("autodoc", "	* returns Value as a ConfigurationEffectivity --Null if another type--
+
+	:rtype: Handle_StepRepr_ConfigurationEffectivity
+") ConfigurationEffectivity;
+		virtual Handle_StepRepr_ConfigurationEffectivity ConfigurationEffectivity ();
+		%feature("compactdefaultargs") DraughtingModel;
+		%feature("autodoc", "	* returns Value as a DraughtingModel --Null if another type--
+
+	:rtype: Handle_StepVisual_DraughtingModel
+") DraughtingModel;
+		virtual Handle_StepVisual_DraughtingModel DraughtingModel ();
+		%feature("compactdefaultargs") GeneralProperty;
+		%feature("autodoc", "	* returns Value as a GeneralProperty --Null if another type--
+
+	:rtype: Handle_StepBasic_GeneralProperty
+") GeneralProperty;
+		virtual Handle_StepBasic_GeneralProperty GeneralProperty ();
+		%feature("compactdefaultargs") MakeFromUsageOption;
+		%feature("autodoc", "	* returns Value as a MakeFromUsageOption --Null if another type--
+
+	:rtype: Handle_StepRepr_MakeFromUsageOption
+") MakeFromUsageOption;
+		virtual Handle_StepRepr_MakeFromUsageOption MakeFromUsageOption ();
+		%feature("compactdefaultargs") ProductConcept;
+		%feature("autodoc", "	* returns Value as a ProductConcept --Null if another type--
+
+	:rtype: Handle_StepRepr_ProductConcept
+") ProductConcept;
+		virtual Handle_StepRepr_ProductConcept ProductConcept ();
+		%feature("compactdefaultargs") ProductDefinitionUsage;
+		%feature("autodoc", "	* returns Value as a ProductDefinitionUsage --Null if another type--
+
+	:rtype: Handle_StepRepr_ProductDefinitionUsage
+") ProductDefinitionUsage;
+		virtual Handle_StepRepr_ProductDefinitionUsage ProductDefinitionUsage ();
+		%feature("compactdefaultargs") VersionedActionRequest;
+		%feature("autodoc", "	* returns Value as a VersionedActionRequest --Null if another type--
+
+	:rtype: Handle_StepBasic_VersionedActionRequest
+") VersionedActionRequest;
+		virtual Handle_StepBasic_VersionedActionRequest VersionedActionRequest ();
 };
 
 

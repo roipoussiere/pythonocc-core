@@ -1,5 +1,5 @@
 /*
-Copyright 2008-2017 Thomas Paviot (tpaviot@gmail.com)
+Copyright 2008-2018 Thomas Paviot (tpaviot@gmail.com)
 
 
 This file is part of pythonOCC.
@@ -56,6 +56,9 @@ def register_handle(handle, base_object):
 /* typedefs */
 /* end typedefs declaration */
 
+/* templates */
+/* end templates declaration */
+
 /* public enums */
 enum GccInt_IType {
 	GccInt_Lin = 0,
@@ -69,10 +72,10 @@ enum GccInt_IType {
 /* end public enums declaration */
 
 %nodefaultctor GccInt_Bisec;
-class GccInt_Bisec : public MMgt_TShared {
+class GccInt_Bisec : public Standard_Transient {
 	public:
 		%feature("compactdefaultargs") ArcType;
-		%feature("autodoc", "	* Returns the type of bisecting object (line, circle, parabola, hyperbola, ellipse, point).
+		%feature("autodoc", "	* Returns the type of bisecting object --line, circle, parabola, hyperbola, ellipse, point--.
 
 	:rtype: GccInt_IType
 ") ArcType;
@@ -135,7 +138,7 @@ class GccInt_Bisec : public MMgt_TShared {
 %}
 
 %nodefaultctor Handle_GccInt_Bisec;
-class Handle_GccInt_Bisec : public Handle_MMgt_TShared {
+class Handle_GccInt_Bisec : public Handle_Standard_Transient {
 
     public:
         // constructors
@@ -147,19 +150,20 @@ class Handle_GccInt_Bisec : public Handle_MMgt_TShared {
         static const Handle_GccInt_Bisec DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_GccInt_Bisec {
     GccInt_Bisec* _get_reference() {
-    return (GccInt_Bisec*)$self->Access();
+    return (GccInt_Bisec*)$self->get();
     }
 };
 
 %extend Handle_GccInt_Bisec {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend GccInt_Bisec {
@@ -224,19 +228,20 @@ class Handle_GccInt_BCirc : public Handle_GccInt_Bisec {
         static const Handle_GccInt_BCirc DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_GccInt_BCirc {
     GccInt_BCirc* _get_reference() {
-    return (GccInt_BCirc*)$self->Access();
+    return (GccInt_BCirc*)$self->get();
     }
 };
 
 %extend Handle_GccInt_BCirc {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend GccInt_BCirc {
@@ -301,19 +306,20 @@ class Handle_GccInt_BElips : public Handle_GccInt_Bisec {
         static const Handle_GccInt_BElips DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_GccInt_BElips {
     GccInt_BElips* _get_reference() {
-    return (GccInt_BElips*)$self->Access();
+    return (GccInt_BElips*)$self->get();
     }
 };
 
 %extend Handle_GccInt_BElips {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend GccInt_BElips {
@@ -378,19 +384,20 @@ class Handle_GccInt_BHyper : public Handle_GccInt_Bisec {
         static const Handle_GccInt_BHyper DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_GccInt_BHyper {
     GccInt_BHyper* _get_reference() {
-    return (GccInt_BHyper*)$self->Access();
+    return (GccInt_BHyper*)$self->get();
     }
 };
 
 %extend Handle_GccInt_BHyper {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend GccInt_BHyper {
@@ -455,19 +462,20 @@ class Handle_GccInt_BLine : public Handle_GccInt_Bisec {
         static const Handle_GccInt_BLine DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_GccInt_BLine {
     GccInt_BLine* _get_reference() {
-    return (GccInt_BLine*)$self->Access();
+    return (GccInt_BLine*)$self->get();
     }
 };
 
 %extend Handle_GccInt_BLine {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend GccInt_BLine {
@@ -532,19 +540,20 @@ class Handle_GccInt_BParab : public Handle_GccInt_Bisec {
         static const Handle_GccInt_BParab DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_GccInt_BParab {
     GccInt_BParab* _get_reference() {
-    return (GccInt_BParab*)$self->Access();
+    return (GccInt_BParab*)$self->get();
     }
 };
 
 %extend Handle_GccInt_BParab {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend GccInt_BParab {
@@ -609,19 +618,20 @@ class Handle_GccInt_BPoint : public Handle_GccInt_Bisec {
         static const Handle_GccInt_BPoint DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_GccInt_BPoint {
     GccInt_BPoint* _get_reference() {
-    return (GccInt_BPoint*)$self->Access();
+    return (GccInt_BPoint*)$self->get();
     }
 };
 
 %extend Handle_GccInt_BPoint {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend GccInt_BPoint {

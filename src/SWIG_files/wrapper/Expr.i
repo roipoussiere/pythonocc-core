@@ -1,5 +1,5 @@
 /*
-Copyright 2008-2017 Thomas Paviot (tpaviot@gmail.com)
+Copyright 2008-2018 Thomas Paviot (tpaviot@gmail.com)
 
 
 This file is part of pythonOCC.
@@ -56,6 +56,15 @@ def register_handle(handle, base_object):
 /* typedefs */
 /* end typedefs declaration */
 
+/* templates */
+%template(Expr_MapOfNamedUnknown) NCollection_IndexedMap <Handle_Expr_NamedUnknown , TColStd_MapTransientHasher>;
+%template(Expr_SequenceOfGeneralExpression) NCollection_Sequence <Handle_Expr_GeneralExpression>;
+%template(Expr_Array1OfGeneralExpression) NCollection_Array1 <Handle_Expr_GeneralExpression>;
+%template(Expr_SequenceOfGeneralRelation) NCollection_Sequence <Handle_Expr_GeneralRelation>;
+%template(Expr_Array1OfNamedUnknown) NCollection_Array1 <Handle_Expr_NamedUnknown>;
+%template(Expr_Array1OfSingleRelation) NCollection_Array1 <Handle_Expr_SingleRelation>;
+/* end templates declaration */
+
 /* public enums */
 /* end public enums declaration */
 
@@ -94,278 +103,17 @@ class Expr {
 	__repr__ = _dumps_object
 	}
 };
-%nodefaultctor Expr_Array1OfGeneralExpression;
-class Expr_Array1OfGeneralExpression {
-	public:
-		%feature("compactdefaultargs") Expr_Array1OfGeneralExpression;
-		%feature("autodoc", "	:param Low:
-	:type Low: int
-	:param Up:
-	:type Up: int
-	:rtype: None
-") Expr_Array1OfGeneralExpression;
-		 Expr_Array1OfGeneralExpression (const Standard_Integer Low,const Standard_Integer Up);
-		%feature("compactdefaultargs") Expr_Array1OfGeneralExpression;
-		%feature("autodoc", "	:param Item:
-	:type Item: Handle_Expr_GeneralExpression &
-	:param Low:
-	:type Low: int
-	:param Up:
-	:type Up: int
-	:rtype: None
-") Expr_Array1OfGeneralExpression;
-		 Expr_Array1OfGeneralExpression (const Handle_Expr_GeneralExpression & Item,const Standard_Integer Low,const Standard_Integer Up);
-		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	:param V:
-	:type V: Handle_Expr_GeneralExpression &
-	:rtype: None
-") Init;
-		void Init (const Handle_Expr_GeneralExpression & V);
-		%feature("compactdefaultargs") Destroy;
-		%feature("autodoc", "	:rtype: None
-") Destroy;
-		void Destroy ();
-		%feature("compactdefaultargs") IsAllocated;
-		%feature("autodoc", "	:rtype: bool
-") IsAllocated;
-		Standard_Boolean IsAllocated ();
-		%feature("compactdefaultargs") Assign;
-		%feature("autodoc", "	:param Other:
-	:type Other: Expr_Array1OfGeneralExpression &
-	:rtype: Expr_Array1OfGeneralExpression
-") Assign;
-		const Expr_Array1OfGeneralExpression & Assign (const Expr_Array1OfGeneralExpression & Other);
-		%feature("compactdefaultargs") operator =;
-		%feature("autodoc", "	:param Other:
-	:type Other: Expr_Array1OfGeneralExpression &
-	:rtype: Expr_Array1OfGeneralExpression
-") operator =;
-		const Expr_Array1OfGeneralExpression & operator = (const Expr_Array1OfGeneralExpression & Other);
-		%feature("compactdefaultargs") Length;
-		%feature("autodoc", "	:rtype: int
-") Length;
-		Standard_Integer Length ();
-		%feature("compactdefaultargs") Lower;
-		%feature("autodoc", "	:rtype: int
-") Lower;
-		Standard_Integer Lower ();
-		%feature("compactdefaultargs") Upper;
-		%feature("autodoc", "	:rtype: int
-") Upper;
-		Standard_Integer Upper ();
-		%feature("compactdefaultargs") SetValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param Value:
-	:type Value: Handle_Expr_GeneralExpression &
-	:rtype: None
-") SetValue;
-		void SetValue (const Standard_Integer Index,const Handle_Expr_GeneralExpression & Value);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: Handle_Expr_GeneralExpression
-") Value;
-		Handle_Expr_GeneralExpression Value (const Standard_Integer Index);
-		%feature("compactdefaultargs") ChangeValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: Handle_Expr_GeneralExpression
-") ChangeValue;
-		Handle_Expr_GeneralExpression ChangeValue (const Standard_Integer Index);
-};
-
-
-%extend Expr_Array1OfGeneralExpression {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor Expr_Array1OfNamedUnknown;
-class Expr_Array1OfNamedUnknown {
-	public:
-		%feature("compactdefaultargs") Expr_Array1OfNamedUnknown;
-		%feature("autodoc", "	:param Low:
-	:type Low: int
-	:param Up:
-	:type Up: int
-	:rtype: None
-") Expr_Array1OfNamedUnknown;
-		 Expr_Array1OfNamedUnknown (const Standard_Integer Low,const Standard_Integer Up);
-		%feature("compactdefaultargs") Expr_Array1OfNamedUnknown;
-		%feature("autodoc", "	:param Item:
-	:type Item: Handle_Expr_NamedUnknown &
-	:param Low:
-	:type Low: int
-	:param Up:
-	:type Up: int
-	:rtype: None
-") Expr_Array1OfNamedUnknown;
-		 Expr_Array1OfNamedUnknown (const Handle_Expr_NamedUnknown & Item,const Standard_Integer Low,const Standard_Integer Up);
-		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	:param V:
-	:type V: Handle_Expr_NamedUnknown &
-	:rtype: None
-") Init;
-		void Init (const Handle_Expr_NamedUnknown & V);
-		%feature("compactdefaultargs") Destroy;
-		%feature("autodoc", "	:rtype: None
-") Destroy;
-		void Destroy ();
-		%feature("compactdefaultargs") IsAllocated;
-		%feature("autodoc", "	:rtype: bool
-") IsAllocated;
-		Standard_Boolean IsAllocated ();
-		%feature("compactdefaultargs") Assign;
-		%feature("autodoc", "	:param Other:
-	:type Other: Expr_Array1OfNamedUnknown &
-	:rtype: Expr_Array1OfNamedUnknown
-") Assign;
-		const Expr_Array1OfNamedUnknown & Assign (const Expr_Array1OfNamedUnknown & Other);
-		%feature("compactdefaultargs") operator =;
-		%feature("autodoc", "	:param Other:
-	:type Other: Expr_Array1OfNamedUnknown &
-	:rtype: Expr_Array1OfNamedUnknown
-") operator =;
-		const Expr_Array1OfNamedUnknown & operator = (const Expr_Array1OfNamedUnknown & Other);
-		%feature("compactdefaultargs") Length;
-		%feature("autodoc", "	:rtype: int
-") Length;
-		Standard_Integer Length ();
-		%feature("compactdefaultargs") Lower;
-		%feature("autodoc", "	:rtype: int
-") Lower;
-		Standard_Integer Lower ();
-		%feature("compactdefaultargs") Upper;
-		%feature("autodoc", "	:rtype: int
-") Upper;
-		Standard_Integer Upper ();
-		%feature("compactdefaultargs") SetValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param Value:
-	:type Value: Handle_Expr_NamedUnknown &
-	:rtype: None
-") SetValue;
-		void SetValue (const Standard_Integer Index,const Handle_Expr_NamedUnknown & Value);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: Handle_Expr_NamedUnknown
-") Value;
-		Handle_Expr_NamedUnknown Value (const Standard_Integer Index);
-		%feature("compactdefaultargs") ChangeValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: Handle_Expr_NamedUnknown
-") ChangeValue;
-		Handle_Expr_NamedUnknown ChangeValue (const Standard_Integer Index);
-};
-
-
-%extend Expr_Array1OfNamedUnknown {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor Expr_Array1OfSingleRelation;
-class Expr_Array1OfSingleRelation {
-	public:
-		%feature("compactdefaultargs") Expr_Array1OfSingleRelation;
-		%feature("autodoc", "	:param Low:
-	:type Low: int
-	:param Up:
-	:type Up: int
-	:rtype: None
-") Expr_Array1OfSingleRelation;
-		 Expr_Array1OfSingleRelation (const Standard_Integer Low,const Standard_Integer Up);
-		%feature("compactdefaultargs") Expr_Array1OfSingleRelation;
-		%feature("autodoc", "	:param Item:
-	:type Item: Handle_Expr_SingleRelation &
-	:param Low:
-	:type Low: int
-	:param Up:
-	:type Up: int
-	:rtype: None
-") Expr_Array1OfSingleRelation;
-		 Expr_Array1OfSingleRelation (const Handle_Expr_SingleRelation & Item,const Standard_Integer Low,const Standard_Integer Up);
-		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	:param V:
-	:type V: Handle_Expr_SingleRelation &
-	:rtype: None
-") Init;
-		void Init (const Handle_Expr_SingleRelation & V);
-		%feature("compactdefaultargs") Destroy;
-		%feature("autodoc", "	:rtype: None
-") Destroy;
-		void Destroy ();
-		%feature("compactdefaultargs") IsAllocated;
-		%feature("autodoc", "	:rtype: bool
-") IsAllocated;
-		Standard_Boolean IsAllocated ();
-		%feature("compactdefaultargs") Assign;
-		%feature("autodoc", "	:param Other:
-	:type Other: Expr_Array1OfSingleRelation &
-	:rtype: Expr_Array1OfSingleRelation
-") Assign;
-		const Expr_Array1OfSingleRelation & Assign (const Expr_Array1OfSingleRelation & Other);
-		%feature("compactdefaultargs") operator =;
-		%feature("autodoc", "	:param Other:
-	:type Other: Expr_Array1OfSingleRelation &
-	:rtype: Expr_Array1OfSingleRelation
-") operator =;
-		const Expr_Array1OfSingleRelation & operator = (const Expr_Array1OfSingleRelation & Other);
-		%feature("compactdefaultargs") Length;
-		%feature("autodoc", "	:rtype: int
-") Length;
-		Standard_Integer Length ();
-		%feature("compactdefaultargs") Lower;
-		%feature("autodoc", "	:rtype: int
-") Lower;
-		Standard_Integer Lower ();
-		%feature("compactdefaultargs") Upper;
-		%feature("autodoc", "	:rtype: int
-") Upper;
-		Standard_Integer Upper ();
-		%feature("compactdefaultargs") SetValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param Value:
-	:type Value: Handle_Expr_SingleRelation &
-	:rtype: None
-") SetValue;
-		void SetValue (const Standard_Integer Index,const Handle_Expr_SingleRelation & Value);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: Handle_Expr_SingleRelation
-") Value;
-		Handle_Expr_SingleRelation Value (const Standard_Integer Index);
-		%feature("compactdefaultargs") ChangeValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: Handle_Expr_SingleRelation
-") ChangeValue;
-		Handle_Expr_SingleRelation ChangeValue (const Standard_Integer Index);
-};
-
-
-%extend Expr_Array1OfSingleRelation {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
 %nodefaultctor Expr_GeneralExpression;
-class Expr_GeneralExpression : public MMgt_TShared {
+class Expr_GeneralExpression : public Standard_Transient {
 	public:
 		%feature("compactdefaultargs") NbSubExpressions;
-		%feature("autodoc", "	* Returns the number of sub-expressions contained in <self> ( >= 0)
+		%feature("autodoc", "	* Returns the number of sub-expressions contained in <self> -- >= 0--
 
 	:rtype: int
 ") NbSubExpressions;
 		virtual Standard_Integer NbSubExpressions ();
 		%feature("compactdefaultargs") SubExpression;
-		%feature("autodoc", "	* Returns the <I>-th sub-expression of <self> raises OutOfRange if <I> > NbSubExpressions(me)
+		%feature("autodoc", "	* Returns the <I>-th sub-expression of <self> raises OutOfRange if <I> > NbSubExpressions--me--
 
 	:param I:
 	:type I: int
@@ -411,7 +159,7 @@ class Expr_GeneralExpression : public MMgt_TShared {
 ") IsLinear;
 		virtual Standard_Boolean IsLinear ();
 		%feature("compactdefaultargs") IsShareable;
-		%feature("autodoc", "	* Tests if <self> can be shared by one or more expressions or must be copied. This method returns False as a default value. To be redefined ( especially for NamedUnknown).
+		%feature("autodoc", "	* Tests if <self> can be shared by one or more expressions or must be copied. This method returns False as a default value. To be redefined -- especially for NamedUnknown--.
 
 	:rtype: bool
 ") IsShareable;
@@ -443,7 +191,7 @@ class Expr_GeneralExpression : public MMgt_TShared {
 ") NDerivative;
 		virtual Handle_Expr_GeneralExpression NDerivative (const Handle_Expr_NamedUnknown & X,const Standard_Integer N);
 		%feature("compactdefaultargs") Replace;
-		%feature("autodoc", "	* Replaces all occurences of <var> with copies of <with> in <self>. Copies of <with> are made with the Copy() method. Raises InvalidOperand if <with> contains <self>.
+		%feature("autodoc", "	* Replaces all occurences of <var> with copies of <with> in <self>. Copies of <with> are made with the Copy---- method. Raises InvalidOperand if <with> contains <self>.
 
 	:param var:
 	:type var: Handle_Expr_NamedUnknown &
@@ -453,7 +201,7 @@ class Expr_GeneralExpression : public MMgt_TShared {
 ") Replace;
 		virtual void Replace (const Handle_Expr_NamedUnknown & var,const Handle_Expr_GeneralExpression & with);
 		%feature("compactdefaultargs") Evaluate;
-		%feature("autodoc", "	* Returns the value of <self> (as a Real) by replacement of <vars> by <vals>. Raises NotEvaluable if <self> contains NamedUnknown not in <vars> or NumericError if result cannot be computed.
+		%feature("autodoc", "	* Returns the value of <self> --as a Real-- by replacement of <vars> by <vals>. Raises NotEvaluable if <self> contains NamedUnknown not in <vars> or NumericError if result cannot be computed.
 
 	:param vars:
 	:type vars: Expr_Array1OfNamedUnknown &
@@ -463,7 +211,7 @@ class Expr_GeneralExpression : public MMgt_TShared {
 ") Evaluate;
 		virtual Standard_Real Evaluate (const Expr_Array1OfNamedUnknown & vars,const TColStd_Array1OfReal & vals);
 		%feature("compactdefaultargs") EvaluateNumeric;
-		%feature("autodoc", "	* Returns the value of <self> (as a Real) by replacement of <vars> by <vals>. Raises NotEvaluable if <self> contains NamedUnknown not in <vars> or NumericError if result cannot be computed.
+		%feature("autodoc", "	* Returns the value of <self> --as a Real-- by replacement of <vars> by <vals>. Raises NotEvaluable if <self> contains NamedUnknown not in <vars> or NumericError if result cannot be computed.
 
 	:rtype: float
 ") EvaluateNumeric;
@@ -496,7 +244,7 @@ class Expr_GeneralExpression : public MMgt_TShared {
 %}
 
 %nodefaultctor Handle_Expr_GeneralExpression;
-class Handle_Expr_GeneralExpression : public Handle_MMgt_TShared {
+class Handle_Expr_GeneralExpression : public Handle_Standard_Transient {
 
     public:
         // constructors
@@ -508,19 +256,20 @@ class Handle_Expr_GeneralExpression : public Handle_MMgt_TShared {
         static const Handle_Expr_GeneralExpression DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_Expr_GeneralExpression {
     Expr_GeneralExpression* _get_reference() {
-    return (Expr_GeneralExpression*)$self->Access();
+    return (Expr_GeneralExpression*)$self->get();
     }
 };
 
 %extend Handle_Expr_GeneralExpression {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend Expr_GeneralExpression {
@@ -529,7 +278,7 @@ class Handle_Expr_GeneralExpression : public Handle_MMgt_TShared {
 	}
 };
 %nodefaultctor Expr_GeneralFunction;
-class Expr_GeneralFunction : public MMgt_TShared {
+class Expr_GeneralFunction : public Standard_Transient {
 	public:
 		%feature("compactdefaultargs") NbOfVariables;
 		%feature("autodoc", "	* Returns the number of variables of <self>.
@@ -580,7 +329,7 @@ class Expr_GeneralFunction : public MMgt_TShared {
 ") Evaluate;
 		virtual Standard_Real Evaluate (const Expr_Array1OfNamedUnknown & vars,const TColStd_Array1OfReal & vals);
 		%feature("compactdefaultargs") IsIdentical;
-		%feature("autodoc", "	* Tests if <self> and <func> are similar functions (same name and same used expression).
+		%feature("autodoc", "	* Tests if <self> and <func> are similar functions --same name and same used expression--.
 
 	:param func:
 	:type func: Handle_Expr_GeneralFunction &
@@ -621,7 +370,7 @@ class Expr_GeneralFunction : public MMgt_TShared {
 %}
 
 %nodefaultctor Handle_Expr_GeneralFunction;
-class Handle_Expr_GeneralFunction : public Handle_MMgt_TShared {
+class Handle_Expr_GeneralFunction : public Handle_Standard_Transient {
 
     public:
         // constructors
@@ -633,19 +382,20 @@ class Handle_Expr_GeneralFunction : public Handle_MMgt_TShared {
         static const Handle_Expr_GeneralFunction DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_Expr_GeneralFunction {
     Expr_GeneralFunction* _get_reference() {
-    return (Expr_GeneralFunction*)$self->Access();
+    return (Expr_GeneralFunction*)$self->get();
     }
 };
 
 %extend Handle_Expr_GeneralFunction {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend Expr_GeneralFunction {
@@ -654,7 +404,7 @@ class Handle_Expr_GeneralFunction : public Handle_MMgt_TShared {
 	}
 };
 %nodefaultctor Expr_GeneralRelation;
-class Expr_GeneralRelation : public MMgt_TShared {
+class Expr_GeneralRelation : public Standard_Transient {
 	public:
 		%feature("compactdefaultargs") IsSatisfied;
 		%feature("autodoc", "	* Returns the current status of the relation
@@ -752,7 +502,7 @@ class Expr_GeneralRelation : public MMgt_TShared {
 %}
 
 %nodefaultctor Handle_Expr_GeneralRelation;
-class Handle_Expr_GeneralRelation : public Handle_MMgt_TShared {
+class Handle_Expr_GeneralRelation : public Handle_Standard_Transient {
 
     public:
         // constructors
@@ -764,193 +514,23 @@ class Handle_Expr_GeneralRelation : public Handle_MMgt_TShared {
         static const Handle_Expr_GeneralRelation DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_Expr_GeneralRelation {
     Expr_GeneralRelation* _get_reference() {
-    return (Expr_GeneralRelation*)$self->Access();
+    return (Expr_GeneralRelation*)$self->get();
     }
 };
 
 %extend Handle_Expr_GeneralRelation {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend Expr_GeneralRelation {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor Expr_IndexedMapNodeOfMapOfNamedUnknown;
-class Expr_IndexedMapNodeOfMapOfNamedUnknown : public TCollection_MapNode {
-	public:
-		%feature("compactdefaultargs") Expr_IndexedMapNodeOfMapOfNamedUnknown;
-		%feature("autodoc", "	:param K1:
-	:type K1: Handle_Expr_NamedUnknown &
-	:param K2:
-	:type K2: int
-	:param n1:
-	:type n1: TCollection_MapNodePtr &
-	:param n2:
-	:type n2: TCollection_MapNodePtr &
-	:rtype: None
-") Expr_IndexedMapNodeOfMapOfNamedUnknown;
-		 Expr_IndexedMapNodeOfMapOfNamedUnknown (const Handle_Expr_NamedUnknown & K1,const Standard_Integer K2,const TCollection_MapNodePtr & n1,const TCollection_MapNodePtr & n2);
-		%feature("compactdefaultargs") Key1;
-		%feature("autodoc", "	:rtype: Handle_Expr_NamedUnknown
-") Key1;
-		Handle_Expr_NamedUnknown Key1 ();
-
-            %feature("autodoc","1");
-            %extend {
-                Standard_Integer GetKey2() {
-                return (Standard_Integer) $self->Key2();
-                }
-            };
-            %feature("autodoc","1");
-            %extend {
-                void SetKey2(Standard_Integer value ) {
-                $self->Key2()=value;
-                }
-            };
-            		%feature("compactdefaultargs") Next2;
-		%feature("autodoc", "	:rtype: TCollection_MapNodePtr
-") Next2;
-		TCollection_MapNodePtr & Next2 ();
-};
-
-
-%extend Expr_IndexedMapNodeOfMapOfNamedUnknown {
-	%pythoncode {
-		def GetHandle(self):
-		    try:
-		        return self.thisHandle
-		    except:
-		        self.thisHandle = Handle_Expr_IndexedMapNodeOfMapOfNamedUnknown(self)
-		        self.thisown = False
-		        return self.thisHandle
-	}
-};
-
-%pythonappend Handle_Expr_IndexedMapNodeOfMapOfNamedUnknown::Handle_Expr_IndexedMapNodeOfMapOfNamedUnknown %{
-    # register the handle in the base object
-    if len(args) > 0:
-        register_handle(self, args[0])
-%}
-
-%nodefaultctor Handle_Expr_IndexedMapNodeOfMapOfNamedUnknown;
-class Handle_Expr_IndexedMapNodeOfMapOfNamedUnknown : public Handle_TCollection_MapNode {
-
-    public:
-        // constructors
-        Handle_Expr_IndexedMapNodeOfMapOfNamedUnknown();
-        Handle_Expr_IndexedMapNodeOfMapOfNamedUnknown(const Handle_Expr_IndexedMapNodeOfMapOfNamedUnknown &aHandle);
-        Handle_Expr_IndexedMapNodeOfMapOfNamedUnknown(const Expr_IndexedMapNodeOfMapOfNamedUnknown *anItem);
-        void Nullify();
-        Standard_Boolean IsNull() const;
-        static const Handle_Expr_IndexedMapNodeOfMapOfNamedUnknown DownCast(const Handle_Standard_Transient &AnObject);
-
-};
-%extend Handle_Expr_IndexedMapNodeOfMapOfNamedUnknown {
-    Expr_IndexedMapNodeOfMapOfNamedUnknown* _get_reference() {
-    return (Expr_IndexedMapNodeOfMapOfNamedUnknown*)$self->Access();
-    }
-};
-
-%extend Handle_Expr_IndexedMapNodeOfMapOfNamedUnknown {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
-};
-
-%extend Expr_IndexedMapNodeOfMapOfNamedUnknown {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor Expr_MapOfNamedUnknown;
-class Expr_MapOfNamedUnknown : public TCollection_BasicMap {
-	public:
-		%feature("compactdefaultargs") Expr_MapOfNamedUnknown;
-		%feature("autodoc", "	:param NbBuckets: default value is 1
-	:type NbBuckets: int
-	:rtype: None
-") Expr_MapOfNamedUnknown;
-		 Expr_MapOfNamedUnknown (const Standard_Integer NbBuckets = 1);
-		%feature("compactdefaultargs") Expr_MapOfNamedUnknown;
-		%feature("autodoc", "	:param Other:
-	:type Other: Expr_MapOfNamedUnknown &
-	:rtype: None
-") Expr_MapOfNamedUnknown;
-		 Expr_MapOfNamedUnknown (const Expr_MapOfNamedUnknown & Other);
-		%feature("compactdefaultargs") Assign;
-		%feature("autodoc", "	:param Other:
-	:type Other: Expr_MapOfNamedUnknown &
-	:rtype: Expr_MapOfNamedUnknown
-") Assign;
-		Expr_MapOfNamedUnknown & Assign (const Expr_MapOfNamedUnknown & Other);
-		%feature("compactdefaultargs") operator =;
-		%feature("autodoc", "	:param Other:
-	:type Other: Expr_MapOfNamedUnknown &
-	:rtype: Expr_MapOfNamedUnknown
-") operator =;
-		Expr_MapOfNamedUnknown & operator = (const Expr_MapOfNamedUnknown & Other);
-		%feature("compactdefaultargs") ReSize;
-		%feature("autodoc", "	:param NbBuckets:
-	:type NbBuckets: int
-	:rtype: None
-") ReSize;
-		void ReSize (const Standard_Integer NbBuckets);
-		%feature("compactdefaultargs") Clear;
-		%feature("autodoc", "	:rtype: None
-") Clear;
-		void Clear ();
-		%feature("compactdefaultargs") Add;
-		%feature("autodoc", "	:param K:
-	:type K: Handle_Expr_NamedUnknown &
-	:rtype: int
-") Add;
-		Standard_Integer Add (const Handle_Expr_NamedUnknown & K);
-		%feature("compactdefaultargs") Substitute;
-		%feature("autodoc", "	:param I:
-	:type I: int
-	:param K:
-	:type K: Handle_Expr_NamedUnknown &
-	:rtype: None
-") Substitute;
-		void Substitute (const Standard_Integer I,const Handle_Expr_NamedUnknown & K);
-		%feature("compactdefaultargs") RemoveLast;
-		%feature("autodoc", "	:rtype: None
-") RemoveLast;
-		void RemoveLast ();
-		%feature("compactdefaultargs") Contains;
-		%feature("autodoc", "	:param K:
-	:type K: Handle_Expr_NamedUnknown &
-	:rtype: bool
-") Contains;
-		Standard_Boolean Contains (const Handle_Expr_NamedUnknown & K);
-		%feature("compactdefaultargs") FindKey;
-		%feature("autodoc", "	:param I:
-	:type I: int
-	:rtype: Handle_Expr_NamedUnknown
-") FindKey;
-		Handle_Expr_NamedUnknown FindKey (const Standard_Integer I);
-		%feature("compactdefaultargs") FindIndex;
-		%feature("autodoc", "	:param K:
-	:type K: Handle_Expr_NamedUnknown &
-	:rtype: int
-") FindIndex;
-		Standard_Integer FindIndex (const Handle_Expr_NamedUnknown & K);
-};
-
-
-%extend Expr_MapOfNamedUnknown {
 	%pythoncode {
 	__repr__ = _dumps_object
 	}
@@ -1023,434 +603,6 @@ class Expr_RelationIterator {
 	__repr__ = _dumps_object
 	}
 };
-%nodefaultctor Expr_SequenceNodeOfSequenceOfGeneralExpression;
-class Expr_SequenceNodeOfSequenceOfGeneralExpression : public TCollection_SeqNode {
-	public:
-		%feature("compactdefaultargs") Expr_SequenceNodeOfSequenceOfGeneralExpression;
-		%feature("autodoc", "	:param I:
-	:type I: Handle_Expr_GeneralExpression &
-	:param n:
-	:type n: TCollection_SeqNodePtr &
-	:param p:
-	:type p: TCollection_SeqNodePtr &
-	:rtype: None
-") Expr_SequenceNodeOfSequenceOfGeneralExpression;
-		 Expr_SequenceNodeOfSequenceOfGeneralExpression (const Handle_Expr_GeneralExpression & I,const TCollection_SeqNodePtr & n,const TCollection_SeqNodePtr & p);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:rtype: Handle_Expr_GeneralExpression
-") Value;
-		Handle_Expr_GeneralExpression Value ();
-};
-
-
-%extend Expr_SequenceNodeOfSequenceOfGeneralExpression {
-	%pythoncode {
-		def GetHandle(self):
-		    try:
-		        return self.thisHandle
-		    except:
-		        self.thisHandle = Handle_Expr_SequenceNodeOfSequenceOfGeneralExpression(self)
-		        self.thisown = False
-		        return self.thisHandle
-	}
-};
-
-%pythonappend Handle_Expr_SequenceNodeOfSequenceOfGeneralExpression::Handle_Expr_SequenceNodeOfSequenceOfGeneralExpression %{
-    # register the handle in the base object
-    if len(args) > 0:
-        register_handle(self, args[0])
-%}
-
-%nodefaultctor Handle_Expr_SequenceNodeOfSequenceOfGeneralExpression;
-class Handle_Expr_SequenceNodeOfSequenceOfGeneralExpression : public Handle_TCollection_SeqNode {
-
-    public:
-        // constructors
-        Handle_Expr_SequenceNodeOfSequenceOfGeneralExpression();
-        Handle_Expr_SequenceNodeOfSequenceOfGeneralExpression(const Handle_Expr_SequenceNodeOfSequenceOfGeneralExpression &aHandle);
-        Handle_Expr_SequenceNodeOfSequenceOfGeneralExpression(const Expr_SequenceNodeOfSequenceOfGeneralExpression *anItem);
-        void Nullify();
-        Standard_Boolean IsNull() const;
-        static const Handle_Expr_SequenceNodeOfSequenceOfGeneralExpression DownCast(const Handle_Standard_Transient &AnObject);
-
-};
-%extend Handle_Expr_SequenceNodeOfSequenceOfGeneralExpression {
-    Expr_SequenceNodeOfSequenceOfGeneralExpression* _get_reference() {
-    return (Expr_SequenceNodeOfSequenceOfGeneralExpression*)$self->Access();
-    }
-};
-
-%extend Handle_Expr_SequenceNodeOfSequenceOfGeneralExpression {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
-};
-
-%extend Expr_SequenceNodeOfSequenceOfGeneralExpression {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor Expr_SequenceNodeOfSequenceOfGeneralRelation;
-class Expr_SequenceNodeOfSequenceOfGeneralRelation : public TCollection_SeqNode {
-	public:
-		%feature("compactdefaultargs") Expr_SequenceNodeOfSequenceOfGeneralRelation;
-		%feature("autodoc", "	:param I:
-	:type I: Handle_Expr_GeneralRelation &
-	:param n:
-	:type n: TCollection_SeqNodePtr &
-	:param p:
-	:type p: TCollection_SeqNodePtr &
-	:rtype: None
-") Expr_SequenceNodeOfSequenceOfGeneralRelation;
-		 Expr_SequenceNodeOfSequenceOfGeneralRelation (const Handle_Expr_GeneralRelation & I,const TCollection_SeqNodePtr & n,const TCollection_SeqNodePtr & p);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:rtype: Handle_Expr_GeneralRelation
-") Value;
-		Handle_Expr_GeneralRelation Value ();
-};
-
-
-%extend Expr_SequenceNodeOfSequenceOfGeneralRelation {
-	%pythoncode {
-		def GetHandle(self):
-		    try:
-		        return self.thisHandle
-		    except:
-		        self.thisHandle = Handle_Expr_SequenceNodeOfSequenceOfGeneralRelation(self)
-		        self.thisown = False
-		        return self.thisHandle
-	}
-};
-
-%pythonappend Handle_Expr_SequenceNodeOfSequenceOfGeneralRelation::Handle_Expr_SequenceNodeOfSequenceOfGeneralRelation %{
-    # register the handle in the base object
-    if len(args) > 0:
-        register_handle(self, args[0])
-%}
-
-%nodefaultctor Handle_Expr_SequenceNodeOfSequenceOfGeneralRelation;
-class Handle_Expr_SequenceNodeOfSequenceOfGeneralRelation : public Handle_TCollection_SeqNode {
-
-    public:
-        // constructors
-        Handle_Expr_SequenceNodeOfSequenceOfGeneralRelation();
-        Handle_Expr_SequenceNodeOfSequenceOfGeneralRelation(const Handle_Expr_SequenceNodeOfSequenceOfGeneralRelation &aHandle);
-        Handle_Expr_SequenceNodeOfSequenceOfGeneralRelation(const Expr_SequenceNodeOfSequenceOfGeneralRelation *anItem);
-        void Nullify();
-        Standard_Boolean IsNull() const;
-        static const Handle_Expr_SequenceNodeOfSequenceOfGeneralRelation DownCast(const Handle_Standard_Transient &AnObject);
-
-};
-%extend Handle_Expr_SequenceNodeOfSequenceOfGeneralRelation {
-    Expr_SequenceNodeOfSequenceOfGeneralRelation* _get_reference() {
-    return (Expr_SequenceNodeOfSequenceOfGeneralRelation*)$self->Access();
-    }
-};
-
-%extend Handle_Expr_SequenceNodeOfSequenceOfGeneralRelation {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
-};
-
-%extend Expr_SequenceNodeOfSequenceOfGeneralRelation {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor Expr_SequenceOfGeneralExpression;
-class Expr_SequenceOfGeneralExpression : public TCollection_BaseSequence {
-	public:
-		%feature("compactdefaultargs") Expr_SequenceOfGeneralExpression;
-		%feature("autodoc", "	:rtype: None
-") Expr_SequenceOfGeneralExpression;
-		 Expr_SequenceOfGeneralExpression ();
-		%feature("compactdefaultargs") Expr_SequenceOfGeneralExpression;
-		%feature("autodoc", "	:param Other:
-	:type Other: Expr_SequenceOfGeneralExpression &
-	:rtype: None
-") Expr_SequenceOfGeneralExpression;
-		 Expr_SequenceOfGeneralExpression (const Expr_SequenceOfGeneralExpression & Other);
-		%feature("compactdefaultargs") Clear;
-		%feature("autodoc", "	:rtype: None
-") Clear;
-		void Clear ();
-		%feature("compactdefaultargs") Assign;
-		%feature("autodoc", "	:param Other:
-	:type Other: Expr_SequenceOfGeneralExpression &
-	:rtype: Expr_SequenceOfGeneralExpression
-") Assign;
-		const Expr_SequenceOfGeneralExpression & Assign (const Expr_SequenceOfGeneralExpression & Other);
-		%feature("compactdefaultargs") operator =;
-		%feature("autodoc", "	:param Other:
-	:type Other: Expr_SequenceOfGeneralExpression &
-	:rtype: Expr_SequenceOfGeneralExpression
-") operator =;
-		const Expr_SequenceOfGeneralExpression & operator = (const Expr_SequenceOfGeneralExpression & Other);
-		%feature("compactdefaultargs") Append;
-		%feature("autodoc", "	:param T:
-	:type T: Handle_Expr_GeneralExpression &
-	:rtype: None
-") Append;
-		void Append (const Handle_Expr_GeneralExpression & T);
-		%feature("compactdefaultargs") Append;
-		%feature("autodoc", "	:param S:
-	:type S: Expr_SequenceOfGeneralExpression &
-	:rtype: None
-") Append;
-		void Append (Expr_SequenceOfGeneralExpression & S);
-		%feature("compactdefaultargs") Prepend;
-		%feature("autodoc", "	:param T:
-	:type T: Handle_Expr_GeneralExpression &
-	:rtype: None
-") Prepend;
-		void Prepend (const Handle_Expr_GeneralExpression & T);
-		%feature("compactdefaultargs") Prepend;
-		%feature("autodoc", "	:param S:
-	:type S: Expr_SequenceOfGeneralExpression &
-	:rtype: None
-") Prepend;
-		void Prepend (Expr_SequenceOfGeneralExpression & S);
-		%feature("compactdefaultargs") InsertBefore;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param T:
-	:type T: Handle_Expr_GeneralExpression &
-	:rtype: None
-") InsertBefore;
-		void InsertBefore (const Standard_Integer Index,const Handle_Expr_GeneralExpression & T);
-		%feature("compactdefaultargs") InsertBefore;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param S:
-	:type S: Expr_SequenceOfGeneralExpression &
-	:rtype: None
-") InsertBefore;
-		void InsertBefore (const Standard_Integer Index,Expr_SequenceOfGeneralExpression & S);
-		%feature("compactdefaultargs") InsertAfter;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param T:
-	:type T: Handle_Expr_GeneralExpression &
-	:rtype: None
-") InsertAfter;
-		void InsertAfter (const Standard_Integer Index,const Handle_Expr_GeneralExpression & T);
-		%feature("compactdefaultargs") InsertAfter;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param S:
-	:type S: Expr_SequenceOfGeneralExpression &
-	:rtype: None
-") InsertAfter;
-		void InsertAfter (const Standard_Integer Index,Expr_SequenceOfGeneralExpression & S);
-		%feature("compactdefaultargs") First;
-		%feature("autodoc", "	:rtype: Handle_Expr_GeneralExpression
-") First;
-		Handle_Expr_GeneralExpression First ();
-		%feature("compactdefaultargs") Last;
-		%feature("autodoc", "	:rtype: Handle_Expr_GeneralExpression
-") Last;
-		Handle_Expr_GeneralExpression Last ();
-		%feature("compactdefaultargs") Split;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param Sub:
-	:type Sub: Expr_SequenceOfGeneralExpression &
-	:rtype: None
-") Split;
-		void Split (const Standard_Integer Index,Expr_SequenceOfGeneralExpression & Sub);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: Handle_Expr_GeneralExpression
-") Value;
-		Handle_Expr_GeneralExpression Value (const Standard_Integer Index);
-		%feature("compactdefaultargs") SetValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param I:
-	:type I: Handle_Expr_GeneralExpression &
-	:rtype: None
-") SetValue;
-		void SetValue (const Standard_Integer Index,const Handle_Expr_GeneralExpression & I);
-		%feature("compactdefaultargs") ChangeValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: Handle_Expr_GeneralExpression
-") ChangeValue;
-		Handle_Expr_GeneralExpression ChangeValue (const Standard_Integer Index);
-		%feature("compactdefaultargs") Remove;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: None
-") Remove;
-		void Remove (const Standard_Integer Index);
-		%feature("compactdefaultargs") Remove;
-		%feature("autodoc", "	:param FromIndex:
-	:type FromIndex: int
-	:param ToIndex:
-	:type ToIndex: int
-	:rtype: None
-") Remove;
-		void Remove (const Standard_Integer FromIndex,const Standard_Integer ToIndex);
-};
-
-
-%extend Expr_SequenceOfGeneralExpression {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor Expr_SequenceOfGeneralRelation;
-class Expr_SequenceOfGeneralRelation : public TCollection_BaseSequence {
-	public:
-		%feature("compactdefaultargs") Expr_SequenceOfGeneralRelation;
-		%feature("autodoc", "	:rtype: None
-") Expr_SequenceOfGeneralRelation;
-		 Expr_SequenceOfGeneralRelation ();
-		%feature("compactdefaultargs") Expr_SequenceOfGeneralRelation;
-		%feature("autodoc", "	:param Other:
-	:type Other: Expr_SequenceOfGeneralRelation &
-	:rtype: None
-") Expr_SequenceOfGeneralRelation;
-		 Expr_SequenceOfGeneralRelation (const Expr_SequenceOfGeneralRelation & Other);
-		%feature("compactdefaultargs") Clear;
-		%feature("autodoc", "	:rtype: None
-") Clear;
-		void Clear ();
-		%feature("compactdefaultargs") Assign;
-		%feature("autodoc", "	:param Other:
-	:type Other: Expr_SequenceOfGeneralRelation &
-	:rtype: Expr_SequenceOfGeneralRelation
-") Assign;
-		const Expr_SequenceOfGeneralRelation & Assign (const Expr_SequenceOfGeneralRelation & Other);
-		%feature("compactdefaultargs") operator =;
-		%feature("autodoc", "	:param Other:
-	:type Other: Expr_SequenceOfGeneralRelation &
-	:rtype: Expr_SequenceOfGeneralRelation
-") operator =;
-		const Expr_SequenceOfGeneralRelation & operator = (const Expr_SequenceOfGeneralRelation & Other);
-		%feature("compactdefaultargs") Append;
-		%feature("autodoc", "	:param T:
-	:type T: Handle_Expr_GeneralRelation &
-	:rtype: None
-") Append;
-		void Append (const Handle_Expr_GeneralRelation & T);
-		%feature("compactdefaultargs") Append;
-		%feature("autodoc", "	:param S:
-	:type S: Expr_SequenceOfGeneralRelation &
-	:rtype: None
-") Append;
-		void Append (Expr_SequenceOfGeneralRelation & S);
-		%feature("compactdefaultargs") Prepend;
-		%feature("autodoc", "	:param T:
-	:type T: Handle_Expr_GeneralRelation &
-	:rtype: None
-") Prepend;
-		void Prepend (const Handle_Expr_GeneralRelation & T);
-		%feature("compactdefaultargs") Prepend;
-		%feature("autodoc", "	:param S:
-	:type S: Expr_SequenceOfGeneralRelation &
-	:rtype: None
-") Prepend;
-		void Prepend (Expr_SequenceOfGeneralRelation & S);
-		%feature("compactdefaultargs") InsertBefore;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param T:
-	:type T: Handle_Expr_GeneralRelation &
-	:rtype: None
-") InsertBefore;
-		void InsertBefore (const Standard_Integer Index,const Handle_Expr_GeneralRelation & T);
-		%feature("compactdefaultargs") InsertBefore;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param S:
-	:type S: Expr_SequenceOfGeneralRelation &
-	:rtype: None
-") InsertBefore;
-		void InsertBefore (const Standard_Integer Index,Expr_SequenceOfGeneralRelation & S);
-		%feature("compactdefaultargs") InsertAfter;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param T:
-	:type T: Handle_Expr_GeneralRelation &
-	:rtype: None
-") InsertAfter;
-		void InsertAfter (const Standard_Integer Index,const Handle_Expr_GeneralRelation & T);
-		%feature("compactdefaultargs") InsertAfter;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param S:
-	:type S: Expr_SequenceOfGeneralRelation &
-	:rtype: None
-") InsertAfter;
-		void InsertAfter (const Standard_Integer Index,Expr_SequenceOfGeneralRelation & S);
-		%feature("compactdefaultargs") First;
-		%feature("autodoc", "	:rtype: Handle_Expr_GeneralRelation
-") First;
-		Handle_Expr_GeneralRelation First ();
-		%feature("compactdefaultargs") Last;
-		%feature("autodoc", "	:rtype: Handle_Expr_GeneralRelation
-") Last;
-		Handle_Expr_GeneralRelation Last ();
-		%feature("compactdefaultargs") Split;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param Sub:
-	:type Sub: Expr_SequenceOfGeneralRelation &
-	:rtype: None
-") Split;
-		void Split (const Standard_Integer Index,Expr_SequenceOfGeneralRelation & Sub);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: Handle_Expr_GeneralRelation
-") Value;
-		Handle_Expr_GeneralRelation Value (const Standard_Integer Index);
-		%feature("compactdefaultargs") SetValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param I:
-	:type I: Handle_Expr_GeneralRelation &
-	:rtype: None
-") SetValue;
-		void SetValue (const Standard_Integer Index,const Handle_Expr_GeneralRelation & I);
-		%feature("compactdefaultargs") ChangeValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: Handle_Expr_GeneralRelation
-") ChangeValue;
-		Handle_Expr_GeneralRelation ChangeValue (const Standard_Integer Index);
-		%feature("compactdefaultargs") Remove;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: None
-") Remove;
-		void Remove (const Standard_Integer Index);
-		%feature("compactdefaultargs") Remove;
-		%feature("autodoc", "	:param FromIndex:
-	:type FromIndex: int
-	:param ToIndex:
-	:type ToIndex: int
-	:rtype: None
-") Remove;
-		void Remove (const Standard_Integer FromIndex,const Standard_Integer ToIndex);
-};
-
-
-%extend Expr_SequenceOfGeneralRelation {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
 %nodefaultctor Expr_UnknownIterator;
 class Expr_UnknownIterator {
 	public:
@@ -1508,13 +660,13 @@ class Expr_BinaryExpression : public Expr_GeneralExpression {
 ") SetSecondOperand;
 		void SetSecondOperand (const Handle_Expr_GeneralExpression & exp);
 		%feature("compactdefaultargs") NbSubExpressions;
-		%feature("autodoc", "	* returns the number of sub-expressions contained in <self> ( >= 0)
+		%feature("autodoc", "	* returns the number of sub-expressions contained in <self> -- >= 0--
 
 	:rtype: int
 ") NbSubExpressions;
 		Standard_Integer NbSubExpressions ();
 		%feature("compactdefaultargs") SubExpression;
-		%feature("autodoc", "	* returns the <I>-th sub-expression of <self> raises OutOfRange if <I> > NbSubExpressions(me)
+		%feature("autodoc", "	* returns the <I>-th sub-expression of <self> raises OutOfRange if <I> > NbSubExpressions--me--
 
 	:param I:
 	:type I: int
@@ -1585,19 +737,20 @@ class Handle_Expr_BinaryExpression : public Handle_Expr_GeneralExpression {
         static const Handle_Expr_BinaryExpression DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_Expr_BinaryExpression {
     Expr_BinaryExpression* _get_reference() {
-    return (Expr_BinaryExpression*)$self->Access();
+    return (Expr_BinaryExpression*)$self->get();
     }
 };
 
 %extend Handle_Expr_BinaryExpression {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend Expr_BinaryExpression {
@@ -1635,7 +788,7 @@ class Expr_FunctionDerivative : public Expr_GeneralFunction {
 ") Variable;
 		Handle_Expr_NamedUnknown Variable (const Standard_Integer index);
 		%feature("compactdefaultargs") Evaluate;
-		%feature("autodoc", "	* Computes the value of <self> with the given variables. Raises DimensionMismatch if Length(vars) is different from Length(values).
+		%feature("autodoc", "	* Computes the value of <self> with the given variables. Raises DimensionMismatch if Length--vars-- is different from Length--values--.
 
 	:param vars:
 	:type vars: Expr_Array1OfNamedUnknown &
@@ -1669,7 +822,7 @@ class Expr_FunctionDerivative : public Expr_GeneralFunction {
 ") Derivative;
 		Handle_Expr_GeneralFunction Derivative (const Handle_Expr_NamedUnknown & var,const Standard_Integer deg);
 		%feature("compactdefaultargs") IsIdentical;
-		%feature("autodoc", "	* Tests if <self> and <func> are similar functions (same name and same used expression).
+		%feature("autodoc", "	* Tests if <self> and <func> are similar functions --same name and same used expression--.
 
 	:param func:
 	:type func: Handle_Expr_GeneralFunction &
@@ -1748,19 +901,20 @@ class Handle_Expr_FunctionDerivative : public Handle_Expr_GeneralFunction {
         static const Handle_Expr_FunctionDerivative DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_Expr_FunctionDerivative {
     Expr_FunctionDerivative* _get_reference() {
-    return (Expr_FunctionDerivative*)$self->Access();
+    return (Expr_FunctionDerivative*)$self->get();
     }
 };
 
 %extend Handle_Expr_FunctionDerivative {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend Expr_FunctionDerivative {
@@ -1835,19 +989,20 @@ class Handle_Expr_NamedExpression : public Handle_Expr_GeneralExpression {
         static const Handle_Expr_NamedExpression DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_Expr_NamedExpression {
     Expr_NamedExpression* _get_reference() {
-    return (Expr_NamedExpression*)$self->Access();
+    return (Expr_NamedExpression*)$self->get();
     }
 };
 
 %extend Handle_Expr_NamedExpression {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend Expr_NamedExpression {
@@ -1899,7 +1054,7 @@ class Expr_NamedFunction : public Expr_GeneralFunction {
 ") Variable;
 		Handle_Expr_NamedUnknown Variable (const Standard_Integer index);
 		%feature("compactdefaultargs") Evaluate;
-		%feature("autodoc", "	* Computes the value of <self> with the given variables. Raises DimensionMismatch if Length(vars) is different from Length(values).
+		%feature("autodoc", "	* Computes the value of <self> with the given variables. Raises DimensionMismatch if Length--vars-- is different from Length--values--.
 
 	:param vars:
 	:type vars: Expr_Array1OfNamedUnknown &
@@ -1933,7 +1088,7 @@ class Expr_NamedFunction : public Expr_GeneralFunction {
 ") Derivative;
 		Handle_Expr_GeneralFunction Derivative (const Handle_Expr_NamedUnknown & var,const Standard_Integer deg);
 		%feature("compactdefaultargs") IsIdentical;
-		%feature("autodoc", "	* Tests if <self> and <func> are similar functions (same name and same used expression).
+		%feature("autodoc", "	* Tests if <self> and <func> are similar functions --same name and same used expression--.
 
 	:param func:
 	:type func: Handle_Expr_GeneralFunction &
@@ -2000,19 +1155,20 @@ class Handle_Expr_NamedFunction : public Handle_Expr_GeneralFunction {
         static const Handle_Expr_NamedFunction DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_Expr_NamedFunction {
     Expr_NamedFunction* _get_reference() {
-    return (Expr_NamedFunction*)$self->Access();
+    return (Expr_NamedFunction*)$self->get();
     }
 };
 
 %extend Handle_Expr_NamedFunction {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend Expr_NamedFunction {
@@ -2040,13 +1196,13 @@ class Expr_NumericValue : public Expr_GeneralExpression {
 ") SetValue;
 		void SetValue (const Standard_Real val);
 		%feature("compactdefaultargs") NbSubExpressions;
-		%feature("autodoc", "	* Returns the number of sub-expressions contained in <self> ( >= 0)
+		%feature("autodoc", "	* Returns the number of sub-expressions contained in <self> -- >= 0--
 
 	:rtype: int
 ") NbSubExpressions;
 		Standard_Integer NbSubExpressions ();
 		%feature("compactdefaultargs") SubExpression;
-		%feature("autodoc", "	* Returns the <I>-th sub-expression of <self> raises OutOfRange if <I> > NbSubExpressions(me)
+		%feature("autodoc", "	* Returns the <I>-th sub-expression of <self> raises OutOfRange if <I> > NbSubExpressions--me--
 
 	:param I:
 	:type I: int
@@ -2126,7 +1282,7 @@ class Expr_NumericValue : public Expr_GeneralExpression {
 ") Replace;
 		void Replace (const Handle_Expr_NamedUnknown & var,const Handle_Expr_GeneralExpression & with);
 		%feature("compactdefaultargs") Evaluate;
-		%feature("autodoc", "	* Returns the value of <self> (as a Real) by replacement of <vars> by <vals>.
+		%feature("autodoc", "	* Returns the value of <self> --as a Real-- by replacement of <vars> by <vals>.
 
 	:param vars:
 	:type vars: Expr_Array1OfNamedUnknown &
@@ -2175,19 +1331,20 @@ class Handle_Expr_NumericValue : public Handle_Expr_GeneralExpression {
         static const Handle_Expr_NumericValue DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_Expr_NumericValue {
     Expr_NumericValue* _get_reference() {
-    return (Expr_NumericValue*)$self->Access();
+    return (Expr_NumericValue*)$self->get();
     }
 };
 
 %extend Handle_Expr_NumericValue {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend Expr_NumericValue {
@@ -2223,13 +1380,13 @@ class Expr_PolyExpression : public Expr_GeneralExpression {
 ") SetOperand;
 		void SetOperand (const Handle_Expr_GeneralExpression & exp,const Standard_Integer index);
 		%feature("compactdefaultargs") NbSubExpressions;
-		%feature("autodoc", "	* returns the number of sub-expressions contained in <self> ( >= 2)
+		%feature("autodoc", "	* returns the number of sub-expressions contained in <self> -- >= 2--
 
 	:rtype: int
 ") NbSubExpressions;
 		Standard_Integer NbSubExpressions ();
 		%feature("compactdefaultargs") SubExpression;
-		%feature("autodoc", "	* Returns the sub-expression denoted by <I> in <self> Raises OutOfRange if <I> > NbSubExpressions(me)
+		%feature("autodoc", "	* Returns the sub-expression denoted by <I> in <self> Raises OutOfRange if <I> > NbSubExpressions--me--
 
 	:param I:
 	:type I: int
@@ -2300,19 +1457,20 @@ class Handle_Expr_PolyExpression : public Handle_Expr_GeneralExpression {
         static const Handle_Expr_PolyExpression DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_Expr_PolyExpression {
     Expr_PolyExpression* _get_reference() {
-    return (Expr_PolyExpression*)$self->Access();
+    return (Expr_PolyExpression*)$self->get();
     }
 };
 
 %extend Handle_Expr_PolyExpression {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend Expr_PolyExpression {
@@ -2364,7 +1522,7 @@ class Expr_SingleRelation : public Expr_GeneralRelation {
 ") NbOfSubRelations;
 		Standard_Integer NbOfSubRelations ();
 		%feature("compactdefaultargs") NbOfSingleRelations;
-		%feature("autodoc", "	* Returns the number of SingleRelations contained in <self> (Always 1).
+		%feature("autodoc", "	* Returns the number of SingleRelations contained in <self> --Always 1--.
 
 	:rtype: int
 ") NbOfSingleRelations;
@@ -2429,19 +1587,20 @@ class Handle_Expr_SingleRelation : public Handle_Expr_GeneralRelation {
         static const Handle_Expr_SingleRelation DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_Expr_SingleRelation {
     Expr_SingleRelation* _get_reference() {
-    return (Expr_SingleRelation*)$self->Access();
+    return (Expr_SingleRelation*)$self->get();
     }
 };
 
 %extend Handle_Expr_SingleRelation {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend Expr_SingleRelation {
@@ -2580,19 +1739,20 @@ class Handle_Expr_SystemRelation : public Handle_Expr_GeneralRelation {
         static const Handle_Expr_SystemRelation DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_Expr_SystemRelation {
     Expr_SystemRelation* _get_reference() {
-    return (Expr_SystemRelation*)$self->Access();
+    return (Expr_SystemRelation*)$self->get();
     }
 };
 
 %extend Handle_Expr_SystemRelation {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend Expr_SystemRelation {
@@ -2618,13 +1778,13 @@ class Expr_UnaryExpression : public Expr_GeneralExpression {
 ") SetOperand;
 		void SetOperand (const Handle_Expr_GeneralExpression & exp);
 		%feature("compactdefaultargs") NbSubExpressions;
-		%feature("autodoc", "	* Returns the number of sub-expressions contained in <self> ( >= 0)
+		%feature("autodoc", "	* Returns the number of sub-expressions contained in <self> -- >= 0--
 
 	:rtype: int
 ") NbSubExpressions;
 		Standard_Integer NbSubExpressions ();
 		%feature("compactdefaultargs") SubExpression;
-		%feature("autodoc", "	* Returns the <I>-th sub-expression of <self>. Raises OutOfRange if <I> > NbSubExpressions(me)
+		%feature("autodoc", "	* Returns the <I>-th sub-expression of <self>. Raises OutOfRange if <I> > NbSubExpressions--me--
 
 	:param I:
 	:type I: int
@@ -2695,19 +1855,20 @@ class Handle_Expr_UnaryExpression : public Handle_Expr_GeneralExpression {
         static const Handle_Expr_UnaryExpression DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_Expr_UnaryExpression {
     Expr_UnaryExpression* _get_reference() {
-    return (Expr_UnaryExpression*)$self->Access();
+    return (Expr_UnaryExpression*)$self->get();
     }
 };
 
 %extend Handle_Expr_UnaryExpression {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend Expr_UnaryExpression {
@@ -2759,7 +1920,7 @@ class Expr_Absolute : public Expr_UnaryExpression {
 ") Derivative;
 		Handle_Expr_GeneralExpression Derivative (const Handle_Expr_NamedUnknown & X);
 		%feature("compactdefaultargs") Evaluate;
-		%feature("autodoc", "	* Returns the value of <self> (as a Real) by replacement of <vars> by <vals>. Raises NotEvaluable if <self> contains NamedUnknown not in <vars> or NumericError if result cannot be computed.
+		%feature("autodoc", "	* Returns the value of <self> --as a Real-- by replacement of <vars> by <vals>. Raises NotEvaluable if <self> contains NamedUnknown not in <vars> or NumericError if result cannot be computed.
 
 	:param vars:
 	:type vars: Expr_Array1OfNamedUnknown &
@@ -2808,19 +1969,20 @@ class Handle_Expr_Absolute : public Handle_Expr_UnaryExpression {
         static const Handle_Expr_Absolute DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_Expr_Absolute {
     Expr_Absolute* _get_reference() {
-    return (Expr_Absolute*)$self->Access();
+    return (Expr_Absolute*)$self->get();
     }
 };
 
 %extend Handle_Expr_Absolute {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend Expr_Absolute {
@@ -2872,7 +2034,7 @@ class Expr_ArcCosine : public Expr_UnaryExpression {
 ") Derivative;
 		Handle_Expr_GeneralExpression Derivative (const Handle_Expr_NamedUnknown & X);
 		%feature("compactdefaultargs") Evaluate;
-		%feature("autodoc", "	* Returns the value of <self> (as a Real) by replacement of <vars> by <vals>. Raises NotEvaluable if <self> contains NamedUnknown not in <vars> or NumericError if result cannot be computed.
+		%feature("autodoc", "	* Returns the value of <self> --as a Real-- by replacement of <vars> by <vals>. Raises NotEvaluable if <self> contains NamedUnknown not in <vars> or NumericError if result cannot be computed.
 
 	:param vars:
 	:type vars: Expr_Array1OfNamedUnknown &
@@ -2921,19 +2083,20 @@ class Handle_Expr_ArcCosine : public Handle_Expr_UnaryExpression {
         static const Handle_Expr_ArcCosine DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_Expr_ArcCosine {
     Expr_ArcCosine* _get_reference() {
-    return (Expr_ArcCosine*)$self->Access();
+    return (Expr_ArcCosine*)$self->get();
     }
 };
 
 %extend Handle_Expr_ArcCosine {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend Expr_ArcCosine {
@@ -2985,7 +2148,7 @@ class Expr_ArcSine : public Expr_UnaryExpression {
 ") Derivative;
 		Handle_Expr_GeneralExpression Derivative (const Handle_Expr_NamedUnknown & X);
 		%feature("compactdefaultargs") Evaluate;
-		%feature("autodoc", "	* Returns the value of <self> (as a Real) by replacement of <vars> by <vals>. Raises NotEvaluable if <self> contains NamedUnknown not in <vars> or NumericError if result cannot be computed.
+		%feature("autodoc", "	* Returns the value of <self> --as a Real-- by replacement of <vars> by <vals>. Raises NotEvaluable if <self> contains NamedUnknown not in <vars> or NumericError if result cannot be computed.
 
 	:param vars:
 	:type vars: Expr_Array1OfNamedUnknown &
@@ -3034,19 +2197,20 @@ class Handle_Expr_ArcSine : public Handle_Expr_UnaryExpression {
         static const Handle_Expr_ArcSine DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_Expr_ArcSine {
     Expr_ArcSine* _get_reference() {
-    return (Expr_ArcSine*)$self->Access();
+    return (Expr_ArcSine*)$self->get();
     }
 };
 
 %extend Handle_Expr_ArcSine {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend Expr_ArcSine {
@@ -3098,7 +2262,7 @@ class Expr_ArcTangent : public Expr_UnaryExpression {
 ") Derivative;
 		Handle_Expr_GeneralExpression Derivative (const Handle_Expr_NamedUnknown & X);
 		%feature("compactdefaultargs") Evaluate;
-		%feature("autodoc", "	* Returns the value of <self> (as a Real) by replacement of <vars> by <vals>. Raises NotEvaluable if <self> contains NamedUnknown not in <vars> or NumericError if result cannot be computed.
+		%feature("autodoc", "	* Returns the value of <self> --as a Real-- by replacement of <vars> by <vals>. Raises NotEvaluable if <self> contains NamedUnknown not in <vars> or NumericError if result cannot be computed.
 
 	:param vars:
 	:type vars: Expr_Array1OfNamedUnknown &
@@ -3147,19 +2311,20 @@ class Handle_Expr_ArcTangent : public Handle_Expr_UnaryExpression {
         static const Handle_Expr_ArcTangent DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_Expr_ArcTangent {
     Expr_ArcTangent* _get_reference() {
-    return (Expr_ArcTangent*)$self->Access();
+    return (Expr_ArcTangent*)$self->get();
     }
 };
 
 %extend Handle_Expr_ArcTangent {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend Expr_ArcTangent {
@@ -3211,7 +2376,7 @@ class Expr_ArgCosh : public Expr_UnaryExpression {
 ") Derivative;
 		Handle_Expr_GeneralExpression Derivative (const Handle_Expr_NamedUnknown & X);
 		%feature("compactdefaultargs") Evaluate;
-		%feature("autodoc", "	* Returns the value of <self> (as a Real) by replacement of <vars> by <vals>. Raises NotEvaluable if <self> contains NamedUnknown not in <vars> or NumericError if result cannot be computed.
+		%feature("autodoc", "	* Returns the value of <self> --as a Real-- by replacement of <vars> by <vals>. Raises NotEvaluable if <self> contains NamedUnknown not in <vars> or NumericError if result cannot be computed.
 
 	:param vars:
 	:type vars: Expr_Array1OfNamedUnknown &
@@ -3260,19 +2425,20 @@ class Handle_Expr_ArgCosh : public Handle_Expr_UnaryExpression {
         static const Handle_Expr_ArgCosh DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_Expr_ArgCosh {
     Expr_ArgCosh* _get_reference() {
-    return (Expr_ArgCosh*)$self->Access();
+    return (Expr_ArgCosh*)$self->get();
     }
 };
 
 %extend Handle_Expr_ArgCosh {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend Expr_ArgCosh {
@@ -3324,7 +2490,7 @@ class Expr_ArgSinh : public Expr_UnaryExpression {
 ") Derivative;
 		Handle_Expr_GeneralExpression Derivative (const Handle_Expr_NamedUnknown & X);
 		%feature("compactdefaultargs") Evaluate;
-		%feature("autodoc", "	* Returns the value of <self> (as a Real) by replacement of <vars> by <vals>. Raises NotEvaluable if <self> contains NamedUnknown not in <vars> or NumericError if result cannot be computed.
+		%feature("autodoc", "	* Returns the value of <self> --as a Real-- by replacement of <vars> by <vals>. Raises NotEvaluable if <self> contains NamedUnknown not in <vars> or NumericError if result cannot be computed.
 
 	:param vars:
 	:type vars: Expr_Array1OfNamedUnknown &
@@ -3373,19 +2539,20 @@ class Handle_Expr_ArgSinh : public Handle_Expr_UnaryExpression {
         static const Handle_Expr_ArgSinh DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_Expr_ArgSinh {
     Expr_ArgSinh* _get_reference() {
-    return (Expr_ArgSinh*)$self->Access();
+    return (Expr_ArgSinh*)$self->get();
     }
 };
 
 %extend Handle_Expr_ArgSinh {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend Expr_ArgSinh {
@@ -3437,7 +2604,7 @@ class Expr_ArgTanh : public Expr_UnaryExpression {
 ") Derivative;
 		Handle_Expr_GeneralExpression Derivative (const Handle_Expr_NamedUnknown & X);
 		%feature("compactdefaultargs") Evaluate;
-		%feature("autodoc", "	* Returns the value of <self> (as a Real) by replacement of <vars> by <vals>. Raises NotEvaluable if <self> contains NamedUnknown not in <vars> or NumericError if result cannot be computed.
+		%feature("autodoc", "	* Returns the value of <self> --as a Real-- by replacement of <vars> by <vals>. Raises NotEvaluable if <self> contains NamedUnknown not in <vars> or NumericError if result cannot be computed.
 
 	:param vars:
 	:type vars: Expr_Array1OfNamedUnknown &
@@ -3486,19 +2653,20 @@ class Handle_Expr_ArgTanh : public Handle_Expr_UnaryExpression {
         static const Handle_Expr_ArgTanh DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_Expr_ArgTanh {
     Expr_ArgTanh* _get_reference() {
-    return (Expr_ArgTanh*)$self->Access();
+    return (Expr_ArgTanh*)$self->get();
     }
 };
 
 %extend Handle_Expr_ArgTanh {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend Expr_ArgTanh {
@@ -3510,7 +2678,7 @@ class Handle_Expr_ArgTanh : public Handle_Expr_UnaryExpression {
 class Expr_BinaryFunction : public Expr_BinaryExpression {
 	public:
 		%feature("compactdefaultargs") Expr_BinaryFunction;
-		%feature("autodoc", "	* Creates <self> as <func> (<exp1>,<exp2>). Raises exception if <func> is not binary.
+		%feature("autodoc", "	* Creates <self> as <func> --<exp1>,<exp2>--. Raises exception if <func> is not binary.
 
 	:param func:
 	:type func: Handle_Expr_GeneralFunction &
@@ -3560,7 +2728,7 @@ class Expr_BinaryFunction : public Expr_BinaryExpression {
 ") Derivative;
 		Handle_Expr_GeneralExpression Derivative (const Handle_Expr_NamedUnknown & X);
 		%feature("compactdefaultargs") Evaluate;
-		%feature("autodoc", "	* Returns the value of <self> (as a Real) by replacement of <vars> by <vals>. Raises NotEvaluable if <self> contains NamedUnknown not in <vars> or NumericError if result cannot be computed.
+		%feature("autodoc", "	* Returns the value of <self> --as a Real-- by replacement of <vars> by <vals>. Raises NotEvaluable if <self> contains NamedUnknown not in <vars> or NumericError if result cannot be computed.
 
 	:param vars:
 	:type vars: Expr_Array1OfNamedUnknown &
@@ -3609,19 +2777,20 @@ class Handle_Expr_BinaryFunction : public Handle_Expr_BinaryExpression {
         static const Handle_Expr_BinaryFunction DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_Expr_BinaryFunction {
     Expr_BinaryFunction* _get_reference() {
-    return (Expr_BinaryFunction*)$self->Access();
+    return (Expr_BinaryFunction*)$self->get();
     }
 };
 
 %extend Handle_Expr_BinaryFunction {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend Expr_BinaryFunction {
@@ -3673,7 +2842,7 @@ class Expr_Cosh : public Expr_UnaryExpression {
 ") Derivative;
 		Handle_Expr_GeneralExpression Derivative (const Handle_Expr_NamedUnknown & X);
 		%feature("compactdefaultargs") Evaluate;
-		%feature("autodoc", "	* Returns the value of <self> (as a Real) by replacement of <vars> by <vals>. Raises NotEvaluable if <self> contains NamedUnknown not in <vars> or NumericError if result cannot be computed.
+		%feature("autodoc", "	* Returns the value of <self> --as a Real-- by replacement of <vars> by <vals>. Raises NotEvaluable if <self> contains NamedUnknown not in <vars> or NumericError if result cannot be computed.
 
 	:param vars:
 	:type vars: Expr_Array1OfNamedUnknown &
@@ -3722,19 +2891,20 @@ class Handle_Expr_Cosh : public Handle_Expr_UnaryExpression {
         static const Handle_Expr_Cosh DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_Expr_Cosh {
     Expr_Cosh* _get_reference() {
-    return (Expr_Cosh*)$self->Access();
+    return (Expr_Cosh*)$self->get();
     }
 };
 
 %extend Handle_Expr_Cosh {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend Expr_Cosh {
@@ -3786,7 +2956,7 @@ class Expr_Cosine : public Expr_UnaryExpression {
 ") Derivative;
 		Handle_Expr_GeneralExpression Derivative (const Handle_Expr_NamedUnknown & X);
 		%feature("compactdefaultargs") Evaluate;
-		%feature("autodoc", "	* Returns the value of <self> (as a Real) by replacement of <vars> by <vals>. Raises NotEvaluable if <self> contains NamedUnknown not in <vars> or NumericError if result cannot be computed.
+		%feature("autodoc", "	* Returns the value of <self> --as a Real-- by replacement of <vars> by <vals>. Raises NotEvaluable if <self> contains NamedUnknown not in <vars> or NumericError if result cannot be computed.
 
 	:param vars:
 	:type vars: Expr_Array1OfNamedUnknown &
@@ -3835,19 +3005,20 @@ class Handle_Expr_Cosine : public Handle_Expr_UnaryExpression {
         static const Handle_Expr_Cosine DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_Expr_Cosine {
     Expr_Cosine* _get_reference() {
-    return (Expr_Cosine*)$self->Access();
+    return (Expr_Cosine*)$self->get();
     }
 };
 
 %extend Handle_Expr_Cosine {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend Expr_Cosine {
@@ -3911,7 +3082,7 @@ class Expr_Difference : public Expr_BinaryExpression {
 ") NDerivative;
 		virtual Handle_Expr_GeneralExpression NDerivative (const Handle_Expr_NamedUnknown & X,const Standard_Integer N);
 		%feature("compactdefaultargs") Evaluate;
-		%feature("autodoc", "	* Returns the value of <self> (as a Real) by replacement of <vars> by <vals>. Raises NotEvaluable if <self> contains NamedUnknown not in <vars> or NumericError if result cannot be computed.
+		%feature("autodoc", "	* Returns the value of <self> --as a Real-- by replacement of <vars> by <vals>. Raises NotEvaluable if <self> contains NamedUnknown not in <vars> or NumericError if result cannot be computed.
 
 	:param vars:
 	:type vars: Expr_Array1OfNamedUnknown &
@@ -3960,19 +3131,20 @@ class Handle_Expr_Difference : public Handle_Expr_BinaryExpression {
         static const Handle_Expr_Difference DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_Expr_Difference {
     Expr_Difference* _get_reference() {
-    return (Expr_Difference*)$self->Access();
+    return (Expr_Difference*)$self->get();
     }
 };
 
 %extend Handle_Expr_Difference {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend Expr_Difference {
@@ -4055,19 +3227,20 @@ class Handle_Expr_Different : public Handle_Expr_SingleRelation {
         static const Handle_Expr_Different DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_Expr_Different {
     Expr_Different* _get_reference() {
-    return (Expr_Different*)$self->Access();
+    return (Expr_Different*)$self->get();
     }
 };
 
 %extend Handle_Expr_Different {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend Expr_Different {
@@ -4121,7 +3294,7 @@ class Expr_Division : public Expr_BinaryExpression {
 ") Derivative;
 		Handle_Expr_GeneralExpression Derivative (const Handle_Expr_NamedUnknown & X);
 		%feature("compactdefaultargs") Evaluate;
-		%feature("autodoc", "	* Returns the value of <self> (as a Real) by replacement of <vars> by <vals>. Raises NotEvaluable if <self> contains NamedUnknown not in <vars> or NumericError if result cannot be computed.
+		%feature("autodoc", "	* Returns the value of <self> --as a Real-- by replacement of <vars> by <vals>. Raises NotEvaluable if <self> contains NamedUnknown not in <vars> or NumericError if result cannot be computed.
 
 	:param vars:
 	:type vars: Expr_Array1OfNamedUnknown &
@@ -4170,19 +3343,20 @@ class Handle_Expr_Division : public Handle_Expr_BinaryExpression {
         static const Handle_Expr_Division DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_Expr_Division {
     Expr_Division* _get_reference() {
-    return (Expr_Division*)$self->Access();
+    return (Expr_Division*)$self->get();
     }
 };
 
 %extend Handle_Expr_Division {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend Expr_Division {
@@ -4265,19 +3439,20 @@ class Handle_Expr_Equal : public Handle_Expr_SingleRelation {
         static const Handle_Expr_Equal DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_Expr_Equal {
     Expr_Equal* _get_reference() {
-    return (Expr_Equal*)$self->Access();
+    return (Expr_Equal*)$self->get();
     }
 };
 
 %extend Handle_Expr_Equal {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend Expr_Equal {
@@ -4329,7 +3504,7 @@ class Expr_Exponential : public Expr_UnaryExpression {
 ") Derivative;
 		Handle_Expr_GeneralExpression Derivative (const Handle_Expr_NamedUnknown & X);
 		%feature("compactdefaultargs") Evaluate;
-		%feature("autodoc", "	* Returns the value of <self> (as a Real) by replacement of <vars> by <vals>. Raises NotEvaluable if <self> contains NamedUnknown not in <vars> or NumericError if result cannot be computed.
+		%feature("autodoc", "	* Returns the value of <self> --as a Real-- by replacement of <vars> by <vals>. Raises NotEvaluable if <self> contains NamedUnknown not in <vars> or NumericError if result cannot be computed.
 
 	:param vars:
 	:type vars: Expr_Array1OfNamedUnknown &
@@ -4378,19 +3553,20 @@ class Handle_Expr_Exponential : public Handle_Expr_UnaryExpression {
         static const Handle_Expr_Exponential DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_Expr_Exponential {
     Expr_Exponential* _get_reference() {
-    return (Expr_Exponential*)$self->Access();
+    return (Expr_Exponential*)$self->get();
     }
 };
 
 %extend Handle_Expr_Exponential {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend Expr_Exponential {
@@ -4444,7 +3620,7 @@ class Expr_Exponentiate : public Expr_BinaryExpression {
 ") Derivative;
 		Handle_Expr_GeneralExpression Derivative (const Handle_Expr_NamedUnknown & X);
 		%feature("compactdefaultargs") Evaluate;
-		%feature("autodoc", "	* Returns the value of <self> (as a Real) by replacement of <vars> by <vals>. Raises NotEvaluable if <self> contains NamedUnknown not in <vars> or NumericError if result cannot be computed.
+		%feature("autodoc", "	* Returns the value of <self> --as a Real-- by replacement of <vars> by <vals>. Raises NotEvaluable if <self> contains NamedUnknown not in <vars> or NumericError if result cannot be computed.
 
 	:param vars:
 	:type vars: Expr_Array1OfNamedUnknown &
@@ -4493,19 +3669,20 @@ class Handle_Expr_Exponentiate : public Handle_Expr_BinaryExpression {
         static const Handle_Expr_Exponentiate DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_Expr_Exponentiate {
     Expr_Exponentiate* _get_reference() {
-    return (Expr_Exponentiate*)$self->Access();
+    return (Expr_Exponentiate*)$self->get();
     }
 };
 
 %extend Handle_Expr_Exponentiate {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend Expr_Exponentiate {
@@ -4588,19 +3765,20 @@ class Handle_Expr_GreaterThan : public Handle_Expr_SingleRelation {
         static const Handle_Expr_GreaterThan DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_Expr_GreaterThan {
     Expr_GreaterThan* _get_reference() {
-    return (Expr_GreaterThan*)$self->Access();
+    return (Expr_GreaterThan*)$self->get();
     }
 };
 
 %extend Handle_Expr_GreaterThan {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend Expr_GreaterThan {
@@ -4683,19 +3861,20 @@ class Handle_Expr_GreaterThanOrEqual : public Handle_Expr_SingleRelation {
         static const Handle_Expr_GreaterThanOrEqual DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_Expr_GreaterThanOrEqual {
     Expr_GreaterThanOrEqual* _get_reference() {
-    return (Expr_GreaterThanOrEqual*)$self->Access();
+    return (Expr_GreaterThanOrEqual*)$self->get();
     }
 };
 
 %extend Handle_Expr_GreaterThanOrEqual {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend Expr_GreaterThanOrEqual {
@@ -4778,19 +3957,20 @@ class Handle_Expr_LessThan : public Handle_Expr_SingleRelation {
         static const Handle_Expr_LessThan DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_Expr_LessThan {
     Expr_LessThan* _get_reference() {
-    return (Expr_LessThan*)$self->Access();
+    return (Expr_LessThan*)$self->get();
     }
 };
 
 %extend Handle_Expr_LessThan {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend Expr_LessThan {
@@ -4873,19 +4053,20 @@ class Handle_Expr_LessThanOrEqual : public Handle_Expr_SingleRelation {
         static const Handle_Expr_LessThanOrEqual DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_Expr_LessThanOrEqual {
     Expr_LessThanOrEqual* _get_reference() {
-    return (Expr_LessThanOrEqual*)$self->Access();
+    return (Expr_LessThanOrEqual*)$self->get();
     }
 };
 
 %extend Handle_Expr_LessThanOrEqual {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend Expr_LessThanOrEqual {
@@ -4937,7 +4118,7 @@ class Expr_LogOf10 : public Expr_UnaryExpression {
 ") Derivative;
 		Handle_Expr_GeneralExpression Derivative (const Handle_Expr_NamedUnknown & X);
 		%feature("compactdefaultargs") Evaluate;
-		%feature("autodoc", "	* Returns the value of <self> (as a Real) by replacement of <vars> by <vals>. Raises NotEvaluable if <self> contains NamedUnknown not in <vars> or NumericError if result cannot be computed.
+		%feature("autodoc", "	* Returns the value of <self> --as a Real-- by replacement of <vars> by <vals>. Raises NotEvaluable if <self> contains NamedUnknown not in <vars> or NumericError if result cannot be computed.
 
 	:param vars:
 	:type vars: Expr_Array1OfNamedUnknown &
@@ -4986,19 +4167,20 @@ class Handle_Expr_LogOf10 : public Handle_Expr_UnaryExpression {
         static const Handle_Expr_LogOf10 DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_Expr_LogOf10 {
     Expr_LogOf10* _get_reference() {
-    return (Expr_LogOf10*)$self->Access();
+    return (Expr_LogOf10*)$self->get();
     }
 };
 
 %extend Handle_Expr_LogOf10 {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend Expr_LogOf10 {
@@ -5050,7 +4232,7 @@ class Expr_LogOfe : public Expr_UnaryExpression {
 ") Derivative;
 		Handle_Expr_GeneralExpression Derivative (const Handle_Expr_NamedUnknown & X);
 		%feature("compactdefaultargs") Evaluate;
-		%feature("autodoc", "	* Returns the value of <self> (as a Real) by replacement of <vars> by <vals>. Raises NotEvaluable if <self> contains NamedUnknown not in <vars> or NumericError if result cannot be computed.
+		%feature("autodoc", "	* Returns the value of <self> --as a Real-- by replacement of <vars> by <vals>. Raises NotEvaluable if <self> contains NamedUnknown not in <vars> or NumericError if result cannot be computed.
 
 	:param vars:
 	:type vars: Expr_Array1OfNamedUnknown &
@@ -5099,19 +4281,20 @@ class Handle_Expr_LogOfe : public Handle_Expr_UnaryExpression {
         static const Handle_Expr_LogOfe DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_Expr_LogOfe {
     Expr_LogOfe* _get_reference() {
-    return (Expr_LogOfe*)$self->Access();
+    return (Expr_LogOfe*)$self->get();
     }
 };
 
 %extend Handle_Expr_LogOfe {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend Expr_LogOfe {
@@ -5137,7 +4320,7 @@ class Expr_NamedConstant : public Expr_NamedExpression {
 ") GetValue;
 		Standard_Real GetValue ();
 		%feature("compactdefaultargs") NbSubExpressions;
-		%feature("autodoc", "	* returns the number of sub-expressions contained in <self> (always returns zero)
+		%feature("autodoc", "	* returns the number of sub-expressions contained in <self> --always returns zero--
 
 	:rtype: int
 ") NbSubExpressions;
@@ -5169,7 +4352,7 @@ class Expr_NamedConstant : public Expr_NamedExpression {
 ") Copy;
 		Handle_Expr_GeneralExpression Copy ();
 		%feature("compactdefaultargs") ContainsUnknowns;
-		%feature("autodoc", "	* Tests if <self> contains NamedUnknown. (returns always False)
+		%feature("autodoc", "	* Tests if <self> contains NamedUnknown. --returns always False--
 
 	:rtype: bool
 ") ContainsUnknowns;
@@ -5215,7 +4398,7 @@ class Expr_NamedConstant : public Expr_NamedExpression {
 ") Replace;
 		void Replace (const Handle_Expr_NamedUnknown & var,const Handle_Expr_GeneralExpression & with);
 		%feature("compactdefaultargs") Evaluate;
-		%feature("autodoc", "	* Returns the value of <self> (as a Real) by replacement of <vars> by <vals>.
+		%feature("autodoc", "	* Returns the value of <self> --as a Real-- by replacement of <vars> by <vals>.
 
 	:param vars:
 	:type vars: Expr_Array1OfNamedUnknown &
@@ -5258,19 +4441,20 @@ class Handle_Expr_NamedConstant : public Handle_Expr_NamedExpression {
         static const Handle_Expr_NamedConstant DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_Expr_NamedConstant {
     Expr_NamedConstant* _get_reference() {
-    return (Expr_NamedConstant*)$self->Access();
+    return (Expr_NamedConstant*)$self->get();
     }
 };
 
 %extend Handle_Expr_NamedConstant {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend Expr_NamedConstant {
@@ -5314,13 +4498,13 @@ class Expr_NamedUnknown : public Expr_NamedExpression {
 ") Deassign;
 		void Deassign ();
 		%feature("compactdefaultargs") NbSubExpressions;
-		%feature("autodoc", "	* Returns the number of sub-expressions contained in <self> ( >= 0)
+		%feature("autodoc", "	* Returns the number of sub-expressions contained in <self> -- >= 0--
 
 	:rtype: int
 ") NbSubExpressions;
 		Standard_Integer NbSubExpressions ();
 		%feature("compactdefaultargs") SubExpression;
-		%feature("autodoc", "	* Returns the <I>-th sub-expression of <self> raises OutOfRange if <I> > NbSubExpressions(me)
+		%feature("autodoc", "	* Returns the <I>-th sub-expression of <self> raises OutOfRange if <I> > NbSubExpressions--me--
 
 	:param I:
 	:type I: int
@@ -5382,7 +4566,7 @@ class Expr_NamedUnknown : public Expr_NamedExpression {
 ") Replace;
 		void Replace (const Handle_Expr_NamedUnknown & var,const Handle_Expr_GeneralExpression & with);
 		%feature("compactdefaultargs") Evaluate;
-		%feature("autodoc", "	* Returns the value of <self> (as a Real) by replacement of <vars> by <vals>. Raises NotEvaluable if <self> contains NamedUnknown not in <vars> or NumericError if result cannot be computed.
+		%feature("autodoc", "	* Returns the value of <self> --as a Real-- by replacement of <vars> by <vals>. Raises NotEvaluable if <self> contains NamedUnknown not in <vars> or NumericError if result cannot be computed.
 
 	:param vars:
 	:type vars: Expr_Array1OfNamedUnknown &
@@ -5425,19 +4609,20 @@ class Handle_Expr_NamedUnknown : public Handle_Expr_NamedExpression {
         static const Handle_Expr_NamedUnknown DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_Expr_NamedUnknown {
     Expr_NamedUnknown* _get_reference() {
-    return (Expr_NamedUnknown*)$self->Access();
+    return (Expr_NamedUnknown*)$self->get();
     }
 };
 
 %extend Handle_Expr_NamedUnknown {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend Expr_NamedUnknown {
@@ -5449,7 +4634,7 @@ class Handle_Expr_NamedUnknown : public Handle_Expr_NamedExpression {
 class Expr_PolyFunction : public Expr_PolyExpression {
 	public:
 		%feature("compactdefaultargs") Expr_PolyFunction;
-		%feature("autodoc", "	* Creates <self> as <func>(<exps_1>,<exps_2>,...,<exps_n>)
+		%feature("autodoc", "	* Creates <self> as <func>--<exps_1>,<exps_2>,...,<exps_n>--
 
 	:param func:
 	:type func: Handle_Expr_GeneralFunction &
@@ -5497,7 +4682,7 @@ class Expr_PolyFunction : public Expr_PolyExpression {
 ") Derivative;
 		Handle_Expr_GeneralExpression Derivative (const Handle_Expr_NamedUnknown & X);
 		%feature("compactdefaultargs") Evaluate;
-		%feature("autodoc", "	* Returns the value of <self> (as a Real) by replacement of <vars> by <vals>. Raises NotEvaluable if <self> contains NamedUnknown not in <vars> or NumericError if result cannot be computed.
+		%feature("autodoc", "	* Returns the value of <self> --as a Real-- by replacement of <vars> by <vals>. Raises NotEvaluable if <self> contains NamedUnknown not in <vars> or NumericError if result cannot be computed.
 
 	:param vars:
 	:type vars: Expr_Array1OfNamedUnknown &
@@ -5546,19 +4731,20 @@ class Handle_Expr_PolyFunction : public Handle_Expr_PolyExpression {
         static const Handle_Expr_PolyFunction DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_Expr_PolyFunction {
     Expr_PolyFunction* _get_reference() {
-    return (Expr_PolyFunction*)$self->Access();
+    return (Expr_PolyFunction*)$self->get();
     }
 };
 
 %extend Handle_Expr_PolyFunction {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend Expr_PolyFunction {
@@ -5620,7 +4806,7 @@ class Expr_Product : public Expr_PolyExpression {
 ") Derivative;
 		Handle_Expr_GeneralExpression Derivative (const Handle_Expr_NamedUnknown & X);
 		%feature("compactdefaultargs") Evaluate;
-		%feature("autodoc", "	* Returns the value of <self> (as a Real) by replacement of <vars> by <vals>. Raises NotEvaluable if <self> contains NamedUnknown not in <vars> or NumericError if result cannot be computed.
+		%feature("autodoc", "	* Returns the value of <self> --as a Real-- by replacement of <vars> by <vals>. Raises NotEvaluable if <self> contains NamedUnknown not in <vars> or NumericError if result cannot be computed.
 
 	:param vars:
 	:type vars: Expr_Array1OfNamedUnknown &
@@ -5669,19 +4855,20 @@ class Handle_Expr_Product : public Handle_Expr_PolyExpression {
         static const Handle_Expr_Product DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_Expr_Product {
     Expr_Product* _get_reference() {
-    return (Expr_Product*)$self->Access();
+    return (Expr_Product*)$self->get();
     }
 };
 
 %extend Handle_Expr_Product {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend Expr_Product {
@@ -5733,7 +4920,7 @@ class Expr_Sine : public Expr_UnaryExpression {
 ") Derivative;
 		Handle_Expr_GeneralExpression Derivative (const Handle_Expr_NamedUnknown & X);
 		%feature("compactdefaultargs") Evaluate;
-		%feature("autodoc", "	* Returns the value of <self> (as a Real) by replacement of <vars> by <vals>. Raises NotEvaluable if <self> contains NamedUnknown not in <vars> or NumericError if result cannot be computed.
+		%feature("autodoc", "	* Returns the value of <self> --as a Real-- by replacement of <vars> by <vals>. Raises NotEvaluable if <self> contains NamedUnknown not in <vars> or NumericError if result cannot be computed.
 
 	:param vars:
 	:type vars: Expr_Array1OfNamedUnknown &
@@ -5782,19 +4969,20 @@ class Handle_Expr_Sine : public Handle_Expr_UnaryExpression {
         static const Handle_Expr_Sine DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_Expr_Sine {
     Expr_Sine* _get_reference() {
-    return (Expr_Sine*)$self->Access();
+    return (Expr_Sine*)$self->get();
     }
 };
 
 %extend Handle_Expr_Sine {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend Expr_Sine {
@@ -5846,7 +5034,7 @@ class Expr_Sinh : public Expr_UnaryExpression {
 ") Derivative;
 		Handle_Expr_GeneralExpression Derivative (const Handle_Expr_NamedUnknown & X);
 		%feature("compactdefaultargs") Evaluate;
-		%feature("autodoc", "	* Returns the value of <self> (as a Real) by replacement of <vars> by <vals>. Raises NotEvaluable if <self> contains NamedUnknown not in <vars> or NumericError if result cannot be computed.
+		%feature("autodoc", "	* Returns the value of <self> --as a Real-- by replacement of <vars> by <vals>. Raises NotEvaluable if <self> contains NamedUnknown not in <vars> or NumericError if result cannot be computed.
 
 	:param vars:
 	:type vars: Expr_Array1OfNamedUnknown &
@@ -5895,19 +5083,20 @@ class Handle_Expr_Sinh : public Handle_Expr_UnaryExpression {
         static const Handle_Expr_Sinh DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_Expr_Sinh {
     Expr_Sinh* _get_reference() {
-    return (Expr_Sinh*)$self->Access();
+    return (Expr_Sinh*)$self->get();
     }
 };
 
 %extend Handle_Expr_Sinh {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend Expr_Sinh {
@@ -5959,7 +5148,7 @@ class Expr_Square : public Expr_UnaryExpression {
 ") Derivative;
 		Handle_Expr_GeneralExpression Derivative (const Handle_Expr_NamedUnknown & X);
 		%feature("compactdefaultargs") Evaluate;
-		%feature("autodoc", "	* Returns the value of <self> (as a Real) by replacement of <vars> by <vals>. Raises NotEvaluable if <self> contains NamedUnknown not in <vars> or NumericError if result cannot be computed.
+		%feature("autodoc", "	* Returns the value of <self> --as a Real-- by replacement of <vars> by <vals>. Raises NotEvaluable if <self> contains NamedUnknown not in <vars> or NumericError if result cannot be computed.
 
 	:param vars:
 	:type vars: Expr_Array1OfNamedUnknown &
@@ -6008,19 +5197,20 @@ class Handle_Expr_Square : public Handle_Expr_UnaryExpression {
         static const Handle_Expr_Square DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_Expr_Square {
     Expr_Square* _get_reference() {
-    return (Expr_Square*)$self->Access();
+    return (Expr_Square*)$self->get();
     }
 };
 
 %extend Handle_Expr_Square {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend Expr_Square {
@@ -6072,7 +5262,7 @@ class Expr_SquareRoot : public Expr_UnaryExpression {
 ") Derivative;
 		Handle_Expr_GeneralExpression Derivative (const Handle_Expr_NamedUnknown & X);
 		%feature("compactdefaultargs") Evaluate;
-		%feature("autodoc", "	* Returns the value of <self> (as a Real) by replacement of <vars> by <vals>. Raises NotEvaluable if <self> contains NamedUnknown not in <vars> or NumericError if result cannot be computed.
+		%feature("autodoc", "	* Returns the value of <self> --as a Real-- by replacement of <vars> by <vals>. Raises NotEvaluable if <self> contains NamedUnknown not in <vars> or NumericError if result cannot be computed.
 
 	:param vars:
 	:type vars: Expr_Array1OfNamedUnknown &
@@ -6121,19 +5311,20 @@ class Handle_Expr_SquareRoot : public Handle_Expr_UnaryExpression {
         static const Handle_Expr_SquareRoot DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_Expr_SquareRoot {
     Expr_SquareRoot* _get_reference() {
-    return (Expr_SquareRoot*)$self->Access();
+    return (Expr_SquareRoot*)$self->get();
     }
 };
 
 %extend Handle_Expr_SquareRoot {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend Expr_SquareRoot {
@@ -6205,7 +5396,7 @@ class Expr_Sum : public Expr_PolyExpression {
 ") NDerivative;
 		virtual Handle_Expr_GeneralExpression NDerivative (const Handle_Expr_NamedUnknown & X,const Standard_Integer N);
 		%feature("compactdefaultargs") Evaluate;
-		%feature("autodoc", "	* Returns the value of <self> (as a Real) by replacement of <vars> by <vals>. Raises NotEvaluable if <self> contains NamedUnknown not in <vars> or NumericError if result cannot be computed.
+		%feature("autodoc", "	* Returns the value of <self> --as a Real-- by replacement of <vars> by <vals>. Raises NotEvaluable if <self> contains NamedUnknown not in <vars> or NumericError if result cannot be computed.
 
 	:param vars:
 	:type vars: Expr_Array1OfNamedUnknown &
@@ -6254,19 +5445,20 @@ class Handle_Expr_Sum : public Handle_Expr_PolyExpression {
         static const Handle_Expr_Sum DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_Expr_Sum {
     Expr_Sum* _get_reference() {
-    return (Expr_Sum*)$self->Access();
+    return (Expr_Sum*)$self->get();
     }
 };
 
 %extend Handle_Expr_Sum {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend Expr_Sum {
@@ -6318,7 +5510,7 @@ class Expr_Tangent : public Expr_UnaryExpression {
 ") Derivative;
 		Handle_Expr_GeneralExpression Derivative (const Handle_Expr_NamedUnknown & X);
 		%feature("compactdefaultargs") Evaluate;
-		%feature("autodoc", "	* Returns the value of <self> (as a Real) by replacement of <vars> by <vals>. Raises NotEvaluable if <self> contains NamedUnknown not in <vars> or NumericError if result cannot be computed.
+		%feature("autodoc", "	* Returns the value of <self> --as a Real-- by replacement of <vars> by <vals>. Raises NotEvaluable if <self> contains NamedUnknown not in <vars> or NumericError if result cannot be computed.
 
 	:param vars:
 	:type vars: Expr_Array1OfNamedUnknown &
@@ -6367,19 +5559,20 @@ class Handle_Expr_Tangent : public Handle_Expr_UnaryExpression {
         static const Handle_Expr_Tangent DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_Expr_Tangent {
     Expr_Tangent* _get_reference() {
-    return (Expr_Tangent*)$self->Access();
+    return (Expr_Tangent*)$self->get();
     }
 };
 
 %extend Handle_Expr_Tangent {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend Expr_Tangent {
@@ -6431,7 +5624,7 @@ class Expr_Tanh : public Expr_UnaryExpression {
 ") Derivative;
 		Handle_Expr_GeneralExpression Derivative (const Handle_Expr_NamedUnknown & X);
 		%feature("compactdefaultargs") Evaluate;
-		%feature("autodoc", "	* Returns the value of <self> (as a Real) by replacement of <vars> by <vals>. Raises NotEvaluable if <self> contains NamedUnknown not in <vars> or NumericError if result cannot be computed.
+		%feature("autodoc", "	* Returns the value of <self> --as a Real-- by replacement of <vars> by <vals>. Raises NotEvaluable if <self> contains NamedUnknown not in <vars> or NumericError if result cannot be computed.
 
 	:param vars:
 	:type vars: Expr_Array1OfNamedUnknown &
@@ -6480,19 +5673,20 @@ class Handle_Expr_Tanh : public Handle_Expr_UnaryExpression {
         static const Handle_Expr_Tanh DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_Expr_Tanh {
     Expr_Tanh* _get_reference() {
-    return (Expr_Tanh*)$self->Access();
+    return (Expr_Tanh*)$self->get();
     }
 };
 
 %extend Handle_Expr_Tanh {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend Expr_Tanh {
@@ -6504,7 +5698,7 @@ class Handle_Expr_Tanh : public Handle_Expr_UnaryExpression {
 class Expr_UnaryFunction : public Expr_UnaryExpression {
 	public:
 		%feature("compactdefaultargs") Expr_UnaryFunction;
-		%feature("autodoc", "	* Creates me as <func>(<exp>). Raises exception if <func> is not unary.
+		%feature("autodoc", "	* Creates me as <func>--<exp>--. Raises exception if <func> is not unary.
 
 	:param func:
 	:type func: Handle_Expr_GeneralFunction &
@@ -6552,7 +5746,7 @@ class Expr_UnaryFunction : public Expr_UnaryExpression {
 ") Derivative;
 		Handle_Expr_GeneralExpression Derivative (const Handle_Expr_NamedUnknown & X);
 		%feature("compactdefaultargs") Evaluate;
-		%feature("autodoc", "	* Returns the value of <self> (as a Real) by replacement of <vars> by <vals>. Raises NotEvaluable if <self> contains NamedUnknown not in <vars> or NumericError if result cannot be computed.
+		%feature("autodoc", "	* Returns the value of <self> --as a Real-- by replacement of <vars> by <vals>. Raises NotEvaluable if <self> contains NamedUnknown not in <vars> or NumericError if result cannot be computed.
 
 	:param vars:
 	:type vars: Expr_Array1OfNamedUnknown &
@@ -6601,19 +5795,20 @@ class Handle_Expr_UnaryFunction : public Handle_Expr_UnaryExpression {
         static const Handle_Expr_UnaryFunction DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_Expr_UnaryFunction {
     Expr_UnaryFunction* _get_reference() {
-    return (Expr_UnaryFunction*)$self->Access();
+    return (Expr_UnaryFunction*)$self->get();
     }
 };
 
 %extend Handle_Expr_UnaryFunction {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend Expr_UnaryFunction {
@@ -6675,7 +5870,7 @@ class Expr_UnaryMinus : public Expr_UnaryExpression {
 ") NDerivative;
 		virtual Handle_Expr_GeneralExpression NDerivative (const Handle_Expr_NamedUnknown & X,const Standard_Integer N);
 		%feature("compactdefaultargs") Evaluate;
-		%feature("autodoc", "	* Returns the value of <self> (as a Real) by replacement of <vars> by <vals>. Raises NotEvaluable if <self> contains NamedUnknown not in <vars> or NumericError if result cannot be computed.
+		%feature("autodoc", "	* Returns the value of <self> --as a Real-- by replacement of <vars> by <vals>. Raises NotEvaluable if <self> contains NamedUnknown not in <vars> or NumericError if result cannot be computed.
 
 	:param vars:
 	:type vars: Expr_Array1OfNamedUnknown &
@@ -6724,19 +5919,20 @@ class Handle_Expr_UnaryMinus : public Handle_Expr_UnaryExpression {
         static const Handle_Expr_UnaryMinus DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_Expr_UnaryMinus {
     Expr_UnaryMinus* _get_reference() {
-    return (Expr_UnaryMinus*)$self->Access();
+    return (Expr_UnaryMinus*)$self->get();
     }
 };
 
 %extend Handle_Expr_UnaryMinus {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend Expr_UnaryMinus {

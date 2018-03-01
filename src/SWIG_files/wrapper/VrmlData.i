@@ -1,5 +1,5 @@
 /*
-Copyright 2008-2017 Thomas Paviot (tpaviot@gmail.com)
+Copyright 2008-2018 Thomas Paviot (tpaviot@gmail.com)
 
 
 This file is part of pythonOCC.
@@ -54,9 +54,13 @@ def register_handle(handle, base_object):
 };
 
 /* typedefs */
-typedef NCollection_Map <Handle_VrmlData_Node> VrmlData_MapOfNode;
-typedef NCollection_List <Handle_VrmlData_Node> VrmlData_ListOfNode;
 /* end typedefs declaration */
+
+/* templates */
+%template(VrmlData_DataMapOfShapeAppearance) NCollection_DataMap <Handle_TopoDS_TShape , Handle_VrmlData_Appearance>;
+%template(VrmlData_ListOfNode) NCollection_List <Handle_VrmlData_Node>;
+%template(VrmlData_MapOfNode) NCollection_Map <Handle_VrmlData_Node>;
+/* end templates declaration */
 
 /* public enums */
 enum VrmlData_ErrorStatus {
@@ -98,7 +102,7 @@ class VrmlData_Node : public Standard_Transient {
 ") Name;
 		inline const char * Name ();
 		%feature("compactdefaultargs") ReadNode;
-		%feature("autodoc", "	* /** * Read a complete node definition from VRML stream * @param theBuffer * Buffer receiving the input data. * @param theNode * <tt>[out]</tt> Node restored from the buffer data * @param Type * Node type to be checked. If it is NULL(default) no type checking is done. * Otherwise the created node is matched and an error is returned if * no match detected. */
+		%feature("autodoc", "	* /** * Read a complete node definition from VRML stream * @param theBuffer * Buffer receiving the input data. * @param theNode * <tt>[out]</tt> Node restored from the buffer data * @param Type * Node type to be checked. If it is NULL--default-- no type checking is done. * Otherwise the created node is matched and an error is returned if * no match detected. */
 
 	:param theBuffer:
 	:type theBuffer: VrmlData_InBuffer &
@@ -146,7 +150,7 @@ class VrmlData_Node : public Standard_Transient {
 ") Clone;
 		virtual Handle_VrmlData_Node Clone (const Handle_VrmlData_Node &);
 		%feature("compactdefaultargs") ReadBoolean;
-		%feature("autodoc", "	* /** * Read one boolean value (True or False). */
+		%feature("autodoc", "	* /** * Read one boolean value --True or False--. */
 
 	:param theBuffer:
 	:type theBuffer: VrmlData_InBuffer &
@@ -239,19 +243,20 @@ class Handle_VrmlData_Node : public Handle_Standard_Transient {
         static const Handle_VrmlData_Node DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_VrmlData_Node {
     VrmlData_Node* _get_reference() {
-    return (VrmlData_Node*)$self->Access();
+    return (VrmlData_Node*)$self->get();
     }
 };
 
 %extend Handle_VrmlData_Node {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend VrmlData_Node {
@@ -272,13 +277,13 @@ typedef VrmlData_ListOfNode::Iterator Iterator;
 ") VrmlData_Scene;
 		 VrmlData_Scene (const Handle_NCollection_IncAllocator & = 0L);
 		%feature("compactdefaultargs") Status;
-		%feature("autodoc", "	* /** * Query the status of the previous operation. * Normally it should be equal to VrmlData_StatusOK (no error). */
+		%feature("autodoc", "	* /** * Query the status of the previous operation. * Normally it should be equal to VrmlData_StatusOK --no error--. */
 
 	:rtype: inline VrmlData_ErrorStatus
 ") Status;
 		inline VrmlData_ErrorStatus Status ();
 		%feature("compactdefaultargs") SetVrmlDir;
-		%feature("autodoc", "	* /** * Add the given directory path to the list of VRML file search directories. * This method forms the list of directories ordered according to the * sequence of this method calls. When an Inline node is found, the URLs * in that node are matched with these directories. * The last (implicit) search directory is the current process directory * ('.'). It takes effect if the list is empty or if there is no match with * exisiting directories. */
+		%feature("autodoc", "	* /** * Add the given directory path to the list of VRML file search directories. * This method forms the list of directories ordered according to the * sequence of this method calls. When an Inline node is found, the URLs * in that node are matched with these directories. * The last --implicit-- search directory is the current process directory * --'.'--. It takes effect if the list is empty or if there is no match with * exisiting directories. */
 
 	:param &:
 	:type &: TCollection_ExtendedString
@@ -354,7 +359,7 @@ typedef VrmlData_ListOfNode::Iterator Iterator;
 ") operator TopoDS_Shape;
 		 operator TopoDS_Shape ();
 		%feature("compactdefaultargs") GetShape;
-		%feature("autodoc", "	* /** * Convert the scene to a Shape, with the information on materials defined * for each sub-shape. This method should be used instead of TopoDS_Shape * explicit conversion operator when you need to retrieve the material * aspect for each face or edge in the returned topological object. * @param M * Data Map that binds an Appearance instance to each created TFace or * TEdge if the Appearance node is defined in VRML scene for that geometry. * returns * TopoDS_Shape (Compound) holding all the scene, similar to the result of * explicit TopoDS_Shape conversion operator. */
+		%feature("autodoc", "	* /** * Convert the scene to a Shape, with the information on materials defined * for each sub-shape. This method should be used instead of TopoDS_Shape * explicit conversion operator when you need to retrieve the material * aspect for each face or edge in the returned topological object. * @param M * Data Map that binds an Appearance instance to each created TFace or * TEdge if the Appearance node is defined in VRML scene for that geometry. * returns * TopoDS_Shape --Compound-- holding all the scene, similar to the result of * explicit TopoDS_Shape conversion operator. */
 
 	:param M:
 	:type M: VrmlData_DataMapOfShapeAppearance &
@@ -368,7 +373,7 @@ typedef VrmlData_ListOfNode::Iterator Iterator;
 ") WorldInfo;
 		Handle_VrmlData_WorldInfo WorldInfo ();
 		%feature("compactdefaultargs") ReadLine;
-		%feature("autodoc", "	* /** * Read a VRML line. Empty lines and comments are skipped. * The processing starts here from theBuffer.LinePtr; if there is at least * one non-empty character (neither space nor comment), this line is used * without reading the next one. * @param theLine * Buffer receiving the input line * @param theInput * Input stream * @param theLen * Length of the input buffer (maximal line length) */
+		%feature("autodoc", "	* /** * Read a VRML line. Empty lines and comments are skipped. * The processing starts here from theBuffer.LinePtr; if there is at least * one non-empty character --neither space nor comment--, this line is used * without reading the next one. * @param theLine * Buffer receiving the input line * @param theInput * Input stream * @param theLen * Length of the input buffer --maximal line length-- */
 
 	:param theBuffer:
 	:type theBuffer: VrmlData_InBuffer &
@@ -448,7 +453,7 @@ typedef VrmlData_ListOfNode::Iterator Iterator;
 ") ReadArrIndex;
 		VrmlData_ErrorStatus ReadArrIndex (VrmlData_InBuffer & theBuffer,const Standard_Integer * * & theArr,Standard_Size & theNBl);
 		%feature("compactdefaultargs") GetLineError;
-		%feature("autodoc", "	* /** * Query the line where the error occurred (if the status is not OK) */
+		%feature("autodoc", "	* /** * Query the line where the error occurred --if the status is not OK-- */
 
 	:rtype: inline int
 ") GetLineError;
@@ -486,7 +491,7 @@ typedef VrmlData_ListOfNode::Iterator Iterator;
 ") WriteArrIndex;
 		VrmlData_ErrorStatus WriteArrIndex (const char * thePrefix,const Standard_Integer * * theArr,const Standard_Size theNbBl);
 		%feature("compactdefaultargs") WriteLine;
-		%feature("autodoc", "	* /** * Write a string to the output stream respecting the indentation. The string * can be defined as two substrings that will be separated by a space. * Each of the substrings can be NULL, then it is ignored. If both * are NULL, then a single newline is output (without indent). * @param theLine0 * The first part of string to output * @param theLine1 * The second part of string to output * @param theIndent * - 0 value ignored. * - negative decreases the current indent and then outputs. * - positive outputs and then increases the current indent. * returns * Error status of the stream, or a special error if myOutput == NULL. */
+		%feature("autodoc", "	* /** * Write a string to the output stream respecting the indentation. The string * can be defined as two substrings that will be separated by a space. * Each of the substrings can be NULL, then it is ignored. If both * are NULL, then a single newline is output --without indent--. * @param theLine0 * The first part of string to output * @param theLine1 * The second part of string to output * @param theIndent * - 0 value ignored. * - negative decreases the current indent and then outputs. * - positive outputs and then increases the current indent. * returns * Error status of the stream, or a special error if myOutput == NULL. */
 
 	:param theLine0:
 	:type theLine0: char *
@@ -691,19 +696,20 @@ class Handle_VrmlData_Appearance : public Handle_VrmlData_Node {
         static const Handle_VrmlData_Appearance DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_VrmlData_Appearance {
     VrmlData_Appearance* _get_reference() {
-    return (VrmlData_Appearance*)$self->Access();
+    return (VrmlData_Appearance*)$self->get();
     }
 };
 
 %extend Handle_VrmlData_Appearance {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend VrmlData_Appearance {
@@ -754,19 +760,20 @@ class Handle_VrmlData_Geometry : public Handle_VrmlData_Node {
         static const Handle_VrmlData_Geometry DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_VrmlData_Geometry {
     VrmlData_Geometry* _get_reference() {
-    return (VrmlData_Geometry*)$self->Access();
+    return (VrmlData_Geometry*)$self->get();
     }
 };
 
 %extend Handle_VrmlData_Geometry {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend VrmlData_Geometry {
@@ -932,19 +939,20 @@ class Handle_VrmlData_Group : public Handle_VrmlData_Node {
         static const Handle_VrmlData_Group DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_VrmlData_Group {
     VrmlData_Group* _get_reference() {
-    return (VrmlData_Group*)$self->Access();
+    return (VrmlData_Group*)$self->get();
     }
 };
 
 %extend Handle_VrmlData_Group {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend VrmlData_Group {
@@ -1125,19 +1133,20 @@ class Handle_VrmlData_Material : public Handle_VrmlData_Node {
         static const Handle_VrmlData_Material DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_VrmlData_Material {
     VrmlData_Material* _get_reference() {
-    return (VrmlData_Material*)$self->Access();
+    return (VrmlData_Material*)$self->get();
     }
 };
 
 %extend Handle_VrmlData_Material {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend VrmlData_Material {
@@ -1256,19 +1265,20 @@ class Handle_VrmlData_ShapeNode : public Handle_VrmlData_Node {
         static const Handle_VrmlData_ShapeNode DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_VrmlData_ShapeNode {
     VrmlData_ShapeNode* _get_reference() {
-    return (VrmlData_ShapeNode*)$self->Access();
+    return (VrmlData_ShapeNode*)$self->get();
     }
 };
 
 %extend Handle_VrmlData_ShapeNode {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend VrmlData_ShapeNode {
@@ -1379,19 +1389,20 @@ class Handle_VrmlData_TextureCoordinate : public Handle_VrmlData_Node {
         static const Handle_VrmlData_TextureCoordinate DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_VrmlData_TextureCoordinate {
     VrmlData_TextureCoordinate* _get_reference() {
-    return (VrmlData_TextureCoordinate*)$self->Access();
+    return (VrmlData_TextureCoordinate*)$self->get();
     }
 };
 
 %extend Handle_VrmlData_TextureCoordinate {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend VrmlData_TextureCoordinate {
@@ -1474,19 +1485,20 @@ class Handle_VrmlData_UnknownNode : public Handle_VrmlData_Node {
         static const Handle_VrmlData_UnknownNode DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_VrmlData_UnknownNode {
     VrmlData_UnknownNode* _get_reference() {
-    return (VrmlData_UnknownNode*)$self->Access();
+    return (VrmlData_UnknownNode*)$self->get();
     }
 };
 
 %extend Handle_VrmlData_UnknownNode {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend VrmlData_UnknownNode {
@@ -1607,19 +1619,20 @@ class Handle_VrmlData_WorldInfo : public Handle_VrmlData_Node {
         static const Handle_VrmlData_WorldInfo DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_VrmlData_WorldInfo {
     VrmlData_WorldInfo* _get_reference() {
-    return (VrmlData_WorldInfo*)$self->Access();
+    return (VrmlData_WorldInfo*)$self->get();
     }
 };
 
 %extend Handle_VrmlData_WorldInfo {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend VrmlData_WorldInfo {
@@ -1667,7 +1680,7 @@ class VrmlData_Box : public VrmlData_Geometry {
 ") SetSize;
 		inline void SetSize (const gp_XYZ & theSize);
 		%feature("compactdefaultargs") TShape;
-		%feature("autodoc", "	* /** * Query the primitive topology. This method returns a Null shape if there * is an internal error during the primitive creation (zero radius, etc.) */
+		%feature("autodoc", "	* /** * Query the primitive topology. This method returns a Null shape if there * is an internal error during the primitive creation --zero radius, etc.-- */
 
 	:rtype: Handle_TopoDS_TShape
 ") TShape;
@@ -1730,19 +1743,20 @@ class Handle_VrmlData_Box : public Handle_VrmlData_Geometry {
         static const Handle_VrmlData_Box DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_VrmlData_Box {
     VrmlData_Box* _get_reference() {
-    return (VrmlData_Box*)$self->Access();
+    return (VrmlData_Box*)$self->get();
     }
 };
 
 %extend Handle_VrmlData_Box {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend VrmlData_Box {
@@ -1774,7 +1788,7 @@ class VrmlData_Color : public VrmlData_ArrayVec3d {
 ") VrmlData_Color;
 		 VrmlData_Color (const VrmlData_Scene & theScene,const char * theName,const size_t nColors = 0,const gp_XYZ * arrColors = 0L);
 		%feature("compactdefaultargs") Color;
-		%feature("autodoc", "	* /** * Query one color * @param i * index in the array of colors [0 .. N-1] * returns * the color value for the index. If index irrelevant, returns (0., 0., 0.) */
+		%feature("autodoc", "	* /** * Query one color * @param i * index in the array of colors [0 .. N-1] * returns * the color value for the index. If index irrelevant, returns --0., 0., 0.-- */
 
 	:param i:
 	:type i: int
@@ -1849,19 +1863,20 @@ class Handle_VrmlData_Color : public Handle_VrmlData_ArrayVec3d {
         static const Handle_VrmlData_Color DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_VrmlData_Color {
     VrmlData_Color* _get_reference() {
-    return (VrmlData_Color*)$self->Access();
+    return (VrmlData_Color*)$self->get();
     }
 };
 
 %extend Handle_VrmlData_Color {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend VrmlData_Color {
@@ -1943,7 +1958,7 @@ class VrmlData_Cone : public VrmlData_Geometry {
 ") SetFaces;
 		inline void SetFaces (const Standard_Boolean hasBottom,const Standard_Boolean hasSide);
 		%feature("compactdefaultargs") TShape;
-		%feature("autodoc", "	* /** * Query the primitive topology. This method returns a Null shape if there * is an internal error during the primitive creation (zero radius, etc.) */
+		%feature("autodoc", "	* /** * Query the primitive topology. This method returns a Null shape if there * is an internal error during the primitive creation --zero radius, etc.-- */
 
 	:rtype: Handle_TopoDS_TShape
 ") TShape;
@@ -2006,19 +2021,20 @@ class Handle_VrmlData_Cone : public Handle_VrmlData_Geometry {
         static const Handle_VrmlData_Cone DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_VrmlData_Cone {
     VrmlData_Cone* _get_reference() {
-    return (VrmlData_Cone*)$self->Access();
+    return (VrmlData_Cone*)$self->get();
     }
 };
 
 %extend Handle_VrmlData_Cone {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend VrmlData_Cone {
@@ -2050,7 +2066,7 @@ class VrmlData_Coordinate : public VrmlData_ArrayVec3d {
 ") VrmlData_Coordinate;
 		 VrmlData_Coordinate (const VrmlData_Scene & theScene,const char * theName,const size_t nPoints = 0,const gp_XYZ * arrPoints = 0L);
 		%feature("compactdefaultargs") Coordinate;
-		%feature("autodoc", "	* /** * Query one point * @param i * index in the array of points [0 .. N-1] * returns * the coordinate for the index. If index irrelevant, returns (0., 0., 0.) */
+		%feature("autodoc", "	* /** * Query one point * @param i * index in the array of points [0 .. N-1] * returns * the coordinate for the index. If index irrelevant, returns --0., 0., 0.-- */
 
 	:param i:
 	:type i: int
@@ -2115,19 +2131,20 @@ class Handle_VrmlData_Coordinate : public Handle_VrmlData_ArrayVec3d {
         static const Handle_VrmlData_Coordinate DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_VrmlData_Coordinate {
     VrmlData_Coordinate* _get_reference() {
-    return (VrmlData_Coordinate*)$self->Access();
+    return (VrmlData_Coordinate*)$self->get();
     }
 };
 
 %extend Handle_VrmlData_Coordinate {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend VrmlData_Coordinate {
@@ -2217,7 +2234,7 @@ class VrmlData_Cylinder : public VrmlData_Geometry {
 ") SetFaces;
 		inline void SetFaces (const Standard_Boolean hasBottom,const Standard_Boolean hasSide,const Standard_Boolean hasTop);
 		%feature("compactdefaultargs") TShape;
-		%feature("autodoc", "	* /** * Query the primitive topology. This method returns a Null shape if there * is an internal error during the primitive creation (zero radius, etc.) */
+		%feature("autodoc", "	* /** * Query the primitive topology. This method returns a Null shape if there * is an internal error during the primitive creation --zero radius, etc.-- */
 
 	:rtype: Handle_TopoDS_TShape
 ") TShape;
@@ -2280,19 +2297,20 @@ class Handle_VrmlData_Cylinder : public Handle_VrmlData_Geometry {
         static const Handle_VrmlData_Cylinder DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_VrmlData_Cylinder {
     VrmlData_Cylinder* _get_reference() {
-    return (VrmlData_Cylinder*)$self->Access();
+    return (VrmlData_Cylinder*)$self->get();
     }
 };
 
 %extend Handle_VrmlData_Cylinder {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend VrmlData_Cylinder {
@@ -2389,19 +2407,20 @@ class Handle_VrmlData_ImageTexture : public Handle_VrmlData_Texture {
         static const Handle_VrmlData_ImageTexture DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_VrmlData_ImageTexture {
     VrmlData_ImageTexture* _get_reference() {
-    return (VrmlData_ImageTexture*)$self->Access();
+    return (VrmlData_ImageTexture*)$self->get();
     }
 };
 
 %extend Handle_VrmlData_ImageTexture {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend VrmlData_ImageTexture {
@@ -2495,7 +2514,7 @@ class VrmlData_IndexedLineSet : public VrmlData_Geometry {
 ") ArrayColorInd;
 		inline size_t ArrayColorInd (const Standard_Integer * * & arrColorInd);
 		%feature("compactdefaultargs") GetColor;
-		%feature("autodoc", "	* /** * Query a color for one node in the given element. The color is * interpreted according to fields myColors, myArrColorInd, * myColorPerVertex, as defined in VRML 2.0. * @param iFace * rank of the polygon [0 .. N-1] * @param iVertex * rank of the vertex in the polygon [0 .. M-1]. This parameter is ignored * if (myColorPerVertex == False) * returns * Color value (RGB); if the color is indefinite then returns (0., 0., 0.) */
+		%feature("autodoc", "	* /** * Query a color for one node in the given element. The color is * interpreted according to fields myColors, myArrColorInd, * myColorPerVertex, as defined in VRML 2.0. * @param iFace * rank of the polygon [0 .. N-1] * @param iVertex * rank of the vertex in the polygon [0 .. M-1]. This parameter is ignored * if --myColorPerVertex == False-- * returns * Color value --RGB--; if the color is indefinite then returns --0., 0., 0.-- */
 
 	:param iFace:
 	:type iFace: int
@@ -2592,19 +2611,20 @@ class Handle_VrmlData_IndexedLineSet : public Handle_VrmlData_Geometry {
         static const Handle_VrmlData_IndexedLineSet DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_VrmlData_IndexedLineSet {
     VrmlData_IndexedLineSet* _get_reference() {
-    return (VrmlData_IndexedLineSet*)$self->Access();
+    return (VrmlData_IndexedLineSet*)$self->get();
     }
 };
 
 %extend Handle_VrmlData_IndexedLineSet {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend VrmlData_IndexedLineSet {
@@ -2636,7 +2656,7 @@ class VrmlData_Normal : public VrmlData_ArrayVec3d {
 ") VrmlData_Normal;
 		 VrmlData_Normal (const VrmlData_Scene & theScene,const char * theName,const size_t nVec = 0,const gp_XYZ * arrVec = 0L);
 		%feature("compactdefaultargs") Normal;
-		%feature("autodoc", "	* /** * Query one normal * @param i * index in the array of normals [0 .. N-1] * returns * the normal value for the index. If index irrelevant, returns (0., 0., 0.) */
+		%feature("autodoc", "	* /** * Query one normal * @param i * index in the array of normals [0 .. N-1] * returns * the normal value for the index. If index irrelevant, returns --0., 0., 0.-- */
 
 	:param i:
 	:type i: int
@@ -2701,19 +2721,20 @@ class Handle_VrmlData_Normal : public Handle_VrmlData_ArrayVec3d {
         static const Handle_VrmlData_Normal DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_VrmlData_Normal {
     VrmlData_Normal* _get_reference() {
-    return (VrmlData_Normal*)$self->Access();
+    return (VrmlData_Normal*)$self->get();
     }
 };
 
 %extend Handle_VrmlData_Normal {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend VrmlData_Normal {
@@ -2757,7 +2778,7 @@ class VrmlData_Sphere : public VrmlData_Geometry {
 ") SetRadius;
 		inline void SetRadius (const Standard_Real theRadius);
 		%feature("compactdefaultargs") TShape;
-		%feature("autodoc", "	* /** * Query the primitive topology. This method returns a Null shape if there * is an internal error during the primitive creation (zero radius, etc.) */
+		%feature("autodoc", "	* /** * Query the primitive topology. This method returns a Null shape if there * is an internal error during the primitive creation --zero radius, etc.-- */
 
 	:rtype: Handle_TopoDS_TShape
 ") TShape;
@@ -2820,19 +2841,20 @@ class Handle_VrmlData_Sphere : public Handle_VrmlData_Geometry {
         static const Handle_VrmlData_Sphere DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_VrmlData_Sphere {
     VrmlData_Sphere* _get_reference() {
-    return (VrmlData_Sphere*)$self->Access();
+    return (VrmlData_Sphere*)$self->get();
     }
 };
 
 %extend Handle_VrmlData_Sphere {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend VrmlData_Sphere {
@@ -2946,7 +2968,7 @@ class VrmlData_IndexedFaceSet : public VrmlData_Faceted {
 ") IndiceNormals;
 		inline Standard_Integer IndiceNormals (const Standard_Integer iFace,const Standard_Integer * & outIndice);
 		%feature("compactdefaultargs") GetNormal;
-		%feature("autodoc", "	* /** * Query a normal for one node in the given element. The normal is * interpreted according to fields myNormals, myArrNormalInd, * myNormalPerVertex, as defined in VRML 2.0. * @param iFace * rank of the polygon [0 .. N-1] * @param iVertex * rank of the vertex in the polygon [0 .. M-1]. This parameter is ignored * if (myNormalPerVertex == False) * returns * Normal vector; if the normal is indefinite then returns (0., 0., 0.) */
+		%feature("autodoc", "	* /** * Query a normal for one node in the given element. The normal is * interpreted according to fields myNormals, myArrNormalInd, * myNormalPerVertex, as defined in VRML 2.0. * @param iFace * rank of the polygon [0 .. N-1] * @param iVertex * rank of the vertex in the polygon [0 .. M-1]. This parameter is ignored * if --myNormalPerVertex == False-- * returns * Normal vector; if the normal is indefinite then returns --0., 0., 0.-- */
 
 	:param iFace:
 	:type iFace: int
@@ -2990,7 +3012,7 @@ class VrmlData_IndexedFaceSet : public VrmlData_Faceted {
 ") ArrayColorInd;
 		inline size_t ArrayColorInd (const Standard_Integer * * & arrColorInd);
 		%feature("compactdefaultargs") GetColor;
-		%feature("autodoc", "	* /** * Query a color for one node in the given element. The color is * interpreted according to fields myColors, myArrColorInd, * myColorPerVertex, as defined in VRML 2.0. * @param iFace * rank of the polygon [0 .. N-1] * @param iVertex * rank of the vertex in the polygon [0 .. M-1]. This parameter is ignored * if (myColorPerVertex == False) * returns * Color value (RGB); if the color is indefinite then returns (0., 0., 0.) */
+		%feature("autodoc", "	* /** * Query a color for one node in the given element. The color is * interpreted according to fields myColors, myArrColorInd, * myColorPerVertex, as defined in VRML 2.0. * @param iFace * rank of the polygon [0 .. N-1] * @param iVertex * rank of the vertex in the polygon [0 .. M-1]. This parameter is ignored * if --myColorPerVertex == False-- * returns * Color value --RGB--; if the color is indefinite then returns --0., 0., 0.-- */
 
 	:param iFace:
 	:type iFace: int
@@ -3121,19 +3143,20 @@ class Handle_VrmlData_IndexedFaceSet : public Handle_VrmlData_Faceted {
         static const Handle_VrmlData_IndexedFaceSet DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_VrmlData_IndexedFaceSet {
     VrmlData_IndexedFaceSet* _get_reference() {
-    return (VrmlData_IndexedFaceSet*)$self->Access();
+    return (VrmlData_IndexedFaceSet*)$self->get();
     }
 };
 
 %extend Handle_VrmlData_IndexedFaceSet {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend VrmlData_IndexedFaceSet {

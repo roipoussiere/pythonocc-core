@@ -1,5 +1,5 @@
 /*
-Copyright 2008-2017 Thomas Paviot (tpaviot@gmail.com)
+Copyright 2008-2018 Thomas Paviot (tpaviot@gmail.com)
 
 
 This file is part of pythonOCC.
@@ -54,12 +54,16 @@ def register_handle(handle, base_object):
 };
 
 /* typedefs */
-typedef NCollection_Sequence <Handle_Select3D_SensitiveEntity> Select3D_EntitySequence;
-typedef BVH_Box <Standard_Real , 3> Select3D_BndBox3d;
-typedef NCollection_Vec3 <Standard_Real> Select3D_Vec3;
-typedef NCollection_Vector <Handle_Select3D_SensitivePoly> Select3D_VectorOfHPoly;
-typedef NCollection_Sequence <Handle_Select3D_SensitiveEntity>::Iterator Select3D_EntitySequenceIter;
 /* end typedefs declaration */
+
+/* templates */
+%template(Select3D_VectorOfHPoly) NCollection_Vector <Handle_Select3D_SensitivePoly>;
+%template(Select3D_BVHBuilder3d) BVH_Builder <Standard_Real , 3>;
+%template(Select3D_IndexedMapOfEntity) NCollection_IndexedMap <Handle_Select3D_SensitiveEntity>;
+%template(Select3D_EntitySequence) NCollection_Sequence <Handle_Select3D_SensitiveEntity>;
+%template(Select3D_BndBox3d) BVH_Box <Standard_Real , 3>;
+%template(Select3D_Vec3) NCollection_Vec3 <Standard_Real>;
+/* end templates declaration */
 
 /* public enums */
 enum Select3D_TypeOfSensitivity {
@@ -69,6 +73,124 @@ enum Select3D_TypeOfSensitivity {
 
 /* end public enums declaration */
 
+%nodefaultctor Select3D_BVHIndexBuffer;
+class Select3D_BVHIndexBuffer : public Graphic3d_Buffer {
+	public:
+		%feature("compactdefaultargs") Select3D_BVHIndexBuffer;
+		%feature("autodoc", "	* Empty constructor.
+
+	:param theAlloc:
+	:type theAlloc: Handle_NCollection_BaseAllocator &
+	:rtype: None
+") Select3D_BVHIndexBuffer;
+		 Select3D_BVHIndexBuffer (const Handle_NCollection_BaseAllocator & theAlloc);
+		%feature("compactdefaultargs") HasPatches;
+		%feature("autodoc", "	:rtype: bool
+") HasPatches;
+		bool HasPatches ();
+		%feature("compactdefaultargs") Init;
+		%feature("autodoc", "	* Allocates new empty index array
+
+	:param theNbElems:
+	:type theNbElems: int
+	:param theHasPatches:
+	:type theHasPatches: bool
+	:rtype: bool
+") Init;
+		bool Init (const Standard_Integer theNbElems,const bool theHasPatches);
+		%feature("compactdefaultargs") Index;
+		%feature("autodoc", "	* Access index at specified position
+
+	:param theIndex:
+	:type theIndex: int
+	:rtype: int
+") Index;
+		Standard_Integer Index (const Standard_Integer theIndex);
+		%feature("compactdefaultargs") PatchSize;
+		%feature("autodoc", "	* Access index at specified position
+
+	:param theIndex:
+	:type theIndex: int
+	:rtype: int
+") PatchSize;
+		Standard_Integer PatchSize (const Standard_Integer theIndex);
+		%feature("compactdefaultargs") SetIndex;
+		%feature("autodoc", "	* Change index at specified position
+
+	:param theIndex:
+	:type theIndex: int
+	:param theValue:
+	:type theValue: int
+	:rtype: None
+") SetIndex;
+		void SetIndex (const Standard_Integer theIndex,const Standard_Integer theValue);
+		%feature("compactdefaultargs") SetIndex;
+		%feature("autodoc", "	* Change index at specified position
+
+	:param theIndex:
+	:type theIndex: int
+	:param theValue:
+	:type theValue: int
+	:param thePatchSize:
+	:type thePatchSize: int
+	:rtype: None
+") SetIndex;
+		void SetIndex (const Standard_Integer theIndex,const Standard_Integer theValue,const Standard_Integer thePatchSize);
+};
+
+
+%extend Select3D_BVHIndexBuffer {
+	%pythoncode {
+		def GetHandle(self):
+		    try:
+		        return self.thisHandle
+		    except:
+		        self.thisHandle = Handle_Select3D_BVHIndexBuffer(self)
+		        self.thisown = False
+		        return self.thisHandle
+	}
+};
+
+%pythonappend Handle_Select3D_BVHIndexBuffer::Handle_Select3D_BVHIndexBuffer %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
+%nodefaultctor Handle_Select3D_BVHIndexBuffer;
+class Handle_Select3D_BVHIndexBuffer : public Handle_Graphic3d_Buffer {
+
+    public:
+        // constructors
+        Handle_Select3D_BVHIndexBuffer();
+        Handle_Select3D_BVHIndexBuffer(const Handle_Select3D_BVHIndexBuffer &aHandle);
+        Handle_Select3D_BVHIndexBuffer(const Select3D_BVHIndexBuffer *anItem);
+        void Nullify();
+        Standard_Boolean IsNull() const;
+        static const Handle_Select3D_BVHIndexBuffer DownCast(const Handle_Standard_Transient &AnObject);
+
+};
+
+%extend Handle_Select3D_BVHIndexBuffer {
+    Select3D_BVHIndexBuffer* _get_reference() {
+    return (Select3D_BVHIndexBuffer*)$self->get();
+    }
+};
+
+%extend Handle_Select3D_BVHIndexBuffer {
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
+};
+
+%extend Select3D_BVHIndexBuffer {
+	%pythoncode {
+	__repr__ = _dumps_object
+	}
+};
 %nodefaultctor Select3D_Pnt;
 class Select3D_Pnt {
 	public:
@@ -76,19 +198,19 @@ class Select3D_Pnt {
 		Standard_ShortReal y;
 		Standard_ShortReal z;
 		%feature("compactdefaultargs") operator gp_Pnt;
-		%feature("autodoc", "	:rtype: inline
+		%feature("autodoc", "	:rtype: None
 ") operator gp_Pnt;
-		inline operator gp_Pnt ();
+		 operator gp_Pnt ();
 		%feature("compactdefaultargs") operator gp_XYZ;
-		%feature("autodoc", "	:rtype: inline
+		%feature("autodoc", "	:rtype: None
 ") operator gp_XYZ;
-		inline operator gp_XYZ ();
+		 operator gp_XYZ ();
 		%feature("compactdefaultargs") operator =;
 		%feature("autodoc", "	:param thePnt:
 	:type thePnt: gp_Pnt
-	:rtype: inline gp_Pnt
+	:rtype: gp_Pnt
 ") operator =;
-		inline gp_Pnt operator = (const gp_Pnt & thePnt);
+		gp_Pnt operator = (const gp_Pnt & thePnt);
 };
 
 
@@ -127,7 +249,7 @@ class Select3D_PointData {
 	:type theIndex: int
 	:rtype: Select3D_Pnt
 ") Pnt;
-		Select3D_Pnt Pnt (const Standard_Integer theIndex);
+		const Select3D_Pnt & Pnt (const Standard_Integer theIndex);
 		%feature("compactdefaultargs") Pnt3d;
 		%feature("autodoc", "	:param theIndex:
 	:type theIndex: int
@@ -245,19 +367,20 @@ class Handle_Select3D_SensitiveBox : public Handle_Select3D_SensitiveEntity {
         static const Handle_Select3D_SensitiveBox DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_Select3D_SensitiveBox {
     Select3D_SensitiveBox* _get_reference() {
-    return (Select3D_SensitiveBox*)$self->Access();
+    return (Select3D_SensitiveBox*)$self->get();
     }
 };
 
 %extend Handle_Select3D_SensitiveBox {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend Select3D_SensitiveBox {
@@ -333,7 +456,7 @@ class Select3D_SensitiveFace : public Select3D_SensitiveEntity {
 ") BVH;
 		virtual void BVH ();
 		%feature("compactdefaultargs") NbSubElements;
-		%feature("autodoc", "	* Returns the amount of sub-entities (points or planar convex polygons)
+		%feature("autodoc", "	* Returns the amount of sub-entities --points or planar convex polygons--
 
 	:rtype: int
 ") NbSubElements;
@@ -372,19 +495,20 @@ class Handle_Select3D_SensitiveFace : public Handle_Select3D_SensitiveEntity {
         static const Handle_Select3D_SensitiveFace DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_Select3D_SensitiveFace {
     Select3D_SensitiveFace* _get_reference() {
-    return (Select3D_SensitiveFace*)$self->Access();
+    return (Select3D_SensitiveFace*)$self->get();
     }
 };
 
 %extend Handle_Select3D_SensitiveFace {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend Select3D_SensitiveFace {
@@ -430,7 +554,7 @@ class Select3D_SensitivePoint : public Select3D_SensitiveEntity {
 
 	:rtype: gp_Pnt
 ") Point;
-		gp_Pnt Point ();
+		const gp_Pnt  Point ();
 		%feature("compactdefaultargs") CenterOfGeometry;
 		%feature("autodoc", "	* Returns center of point. If location transformation is set, it will be applied
 
@@ -477,19 +601,20 @@ class Handle_Select3D_SensitivePoint : public Handle_Select3D_SensitiveEntity {
         static const Handle_Select3D_SensitivePoint DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_Select3D_SensitivePoint {
     Select3D_SensitivePoint* _get_reference() {
-    return (Select3D_SensitivePoint*)$self->Access();
+    return (Select3D_SensitivePoint*)$self->get();
     }
 };
 
 %extend Handle_Select3D_SensitivePoint {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend Select3D_SensitivePoint {
@@ -512,34 +637,34 @@ class Select3D_SensitiveSegment : public Select3D_SensitiveEntity {
 	:rtype: None
 ") Select3D_SensitiveSegment;
 		 Select3D_SensitiveSegment (const Handle_SelectBasics_EntityOwner & theOwnerId,const gp_Pnt & theFirstPnt,const gp_Pnt & theLastPnt);
-		%feature("compactdefaultargs") StartPoint;
+		%feature("compactdefaultargs") SetStartPoint;
 		%feature("autodoc", "	* changes the start Point of the Segment;
 
 	:param thePnt:
 	:type thePnt: gp_Pnt
 	:rtype: None
-") StartPoint;
-		void StartPoint (const gp_Pnt & thePnt);
-		%feature("compactdefaultargs") EndPoint;
+") SetStartPoint;
+		void SetStartPoint (const gp_Pnt & thePnt);
+		%feature("compactdefaultargs") SetEndPoint;
 		%feature("autodoc", "	* changes the end point of the segment
 
 	:param thePnt:
 	:type thePnt: gp_Pnt
 	:rtype: None
-") EndPoint;
-		void EndPoint (const gp_Pnt & thePnt);
+") SetEndPoint;
+		void SetEndPoint (const gp_Pnt & thePnt);
 		%feature("compactdefaultargs") StartPoint;
 		%feature("autodoc", "	* gives the 3D start Point of the Segment
 
 	:rtype: gp_Pnt
 ") StartPoint;
-		gp_Pnt StartPoint ();
+		const gp_Pnt  StartPoint ();
 		%feature("compactdefaultargs") EndPoint;
 		%feature("autodoc", "	* gives the 3D End Point of the Segment
 
 	:rtype: gp_Pnt
 ") EndPoint;
-		gp_Pnt EndPoint ();
+		const gp_Pnt  EndPoint ();
 		%feature("compactdefaultargs") NbSubElements;
 		%feature("autodoc", "	* Returns the amount of points
 
@@ -572,6 +697,22 @@ class Select3D_SensitiveSegment : public Select3D_SensitiveEntity {
 	:rtype: Select3D_BndBox3d
 ") BoundingBox;
 		virtual Select3D_BndBox3d BoundingBox ();
+		%feature("compactdefaultargs") StartPoint;
+		%feature("autodoc", "	* changes the start Point of the Segment;
+
+	:param thePnt:
+	:type thePnt: gp_Pnt
+	:rtype: None
+") StartPoint;
+		void StartPoint (const gp_Pnt & thePnt);
+		%feature("compactdefaultargs") EndPoint;
+		%feature("autodoc", "	* changes the end point of the segment
+
+	:param thePnt:
+	:type thePnt: gp_Pnt
+	:rtype: None
+") EndPoint;
+		void EndPoint (const gp_Pnt & thePnt);
 };
 
 
@@ -606,19 +747,20 @@ class Handle_Select3D_SensitiveSegment : public Handle_Select3D_SensitiveEntity 
         static const Handle_Select3D_SensitiveSegment DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_Select3D_SensitiveSegment {
     Select3D_SensitiveSegment* _get_reference() {
-    return (Select3D_SensitiveSegment*)$self->Access();
+    return (Select3D_SensitiveSegment*)$self->get();
     }
 };
 
 %extend Handle_Select3D_SensitiveSegment {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend Select3D_SensitiveSegment {
@@ -629,6 +771,20 @@ class Handle_Select3D_SensitiveSegment : public Handle_Select3D_SensitiveEntity 
 %nodefaultctor Select3D_SensitiveSet;
 class Select3D_SensitiveSet : public Select3D_SensitiveEntity {
 	public:
+		%feature("compactdefaultargs") DefaultBVHBuilder;
+		%feature("autodoc", "	* Return global instance to default BVH builder.
+
+	:rtype: Handle_Select3D_BVHBuilder3d
+") DefaultBVHBuilder;
+		Handle_Select3D_BVHBuilder3d DefaultBVHBuilder ();
+		%feature("compactdefaultargs") SetDefaultBVHBuilder;
+		%feature("autodoc", "	* Assign new BVH builder to be used by default for new sensitive sets --assigning is NOT thread-safe!--.
+
+	:param theBuilder:
+	:type theBuilder: Handle_Select3D_BVHBuilder3d &
+	:rtype: void
+") SetDefaultBVHBuilder;
+		static void SetDefaultBVHBuilder (const Handle_Select3D_BVHBuilder3d & theBuilder);
 		%feature("compactdefaultargs") Size;
 		%feature("autodoc", "	* Returns the amount of sub-entities of the complex entity
 
@@ -676,11 +832,19 @@ class Select3D_SensitiveSet : public Select3D_SensitiveEntity {
 		%feature("compactdefaultargs") BVH;
 		%feature("autodoc", "	* Builds BVH tree for sensitive set. Must be called manually to build BVH tree for any sensitive set in case if its content was initialized not in a constructor, but element by element
 
-	:rtype: None
+	:rtype: void
 ") BVH;
-		void BVH ();
+		virtual void BVH ();
+		%feature("compactdefaultargs") SetBuilder;
+		%feature("autodoc", "	* Sets the method --builder-- used to construct BVH.
+
+	:param theBuilder:
+	:type theBuilder: Handle_Select3D_BVHBuilder3d &
+	:rtype: None
+") SetBuilder;
+		void SetBuilder (const Handle_Select3D_BVHBuilder3d & theBuilder);
 		%feature("compactdefaultargs") MarkDirty;
-		%feature("autodoc", "	* Marks BVH tree of the set as outdated. It will be rebuild at the next call of BVH()
+		%feature("autodoc", "	* Marks BVH tree of the set as outdated. It will be rebuild at the next call of BVH----
 
 	:rtype: None
 ") MarkDirty;
@@ -743,19 +907,20 @@ class Handle_Select3D_SensitiveSet : public Handle_Select3D_SensitiveEntity {
         static const Handle_Select3D_SensitiveSet DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_Select3D_SensitiveSet {
     Select3D_SensitiveSet* _get_reference() {
-    return (Select3D_SensitiveSet*)$self->Access();
+    return (Select3D_SensitiveSet*)$self->get();
     }
 };
 
 %extend Handle_Select3D_SensitiveSet {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend Select3D_SensitiveSet {
@@ -866,19 +1031,20 @@ class Handle_Select3D_SensitiveTriangle : public Handle_Select3D_SensitiveEntity
         static const Handle_Select3D_SensitiveTriangle DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_Select3D_SensitiveTriangle {
     Select3D_SensitiveTriangle* _get_reference() {
-    return (Select3D_SensitiveTriangle*)$self->Access();
+    return (Select3D_SensitiveTriangle*)$self->get();
     }
 };
 
 %extend Handle_Select3D_SensitiveTriangle {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend Select3D_SensitiveTriangle {
@@ -993,19 +1159,20 @@ class Handle_Select3D_InteriorSensitivePointSet : public Handle_Select3D_Sensiti
         static const Handle_Select3D_InteriorSensitivePointSet DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_Select3D_InteriorSensitivePointSet {
     Select3D_InteriorSensitivePointSet* _get_reference() {
-    return (Select3D_InteriorSensitivePointSet*)$self->Access();
+    return (Select3D_InteriorSensitivePointSet*)$self->get();
     }
 };
 
 %extend Handle_Select3D_InteriorSensitivePointSet {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend Select3D_InteriorSensitivePointSet {
@@ -1038,6 +1205,32 @@ class Select3D_SensitiveGroup : public Select3D_SensitiveSet {
 	:rtype: None
 ") Select3D_SensitiveGroup;
 		 Select3D_SensitiveGroup (const Handle_SelectBasics_EntityOwner & theOwnerId,Select3D_EntitySequence & theEntities,const Standard_Boolean theIsMustMatchAll = Standard_True);
+		%feature("compactdefaultargs") Entities;
+		%feature("autodoc", "	* Gets group content
+
+	:rtype: Select3D_IndexedMapOfEntity
+") Entities;
+		const Select3D_IndexedMapOfEntity & Entities ();
+		%feature("compactdefaultargs") SubEntity;
+		%feature("autodoc", "	* Access entity by index [1, NbSubElements----].
+
+	:param theIndex:
+	:type theIndex: int
+	:rtype: Handle_Select3D_SensitiveEntity
+") SubEntity;
+		Handle_Select3D_SensitiveEntity SubEntity (const Standard_Integer theIndex);
+		%feature("compactdefaultargs") LastDetectedEntity;
+		%feature("autodoc", "	* Return last detected entity.
+
+	:rtype: Handle_Select3D_SensitiveEntity
+") LastDetectedEntity;
+		Handle_Select3D_SensitiveEntity LastDetectedEntity ();
+		%feature("compactdefaultargs") LastDetectedEntityIndex;
+		%feature("autodoc", "	* Return index of last detected entity.
+
+	:rtype: int
+") LastDetectedEntityIndex;
+		Standard_Integer LastDetectedEntityIndex ();
 		%feature("compactdefaultargs") Add;
 		%feature("autodoc", "	* Adds the list of sensitive entities LL to the empty sensitive group object created at construction time.
 
@@ -1088,6 +1281,20 @@ class Select3D_SensitiveGroup : public Select3D_SensitiveSet {
 	:rtype: bool
 ") MustMatchAll;
 		Standard_Boolean MustMatchAll ();
+		%feature("compactdefaultargs") ToCheckOverlapAll;
+		%feature("autodoc", "	* Returns True if all sensitive entities should be checked within rectangular/polygonal selection, False by default. Can be useful for sensitive entities holding detection results as class property.
+
+	:rtype: bool
+") ToCheckOverlapAll;
+		Standard_Boolean ToCheckOverlapAll ();
+		%feature("compactdefaultargs") SetCheckOverlapAll;
+		%feature("autodoc", "	* Returns True if all sensitive entities should be checked within rectangular/polygonal selection, False by default. Can be useful for sensitive entities holding detection results as class property.
+
+	:param theToCheckAll:
+	:type theToCheckAll: bool
+	:rtype: None
+") SetCheckOverlapAll;
+		void SetCheckOverlapAll (Standard_Boolean theToCheckAll);
 		%feature("compactdefaultargs") Matches;
 		%feature("autodoc", "	* Checks whether the group overlaps current selecting volume
 
@@ -1116,12 +1323,6 @@ class Select3D_SensitiveGroup : public Select3D_SensitiveSet {
 	:rtype: None
 ") Set;
 		void Set (const Handle_SelectBasics_EntityOwner & theOwnerId);
-		%feature("compactdefaultargs") GetEntities;
-		%feature("autodoc", "	* Gets group content
-
-	:rtype: Select3D_EntitySequence
-") GetEntities;
-		const Select3D_EntitySequence & GetEntities ();
 		%feature("compactdefaultargs") BoundingBox;
 		%feature("autodoc", "	* Returns bounding box of the group. If location transformation is set, it will be applied
 
@@ -1202,19 +1403,20 @@ class Handle_Select3D_SensitiveGroup : public Handle_Select3D_SensitiveSet {
         static const Handle_Select3D_SensitiveGroup DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_Select3D_SensitiveGroup {
     Select3D_SensitiveGroup* _get_reference() {
-    return (Select3D_SensitiveGroup*)$self->Access();
+    return (Select3D_SensitiveGroup*)$self->get();
     }
 };
 
 %extend Handle_Select3D_SensitiveGroup {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend Select3D_SensitiveGroup {
@@ -1355,22 +1557,419 @@ class Handle_Select3D_SensitivePoly : public Handle_Select3D_SensitiveSet {
         static const Handle_Select3D_SensitivePoly DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_Select3D_SensitivePoly {
     Select3D_SensitivePoly* _get_reference() {
-    return (Select3D_SensitivePoly*)$self->Access();
+    return (Select3D_SensitivePoly*)$self->get();
     }
 };
 
 %extend Handle_Select3D_SensitivePoly {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend Select3D_SensitivePoly {
+	%pythoncode {
+	__repr__ = _dumps_object
+	}
+};
+%nodefaultctor Select3D_SensitivePrimitiveArray;
+class Select3D_SensitivePrimitiveArray : public Select3D_SensitiveSet {
+	public:
+		%feature("compactdefaultargs") Select3D_SensitivePrimitiveArray;
+		%feature("autodoc", "	* Constructs an empty sensitive object.
+
+	:param theOwnerId:
+	:type theOwnerId: Handle_SelectBasics_EntityOwner &
+	:rtype: None
+") Select3D_SensitivePrimitiveArray;
+		 Select3D_SensitivePrimitiveArray (const Handle_SelectBasics_EntityOwner & theOwnerId);
+		%feature("compactdefaultargs") PatchSizeMax;
+		%feature("autodoc", "	* Return patch size limit --1 by default--.
+
+	:rtype: int
+") PatchSizeMax;
+		Standard_Integer PatchSizeMax ();
+		%feature("compactdefaultargs") SetPatchSizeMax;
+		%feature("autodoc", "	* Assign patch size limit. Should be set before initialization.
+
+	:param thePatchSizeMax:
+	:type thePatchSizeMax: int
+	:rtype: None
+") SetPatchSizeMax;
+		void SetPatchSizeMax (const Standard_Integer thePatchSizeMax);
+		%feature("compactdefaultargs") PatchDistance;
+		%feature("autodoc", "	* Maximum allowed distance between consequential elements in patch --ShortRealLast---- by default--. Has no effect on indexed triangulation.
+
+	:rtype: float
+") PatchDistance;
+		float PatchDistance ();
+		%feature("compactdefaultargs") SetPatchDistance;
+		%feature("autodoc", "	* Assign patch distance limit. Should be set before initialization.
+
+	:param thePatchDistMax:
+	:type thePatchDistMax: float
+	:rtype: None
+") SetPatchDistance;
+		void SetPatchDistance (const float thePatchDistMax);
+		%feature("compactdefaultargs") InitTriangulation;
+		%feature("autodoc", "	* Initialize the sensitive object from triangualtion. The sub-triangulation can be specified by arguments theIndexLower and theIndexUpper --these are for iterating theIndices, not to restrict the actual index values!--. @param theVerts attributes array containing Graphic3d_TOA_POS with type Graphic3d_TOD_VEC3 or Graphic3d_TOD_VEC2 @param theIndices index array defining triangulation @param theInitLoc location @param theIndexLower the theIndices range - first value --inclusive--, starting from 0 and multiple by 3 @param theIndexUpper the theIndices range - last value --inclusive--, upto theIndices->NbElements-1 and multiple by 3 @param theToEvalMinMax compute bounding box within initialization @param theNbGroups number of groups to split the vertex array into several parts
+
+	:param theVerts:
+	:type theVerts: Handle_Graphic3d_Buffer &
+	:param theIndices:
+	:type theIndices: Handle_Graphic3d_IndexBuffer &
+	:param theInitLoc:
+	:type theInitLoc: TopLoc_Location &
+	:param theIndexLower:
+	:type theIndexLower: int
+	:param theIndexUpper:
+	:type theIndexUpper: int
+	:param theToEvalMinMax: default value is true
+	:type theToEvalMinMax: bool
+	:param theNbGroups: default value is 1
+	:type theNbGroups: int
+	:rtype: bool
+") InitTriangulation;
+		bool InitTriangulation (const Handle_Graphic3d_Buffer & theVerts,const Handle_Graphic3d_IndexBuffer & theIndices,const TopLoc_Location & theInitLoc,const Standard_Integer theIndexLower,const Standard_Integer theIndexUpper,const bool theToEvalMinMax = true,const Standard_Integer theNbGroups = 1);
+		%feature("compactdefaultargs") InitTriangulation;
+		%feature("autodoc", "	* Initialize the sensitive object from triangualtion. @param theVerts attributes array containing Graphic3d_TOA_POS with type Graphic3d_TOD_VEC3 or Graphic3d_TOD_VEC2 @param theIndices index array defining triangulation @param theInitLoc location @param theToEvalMinMax compute bounding box within initialization @param theNbGroups number of groups to split the vertex array into several parts
+
+	:param theVerts:
+	:type theVerts: Handle_Graphic3d_Buffer &
+	:param theIndices:
+	:type theIndices: Handle_Graphic3d_IndexBuffer &
+	:param theInitLoc:
+	:type theInitLoc: TopLoc_Location &
+	:param theToEvalMinMax: default value is true
+	:type theToEvalMinMax: bool
+	:param theNbGroups: default value is 1
+	:type theNbGroups: int
+	:rtype: bool
+") InitTriangulation;
+		bool InitTriangulation (const Handle_Graphic3d_Buffer & theVerts,const Handle_Graphic3d_IndexBuffer & theIndices,const TopLoc_Location & theInitLoc,const bool theToEvalMinMax = true,const Standard_Integer theNbGroups = 1);
+		%feature("compactdefaultargs") InitPoints;
+		%feature("autodoc", "	* Initialize the sensitive object from point set. The sub-set of points can be specified by arguments theIndexLower and theIndexUpper --these are for iterating theIndices, not to restrict the actual index values!--. @param theVerts attributes array containing Graphic3d_TOA_POS with type Graphic3d_TOD_VEC3 or Graphic3d_TOD_VEC2 @param theIndices index array defining points @param theInitLoc location @param theIndexLower the theIndices range - first value --inclusive--, starting from 0 @param theIndexUpper the theIndices range - last value --inclusive--, upto theIndices->NbElements-1 @param theToEvalMinMax compute bounding box within initialization @param theNbGroups number of groups to split the vertex array into several parts
+
+	:param theVerts:
+	:type theVerts: Handle_Graphic3d_Buffer &
+	:param theIndices:
+	:type theIndices: Handle_Graphic3d_IndexBuffer &
+	:param theInitLoc:
+	:type theInitLoc: TopLoc_Location &
+	:param theIndexLower:
+	:type theIndexLower: int
+	:param theIndexUpper:
+	:type theIndexUpper: int
+	:param theToEvalMinMax: default value is true
+	:type theToEvalMinMax: bool
+	:param theNbGroups: default value is 1
+	:type theNbGroups: int
+	:rtype: bool
+") InitPoints;
+		bool InitPoints (const Handle_Graphic3d_Buffer & theVerts,const Handle_Graphic3d_IndexBuffer & theIndices,const TopLoc_Location & theInitLoc,const Standard_Integer theIndexLower,const Standard_Integer theIndexUpper,const bool theToEvalMinMax = true,const Standard_Integer theNbGroups = 1);
+		%feature("compactdefaultargs") InitPoints;
+		%feature("autodoc", "	* Initialize the sensitive object from point set. @param theVerts attributes array containing Graphic3d_TOA_POS with type Graphic3d_TOD_VEC3 or Graphic3d_TOD_VEC2 @param theIndices index array to define subset of points @param theInitLoc location @param theToEvalMinMax compute bounding box within initialization @param theNbGroups number of groups to split the vertex array into several parts
+
+	:param theVerts:
+	:type theVerts: Handle_Graphic3d_Buffer &
+	:param theIndices:
+	:type theIndices: Handle_Graphic3d_IndexBuffer &
+	:param theInitLoc:
+	:type theInitLoc: TopLoc_Location &
+	:param theToEvalMinMax: default value is true
+	:type theToEvalMinMax: bool
+	:param theNbGroups: default value is 1
+	:type theNbGroups: int
+	:rtype: bool
+") InitPoints;
+		bool InitPoints (const Handle_Graphic3d_Buffer & theVerts,const Handle_Graphic3d_IndexBuffer & theIndices,const TopLoc_Location & theInitLoc,const bool theToEvalMinMax = true,const Standard_Integer theNbGroups = 1);
+		%feature("compactdefaultargs") InitPoints;
+		%feature("autodoc", "	* Initialize the sensitive object from point set. @param theVerts attributes array containing Graphic3d_TOA_POS with type Graphic3d_TOD_VEC3 or Graphic3d_TOD_VEC2 @param theInitLoc location @param theToEvalMinMax compute bounding box within initialization @param theNbGroups number of groups to split the vertex array into several parts
+
+	:param theVerts:
+	:type theVerts: Handle_Graphic3d_Buffer &
+	:param theInitLoc:
+	:type theInitLoc: TopLoc_Location &
+	:param theToEvalMinMax: default value is true
+	:type theToEvalMinMax: bool
+	:param theNbGroups: default value is 1
+	:type theNbGroups: int
+	:rtype: bool
+") InitPoints;
+		bool InitPoints (const Handle_Graphic3d_Buffer & theVerts,const TopLoc_Location & theInitLoc,const bool theToEvalMinMax = true,const Standard_Integer theNbGroups = 1);
+		%feature("compactdefaultargs") SetMinMax;
+		%feature("autodoc", "	* Assign new not transformed bounding box.
+
+	:param theMinX:
+	:type theMinX: double
+	:param theMinY:
+	:type theMinY: double
+	:param theMinZ:
+	:type theMinZ: double
+	:param theMaxX:
+	:type theMaxX: double
+	:param theMaxY:
+	:type theMaxY: double
+	:param theMaxZ:
+	:type theMaxZ: double
+	:rtype: None
+") SetMinMax;
+		void SetMinMax (double theMinX,double theMinY,double theMinZ,double theMaxX,double theMaxY,double theMaxZ);
+		%feature("compactdefaultargs") ToDetectElements;
+		%feature("autodoc", "	* Return flag to keep index of last topmost detected element, True by default.
+
+	:rtype: bool
+") ToDetectElements;
+		bool ToDetectElements ();
+		%feature("compactdefaultargs") SetDetectElements;
+		%feature("autodoc", "	* Setup keeping of the index of last topmost detected element --axis picking--.
+
+	:param theToDetect:
+	:type theToDetect: bool
+	:rtype: None
+") SetDetectElements;
+		void SetDetectElements (bool theToDetect);
+		%feature("compactdefaultargs") ToDetectElementMap;
+		%feature("autodoc", "	* Return flag to keep index map of last detected elements, False by default --rectangle selection--.
+
+	:rtype: bool
+") ToDetectElementMap;
+		bool ToDetectElementMap ();
+		%feature("compactdefaultargs") SetDetectElementMap;
+		%feature("autodoc", "	* Setup keeping of the index map of last detected elements --rectangle selection--.
+
+	:param theToDetect:
+	:type theToDetect: bool
+	:rtype: None
+") SetDetectElementMap;
+		void SetDetectElementMap (bool theToDetect);
+		%feature("compactdefaultargs") ToDetectNodes;
+		%feature("autodoc", "	* Return flag to keep index of last topmost detected node, False by default.
+
+	:rtype: bool
+") ToDetectNodes;
+		bool ToDetectNodes ();
+		%feature("compactdefaultargs") SetDetectNodes;
+		%feature("autodoc", "	* Setup keeping of the index of last topmost detected node --for axis picking--.
+
+	:param theToDetect:
+	:type theToDetect: bool
+	:rtype: None
+") SetDetectNodes;
+		void SetDetectNodes (bool theToDetect);
+		%feature("compactdefaultargs") ToDetectNodeMap;
+		%feature("autodoc", "	* Return flag to keep index map of last detected nodes, False by default --rectangle selection--.
+
+	:rtype: bool
+") ToDetectNodeMap;
+		bool ToDetectNodeMap ();
+		%feature("compactdefaultargs") SetDetectNodeMap;
+		%feature("autodoc", "	* Setup keeping of the index map of last detected nodes --rectangle selection--.
+
+	:param theToDetect:
+	:type theToDetect: bool
+	:rtype: None
+") SetDetectNodeMap;
+		void SetDetectNodeMap (bool theToDetect);
+		%feature("compactdefaultargs") ToDetectEdges;
+		%feature("autodoc", "	* Return flag to keep index of last topmost detected edge, False by default.
+
+	:rtype: bool
+") ToDetectEdges;
+		bool ToDetectEdges ();
+		%feature("compactdefaultargs") SetDetectEdges;
+		%feature("autodoc", "	* Setup keeping of the index of last topmost detected edge --axis picking--.
+
+	:param theToDetect:
+	:type theToDetect: bool
+	:rtype: None
+") SetDetectEdges;
+		void SetDetectEdges (bool theToDetect);
+		%feature("compactdefaultargs") LastDetectedElement;
+		%feature("autodoc", "	* Return last topmost detected element or -1 if undefined --axis picking--.
+
+	:rtype: int
+") LastDetectedElement;
+		Standard_Integer LastDetectedElement ();
+		%feature("compactdefaultargs") LastDetectedElementMap;
+		%feature("autodoc", "	* Return the index map of last detected elements --rectangle selection--.
+
+	:rtype: Handle_TColStd_HPackedMapOfInteger
+") LastDetectedElementMap;
+		Handle_TColStd_HPackedMapOfInteger LastDetectedElementMap ();
+		%feature("compactdefaultargs") LastDetectedNode;
+		%feature("autodoc", "	* Return last topmost detected node or -1 if undefined --axis picking--.
+
+	:rtype: int
+") LastDetectedNode;
+		Standard_Integer LastDetectedNode ();
+		%feature("compactdefaultargs") LastDetectedNodeMap;
+		%feature("autodoc", "	* Return the index map of last detected nodes --rectangle selection--.
+
+	:rtype: Handle_TColStd_HPackedMapOfInteger
+") LastDetectedNodeMap;
+		Handle_TColStd_HPackedMapOfInteger LastDetectedNodeMap ();
+		%feature("compactdefaultargs") LastDetectedEdgeNode1;
+		%feature("autodoc", "	* Return the first node of last topmost detected edge or -1 if undefined --axis picking--.
+
+	:rtype: int
+") LastDetectedEdgeNode1;
+		Standard_Integer LastDetectedEdgeNode1 ();
+		%feature("compactdefaultargs") LastDetectedEdgeNode2;
+		%feature("autodoc", "	* Return the second node of last topmost detected edge or -1 if undefined --axis picking--.
+
+	:rtype: int
+") LastDetectedEdgeNode2;
+		Standard_Integer LastDetectedEdgeNode2 ();
+		%feature("compactdefaultargs") Matches;
+		%feature("autodoc", "	* Checks whether the sensitive entity is overlapped by current selecting volume.
+
+	:param theMgr:
+	:type theMgr: SelectBasics_SelectingVolumeManager &
+	:param thePickResult:
+	:type thePickResult: SelectBasics_PickResult &
+	:rtype: bool
+") Matches;
+		virtual Standard_Boolean Matches (SelectBasics_SelectingVolumeManager & theMgr,SelectBasics_PickResult & thePickResult);
+		%feature("compactdefaultargs") GetConnected;
+		%feature("autodoc", "	:rtype: Handle_Select3D_SensitiveEntity
+") GetConnected;
+		virtual Handle_Select3D_SensitiveEntity GetConnected ();
+		%feature("compactdefaultargs") Size;
+		%feature("autodoc", "	* Returns the length of array of triangles or edges
+
+	:rtype: int
+") Size;
+		virtual Standard_Integer Size ();
+		%feature("compactdefaultargs") NbSubElements;
+		%feature("autodoc", "	* Returns the amount of nodes in triangulation
+
+	:rtype: int
+") NbSubElements;
+		Standard_Integer NbSubElements ();
+		%feature("compactdefaultargs") Box;
+		%feature("autodoc", "	* Returns bounding box of triangle/edge with index theIdx
+
+	:param theIdx:
+	:type theIdx: int
+	:rtype: Select3D_BndBox3d
+") Box;
+		virtual Select3D_BndBox3d Box (const Standard_Integer theIdx);
+		%feature("compactdefaultargs") Center;
+		%feature("autodoc", "	* Returns geometry center of triangle/edge with index theIdx in array along the given axis theAxis
+
+	:param theIdx:
+	:type theIdx: int
+	:param theAxis:
+	:type theAxis: int
+	:rtype: float
+") Center;
+		virtual Standard_Real Center (const Standard_Integer theIdx,const Standard_Integer theAxis);
+		%feature("compactdefaultargs") Swap;
+		%feature("autodoc", "	* Swaps items with indexes theIdx1 and theIdx2 in array
+
+	:param theIdx1:
+	:type theIdx1: int
+	:param theIdx2:
+	:type theIdx2: int
+	:rtype: void
+") Swap;
+		virtual void Swap (const Standard_Integer theIdx1,const Standard_Integer theIdx2);
+		%feature("compactdefaultargs") BoundingBox;
+		%feature("autodoc", "	* Returns bounding box of the triangulation. If location transformation is set, it will be applied
+
+	:rtype: Select3D_BndBox3d
+") BoundingBox;
+		virtual Select3D_BndBox3d BoundingBox ();
+		%feature("compactdefaultargs") CenterOfGeometry;
+		%feature("autodoc", "	* Returns center of triangulation. If location transformation is set, it will be applied
+
+	:rtype: gp_Pnt
+") CenterOfGeometry;
+		gp_Pnt CenterOfGeometry ();
+		%feature("compactdefaultargs") HasInitLocation;
+		%feature("autodoc", "	* Returns true if the shape corresponding to the entity has init location
+
+	:rtype: bool
+") HasInitLocation;
+		Standard_Boolean HasInitLocation ();
+		%feature("compactdefaultargs") InvInitLocation;
+		%feature("autodoc", "	* Returns inversed location transformation matrix if the shape corresponding to this entity has init location set. Otherwise, returns identity matrix.
+
+	:rtype: gp_GTrsf
+") InvInitLocation;
+		gp_GTrsf InvInitLocation ();
+		%feature("compactdefaultargs") Set;
+		%feature("autodoc", "	* Sets the owner for all entities in group
+
+	:param theOwnerId:
+	:type theOwnerId: Handle_SelectBasics_EntityOwner &
+	:rtype: void
+") Set;
+		virtual void Set (const Handle_SelectBasics_EntityOwner & theOwnerId);
+		%feature("compactdefaultargs") BVH;
+		%feature("autodoc", "	* Builds BVH tree for sensitive set.
+
+	:rtype: void
+") BVH;
+		virtual void BVH ();
+};
+
+
+%extend Select3D_SensitivePrimitiveArray {
+	%pythoncode {
+		def GetHandle(self):
+		    try:
+		        return self.thisHandle
+		    except:
+		        self.thisHandle = Handle_Select3D_SensitivePrimitiveArray(self)
+		        self.thisown = False
+		        return self.thisHandle
+	}
+};
+
+%pythonappend Handle_Select3D_SensitivePrimitiveArray::Handle_Select3D_SensitivePrimitiveArray %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
+%nodefaultctor Handle_Select3D_SensitivePrimitiveArray;
+class Handle_Select3D_SensitivePrimitiveArray : public Handle_Select3D_SensitiveSet {
+
+    public:
+        // constructors
+        Handle_Select3D_SensitivePrimitiveArray();
+        Handle_Select3D_SensitivePrimitiveArray(const Handle_Select3D_SensitivePrimitiveArray &aHandle);
+        Handle_Select3D_SensitivePrimitiveArray(const Select3D_SensitivePrimitiveArray *anItem);
+        void Nullify();
+        Standard_Boolean IsNull() const;
+        static const Handle_Select3D_SensitivePrimitiveArray DownCast(const Handle_Standard_Transient &AnObject);
+
+};
+
+%extend Handle_Select3D_SensitivePrimitiveArray {
+    Select3D_SensitivePrimitiveArray* _get_reference() {
+    return (Select3D_SensitivePrimitiveArray*)$self->get();
+    }
+};
+
+%extend Handle_Select3D_SensitivePrimitiveArray {
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
+};
+
+%extend Select3D_SensitivePrimitiveArray {
 	%pythoncode {
 	__repr__ = _dumps_object
 	}
@@ -1502,19 +2101,20 @@ class Handle_Select3D_SensitiveWire : public Handle_Select3D_SensitiveSet {
         static const Handle_Select3D_SensitiveWire DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_Select3D_SensitiveWire {
     Select3D_SensitiveWire* _get_reference() {
-    return (Select3D_SensitiveWire*)$self->Access();
+    return (Select3D_SensitiveWire*)$self->get();
     }
 };
 
 %extend Handle_Select3D_SensitiveWire {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend Select3D_SensitiveWire {
@@ -1655,19 +2255,20 @@ class Handle_Select3D_SensitiveCircle : public Handle_Select3D_SensitivePoly {
         static const Handle_Select3D_SensitiveCircle DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_Select3D_SensitiveCircle {
     Select3D_SensitiveCircle* _get_reference() {
-    return (Select3D_SensitiveCircle*)$self->Access();
+    return (Select3D_SensitiveCircle*)$self->get();
     }
 };
 
 %extend Handle_Select3D_SensitiveCircle {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend Select3D_SensitiveCircle {
@@ -1750,19 +2351,20 @@ class Handle_Select3D_SensitiveCurve : public Handle_Select3D_SensitivePoly {
         static const Handle_Select3D_SensitiveCurve DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_Select3D_SensitiveCurve {
     Select3D_SensitiveCurve* _get_reference() {
-    return (Select3D_SensitiveCurve*)$self->Access();
+    return (Select3D_SensitiveCurve*)$self->get();
     }
 };
 
 %extend Handle_Select3D_SensitiveCurve {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend Select3D_SensitiveCurve {

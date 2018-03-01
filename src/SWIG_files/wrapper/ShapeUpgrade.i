@@ -1,5 +1,5 @@
 /*
-Copyright 2008-2017 Thomas Paviot (tpaviot@gmail.com)
+Copyright 2008-2018 Thomas Paviot (tpaviot@gmail.com)
 
 
 This file is part of pythonOCC.
@@ -56,6 +56,9 @@ def register_handle(handle, base_object):
 /* typedefs */
 /* end typedefs declaration */
 
+/* templates */
+/* end templates declaration */
+
 /* public enums */
 /* end public enums declaration */
 
@@ -73,7 +76,7 @@ class ShapeUpgrade {
 ") C0BSplineToSequenceOfC1BSplineCurve;
 		static Standard_Boolean C0BSplineToSequenceOfC1BSplineCurve (const Handle_Geom_BSplineCurve & BS,Handle_TColGeom_HSequenceOfBoundedCurve & seqBS);
 		%feature("compactdefaultargs") C0BSplineToSequenceOfC1BSplineCurve;
-		%feature("autodoc", "	* Converts C0 B-Spline curve into sequence of C1 B-Spline curves. This method splits B-Spline at the knots with multiplicities equal to degree, i.e. unlike method GeomConvert::C0BSplineToArrayOfC1BSplineCurve this one does not use any tolerance and therefore does not change the geometry of B-Spline. Returns True if C0 B-Spline was successfully splitted, else returns False (if BS is C1 B-Spline).
+		%feature("autodoc", "	* Converts C0 B-Spline curve into sequence of C1 B-Spline curves. This method splits B-Spline at the knots with multiplicities equal to degree, i.e. unlike method GeomConvert::C0BSplineToArrayOfC1BSplineCurve this one does not use any tolerance and therefore does not change the geometry of B-Spline. Returns True if C0 B-Spline was successfully splitted, else returns False --if BS is C1 B-Spline--.
 
 	:param BS:
 	:type BS: Handle_Geom2d_BSplineCurve &
@@ -91,7 +94,7 @@ class ShapeUpgrade {
 	}
 };
 %nodefaultctor ShapeUpgrade_RemoveLocations;
-class ShapeUpgrade_RemoveLocations : public MMgt_TShared {
+class ShapeUpgrade_RemoveLocations : public Standard_Transient {
 	public:
 		%feature("compactdefaultargs") ShapeUpgrade_RemoveLocations;
 		%feature("autodoc", "	* Empy constructor
@@ -157,7 +160,7 @@ class ShapeUpgrade_RemoveLocations : public MMgt_TShared {
 %}
 
 %nodefaultctor Handle_ShapeUpgrade_RemoveLocations;
-class Handle_ShapeUpgrade_RemoveLocations : public Handle_MMgt_TShared {
+class Handle_ShapeUpgrade_RemoveLocations : public Handle_Standard_Transient {
 
     public:
         // constructors
@@ -169,19 +172,20 @@ class Handle_ShapeUpgrade_RemoveLocations : public Handle_MMgt_TShared {
         static const Handle_ShapeUpgrade_RemoveLocations DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_ShapeUpgrade_RemoveLocations {
     ShapeUpgrade_RemoveLocations* _get_reference() {
-    return (ShapeUpgrade_RemoveLocations*)$self->Access();
+    return (ShapeUpgrade_RemoveLocations*)$self->get();
     }
 };
 
 %extend Handle_ShapeUpgrade_RemoveLocations {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend ShapeUpgrade_RemoveLocations {
@@ -212,10 +216,6 @@ class ShapeUpgrade_ShapeDivide {
 	:rtype: None
 ") Init;
 		void Init (const TopoDS_Shape & S);
-		%feature("compactdefaultargs") Delete;
-		%feature("autodoc", "	:rtype: void
-") Delete;
-		virtual void Delete ();
 		%feature("compactdefaultargs") SetPrecision;
 		%feature("autodoc", "	* Defines the spatial precision used for splitting
 
@@ -241,7 +241,7 @@ class ShapeUpgrade_ShapeDivide {
 ") SetMinTolerance;
 		void SetMinTolerance (const Standard_Real mintol);
 		%feature("compactdefaultargs") SetSurfaceSegmentMode;
-		%feature("autodoc", "	* Purpose sets mode for trimming (segment) surface by wire UV bounds.
+		%feature("autodoc", "	* Purpose sets mode for trimming --segment-- surface by wire UV bounds.
 
 	:param Segment:
 	:type Segment: bool
@@ -249,7 +249,7 @@ class ShapeUpgrade_ShapeDivide {
 ") SetSurfaceSegmentMode;
 		void SetSurfaceSegmentMode (const Standard_Boolean Segment);
 		%feature("compactdefaultargs") Perform;
-		%feature("autodoc", "	* Performs splitting and computes the resulting shape If newContext is True (default), the internal context will be cleared at start, else previous substitutions will be acting.
+		%feature("autodoc", "	* Performs splitting and computes the resulting shape If newContext is True --default--, the internal context will be cleared at start, else previous substitutions will be acting.
 
 	:param newContext: default value is Standard_True
 	:type newContext: bool
@@ -263,13 +263,13 @@ class ShapeUpgrade_ShapeDivide {
 ") Result;
 		TopoDS_Shape Result ();
 		%feature("compactdefaultargs") GetContext;
-		%feature("autodoc", "	* Returns context with all the modifications made during last call(s) to Perform() recorded
+		%feature("autodoc", "	* Returns context with all the modifications made during last call--s-- to Perform---- recorded
 
 	:rtype: Handle_ShapeBuild_ReShape
 ") GetContext;
 		Handle_ShapeBuild_ReShape GetContext ();
 		%feature("compactdefaultargs") SetContext;
-		%feature("autodoc", "	* Sets context with recorded modifications to be applied during next call(s) to Perform(shape,Standard_False)
+		%feature("autodoc", "	* Sets context with recorded modifications to be applied during next call--s-- to Perform--shape,Standard_False--
 
 	:param context:
 	:type context: Handle_ShapeBuild_ReShape &
@@ -303,7 +303,7 @@ class ShapeUpgrade_ShapeDivide {
 ") SendMsg;
 		void SendMsg (const TopoDS_Shape & shape,const Message_Msg & message,const Message_Gravity gravity = Message_Info);
 		%feature("compactdefaultargs") Status;
-		%feature("autodoc", "	* Queries the status of last call to Perform OK : no splitting was done (or no call to Perform) DONE1: some edges were splitted DONE2: surface was splitted FAIL1: some errors occured
+		%feature("autodoc", "	* Queries the status of last call to Perform OK : no splitting was done --or no call to Perform-- DONE1: some edges were splitted DONE2: surface was splitted FAIL1: some errors occured
 
 	:param status:
 	:type status: ShapeExtend_Status
@@ -344,7 +344,7 @@ class ShapeUpgrade_ShellSewing {
 ") ShapeUpgrade_ShellSewing;
 		 ShapeUpgrade_ShellSewing ();
 		%feature("compactdefaultargs") ApplySewing;
-		%feature("autodoc", "	* Builds a new shape from a former one, by calling Sewing from BRepBuilderAPI. Rebuilt solids are oriented to be 'not infinite' //! If <tol> is not given (i.e. value 0. by default), it is computed as the mean tolerance recorded in <shape> //! If no shell has been sewed, this method returns the input shape
+		%feature("autodoc", "	* Builds a new shape from a former one, by calling Sewing from BRepBuilderAPI. Rebuilt solids are oriented to be 'not infinite' //! If <tol> is not given --i.e. value 0. by default--, it is computed as the mean tolerance recorded in <shape> //! If no shell has been sewed, this method returns the input shape
 
 	:param shape:
 	:type shape: TopoDS_Shape &
@@ -362,7 +362,7 @@ class ShapeUpgrade_ShellSewing {
 	}
 };
 %nodefaultctor ShapeUpgrade_SplitCurve;
-class ShapeUpgrade_SplitCurve : public MMgt_TShared {
+class ShapeUpgrade_SplitCurve : public Standard_Transient {
 	public:
 		%feature("compactdefaultargs") ShapeUpgrade_SplitCurve;
 		%feature("autodoc", "	* Empty constructor.
@@ -409,7 +409,7 @@ class ShapeUpgrade_SplitCurve : public MMgt_TShared {
 ") Compute;
 		virtual void Compute ();
 		%feature("compactdefaultargs") Perform;
-		%feature("autodoc", "	* Performs correction/splitting of the curve. First defines splitting values by method Compute(), then calls method Build().
+		%feature("autodoc", "	* Performs correction/splitting of the curve. First defines splitting values by method Compute----, then calls method Build----.
 
 	:param Segment: default value is Standard_True
 	:type Segment: bool
@@ -417,7 +417,7 @@ class ShapeUpgrade_SplitCurve : public MMgt_TShared {
 ") Perform;
 		void Perform (const Standard_Boolean Segment = Standard_True);
 		%feature("compactdefaultargs") Status;
-		%feature("autodoc", "	* Returns the status OK - no splitting is needed DONE1 - splitting required and gives more than one segment DONE2 - splitting is required, but gives only one segment (initial) DONE3 - geometric form of the curve or parametrisation is modified
+		%feature("autodoc", "	* Returns the status OK - no splitting is needed DONE1 - splitting required and gives more than one segment DONE2 - splitting is required, but gives only one segment --initial-- DONE3 - geometric form of the curve or parametrisation is modified
 
 	:param status:
 	:type status: ShapeExtend_Status
@@ -446,7 +446,7 @@ class ShapeUpgrade_SplitCurve : public MMgt_TShared {
 %}
 
 %nodefaultctor Handle_ShapeUpgrade_SplitCurve;
-class Handle_ShapeUpgrade_SplitCurve : public Handle_MMgt_TShared {
+class Handle_ShapeUpgrade_SplitCurve : public Handle_Standard_Transient {
 
     public:
         // constructors
@@ -458,19 +458,20 @@ class Handle_ShapeUpgrade_SplitCurve : public Handle_MMgt_TShared {
         static const Handle_ShapeUpgrade_SplitCurve DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_ShapeUpgrade_SplitCurve {
     ShapeUpgrade_SplitCurve* _get_reference() {
-    return (ShapeUpgrade_SplitCurve*)$self->Access();
+    return (ShapeUpgrade_SplitCurve*)$self->get();
     }
 };
 
 %extend Handle_ShapeUpgrade_SplitCurve {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend ShapeUpgrade_SplitCurve {
@@ -479,7 +480,7 @@ class Handle_ShapeUpgrade_SplitCurve : public Handle_MMgt_TShared {
 	}
 };
 %nodefaultctor ShapeUpgrade_SplitSurface;
-class ShapeUpgrade_SplitSurface : public MMgt_TShared {
+class ShapeUpgrade_SplitSurface : public Standard_Transient {
 	public:
 		%feature("compactdefaultargs") ShapeUpgrade_SplitSurface;
 		%feature("autodoc", "	* Empty constructor.
@@ -528,7 +529,7 @@ class ShapeUpgrade_SplitSurface : public MMgt_TShared {
 ") SetVSplitValues;
 		void SetVSplitValues (const Handle_TColStd_HSequenceOfReal & VValues);
 		%feature("compactdefaultargs") Build;
-		%feature("autodoc", "	* Performs splitting of the supporting surface. If resulting surface is B-Spline and Segment is True, the result is composed with segments of the surface bounded by the U and V SplitValues (method Geom_BSplineSurface::Segment is used). If Segment is False, the result is composed with Geom_RectangularTrimmedSurface all based on the same complete surface. Fields myNbResultingRow and myNbResultingCol must be set to specify the size of resulting grid of surfaces.
+		%feature("autodoc", "	* Performs splitting of the supporting surface. If resulting surface is B-Spline and Segment is True, the result is composed with segments of the surface bounded by the U and V SplitValues --method Geom_BSplineSurface::Segment is used--. If Segment is False, the result is composed with Geom_RectangularTrimmedSurface all based on the same complete surface. Fields myNbResultingRow and myNbResultingCol must be set to specify the size of resulting grid of surfaces.
 
 	:param Segment:
 	:type Segment: bool
@@ -544,7 +545,7 @@ class ShapeUpgrade_SplitSurface : public MMgt_TShared {
 ") Compute;
 		virtual void Compute (const Standard_Boolean Segment = Standard_True);
 		%feature("compactdefaultargs") Perform;
-		%feature("autodoc", "	* Performs correction/splitting of the surface. First defines splitting values by method Compute(), then calls method Build().
+		%feature("autodoc", "	* Performs correction/splitting of the surface. First defines splitting values by method Compute----, then calls method Build----.
 
 	:param Segment: default value is Standard_True
 	:type Segment: bool
@@ -564,7 +565,7 @@ class ShapeUpgrade_SplitSurface : public MMgt_TShared {
 ") VSplitValues;
 		Handle_TColStd_HSequenceOfReal VSplitValues ();
 		%feature("compactdefaultargs") Status;
-		%feature("autodoc", "	* Returns the status OK - no splitting is needed DONE1 - splitting required and gives more than one patch DONE2 - splitting is required, but gives only single patch (initial) DONE3 - geometric form of the surface or parametrisation is modified
+		%feature("autodoc", "	* Returns the status OK - no splitting is needed DONE1 - splitting required and gives more than one patch DONE2 - splitting is required, but gives only single patch --initial-- DONE3 - geometric form of the surface or parametrisation is modified
 
 	:param status:
 	:type status: ShapeExtend_Status
@@ -599,7 +600,7 @@ class ShapeUpgrade_SplitSurface : public MMgt_TShared {
 %}
 
 %nodefaultctor Handle_ShapeUpgrade_SplitSurface;
-class Handle_ShapeUpgrade_SplitSurface : public Handle_MMgt_TShared {
+class Handle_ShapeUpgrade_SplitSurface : public Handle_Standard_Transient {
 
     public:
         // constructors
@@ -611,19 +612,20 @@ class Handle_ShapeUpgrade_SplitSurface : public Handle_MMgt_TShared {
         static const Handle_ShapeUpgrade_SplitSurface DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_ShapeUpgrade_SplitSurface {
     ShapeUpgrade_SplitSurface* _get_reference() {
-    return (ShapeUpgrade_SplitSurface*)$self->Access();
+    return (ShapeUpgrade_SplitSurface*)$self->get();
     }
 };
 
 %extend Handle_ShapeUpgrade_SplitSurface {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend ShapeUpgrade_SplitSurface {
@@ -632,7 +634,7 @@ class Handle_ShapeUpgrade_SplitSurface : public Handle_MMgt_TShared {
 	}
 };
 %nodefaultctor ShapeUpgrade_Tool;
-class ShapeUpgrade_Tool : public MMgt_TShared {
+class ShapeUpgrade_Tool : public Standard_Transient {
 	public:
 		%feature("compactdefaultargs") ShapeUpgrade_Tool;
 		%feature("autodoc", "	* Empty constructor
@@ -734,7 +736,7 @@ class ShapeUpgrade_Tool : public MMgt_TShared {
 %}
 
 %nodefaultctor Handle_ShapeUpgrade_Tool;
-class Handle_ShapeUpgrade_Tool : public Handle_MMgt_TShared {
+class Handle_ShapeUpgrade_Tool : public Handle_Standard_Transient {
 
     public:
         // constructors
@@ -746,19 +748,20 @@ class Handle_ShapeUpgrade_Tool : public Handle_MMgt_TShared {
         static const Handle_ShapeUpgrade_Tool DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_ShapeUpgrade_Tool {
     ShapeUpgrade_Tool* _get_reference() {
-    return (ShapeUpgrade_Tool*)$self->Access();
+    return (ShapeUpgrade_Tool*)$self->get();
     }
 };
 
 %extend Handle_ShapeUpgrade_Tool {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend ShapeUpgrade_Tool {
@@ -767,7 +770,7 @@ class Handle_ShapeUpgrade_Tool : public Handle_MMgt_TShared {
 	}
 };
 %nodefaultctor ShapeUpgrade_UnifySameDomain;
-class ShapeUpgrade_UnifySameDomain : public MMgt_TShared {
+class ShapeUpgrade_UnifySameDomain : public Standard_Transient {
 	public:
 		%feature("compactdefaultargs") ShapeUpgrade_UnifySameDomain;
 		%feature("autodoc", "	* empty constructor
@@ -788,7 +791,9 @@ class ShapeUpgrade_UnifySameDomain : public MMgt_TShared {
 ") ShapeUpgrade_UnifySameDomain;
 		 ShapeUpgrade_UnifySameDomain (const TopoDS_Shape & aShape,const Standard_Boolean UnifyEdges = Standard_True,const Standard_Boolean UnifyFaces = Standard_True,const Standard_Boolean ConcatBSplines = Standard_False);
 		%feature("compactdefaultargs") Initialize;
-		%feature("autodoc", "	:param aShape:
+		%feature("autodoc", "	* Initializes with a shape
+
+	:param aShape:
 	:type aShape: TopoDS_Shape &
 	:param UnifyEdges: default value is Standard_True
 	:type UnifyEdges: bool
@@ -799,6 +804,54 @@ class ShapeUpgrade_UnifySameDomain : public MMgt_TShared {
 	:rtype: None
 ") Initialize;
 		void Initialize (const TopoDS_Shape & aShape,const Standard_Boolean UnifyEdges = Standard_True,const Standard_Boolean UnifyFaces = Standard_True,const Standard_Boolean ConcatBSplines = Standard_False);
+		%feature("compactdefaultargs") AllowInternalEdges;
+		%feature("autodoc", "	* Sets the flag defining whether it is allowed to create internal edges inside merged faces in the case of non-manifold topology. Without this flag merging through multi connected edge is forbidden. Default value is false.
+
+	:param theValue:
+	:type theValue: bool
+	:rtype: None
+") AllowInternalEdges;
+		void AllowInternalEdges (const Standard_Boolean theValue);
+		%feature("compactdefaultargs") KeepShape;
+		%feature("autodoc", "	* Sets the shape for avoid merging of the faces in given places. This shape can be vertex or edge. If shape is vertex it forbids merging of connected edges. If shape is edge it forbids merging of connected faces.
+
+	:param theShape:
+	:type theShape: TopoDS_Shape &
+	:rtype: None
+") KeepShape;
+		void KeepShape (const TopoDS_Shape & theShape);
+		%feature("compactdefaultargs") KeepShapes;
+		%feature("autodoc", "	* Sets the map of shapes for avoid merging of the faces in given places These shapes can be vertexes or edges. If shape is vertex it forbids merging of connected edges. If shape is edge it forbids merging of connected faces.
+
+	:param theShapes:
+	:type theShapes: TopTools_MapOfShape &
+	:rtype: None
+") KeepShapes;
+		void KeepShapes (const TopTools_MapOfShape & theShapes);
+		%feature("compactdefaultargs") SetSafeInputMode;
+		%feature("autodoc", "	* Sets the flag defining the behavior of the algorithm regarding modification of input shape. If this flag is equal to True then the input --original-- shape can't be modified during modification process. Default value is true.
+
+	:param theValue:
+	:type theValue: bool
+	:rtype: None
+") SetSafeInputMode;
+		void SetSafeInputMode (Standard_Boolean theValue);
+		%feature("compactdefaultargs") SetLinearTolerance;
+		%feature("autodoc", "	* Sets the linear tolerance. Default value is Precision::Confusion----.
+
+	:param theValue:
+	:type theValue: float
+	:rtype: None
+") SetLinearTolerance;
+		void SetLinearTolerance (const Standard_Real theValue);
+		%feature("compactdefaultargs") SetAngularTolerance;
+		%feature("autodoc", "	* Sets the angular tolerance. Default value is Precision::Angular----.
+
+	:param theValue:
+	:type theValue: float
+	:rtype: None
+") SetAngularTolerance;
+		void SetAngularTolerance (const Standard_Real theValue);
 		%feature("compactdefaultargs") Build;
 		%feature("autodoc", "	* Builds the resulting shape
 
@@ -811,12 +864,6 @@ class ShapeUpgrade_UnifySameDomain : public MMgt_TShared {
 	:rtype: TopoDS_Shape
 ") Shape;
 		const TopoDS_Shape  Shape ();
-		%feature("compactdefaultargs") Generated;
-		%feature("autodoc", "	:param aShape:
-	:type aShape: TopoDS_Shape &
-	:rtype: TopoDS_Shape
-") Generated;
-		TopoDS_Shape Generated (const TopoDS_Shape & aShape);
 		%feature("compactdefaultargs") UnifyFaces;
 		%feature("autodoc", "	* this method makes if possible a common face from each group of faces lying on coincident surfaces
 
@@ -835,6 +882,18 @@ class ShapeUpgrade_UnifySameDomain : public MMgt_TShared {
 	:rtype: None
 ") UnifyFacesAndEdges;
 		void UnifyFacesAndEdges ();
+		%feature("compactdefaultargs") History;
+		%feature("autodoc", "	* Returns the history of the processed shapes.
+
+	:rtype: Handle_BRepTools_History
+") History;
+		Handle_BRepTools_History History ();
+		%feature("compactdefaultargs") History;
+		%feature("autodoc", "	* Returns the history of the processed shapes.
+
+	:rtype: Handle_BRepTools_History
+") History;
+		Handle_BRepTools_History History ();
 };
 
 
@@ -857,7 +916,7 @@ class ShapeUpgrade_UnifySameDomain : public MMgt_TShared {
 %}
 
 %nodefaultctor Handle_ShapeUpgrade_UnifySameDomain;
-class Handle_ShapeUpgrade_UnifySameDomain : public Handle_MMgt_TShared {
+class Handle_ShapeUpgrade_UnifySameDomain : public Handle_Standard_Transient {
 
     public:
         // constructors
@@ -869,19 +928,20 @@ class Handle_ShapeUpgrade_UnifySameDomain : public Handle_MMgt_TShared {
         static const Handle_ShapeUpgrade_UnifySameDomain DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_ShapeUpgrade_UnifySameDomain {
     ShapeUpgrade_UnifySameDomain* _get_reference() {
-    return (ShapeUpgrade_UnifySameDomain*)$self->Access();
+    return (ShapeUpgrade_UnifySameDomain*)$self->get();
     }
 };
 
 %extend Handle_ShapeUpgrade_UnifySameDomain {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend ShapeUpgrade_UnifySameDomain {
@@ -1010,19 +1070,20 @@ class Handle_ShapeUpgrade_ConvertSurfaceToBezierBasis : public Handle_ShapeUpgra
         static const Handle_ShapeUpgrade_ConvertSurfaceToBezierBasis DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_ShapeUpgrade_ConvertSurfaceToBezierBasis {
     ShapeUpgrade_ConvertSurfaceToBezierBasis* _get_reference() {
-    return (ShapeUpgrade_ConvertSurfaceToBezierBasis*)$self->Access();
+    return (ShapeUpgrade_ConvertSurfaceToBezierBasis*)$self->get();
     }
 };
 
 %extend Handle_ShapeUpgrade_ConvertSurfaceToBezierBasis {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend ShapeUpgrade_ConvertSurfaceToBezierBasis {
@@ -1135,19 +1196,20 @@ class Handle_ShapeUpgrade_EdgeDivide : public Handle_ShapeUpgrade_Tool {
         static const Handle_ShapeUpgrade_EdgeDivide DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_ShapeUpgrade_EdgeDivide {
     ShapeUpgrade_EdgeDivide* _get_reference() {
-    return (ShapeUpgrade_EdgeDivide*)$self->Access();
+    return (ShapeUpgrade_EdgeDivide*)$self->get();
     }
 };
 
 %extend Handle_ShapeUpgrade_EdgeDivide {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend ShapeUpgrade_EdgeDivide {
@@ -1181,7 +1243,7 @@ class ShapeUpgrade_FaceDivide : public ShapeUpgrade_Tool {
 ") Init;
 		void Init (const TopoDS_Face & F);
 		%feature("compactdefaultargs") SetSurfaceSegmentMode;
-		%feature("autodoc", "	* Purpose sets mode for trimming (segment) surface by wire UV bounds.
+		%feature("autodoc", "	* Purpose sets mode for trimming --segment-- surface by wire UV bounds.
 
 	:param Segment:
 	:type Segment: bool
@@ -1213,7 +1275,7 @@ class ShapeUpgrade_FaceDivide : public ShapeUpgrade_Tool {
 ") Result;
 		TopoDS_Shape Result ();
 		%feature("compactdefaultargs") Status;
-		%feature("autodoc", "	* Queries the status of last call to Perform OK : no splitting was done (or no call to Perform) DONE1: some edges were splitted DONE2: surface was splitted DONE3: surface was modified without splitting FAIL1: some fails encountered during splitting wires FAIL2: face cannot be splitted
+		%feature("autodoc", "	* Queries the status of last call to Perform OK : no splitting was done --or no call to Perform-- DONE1: some edges were splitted DONE2: surface was splitted DONE3: surface was modified without splitting FAIL1: some fails encountered during splitting wires FAIL2: face cannot be splitted
 
 	:param status:
 	:type status: ShapeExtend_Status
@@ -1282,19 +1344,20 @@ class Handle_ShapeUpgrade_FaceDivide : public Handle_ShapeUpgrade_Tool {
         static const Handle_ShapeUpgrade_FaceDivide DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_ShapeUpgrade_FaceDivide {
     ShapeUpgrade_FaceDivide* _get_reference() {
-    return (ShapeUpgrade_FaceDivide*)$self->Access();
+    return (ShapeUpgrade_FaceDivide*)$self->get();
     }
 };
 
 %extend Handle_ShapeUpgrade_FaceDivide {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend ShapeUpgrade_FaceDivide {
@@ -1389,19 +1452,20 @@ class Handle_ShapeUpgrade_FixSmallCurves : public Handle_ShapeUpgrade_Tool {
         static const Handle_ShapeUpgrade_FixSmallCurves DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_ShapeUpgrade_FixSmallCurves {
     ShapeUpgrade_FixSmallCurves* _get_reference() {
-    return (ShapeUpgrade_FixSmallCurves*)$self->Access();
+    return (ShapeUpgrade_FixSmallCurves*)$self->get();
     }
 };
 
 %extend Handle_ShapeUpgrade_FixSmallCurves {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend ShapeUpgrade_FixSmallCurves {
@@ -1491,7 +1555,7 @@ class ShapeUpgrade_RemoveInternalWires : public ShapeUpgrade_Tool {
 ") RemovedWires;
 		const TopTools_SequenceOfShape & RemovedWires ();
 		%feature("compactdefaultargs") Status;
-		%feature("autodoc", "	* Queries status of last call to Perform() : OK - nothing was done :DONE1 - internal wires were removed :DONE2 - small faces were removed. :FAIL1 - initial shape is not specified :FAIL2 - specified sub-shape is not belonged to inotial shape.
+		%feature("autodoc", "	* Queries status of last call to Perform---- : OK - nothing was done :DONE1 - internal wires were removed :DONE2 - small faces were removed. :FAIL1 - initial shape is not specified :FAIL2 - specified sub-shape is not belonged to inotial shape.
 
 	:param theStatus:
 	:type theStatus: ShapeExtend_Status
@@ -1532,19 +1596,20 @@ class Handle_ShapeUpgrade_RemoveInternalWires : public Handle_ShapeUpgrade_Tool 
         static const Handle_ShapeUpgrade_RemoveInternalWires DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_ShapeUpgrade_RemoveInternalWires {
     ShapeUpgrade_RemoveInternalWires* _get_reference() {
-    return (ShapeUpgrade_RemoveInternalWires*)$self->Access();
+    return (ShapeUpgrade_RemoveInternalWires*)$self->get();
     }
 };
 
 %extend Handle_ShapeUpgrade_RemoveInternalWires {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend ShapeUpgrade_RemoveInternalWires {
@@ -1755,7 +1820,7 @@ class ShapeUpgrade_ShapeDivideAngle : public ShapeUpgrade_ShapeDivide {
 ") InitTool;
 		void InitTool (const Standard_Real MaxAngle);
 		%feature("compactdefaultargs") SetMaxAngle;
-		%feature("autodoc", "	* Set maximal angle (calls InitTool)
+		%feature("autodoc", "	* Set maximal angle --calls InitTool--
 
 	:param MaxAngle:
 	:type MaxAngle: float
@@ -1898,7 +1963,7 @@ class ShapeUpgrade_ShapeDivideContinuity : public ShapeUpgrade_ShapeDivide {
 ") SetTolerance2d;
 		void SetTolerance2d (const Standard_Real Tol);
 		%feature("compactdefaultargs") SetBoundaryCriterion;
-		%feature("autodoc", "	* Defines a criterion of continuity for the boundary (all the Wires) //! The possible values are C0, G1, C1, G2, C2, C3, CN The default is C1 to respect the Cas.Cade Shape Validity. G1 and G2 are not authorized.
+		%feature("autodoc", "	* Defines a criterion of continuity for the boundary --all the Wires-- //! The possible values are C0, G1, C1, G2, C2, C3, CN The default is C1 to respect the Cas.Cade Shape Validity. G1 and G2 are not authorized.
 
 	:param Criterion: default value is GeomAbs_C1
 	:type Criterion: GeomAbs_Shape
@@ -1906,7 +1971,7 @@ class ShapeUpgrade_ShapeDivideContinuity : public ShapeUpgrade_ShapeDivide {
 ") SetBoundaryCriterion;
 		void SetBoundaryCriterion (const GeomAbs_Shape Criterion = GeomAbs_C1);
 		%feature("compactdefaultargs") SetPCurveCriterion;
-		%feature("autodoc", "	* Defines a criterion of continuity for the boundary (all the pcurves of Wires) //! The possible values are C0, G1, C1, G2, C2, C3, CN The default is C1 to respect the Cas.Cade Shape Validity. G1 and G2 are not authorized.
+		%feature("autodoc", "	* Defines a criterion of continuity for the boundary --all the pcurves of Wires-- //! The possible values are C0, G1, C1, G2, C2, C3, CN The default is C1 to respect the Cas.Cade Shape Validity. G1 and G2 are not authorized.
 
 	:param Criterion: default value is GeomAbs_C1
 	:type Criterion: GeomAbs_Shape
@@ -1914,7 +1979,7 @@ class ShapeUpgrade_ShapeDivideContinuity : public ShapeUpgrade_ShapeDivide {
 ") SetPCurveCriterion;
 		void SetPCurveCriterion (const GeomAbs_Shape Criterion = GeomAbs_C1);
 		%feature("compactdefaultargs") SetSurfaceCriterion;
-		%feature("autodoc", "	* Defines a criterion of continuity for the boundary (all the Wires) //! The possible values are C0, G1, C1, G2, C2, C3, CN The default is C1 to respect the Cas.Cade Shape Validity. G1 and G2 are not authorized.
+		%feature("autodoc", "	* Defines a criterion of continuity for the boundary --all the Wires-- //! The possible values are C0, G1, C1, G2, C2, C3, CN The default is C1 to respect the Cas.Cade Shape Validity. G1 and G2 are not authorized.
 
 	:param Criterion: default value is GeomAbs_C1
 	:type Criterion: GeomAbs_Shape
@@ -2004,19 +2069,20 @@ class Handle_ShapeUpgrade_SplitCurve2d : public Handle_ShapeUpgrade_SplitCurve {
         static const Handle_ShapeUpgrade_SplitCurve2d DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_ShapeUpgrade_SplitCurve2d {
     ShapeUpgrade_SplitCurve2d* _get_reference() {
-    return (ShapeUpgrade_SplitCurve2d*)$self->Access();
+    return (ShapeUpgrade_SplitCurve2d*)$self->get();
     }
 };
 
 %extend Handle_ShapeUpgrade_SplitCurve2d {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend ShapeUpgrade_SplitCurve2d {
@@ -2099,19 +2165,20 @@ class Handle_ShapeUpgrade_SplitCurve3d : public Handle_ShapeUpgrade_SplitCurve {
         static const Handle_ShapeUpgrade_SplitCurve3d DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_ShapeUpgrade_SplitCurve3d {
     ShapeUpgrade_SplitCurve3d* _get_reference() {
-    return (ShapeUpgrade_SplitCurve3d*)$self->Access();
+    return (ShapeUpgrade_SplitCurve3d*)$self->get();
     }
 };
 
 %extend Handle_ShapeUpgrade_SplitCurve3d {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend ShapeUpgrade_SplitCurve3d {
@@ -2145,7 +2212,7 @@ class ShapeUpgrade_SplitSurfaceAngle : public ShapeUpgrade_SplitSurface {
 ") MaxAngle;
 		Standard_Real MaxAngle ();
 		%feature("compactdefaultargs") Compute;
-		%feature("autodoc", "	* Performs splitting of the supporting surface(s). First defines splitting values, then calls inherited method.
+		%feature("autodoc", "	* Performs splitting of the supporting surface--s--. First defines splitting values, then calls inherited method.
 
 	:param Segment:
 	:type Segment: bool
@@ -2186,19 +2253,20 @@ class Handle_ShapeUpgrade_SplitSurfaceAngle : public Handle_ShapeUpgrade_SplitSu
         static const Handle_ShapeUpgrade_SplitSurfaceAngle DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_ShapeUpgrade_SplitSurfaceAngle {
     ShapeUpgrade_SplitSurfaceAngle* _get_reference() {
-    return (ShapeUpgrade_SplitSurfaceAngle*)$self->Access();
+    return (ShapeUpgrade_SplitSurfaceAngle*)$self->get();
     }
 };
 
 %extend Handle_ShapeUpgrade_SplitSurfaceAngle {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend ShapeUpgrade_SplitSurfaceAngle {
@@ -2268,19 +2336,20 @@ class Handle_ShapeUpgrade_SplitSurfaceArea : public Handle_ShapeUpgrade_SplitSur
         static const Handle_ShapeUpgrade_SplitSurfaceArea DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_ShapeUpgrade_SplitSurfaceArea {
     ShapeUpgrade_SplitSurfaceArea* _get_reference() {
-    return (ShapeUpgrade_SplitSurfaceArea*)$self->Access();
+    return (ShapeUpgrade_SplitSurfaceArea*)$self->get();
     }
 };
 
 %extend Handle_ShapeUpgrade_SplitSurfaceArea {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend ShapeUpgrade_SplitSurfaceArea {
@@ -2353,19 +2422,20 @@ class Handle_ShapeUpgrade_SplitSurfaceContinuity : public Handle_ShapeUpgrade_Sp
         static const Handle_ShapeUpgrade_SplitSurfaceContinuity DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_ShapeUpgrade_SplitSurfaceContinuity {
     ShapeUpgrade_SplitSurfaceContinuity* _get_reference() {
-    return (ShapeUpgrade_SplitSurfaceContinuity*)$self->Access();
+    return (ShapeUpgrade_SplitSurfaceContinuity*)$self->get();
     }
 };
 
 %extend Handle_ShapeUpgrade_SplitSurfaceContinuity {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend ShapeUpgrade_SplitSurfaceContinuity {
@@ -2445,19 +2515,19 @@ class ShapeUpgrade_WireDivide : public ShapeUpgrade_Tool {
 ") SetSurface;
 		void SetSurface (const Handle_Geom_Surface & S,const TopLoc_Location & L);
 		%feature("compactdefaultargs") Perform;
-		%feature("autodoc", "	* Computes the resulting wire by splitting all the edges according to splitting criteria. All the modifications made are recorded in context (ShapeBuild_ReShape). This tool is applied to all edges before splitting them in order to keep sharings. If no supporting face or surface is defined, only 3d splitting criteria are used.
+		%feature("autodoc", "	* Computes the resulting wire by splitting all the edges according to splitting criteria. All the modifications made are recorded in context --ShapeBuild_ReShape--. This tool is applied to all edges before splitting them in order to keep sharings. If no supporting face or surface is defined, only 3d splitting criteria are used.
 
 	:rtype: void
 ") Perform;
 		virtual void Perform ();
 		%feature("compactdefaultargs") Wire;
-		%feature("autodoc", "	* Gives the resulting Wire (equal to initial one if not done or Null if not loaded)
+		%feature("autodoc", "	* Gives the resulting Wire --equal to initial one if not done or Null if not loaded--
 
 	:rtype: TopoDS_Wire
 ") Wire;
 		const TopoDS_Wire  Wire ();
 		%feature("compactdefaultargs") Status;
-		%feature("autodoc", "	* Queries status of last call to Perform() OK - no edges were splitted, wire left untouched DONE1 - some edges were splitted FAIL1 - some edges have no 3d curve (skipped) FAIL2 - some edges have no pcurve (skipped)
+		%feature("autodoc", "	* Queries status of last call to Perform---- OK - no edges were splitted, wire left untouched DONE1 - some edges were splitted FAIL1 - some edges have no 3d curve --skipped-- FAIL2 - some edges have no pcurve --skipped--
 
 	:param status:
 	:type status: ShapeExtend_Status
@@ -2564,19 +2634,20 @@ class Handle_ShapeUpgrade_WireDivide : public Handle_ShapeUpgrade_Tool {
         static const Handle_ShapeUpgrade_WireDivide DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_ShapeUpgrade_WireDivide {
     ShapeUpgrade_WireDivide* _get_reference() {
-    return (ShapeUpgrade_WireDivide*)$self->Access();
+    return (ShapeUpgrade_WireDivide*)$self->get();
     }
 };
 
 %extend Handle_ShapeUpgrade_WireDivide {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend ShapeUpgrade_WireDivide {
@@ -2633,19 +2704,20 @@ class Handle_ShapeUpgrade_ClosedEdgeDivide : public Handle_ShapeUpgrade_EdgeDivi
         static const Handle_ShapeUpgrade_ClosedEdgeDivide DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_ShapeUpgrade_ClosedEdgeDivide {
     ShapeUpgrade_ClosedEdgeDivide* _get_reference() {
-    return (ShapeUpgrade_ClosedEdgeDivide*)$self->Access();
+    return (ShapeUpgrade_ClosedEdgeDivide*)$self->get();
     }
 };
 
 %extend Handle_ShapeUpgrade_ClosedEdgeDivide {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend ShapeUpgrade_ClosedEdgeDivide {
@@ -2724,19 +2796,20 @@ class Handle_ShapeUpgrade_ClosedFaceDivide : public Handle_ShapeUpgrade_FaceDivi
         static const Handle_ShapeUpgrade_ClosedFaceDivide DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_ShapeUpgrade_ClosedFaceDivide {
     ShapeUpgrade_ClosedFaceDivide* _get_reference() {
-    return (ShapeUpgrade_ClosedFaceDivide*)$self->Access();
+    return (ShapeUpgrade_ClosedFaceDivide*)$self->get();
     }
 };
 
 %extend Handle_ShapeUpgrade_ClosedFaceDivide {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend ShapeUpgrade_ClosedFaceDivide {
@@ -2807,19 +2880,20 @@ class Handle_ShapeUpgrade_ConvertCurve2dToBezier : public Handle_ShapeUpgrade_Sp
         static const Handle_ShapeUpgrade_ConvertCurve2dToBezier DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_ShapeUpgrade_ConvertCurve2dToBezier {
     ShapeUpgrade_ConvertCurve2dToBezier* _get_reference() {
-    return (ShapeUpgrade_ConvertCurve2dToBezier*)$self->Access();
+    return (ShapeUpgrade_ConvertCurve2dToBezier*)$self->get();
     }
 };
 
 %extend Handle_ShapeUpgrade_ConvertCurve2dToBezier {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend ShapeUpgrade_ConvertCurve2dToBezier {
@@ -2932,19 +3006,20 @@ class Handle_ShapeUpgrade_ConvertCurve3dToBezier : public Handle_ShapeUpgrade_Sp
         static const Handle_ShapeUpgrade_ConvertCurve3dToBezier DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_ShapeUpgrade_ConvertCurve3dToBezier {
     ShapeUpgrade_ConvertCurve3dToBezier* _get_reference() {
-    return (ShapeUpgrade_ConvertCurve3dToBezier*)$self->Access();
+    return (ShapeUpgrade_ConvertCurve3dToBezier*)$self->get();
     }
 };
 
 %extend Handle_ShapeUpgrade_ConvertCurve3dToBezier {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend ShapeUpgrade_ConvertCurve3dToBezier {
@@ -3020,19 +3095,20 @@ class Handle_ShapeUpgrade_FaceDivideArea : public Handle_ShapeUpgrade_FaceDivide
         static const Handle_ShapeUpgrade_FaceDivideArea DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_ShapeUpgrade_FaceDivideArea {
     ShapeUpgrade_FaceDivideArea* _get_reference() {
-    return (ShapeUpgrade_FaceDivideArea*)$self->Access();
+    return (ShapeUpgrade_FaceDivideArea*)$self->get();
     }
 };
 
 %extend Handle_ShapeUpgrade_FaceDivideArea {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend ShapeUpgrade_FaceDivideArea {
@@ -3095,19 +3171,20 @@ class Handle_ShapeUpgrade_FixSmallBezierCurves : public Handle_ShapeUpgrade_FixS
         static const Handle_ShapeUpgrade_FixSmallBezierCurves DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_ShapeUpgrade_FixSmallBezierCurves {
     ShapeUpgrade_FixSmallBezierCurves* _get_reference() {
-    return (ShapeUpgrade_FixSmallBezierCurves*)$self->Access();
+    return (ShapeUpgrade_FixSmallBezierCurves*)$self->get();
     }
 };
 
 %extend Handle_ShapeUpgrade_FixSmallBezierCurves {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend ShapeUpgrade_FixSmallBezierCurves {
@@ -3180,19 +3257,20 @@ class Handle_ShapeUpgrade_SplitCurve2dContinuity : public Handle_ShapeUpgrade_Sp
         static const Handle_ShapeUpgrade_SplitCurve2dContinuity DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_ShapeUpgrade_SplitCurve2dContinuity {
     ShapeUpgrade_SplitCurve2dContinuity* _get_reference() {
-    return (ShapeUpgrade_SplitCurve2dContinuity*)$self->Access();
+    return (ShapeUpgrade_SplitCurve2dContinuity*)$self->get();
     }
 };
 
 %extend Handle_ShapeUpgrade_SplitCurve2dContinuity {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend ShapeUpgrade_SplitCurve2dContinuity {
@@ -3269,19 +3347,20 @@ class Handle_ShapeUpgrade_SplitCurve3dContinuity : public Handle_ShapeUpgrade_Sp
         static const Handle_ShapeUpgrade_SplitCurve3dContinuity DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_ShapeUpgrade_SplitCurve3dContinuity {
     ShapeUpgrade_SplitCurve3dContinuity* _get_reference() {
-    return (ShapeUpgrade_SplitCurve3dContinuity*)$self->Access();
+    return (ShapeUpgrade_SplitCurve3dContinuity*)$self->get();
     }
 };
 
 %extend Handle_ShapeUpgrade_SplitCurve3dContinuity {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend ShapeUpgrade_SplitCurve3dContinuity {

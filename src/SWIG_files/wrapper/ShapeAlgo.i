@@ -1,5 +1,5 @@
 /*
-Copyright 2008-2017 Thomas Paviot (tpaviot@gmail.com)
+Copyright 2008-2018 Thomas Paviot (tpaviot@gmail.com)
 
 
 This file is part of pythonOCC.
@@ -56,6 +56,9 @@ def register_handle(handle, base_object):
 /* typedefs */
 /* end typedefs declaration */
 
+/* templates */
+/* end templates declaration */
+
 /* public enums */
 /* end public enums declaration */
 
@@ -91,7 +94,7 @@ class ShapeAlgo {
 	}
 };
 %nodefaultctor ShapeAlgo_ToolContainer;
-class ShapeAlgo_ToolContainer : public MMgt_TShared {
+class ShapeAlgo_ToolContainer : public Standard_Transient {
 	public:
 		%feature("compactdefaultargs") ShapeAlgo_ToolContainer;
 		%feature("autodoc", "	* Empty constructor
@@ -133,7 +136,7 @@ class ShapeAlgo_ToolContainer : public MMgt_TShared {
 %}
 
 %nodefaultctor Handle_ShapeAlgo_ToolContainer;
-class Handle_ShapeAlgo_ToolContainer : public Handle_MMgt_TShared {
+class Handle_ShapeAlgo_ToolContainer : public Handle_Standard_Transient {
 
     public:
         // constructors
@@ -145,19 +148,20 @@ class Handle_ShapeAlgo_ToolContainer : public Handle_MMgt_TShared {
         static const Handle_ShapeAlgo_ToolContainer DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_ShapeAlgo_ToolContainer {
     ShapeAlgo_ToolContainer* _get_reference() {
-    return (ShapeAlgo_ToolContainer*)$self->Access();
+    return (ShapeAlgo_ToolContainer*)$self->get();
     }
 };
 
 %extend Handle_ShapeAlgo_ToolContainer {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend ShapeAlgo_ToolContainer {

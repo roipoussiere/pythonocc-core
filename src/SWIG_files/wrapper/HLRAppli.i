@@ -1,5 +1,5 @@
 /*
-Copyright 2008-2017 Thomas Paviot (tpaviot@gmail.com)
+Copyright 2008-2018 Thomas Paviot (tpaviot@gmail.com)
 
 
 This file is part of pythonOCC.
@@ -56,6 +56,9 @@ def register_handle(handle, base_object):
 /* typedefs */
 /* end typedefs declaration */
 
+/* templates */
+/* end templates declaration */
+
 /* public enums */
 /* end public enums declaration */
 
@@ -104,6 +107,18 @@ class HLRAppli_ReflectLines {
 	:rtype: TopoDS_Shape
 ") GetResult;
 		TopoDS_Shape GetResult ();
+		%feature("compactdefaultargs") GetCompoundOf3dEdges;
+		%feature("autodoc", "	* returns resulting compound of lines of specified type and visibility represented by edges in 3d or 2d
+
+	:param type:
+	:type type: HLRBRep_TypeOfResultingEdge
+	:param visible:
+	:type visible: bool
+	:param In3d:
+	:type In3d: bool
+	:rtype: TopoDS_Shape
+") GetCompoundOf3dEdges;
+		TopoDS_Shape GetCompoundOf3dEdges (const HLRBRep_TypeOfResultingEdge type,const Standard_Boolean visible,const Standard_Boolean In3d);
 };
 
 

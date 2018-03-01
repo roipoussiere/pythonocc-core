@@ -1,5 +1,5 @@
 /*
-Copyright 2008-2017 Thomas Paviot (tpaviot@gmail.com)
+Copyright 2008-2018 Thomas Paviot (tpaviot@gmail.com)
 
 
 This file is part of pythonOCC.
@@ -57,6 +57,9 @@ def register_handle(handle, base_object):
 typedef Adaptor2d_Curve2d * Adaptor2d_Curve2dPtr;
 /* end typedefs declaration */
 
+/* templates */
+/* end templates declaration */
+
 /* public enums */
 /* end public enums declaration */
 
@@ -83,7 +86,7 @@ class Adaptor2d_Curve2d {
 ") NbIntervals;
 		virtual Standard_Integer NbIntervals (const GeomAbs_Shape S);
 		%feature("compactdefaultargs") Intervals;
-		%feature("autodoc", "	* Stores in <T> the parameters bounding the intervals of continuity <S>. //! The array must provide enough room to accomodate for the parameters. i.e. T.Length() > NbIntervals()
+		%feature("autodoc", "	* Stores in <T> the parameters bounding the intervals of continuity <S>. //! The array must provide enough room to accomodate for the parameters. i.e. T.Length---- > NbIntervals----
 
 	:param T:
 	:type T: TColStd_Array1OfReal &
@@ -257,7 +260,7 @@ class Adaptor2d_Curve2d {
 	}
 };
 %nodefaultctor Adaptor2d_HCurve2d;
-class Adaptor2d_HCurve2d : public MMgt_TShared {
+class Adaptor2d_HCurve2d : public Standard_Transient {
 	public:
 		%feature("compactdefaultargs") Curve2d;
 		%feature("autodoc", "	* Returns a reference to the Curve2d inside the HCurve2d.
@@ -449,7 +452,7 @@ class Adaptor2d_HCurve2d : public MMgt_TShared {
 %}
 
 %nodefaultctor Handle_Adaptor2d_HCurve2d;
-class Handle_Adaptor2d_HCurve2d : public Handle_MMgt_TShared {
+class Handle_Adaptor2d_HCurve2d : public Handle_Standard_Transient {
 
     public:
         // constructors
@@ -461,19 +464,20 @@ class Handle_Adaptor2d_HCurve2d : public Handle_MMgt_TShared {
         static const Handle_Adaptor2d_HCurve2d DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_Adaptor2d_HCurve2d {
     Adaptor2d_HCurve2d* _get_reference() {
-    return (Adaptor2d_HCurve2d*)$self->Access();
+    return (Adaptor2d_HCurve2d*)$self->get();
     }
 };
 
 %extend Handle_Adaptor2d_HCurve2d {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend Adaptor2d_HCurve2d {
@@ -485,27 +489,37 @@ class Handle_Adaptor2d_HCurve2d : public Handle_MMgt_TShared {
 class Adaptor2d_HLine2d : public Adaptor2d_HCurve2d {
 	public:
 		%feature("compactdefaultargs") Adaptor2d_HLine2d;
-		%feature("autodoc", "	:rtype: None
+		%feature("autodoc", "	* Creates an empty GenHCurve2d.
+
+	:rtype: None
 ") Adaptor2d_HLine2d;
 		 Adaptor2d_HLine2d ();
 		%feature("compactdefaultargs") Adaptor2d_HLine2d;
-		%feature("autodoc", "	:param C:
+		%feature("autodoc", "	* Creates a GenHCurve2d from a Curve
+
+	:param C:
 	:type C: Adaptor2d_Line2d &
 	:rtype: None
 ") Adaptor2d_HLine2d;
 		 Adaptor2d_HLine2d (const Adaptor2d_Line2d & C);
 		%feature("compactdefaultargs") Set;
-		%feature("autodoc", "	:param C:
+		%feature("autodoc", "	* Sets the field of the GenHCurve2d.
+
+	:param C:
 	:type C: Adaptor2d_Line2d &
 	:rtype: None
 ") Set;
 		void Set (const Adaptor2d_Line2d & C);
 		%feature("compactdefaultargs") Curve2d;
-		%feature("autodoc", "	:rtype: Adaptor2d_Curve2d
+		%feature("autodoc", "	* Returns the curve used to create the GenHCurve2d. This is redefined from HCurve2d, cannot be inline.
+
+	:rtype: Adaptor2d_Curve2d
 ") Curve2d;
 		const Adaptor2d_Curve2d & Curve2d ();
 		%feature("compactdefaultargs") ChangeCurve2d;
-		%feature("autodoc", "	:rtype: Adaptor2d_Line2d
+		%feature("autodoc", "	* Returns the curve used to create the GenHCurve.
+
+	:rtype: Adaptor2d_Line2d
 ") ChangeCurve2d;
 		Adaptor2d_Line2d & ChangeCurve2d ();
 };
@@ -542,22 +556,115 @@ class Handle_Adaptor2d_HLine2d : public Handle_Adaptor2d_HCurve2d {
         static const Handle_Adaptor2d_HLine2d DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_Adaptor2d_HLine2d {
     Adaptor2d_HLine2d* _get_reference() {
-    return (Adaptor2d_HLine2d*)$self->Access();
+    return (Adaptor2d_HLine2d*)$self->get();
     }
 };
 
 %extend Handle_Adaptor2d_HLine2d {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend Adaptor2d_HLine2d {
+	%pythoncode {
+	__repr__ = _dumps_object
+	}
+};
+%nodefaultctor Adaptor2d_HOffsetCurve;
+class Adaptor2d_HOffsetCurve : public Adaptor2d_HCurve2d {
+	public:
+		%feature("compactdefaultargs") Adaptor2d_HOffsetCurve;
+		%feature("autodoc", "	* Creates an empty GenHCurve2d.
+
+	:rtype: None
+") Adaptor2d_HOffsetCurve;
+		 Adaptor2d_HOffsetCurve ();
+		%feature("compactdefaultargs") Adaptor2d_HOffsetCurve;
+		%feature("autodoc", "	* Creates a GenHCurve2d from a Curve
+
+	:param C:
+	:type C: Adaptor2d_OffsetCurve &
+	:rtype: None
+") Adaptor2d_HOffsetCurve;
+		 Adaptor2d_HOffsetCurve (const Adaptor2d_OffsetCurve & C);
+		%feature("compactdefaultargs") Set;
+		%feature("autodoc", "	* Sets the field of the GenHCurve2d.
+
+	:param C:
+	:type C: Adaptor2d_OffsetCurve &
+	:rtype: None
+") Set;
+		void Set (const Adaptor2d_OffsetCurve & C);
+		%feature("compactdefaultargs") Curve2d;
+		%feature("autodoc", "	* Returns the curve used to create the GenHCurve2d. This is redefined from HCurve2d, cannot be inline.
+
+	:rtype: Adaptor2d_Curve2d
+") Curve2d;
+		const Adaptor2d_Curve2d & Curve2d ();
+		%feature("compactdefaultargs") ChangeCurve2d;
+		%feature("autodoc", "	* Returns the curve used to create the GenHCurve.
+
+	:rtype: Adaptor2d_OffsetCurve
+") ChangeCurve2d;
+		Adaptor2d_OffsetCurve & ChangeCurve2d ();
+};
+
+
+%extend Adaptor2d_HOffsetCurve {
+	%pythoncode {
+		def GetHandle(self):
+		    try:
+		        return self.thisHandle
+		    except:
+		        self.thisHandle = Handle_Adaptor2d_HOffsetCurve(self)
+		        self.thisown = False
+		        return self.thisHandle
+	}
+};
+
+%pythonappend Handle_Adaptor2d_HOffsetCurve::Handle_Adaptor2d_HOffsetCurve %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
+%nodefaultctor Handle_Adaptor2d_HOffsetCurve;
+class Handle_Adaptor2d_HOffsetCurve : public Handle_Adaptor2d_HCurve2d {
+
+    public:
+        // constructors
+        Handle_Adaptor2d_HOffsetCurve();
+        Handle_Adaptor2d_HOffsetCurve(const Handle_Adaptor2d_HOffsetCurve &aHandle);
+        Handle_Adaptor2d_HOffsetCurve(const Adaptor2d_HOffsetCurve *anItem);
+        void Nullify();
+        Standard_Boolean IsNull() const;
+        static const Handle_Adaptor2d_HOffsetCurve DownCast(const Handle_Standard_Transient &AnObject);
+
+};
+
+%extend Handle_Adaptor2d_HOffsetCurve {
+    Adaptor2d_HOffsetCurve* _get_reference() {
+    return (Adaptor2d_HOffsetCurve*)$self->get();
+    }
+};
+
+%extend Handle_Adaptor2d_HOffsetCurve {
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
+};
+
+%extend Adaptor2d_HOffsetCurve {
 	%pythoncode {
 	__repr__ = _dumps_object
 	}
@@ -618,7 +725,7 @@ class Adaptor2d_Line2d : public Adaptor2d_Curve2d {
 ") NbIntervals;
 		Standard_Integer NbIntervals (const GeomAbs_Shape S);
 		%feature("compactdefaultargs") Intervals;
-		%feature("autodoc", "	* Stores in <T> the parameters bounding the intervals of continuity <S>. //! The array must provide enough room to accomodate for the parameters. i.e. T.Length() > NbIntervals()
+		%feature("autodoc", "	* Stores in <T> the parameters bounding the intervals of continuity <S>. //! The array must provide enough room to accomodate for the parameters. i.e. T.Length---- > NbIntervals----
 
 	:param T:
 	:type T: TColStd_Array1OfReal &
@@ -767,6 +874,273 @@ class Adaptor2d_Line2d : public Adaptor2d_Curve2d {
 
 
 %extend Adaptor2d_Line2d {
+	%pythoncode {
+	__repr__ = _dumps_object
+	}
+};
+%nodefaultctor Adaptor2d_OffsetCurve;
+class Adaptor2d_OffsetCurve : public Adaptor2d_Curve2d {
+	public:
+		%feature("compactdefaultargs") Adaptor2d_OffsetCurve;
+		%feature("autodoc", "	* The Offset is set to 0.
+
+	:rtype: None
+") Adaptor2d_OffsetCurve;
+		 Adaptor2d_OffsetCurve ();
+		%feature("compactdefaultargs") Adaptor2d_OffsetCurve;
+		%feature("autodoc", "	* The curve is loaded. The Offset is set to 0.
+
+	:param C:
+	:type C: Handle_Adaptor2d_HCurve2d &
+	:rtype: None
+") Adaptor2d_OffsetCurve;
+		 Adaptor2d_OffsetCurve (const Handle_Adaptor2d_HCurve2d & C);
+		%feature("compactdefaultargs") Adaptor2d_OffsetCurve;
+		%feature("autodoc", "	* Creates an OffsetCurve curve. The Offset is set to Offset.
+
+	:param C:
+	:type C: Handle_Adaptor2d_HCurve2d &
+	:param Offset:
+	:type Offset: float
+	:rtype: None
+") Adaptor2d_OffsetCurve;
+		 Adaptor2d_OffsetCurve (const Handle_Adaptor2d_HCurve2d & C,const Standard_Real Offset);
+		%feature("compactdefaultargs") Adaptor2d_OffsetCurve;
+		%feature("autodoc", "	* Create an Offset curve. WFirst,WLast define the bounds of the Offset curve.
+
+	:param C:
+	:type C: Handle_Adaptor2d_HCurve2d &
+	:param Offset:
+	:type Offset: float
+	:param WFirst:
+	:type WFirst: float
+	:param WLast:
+	:type WLast: float
+	:rtype: None
+") Adaptor2d_OffsetCurve;
+		 Adaptor2d_OffsetCurve (const Handle_Adaptor2d_HCurve2d & C,const Standard_Real Offset,const Standard_Real WFirst,const Standard_Real WLast);
+		%feature("compactdefaultargs") Load;
+		%feature("autodoc", "	* Changes the curve. The Offset is reset to 0.
+
+	:param S:
+	:type S: Handle_Adaptor2d_HCurve2d &
+	:rtype: None
+") Load;
+		void Load (const Handle_Adaptor2d_HCurve2d & S);
+		%feature("compactdefaultargs") Load;
+		%feature("autodoc", "	* Changes the Offset on the current Curve.
+
+	:param Offset:
+	:type Offset: float
+	:rtype: None
+") Load;
+		void Load (const Standard_Real Offset);
+		%feature("compactdefaultargs") Load;
+		%feature("autodoc", "	* Changes the Offset Curve on the current Curve.
+
+	:param Offset:
+	:type Offset: float
+	:param WFirst:
+	:type WFirst: float
+	:param WLast:
+	:type WLast: float
+	:rtype: None
+") Load;
+		void Load (const Standard_Real Offset,const Standard_Real WFirst,const Standard_Real WLast);
+		%feature("compactdefaultargs") Curve;
+		%feature("autodoc", "	:rtype: Handle_Adaptor2d_HCurve2d
+") Curve;
+		Handle_Adaptor2d_HCurve2d Curve ();
+		%feature("compactdefaultargs") Offset;
+		%feature("autodoc", "	:rtype: float
+") Offset;
+		Standard_Real Offset ();
+		%feature("compactdefaultargs") FirstParameter;
+		%feature("autodoc", "	:rtype: float
+") FirstParameter;
+		Standard_Real FirstParameter ();
+		%feature("compactdefaultargs") LastParameter;
+		%feature("autodoc", "	:rtype: float
+") LastParameter;
+		Standard_Real LastParameter ();
+		%feature("compactdefaultargs") Continuity;
+		%feature("autodoc", "	:rtype: GeomAbs_Shape
+") Continuity;
+		GeomAbs_Shape Continuity ();
+		%feature("compactdefaultargs") NbIntervals;
+		%feature("autodoc", "	* If necessary, breaks the curve in intervals of continuity <S>. And returns the number of intervals.
+
+	:param S:
+	:type S: GeomAbs_Shape
+	:rtype: int
+") NbIntervals;
+		Standard_Integer NbIntervals (const GeomAbs_Shape S);
+		%feature("compactdefaultargs") Intervals;
+		%feature("autodoc", "	* Stores in <T> the parameters bounding the intervals of continuity <S>. //! The array must provide enough room to accomodate for the parameters. i.e. T.Length---- > NbIntervals----
+
+	:param T:
+	:type T: TColStd_Array1OfReal &
+	:param S:
+	:type S: GeomAbs_Shape
+	:rtype: None
+") Intervals;
+		void Intervals (TColStd_Array1OfReal & T,const GeomAbs_Shape S);
+		%feature("compactdefaultargs") Trim;
+		%feature("autodoc", "	* Returns a curve equivalent of <self> between parameters <First> and <Last>. <Tol> is used to test for 3d points confusion. If <First> >= <Last>
+
+	:param First:
+	:type First: float
+	:param Last:
+	:type Last: float
+	:param Tol:
+	:type Tol: float
+	:rtype: Handle_Adaptor2d_HCurve2d
+") Trim;
+		Handle_Adaptor2d_HCurve2d Trim (const Standard_Real First,const Standard_Real Last,const Standard_Real Tol);
+		%feature("compactdefaultargs") IsClosed;
+		%feature("autodoc", "	:rtype: bool
+") IsClosed;
+		Standard_Boolean IsClosed ();
+		%feature("compactdefaultargs") IsPeriodic;
+		%feature("autodoc", "	:rtype: bool
+") IsPeriodic;
+		Standard_Boolean IsPeriodic ();
+		%feature("compactdefaultargs") Period;
+		%feature("autodoc", "	:rtype: float
+") Period;
+		Standard_Real Period ();
+		%feature("compactdefaultargs") Value;
+		%feature("autodoc", "	* Computes the point of parameter U on the curve.
+
+	:param U:
+	:type U: float
+	:rtype: gp_Pnt2d
+") Value;
+		gp_Pnt2d Value (const Standard_Real U);
+		%feature("compactdefaultargs") D0;
+		%feature("autodoc", "	* Computes the point of parameter U on the curve.
+
+	:param U:
+	:type U: float
+	:param P:
+	:type P: gp_Pnt2d
+	:rtype: None
+") D0;
+		void D0 (const Standard_Real U,gp_Pnt2d & P);
+		%feature("compactdefaultargs") D1;
+		%feature("autodoc", "	* Computes the point of parameter U on the curve with its first derivative. Raised if the continuity of the current interval is not C1.
+
+	:param U:
+	:type U: float
+	:param P:
+	:type P: gp_Pnt2d
+	:param V:
+	:type V: gp_Vec2d
+	:rtype: None
+") D1;
+		void D1 (const Standard_Real U,gp_Pnt2d & P,gp_Vec2d & V);
+		%feature("compactdefaultargs") D2;
+		%feature("autodoc", "	* Returns the point P of parameter U, the first and second derivatives V1 and V2. Raised if the continuity of the current interval is not C2.
+
+	:param U:
+	:type U: float
+	:param P:
+	:type P: gp_Pnt2d
+	:param V1:
+	:type V1: gp_Vec2d
+	:param V2:
+	:type V2: gp_Vec2d
+	:rtype: None
+") D2;
+		void D2 (const Standard_Real U,gp_Pnt2d & P,gp_Vec2d & V1,gp_Vec2d & V2);
+		%feature("compactdefaultargs") D3;
+		%feature("autodoc", "	* Returns the point P of parameter U, the first, the second and the third derivative. Raised if the continuity of the current interval is not C3.
+
+	:param U:
+	:type U: float
+	:param P:
+	:type P: gp_Pnt2d
+	:param V1:
+	:type V1: gp_Vec2d
+	:param V2:
+	:type V2: gp_Vec2d
+	:param V3:
+	:type V3: gp_Vec2d
+	:rtype: None
+") D3;
+		void D3 (const Standard_Real U,gp_Pnt2d & P,gp_Vec2d & V1,gp_Vec2d & V2,gp_Vec2d & V3);
+		%feature("compactdefaultargs") DN;
+		%feature("autodoc", "	* The returned vector gives the value of the derivative for the order of derivation N. Raised if the continuity of the current interval is not CN. Raised if N < 1.
+
+	:param U:
+	:type U: float
+	:param N:
+	:type N: int
+	:rtype: gp_Vec2d
+") DN;
+		gp_Vec2d DN (const Standard_Real U,const Standard_Integer N);
+		%feature("compactdefaultargs") Resolution;
+		%feature("autodoc", "	* Returns the parametric resolution corresponding to the real space resolution <R3d>.
+
+	:param R3d:
+	:type R3d: float
+	:rtype: float
+") Resolution;
+		Standard_Real Resolution (const Standard_Real R3d);
+		%feature("compactdefaultargs") GetType;
+		%feature("autodoc", "	* Returns the type of the curve in the current interval : Line, Circle, Ellipse, Hyperbola, Parabola, BezierCurve, BSplineCurve, OtherCurve.
+
+	:rtype: GeomAbs_CurveType
+") GetType;
+		GeomAbs_CurveType GetType ();
+		%feature("compactdefaultargs") Line;
+		%feature("autodoc", "	:rtype: gp_Lin2d
+") Line;
+		gp_Lin2d Line ();
+		%feature("compactdefaultargs") Circle;
+		%feature("autodoc", "	:rtype: gp_Circ2d
+") Circle;
+		gp_Circ2d Circle ();
+		%feature("compactdefaultargs") Ellipse;
+		%feature("autodoc", "	:rtype: gp_Elips2d
+") Ellipse;
+		gp_Elips2d Ellipse ();
+		%feature("compactdefaultargs") Hyperbola;
+		%feature("autodoc", "	:rtype: gp_Hypr2d
+") Hyperbola;
+		gp_Hypr2d Hyperbola ();
+		%feature("compactdefaultargs") Parabola;
+		%feature("autodoc", "	:rtype: gp_Parab2d
+") Parabola;
+		gp_Parab2d Parabola ();
+		%feature("compactdefaultargs") Degree;
+		%feature("autodoc", "	:rtype: int
+") Degree;
+		Standard_Integer Degree ();
+		%feature("compactdefaultargs") IsRational;
+		%feature("autodoc", "	:rtype: bool
+") IsRational;
+		Standard_Boolean IsRational ();
+		%feature("compactdefaultargs") NbPoles;
+		%feature("autodoc", "	:rtype: int
+") NbPoles;
+		Standard_Integer NbPoles ();
+		%feature("compactdefaultargs") NbKnots;
+		%feature("autodoc", "	:rtype: int
+") NbKnots;
+		Standard_Integer NbKnots ();
+		%feature("compactdefaultargs") Bezier;
+		%feature("autodoc", "	:rtype: Handle_Geom2d_BezierCurve
+") Bezier;
+		Handle_Geom2d_BezierCurve Bezier ();
+		%feature("compactdefaultargs") BSpline;
+		%feature("autodoc", "	:rtype: Handle_Geom2d_BSplineCurve
+") BSpline;
+		Handle_Geom2d_BSplineCurve BSpline ();
+};
+
+
+%extend Adaptor2d_OffsetCurve {
 	%pythoncode {
 	__repr__ = _dumps_object
 	}

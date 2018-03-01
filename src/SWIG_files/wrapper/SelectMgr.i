@@ -1,5 +1,5 @@
 /*
-Copyright 2008-2017 Thomas Paviot (tpaviot@gmail.com)
+Copyright 2008-2018 Thomas Paviot (tpaviot@gmail.com)
 
 
 This file is part of pythonOCC.
@@ -54,23 +54,26 @@ def register_handle(handle, base_object):
 };
 
 /* typedefs */
-typedef NCollection_DataMap <Handle_SelectMgr_EntityOwner , Standard_Integer> SelectMgr_MapOfOwnerDetectedEntities;
-typedef NCollection_Handle <NCollection_IndexedMap <Handle_SelectMgr_EntityOwner>> Handle_SelectMgr_IndexedMapOfOwner;
 typedef SelectMgr_SelectableObject * SelectMgr_SOPtr;
-typedef NCollection_Mat4 <Standard_Real> SelectMgr_Mat4;
-typedef NCollection_List <SelectMgr_HTriangularFrustum> SelectMgr_TriangFrustums;
-typedef NCollection_IndexedMap <Handle_SelectMgr_SensitiveEntity> SelectMgr_IndexedMapOfHSensitive;
-typedef NCollection_DataMap <Handle_SelectMgr_EntityOwner , Standard_Integer>::Iterator SelectMgr_MapOfOwnerDetectedEntitiesIterator;
-typedef NCollection_List <SelectMgr_HTriangularFrustum>::Iterator SelectMgr_TriangFrustumsIter;
-typedef NCollection_Sequence <Handle_SelectMgr_Selection> SelectMgr_SequenceOfSelection;
-typedef NCollection_DataMap <Handle_SelectMgr_SelectableObject , NCollection_Handle <SelectMgr_SensitiveEntitySet>> SelectMgr_MapOfObjectSensitives;
-typedef NCollection_IndexedMap <Handle_SelectMgr_EntityOwner> SelectMgr_IndexedMapOfOwner;
-typedef NCollection_DataMap <Handle_SelectMgr_SelectableObject , NCollection_Handle <SelectMgr_SensitiveEntitySet>>::Iterator SelectMgr_MapOfObjectSensitivesIterator;
-typedef NCollection_Vec3 <Standard_Real> SelectMgr_Vec3;
-typedef NCollection_DataMap <Standard_Integer , SelectMgr_SelectingVolumeManager> SelectMgr_FrustumCache;
-typedef NCollection_Vec4 <Standard_Real> SelectMgr_Vec4;
-typedef NCollection_Handle <SelectMgr_TriangularFrustum> SelectMgr_HTriangularFrustum;
 /* end typedefs declaration */
+
+/* templates */
+%template(SelectMgr_DataMapOfObjectSelectors) NCollection_DataMap <Handle_SelectMgr_SelectableObject , SelectMgr_SequenceOfSelector , TColStd_MapTransientHasher>;
+%template(SelectMgr_Mat4) NCollection_Mat4 <Standard_Real>;
+%template(SelectMgr_TriangFrustums) NCollection_List <Handle_SelectMgr_TriangularFrustum>;
+%template(SelectMgr_SequenceOfOwner) NCollection_Sequence <Handle_SelectMgr_EntityOwner>;
+%template(SelectMgr_IndexedMapOfHSensitive) NCollection_IndexedMap <Handle_SelectMgr_SensitiveEntity>;
+%template(SelectMgr_MapOfObjectSensitives) NCollection_DataMap <Handle_SelectMgr_SelectableObject , Handle_SelectMgr_SensitiveEntitySet>;
+%template(SelectMgr_SequenceOfSelection) NCollection_Sequence <Handle_SelectMgr_Selection>;
+%template(SelectMgr_IndexedDataMapOfOwnerCriterion) NCollection_IndexedDataMap <Handle_SelectBasics_EntityOwner , SelectMgr_SortCriterion , TColStd_MapTransientHasher>;
+%template(SelectMgr_IndexedMapOfOwner) NCollection_Shared<NCollection_IndexedMap <Handle_SelectMgr_EntityOwner>>;
+%template(SelectMgr_Vec3) NCollection_Vec3 <Standard_Real>;
+%template(SelectMgr_SequenceOfSelector) NCollection_Sequence <Handle_SelectMgr_ViewerSelector>;
+%template(SelectMgr_FrustumCache) NCollection_DataMap <Standard_Integer , SelectMgr_SelectingVolumeManager>;
+%template(SelectMgr_Vec4) NCollection_Vec4 <Standard_Real>;
+%template(SelectMgr_ListOfFilter) NCollection_List <Handle_SelectMgr_Filter>;
+%template(SelectMgr_SequenceOfFilter) NCollection_Sequence <Handle_SelectMgr_Filter>;
+/* end templates declaration */
 
 /* public enums */
 enum SelectMgr_TypeOfUpdate {
@@ -95,201 +98,13 @@ enum SelectMgr_StateOfSelection {
 	SelectMgr_SOS_Unknown = 4,
 };
 
+enum SelectMgr_PickingStrategy {
+	SelectMgr_PickingStrategy_FirstAcceptable = 0,
+	SelectMgr_PickingStrategy_OnlyTopmost = 1,
+};
+
 /* end public enums declaration */
 
-%nodefaultctor SelectMgr_DataMapIteratorOfDataMapOfObjectSelectors;
-class SelectMgr_DataMapIteratorOfDataMapOfObjectSelectors : public TCollection_BasicMapIterator {
-	public:
-		%feature("compactdefaultargs") SelectMgr_DataMapIteratorOfDataMapOfObjectSelectors;
-		%feature("autodoc", "	:rtype: None
-") SelectMgr_DataMapIteratorOfDataMapOfObjectSelectors;
-		 SelectMgr_DataMapIteratorOfDataMapOfObjectSelectors ();
-		%feature("compactdefaultargs") SelectMgr_DataMapIteratorOfDataMapOfObjectSelectors;
-		%feature("autodoc", "	:param aMap:
-	:type aMap: SelectMgr_DataMapOfObjectSelectors &
-	:rtype: None
-") SelectMgr_DataMapIteratorOfDataMapOfObjectSelectors;
-		 SelectMgr_DataMapIteratorOfDataMapOfObjectSelectors (const SelectMgr_DataMapOfObjectSelectors & aMap);
-		%feature("compactdefaultargs") Initialize;
-		%feature("autodoc", "	:param aMap:
-	:type aMap: SelectMgr_DataMapOfObjectSelectors &
-	:rtype: None
-") Initialize;
-		void Initialize (const SelectMgr_DataMapOfObjectSelectors & aMap);
-		%feature("compactdefaultargs") Key;
-		%feature("autodoc", "	:rtype: Handle_SelectMgr_SelectableObject
-") Key;
-		Handle_SelectMgr_SelectableObject Key ();
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:rtype: SelectMgr_SequenceOfSelector
-") Value;
-		const SelectMgr_SequenceOfSelector & Value ();
-};
-
-
-%extend SelectMgr_DataMapIteratorOfDataMapOfObjectSelectors {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor SelectMgr_DataMapNodeOfDataMapOfObjectSelectors;
-class SelectMgr_DataMapNodeOfDataMapOfObjectSelectors : public TCollection_MapNode {
-	public:
-		%feature("compactdefaultargs") SelectMgr_DataMapNodeOfDataMapOfObjectSelectors;
-		%feature("autodoc", "	:param K:
-	:type K: Handle_SelectMgr_SelectableObject &
-	:param I:
-	:type I: SelectMgr_SequenceOfSelector &
-	:param n:
-	:type n: TCollection_MapNodePtr &
-	:rtype: None
-") SelectMgr_DataMapNodeOfDataMapOfObjectSelectors;
-		 SelectMgr_DataMapNodeOfDataMapOfObjectSelectors (const Handle_SelectMgr_SelectableObject & K,const SelectMgr_SequenceOfSelector & I,const TCollection_MapNodePtr & n);
-		%feature("compactdefaultargs") Key;
-		%feature("autodoc", "	:rtype: Handle_SelectMgr_SelectableObject
-") Key;
-		Handle_SelectMgr_SelectableObject Key ();
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:rtype: SelectMgr_SequenceOfSelector
-") Value;
-		SelectMgr_SequenceOfSelector & Value ();
-};
-
-
-%extend SelectMgr_DataMapNodeOfDataMapOfObjectSelectors {
-	%pythoncode {
-		def GetHandle(self):
-		    try:
-		        return self.thisHandle
-		    except:
-		        self.thisHandle = Handle_SelectMgr_DataMapNodeOfDataMapOfObjectSelectors(self)
-		        self.thisown = False
-		        return self.thisHandle
-	}
-};
-
-%pythonappend Handle_SelectMgr_DataMapNodeOfDataMapOfObjectSelectors::Handle_SelectMgr_DataMapNodeOfDataMapOfObjectSelectors %{
-    # register the handle in the base object
-    if len(args) > 0:
-        register_handle(self, args[0])
-%}
-
-%nodefaultctor Handle_SelectMgr_DataMapNodeOfDataMapOfObjectSelectors;
-class Handle_SelectMgr_DataMapNodeOfDataMapOfObjectSelectors : public Handle_TCollection_MapNode {
-
-    public:
-        // constructors
-        Handle_SelectMgr_DataMapNodeOfDataMapOfObjectSelectors();
-        Handle_SelectMgr_DataMapNodeOfDataMapOfObjectSelectors(const Handle_SelectMgr_DataMapNodeOfDataMapOfObjectSelectors &aHandle);
-        Handle_SelectMgr_DataMapNodeOfDataMapOfObjectSelectors(const SelectMgr_DataMapNodeOfDataMapOfObjectSelectors *anItem);
-        void Nullify();
-        Standard_Boolean IsNull() const;
-        static const Handle_SelectMgr_DataMapNodeOfDataMapOfObjectSelectors DownCast(const Handle_Standard_Transient &AnObject);
-
-};
-%extend Handle_SelectMgr_DataMapNodeOfDataMapOfObjectSelectors {
-    SelectMgr_DataMapNodeOfDataMapOfObjectSelectors* _get_reference() {
-    return (SelectMgr_DataMapNodeOfDataMapOfObjectSelectors*)$self->Access();
-    }
-};
-
-%extend Handle_SelectMgr_DataMapNodeOfDataMapOfObjectSelectors {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
-};
-
-%extend SelectMgr_DataMapNodeOfDataMapOfObjectSelectors {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor SelectMgr_DataMapOfObjectSelectors;
-class SelectMgr_DataMapOfObjectSelectors : public TCollection_BasicMap {
-	public:
-		%feature("compactdefaultargs") SelectMgr_DataMapOfObjectSelectors;
-		%feature("autodoc", "	:param NbBuckets: default value is 1
-	:type NbBuckets: int
-	:rtype: None
-") SelectMgr_DataMapOfObjectSelectors;
-		 SelectMgr_DataMapOfObjectSelectors (const Standard_Integer NbBuckets = 1);
-		%feature("compactdefaultargs") Assign;
-		%feature("autodoc", "	:param Other:
-	:type Other: SelectMgr_DataMapOfObjectSelectors &
-	:rtype: SelectMgr_DataMapOfObjectSelectors
-") Assign;
-		SelectMgr_DataMapOfObjectSelectors & Assign (const SelectMgr_DataMapOfObjectSelectors & Other);
-		%feature("compactdefaultargs") operator =;
-		%feature("autodoc", "	:param Other:
-	:type Other: SelectMgr_DataMapOfObjectSelectors &
-	:rtype: SelectMgr_DataMapOfObjectSelectors
-") operator =;
-		SelectMgr_DataMapOfObjectSelectors & operator = (const SelectMgr_DataMapOfObjectSelectors & Other);
-		%feature("compactdefaultargs") ReSize;
-		%feature("autodoc", "	:param NbBuckets:
-	:type NbBuckets: int
-	:rtype: None
-") ReSize;
-		void ReSize (const Standard_Integer NbBuckets);
-		%feature("compactdefaultargs") Clear;
-		%feature("autodoc", "	:rtype: None
-") Clear;
-		void Clear ();
-		%feature("compactdefaultargs") Bind;
-		%feature("autodoc", "	:param K:
-	:type K: Handle_SelectMgr_SelectableObject &
-	:param I:
-	:type I: SelectMgr_SequenceOfSelector &
-	:rtype: bool
-") Bind;
-		Standard_Boolean Bind (const Handle_SelectMgr_SelectableObject & K,const SelectMgr_SequenceOfSelector & I);
-		%feature("compactdefaultargs") IsBound;
-		%feature("autodoc", "	:param K:
-	:type K: Handle_SelectMgr_SelectableObject &
-	:rtype: bool
-") IsBound;
-		Standard_Boolean IsBound (const Handle_SelectMgr_SelectableObject & K);
-		%feature("compactdefaultargs") UnBind;
-		%feature("autodoc", "	:param K:
-	:type K: Handle_SelectMgr_SelectableObject &
-	:rtype: bool
-") UnBind;
-		Standard_Boolean UnBind (const Handle_SelectMgr_SelectableObject & K);
-		%feature("compactdefaultargs") Find;
-		%feature("autodoc", "	:param K:
-	:type K: Handle_SelectMgr_SelectableObject &
-	:rtype: SelectMgr_SequenceOfSelector
-") Find;
-		const SelectMgr_SequenceOfSelector & Find (const Handle_SelectMgr_SelectableObject & K);
-		%feature("compactdefaultargs") ChangeFind;
-		%feature("autodoc", "	:param K:
-	:type K: Handle_SelectMgr_SelectableObject &
-	:rtype: SelectMgr_SequenceOfSelector
-") ChangeFind;
-		SelectMgr_SequenceOfSelector & ChangeFind (const Handle_SelectMgr_SelectableObject & K);
-		%feature("compactdefaultargs") Find1;
-		%feature("autodoc", "	:param K:
-	:type K: Handle_SelectMgr_SelectableObject &
-	:rtype: Standard_Address
-") Find1;
-		Standard_Address Find1 (const Handle_SelectMgr_SelectableObject & K);
-		%feature("compactdefaultargs") ChangeFind1;
-		%feature("autodoc", "	:param K:
-	:type K: Handle_SelectMgr_SelectableObject &
-	:rtype: Standard_Address
-") ChangeFind1;
-		Standard_Address ChangeFind1 (const Handle_SelectMgr_SelectableObject & K);
-};
-
-
-%extend SelectMgr_DataMapOfObjectSelectors {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
 %nodefaultctor SelectMgr_EntityOwner;
 class SelectMgr_EntityOwner : public SelectBasics_EntityOwner {
 	public:
@@ -333,20 +148,14 @@ class SelectMgr_EntityOwner : public SelectBasics_EntityOwner {
 	:rtype: Handle_SelectMgr_SelectableObject
 ") Selectable;
 		virtual Handle_SelectMgr_SelectableObject Selectable ();
-		%feature("compactdefaultargs") Set;
-		%feature("autodoc", "	* Sets the selectable object anSO to be used by the second constructor above.
+		%feature("compactdefaultargs") SetSelectable;
+		%feature("autodoc", "	* Sets the selectable object.
 
-	:param aSO:
-	:type aSO: Handle_SelectMgr_SelectableObject &
-	:rtype: None
-") Set;
-		void Set (const Handle_SelectMgr_SelectableObject & aSO);
-		%feature("compactdefaultargs") Hilight;
-		%feature("autodoc", "	* Provides a framework to highlight any selectable object found subsequently which can serve as an owner of a sensitive primitive.
-
+	:param theSelObj:
+	:type theSelObj: Handle_SelectMgr_SelectableObject &
 	:rtype: void
-") Hilight;
-		virtual void Hilight ();
+") SetSelectable;
+		virtual void SetSelectable (const Handle_SelectMgr_SelectableObject & theSelObj);
 		%feature("compactdefaultargs") IsHilighted;
 		%feature("autodoc", "	* Returns true if the presentation manager aPM highlights selections corresponding to the selection mode aMode.
 
@@ -357,36 +166,28 @@ class SelectMgr_EntityOwner : public SelectBasics_EntityOwner {
 	:rtype: bool
 ") IsHilighted;
 		virtual Standard_Boolean IsHilighted (const Handle_PrsMgr_PresentationManager & aPM,const Standard_Integer aMode = 0);
-		%feature("compactdefaultargs") Hilight;
-		%feature("autodoc", "	* Highlights the owner of a detected selectable object in the presentation manager aPM. This object could be the owner of a sensitive primitive. The display mode for the highlight is aMode; this has the default value of 0, that is, wireframe mode.
-
-	:param aPM:
-	:type aPM: Handle_PrsMgr_PresentationManager &
-	:param aMode: default value is 0
-	:type aMode: int
-	:rtype: void
-") Hilight;
-		virtual void Hilight (const Handle_PrsMgr_PresentationManager & aPM,const Standard_Integer aMode = 0);
 		%feature("compactdefaultargs") HilightWithColor;
-		%feature("autodoc", "	:param aPM:
-	:type aPM: Handle_PrsMgr_PresentationManager3d &
-	:param aColor:
-	:type aColor: Quantity_NameOfColor
-	:param aMode: default value is 0
-	:type aMode: int
+		%feature("autodoc", "	* Highlights selectable object's presentation with mode theMode in presentation manager with given highlight style. Also a check for auto-highlight is performed - if selectable object manages highlighting on its own, execution will be passed to SelectMgr_SelectableObject::HilightOwnerWithColor method
+
+	:param thePM:
+	:type thePM: Handle_PrsMgr_PresentationManager3d &
+	:param theStyle:
+	:type theStyle: Handle_Prs3d_Drawer &
+	:param theMode: default value is 0
+	:type theMode: int
 	:rtype: void
 ") HilightWithColor;
-		virtual void HilightWithColor (const Handle_PrsMgr_PresentationManager3d & aPM,const Quantity_NameOfColor aColor,const Standard_Integer aMode = 0);
+		virtual void HilightWithColor (const Handle_PrsMgr_PresentationManager3d & thePM,const Handle_Prs3d_Drawer & theStyle,const Standard_Integer theMode = 0);
 		%feature("compactdefaultargs") Unhilight;
-		%feature("autodoc", "	* Removes highlighting from the owner of a detected selectable object in the presentation manager aPM. This object could be the owner of a sensitive primitive. The display mode for the highlight is aMode; this has the default value of 0, that is, wireframe mode.
+		%feature("autodoc", "	* Removes highlighting from the owner of a detected selectable object in the presentation manager. This object could be the owner of a sensitive primitive. @param thePrsMgr presentation manager @param theMode obsolete argument for compatibility, should be ignored by implementations
 
-	:param aPM:
-	:type aPM: Handle_PrsMgr_PresentationManager &
-	:param aMode: default value is 0
-	:type aMode: int
+	:param thePrsMgr:
+	:type thePrsMgr: Handle_PrsMgr_PresentationManager &
+	:param theMode: default value is 0
+	:type theMode: int
 	:rtype: void
 ") Unhilight;
-		virtual void Unhilight (const Handle_PrsMgr_PresentationManager & aPM,const Standard_Integer aMode = 0);
+		virtual void Unhilight (const Handle_PrsMgr_PresentationManager & thePrsMgr,const Standard_Integer theMode = 0);
 		%feature("compactdefaultargs") Clear;
 		%feature("autodoc", "	* Clears the owners matching the value of the selection mode aMode from the presentation manager object aPM.
 
@@ -430,13 +231,13 @@ class SelectMgr_EntityOwner : public SelectBasics_EntityOwner {
 ") IsSelected;
 		Standard_Boolean IsSelected ();
 		%feature("compactdefaultargs") State;
-		%feature("autodoc", "	* Set the state of the owner. The method is deprecated. Use SetSelected() instead.
+		%feature("autodoc", "	* Set the state of the owner. The method is deprecated. Use SetSelected---- instead.
 
-	:param aStatus:
-	:type aStatus: int
+	:param theStatus:
+	:type theStatus: int
 	:rtype: None
 ") State;
-		void State (const Standard_Integer aStatus);
+		void State (const Standard_Integer theStatus);
 		%feature("compactdefaultargs") State;
 		%feature("autodoc", "	:rtype: int
 ") State;
@@ -461,6 +262,48 @@ class SelectMgr_EntityOwner : public SelectBasics_EntityOwner {
 	:rtype: void
 ") SetZLayer;
 		virtual void SetZLayer (const Graphic3d_ZLayerId theLayerId);
+		%feature("compactdefaultargs") UpdateHighlightTrsf;
+		%feature("autodoc", "	* Implements immediate application of location transformation of parent object to dynamic highlight structure
+
+	:param theViewer:
+	:type theViewer: Handle_V3d_Viewer &
+	:param theManager:
+	:type theManager: Handle_PrsMgr_PresentationManager3d &
+	:param theDispMode:
+	:type theDispMode: int
+	:rtype: void
+") UpdateHighlightTrsf;
+		virtual void UpdateHighlightTrsf (const Handle_V3d_Viewer & theViewer,const Handle_PrsMgr_PresentationManager3d & theManager,const Standard_Integer theDispMode);
+		%feature("compactdefaultargs") IsSameSelectable;
+		%feature("autodoc", "	* Returns true if pointer to selectable object of this owner is equal to the given one
+
+	:param theOther:
+	:type theOther: Handle_SelectMgr_SelectableObject &
+	:rtype: bool
+") IsSameSelectable;
+		Standard_Boolean IsSameSelectable (const Handle_SelectMgr_SelectableObject & theOther);
+		%feature("compactdefaultargs") ComesFromDecomposition;
+		%feature("autodoc", "	* Returns True if this owner points to a part of object and False for entire object.
+
+	:rtype: bool
+") ComesFromDecomposition;
+		Standard_Boolean ComesFromDecomposition ();
+		%feature("compactdefaultargs") SetComesFromDecomposition;
+		%feature("autodoc", "	* Sets flag indicating this owner points to a part of object --True-- or to entire object --False--.
+
+	:param theIsFromDecomposition:
+	:type theIsFromDecomposition: bool
+	:rtype: None
+") SetComesFromDecomposition;
+		void SetComesFromDecomposition (const Standard_Boolean theIsFromDecomposition);
+		%feature("compactdefaultargs") Set;
+		%feature("autodoc", "	* Sets the selectable object.
+
+	:param theSelObj:
+	:type theSelObj: Handle_SelectMgr_SelectableObject &
+	:rtype: None
+") Set;
+		void Set (const Handle_SelectMgr_SelectableObject & theSelObj);
 };
 
 
@@ -495,19 +338,20 @@ class Handle_SelectMgr_EntityOwner : public Handle_SelectBasics_EntityOwner {
         static const Handle_SelectMgr_EntityOwner DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_SelectMgr_EntityOwner {
     SelectMgr_EntityOwner* _get_reference() {
-    return (SelectMgr_EntityOwner*)$self->Access();
+    return (SelectMgr_EntityOwner*)$self->get();
     }
 };
 
 %extend Handle_SelectMgr_EntityOwner {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend SelectMgr_EntityOwner {
@@ -516,7 +360,7 @@ class Handle_SelectMgr_EntityOwner : public Handle_SelectBasics_EntityOwner {
 	}
 };
 %nodefaultctor SelectMgr_Filter;
-class SelectMgr_Filter : public MMgt_TShared {
+class SelectMgr_Filter : public Standard_Transient {
 	public:
 		%feature("compactdefaultargs") IsOk;
 		%feature("autodoc", "	* Indicates that the selected Interactive Object passes the filter. The owner, anObj, can be either direct or user. A direct owner is the corresponding construction element, whereas a user is the compound shape of which the entity forms a part. When an object is detected by the mouse - in AIS, this is done through a context selector - its owner is passed to the filter as an argument. If the object returns Standard_True, it is kept; if not, it is rejected. If you are creating a filter class inheriting this framework, and the daughter class is to be used in an AIS local context, you will need to implement the virtual function ActsOn.
@@ -556,7 +400,7 @@ class SelectMgr_Filter : public MMgt_TShared {
 %}
 
 %nodefaultctor Handle_SelectMgr_Filter;
-class Handle_SelectMgr_Filter : public Handle_MMgt_TShared {
+class Handle_SelectMgr_Filter : public Handle_Standard_Transient {
 
     public:
         // constructors
@@ -568,476 +412,23 @@ class Handle_SelectMgr_Filter : public Handle_MMgt_TShared {
         static const Handle_SelectMgr_Filter DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_SelectMgr_Filter {
     SelectMgr_Filter* _get_reference() {
-    return (SelectMgr_Filter*)$self->Access();
+    return (SelectMgr_Filter*)$self->get();
     }
 };
 
 %extend Handle_SelectMgr_Filter {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend SelectMgr_Filter {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor SelectMgr_IndexedDataMapNodeOfIndexedDataMapOfOwnerCriterion;
-class SelectMgr_IndexedDataMapNodeOfIndexedDataMapOfOwnerCriterion : public TCollection_MapNode {
-	public:
-		%feature("compactdefaultargs") SelectMgr_IndexedDataMapNodeOfIndexedDataMapOfOwnerCriterion;
-		%feature("autodoc", "	:param K1:
-	:type K1: Handle_SelectBasics_EntityOwner &
-	:param K2:
-	:type K2: int
-	:param I:
-	:type I: SelectMgr_SortCriterion &
-	:param n1:
-	:type n1: TCollection_MapNodePtr &
-	:param n2:
-	:type n2: TCollection_MapNodePtr &
-	:rtype: None
-") SelectMgr_IndexedDataMapNodeOfIndexedDataMapOfOwnerCriterion;
-		 SelectMgr_IndexedDataMapNodeOfIndexedDataMapOfOwnerCriterion (const Handle_SelectBasics_EntityOwner & K1,const Standard_Integer K2,const SelectMgr_SortCriterion & I,const TCollection_MapNodePtr & n1,const TCollection_MapNodePtr & n2);
-		%feature("compactdefaultargs") Key1;
-		%feature("autodoc", "	:rtype: Handle_SelectBasics_EntityOwner
-") Key1;
-		Handle_SelectBasics_EntityOwner Key1 ();
-
-            %feature("autodoc","1");
-            %extend {
-                Standard_Integer GetKey2() {
-                return (Standard_Integer) $self->Key2();
-                }
-            };
-            %feature("autodoc","1");
-            %extend {
-                void SetKey2(Standard_Integer value ) {
-                $self->Key2()=value;
-                }
-            };
-            		%feature("compactdefaultargs") Next2;
-		%feature("autodoc", "	:rtype: TCollection_MapNodePtr
-") Next2;
-		TCollection_MapNodePtr & Next2 ();
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:rtype: SelectMgr_SortCriterion
-") Value;
-		SelectMgr_SortCriterion & Value ();
-};
-
-
-%extend SelectMgr_IndexedDataMapNodeOfIndexedDataMapOfOwnerCriterion {
-	%pythoncode {
-		def GetHandle(self):
-		    try:
-		        return self.thisHandle
-		    except:
-		        self.thisHandle = Handle_SelectMgr_IndexedDataMapNodeOfIndexedDataMapOfOwnerCriterion(self)
-		        self.thisown = False
-		        return self.thisHandle
-	}
-};
-
-%pythonappend Handle_SelectMgr_IndexedDataMapNodeOfIndexedDataMapOfOwnerCriterion::Handle_SelectMgr_IndexedDataMapNodeOfIndexedDataMapOfOwnerCriterion %{
-    # register the handle in the base object
-    if len(args) > 0:
-        register_handle(self, args[0])
-%}
-
-%nodefaultctor Handle_SelectMgr_IndexedDataMapNodeOfIndexedDataMapOfOwnerCriterion;
-class Handle_SelectMgr_IndexedDataMapNodeOfIndexedDataMapOfOwnerCriterion : public Handle_TCollection_MapNode {
-
-    public:
-        // constructors
-        Handle_SelectMgr_IndexedDataMapNodeOfIndexedDataMapOfOwnerCriterion();
-        Handle_SelectMgr_IndexedDataMapNodeOfIndexedDataMapOfOwnerCriterion(const Handle_SelectMgr_IndexedDataMapNodeOfIndexedDataMapOfOwnerCriterion &aHandle);
-        Handle_SelectMgr_IndexedDataMapNodeOfIndexedDataMapOfOwnerCriterion(const SelectMgr_IndexedDataMapNodeOfIndexedDataMapOfOwnerCriterion *anItem);
-        void Nullify();
-        Standard_Boolean IsNull() const;
-        static const Handle_SelectMgr_IndexedDataMapNodeOfIndexedDataMapOfOwnerCriterion DownCast(const Handle_Standard_Transient &AnObject);
-
-};
-%extend Handle_SelectMgr_IndexedDataMapNodeOfIndexedDataMapOfOwnerCriterion {
-    SelectMgr_IndexedDataMapNodeOfIndexedDataMapOfOwnerCriterion* _get_reference() {
-    return (SelectMgr_IndexedDataMapNodeOfIndexedDataMapOfOwnerCriterion*)$self->Access();
-    }
-};
-
-%extend Handle_SelectMgr_IndexedDataMapNodeOfIndexedDataMapOfOwnerCriterion {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
-};
-
-%extend SelectMgr_IndexedDataMapNodeOfIndexedDataMapOfOwnerCriterion {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor SelectMgr_IndexedDataMapOfOwnerCriterion;
-class SelectMgr_IndexedDataMapOfOwnerCriterion : public TCollection_BasicMap {
-	public:
-		%feature("compactdefaultargs") SelectMgr_IndexedDataMapOfOwnerCriterion;
-		%feature("autodoc", "	:param NbBuckets: default value is 1
-	:type NbBuckets: int
-	:rtype: None
-") SelectMgr_IndexedDataMapOfOwnerCriterion;
-		 SelectMgr_IndexedDataMapOfOwnerCriterion (const Standard_Integer NbBuckets = 1);
-		%feature("compactdefaultargs") Assign;
-		%feature("autodoc", "	:param Other:
-	:type Other: SelectMgr_IndexedDataMapOfOwnerCriterion &
-	:rtype: SelectMgr_IndexedDataMapOfOwnerCriterion
-") Assign;
-		SelectMgr_IndexedDataMapOfOwnerCriterion & Assign (const SelectMgr_IndexedDataMapOfOwnerCriterion & Other);
-		%feature("compactdefaultargs") operator =;
-		%feature("autodoc", "	:param Other:
-	:type Other: SelectMgr_IndexedDataMapOfOwnerCriterion &
-	:rtype: SelectMgr_IndexedDataMapOfOwnerCriterion
-") operator =;
-		SelectMgr_IndexedDataMapOfOwnerCriterion & operator = (const SelectMgr_IndexedDataMapOfOwnerCriterion & Other);
-		%feature("compactdefaultargs") ReSize;
-		%feature("autodoc", "	:param NbBuckets:
-	:type NbBuckets: int
-	:rtype: None
-") ReSize;
-		void ReSize (const Standard_Integer NbBuckets);
-		%feature("compactdefaultargs") Clear;
-		%feature("autodoc", "	:rtype: None
-") Clear;
-		void Clear ();
-		%feature("compactdefaultargs") Add;
-		%feature("autodoc", "	:param K:
-	:type K: Handle_SelectBasics_EntityOwner &
-	:param I:
-	:type I: SelectMgr_SortCriterion &
-	:rtype: int
-") Add;
-		Standard_Integer Add (const Handle_SelectBasics_EntityOwner & K,const SelectMgr_SortCriterion & I);
-		%feature("compactdefaultargs") Substitute;
-		%feature("autodoc", "	:param I:
-	:type I: int
-	:param K:
-	:type K: Handle_SelectBasics_EntityOwner &
-	:param T:
-	:type T: SelectMgr_SortCriterion &
-	:rtype: None
-") Substitute;
-		void Substitute (const Standard_Integer I,const Handle_SelectBasics_EntityOwner & K,const SelectMgr_SortCriterion & T);
-		%feature("compactdefaultargs") RemoveLast;
-		%feature("autodoc", "	:rtype: None
-") RemoveLast;
-		void RemoveLast ();
-		%feature("compactdefaultargs") Contains;
-		%feature("autodoc", "	:param K:
-	:type K: Handle_SelectBasics_EntityOwner &
-	:rtype: bool
-") Contains;
-		Standard_Boolean Contains (const Handle_SelectBasics_EntityOwner & K);
-		%feature("compactdefaultargs") FindKey;
-		%feature("autodoc", "	:param I:
-	:type I: int
-	:rtype: Handle_SelectBasics_EntityOwner
-") FindKey;
-		Handle_SelectBasics_EntityOwner FindKey (const Standard_Integer I);
-		%feature("compactdefaultargs") FindFromIndex;
-		%feature("autodoc", "	:param I:
-	:type I: int
-	:rtype: SelectMgr_SortCriterion
-") FindFromIndex;
-		const SelectMgr_SortCriterion & FindFromIndex (const Standard_Integer I);
-		%feature("compactdefaultargs") ChangeFromIndex;
-		%feature("autodoc", "	:param I:
-	:type I: int
-	:rtype: SelectMgr_SortCriterion
-") ChangeFromIndex;
-		SelectMgr_SortCriterion & ChangeFromIndex (const Standard_Integer I);
-		%feature("compactdefaultargs") FindIndex;
-		%feature("autodoc", "	:param K:
-	:type K: Handle_SelectBasics_EntityOwner &
-	:rtype: int
-") FindIndex;
-		Standard_Integer FindIndex (const Handle_SelectBasics_EntityOwner & K);
-		%feature("compactdefaultargs") FindFromKey;
-		%feature("autodoc", "	:param K:
-	:type K: Handle_SelectBasics_EntityOwner &
-	:rtype: SelectMgr_SortCriterion
-") FindFromKey;
-		const SelectMgr_SortCriterion & FindFromKey (const Handle_SelectBasics_EntityOwner & K);
-		%feature("compactdefaultargs") ChangeFromKey;
-		%feature("autodoc", "	:param K:
-	:type K: Handle_SelectBasics_EntityOwner &
-	:rtype: SelectMgr_SortCriterion
-") ChangeFromKey;
-		SelectMgr_SortCriterion & ChangeFromKey (const Handle_SelectBasics_EntityOwner & K);
-		%feature("compactdefaultargs") FindFromKey1;
-		%feature("autodoc", "	:param K:
-	:type K: Handle_SelectBasics_EntityOwner &
-	:rtype: Standard_Address
-") FindFromKey1;
-		Standard_Address FindFromKey1 (const Handle_SelectBasics_EntityOwner & K);
-		%feature("compactdefaultargs") ChangeFromKey1;
-		%feature("autodoc", "	:param K:
-	:type K: Handle_SelectBasics_EntityOwner &
-	:rtype: Standard_Address
-") ChangeFromKey1;
-		Standard_Address ChangeFromKey1 (const Handle_SelectBasics_EntityOwner & K);
-};
-
-
-%extend SelectMgr_IndexedDataMapOfOwnerCriterion {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor SelectMgr_ListIteratorOfListOfFilter;
-class SelectMgr_ListIteratorOfListOfFilter {
-	public:
-		%feature("compactdefaultargs") SelectMgr_ListIteratorOfListOfFilter;
-		%feature("autodoc", "	:rtype: None
-") SelectMgr_ListIteratorOfListOfFilter;
-		 SelectMgr_ListIteratorOfListOfFilter ();
-		%feature("compactdefaultargs") SelectMgr_ListIteratorOfListOfFilter;
-		%feature("autodoc", "	:param L:
-	:type L: SelectMgr_ListOfFilter &
-	:rtype: None
-") SelectMgr_ListIteratorOfListOfFilter;
-		 SelectMgr_ListIteratorOfListOfFilter (const SelectMgr_ListOfFilter & L);
-		%feature("compactdefaultargs") Initialize;
-		%feature("autodoc", "	:param L:
-	:type L: SelectMgr_ListOfFilter &
-	:rtype: None
-") Initialize;
-		void Initialize (const SelectMgr_ListOfFilter & L);
-		%feature("compactdefaultargs") More;
-		%feature("autodoc", "	:rtype: bool
-") More;
-		Standard_Boolean More ();
-		%feature("compactdefaultargs") Next;
-		%feature("autodoc", "	:rtype: None
-") Next;
-		void Next ();
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:rtype: Handle_SelectMgr_Filter
-") Value;
-		Handle_SelectMgr_Filter Value ();
-};
-
-
-%extend SelectMgr_ListIteratorOfListOfFilter {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor SelectMgr_ListNodeOfListOfFilter;
-class SelectMgr_ListNodeOfListOfFilter : public TCollection_MapNode {
-	public:
-		%feature("compactdefaultargs") SelectMgr_ListNodeOfListOfFilter;
-		%feature("autodoc", "	:param I:
-	:type I: Handle_SelectMgr_Filter &
-	:param n:
-	:type n: TCollection_MapNodePtr &
-	:rtype: None
-") SelectMgr_ListNodeOfListOfFilter;
-		 SelectMgr_ListNodeOfListOfFilter (const Handle_SelectMgr_Filter & I,const TCollection_MapNodePtr & n);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:rtype: Handle_SelectMgr_Filter
-") Value;
-		Handle_SelectMgr_Filter Value ();
-};
-
-
-%extend SelectMgr_ListNodeOfListOfFilter {
-	%pythoncode {
-		def GetHandle(self):
-		    try:
-		        return self.thisHandle
-		    except:
-		        self.thisHandle = Handle_SelectMgr_ListNodeOfListOfFilter(self)
-		        self.thisown = False
-		        return self.thisHandle
-	}
-};
-
-%pythonappend Handle_SelectMgr_ListNodeOfListOfFilter::Handle_SelectMgr_ListNodeOfListOfFilter %{
-    # register the handle in the base object
-    if len(args) > 0:
-        register_handle(self, args[0])
-%}
-
-%nodefaultctor Handle_SelectMgr_ListNodeOfListOfFilter;
-class Handle_SelectMgr_ListNodeOfListOfFilter : public Handle_TCollection_MapNode {
-
-    public:
-        // constructors
-        Handle_SelectMgr_ListNodeOfListOfFilter();
-        Handle_SelectMgr_ListNodeOfListOfFilter(const Handle_SelectMgr_ListNodeOfListOfFilter &aHandle);
-        Handle_SelectMgr_ListNodeOfListOfFilter(const SelectMgr_ListNodeOfListOfFilter *anItem);
-        void Nullify();
-        Standard_Boolean IsNull() const;
-        static const Handle_SelectMgr_ListNodeOfListOfFilter DownCast(const Handle_Standard_Transient &AnObject);
-
-};
-%extend Handle_SelectMgr_ListNodeOfListOfFilter {
-    SelectMgr_ListNodeOfListOfFilter* _get_reference() {
-    return (SelectMgr_ListNodeOfListOfFilter*)$self->Access();
-    }
-};
-
-%extend Handle_SelectMgr_ListNodeOfListOfFilter {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
-};
-
-%extend SelectMgr_ListNodeOfListOfFilter {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor SelectMgr_ListOfFilter;
-class SelectMgr_ListOfFilter {
-	public:
-		%feature("compactdefaultargs") SelectMgr_ListOfFilter;
-		%feature("autodoc", "	:rtype: None
-") SelectMgr_ListOfFilter;
-		 SelectMgr_ListOfFilter ();
-		%feature("compactdefaultargs") SelectMgr_ListOfFilter;
-		%feature("autodoc", "	:param Other:
-	:type Other: SelectMgr_ListOfFilter &
-	:rtype: None
-") SelectMgr_ListOfFilter;
-		 SelectMgr_ListOfFilter (const SelectMgr_ListOfFilter & Other);
-		%feature("compactdefaultargs") Assign;
-		%feature("autodoc", "	:param Other:
-	:type Other: SelectMgr_ListOfFilter &
-	:rtype: None
-") Assign;
-		void Assign (const SelectMgr_ListOfFilter & Other);
-		%feature("compactdefaultargs") operator =;
-		%feature("autodoc", "	:param Other:
-	:type Other: SelectMgr_ListOfFilter &
-	:rtype: None
-") operator =;
-		void operator = (const SelectMgr_ListOfFilter & Other);
-		%feature("compactdefaultargs") Extent;
-		%feature("autodoc", "	:rtype: int
-") Extent;
-		Standard_Integer Extent ();
-		%feature("compactdefaultargs") Clear;
-		%feature("autodoc", "	:rtype: None
-") Clear;
-		void Clear ();
-		%feature("compactdefaultargs") IsEmpty;
-		%feature("autodoc", "	:rtype: bool
-") IsEmpty;
-		Standard_Boolean IsEmpty ();
-		%feature("compactdefaultargs") Prepend;
-		%feature("autodoc", "	:param I:
-	:type I: Handle_SelectMgr_Filter &
-	:rtype: None
-") Prepend;
-		void Prepend (const Handle_SelectMgr_Filter & I);
-		%feature("compactdefaultargs") Prepend;
-		%feature("autodoc", "	:param I:
-	:type I: Handle_SelectMgr_Filter &
-	:param theIt:
-	:type theIt: SelectMgr_ListIteratorOfListOfFilter &
-	:rtype: None
-") Prepend;
-		void Prepend (const Handle_SelectMgr_Filter & I,SelectMgr_ListIteratorOfListOfFilter & theIt);
-		%feature("compactdefaultargs") Prepend;
-		%feature("autodoc", "	:param Other:
-	:type Other: SelectMgr_ListOfFilter &
-	:rtype: None
-") Prepend;
-		void Prepend (SelectMgr_ListOfFilter & Other);
-		%feature("compactdefaultargs") Append;
-		%feature("autodoc", "	:param I:
-	:type I: Handle_SelectMgr_Filter &
-	:rtype: None
-") Append;
-		void Append (const Handle_SelectMgr_Filter & I);
-		%feature("compactdefaultargs") Append;
-		%feature("autodoc", "	:param I:
-	:type I: Handle_SelectMgr_Filter &
-	:param theIt:
-	:type theIt: SelectMgr_ListIteratorOfListOfFilter &
-	:rtype: None
-") Append;
-		void Append (const Handle_SelectMgr_Filter & I,SelectMgr_ListIteratorOfListOfFilter & theIt);
-		%feature("compactdefaultargs") Append;
-		%feature("autodoc", "	:param Other:
-	:type Other: SelectMgr_ListOfFilter &
-	:rtype: None
-") Append;
-		void Append (SelectMgr_ListOfFilter & Other);
-		%feature("compactdefaultargs") First;
-		%feature("autodoc", "	:rtype: Handle_SelectMgr_Filter
-") First;
-		Handle_SelectMgr_Filter First ();
-		%feature("compactdefaultargs") Last;
-		%feature("autodoc", "	:rtype: Handle_SelectMgr_Filter
-") Last;
-		Handle_SelectMgr_Filter Last ();
-		%feature("compactdefaultargs") RemoveFirst;
-		%feature("autodoc", "	:rtype: None
-") RemoveFirst;
-		void RemoveFirst ();
-		%feature("compactdefaultargs") Remove;
-		%feature("autodoc", "	:param It:
-	:type It: SelectMgr_ListIteratorOfListOfFilter &
-	:rtype: None
-") Remove;
-		void Remove (SelectMgr_ListIteratorOfListOfFilter & It);
-		%feature("compactdefaultargs") InsertBefore;
-		%feature("autodoc", "	:param I:
-	:type I: Handle_SelectMgr_Filter &
-	:param It:
-	:type It: SelectMgr_ListIteratorOfListOfFilter &
-	:rtype: None
-") InsertBefore;
-		void InsertBefore (const Handle_SelectMgr_Filter & I,SelectMgr_ListIteratorOfListOfFilter & It);
-		%feature("compactdefaultargs") InsertBefore;
-		%feature("autodoc", "	:param Other:
-	:type Other: SelectMgr_ListOfFilter &
-	:param It:
-	:type It: SelectMgr_ListIteratorOfListOfFilter &
-	:rtype: None
-") InsertBefore;
-		void InsertBefore (SelectMgr_ListOfFilter & Other,SelectMgr_ListIteratorOfListOfFilter & It);
-		%feature("compactdefaultargs") InsertAfter;
-		%feature("autodoc", "	:param I:
-	:type I: Handle_SelectMgr_Filter &
-	:param It:
-	:type It: SelectMgr_ListIteratorOfListOfFilter &
-	:rtype: None
-") InsertAfter;
-		void InsertAfter (const Handle_SelectMgr_Filter & I,SelectMgr_ListIteratorOfListOfFilter & It);
-		%feature("compactdefaultargs") InsertAfter;
-		%feature("autodoc", "	:param Other:
-	:type Other: SelectMgr_ListOfFilter &
-	:param It:
-	:type It: SelectMgr_ListIteratorOfListOfFilter &
-	:rtype: None
-") InsertAfter;
-		void InsertAfter (SelectMgr_ListOfFilter & Other,SelectMgr_ListIteratorOfListOfFilter & It);
-};
-
-
-%extend SelectMgr_ListOfFilter {
 	%pythoncode {
 	__repr__ = _dumps_object
 	}
@@ -1080,7 +471,7 @@ class SelectMgr_SelectableObject : public PrsMgr_PresentableObject {
 ") AddSelection;
 		void AddSelection (const Handle_SelectMgr_Selection & aSelection,const Standard_Integer aMode);
 		%feature("compactdefaultargs") ClearSelections;
-		%feature("autodoc", "	* Empties all the selections in the SelectableObject <update> parameter defines whether all object's selections should be flagged for further update or not. This improved method can be used to recompute an object's selection (without redisplaying the object completely) when some selection mode is activated not for the first time.
+		%feature("autodoc", "	* Empties all the selections in the SelectableObject <update> parameter defines whether all object's selections should be flagged for further update or not. This improved method can be used to recompute an object's selection --without redisplaying the object completely-- when some selection mode is activated not for the first time.
 
 	:param update: default value is Standard_False
 	:type update: bool
@@ -1096,13 +487,13 @@ class SelectMgr_SelectableObject : public PrsMgr_PresentableObject {
 ") Selection;
 		Handle_SelectMgr_Selection Selection (const Standard_Integer aMode);
 		%feature("compactdefaultargs") HasSelection;
-		%feature("autodoc", "	* Returns true if a selection corresponding to the selection mode aMode is present in this framework.
+		%feature("autodoc", "	* Returns true if a selection corresponding to the selection mode theMode was computed for this object.
 
-	:param aMode:
-	:type aMode: int
+	:param theMode:
+	:type theMode: int
 	:rtype: bool
 ") HasSelection;
-		Standard_Boolean HasSelection (const Standard_Integer aMode);
+		virtual Standard_Boolean HasSelection (const Standard_Integer theMode);
 		%feature("compactdefaultargs") Init;
 		%feature("autodoc", "	* Begins the iteration scanning for sensitive primitives.
 
@@ -1146,7 +537,7 @@ class SelectMgr_SelectableObject : public PrsMgr_PresentableObject {
 ") UpdateTransformations;
 		virtual void UpdateTransformations (const Handle_SelectMgr_Selection & aSelection);
 		%feature("compactdefaultargs") HilightSelected;
-		%feature("autodoc", "	* Method which draws selected owners ( for fast presentation draw )
+		%feature("autodoc", "	* Method which draws selected owners -- for fast presentation draw --
 
 	:param PM:
 	:type PM: Handle_PrsMgr_PresentationManager3d &
@@ -1156,25 +547,33 @@ class SelectMgr_SelectableObject : public PrsMgr_PresentableObject {
 ") HilightSelected;
 		virtual void HilightSelected (const Handle_PrsMgr_PresentationManager3d & PM,const SelectMgr_SequenceOfOwner & Seq);
 		%feature("compactdefaultargs") ClearSelected;
-		%feature("autodoc", "	* Method which clear all selected owners belonging to this selectable object ( for fast presentation draw )
+		%feature("autodoc", "	* Method which clear all selected owners belonging to this selectable object -- for fast presentation draw --
 
 	:rtype: void
 ") ClearSelected;
 		virtual void ClearSelected ();
+		%feature("compactdefaultargs") ClearDynamicHighlight;
+		%feature("autodoc", "	* Method that needs to be implemented when the object manages selection and dynamic highlighting on its own. Clears or invalidates dynamic highlight presentation. By default it clears immediate draw of given presentation manager.
+
+	:param theMgr:
+	:type theMgr: Handle_PrsMgr_PresentationManager3d &
+	:rtype: void
+") ClearDynamicHighlight;
+		virtual void ClearDynamicHighlight (const Handle_PrsMgr_PresentationManager3d & theMgr);
 		%feature("compactdefaultargs") HilightOwnerWithColor;
-		%feature("autodoc", "	* Method which hilight an owner belonging to this selectable object ( for fast presentation draw )
+		%feature("autodoc", "	* Method which hilight an owner belonging to this selectable object -- for fast presentation draw --
 
 	:param thePM:
 	:type thePM: Handle_PrsMgr_PresentationManager3d &
-	:param theColor:
-	:type theColor: Quantity_NameOfColor
+	:param theStyle:
+	:type theStyle: Handle_Prs3d_Drawer &
 	:param theOwner:
 	:type theOwner: Handle_SelectMgr_EntityOwner &
 	:rtype: void
 ") HilightOwnerWithColor;
-		virtual void HilightOwnerWithColor (const Handle_PrsMgr_PresentationManager3d & thePM,const Quantity_NameOfColor theColor,const Handle_SelectMgr_EntityOwner & theOwner);
+		virtual void HilightOwnerWithColor (const Handle_PrsMgr_PresentationManager3d & thePM,const Handle_Prs3d_Drawer & theStyle,const Handle_SelectMgr_EntityOwner & theOwner);
 		%feature("compactdefaultargs") IsAutoHilight;
-		%feature("autodoc", "	* If returns True, the old mechanism for highlighting selected objects is used (HilightSelected Method may be empty). If returns False, the HilightSelected method will be fully responsible for highlighting selected entity owners belonging to this selectable object.
+		%feature("autodoc", "	* If returns True, the old mechanism for highlighting selected objects is used --HilightSelected Method may be empty--. If returns False, the HilightSelected method will be fully responsible for highlighting selected entity owners belonging to this selectable object.
 
 	:rtype: bool
 ") IsAutoHilight;
@@ -1199,6 +598,14 @@ class SelectMgr_SelectableObject : public PrsMgr_PresentableObject {
 	:rtype: Handle_Prs3d_Presentation
 ") GetSelectPresentation;
 		Handle_Prs3d_Presentation GetSelectPresentation (const Handle_PrsMgr_PresentationManager3d & TheMgr);
+		%feature("compactdefaultargs") ErasePresentations;
+		%feature("autodoc", "	* Removes presentations returned by GetHilightPresentation---- and GetSelectPresentation----.
+
+	:param theToRemove:
+	:type theToRemove: bool
+	:rtype: void
+") ErasePresentations;
+		virtual void ErasePresentations (Standard_Boolean theToRemove);
 		%feature("compactdefaultargs") SetZLayer;
 		%feature("autodoc", "	* Set Z layer ID and update all presentations of the selectable object. The layers mechanism allows drawing objects in higher layers in overlay of objects in lower layers.
 
@@ -1223,54 +630,6 @@ class SelectMgr_SelectableObject : public PrsMgr_PresentableObject {
 	:rtype: void
 ") BoundingBox;
 		virtual void BoundingBox (Bnd_Box & theBndBox);
-		%feature("compactdefaultargs") SetAttributes;
-		%feature("autodoc", "	* Initializes the drawing tool theDrawer.
-
-	:param theDrawer:
-	:type theDrawer: Handle_Prs3d_Drawer &
-	:rtype: void
-") SetAttributes;
-		virtual void SetAttributes (const Handle_Prs3d_Drawer & theDrawer);
-		%feature("compactdefaultargs") Attributes;
-		%feature("autodoc", "	* Returns the attributes settings.
-
-	:rtype: Handle_Prs3d_Drawer
-") Attributes;
-		Handle_Prs3d_Drawer Attributes ();
-		%feature("compactdefaultargs") UnsetAttributes;
-		%feature("autodoc", "	* Clears settings provided by the drawing tool theDrawer.
-
-	:rtype: void
-") UnsetAttributes;
-		virtual void UnsetAttributes ();
-		%feature("compactdefaultargs") SetHilightAttributes;
-		%feature("autodoc", "	* Initializes the hilight drawing tool theDrawer.
-
-	:param theDrawer:
-	:type theDrawer: Handle_Prs3d_Drawer &
-	:rtype: void
-") SetHilightAttributes;
-		virtual void SetHilightAttributes (const Handle_Prs3d_Drawer & theDrawer);
-		%feature("compactdefaultargs") HilightAttributes;
-		%feature("autodoc", "	* Returns the hilight attributes settings.
-
-	:rtype: Handle_Prs3d_Drawer
-") HilightAttributes;
-		Handle_Prs3d_Drawer HilightAttributes ();
-		%feature("compactdefaultargs") UnsetHilightAttributes;
-		%feature("autodoc", "	* Clears settings provided by the hilight drawing tool theDrawer.
-
-	:rtype: void
-") UnsetHilightAttributes;
-		virtual void UnsetHilightAttributes ();
-		%feature("compactdefaultargs") InitDefaultHilightAttributes;
-		%feature("autodoc", "	* Initializes theDrawer by default hilight settings.
-
-	:param theDrawer:
-	:type theDrawer: Handle_Prs3d_Drawer &
-	:rtype: void
-") InitDefaultHilightAttributes;
-		static void InitDefaultHilightAttributes (const Handle_Prs3d_Drawer & theDrawer);
 		%feature("compactdefaultargs") SetAssemblyOwner;
 		%feature("autodoc", "	* Sets common entity owner for assembly sensitive object entities
 
@@ -1294,7 +653,19 @@ class SelectMgr_SelectableObject : public PrsMgr_PresentableObject {
 	:type theOwners: Handle_SelectMgr_IndexedMapOfOwner &
 	:rtype: Bnd_Box
 ") BndBoxOfSelected;
-		Bnd_Box BndBoxOfSelected (Handle_SelectMgr_IndexedMapOfOwner & theOwners);
+		Bnd_Box BndBoxOfSelected (const Handle_SelectMgr_IndexedMapOfOwner & theOwners);
+		%feature("compactdefaultargs") GlobalSelectionMode;
+		%feature("autodoc", "	* Returns the mode for selection of object as a whole
+
+	:rtype: int
+") GlobalSelectionMode;
+		Standard_Integer GlobalSelectionMode ();
+		%feature("compactdefaultargs") GlobalSelOwner;
+		%feature("autodoc", "	* Returns the owner of mode for selection of object as a whole
+
+	:rtype: Handle_SelectMgr_EntityOwner
+") GlobalSelOwner;
+		virtual Handle_SelectMgr_EntityOwner GlobalSelOwner ();
 };
 
 
@@ -1329,22 +700,138 @@ class Handle_SelectMgr_SelectableObject : public Handle_PrsMgr_PresentableObject
         static const Handle_SelectMgr_SelectableObject DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_SelectMgr_SelectableObject {
     SelectMgr_SelectableObject* _get_reference() {
-    return (SelectMgr_SelectableObject*)$self->Access();
+    return (SelectMgr_SelectableObject*)$self->get();
     }
 };
 
 %extend Handle_SelectMgr_SelectableObject {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend SelectMgr_SelectableObject {
+	%pythoncode {
+	__repr__ = _dumps_object
+	}
+};
+%nodefaultctor SelectMgr_SelectableObjectSet;
+class SelectMgr_SelectableObjectSet {
+	public:
+/* public enums */
+enum BVHSubset {
+	BVHSubset_3d = 0,
+	BVHSubset_3dPersistent = 1,
+	BVHSubset_2dPersistent = 2,
+	BVHSubsetNb = 3,
+};
+
+/* end public enums declaration */
+
+		%feature("compactdefaultargs") SelectMgr_SelectableObjectSet;
+		%feature("autodoc", "	* Creates new empty objects set and initializes BVH tree builders for each subset.
+
+	:rtype: None
+") SelectMgr_SelectableObjectSet;
+		 SelectMgr_SelectableObjectSet ();
+		%feature("compactdefaultargs") Append;
+		%feature("autodoc", "	* Adds the new selectable object to the set. The selectable object is placed into one of the predefined subsets depending on its persistence type. After adding an object, this method marks the corresponding BVH tree for rebuild. returns true if selectable object is added, otherwise returns false --selectable object is already in the set--.
+
+	:param theObject:
+	:type theObject: Handle_SelectMgr_SelectableObject &
+	:rtype: bool
+") Append;
+		Standard_Boolean Append (const Handle_SelectMgr_SelectableObject & theObject);
+		%feature("compactdefaultargs") Remove;
+		%feature("autodoc", "	* Removes the selectable object from the set. The selectable object is removed from the subset it has been placed into. After removing an object, this method marks the corresponding BVH tree for rebuild. returns true if selectable object is removed, otherwise returns false --selectable object is not in the set--.
+
+	:param theObject:
+	:type theObject: Handle_SelectMgr_SelectableObject &
+	:rtype: bool
+") Remove;
+		Standard_Boolean Remove (const Handle_SelectMgr_SelectableObject & theObject);
+		%feature("compactdefaultargs") ChangeSubset;
+		%feature("autodoc", "	* Performs necessary updates when object's persistence types changes. This method should be called right after changing transformation persistence flags of the objects and before updating BVH tree - to provide up-to-date state of the object set.
+
+	:param theObject:
+	:type theObject: Handle_SelectMgr_SelectableObject &
+	:rtype: None
+") ChangeSubset;
+		void ChangeSubset (const Handle_SelectMgr_SelectableObject & theObject);
+		%feature("compactdefaultargs") UpdateBVH;
+		%feature("autodoc", "	* Updates outdated BVH trees and remembers the last state of the camera view-projection matrices and viewport --window-- dimensions.
+
+	:param theCamera:
+	:type theCamera: Handle_Graphic3d_Camera &
+	:param theProjectionMat:
+	:type theProjectionMat: Graphic3d_Mat4d &
+	:param theWorldViewMat:
+	:type theWorldViewMat: Graphic3d_Mat4d &
+	:param theViewState:
+	:type theViewState: Graphic3d_WorldViewProjState &
+	:param theViewportWidth:
+	:type theViewportWidth: int
+	:param theViewportHeight:
+	:type theViewportHeight: int
+	:rtype: None
+") UpdateBVH;
+		void UpdateBVH (const Handle_Graphic3d_Camera & theCamera,const Graphic3d_Mat4d & theProjectionMat,const Graphic3d_Mat4d & theWorldViewMat,const Graphic3d_WorldViewProjState & theViewState,const Standard_Integer theViewportWidth,const Standard_Integer theViewportHeight);
+		%feature("compactdefaultargs") MarkDirty;
+		%feature("autodoc", "	* Marks every BVH subset for update.
+
+	:rtype: None
+") MarkDirty;
+		void MarkDirty ();
+		%feature("compactdefaultargs") Contains;
+		%feature("autodoc", "	* Returns true if this objects set contains theObject given.
+
+	:param theObject:
+	:type theObject: Handle_SelectMgr_SelectableObject &
+	:rtype: bool
+") Contains;
+		Standard_Boolean Contains (const Handle_SelectMgr_SelectableObject & theObject);
+		%feature("compactdefaultargs") IsEmpty;
+		%feature("autodoc", "	* Returns true if the object set does not contain any selectable objects.
+
+	:rtype: bool
+") IsEmpty;
+		Standard_Boolean IsEmpty ();
+		%feature("compactdefaultargs") IsEmpty;
+		%feature("autodoc", "	* Returns true if the specified object subset is empty.
+
+	:param theSubset:
+	:type theSubset: BVHSubset
+	:rtype: bool
+") IsEmpty;
+		Standard_Boolean IsEmpty (const BVHSubset theSubset);
+		%feature("compactdefaultargs") GetObjectById;
+		%feature("autodoc", "	* Returns object from subset theSubset by theIndex given. The method allows to get selectable object referred by the index of an element of the subset's BVH tree.
+
+	:param theSubset:
+	:type theSubset: BVHSubset
+	:param theIndex:
+	:type theIndex: int
+	:rtype: Handle_SelectMgr_SelectableObject
+") GetObjectById;
+		Handle_SelectMgr_SelectableObject GetObjectById (const BVHSubset theSubset,const Standard_Integer theIndex);
+		%feature("compactdefaultargs") BVH;
+		%feature("autodoc", "	* Returns computed BVH for the theSubset given.
+
+	:param theSubset:
+	:type theSubset: BVHSubset
+	:rtype: opencascade::handle<BVH_Tree<float, 3> >
+") BVH;
+		const opencascade::handle<BVH_Tree<Standard_Real, 3> > & BVH (const BVHSubset theSubset);
+};
+
+
+%extend SelectMgr_SelectableObjectSet {
 	%pythoncode {
 	__repr__ = _dumps_object
 	}
@@ -1361,15 +848,17 @@ class SelectMgr_SelectingVolumeManager : public SelectBasics_SelectingVolumeMana
 ") SelectMgr_SelectingVolumeManager;
 		 SelectMgr_SelectingVolumeManager (Standard_Boolean theToAllocateFrustums = Standard_True);
 		%feature("compactdefaultargs") ScaleAndTransform;
-		%feature("autodoc", "	* IMPORTANT: Scaling makes sense only for frustum built on a single point! Note that this method does not perform any checks on type of the frustum. //! Returns a copy of the frustum resized according to the scale factor given and transforms it using the matrix given. There are no default parameters, but in case if: - transformation only is needed: @theScaleFactor must be initialized as any negative value; - scale only is needed: @theTrsf must be set to gp_Identity.
+		%feature("autodoc", "	* IMPORTANT: Scaling makes sense only for frustum built on a single point! Note that this method does not perform any checks on type of the frustum. //! Returns a copy of the frustum resized according to the scale factor given and transforms it using the matrix given. There are no default parameters, but in case if: - transformation only is needed: @theScaleFactor must be initialized as any negative value; - scale only is needed: @theTrsf must be set to gp_Identity. Builder is an optional argument that represents corresponding settings for re-constructing transformed frustum from scratch. Can be null if reconstruction is not expected furthermore.
 
 	:param theScaleFactor:
 	:type theScaleFactor: int
 	:param theTrsf:
-	:type theTrsf: gp_Trsf
+	:type theTrsf: gp_GTrsf
+	:param theBuilder: default value is NULL
+	:type theBuilder: Handle_SelectMgr_FrustumBuilder &
 	:rtype: SelectMgr_SelectingVolumeManager
 ") ScaleAndTransform;
-		virtual SelectMgr_SelectingVolumeManager ScaleAndTransform (const Standard_Integer theScaleFactor,const gp_Trsf & theTrsf);
+		virtual SelectMgr_SelectingVolumeManager ScaleAndTransform (const Standard_Integer theScaleFactor,const gp_GTrsf & theTrsf,const Handle_SelectMgr_FrustumBuilder & theBuilder = NULL);
 		%feature("compactdefaultargs") GetActiveSelectionType;
 		%feature("autodoc", "	:rtype: int
 ") GetActiveSelectionType;
@@ -1380,6 +869,12 @@ class SelectMgr_SelectingVolumeManager : public SelectBasics_SelectingVolumeMana
 	:rtype: None
 ") SetActiveSelectionType;
 		void SetActiveSelectionType (const SelectionType & theType);
+		%feature("compactdefaultargs") Camera;
+		%feature("autodoc", "	* Returns current camera definition.
+
+	:rtype: Handle_Graphic3d_Camera
+") Camera;
+		Handle_Graphic3d_Camera Camera ();
 		%feature("compactdefaultargs") SetCamera;
 		%feature("autodoc", "	* Updates camera projection and orientation matrices in all selecting volumes
 
@@ -1393,13 +888,41 @@ class SelectMgr_SelectingVolumeManager : public SelectBasics_SelectingVolumeMana
 
 	:param theProjection:
 	:type theProjection: Graphic3d_Mat4d &
-	:param theOrientation:
-	:type theOrientation: Graphic3d_Mat4d &
+	:param theWorldView:
+	:type theWorldView: Graphic3d_Mat4d &
 	:param theIsOrthographic:
 	:type theIsOrthographic: bool
+	:param theWVPState: default value is Graphic3d_WorldViewProjState()
+	:type theWVPState: Graphic3d_WorldViewProjState &
 	:rtype: None
 ") SetCamera;
-		void SetCamera (const Graphic3d_Mat4d & theProjection,const Graphic3d_Mat4d & theOrientation,const Standard_Boolean theIsOrthographic);
+		void SetCamera (const Graphic3d_Mat4d & theProjection,const Graphic3d_Mat4d & theWorldView,const Standard_Boolean theIsOrthographic,const Graphic3d_WorldViewProjState & theWVPState = Graphic3d_WorldViewProjState());
+		%feature("compactdefaultargs") ProjectionMatrix;
+		%feature("autodoc", "	* returns current projection transformation common for all selecting volumes
+
+	:rtype: Graphic3d_Mat4d
+") ProjectionMatrix;
+		const Graphic3d_Mat4d & ProjectionMatrix ();
+		%feature("compactdefaultargs") WorldViewMatrix;
+		%feature("autodoc", "	* returns current world view transformation common for all selecting volumes
+
+	:rtype: Graphic3d_Mat4d
+") WorldViewMatrix;
+		const Graphic3d_Mat4d & WorldViewMatrix ();
+		%feature("compactdefaultargs") WindowSize;
+		%feature("autodoc", "	:param theWidth:
+	:type theWidth: int &
+	:param theHeight:
+	:type theHeight: int &
+	:rtype: None
+") WindowSize;
+		void WindowSize (Standard_Integer &OutValue,Standard_Integer &OutValue);
+		%feature("compactdefaultargs") WorldViewProjState;
+		%feature("autodoc", "	* returns current camera world view projection transformation state common for all selecting volumes
+
+	:rtype: Graphic3d_WorldViewProjState
+") WorldViewProjState;
+		const Graphic3d_WorldViewProjState & WorldViewProjState ();
 		%feature("compactdefaultargs") SetViewport;
 		%feature("autodoc", "	* Updates viewport in all selecting volumes
 
@@ -1513,6 +1036,18 @@ class SelectMgr_SelectingVolumeManager : public SelectBasics_SelectingVolumeMana
 ") Overlaps;
 		virtual Standard_Boolean Overlaps (const Handle_TColgp_HArray1OfPnt & theArrayOfPts,Standard_Integer theSensType,Standard_Real &OutValue);
 		%feature("compactdefaultargs") Overlaps;
+		%feature("autodoc", "	* SAT intersection test between defined volume and given ordered set of points, representing line segments. The test may be considered of interior part or boundary line defined by segments depending on given sensitivity type
+
+	:param theArrayOfPts:
+	:type theArrayOfPts: TColgp_Array1OfPnt
+	:param theSensType:
+	:type theSensType: int
+	:param theDepth:
+	:type theDepth: float &
+	:rtype: bool
+") Overlaps;
+		virtual Standard_Boolean Overlaps (const TColgp_Array1OfPnt & theArrayOfPts,Standard_Integer theSensType,Standard_Real &OutValue);
+		%feature("compactdefaultargs") Overlaps;
 		%feature("autodoc", "	* Checks if line segment overlaps selecting frustum
 
 	:param thePnt1:
@@ -1549,7 +1084,7 @@ class SelectMgr_SelectingVolumeManager : public SelectBasics_SelectingVolumeMana
 ") DistToGeometryCenter;
 		virtual Standard_Real DistToGeometryCenter (const gp_Pnt & theCOG);
 		%feature("compactdefaultargs") DetectedPoint;
-		%feature("autodoc", "	* Calculates the point on a view ray that was detected during the run of selection algo by given depth. Is valid for point selection only
+		%feature("autodoc", "	* Calculates the point on a view ray that was detected during the run of selection algo by given depth. Throws exception if active selection type is not Point.
 
 	:param theDepth:
 	:type theDepth: float
@@ -1578,20 +1113,60 @@ class SelectMgr_SelectingVolumeManager : public SelectBasics_SelectingVolumeMana
 		%feature("autodoc", "	:rtype: bool
 ") IsOverlapAllowed;
 		virtual Standard_Boolean IsOverlapAllowed ();
+		%feature("compactdefaultargs") ViewClipping;
+		%feature("autodoc", "	* Return view clipping planes.
+
+	:rtype: Handle_Graphic3d_SequenceOfHClipPlane
+") ViewClipping;
+		Handle_Graphic3d_SequenceOfHClipPlane ViewClipping ();
+		%feature("compactdefaultargs") SetViewClipping;
+		%feature("autodoc", "	* Valid for point selection only! Computes depth range for global --defined for the whole view-- clipping planes.
+
+	:param thePlanes:
+	:type thePlanes: Handle_Graphic3d_SequenceOfHClipPlane &
+	:rtype: None
+") SetViewClipping;
+		void SetViewClipping (const Handle_Graphic3d_SequenceOfHClipPlane & thePlanes);
+		%feature("compactdefaultargs") SetViewClippingEnabled;
+		%feature("autodoc", "	* Set if view clipping plane is enabled or not. returns previous flag value
+
+	:param theToEnable:
+	:type theToEnable: bool
+	:rtype: bool
+") SetViewClippingEnabled;
+		Standard_Boolean SetViewClippingEnabled (const Standard_Boolean theToEnable);
 		%feature("compactdefaultargs") GetVertices;
 		%feature("autodoc", "	* A set of helper functions that return rectangular selecting frustum data
 
 	:rtype: gp_Pnt *
 ") GetVertices;
 		const gp_Pnt * GetVertices ();
-		%feature("compactdefaultargs") GetNearPnt;
-		%feature("autodoc", "	:rtype: gp_Pnt
-") GetNearPnt;
-		gp_Pnt GetNearPnt ();
-		%feature("compactdefaultargs") GetFarPnt;
-		%feature("autodoc", "	:rtype: gp_Pnt
-") GetFarPnt;
-		gp_Pnt GetFarPnt ();
+		%feature("compactdefaultargs") GetNearPickedPnt;
+		%feature("autodoc", "	* Valid only for point and rectangular selection. Returns projection of 2d mouse picked point or projection of center of 2d rectangle --for point and rectangular selection correspondingly-- onto near view frustum plane
+
+	:rtype: gp_Pnt
+") GetNearPickedPnt;
+		virtual gp_Pnt GetNearPickedPnt ();
+		%feature("compactdefaultargs") GetFarPickedPnt;
+		%feature("autodoc", "	* Valid only for point and rectangular selection. Returns projection of 2d mouse picked point or projection of center of 2d rectangle --for point and rectangular selection correspondingly-- onto far view frustum plane
+
+	:rtype: gp_Pnt
+") GetFarPickedPnt;
+		virtual gp_Pnt GetFarPickedPnt ();
+		%feature("compactdefaultargs") ActiveVolume;
+		%feature("autodoc", "	* Returns active selecting volume that was built during last run of OCCT selection mechanism
+
+	:rtype: Handle_SelectMgr_BaseFrustum
+") ActiveVolume;
+		Handle_SelectMgr_BaseFrustum ActiveVolume ();
+		%feature("compactdefaultargs") GetPlanes;
+		%feature("autodoc", "	* Stores plane equation coefficients --in the following form: Ax + By + Cz + D = 0-- to the given vector
+
+	:param thePlaneEquations:
+	:type thePlaneEquations: NCollection_Vector<SelectMgr_Vec4> &
+	:rtype: None
+") GetPlanes;
+		void GetPlanes (NCollection_Vector<SelectMgr_Vec4> & thePlaneEquations);
 };
 
 
@@ -1601,7 +1176,7 @@ class SelectMgr_SelectingVolumeManager : public SelectBasics_SelectingVolumeMana
 	}
 };
 %nodefaultctor SelectMgr_Selection;
-class SelectMgr_Selection : public MMgt_TShared {
+class SelectMgr_Selection : public Standard_Transient {
 	public:
 		%feature("compactdefaultargs") SelectMgr_Selection;
 		%feature("autodoc", "	* Constructs a selection object defined by the selection mode IdMode. The default setting 0 is the selection mode for a shape in its entirety.
@@ -1692,7 +1267,7 @@ class SelectMgr_Selection : public MMgt_TShared {
 
 	:rtype: SelectMgr_StateOfSelection
 ") GetSelectionState;
-		const SelectMgr_StateOfSelection GetSelectionState ();
+		SelectMgr_StateOfSelection GetSelectionState ();
 		%feature("compactdefaultargs") SetSelectionState;
 		%feature("autodoc", "	* Sets status of selection
 
@@ -1737,7 +1312,7 @@ class SelectMgr_Selection : public MMgt_TShared {
 %}
 
 %nodefaultctor Handle_SelectMgr_Selection;
-class Handle_SelectMgr_Selection : public Handle_MMgt_TShared {
+class Handle_SelectMgr_Selection : public Handle_Standard_Transient {
 
     public:
         // constructors
@@ -1749,19 +1324,20 @@ class Handle_SelectMgr_Selection : public Handle_MMgt_TShared {
         static const Handle_SelectMgr_Selection DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_SelectMgr_Selection {
     SelectMgr_Selection* _get_reference() {
-    return (SelectMgr_Selection*)$self->Access();
+    return (SelectMgr_Selection*)$self->get();
     }
 };
 
 %extend Handle_SelectMgr_Selection {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend SelectMgr_Selection {
@@ -1770,7 +1346,7 @@ class Handle_SelectMgr_Selection : public Handle_MMgt_TShared {
 	}
 };
 %nodefaultctor SelectMgr_SelectionManager;
-class SelectMgr_SelectionManager : public MMgt_TShared {
+class SelectMgr_SelectionManager : public Standard_Transient {
 	public:
 		%feature("compactdefaultargs") SelectMgr_SelectionManager;
 		%feature("autodoc", "	* Constructs an empty selection manager object.
@@ -1811,7 +1387,7 @@ class SelectMgr_SelectionManager : public MMgt_TShared {
 ") Contains;
 		Standard_Boolean Contains (const Handle_SelectMgr_SelectableObject & theObject);
 		%feature("compactdefaultargs") Load;
-		%feature("autodoc", "	* Loads and computes selection mode theMode (if it is not equal to -1) in global context and adds selectable object to BVH tree. If the object theObject has an already calculated selection with mode theMode and it was removed, the selection will be recalculated.
+		%feature("autodoc", "	* Loads and computes selection mode theMode --if it is not equal to -1-- in global context and adds selectable object to BVH tree. If the object theObject has an already calculated selection with mode theMode and it was removed, the selection will be recalculated.
 
 	:param theObject:
 	:type theObject: Handle_SelectMgr_SelectableObject &
@@ -1821,7 +1397,7 @@ class SelectMgr_SelectionManager : public MMgt_TShared {
 ") Load;
 		void Load (const Handle_SelectMgr_SelectableObject & theObject,const Standard_Integer theMode = -1);
 		%feature("compactdefaultargs") Load;
-		%feature("autodoc", "	* Loads and computes selection mode theMode (if it is not equal to -1) and adds selectable object to BVH tree. Does not perform check of existance of theObject in global context before addition, but adds theSelector to local context.
+		%feature("autodoc", "	* Loads and computes selection mode theMode --if it is not equal to -1-- and adds selectable object to BVH tree. Does not perform check of existance of theObject in global context before addition, but adds theSelector to local context.
 
 	:param theObject:
 	:type theObject: Handle_SelectMgr_SelectableObject &
@@ -1851,7 +1427,7 @@ class SelectMgr_SelectionManager : public MMgt_TShared {
 ") Remove;
 		void Remove (const Handle_SelectMgr_SelectableObject & theObject,const Handle_SelectMgr_ViewerSelector & theSelector);
 		%feature("compactdefaultargs") Activate;
-		%feature("autodoc", "	* Activates the selection mode theMode in the selector theSelector for the selectable object anObject. By default, theMode is equal to 0. If theSelector is set to default (NULL), the selection with the mode theMode will be activated in all the viewers available.
+		%feature("autodoc", "	* Activates the selection mode theMode in the selector theSelector for the selectable object anObject. By default, theMode is equal to 0. If theSelector is set to default --NULL--, the selection with the mode theMode will be activated in all the viewers available.
 
 	:param theObject:
 	:type theObject: Handle_SelectMgr_SelectableObject &
@@ -1863,7 +1439,7 @@ class SelectMgr_SelectionManager : public MMgt_TShared {
 ") Activate;
 		void Activate (const Handle_SelectMgr_SelectableObject & theObject,const Standard_Integer theMode = 0,const Handle_SelectMgr_ViewerSelector & theSelector = NULL);
 		%feature("compactdefaultargs") Deactivate;
-		%feature("autodoc", "	* Deactivates mode theMode of theObject in theSelector. If theMode value is set to default (-1), all avtive selection modes will be deactivated. Likewise, if theSelector value is set to default (NULL), theMode will be deactivated in all viewer selectors.
+		%feature("autodoc", "	* Deactivates mode theMode of theObject in theSelector. If theMode value is set to default ---1--, all avtive selection modes will be deactivated. Likewise, if theSelector value is set to default --NULL--, theMode will be deactivated in all viewer selectors.
 
 	:param theObject:
 	:type theObject: Handle_SelectMgr_SelectableObject &
@@ -1887,7 +1463,7 @@ class SelectMgr_SelectionManager : public MMgt_TShared {
 ") IsActivated;
 		Standard_Boolean IsActivated (const Handle_SelectMgr_SelectableObject & theObject,const Standard_Integer theMode = -1,const Handle_SelectMgr_ViewerSelector & theSelector = NULL);
 		%feature("compactdefaultargs") ClearSelectionStructures;
-		%feature("autodoc", "	* Removes sensitive entities from all viewer selectors after method Clear() was called to the selection they belonged to or it was recomputed somehow.
+		%feature("autodoc", "	* Removes sensitive entities from all viewer selectors after method Clear---- was called to the selection they belonged to or it was recomputed somehow.
 
 	:param theObj:
 	:type theObj: Handle_SelectMgr_SelectableObject &
@@ -1911,7 +1487,7 @@ class SelectMgr_SelectionManager : public MMgt_TShared {
 ") RestoreSelectionStructures;
 		void RestoreSelectionStructures (const Handle_SelectMgr_SelectableObject & theObj,const Standard_Integer theMode = -1,const Handle_SelectMgr_ViewerSelector & theSelector = NULL);
 		%feature("compactdefaultargs") RecomputeSelection;
-		%feature("autodoc", "	* Recomputes activated selections of theObject for all known viewer selectors according to theMode specified. If theMode is set to default (-1), then all activated selections will be recomputed. If theIsForce is set to true, then selection mode theMode for object theObject will be recomputed regardless of its activation status.
+		%feature("autodoc", "	* Recomputes activated selections of theObject for all known viewer selectors according to theMode specified. If theMode is set to default ---1--, then all activated selections will be recomputed. If theIsForce is set to true, then selection mode theMode for object theObject will be recomputed regardless of its activation status.
 
 	:param theObject:
 	:type theObject: Handle_SelectMgr_SelectableObject &
@@ -1978,6 +1554,14 @@ class SelectMgr_SelectionManager : public MMgt_TShared {
 	:rtype: None
 ") SetSelectionSensitivity;
 		void SetSelectionSensitivity (const Handle_SelectMgr_SelectableObject & theObject,const Standard_Integer theMode,const Standard_Integer theNewSens);
+		%feature("compactdefaultargs") UpdateSelection;
+		%feature("autodoc", "	* Re-adds selectable object in BVHs in all viewer selectors.
+
+	:param theObj:
+	:type theObj: Handle_SelectMgr_SelectableObject &
+	:rtype: None
+") UpdateSelection;
+		void UpdateSelection (const Handle_SelectMgr_SelectableObject & theObj);
 };
 
 
@@ -2000,7 +1584,7 @@ class SelectMgr_SelectionManager : public MMgt_TShared {
 %}
 
 %nodefaultctor Handle_SelectMgr_SelectionManager;
-class Handle_SelectMgr_SelectionManager : public Handle_MMgt_TShared {
+class Handle_SelectMgr_SelectionManager : public Handle_Standard_Transient {
 
     public:
         // constructors
@@ -2012,19 +1596,20 @@ class Handle_SelectMgr_SelectionManager : public Handle_MMgt_TShared {
         static const Handle_SelectMgr_SelectionManager DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_SelectMgr_SelectionManager {
     SelectMgr_SelectionManager* _get_reference() {
-    return (SelectMgr_SelectionManager*)$self->Access();
+    return (SelectMgr_SelectionManager*)$self->get();
     }
 };
 
 %extend Handle_SelectMgr_SelectionManager {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend SelectMgr_SelectionManager {
@@ -2107,19 +1692,20 @@ class Handle_SelectMgr_SensitiveEntity : public Handle_Standard_Transient {
         static const Handle_SelectMgr_SensitiveEntity DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_SelectMgr_SensitiveEntity {
     SelectMgr_SensitiveEntity* _get_reference() {
-    return (SelectMgr_SensitiveEntity*)$self->Access();
+    return (SelectMgr_SensitiveEntity*)$self->get();
     }
 };
 
 %extend Handle_SelectMgr_SensitiveEntity {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend SelectMgr_SensitiveEntity {
@@ -2127,644 +1713,88 @@ class Handle_SelectMgr_SensitiveEntity : public Handle_Standard_Transient {
 	__repr__ = _dumps_object
 	}
 };
-%nodefaultctor SelectMgr_SequenceNodeOfSequenceOfFilter;
-class SelectMgr_SequenceNodeOfSequenceOfFilter : public TCollection_SeqNode {
+%nodefaultctor SelectMgr_SensitiveEntitySet;
+class SelectMgr_SensitiveEntitySet : public BVH_PrimitiveSet3d {
 	public:
-		%feature("compactdefaultargs") SelectMgr_SequenceNodeOfSequenceOfFilter;
-		%feature("autodoc", "	:param I:
-	:type I: Handle_SelectMgr_Filter &
-	:param n:
-	:type n: TCollection_SeqNodePtr &
-	:param p:
-	:type p: TCollection_SeqNodePtr &
+		using BVH_PrimitiveSet3d:: Box;
+		%feature("compactdefaultargs") SelectMgr_SensitiveEntitySet;
+		%feature("autodoc", "	* Empty constructor.
+
+	:param theBuilder:
+	:type theBuilder: Handle_Select3D_BVHBuilder3d &
 	:rtype: None
-") SelectMgr_SequenceNodeOfSequenceOfFilter;
-		 SelectMgr_SequenceNodeOfSequenceOfFilter (const Handle_SelectMgr_Filter & I,const TCollection_SeqNodePtr & n,const TCollection_SeqNodePtr & p);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:rtype: Handle_SelectMgr_Filter
-") Value;
-		Handle_SelectMgr_Filter Value ();
-};
-
-
-%extend SelectMgr_SequenceNodeOfSequenceOfFilter {
-	%pythoncode {
-		def GetHandle(self):
-		    try:
-		        return self.thisHandle
-		    except:
-		        self.thisHandle = Handle_SelectMgr_SequenceNodeOfSequenceOfFilter(self)
-		        self.thisown = False
-		        return self.thisHandle
-	}
-};
-
-%pythonappend Handle_SelectMgr_SequenceNodeOfSequenceOfFilter::Handle_SelectMgr_SequenceNodeOfSequenceOfFilter %{
-    # register the handle in the base object
-    if len(args) > 0:
-        register_handle(self, args[0])
-%}
-
-%nodefaultctor Handle_SelectMgr_SequenceNodeOfSequenceOfFilter;
-class Handle_SelectMgr_SequenceNodeOfSequenceOfFilter : public Handle_TCollection_SeqNode {
-
-    public:
-        // constructors
-        Handle_SelectMgr_SequenceNodeOfSequenceOfFilter();
-        Handle_SelectMgr_SequenceNodeOfSequenceOfFilter(const Handle_SelectMgr_SequenceNodeOfSequenceOfFilter &aHandle);
-        Handle_SelectMgr_SequenceNodeOfSequenceOfFilter(const SelectMgr_SequenceNodeOfSequenceOfFilter *anItem);
-        void Nullify();
-        Standard_Boolean IsNull() const;
-        static const Handle_SelectMgr_SequenceNodeOfSequenceOfFilter DownCast(const Handle_Standard_Transient &AnObject);
-
-};
-%extend Handle_SelectMgr_SequenceNodeOfSequenceOfFilter {
-    SelectMgr_SequenceNodeOfSequenceOfFilter* _get_reference() {
-    return (SelectMgr_SequenceNodeOfSequenceOfFilter*)$self->Access();
-    }
-};
-
-%extend Handle_SelectMgr_SequenceNodeOfSequenceOfFilter {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
-};
-
-%extend SelectMgr_SequenceNodeOfSequenceOfFilter {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor SelectMgr_SequenceNodeOfSequenceOfOwner;
-class SelectMgr_SequenceNodeOfSequenceOfOwner : public TCollection_SeqNode {
-	public:
-		%feature("compactdefaultargs") SelectMgr_SequenceNodeOfSequenceOfOwner;
-		%feature("autodoc", "	:param I:
-	:type I: Handle_SelectMgr_EntityOwner &
-	:param n:
-	:type n: TCollection_SeqNodePtr &
-	:param p:
-	:type p: TCollection_SeqNodePtr &
-	:rtype: None
-") SelectMgr_SequenceNodeOfSequenceOfOwner;
-		 SelectMgr_SequenceNodeOfSequenceOfOwner (const Handle_SelectMgr_EntityOwner & I,const TCollection_SeqNodePtr & n,const TCollection_SeqNodePtr & p);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:rtype: Handle_SelectMgr_EntityOwner
-") Value;
-		Handle_SelectMgr_EntityOwner Value ();
-};
-
-
-%extend SelectMgr_SequenceNodeOfSequenceOfOwner {
-	%pythoncode {
-		def GetHandle(self):
-		    try:
-		        return self.thisHandle
-		    except:
-		        self.thisHandle = Handle_SelectMgr_SequenceNodeOfSequenceOfOwner(self)
-		        self.thisown = False
-		        return self.thisHandle
-	}
-};
-
-%pythonappend Handle_SelectMgr_SequenceNodeOfSequenceOfOwner::Handle_SelectMgr_SequenceNodeOfSequenceOfOwner %{
-    # register the handle in the base object
-    if len(args) > 0:
-        register_handle(self, args[0])
-%}
-
-%nodefaultctor Handle_SelectMgr_SequenceNodeOfSequenceOfOwner;
-class Handle_SelectMgr_SequenceNodeOfSequenceOfOwner : public Handle_TCollection_SeqNode {
-
-    public:
-        // constructors
-        Handle_SelectMgr_SequenceNodeOfSequenceOfOwner();
-        Handle_SelectMgr_SequenceNodeOfSequenceOfOwner(const Handle_SelectMgr_SequenceNodeOfSequenceOfOwner &aHandle);
-        Handle_SelectMgr_SequenceNodeOfSequenceOfOwner(const SelectMgr_SequenceNodeOfSequenceOfOwner *anItem);
-        void Nullify();
-        Standard_Boolean IsNull() const;
-        static const Handle_SelectMgr_SequenceNodeOfSequenceOfOwner DownCast(const Handle_Standard_Transient &AnObject);
-
-};
-%extend Handle_SelectMgr_SequenceNodeOfSequenceOfOwner {
-    SelectMgr_SequenceNodeOfSequenceOfOwner* _get_reference() {
-    return (SelectMgr_SequenceNodeOfSequenceOfOwner*)$self->Access();
-    }
-};
-
-%extend Handle_SelectMgr_SequenceNodeOfSequenceOfOwner {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
-};
-
-%extend SelectMgr_SequenceNodeOfSequenceOfOwner {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor SelectMgr_SequenceNodeOfSequenceOfSelector;
-class SelectMgr_SequenceNodeOfSequenceOfSelector : public TCollection_SeqNode {
-	public:
-		%feature("compactdefaultargs") SelectMgr_SequenceNodeOfSequenceOfSelector;
-		%feature("autodoc", "	:param I:
-	:type I: Handle_SelectMgr_ViewerSelector &
-	:param n:
-	:type n: TCollection_SeqNodePtr &
-	:param p:
-	:type p: TCollection_SeqNodePtr &
-	:rtype: None
-") SelectMgr_SequenceNodeOfSequenceOfSelector;
-		 SelectMgr_SequenceNodeOfSequenceOfSelector (const Handle_SelectMgr_ViewerSelector & I,const TCollection_SeqNodePtr & n,const TCollection_SeqNodePtr & p);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:rtype: Handle_SelectMgr_ViewerSelector
-") Value;
-		Handle_SelectMgr_ViewerSelector Value ();
-};
-
-
-%extend SelectMgr_SequenceNodeOfSequenceOfSelector {
-	%pythoncode {
-		def GetHandle(self):
-		    try:
-		        return self.thisHandle
-		    except:
-		        self.thisHandle = Handle_SelectMgr_SequenceNodeOfSequenceOfSelector(self)
-		        self.thisown = False
-		        return self.thisHandle
-	}
-};
-
-%pythonappend Handle_SelectMgr_SequenceNodeOfSequenceOfSelector::Handle_SelectMgr_SequenceNodeOfSequenceOfSelector %{
-    # register the handle in the base object
-    if len(args) > 0:
-        register_handle(self, args[0])
-%}
-
-%nodefaultctor Handle_SelectMgr_SequenceNodeOfSequenceOfSelector;
-class Handle_SelectMgr_SequenceNodeOfSequenceOfSelector : public Handle_TCollection_SeqNode {
-
-    public:
-        // constructors
-        Handle_SelectMgr_SequenceNodeOfSequenceOfSelector();
-        Handle_SelectMgr_SequenceNodeOfSequenceOfSelector(const Handle_SelectMgr_SequenceNodeOfSequenceOfSelector &aHandle);
-        Handle_SelectMgr_SequenceNodeOfSequenceOfSelector(const SelectMgr_SequenceNodeOfSequenceOfSelector *anItem);
-        void Nullify();
-        Standard_Boolean IsNull() const;
-        static const Handle_SelectMgr_SequenceNodeOfSequenceOfSelector DownCast(const Handle_Standard_Transient &AnObject);
-
-};
-%extend Handle_SelectMgr_SequenceNodeOfSequenceOfSelector {
-    SelectMgr_SequenceNodeOfSequenceOfSelector* _get_reference() {
-    return (SelectMgr_SequenceNodeOfSequenceOfSelector*)$self->Access();
-    }
-};
-
-%extend Handle_SelectMgr_SequenceNodeOfSequenceOfSelector {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
-};
-
-%extend SelectMgr_SequenceNodeOfSequenceOfSelector {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor SelectMgr_SequenceOfFilter;
-class SelectMgr_SequenceOfFilter : public TCollection_BaseSequence {
-	public:
-		%feature("compactdefaultargs") SelectMgr_SequenceOfFilter;
-		%feature("autodoc", "	:rtype: None
-") SelectMgr_SequenceOfFilter;
-		 SelectMgr_SequenceOfFilter ();
-		%feature("compactdefaultargs") SelectMgr_SequenceOfFilter;
-		%feature("autodoc", "	:param Other:
-	:type Other: SelectMgr_SequenceOfFilter &
-	:rtype: None
-") SelectMgr_SequenceOfFilter;
-		 SelectMgr_SequenceOfFilter (const SelectMgr_SequenceOfFilter & Other);
-		%feature("compactdefaultargs") Clear;
-		%feature("autodoc", "	:rtype: None
-") Clear;
-		void Clear ();
-		%feature("compactdefaultargs") Assign;
-		%feature("autodoc", "	:param Other:
-	:type Other: SelectMgr_SequenceOfFilter &
-	:rtype: SelectMgr_SequenceOfFilter
-") Assign;
-		const SelectMgr_SequenceOfFilter & Assign (const SelectMgr_SequenceOfFilter & Other);
-		%feature("compactdefaultargs") operator =;
-		%feature("autodoc", "	:param Other:
-	:type Other: SelectMgr_SequenceOfFilter &
-	:rtype: SelectMgr_SequenceOfFilter
-") operator =;
-		const SelectMgr_SequenceOfFilter & operator = (const SelectMgr_SequenceOfFilter & Other);
+") SelectMgr_SensitiveEntitySet;
+		 SelectMgr_SensitiveEntitySet (const Handle_Select3D_BVHBuilder3d & theBuilder);
 		%feature("compactdefaultargs") Append;
-		%feature("autodoc", "	:param T:
-	:type T: Handle_SelectMgr_Filter &
+		%feature("autodoc", "	* Adds new entity to the set and marks BVH tree for rebuild
+
+	:param theEntity:
+	:type theEntity: Handle_SelectMgr_SensitiveEntity &
 	:rtype: None
 ") Append;
-		void Append (const Handle_SelectMgr_Filter & T);
+		void Append (const Handle_SelectMgr_SensitiveEntity & theEntity);
 		%feature("compactdefaultargs") Append;
-		%feature("autodoc", "	:param S:
-	:type S: SelectMgr_SequenceOfFilter &
+		%feature("autodoc", "	* Adds every entity of selection theSelection to the set and marks BVH tree for rebuild
+
+	:param theSelection:
+	:type theSelection: Handle_SelectMgr_Selection &
 	:rtype: None
 ") Append;
-		void Append (SelectMgr_SequenceOfFilter & S);
-		%feature("compactdefaultargs") Prepend;
-		%feature("autodoc", "	:param T:
-	:type T: Handle_SelectMgr_Filter &
-	:rtype: None
-") Prepend;
-		void Prepend (const Handle_SelectMgr_Filter & T);
-		%feature("compactdefaultargs") Prepend;
-		%feature("autodoc", "	:param S:
-	:type S: SelectMgr_SequenceOfFilter &
-	:rtype: None
-") Prepend;
-		void Prepend (SelectMgr_SequenceOfFilter & S);
-		%feature("compactdefaultargs") InsertBefore;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param T:
-	:type T: Handle_SelectMgr_Filter &
-	:rtype: None
-") InsertBefore;
-		void InsertBefore (const Standard_Integer Index,const Handle_SelectMgr_Filter & T);
-		%feature("compactdefaultargs") InsertBefore;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param S:
-	:type S: SelectMgr_SequenceOfFilter &
-	:rtype: None
-") InsertBefore;
-		void InsertBefore (const Standard_Integer Index,SelectMgr_SequenceOfFilter & S);
-		%feature("compactdefaultargs") InsertAfter;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param T:
-	:type T: Handle_SelectMgr_Filter &
-	:rtype: None
-") InsertAfter;
-		void InsertAfter (const Standard_Integer Index,const Handle_SelectMgr_Filter & T);
-		%feature("compactdefaultargs") InsertAfter;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param S:
-	:type S: SelectMgr_SequenceOfFilter &
-	:rtype: None
-") InsertAfter;
-		void InsertAfter (const Standard_Integer Index,SelectMgr_SequenceOfFilter & S);
-		%feature("compactdefaultargs") First;
-		%feature("autodoc", "	:rtype: Handle_SelectMgr_Filter
-") First;
-		Handle_SelectMgr_Filter First ();
-		%feature("compactdefaultargs") Last;
-		%feature("autodoc", "	:rtype: Handle_SelectMgr_Filter
-") Last;
-		Handle_SelectMgr_Filter Last ();
-		%feature("compactdefaultargs") Split;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param Sub:
-	:type Sub: SelectMgr_SequenceOfFilter &
-	:rtype: None
-") Split;
-		void Split (const Standard_Integer Index,SelectMgr_SequenceOfFilter & Sub);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: Handle_SelectMgr_Filter
-") Value;
-		Handle_SelectMgr_Filter Value (const Standard_Integer Index);
-		%feature("compactdefaultargs") SetValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param I:
-	:type I: Handle_SelectMgr_Filter &
-	:rtype: None
-") SetValue;
-		void SetValue (const Standard_Integer Index,const Handle_SelectMgr_Filter & I);
-		%feature("compactdefaultargs") ChangeValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: Handle_SelectMgr_Filter
-") ChangeValue;
-		Handle_SelectMgr_Filter ChangeValue (const Standard_Integer Index);
+		void Append (const Handle_SelectMgr_Selection & theSelection);
 		%feature("compactdefaultargs") Remove;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
+		%feature("autodoc", "	* Removes every entity of selection theSelection from the set and marks BVH tree for rebuild
+
+	:param theSelection:
+	:type theSelection: Handle_SelectMgr_Selection &
 	:rtype: None
 ") Remove;
-		void Remove (const Standard_Integer Index);
-		%feature("compactdefaultargs") Remove;
-		%feature("autodoc", "	:param FromIndex:
-	:type FromIndex: int
-	:param ToIndex:
-	:type ToIndex: int
-	:rtype: None
-") Remove;
-		void Remove (const Standard_Integer FromIndex,const Standard_Integer ToIndex);
+		void Remove (const Handle_SelectMgr_Selection & theSelection);
+		%feature("compactdefaultargs") Box;
+		%feature("autodoc", "	* Returns bounding box of entity with index theIdx
+
+	:param theIndex:
+	:type theIndex: int
+	:rtype: Select3D_BndBox3d
+") Box;
+		virtual Select3D_BndBox3d Box (const Standard_Integer theIndex);
+		%feature("compactdefaultargs") Center;
+		%feature("autodoc", "	* Returns geometry center of sensitive entity index theIdx along the given axis theAxis
+
+	:param theIndex:
+	:type theIndex: int
+	:param theAxis:
+	:type theAxis: int
+	:rtype: float
+") Center;
+		virtual Standard_Real Center (const Standard_Integer theIndex,const Standard_Integer theAxis);
+		%feature("compactdefaultargs") Swap;
+		%feature("autodoc", "	* Swaps items with indexes theIdx1 and theIdx2
+
+	:param theIndex1:
+	:type theIndex1: int
+	:param theIndex2:
+	:type theIndex2: int
+	:rtype: void
+") Swap;
+		virtual void Swap (const Standard_Integer theIndex1,const Standard_Integer theIndex2);
+		%feature("compactdefaultargs") Size;
+		%feature("autodoc", "	* Returns the amount of entities
+
+	:rtype: int
+") Size;
+		virtual Standard_Integer Size ();
+		%feature("compactdefaultargs") GetSensitiveById;
+		%feature("autodoc", "	* Returns the entity with index theIndex in the set
+
+	:param theIndex:
+	:type theIndex: int
+	:rtype: Handle_SelectMgr_SensitiveEntity
+") GetSensitiveById;
+		Handle_SelectMgr_SensitiveEntity GetSensitiveById (const Standard_Integer theIndex);
 };
 
 
-%extend SelectMgr_SequenceOfFilter {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor SelectMgr_SequenceOfOwner;
-class SelectMgr_SequenceOfOwner : public TCollection_BaseSequence {
-	public:
-		%feature("compactdefaultargs") SelectMgr_SequenceOfOwner;
-		%feature("autodoc", "	:rtype: None
-") SelectMgr_SequenceOfOwner;
-		 SelectMgr_SequenceOfOwner ();
-		%feature("compactdefaultargs") SelectMgr_SequenceOfOwner;
-		%feature("autodoc", "	:param Other:
-	:type Other: SelectMgr_SequenceOfOwner &
-	:rtype: None
-") SelectMgr_SequenceOfOwner;
-		 SelectMgr_SequenceOfOwner (const SelectMgr_SequenceOfOwner & Other);
-		%feature("compactdefaultargs") Clear;
-		%feature("autodoc", "	:rtype: None
-") Clear;
-		void Clear ();
-		%feature("compactdefaultargs") Assign;
-		%feature("autodoc", "	:param Other:
-	:type Other: SelectMgr_SequenceOfOwner &
-	:rtype: SelectMgr_SequenceOfOwner
-") Assign;
-		const SelectMgr_SequenceOfOwner & Assign (const SelectMgr_SequenceOfOwner & Other);
-		%feature("compactdefaultargs") operator =;
-		%feature("autodoc", "	:param Other:
-	:type Other: SelectMgr_SequenceOfOwner &
-	:rtype: SelectMgr_SequenceOfOwner
-") operator =;
-		const SelectMgr_SequenceOfOwner & operator = (const SelectMgr_SequenceOfOwner & Other);
-		%feature("compactdefaultargs") Append;
-		%feature("autodoc", "	:param T:
-	:type T: Handle_SelectMgr_EntityOwner &
-	:rtype: None
-") Append;
-		void Append (const Handle_SelectMgr_EntityOwner & T);
-		%feature("compactdefaultargs") Append;
-		%feature("autodoc", "	:param S:
-	:type S: SelectMgr_SequenceOfOwner &
-	:rtype: None
-") Append;
-		void Append (SelectMgr_SequenceOfOwner & S);
-		%feature("compactdefaultargs") Prepend;
-		%feature("autodoc", "	:param T:
-	:type T: Handle_SelectMgr_EntityOwner &
-	:rtype: None
-") Prepend;
-		void Prepend (const Handle_SelectMgr_EntityOwner & T);
-		%feature("compactdefaultargs") Prepend;
-		%feature("autodoc", "	:param S:
-	:type S: SelectMgr_SequenceOfOwner &
-	:rtype: None
-") Prepend;
-		void Prepend (SelectMgr_SequenceOfOwner & S);
-		%feature("compactdefaultargs") InsertBefore;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param T:
-	:type T: Handle_SelectMgr_EntityOwner &
-	:rtype: None
-") InsertBefore;
-		void InsertBefore (const Standard_Integer Index,const Handle_SelectMgr_EntityOwner & T);
-		%feature("compactdefaultargs") InsertBefore;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param S:
-	:type S: SelectMgr_SequenceOfOwner &
-	:rtype: None
-") InsertBefore;
-		void InsertBefore (const Standard_Integer Index,SelectMgr_SequenceOfOwner & S);
-		%feature("compactdefaultargs") InsertAfter;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param T:
-	:type T: Handle_SelectMgr_EntityOwner &
-	:rtype: None
-") InsertAfter;
-		void InsertAfter (const Standard_Integer Index,const Handle_SelectMgr_EntityOwner & T);
-		%feature("compactdefaultargs") InsertAfter;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param S:
-	:type S: SelectMgr_SequenceOfOwner &
-	:rtype: None
-") InsertAfter;
-		void InsertAfter (const Standard_Integer Index,SelectMgr_SequenceOfOwner & S);
-		%feature("compactdefaultargs") First;
-		%feature("autodoc", "	:rtype: Handle_SelectMgr_EntityOwner
-") First;
-		Handle_SelectMgr_EntityOwner First ();
-		%feature("compactdefaultargs") Last;
-		%feature("autodoc", "	:rtype: Handle_SelectMgr_EntityOwner
-") Last;
-		Handle_SelectMgr_EntityOwner Last ();
-		%feature("compactdefaultargs") Split;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param Sub:
-	:type Sub: SelectMgr_SequenceOfOwner &
-	:rtype: None
-") Split;
-		void Split (const Standard_Integer Index,SelectMgr_SequenceOfOwner & Sub);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: Handle_SelectMgr_EntityOwner
-") Value;
-		Handle_SelectMgr_EntityOwner Value (const Standard_Integer Index);
-		%feature("compactdefaultargs") SetValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param I:
-	:type I: Handle_SelectMgr_EntityOwner &
-	:rtype: None
-") SetValue;
-		void SetValue (const Standard_Integer Index,const Handle_SelectMgr_EntityOwner & I);
-		%feature("compactdefaultargs") ChangeValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: Handle_SelectMgr_EntityOwner
-") ChangeValue;
-		Handle_SelectMgr_EntityOwner ChangeValue (const Standard_Integer Index);
-		%feature("compactdefaultargs") Remove;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: None
-") Remove;
-		void Remove (const Standard_Integer Index);
-		%feature("compactdefaultargs") Remove;
-		%feature("autodoc", "	:param FromIndex:
-	:type FromIndex: int
-	:param ToIndex:
-	:type ToIndex: int
-	:rtype: None
-") Remove;
-		void Remove (const Standard_Integer FromIndex,const Standard_Integer ToIndex);
-};
-
-
-%extend SelectMgr_SequenceOfOwner {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor SelectMgr_SequenceOfSelector;
-class SelectMgr_SequenceOfSelector : public TCollection_BaseSequence {
-	public:
-		%feature("compactdefaultargs") SelectMgr_SequenceOfSelector;
-		%feature("autodoc", "	:rtype: None
-") SelectMgr_SequenceOfSelector;
-		 SelectMgr_SequenceOfSelector ();
-		%feature("compactdefaultargs") SelectMgr_SequenceOfSelector;
-		%feature("autodoc", "	:param Other:
-	:type Other: SelectMgr_SequenceOfSelector &
-	:rtype: None
-") SelectMgr_SequenceOfSelector;
-		 SelectMgr_SequenceOfSelector (const SelectMgr_SequenceOfSelector & Other);
-		%feature("compactdefaultargs") Clear;
-		%feature("autodoc", "	:rtype: None
-") Clear;
-		void Clear ();
-		%feature("compactdefaultargs") Assign;
-		%feature("autodoc", "	:param Other:
-	:type Other: SelectMgr_SequenceOfSelector &
-	:rtype: SelectMgr_SequenceOfSelector
-") Assign;
-		const SelectMgr_SequenceOfSelector & Assign (const SelectMgr_SequenceOfSelector & Other);
-		%feature("compactdefaultargs") operator =;
-		%feature("autodoc", "	:param Other:
-	:type Other: SelectMgr_SequenceOfSelector &
-	:rtype: SelectMgr_SequenceOfSelector
-") operator =;
-		const SelectMgr_SequenceOfSelector & operator = (const SelectMgr_SequenceOfSelector & Other);
-		%feature("compactdefaultargs") Append;
-		%feature("autodoc", "	:param T:
-	:type T: Handle_SelectMgr_ViewerSelector &
-	:rtype: None
-") Append;
-		void Append (const Handle_SelectMgr_ViewerSelector & T);
-		%feature("compactdefaultargs") Append;
-		%feature("autodoc", "	:param S:
-	:type S: SelectMgr_SequenceOfSelector &
-	:rtype: None
-") Append;
-		void Append (SelectMgr_SequenceOfSelector & S);
-		%feature("compactdefaultargs") Prepend;
-		%feature("autodoc", "	:param T:
-	:type T: Handle_SelectMgr_ViewerSelector &
-	:rtype: None
-") Prepend;
-		void Prepend (const Handle_SelectMgr_ViewerSelector & T);
-		%feature("compactdefaultargs") Prepend;
-		%feature("autodoc", "	:param S:
-	:type S: SelectMgr_SequenceOfSelector &
-	:rtype: None
-") Prepend;
-		void Prepend (SelectMgr_SequenceOfSelector & S);
-		%feature("compactdefaultargs") InsertBefore;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param T:
-	:type T: Handle_SelectMgr_ViewerSelector &
-	:rtype: None
-") InsertBefore;
-		void InsertBefore (const Standard_Integer Index,const Handle_SelectMgr_ViewerSelector & T);
-		%feature("compactdefaultargs") InsertBefore;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param S:
-	:type S: SelectMgr_SequenceOfSelector &
-	:rtype: None
-") InsertBefore;
-		void InsertBefore (const Standard_Integer Index,SelectMgr_SequenceOfSelector & S);
-		%feature("compactdefaultargs") InsertAfter;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param T:
-	:type T: Handle_SelectMgr_ViewerSelector &
-	:rtype: None
-") InsertAfter;
-		void InsertAfter (const Standard_Integer Index,const Handle_SelectMgr_ViewerSelector & T);
-		%feature("compactdefaultargs") InsertAfter;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param S:
-	:type S: SelectMgr_SequenceOfSelector &
-	:rtype: None
-") InsertAfter;
-		void InsertAfter (const Standard_Integer Index,SelectMgr_SequenceOfSelector & S);
-		%feature("compactdefaultargs") First;
-		%feature("autodoc", "	:rtype: Handle_SelectMgr_ViewerSelector
-") First;
-		Handle_SelectMgr_ViewerSelector First ();
-		%feature("compactdefaultargs") Last;
-		%feature("autodoc", "	:rtype: Handle_SelectMgr_ViewerSelector
-") Last;
-		Handle_SelectMgr_ViewerSelector Last ();
-		%feature("compactdefaultargs") Split;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param Sub:
-	:type Sub: SelectMgr_SequenceOfSelector &
-	:rtype: None
-") Split;
-		void Split (const Standard_Integer Index,SelectMgr_SequenceOfSelector & Sub);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: Handle_SelectMgr_ViewerSelector
-") Value;
-		Handle_SelectMgr_ViewerSelector Value (const Standard_Integer Index);
-		%feature("compactdefaultargs") SetValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param I:
-	:type I: Handle_SelectMgr_ViewerSelector &
-	:rtype: None
-") SetValue;
-		void SetValue (const Standard_Integer Index,const Handle_SelectMgr_ViewerSelector & I);
-		%feature("compactdefaultargs") ChangeValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: Handle_SelectMgr_ViewerSelector
-") ChangeValue;
-		Handle_SelectMgr_ViewerSelector ChangeValue (const Standard_Integer Index);
-		%feature("compactdefaultargs") Remove;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: None
-") Remove;
-		void Remove (const Standard_Integer Index);
-		%feature("compactdefaultargs") Remove;
-		%feature("autodoc", "	:param FromIndex:
-	:type FromIndex: int
-	:param ToIndex:
-	:type ToIndex: int
-	:rtype: None
-") Remove;
-		void Remove (const Standard_Integer FromIndex,const Standard_Integer ToIndex);
-};
-
-
-%extend SelectMgr_SequenceOfSelector {
+%extend SelectMgr_SensitiveEntitySet {
 	%pythoncode {
 	__repr__ = _dumps_object
 	}
@@ -2772,90 +1802,52 @@ class SelectMgr_SequenceOfSelector : public TCollection_BaseSequence {
 %nodefaultctor SelectMgr_SortCriterion;
 class SelectMgr_SortCriterion {
 	public:
+		Handle_SelectBasics_SensitiveEntity Entity;
+		gp_Pnt Point;
+		float Depth;
+		float MinDist;
+		float Tolerance;
+		int Priority;
+		int ZLayerPosition;
+		bool ToPreferClosest;
 		%feature("compactdefaultargs") SelectMgr_SortCriterion;
-		%feature("autodoc", "	:rtype: None
+		%feature("autodoc", "	* //!< whether closest object is preferred even if has less priority Empty constructor.
+
+	:rtype: None
 ") SelectMgr_SortCriterion;
 		 SelectMgr_SortCriterion ();
-		%feature("compactdefaultargs") SelectMgr_SortCriterion;
-		%feature("autodoc", "	* Defines parameters of selection criterion: - Priority: selection priority - Depth: distance from the view plane to the entity - MinDist: distance from the clicked point to the entity on the view plane - Tol: tolerance used for selecting candidates - PreferClosest: specify whether closest object is preferred even if if has less priority
-
-	:param thePriority:
-	:type thePriority: int
-	:param theDepth:
-	:type theDepth: float
-	:param theMinDist:
-	:type theMinDist: float
-	:param theTol:
-	:type theTol: float
-	:param PreferClosest:
-	:type PreferClosest: bool
-	:rtype: None
-") SelectMgr_SortCriterion;
-		 SelectMgr_SortCriterion (const Standard_Integer thePriority,const Standard_Real theDepth,const Standard_Real theMinDist,const Standard_Real theTol,const Standard_Boolean PreferClosest);
-		%feature("compactdefaultargs") SetPriority;
-		%feature("autodoc", "	:param P:
-	:type P: int
-	:rtype: None
-") SetPriority;
-		void SetPriority (const Standard_Integer P);
-		%feature("compactdefaultargs") SetDepth;
-		%feature("autodoc", "	:param D:
-	:type D: float
-	:rtype: None
-") SetDepth;
-		void SetDepth (const Standard_Real D);
-		%feature("compactdefaultargs") SetMinDist;
-		%feature("autodoc", "	:param D:
-	:type D: float
-	:rtype: None
-") SetMinDist;
-		void SetMinDist (const Standard_Real D);
-		%feature("compactdefaultargs") SetTol;
-		%feature("autodoc", "	:param T:
-	:type T: float
-	:rtype: None
-") SetTol;
-		void SetTol (const Standard_Real T);
-		%feature("compactdefaultargs") Priority;
-		%feature("autodoc", "	:rtype: int
-") Priority;
-		Standard_Integer Priority ();
-		%feature("compactdefaultargs") Depth;
-		%feature("autodoc", "	:rtype: float
-") Depth;
-		Standard_Real Depth ();
-		%feature("compactdefaultargs") MinDist;
-		%feature("autodoc", "	:rtype: float
-") MinDist;
-		Standard_Real MinDist ();
-		%feature("compactdefaultargs") Tol;
-		%feature("autodoc", "	:rtype: float
-") Tol;
-		Standard_Real Tol ();
-		%feature("compactdefaultargs") IsGreater;
-		%feature("autodoc", "	:param anOtherCriterion:
-	:type anOtherCriterion: SelectMgr_SortCriterion &
-	:rtype: bool
-") IsGreater;
-		Standard_Boolean IsGreater (const SelectMgr_SortCriterion & anOtherCriterion);
 		%feature("compactdefaultargs") operator >;
-		%feature("autodoc", "	:param anOtherCriterion:
-	:type anOtherCriterion: SelectMgr_SortCriterion &
+		%feature("autodoc", "	* Comparison operator.
+
+	:param theOther:
+	:type theOther: SelectMgr_SortCriterion &
 	:rtype: bool
 ") operator >;
-		Standard_Boolean operator > (const SelectMgr_SortCriterion & anOtherCriterion);
-		%feature("compactdefaultargs") IsLower;
-		%feature("autodoc", "	:param anOtherCriterion:
-	:type anOtherCriterion: SelectMgr_SortCriterion &
-	:rtype: bool
-") IsLower;
-		Standard_Boolean IsLower (const SelectMgr_SortCriterion & anOtherCriterion);
+		bool operator > (const SelectMgr_SortCriterion & theOther);
 		%feature("compactdefaultargs") operator <;
-		%feature("autodoc", "	:param anOtherCriterion:
-	:type anOtherCriterion: SelectMgr_SortCriterion &
+		%feature("autodoc", "	* Comparison operator.
+
+	:param theOther:
+	:type theOther: SelectMgr_SortCriterion &
 	:rtype: bool
 ") operator <;
-		Standard_Boolean operator < (const SelectMgr_SortCriterion & anOtherCriterion);
+		bool operator < (const SelectMgr_SortCriterion & theOther);
+		%feature("compactdefaultargs") IsGreater;
+		%feature("autodoc", "	* Compare with another item.
+
+	:param theOther:
+	:type theOther: SelectMgr_SortCriterion &
+	:rtype: bool
+") IsGreater;
+		bool IsGreater (const SelectMgr_SortCriterion & theOther);
+		%feature("compactdefaultargs") IsLower;
+		%feature("autodoc", "	* Compare with another item.
+
+	:param theOther:
+	:type theOther: SelectMgr_SortCriterion &
+	:rtype: bool
+") IsLower;
+		bool IsLower (const SelectMgr_SortCriterion & theOther);
 };
 
 
@@ -2864,8 +1856,59 @@ class SelectMgr_SortCriterion {
 	__repr__ = _dumps_object
 	}
 };
+%nodefaultctor SelectMgr_ViewClipRange;
+class SelectMgr_ViewClipRange {
+	public:
+		%feature("compactdefaultargs") SelectMgr_ViewClipRange;
+		%feature("autodoc", "	* Creates new empty view clip range
+
+	:rtype: None
+") SelectMgr_ViewClipRange;
+		 SelectMgr_ViewClipRange ();
+		%feature("compactdefaultargs") Set;
+		%feature("autodoc", "	* Sets boundaries and validates view clipping range
+
+	:param theDepthMin:
+	:type theDepthMin: float
+	:param theDepthMax:
+	:type theDepthMax: float
+	:rtype: None
+") Set;
+		void Set (const Standard_Real theDepthMin,const Standard_Real theDepthMax);
+		%feature("compactdefaultargs") IsValid;
+		%feature("autodoc", "	* Returns true if clip range is set and depth of each matched primitive must be tested for satisfying the defined interval
+
+	:rtype: bool
+") IsValid;
+		Standard_Boolean IsValid ();
+		%feature("compactdefaultargs") MaxDepth;
+		%feature("autodoc", "	* Returns the upper bound of valid depth range
+
+	:rtype: float
+") MaxDepth;
+		Standard_Real MaxDepth ();
+		%feature("compactdefaultargs") MinDepth;
+		%feature("autodoc", "	* Returns the lower bound of valid depth range
+
+	:rtype: float
+") MinDepth;
+		Standard_Real MinDepth ();
+		%feature("compactdefaultargs") Clear;
+		%feature("autodoc", "	* Invalidates view clipping range
+
+	:rtype: None
+") Clear;
+		void Clear ();
+};
+
+
+%extend SelectMgr_ViewClipRange {
+	%pythoncode {
+	__repr__ = _dumps_object
+	}
+};
 %nodefaultctor SelectMgr_ViewerSelector;
-class SelectMgr_ViewerSelector : public MMgt_TShared {
+class SelectMgr_ViewerSelector : public Standard_Transient {
 	public:
 		%feature("compactdefaultargs") Clear;
 		%feature("autodoc", "	* Empties all the tables, removes all selections...
@@ -2876,39 +1919,15 @@ class SelectMgr_ViewerSelector : public MMgt_TShared {
 		%feature("compactdefaultargs") Sensitivity;
 		%feature("autodoc", "	* returns the Sensitivity of picking
 
-	:rtype: int
+	:rtype: float
 ") Sensitivity;
-		Standard_Integer Sensitivity ();
+		Standard_Real Sensitivity ();
 		%feature("compactdefaultargs") SortResult;
 		%feature("autodoc", "	* Sorts the detected entites by priority and distance. to be redefined if other criterion are used...
 
 	:rtype: None
 ") SortResult;
 		void SortResult ();
-		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	* Begins an iteration scanning for the owners detected at a position in the view.
-
-	:rtype: None
-") Init;
-		void Init ();
-		%feature("compactdefaultargs") More;
-		%feature("autodoc", "	* Continues the interation scanning for the owners detected at a position in the view, or - continues the iteration scanning for the owner closest to the position in the view.
-
-	:rtype: bool
-") More;
-		Standard_Boolean More ();
-		%feature("compactdefaultargs") Next;
-		%feature("autodoc", "	* Returns the next owner found in the iteration. This is a scan for the owners detected at a position in the view.
-
-	:rtype: None
-") Next;
-		void Next ();
-		%feature("compactdefaultargs") Picked;
-		%feature("autodoc", "	* Returns the current selected entity detected by the selector;
-
-	:rtype: Handle_SelectMgr_EntityOwner
-") Picked;
-		Handle_SelectMgr_EntityOwner Picked ();
 		%feature("compactdefaultargs") OnePicked;
 		%feature("autodoc", "	* Returns the picked element with the highest priority, and which is the closest to the last successful mouse position.
 
@@ -2916,33 +1935,71 @@ class SelectMgr_ViewerSelector : public MMgt_TShared {
 ") OnePicked;
 		Handle_SelectMgr_EntityOwner OnePicked ();
 		%feature("compactdefaultargs") SetPickClosest;
-		%feature("autodoc", "	* Set preference of selecting one object for OnePicked() method: - If True, objects with less depth (distance fron the view plane) are preferred regardless of priority (priority is used then to choose among objects with similar depth), - If False, objects with higher priority are preferred regardless of the depth which is used to choose among objects of the same priority.
+		%feature("autodoc", "	* Set preference of selecting one object for OnePicked---- method: - If True, objects with less depth --distance fron the view plane-- are preferred regardless of priority --priority is used then to choose among objects with similar depth--, - If False, objects with higher priority are preferred regardless of the depth which is used to choose among objects of the same priority.
 
-	:param preferClosest:
-	:type preferClosest: bool
+	:param theToPreferClosest:
+	:type theToPreferClosest: bool
 	:rtype: None
 ") SetPickClosest;
-		void SetPickClosest (const Standard_Boolean preferClosest);
+		void SetPickClosest (const Standard_Boolean theToPreferClosest);
 		%feature("compactdefaultargs") NbPicked;
-		%feature("autodoc", "	* Returns the number of owners found at a position in the view by the Init - More - Next - Picked iteration.
+		%feature("autodoc", "	* Returns the number of detected owners.
 
 	:rtype: int
 ") NbPicked;
 		Standard_Integer NbPicked ();
 		%feature("compactdefaultargs") Picked;
-		%feature("autodoc", "	* Returns the entity which is at rank <aRank> in the list of stored ones.
+		%feature("autodoc", "	* Returns the entity Owner for the object picked at specified position. @param theRank rank of detected object within range 1...NbPicked----
 
-	:param aRank:
-	:type aRank: int
+	:param theRank:
+	:type theRank: int
 	:rtype: Handle_SelectMgr_EntityOwner
 ") Picked;
-		Handle_SelectMgr_EntityOwner Picked (const Standard_Integer aRank);
+		Handle_SelectMgr_EntityOwner Picked (const Standard_Integer theRank);
+		%feature("compactdefaultargs") PickedData;
+		%feature("autodoc", "	* Returns the Entity for the object picked at specified position. @param theRank rank of detected object within range 1...NbPicked----
+
+	:param theRank:
+	:type theRank: int
+	:rtype: SelectMgr_SortCriterion
+") PickedData;
+		const SelectMgr_SortCriterion & PickedData (const Standard_Integer theRank);
+		%feature("compactdefaultargs") PickedEntity;
+		%feature("autodoc", "	* Returns the Entity for the object picked at specified position. @param theRank rank of detected object within range 1...NbPicked----
+
+	:param theRank:
+	:type theRank: int
+	:rtype: Handle_SelectBasics_SensitiveEntity
+") PickedEntity;
+		Handle_SelectBasics_SensitiveEntity PickedEntity (const Standard_Integer theRank);
+		%feature("compactdefaultargs") PickedPoint;
+		%feature("autodoc", "	* Returns the 3D point --intersection of picking axis with the object nearest to eye-- for the object picked at specified position. @param theRank rank of detected object within range 1...NbPicked----
+
+	:param theRank:
+	:type theRank: int
+	:rtype: gp_Pnt
+") PickedPoint;
+		gp_Pnt PickedPoint (const Standard_Integer theRank);
 		%feature("compactdefaultargs") Contains;
 		%feature("autodoc", "	:param theObject:
 	:type theObject: Handle_SelectMgr_SelectableObject &
 	:rtype: bool
 ") Contains;
 		Standard_Boolean Contains (const Handle_SelectMgr_SelectableObject & theObject);
+		%feature("compactdefaultargs") EntitySetBuilder;
+		%feature("autodoc", "	* Returns the default builder used to construct BVH of entity set.
+
+	:rtype: Handle_Select3D_BVHBuilder3d
+") EntitySetBuilder;
+		const Handle_Select3D_BVHBuilder3d EntitySetBuilder ();
+		%feature("compactdefaultargs") SetEntitySetBuilder;
+		%feature("autodoc", "	* Sets the default builder used to construct BVH of entity set. The new builder will be also assigned for already defined objects, but computed BVH trees will not be invalidated.
+
+	:param theBuilder:
+	:type theBuilder: Handle_Select3D_BVHBuilder3d &
+	:rtype: None
+") SetEntitySetBuilder;
+		void SetEntitySetBuilder (const Handle_Select3D_BVHBuilder3d & theBuilder);
 		%feature("compactdefaultargs") Modes;
 		%feature("autodoc", "	* Returns the list of selection modes ModeList found in this selector for the selectable object aSelectableObject. Returns true if aSelectableObject is referenced inside this selector; returns false if the object is not present in this selector.
 
@@ -3015,6 +2072,14 @@ class SelectMgr_ViewerSelector : public MMgt_TShared {
 	:rtype: None
 ") AddSelectionToObject;
 		void AddSelectionToObject (const Handle_SelectMgr_SelectableObject & theObject,const Handle_SelectMgr_Selection & theSelection);
+		%feature("compactdefaultargs") MoveSelectableObject;
+		%feature("autodoc", "	* Moves existing object from set of not transform persistence objects to set of transform persistence objects --or vice versa--.
+
+	:param theObject:
+	:type theObject: Handle_SelectMgr_SelectableObject &
+	:rtype: None
+") MoveSelectableObject;
+		void MoveSelectableObject (const Handle_SelectMgr_SelectableObject & theObject);
 		%feature("compactdefaultargs") RemoveSelectableObject;
 		%feature("autodoc", "	* Removes selectable object from map of selectable ones
 
@@ -3051,6 +2116,50 @@ class SelectMgr_ViewerSelector : public MMgt_TShared {
 	:rtype: None
 ") RebuildSensitivesTree;
 		void RebuildSensitivesTree (const Handle_SelectMgr_SelectableObject & theObject,const Standard_Boolean theIsForce = Standard_False);
+		%feature("compactdefaultargs") GetManager;
+		%feature("autodoc", "	* Returns instance of selecting volume manager of the viewer selector
+
+	:rtype: SelectMgr_SelectingVolumeManager
+") GetManager;
+		SelectMgr_SelectingVolumeManager & GetManager ();
+		%feature("compactdefaultargs") ResetSelectionActivationStatus;
+		%feature("autodoc", "	* Marks all added sensitive entities of all objects as non-selectable
+
+	:rtype: None
+") ResetSelectionActivationStatus;
+		void ResetSelectionActivationStatus ();
+		%feature("compactdefaultargs") AllowOverlapDetection;
+		%feature("autodoc", "	* Is used for rectangular selection only If theIsToAllow is false, only fully included sensitives will be detected, otherwise the algorithm will mark both included and overlapped entities as matched
+
+	:param theIsToAllow:
+	:type theIsToAllow: bool
+	:rtype: None
+") AllowOverlapDetection;
+		void AllowOverlapDetection (const Standard_Boolean theIsToAllow);
+		%feature("compactdefaultargs") Init;
+		%feature("autodoc", "	* Begins an iteration scanning for the owners detected at a position in the view.
+
+	:rtype: None
+") Init;
+		void Init ();
+		%feature("compactdefaultargs") More;
+		%feature("autodoc", "	* Continues the interation scanning for the owners detected at a position in the view, or continues the iteration scanning for the owner closest to the position in the view.
+
+	:rtype: bool
+") More;
+		Standard_Boolean More ();
+		%feature("compactdefaultargs") Next;
+		%feature("autodoc", "	* Returns the next owner found in the iteration. This is a scan for the owners detected at a position in the view.
+
+	:rtype: None
+") Next;
+		void Next ();
+		%feature("compactdefaultargs") Picked;
+		%feature("autodoc", "	* Returns the current selected entity detected by the selector;
+
+	:rtype: Handle_SelectMgr_EntityOwner
+") Picked;
+		Handle_SelectMgr_EntityOwner Picked ();
 		%feature("compactdefaultargs") InitDetected;
 		%feature("autodoc", "	* Initializes internal iterator for stored detected sensitive entities
 
@@ -3075,12 +2184,6 @@ class SelectMgr_ViewerSelector : public MMgt_TShared {
 	:rtype: Handle_SelectBasics_SensitiveEntity
 ") DetectedEntity;
 		Handle_SelectBasics_SensitiveEntity DetectedEntity ();
-		%feature("compactdefaultargs") GetManager;
-		%feature("autodoc", "	* Returns instance of selecting volume manager of the viewer selector
-
-	:rtype: SelectMgr_SelectingVolumeManager
-") GetManager;
-		SelectMgr_SelectingVolumeManager & GetManager ();
 };
 
 
@@ -3103,7 +2206,7 @@ class SelectMgr_ViewerSelector : public MMgt_TShared {
 %}
 
 %nodefaultctor Handle_SelectMgr_ViewerSelector;
-class Handle_SelectMgr_ViewerSelector : public Handle_MMgt_TShared {
+class Handle_SelectMgr_ViewerSelector : public Handle_Standard_Transient {
 
     public:
         // constructors
@@ -3115,19 +2218,20 @@ class Handle_SelectMgr_ViewerSelector : public Handle_MMgt_TShared {
         static const Handle_SelectMgr_ViewerSelector DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_SelectMgr_ViewerSelector {
     SelectMgr_ViewerSelector* _get_reference() {
-    return (SelectMgr_ViewerSelector*)$self->Access();
+    return (SelectMgr_ViewerSelector*)$self->get();
     }
 };
 
 %extend Handle_SelectMgr_ViewerSelector {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend SelectMgr_ViewerSelector {
@@ -3220,19 +2324,20 @@ class Handle_SelectMgr_CompositionFilter : public Handle_SelectMgr_Filter {
         static const Handle_SelectMgr_CompositionFilter DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_SelectMgr_CompositionFilter {
     SelectMgr_CompositionFilter* _get_reference() {
-    return (SelectMgr_CompositionFilter*)$self->Access();
+    return (SelectMgr_CompositionFilter*)$self->get();
     }
 };
 
 %extend Handle_SelectMgr_CompositionFilter {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend SelectMgr_CompositionFilter {
@@ -3289,19 +2394,20 @@ class Handle_SelectMgr_AndFilter : public Handle_SelectMgr_CompositionFilter {
         static const Handle_SelectMgr_AndFilter DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_SelectMgr_AndFilter {
     SelectMgr_AndFilter* _get_reference() {
-    return (SelectMgr_AndFilter*)$self->Access();
+    return (SelectMgr_AndFilter*)$self->get();
     }
 };
 
 %extend Handle_SelectMgr_AndFilter {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend SelectMgr_AndFilter {
@@ -3366,19 +2472,20 @@ class Handle_SelectMgr_OrFilter : public Handle_SelectMgr_CompositionFilter {
         static const Handle_SelectMgr_OrFilter DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_SelectMgr_OrFilter {
     SelectMgr_OrFilter* _get_reference() {
-    return (SelectMgr_OrFilter*)$self->Access();
+    return (SelectMgr_OrFilter*)$self->get();
     }
 };
 
 %extend Handle_SelectMgr_OrFilter {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend SelectMgr_OrFilter {

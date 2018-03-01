@@ -1,5 +1,5 @@
 /*
-Copyright 2008-2017 Thomas Paviot (tpaviot@gmail.com)
+Copyright 2008-2018 Thomas Paviot (tpaviot@gmail.com)
 
 
 This file is part of pythonOCC.
@@ -55,6 +55,9 @@ def register_handle(handle, base_object):
 
 /* typedefs */
 /* end typedefs declaration */
+
+/* templates */
+/* end templates declaration */
 
 /* public enums */
 /* end public enums declaration */
@@ -1219,7 +1222,7 @@ class RWStepGeom_RWCurveBoundedSurface {
 ") WriteStep;
 		void WriteStep (StepData_StepWriter & SW,const Handle_StepGeom_CurveBoundedSurface & ent);
 		%feature("compactdefaultargs") Share;
-		%feature("autodoc", "	* Fills data for graph (shared items)
+		%feature("autodoc", "	* Fills data for graph --shared items--
 
 	:param ent:
 	:type ent: Handle_StepGeom_CurveBoundedSurface &
@@ -2040,7 +2043,7 @@ class RWStepGeom_RWOrientedSurface {
 ") WriteStep;
 		void WriteStep (StepData_StepWriter & SW,const Handle_StepGeom_OrientedSurface & ent);
 		%feature("compactdefaultargs") Share;
-		%feature("autodoc", "	* Fills data for graph (shared items)
+		%feature("autodoc", "	* Fills data for graph --shared items--
 
 	:param ent:
 	:type ent: Handle_StepGeom_OrientedSurface &

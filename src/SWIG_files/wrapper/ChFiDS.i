@@ -1,5 +1,5 @@
 /*
-Copyright 2008-2017 Thomas Paviot (tpaviot@gmail.com)
+Copyright 2008-2018 Thomas Paviot (tpaviot@gmail.com)
 
 
 This file is part of pythonOCC.
@@ -55,6 +55,17 @@ def register_handle(handle, base_object):
 
 /* typedefs */
 /* end typedefs declaration */
+
+/* templates */
+%template(ChFiDS_SecArray1) NCollection_Array1 <ChFiDS_CircSection>;
+%template(ChFiDS_SequenceOfSpine) NCollection_Sequence <Handle_ChFiDS_Spine>;
+%template(ChFiDS_Regularities) NCollection_List <ChFiDS_Regul>;
+%template(ChFiDS_ListOfHElSpine) NCollection_List <Handle_ChFiDS_HElSpine>;
+%template(ChFiDS_SequenceOfSurfData) NCollection_Sequence <Handle_ChFiDS_SurfData>;
+%template(ChFiDS_IndexedDataMapOfVertexListOfStripe) NCollection_IndexedDataMap <TopoDS_Vertex , ChFiDS_ListOfStripe , TopTools_ShapeMapHasher>;
+%template(ChFiDS_StripeArray1) NCollection_Array1 <Handle_ChFiDS_Stripe>;
+%template(ChFiDS_ListOfStripe) NCollection_List <Handle_ChFiDS_Stripe>;
+/* end templates declaration */
 
 /* public enums */
 enum ChFiDS_State {
@@ -238,13 +249,13 @@ class ChFiDS_CommonPoint {
 ") Arc;
 		const TopoDS_Edge  Arc ();
 		%feature("compactdefaultargs") TransitionOnArc;
-		%feature("autodoc", "	* Returns the transition of the point on the arc returned by Arc().
+		%feature("autodoc", "	* Returns the transition of the point on the arc returned by Arc----.
 
 	:rtype: TopAbs_Orientation
 ") TransitionOnArc;
 		TopAbs_Orientation TransitionOnArc ();
 		%feature("compactdefaultargs") ParameterOnArc;
-		%feature("autodoc", "	* Returns the parameter of the point on the arc returned by the method Arc().
+		%feature("autodoc", "	* Returns the parameter of the point on the arc returned by the method Arc----.
 
 	:rtype: float
 ") ParameterOnArc;
@@ -637,224 +648,47 @@ class ChFiDS_FaceInterference {
 	__repr__ = _dumps_object
 	}
 };
-%nodefaultctor ChFiDS_HData;
-class ChFiDS_HData : public MMgt_TShared {
-	public:
-		%feature("compactdefaultargs") ChFiDS_HData;
-		%feature("autodoc", "	:rtype: None
-") ChFiDS_HData;
-		 ChFiDS_HData ();
-		%feature("compactdefaultargs") IsEmpty;
-		%feature("autodoc", "	:rtype: bool
-") IsEmpty;
-		Standard_Boolean IsEmpty ();
-		%feature("compactdefaultargs") Length;
-		%feature("autodoc", "	:rtype: int
-") Length;
-		Standard_Integer Length ();
-		%feature("compactdefaultargs") Clear;
-		%feature("autodoc", "	:rtype: None
-") Clear;
-		void Clear ();
-		%feature("compactdefaultargs") Append;
-		%feature("autodoc", "	:param anItem:
-	:type anItem: Handle_ChFiDS_SurfData &
-	:rtype: None
-") Append;
-		void Append (const Handle_ChFiDS_SurfData & anItem);
-		%feature("compactdefaultargs") Append;
-		%feature("autodoc", "	:param aSequence:
-	:type aSequence: Handle_ChFiDS_HData &
-	:rtype: None
-") Append;
-		void Append (const Handle_ChFiDS_HData & aSequence);
-		%feature("compactdefaultargs") Prepend;
-		%feature("autodoc", "	:param anItem:
-	:type anItem: Handle_ChFiDS_SurfData &
-	:rtype: None
-") Prepend;
-		void Prepend (const Handle_ChFiDS_SurfData & anItem);
-		%feature("compactdefaultargs") Prepend;
-		%feature("autodoc", "	:param aSequence:
-	:type aSequence: Handle_ChFiDS_HData &
-	:rtype: None
-") Prepend;
-		void Prepend (const Handle_ChFiDS_HData & aSequence);
-		%feature("compactdefaultargs") Reverse;
-		%feature("autodoc", "	:rtype: None
-") Reverse;
-		void Reverse ();
-		%feature("compactdefaultargs") InsertBefore;
-		%feature("autodoc", "	:param anIndex:
-	:type anIndex: int
-	:param anItem:
-	:type anItem: Handle_ChFiDS_SurfData &
-	:rtype: None
-") InsertBefore;
-		void InsertBefore (const Standard_Integer anIndex,const Handle_ChFiDS_SurfData & anItem);
-		%feature("compactdefaultargs") InsertBefore;
-		%feature("autodoc", "	:param anIndex:
-	:type anIndex: int
-	:param aSequence:
-	:type aSequence: Handle_ChFiDS_HData &
-	:rtype: None
-") InsertBefore;
-		void InsertBefore (const Standard_Integer anIndex,const Handle_ChFiDS_HData & aSequence);
-		%feature("compactdefaultargs") InsertAfter;
-		%feature("autodoc", "	:param anIndex:
-	:type anIndex: int
-	:param anItem:
-	:type anItem: Handle_ChFiDS_SurfData &
-	:rtype: None
-") InsertAfter;
-		void InsertAfter (const Standard_Integer anIndex,const Handle_ChFiDS_SurfData & anItem);
-		%feature("compactdefaultargs") InsertAfter;
-		%feature("autodoc", "	:param anIndex:
-	:type anIndex: int
-	:param aSequence:
-	:type aSequence: Handle_ChFiDS_HData &
-	:rtype: None
-") InsertAfter;
-		void InsertAfter (const Standard_Integer anIndex,const Handle_ChFiDS_HData & aSequence);
-		%feature("compactdefaultargs") Exchange;
-		%feature("autodoc", "	:param anIndex:
-	:type anIndex: int
-	:param anOtherIndex:
-	:type anOtherIndex: int
-	:rtype: None
-") Exchange;
-		void Exchange (const Standard_Integer anIndex,const Standard_Integer anOtherIndex);
-		%feature("compactdefaultargs") Split;
-		%feature("autodoc", "	:param anIndex:
-	:type anIndex: int
-	:rtype: Handle_ChFiDS_HData
-") Split;
-		Handle_ChFiDS_HData Split (const Standard_Integer anIndex);
-		%feature("compactdefaultargs") SetValue;
-		%feature("autodoc", "	:param anIndex:
-	:type anIndex: int
-	:param anItem:
-	:type anItem: Handle_ChFiDS_SurfData &
-	:rtype: None
-") SetValue;
-		void SetValue (const Standard_Integer anIndex,const Handle_ChFiDS_SurfData & anItem);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:param anIndex:
-	:type anIndex: int
-	:rtype: Handle_ChFiDS_SurfData
-") Value;
-		Handle_ChFiDS_SurfData Value (const Standard_Integer anIndex);
-		%feature("compactdefaultargs") ChangeValue;
-		%feature("autodoc", "	:param anIndex:
-	:type anIndex: int
-	:rtype: Handle_ChFiDS_SurfData
-") ChangeValue;
-		Handle_ChFiDS_SurfData ChangeValue (const Standard_Integer anIndex);
-		%feature("compactdefaultargs") Remove;
-		%feature("autodoc", "	:param anIndex:
-	:type anIndex: int
-	:rtype: None
-") Remove;
-		void Remove (const Standard_Integer anIndex);
-		%feature("compactdefaultargs") Remove;
-		%feature("autodoc", "	:param fromIndex:
-	:type fromIndex: int
-	:param toIndex:
-	:type toIndex: int
-	:rtype: None
-") Remove;
-		void Remove (const Standard_Integer fromIndex,const Standard_Integer toIndex);
-		%feature("compactdefaultargs") Sequence;
-		%feature("autodoc", "	:rtype: ChFiDS_SequenceOfSurfData
-") Sequence;
-		const ChFiDS_SequenceOfSurfData & Sequence ();
-		%feature("compactdefaultargs") ChangeSequence;
-		%feature("autodoc", "	:rtype: ChFiDS_SequenceOfSurfData
-") ChangeSequence;
-		ChFiDS_SequenceOfSurfData & ChangeSequence ();
-};
-
-
-%extend ChFiDS_HData {
-	%pythoncode {
-		def GetHandle(self):
-		    try:
-		        return self.thisHandle
-		    except:
-		        self.thisHandle = Handle_ChFiDS_HData(self)
-		        self.thisown = False
-		        return self.thisHandle
-	}
-};
-
-%pythonappend Handle_ChFiDS_HData::Handle_ChFiDS_HData %{
-    # register the handle in the base object
-    if len(args) > 0:
-        register_handle(self, args[0])
-%}
-
-%nodefaultctor Handle_ChFiDS_HData;
-class Handle_ChFiDS_HData : public Handle_MMgt_TShared {
-
-    public:
-        // constructors
-        Handle_ChFiDS_HData();
-        Handle_ChFiDS_HData(const Handle_ChFiDS_HData &aHandle);
-        Handle_ChFiDS_HData(const ChFiDS_HData *anItem);
-        void Nullify();
-        Standard_Boolean IsNull() const;
-        static const Handle_ChFiDS_HData DownCast(const Handle_Standard_Transient &AnObject);
-
-};
-%extend Handle_ChFiDS_HData {
-    ChFiDS_HData* _get_reference() {
-    return (ChFiDS_HData*)$self->Access();
-    }
-};
-
-%extend Handle_ChFiDS_HData {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
-};
-
-%extend ChFiDS_HData {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
 %nodefaultctor ChFiDS_HElSpine;
 class ChFiDS_HElSpine : public Adaptor3d_HCurve {
 	public:
 		%feature("compactdefaultargs") ChFiDS_HElSpine;
-		%feature("autodoc", "	:rtype: None
+		%feature("autodoc", "	* Creates an empty GenHCurve.
+
+	:rtype: None
 ") ChFiDS_HElSpine;
 		 ChFiDS_HElSpine ();
 		%feature("compactdefaultargs") ChFiDS_HElSpine;
-		%feature("autodoc", "	:param C:
+		%feature("autodoc", "	* Creates a GenHCurve from a Curve
+
+	:param C:
 	:type C: ChFiDS_ElSpine &
 	:rtype: None
 ") ChFiDS_HElSpine;
 		 ChFiDS_HElSpine (const ChFiDS_ElSpine & C);
 		%feature("compactdefaultargs") Set;
-		%feature("autodoc", "	:param C:
+		%feature("autodoc", "	* Sets the field of the GenHCurve.
+
+	:param C:
 	:type C: ChFiDS_ElSpine &
 	:rtype: None
 ") Set;
 		void Set (const ChFiDS_ElSpine & C);
 		%feature("compactdefaultargs") Curve;
-		%feature("autodoc", "	:rtype: Adaptor3d_Curve
+		%feature("autodoc", "	* Returns the curve used to create the GenHCurve. This is redefined from HCurve, cannot be inline.
+
+	:rtype: Adaptor3d_Curve
 ") Curve;
 		const Adaptor3d_Curve & Curve ();
 		%feature("compactdefaultargs") GetCurve;
-		%feature("autodoc", "	:rtype: Adaptor3d_Curve
+		%feature("autodoc", "	* Returns the curve used to create the GenHCurve. This is redefined from HCurve, cannot be inline.
+
+	:rtype: Adaptor3d_Curve
 ") GetCurve;
 		Adaptor3d_Curve & GetCurve ();
 		%feature("compactdefaultargs") ChangeCurve;
-		%feature("autodoc", "	:rtype: ChFiDS_ElSpine
+		%feature("autodoc", "	* Returns the curve used to create the GenHCurve.
+
+	:rtype: ChFiDS_ElSpine
 ") ChangeCurve;
 		ChFiDS_ElSpine & ChangeCurve ();
 };
@@ -891,827 +725,23 @@ class Handle_ChFiDS_HElSpine : public Handle_Adaptor3d_HCurve {
         static const Handle_ChFiDS_HElSpine DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_ChFiDS_HElSpine {
     ChFiDS_HElSpine* _get_reference() {
-    return (ChFiDS_HElSpine*)$self->Access();
+    return (ChFiDS_HElSpine*)$self->get();
     }
 };
 
 %extend Handle_ChFiDS_HElSpine {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend ChFiDS_HElSpine {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor ChFiDS_IndexedDataMapNodeOfIndexedDataMapOfVertexListOfStripe;
-class ChFiDS_IndexedDataMapNodeOfIndexedDataMapOfVertexListOfStripe : public TCollection_MapNode {
-	public:
-		%feature("compactdefaultargs") ChFiDS_IndexedDataMapNodeOfIndexedDataMapOfVertexListOfStripe;
-		%feature("autodoc", "	:param K1:
-	:type K1: TopoDS_Vertex &
-	:param K2:
-	:type K2: int
-	:param I:
-	:type I: ChFiDS_ListOfStripe &
-	:param n1:
-	:type n1: TCollection_MapNodePtr &
-	:param n2:
-	:type n2: TCollection_MapNodePtr &
-	:rtype: None
-") ChFiDS_IndexedDataMapNodeOfIndexedDataMapOfVertexListOfStripe;
-		 ChFiDS_IndexedDataMapNodeOfIndexedDataMapOfVertexListOfStripe (const TopoDS_Vertex & K1,const Standard_Integer K2,const ChFiDS_ListOfStripe & I,const TCollection_MapNodePtr & n1,const TCollection_MapNodePtr & n2);
-		%feature("compactdefaultargs") Key1;
-		%feature("autodoc", "	:rtype: TopoDS_Vertex
-") Key1;
-		TopoDS_Vertex  Key1 ();
-
-            %feature("autodoc","1");
-            %extend {
-                Standard_Integer GetKey2() {
-                return (Standard_Integer) $self->Key2();
-                }
-            };
-            %feature("autodoc","1");
-            %extend {
-                void SetKey2(Standard_Integer value ) {
-                $self->Key2()=value;
-                }
-            };
-            		%feature("compactdefaultargs") Next2;
-		%feature("autodoc", "	:rtype: TCollection_MapNodePtr
-") Next2;
-		TCollection_MapNodePtr & Next2 ();
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:rtype: ChFiDS_ListOfStripe
-") Value;
-		ChFiDS_ListOfStripe & Value ();
-};
-
-
-%extend ChFiDS_IndexedDataMapNodeOfIndexedDataMapOfVertexListOfStripe {
-	%pythoncode {
-		def GetHandle(self):
-		    try:
-		        return self.thisHandle
-		    except:
-		        self.thisHandle = Handle_ChFiDS_IndexedDataMapNodeOfIndexedDataMapOfVertexListOfStripe(self)
-		        self.thisown = False
-		        return self.thisHandle
-	}
-};
-
-%pythonappend Handle_ChFiDS_IndexedDataMapNodeOfIndexedDataMapOfVertexListOfStripe::Handle_ChFiDS_IndexedDataMapNodeOfIndexedDataMapOfVertexListOfStripe %{
-    # register the handle in the base object
-    if len(args) > 0:
-        register_handle(self, args[0])
-%}
-
-%nodefaultctor Handle_ChFiDS_IndexedDataMapNodeOfIndexedDataMapOfVertexListOfStripe;
-class Handle_ChFiDS_IndexedDataMapNodeOfIndexedDataMapOfVertexListOfStripe : public Handle_TCollection_MapNode {
-
-    public:
-        // constructors
-        Handle_ChFiDS_IndexedDataMapNodeOfIndexedDataMapOfVertexListOfStripe();
-        Handle_ChFiDS_IndexedDataMapNodeOfIndexedDataMapOfVertexListOfStripe(const Handle_ChFiDS_IndexedDataMapNodeOfIndexedDataMapOfVertexListOfStripe &aHandle);
-        Handle_ChFiDS_IndexedDataMapNodeOfIndexedDataMapOfVertexListOfStripe(const ChFiDS_IndexedDataMapNodeOfIndexedDataMapOfVertexListOfStripe *anItem);
-        void Nullify();
-        Standard_Boolean IsNull() const;
-        static const Handle_ChFiDS_IndexedDataMapNodeOfIndexedDataMapOfVertexListOfStripe DownCast(const Handle_Standard_Transient &AnObject);
-
-};
-%extend Handle_ChFiDS_IndexedDataMapNodeOfIndexedDataMapOfVertexListOfStripe {
-    ChFiDS_IndexedDataMapNodeOfIndexedDataMapOfVertexListOfStripe* _get_reference() {
-    return (ChFiDS_IndexedDataMapNodeOfIndexedDataMapOfVertexListOfStripe*)$self->Access();
-    }
-};
-
-%extend Handle_ChFiDS_IndexedDataMapNodeOfIndexedDataMapOfVertexListOfStripe {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
-};
-
-%extend ChFiDS_IndexedDataMapNodeOfIndexedDataMapOfVertexListOfStripe {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor ChFiDS_IndexedDataMapOfVertexListOfStripe;
-class ChFiDS_IndexedDataMapOfVertexListOfStripe : public TCollection_BasicMap {
-	public:
-		%feature("compactdefaultargs") ChFiDS_IndexedDataMapOfVertexListOfStripe;
-		%feature("autodoc", "	:param NbBuckets: default value is 1
-	:type NbBuckets: int
-	:rtype: None
-") ChFiDS_IndexedDataMapOfVertexListOfStripe;
-		 ChFiDS_IndexedDataMapOfVertexListOfStripe (const Standard_Integer NbBuckets = 1);
-		%feature("compactdefaultargs") Assign;
-		%feature("autodoc", "	:param Other:
-	:type Other: ChFiDS_IndexedDataMapOfVertexListOfStripe &
-	:rtype: ChFiDS_IndexedDataMapOfVertexListOfStripe
-") Assign;
-		ChFiDS_IndexedDataMapOfVertexListOfStripe & Assign (const ChFiDS_IndexedDataMapOfVertexListOfStripe & Other);
-		%feature("compactdefaultargs") operator =;
-		%feature("autodoc", "	:param Other:
-	:type Other: ChFiDS_IndexedDataMapOfVertexListOfStripe &
-	:rtype: ChFiDS_IndexedDataMapOfVertexListOfStripe
-") operator =;
-		ChFiDS_IndexedDataMapOfVertexListOfStripe & operator = (const ChFiDS_IndexedDataMapOfVertexListOfStripe & Other);
-		%feature("compactdefaultargs") ReSize;
-		%feature("autodoc", "	:param NbBuckets:
-	:type NbBuckets: int
-	:rtype: None
-") ReSize;
-		void ReSize (const Standard_Integer NbBuckets);
-		%feature("compactdefaultargs") Clear;
-		%feature("autodoc", "	:rtype: None
-") Clear;
-		void Clear ();
-		%feature("compactdefaultargs") Add;
-		%feature("autodoc", "	:param K:
-	:type K: TopoDS_Vertex &
-	:param I:
-	:type I: ChFiDS_ListOfStripe &
-	:rtype: int
-") Add;
-		Standard_Integer Add (const TopoDS_Vertex & K,const ChFiDS_ListOfStripe & I);
-		%feature("compactdefaultargs") Substitute;
-		%feature("autodoc", "	:param I:
-	:type I: int
-	:param K:
-	:type K: TopoDS_Vertex &
-	:param T:
-	:type T: ChFiDS_ListOfStripe &
-	:rtype: None
-") Substitute;
-		void Substitute (const Standard_Integer I,const TopoDS_Vertex & K,const ChFiDS_ListOfStripe & T);
-		%feature("compactdefaultargs") RemoveLast;
-		%feature("autodoc", "	:rtype: None
-") RemoveLast;
-		void RemoveLast ();
-		%feature("compactdefaultargs") Contains;
-		%feature("autodoc", "	:param K:
-	:type K: TopoDS_Vertex &
-	:rtype: bool
-") Contains;
-		Standard_Boolean Contains (const TopoDS_Vertex & K);
-		%feature("compactdefaultargs") FindKey;
-		%feature("autodoc", "	:param I:
-	:type I: int
-	:rtype: TopoDS_Vertex
-") FindKey;
-		const TopoDS_Vertex  FindKey (const Standard_Integer I);
-		%feature("compactdefaultargs") FindFromIndex;
-		%feature("autodoc", "	:param I:
-	:type I: int
-	:rtype: ChFiDS_ListOfStripe
-") FindFromIndex;
-		const ChFiDS_ListOfStripe & FindFromIndex (const Standard_Integer I);
-		%feature("compactdefaultargs") ChangeFromIndex;
-		%feature("autodoc", "	:param I:
-	:type I: int
-	:rtype: ChFiDS_ListOfStripe
-") ChangeFromIndex;
-		ChFiDS_ListOfStripe & ChangeFromIndex (const Standard_Integer I);
-		%feature("compactdefaultargs") FindIndex;
-		%feature("autodoc", "	:param K:
-	:type K: TopoDS_Vertex &
-	:rtype: int
-") FindIndex;
-		Standard_Integer FindIndex (const TopoDS_Vertex & K);
-		%feature("compactdefaultargs") FindFromKey;
-		%feature("autodoc", "	:param K:
-	:type K: TopoDS_Vertex &
-	:rtype: ChFiDS_ListOfStripe
-") FindFromKey;
-		const ChFiDS_ListOfStripe & FindFromKey (const TopoDS_Vertex & K);
-		%feature("compactdefaultargs") ChangeFromKey;
-		%feature("autodoc", "	:param K:
-	:type K: TopoDS_Vertex &
-	:rtype: ChFiDS_ListOfStripe
-") ChangeFromKey;
-		ChFiDS_ListOfStripe & ChangeFromKey (const TopoDS_Vertex & K);
-		%feature("compactdefaultargs") FindFromKey1;
-		%feature("autodoc", "	:param K:
-	:type K: TopoDS_Vertex &
-	:rtype: Standard_Address
-") FindFromKey1;
-		Standard_Address FindFromKey1 (const TopoDS_Vertex & K);
-		%feature("compactdefaultargs") ChangeFromKey1;
-		%feature("autodoc", "	:param K:
-	:type K: TopoDS_Vertex &
-	:rtype: Standard_Address
-") ChangeFromKey1;
-		Standard_Address ChangeFromKey1 (const TopoDS_Vertex & K);
-};
-
-
-%extend ChFiDS_IndexedDataMapOfVertexListOfStripe {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor ChFiDS_ListIteratorOfListOfHElSpine;
-class ChFiDS_ListIteratorOfListOfHElSpine {
-	public:
-		%feature("compactdefaultargs") ChFiDS_ListIteratorOfListOfHElSpine;
-		%feature("autodoc", "	:rtype: None
-") ChFiDS_ListIteratorOfListOfHElSpine;
-		 ChFiDS_ListIteratorOfListOfHElSpine ();
-		%feature("compactdefaultargs") ChFiDS_ListIteratorOfListOfHElSpine;
-		%feature("autodoc", "	:param L:
-	:type L: ChFiDS_ListOfHElSpine &
-	:rtype: None
-") ChFiDS_ListIteratorOfListOfHElSpine;
-		 ChFiDS_ListIteratorOfListOfHElSpine (const ChFiDS_ListOfHElSpine & L);
-		%feature("compactdefaultargs") Initialize;
-		%feature("autodoc", "	:param L:
-	:type L: ChFiDS_ListOfHElSpine &
-	:rtype: None
-") Initialize;
-		void Initialize (const ChFiDS_ListOfHElSpine & L);
-		%feature("compactdefaultargs") More;
-		%feature("autodoc", "	:rtype: bool
-") More;
-		Standard_Boolean More ();
-		%feature("compactdefaultargs") Next;
-		%feature("autodoc", "	:rtype: None
-") Next;
-		void Next ();
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:rtype: Handle_ChFiDS_HElSpine
-") Value;
-		Handle_ChFiDS_HElSpine Value ();
-};
-
-
-%extend ChFiDS_ListIteratorOfListOfHElSpine {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor ChFiDS_ListIteratorOfListOfStripe;
-class ChFiDS_ListIteratorOfListOfStripe {
-	public:
-		%feature("compactdefaultargs") ChFiDS_ListIteratorOfListOfStripe;
-		%feature("autodoc", "	:rtype: None
-") ChFiDS_ListIteratorOfListOfStripe;
-		 ChFiDS_ListIteratorOfListOfStripe ();
-		%feature("compactdefaultargs") ChFiDS_ListIteratorOfListOfStripe;
-		%feature("autodoc", "	:param L:
-	:type L: ChFiDS_ListOfStripe &
-	:rtype: None
-") ChFiDS_ListIteratorOfListOfStripe;
-		 ChFiDS_ListIteratorOfListOfStripe (const ChFiDS_ListOfStripe & L);
-		%feature("compactdefaultargs") Initialize;
-		%feature("autodoc", "	:param L:
-	:type L: ChFiDS_ListOfStripe &
-	:rtype: None
-") Initialize;
-		void Initialize (const ChFiDS_ListOfStripe & L);
-		%feature("compactdefaultargs") More;
-		%feature("autodoc", "	:rtype: bool
-") More;
-		Standard_Boolean More ();
-		%feature("compactdefaultargs") Next;
-		%feature("autodoc", "	:rtype: None
-") Next;
-		void Next ();
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:rtype: Handle_ChFiDS_Stripe
-") Value;
-		Handle_ChFiDS_Stripe Value ();
-};
-
-
-%extend ChFiDS_ListIteratorOfListOfStripe {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor ChFiDS_ListIteratorOfRegularities;
-class ChFiDS_ListIteratorOfRegularities {
-	public:
-		%feature("compactdefaultargs") ChFiDS_ListIteratorOfRegularities;
-		%feature("autodoc", "	:rtype: None
-") ChFiDS_ListIteratorOfRegularities;
-		 ChFiDS_ListIteratorOfRegularities ();
-		%feature("compactdefaultargs") ChFiDS_ListIteratorOfRegularities;
-		%feature("autodoc", "	:param L:
-	:type L: ChFiDS_Regularities &
-	:rtype: None
-") ChFiDS_ListIteratorOfRegularities;
-		 ChFiDS_ListIteratorOfRegularities (const ChFiDS_Regularities & L);
-		%feature("compactdefaultargs") Initialize;
-		%feature("autodoc", "	:param L:
-	:type L: ChFiDS_Regularities &
-	:rtype: None
-") Initialize;
-		void Initialize (const ChFiDS_Regularities & L);
-		%feature("compactdefaultargs") More;
-		%feature("autodoc", "	:rtype: bool
-") More;
-		Standard_Boolean More ();
-		%feature("compactdefaultargs") Next;
-		%feature("autodoc", "	:rtype: None
-") Next;
-		void Next ();
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:rtype: ChFiDS_Regul
-") Value;
-		ChFiDS_Regul & Value ();
-};
-
-
-%extend ChFiDS_ListIteratorOfRegularities {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor ChFiDS_ListNodeOfListOfHElSpine;
-class ChFiDS_ListNodeOfListOfHElSpine : public TCollection_MapNode {
-	public:
-		%feature("compactdefaultargs") ChFiDS_ListNodeOfListOfHElSpine;
-		%feature("autodoc", "	:param I:
-	:type I: Handle_ChFiDS_HElSpine &
-	:param n:
-	:type n: TCollection_MapNodePtr &
-	:rtype: None
-") ChFiDS_ListNodeOfListOfHElSpine;
-		 ChFiDS_ListNodeOfListOfHElSpine (const Handle_ChFiDS_HElSpine & I,const TCollection_MapNodePtr & n);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:rtype: Handle_ChFiDS_HElSpine
-") Value;
-		Handle_ChFiDS_HElSpine Value ();
-};
-
-
-%extend ChFiDS_ListNodeOfListOfHElSpine {
-	%pythoncode {
-		def GetHandle(self):
-		    try:
-		        return self.thisHandle
-		    except:
-		        self.thisHandle = Handle_ChFiDS_ListNodeOfListOfHElSpine(self)
-		        self.thisown = False
-		        return self.thisHandle
-	}
-};
-
-%pythonappend Handle_ChFiDS_ListNodeOfListOfHElSpine::Handle_ChFiDS_ListNodeOfListOfHElSpine %{
-    # register the handle in the base object
-    if len(args) > 0:
-        register_handle(self, args[0])
-%}
-
-%nodefaultctor Handle_ChFiDS_ListNodeOfListOfHElSpine;
-class Handle_ChFiDS_ListNodeOfListOfHElSpine : public Handle_TCollection_MapNode {
-
-    public:
-        // constructors
-        Handle_ChFiDS_ListNodeOfListOfHElSpine();
-        Handle_ChFiDS_ListNodeOfListOfHElSpine(const Handle_ChFiDS_ListNodeOfListOfHElSpine &aHandle);
-        Handle_ChFiDS_ListNodeOfListOfHElSpine(const ChFiDS_ListNodeOfListOfHElSpine *anItem);
-        void Nullify();
-        Standard_Boolean IsNull() const;
-        static const Handle_ChFiDS_ListNodeOfListOfHElSpine DownCast(const Handle_Standard_Transient &AnObject);
-
-};
-%extend Handle_ChFiDS_ListNodeOfListOfHElSpine {
-    ChFiDS_ListNodeOfListOfHElSpine* _get_reference() {
-    return (ChFiDS_ListNodeOfListOfHElSpine*)$self->Access();
-    }
-};
-
-%extend Handle_ChFiDS_ListNodeOfListOfHElSpine {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
-};
-
-%extend ChFiDS_ListNodeOfListOfHElSpine {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor ChFiDS_ListNodeOfListOfStripe;
-class ChFiDS_ListNodeOfListOfStripe : public TCollection_MapNode {
-	public:
-		%feature("compactdefaultargs") ChFiDS_ListNodeOfListOfStripe;
-		%feature("autodoc", "	:param I:
-	:type I: Handle_ChFiDS_Stripe &
-	:param n:
-	:type n: TCollection_MapNodePtr &
-	:rtype: None
-") ChFiDS_ListNodeOfListOfStripe;
-		 ChFiDS_ListNodeOfListOfStripe (const Handle_ChFiDS_Stripe & I,const TCollection_MapNodePtr & n);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:rtype: Handle_ChFiDS_Stripe
-") Value;
-		Handle_ChFiDS_Stripe Value ();
-};
-
-
-%extend ChFiDS_ListNodeOfListOfStripe {
-	%pythoncode {
-		def GetHandle(self):
-		    try:
-		        return self.thisHandle
-		    except:
-		        self.thisHandle = Handle_ChFiDS_ListNodeOfListOfStripe(self)
-		        self.thisown = False
-		        return self.thisHandle
-	}
-};
-
-%pythonappend Handle_ChFiDS_ListNodeOfListOfStripe::Handle_ChFiDS_ListNodeOfListOfStripe %{
-    # register the handle in the base object
-    if len(args) > 0:
-        register_handle(self, args[0])
-%}
-
-%nodefaultctor Handle_ChFiDS_ListNodeOfListOfStripe;
-class Handle_ChFiDS_ListNodeOfListOfStripe : public Handle_TCollection_MapNode {
-
-    public:
-        // constructors
-        Handle_ChFiDS_ListNodeOfListOfStripe();
-        Handle_ChFiDS_ListNodeOfListOfStripe(const Handle_ChFiDS_ListNodeOfListOfStripe &aHandle);
-        Handle_ChFiDS_ListNodeOfListOfStripe(const ChFiDS_ListNodeOfListOfStripe *anItem);
-        void Nullify();
-        Standard_Boolean IsNull() const;
-        static const Handle_ChFiDS_ListNodeOfListOfStripe DownCast(const Handle_Standard_Transient &AnObject);
-
-};
-%extend Handle_ChFiDS_ListNodeOfListOfStripe {
-    ChFiDS_ListNodeOfListOfStripe* _get_reference() {
-    return (ChFiDS_ListNodeOfListOfStripe*)$self->Access();
-    }
-};
-
-%extend Handle_ChFiDS_ListNodeOfListOfStripe {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
-};
-
-%extend ChFiDS_ListNodeOfListOfStripe {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor ChFiDS_ListNodeOfRegularities;
-class ChFiDS_ListNodeOfRegularities : public TCollection_MapNode {
-	public:
-		%feature("compactdefaultargs") ChFiDS_ListNodeOfRegularities;
-		%feature("autodoc", "	:param I:
-	:type I: ChFiDS_Regul &
-	:param n:
-	:type n: TCollection_MapNodePtr &
-	:rtype: None
-") ChFiDS_ListNodeOfRegularities;
-		 ChFiDS_ListNodeOfRegularities (const ChFiDS_Regul & I,const TCollection_MapNodePtr & n);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:rtype: ChFiDS_Regul
-") Value;
-		ChFiDS_Regul & Value ();
-};
-
-
-%extend ChFiDS_ListNodeOfRegularities {
-	%pythoncode {
-		def GetHandle(self):
-		    try:
-		        return self.thisHandle
-		    except:
-		        self.thisHandle = Handle_ChFiDS_ListNodeOfRegularities(self)
-		        self.thisown = False
-		        return self.thisHandle
-	}
-};
-
-%pythonappend Handle_ChFiDS_ListNodeOfRegularities::Handle_ChFiDS_ListNodeOfRegularities %{
-    # register the handle in the base object
-    if len(args) > 0:
-        register_handle(self, args[0])
-%}
-
-%nodefaultctor Handle_ChFiDS_ListNodeOfRegularities;
-class Handle_ChFiDS_ListNodeOfRegularities : public Handle_TCollection_MapNode {
-
-    public:
-        // constructors
-        Handle_ChFiDS_ListNodeOfRegularities();
-        Handle_ChFiDS_ListNodeOfRegularities(const Handle_ChFiDS_ListNodeOfRegularities &aHandle);
-        Handle_ChFiDS_ListNodeOfRegularities(const ChFiDS_ListNodeOfRegularities *anItem);
-        void Nullify();
-        Standard_Boolean IsNull() const;
-        static const Handle_ChFiDS_ListNodeOfRegularities DownCast(const Handle_Standard_Transient &AnObject);
-
-};
-%extend Handle_ChFiDS_ListNodeOfRegularities {
-    ChFiDS_ListNodeOfRegularities* _get_reference() {
-    return (ChFiDS_ListNodeOfRegularities*)$self->Access();
-    }
-};
-
-%extend Handle_ChFiDS_ListNodeOfRegularities {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
-};
-
-%extend ChFiDS_ListNodeOfRegularities {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor ChFiDS_ListOfHElSpine;
-class ChFiDS_ListOfHElSpine {
-	public:
-		%feature("compactdefaultargs") ChFiDS_ListOfHElSpine;
-		%feature("autodoc", "	:rtype: None
-") ChFiDS_ListOfHElSpine;
-		 ChFiDS_ListOfHElSpine ();
-		%feature("compactdefaultargs") ChFiDS_ListOfHElSpine;
-		%feature("autodoc", "	:param Other:
-	:type Other: ChFiDS_ListOfHElSpine &
-	:rtype: None
-") ChFiDS_ListOfHElSpine;
-		 ChFiDS_ListOfHElSpine (const ChFiDS_ListOfHElSpine & Other);
-		%feature("compactdefaultargs") Assign;
-		%feature("autodoc", "	:param Other:
-	:type Other: ChFiDS_ListOfHElSpine &
-	:rtype: None
-") Assign;
-		void Assign (const ChFiDS_ListOfHElSpine & Other);
-		%feature("compactdefaultargs") operator =;
-		%feature("autodoc", "	:param Other:
-	:type Other: ChFiDS_ListOfHElSpine &
-	:rtype: None
-") operator =;
-		void operator = (const ChFiDS_ListOfHElSpine & Other);
-		%feature("compactdefaultargs") Extent;
-		%feature("autodoc", "	:rtype: int
-") Extent;
-		Standard_Integer Extent ();
-		%feature("compactdefaultargs") Clear;
-		%feature("autodoc", "	:rtype: None
-") Clear;
-		void Clear ();
-		%feature("compactdefaultargs") IsEmpty;
-		%feature("autodoc", "	:rtype: bool
-") IsEmpty;
-		Standard_Boolean IsEmpty ();
-		%feature("compactdefaultargs") Prepend;
-		%feature("autodoc", "	:param I:
-	:type I: Handle_ChFiDS_HElSpine &
-	:rtype: None
-") Prepend;
-		void Prepend (const Handle_ChFiDS_HElSpine & I);
-		%feature("compactdefaultargs") Prepend;
-		%feature("autodoc", "	:param I:
-	:type I: Handle_ChFiDS_HElSpine &
-	:param theIt:
-	:type theIt: ChFiDS_ListIteratorOfListOfHElSpine &
-	:rtype: None
-") Prepend;
-		void Prepend (const Handle_ChFiDS_HElSpine & I,ChFiDS_ListIteratorOfListOfHElSpine & theIt);
-		%feature("compactdefaultargs") Prepend;
-		%feature("autodoc", "	:param Other:
-	:type Other: ChFiDS_ListOfHElSpine &
-	:rtype: None
-") Prepend;
-		void Prepend (ChFiDS_ListOfHElSpine & Other);
-		%feature("compactdefaultargs") Append;
-		%feature("autodoc", "	:param I:
-	:type I: Handle_ChFiDS_HElSpine &
-	:rtype: None
-") Append;
-		void Append (const Handle_ChFiDS_HElSpine & I);
-		%feature("compactdefaultargs") Append;
-		%feature("autodoc", "	:param I:
-	:type I: Handle_ChFiDS_HElSpine &
-	:param theIt:
-	:type theIt: ChFiDS_ListIteratorOfListOfHElSpine &
-	:rtype: None
-") Append;
-		void Append (const Handle_ChFiDS_HElSpine & I,ChFiDS_ListIteratorOfListOfHElSpine & theIt);
-		%feature("compactdefaultargs") Append;
-		%feature("autodoc", "	:param Other:
-	:type Other: ChFiDS_ListOfHElSpine &
-	:rtype: None
-") Append;
-		void Append (ChFiDS_ListOfHElSpine & Other);
-		%feature("compactdefaultargs") First;
-		%feature("autodoc", "	:rtype: Handle_ChFiDS_HElSpine
-") First;
-		Handle_ChFiDS_HElSpine First ();
-		%feature("compactdefaultargs") Last;
-		%feature("autodoc", "	:rtype: Handle_ChFiDS_HElSpine
-") Last;
-		Handle_ChFiDS_HElSpine Last ();
-		%feature("compactdefaultargs") RemoveFirst;
-		%feature("autodoc", "	:rtype: None
-") RemoveFirst;
-		void RemoveFirst ();
-		%feature("compactdefaultargs") Remove;
-		%feature("autodoc", "	:param It:
-	:type It: ChFiDS_ListIteratorOfListOfHElSpine &
-	:rtype: None
-") Remove;
-		void Remove (ChFiDS_ListIteratorOfListOfHElSpine & It);
-		%feature("compactdefaultargs") InsertBefore;
-		%feature("autodoc", "	:param I:
-	:type I: Handle_ChFiDS_HElSpine &
-	:param It:
-	:type It: ChFiDS_ListIteratorOfListOfHElSpine &
-	:rtype: None
-") InsertBefore;
-		void InsertBefore (const Handle_ChFiDS_HElSpine & I,ChFiDS_ListIteratorOfListOfHElSpine & It);
-		%feature("compactdefaultargs") InsertBefore;
-		%feature("autodoc", "	:param Other:
-	:type Other: ChFiDS_ListOfHElSpine &
-	:param It:
-	:type It: ChFiDS_ListIteratorOfListOfHElSpine &
-	:rtype: None
-") InsertBefore;
-		void InsertBefore (ChFiDS_ListOfHElSpine & Other,ChFiDS_ListIteratorOfListOfHElSpine & It);
-		%feature("compactdefaultargs") InsertAfter;
-		%feature("autodoc", "	:param I:
-	:type I: Handle_ChFiDS_HElSpine &
-	:param It:
-	:type It: ChFiDS_ListIteratorOfListOfHElSpine &
-	:rtype: None
-") InsertAfter;
-		void InsertAfter (const Handle_ChFiDS_HElSpine & I,ChFiDS_ListIteratorOfListOfHElSpine & It);
-		%feature("compactdefaultargs") InsertAfter;
-		%feature("autodoc", "	:param Other:
-	:type Other: ChFiDS_ListOfHElSpine &
-	:param It:
-	:type It: ChFiDS_ListIteratorOfListOfHElSpine &
-	:rtype: None
-") InsertAfter;
-		void InsertAfter (ChFiDS_ListOfHElSpine & Other,ChFiDS_ListIteratorOfListOfHElSpine & It);
-};
-
-
-%extend ChFiDS_ListOfHElSpine {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor ChFiDS_ListOfStripe;
-class ChFiDS_ListOfStripe {
-	public:
-		%feature("compactdefaultargs") ChFiDS_ListOfStripe;
-		%feature("autodoc", "	:rtype: None
-") ChFiDS_ListOfStripe;
-		 ChFiDS_ListOfStripe ();
-		%feature("compactdefaultargs") ChFiDS_ListOfStripe;
-		%feature("autodoc", "	:param Other:
-	:type Other: ChFiDS_ListOfStripe &
-	:rtype: None
-") ChFiDS_ListOfStripe;
-		 ChFiDS_ListOfStripe (const ChFiDS_ListOfStripe & Other);
-		%feature("compactdefaultargs") Assign;
-		%feature("autodoc", "	:param Other:
-	:type Other: ChFiDS_ListOfStripe &
-	:rtype: None
-") Assign;
-		void Assign (const ChFiDS_ListOfStripe & Other);
-		%feature("compactdefaultargs") operator =;
-		%feature("autodoc", "	:param Other:
-	:type Other: ChFiDS_ListOfStripe &
-	:rtype: None
-") operator =;
-		void operator = (const ChFiDS_ListOfStripe & Other);
-		%feature("compactdefaultargs") Extent;
-		%feature("autodoc", "	:rtype: int
-") Extent;
-		Standard_Integer Extent ();
-		%feature("compactdefaultargs") Clear;
-		%feature("autodoc", "	:rtype: None
-") Clear;
-		void Clear ();
-		%feature("compactdefaultargs") IsEmpty;
-		%feature("autodoc", "	:rtype: bool
-") IsEmpty;
-		Standard_Boolean IsEmpty ();
-		%feature("compactdefaultargs") Prepend;
-		%feature("autodoc", "	:param I:
-	:type I: Handle_ChFiDS_Stripe &
-	:rtype: None
-") Prepend;
-		void Prepend (const Handle_ChFiDS_Stripe & I);
-		%feature("compactdefaultargs") Prepend;
-		%feature("autodoc", "	:param I:
-	:type I: Handle_ChFiDS_Stripe &
-	:param theIt:
-	:type theIt: ChFiDS_ListIteratorOfListOfStripe &
-	:rtype: None
-") Prepend;
-		void Prepend (const Handle_ChFiDS_Stripe & I,ChFiDS_ListIteratorOfListOfStripe & theIt);
-		%feature("compactdefaultargs") Prepend;
-		%feature("autodoc", "	:param Other:
-	:type Other: ChFiDS_ListOfStripe &
-	:rtype: None
-") Prepend;
-		void Prepend (ChFiDS_ListOfStripe & Other);
-		%feature("compactdefaultargs") Append;
-		%feature("autodoc", "	:param I:
-	:type I: Handle_ChFiDS_Stripe &
-	:rtype: None
-") Append;
-		void Append (const Handle_ChFiDS_Stripe & I);
-		%feature("compactdefaultargs") Append;
-		%feature("autodoc", "	:param I:
-	:type I: Handle_ChFiDS_Stripe &
-	:param theIt:
-	:type theIt: ChFiDS_ListIteratorOfListOfStripe &
-	:rtype: None
-") Append;
-		void Append (const Handle_ChFiDS_Stripe & I,ChFiDS_ListIteratorOfListOfStripe & theIt);
-		%feature("compactdefaultargs") Append;
-		%feature("autodoc", "	:param Other:
-	:type Other: ChFiDS_ListOfStripe &
-	:rtype: None
-") Append;
-		void Append (ChFiDS_ListOfStripe & Other);
-		%feature("compactdefaultargs") First;
-		%feature("autodoc", "	:rtype: Handle_ChFiDS_Stripe
-") First;
-		Handle_ChFiDS_Stripe First ();
-		%feature("compactdefaultargs") Last;
-		%feature("autodoc", "	:rtype: Handle_ChFiDS_Stripe
-") Last;
-		Handle_ChFiDS_Stripe Last ();
-		%feature("compactdefaultargs") RemoveFirst;
-		%feature("autodoc", "	:rtype: None
-") RemoveFirst;
-		void RemoveFirst ();
-		%feature("compactdefaultargs") Remove;
-		%feature("autodoc", "	:param It:
-	:type It: ChFiDS_ListIteratorOfListOfStripe &
-	:rtype: None
-") Remove;
-		void Remove (ChFiDS_ListIteratorOfListOfStripe & It);
-		%feature("compactdefaultargs") InsertBefore;
-		%feature("autodoc", "	:param I:
-	:type I: Handle_ChFiDS_Stripe &
-	:param It:
-	:type It: ChFiDS_ListIteratorOfListOfStripe &
-	:rtype: None
-") InsertBefore;
-		void InsertBefore (const Handle_ChFiDS_Stripe & I,ChFiDS_ListIteratorOfListOfStripe & It);
-		%feature("compactdefaultargs") InsertBefore;
-		%feature("autodoc", "	:param Other:
-	:type Other: ChFiDS_ListOfStripe &
-	:param It:
-	:type It: ChFiDS_ListIteratorOfListOfStripe &
-	:rtype: None
-") InsertBefore;
-		void InsertBefore (ChFiDS_ListOfStripe & Other,ChFiDS_ListIteratorOfListOfStripe & It);
-		%feature("compactdefaultargs") InsertAfter;
-		%feature("autodoc", "	:param I:
-	:type I: Handle_ChFiDS_Stripe &
-	:param It:
-	:type It: ChFiDS_ListIteratorOfListOfStripe &
-	:rtype: None
-") InsertAfter;
-		void InsertAfter (const Handle_ChFiDS_Stripe & I,ChFiDS_ListIteratorOfListOfStripe & It);
-		%feature("compactdefaultargs") InsertAfter;
-		%feature("autodoc", "	:param Other:
-	:type Other: ChFiDS_ListOfStripe &
-	:param It:
-	:type It: ChFiDS_ListIteratorOfListOfStripe &
-	:rtype: None
-") InsertAfter;
-		void InsertAfter (ChFiDS_ListOfStripe & Other,ChFiDS_ListIteratorOfListOfStripe & It);
-};
-
-
-%extend ChFiDS_ListOfStripe {
 	%pythoncode {
 	__repr__ = _dumps_object
 	}
@@ -1820,779 +850,8 @@ class ChFiDS_Regul {
 	__repr__ = _dumps_object
 	}
 };
-%nodefaultctor ChFiDS_Regularities;
-class ChFiDS_Regularities {
-	public:
-		%feature("compactdefaultargs") ChFiDS_Regularities;
-		%feature("autodoc", "	:rtype: None
-") ChFiDS_Regularities;
-		 ChFiDS_Regularities ();
-		%feature("compactdefaultargs") ChFiDS_Regularities;
-		%feature("autodoc", "	:param Other:
-	:type Other: ChFiDS_Regularities &
-	:rtype: None
-") ChFiDS_Regularities;
-		 ChFiDS_Regularities (const ChFiDS_Regularities & Other);
-		%feature("compactdefaultargs") Assign;
-		%feature("autodoc", "	:param Other:
-	:type Other: ChFiDS_Regularities &
-	:rtype: None
-") Assign;
-		void Assign (const ChFiDS_Regularities & Other);
-		%feature("compactdefaultargs") operator =;
-		%feature("autodoc", "	:param Other:
-	:type Other: ChFiDS_Regularities &
-	:rtype: None
-") operator =;
-		void operator = (const ChFiDS_Regularities & Other);
-		%feature("compactdefaultargs") Extent;
-		%feature("autodoc", "	:rtype: int
-") Extent;
-		Standard_Integer Extent ();
-		%feature("compactdefaultargs") Clear;
-		%feature("autodoc", "	:rtype: None
-") Clear;
-		void Clear ();
-		%feature("compactdefaultargs") IsEmpty;
-		%feature("autodoc", "	:rtype: bool
-") IsEmpty;
-		Standard_Boolean IsEmpty ();
-		%feature("compactdefaultargs") Prepend;
-		%feature("autodoc", "	:param I:
-	:type I: ChFiDS_Regul &
-	:rtype: None
-") Prepend;
-		void Prepend (const ChFiDS_Regul & I);
-		%feature("compactdefaultargs") Prepend;
-		%feature("autodoc", "	:param I:
-	:type I: ChFiDS_Regul &
-	:param theIt:
-	:type theIt: ChFiDS_ListIteratorOfRegularities &
-	:rtype: None
-") Prepend;
-		void Prepend (const ChFiDS_Regul & I,ChFiDS_ListIteratorOfRegularities & theIt);
-		%feature("compactdefaultargs") Prepend;
-		%feature("autodoc", "	:param Other:
-	:type Other: ChFiDS_Regularities &
-	:rtype: None
-") Prepend;
-		void Prepend (ChFiDS_Regularities & Other);
-		%feature("compactdefaultargs") Append;
-		%feature("autodoc", "	:param I:
-	:type I: ChFiDS_Regul &
-	:rtype: None
-") Append;
-		void Append (const ChFiDS_Regul & I);
-		%feature("compactdefaultargs") Append;
-		%feature("autodoc", "	:param I:
-	:type I: ChFiDS_Regul &
-	:param theIt:
-	:type theIt: ChFiDS_ListIteratorOfRegularities &
-	:rtype: None
-") Append;
-		void Append (const ChFiDS_Regul & I,ChFiDS_ListIteratorOfRegularities & theIt);
-		%feature("compactdefaultargs") Append;
-		%feature("autodoc", "	:param Other:
-	:type Other: ChFiDS_Regularities &
-	:rtype: None
-") Append;
-		void Append (ChFiDS_Regularities & Other);
-		%feature("compactdefaultargs") First;
-		%feature("autodoc", "	:rtype: ChFiDS_Regul
-") First;
-		ChFiDS_Regul & First ();
-		%feature("compactdefaultargs") Last;
-		%feature("autodoc", "	:rtype: ChFiDS_Regul
-") Last;
-		ChFiDS_Regul & Last ();
-		%feature("compactdefaultargs") RemoveFirst;
-		%feature("autodoc", "	:rtype: None
-") RemoveFirst;
-		void RemoveFirst ();
-		%feature("compactdefaultargs") Remove;
-		%feature("autodoc", "	:param It:
-	:type It: ChFiDS_ListIteratorOfRegularities &
-	:rtype: None
-") Remove;
-		void Remove (ChFiDS_ListIteratorOfRegularities & It);
-		%feature("compactdefaultargs") InsertBefore;
-		%feature("autodoc", "	:param I:
-	:type I: ChFiDS_Regul &
-	:param It:
-	:type It: ChFiDS_ListIteratorOfRegularities &
-	:rtype: None
-") InsertBefore;
-		void InsertBefore (const ChFiDS_Regul & I,ChFiDS_ListIteratorOfRegularities & It);
-		%feature("compactdefaultargs") InsertBefore;
-		%feature("autodoc", "	:param Other:
-	:type Other: ChFiDS_Regularities &
-	:param It:
-	:type It: ChFiDS_ListIteratorOfRegularities &
-	:rtype: None
-") InsertBefore;
-		void InsertBefore (ChFiDS_Regularities & Other,ChFiDS_ListIteratorOfRegularities & It);
-		%feature("compactdefaultargs") InsertAfter;
-		%feature("autodoc", "	:param I:
-	:type I: ChFiDS_Regul &
-	:param It:
-	:type It: ChFiDS_ListIteratorOfRegularities &
-	:rtype: None
-") InsertAfter;
-		void InsertAfter (const ChFiDS_Regul & I,ChFiDS_ListIteratorOfRegularities & It);
-		%feature("compactdefaultargs") InsertAfter;
-		%feature("autodoc", "	:param Other:
-	:type Other: ChFiDS_Regularities &
-	:param It:
-	:type It: ChFiDS_ListIteratorOfRegularities &
-	:rtype: None
-") InsertAfter;
-		void InsertAfter (ChFiDS_Regularities & Other,ChFiDS_ListIteratorOfRegularities & It);
-};
-
-
-%extend ChFiDS_Regularities {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor ChFiDS_SecArray1;
-class ChFiDS_SecArray1 {
-	public:
-		%feature("compactdefaultargs") ChFiDS_SecArray1;
-		%feature("autodoc", "	:param Low:
-	:type Low: int
-	:param Up:
-	:type Up: int
-	:rtype: None
-") ChFiDS_SecArray1;
-		 ChFiDS_SecArray1 (const Standard_Integer Low,const Standard_Integer Up);
-		%feature("compactdefaultargs") ChFiDS_SecArray1;
-		%feature("autodoc", "	:param Item:
-	:type Item: ChFiDS_CircSection &
-	:param Low:
-	:type Low: int
-	:param Up:
-	:type Up: int
-	:rtype: None
-") ChFiDS_SecArray1;
-		 ChFiDS_SecArray1 (const ChFiDS_CircSection & Item,const Standard_Integer Low,const Standard_Integer Up);
-		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	:param V:
-	:type V: ChFiDS_CircSection &
-	:rtype: None
-") Init;
-		void Init (const ChFiDS_CircSection & V);
-		%feature("compactdefaultargs") Destroy;
-		%feature("autodoc", "	:rtype: None
-") Destroy;
-		void Destroy ();
-		%feature("compactdefaultargs") IsAllocated;
-		%feature("autodoc", "	:rtype: bool
-") IsAllocated;
-		Standard_Boolean IsAllocated ();
-		%feature("compactdefaultargs") Assign;
-		%feature("autodoc", "	:param Other:
-	:type Other: ChFiDS_SecArray1 &
-	:rtype: ChFiDS_SecArray1
-") Assign;
-		const ChFiDS_SecArray1 & Assign (const ChFiDS_SecArray1 & Other);
-		%feature("compactdefaultargs") operator =;
-		%feature("autodoc", "	:param Other:
-	:type Other: ChFiDS_SecArray1 &
-	:rtype: ChFiDS_SecArray1
-") operator =;
-		const ChFiDS_SecArray1 & operator = (const ChFiDS_SecArray1 & Other);
-		%feature("compactdefaultargs") Length;
-		%feature("autodoc", "	:rtype: int
-") Length;
-		Standard_Integer Length ();
-		%feature("compactdefaultargs") Lower;
-		%feature("autodoc", "	:rtype: int
-") Lower;
-		Standard_Integer Lower ();
-		%feature("compactdefaultargs") Upper;
-		%feature("autodoc", "	:rtype: int
-") Upper;
-		Standard_Integer Upper ();
-		%feature("compactdefaultargs") SetValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param Value:
-	:type Value: ChFiDS_CircSection &
-	:rtype: None
-") SetValue;
-		void SetValue (const Standard_Integer Index,const ChFiDS_CircSection & Value);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: ChFiDS_CircSection
-") Value;
-		const ChFiDS_CircSection & Value (const Standard_Integer Index);
-		%feature("compactdefaultargs") ChangeValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: ChFiDS_CircSection
-") ChangeValue;
-		ChFiDS_CircSection & ChangeValue (const Standard_Integer Index);
-};
-
-
-%extend ChFiDS_SecArray1 {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor ChFiDS_SecHArray1;
-class ChFiDS_SecHArray1 : public MMgt_TShared {
-	public:
-		%feature("compactdefaultargs") ChFiDS_SecHArray1;
-		%feature("autodoc", "	:param Low:
-	:type Low: int
-	:param Up:
-	:type Up: int
-	:rtype: None
-") ChFiDS_SecHArray1;
-		 ChFiDS_SecHArray1 (const Standard_Integer Low,const Standard_Integer Up);
-		%feature("compactdefaultargs") ChFiDS_SecHArray1;
-		%feature("autodoc", "	:param Low:
-	:type Low: int
-	:param Up:
-	:type Up: int
-	:param V:
-	:type V: ChFiDS_CircSection &
-	:rtype: None
-") ChFiDS_SecHArray1;
-		 ChFiDS_SecHArray1 (const Standard_Integer Low,const Standard_Integer Up,const ChFiDS_CircSection & V);
-		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	:param V:
-	:type V: ChFiDS_CircSection &
-	:rtype: None
-") Init;
-		void Init (const ChFiDS_CircSection & V);
-		%feature("compactdefaultargs") Length;
-		%feature("autodoc", "	:rtype: int
-") Length;
-		Standard_Integer Length ();
-		%feature("compactdefaultargs") Lower;
-		%feature("autodoc", "	:rtype: int
-") Lower;
-		Standard_Integer Lower ();
-		%feature("compactdefaultargs") Upper;
-		%feature("autodoc", "	:rtype: int
-") Upper;
-		Standard_Integer Upper ();
-		%feature("compactdefaultargs") SetValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param Value:
-	:type Value: ChFiDS_CircSection &
-	:rtype: None
-") SetValue;
-		void SetValue (const Standard_Integer Index,const ChFiDS_CircSection & Value);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: ChFiDS_CircSection
-") Value;
-		const ChFiDS_CircSection & Value (const Standard_Integer Index);
-		%feature("compactdefaultargs") ChangeValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: ChFiDS_CircSection
-") ChangeValue;
-		ChFiDS_CircSection & ChangeValue (const Standard_Integer Index);
-		%feature("compactdefaultargs") Array1;
-		%feature("autodoc", "	:rtype: ChFiDS_SecArray1
-") Array1;
-		const ChFiDS_SecArray1 & Array1 ();
-		%feature("compactdefaultargs") ChangeArray1;
-		%feature("autodoc", "	:rtype: ChFiDS_SecArray1
-") ChangeArray1;
-		ChFiDS_SecArray1 & ChangeArray1 ();
-};
-
-
-%extend ChFiDS_SecHArray1 {
-	%pythoncode {
-		def GetHandle(self):
-		    try:
-		        return self.thisHandle
-		    except:
-		        self.thisHandle = Handle_ChFiDS_SecHArray1(self)
-		        self.thisown = False
-		        return self.thisHandle
-	}
-};
-
-%pythonappend Handle_ChFiDS_SecHArray1::Handle_ChFiDS_SecHArray1 %{
-    # register the handle in the base object
-    if len(args) > 0:
-        register_handle(self, args[0])
-%}
-
-%nodefaultctor Handle_ChFiDS_SecHArray1;
-class Handle_ChFiDS_SecHArray1 : public Handle_MMgt_TShared {
-
-    public:
-        // constructors
-        Handle_ChFiDS_SecHArray1();
-        Handle_ChFiDS_SecHArray1(const Handle_ChFiDS_SecHArray1 &aHandle);
-        Handle_ChFiDS_SecHArray1(const ChFiDS_SecHArray1 *anItem);
-        void Nullify();
-        Standard_Boolean IsNull() const;
-        static const Handle_ChFiDS_SecHArray1 DownCast(const Handle_Standard_Transient &AnObject);
-
-};
-%extend Handle_ChFiDS_SecHArray1 {
-    ChFiDS_SecHArray1* _get_reference() {
-    return (ChFiDS_SecHArray1*)$self->Access();
-    }
-};
-
-%extend Handle_ChFiDS_SecHArray1 {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
-};
-
-%extend ChFiDS_SecHArray1 {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor ChFiDS_SequenceNodeOfSequenceOfSpine;
-class ChFiDS_SequenceNodeOfSequenceOfSpine : public TCollection_SeqNode {
-	public:
-		%feature("compactdefaultargs") ChFiDS_SequenceNodeOfSequenceOfSpine;
-		%feature("autodoc", "	:param I:
-	:type I: Handle_ChFiDS_Spine &
-	:param n:
-	:type n: TCollection_SeqNodePtr &
-	:param p:
-	:type p: TCollection_SeqNodePtr &
-	:rtype: None
-") ChFiDS_SequenceNodeOfSequenceOfSpine;
-		 ChFiDS_SequenceNodeOfSequenceOfSpine (const Handle_ChFiDS_Spine & I,const TCollection_SeqNodePtr & n,const TCollection_SeqNodePtr & p);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:rtype: Handle_ChFiDS_Spine
-") Value;
-		Handle_ChFiDS_Spine Value ();
-};
-
-
-%extend ChFiDS_SequenceNodeOfSequenceOfSpine {
-	%pythoncode {
-		def GetHandle(self):
-		    try:
-		        return self.thisHandle
-		    except:
-		        self.thisHandle = Handle_ChFiDS_SequenceNodeOfSequenceOfSpine(self)
-		        self.thisown = False
-		        return self.thisHandle
-	}
-};
-
-%pythonappend Handle_ChFiDS_SequenceNodeOfSequenceOfSpine::Handle_ChFiDS_SequenceNodeOfSequenceOfSpine %{
-    # register the handle in the base object
-    if len(args) > 0:
-        register_handle(self, args[0])
-%}
-
-%nodefaultctor Handle_ChFiDS_SequenceNodeOfSequenceOfSpine;
-class Handle_ChFiDS_SequenceNodeOfSequenceOfSpine : public Handle_TCollection_SeqNode {
-
-    public:
-        // constructors
-        Handle_ChFiDS_SequenceNodeOfSequenceOfSpine();
-        Handle_ChFiDS_SequenceNodeOfSequenceOfSpine(const Handle_ChFiDS_SequenceNodeOfSequenceOfSpine &aHandle);
-        Handle_ChFiDS_SequenceNodeOfSequenceOfSpine(const ChFiDS_SequenceNodeOfSequenceOfSpine *anItem);
-        void Nullify();
-        Standard_Boolean IsNull() const;
-        static const Handle_ChFiDS_SequenceNodeOfSequenceOfSpine DownCast(const Handle_Standard_Transient &AnObject);
-
-};
-%extend Handle_ChFiDS_SequenceNodeOfSequenceOfSpine {
-    ChFiDS_SequenceNodeOfSequenceOfSpine* _get_reference() {
-    return (ChFiDS_SequenceNodeOfSequenceOfSpine*)$self->Access();
-    }
-};
-
-%extend Handle_ChFiDS_SequenceNodeOfSequenceOfSpine {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
-};
-
-%extend ChFiDS_SequenceNodeOfSequenceOfSpine {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor ChFiDS_SequenceNodeOfSequenceOfSurfData;
-class ChFiDS_SequenceNodeOfSequenceOfSurfData : public TCollection_SeqNode {
-	public:
-		%feature("compactdefaultargs") ChFiDS_SequenceNodeOfSequenceOfSurfData;
-		%feature("autodoc", "	:param I:
-	:type I: Handle_ChFiDS_SurfData &
-	:param n:
-	:type n: TCollection_SeqNodePtr &
-	:param p:
-	:type p: TCollection_SeqNodePtr &
-	:rtype: None
-") ChFiDS_SequenceNodeOfSequenceOfSurfData;
-		 ChFiDS_SequenceNodeOfSequenceOfSurfData (const Handle_ChFiDS_SurfData & I,const TCollection_SeqNodePtr & n,const TCollection_SeqNodePtr & p);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:rtype: Handle_ChFiDS_SurfData
-") Value;
-		Handle_ChFiDS_SurfData Value ();
-};
-
-
-%extend ChFiDS_SequenceNodeOfSequenceOfSurfData {
-	%pythoncode {
-		def GetHandle(self):
-		    try:
-		        return self.thisHandle
-		    except:
-		        self.thisHandle = Handle_ChFiDS_SequenceNodeOfSequenceOfSurfData(self)
-		        self.thisown = False
-		        return self.thisHandle
-	}
-};
-
-%pythonappend Handle_ChFiDS_SequenceNodeOfSequenceOfSurfData::Handle_ChFiDS_SequenceNodeOfSequenceOfSurfData %{
-    # register the handle in the base object
-    if len(args) > 0:
-        register_handle(self, args[0])
-%}
-
-%nodefaultctor Handle_ChFiDS_SequenceNodeOfSequenceOfSurfData;
-class Handle_ChFiDS_SequenceNodeOfSequenceOfSurfData : public Handle_TCollection_SeqNode {
-
-    public:
-        // constructors
-        Handle_ChFiDS_SequenceNodeOfSequenceOfSurfData();
-        Handle_ChFiDS_SequenceNodeOfSequenceOfSurfData(const Handle_ChFiDS_SequenceNodeOfSequenceOfSurfData &aHandle);
-        Handle_ChFiDS_SequenceNodeOfSequenceOfSurfData(const ChFiDS_SequenceNodeOfSequenceOfSurfData *anItem);
-        void Nullify();
-        Standard_Boolean IsNull() const;
-        static const Handle_ChFiDS_SequenceNodeOfSequenceOfSurfData DownCast(const Handle_Standard_Transient &AnObject);
-
-};
-%extend Handle_ChFiDS_SequenceNodeOfSequenceOfSurfData {
-    ChFiDS_SequenceNodeOfSequenceOfSurfData* _get_reference() {
-    return (ChFiDS_SequenceNodeOfSequenceOfSurfData*)$self->Access();
-    }
-};
-
-%extend Handle_ChFiDS_SequenceNodeOfSequenceOfSurfData {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
-};
-
-%extend ChFiDS_SequenceNodeOfSequenceOfSurfData {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor ChFiDS_SequenceOfSpine;
-class ChFiDS_SequenceOfSpine : public TCollection_BaseSequence {
-	public:
-		%feature("compactdefaultargs") ChFiDS_SequenceOfSpine;
-		%feature("autodoc", "	:rtype: None
-") ChFiDS_SequenceOfSpine;
-		 ChFiDS_SequenceOfSpine ();
-		%feature("compactdefaultargs") ChFiDS_SequenceOfSpine;
-		%feature("autodoc", "	:param Other:
-	:type Other: ChFiDS_SequenceOfSpine &
-	:rtype: None
-") ChFiDS_SequenceOfSpine;
-		 ChFiDS_SequenceOfSpine (const ChFiDS_SequenceOfSpine & Other);
-		%feature("compactdefaultargs") Clear;
-		%feature("autodoc", "	:rtype: None
-") Clear;
-		void Clear ();
-		%feature("compactdefaultargs") Assign;
-		%feature("autodoc", "	:param Other:
-	:type Other: ChFiDS_SequenceOfSpine &
-	:rtype: ChFiDS_SequenceOfSpine
-") Assign;
-		const ChFiDS_SequenceOfSpine & Assign (const ChFiDS_SequenceOfSpine & Other);
-		%feature("compactdefaultargs") operator =;
-		%feature("autodoc", "	:param Other:
-	:type Other: ChFiDS_SequenceOfSpine &
-	:rtype: ChFiDS_SequenceOfSpine
-") operator =;
-		const ChFiDS_SequenceOfSpine & operator = (const ChFiDS_SequenceOfSpine & Other);
-		%feature("compactdefaultargs") Append;
-		%feature("autodoc", "	:param T:
-	:type T: Handle_ChFiDS_Spine &
-	:rtype: None
-") Append;
-		void Append (const Handle_ChFiDS_Spine & T);
-		%feature("compactdefaultargs") Append;
-		%feature("autodoc", "	:param S:
-	:type S: ChFiDS_SequenceOfSpine &
-	:rtype: None
-") Append;
-		void Append (ChFiDS_SequenceOfSpine & S);
-		%feature("compactdefaultargs") Prepend;
-		%feature("autodoc", "	:param T:
-	:type T: Handle_ChFiDS_Spine &
-	:rtype: None
-") Prepend;
-		void Prepend (const Handle_ChFiDS_Spine & T);
-		%feature("compactdefaultargs") Prepend;
-		%feature("autodoc", "	:param S:
-	:type S: ChFiDS_SequenceOfSpine &
-	:rtype: None
-") Prepend;
-		void Prepend (ChFiDS_SequenceOfSpine & S);
-		%feature("compactdefaultargs") InsertBefore;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param T:
-	:type T: Handle_ChFiDS_Spine &
-	:rtype: None
-") InsertBefore;
-		void InsertBefore (const Standard_Integer Index,const Handle_ChFiDS_Spine & T);
-		%feature("compactdefaultargs") InsertBefore;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param S:
-	:type S: ChFiDS_SequenceOfSpine &
-	:rtype: None
-") InsertBefore;
-		void InsertBefore (const Standard_Integer Index,ChFiDS_SequenceOfSpine & S);
-		%feature("compactdefaultargs") InsertAfter;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param T:
-	:type T: Handle_ChFiDS_Spine &
-	:rtype: None
-") InsertAfter;
-		void InsertAfter (const Standard_Integer Index,const Handle_ChFiDS_Spine & T);
-		%feature("compactdefaultargs") InsertAfter;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param S:
-	:type S: ChFiDS_SequenceOfSpine &
-	:rtype: None
-") InsertAfter;
-		void InsertAfter (const Standard_Integer Index,ChFiDS_SequenceOfSpine & S);
-		%feature("compactdefaultargs") First;
-		%feature("autodoc", "	:rtype: Handle_ChFiDS_Spine
-") First;
-		Handle_ChFiDS_Spine First ();
-		%feature("compactdefaultargs") Last;
-		%feature("autodoc", "	:rtype: Handle_ChFiDS_Spine
-") Last;
-		Handle_ChFiDS_Spine Last ();
-		%feature("compactdefaultargs") Split;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param Sub:
-	:type Sub: ChFiDS_SequenceOfSpine &
-	:rtype: None
-") Split;
-		void Split (const Standard_Integer Index,ChFiDS_SequenceOfSpine & Sub);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: Handle_ChFiDS_Spine
-") Value;
-		Handle_ChFiDS_Spine Value (const Standard_Integer Index);
-		%feature("compactdefaultargs") SetValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param I:
-	:type I: Handle_ChFiDS_Spine &
-	:rtype: None
-") SetValue;
-		void SetValue (const Standard_Integer Index,const Handle_ChFiDS_Spine & I);
-		%feature("compactdefaultargs") ChangeValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: Handle_ChFiDS_Spine
-") ChangeValue;
-		Handle_ChFiDS_Spine ChangeValue (const Standard_Integer Index);
-		%feature("compactdefaultargs") Remove;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: None
-") Remove;
-		void Remove (const Standard_Integer Index);
-		%feature("compactdefaultargs") Remove;
-		%feature("autodoc", "	:param FromIndex:
-	:type FromIndex: int
-	:param ToIndex:
-	:type ToIndex: int
-	:rtype: None
-") Remove;
-		void Remove (const Standard_Integer FromIndex,const Standard_Integer ToIndex);
-};
-
-
-%extend ChFiDS_SequenceOfSpine {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor ChFiDS_SequenceOfSurfData;
-class ChFiDS_SequenceOfSurfData : public TCollection_BaseSequence {
-	public:
-		%feature("compactdefaultargs") ChFiDS_SequenceOfSurfData;
-		%feature("autodoc", "	:rtype: None
-") ChFiDS_SequenceOfSurfData;
-		 ChFiDS_SequenceOfSurfData ();
-		%feature("compactdefaultargs") ChFiDS_SequenceOfSurfData;
-		%feature("autodoc", "	:param Other:
-	:type Other: ChFiDS_SequenceOfSurfData &
-	:rtype: None
-") ChFiDS_SequenceOfSurfData;
-		 ChFiDS_SequenceOfSurfData (const ChFiDS_SequenceOfSurfData & Other);
-		%feature("compactdefaultargs") Clear;
-		%feature("autodoc", "	:rtype: None
-") Clear;
-		void Clear ();
-		%feature("compactdefaultargs") Assign;
-		%feature("autodoc", "	:param Other:
-	:type Other: ChFiDS_SequenceOfSurfData &
-	:rtype: ChFiDS_SequenceOfSurfData
-") Assign;
-		const ChFiDS_SequenceOfSurfData & Assign (const ChFiDS_SequenceOfSurfData & Other);
-		%feature("compactdefaultargs") operator =;
-		%feature("autodoc", "	:param Other:
-	:type Other: ChFiDS_SequenceOfSurfData &
-	:rtype: ChFiDS_SequenceOfSurfData
-") operator =;
-		const ChFiDS_SequenceOfSurfData & operator = (const ChFiDS_SequenceOfSurfData & Other);
-		%feature("compactdefaultargs") Append;
-		%feature("autodoc", "	:param T:
-	:type T: Handle_ChFiDS_SurfData &
-	:rtype: None
-") Append;
-		void Append (const Handle_ChFiDS_SurfData & T);
-		%feature("compactdefaultargs") Append;
-		%feature("autodoc", "	:param S:
-	:type S: ChFiDS_SequenceOfSurfData &
-	:rtype: None
-") Append;
-		void Append (ChFiDS_SequenceOfSurfData & S);
-		%feature("compactdefaultargs") Prepend;
-		%feature("autodoc", "	:param T:
-	:type T: Handle_ChFiDS_SurfData &
-	:rtype: None
-") Prepend;
-		void Prepend (const Handle_ChFiDS_SurfData & T);
-		%feature("compactdefaultargs") Prepend;
-		%feature("autodoc", "	:param S:
-	:type S: ChFiDS_SequenceOfSurfData &
-	:rtype: None
-") Prepend;
-		void Prepend (ChFiDS_SequenceOfSurfData & S);
-		%feature("compactdefaultargs") InsertBefore;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param T:
-	:type T: Handle_ChFiDS_SurfData &
-	:rtype: None
-") InsertBefore;
-		void InsertBefore (const Standard_Integer Index,const Handle_ChFiDS_SurfData & T);
-		%feature("compactdefaultargs") InsertBefore;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param S:
-	:type S: ChFiDS_SequenceOfSurfData &
-	:rtype: None
-") InsertBefore;
-		void InsertBefore (const Standard_Integer Index,ChFiDS_SequenceOfSurfData & S);
-		%feature("compactdefaultargs") InsertAfter;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param T:
-	:type T: Handle_ChFiDS_SurfData &
-	:rtype: None
-") InsertAfter;
-		void InsertAfter (const Standard_Integer Index,const Handle_ChFiDS_SurfData & T);
-		%feature("compactdefaultargs") InsertAfter;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param S:
-	:type S: ChFiDS_SequenceOfSurfData &
-	:rtype: None
-") InsertAfter;
-		void InsertAfter (const Standard_Integer Index,ChFiDS_SequenceOfSurfData & S);
-		%feature("compactdefaultargs") First;
-		%feature("autodoc", "	:rtype: Handle_ChFiDS_SurfData
-") First;
-		Handle_ChFiDS_SurfData First ();
-		%feature("compactdefaultargs") Last;
-		%feature("autodoc", "	:rtype: Handle_ChFiDS_SurfData
-") Last;
-		Handle_ChFiDS_SurfData Last ();
-		%feature("compactdefaultargs") Split;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param Sub:
-	:type Sub: ChFiDS_SequenceOfSurfData &
-	:rtype: None
-") Split;
-		void Split (const Standard_Integer Index,ChFiDS_SequenceOfSurfData & Sub);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: Handle_ChFiDS_SurfData
-") Value;
-		Handle_ChFiDS_SurfData Value (const Standard_Integer Index);
-		%feature("compactdefaultargs") SetValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param I:
-	:type I: Handle_ChFiDS_SurfData &
-	:rtype: None
-") SetValue;
-		void SetValue (const Standard_Integer Index,const Handle_ChFiDS_SurfData & I);
-		%feature("compactdefaultargs") ChangeValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: Handle_ChFiDS_SurfData
-") ChangeValue;
-		Handle_ChFiDS_SurfData ChangeValue (const Standard_Integer Index);
-		%feature("compactdefaultargs") Remove;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: None
-") Remove;
-		void Remove (const Standard_Integer Index);
-		%feature("compactdefaultargs") Remove;
-		%feature("autodoc", "	:param FromIndex:
-	:type FromIndex: int
-	:param ToIndex:
-	:type ToIndex: int
-	:rtype: None
-") Remove;
-		void Remove (const Standard_Integer FromIndex,const Standard_Integer ToIndex);
-};
-
-
-%extend ChFiDS_SequenceOfSurfData {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
 %nodefaultctor ChFiDS_Spine;
-class ChFiDS_Spine : public MMgt_TShared {
+class ChFiDS_Spine : public Standard_Transient {
 	public:
 		%feature("compactdefaultargs") ChFiDS_Spine;
 		%feature("autodoc", "	:rtype: None
@@ -2691,7 +950,7 @@ class ChFiDS_Spine : public MMgt_TShared {
 ") SplitDone;
 		void SplitDone (const Standard_Boolean B);
 		%feature("compactdefaultargs") Load;
-		%feature("autodoc", "	* prepare the guideline depending on the edges that are elementary arks (take parameters from a single curvilinear abscissa); to be able to call methods on the geometry (first,last,value,d1,d2) it is necessary to start with preparation otherwise an exception will be raised
+		%feature("autodoc", "	* prepare the guideline depending on the edges that are elementary arks --take parameters from a single curvilinear abscissa--; to be able to call methods on the geometry --first,last,value,d1,d2-- it is necessary to start with preparation otherwise an exception will be raised
 
 	:rtype: None
 ") Load;
@@ -2735,7 +994,7 @@ class ChFiDS_Spine : public MMgt_TShared {
 ") FirstParameter;
 		Standard_Real FirstParameter (const Standard_Integer IndexSpine);
 		%feature("compactdefaultargs") LastParameter;
-		%feature("autodoc", "	* gives the total length till the ark with number IndexSpine (inclus)
+		%feature("autodoc", "	* gives the total length till the ark with number IndexSpine --inclus--
 
 	:param IndexSpine:
 	:type IndexSpine: int
@@ -2887,7 +1146,7 @@ class ChFiDS_Spine : public MMgt_TShared {
 ") SetStatus;
 		void SetStatus (const ChFiDS_State S,const Standard_Boolean IsFirst);
 		%feature("compactdefaultargs") IsTangencyExtremity;
-		%feature("autodoc", "	* returns if the set of edges starts (or end) on Tangency point.
+		%feature("autodoc", "	* returns if the set of edges starts --or end-- on Tangency point.
 
 	:param IsFirst:
 	:type IsFirst: bool
@@ -3002,7 +1261,7 @@ class ChFiDS_Spine : public MMgt_TShared {
 %}
 
 %nodefaultctor Handle_ChFiDS_Spine;
-class Handle_ChFiDS_Spine : public Handle_MMgt_TShared {
+class Handle_ChFiDS_Spine : public Handle_Standard_Transient {
 
     public:
         // constructors
@@ -3014,19 +1273,20 @@ class Handle_ChFiDS_Spine : public Handle_MMgt_TShared {
         static const Handle_ChFiDS_Spine DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_ChFiDS_Spine {
     ChFiDS_Spine* _get_reference() {
-    return (ChFiDS_Spine*)$self->Access();
+    return (ChFiDS_Spine*)$self->get();
     }
 };
 
 %extend Handle_ChFiDS_Spine {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend ChFiDS_Spine {
@@ -3035,7 +1295,7 @@ class Handle_ChFiDS_Spine : public Handle_MMgt_TShared {
 	}
 };
 %nodefaultctor ChFiDS_Stripe;
-class ChFiDS_Stripe : public MMgt_TShared {
+class ChFiDS_Stripe : public Standard_Transient {
 	public:
 		%feature("compactdefaultargs") ChFiDS_Stripe;
 		%feature("autodoc", "	:rtype: None
@@ -3363,7 +1623,7 @@ class ChFiDS_Stripe : public MMgt_TShared {
 %}
 
 %nodefaultctor Handle_ChFiDS_Stripe;
-class Handle_ChFiDS_Stripe : public Handle_MMgt_TShared {
+class Handle_ChFiDS_Stripe : public Handle_Standard_Transient {
 
     public:
         // constructors
@@ -3375,109 +1635,23 @@ class Handle_ChFiDS_Stripe : public Handle_MMgt_TShared {
         static const Handle_ChFiDS_Stripe DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_ChFiDS_Stripe {
     ChFiDS_Stripe* _get_reference() {
-    return (ChFiDS_Stripe*)$self->Access();
+    return (ChFiDS_Stripe*)$self->get();
     }
 };
 
 %extend Handle_ChFiDS_Stripe {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend ChFiDS_Stripe {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor ChFiDS_StripeArray1;
-class ChFiDS_StripeArray1 {
-	public:
-		%feature("compactdefaultargs") ChFiDS_StripeArray1;
-		%feature("autodoc", "	:param Low:
-	:type Low: int
-	:param Up:
-	:type Up: int
-	:rtype: None
-") ChFiDS_StripeArray1;
-		 ChFiDS_StripeArray1 (const Standard_Integer Low,const Standard_Integer Up);
-		%feature("compactdefaultargs") ChFiDS_StripeArray1;
-		%feature("autodoc", "	:param Item:
-	:type Item: Handle_ChFiDS_Stripe &
-	:param Low:
-	:type Low: int
-	:param Up:
-	:type Up: int
-	:rtype: None
-") ChFiDS_StripeArray1;
-		 ChFiDS_StripeArray1 (const Handle_ChFiDS_Stripe & Item,const Standard_Integer Low,const Standard_Integer Up);
-		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	:param V:
-	:type V: Handle_ChFiDS_Stripe &
-	:rtype: None
-") Init;
-		void Init (const Handle_ChFiDS_Stripe & V);
-		%feature("compactdefaultargs") Destroy;
-		%feature("autodoc", "	:rtype: None
-") Destroy;
-		void Destroy ();
-		%feature("compactdefaultargs") IsAllocated;
-		%feature("autodoc", "	:rtype: bool
-") IsAllocated;
-		Standard_Boolean IsAllocated ();
-		%feature("compactdefaultargs") Assign;
-		%feature("autodoc", "	:param Other:
-	:type Other: ChFiDS_StripeArray1 &
-	:rtype: ChFiDS_StripeArray1
-") Assign;
-		const ChFiDS_StripeArray1 & Assign (const ChFiDS_StripeArray1 & Other);
-		%feature("compactdefaultargs") operator =;
-		%feature("autodoc", "	:param Other:
-	:type Other: ChFiDS_StripeArray1 &
-	:rtype: ChFiDS_StripeArray1
-") operator =;
-		const ChFiDS_StripeArray1 & operator = (const ChFiDS_StripeArray1 & Other);
-		%feature("compactdefaultargs") Length;
-		%feature("autodoc", "	:rtype: int
-") Length;
-		Standard_Integer Length ();
-		%feature("compactdefaultargs") Lower;
-		%feature("autodoc", "	:rtype: int
-") Lower;
-		Standard_Integer Lower ();
-		%feature("compactdefaultargs") Upper;
-		%feature("autodoc", "	:rtype: int
-") Upper;
-		Standard_Integer Upper ();
-		%feature("compactdefaultargs") SetValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param Value:
-	:type Value: Handle_ChFiDS_Stripe &
-	:rtype: None
-") SetValue;
-		void SetValue (const Standard_Integer Index,const Handle_ChFiDS_Stripe & Value);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: Handle_ChFiDS_Stripe
-") Value;
-		Handle_ChFiDS_Stripe Value (const Standard_Integer Index);
-		%feature("compactdefaultargs") ChangeValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: Handle_ChFiDS_Stripe
-") ChangeValue;
-		Handle_ChFiDS_Stripe ChangeValue (const Standard_Integer Index);
-};
-
-
-%extend ChFiDS_StripeArray1 {
 	%pythoncode {
 	__repr__ = _dumps_object
 	}
@@ -3532,7 +1706,7 @@ class ChFiDS_StripeMap {
 	}
 };
 %nodefaultctor ChFiDS_SurfData;
-class ChFiDS_SurfData : public MMgt_TShared {
+class ChFiDS_SurfData : public Standard_Transient {
 	public:
 		%feature("compactdefaultargs") ChFiDS_SurfData;
 		%feature("autodoc", "	:rtype: None
@@ -3749,15 +1923,15 @@ class ChFiDS_SurfData : public MMgt_TShared {
 ") LastExtensionValue;
 		void LastExtensionValue (const Standard_Real Extend);
 		%feature("compactdefaultargs") Simul;
-		%feature("autodoc", "	:rtype: Handle_MMgt_TShared
+		%feature("autodoc", "	:rtype: Handle_Standard_Transient
 ") Simul;
-		Handle_MMgt_TShared Simul ();
+		Handle_Standard_Transient Simul ();
 		%feature("compactdefaultargs") SetSimul;
 		%feature("autodoc", "	:param S:
-	:type S: Handle_MMgt_TShared &
+	:type S: Handle_Standard_Transient &
 	:rtype: None
 ") SetSimul;
-		void SetSimul (const Handle_MMgt_TShared & S);
+		void SetSimul (const Handle_Standard_Transient & S);
 		%feature("compactdefaultargs") ResetSimul;
 		%feature("autodoc", "	:rtype: None
 ") ResetSimul;
@@ -3836,7 +2010,7 @@ class ChFiDS_SurfData : public MMgt_TShared {
 %}
 
 %nodefaultctor Handle_ChFiDS_SurfData;
-class Handle_ChFiDS_SurfData : public Handle_MMgt_TShared {
+class Handle_ChFiDS_SurfData : public Handle_Standard_Transient {
 
     public:
         // constructors
@@ -3848,19 +2022,20 @@ class Handle_ChFiDS_SurfData : public Handle_MMgt_TShared {
         static const Handle_ChFiDS_SurfData DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_ChFiDS_SurfData {
     ChFiDS_SurfData* _get_reference() {
-    return (ChFiDS_SurfData*)$self->Access();
+    return (ChFiDS_SurfData*)$self->get();
     }
 };
 
 %extend Handle_ChFiDS_SurfData {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend ChFiDS_SurfData {
@@ -3969,19 +2144,20 @@ class Handle_ChFiDS_ChamfSpine : public Handle_ChFiDS_Spine {
         static const Handle_ChFiDS_ChamfSpine DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_ChFiDS_ChamfSpine {
     ChFiDS_ChamfSpine* _get_reference() {
-    return (ChFiDS_ChamfSpine*)$self->Access();
+    return (ChFiDS_ChamfSpine*)$self->get();
     }
 };
 
 %extend Handle_ChFiDS_ChamfSpine {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend ChFiDS_ChamfSpine {
@@ -4168,19 +2344,20 @@ class Handle_ChFiDS_FilSpine : public Handle_ChFiDS_Spine {
         static const Handle_ChFiDS_FilSpine DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_ChFiDS_FilSpine {
     ChFiDS_FilSpine* _get_reference() {
-    return (ChFiDS_FilSpine*)$self->Access();
+    return (ChFiDS_FilSpine*)$self->get();
     }
 };
 
 %extend Handle_ChFiDS_FilSpine {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend ChFiDS_FilSpine {

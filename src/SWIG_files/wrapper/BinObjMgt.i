@@ -1,5 +1,5 @@
 /*
-Copyright 2008-2017 Thomas Paviot (tpaviot@gmail.com)
+Copyright 2008-2018 Thomas Paviot (tpaviot@gmail.com)
 
 
 This file is part of pythonOCC.
@@ -63,6 +63,9 @@ typedef Standard_Integer * BinObjMgt_PInteger;
 typedef TColStd_DataMapOfIntegerTransient BinObjMgt_RRelocationTable;
 typedef Standard_Character * BinObjMgt_PChar;
 /* end typedefs declaration */
+
+/* templates */
+/* end templates declaration */
 
 /* public enums */
 /* end public enums declaration */
@@ -409,7 +412,7 @@ class BinObjMgt_Persistent {
 ") Position;
 		Standard_Integer Position ();
 		%feature("compactdefaultargs") SetPosition;
-		%feature("autodoc", "	* Sets the current position for get/put. Resets an error state depending on the validity of thePos. Returns the new state (value of IsOK())
+		%feature("autodoc", "	* Sets the current position for get/put. Resets an error state depending on the validity of thePos. Returns the new state --value of IsOK------
 
 	:param thePos:
 	:type thePos: int

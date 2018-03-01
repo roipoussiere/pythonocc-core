@@ -1,5 +1,5 @@
 /*
-Copyright 2008-2017 Thomas Paviot (tpaviot@gmail.com)
+Copyright 2008-2018 Thomas Paviot (tpaviot@gmail.com)
 
 
 This file is part of pythonOCC.
@@ -54,11 +54,12 @@ def register_handle(handle, base_object):
 };
 
 /* typedefs */
-typedef NCollection_Vector <Poly_CoherentLink>::Iterator Poly_BaseIteratorOfCoherentLink;
-typedef NCollection_Vector <Poly_CoherentTriangle>::Iterator Poly_BaseIteratorOfCoherentTriangle;
-typedef NCollection_Vector <Poly_CoherentNode>::Iterator Poly_BaseIteratorOfCoherentNode;
-typedef NCollection_List <Handle_Poly_Triangulation> Poly_ListOfTriangulation;
 /* end typedefs declaration */
+
+/* templates */
+%template(Poly_ListOfTriangulation) NCollection_List <Handle_Poly_Triangulation>;
+%template(Poly_Array1OfTriangle) NCollection_Array1 <Poly_Triangle>;
+/* end templates declaration */
 
 /* public enums */
 /* end public enums declaration */
@@ -170,7 +171,7 @@ class Poly {
 ") ComputeNormals;
 		static void ComputeNormals (const Handle_Poly_Triangulation & Tri);
 		%feature("compactdefaultargs") PointOnTriangle;
-		%feature("autodoc", "	* Computes parameters of the point P on triangle defined by points P1, P2, and P3, in 2d. The parameters U and V are defined so that P = P1 + U * (P2 - P1) + V * (P3 - P1), with U >= 0, V >= 0, U + V <= 1. If P is located outside of triangle, or triangle is degenerated, the returned parameters correspond to closest point, and returned value is square of the distance from original point to triangle (0 if point is inside).
+		%feature("autodoc", "	* Computes parameters of the point P on triangle defined by points P1, P2, and P3, in 2d. The parameters U and V are defined so that P = P1 + U * --P2 - P1-- + V * --P3 - P1--, with U >= 0, V >= 0, U + V <= 1. If P is located outside of triangle, or triangle is degenerated, the returned parameters correspond to closest point, and returned value is square of the distance from original point to triangle --0 if point is inside--.
 
 	:param P1:
 	:type P1: gp_XY
@@ -189,93 +190,6 @@ class Poly {
 
 
 %extend Poly {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor Poly_Array1OfTriangle;
-class Poly_Array1OfTriangle {
-	public:
-		%feature("compactdefaultargs") Poly_Array1OfTriangle;
-		%feature("autodoc", "	:param Low:
-	:type Low: int
-	:param Up:
-	:type Up: int
-	:rtype: None
-") Poly_Array1OfTriangle;
-		 Poly_Array1OfTriangle (const Standard_Integer Low,const Standard_Integer Up);
-		%feature("compactdefaultargs") Poly_Array1OfTriangle;
-		%feature("autodoc", "	:param Item:
-	:type Item: Poly_Triangle &
-	:param Low:
-	:type Low: int
-	:param Up:
-	:type Up: int
-	:rtype: None
-") Poly_Array1OfTriangle;
-		 Poly_Array1OfTriangle (const Poly_Triangle & Item,const Standard_Integer Low,const Standard_Integer Up);
-		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	:param V:
-	:type V: Poly_Triangle &
-	:rtype: None
-") Init;
-		void Init (const Poly_Triangle & V);
-		%feature("compactdefaultargs") Destroy;
-		%feature("autodoc", "	:rtype: None
-") Destroy;
-		void Destroy ();
-		%feature("compactdefaultargs") IsAllocated;
-		%feature("autodoc", "	:rtype: bool
-") IsAllocated;
-		Standard_Boolean IsAllocated ();
-		%feature("compactdefaultargs") Assign;
-		%feature("autodoc", "	:param Other:
-	:type Other: Poly_Array1OfTriangle &
-	:rtype: Poly_Array1OfTriangle
-") Assign;
-		const Poly_Array1OfTriangle & Assign (const Poly_Array1OfTriangle & Other);
-		%feature("compactdefaultargs") operator =;
-		%feature("autodoc", "	:param Other:
-	:type Other: Poly_Array1OfTriangle &
-	:rtype: Poly_Array1OfTriangle
-") operator =;
-		const Poly_Array1OfTriangle & operator = (const Poly_Array1OfTriangle & Other);
-		%feature("compactdefaultargs") Length;
-		%feature("autodoc", "	:rtype: int
-") Length;
-		Standard_Integer Length ();
-		%feature("compactdefaultargs") Lower;
-		%feature("autodoc", "	:rtype: int
-") Lower;
-		Standard_Integer Lower ();
-		%feature("compactdefaultargs") Upper;
-		%feature("autodoc", "	:rtype: int
-") Upper;
-		Standard_Integer Upper ();
-		%feature("compactdefaultargs") SetValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param Value:
-	:type Value: Poly_Triangle &
-	:rtype: None
-") SetValue;
-		void SetValue (const Standard_Integer Index,const Poly_Triangle & Value);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: Poly_Triangle
-") Value;
-		const Poly_Triangle & Value (const Standard_Integer Index);
-		%feature("compactdefaultargs") ChangeValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: Poly_Triangle
-") ChangeValue;
-		Poly_Triangle & ChangeValue (const Standard_Integer Index);
-};
-
-
-%extend Poly_Array1OfTriangle {
 	%pythoncode {
 	__repr__ = _dumps_object
 	}
@@ -310,7 +224,7 @@ class Poly_CoherentLink {
 ") Poly_CoherentLink;
 		 Poly_CoherentLink (const Poly_CoherentTriangle & theTri,Standard_Integer iSide);
 		%feature("compactdefaultargs") Node;
-		%feature("autodoc", "	* /** * Return the node index in the current triangulation. * @param ind * 0 or 1 making distinction of the two nodes that constitute the Link. * Node(0) always returns a smaller number than Node(1). */
+		%feature("autodoc", "	* /** * Return the node index in the current triangulation. * @param ind * 0 or 1 making distinction of the two nodes that constitute the Link. * Node--0-- always returns a smaller number than Node--1--. */
 
 	:param ind:
 	:type ind: int
@@ -318,7 +232,7 @@ class Poly_CoherentLink {
 ") Node;
 		inline Standard_Integer Node (const Standard_Integer ind);
 		%feature("compactdefaultargs") OppositeNode;
-		%feature("autodoc", "	* /** * Return the opposite node (belonging to the left or right incident triangle) * index in the current triangulation. * @param ind * 0 or 1 making distinction of the two involved triangles: 0 on the left, * 1 on the right side of the Link. */
+		%feature("autodoc", "	* /** * Return the opposite node --belonging to the left or right incident triangle-- * index in the current triangulation. * @param ind * 0 or 1 making distinction of the two involved triangles: 0 on the left, * 1 on the right side of the Link. */
 
 	:param ind:
 	:type ind: int
@@ -524,7 +438,7 @@ class Poly_CoherentTriangle {
 ") IsEmpty;
 		inline Standard_Boolean IsEmpty ();
 		%feature("compactdefaultargs") SetConnection;
-		%feature("autodoc", "	* /** * Create connection with another triangle theTri. * This method creates both connections: in this triangle and in theTri. You * do not need to call the same method on triangle theTr. * @param iConn * Can be 0, 1 or 2 - index of the node that is opposite to the connection * (shared link). * @param theTr * Triangle that is connected on the given link. * returns * True if successful, False if the connection is rejected * due to improper topology. */
+		%feature("autodoc", "	* /** * Create connection with another triangle theTri. * This method creates both connections: in this triangle and in theTri. You * do not need to call the same method on triangle theTr. * @param iConn * Can be 0, 1 or 2 - index of the node that is opposite to the connection * --shared link--. * @param theTr * Triangle that is connected on the given link. * returns * True if successful, False if the connection is rejected * due to improper topology. */
 
 	:param iConn:
 	:type iConn: int
@@ -542,7 +456,7 @@ class Poly_CoherentTriangle {
 ") SetConnection;
 		Standard_Boolean SetConnection (Poly_CoherentTriangle & theTri);
 		%feature("compactdefaultargs") RemoveConnection;
-		%feature("autodoc", "	* /** * Remove the connection with the given index. * @param iConn * Can be 0, 1 or 2 - index of the node that is opposite to the connection * (shared link). */
+		%feature("autodoc", "	* /** * Remove the connection with the given index. * @param iConn * Can be 0, 1 or 2 - index of the node that is opposite to the connection * --shared link--. */
 
 	:param iConn:
 	:type iConn: int
@@ -607,13 +521,27 @@ class Poly_CoherentTriangle {
 class Poly_Connect {
 	public:
 		%feature("compactdefaultargs") Poly_Connect;
-		%feature("autodoc", "	* Constructs an algorithm to explore the adjacency data of nodes or triangles for the triangulation T.
+		%feature("autodoc", "	* Constructs an uninitialized algorithm.
 
-	:param T:
-	:type T: Handle_Poly_Triangulation &
 	:rtype: None
 ") Poly_Connect;
-		 Poly_Connect (const Handle_Poly_Triangulation & T);
+		 Poly_Connect ();
+		%feature("compactdefaultargs") Poly_Connect;
+		%feature("autodoc", "	* Constructs an algorithm to explore the adjacency data of nodes or triangles for the triangulation T.
+
+	:param theTriangulation:
+	:type theTriangulation: Handle_Poly_Triangulation &
+	:rtype: None
+") Poly_Connect;
+		 Poly_Connect (const Handle_Poly_Triangulation & theTriangulation);
+		%feature("compactdefaultargs") Load;
+		%feature("autodoc", "	* Initialize the algorithm to explore the adjacency data of nodes or triangles for the triangulation theTriangulation.
+
+	:param theTriangulation:
+	:type theTriangulation: Handle_Poly_Triangulation &
+	:rtype: None
+") Load;
+		void Load (const Handle_Poly_Triangulation & theTriangulation);
 		%feature("compactdefaultargs") Triangulation;
 		%feature("autodoc", "	* Returns the triangulation analyzed by this tool.
 
@@ -657,7 +585,7 @@ class Poly_Connect {
 ") Nodes;
 		void Nodes (const Standard_Integer T,Standard_Integer &OutValue,Standard_Integer &OutValue,Standard_Integer &OutValue);
 		%feature("compactdefaultargs") Initialize;
-		%feature("autodoc", "	* Initializes an iterator to search for all the triangles containing the node referenced at index N in the nodes table, for the triangulation analyzed by this tool. The iterator is managed by the following functions: - More, which checks if there are still elements in the iterator - Next, which positions the iterator on the next element - Value, which returns the current element. The use of such an iterator provides direct access to the triangles around a particular node, i.e. it avoids iterating on all the component triangles of a triangulation. Example Poly_Connect C(Tr); for (C.Initialize(n1);C.More();C.Next()) { t = C.Value(); }
+		%feature("autodoc", "	* Initializes an iterator to search for all the triangles containing the node referenced at index N in the nodes table, for the triangulation analyzed by this tool. The iterator is managed by the following functions: - More, which checks if there are still elements in the iterator - Next, which positions the iterator on the next element - Value, which returns the current element. The use of such an iterator provides direct access to the triangles around a particular node, i.e. it avoids iterating on all the component triangles of a triangulation. Example Poly_Connect C--Tr--; for --C.Initialize--n1--;C.More----;C.Next------ { t = C.Value----; }
 
 	:param N:
 	:type N: int
@@ -665,13 +593,13 @@ class Poly_Connect {
 ") Initialize;
 		void Initialize (const Standard_Integer N);
 		%feature("compactdefaultargs") More;
-		%feature("autodoc", "	* Returns true if there is another element in the iterator defined with the function Initialize (i.e. if there is another triangle containing the given node).
+		%feature("autodoc", "	* Returns true if there is another element in the iterator defined with the function Initialize --i.e. if there is another triangle containing the given node--.
 
 	:rtype: bool
 ") More;
 		Standard_Boolean More ();
 		%feature("compactdefaultargs") Next;
-		%feature("autodoc", "	* Advances the iterator defined with the function Initialize to access the next triangle. Note: There is no action if the iterator is empty (i.e. if the function More returns false).-
+		%feature("autodoc", "	* Advances the iterator defined with the function Initialize to access the next triangle. Note: There is no action if the iterator is empty --i.e. if the function More returns false--.-
 
 	:rtype: None
 ") Next;
@@ -690,129 +618,8 @@ class Poly_Connect {
 	__repr__ = _dumps_object
 	}
 };
-%nodefaultctor Poly_HArray1OfTriangle;
-class Poly_HArray1OfTriangle : public MMgt_TShared {
-	public:
-		%feature("compactdefaultargs") Poly_HArray1OfTriangle;
-		%feature("autodoc", "	:param Low:
-	:type Low: int
-	:param Up:
-	:type Up: int
-	:rtype: None
-") Poly_HArray1OfTriangle;
-		 Poly_HArray1OfTriangle (const Standard_Integer Low,const Standard_Integer Up);
-		%feature("compactdefaultargs") Poly_HArray1OfTriangle;
-		%feature("autodoc", "	:param Low:
-	:type Low: int
-	:param Up:
-	:type Up: int
-	:param V:
-	:type V: Poly_Triangle &
-	:rtype: None
-") Poly_HArray1OfTriangle;
-		 Poly_HArray1OfTriangle (const Standard_Integer Low,const Standard_Integer Up,const Poly_Triangle & V);
-		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	:param V:
-	:type V: Poly_Triangle &
-	:rtype: None
-") Init;
-		void Init (const Poly_Triangle & V);
-		%feature("compactdefaultargs") Length;
-		%feature("autodoc", "	:rtype: int
-") Length;
-		Standard_Integer Length ();
-		%feature("compactdefaultargs") Lower;
-		%feature("autodoc", "	:rtype: int
-") Lower;
-		Standard_Integer Lower ();
-		%feature("compactdefaultargs") Upper;
-		%feature("autodoc", "	:rtype: int
-") Upper;
-		Standard_Integer Upper ();
-		%feature("compactdefaultargs") SetValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param Value:
-	:type Value: Poly_Triangle &
-	:rtype: None
-") SetValue;
-		void SetValue (const Standard_Integer Index,const Poly_Triangle & Value);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: Poly_Triangle
-") Value;
-		const Poly_Triangle & Value (const Standard_Integer Index);
-		%feature("compactdefaultargs") ChangeValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: Poly_Triangle
-") ChangeValue;
-		Poly_Triangle & ChangeValue (const Standard_Integer Index);
-		%feature("compactdefaultargs") Array1;
-		%feature("autodoc", "	:rtype: Poly_Array1OfTriangle
-") Array1;
-		const Poly_Array1OfTriangle & Array1 ();
-		%feature("compactdefaultargs") ChangeArray1;
-		%feature("autodoc", "	:rtype: Poly_Array1OfTriangle
-") ChangeArray1;
-		Poly_Array1OfTriangle & ChangeArray1 ();
-};
-
-
-%extend Poly_HArray1OfTriangle {
-	%pythoncode {
-		def GetHandle(self):
-		    try:
-		        return self.thisHandle
-		    except:
-		        self.thisHandle = Handle_Poly_HArray1OfTriangle(self)
-		        self.thisown = False
-		        return self.thisHandle
-	}
-};
-
-%pythonappend Handle_Poly_HArray1OfTriangle::Handle_Poly_HArray1OfTriangle %{
-    # register the handle in the base object
-    if len(args) > 0:
-        register_handle(self, args[0])
-%}
-
-%nodefaultctor Handle_Poly_HArray1OfTriangle;
-class Handle_Poly_HArray1OfTriangle : public Handle_MMgt_TShared {
-
-    public:
-        // constructors
-        Handle_Poly_HArray1OfTriangle();
-        Handle_Poly_HArray1OfTriangle(const Handle_Poly_HArray1OfTriangle &aHandle);
-        Handle_Poly_HArray1OfTriangle(const Poly_HArray1OfTriangle *anItem);
-        void Nullify();
-        Standard_Boolean IsNull() const;
-        static const Handle_Poly_HArray1OfTriangle DownCast(const Handle_Standard_Transient &AnObject);
-
-};
-%extend Handle_Poly_HArray1OfTriangle {
-    Poly_HArray1OfTriangle* _get_reference() {
-    return (Poly_HArray1OfTriangle*)$self->Access();
-    }
-};
-
-%extend Handle_Poly_HArray1OfTriangle {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
-};
-
-%extend Poly_HArray1OfTriangle {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
 %nodefaultctor Poly_Polygon2D;
-class Poly_Polygon2D : public MMgt_TShared {
+class Poly_Polygon2D : public Standard_Transient {
 	public:
 		%feature("compactdefaultargs") Poly_Polygon2D;
 		%feature("autodoc", "	* Constructs a 2D polygon defined by the table of points, <Nodes>.
@@ -870,7 +677,7 @@ class Poly_Polygon2D : public MMgt_TShared {
 %}
 
 %nodefaultctor Handle_Poly_Polygon2D;
-class Handle_Poly_Polygon2D : public Handle_MMgt_TShared {
+class Handle_Poly_Polygon2D : public Handle_Standard_Transient {
 
     public:
         // constructors
@@ -882,19 +689,20 @@ class Handle_Poly_Polygon2D : public Handle_MMgt_TShared {
         static const Handle_Poly_Polygon2D DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_Poly_Polygon2D {
     Poly_Polygon2D* _get_reference() {
-    return (Poly_Polygon2D*)$self->Access();
+    return (Poly_Polygon2D*)$self->get();
     }
 };
 
 %extend Handle_Poly_Polygon2D {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend Poly_Polygon2D {
@@ -903,7 +711,7 @@ class Handle_Poly_Polygon2D : public Handle_MMgt_TShared {
 	}
 };
 %nodefaultctor Poly_Polygon3D;
-class Poly_Polygon3D : public MMgt_TShared {
+class Poly_Polygon3D : public Standard_Transient {
 	public:
 		%feature("compactdefaultargs") Poly_Polygon3D;
 		%feature("autodoc", "	* onstructs a 3D polygon defined by the table of points, Nodes.
@@ -923,6 +731,12 @@ class Poly_Polygon3D : public MMgt_TShared {
 	:rtype: None
 ") Poly_Polygon3D;
 		 Poly_Polygon3D (const TColgp_Array1OfPnt & Nodes,const TColStd_Array1OfReal & Parameters);
+		%feature("compactdefaultargs") Copy;
+		%feature("autodoc", "	* Creates a copy of current polygon
+
+	:rtype: Handle_Poly_Polygon3D
+") Copy;
+		virtual Handle_Poly_Polygon3D Copy ();
 		%feature("compactdefaultargs") Deflection;
 		%feature("autodoc", "	* Returns the deflection of this polygon
 
@@ -989,7 +803,7 @@ class Poly_Polygon3D : public MMgt_TShared {
 %}
 
 %nodefaultctor Handle_Poly_Polygon3D;
-class Handle_Poly_Polygon3D : public Handle_MMgt_TShared {
+class Handle_Poly_Polygon3D : public Handle_Standard_Transient {
 
     public:
         // constructors
@@ -1001,19 +815,20 @@ class Handle_Poly_Polygon3D : public Handle_MMgt_TShared {
         static const Handle_Poly_Polygon3D DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_Poly_Polygon3D {
     Poly_Polygon3D* _get_reference() {
-    return (Poly_Polygon3D*)$self->Access();
+    return (Poly_Polygon3D*)$self->get();
     }
 };
 
 %extend Handle_Poly_Polygon3D {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend Poly_Polygon3D {
@@ -1022,7 +837,7 @@ class Handle_Poly_Polygon3D : public Handle_MMgt_TShared {
 	}
 };
 %nodefaultctor Poly_PolygonOnTriangulation;
-class Poly_PolygonOnTriangulation : public MMgt_TShared {
+class Poly_PolygonOnTriangulation : public Standard_Transient {
 	public:
 		%feature("compactdefaultargs") Poly_PolygonOnTriangulation;
 		%feature("autodoc", "	* Constructs a 3D polygon on the triangulation of a shape, defined by the table of nodes, <Nodes>.
@@ -1042,6 +857,12 @@ class Poly_PolygonOnTriangulation : public MMgt_TShared {
 	:rtype: None
 ") Poly_PolygonOnTriangulation;
 		 Poly_PolygonOnTriangulation (const TColStd_Array1OfInteger & Nodes,const TColStd_Array1OfReal & Parameters);
+		%feature("compactdefaultargs") Copy;
+		%feature("autodoc", "	* Creates a copy of current polygon
+
+	:rtype: Handle_Poly_PolygonOnTriangulation
+") Copy;
+		virtual Handle_Poly_PolygonOnTriangulation Copy ();
 		%feature("compactdefaultargs") Deflection;
 		%feature("autodoc", "	* Returns the deflection of this polygon
 
@@ -1102,7 +923,7 @@ class Poly_PolygonOnTriangulation : public MMgt_TShared {
 %}
 
 %nodefaultctor Handle_Poly_PolygonOnTriangulation;
-class Handle_Poly_PolygonOnTriangulation : public Handle_MMgt_TShared {
+class Handle_Poly_PolygonOnTriangulation : public Handle_Standard_Transient {
 
     public:
         // constructors
@@ -1114,19 +935,20 @@ class Handle_Poly_PolygonOnTriangulation : public Handle_MMgt_TShared {
         static const Handle_Poly_PolygonOnTriangulation DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_Poly_PolygonOnTriangulation {
     Poly_PolygonOnTriangulation* _get_reference() {
-    return (Poly_PolygonOnTriangulation*)$self->Access();
+    return (Poly_PolygonOnTriangulation*)$self->get();
     }
 };
 
 %extend Handle_Poly_PolygonOnTriangulation {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend Poly_PolygonOnTriangulation {
@@ -1214,10 +1036,10 @@ class Poly_Triangle {
 	}
 };
 %nodefaultctor Poly_Triangulation;
-class Poly_Triangulation : public MMgt_TShared {
+class Poly_Triangulation : public Standard_Transient {
 	public:
 		%feature("compactdefaultargs") Poly_Triangulation;
-		%feature("autodoc", "	* Constructs a triangulation from a set of triangles. The triangulation is initialized without a triangle or a node, but capable of containing nbNodes nodes, and nbTriangles triangles. Here the UVNodes flag indicates whether 2D nodes will be associated with 3D ones, (i.e. to enable a 2D representation).
+		%feature("autodoc", "	* Constructs a triangulation from a set of triangles. The triangulation is initialized without a triangle or a node, but capable of containing nbNodes nodes, and nbTriangles triangles. Here the UVNodes flag indicates whether 2D nodes will be associated with 3D ones, --i.e. to enable a 2D representation--.
 
 	:param nbNodes:
 	:type nbNodes: int
@@ -1239,7 +1061,7 @@ class Poly_Triangulation : public MMgt_TShared {
 ") Poly_Triangulation;
 		 Poly_Triangulation (const TColgp_Array1OfPnt & Nodes,const Poly_Array1OfTriangle & Triangles);
 		%feature("compactdefaultargs") Poly_Triangulation;
-		%feature("autodoc", "	* Constructs a triangulation from a set of triangles. The triangulation is initialized with 3D points from Nodes, 2D points from UVNodes and triangles from Triangles, where coordinates of a 2D point from UVNodes are the (u, v) parameters of the corresponding 3D point from Nodes on the surface approximated by the constructed triangulation.
+		%feature("autodoc", "	* Constructs a triangulation from a set of triangles. The triangulation is initialized with 3D points from Nodes, 2D points from UVNodes and triangles from Triangles, where coordinates of a 2D point from UVNodes are the --u, v-- parameters of the corresponding 3D point from Nodes on the surface approximated by the constructed triangulation.
 
 	:param Nodes:
 	:type Nodes: TColgp_Array1OfPnt
@@ -1251,11 +1073,19 @@ class Poly_Triangulation : public MMgt_TShared {
 ") Poly_Triangulation;
 		 Poly_Triangulation (const TColgp_Array1OfPnt & Nodes,const TColgp_Array1OfPnt2d & UVNodes,const Poly_Array1OfTriangle & Triangles);
 		%feature("compactdefaultargs") Copy;
-		%feature("autodoc", "	* Creates full copy of current triangulation.
+		%feature("autodoc", "	* Creates full copy of current triangulation
 
 	:rtype: Handle_Poly_Triangulation
 ") Copy;
-		Handle_Poly_Triangulation Copy ();
+		virtual Handle_Poly_Triangulation Copy ();
+		%feature("compactdefaultargs") Poly_Triangulation;
+		%feature("autodoc", "	* Copy constructor for triangulation.
+
+	:param theTriangulation:
+	:type theTriangulation: Handle_Poly_Triangulation &
+	:rtype: None
+") Poly_Triangulation;
+		 Poly_Triangulation (const Handle_Poly_Triangulation & theTriangulation);
 		%feature("compactdefaultargs") Deflection;
 		%feature("autodoc", "	* Returns the deflection of this triangulation.
 
@@ -1263,13 +1093,13 @@ class Poly_Triangulation : public MMgt_TShared {
 ") Deflection;
 		Standard_Real Deflection ();
 		%feature("compactdefaultargs") Deflection;
-		%feature("autodoc", "	* Sets the deflection of this triangulation to D. See more on deflection in Polygon2D
+		%feature("autodoc", "	* Sets the deflection of this triangulation to theDeflection. See more on deflection in Polygon2D
 
-	:param D:
-	:type D: float
+	:param theDeflection:
+	:type theDeflection: float
 	:rtype: None
 ") Deflection;
-		void Deflection (const Standard_Real D);
+		void Deflection (const Standard_Real theDeflection);
 		%feature("compactdefaultargs") RemoveUVNodes;
 		%feature("autodoc", "	* Deallocates the UV nodes.
 
@@ -1277,47 +1107,79 @@ class Poly_Triangulation : public MMgt_TShared {
 ") RemoveUVNodes;
 		void RemoveUVNodes ();
 		%feature("compactdefaultargs") NbNodes;
-		%feature("autodoc", "	* Returns the number of nodes for this triangulation. Null if the nodes are not yet defined.
+		%feature("autodoc", "	* Returns the number of nodes for this triangulation.
 
 	:rtype: int
 ") NbNodes;
 		Standard_Integer NbNodes ();
 		%feature("compactdefaultargs") NbTriangles;
-		%feature("autodoc", "	* Returns the number of triangles for this triangulation. Null if the Triangles are not yet defined.
+		%feature("autodoc", "	* Returns the number of triangles for this triangulation.
 
 	:rtype: int
 ") NbTriangles;
 		Standard_Integer NbTriangles ();
 		%feature("compactdefaultargs") HasUVNodes;
-		%feature("autodoc", "	* Returns true if 2D nodes are associated with 3D nodes for this triangulation.
+		%feature("autodoc", "	* Returns Standard_True if 2D nodes are associated with 3D nodes for this triangulation.
 
 	:rtype: bool
 ") HasUVNodes;
 		Standard_Boolean HasUVNodes ();
 		%feature("compactdefaultargs") Nodes;
-		%feature("autodoc", "	* Returns the table of 3D nodes (3D points) for this triangulation.
+		%feature("autodoc", "	* Returns the table of 3D nodes --3D points-- for this triangulation.
 
 	:rtype: TColgp_Array1OfPnt
 ") Nodes;
 		const TColgp_Array1OfPnt & Nodes ();
 		%feature("compactdefaultargs") ChangeNodes;
-		%feature("autodoc", "	* Returns the table of 3D nodes (3D points) for this triangulation. The returned array is shared. Therefore if the table is selected by reference, you can, by simply modifying it, directly modify the data structure of this triangulation.
+		%feature("autodoc", "	* Returns the table of 3D nodes --3D points-- for this triangulation. The returned array is shared. Therefore if the table is selected by reference, you can, by simply modifying it, directly modify the data structure of this triangulation.
 
 	:rtype: TColgp_Array1OfPnt
 ") ChangeNodes;
 		TColgp_Array1OfPnt & ChangeNodes ();
+		%feature("compactdefaultargs") Node;
+		%feature("autodoc", "	* Returns node at the given index. Raises Standard_OutOfRange exception if theIndex is less than 1 or greater than NbNodes.
+
+	:param theIndex:
+	:type theIndex: int
+	:rtype: gp_Pnt
+") Node;
+		const gp_Pnt  Node (const Standard_Integer theIndex);
+		%feature("compactdefaultargs") ChangeNode;
+		%feature("autodoc", "	* Give access to the node at the given index. Raises Standard_OutOfRange exception if theIndex is less than 1 or greater than NbNodes.
+
+	:param theIndex:
+	:type theIndex: int
+	:rtype: gp_Pnt
+") ChangeNode;
+		gp_Pnt  ChangeNode (const Standard_Integer theIndex);
 		%feature("compactdefaultargs") UVNodes;
-		%feature("autodoc", "	* Returns the table of 2D nodes (2D points) associated with each 3D node of this triangulation. The function HasUVNodes checks if 2D nodes are associated with the 3D nodes of this triangulation. Const reference on the 2d nodes values.
+		%feature("autodoc", "	* Returns the table of 2D nodes --2D points-- associated with each 3D node of this triangulation. The function HasUVNodes checks if 2D nodes are associated with the 3D nodes of this triangulation. Const reference on the 2d nodes values.
 
 	:rtype: TColgp_Array1OfPnt2d
 ") UVNodes;
 		const TColgp_Array1OfPnt2d & UVNodes ();
 		%feature("compactdefaultargs") ChangeUVNodes;
-		%feature("autodoc", "	* Returns the table of 2D nodes (2D points) associated with each 3D node of this triangulation. Function ChangeUVNodes shares the returned array. Therefore if the table is selected by reference, you can, by simply modifying it, directly modify the data structure of this triangulation.
+		%feature("autodoc", "	* Returns the table of 2D nodes --2D points-- associated with each 3D node of this triangulation. Function ChangeUVNodes shares the returned array. Therefore if the table is selected by reference, you can, by simply modifying it, directly modify the data structure of this triangulation.
 
 	:rtype: TColgp_Array1OfPnt2d
 ") ChangeUVNodes;
 		TColgp_Array1OfPnt2d & ChangeUVNodes ();
+		%feature("compactdefaultargs") UVNode;
+		%feature("autodoc", "	* Returns UVNode at the given index. Raises Standard_OutOfRange exception if theIndex is less than 1 or greater than NbNodes.
+
+	:param theIndex:
+	:type theIndex: int
+	:rtype: gp_Pnt2d
+") UVNode;
+		const gp_Pnt2d  UVNode (const Standard_Integer theIndex);
+		%feature("compactdefaultargs") ChangeUVNode;
+		%feature("autodoc", "	* Give access to the UVNode at the given index. Raises Standard_OutOfRange exception if theIndex is less than 1 or greater than NbNodes.
+
+	:param theIndex:
+	:type theIndex: int
+	:rtype: gp_Pnt2d
+") ChangeUVNode;
+		gp_Pnt2d  ChangeUVNode (const Standard_Integer theIndex);
 		%feature("compactdefaultargs") Triangles;
 		%feature("autodoc", "	* Returns the table of triangles for this triangulation.
 
@@ -1330,6 +1192,22 @@ class Poly_Triangulation : public MMgt_TShared {
 	:rtype: Poly_Array1OfTriangle
 ") ChangeTriangles;
 		Poly_Array1OfTriangle & ChangeTriangles ();
+		%feature("compactdefaultargs") Triangle;
+		%feature("autodoc", "	* Returns triangle at the given index. Raises Standard_OutOfRange exception if theIndex is less than 1 or greater than NbTriangles.
+
+	:param theIndex:
+	:type theIndex: int
+	:rtype: Poly_Triangle
+") Triangle;
+		const Poly_Triangle & Triangle (const Standard_Integer theIndex);
+		%feature("compactdefaultargs") ChangeTriangle;
+		%feature("autodoc", "	* Give access to the triangle at the given index. Raises Standard_OutOfRange exception if theIndex is less than 1 or greater than NbTriangles.
+
+	:param theIndex:
+	:type theIndex: int
+	:rtype: Poly_Triangle
+") ChangeTriangle;
+		Poly_Triangle & ChangeTriangle (const Standard_Integer theIndex);
 		%feature("compactdefaultargs") SetNormals;
 		%feature("autodoc", "	* Sets the table of node normals. raises exception if length of theNormals != 3*NbNodes
 
@@ -1339,17 +1217,41 @@ class Poly_Triangulation : public MMgt_TShared {
 ") SetNormals;
 		void SetNormals (const Handle_TShort_HArray1OfShortReal & theNormals);
 		%feature("compactdefaultargs") Normals;
-		%feature("autodoc", "	:rtype: TShort_Array1OfShortReal
+		%feature("autodoc", "	* Returns the table of node normals.
+
+	:rtype: TShort_Array1OfShortReal
 ") Normals;
 		const TShort_Array1OfShortReal & Normals ();
 		%feature("compactdefaultargs") ChangeNormals;
-		%feature("autodoc", "	:rtype: TShort_Array1OfShortReal
+		%feature("autodoc", "	* Gives access to the table of node normals.
+
+	:rtype: TShort_Array1OfShortReal
 ") ChangeNormals;
 		TShort_Array1OfShortReal & ChangeNormals ();
 		%feature("compactdefaultargs") HasNormals;
-		%feature("autodoc", "	:rtype: bool
+		%feature("autodoc", "	* Returns Standard_True if nodal normals are defined.
+
+	:rtype: bool
 ") HasNormals;
 		Standard_Boolean HasNormals ();
+		%feature("compactdefaultargs") Normal;
+		%feature("autodoc", "	* returns normal at the given index. Raises Standard_OutOfRange exception.
+
+	:param theIndex:
+	:type theIndex: int
+	:rtype: gp_Dir
+") Normal;
+		const gp_Dir Normal (const Standard_Integer theIndex);
+		%feature("compactdefaultargs") SetNormal;
+		%feature("autodoc", "	* Changes normal at the given index. Raises Standard_OutOfRange exception.
+
+	:param theIndex:
+	:type theIndex: int
+	:param theNormal:
+	:type theNormal: gp_Dir
+	:rtype: None
+") SetNormal;
+		void SetNormal (const Standard_Integer theIndex,const gp_Dir & theNormal);
 };
 
 
@@ -1372,7 +1274,7 @@ class Poly_Triangulation : public MMgt_TShared {
 %}
 
 %nodefaultctor Handle_Poly_Triangulation;
-class Handle_Poly_Triangulation : public Handle_MMgt_TShared {
+class Handle_Poly_Triangulation : public Handle_Standard_Transient {
 
     public:
         // constructors
@@ -1384,19 +1286,20 @@ class Handle_Poly_Triangulation : public Handle_MMgt_TShared {
         static const Handle_Poly_Triangulation DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_Poly_Triangulation {
     Poly_Triangulation* _get_reference() {
-    return (Poly_Triangulation*)$self->Access();
+    return (Poly_Triangulation*)$self->get();
     }
 };
 
 %extend Handle_Poly_Triangulation {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend Poly_Triangulation {

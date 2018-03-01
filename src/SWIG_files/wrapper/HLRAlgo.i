@@ -1,5 +1,5 @@
 /*
-Copyright 2008-2017 Thomas Paviot (tpaviot@gmail.com)
+Copyright 2008-2018 Thomas Paviot (tpaviot@gmail.com)
 
 
 This file is part of pythonOCC.
@@ -56,7 +56,32 @@ def register_handle(handle, base_object):
 /* typedefs */
 /* end typedefs declaration */
 
+/* templates */
+%template(HLRAlgo_InterferenceList) NCollection_List <HLRAlgo_Interference>;
+%template(HLRAlgo_Array1OfPHDat) NCollection_Array1 <HLRAlgo_PolyHidingData>;
+%template(HLRAlgo_Array1OfPINod) NCollection_Array1 <Handle_HLRAlgo_PolyInternalNode>;
+%template(HLRAlgo_Array1OfTData) NCollection_Array1 <HLRAlgo_TriangleData>;
+%template(HLRAlgo_ListOfBPoint) NCollection_List <HLRAlgo_BiPoint>;
+%template(HLRAlgo_Array1OfPISeg) NCollection_Array1 <HLRAlgo_PolyInternalSegment>;
+/* end templates declaration */
+
 /* public enums */
+enum HLRAlgo_PolyMask {
+	HLRAlgo_PolyMask_EMskOutLin1 = 1,
+	HLRAlgo_PolyMask_EMskOutLin2 = 2,
+	HLRAlgo_PolyMask_EMskOutLin3 = 4,
+	HLRAlgo_PolyMask_EMskGrALin1 = 8,
+	HLRAlgo_PolyMask_EMskGrALin2 = 16,
+	HLRAlgo_PolyMask_EMskGrALin3 = 32,
+	HLRAlgo_PolyMask_FMskBack = 64,
+	HLRAlgo_PolyMask_FMskSide = 128,
+	HLRAlgo_PolyMask_FMskHiding = 256,
+	HLRAlgo_PolyMask_FMskFlat = 512,
+	HLRAlgo_PolyMask_FMskOnOutL = 1024,
+	HLRAlgo_PolyMask_FMskOrBack = 2048,
+	HLRAlgo_PolyMask_FMskFrBack = 4096,
+};
+
 /* end public enums declaration */
 
 %rename(hlralgo) HLRAlgo;
@@ -72,436 +97,88 @@ class HLRAlgo {
 	:param z:
 	:type z: float
 	:param Min:
-	:type Min: Standard_Address
+	:type Min: float
 	:param Max:
-	:type Max: Standard_Address
+	:type Max: float
 	:rtype: void
 ") UpdateMinMax;
-		static void UpdateMinMax (const Standard_Real x,const Standard_Real y,const Standard_Real z,const Standard_Address Min,const Standard_Address Max);
+		static void UpdateMinMax (const Standard_Real x,const Standard_Real y,const Standard_Real z,Standard_Real Min[16],Standard_Real Max[16]);
 		%feature("compactdefaultargs") EnlargeMinMax;
 		%feature("autodoc", "	:param tol:
 	:type tol: float
 	:param Min:
-	:type Min: Standard_Address
+	:type Min: float
 	:param Max:
-	:type Max: Standard_Address
+	:type Max: float
 	:rtype: void
 ") EnlargeMinMax;
-		static void EnlargeMinMax (const Standard_Real tol,const Standard_Address Min,const Standard_Address Max);
+		static void EnlargeMinMax (const Standard_Real tol,Standard_Real Min[16],Standard_Real Max[16]);
 		%feature("compactdefaultargs") InitMinMax;
 		%feature("autodoc", "	:param Big:
 	:type Big: float
 	:param Min:
-	:type Min: Standard_Address
+	:type Min: float
 	:param Max:
-	:type Max: Standard_Address
+	:type Max: float
 	:rtype: void
 ") InitMinMax;
-		static void InitMinMax (const Standard_Real Big,const Standard_Address Min,const Standard_Address Max);
+		static void InitMinMax (const Standard_Real Big,Standard_Real Min[16],Standard_Real Max[16]);
 		%feature("compactdefaultargs") EncodeMinMax;
 		%feature("autodoc", "	:param Min:
-	:type Min: Standard_Address
+	:type Min: HLRAlgo_EdgesBlock::MinMaxIndices &
 	:param Max:
-	:type Max: Standard_Address
+	:type Max: HLRAlgo_EdgesBlock::MinMaxIndices &
 	:param MinMax:
-	:type MinMax: Standard_Address
+	:type MinMax: HLRAlgo_EdgesBlock::MinMaxIndices &
 	:rtype: void
 ") EncodeMinMax;
-		static void EncodeMinMax (const Standard_Address Min,const Standard_Address Max,const Standard_Address MinMax);
+		static void EncodeMinMax (HLRAlgo_EdgesBlock::MinMaxIndices & Min,HLRAlgo_EdgesBlock::MinMaxIndices & Max,HLRAlgo_EdgesBlock::MinMaxIndices & MinMax);
 		%feature("compactdefaultargs") SizeBox;
 		%feature("autodoc", "	:param Min:
-	:type Min: Standard_Address
+	:type Min: HLRAlgo_EdgesBlock::MinMaxIndices &
 	:param Max:
-	:type Max: Standard_Address
+	:type Max: HLRAlgo_EdgesBlock::MinMaxIndices &
 	:rtype: float
 ") SizeBox;
-		static Standard_Real SizeBox (const Standard_Address Min,const Standard_Address Max);
+		static Standard_Real SizeBox (HLRAlgo_EdgesBlock::MinMaxIndices & Min,HLRAlgo_EdgesBlock::MinMaxIndices & Max);
 		%feature("compactdefaultargs") DecodeMinMax;
 		%feature("autodoc", "	:param MinMax:
-	:type MinMax: Standard_Address
+	:type MinMax: HLRAlgo_EdgesBlock::MinMaxIndices &
 	:param Min:
-	:type Min: Standard_Address
+	:type Min: HLRAlgo_EdgesBlock::MinMaxIndices &
 	:param Max:
-	:type Max: Standard_Address
+	:type Max: HLRAlgo_EdgesBlock::MinMaxIndices &
 	:rtype: void
 ") DecodeMinMax;
-		static void DecodeMinMax (const Standard_Address MinMax,const Standard_Address Min,const Standard_Address Max);
+		static void DecodeMinMax (const HLRAlgo_EdgesBlock::MinMaxIndices & MinMax,HLRAlgo_EdgesBlock::MinMaxIndices & Min,HLRAlgo_EdgesBlock::MinMaxIndices & Max);
 		%feature("compactdefaultargs") CopyMinMax;
 		%feature("autodoc", "	:param IMin:
-	:type IMin: Standard_Address
+	:type IMin: HLRAlgo_EdgesBlock::MinMaxIndices &
 	:param IMax:
-	:type IMax: Standard_Address
+	:type IMax: HLRAlgo_EdgesBlock::MinMaxIndices &
 	:param OMin:
-	:type OMin: Standard_Address
+	:type OMin: HLRAlgo_EdgesBlock::MinMaxIndices &
 	:param OMax:
-	:type OMax: Standard_Address
+	:type OMax: HLRAlgo_EdgesBlock::MinMaxIndices &
 	:rtype: void
 ") CopyMinMax;
-		static void CopyMinMax (const Standard_Address IMin,const Standard_Address IMax,const Standard_Address OMin,const Standard_Address OMax);
+		static void CopyMinMax (HLRAlgo_EdgesBlock::MinMaxIndices & IMin,HLRAlgo_EdgesBlock::MinMaxIndices & IMax,HLRAlgo_EdgesBlock::MinMaxIndices & OMin,HLRAlgo_EdgesBlock::MinMaxIndices & OMax);
 		%feature("compactdefaultargs") AddMinMax;
 		%feature("autodoc", "	:param IMin:
-	:type IMin: Standard_Address
+	:type IMin: HLRAlgo_EdgesBlock::MinMaxIndices &
 	:param IMax:
-	:type IMax: Standard_Address
+	:type IMax: HLRAlgo_EdgesBlock::MinMaxIndices &
 	:param OMin:
-	:type OMin: Standard_Address
+	:type OMin: HLRAlgo_EdgesBlock::MinMaxIndices &
 	:param OMax:
-	:type OMax: Standard_Address
+	:type OMax: HLRAlgo_EdgesBlock::MinMaxIndices &
 	:rtype: void
 ") AddMinMax;
-		static void AddMinMax (const Standard_Address IMin,const Standard_Address IMax,const Standard_Address OMin,const Standard_Address OMax);
+		static void AddMinMax (HLRAlgo_EdgesBlock::MinMaxIndices & IMin,HLRAlgo_EdgesBlock::MinMaxIndices & IMax,HLRAlgo_EdgesBlock::MinMaxIndices & OMin,HLRAlgo_EdgesBlock::MinMaxIndices & OMax);
 };
 
 
 %extend HLRAlgo {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor HLRAlgo_Array1OfPHDat;
-class HLRAlgo_Array1OfPHDat {
-	public:
-		%feature("compactdefaultargs") HLRAlgo_Array1OfPHDat;
-		%feature("autodoc", "	:param Low:
-	:type Low: int
-	:param Up:
-	:type Up: int
-	:rtype: None
-") HLRAlgo_Array1OfPHDat;
-		 HLRAlgo_Array1OfPHDat (const Standard_Integer Low,const Standard_Integer Up);
-		%feature("compactdefaultargs") HLRAlgo_Array1OfPHDat;
-		%feature("autodoc", "	:param Item:
-	:type Item: HLRAlgo_PolyHidingData &
-	:param Low:
-	:type Low: int
-	:param Up:
-	:type Up: int
-	:rtype: None
-") HLRAlgo_Array1OfPHDat;
-		 HLRAlgo_Array1OfPHDat (const HLRAlgo_PolyHidingData & Item,const Standard_Integer Low,const Standard_Integer Up);
-		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	:param V:
-	:type V: HLRAlgo_PolyHidingData &
-	:rtype: None
-") Init;
-		void Init (const HLRAlgo_PolyHidingData & V);
-		%feature("compactdefaultargs") Destroy;
-		%feature("autodoc", "	:rtype: None
-") Destroy;
-		void Destroy ();
-		%feature("compactdefaultargs") IsAllocated;
-		%feature("autodoc", "	:rtype: bool
-") IsAllocated;
-		Standard_Boolean IsAllocated ();
-		%feature("compactdefaultargs") Assign;
-		%feature("autodoc", "	:param Other:
-	:type Other: HLRAlgo_Array1OfPHDat &
-	:rtype: HLRAlgo_Array1OfPHDat
-") Assign;
-		const HLRAlgo_Array1OfPHDat & Assign (const HLRAlgo_Array1OfPHDat & Other);
-		%feature("compactdefaultargs") operator =;
-		%feature("autodoc", "	:param Other:
-	:type Other: HLRAlgo_Array1OfPHDat &
-	:rtype: HLRAlgo_Array1OfPHDat
-") operator =;
-		const HLRAlgo_Array1OfPHDat & operator = (const HLRAlgo_Array1OfPHDat & Other);
-		%feature("compactdefaultargs") Length;
-		%feature("autodoc", "	:rtype: int
-") Length;
-		Standard_Integer Length ();
-		%feature("compactdefaultargs") Lower;
-		%feature("autodoc", "	:rtype: int
-") Lower;
-		Standard_Integer Lower ();
-		%feature("compactdefaultargs") Upper;
-		%feature("autodoc", "	:rtype: int
-") Upper;
-		Standard_Integer Upper ();
-		%feature("compactdefaultargs") SetValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param Value:
-	:type Value: HLRAlgo_PolyHidingData &
-	:rtype: None
-") SetValue;
-		void SetValue (const Standard_Integer Index,const HLRAlgo_PolyHidingData & Value);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: HLRAlgo_PolyHidingData
-") Value;
-		const HLRAlgo_PolyHidingData & Value (const Standard_Integer Index);
-		%feature("compactdefaultargs") ChangeValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: HLRAlgo_PolyHidingData
-") ChangeValue;
-		HLRAlgo_PolyHidingData & ChangeValue (const Standard_Integer Index);
-};
-
-
-%extend HLRAlgo_Array1OfPHDat {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor HLRAlgo_Array1OfPINod;
-class HLRAlgo_Array1OfPINod {
-	public:
-		%feature("compactdefaultargs") HLRAlgo_Array1OfPINod;
-		%feature("autodoc", "	:param Low:
-	:type Low: int
-	:param Up:
-	:type Up: int
-	:rtype: None
-") HLRAlgo_Array1OfPINod;
-		 HLRAlgo_Array1OfPINod (const Standard_Integer Low,const Standard_Integer Up);
-		%feature("compactdefaultargs") HLRAlgo_Array1OfPINod;
-		%feature("autodoc", "	:param Item:
-	:type Item: Handle_HLRAlgo_PolyInternalNode &
-	:param Low:
-	:type Low: int
-	:param Up:
-	:type Up: int
-	:rtype: None
-") HLRAlgo_Array1OfPINod;
-		 HLRAlgo_Array1OfPINod (const Handle_HLRAlgo_PolyInternalNode & Item,const Standard_Integer Low,const Standard_Integer Up);
-		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	:param V:
-	:type V: Handle_HLRAlgo_PolyInternalNode &
-	:rtype: None
-") Init;
-		void Init (const Handle_HLRAlgo_PolyInternalNode & V);
-		%feature("compactdefaultargs") Destroy;
-		%feature("autodoc", "	:rtype: None
-") Destroy;
-		void Destroy ();
-		%feature("compactdefaultargs") IsAllocated;
-		%feature("autodoc", "	:rtype: bool
-") IsAllocated;
-		Standard_Boolean IsAllocated ();
-		%feature("compactdefaultargs") Assign;
-		%feature("autodoc", "	:param Other:
-	:type Other: HLRAlgo_Array1OfPINod &
-	:rtype: HLRAlgo_Array1OfPINod
-") Assign;
-		const HLRAlgo_Array1OfPINod & Assign (const HLRAlgo_Array1OfPINod & Other);
-		%feature("compactdefaultargs") operator =;
-		%feature("autodoc", "	:param Other:
-	:type Other: HLRAlgo_Array1OfPINod &
-	:rtype: HLRAlgo_Array1OfPINod
-") operator =;
-		const HLRAlgo_Array1OfPINod & operator = (const HLRAlgo_Array1OfPINod & Other);
-		%feature("compactdefaultargs") Length;
-		%feature("autodoc", "	:rtype: int
-") Length;
-		Standard_Integer Length ();
-		%feature("compactdefaultargs") Lower;
-		%feature("autodoc", "	:rtype: int
-") Lower;
-		Standard_Integer Lower ();
-		%feature("compactdefaultargs") Upper;
-		%feature("autodoc", "	:rtype: int
-") Upper;
-		Standard_Integer Upper ();
-		%feature("compactdefaultargs") SetValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param Value:
-	:type Value: Handle_HLRAlgo_PolyInternalNode &
-	:rtype: None
-") SetValue;
-		void SetValue (const Standard_Integer Index,const Handle_HLRAlgo_PolyInternalNode & Value);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: Handle_HLRAlgo_PolyInternalNode
-") Value;
-		Handle_HLRAlgo_PolyInternalNode Value (const Standard_Integer Index);
-		%feature("compactdefaultargs") ChangeValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: Handle_HLRAlgo_PolyInternalNode
-") ChangeValue;
-		Handle_HLRAlgo_PolyInternalNode ChangeValue (const Standard_Integer Index);
-};
-
-
-%extend HLRAlgo_Array1OfPINod {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor HLRAlgo_Array1OfPISeg;
-class HLRAlgo_Array1OfPISeg {
-	public:
-		%feature("compactdefaultargs") HLRAlgo_Array1OfPISeg;
-		%feature("autodoc", "	:param Low:
-	:type Low: int
-	:param Up:
-	:type Up: int
-	:rtype: None
-") HLRAlgo_Array1OfPISeg;
-		 HLRAlgo_Array1OfPISeg (const Standard_Integer Low,const Standard_Integer Up);
-		%feature("compactdefaultargs") HLRAlgo_Array1OfPISeg;
-		%feature("autodoc", "	:param Item:
-	:type Item: HLRAlgo_PolyInternalSegment &
-	:param Low:
-	:type Low: int
-	:param Up:
-	:type Up: int
-	:rtype: None
-") HLRAlgo_Array1OfPISeg;
-		 HLRAlgo_Array1OfPISeg (const HLRAlgo_PolyInternalSegment & Item,const Standard_Integer Low,const Standard_Integer Up);
-		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	:param V:
-	:type V: HLRAlgo_PolyInternalSegment &
-	:rtype: None
-") Init;
-		void Init (const HLRAlgo_PolyInternalSegment & V);
-		%feature("compactdefaultargs") Destroy;
-		%feature("autodoc", "	:rtype: None
-") Destroy;
-		void Destroy ();
-		%feature("compactdefaultargs") IsAllocated;
-		%feature("autodoc", "	:rtype: bool
-") IsAllocated;
-		Standard_Boolean IsAllocated ();
-		%feature("compactdefaultargs") Assign;
-		%feature("autodoc", "	:param Other:
-	:type Other: HLRAlgo_Array1OfPISeg &
-	:rtype: HLRAlgo_Array1OfPISeg
-") Assign;
-		const HLRAlgo_Array1OfPISeg & Assign (const HLRAlgo_Array1OfPISeg & Other);
-		%feature("compactdefaultargs") operator =;
-		%feature("autodoc", "	:param Other:
-	:type Other: HLRAlgo_Array1OfPISeg &
-	:rtype: HLRAlgo_Array1OfPISeg
-") operator =;
-		const HLRAlgo_Array1OfPISeg & operator = (const HLRAlgo_Array1OfPISeg & Other);
-		%feature("compactdefaultargs") Length;
-		%feature("autodoc", "	:rtype: int
-") Length;
-		Standard_Integer Length ();
-		%feature("compactdefaultargs") Lower;
-		%feature("autodoc", "	:rtype: int
-") Lower;
-		Standard_Integer Lower ();
-		%feature("compactdefaultargs") Upper;
-		%feature("autodoc", "	:rtype: int
-") Upper;
-		Standard_Integer Upper ();
-		%feature("compactdefaultargs") SetValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param Value:
-	:type Value: HLRAlgo_PolyInternalSegment &
-	:rtype: None
-") SetValue;
-		void SetValue (const Standard_Integer Index,const HLRAlgo_PolyInternalSegment & Value);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: HLRAlgo_PolyInternalSegment
-") Value;
-		const HLRAlgo_PolyInternalSegment & Value (const Standard_Integer Index);
-		%feature("compactdefaultargs") ChangeValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: HLRAlgo_PolyInternalSegment
-") ChangeValue;
-		HLRAlgo_PolyInternalSegment & ChangeValue (const Standard_Integer Index);
-};
-
-
-%extend HLRAlgo_Array1OfPISeg {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor HLRAlgo_Array1OfTData;
-class HLRAlgo_Array1OfTData {
-	public:
-		%feature("compactdefaultargs") HLRAlgo_Array1OfTData;
-		%feature("autodoc", "	:param Low:
-	:type Low: int
-	:param Up:
-	:type Up: int
-	:rtype: None
-") HLRAlgo_Array1OfTData;
-		 HLRAlgo_Array1OfTData (const Standard_Integer Low,const Standard_Integer Up);
-		%feature("compactdefaultargs") HLRAlgo_Array1OfTData;
-		%feature("autodoc", "	:param Item:
-	:type Item: HLRAlgo_TriangleData &
-	:param Low:
-	:type Low: int
-	:param Up:
-	:type Up: int
-	:rtype: None
-") HLRAlgo_Array1OfTData;
-		 HLRAlgo_Array1OfTData (const HLRAlgo_TriangleData & Item,const Standard_Integer Low,const Standard_Integer Up);
-		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	:param V:
-	:type V: HLRAlgo_TriangleData &
-	:rtype: None
-") Init;
-		void Init (const HLRAlgo_TriangleData & V);
-		%feature("compactdefaultargs") Destroy;
-		%feature("autodoc", "	:rtype: None
-") Destroy;
-		void Destroy ();
-		%feature("compactdefaultargs") IsAllocated;
-		%feature("autodoc", "	:rtype: bool
-") IsAllocated;
-		Standard_Boolean IsAllocated ();
-		%feature("compactdefaultargs") Assign;
-		%feature("autodoc", "	:param Other:
-	:type Other: HLRAlgo_Array1OfTData &
-	:rtype: HLRAlgo_Array1OfTData
-") Assign;
-		const HLRAlgo_Array1OfTData & Assign (const HLRAlgo_Array1OfTData & Other);
-		%feature("compactdefaultargs") operator =;
-		%feature("autodoc", "	:param Other:
-	:type Other: HLRAlgo_Array1OfTData &
-	:rtype: HLRAlgo_Array1OfTData
-") operator =;
-		const HLRAlgo_Array1OfTData & operator = (const HLRAlgo_Array1OfTData & Other);
-		%feature("compactdefaultargs") Length;
-		%feature("autodoc", "	:rtype: int
-") Length;
-		Standard_Integer Length ();
-		%feature("compactdefaultargs") Lower;
-		%feature("autodoc", "	:rtype: int
-") Lower;
-		Standard_Integer Lower ();
-		%feature("compactdefaultargs") Upper;
-		%feature("autodoc", "	:rtype: int
-") Upper;
-		Standard_Integer Upper ();
-		%feature("compactdefaultargs") SetValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param Value:
-	:type Value: HLRAlgo_TriangleData &
-	:rtype: None
-") SetValue;
-		void SetValue (const Standard_Integer Index,const HLRAlgo_TriangleData & Value);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: HLRAlgo_TriangleData
-") Value;
-		const HLRAlgo_TriangleData & Value (const Standard_Integer Index);
-		%feature("compactdefaultargs") ChangeValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: HLRAlgo_TriangleData
-") ChangeValue;
-		HLRAlgo_TriangleData & ChangeValue (const Standard_Integer Index);
-};
-
-
-%extend HLRAlgo_Array1OfTData {
 	%pythoncode {
 	__repr__ = _dumps_object
 	}
@@ -809,14 +486,6 @@ class HLRAlgo_BiPoint {
 	:rtype: None
 ") Hidden;
 		void Hidden (const Standard_Boolean B);
-		%feature("compactdefaultargs") Indices;
-		%feature("autodoc", "	:rtype: Standard_Address
-") Indices;
-		Standard_Address Indices ();
-		%feature("compactdefaultargs") Coordinates;
-		%feature("autodoc", "	:rtype: Standard_Address
-") Coordinates;
-		Standard_Address Coordinates ();
 };
 
 
@@ -886,7 +555,7 @@ class HLRAlgo_EdgeIterator {
 	:type status: HLRAlgo_EdgeStatus &
 	:rtype: None
 ") InitHidden;
-		void InitHidden (const HLRAlgo_EdgeStatus & status);
+		void InitHidden (HLRAlgo_EdgeStatus & status);
 		%feature("compactdefaultargs") MoreHidden;
 		%feature("autodoc", "	:rtype: bool
 ") MoreHidden;
@@ -914,7 +583,7 @@ class HLRAlgo_EdgeIterator {
 	:type status: HLRAlgo_EdgeStatus &
 	:rtype: None
 ") InitVisible;
-		void InitVisible (const HLRAlgo_EdgeStatus & status);
+		void InitVisible (HLRAlgo_EdgeStatus & status);
 		%feature("compactdefaultargs") MoreVisible;
 		%feature("autodoc", "	:rtype: bool
 ") MoreVisible;
@@ -981,17 +650,17 @@ class HLRAlgo_EdgeStatus {
 ") Initialize;
 		void Initialize (const Standard_Real Start,const Standard_ShortReal TolStart,const Standard_Real End,const Standard_ShortReal TolEnd);
 		%feature("compactdefaultargs") Bounds;
-		%feature("autodoc", "	:param Start:
-	:type Start: float &
-	:param TolStart:
-	:type TolStart: Standard_ShortReal &
-	:param End:
-	:type End: float &
-	:param TolEnd:
-	:type TolEnd: Standard_ShortReal &
+		%feature("autodoc", "	:param theStart:
+	:type theStart: float &
+	:param theTolStart:
+	:type theTolStart: Standard_ShortReal &
+	:param theEnd:
+	:type theEnd: float &
+	:param theTolEnd:
+	:type theTolEnd: Standard_ShortReal &
 	:rtype: None
 ") Bounds;
-		void Bounds (Standard_Real &OutValue,Standard_ShortReal & TolStart,Standard_Real &OutValue,Standard_ShortReal & TolEnd);
+		void Bounds (Standard_Real &OutValue,Standard_ShortReal & theTolStart,Standard_Real &OutValue,Standard_ShortReal & theTolEnd);
 		%feature("compactdefaultargs") NbVisiblePart;
 		%feature("autodoc", "	:rtype: int
 ") NbVisiblePart;
@@ -1011,7 +680,7 @@ class HLRAlgo_EdgeStatus {
 ") VisiblePart;
 		void VisiblePart (const Standard_Integer Index,Standard_Real &OutValue,Standard_ShortReal & TolStart,Standard_Real &OutValue,Standard_ShortReal & TolEnd);
 		%feature("compactdefaultargs") Hide;
-		%feature("autodoc", "	* Hides the interval <Start>, <End> with the tolerances <TolStart>, <TolEnd>. This interval is subtracted from the visible parts. If the hidden part is on ( or under ) the face the flag <OnFace> is True ( or False ). If the hidden part is on ( or inside ) the boundary of the face the flag <OnBoundary> is True ( or False ).
+		%feature("autodoc", "	* Hides the interval <Start>, <End> with the tolerances <TolStart>, <TolEnd>. This interval is subtracted from the visible parts. If the hidden part is on -- or under -- the face the flag <OnFace> is True -- or False --. If the hidden part is on -- or inside -- the boundary of the face the flag <OnBoundary> is True -- or False --.
 
 	:param Start:
 	:type Start: float
@@ -1069,7 +738,7 @@ class HLRAlgo_EdgeStatus {
 	}
 };
 %nodefaultctor HLRAlgo_EdgesBlock;
-class HLRAlgo_EdgesBlock : public MMgt_TShared {
+class HLRAlgo_EdgesBlock : public Standard_Transient {
 	public:
 		%feature("compactdefaultargs") HLRAlgo_EdgesBlock;
 		%feature("autodoc", "	* Create a Block of Edges for a wire.
@@ -1167,16 +836,6 @@ class HLRAlgo_EdgesBlock : public MMgt_TShared {
 	:rtype: None
 ") IsoLine;
 		void IsoLine (const Standard_Integer I,const Standard_Boolean B);
-		%feature("compactdefaultargs") UpdateMinMax;
-		%feature("autodoc", "	:param TotMinMax:
-	:type TotMinMax: Standard_Address
-	:rtype: None
-") UpdateMinMax;
-		void UpdateMinMax (const Standard_Address TotMinMax);
-		%feature("compactdefaultargs") MinMax;
-		%feature("autodoc", "	:rtype: Standard_Address
-") MinMax;
-		Standard_Address MinMax ();
 };
 
 
@@ -1199,7 +858,7 @@ class HLRAlgo_EdgesBlock : public MMgt_TShared {
 %}
 
 %nodefaultctor Handle_HLRAlgo_EdgesBlock;
-class Handle_HLRAlgo_EdgesBlock : public Handle_MMgt_TShared {
+class Handle_HLRAlgo_EdgesBlock : public Handle_Standard_Transient {
 
     public:
         // constructors
@@ -1211,506 +870,23 @@ class Handle_HLRAlgo_EdgesBlock : public Handle_MMgt_TShared {
         static const Handle_HLRAlgo_EdgesBlock DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_HLRAlgo_EdgesBlock {
     HLRAlgo_EdgesBlock* _get_reference() {
-    return (HLRAlgo_EdgesBlock*)$self->Access();
+    return (HLRAlgo_EdgesBlock*)$self->get();
     }
 };
 
 %extend Handle_HLRAlgo_EdgesBlock {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend HLRAlgo_EdgesBlock {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor HLRAlgo_HArray1OfPHDat;
-class HLRAlgo_HArray1OfPHDat : public MMgt_TShared {
-	public:
-		%feature("compactdefaultargs") HLRAlgo_HArray1OfPHDat;
-		%feature("autodoc", "	:param Low:
-	:type Low: int
-	:param Up:
-	:type Up: int
-	:rtype: None
-") HLRAlgo_HArray1OfPHDat;
-		 HLRAlgo_HArray1OfPHDat (const Standard_Integer Low,const Standard_Integer Up);
-		%feature("compactdefaultargs") HLRAlgo_HArray1OfPHDat;
-		%feature("autodoc", "	:param Low:
-	:type Low: int
-	:param Up:
-	:type Up: int
-	:param V:
-	:type V: HLRAlgo_PolyHidingData &
-	:rtype: None
-") HLRAlgo_HArray1OfPHDat;
-		 HLRAlgo_HArray1OfPHDat (const Standard_Integer Low,const Standard_Integer Up,const HLRAlgo_PolyHidingData & V);
-		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	:param V:
-	:type V: HLRAlgo_PolyHidingData &
-	:rtype: None
-") Init;
-		void Init (const HLRAlgo_PolyHidingData & V);
-		%feature("compactdefaultargs") Length;
-		%feature("autodoc", "	:rtype: int
-") Length;
-		Standard_Integer Length ();
-		%feature("compactdefaultargs") Lower;
-		%feature("autodoc", "	:rtype: int
-") Lower;
-		Standard_Integer Lower ();
-		%feature("compactdefaultargs") Upper;
-		%feature("autodoc", "	:rtype: int
-") Upper;
-		Standard_Integer Upper ();
-		%feature("compactdefaultargs") SetValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param Value:
-	:type Value: HLRAlgo_PolyHidingData &
-	:rtype: None
-") SetValue;
-		void SetValue (const Standard_Integer Index,const HLRAlgo_PolyHidingData & Value);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: HLRAlgo_PolyHidingData
-") Value;
-		const HLRAlgo_PolyHidingData & Value (const Standard_Integer Index);
-		%feature("compactdefaultargs") ChangeValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: HLRAlgo_PolyHidingData
-") ChangeValue;
-		HLRAlgo_PolyHidingData & ChangeValue (const Standard_Integer Index);
-		%feature("compactdefaultargs") Array1;
-		%feature("autodoc", "	:rtype: HLRAlgo_Array1OfPHDat
-") Array1;
-		const HLRAlgo_Array1OfPHDat & Array1 ();
-		%feature("compactdefaultargs") ChangeArray1;
-		%feature("autodoc", "	:rtype: HLRAlgo_Array1OfPHDat
-") ChangeArray1;
-		HLRAlgo_Array1OfPHDat & ChangeArray1 ();
-};
-
-
-%extend HLRAlgo_HArray1OfPHDat {
-	%pythoncode {
-		def GetHandle(self):
-		    try:
-		        return self.thisHandle
-		    except:
-		        self.thisHandle = Handle_HLRAlgo_HArray1OfPHDat(self)
-		        self.thisown = False
-		        return self.thisHandle
-	}
-};
-
-%pythonappend Handle_HLRAlgo_HArray1OfPHDat::Handle_HLRAlgo_HArray1OfPHDat %{
-    # register the handle in the base object
-    if len(args) > 0:
-        register_handle(self, args[0])
-%}
-
-%nodefaultctor Handle_HLRAlgo_HArray1OfPHDat;
-class Handle_HLRAlgo_HArray1OfPHDat : public Handle_MMgt_TShared {
-
-    public:
-        // constructors
-        Handle_HLRAlgo_HArray1OfPHDat();
-        Handle_HLRAlgo_HArray1OfPHDat(const Handle_HLRAlgo_HArray1OfPHDat &aHandle);
-        Handle_HLRAlgo_HArray1OfPHDat(const HLRAlgo_HArray1OfPHDat *anItem);
-        void Nullify();
-        Standard_Boolean IsNull() const;
-        static const Handle_HLRAlgo_HArray1OfPHDat DownCast(const Handle_Standard_Transient &AnObject);
-
-};
-%extend Handle_HLRAlgo_HArray1OfPHDat {
-    HLRAlgo_HArray1OfPHDat* _get_reference() {
-    return (HLRAlgo_HArray1OfPHDat*)$self->Access();
-    }
-};
-
-%extend Handle_HLRAlgo_HArray1OfPHDat {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
-};
-
-%extend HLRAlgo_HArray1OfPHDat {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor HLRAlgo_HArray1OfPINod;
-class HLRAlgo_HArray1OfPINod : public MMgt_TShared {
-	public:
-		%feature("compactdefaultargs") HLRAlgo_HArray1OfPINod;
-		%feature("autodoc", "	:param Low:
-	:type Low: int
-	:param Up:
-	:type Up: int
-	:rtype: None
-") HLRAlgo_HArray1OfPINod;
-		 HLRAlgo_HArray1OfPINod (const Standard_Integer Low,const Standard_Integer Up);
-		%feature("compactdefaultargs") HLRAlgo_HArray1OfPINod;
-		%feature("autodoc", "	:param Low:
-	:type Low: int
-	:param Up:
-	:type Up: int
-	:param V:
-	:type V: Handle_HLRAlgo_PolyInternalNode &
-	:rtype: None
-") HLRAlgo_HArray1OfPINod;
-		 HLRAlgo_HArray1OfPINod (const Standard_Integer Low,const Standard_Integer Up,const Handle_HLRAlgo_PolyInternalNode & V);
-		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	:param V:
-	:type V: Handle_HLRAlgo_PolyInternalNode &
-	:rtype: None
-") Init;
-		void Init (const Handle_HLRAlgo_PolyInternalNode & V);
-		%feature("compactdefaultargs") Length;
-		%feature("autodoc", "	:rtype: int
-") Length;
-		Standard_Integer Length ();
-		%feature("compactdefaultargs") Lower;
-		%feature("autodoc", "	:rtype: int
-") Lower;
-		Standard_Integer Lower ();
-		%feature("compactdefaultargs") Upper;
-		%feature("autodoc", "	:rtype: int
-") Upper;
-		Standard_Integer Upper ();
-		%feature("compactdefaultargs") SetValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param Value:
-	:type Value: Handle_HLRAlgo_PolyInternalNode &
-	:rtype: None
-") SetValue;
-		void SetValue (const Standard_Integer Index,const Handle_HLRAlgo_PolyInternalNode & Value);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: Handle_HLRAlgo_PolyInternalNode
-") Value;
-		Handle_HLRAlgo_PolyInternalNode Value (const Standard_Integer Index);
-		%feature("compactdefaultargs") ChangeValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: Handle_HLRAlgo_PolyInternalNode
-") ChangeValue;
-		Handle_HLRAlgo_PolyInternalNode ChangeValue (const Standard_Integer Index);
-		%feature("compactdefaultargs") Array1;
-		%feature("autodoc", "	:rtype: HLRAlgo_Array1OfPINod
-") Array1;
-		const HLRAlgo_Array1OfPINod & Array1 ();
-		%feature("compactdefaultargs") ChangeArray1;
-		%feature("autodoc", "	:rtype: HLRAlgo_Array1OfPINod
-") ChangeArray1;
-		HLRAlgo_Array1OfPINod & ChangeArray1 ();
-};
-
-
-%extend HLRAlgo_HArray1OfPINod {
-	%pythoncode {
-		def GetHandle(self):
-		    try:
-		        return self.thisHandle
-		    except:
-		        self.thisHandle = Handle_HLRAlgo_HArray1OfPINod(self)
-		        self.thisown = False
-		        return self.thisHandle
-	}
-};
-
-%pythonappend Handle_HLRAlgo_HArray1OfPINod::Handle_HLRAlgo_HArray1OfPINod %{
-    # register the handle in the base object
-    if len(args) > 0:
-        register_handle(self, args[0])
-%}
-
-%nodefaultctor Handle_HLRAlgo_HArray1OfPINod;
-class Handle_HLRAlgo_HArray1OfPINod : public Handle_MMgt_TShared {
-
-    public:
-        // constructors
-        Handle_HLRAlgo_HArray1OfPINod();
-        Handle_HLRAlgo_HArray1OfPINod(const Handle_HLRAlgo_HArray1OfPINod &aHandle);
-        Handle_HLRAlgo_HArray1OfPINod(const HLRAlgo_HArray1OfPINod *anItem);
-        void Nullify();
-        Standard_Boolean IsNull() const;
-        static const Handle_HLRAlgo_HArray1OfPINod DownCast(const Handle_Standard_Transient &AnObject);
-
-};
-%extend Handle_HLRAlgo_HArray1OfPINod {
-    HLRAlgo_HArray1OfPINod* _get_reference() {
-    return (HLRAlgo_HArray1OfPINod*)$self->Access();
-    }
-};
-
-%extend Handle_HLRAlgo_HArray1OfPINod {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
-};
-
-%extend HLRAlgo_HArray1OfPINod {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor HLRAlgo_HArray1OfPISeg;
-class HLRAlgo_HArray1OfPISeg : public MMgt_TShared {
-	public:
-		%feature("compactdefaultargs") HLRAlgo_HArray1OfPISeg;
-		%feature("autodoc", "	:param Low:
-	:type Low: int
-	:param Up:
-	:type Up: int
-	:rtype: None
-") HLRAlgo_HArray1OfPISeg;
-		 HLRAlgo_HArray1OfPISeg (const Standard_Integer Low,const Standard_Integer Up);
-		%feature("compactdefaultargs") HLRAlgo_HArray1OfPISeg;
-		%feature("autodoc", "	:param Low:
-	:type Low: int
-	:param Up:
-	:type Up: int
-	:param V:
-	:type V: HLRAlgo_PolyInternalSegment &
-	:rtype: None
-") HLRAlgo_HArray1OfPISeg;
-		 HLRAlgo_HArray1OfPISeg (const Standard_Integer Low,const Standard_Integer Up,const HLRAlgo_PolyInternalSegment & V);
-		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	:param V:
-	:type V: HLRAlgo_PolyInternalSegment &
-	:rtype: None
-") Init;
-		void Init (const HLRAlgo_PolyInternalSegment & V);
-		%feature("compactdefaultargs") Length;
-		%feature("autodoc", "	:rtype: int
-") Length;
-		Standard_Integer Length ();
-		%feature("compactdefaultargs") Lower;
-		%feature("autodoc", "	:rtype: int
-") Lower;
-		Standard_Integer Lower ();
-		%feature("compactdefaultargs") Upper;
-		%feature("autodoc", "	:rtype: int
-") Upper;
-		Standard_Integer Upper ();
-		%feature("compactdefaultargs") SetValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param Value:
-	:type Value: HLRAlgo_PolyInternalSegment &
-	:rtype: None
-") SetValue;
-		void SetValue (const Standard_Integer Index,const HLRAlgo_PolyInternalSegment & Value);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: HLRAlgo_PolyInternalSegment
-") Value;
-		const HLRAlgo_PolyInternalSegment & Value (const Standard_Integer Index);
-		%feature("compactdefaultargs") ChangeValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: HLRAlgo_PolyInternalSegment
-") ChangeValue;
-		HLRAlgo_PolyInternalSegment & ChangeValue (const Standard_Integer Index);
-		%feature("compactdefaultargs") Array1;
-		%feature("autodoc", "	:rtype: HLRAlgo_Array1OfPISeg
-") Array1;
-		const HLRAlgo_Array1OfPISeg & Array1 ();
-		%feature("compactdefaultargs") ChangeArray1;
-		%feature("autodoc", "	:rtype: HLRAlgo_Array1OfPISeg
-") ChangeArray1;
-		HLRAlgo_Array1OfPISeg & ChangeArray1 ();
-};
-
-
-%extend HLRAlgo_HArray1OfPISeg {
-	%pythoncode {
-		def GetHandle(self):
-		    try:
-		        return self.thisHandle
-		    except:
-		        self.thisHandle = Handle_HLRAlgo_HArray1OfPISeg(self)
-		        self.thisown = False
-		        return self.thisHandle
-	}
-};
-
-%pythonappend Handle_HLRAlgo_HArray1OfPISeg::Handle_HLRAlgo_HArray1OfPISeg %{
-    # register the handle in the base object
-    if len(args) > 0:
-        register_handle(self, args[0])
-%}
-
-%nodefaultctor Handle_HLRAlgo_HArray1OfPISeg;
-class Handle_HLRAlgo_HArray1OfPISeg : public Handle_MMgt_TShared {
-
-    public:
-        // constructors
-        Handle_HLRAlgo_HArray1OfPISeg();
-        Handle_HLRAlgo_HArray1OfPISeg(const Handle_HLRAlgo_HArray1OfPISeg &aHandle);
-        Handle_HLRAlgo_HArray1OfPISeg(const HLRAlgo_HArray1OfPISeg *anItem);
-        void Nullify();
-        Standard_Boolean IsNull() const;
-        static const Handle_HLRAlgo_HArray1OfPISeg DownCast(const Handle_Standard_Transient &AnObject);
-
-};
-%extend Handle_HLRAlgo_HArray1OfPISeg {
-    HLRAlgo_HArray1OfPISeg* _get_reference() {
-    return (HLRAlgo_HArray1OfPISeg*)$self->Access();
-    }
-};
-
-%extend Handle_HLRAlgo_HArray1OfPISeg {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
-};
-
-%extend HLRAlgo_HArray1OfPISeg {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor HLRAlgo_HArray1OfTData;
-class HLRAlgo_HArray1OfTData : public MMgt_TShared {
-	public:
-		%feature("compactdefaultargs") HLRAlgo_HArray1OfTData;
-		%feature("autodoc", "	:param Low:
-	:type Low: int
-	:param Up:
-	:type Up: int
-	:rtype: None
-") HLRAlgo_HArray1OfTData;
-		 HLRAlgo_HArray1OfTData (const Standard_Integer Low,const Standard_Integer Up);
-		%feature("compactdefaultargs") HLRAlgo_HArray1OfTData;
-		%feature("autodoc", "	:param Low:
-	:type Low: int
-	:param Up:
-	:type Up: int
-	:param V:
-	:type V: HLRAlgo_TriangleData &
-	:rtype: None
-") HLRAlgo_HArray1OfTData;
-		 HLRAlgo_HArray1OfTData (const Standard_Integer Low,const Standard_Integer Up,const HLRAlgo_TriangleData & V);
-		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	:param V:
-	:type V: HLRAlgo_TriangleData &
-	:rtype: None
-") Init;
-		void Init (const HLRAlgo_TriangleData & V);
-		%feature("compactdefaultargs") Length;
-		%feature("autodoc", "	:rtype: int
-") Length;
-		Standard_Integer Length ();
-		%feature("compactdefaultargs") Lower;
-		%feature("autodoc", "	:rtype: int
-") Lower;
-		Standard_Integer Lower ();
-		%feature("compactdefaultargs") Upper;
-		%feature("autodoc", "	:rtype: int
-") Upper;
-		Standard_Integer Upper ();
-		%feature("compactdefaultargs") SetValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param Value:
-	:type Value: HLRAlgo_TriangleData &
-	:rtype: None
-") SetValue;
-		void SetValue (const Standard_Integer Index,const HLRAlgo_TriangleData & Value);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: HLRAlgo_TriangleData
-") Value;
-		const HLRAlgo_TriangleData & Value (const Standard_Integer Index);
-		%feature("compactdefaultargs") ChangeValue;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:rtype: HLRAlgo_TriangleData
-") ChangeValue;
-		HLRAlgo_TriangleData & ChangeValue (const Standard_Integer Index);
-		%feature("compactdefaultargs") Array1;
-		%feature("autodoc", "	:rtype: HLRAlgo_Array1OfTData
-") Array1;
-		const HLRAlgo_Array1OfTData & Array1 ();
-		%feature("compactdefaultargs") ChangeArray1;
-		%feature("autodoc", "	:rtype: HLRAlgo_Array1OfTData
-") ChangeArray1;
-		HLRAlgo_Array1OfTData & ChangeArray1 ();
-};
-
-
-%extend HLRAlgo_HArray1OfTData {
-	%pythoncode {
-		def GetHandle(self):
-		    try:
-		        return self.thisHandle
-		    except:
-		        self.thisHandle = Handle_HLRAlgo_HArray1OfTData(self)
-		        self.thisown = False
-		        return self.thisHandle
-	}
-};
-
-%pythonappend Handle_HLRAlgo_HArray1OfTData::Handle_HLRAlgo_HArray1OfTData %{
-    # register the handle in the base object
-    if len(args) > 0:
-        register_handle(self, args[0])
-%}
-
-%nodefaultctor Handle_HLRAlgo_HArray1OfTData;
-class Handle_HLRAlgo_HArray1OfTData : public Handle_MMgt_TShared {
-
-    public:
-        // constructors
-        Handle_HLRAlgo_HArray1OfTData();
-        Handle_HLRAlgo_HArray1OfTData(const Handle_HLRAlgo_HArray1OfTData &aHandle);
-        Handle_HLRAlgo_HArray1OfTData(const HLRAlgo_HArray1OfTData *anItem);
-        void Nullify();
-        Standard_Boolean IsNull() const;
-        static const Handle_HLRAlgo_HArray1OfTData DownCast(const Handle_Standard_Transient &AnObject);
-
-};
-%extend Handle_HLRAlgo_HArray1OfTData {
-    HLRAlgo_HArray1OfTData* _get_reference() {
-    return (HLRAlgo_HArray1OfTData*)$self->Access();
-    }
-};
-
-%extend Handle_HLRAlgo_HArray1OfTData {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
-};
-
-%extend HLRAlgo_HArray1OfTData {
 	%pythoncode {
 	__repr__ = _dumps_object
 	}
@@ -1798,141 +974,6 @@ class HLRAlgo_Interference {
 
 
 %extend HLRAlgo_Interference {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor HLRAlgo_InterferenceList;
-class HLRAlgo_InterferenceList {
-	public:
-		%feature("compactdefaultargs") HLRAlgo_InterferenceList;
-		%feature("autodoc", "	:rtype: None
-") HLRAlgo_InterferenceList;
-		 HLRAlgo_InterferenceList ();
-		%feature("compactdefaultargs") HLRAlgo_InterferenceList;
-		%feature("autodoc", "	:param Other:
-	:type Other: HLRAlgo_InterferenceList &
-	:rtype: None
-") HLRAlgo_InterferenceList;
-		 HLRAlgo_InterferenceList (const HLRAlgo_InterferenceList & Other);
-		%feature("compactdefaultargs") Assign;
-		%feature("autodoc", "	:param Other:
-	:type Other: HLRAlgo_InterferenceList &
-	:rtype: None
-") Assign;
-		void Assign (const HLRAlgo_InterferenceList & Other);
-		%feature("compactdefaultargs") operator =;
-		%feature("autodoc", "	:param Other:
-	:type Other: HLRAlgo_InterferenceList &
-	:rtype: None
-") operator =;
-		void operator = (const HLRAlgo_InterferenceList & Other);
-		%feature("compactdefaultargs") Extent;
-		%feature("autodoc", "	:rtype: int
-") Extent;
-		Standard_Integer Extent ();
-		%feature("compactdefaultargs") Clear;
-		%feature("autodoc", "	:rtype: None
-") Clear;
-		void Clear ();
-		%feature("compactdefaultargs") IsEmpty;
-		%feature("autodoc", "	:rtype: bool
-") IsEmpty;
-		Standard_Boolean IsEmpty ();
-		%feature("compactdefaultargs") Prepend;
-		%feature("autodoc", "	:param I:
-	:type I: HLRAlgo_Interference &
-	:rtype: None
-") Prepend;
-		void Prepend (const HLRAlgo_Interference & I);
-		%feature("compactdefaultargs") Prepend;
-		%feature("autodoc", "	:param I:
-	:type I: HLRAlgo_Interference &
-	:param theIt:
-	:type theIt: HLRAlgo_ListIteratorOfInterferenceList &
-	:rtype: None
-") Prepend;
-		void Prepend (const HLRAlgo_Interference & I,HLRAlgo_ListIteratorOfInterferenceList & theIt);
-		%feature("compactdefaultargs") Prepend;
-		%feature("autodoc", "	:param Other:
-	:type Other: HLRAlgo_InterferenceList &
-	:rtype: None
-") Prepend;
-		void Prepend (HLRAlgo_InterferenceList & Other);
-		%feature("compactdefaultargs") Append;
-		%feature("autodoc", "	:param I:
-	:type I: HLRAlgo_Interference &
-	:rtype: None
-") Append;
-		void Append (const HLRAlgo_Interference & I);
-		%feature("compactdefaultargs") Append;
-		%feature("autodoc", "	:param I:
-	:type I: HLRAlgo_Interference &
-	:param theIt:
-	:type theIt: HLRAlgo_ListIteratorOfInterferenceList &
-	:rtype: None
-") Append;
-		void Append (const HLRAlgo_Interference & I,HLRAlgo_ListIteratorOfInterferenceList & theIt);
-		%feature("compactdefaultargs") Append;
-		%feature("autodoc", "	:param Other:
-	:type Other: HLRAlgo_InterferenceList &
-	:rtype: None
-") Append;
-		void Append (HLRAlgo_InterferenceList & Other);
-		%feature("compactdefaultargs") First;
-		%feature("autodoc", "	:rtype: HLRAlgo_Interference
-") First;
-		HLRAlgo_Interference & First ();
-		%feature("compactdefaultargs") Last;
-		%feature("autodoc", "	:rtype: HLRAlgo_Interference
-") Last;
-		HLRAlgo_Interference & Last ();
-		%feature("compactdefaultargs") RemoveFirst;
-		%feature("autodoc", "	:rtype: None
-") RemoveFirst;
-		void RemoveFirst ();
-		%feature("compactdefaultargs") Remove;
-		%feature("autodoc", "	:param It:
-	:type It: HLRAlgo_ListIteratorOfInterferenceList &
-	:rtype: None
-") Remove;
-		void Remove (HLRAlgo_ListIteratorOfInterferenceList & It);
-		%feature("compactdefaultargs") InsertBefore;
-		%feature("autodoc", "	:param I:
-	:type I: HLRAlgo_Interference &
-	:param It:
-	:type It: HLRAlgo_ListIteratorOfInterferenceList &
-	:rtype: None
-") InsertBefore;
-		void InsertBefore (const HLRAlgo_Interference & I,HLRAlgo_ListIteratorOfInterferenceList & It);
-		%feature("compactdefaultargs") InsertBefore;
-		%feature("autodoc", "	:param Other:
-	:type Other: HLRAlgo_InterferenceList &
-	:param It:
-	:type It: HLRAlgo_ListIteratorOfInterferenceList &
-	:rtype: None
-") InsertBefore;
-		void InsertBefore (HLRAlgo_InterferenceList & Other,HLRAlgo_ListIteratorOfInterferenceList & It);
-		%feature("compactdefaultargs") InsertAfter;
-		%feature("autodoc", "	:param I:
-	:type I: HLRAlgo_Interference &
-	:param It:
-	:type It: HLRAlgo_ListIteratorOfInterferenceList &
-	:rtype: None
-") InsertAfter;
-		void InsertAfter (const HLRAlgo_Interference & I,HLRAlgo_ListIteratorOfInterferenceList & It);
-		%feature("compactdefaultargs") InsertAfter;
-		%feature("autodoc", "	:param Other:
-	:type Other: HLRAlgo_InterferenceList &
-	:param It:
-	:type It: HLRAlgo_ListIteratorOfInterferenceList &
-	:rtype: None
-") InsertAfter;
-		void InsertAfter (HLRAlgo_InterferenceList & Other,HLRAlgo_ListIteratorOfInterferenceList & It);
-};
-
-
-%extend HLRAlgo_InterferenceList {
 	%pythoncode {
 	__repr__ = _dumps_object
 	}
@@ -2040,359 +1081,8 @@ class HLRAlgo_Intersection {
 	__repr__ = _dumps_object
 	}
 };
-%nodefaultctor HLRAlgo_ListIteratorOfInterferenceList;
-class HLRAlgo_ListIteratorOfInterferenceList {
-	public:
-		%feature("compactdefaultargs") HLRAlgo_ListIteratorOfInterferenceList;
-		%feature("autodoc", "	:rtype: None
-") HLRAlgo_ListIteratorOfInterferenceList;
-		 HLRAlgo_ListIteratorOfInterferenceList ();
-		%feature("compactdefaultargs") HLRAlgo_ListIteratorOfInterferenceList;
-		%feature("autodoc", "	:param L:
-	:type L: HLRAlgo_InterferenceList &
-	:rtype: None
-") HLRAlgo_ListIteratorOfInterferenceList;
-		 HLRAlgo_ListIteratorOfInterferenceList (const HLRAlgo_InterferenceList & L);
-		%feature("compactdefaultargs") Initialize;
-		%feature("autodoc", "	:param L:
-	:type L: HLRAlgo_InterferenceList &
-	:rtype: None
-") Initialize;
-		void Initialize (const HLRAlgo_InterferenceList & L);
-		%feature("compactdefaultargs") More;
-		%feature("autodoc", "	:rtype: bool
-") More;
-		Standard_Boolean More ();
-		%feature("compactdefaultargs") Next;
-		%feature("autodoc", "	:rtype: None
-") Next;
-		void Next ();
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:rtype: HLRAlgo_Interference
-") Value;
-		HLRAlgo_Interference & Value ();
-};
-
-
-%extend HLRAlgo_ListIteratorOfInterferenceList {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor HLRAlgo_ListIteratorOfListOfBPoint;
-class HLRAlgo_ListIteratorOfListOfBPoint {
-	public:
-		%feature("compactdefaultargs") HLRAlgo_ListIteratorOfListOfBPoint;
-		%feature("autodoc", "	:rtype: None
-") HLRAlgo_ListIteratorOfListOfBPoint;
-		 HLRAlgo_ListIteratorOfListOfBPoint ();
-		%feature("compactdefaultargs") HLRAlgo_ListIteratorOfListOfBPoint;
-		%feature("autodoc", "	:param L:
-	:type L: HLRAlgo_ListOfBPoint &
-	:rtype: None
-") HLRAlgo_ListIteratorOfListOfBPoint;
-		 HLRAlgo_ListIteratorOfListOfBPoint (const HLRAlgo_ListOfBPoint & L);
-		%feature("compactdefaultargs") Initialize;
-		%feature("autodoc", "	:param L:
-	:type L: HLRAlgo_ListOfBPoint &
-	:rtype: None
-") Initialize;
-		void Initialize (const HLRAlgo_ListOfBPoint & L);
-		%feature("compactdefaultargs") More;
-		%feature("autodoc", "	:rtype: bool
-") More;
-		Standard_Boolean More ();
-		%feature("compactdefaultargs") Next;
-		%feature("autodoc", "	:rtype: None
-") Next;
-		void Next ();
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:rtype: HLRAlgo_BiPoint
-") Value;
-		HLRAlgo_BiPoint & Value ();
-};
-
-
-%extend HLRAlgo_ListIteratorOfListOfBPoint {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor HLRAlgo_ListNodeOfInterferenceList;
-class HLRAlgo_ListNodeOfInterferenceList : public TCollection_MapNode {
-	public:
-		%feature("compactdefaultargs") HLRAlgo_ListNodeOfInterferenceList;
-		%feature("autodoc", "	:param I:
-	:type I: HLRAlgo_Interference &
-	:param n:
-	:type n: TCollection_MapNodePtr &
-	:rtype: None
-") HLRAlgo_ListNodeOfInterferenceList;
-		 HLRAlgo_ListNodeOfInterferenceList (const HLRAlgo_Interference & I,const TCollection_MapNodePtr & n);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:rtype: HLRAlgo_Interference
-") Value;
-		HLRAlgo_Interference & Value ();
-};
-
-
-%extend HLRAlgo_ListNodeOfInterferenceList {
-	%pythoncode {
-		def GetHandle(self):
-		    try:
-		        return self.thisHandle
-		    except:
-		        self.thisHandle = Handle_HLRAlgo_ListNodeOfInterferenceList(self)
-		        self.thisown = False
-		        return self.thisHandle
-	}
-};
-
-%pythonappend Handle_HLRAlgo_ListNodeOfInterferenceList::Handle_HLRAlgo_ListNodeOfInterferenceList %{
-    # register the handle in the base object
-    if len(args) > 0:
-        register_handle(self, args[0])
-%}
-
-%nodefaultctor Handle_HLRAlgo_ListNodeOfInterferenceList;
-class Handle_HLRAlgo_ListNodeOfInterferenceList : public Handle_TCollection_MapNode {
-
-    public:
-        // constructors
-        Handle_HLRAlgo_ListNodeOfInterferenceList();
-        Handle_HLRAlgo_ListNodeOfInterferenceList(const Handle_HLRAlgo_ListNodeOfInterferenceList &aHandle);
-        Handle_HLRAlgo_ListNodeOfInterferenceList(const HLRAlgo_ListNodeOfInterferenceList *anItem);
-        void Nullify();
-        Standard_Boolean IsNull() const;
-        static const Handle_HLRAlgo_ListNodeOfInterferenceList DownCast(const Handle_Standard_Transient &AnObject);
-
-};
-%extend Handle_HLRAlgo_ListNodeOfInterferenceList {
-    HLRAlgo_ListNodeOfInterferenceList* _get_reference() {
-    return (HLRAlgo_ListNodeOfInterferenceList*)$self->Access();
-    }
-};
-
-%extend Handle_HLRAlgo_ListNodeOfInterferenceList {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
-};
-
-%extend HLRAlgo_ListNodeOfInterferenceList {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor HLRAlgo_ListNodeOfListOfBPoint;
-class HLRAlgo_ListNodeOfListOfBPoint : public TCollection_MapNode {
-	public:
-		%feature("compactdefaultargs") HLRAlgo_ListNodeOfListOfBPoint;
-		%feature("autodoc", "	:param I:
-	:type I: HLRAlgo_BiPoint &
-	:param n:
-	:type n: TCollection_MapNodePtr &
-	:rtype: None
-") HLRAlgo_ListNodeOfListOfBPoint;
-		 HLRAlgo_ListNodeOfListOfBPoint (const HLRAlgo_BiPoint & I,const TCollection_MapNodePtr & n);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:rtype: HLRAlgo_BiPoint
-") Value;
-		HLRAlgo_BiPoint & Value ();
-};
-
-
-%extend HLRAlgo_ListNodeOfListOfBPoint {
-	%pythoncode {
-		def GetHandle(self):
-		    try:
-		        return self.thisHandle
-		    except:
-		        self.thisHandle = Handle_HLRAlgo_ListNodeOfListOfBPoint(self)
-		        self.thisown = False
-		        return self.thisHandle
-	}
-};
-
-%pythonappend Handle_HLRAlgo_ListNodeOfListOfBPoint::Handle_HLRAlgo_ListNodeOfListOfBPoint %{
-    # register the handle in the base object
-    if len(args) > 0:
-        register_handle(self, args[0])
-%}
-
-%nodefaultctor Handle_HLRAlgo_ListNodeOfListOfBPoint;
-class Handle_HLRAlgo_ListNodeOfListOfBPoint : public Handle_TCollection_MapNode {
-
-    public:
-        // constructors
-        Handle_HLRAlgo_ListNodeOfListOfBPoint();
-        Handle_HLRAlgo_ListNodeOfListOfBPoint(const Handle_HLRAlgo_ListNodeOfListOfBPoint &aHandle);
-        Handle_HLRAlgo_ListNodeOfListOfBPoint(const HLRAlgo_ListNodeOfListOfBPoint *anItem);
-        void Nullify();
-        Standard_Boolean IsNull() const;
-        static const Handle_HLRAlgo_ListNodeOfListOfBPoint DownCast(const Handle_Standard_Transient &AnObject);
-
-};
-%extend Handle_HLRAlgo_ListNodeOfListOfBPoint {
-    HLRAlgo_ListNodeOfListOfBPoint* _get_reference() {
-    return (HLRAlgo_ListNodeOfListOfBPoint*)$self->Access();
-    }
-};
-
-%extend Handle_HLRAlgo_ListNodeOfListOfBPoint {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
-};
-
-%extend HLRAlgo_ListNodeOfListOfBPoint {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor HLRAlgo_ListOfBPoint;
-class HLRAlgo_ListOfBPoint {
-	public:
-		%feature("compactdefaultargs") HLRAlgo_ListOfBPoint;
-		%feature("autodoc", "	:rtype: None
-") HLRAlgo_ListOfBPoint;
-		 HLRAlgo_ListOfBPoint ();
-		%feature("compactdefaultargs") HLRAlgo_ListOfBPoint;
-		%feature("autodoc", "	:param Other:
-	:type Other: HLRAlgo_ListOfBPoint &
-	:rtype: None
-") HLRAlgo_ListOfBPoint;
-		 HLRAlgo_ListOfBPoint (const HLRAlgo_ListOfBPoint & Other);
-		%feature("compactdefaultargs") Assign;
-		%feature("autodoc", "	:param Other:
-	:type Other: HLRAlgo_ListOfBPoint &
-	:rtype: None
-") Assign;
-		void Assign (const HLRAlgo_ListOfBPoint & Other);
-		%feature("compactdefaultargs") operator =;
-		%feature("autodoc", "	:param Other:
-	:type Other: HLRAlgo_ListOfBPoint &
-	:rtype: None
-") operator =;
-		void operator = (const HLRAlgo_ListOfBPoint & Other);
-		%feature("compactdefaultargs") Extent;
-		%feature("autodoc", "	:rtype: int
-") Extent;
-		Standard_Integer Extent ();
-		%feature("compactdefaultargs") Clear;
-		%feature("autodoc", "	:rtype: None
-") Clear;
-		void Clear ();
-		%feature("compactdefaultargs") IsEmpty;
-		%feature("autodoc", "	:rtype: bool
-") IsEmpty;
-		Standard_Boolean IsEmpty ();
-		%feature("compactdefaultargs") Prepend;
-		%feature("autodoc", "	:param I:
-	:type I: HLRAlgo_BiPoint &
-	:rtype: None
-") Prepend;
-		void Prepend (const HLRAlgo_BiPoint & I);
-		%feature("compactdefaultargs") Prepend;
-		%feature("autodoc", "	:param I:
-	:type I: HLRAlgo_BiPoint &
-	:param theIt:
-	:type theIt: HLRAlgo_ListIteratorOfListOfBPoint &
-	:rtype: None
-") Prepend;
-		void Prepend (const HLRAlgo_BiPoint & I,HLRAlgo_ListIteratorOfListOfBPoint & theIt);
-		%feature("compactdefaultargs") Prepend;
-		%feature("autodoc", "	:param Other:
-	:type Other: HLRAlgo_ListOfBPoint &
-	:rtype: None
-") Prepend;
-		void Prepend (HLRAlgo_ListOfBPoint & Other);
-		%feature("compactdefaultargs") Append;
-		%feature("autodoc", "	:param I:
-	:type I: HLRAlgo_BiPoint &
-	:rtype: None
-") Append;
-		void Append (const HLRAlgo_BiPoint & I);
-		%feature("compactdefaultargs") Append;
-		%feature("autodoc", "	:param I:
-	:type I: HLRAlgo_BiPoint &
-	:param theIt:
-	:type theIt: HLRAlgo_ListIteratorOfListOfBPoint &
-	:rtype: None
-") Append;
-		void Append (const HLRAlgo_BiPoint & I,HLRAlgo_ListIteratorOfListOfBPoint & theIt);
-		%feature("compactdefaultargs") Append;
-		%feature("autodoc", "	:param Other:
-	:type Other: HLRAlgo_ListOfBPoint &
-	:rtype: None
-") Append;
-		void Append (HLRAlgo_ListOfBPoint & Other);
-		%feature("compactdefaultargs") First;
-		%feature("autodoc", "	:rtype: HLRAlgo_BiPoint
-") First;
-		HLRAlgo_BiPoint & First ();
-		%feature("compactdefaultargs") Last;
-		%feature("autodoc", "	:rtype: HLRAlgo_BiPoint
-") Last;
-		HLRAlgo_BiPoint & Last ();
-		%feature("compactdefaultargs") RemoveFirst;
-		%feature("autodoc", "	:rtype: None
-") RemoveFirst;
-		void RemoveFirst ();
-		%feature("compactdefaultargs") Remove;
-		%feature("autodoc", "	:param It:
-	:type It: HLRAlgo_ListIteratorOfListOfBPoint &
-	:rtype: None
-") Remove;
-		void Remove (HLRAlgo_ListIteratorOfListOfBPoint & It);
-		%feature("compactdefaultargs") InsertBefore;
-		%feature("autodoc", "	:param I:
-	:type I: HLRAlgo_BiPoint &
-	:param It:
-	:type It: HLRAlgo_ListIteratorOfListOfBPoint &
-	:rtype: None
-") InsertBefore;
-		void InsertBefore (const HLRAlgo_BiPoint & I,HLRAlgo_ListIteratorOfListOfBPoint & It);
-		%feature("compactdefaultargs") InsertBefore;
-		%feature("autodoc", "	:param Other:
-	:type Other: HLRAlgo_ListOfBPoint &
-	:param It:
-	:type It: HLRAlgo_ListIteratorOfListOfBPoint &
-	:rtype: None
-") InsertBefore;
-		void InsertBefore (HLRAlgo_ListOfBPoint & Other,HLRAlgo_ListIteratorOfListOfBPoint & It);
-		%feature("compactdefaultargs") InsertAfter;
-		%feature("autodoc", "	:param I:
-	:type I: HLRAlgo_BiPoint &
-	:param It:
-	:type It: HLRAlgo_ListIteratorOfListOfBPoint &
-	:rtype: None
-") InsertAfter;
-		void InsertAfter (const HLRAlgo_BiPoint & I,HLRAlgo_ListIteratorOfListOfBPoint & It);
-		%feature("compactdefaultargs") InsertAfter;
-		%feature("autodoc", "	:param Other:
-	:type Other: HLRAlgo_ListOfBPoint &
-	:param It:
-	:type It: HLRAlgo_ListIteratorOfListOfBPoint &
-	:rtype: None
-") InsertAfter;
-		void InsertAfter (HLRAlgo_ListOfBPoint & Other,HLRAlgo_ListIteratorOfListOfBPoint & It);
-};
-
-
-%extend HLRAlgo_ListOfBPoint {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
 %nodefaultctor HLRAlgo_PolyAlgo;
-class HLRAlgo_PolyAlgo : public MMgt_TShared {
+class HLRAlgo_PolyAlgo : public Standard_Transient {
 	public:
 		%feature("compactdefaultargs") HLRAlgo_PolyAlgo;
 		%feature("autodoc", "	:rtype: None
@@ -2433,8 +1123,6 @@ class HLRAlgo_PolyAlgo : public MMgt_TShared {
 		%feature("compactdefaultargs") Hide;
 		%feature("autodoc", "	* process hiding between <Pt1> and <Pt2>.
 
-	:param Coordinates:
-	:type Coordinates: Standard_Address &
 	:param status:
 	:type status: HLRAlgo_EdgeStatus &
 	:param Index:
@@ -2447,9 +1135,9 @@ class HLRAlgo_PolyAlgo : public MMgt_TShared {
 	:type outl: bool
 	:param intl:
 	:type intl: bool
-	:rtype: None
+	:rtype: HLRAlgo_BiPoint::PointsT
 ") Hide;
-		void Hide (Standard_Address & Coordinates,HLRAlgo_EdgeStatus & status,Standard_Integer &OutValue,Standard_Boolean &OutValue,Standard_Boolean &OutValue,Standard_Boolean &OutValue,Standard_Boolean &OutValue);
+		HLRAlgo_BiPoint::PointsT & Hide (HLRAlgo_EdgeStatus & status,Standard_Integer &OutValue,Standard_Boolean &OutValue,Standard_Boolean &OutValue,Standard_Boolean &OutValue,Standard_Boolean &OutValue);
 		%feature("compactdefaultargs") InitShow;
 		%feature("autodoc", "	:rtype: None
 ") InitShow;
@@ -2465,8 +1153,6 @@ class HLRAlgo_PolyAlgo : public MMgt_TShared {
 		%feature("compactdefaultargs") Show;
 		%feature("autodoc", "	* process hiding between <Pt1> and <Pt2>.
 
-	:param Coordinates:
-	:type Coordinates: Standard_Address &
 	:param Index:
 	:type Index: int &
 	:param reg1:
@@ -2477,9 +1163,9 @@ class HLRAlgo_PolyAlgo : public MMgt_TShared {
 	:type outl: bool
 	:param intl:
 	:type intl: bool
-	:rtype: None
+	:rtype: HLRAlgo_BiPoint::PointsT
 ") Show;
-		void Show (Standard_Address & Coordinates,Standard_Integer &OutValue,Standard_Boolean &OutValue,Standard_Boolean &OutValue,Standard_Boolean &OutValue,Standard_Boolean &OutValue);
+		HLRAlgo_BiPoint::PointsT & Show (Standard_Integer &OutValue,Standard_Boolean &OutValue,Standard_Boolean &OutValue,Standard_Boolean &OutValue,Standard_Boolean &OutValue);
 };
 
 
@@ -2502,7 +1188,7 @@ class HLRAlgo_PolyAlgo : public MMgt_TShared {
 %}
 
 %nodefaultctor Handle_HLRAlgo_PolyAlgo;
-class Handle_HLRAlgo_PolyAlgo : public Handle_MMgt_TShared {
+class Handle_HLRAlgo_PolyAlgo : public Handle_Standard_Transient {
 
     public:
         // constructors
@@ -2514,19 +1200,20 @@ class Handle_HLRAlgo_PolyAlgo : public Handle_MMgt_TShared {
         static const Handle_HLRAlgo_PolyAlgo DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_HLRAlgo_PolyAlgo {
     HLRAlgo_PolyAlgo* _get_reference() {
-    return (HLRAlgo_PolyAlgo*)$self->Access();
+    return (HLRAlgo_PolyAlgo*)$self->get();
     }
 };
 
 %extend Handle_HLRAlgo_PolyAlgo {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend HLRAlgo_PolyAlgo {
@@ -2535,7 +1222,7 @@ class Handle_HLRAlgo_PolyAlgo : public Handle_MMgt_TShared {
 	}
 };
 %nodefaultctor HLRAlgo_PolyData;
-class HLRAlgo_PolyData : public MMgt_TShared {
+class HLRAlgo_PolyData : public Standard_Transient {
 	public:
 		%feature("compactdefaultargs") HLRAlgo_PolyData;
 		%feature("autodoc", "	:rtype: None
@@ -2581,36 +1268,10 @@ class HLRAlgo_PolyData : public MMgt_TShared {
 		%feature("autodoc", "	:rtype: HLRAlgo_Array1OfPHDat
 ") PHDat;
 		HLRAlgo_Array1OfPHDat & PHDat ();
-		%feature("compactdefaultargs") UpdateGlobalMinMax;
-		%feature("autodoc", "	:param ToTMinMax:
-	:type ToTMinMax: Standard_Address
-	:rtype: None
-") UpdateGlobalMinMax;
-		void UpdateGlobalMinMax (const Standard_Address ToTMinMax);
 		%feature("compactdefaultargs") Hiding;
 		%feature("autodoc", "	:rtype: bool
 ") Hiding;
 		Standard_Boolean Hiding ();
-		%feature("compactdefaultargs") HideByPolyData;
-		%feature("autodoc", "	* process hiding between <Pt1> and <Pt2>.
-
-	:param Coordinates:
-	:type Coordinates: Standard_Address
-	:param RealPtr:
-	:type RealPtr: Standard_Address
-	:param Indices:
-	:type Indices: Standard_Address
-	:param HidingShell:
-	:type HidingShell: bool
-	:param status:
-	:type status: HLRAlgo_EdgeStatus &
-	:rtype: None
-") HideByPolyData;
-		void HideByPolyData (const Standard_Address Coordinates,const Standard_Address RealPtr,const Standard_Address Indices,const Standard_Boolean HidingShell,HLRAlgo_EdgeStatus & status);
-		%feature("compactdefaultargs") Indices;
-		%feature("autodoc", "	:rtype: Standard_Address
-") Indices;
-		Standard_Address Indices ();
 };
 
 
@@ -2633,7 +1294,7 @@ class HLRAlgo_PolyData : public MMgt_TShared {
 %}
 
 %nodefaultctor Handle_HLRAlgo_PolyData;
-class Handle_HLRAlgo_PolyData : public Handle_MMgt_TShared {
+class Handle_HLRAlgo_PolyData : public Handle_Standard_Transient {
 
     public:
         // constructors
@@ -2645,19 +1306,20 @@ class Handle_HLRAlgo_PolyData : public Handle_MMgt_TShared {
         static const Handle_HLRAlgo_PolyData DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_HLRAlgo_PolyData {
     HLRAlgo_PolyData* _get_reference() {
-    return (HLRAlgo_PolyData*)$self->Access();
+    return (HLRAlgo_PolyData*)$self->get();
     }
 };
 
 %extend Handle_HLRAlgo_PolyData {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend HLRAlgo_PolyData {
@@ -2665,49 +1327,8 @@ class Handle_HLRAlgo_PolyData : public Handle_MMgt_TShared {
 	__repr__ = _dumps_object
 	}
 };
-%nodefaultctor HLRAlgo_PolyHidingData;
-class HLRAlgo_PolyHidingData {
-	public:
-		%feature("compactdefaultargs") HLRAlgo_PolyHidingData;
-		%feature("autodoc", "	:rtype: None
-") HLRAlgo_PolyHidingData;
-		 HLRAlgo_PolyHidingData ();
-		%feature("compactdefaultargs") Set;
-		%feature("autodoc", "	:param Index:
-	:type Index: int
-	:param Minim:
-	:type Minim: int
-	:param Maxim:
-	:type Maxim: int
-	:param A:
-	:type A: float
-	:param B:
-	:type B: float
-	:param C:
-	:type C: float
-	:param D:
-	:type D: float
-	:rtype: None
-") Set;
-		void Set (const Standard_Integer Index,const Standard_Integer Minim,const Standard_Integer Maxim,const Standard_Real A,const Standard_Real B,const Standard_Real C,const Standard_Real D);
-		%feature("compactdefaultargs") IndexAndMinMax;
-		%feature("autodoc", "	:rtype: Standard_Address
-") IndexAndMinMax;
-		Standard_Address IndexAndMinMax ();
-		%feature("compactdefaultargs") Plan;
-		%feature("autodoc", "	:rtype: Standard_Address
-") Plan;
-		Standard_Address Plan ();
-};
-
-
-%extend HLRAlgo_PolyHidingData {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
 %nodefaultctor HLRAlgo_PolyInternalData;
-class HLRAlgo_PolyInternalData : public MMgt_TShared {
+class HLRAlgo_PolyInternalData : public Standard_Transient {
 	public:
 		%feature("compactdefaultargs") HLRAlgo_PolyInternalData;
 		%feature("autodoc", "	:param nbNod:
@@ -2719,23 +1340,23 @@ class HLRAlgo_PolyInternalData : public MMgt_TShared {
 		 HLRAlgo_PolyInternalData (const Standard_Integer nbNod,const Standard_Integer nbTri);
 		%feature("compactdefaultargs") UpdateLinks;
 		%feature("autodoc", "	:param TData:
-	:type TData: Standard_Address &
+	:type TData: HLRAlgo_Array1OfTData * &
 	:param PISeg:
-	:type PISeg: Standard_Address &
+	:type PISeg: HLRAlgo_Array1OfPISeg * &
 	:param PINod:
-	:type PINod: Standard_Address &
+	:type PINod: HLRAlgo_Array1OfPINod * &
 	:rtype: None
 ") UpdateLinks;
-		void UpdateLinks (Standard_Address & TData,Standard_Address & PISeg,Standard_Address & PINod);
+		void UpdateLinks (HLRAlgo_Array1OfTData * & TData,HLRAlgo_Array1OfPISeg * & PISeg,HLRAlgo_Array1OfPINod * & PINod);
 		%feature("compactdefaultargs") AddNode;
 		%feature("autodoc", "	:param Nod1RValues:
-	:type Nod1RValues: Standard_Address
+	:type Nod1RValues: HLRAlgo_PolyInternalNode::NodeData &
 	:param Nod2RValues:
-	:type Nod2RValues: Standard_Address
+	:type Nod2RValues: HLRAlgo_PolyInternalNode::NodeData &
 	:param PINod1:
-	:type PINod1: Standard_Address &
+	:type PINod1: HLRAlgo_Array1OfPINod * &
 	:param PINod2:
-	:type PINod2: Standard_Address &
+	:type PINod2: HLRAlgo_Array1OfPINod * &
 	:param coef1:
 	:type coef1: float
 	:param X3:
@@ -2746,7 +1367,7 @@ class HLRAlgo_PolyInternalData : public MMgt_TShared {
 	:type Z3: float
 	:rtype: int
 ") AddNode;
-		Standard_Integer AddNode (const Standard_Address Nod1RValues,const Standard_Address Nod2RValues,Standard_Address & PINod1,Standard_Address & PINod2,const Standard_Real coef1,const Standard_Real X3,const Standard_Real Y3,const Standard_Real Z3);
+		Standard_Integer AddNode (HLRAlgo_PolyInternalNode::NodeData & Nod1RValues,HLRAlgo_PolyInternalNode::NodeData & Nod2RValues,HLRAlgo_Array1OfPINod * & PINod1,HLRAlgo_Array1OfPINod * & PINod2,const Standard_Real coef1,const Standard_Real X3,const Standard_Real Y3,const Standard_Real Z3);
 		%feature("compactdefaultargs") UpdateLinks;
 		%feature("autodoc", "	:param ip1:
 	:type ip1: int
@@ -2755,48 +1376,48 @@ class HLRAlgo_PolyInternalData : public MMgt_TShared {
 	:param ip3:
 	:type ip3: int
 	:param TData1:
-	:type TData1: Standard_Address &
+	:type TData1: HLRAlgo_Array1OfTData * &
 	:param TData2:
-	:type TData2: Standard_Address &
+	:type TData2: HLRAlgo_Array1OfTData * &
 	:param PISeg1:
-	:type PISeg1: Standard_Address &
+	:type PISeg1: HLRAlgo_Array1OfPISeg * &
 	:param PISeg2:
-	:type PISeg2: Standard_Address &
+	:type PISeg2: HLRAlgo_Array1OfPISeg * &
 	:param PINod1:
-	:type PINod1: Standard_Address &
+	:type PINod1: HLRAlgo_Array1OfPINod * &
 	:param PINod2:
-	:type PINod2: Standard_Address &
+	:type PINod2: HLRAlgo_Array1OfPINod * &
 	:rtype: None
 ") UpdateLinks;
-		void UpdateLinks (const Standard_Integer ip1,const Standard_Integer ip2,const Standard_Integer ip3,Standard_Address & TData1,Standard_Address & TData2,Standard_Address & PISeg1,Standard_Address & PISeg2,Standard_Address & PINod1,Standard_Address & PINod2);
+		void UpdateLinks (const Standard_Integer ip1,const Standard_Integer ip2,const Standard_Integer ip3,HLRAlgo_Array1OfTData * & TData1,HLRAlgo_Array1OfTData * & TData2,HLRAlgo_Array1OfPISeg * & PISeg1,HLRAlgo_Array1OfPISeg * & PISeg2,HLRAlgo_Array1OfPINod * & PINod1,HLRAlgo_Array1OfPINod * & PINod2);
 		%feature("compactdefaultargs") Dump;
 		%feature("autodoc", "	:rtype: None
 ") Dump;
 		void Dump ();
 		%feature("compactdefaultargs") IncTData;
 		%feature("autodoc", "	:param TData1:
-	:type TData1: Standard_Address &
+	:type TData1: HLRAlgo_Array1OfTData * &
 	:param TData2:
-	:type TData2: Standard_Address &
+	:type TData2: HLRAlgo_Array1OfTData * &
 	:rtype: None
 ") IncTData;
-		void IncTData (Standard_Address & TData1,Standard_Address & TData2);
+		void IncTData (HLRAlgo_Array1OfTData * & TData1,HLRAlgo_Array1OfTData * & TData2);
 		%feature("compactdefaultargs") IncPISeg;
 		%feature("autodoc", "	:param PISeg1:
-	:type PISeg1: Standard_Address &
+	:type PISeg1: HLRAlgo_Array1OfPISeg * &
 	:param PISeg2:
-	:type PISeg2: Standard_Address &
+	:type PISeg2: HLRAlgo_Array1OfPISeg * &
 	:rtype: None
 ") IncPISeg;
-		void IncPISeg (Standard_Address & PISeg1,Standard_Address & PISeg2);
+		void IncPISeg (HLRAlgo_Array1OfPISeg * & PISeg1,HLRAlgo_Array1OfPISeg * & PISeg2);
 		%feature("compactdefaultargs") IncPINod;
 		%feature("autodoc", "	:param PINod1:
-	:type PINod1: Standard_Address &
+	:type PINod1: HLRAlgo_Array1OfPINod * &
 	:param PINod2:
-	:type PINod2: Standard_Address &
+	:type PINod2: HLRAlgo_Array1OfPINod * &
 	:rtype: None
 ") IncPINod;
-		void IncPINod (Standard_Address & PINod1,Standard_Address & PINod2);
+		void IncPINod (HLRAlgo_Array1OfPINod * & PINod1,HLRAlgo_Array1OfPINod * & PINod2);
 		%feature("compactdefaultargs") DecTData;
 		%feature("autodoc", "	:rtype: None
 ") DecTData;
@@ -2875,7 +1496,7 @@ class HLRAlgo_PolyInternalData : public MMgt_TShared {
 %}
 
 %nodefaultctor Handle_HLRAlgo_PolyInternalData;
-class Handle_HLRAlgo_PolyInternalData : public Handle_MMgt_TShared {
+class Handle_HLRAlgo_PolyInternalData : public Handle_Standard_Transient {
 
     public:
         // constructors
@@ -2887,19 +1508,20 @@ class Handle_HLRAlgo_PolyInternalData : public Handle_MMgt_TShared {
         static const Handle_HLRAlgo_PolyInternalData DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_HLRAlgo_PolyInternalData {
     HLRAlgo_PolyInternalData* _get_reference() {
-    return (HLRAlgo_PolyInternalData*)$self->Access();
+    return (HLRAlgo_PolyInternalData*)$self->get();
     }
 };
 
 %extend Handle_HLRAlgo_PolyInternalData {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend HLRAlgo_PolyInternalData {
@@ -2908,20 +1530,12 @@ class Handle_HLRAlgo_PolyInternalData : public Handle_MMgt_TShared {
 	}
 };
 %nodefaultctor HLRAlgo_PolyInternalNode;
-class HLRAlgo_PolyInternalNode : public MMgt_TShared {
+class HLRAlgo_PolyInternalNode : public Standard_Transient {
 	public:
 		%feature("compactdefaultargs") HLRAlgo_PolyInternalNode;
 		%feature("autodoc", "	:rtype: None
 ") HLRAlgo_PolyInternalNode;
 		 HLRAlgo_PolyInternalNode ();
-		%feature("compactdefaultargs") Indices;
-		%feature("autodoc", "	:rtype: Standard_Address
-") Indices;
-		Standard_Address Indices ();
-		%feature("compactdefaultargs") RValues;
-		%feature("autodoc", "	:rtype: Standard_Address
-") RValues;
-		Standard_Address RValues ();
 };
 
 
@@ -2944,7 +1558,7 @@ class HLRAlgo_PolyInternalNode : public MMgt_TShared {
 %}
 
 %nodefaultctor Handle_HLRAlgo_PolyInternalNode;
-class Handle_HLRAlgo_PolyInternalNode : public Handle_MMgt_TShared {
+class Handle_HLRAlgo_PolyInternalNode : public Handle_Standard_Transient {
 
     public:
         // constructors
@@ -2956,19 +1570,20 @@ class Handle_HLRAlgo_PolyInternalNode : public Handle_MMgt_TShared {
         static const Handle_HLRAlgo_PolyInternalNode DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_HLRAlgo_PolyInternalNode {
     HLRAlgo_PolyInternalNode* _get_reference() {
-    return (HLRAlgo_PolyInternalNode*)$self->Access();
+    return (HLRAlgo_PolyInternalNode*)$self->get();
     }
 };
 
 %extend Handle_HLRAlgo_PolyInternalNode {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend HLRAlgo_PolyInternalNode {
@@ -2976,27 +1591,8 @@ class Handle_HLRAlgo_PolyInternalNode : public Handle_MMgt_TShared {
 	__repr__ = _dumps_object
 	}
 };
-%nodefaultctor HLRAlgo_PolyInternalSegment;
-class HLRAlgo_PolyInternalSegment {
-	public:
-		%feature("compactdefaultargs") HLRAlgo_PolyInternalSegment;
-		%feature("autodoc", "	:rtype: None
-") HLRAlgo_PolyInternalSegment;
-		 HLRAlgo_PolyInternalSegment ();
-		%feature("compactdefaultargs") Indices;
-		%feature("autodoc", "	:rtype: Standard_Address
-") Indices;
-		Standard_Address Indices ();
-};
-
-
-%extend HLRAlgo_PolyInternalSegment {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
 %nodefaultctor HLRAlgo_PolyShellData;
-class HLRAlgo_PolyShellData : public MMgt_TShared {
+class HLRAlgo_PolyShellData : public Standard_Transient {
 	public:
 		%feature("compactdefaultargs") HLRAlgo_PolyShellData;
 		%feature("autodoc", "	:param nbFace:
@@ -3005,11 +1601,11 @@ class HLRAlgo_PolyShellData : public MMgt_TShared {
 ") HLRAlgo_PolyShellData;
 		 HLRAlgo_PolyShellData (const Standard_Integer nbFace);
 		%feature("compactdefaultargs") UpdateGlobalMinMax;
-		%feature("autodoc", "	:param TotMinMax:
-	:type TotMinMax: Standard_Address
+		%feature("autodoc", "	:param theBox:
+	:type theBox: HLRAlgo_PolyData::Box &
 	:rtype: None
 ") UpdateGlobalMinMax;
-		void UpdateGlobalMinMax (const Standard_Address TotMinMax);
+		void UpdateGlobalMinMax (HLRAlgo_PolyData::Box & theBox);
 		%feature("compactdefaultargs") UpdateHiding;
 		%feature("autodoc", "	:param nbHiding:
 	:type nbHiding: int
@@ -3032,10 +1628,6 @@ class HLRAlgo_PolyShellData : public MMgt_TShared {
 		%feature("autodoc", "	:rtype: HLRAlgo_ListOfBPoint
 ") Edges;
 		HLRAlgo_ListOfBPoint & Edges ();
-		%feature("compactdefaultargs") Indices;
-		%feature("autodoc", "	:rtype: Standard_Address
-") Indices;
-		Standard_Address Indices ();
 };
 
 
@@ -3058,7 +1650,7 @@ class HLRAlgo_PolyShellData : public MMgt_TShared {
 %}
 
 %nodefaultctor Handle_HLRAlgo_PolyShellData;
-class Handle_HLRAlgo_PolyShellData : public Handle_MMgt_TShared {
+class Handle_HLRAlgo_PolyShellData : public Handle_Standard_Transient {
 
     public:
         // constructors
@@ -3070,19 +1662,20 @@ class Handle_HLRAlgo_PolyShellData : public Handle_MMgt_TShared {
         static const Handle_HLRAlgo_PolyShellData DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_HLRAlgo_PolyShellData {
     HLRAlgo_PolyShellData* _get_reference() {
-    return (HLRAlgo_PolyShellData*)$self->Access();
+    return (HLRAlgo_PolyShellData*)$self->get();
     }
 };
 
 %extend Handle_HLRAlgo_PolyShellData {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend HLRAlgo_PolyShellData {
@@ -3271,27 +1864,8 @@ class HLRAlgo_Projector {
 	__repr__ = _dumps_object
 	}
 };
-%nodefaultctor HLRAlgo_TriangleData;
-class HLRAlgo_TriangleData {
-	public:
-		%feature("compactdefaultargs") HLRAlgo_TriangleData;
-		%feature("autodoc", "	:rtype: None
-") HLRAlgo_TriangleData;
-		 HLRAlgo_TriangleData ();
-		%feature("compactdefaultargs") Indices;
-		%feature("autodoc", "	:rtype: Standard_Address
-") Indices;
-		Standard_Address Indices ();
-};
-
-
-%extend HLRAlgo_TriangleData {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
 %nodefaultctor HLRAlgo_WiresBlock;
-class HLRAlgo_WiresBlock : public MMgt_TShared {
+class HLRAlgo_WiresBlock : public Standard_Transient {
 	public:
 		%feature("compactdefaultargs") HLRAlgo_WiresBlock;
 		%feature("autodoc", "	* Create a Block of Blocks.
@@ -3320,15 +1894,15 @@ class HLRAlgo_WiresBlock : public MMgt_TShared {
 ") Wire;
 		Handle_HLRAlgo_EdgesBlock Wire (const Standard_Integer I);
 		%feature("compactdefaultargs") UpdateMinMax;
-		%feature("autodoc", "	:param TotMinMax:
-	:type TotMinMax: Standard_Address
+		%feature("autodoc", "	:param theMinMaxes:
+	:type theMinMaxes: HLRAlgo_EdgesBlock::MinMaxIndices &
 	:rtype: None
 ") UpdateMinMax;
-		void UpdateMinMax (const Standard_Address TotMinMax);
+		void UpdateMinMax (const HLRAlgo_EdgesBlock::MinMaxIndices & theMinMaxes);
 		%feature("compactdefaultargs") MinMax;
-		%feature("autodoc", "	:rtype: Standard_Address
+		%feature("autodoc", "	:rtype: HLRAlgo_EdgesBlock::MinMaxIndices
 ") MinMax;
-		Standard_Address MinMax ();
+		HLRAlgo_EdgesBlock::MinMaxIndices & MinMax ();
 };
 
 
@@ -3351,7 +1925,7 @@ class HLRAlgo_WiresBlock : public MMgt_TShared {
 %}
 
 %nodefaultctor Handle_HLRAlgo_WiresBlock;
-class Handle_HLRAlgo_WiresBlock : public Handle_MMgt_TShared {
+class Handle_HLRAlgo_WiresBlock : public Handle_Standard_Transient {
 
     public:
         // constructors
@@ -3363,19 +1937,20 @@ class Handle_HLRAlgo_WiresBlock : public Handle_MMgt_TShared {
         static const Handle_HLRAlgo_WiresBlock DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_HLRAlgo_WiresBlock {
     HLRAlgo_WiresBlock* _get_reference() {
-    return (HLRAlgo_WiresBlock*)$self->Access();
+    return (HLRAlgo_WiresBlock*)$self->get();
     }
 };
 
 %extend Handle_HLRAlgo_WiresBlock {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend HLRAlgo_WiresBlock {

@@ -1,5 +1,5 @@
 /*
-Copyright 2008-2017 Thomas Paviot (tpaviot@gmail.com)
+Copyright 2008-2018 Thomas Paviot (tpaviot@gmail.com)
 
 
 This file is part of pythonOCC.
@@ -55,6 +55,9 @@ def register_handle(handle, base_object):
 
 /* typedefs */
 /* end typedefs declaration */
+
+/* templates */
+/* end templates declaration */
 
 /* public enums */
 /* end public enums declaration */
@@ -254,17 +257,14 @@ class GeomTools_Curve2dSet {
 	:rtype: void
 ") PrintCurve2d;
 		static void PrintCurve2d (const Handle_Geom2d_Curve & C,Standard_OStream & OS,const Standard_Boolean compact = Standard_False);
-		%feature("compactdefaultargs") ReadCurve2d;
-		%feature("autodoc", "	* Reads the curve from the stream. The curve is assumed to have been writtent with the Print method (compact = True).
 
-	:param IS:
-	:type IS: Standard_IStream &
-	:param C:
-	:type C: Handle_Geom2d_Curve &
-	:rtype: Standard_IStream
-") ReadCurve2d;
-		static Standard_IStream & ReadCurve2d (Standard_IStream & IS,Handle_Geom2d_Curve & C);
-		%feature("compactdefaultargs") SetProgress;
+        %feature("autodoc", "1");
+        %extend{
+            void ReadCurve2dFromString(std::string src) {
+            std::stringstream s(src);
+            self->ReadCurve2d(s);}
+        };
+        		%feature("compactdefaultargs") SetProgress;
 		%feature("autodoc", "	:param PR:
 	:type PR: Handle_Message_ProgressIndicator &
 	:rtype: None
@@ -356,17 +356,14 @@ class GeomTools_CurveSet {
 	:rtype: void
 ") PrintCurve;
 		static void PrintCurve (const Handle_Geom_Curve & C,Standard_OStream & OS,const Standard_Boolean compact = Standard_False);
-		%feature("compactdefaultargs") ReadCurve;
-		%feature("autodoc", "	* Reads the curve from the stream. The curve is assumed to have been writtent with the Print method (compact = True).
 
-	:param IS:
-	:type IS: Standard_IStream &
-	:param C:
-	:type C: Handle_Geom_Curve &
-	:rtype: Standard_IStream
-") ReadCurve;
-		static Standard_IStream & ReadCurve (Standard_IStream & IS,Handle_Geom_Curve & C);
-		%feature("compactdefaultargs") SetProgress;
+        %feature("autodoc", "1");
+        %extend{
+            void ReadCurveFromString(std::string src) {
+            std::stringstream s(src);
+            self->ReadCurve(s);}
+        };
+        		%feature("compactdefaultargs") SetProgress;
 		%feature("autodoc", "	:param PR:
 	:type PR: Handle_Message_ProgressIndicator &
 	:rtype: None
@@ -458,17 +455,14 @@ class GeomTools_SurfaceSet {
 	:rtype: void
 ") PrintSurface;
 		static void PrintSurface (const Handle_Geom_Surface & S,Standard_OStream & OS,const Standard_Boolean compact = Standard_False);
-		%feature("compactdefaultargs") ReadSurface;
-		%feature("autodoc", "	* Reads the surface from the stream. The surface is assumed to have been writtent with the Print method (compact = True).
 
-	:param IS:
-	:type IS: Standard_IStream &
-	:param S:
-	:type S: Handle_Geom_Surface &
-	:rtype: Standard_IStream
-") ReadSurface;
-		static Standard_IStream & ReadSurface (Standard_IStream & IS,Handle_Geom_Surface & S);
-		%feature("compactdefaultargs") SetProgress;
+        %feature("autodoc", "1");
+        %extend{
+            void ReadSurfaceFromString(std::string src) {
+            std::stringstream s(src);
+            self->ReadSurface(s);}
+        };
+        		%feature("compactdefaultargs") SetProgress;
 		%feature("autodoc", "	:param PR:
 	:type PR: Handle_Message_ProgressIndicator &
 	:rtype: None
@@ -487,7 +481,7 @@ class GeomTools_SurfaceSet {
 	}
 };
 %nodefaultctor GeomTools_UndefinedTypeHandler;
-class GeomTools_UndefinedTypeHandler : public MMgt_TShared {
+class GeomTools_UndefinedTypeHandler : public Standard_Transient {
 	public:
 		%feature("compactdefaultargs") GeomTools_UndefinedTypeHandler;
 		%feature("autodoc", "	:rtype: None
@@ -575,7 +569,7 @@ class GeomTools_UndefinedTypeHandler : public MMgt_TShared {
 %}
 
 %nodefaultctor Handle_GeomTools_UndefinedTypeHandler;
-class Handle_GeomTools_UndefinedTypeHandler : public Handle_MMgt_TShared {
+class Handle_GeomTools_UndefinedTypeHandler : public Handle_Standard_Transient {
 
     public:
         // constructors
@@ -587,19 +581,20 @@ class Handle_GeomTools_UndefinedTypeHandler : public Handle_MMgt_TShared {
         static const Handle_GeomTools_UndefinedTypeHandler DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_GeomTools_UndefinedTypeHandler {
     GeomTools_UndefinedTypeHandler* _get_reference() {
-    return (GeomTools_UndefinedTypeHandler*)$self->Access();
+    return (GeomTools_UndefinedTypeHandler*)$self->get();
     }
 };
 
 %extend Handle_GeomTools_UndefinedTypeHandler {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend GeomTools_UndefinedTypeHandler {

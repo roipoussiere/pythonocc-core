@@ -1,5 +1,5 @@
 /*
-Copyright 2008-2017 Thomas Paviot (tpaviot@gmail.com)
+Copyright 2008-2018 Thomas Paviot (tpaviot@gmail.com)
 
 
 This file is part of pythonOCC.
@@ -54,15 +54,24 @@ def register_handle(handle, base_object):
 };
 
 /* typedefs */
-typedef TNaming_RefShape * TNaming_PtrRefShape;
-typedef NCollection_Map <TopoDS_Shape> TNaming_MapOfShape;
-typedef TNaming_DataMapOfShapeMapOfShape::Iterator TNaming_DataMapIteratorOfDataMapOfShapeMapOfShape;
-typedef TNaming_DataMapOfShapePtrRefShape * TNaming_PtrDataMapOfShapePtrRefShape;
-typedef NCollection_DataMap <TopoDS_Shape , TNaming_MapOfShape> TNaming_DataMapOfShapeMapOfShape;
-typedef TNaming_MapOfShape::Iterator TNaming_MapIteratorOfMapOfShape;
 typedef TNaming_Node * TNaming_PtrNode;
+typedef TNaming_RefShape * TNaming_PtrRefShape;
+typedef TNaming_MapOfShape::Iterator TNaming_MapIteratorOfMapOfShape;
+typedef TNaming_DataMapOfShapeMapOfShape::Iterator TNaming_DataMapIteratorOfDataMapOfShapeMapOfShape;
 typedef TNaming_NamedShape * TNaming_PtrAttribute;
 /* end typedefs declaration */
+
+/* templates */
+%template(TNaming_ListOfNamedShape) NCollection_List <Handle_TNaming_NamedShape>;
+%template(TNaming_MapOfShape) NCollection_Map <TopoDS_Shape>;
+%template(TNaming_NamedShapeHasher) NCollection_DefaultHasher <Handle_TNaming_NamedShape>;
+%template(TNaming_DataMapOfShapePtrRefShape) NCollection_DataMap <TopoDS_Shape , TNaming_PtrRefShape , TopTools_ShapeMapHasher>;
+%template(TNaming_ListOfIndexedDataMapOfShapeListOfShape) NCollection_List <TopTools_IndexedDataMapOfShapeListOfShape>;
+%template(TNaming_DataMapOfShapeShapesSet) NCollection_DataMap <TopoDS_Shape , TNaming_ShapesSet , TopTools_ShapeMapHasher>;
+%template(TNaming_MapOfNamedShape) NCollection_Map <Handle_TNaming_NamedShape , TNaming_NamedShapeHasher>;
+%template(TNaming_ListOfMapOfShape) NCollection_List <TopTools_MapOfShape>;
+%template(TNaming_DataMapOfShapeMapOfShape) NCollection_DataMap <TopoDS_Shape , TNaming_MapOfShape>;
+/* end templates declaration */
 
 /* public enums */
 enum TNaming_Evolution {
@@ -149,7 +158,7 @@ class TNaming {
 ") Transform;
 		static void Transform (const TDF_Label & label,const gp_Trsf & aTransformation);
 		%feature("compactdefaultargs") Replicate;
-		%feature("autodoc", "	* Replicates the named shape with the transformation <T> on the label <L> (and sub-labels if necessary) (TNaming_GENERATED is set)
+		%feature("autodoc", "	* Replicates the named shape with the transformation <T> on the label <L> --and sub-labels if necessary-- --TNaming_GENERATED is set--
 
 	:param NS:
 	:type NS: Handle_TNaming_NamedShape &
@@ -161,7 +170,7 @@ class TNaming {
 ") Replicate;
 		static void Replicate (const Handle_TNaming_NamedShape & NS,const gp_Trsf & T,const TDF_Label & L);
 		%feature("compactdefaultargs") Replicate;
-		%feature("autodoc", "	* Replicates the shape with the transformation <T> on the label <L> (and sub-labels if necessary) (TNaming_GENERATED is set)
+		%feature("autodoc", "	* Replicates the shape with the transformation <T> on the label <L> --and sub-labels if necessary-- --TNaming_GENERATED is set--
 
 	:param SH:
 	:type SH: TopoDS_Shape &
@@ -191,7 +200,7 @@ class TNaming {
 ") FindUniqueContext;
 		static TopoDS_Shape FindUniqueContext (const TopoDS_Shape & S,const TopoDS_Shape & Context);
 		%feature("compactdefaultargs") FindUniqueContextSet;
-		%feature("autodoc", "	* Find unique context of shape <S>,which is pure concatenation of atomic shapes (Compound). The result is concatenation of single contexts
+		%feature("autodoc", "	* Find unique context of shape <S>,which is pure concatenation of atomic shapes --Compound--. The result is concatenation of single contexts
 
 	:param S:
 	:type S: TopoDS_Shape &
@@ -354,7 +363,7 @@ class TNaming_Builder {
 class TNaming_CopyShape {
 	public:
 		%feature("compactdefaultargs") CopyTool;
-		%feature("autodoc", "	* Makes copy a set of shape(s), using the aMap
+		%feature("autodoc", "	* Makes copy a set of shape--s--, using the aMap
 
 	:param aShape:
 	:type aShape: TopoDS_Shape &
@@ -366,7 +375,7 @@ class TNaming_CopyShape {
 ") CopyTool;
 		static void CopyTool (const TopoDS_Shape & aShape,TColStd_IndexedDataMapOfTransientTransient & aMap,TopoDS_Shape & aResult);
 		%feature("compactdefaultargs") Translate;
-		%feature("autodoc", "	* Translates a Transient shape(s) to Transient
+		%feature("autodoc", "	* Translates a Transient shape--s-- to Transient
 
 	:param aShape:
 	:type aShape: TopoDS_Shape &
@@ -393,392 +402,6 @@ class TNaming_CopyShape {
 
 
 %extend TNaming_CopyShape {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor TNaming_DataMapIteratorOfDataMapOfShapePtrRefShape;
-class TNaming_DataMapIteratorOfDataMapOfShapePtrRefShape : public TCollection_BasicMapIterator {
-	public:
-		%feature("compactdefaultargs") TNaming_DataMapIteratorOfDataMapOfShapePtrRefShape;
-		%feature("autodoc", "	:rtype: None
-") TNaming_DataMapIteratorOfDataMapOfShapePtrRefShape;
-		 TNaming_DataMapIteratorOfDataMapOfShapePtrRefShape ();
-		%feature("compactdefaultargs") TNaming_DataMapIteratorOfDataMapOfShapePtrRefShape;
-		%feature("autodoc", "	:param aMap:
-	:type aMap: TNaming_DataMapOfShapePtrRefShape &
-	:rtype: None
-") TNaming_DataMapIteratorOfDataMapOfShapePtrRefShape;
-		 TNaming_DataMapIteratorOfDataMapOfShapePtrRefShape (const TNaming_DataMapOfShapePtrRefShape & aMap);
-		%feature("compactdefaultargs") Initialize;
-		%feature("autodoc", "	:param aMap:
-	:type aMap: TNaming_DataMapOfShapePtrRefShape &
-	:rtype: None
-") Initialize;
-		void Initialize (const TNaming_DataMapOfShapePtrRefShape & aMap);
-		%feature("compactdefaultargs") Key;
-		%feature("autodoc", "	:rtype: TopoDS_Shape
-") Key;
-		const TopoDS_Shape  Key ();
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:rtype: TNaming_PtrRefShape
-") Value;
-		const TNaming_PtrRefShape & Value ();
-};
-
-
-%extend TNaming_DataMapIteratorOfDataMapOfShapePtrRefShape {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor TNaming_DataMapIteratorOfDataMapOfShapeShapesSet;
-class TNaming_DataMapIteratorOfDataMapOfShapeShapesSet : public TCollection_BasicMapIterator {
-	public:
-		%feature("compactdefaultargs") TNaming_DataMapIteratorOfDataMapOfShapeShapesSet;
-		%feature("autodoc", "	:rtype: None
-") TNaming_DataMapIteratorOfDataMapOfShapeShapesSet;
-		 TNaming_DataMapIteratorOfDataMapOfShapeShapesSet ();
-		%feature("compactdefaultargs") TNaming_DataMapIteratorOfDataMapOfShapeShapesSet;
-		%feature("autodoc", "	:param aMap:
-	:type aMap: TNaming_DataMapOfShapeShapesSet &
-	:rtype: None
-") TNaming_DataMapIteratorOfDataMapOfShapeShapesSet;
-		 TNaming_DataMapIteratorOfDataMapOfShapeShapesSet (const TNaming_DataMapOfShapeShapesSet & aMap);
-		%feature("compactdefaultargs") Initialize;
-		%feature("autodoc", "	:param aMap:
-	:type aMap: TNaming_DataMapOfShapeShapesSet &
-	:rtype: None
-") Initialize;
-		void Initialize (const TNaming_DataMapOfShapeShapesSet & aMap);
-		%feature("compactdefaultargs") Key;
-		%feature("autodoc", "	:rtype: TopoDS_Shape
-") Key;
-		const TopoDS_Shape  Key ();
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:rtype: TNaming_ShapesSet
-") Value;
-		const TNaming_ShapesSet & Value ();
-};
-
-
-%extend TNaming_DataMapIteratorOfDataMapOfShapeShapesSet {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor TNaming_DataMapNodeOfDataMapOfShapePtrRefShape;
-class TNaming_DataMapNodeOfDataMapOfShapePtrRefShape : public TCollection_MapNode {
-	public:
-		%feature("compactdefaultargs") TNaming_DataMapNodeOfDataMapOfShapePtrRefShape;
-		%feature("autodoc", "	:param K:
-	:type K: TopoDS_Shape &
-	:param I:
-	:type I: TNaming_PtrRefShape &
-	:param n:
-	:type n: TCollection_MapNodePtr &
-	:rtype: None
-") TNaming_DataMapNodeOfDataMapOfShapePtrRefShape;
-		 TNaming_DataMapNodeOfDataMapOfShapePtrRefShape (const TopoDS_Shape & K,const TNaming_PtrRefShape & I,const TCollection_MapNodePtr & n);
-		%feature("compactdefaultargs") Key;
-		%feature("autodoc", "	:rtype: TopoDS_Shape
-") Key;
-		TopoDS_Shape  Key ();
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:rtype: TNaming_PtrRefShape
-") Value;
-		TNaming_PtrRefShape & Value ();
-};
-
-
-%extend TNaming_DataMapNodeOfDataMapOfShapePtrRefShape {
-	%pythoncode {
-		def GetHandle(self):
-		    try:
-		        return self.thisHandle
-		    except:
-		        self.thisHandle = Handle_TNaming_DataMapNodeOfDataMapOfShapePtrRefShape(self)
-		        self.thisown = False
-		        return self.thisHandle
-	}
-};
-
-%pythonappend Handle_TNaming_DataMapNodeOfDataMapOfShapePtrRefShape::Handle_TNaming_DataMapNodeOfDataMapOfShapePtrRefShape %{
-    # register the handle in the base object
-    if len(args) > 0:
-        register_handle(self, args[0])
-%}
-
-%nodefaultctor Handle_TNaming_DataMapNodeOfDataMapOfShapePtrRefShape;
-class Handle_TNaming_DataMapNodeOfDataMapOfShapePtrRefShape : public Handle_TCollection_MapNode {
-
-    public:
-        // constructors
-        Handle_TNaming_DataMapNodeOfDataMapOfShapePtrRefShape();
-        Handle_TNaming_DataMapNodeOfDataMapOfShapePtrRefShape(const Handle_TNaming_DataMapNodeOfDataMapOfShapePtrRefShape &aHandle);
-        Handle_TNaming_DataMapNodeOfDataMapOfShapePtrRefShape(const TNaming_DataMapNodeOfDataMapOfShapePtrRefShape *anItem);
-        void Nullify();
-        Standard_Boolean IsNull() const;
-        static const Handle_TNaming_DataMapNodeOfDataMapOfShapePtrRefShape DownCast(const Handle_Standard_Transient &AnObject);
-
-};
-%extend Handle_TNaming_DataMapNodeOfDataMapOfShapePtrRefShape {
-    TNaming_DataMapNodeOfDataMapOfShapePtrRefShape* _get_reference() {
-    return (TNaming_DataMapNodeOfDataMapOfShapePtrRefShape*)$self->Access();
-    }
-};
-
-%extend Handle_TNaming_DataMapNodeOfDataMapOfShapePtrRefShape {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
-};
-
-%extend TNaming_DataMapNodeOfDataMapOfShapePtrRefShape {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor TNaming_DataMapNodeOfDataMapOfShapeShapesSet;
-class TNaming_DataMapNodeOfDataMapOfShapeShapesSet : public TCollection_MapNode {
-	public:
-		%feature("compactdefaultargs") TNaming_DataMapNodeOfDataMapOfShapeShapesSet;
-		%feature("autodoc", "	:param K:
-	:type K: TopoDS_Shape &
-	:param I:
-	:type I: TNaming_ShapesSet &
-	:param n:
-	:type n: TCollection_MapNodePtr &
-	:rtype: None
-") TNaming_DataMapNodeOfDataMapOfShapeShapesSet;
-		 TNaming_DataMapNodeOfDataMapOfShapeShapesSet (const TopoDS_Shape & K,const TNaming_ShapesSet & I,const TCollection_MapNodePtr & n);
-		%feature("compactdefaultargs") Key;
-		%feature("autodoc", "	:rtype: TopoDS_Shape
-") Key;
-		TopoDS_Shape  Key ();
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:rtype: TNaming_ShapesSet
-") Value;
-		TNaming_ShapesSet & Value ();
-};
-
-
-%extend TNaming_DataMapNodeOfDataMapOfShapeShapesSet {
-	%pythoncode {
-		def GetHandle(self):
-		    try:
-		        return self.thisHandle
-		    except:
-		        self.thisHandle = Handle_TNaming_DataMapNodeOfDataMapOfShapeShapesSet(self)
-		        self.thisown = False
-		        return self.thisHandle
-	}
-};
-
-%pythonappend Handle_TNaming_DataMapNodeOfDataMapOfShapeShapesSet::Handle_TNaming_DataMapNodeOfDataMapOfShapeShapesSet %{
-    # register the handle in the base object
-    if len(args) > 0:
-        register_handle(self, args[0])
-%}
-
-%nodefaultctor Handle_TNaming_DataMapNodeOfDataMapOfShapeShapesSet;
-class Handle_TNaming_DataMapNodeOfDataMapOfShapeShapesSet : public Handle_TCollection_MapNode {
-
-    public:
-        // constructors
-        Handle_TNaming_DataMapNodeOfDataMapOfShapeShapesSet();
-        Handle_TNaming_DataMapNodeOfDataMapOfShapeShapesSet(const Handle_TNaming_DataMapNodeOfDataMapOfShapeShapesSet &aHandle);
-        Handle_TNaming_DataMapNodeOfDataMapOfShapeShapesSet(const TNaming_DataMapNodeOfDataMapOfShapeShapesSet *anItem);
-        void Nullify();
-        Standard_Boolean IsNull() const;
-        static const Handle_TNaming_DataMapNodeOfDataMapOfShapeShapesSet DownCast(const Handle_Standard_Transient &AnObject);
-
-};
-%extend Handle_TNaming_DataMapNodeOfDataMapOfShapeShapesSet {
-    TNaming_DataMapNodeOfDataMapOfShapeShapesSet* _get_reference() {
-    return (TNaming_DataMapNodeOfDataMapOfShapeShapesSet*)$self->Access();
-    }
-};
-
-%extend Handle_TNaming_DataMapNodeOfDataMapOfShapeShapesSet {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
-};
-
-%extend TNaming_DataMapNodeOfDataMapOfShapeShapesSet {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor TNaming_DataMapOfShapePtrRefShape;
-class TNaming_DataMapOfShapePtrRefShape : public TCollection_BasicMap {
-	public:
-		%feature("compactdefaultargs") TNaming_DataMapOfShapePtrRefShape;
-		%feature("autodoc", "	:param NbBuckets: default value is 1
-	:type NbBuckets: int
-	:rtype: None
-") TNaming_DataMapOfShapePtrRefShape;
-		 TNaming_DataMapOfShapePtrRefShape (const Standard_Integer NbBuckets = 1);
-		%feature("compactdefaultargs") Assign;
-		%feature("autodoc", "	:param Other:
-	:type Other: TNaming_DataMapOfShapePtrRefShape &
-	:rtype: TNaming_DataMapOfShapePtrRefShape
-") Assign;
-		TNaming_DataMapOfShapePtrRefShape & Assign (const TNaming_DataMapOfShapePtrRefShape & Other);
-		%feature("compactdefaultargs") operator =;
-		%feature("autodoc", "	:param Other:
-	:type Other: TNaming_DataMapOfShapePtrRefShape &
-	:rtype: TNaming_DataMapOfShapePtrRefShape
-") operator =;
-		TNaming_DataMapOfShapePtrRefShape & operator = (const TNaming_DataMapOfShapePtrRefShape & Other);
-		%feature("compactdefaultargs") ReSize;
-		%feature("autodoc", "	:param NbBuckets:
-	:type NbBuckets: int
-	:rtype: None
-") ReSize;
-		void ReSize (const Standard_Integer NbBuckets);
-		%feature("compactdefaultargs") Clear;
-		%feature("autodoc", "	:rtype: None
-") Clear;
-		void Clear ();
-		%feature("compactdefaultargs") Bind;
-		%feature("autodoc", "	:param K:
-	:type K: TopoDS_Shape &
-	:param I:
-	:type I: TNaming_PtrRefShape &
-	:rtype: bool
-") Bind;
-		Standard_Boolean Bind (const TopoDS_Shape & K,const TNaming_PtrRefShape & I);
-		%feature("compactdefaultargs") IsBound;
-		%feature("autodoc", "	:param K:
-	:type K: TopoDS_Shape &
-	:rtype: bool
-") IsBound;
-		Standard_Boolean IsBound (const TopoDS_Shape & K);
-		%feature("compactdefaultargs") UnBind;
-		%feature("autodoc", "	:param K:
-	:type K: TopoDS_Shape &
-	:rtype: bool
-") UnBind;
-		Standard_Boolean UnBind (const TopoDS_Shape & K);
-		%feature("compactdefaultargs") Find;
-		%feature("autodoc", "	:param K:
-	:type K: TopoDS_Shape &
-	:rtype: TNaming_PtrRefShape
-") Find;
-		const TNaming_PtrRefShape & Find (const TopoDS_Shape & K);
-		%feature("compactdefaultargs") ChangeFind;
-		%feature("autodoc", "	:param K:
-	:type K: TopoDS_Shape &
-	:rtype: TNaming_PtrRefShape
-") ChangeFind;
-		TNaming_PtrRefShape & ChangeFind (const TopoDS_Shape & K);
-		%feature("compactdefaultargs") Find1;
-		%feature("autodoc", "	:param K:
-	:type K: TopoDS_Shape &
-	:rtype: Standard_Address
-") Find1;
-		Standard_Address Find1 (const TopoDS_Shape & K);
-		%feature("compactdefaultargs") ChangeFind1;
-		%feature("autodoc", "	:param K:
-	:type K: TopoDS_Shape &
-	:rtype: Standard_Address
-") ChangeFind1;
-		Standard_Address ChangeFind1 (const TopoDS_Shape & K);
-};
-
-
-%extend TNaming_DataMapOfShapePtrRefShape {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor TNaming_DataMapOfShapeShapesSet;
-class TNaming_DataMapOfShapeShapesSet : public TCollection_BasicMap {
-	public:
-		%feature("compactdefaultargs") TNaming_DataMapOfShapeShapesSet;
-		%feature("autodoc", "	:param NbBuckets: default value is 1
-	:type NbBuckets: int
-	:rtype: None
-") TNaming_DataMapOfShapeShapesSet;
-		 TNaming_DataMapOfShapeShapesSet (const Standard_Integer NbBuckets = 1);
-		%feature("compactdefaultargs") Assign;
-		%feature("autodoc", "	:param Other:
-	:type Other: TNaming_DataMapOfShapeShapesSet &
-	:rtype: TNaming_DataMapOfShapeShapesSet
-") Assign;
-		TNaming_DataMapOfShapeShapesSet & Assign (const TNaming_DataMapOfShapeShapesSet & Other);
-		%feature("compactdefaultargs") operator =;
-		%feature("autodoc", "	:param Other:
-	:type Other: TNaming_DataMapOfShapeShapesSet &
-	:rtype: TNaming_DataMapOfShapeShapesSet
-") operator =;
-		TNaming_DataMapOfShapeShapesSet & operator = (const TNaming_DataMapOfShapeShapesSet & Other);
-		%feature("compactdefaultargs") ReSize;
-		%feature("autodoc", "	:param NbBuckets:
-	:type NbBuckets: int
-	:rtype: None
-") ReSize;
-		void ReSize (const Standard_Integer NbBuckets);
-		%feature("compactdefaultargs") Clear;
-		%feature("autodoc", "	:rtype: None
-") Clear;
-		void Clear ();
-		%feature("compactdefaultargs") Bind;
-		%feature("autodoc", "	:param K:
-	:type K: TopoDS_Shape &
-	:param I:
-	:type I: TNaming_ShapesSet &
-	:rtype: bool
-") Bind;
-		Standard_Boolean Bind (const TopoDS_Shape & K,const TNaming_ShapesSet & I);
-		%feature("compactdefaultargs") IsBound;
-		%feature("autodoc", "	:param K:
-	:type K: TopoDS_Shape &
-	:rtype: bool
-") IsBound;
-		Standard_Boolean IsBound (const TopoDS_Shape & K);
-		%feature("compactdefaultargs") UnBind;
-		%feature("autodoc", "	:param K:
-	:type K: TopoDS_Shape &
-	:rtype: bool
-") UnBind;
-		Standard_Boolean UnBind (const TopoDS_Shape & K);
-		%feature("compactdefaultargs") Find;
-		%feature("autodoc", "	:param K:
-	:type K: TopoDS_Shape &
-	:rtype: TNaming_ShapesSet
-") Find;
-		const TNaming_ShapesSet & Find (const TopoDS_Shape & K);
-		%feature("compactdefaultargs") ChangeFind;
-		%feature("autodoc", "	:param K:
-	:type K: TopoDS_Shape &
-	:rtype: TNaming_ShapesSet
-") ChangeFind;
-		TNaming_ShapesSet & ChangeFind (const TopoDS_Shape & K);
-		%feature("compactdefaultargs") Find1;
-		%feature("autodoc", "	:param K:
-	:type K: TopoDS_Shape &
-	:rtype: Standard_Address
-") Find1;
-		Standard_Address Find1 (const TopoDS_Shape & K);
-		%feature("compactdefaultargs") ChangeFind1;
-		%feature("autodoc", "	:param K:
-	:type K: TopoDS_Shape &
-	:rtype: Standard_Address
-") ChangeFind1;
-		Standard_Address ChangeFind1 (const TopoDS_Shape & K);
-};
-
-
-%extend TNaming_DataMapOfShapeShapesSet {
 	%pythoncode {
 	__repr__ = _dumps_object
 	}
@@ -834,19 +457,20 @@ class Handle_TNaming_DeltaOnModification : public Handle_TDF_DeltaOnModification
         static const Handle_TNaming_DeltaOnModification DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_TNaming_DeltaOnModification {
     TNaming_DeltaOnModification* _get_reference() {
-    return (TNaming_DeltaOnModification*)$self->Access();
+    return (TNaming_DeltaOnModification*)$self->get();
     }
 };
 
 %extend Handle_TNaming_DeltaOnModification {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend TNaming_DeltaOnModification {
@@ -905,19 +529,20 @@ class Handle_TNaming_DeltaOnRemoval : public Handle_TDF_DeltaOnRemoval {
         static const Handle_TNaming_DeltaOnRemoval DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_TNaming_DeltaOnRemoval {
     TNaming_DeltaOnRemoval* _get_reference() {
-    return (TNaming_DeltaOnRemoval*)$self->Access();
+    return (TNaming_DeltaOnRemoval*)$self->get();
     }
 };
 
 %extend Handle_TNaming_DeltaOnRemoval {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend TNaming_DeltaOnRemoval {
@@ -1094,7 +719,7 @@ class TNaming_Iterator {
 ") NewShape;
 		const TopoDS_Shape  NewShape ();
 		%feature("compactdefaultargs") IsModification;
-		%feature("autodoc", "	* Returns true if the new shape is a modification (split, fuse,etc...) of the old shape.
+		%feature("autodoc", "	* Returns true if the new shape is a modification --split, fuse,etc...-- of the old shape.
 
 	:rtype: bool
 ") IsModification;
@@ -1152,735 +777,6 @@ class TNaming_IteratorOnShapesSet {
 
 
 %extend TNaming_IteratorOnShapesSet {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor TNaming_ListIteratorOfListOfIndexedDataMapOfShapeListOfShape;
-class TNaming_ListIteratorOfListOfIndexedDataMapOfShapeListOfShape {
-	public:
-		%feature("compactdefaultargs") TNaming_ListIteratorOfListOfIndexedDataMapOfShapeListOfShape;
-		%feature("autodoc", "	:rtype: None
-") TNaming_ListIteratorOfListOfIndexedDataMapOfShapeListOfShape;
-		 TNaming_ListIteratorOfListOfIndexedDataMapOfShapeListOfShape ();
-		%feature("compactdefaultargs") TNaming_ListIteratorOfListOfIndexedDataMapOfShapeListOfShape;
-		%feature("autodoc", "	:param L:
-	:type L: TNaming_ListOfIndexedDataMapOfShapeListOfShape &
-	:rtype: None
-") TNaming_ListIteratorOfListOfIndexedDataMapOfShapeListOfShape;
-		 TNaming_ListIteratorOfListOfIndexedDataMapOfShapeListOfShape (const TNaming_ListOfIndexedDataMapOfShapeListOfShape & L);
-		%feature("compactdefaultargs") Initialize;
-		%feature("autodoc", "	:param L:
-	:type L: TNaming_ListOfIndexedDataMapOfShapeListOfShape &
-	:rtype: None
-") Initialize;
-		void Initialize (const TNaming_ListOfIndexedDataMapOfShapeListOfShape & L);
-		%feature("compactdefaultargs") More;
-		%feature("autodoc", "	:rtype: bool
-") More;
-		Standard_Boolean More ();
-		%feature("compactdefaultargs") Next;
-		%feature("autodoc", "	:rtype: None
-") Next;
-		void Next ();
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:rtype: TopTools_IndexedDataMapOfShapeListOfShape
-") Value;
-		TopTools_IndexedDataMapOfShapeListOfShape & Value ();
-};
-
-
-%extend TNaming_ListIteratorOfListOfIndexedDataMapOfShapeListOfShape {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor TNaming_ListIteratorOfListOfMapOfShape;
-class TNaming_ListIteratorOfListOfMapOfShape {
-	public:
-		%feature("compactdefaultargs") TNaming_ListIteratorOfListOfMapOfShape;
-		%feature("autodoc", "	:rtype: None
-") TNaming_ListIteratorOfListOfMapOfShape;
-		 TNaming_ListIteratorOfListOfMapOfShape ();
-		%feature("compactdefaultargs") TNaming_ListIteratorOfListOfMapOfShape;
-		%feature("autodoc", "	:param L:
-	:type L: TNaming_ListOfMapOfShape &
-	:rtype: None
-") TNaming_ListIteratorOfListOfMapOfShape;
-		 TNaming_ListIteratorOfListOfMapOfShape (const TNaming_ListOfMapOfShape & L);
-		%feature("compactdefaultargs") Initialize;
-		%feature("autodoc", "	:param L:
-	:type L: TNaming_ListOfMapOfShape &
-	:rtype: None
-") Initialize;
-		void Initialize (const TNaming_ListOfMapOfShape & L);
-		%feature("compactdefaultargs") More;
-		%feature("autodoc", "	:rtype: bool
-") More;
-		Standard_Boolean More ();
-		%feature("compactdefaultargs") Next;
-		%feature("autodoc", "	:rtype: None
-") Next;
-		void Next ();
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:rtype: TopTools_MapOfShape
-") Value;
-		TopTools_MapOfShape & Value ();
-};
-
-
-%extend TNaming_ListIteratorOfListOfMapOfShape {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor TNaming_ListIteratorOfListOfNamedShape;
-class TNaming_ListIteratorOfListOfNamedShape {
-	public:
-		%feature("compactdefaultargs") TNaming_ListIteratorOfListOfNamedShape;
-		%feature("autodoc", "	:rtype: None
-") TNaming_ListIteratorOfListOfNamedShape;
-		 TNaming_ListIteratorOfListOfNamedShape ();
-		%feature("compactdefaultargs") TNaming_ListIteratorOfListOfNamedShape;
-		%feature("autodoc", "	:param L:
-	:type L: TNaming_ListOfNamedShape &
-	:rtype: None
-") TNaming_ListIteratorOfListOfNamedShape;
-		 TNaming_ListIteratorOfListOfNamedShape (const TNaming_ListOfNamedShape & L);
-		%feature("compactdefaultargs") Initialize;
-		%feature("autodoc", "	:param L:
-	:type L: TNaming_ListOfNamedShape &
-	:rtype: None
-") Initialize;
-		void Initialize (const TNaming_ListOfNamedShape & L);
-		%feature("compactdefaultargs") More;
-		%feature("autodoc", "	:rtype: bool
-") More;
-		Standard_Boolean More ();
-		%feature("compactdefaultargs") Next;
-		%feature("autodoc", "	:rtype: None
-") Next;
-		void Next ();
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:rtype: Handle_TNaming_NamedShape
-") Value;
-		Handle_TNaming_NamedShape Value ();
-};
-
-
-%extend TNaming_ListIteratorOfListOfNamedShape {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor TNaming_ListNodeOfListOfIndexedDataMapOfShapeListOfShape;
-class TNaming_ListNodeOfListOfIndexedDataMapOfShapeListOfShape : public TCollection_MapNode {
-	public:
-		%feature("compactdefaultargs") TNaming_ListNodeOfListOfIndexedDataMapOfShapeListOfShape;
-		%feature("autodoc", "	:param I:
-	:type I: TopTools_IndexedDataMapOfShapeListOfShape &
-	:param n:
-	:type n: TCollection_MapNodePtr &
-	:rtype: None
-") TNaming_ListNodeOfListOfIndexedDataMapOfShapeListOfShape;
-		 TNaming_ListNodeOfListOfIndexedDataMapOfShapeListOfShape (const TopTools_IndexedDataMapOfShapeListOfShape & I,const TCollection_MapNodePtr & n);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:rtype: TopTools_IndexedDataMapOfShapeListOfShape
-") Value;
-		TopTools_IndexedDataMapOfShapeListOfShape & Value ();
-};
-
-
-%extend TNaming_ListNodeOfListOfIndexedDataMapOfShapeListOfShape {
-	%pythoncode {
-		def GetHandle(self):
-		    try:
-		        return self.thisHandle
-		    except:
-		        self.thisHandle = Handle_TNaming_ListNodeOfListOfIndexedDataMapOfShapeListOfShape(self)
-		        self.thisown = False
-		        return self.thisHandle
-	}
-};
-
-%pythonappend Handle_TNaming_ListNodeOfListOfIndexedDataMapOfShapeListOfShape::Handle_TNaming_ListNodeOfListOfIndexedDataMapOfShapeListOfShape %{
-    # register the handle in the base object
-    if len(args) > 0:
-        register_handle(self, args[0])
-%}
-
-%nodefaultctor Handle_TNaming_ListNodeOfListOfIndexedDataMapOfShapeListOfShape;
-class Handle_TNaming_ListNodeOfListOfIndexedDataMapOfShapeListOfShape : public Handle_TCollection_MapNode {
-
-    public:
-        // constructors
-        Handle_TNaming_ListNodeOfListOfIndexedDataMapOfShapeListOfShape();
-        Handle_TNaming_ListNodeOfListOfIndexedDataMapOfShapeListOfShape(const Handle_TNaming_ListNodeOfListOfIndexedDataMapOfShapeListOfShape &aHandle);
-        Handle_TNaming_ListNodeOfListOfIndexedDataMapOfShapeListOfShape(const TNaming_ListNodeOfListOfIndexedDataMapOfShapeListOfShape *anItem);
-        void Nullify();
-        Standard_Boolean IsNull() const;
-        static const Handle_TNaming_ListNodeOfListOfIndexedDataMapOfShapeListOfShape DownCast(const Handle_Standard_Transient &AnObject);
-
-};
-%extend Handle_TNaming_ListNodeOfListOfIndexedDataMapOfShapeListOfShape {
-    TNaming_ListNodeOfListOfIndexedDataMapOfShapeListOfShape* _get_reference() {
-    return (TNaming_ListNodeOfListOfIndexedDataMapOfShapeListOfShape*)$self->Access();
-    }
-};
-
-%extend Handle_TNaming_ListNodeOfListOfIndexedDataMapOfShapeListOfShape {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
-};
-
-%extend TNaming_ListNodeOfListOfIndexedDataMapOfShapeListOfShape {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor TNaming_ListNodeOfListOfMapOfShape;
-class TNaming_ListNodeOfListOfMapOfShape : public TCollection_MapNode {
-	public:
-		%feature("compactdefaultargs") TNaming_ListNodeOfListOfMapOfShape;
-		%feature("autodoc", "	:param I:
-	:type I: TopTools_MapOfShape &
-	:param n:
-	:type n: TCollection_MapNodePtr &
-	:rtype: None
-") TNaming_ListNodeOfListOfMapOfShape;
-		 TNaming_ListNodeOfListOfMapOfShape (const TopTools_MapOfShape & I,const TCollection_MapNodePtr & n);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:rtype: TopTools_MapOfShape
-") Value;
-		TopTools_MapOfShape & Value ();
-};
-
-
-%extend TNaming_ListNodeOfListOfMapOfShape {
-	%pythoncode {
-		def GetHandle(self):
-		    try:
-		        return self.thisHandle
-		    except:
-		        self.thisHandle = Handle_TNaming_ListNodeOfListOfMapOfShape(self)
-		        self.thisown = False
-		        return self.thisHandle
-	}
-};
-
-%pythonappend Handle_TNaming_ListNodeOfListOfMapOfShape::Handle_TNaming_ListNodeOfListOfMapOfShape %{
-    # register the handle in the base object
-    if len(args) > 0:
-        register_handle(self, args[0])
-%}
-
-%nodefaultctor Handle_TNaming_ListNodeOfListOfMapOfShape;
-class Handle_TNaming_ListNodeOfListOfMapOfShape : public Handle_TCollection_MapNode {
-
-    public:
-        // constructors
-        Handle_TNaming_ListNodeOfListOfMapOfShape();
-        Handle_TNaming_ListNodeOfListOfMapOfShape(const Handle_TNaming_ListNodeOfListOfMapOfShape &aHandle);
-        Handle_TNaming_ListNodeOfListOfMapOfShape(const TNaming_ListNodeOfListOfMapOfShape *anItem);
-        void Nullify();
-        Standard_Boolean IsNull() const;
-        static const Handle_TNaming_ListNodeOfListOfMapOfShape DownCast(const Handle_Standard_Transient &AnObject);
-
-};
-%extend Handle_TNaming_ListNodeOfListOfMapOfShape {
-    TNaming_ListNodeOfListOfMapOfShape* _get_reference() {
-    return (TNaming_ListNodeOfListOfMapOfShape*)$self->Access();
-    }
-};
-
-%extend Handle_TNaming_ListNodeOfListOfMapOfShape {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
-};
-
-%extend TNaming_ListNodeOfListOfMapOfShape {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor TNaming_ListNodeOfListOfNamedShape;
-class TNaming_ListNodeOfListOfNamedShape : public TCollection_MapNode {
-	public:
-		%feature("compactdefaultargs") TNaming_ListNodeOfListOfNamedShape;
-		%feature("autodoc", "	:param I:
-	:type I: Handle_TNaming_NamedShape &
-	:param n:
-	:type n: TCollection_MapNodePtr &
-	:rtype: None
-") TNaming_ListNodeOfListOfNamedShape;
-		 TNaming_ListNodeOfListOfNamedShape (const Handle_TNaming_NamedShape & I,const TCollection_MapNodePtr & n);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:rtype: Handle_TNaming_NamedShape
-") Value;
-		Handle_TNaming_NamedShape Value ();
-};
-
-
-%extend TNaming_ListNodeOfListOfNamedShape {
-	%pythoncode {
-		def GetHandle(self):
-		    try:
-		        return self.thisHandle
-		    except:
-		        self.thisHandle = Handle_TNaming_ListNodeOfListOfNamedShape(self)
-		        self.thisown = False
-		        return self.thisHandle
-	}
-};
-
-%pythonappend Handle_TNaming_ListNodeOfListOfNamedShape::Handle_TNaming_ListNodeOfListOfNamedShape %{
-    # register the handle in the base object
-    if len(args) > 0:
-        register_handle(self, args[0])
-%}
-
-%nodefaultctor Handle_TNaming_ListNodeOfListOfNamedShape;
-class Handle_TNaming_ListNodeOfListOfNamedShape : public Handle_TCollection_MapNode {
-
-    public:
-        // constructors
-        Handle_TNaming_ListNodeOfListOfNamedShape();
-        Handle_TNaming_ListNodeOfListOfNamedShape(const Handle_TNaming_ListNodeOfListOfNamedShape &aHandle);
-        Handle_TNaming_ListNodeOfListOfNamedShape(const TNaming_ListNodeOfListOfNamedShape *anItem);
-        void Nullify();
-        Standard_Boolean IsNull() const;
-        static const Handle_TNaming_ListNodeOfListOfNamedShape DownCast(const Handle_Standard_Transient &AnObject);
-
-};
-%extend Handle_TNaming_ListNodeOfListOfNamedShape {
-    TNaming_ListNodeOfListOfNamedShape* _get_reference() {
-    return (TNaming_ListNodeOfListOfNamedShape*)$self->Access();
-    }
-};
-
-%extend Handle_TNaming_ListNodeOfListOfNamedShape {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
-};
-
-%extend TNaming_ListNodeOfListOfNamedShape {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor TNaming_ListOfIndexedDataMapOfShapeListOfShape;
-class TNaming_ListOfIndexedDataMapOfShapeListOfShape {
-	public:
-		%feature("compactdefaultargs") TNaming_ListOfIndexedDataMapOfShapeListOfShape;
-		%feature("autodoc", "	:rtype: None
-") TNaming_ListOfIndexedDataMapOfShapeListOfShape;
-		 TNaming_ListOfIndexedDataMapOfShapeListOfShape ();
-		%feature("compactdefaultargs") TNaming_ListOfIndexedDataMapOfShapeListOfShape;
-		%feature("autodoc", "	:param Other:
-	:type Other: TNaming_ListOfIndexedDataMapOfShapeListOfShape &
-	:rtype: None
-") TNaming_ListOfIndexedDataMapOfShapeListOfShape;
-		 TNaming_ListOfIndexedDataMapOfShapeListOfShape (const TNaming_ListOfIndexedDataMapOfShapeListOfShape & Other);
-		%feature("compactdefaultargs") Assign;
-		%feature("autodoc", "	:param Other:
-	:type Other: TNaming_ListOfIndexedDataMapOfShapeListOfShape &
-	:rtype: None
-") Assign;
-		void Assign (const TNaming_ListOfIndexedDataMapOfShapeListOfShape & Other);
-		%feature("compactdefaultargs") operator =;
-		%feature("autodoc", "	:param Other:
-	:type Other: TNaming_ListOfIndexedDataMapOfShapeListOfShape &
-	:rtype: None
-") operator =;
-		void operator = (const TNaming_ListOfIndexedDataMapOfShapeListOfShape & Other);
-		%feature("compactdefaultargs") Extent;
-		%feature("autodoc", "	:rtype: int
-") Extent;
-		Standard_Integer Extent ();
-		%feature("compactdefaultargs") Clear;
-		%feature("autodoc", "	:rtype: None
-") Clear;
-		void Clear ();
-		%feature("compactdefaultargs") IsEmpty;
-		%feature("autodoc", "	:rtype: bool
-") IsEmpty;
-		Standard_Boolean IsEmpty ();
-		%feature("compactdefaultargs") Prepend;
-		%feature("autodoc", "	:param I:
-	:type I: TopTools_IndexedDataMapOfShapeListOfShape &
-	:rtype: None
-") Prepend;
-		void Prepend (const TopTools_IndexedDataMapOfShapeListOfShape & I);
-		%feature("compactdefaultargs") Prepend;
-		%feature("autodoc", "	:param I:
-	:type I: TopTools_IndexedDataMapOfShapeListOfShape &
-	:param theIt:
-	:type theIt: TNaming_ListIteratorOfListOfIndexedDataMapOfShapeListOfShape &
-	:rtype: None
-") Prepend;
-		void Prepend (const TopTools_IndexedDataMapOfShapeListOfShape & I,TNaming_ListIteratorOfListOfIndexedDataMapOfShapeListOfShape & theIt);
-		%feature("compactdefaultargs") Prepend;
-		%feature("autodoc", "	:param Other:
-	:type Other: TNaming_ListOfIndexedDataMapOfShapeListOfShape &
-	:rtype: None
-") Prepend;
-		void Prepend (TNaming_ListOfIndexedDataMapOfShapeListOfShape & Other);
-		%feature("compactdefaultargs") Append;
-		%feature("autodoc", "	:param I:
-	:type I: TopTools_IndexedDataMapOfShapeListOfShape &
-	:rtype: None
-") Append;
-		void Append (const TopTools_IndexedDataMapOfShapeListOfShape & I);
-		%feature("compactdefaultargs") Append;
-		%feature("autodoc", "	:param I:
-	:type I: TopTools_IndexedDataMapOfShapeListOfShape &
-	:param theIt:
-	:type theIt: TNaming_ListIteratorOfListOfIndexedDataMapOfShapeListOfShape &
-	:rtype: None
-") Append;
-		void Append (const TopTools_IndexedDataMapOfShapeListOfShape & I,TNaming_ListIteratorOfListOfIndexedDataMapOfShapeListOfShape & theIt);
-		%feature("compactdefaultargs") Append;
-		%feature("autodoc", "	:param Other:
-	:type Other: TNaming_ListOfIndexedDataMapOfShapeListOfShape &
-	:rtype: None
-") Append;
-		void Append (TNaming_ListOfIndexedDataMapOfShapeListOfShape & Other);
-		%feature("compactdefaultargs") First;
-		%feature("autodoc", "	:rtype: TopTools_IndexedDataMapOfShapeListOfShape
-") First;
-		TopTools_IndexedDataMapOfShapeListOfShape & First ();
-		%feature("compactdefaultargs") Last;
-		%feature("autodoc", "	:rtype: TopTools_IndexedDataMapOfShapeListOfShape
-") Last;
-		TopTools_IndexedDataMapOfShapeListOfShape & Last ();
-		%feature("compactdefaultargs") RemoveFirst;
-		%feature("autodoc", "	:rtype: None
-") RemoveFirst;
-		void RemoveFirst ();
-		%feature("compactdefaultargs") Remove;
-		%feature("autodoc", "	:param It:
-	:type It: TNaming_ListIteratorOfListOfIndexedDataMapOfShapeListOfShape &
-	:rtype: None
-") Remove;
-		void Remove (TNaming_ListIteratorOfListOfIndexedDataMapOfShapeListOfShape & It);
-		%feature("compactdefaultargs") InsertBefore;
-		%feature("autodoc", "	:param I:
-	:type I: TopTools_IndexedDataMapOfShapeListOfShape &
-	:param It:
-	:type It: TNaming_ListIteratorOfListOfIndexedDataMapOfShapeListOfShape &
-	:rtype: None
-") InsertBefore;
-		void InsertBefore (const TopTools_IndexedDataMapOfShapeListOfShape & I,TNaming_ListIteratorOfListOfIndexedDataMapOfShapeListOfShape & It);
-		%feature("compactdefaultargs") InsertBefore;
-		%feature("autodoc", "	:param Other:
-	:type Other: TNaming_ListOfIndexedDataMapOfShapeListOfShape &
-	:param It:
-	:type It: TNaming_ListIteratorOfListOfIndexedDataMapOfShapeListOfShape &
-	:rtype: None
-") InsertBefore;
-		void InsertBefore (TNaming_ListOfIndexedDataMapOfShapeListOfShape & Other,TNaming_ListIteratorOfListOfIndexedDataMapOfShapeListOfShape & It);
-		%feature("compactdefaultargs") InsertAfter;
-		%feature("autodoc", "	:param I:
-	:type I: TopTools_IndexedDataMapOfShapeListOfShape &
-	:param It:
-	:type It: TNaming_ListIteratorOfListOfIndexedDataMapOfShapeListOfShape &
-	:rtype: None
-") InsertAfter;
-		void InsertAfter (const TopTools_IndexedDataMapOfShapeListOfShape & I,TNaming_ListIteratorOfListOfIndexedDataMapOfShapeListOfShape & It);
-		%feature("compactdefaultargs") InsertAfter;
-		%feature("autodoc", "	:param Other:
-	:type Other: TNaming_ListOfIndexedDataMapOfShapeListOfShape &
-	:param It:
-	:type It: TNaming_ListIteratorOfListOfIndexedDataMapOfShapeListOfShape &
-	:rtype: None
-") InsertAfter;
-		void InsertAfter (TNaming_ListOfIndexedDataMapOfShapeListOfShape & Other,TNaming_ListIteratorOfListOfIndexedDataMapOfShapeListOfShape & It);
-};
-
-
-%extend TNaming_ListOfIndexedDataMapOfShapeListOfShape {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor TNaming_ListOfMapOfShape;
-class TNaming_ListOfMapOfShape {
-	public:
-		%feature("compactdefaultargs") TNaming_ListOfMapOfShape;
-		%feature("autodoc", "	:rtype: None
-") TNaming_ListOfMapOfShape;
-		 TNaming_ListOfMapOfShape ();
-		%feature("compactdefaultargs") TNaming_ListOfMapOfShape;
-		%feature("autodoc", "	:param Other:
-	:type Other: TNaming_ListOfMapOfShape &
-	:rtype: None
-") TNaming_ListOfMapOfShape;
-		 TNaming_ListOfMapOfShape (const TNaming_ListOfMapOfShape & Other);
-		%feature("compactdefaultargs") Assign;
-		%feature("autodoc", "	:param Other:
-	:type Other: TNaming_ListOfMapOfShape &
-	:rtype: None
-") Assign;
-		void Assign (const TNaming_ListOfMapOfShape & Other);
-		%feature("compactdefaultargs") operator =;
-		%feature("autodoc", "	:param Other:
-	:type Other: TNaming_ListOfMapOfShape &
-	:rtype: None
-") operator =;
-		void operator = (const TNaming_ListOfMapOfShape & Other);
-		%feature("compactdefaultargs") Extent;
-		%feature("autodoc", "	:rtype: int
-") Extent;
-		Standard_Integer Extent ();
-		%feature("compactdefaultargs") Clear;
-		%feature("autodoc", "	:rtype: None
-") Clear;
-		void Clear ();
-		%feature("compactdefaultargs") IsEmpty;
-		%feature("autodoc", "	:rtype: bool
-") IsEmpty;
-		Standard_Boolean IsEmpty ();
-		%feature("compactdefaultargs") Prepend;
-		%feature("autodoc", "	:param I:
-	:type I: TopTools_MapOfShape &
-	:rtype: None
-") Prepend;
-		void Prepend (const TopTools_MapOfShape & I);
-		%feature("compactdefaultargs") Prepend;
-		%feature("autodoc", "	:param I:
-	:type I: TopTools_MapOfShape &
-	:param theIt:
-	:type theIt: TNaming_ListIteratorOfListOfMapOfShape &
-	:rtype: None
-") Prepend;
-		void Prepend (const TopTools_MapOfShape & I,TNaming_ListIteratorOfListOfMapOfShape & theIt);
-		%feature("compactdefaultargs") Prepend;
-		%feature("autodoc", "	:param Other:
-	:type Other: TNaming_ListOfMapOfShape &
-	:rtype: None
-") Prepend;
-		void Prepend (TNaming_ListOfMapOfShape & Other);
-		%feature("compactdefaultargs") Append;
-		%feature("autodoc", "	:param I:
-	:type I: TopTools_MapOfShape &
-	:rtype: None
-") Append;
-		void Append (const TopTools_MapOfShape & I);
-		%feature("compactdefaultargs") Append;
-		%feature("autodoc", "	:param I:
-	:type I: TopTools_MapOfShape &
-	:param theIt:
-	:type theIt: TNaming_ListIteratorOfListOfMapOfShape &
-	:rtype: None
-") Append;
-		void Append (const TopTools_MapOfShape & I,TNaming_ListIteratorOfListOfMapOfShape & theIt);
-		%feature("compactdefaultargs") Append;
-		%feature("autodoc", "	:param Other:
-	:type Other: TNaming_ListOfMapOfShape &
-	:rtype: None
-") Append;
-		void Append (TNaming_ListOfMapOfShape & Other);
-		%feature("compactdefaultargs") First;
-		%feature("autodoc", "	:rtype: TopTools_MapOfShape
-") First;
-		TopTools_MapOfShape & First ();
-		%feature("compactdefaultargs") Last;
-		%feature("autodoc", "	:rtype: TopTools_MapOfShape
-") Last;
-		TopTools_MapOfShape & Last ();
-		%feature("compactdefaultargs") RemoveFirst;
-		%feature("autodoc", "	:rtype: None
-") RemoveFirst;
-		void RemoveFirst ();
-		%feature("compactdefaultargs") Remove;
-		%feature("autodoc", "	:param It:
-	:type It: TNaming_ListIteratorOfListOfMapOfShape &
-	:rtype: None
-") Remove;
-		void Remove (TNaming_ListIteratorOfListOfMapOfShape & It);
-		%feature("compactdefaultargs") InsertBefore;
-		%feature("autodoc", "	:param I:
-	:type I: TopTools_MapOfShape &
-	:param It:
-	:type It: TNaming_ListIteratorOfListOfMapOfShape &
-	:rtype: None
-") InsertBefore;
-		void InsertBefore (const TopTools_MapOfShape & I,TNaming_ListIteratorOfListOfMapOfShape & It);
-		%feature("compactdefaultargs") InsertBefore;
-		%feature("autodoc", "	:param Other:
-	:type Other: TNaming_ListOfMapOfShape &
-	:param It:
-	:type It: TNaming_ListIteratorOfListOfMapOfShape &
-	:rtype: None
-") InsertBefore;
-		void InsertBefore (TNaming_ListOfMapOfShape & Other,TNaming_ListIteratorOfListOfMapOfShape & It);
-		%feature("compactdefaultargs") InsertAfter;
-		%feature("autodoc", "	:param I:
-	:type I: TopTools_MapOfShape &
-	:param It:
-	:type It: TNaming_ListIteratorOfListOfMapOfShape &
-	:rtype: None
-") InsertAfter;
-		void InsertAfter (const TopTools_MapOfShape & I,TNaming_ListIteratorOfListOfMapOfShape & It);
-		%feature("compactdefaultargs") InsertAfter;
-		%feature("autodoc", "	:param Other:
-	:type Other: TNaming_ListOfMapOfShape &
-	:param It:
-	:type It: TNaming_ListIteratorOfListOfMapOfShape &
-	:rtype: None
-") InsertAfter;
-		void InsertAfter (TNaming_ListOfMapOfShape & Other,TNaming_ListIteratorOfListOfMapOfShape & It);
-};
-
-
-%extend TNaming_ListOfMapOfShape {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor TNaming_ListOfNamedShape;
-class TNaming_ListOfNamedShape {
-	public:
-		%feature("compactdefaultargs") TNaming_ListOfNamedShape;
-		%feature("autodoc", "	:rtype: None
-") TNaming_ListOfNamedShape;
-		 TNaming_ListOfNamedShape ();
-		%feature("compactdefaultargs") TNaming_ListOfNamedShape;
-		%feature("autodoc", "	:param Other:
-	:type Other: TNaming_ListOfNamedShape &
-	:rtype: None
-") TNaming_ListOfNamedShape;
-		 TNaming_ListOfNamedShape (const TNaming_ListOfNamedShape & Other);
-		%feature("compactdefaultargs") Assign;
-		%feature("autodoc", "	:param Other:
-	:type Other: TNaming_ListOfNamedShape &
-	:rtype: None
-") Assign;
-		void Assign (const TNaming_ListOfNamedShape & Other);
-		%feature("compactdefaultargs") operator =;
-		%feature("autodoc", "	:param Other:
-	:type Other: TNaming_ListOfNamedShape &
-	:rtype: None
-") operator =;
-		void operator = (const TNaming_ListOfNamedShape & Other);
-		%feature("compactdefaultargs") Extent;
-		%feature("autodoc", "	:rtype: int
-") Extent;
-		Standard_Integer Extent ();
-		%feature("compactdefaultargs") Clear;
-		%feature("autodoc", "	:rtype: None
-") Clear;
-		void Clear ();
-		%feature("compactdefaultargs") IsEmpty;
-		%feature("autodoc", "	:rtype: bool
-") IsEmpty;
-		Standard_Boolean IsEmpty ();
-		%feature("compactdefaultargs") Prepend;
-		%feature("autodoc", "	:param I:
-	:type I: Handle_TNaming_NamedShape &
-	:rtype: None
-") Prepend;
-		void Prepend (const Handle_TNaming_NamedShape & I);
-		%feature("compactdefaultargs") Prepend;
-		%feature("autodoc", "	:param I:
-	:type I: Handle_TNaming_NamedShape &
-	:param theIt:
-	:type theIt: TNaming_ListIteratorOfListOfNamedShape &
-	:rtype: None
-") Prepend;
-		void Prepend (const Handle_TNaming_NamedShape & I,TNaming_ListIteratorOfListOfNamedShape & theIt);
-		%feature("compactdefaultargs") Prepend;
-		%feature("autodoc", "	:param Other:
-	:type Other: TNaming_ListOfNamedShape &
-	:rtype: None
-") Prepend;
-		void Prepend (TNaming_ListOfNamedShape & Other);
-		%feature("compactdefaultargs") Append;
-		%feature("autodoc", "	:param I:
-	:type I: Handle_TNaming_NamedShape &
-	:rtype: None
-") Append;
-		void Append (const Handle_TNaming_NamedShape & I);
-		%feature("compactdefaultargs") Append;
-		%feature("autodoc", "	:param I:
-	:type I: Handle_TNaming_NamedShape &
-	:param theIt:
-	:type theIt: TNaming_ListIteratorOfListOfNamedShape &
-	:rtype: None
-") Append;
-		void Append (const Handle_TNaming_NamedShape & I,TNaming_ListIteratorOfListOfNamedShape & theIt);
-		%feature("compactdefaultargs") Append;
-		%feature("autodoc", "	:param Other:
-	:type Other: TNaming_ListOfNamedShape &
-	:rtype: None
-") Append;
-		void Append (TNaming_ListOfNamedShape & Other);
-		%feature("compactdefaultargs") First;
-		%feature("autodoc", "	:rtype: Handle_TNaming_NamedShape
-") First;
-		Handle_TNaming_NamedShape First ();
-		%feature("compactdefaultargs") Last;
-		%feature("autodoc", "	:rtype: Handle_TNaming_NamedShape
-") Last;
-		Handle_TNaming_NamedShape Last ();
-		%feature("compactdefaultargs") RemoveFirst;
-		%feature("autodoc", "	:rtype: None
-") RemoveFirst;
-		void RemoveFirst ();
-		%feature("compactdefaultargs") Remove;
-		%feature("autodoc", "	:param It:
-	:type It: TNaming_ListIteratorOfListOfNamedShape &
-	:rtype: None
-") Remove;
-		void Remove (TNaming_ListIteratorOfListOfNamedShape & It);
-		%feature("compactdefaultargs") InsertBefore;
-		%feature("autodoc", "	:param I:
-	:type I: Handle_TNaming_NamedShape &
-	:param It:
-	:type It: TNaming_ListIteratorOfListOfNamedShape &
-	:rtype: None
-") InsertBefore;
-		void InsertBefore (const Handle_TNaming_NamedShape & I,TNaming_ListIteratorOfListOfNamedShape & It);
-		%feature("compactdefaultargs") InsertBefore;
-		%feature("autodoc", "	:param Other:
-	:type Other: TNaming_ListOfNamedShape &
-	:param It:
-	:type It: TNaming_ListIteratorOfListOfNamedShape &
-	:rtype: None
-") InsertBefore;
-		void InsertBefore (TNaming_ListOfNamedShape & Other,TNaming_ListIteratorOfListOfNamedShape & It);
-		%feature("compactdefaultargs") InsertAfter;
-		%feature("autodoc", "	:param I:
-	:type I: Handle_TNaming_NamedShape &
-	:param It:
-	:type It: TNaming_ListIteratorOfListOfNamedShape &
-	:rtype: None
-") InsertAfter;
-		void InsertAfter (const Handle_TNaming_NamedShape & I,TNaming_ListIteratorOfListOfNamedShape & It);
-		%feature("compactdefaultargs") InsertAfter;
-		%feature("autodoc", "	:param Other:
-	:type Other: TNaming_ListOfNamedShape &
-	:param It:
-	:type It: TNaming_ListIteratorOfListOfNamedShape &
-	:rtype: None
-") InsertAfter;
-		void InsertAfter (TNaming_ListOfNamedShape & Other,TNaming_ListIteratorOfListOfNamedShape & It);
-};
-
-
-%extend TNaming_ListOfNamedShape {
 	%pythoncode {
 	__repr__ = _dumps_object
 	}
@@ -1996,100 +892,6 @@ class TNaming_Localizer {
 
 
 %extend TNaming_Localizer {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor TNaming_MapIteratorOfMapOfNamedShape;
-class TNaming_MapIteratorOfMapOfNamedShape : public TCollection_BasicMapIterator {
-	public:
-		%feature("compactdefaultargs") TNaming_MapIteratorOfMapOfNamedShape;
-		%feature("autodoc", "	:rtype: None
-") TNaming_MapIteratorOfMapOfNamedShape;
-		 TNaming_MapIteratorOfMapOfNamedShape ();
-		%feature("compactdefaultargs") TNaming_MapIteratorOfMapOfNamedShape;
-		%feature("autodoc", "	:param aMap:
-	:type aMap: TNaming_MapOfNamedShape &
-	:rtype: None
-") TNaming_MapIteratorOfMapOfNamedShape;
-		 TNaming_MapIteratorOfMapOfNamedShape (const TNaming_MapOfNamedShape & aMap);
-		%feature("compactdefaultargs") Initialize;
-		%feature("autodoc", "	:param aMap:
-	:type aMap: TNaming_MapOfNamedShape &
-	:rtype: None
-") Initialize;
-		void Initialize (const TNaming_MapOfNamedShape & aMap);
-		%feature("compactdefaultargs") Key;
-		%feature("autodoc", "	:rtype: Handle_TNaming_NamedShape
-") Key;
-		Handle_TNaming_NamedShape Key ();
-};
-
-
-%extend TNaming_MapIteratorOfMapOfNamedShape {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor TNaming_MapOfNamedShape;
-class TNaming_MapOfNamedShape : public TCollection_BasicMap {
-	public:
-		%feature("compactdefaultargs") TNaming_MapOfNamedShape;
-		%feature("autodoc", "	:param NbBuckets: default value is 1
-	:type NbBuckets: int
-	:rtype: None
-") TNaming_MapOfNamedShape;
-		 TNaming_MapOfNamedShape (const Standard_Integer NbBuckets = 1);
-		%feature("compactdefaultargs") TNaming_MapOfNamedShape;
-		%feature("autodoc", "	:param Other:
-	:type Other: TNaming_MapOfNamedShape &
-	:rtype: None
-") TNaming_MapOfNamedShape;
-		 TNaming_MapOfNamedShape (const TNaming_MapOfNamedShape & Other);
-		%feature("compactdefaultargs") Assign;
-		%feature("autodoc", "	:param Other:
-	:type Other: TNaming_MapOfNamedShape &
-	:rtype: TNaming_MapOfNamedShape
-") Assign;
-		TNaming_MapOfNamedShape & Assign (const TNaming_MapOfNamedShape & Other);
-		%feature("compactdefaultargs") operator =;
-		%feature("autodoc", "	:param Other:
-	:type Other: TNaming_MapOfNamedShape &
-	:rtype: TNaming_MapOfNamedShape
-") operator =;
-		TNaming_MapOfNamedShape & operator = (const TNaming_MapOfNamedShape & Other);
-		%feature("compactdefaultargs") ReSize;
-		%feature("autodoc", "	:param NbBuckets:
-	:type NbBuckets: int
-	:rtype: None
-") ReSize;
-		void ReSize (const Standard_Integer NbBuckets);
-		%feature("compactdefaultargs") Clear;
-		%feature("autodoc", "	:rtype: None
-") Clear;
-		void Clear ();
-		%feature("compactdefaultargs") Add;
-		%feature("autodoc", "	:param aKey:
-	:type aKey: Handle_TNaming_NamedShape &
-	:rtype: bool
-") Add;
-		Standard_Boolean Add (const Handle_TNaming_NamedShape & aKey);
-		%feature("compactdefaultargs") Contains;
-		%feature("autodoc", "	:param aKey:
-	:type aKey: Handle_TNaming_NamedShape &
-	:rtype: bool
-") Contains;
-		Standard_Boolean Contains (const Handle_TNaming_NamedShape & aKey);
-		%feature("compactdefaultargs") Remove;
-		%feature("autodoc", "	:param aKey:
-	:type aKey: Handle_TNaming_NamedShape &
-	:rtype: bool
-") Remove;
-		Standard_Boolean Remove (const Handle_TNaming_NamedShape & aKey);
-};
-
-
-%extend TNaming_MapOfNamedShape {
 	%pythoncode {
 	__repr__ = _dumps_object
 	}
@@ -2259,7 +1061,7 @@ class TNaming_NamedShape : public TDF_Attribute {
 ") ID;
 		const Standard_GUID & ID ();
 		%feature("compactdefaultargs") BackupCopy;
-		%feature("autodoc", "	* Copies the attribute contents into a new other attribute. It is used by Backup().
+		%feature("autodoc", "	* Copies the attribute contents into a new other attribute. It is used by Backup----.
 
 	:rtype: Handle_TDF_Attribute
 ") BackupCopy;
@@ -2384,48 +1186,23 @@ class Handle_TNaming_NamedShape : public Handle_TDF_Attribute {
         static const Handle_TNaming_NamedShape DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_TNaming_NamedShape {
     TNaming_NamedShape* _get_reference() {
-    return (TNaming_NamedShape*)$self->Access();
+    return (TNaming_NamedShape*)$self->get();
     }
 };
 
 %extend Handle_TNaming_NamedShape {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend TNaming_NamedShape {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-class TNaming_NamedShapeHasher {
-	public:
-		%feature("compactdefaultargs") HashCode;
-		%feature("autodoc", "	:param K:
-	:type K: Handle_TNaming_NamedShape &
-	:param Upper:
-	:type Upper: int
-	:rtype: int
-") HashCode;
-		static Standard_Integer HashCode (const Handle_TNaming_NamedShape & K,const Standard_Integer Upper);
-		%feature("compactdefaultargs") IsEqual;
-		%feature("autodoc", "	:param K1:
-	:type K1: Handle_TNaming_NamedShape &
-	:param K2:
-	:type K2: Handle_TNaming_NamedShape &
-	:rtype: bool
-") IsEqual;
-		static Standard_Boolean IsEqual (const Handle_TNaming_NamedShape & K1,const Handle_TNaming_NamedShape & K2);
-};
-
-
-%extend TNaming_NamedShapeHasher {
 	%pythoncode {
 	__repr__ = _dumps_object
 	}
@@ -2446,7 +1223,7 @@ class TNaming_Naming : public TDF_Attribute {
 ") Insert;
 		static Handle_TNaming_Naming Insert (const TDF_Label & under);
 		%feature("compactdefaultargs") Name;
-		%feature("autodoc", "	* Creates a Namimg attribute at label <where> to identify the shape <Selection>. Geometry is Standard_True if we are only interested by the underlying geometry (e.g. setting a constraint). <Context> is used to find neighbours of <S> when required by the naming. If KeepOrientation is True the Selection orientation is taken into account. BNproblem == True points out that Context sub-shapes in DF have orientation differences with Context shape itself. instance method ===============
+		%feature("autodoc", "	* Creates a Namimg attribute at label <where> to identify the shape <Selection>. Geometry is Standard_True if we are only interested by the underlying geometry --e.g. setting a constraint--. <Context> is used to find neighbours of <S> when required by the naming. If KeepOrientation is True the Selection orientation is taken into account. BNproblem == True points out that Context sub-shapes in DF have orientation differences with Context shape itself. instance method ===============
 
 	:param where:
 	:type where: TDF_Label &
@@ -2577,19 +1354,20 @@ class Handle_TNaming_Naming : public Handle_TDF_Attribute {
         static const Handle_TNaming_Naming DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_TNaming_Naming {
     TNaming_Naming* _get_reference() {
-    return (TNaming_Naming*)$self->Access();
+    return (TNaming_Naming*)$self->get();
     }
 };
 
 %extend Handle_TNaming_Naming {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend TNaming_Naming {
@@ -2701,7 +1479,7 @@ class TNaming_NewShapeIterator {
 ") Shape;
 		const TopoDS_Shape  Shape ();
 		%feature("compactdefaultargs") IsModification;
-		%feature("autodoc", "	* True if the new shape is a modification (split, fuse,etc...) of the old shape.
+		%feature("autodoc", "	* True if the new shape is a modification --split, fuse,etc...-- of the old shape.
 
 	:rtype: bool
 ") IsModification;
@@ -2772,7 +1550,7 @@ class TNaming_OldShapeIterator {
 ") Shape;
 		const TopoDS_Shape  Shape ();
 		%feature("compactdefaultargs") IsModification;
-		%feature("autodoc", "	* True if the new shape is a modification (split, fuse,etc...) of the old shape.
+		%feature("autodoc", "	* True if the new shape is a modification --split, fuse,etc...-- of the old shape.
 
 	:rtype: bool
 ") IsModification;
@@ -2965,7 +1743,7 @@ class TNaming_Scope {
 class TNaming_Selector {
 	public:
 		%feature("compactdefaultargs") IsIdentified;
-		%feature("autodoc", "	* To know if a shape is already identified (not selected) ======================================================= //! The label access defines the point of access to the data framework. selection is the shape for which we want to know whether it is identified or not. If true, NS is returned as the identity of selection. If Geometry is true, NS will be the named shape containing the first appearance of selection and not any other shape. In other words, selection must be the only shape stored in NS.
+		%feature("autodoc", "	* To know if a shape is already identified --not selected-- ======================================================= //! The label access defines the point of access to the data framework. selection is the shape for which we want to know whether it is identified or not. If true, NS is returned as the identity of selection. If Geometry is true, NS will be the named shape containing the first appearance of selection and not any other shape. In other words, selection must be the only shape stored in NS.
 
 	:param access:
 	:type access: TDF_Label &
@@ -3135,75 +1913,6 @@ class TNaming_ShapesSet {
 	__repr__ = _dumps_object
 	}
 };
-%nodefaultctor TNaming_StdMapNodeOfMapOfNamedShape;
-class TNaming_StdMapNodeOfMapOfNamedShape : public TCollection_MapNode {
-	public:
-		%feature("compactdefaultargs") TNaming_StdMapNodeOfMapOfNamedShape;
-		%feature("autodoc", "	:param K:
-	:type K: Handle_TNaming_NamedShape &
-	:param n:
-	:type n: TCollection_MapNodePtr &
-	:rtype: None
-") TNaming_StdMapNodeOfMapOfNamedShape;
-		 TNaming_StdMapNodeOfMapOfNamedShape (const Handle_TNaming_NamedShape & K,const TCollection_MapNodePtr & n);
-		%feature("compactdefaultargs") Key;
-		%feature("autodoc", "	:rtype: Handle_TNaming_NamedShape
-") Key;
-		Handle_TNaming_NamedShape Key ();
-};
-
-
-%extend TNaming_StdMapNodeOfMapOfNamedShape {
-	%pythoncode {
-		def GetHandle(self):
-		    try:
-		        return self.thisHandle
-		    except:
-		        self.thisHandle = Handle_TNaming_StdMapNodeOfMapOfNamedShape(self)
-		        self.thisown = False
-		        return self.thisHandle
-	}
-};
-
-%pythonappend Handle_TNaming_StdMapNodeOfMapOfNamedShape::Handle_TNaming_StdMapNodeOfMapOfNamedShape %{
-    # register the handle in the base object
-    if len(args) > 0:
-        register_handle(self, args[0])
-%}
-
-%nodefaultctor Handle_TNaming_StdMapNodeOfMapOfNamedShape;
-class Handle_TNaming_StdMapNodeOfMapOfNamedShape : public Handle_TCollection_MapNode {
-
-    public:
-        // constructors
-        Handle_TNaming_StdMapNodeOfMapOfNamedShape();
-        Handle_TNaming_StdMapNodeOfMapOfNamedShape(const Handle_TNaming_StdMapNodeOfMapOfNamedShape &aHandle);
-        Handle_TNaming_StdMapNodeOfMapOfNamedShape(const TNaming_StdMapNodeOfMapOfNamedShape *anItem);
-        void Nullify();
-        Standard_Boolean IsNull() const;
-        static const Handle_TNaming_StdMapNodeOfMapOfNamedShape DownCast(const Handle_Standard_Transient &AnObject);
-
-};
-%extend Handle_TNaming_StdMapNodeOfMapOfNamedShape {
-    TNaming_StdMapNodeOfMapOfNamedShape* _get_reference() {
-    return (TNaming_StdMapNodeOfMapOfNamedShape*)$self->Access();
-    }
-};
-
-%extend Handle_TNaming_StdMapNodeOfMapOfNamedShape {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
-};
-
-%extend TNaming_StdMapNodeOfMapOfNamedShape {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
 class TNaming_Tool {
 	public:
 		%feature("compactdefaultargs") CurrentShape;
@@ -3243,7 +1952,7 @@ class TNaming_Tool {
 ") CurrentNamedShape;
 		static Handle_TNaming_NamedShape CurrentNamedShape (const Handle_TNaming_NamedShape & NS);
 		%feature("compactdefaultargs") NamedShape;
-		%feature("autodoc", "	* Returns the named shape attribute defined by the shape aShape and the label anAccess. This attribute is returned as a new shape. You call this function, if you need to create a topological attribute for existing data. Example class MyPkg_MyClass { public: Standard_Boolean SameEdge(const Handle_OCafTest_Line& , const Handle_CafTest_Line& ); }; //! Standard_Boolean MyPkg_MyClass::SameEdge (const Handle_OCafTest_Line& L1 const Handle_OCafTest_Line& L2) { Handle_TNaming_NamedShape NS1 = L1->NamedShape(); Handle_TNaming_NamedShape NS2 = L2->NamedShape(); //! return BRepTools::Compare(NS1->Get(),NS2->Get()); } In the example above, the function SameEdge is created to compare the edges having two lines for geometric supports. If these edges are found by BRepTools::Compare to be within the same tolerance, they are considered to be the same. Warning To avoid sharing of names, a SELECTED attribute will not be returned. Sharing of names makes it harder to manage the data structure. When the user of the name is removed, for example, it is difficult to know whether the name should be destroyed.
+		%feature("autodoc", "	* Returns the named shape attribute defined by the shape aShape and the label anAccess. This attribute is returned as a new shape. You call this function, if you need to create a topological attribute for existing data. Example class MyPkg_MyClass { public: Standard_Boolean SameEdge--const Handle_OCafTest_Line& , const Handle_CafTest_Line& --; }; //! Standard_Boolean MyPkg_MyClass::SameEdge --const Handle_OCafTest_Line& L1 const Handle_OCafTest_Line& L2-- { Handle_TNaming_NamedShape NS1 = L1->NamedShape----; Handle_TNaming_NamedShape NS2 = L2->NamedShape----; //! return BRepTools::Compare--NS1->Get----,NS2->Get------; } In the example above, the function SameEdge is created to compare the edges having two lines for geometric supports. If these edges are found by BRepTools::Compare to be within the same tolerance, they are considered to be the same. Warning To avoid sharing of names, a SELECTED attribute will not be returned. Sharing of names makes it harder to manage the data structure. When the user of the name is removed, for example, it is difficult to know whether the name should be destroyed.
 
 	:param aShape:
 	:type aShape: TopoDS_Shape &
@@ -3289,7 +1998,7 @@ class TNaming_Tool {
 ") Collect;
 		static void Collect (const Handle_TNaming_NamedShape & NS,TNaming_MapOfNamedShape & Labels,const Standard_Boolean OnlyModif = Standard_True);
 		%feature("compactdefaultargs") HasLabel;
-		%feature("autodoc", "	* Returns True if <aShape> appears under a label.(DP)
+		%feature("autodoc", "	* Returns True if <aShape> appears under a label.--DP--
 
 	:param access:
 	:type access: TDF_Label &
@@ -3333,7 +2042,7 @@ class TNaming_Tool {
 ") ValidUntil;
 		static Standard_Integer ValidUntil (const TDF_Label & access,const TopoDS_Shape & S);
 		%feature("compactdefaultargs") FindShape;
-		%feature("autodoc", "	* Returns the current shape (a Wire or a Shell) built (in the data framework) from the the shapes of the argument named shape. It is used for IDENTITY name type computation.
+		%feature("autodoc", "	* Returns the current shape --a Wire or a Shell-- built --in the data framework-- from the the shapes of the argument named shape. It is used for IDENTITY name type computation.
 
 	:param Valid:
 	:type Valid: TDF_LabelMap &
@@ -3355,7 +2064,7 @@ class TNaming_Tool {
 	}
 };
 %nodefaultctor TNaming_TranslateTool;
-class TNaming_TranslateTool : public MMgt_TShared {
+class TNaming_TranslateTool : public Standard_Transient {
 	public:
 		%feature("compactdefaultargs") Add;
 		%feature("autodoc", "	:param S1:
@@ -3473,7 +2182,7 @@ class TNaming_TranslateTool : public MMgt_TShared {
 %}
 
 %nodefaultctor Handle_TNaming_TranslateTool;
-class Handle_TNaming_TranslateTool : public Handle_MMgt_TShared {
+class Handle_TNaming_TranslateTool : public Handle_Standard_Transient {
 
     public:
         // constructors
@@ -3485,19 +2194,20 @@ class Handle_TNaming_TranslateTool : public Handle_MMgt_TShared {
         static const Handle_TNaming_TranslateTool DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_TNaming_TranslateTool {
     TNaming_TranslateTool* _get_reference() {
-    return (TNaming_TranslateTool*)$self->Access();
+    return (TNaming_TranslateTool*)$self->get();
     }
 };
 
 %extend Handle_TNaming_TranslateTool {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend TNaming_TranslateTool {
@@ -3535,7 +2245,7 @@ class TNaming_Translator {
 ") Copied;
 		const TopoDS_Shape Copied (const TopoDS_Shape & aShape);
 		%feature("compactdefaultargs") Copied;
-		%feature("autodoc", "	* returns DataMap of results; (shape <-> copied shape)
+		%feature("autodoc", "	* returns DataMap of results; --shape <-> copied shape--
 
 	:rtype: TopTools_DataMapOfShapeShape
 ") Copied;
@@ -3578,7 +2288,7 @@ class TNaming_UsedShapes : public TDF_Attribute {
 ") GetID;
 		static const Standard_GUID & GetID ();
 		%feature("compactdefaultargs") BackupCopy;
-		%feature("autodoc", "	* Copies the attribute contents into a new other attribute. It is used by Backup().
+		%feature("autodoc", "	* Copies the attribute contents into a new other attribute. It is used by Backup----.
 
 	:rtype: Handle_TDF_Attribute
 ") BackupCopy;
@@ -3608,13 +2318,13 @@ class TNaming_UsedShapes : public TDF_Attribute {
 ") AfterUndo;
 		virtual Standard_Boolean AfterUndo (const Handle_TDF_AttributeDelta & anAttDelta,const Standard_Boolean forceIt = Standard_False);
 		%feature("compactdefaultargs") DeltaOnAddition;
-		%feature("autodoc", "	* this method returns a null handle (no delta).
+		%feature("autodoc", "	* this method returns a null handle --no delta--.
 
 	:rtype: Handle_TDF_DeltaOnAddition
 ") DeltaOnAddition;
 		virtual Handle_TDF_DeltaOnAddition DeltaOnAddition ();
 		%feature("compactdefaultargs") DeltaOnRemoval;
-		%feature("autodoc", "	* this method returns a null handle (no delta).
+		%feature("autodoc", "	* this method returns a null handle --no delta--.
 
 	:rtype: Handle_TDF_DeltaOnRemoval
 ") DeltaOnRemoval;
@@ -3636,7 +2346,7 @@ class TNaming_UsedShapes : public TDF_Attribute {
 ") Paste;
 		virtual void Paste (const Handle_TDF_Attribute & intoAttribute,const Handle_TDF_RelocationTable & aRelocTationable);
 		%feature("compactdefaultargs") References;
-		%feature("autodoc", "	* Adds the directly referenced attributes and labels to <aDataSet>. 'Directly' means we have only to look at the first level of references. //! For this, use only the AddLabel() & AddAttribute() from DataSet and do not try to modify information previously stored in <aDataSet>.
+		%feature("autodoc", "	* Adds the directly referenced attributes and labels to <aDataSet>. 'Directly' means we have only to look at the first level of references. //! For this, use only the AddLabel---- & AddAttribute---- from DataSet and do not try to modify information previously stored in <aDataSet>.
 
 	:param aDataSet:
 	:type aDataSet: Handle_TDF_DataSet &
@@ -3685,19 +2395,20 @@ class Handle_TNaming_UsedShapes : public Handle_TDF_Attribute {
         static const Handle_TNaming_UsedShapes DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_TNaming_UsedShapes {
     TNaming_UsedShapes* _get_reference() {
-    return (TNaming_UsedShapes*)$self->Access();
+    return (TNaming_UsedShapes*)$self->get();
     }
 };
 
 %extend Handle_TNaming_UsedShapes {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend TNaming_UsedShapes {

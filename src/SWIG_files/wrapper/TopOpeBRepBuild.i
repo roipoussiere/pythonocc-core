@@ -1,5 +1,5 @@
 /*
-Copyright 2008-2017 Thomas Paviot (tpaviot@gmail.com)
+Copyright 2008-2018 Thomas Paviot (tpaviot@gmail.com)
 
 
 This file is part of pythonOCC.
@@ -59,6 +59,15 @@ typedef TopOpeBRepBuild_Builder * TopOpeBRepBuild_PBuilder;
 typedef TopOpeBRepBuild_WireEdgeSet * TopOpeBRepBuild_PWireEdgeSet;
 /* end typedefs declaration */
 
+/* templates */
+%template(TopOpeBRepBuild_ListOfListOfLoop) NCollection_List <TopOpeBRepBuild_ListOfLoop>;
+%template(TopOpeBRepBuild_ListOfShapeListOfShape) NCollection_List <TopOpeBRepBuild_ShapeListOfShape>;
+%template(TopOpeBRepBuild_ListOfPave) NCollection_List <Handle_TopOpeBRepBuild_Pave>;
+%template(TopOpeBRepBuild_IndexedDataMapOfShapeVertexInfo) NCollection_IndexedDataMap <TopoDS_Shape , TopOpeBRepBuild_VertexInfo , TopTools_ShapeMapHasher>;
+%template(TopOpeBRepBuild_ListOfLoop) NCollection_List <Handle_TopOpeBRepBuild_Loop>;
+%template(TopOpeBRepBuild_DataMapOfShapeListOfShapeListOfShape) NCollection_DataMap <TopoDS_Shape , TopOpeBRepBuild_ListOfShapeListOfShape , TopTools_ShapeMapHasher>;
+/* end templates declaration */
+
 /* public enums */
 enum TopOpeBRepBuild_LoopEnum {
 	TopOpeBRepBuild_ANYLOOP = 0,
@@ -87,10 +96,6 @@ class TopOpeBRepBuild_AreaBuilder {
 	:rtype: None
 ") TopOpeBRepBuild_AreaBuilder;
 		 TopOpeBRepBuild_AreaBuilder (TopOpeBRepBuild_LoopSet & LS,TopOpeBRepBuild_LoopClassifier & LC,const Standard_Boolean ForceClass = Standard_False);
-		%feature("compactdefaultargs") Delete;
-		%feature("autodoc", "	:rtype: void
-") Delete;
-		virtual void Delete ();
 		%feature("compactdefaultargs") InitAreaBuilder;
 		%feature("autodoc", "	* Sets a AreaBuilder to find the areas on the shapes described by <LS> using the classifier <LC>.
 
@@ -483,199 +488,6 @@ class TopOpeBRepBuild_CorrectFace2d {
 	__repr__ = _dumps_object
 	}
 };
-%nodefaultctor TopOpeBRepBuild_DataMapIteratorOfDataMapOfShapeListOfShapeListOfShape;
-class TopOpeBRepBuild_DataMapIteratorOfDataMapOfShapeListOfShapeListOfShape : public TCollection_BasicMapIterator {
-	public:
-		%feature("compactdefaultargs") TopOpeBRepBuild_DataMapIteratorOfDataMapOfShapeListOfShapeListOfShape;
-		%feature("autodoc", "	:rtype: None
-") TopOpeBRepBuild_DataMapIteratorOfDataMapOfShapeListOfShapeListOfShape;
-		 TopOpeBRepBuild_DataMapIteratorOfDataMapOfShapeListOfShapeListOfShape ();
-		%feature("compactdefaultargs") TopOpeBRepBuild_DataMapIteratorOfDataMapOfShapeListOfShapeListOfShape;
-		%feature("autodoc", "	:param aMap:
-	:type aMap: TopOpeBRepBuild_DataMapOfShapeListOfShapeListOfShape &
-	:rtype: None
-") TopOpeBRepBuild_DataMapIteratorOfDataMapOfShapeListOfShapeListOfShape;
-		 TopOpeBRepBuild_DataMapIteratorOfDataMapOfShapeListOfShapeListOfShape (const TopOpeBRepBuild_DataMapOfShapeListOfShapeListOfShape & aMap);
-		%feature("compactdefaultargs") Initialize;
-		%feature("autodoc", "	:param aMap:
-	:type aMap: TopOpeBRepBuild_DataMapOfShapeListOfShapeListOfShape &
-	:rtype: None
-") Initialize;
-		void Initialize (const TopOpeBRepBuild_DataMapOfShapeListOfShapeListOfShape & aMap);
-		%feature("compactdefaultargs") Key;
-		%feature("autodoc", "	:rtype: TopoDS_Shape
-") Key;
-		const TopoDS_Shape  Key ();
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:rtype: TopOpeBRepBuild_ListOfShapeListOfShape
-") Value;
-		const TopOpeBRepBuild_ListOfShapeListOfShape & Value ();
-};
-
-
-%extend TopOpeBRepBuild_DataMapIteratorOfDataMapOfShapeListOfShapeListOfShape {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor TopOpeBRepBuild_DataMapNodeOfDataMapOfShapeListOfShapeListOfShape;
-class TopOpeBRepBuild_DataMapNodeOfDataMapOfShapeListOfShapeListOfShape : public TCollection_MapNode {
-	public:
-		%feature("compactdefaultargs") TopOpeBRepBuild_DataMapNodeOfDataMapOfShapeListOfShapeListOfShape;
-		%feature("autodoc", "	:param K:
-	:type K: TopoDS_Shape &
-	:param I:
-	:type I: TopOpeBRepBuild_ListOfShapeListOfShape &
-	:param n:
-	:type n: TCollection_MapNodePtr &
-	:rtype: None
-") TopOpeBRepBuild_DataMapNodeOfDataMapOfShapeListOfShapeListOfShape;
-		 TopOpeBRepBuild_DataMapNodeOfDataMapOfShapeListOfShapeListOfShape (const TopoDS_Shape & K,const TopOpeBRepBuild_ListOfShapeListOfShape & I,const TCollection_MapNodePtr & n);
-		%feature("compactdefaultargs") Key;
-		%feature("autodoc", "	:rtype: TopoDS_Shape
-") Key;
-		TopoDS_Shape  Key ();
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:rtype: TopOpeBRepBuild_ListOfShapeListOfShape
-") Value;
-		TopOpeBRepBuild_ListOfShapeListOfShape & Value ();
-};
-
-
-%extend TopOpeBRepBuild_DataMapNodeOfDataMapOfShapeListOfShapeListOfShape {
-	%pythoncode {
-		def GetHandle(self):
-		    try:
-		        return self.thisHandle
-		    except:
-		        self.thisHandle = Handle_TopOpeBRepBuild_DataMapNodeOfDataMapOfShapeListOfShapeListOfShape(self)
-		        self.thisown = False
-		        return self.thisHandle
-	}
-};
-
-%pythonappend Handle_TopOpeBRepBuild_DataMapNodeOfDataMapOfShapeListOfShapeListOfShape::Handle_TopOpeBRepBuild_DataMapNodeOfDataMapOfShapeListOfShapeListOfShape %{
-    # register the handle in the base object
-    if len(args) > 0:
-        register_handle(self, args[0])
-%}
-
-%nodefaultctor Handle_TopOpeBRepBuild_DataMapNodeOfDataMapOfShapeListOfShapeListOfShape;
-class Handle_TopOpeBRepBuild_DataMapNodeOfDataMapOfShapeListOfShapeListOfShape : public Handle_TCollection_MapNode {
-
-    public:
-        // constructors
-        Handle_TopOpeBRepBuild_DataMapNodeOfDataMapOfShapeListOfShapeListOfShape();
-        Handle_TopOpeBRepBuild_DataMapNodeOfDataMapOfShapeListOfShapeListOfShape(const Handle_TopOpeBRepBuild_DataMapNodeOfDataMapOfShapeListOfShapeListOfShape &aHandle);
-        Handle_TopOpeBRepBuild_DataMapNodeOfDataMapOfShapeListOfShapeListOfShape(const TopOpeBRepBuild_DataMapNodeOfDataMapOfShapeListOfShapeListOfShape *anItem);
-        void Nullify();
-        Standard_Boolean IsNull() const;
-        static const Handle_TopOpeBRepBuild_DataMapNodeOfDataMapOfShapeListOfShapeListOfShape DownCast(const Handle_Standard_Transient &AnObject);
-
-};
-%extend Handle_TopOpeBRepBuild_DataMapNodeOfDataMapOfShapeListOfShapeListOfShape {
-    TopOpeBRepBuild_DataMapNodeOfDataMapOfShapeListOfShapeListOfShape* _get_reference() {
-    return (TopOpeBRepBuild_DataMapNodeOfDataMapOfShapeListOfShapeListOfShape*)$self->Access();
-    }
-};
-
-%extend Handle_TopOpeBRepBuild_DataMapNodeOfDataMapOfShapeListOfShapeListOfShape {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
-};
-
-%extend TopOpeBRepBuild_DataMapNodeOfDataMapOfShapeListOfShapeListOfShape {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor TopOpeBRepBuild_DataMapOfShapeListOfShapeListOfShape;
-class TopOpeBRepBuild_DataMapOfShapeListOfShapeListOfShape : public TCollection_BasicMap {
-	public:
-		%feature("compactdefaultargs") TopOpeBRepBuild_DataMapOfShapeListOfShapeListOfShape;
-		%feature("autodoc", "	:param NbBuckets: default value is 1
-	:type NbBuckets: int
-	:rtype: None
-") TopOpeBRepBuild_DataMapOfShapeListOfShapeListOfShape;
-		 TopOpeBRepBuild_DataMapOfShapeListOfShapeListOfShape (const Standard_Integer NbBuckets = 1);
-		%feature("compactdefaultargs") Assign;
-		%feature("autodoc", "	:param Other:
-	:type Other: TopOpeBRepBuild_DataMapOfShapeListOfShapeListOfShape &
-	:rtype: TopOpeBRepBuild_DataMapOfShapeListOfShapeListOfShape
-") Assign;
-		TopOpeBRepBuild_DataMapOfShapeListOfShapeListOfShape & Assign (const TopOpeBRepBuild_DataMapOfShapeListOfShapeListOfShape & Other);
-		%feature("compactdefaultargs") operator =;
-		%feature("autodoc", "	:param Other:
-	:type Other: TopOpeBRepBuild_DataMapOfShapeListOfShapeListOfShape &
-	:rtype: TopOpeBRepBuild_DataMapOfShapeListOfShapeListOfShape
-") operator =;
-		TopOpeBRepBuild_DataMapOfShapeListOfShapeListOfShape & operator = (const TopOpeBRepBuild_DataMapOfShapeListOfShapeListOfShape & Other);
-		%feature("compactdefaultargs") ReSize;
-		%feature("autodoc", "	:param NbBuckets:
-	:type NbBuckets: int
-	:rtype: None
-") ReSize;
-		void ReSize (const Standard_Integer NbBuckets);
-		%feature("compactdefaultargs") Clear;
-		%feature("autodoc", "	:rtype: None
-") Clear;
-		void Clear ();
-		%feature("compactdefaultargs") Bind;
-		%feature("autodoc", "	:param K:
-	:type K: TopoDS_Shape &
-	:param I:
-	:type I: TopOpeBRepBuild_ListOfShapeListOfShape &
-	:rtype: bool
-") Bind;
-		Standard_Boolean Bind (const TopoDS_Shape & K,const TopOpeBRepBuild_ListOfShapeListOfShape & I);
-		%feature("compactdefaultargs") IsBound;
-		%feature("autodoc", "	:param K:
-	:type K: TopoDS_Shape &
-	:rtype: bool
-") IsBound;
-		Standard_Boolean IsBound (const TopoDS_Shape & K);
-		%feature("compactdefaultargs") UnBind;
-		%feature("autodoc", "	:param K:
-	:type K: TopoDS_Shape &
-	:rtype: bool
-") UnBind;
-		Standard_Boolean UnBind (const TopoDS_Shape & K);
-		%feature("compactdefaultargs") Find;
-		%feature("autodoc", "	:param K:
-	:type K: TopoDS_Shape &
-	:rtype: TopOpeBRepBuild_ListOfShapeListOfShape
-") Find;
-		const TopOpeBRepBuild_ListOfShapeListOfShape & Find (const TopoDS_Shape & K);
-		%feature("compactdefaultargs") ChangeFind;
-		%feature("autodoc", "	:param K:
-	:type K: TopoDS_Shape &
-	:rtype: TopOpeBRepBuild_ListOfShapeListOfShape
-") ChangeFind;
-		TopOpeBRepBuild_ListOfShapeListOfShape & ChangeFind (const TopoDS_Shape & K);
-		%feature("compactdefaultargs") Find1;
-		%feature("autodoc", "	:param K:
-	:type K: TopoDS_Shape &
-	:rtype: Standard_Address
-") Find1;
-		Standard_Address Find1 (const TopoDS_Shape & K);
-		%feature("compactdefaultargs") ChangeFind1;
-		%feature("autodoc", "	:param K:
-	:type K: TopoDS_Shape &
-	:rtype: Standard_Address
-") ChangeFind1;
-		Standard_Address ChangeFind1 (const TopoDS_Shape & K);
-};
-
-
-%extend TopOpeBRepBuild_DataMapOfShapeListOfShapeListOfShape {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
 %nodefaultctor TopOpeBRepBuild_FaceBuilder;
 class TopOpeBRepBuild_FaceBuilder {
 	public:
@@ -684,7 +496,7 @@ class TopOpeBRepBuild_FaceBuilder {
 ") TopOpeBRepBuild_FaceBuilder;
 		 TopOpeBRepBuild_FaceBuilder ();
 		%feature("compactdefaultargs") TopOpeBRepBuild_FaceBuilder;
-		%feature("autodoc", "	* Create a FaceBuilder to build the faces on the shapes (wires, blocks of edge) described by <LS>.
+		%feature("autodoc", "	* Create a FaceBuilder to build the faces on the shapes --wires, blocks of edge-- described by <LS>.
 
 	:param ES:
 	:type ES: TopOpeBRepBuild_WireEdgeSet &
@@ -706,7 +518,7 @@ class TopOpeBRepBuild_FaceBuilder {
 ") InitFaceBuilder;
 		void InitFaceBuilder (TopOpeBRepBuild_WireEdgeSet & ES,const TopoDS_Shape & F,const Standard_Boolean ForceClass);
 		%feature("compactdefaultargs") DetectUnclosedWire;
-		%feature("autodoc", "	* Removes are non 3d-closed wires. Fills up maps <mapVVsameG> and <mapVon1Edge>, in order to correct 3d-closed but unclosed (topologic connexity) wires. modifies myBlockBuilder
+		%feature("autodoc", "	* Removes are non 3d-closed wires. Fills up maps <mapVVsameG> and <mapVon1Edge>, in order to correct 3d-closed but unclosed --topologic connexity-- wires. modifies myBlockBuilder
 
 	:param mapVVsameG:
 	:type mapVVsameG: TopTools_IndexedDataMapOfShapeShape &
@@ -726,7 +538,7 @@ class TopOpeBRepBuild_FaceBuilder {
 ") CorrectGclosedWire;
 		void CorrectGclosedWire (const TopTools_IndexedDataMapOfShapeShape & mapVVref,const TopTools_IndexedDataMapOfShapeShape & mapVon1Edge);
 		%feature("compactdefaultargs") DetectPseudoInternalEdge;
-		%feature("autodoc", "	* Removes edges appearing twice (FORWARD,REVERSED) with a bounding vertex not connected to any other edge. mapE contains edges found. modifies myBlockBuilder.
+		%feature("autodoc", "	* Removes edges appearing twice --FORWARD,REVERSED-- with a bounding vertex not connected to any other edge. mapE contains edges found. modifies myBlockBuilder.
 
 	:param mapE:
 	:type mapE: TopTools_IndexedMapOfShape &
@@ -768,7 +580,7 @@ class TopOpeBRepBuild_FaceBuilder {
 ") IsOldWire;
 		Standard_Boolean IsOldWire ();
 		%feature("compactdefaultargs") OldWire;
-		%feature("autodoc", "	* Returns current wire This wire may be : * an old wire OldWire(), which has not been reconstructed; * a new wire made of edges described by ...NewEdge() methods.
+		%feature("autodoc", "	* Returns current wire This wire may be : * an old wire OldWire----, which has not been reconstructed; * a new wire made of edges described by ...NewEdge---- methods.
 
 	:rtype: TopoDS_Shape
 ") OldWire;
@@ -1060,23 +872,23 @@ class TopOpeBRepBuild_GTopo {
 		 TopOpeBRepBuild_GTopo ();
 		%feature("compactdefaultargs") TopOpeBRepBuild_GTopo;
 		%feature("autodoc", "	:param II:
-	:type II: int
+	:type II: bool
 	:param IN:
-	:type IN: int
+	:type IN: bool
 	:param IO:
-	:type IO: int
+	:type IO: bool
 	:param NI:
-	:type NI: int
+	:type NI: bool
 	:param NN:
-	:type NN: int
+	:type NN: bool
 	:param NO:
-	:type NO: int
+	:type NO: bool
 	:param OI:
-	:type OI: int
+	:type OI: bool
 	:param ON:
-	:type ON: int
+	:type ON: bool
 	:param OO:
-	:type OO: int
+	:type OO: bool
 	:param t1:
 	:type t1: TopAbs_ShapeEnum
 	:param t2:
@@ -1087,7 +899,7 @@ class TopOpeBRepBuild_GTopo {
 	:type C2: TopOpeBRepDS_Config
 	:rtype: None
 ") TopOpeBRepBuild_GTopo;
-		 TopOpeBRepBuild_GTopo (const Standard_Integer II,const Standard_Integer IN,const Standard_Integer IO,const Standard_Integer NI,const Standard_Integer NN,const Standard_Integer NO,const Standard_Integer OI,const Standard_Integer ON,const Standard_Integer OO,const TopAbs_ShapeEnum t1,const TopAbs_ShapeEnum t2,const TopOpeBRepDS_Config C1,const TopOpeBRepDS_Config C2);
+		 TopOpeBRepBuild_GTopo (const Standard_Boolean II,const Standard_Boolean IN,const Standard_Boolean IO,const Standard_Boolean NI,const Standard_Boolean NN,const Standard_Boolean NO,const Standard_Boolean OI,const Standard_Boolean ON,const Standard_Boolean OO,const TopAbs_ShapeEnum t1,const TopAbs_ShapeEnum t2,const TopOpeBRepDS_Config C1,const TopOpeBRepDS_Config C2);
 		%feature("compactdefaultargs") Reset;
 		%feature("autodoc", "	:rtype: None
 ") Reset;
@@ -1287,7 +1099,7 @@ class TopOpeBRepBuild_GTopo {
 	}
 };
 %nodefaultctor TopOpeBRepBuild_HBuilder;
-class TopOpeBRepBuild_HBuilder : public MMgt_TShared {
+class TopOpeBRepBuild_HBuilder : public Standard_Transient {
 	public:
 		%feature("compactdefaultargs") TopOpeBRepBuild_HBuilder;
 		%feature("autodoc", "	:param BT:
@@ -1510,7 +1322,7 @@ class TopOpeBRepBuild_HBuilder : public MMgt_TShared {
 ") GetDSPointFromNewVertex;
 		Standard_Integer GetDSPointFromNewVertex (const TopoDS_Shape & NewVert);
 		%feature("compactdefaultargs") EdgeCurveAncestors;
-		%feature("autodoc", "	* search for the couple of face F1,F2 (from arguments of supra Perform(S1,S2,HDS)) method which intersection gives section edge E built on an intersection curve. returns True if F1,F2 have been valued. returns False if E is not a section edge built on intersection curve IC.
+		%feature("autodoc", "	* search for the couple of face F1,F2 --from arguments of supra Perform--S1,S2,HDS---- method which intersection gives section edge E built on an intersection curve. returns True if F1,F2 have been valued. returns False if E is not a section edge built on intersection curve IC.
 
 	:param E:
 	:type E: TopoDS_Shape &
@@ -1524,7 +1336,7 @@ class TopOpeBRepBuild_HBuilder : public MMgt_TShared {
 ") EdgeCurveAncestors;
 		Standard_Boolean EdgeCurveAncestors (const TopoDS_Shape & E,TopoDS_Shape & F1,TopoDS_Shape & F2,Standard_Integer &OutValue);
 		%feature("compactdefaultargs") EdgeSectionAncestors;
-		%feature("autodoc", "	* search for the couple of face F1,F2 (from arguments of supra Perform(S1,S2,HDS)) method which intersection gives section edge E built on at least one edge . returns True if F1,F2 have been valued. returns False if E is not a section edge built on at least one edge of S1 and/or S2. LE1,LE2 are edges of S1,S2 which common part is edge E. LE1 or LE2 may be empty() but not both.
+		%feature("autodoc", "	* search for the couple of face F1,F2 --from arguments of supra Perform--S1,S2,HDS---- method which intersection gives section edge E built on at least one edge . returns True if F1,F2 have been valued. returns False if E is not a section edge built on at least one edge of S1 and/or S2. LE1,LE2 are edges of S1,S2 which common part is edge E. LE1 or LE2 may be empty---- but not both.
 
 	:param E:
 	:type E: TopoDS_Shape &
@@ -1579,7 +1391,7 @@ class TopOpeBRepBuild_HBuilder : public MMgt_TShared {
 %}
 
 %nodefaultctor Handle_TopOpeBRepBuild_HBuilder;
-class Handle_TopOpeBRepBuild_HBuilder : public Handle_MMgt_TShared {
+class Handle_TopOpeBRepBuild_HBuilder : public Handle_Standard_Transient {
 
     public:
         // constructors
@@ -1591,19 +1403,20 @@ class Handle_TopOpeBRepBuild_HBuilder : public Handle_MMgt_TShared {
         static const Handle_TopOpeBRepBuild_HBuilder DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_TopOpeBRepBuild_HBuilder {
     TopOpeBRepBuild_HBuilder* _get_reference() {
-    return (TopOpeBRepBuild_HBuilder*)$self->Access();
+    return (TopOpeBRepBuild_HBuilder*)$self->get();
     }
 };
 
 %extend Handle_TopOpeBRepBuild_HBuilder {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend TopOpeBRepBuild_HBuilder {
@@ -1611,1191 +1424,8 @@ class Handle_TopOpeBRepBuild_HBuilder : public Handle_MMgt_TShared {
 	__repr__ = _dumps_object
 	}
 };
-%nodefaultctor TopOpeBRepBuild_IndexedDataMapNodeOfIndexedDataMapOfShapeVertexInfo;
-class TopOpeBRepBuild_IndexedDataMapNodeOfIndexedDataMapOfShapeVertexInfo : public TCollection_MapNode {
-	public:
-		%feature("compactdefaultargs") TopOpeBRepBuild_IndexedDataMapNodeOfIndexedDataMapOfShapeVertexInfo;
-		%feature("autodoc", "	:param K1:
-	:type K1: TopoDS_Shape &
-	:param K2:
-	:type K2: int
-	:param I:
-	:type I: TopOpeBRepBuild_VertexInfo &
-	:param n1:
-	:type n1: TCollection_MapNodePtr &
-	:param n2:
-	:type n2: TCollection_MapNodePtr &
-	:rtype: None
-") TopOpeBRepBuild_IndexedDataMapNodeOfIndexedDataMapOfShapeVertexInfo;
-		 TopOpeBRepBuild_IndexedDataMapNodeOfIndexedDataMapOfShapeVertexInfo (const TopoDS_Shape & K1,const Standard_Integer K2,const TopOpeBRepBuild_VertexInfo & I,const TCollection_MapNodePtr & n1,const TCollection_MapNodePtr & n2);
-		%feature("compactdefaultargs") Key1;
-		%feature("autodoc", "	:rtype: TopoDS_Shape
-") Key1;
-		TopoDS_Shape  Key1 ();
-
-            %feature("autodoc","1");
-            %extend {
-                Standard_Integer GetKey2() {
-                return (Standard_Integer) $self->Key2();
-                }
-            };
-            %feature("autodoc","1");
-            %extend {
-                void SetKey2(Standard_Integer value ) {
-                $self->Key2()=value;
-                }
-            };
-            		%feature("compactdefaultargs") Next2;
-		%feature("autodoc", "	:rtype: TCollection_MapNodePtr
-") Next2;
-		TCollection_MapNodePtr & Next2 ();
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:rtype: TopOpeBRepBuild_VertexInfo
-") Value;
-		TopOpeBRepBuild_VertexInfo & Value ();
-};
-
-
-%extend TopOpeBRepBuild_IndexedDataMapNodeOfIndexedDataMapOfShapeVertexInfo {
-	%pythoncode {
-		def GetHandle(self):
-		    try:
-		        return self.thisHandle
-		    except:
-		        self.thisHandle = Handle_TopOpeBRepBuild_IndexedDataMapNodeOfIndexedDataMapOfShapeVertexInfo(self)
-		        self.thisown = False
-		        return self.thisHandle
-	}
-};
-
-%pythonappend Handle_TopOpeBRepBuild_IndexedDataMapNodeOfIndexedDataMapOfShapeVertexInfo::Handle_TopOpeBRepBuild_IndexedDataMapNodeOfIndexedDataMapOfShapeVertexInfo %{
-    # register the handle in the base object
-    if len(args) > 0:
-        register_handle(self, args[0])
-%}
-
-%nodefaultctor Handle_TopOpeBRepBuild_IndexedDataMapNodeOfIndexedDataMapOfShapeVertexInfo;
-class Handle_TopOpeBRepBuild_IndexedDataMapNodeOfIndexedDataMapOfShapeVertexInfo : public Handle_TCollection_MapNode {
-
-    public:
-        // constructors
-        Handle_TopOpeBRepBuild_IndexedDataMapNodeOfIndexedDataMapOfShapeVertexInfo();
-        Handle_TopOpeBRepBuild_IndexedDataMapNodeOfIndexedDataMapOfShapeVertexInfo(const Handle_TopOpeBRepBuild_IndexedDataMapNodeOfIndexedDataMapOfShapeVertexInfo &aHandle);
-        Handle_TopOpeBRepBuild_IndexedDataMapNodeOfIndexedDataMapOfShapeVertexInfo(const TopOpeBRepBuild_IndexedDataMapNodeOfIndexedDataMapOfShapeVertexInfo *anItem);
-        void Nullify();
-        Standard_Boolean IsNull() const;
-        static const Handle_TopOpeBRepBuild_IndexedDataMapNodeOfIndexedDataMapOfShapeVertexInfo DownCast(const Handle_Standard_Transient &AnObject);
-
-};
-%extend Handle_TopOpeBRepBuild_IndexedDataMapNodeOfIndexedDataMapOfShapeVertexInfo {
-    TopOpeBRepBuild_IndexedDataMapNodeOfIndexedDataMapOfShapeVertexInfo* _get_reference() {
-    return (TopOpeBRepBuild_IndexedDataMapNodeOfIndexedDataMapOfShapeVertexInfo*)$self->Access();
-    }
-};
-
-%extend Handle_TopOpeBRepBuild_IndexedDataMapNodeOfIndexedDataMapOfShapeVertexInfo {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
-};
-
-%extend TopOpeBRepBuild_IndexedDataMapNodeOfIndexedDataMapOfShapeVertexInfo {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor TopOpeBRepBuild_IndexedDataMapOfShapeVertexInfo;
-class TopOpeBRepBuild_IndexedDataMapOfShapeVertexInfo : public TCollection_BasicMap {
-	public:
-		%feature("compactdefaultargs") TopOpeBRepBuild_IndexedDataMapOfShapeVertexInfo;
-		%feature("autodoc", "	:param NbBuckets: default value is 1
-	:type NbBuckets: int
-	:rtype: None
-") TopOpeBRepBuild_IndexedDataMapOfShapeVertexInfo;
-		 TopOpeBRepBuild_IndexedDataMapOfShapeVertexInfo (const Standard_Integer NbBuckets = 1);
-		%feature("compactdefaultargs") Assign;
-		%feature("autodoc", "	:param Other:
-	:type Other: TopOpeBRepBuild_IndexedDataMapOfShapeVertexInfo &
-	:rtype: TopOpeBRepBuild_IndexedDataMapOfShapeVertexInfo
-") Assign;
-		TopOpeBRepBuild_IndexedDataMapOfShapeVertexInfo & Assign (const TopOpeBRepBuild_IndexedDataMapOfShapeVertexInfo & Other);
-		%feature("compactdefaultargs") operator =;
-		%feature("autodoc", "	:param Other:
-	:type Other: TopOpeBRepBuild_IndexedDataMapOfShapeVertexInfo &
-	:rtype: TopOpeBRepBuild_IndexedDataMapOfShapeVertexInfo
-") operator =;
-		TopOpeBRepBuild_IndexedDataMapOfShapeVertexInfo & operator = (const TopOpeBRepBuild_IndexedDataMapOfShapeVertexInfo & Other);
-		%feature("compactdefaultargs") ReSize;
-		%feature("autodoc", "	:param NbBuckets:
-	:type NbBuckets: int
-	:rtype: None
-") ReSize;
-		void ReSize (const Standard_Integer NbBuckets);
-		%feature("compactdefaultargs") Clear;
-		%feature("autodoc", "	:rtype: None
-") Clear;
-		void Clear ();
-		%feature("compactdefaultargs") Add;
-		%feature("autodoc", "	:param K:
-	:type K: TopoDS_Shape &
-	:param I:
-	:type I: TopOpeBRepBuild_VertexInfo &
-	:rtype: int
-") Add;
-		Standard_Integer Add (const TopoDS_Shape & K,const TopOpeBRepBuild_VertexInfo & I);
-		%feature("compactdefaultargs") Substitute;
-		%feature("autodoc", "	:param I:
-	:type I: int
-	:param K:
-	:type K: TopoDS_Shape &
-	:param T:
-	:type T: TopOpeBRepBuild_VertexInfo &
-	:rtype: None
-") Substitute;
-		void Substitute (const Standard_Integer I,const TopoDS_Shape & K,const TopOpeBRepBuild_VertexInfo & T);
-		%feature("compactdefaultargs") RemoveLast;
-		%feature("autodoc", "	:rtype: None
-") RemoveLast;
-		void RemoveLast ();
-		%feature("compactdefaultargs") Contains;
-		%feature("autodoc", "	:param K:
-	:type K: TopoDS_Shape &
-	:rtype: bool
-") Contains;
-		Standard_Boolean Contains (const TopoDS_Shape & K);
-		%feature("compactdefaultargs") FindKey;
-		%feature("autodoc", "	:param I:
-	:type I: int
-	:rtype: TopoDS_Shape
-") FindKey;
-		const TopoDS_Shape  FindKey (const Standard_Integer I);
-		%feature("compactdefaultargs") FindFromIndex;
-		%feature("autodoc", "	:param I:
-	:type I: int
-	:rtype: TopOpeBRepBuild_VertexInfo
-") FindFromIndex;
-		const TopOpeBRepBuild_VertexInfo & FindFromIndex (const Standard_Integer I);
-		%feature("compactdefaultargs") ChangeFromIndex;
-		%feature("autodoc", "	:param I:
-	:type I: int
-	:rtype: TopOpeBRepBuild_VertexInfo
-") ChangeFromIndex;
-		TopOpeBRepBuild_VertexInfo & ChangeFromIndex (const Standard_Integer I);
-		%feature("compactdefaultargs") FindIndex;
-		%feature("autodoc", "	:param K:
-	:type K: TopoDS_Shape &
-	:rtype: int
-") FindIndex;
-		Standard_Integer FindIndex (const TopoDS_Shape & K);
-		%feature("compactdefaultargs") FindFromKey;
-		%feature("autodoc", "	:param K:
-	:type K: TopoDS_Shape &
-	:rtype: TopOpeBRepBuild_VertexInfo
-") FindFromKey;
-		const TopOpeBRepBuild_VertexInfo & FindFromKey (const TopoDS_Shape & K);
-		%feature("compactdefaultargs") ChangeFromKey;
-		%feature("autodoc", "	:param K:
-	:type K: TopoDS_Shape &
-	:rtype: TopOpeBRepBuild_VertexInfo
-") ChangeFromKey;
-		TopOpeBRepBuild_VertexInfo & ChangeFromKey (const TopoDS_Shape & K);
-		%feature("compactdefaultargs") FindFromKey1;
-		%feature("autodoc", "	:param K:
-	:type K: TopoDS_Shape &
-	:rtype: Standard_Address
-") FindFromKey1;
-		Standard_Address FindFromKey1 (const TopoDS_Shape & K);
-		%feature("compactdefaultargs") ChangeFromKey1;
-		%feature("autodoc", "	:param K:
-	:type K: TopoDS_Shape &
-	:rtype: Standard_Address
-") ChangeFromKey1;
-		Standard_Address ChangeFromKey1 (const TopoDS_Shape & K);
-};
-
-
-%extend TopOpeBRepBuild_IndexedDataMapOfShapeVertexInfo {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor TopOpeBRepBuild_ListIteratorOfListOfListOfLoop;
-class TopOpeBRepBuild_ListIteratorOfListOfListOfLoop {
-	public:
-		%feature("compactdefaultargs") TopOpeBRepBuild_ListIteratorOfListOfListOfLoop;
-		%feature("autodoc", "	:rtype: None
-") TopOpeBRepBuild_ListIteratorOfListOfListOfLoop;
-		 TopOpeBRepBuild_ListIteratorOfListOfListOfLoop ();
-		%feature("compactdefaultargs") TopOpeBRepBuild_ListIteratorOfListOfListOfLoop;
-		%feature("autodoc", "	:param L:
-	:type L: TopOpeBRepBuild_ListOfListOfLoop &
-	:rtype: None
-") TopOpeBRepBuild_ListIteratorOfListOfListOfLoop;
-		 TopOpeBRepBuild_ListIteratorOfListOfListOfLoop (const TopOpeBRepBuild_ListOfListOfLoop & L);
-		%feature("compactdefaultargs") Initialize;
-		%feature("autodoc", "	:param L:
-	:type L: TopOpeBRepBuild_ListOfListOfLoop &
-	:rtype: None
-") Initialize;
-		void Initialize (const TopOpeBRepBuild_ListOfListOfLoop & L);
-		%feature("compactdefaultargs") More;
-		%feature("autodoc", "	:rtype: bool
-") More;
-		Standard_Boolean More ();
-		%feature("compactdefaultargs") Next;
-		%feature("autodoc", "	:rtype: None
-") Next;
-		void Next ();
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:rtype: TopOpeBRepBuild_ListOfLoop
-") Value;
-		TopOpeBRepBuild_ListOfLoop & Value ();
-};
-
-
-%extend TopOpeBRepBuild_ListIteratorOfListOfListOfLoop {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor TopOpeBRepBuild_ListIteratorOfListOfLoop;
-class TopOpeBRepBuild_ListIteratorOfListOfLoop {
-	public:
-		%feature("compactdefaultargs") TopOpeBRepBuild_ListIteratorOfListOfLoop;
-		%feature("autodoc", "	:rtype: None
-") TopOpeBRepBuild_ListIteratorOfListOfLoop;
-		 TopOpeBRepBuild_ListIteratorOfListOfLoop ();
-		%feature("compactdefaultargs") TopOpeBRepBuild_ListIteratorOfListOfLoop;
-		%feature("autodoc", "	:param L:
-	:type L: TopOpeBRepBuild_ListOfLoop &
-	:rtype: None
-") TopOpeBRepBuild_ListIteratorOfListOfLoop;
-		 TopOpeBRepBuild_ListIteratorOfListOfLoop (const TopOpeBRepBuild_ListOfLoop & L);
-		%feature("compactdefaultargs") Initialize;
-		%feature("autodoc", "	:param L:
-	:type L: TopOpeBRepBuild_ListOfLoop &
-	:rtype: None
-") Initialize;
-		void Initialize (const TopOpeBRepBuild_ListOfLoop & L);
-		%feature("compactdefaultargs") More;
-		%feature("autodoc", "	:rtype: bool
-") More;
-		Standard_Boolean More ();
-		%feature("compactdefaultargs") Next;
-		%feature("autodoc", "	:rtype: None
-") Next;
-		void Next ();
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:rtype: Handle_TopOpeBRepBuild_Loop
-") Value;
-		Handle_TopOpeBRepBuild_Loop Value ();
-};
-
-
-%extend TopOpeBRepBuild_ListIteratorOfListOfLoop {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor TopOpeBRepBuild_ListIteratorOfListOfPave;
-class TopOpeBRepBuild_ListIteratorOfListOfPave {
-	public:
-		%feature("compactdefaultargs") TopOpeBRepBuild_ListIteratorOfListOfPave;
-		%feature("autodoc", "	:rtype: None
-") TopOpeBRepBuild_ListIteratorOfListOfPave;
-		 TopOpeBRepBuild_ListIteratorOfListOfPave ();
-		%feature("compactdefaultargs") TopOpeBRepBuild_ListIteratorOfListOfPave;
-		%feature("autodoc", "	:param L:
-	:type L: TopOpeBRepBuild_ListOfPave &
-	:rtype: None
-") TopOpeBRepBuild_ListIteratorOfListOfPave;
-		 TopOpeBRepBuild_ListIteratorOfListOfPave (const TopOpeBRepBuild_ListOfPave & L);
-		%feature("compactdefaultargs") Initialize;
-		%feature("autodoc", "	:param L:
-	:type L: TopOpeBRepBuild_ListOfPave &
-	:rtype: None
-") Initialize;
-		void Initialize (const TopOpeBRepBuild_ListOfPave & L);
-		%feature("compactdefaultargs") More;
-		%feature("autodoc", "	:rtype: bool
-") More;
-		Standard_Boolean More ();
-		%feature("compactdefaultargs") Next;
-		%feature("autodoc", "	:rtype: None
-") Next;
-		void Next ();
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:rtype: Handle_TopOpeBRepBuild_Pave
-") Value;
-		Handle_TopOpeBRepBuild_Pave Value ();
-};
-
-
-%extend TopOpeBRepBuild_ListIteratorOfListOfPave {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor TopOpeBRepBuild_ListIteratorOfListOfShapeListOfShape;
-class TopOpeBRepBuild_ListIteratorOfListOfShapeListOfShape {
-	public:
-		%feature("compactdefaultargs") TopOpeBRepBuild_ListIteratorOfListOfShapeListOfShape;
-		%feature("autodoc", "	:rtype: None
-") TopOpeBRepBuild_ListIteratorOfListOfShapeListOfShape;
-		 TopOpeBRepBuild_ListIteratorOfListOfShapeListOfShape ();
-		%feature("compactdefaultargs") TopOpeBRepBuild_ListIteratorOfListOfShapeListOfShape;
-		%feature("autodoc", "	:param L:
-	:type L: TopOpeBRepBuild_ListOfShapeListOfShape &
-	:rtype: None
-") TopOpeBRepBuild_ListIteratorOfListOfShapeListOfShape;
-		 TopOpeBRepBuild_ListIteratorOfListOfShapeListOfShape (const TopOpeBRepBuild_ListOfShapeListOfShape & L);
-		%feature("compactdefaultargs") Initialize;
-		%feature("autodoc", "	:param L:
-	:type L: TopOpeBRepBuild_ListOfShapeListOfShape &
-	:rtype: None
-") Initialize;
-		void Initialize (const TopOpeBRepBuild_ListOfShapeListOfShape & L);
-		%feature("compactdefaultargs") More;
-		%feature("autodoc", "	:rtype: bool
-") More;
-		Standard_Boolean More ();
-		%feature("compactdefaultargs") Next;
-		%feature("autodoc", "	:rtype: None
-") Next;
-		void Next ();
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:rtype: TopOpeBRepBuild_ShapeListOfShape
-") Value;
-		TopOpeBRepBuild_ShapeListOfShape & Value ();
-};
-
-
-%extend TopOpeBRepBuild_ListIteratorOfListOfShapeListOfShape {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor TopOpeBRepBuild_ListNodeOfListOfListOfLoop;
-class TopOpeBRepBuild_ListNodeOfListOfListOfLoop : public TCollection_MapNode {
-	public:
-		%feature("compactdefaultargs") TopOpeBRepBuild_ListNodeOfListOfListOfLoop;
-		%feature("autodoc", "	:param I:
-	:type I: TopOpeBRepBuild_ListOfLoop &
-	:param n:
-	:type n: TCollection_MapNodePtr &
-	:rtype: None
-") TopOpeBRepBuild_ListNodeOfListOfListOfLoop;
-		 TopOpeBRepBuild_ListNodeOfListOfListOfLoop (const TopOpeBRepBuild_ListOfLoop & I,const TCollection_MapNodePtr & n);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:rtype: TopOpeBRepBuild_ListOfLoop
-") Value;
-		TopOpeBRepBuild_ListOfLoop & Value ();
-};
-
-
-%extend TopOpeBRepBuild_ListNodeOfListOfListOfLoop {
-	%pythoncode {
-		def GetHandle(self):
-		    try:
-		        return self.thisHandle
-		    except:
-		        self.thisHandle = Handle_TopOpeBRepBuild_ListNodeOfListOfListOfLoop(self)
-		        self.thisown = False
-		        return self.thisHandle
-	}
-};
-
-%pythonappend Handle_TopOpeBRepBuild_ListNodeOfListOfListOfLoop::Handle_TopOpeBRepBuild_ListNodeOfListOfListOfLoop %{
-    # register the handle in the base object
-    if len(args) > 0:
-        register_handle(self, args[0])
-%}
-
-%nodefaultctor Handle_TopOpeBRepBuild_ListNodeOfListOfListOfLoop;
-class Handle_TopOpeBRepBuild_ListNodeOfListOfListOfLoop : public Handle_TCollection_MapNode {
-
-    public:
-        // constructors
-        Handle_TopOpeBRepBuild_ListNodeOfListOfListOfLoop();
-        Handle_TopOpeBRepBuild_ListNodeOfListOfListOfLoop(const Handle_TopOpeBRepBuild_ListNodeOfListOfListOfLoop &aHandle);
-        Handle_TopOpeBRepBuild_ListNodeOfListOfListOfLoop(const TopOpeBRepBuild_ListNodeOfListOfListOfLoop *anItem);
-        void Nullify();
-        Standard_Boolean IsNull() const;
-        static const Handle_TopOpeBRepBuild_ListNodeOfListOfListOfLoop DownCast(const Handle_Standard_Transient &AnObject);
-
-};
-%extend Handle_TopOpeBRepBuild_ListNodeOfListOfListOfLoop {
-    TopOpeBRepBuild_ListNodeOfListOfListOfLoop* _get_reference() {
-    return (TopOpeBRepBuild_ListNodeOfListOfListOfLoop*)$self->Access();
-    }
-};
-
-%extend Handle_TopOpeBRepBuild_ListNodeOfListOfListOfLoop {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
-};
-
-%extend TopOpeBRepBuild_ListNodeOfListOfListOfLoop {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor TopOpeBRepBuild_ListNodeOfListOfLoop;
-class TopOpeBRepBuild_ListNodeOfListOfLoop : public TCollection_MapNode {
-	public:
-		%feature("compactdefaultargs") TopOpeBRepBuild_ListNodeOfListOfLoop;
-		%feature("autodoc", "	:param I:
-	:type I: Handle_TopOpeBRepBuild_Loop &
-	:param n:
-	:type n: TCollection_MapNodePtr &
-	:rtype: None
-") TopOpeBRepBuild_ListNodeOfListOfLoop;
-		 TopOpeBRepBuild_ListNodeOfListOfLoop (const Handle_TopOpeBRepBuild_Loop & I,const TCollection_MapNodePtr & n);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:rtype: Handle_TopOpeBRepBuild_Loop
-") Value;
-		Handle_TopOpeBRepBuild_Loop Value ();
-};
-
-
-%extend TopOpeBRepBuild_ListNodeOfListOfLoop {
-	%pythoncode {
-		def GetHandle(self):
-		    try:
-		        return self.thisHandle
-		    except:
-		        self.thisHandle = Handle_TopOpeBRepBuild_ListNodeOfListOfLoop(self)
-		        self.thisown = False
-		        return self.thisHandle
-	}
-};
-
-%pythonappend Handle_TopOpeBRepBuild_ListNodeOfListOfLoop::Handle_TopOpeBRepBuild_ListNodeOfListOfLoop %{
-    # register the handle in the base object
-    if len(args) > 0:
-        register_handle(self, args[0])
-%}
-
-%nodefaultctor Handle_TopOpeBRepBuild_ListNodeOfListOfLoop;
-class Handle_TopOpeBRepBuild_ListNodeOfListOfLoop : public Handle_TCollection_MapNode {
-
-    public:
-        // constructors
-        Handle_TopOpeBRepBuild_ListNodeOfListOfLoop();
-        Handle_TopOpeBRepBuild_ListNodeOfListOfLoop(const Handle_TopOpeBRepBuild_ListNodeOfListOfLoop &aHandle);
-        Handle_TopOpeBRepBuild_ListNodeOfListOfLoop(const TopOpeBRepBuild_ListNodeOfListOfLoop *anItem);
-        void Nullify();
-        Standard_Boolean IsNull() const;
-        static const Handle_TopOpeBRepBuild_ListNodeOfListOfLoop DownCast(const Handle_Standard_Transient &AnObject);
-
-};
-%extend Handle_TopOpeBRepBuild_ListNodeOfListOfLoop {
-    TopOpeBRepBuild_ListNodeOfListOfLoop* _get_reference() {
-    return (TopOpeBRepBuild_ListNodeOfListOfLoop*)$self->Access();
-    }
-};
-
-%extend Handle_TopOpeBRepBuild_ListNodeOfListOfLoop {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
-};
-
-%extend TopOpeBRepBuild_ListNodeOfListOfLoop {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor TopOpeBRepBuild_ListNodeOfListOfPave;
-class TopOpeBRepBuild_ListNodeOfListOfPave : public TCollection_MapNode {
-	public:
-		%feature("compactdefaultargs") TopOpeBRepBuild_ListNodeOfListOfPave;
-		%feature("autodoc", "	:param I:
-	:type I: Handle_TopOpeBRepBuild_Pave &
-	:param n:
-	:type n: TCollection_MapNodePtr &
-	:rtype: None
-") TopOpeBRepBuild_ListNodeOfListOfPave;
-		 TopOpeBRepBuild_ListNodeOfListOfPave (const Handle_TopOpeBRepBuild_Pave & I,const TCollection_MapNodePtr & n);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:rtype: Handle_TopOpeBRepBuild_Pave
-") Value;
-		Handle_TopOpeBRepBuild_Pave Value ();
-};
-
-
-%extend TopOpeBRepBuild_ListNodeOfListOfPave {
-	%pythoncode {
-		def GetHandle(self):
-		    try:
-		        return self.thisHandle
-		    except:
-		        self.thisHandle = Handle_TopOpeBRepBuild_ListNodeOfListOfPave(self)
-		        self.thisown = False
-		        return self.thisHandle
-	}
-};
-
-%pythonappend Handle_TopOpeBRepBuild_ListNodeOfListOfPave::Handle_TopOpeBRepBuild_ListNodeOfListOfPave %{
-    # register the handle in the base object
-    if len(args) > 0:
-        register_handle(self, args[0])
-%}
-
-%nodefaultctor Handle_TopOpeBRepBuild_ListNodeOfListOfPave;
-class Handle_TopOpeBRepBuild_ListNodeOfListOfPave : public Handle_TCollection_MapNode {
-
-    public:
-        // constructors
-        Handle_TopOpeBRepBuild_ListNodeOfListOfPave();
-        Handle_TopOpeBRepBuild_ListNodeOfListOfPave(const Handle_TopOpeBRepBuild_ListNodeOfListOfPave &aHandle);
-        Handle_TopOpeBRepBuild_ListNodeOfListOfPave(const TopOpeBRepBuild_ListNodeOfListOfPave *anItem);
-        void Nullify();
-        Standard_Boolean IsNull() const;
-        static const Handle_TopOpeBRepBuild_ListNodeOfListOfPave DownCast(const Handle_Standard_Transient &AnObject);
-
-};
-%extend Handle_TopOpeBRepBuild_ListNodeOfListOfPave {
-    TopOpeBRepBuild_ListNodeOfListOfPave* _get_reference() {
-    return (TopOpeBRepBuild_ListNodeOfListOfPave*)$self->Access();
-    }
-};
-
-%extend Handle_TopOpeBRepBuild_ListNodeOfListOfPave {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
-};
-
-%extend TopOpeBRepBuild_ListNodeOfListOfPave {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor TopOpeBRepBuild_ListNodeOfListOfShapeListOfShape;
-class TopOpeBRepBuild_ListNodeOfListOfShapeListOfShape : public TCollection_MapNode {
-	public:
-		%feature("compactdefaultargs") TopOpeBRepBuild_ListNodeOfListOfShapeListOfShape;
-		%feature("autodoc", "	:param I:
-	:type I: TopOpeBRepBuild_ShapeListOfShape &
-	:param n:
-	:type n: TCollection_MapNodePtr &
-	:rtype: None
-") TopOpeBRepBuild_ListNodeOfListOfShapeListOfShape;
-		 TopOpeBRepBuild_ListNodeOfListOfShapeListOfShape (const TopOpeBRepBuild_ShapeListOfShape & I,const TCollection_MapNodePtr & n);
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:rtype: TopOpeBRepBuild_ShapeListOfShape
-") Value;
-		TopOpeBRepBuild_ShapeListOfShape & Value ();
-};
-
-
-%extend TopOpeBRepBuild_ListNodeOfListOfShapeListOfShape {
-	%pythoncode {
-		def GetHandle(self):
-		    try:
-		        return self.thisHandle
-		    except:
-		        self.thisHandle = Handle_TopOpeBRepBuild_ListNodeOfListOfShapeListOfShape(self)
-		        self.thisown = False
-		        return self.thisHandle
-	}
-};
-
-%pythonappend Handle_TopOpeBRepBuild_ListNodeOfListOfShapeListOfShape::Handle_TopOpeBRepBuild_ListNodeOfListOfShapeListOfShape %{
-    # register the handle in the base object
-    if len(args) > 0:
-        register_handle(self, args[0])
-%}
-
-%nodefaultctor Handle_TopOpeBRepBuild_ListNodeOfListOfShapeListOfShape;
-class Handle_TopOpeBRepBuild_ListNodeOfListOfShapeListOfShape : public Handle_TCollection_MapNode {
-
-    public:
-        // constructors
-        Handle_TopOpeBRepBuild_ListNodeOfListOfShapeListOfShape();
-        Handle_TopOpeBRepBuild_ListNodeOfListOfShapeListOfShape(const Handle_TopOpeBRepBuild_ListNodeOfListOfShapeListOfShape &aHandle);
-        Handle_TopOpeBRepBuild_ListNodeOfListOfShapeListOfShape(const TopOpeBRepBuild_ListNodeOfListOfShapeListOfShape *anItem);
-        void Nullify();
-        Standard_Boolean IsNull() const;
-        static const Handle_TopOpeBRepBuild_ListNodeOfListOfShapeListOfShape DownCast(const Handle_Standard_Transient &AnObject);
-
-};
-%extend Handle_TopOpeBRepBuild_ListNodeOfListOfShapeListOfShape {
-    TopOpeBRepBuild_ListNodeOfListOfShapeListOfShape* _get_reference() {
-    return (TopOpeBRepBuild_ListNodeOfListOfShapeListOfShape*)$self->Access();
-    }
-};
-
-%extend Handle_TopOpeBRepBuild_ListNodeOfListOfShapeListOfShape {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
-};
-
-%extend TopOpeBRepBuild_ListNodeOfListOfShapeListOfShape {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor TopOpeBRepBuild_ListOfListOfLoop;
-class TopOpeBRepBuild_ListOfListOfLoop {
-	public:
-		%feature("compactdefaultargs") TopOpeBRepBuild_ListOfListOfLoop;
-		%feature("autodoc", "	:rtype: None
-") TopOpeBRepBuild_ListOfListOfLoop;
-		 TopOpeBRepBuild_ListOfListOfLoop ();
-		%feature("compactdefaultargs") TopOpeBRepBuild_ListOfListOfLoop;
-		%feature("autodoc", "	:param Other:
-	:type Other: TopOpeBRepBuild_ListOfListOfLoop &
-	:rtype: None
-") TopOpeBRepBuild_ListOfListOfLoop;
-		 TopOpeBRepBuild_ListOfListOfLoop (const TopOpeBRepBuild_ListOfListOfLoop & Other);
-		%feature("compactdefaultargs") Assign;
-		%feature("autodoc", "	:param Other:
-	:type Other: TopOpeBRepBuild_ListOfListOfLoop &
-	:rtype: None
-") Assign;
-		void Assign (const TopOpeBRepBuild_ListOfListOfLoop & Other);
-		%feature("compactdefaultargs") operator =;
-		%feature("autodoc", "	:param Other:
-	:type Other: TopOpeBRepBuild_ListOfListOfLoop &
-	:rtype: None
-") operator =;
-		void operator = (const TopOpeBRepBuild_ListOfListOfLoop & Other);
-		%feature("compactdefaultargs") Extent;
-		%feature("autodoc", "	:rtype: int
-") Extent;
-		Standard_Integer Extent ();
-		%feature("compactdefaultargs") Clear;
-		%feature("autodoc", "	:rtype: None
-") Clear;
-		void Clear ();
-		%feature("compactdefaultargs") IsEmpty;
-		%feature("autodoc", "	:rtype: bool
-") IsEmpty;
-		Standard_Boolean IsEmpty ();
-		%feature("compactdefaultargs") Prepend;
-		%feature("autodoc", "	:param I:
-	:type I: TopOpeBRepBuild_ListOfLoop &
-	:rtype: None
-") Prepend;
-		void Prepend (const TopOpeBRepBuild_ListOfLoop & I);
-		%feature("compactdefaultargs") Prepend;
-		%feature("autodoc", "	:param I:
-	:type I: TopOpeBRepBuild_ListOfLoop &
-	:param theIt:
-	:type theIt: TopOpeBRepBuild_ListIteratorOfListOfListOfLoop &
-	:rtype: None
-") Prepend;
-		void Prepend (const TopOpeBRepBuild_ListOfLoop & I,TopOpeBRepBuild_ListIteratorOfListOfListOfLoop & theIt);
-		%feature("compactdefaultargs") Prepend;
-		%feature("autodoc", "	:param Other:
-	:type Other: TopOpeBRepBuild_ListOfListOfLoop &
-	:rtype: None
-") Prepend;
-		void Prepend (TopOpeBRepBuild_ListOfListOfLoop & Other);
-		%feature("compactdefaultargs") Append;
-		%feature("autodoc", "	:param I:
-	:type I: TopOpeBRepBuild_ListOfLoop &
-	:rtype: None
-") Append;
-		void Append (const TopOpeBRepBuild_ListOfLoop & I);
-		%feature("compactdefaultargs") Append;
-		%feature("autodoc", "	:param I:
-	:type I: TopOpeBRepBuild_ListOfLoop &
-	:param theIt:
-	:type theIt: TopOpeBRepBuild_ListIteratorOfListOfListOfLoop &
-	:rtype: None
-") Append;
-		void Append (const TopOpeBRepBuild_ListOfLoop & I,TopOpeBRepBuild_ListIteratorOfListOfListOfLoop & theIt);
-		%feature("compactdefaultargs") Append;
-		%feature("autodoc", "	:param Other:
-	:type Other: TopOpeBRepBuild_ListOfListOfLoop &
-	:rtype: None
-") Append;
-		void Append (TopOpeBRepBuild_ListOfListOfLoop & Other);
-		%feature("compactdefaultargs") First;
-		%feature("autodoc", "	:rtype: TopOpeBRepBuild_ListOfLoop
-") First;
-		TopOpeBRepBuild_ListOfLoop & First ();
-		%feature("compactdefaultargs") Last;
-		%feature("autodoc", "	:rtype: TopOpeBRepBuild_ListOfLoop
-") Last;
-		TopOpeBRepBuild_ListOfLoop & Last ();
-		%feature("compactdefaultargs") RemoveFirst;
-		%feature("autodoc", "	:rtype: None
-") RemoveFirst;
-		void RemoveFirst ();
-		%feature("compactdefaultargs") Remove;
-		%feature("autodoc", "	:param It:
-	:type It: TopOpeBRepBuild_ListIteratorOfListOfListOfLoop &
-	:rtype: None
-") Remove;
-		void Remove (TopOpeBRepBuild_ListIteratorOfListOfListOfLoop & It);
-		%feature("compactdefaultargs") InsertBefore;
-		%feature("autodoc", "	:param I:
-	:type I: TopOpeBRepBuild_ListOfLoop &
-	:param It:
-	:type It: TopOpeBRepBuild_ListIteratorOfListOfListOfLoop &
-	:rtype: None
-") InsertBefore;
-		void InsertBefore (const TopOpeBRepBuild_ListOfLoop & I,TopOpeBRepBuild_ListIteratorOfListOfListOfLoop & It);
-		%feature("compactdefaultargs") InsertBefore;
-		%feature("autodoc", "	:param Other:
-	:type Other: TopOpeBRepBuild_ListOfListOfLoop &
-	:param It:
-	:type It: TopOpeBRepBuild_ListIteratorOfListOfListOfLoop &
-	:rtype: None
-") InsertBefore;
-		void InsertBefore (TopOpeBRepBuild_ListOfListOfLoop & Other,TopOpeBRepBuild_ListIteratorOfListOfListOfLoop & It);
-		%feature("compactdefaultargs") InsertAfter;
-		%feature("autodoc", "	:param I:
-	:type I: TopOpeBRepBuild_ListOfLoop &
-	:param It:
-	:type It: TopOpeBRepBuild_ListIteratorOfListOfListOfLoop &
-	:rtype: None
-") InsertAfter;
-		void InsertAfter (const TopOpeBRepBuild_ListOfLoop & I,TopOpeBRepBuild_ListIteratorOfListOfListOfLoop & It);
-		%feature("compactdefaultargs") InsertAfter;
-		%feature("autodoc", "	:param Other:
-	:type Other: TopOpeBRepBuild_ListOfListOfLoop &
-	:param It:
-	:type It: TopOpeBRepBuild_ListIteratorOfListOfListOfLoop &
-	:rtype: None
-") InsertAfter;
-		void InsertAfter (TopOpeBRepBuild_ListOfListOfLoop & Other,TopOpeBRepBuild_ListIteratorOfListOfListOfLoop & It);
-};
-
-
-%extend TopOpeBRepBuild_ListOfListOfLoop {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor TopOpeBRepBuild_ListOfLoop;
-class TopOpeBRepBuild_ListOfLoop {
-	public:
-		%feature("compactdefaultargs") TopOpeBRepBuild_ListOfLoop;
-		%feature("autodoc", "	:rtype: None
-") TopOpeBRepBuild_ListOfLoop;
-		 TopOpeBRepBuild_ListOfLoop ();
-		%feature("compactdefaultargs") TopOpeBRepBuild_ListOfLoop;
-		%feature("autodoc", "	:param Other:
-	:type Other: TopOpeBRepBuild_ListOfLoop &
-	:rtype: None
-") TopOpeBRepBuild_ListOfLoop;
-		 TopOpeBRepBuild_ListOfLoop (const TopOpeBRepBuild_ListOfLoop & Other);
-		%feature("compactdefaultargs") Assign;
-		%feature("autodoc", "	:param Other:
-	:type Other: TopOpeBRepBuild_ListOfLoop &
-	:rtype: None
-") Assign;
-		void Assign (const TopOpeBRepBuild_ListOfLoop & Other);
-		%feature("compactdefaultargs") operator =;
-		%feature("autodoc", "	:param Other:
-	:type Other: TopOpeBRepBuild_ListOfLoop &
-	:rtype: None
-") operator =;
-		void operator = (const TopOpeBRepBuild_ListOfLoop & Other);
-		%feature("compactdefaultargs") Extent;
-		%feature("autodoc", "	:rtype: int
-") Extent;
-		Standard_Integer Extent ();
-		%feature("compactdefaultargs") Clear;
-		%feature("autodoc", "	:rtype: None
-") Clear;
-		void Clear ();
-		%feature("compactdefaultargs") IsEmpty;
-		%feature("autodoc", "	:rtype: bool
-") IsEmpty;
-		Standard_Boolean IsEmpty ();
-		%feature("compactdefaultargs") Prepend;
-		%feature("autodoc", "	:param I:
-	:type I: Handle_TopOpeBRepBuild_Loop &
-	:rtype: None
-") Prepend;
-		void Prepend (const Handle_TopOpeBRepBuild_Loop & I);
-		%feature("compactdefaultargs") Prepend;
-		%feature("autodoc", "	:param I:
-	:type I: Handle_TopOpeBRepBuild_Loop &
-	:param theIt:
-	:type theIt: TopOpeBRepBuild_ListIteratorOfListOfLoop &
-	:rtype: None
-") Prepend;
-		void Prepend (const Handle_TopOpeBRepBuild_Loop & I,TopOpeBRepBuild_ListIteratorOfListOfLoop & theIt);
-		%feature("compactdefaultargs") Prepend;
-		%feature("autodoc", "	:param Other:
-	:type Other: TopOpeBRepBuild_ListOfLoop &
-	:rtype: None
-") Prepend;
-		void Prepend (TopOpeBRepBuild_ListOfLoop & Other);
-		%feature("compactdefaultargs") Append;
-		%feature("autodoc", "	:param I:
-	:type I: Handle_TopOpeBRepBuild_Loop &
-	:rtype: None
-") Append;
-		void Append (const Handle_TopOpeBRepBuild_Loop & I);
-		%feature("compactdefaultargs") Append;
-		%feature("autodoc", "	:param I:
-	:type I: Handle_TopOpeBRepBuild_Loop &
-	:param theIt:
-	:type theIt: TopOpeBRepBuild_ListIteratorOfListOfLoop &
-	:rtype: None
-") Append;
-		void Append (const Handle_TopOpeBRepBuild_Loop & I,TopOpeBRepBuild_ListIteratorOfListOfLoop & theIt);
-		%feature("compactdefaultargs") Append;
-		%feature("autodoc", "	:param Other:
-	:type Other: TopOpeBRepBuild_ListOfLoop &
-	:rtype: None
-") Append;
-		void Append (TopOpeBRepBuild_ListOfLoop & Other);
-		%feature("compactdefaultargs") First;
-		%feature("autodoc", "	:rtype: Handle_TopOpeBRepBuild_Loop
-") First;
-		Handle_TopOpeBRepBuild_Loop First ();
-		%feature("compactdefaultargs") Last;
-		%feature("autodoc", "	:rtype: Handle_TopOpeBRepBuild_Loop
-") Last;
-		Handle_TopOpeBRepBuild_Loop Last ();
-		%feature("compactdefaultargs") RemoveFirst;
-		%feature("autodoc", "	:rtype: None
-") RemoveFirst;
-		void RemoveFirst ();
-		%feature("compactdefaultargs") Remove;
-		%feature("autodoc", "	:param It:
-	:type It: TopOpeBRepBuild_ListIteratorOfListOfLoop &
-	:rtype: None
-") Remove;
-		void Remove (TopOpeBRepBuild_ListIteratorOfListOfLoop & It);
-		%feature("compactdefaultargs") InsertBefore;
-		%feature("autodoc", "	:param I:
-	:type I: Handle_TopOpeBRepBuild_Loop &
-	:param It:
-	:type It: TopOpeBRepBuild_ListIteratorOfListOfLoop &
-	:rtype: None
-") InsertBefore;
-		void InsertBefore (const Handle_TopOpeBRepBuild_Loop & I,TopOpeBRepBuild_ListIteratorOfListOfLoop & It);
-		%feature("compactdefaultargs") InsertBefore;
-		%feature("autodoc", "	:param Other:
-	:type Other: TopOpeBRepBuild_ListOfLoop &
-	:param It:
-	:type It: TopOpeBRepBuild_ListIteratorOfListOfLoop &
-	:rtype: None
-") InsertBefore;
-		void InsertBefore (TopOpeBRepBuild_ListOfLoop & Other,TopOpeBRepBuild_ListIteratorOfListOfLoop & It);
-		%feature("compactdefaultargs") InsertAfter;
-		%feature("autodoc", "	:param I:
-	:type I: Handle_TopOpeBRepBuild_Loop &
-	:param It:
-	:type It: TopOpeBRepBuild_ListIteratorOfListOfLoop &
-	:rtype: None
-") InsertAfter;
-		void InsertAfter (const Handle_TopOpeBRepBuild_Loop & I,TopOpeBRepBuild_ListIteratorOfListOfLoop & It);
-		%feature("compactdefaultargs") InsertAfter;
-		%feature("autodoc", "	:param Other:
-	:type Other: TopOpeBRepBuild_ListOfLoop &
-	:param It:
-	:type It: TopOpeBRepBuild_ListIteratorOfListOfLoop &
-	:rtype: None
-") InsertAfter;
-		void InsertAfter (TopOpeBRepBuild_ListOfLoop & Other,TopOpeBRepBuild_ListIteratorOfListOfLoop & It);
-};
-
-
-%extend TopOpeBRepBuild_ListOfLoop {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor TopOpeBRepBuild_ListOfPave;
-class TopOpeBRepBuild_ListOfPave {
-	public:
-		%feature("compactdefaultargs") TopOpeBRepBuild_ListOfPave;
-		%feature("autodoc", "	:rtype: None
-") TopOpeBRepBuild_ListOfPave;
-		 TopOpeBRepBuild_ListOfPave ();
-		%feature("compactdefaultargs") TopOpeBRepBuild_ListOfPave;
-		%feature("autodoc", "	:param Other:
-	:type Other: TopOpeBRepBuild_ListOfPave &
-	:rtype: None
-") TopOpeBRepBuild_ListOfPave;
-		 TopOpeBRepBuild_ListOfPave (const TopOpeBRepBuild_ListOfPave & Other);
-		%feature("compactdefaultargs") Assign;
-		%feature("autodoc", "	:param Other:
-	:type Other: TopOpeBRepBuild_ListOfPave &
-	:rtype: None
-") Assign;
-		void Assign (const TopOpeBRepBuild_ListOfPave & Other);
-		%feature("compactdefaultargs") operator =;
-		%feature("autodoc", "	:param Other:
-	:type Other: TopOpeBRepBuild_ListOfPave &
-	:rtype: None
-") operator =;
-		void operator = (const TopOpeBRepBuild_ListOfPave & Other);
-		%feature("compactdefaultargs") Extent;
-		%feature("autodoc", "	:rtype: int
-") Extent;
-		Standard_Integer Extent ();
-		%feature("compactdefaultargs") Clear;
-		%feature("autodoc", "	:rtype: None
-") Clear;
-		void Clear ();
-		%feature("compactdefaultargs") IsEmpty;
-		%feature("autodoc", "	:rtype: bool
-") IsEmpty;
-		Standard_Boolean IsEmpty ();
-		%feature("compactdefaultargs") Prepend;
-		%feature("autodoc", "	:param I:
-	:type I: Handle_TopOpeBRepBuild_Pave &
-	:rtype: None
-") Prepend;
-		void Prepend (const Handle_TopOpeBRepBuild_Pave & I);
-		%feature("compactdefaultargs") Prepend;
-		%feature("autodoc", "	:param I:
-	:type I: Handle_TopOpeBRepBuild_Pave &
-	:param theIt:
-	:type theIt: TopOpeBRepBuild_ListIteratorOfListOfPave &
-	:rtype: None
-") Prepend;
-		void Prepend (const Handle_TopOpeBRepBuild_Pave & I,TopOpeBRepBuild_ListIteratorOfListOfPave & theIt);
-		%feature("compactdefaultargs") Prepend;
-		%feature("autodoc", "	:param Other:
-	:type Other: TopOpeBRepBuild_ListOfPave &
-	:rtype: None
-") Prepend;
-		void Prepend (TopOpeBRepBuild_ListOfPave & Other);
-		%feature("compactdefaultargs") Append;
-		%feature("autodoc", "	:param I:
-	:type I: Handle_TopOpeBRepBuild_Pave &
-	:rtype: None
-") Append;
-		void Append (const Handle_TopOpeBRepBuild_Pave & I);
-		%feature("compactdefaultargs") Append;
-		%feature("autodoc", "	:param I:
-	:type I: Handle_TopOpeBRepBuild_Pave &
-	:param theIt:
-	:type theIt: TopOpeBRepBuild_ListIteratorOfListOfPave &
-	:rtype: None
-") Append;
-		void Append (const Handle_TopOpeBRepBuild_Pave & I,TopOpeBRepBuild_ListIteratorOfListOfPave & theIt);
-		%feature("compactdefaultargs") Append;
-		%feature("autodoc", "	:param Other:
-	:type Other: TopOpeBRepBuild_ListOfPave &
-	:rtype: None
-") Append;
-		void Append (TopOpeBRepBuild_ListOfPave & Other);
-		%feature("compactdefaultargs") First;
-		%feature("autodoc", "	:rtype: Handle_TopOpeBRepBuild_Pave
-") First;
-		Handle_TopOpeBRepBuild_Pave First ();
-		%feature("compactdefaultargs") Last;
-		%feature("autodoc", "	:rtype: Handle_TopOpeBRepBuild_Pave
-") Last;
-		Handle_TopOpeBRepBuild_Pave Last ();
-		%feature("compactdefaultargs") RemoveFirst;
-		%feature("autodoc", "	:rtype: None
-") RemoveFirst;
-		void RemoveFirst ();
-		%feature("compactdefaultargs") Remove;
-		%feature("autodoc", "	:param It:
-	:type It: TopOpeBRepBuild_ListIteratorOfListOfPave &
-	:rtype: None
-") Remove;
-		void Remove (TopOpeBRepBuild_ListIteratorOfListOfPave & It);
-		%feature("compactdefaultargs") InsertBefore;
-		%feature("autodoc", "	:param I:
-	:type I: Handle_TopOpeBRepBuild_Pave &
-	:param It:
-	:type It: TopOpeBRepBuild_ListIteratorOfListOfPave &
-	:rtype: None
-") InsertBefore;
-		void InsertBefore (const Handle_TopOpeBRepBuild_Pave & I,TopOpeBRepBuild_ListIteratorOfListOfPave & It);
-		%feature("compactdefaultargs") InsertBefore;
-		%feature("autodoc", "	:param Other:
-	:type Other: TopOpeBRepBuild_ListOfPave &
-	:param It:
-	:type It: TopOpeBRepBuild_ListIteratorOfListOfPave &
-	:rtype: None
-") InsertBefore;
-		void InsertBefore (TopOpeBRepBuild_ListOfPave & Other,TopOpeBRepBuild_ListIteratorOfListOfPave & It);
-		%feature("compactdefaultargs") InsertAfter;
-		%feature("autodoc", "	:param I:
-	:type I: Handle_TopOpeBRepBuild_Pave &
-	:param It:
-	:type It: TopOpeBRepBuild_ListIteratorOfListOfPave &
-	:rtype: None
-") InsertAfter;
-		void InsertAfter (const Handle_TopOpeBRepBuild_Pave & I,TopOpeBRepBuild_ListIteratorOfListOfPave & It);
-		%feature("compactdefaultargs") InsertAfter;
-		%feature("autodoc", "	:param Other:
-	:type Other: TopOpeBRepBuild_ListOfPave &
-	:param It:
-	:type It: TopOpeBRepBuild_ListIteratorOfListOfPave &
-	:rtype: None
-") InsertAfter;
-		void InsertAfter (TopOpeBRepBuild_ListOfPave & Other,TopOpeBRepBuild_ListIteratorOfListOfPave & It);
-};
-
-
-%extend TopOpeBRepBuild_ListOfPave {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor TopOpeBRepBuild_ListOfShapeListOfShape;
-class TopOpeBRepBuild_ListOfShapeListOfShape {
-	public:
-		%feature("compactdefaultargs") TopOpeBRepBuild_ListOfShapeListOfShape;
-		%feature("autodoc", "	:rtype: None
-") TopOpeBRepBuild_ListOfShapeListOfShape;
-		 TopOpeBRepBuild_ListOfShapeListOfShape ();
-		%feature("compactdefaultargs") TopOpeBRepBuild_ListOfShapeListOfShape;
-		%feature("autodoc", "	:param Other:
-	:type Other: TopOpeBRepBuild_ListOfShapeListOfShape &
-	:rtype: None
-") TopOpeBRepBuild_ListOfShapeListOfShape;
-		 TopOpeBRepBuild_ListOfShapeListOfShape (const TopOpeBRepBuild_ListOfShapeListOfShape & Other);
-		%feature("compactdefaultargs") Assign;
-		%feature("autodoc", "	:param Other:
-	:type Other: TopOpeBRepBuild_ListOfShapeListOfShape &
-	:rtype: None
-") Assign;
-		void Assign (const TopOpeBRepBuild_ListOfShapeListOfShape & Other);
-		%feature("compactdefaultargs") operator =;
-		%feature("autodoc", "	:param Other:
-	:type Other: TopOpeBRepBuild_ListOfShapeListOfShape &
-	:rtype: None
-") operator =;
-		void operator = (const TopOpeBRepBuild_ListOfShapeListOfShape & Other);
-		%feature("compactdefaultargs") Extent;
-		%feature("autodoc", "	:rtype: int
-") Extent;
-		Standard_Integer Extent ();
-		%feature("compactdefaultargs") Clear;
-		%feature("autodoc", "	:rtype: None
-") Clear;
-		void Clear ();
-		%feature("compactdefaultargs") IsEmpty;
-		%feature("autodoc", "	:rtype: bool
-") IsEmpty;
-		Standard_Boolean IsEmpty ();
-		%feature("compactdefaultargs") Prepend;
-		%feature("autodoc", "	:param I:
-	:type I: TopOpeBRepBuild_ShapeListOfShape &
-	:rtype: None
-") Prepend;
-		void Prepend (const TopOpeBRepBuild_ShapeListOfShape & I);
-		%feature("compactdefaultargs") Prepend;
-		%feature("autodoc", "	:param I:
-	:type I: TopOpeBRepBuild_ShapeListOfShape &
-	:param theIt:
-	:type theIt: TopOpeBRepBuild_ListIteratorOfListOfShapeListOfShape &
-	:rtype: None
-") Prepend;
-		void Prepend (const TopOpeBRepBuild_ShapeListOfShape & I,TopOpeBRepBuild_ListIteratorOfListOfShapeListOfShape & theIt);
-		%feature("compactdefaultargs") Prepend;
-		%feature("autodoc", "	:param Other:
-	:type Other: TopOpeBRepBuild_ListOfShapeListOfShape &
-	:rtype: None
-") Prepend;
-		void Prepend (TopOpeBRepBuild_ListOfShapeListOfShape & Other);
-		%feature("compactdefaultargs") Append;
-		%feature("autodoc", "	:param I:
-	:type I: TopOpeBRepBuild_ShapeListOfShape &
-	:rtype: None
-") Append;
-		void Append (const TopOpeBRepBuild_ShapeListOfShape & I);
-		%feature("compactdefaultargs") Append;
-		%feature("autodoc", "	:param I:
-	:type I: TopOpeBRepBuild_ShapeListOfShape &
-	:param theIt:
-	:type theIt: TopOpeBRepBuild_ListIteratorOfListOfShapeListOfShape &
-	:rtype: None
-") Append;
-		void Append (const TopOpeBRepBuild_ShapeListOfShape & I,TopOpeBRepBuild_ListIteratorOfListOfShapeListOfShape & theIt);
-		%feature("compactdefaultargs") Append;
-		%feature("autodoc", "	:param Other:
-	:type Other: TopOpeBRepBuild_ListOfShapeListOfShape &
-	:rtype: None
-") Append;
-		void Append (TopOpeBRepBuild_ListOfShapeListOfShape & Other);
-		%feature("compactdefaultargs") First;
-		%feature("autodoc", "	:rtype: TopOpeBRepBuild_ShapeListOfShape
-") First;
-		TopOpeBRepBuild_ShapeListOfShape & First ();
-		%feature("compactdefaultargs") Last;
-		%feature("autodoc", "	:rtype: TopOpeBRepBuild_ShapeListOfShape
-") Last;
-		TopOpeBRepBuild_ShapeListOfShape & Last ();
-		%feature("compactdefaultargs") RemoveFirst;
-		%feature("autodoc", "	:rtype: None
-") RemoveFirst;
-		void RemoveFirst ();
-		%feature("compactdefaultargs") Remove;
-		%feature("autodoc", "	:param It:
-	:type It: TopOpeBRepBuild_ListIteratorOfListOfShapeListOfShape &
-	:rtype: None
-") Remove;
-		void Remove (TopOpeBRepBuild_ListIteratorOfListOfShapeListOfShape & It);
-		%feature("compactdefaultargs") InsertBefore;
-		%feature("autodoc", "	:param I:
-	:type I: TopOpeBRepBuild_ShapeListOfShape &
-	:param It:
-	:type It: TopOpeBRepBuild_ListIteratorOfListOfShapeListOfShape &
-	:rtype: None
-") InsertBefore;
-		void InsertBefore (const TopOpeBRepBuild_ShapeListOfShape & I,TopOpeBRepBuild_ListIteratorOfListOfShapeListOfShape & It);
-		%feature("compactdefaultargs") InsertBefore;
-		%feature("autodoc", "	:param Other:
-	:type Other: TopOpeBRepBuild_ListOfShapeListOfShape &
-	:param It:
-	:type It: TopOpeBRepBuild_ListIteratorOfListOfShapeListOfShape &
-	:rtype: None
-") InsertBefore;
-		void InsertBefore (TopOpeBRepBuild_ListOfShapeListOfShape & Other,TopOpeBRepBuild_ListIteratorOfListOfShapeListOfShape & It);
-		%feature("compactdefaultargs") InsertAfter;
-		%feature("autodoc", "	:param I:
-	:type I: TopOpeBRepBuild_ShapeListOfShape &
-	:param It:
-	:type It: TopOpeBRepBuild_ListIteratorOfListOfShapeListOfShape &
-	:rtype: None
-") InsertAfter;
-		void InsertAfter (const TopOpeBRepBuild_ShapeListOfShape & I,TopOpeBRepBuild_ListIteratorOfListOfShapeListOfShape & It);
-		%feature("compactdefaultargs") InsertAfter;
-		%feature("autodoc", "	:param Other:
-	:type Other: TopOpeBRepBuild_ListOfShapeListOfShape &
-	:param It:
-	:type It: TopOpeBRepBuild_ListIteratorOfListOfShapeListOfShape &
-	:rtype: None
-") InsertAfter;
-		void InsertAfter (TopOpeBRepBuild_ListOfShapeListOfShape & Other,TopOpeBRepBuild_ListIteratorOfListOfShapeListOfShape & It);
-};
-
-
-%extend TopOpeBRepBuild_ListOfShapeListOfShape {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
 %nodefaultctor TopOpeBRepBuild_Loop;
-class TopOpeBRepBuild_Loop : public MMgt_TShared {
+class TopOpeBRepBuild_Loop : public Standard_Transient {
 	public:
 		%feature("compactdefaultargs") TopOpeBRepBuild_Loop;
 		%feature("autodoc", "	:param S:
@@ -2847,7 +1477,7 @@ class TopOpeBRepBuild_Loop : public MMgt_TShared {
 %}
 
 %nodefaultctor Handle_TopOpeBRepBuild_Loop;
-class Handle_TopOpeBRepBuild_Loop : public Handle_MMgt_TShared {
+class Handle_TopOpeBRepBuild_Loop : public Handle_Standard_Transient {
 
     public:
         // constructors
@@ -2859,19 +1489,20 @@ class Handle_TopOpeBRepBuild_Loop : public Handle_MMgt_TShared {
         static const Handle_TopOpeBRepBuild_Loop DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_TopOpeBRepBuild_Loop {
     TopOpeBRepBuild_Loop* _get_reference() {
-    return (TopOpeBRepBuild_Loop*)$self->Access();
+    return (TopOpeBRepBuild_Loop*)$self->get();
     }
 };
 
 %extend Handle_TopOpeBRepBuild_Loop {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend TopOpeBRepBuild_Loop {
@@ -2882,10 +1513,6 @@ class Handle_TopOpeBRepBuild_Loop : public Handle_MMgt_TShared {
 %nodefaultctor TopOpeBRepBuild_LoopClassifier;
 class TopOpeBRepBuild_LoopClassifier {
 	public:
-		%feature("compactdefaultargs") Delete;
-		%feature("autodoc", "	:rtype: void
-") Delete;
-		virtual void Delete ();
 		%feature("compactdefaultargs") Compare;
 		%feature("autodoc", "	* Returns the state of loop <L1> compared with loop <L2>.
 
@@ -2911,10 +1538,6 @@ class TopOpeBRepBuild_LoopSet {
 		%feature("autodoc", "	:rtype: None
 ") TopOpeBRepBuild_LoopSet;
 		 TopOpeBRepBuild_LoopSet ();
-		%feature("compactdefaultargs") Delete;
-		%feature("autodoc", "	:rtype: void
-") Delete;
-		virtual void Delete ();
 		%feature("compactdefaultargs") ChangeListOfLoop;
 		%feature("autodoc", "	:rtype: TopOpeBRepBuild_ListOfLoop
 ") ChangeListOfLoop;
@@ -2934,7 +1557,7 @@ class TopOpeBRepBuild_LoopSet {
 		%feature("compactdefaultargs") Loop;
 		%feature("autodoc", "	:rtype: Handle_TopOpeBRepBuild_Loop
 ") Loop;
-		Handle_TopOpeBRepBuild_Loop Loop ();
+		virtual Handle_TopOpeBRepBuild_Loop Loop ();
 };
 
 
@@ -2992,7 +1615,7 @@ class TopOpeBRepBuild_ShapeListOfShape {
 class TopOpeBRepBuild_ShapeSet {
 	public:
 		%feature("compactdefaultargs") TopOpeBRepBuild_ShapeSet;
-		%feature("autodoc", "	* Creates a ShapeSet in order to build shapes connected by <SubShapeType> shapes. <checkshape>:check (or not) the shapes, startelements, elements added.
+		%feature("autodoc", "	* Creates a ShapeSet in order to build shapes connected by <SubShapeType> shapes. <checkshape>:check --or not-- the shapes, startelements, elements added.
 
 	:param SubShapeType:
 	:type SubShapeType: TopAbs_ShapeEnum
@@ -3001,12 +1624,8 @@ class TopOpeBRepBuild_ShapeSet {
 	:rtype: None
 ") TopOpeBRepBuild_ShapeSet;
 		 TopOpeBRepBuild_ShapeSet (const TopAbs_ShapeEnum SubShapeType,const Standard_Boolean checkshape = Standard_True);
-		%feature("compactdefaultargs") Delete;
-		%feature("autodoc", "	:rtype: void
-") Delete;
-		virtual void Delete ();
 		%feature("compactdefaultargs") AddShape;
-		%feature("autodoc", "	* Adds <S> to the list of shapes. (wires or shells).
+		%feature("autodoc", "	* Adds <S> to the list of shapes. --wires or shells--.
 
 	:param S:
 	:type S: TopoDS_Shape &
@@ -3014,7 +1633,7 @@ class TopOpeBRepBuild_ShapeSet {
 ") AddShape;
 		virtual void AddShape (const TopoDS_Shape & S);
 		%feature("compactdefaultargs") AddStartElement;
-		%feature("autodoc", "	* (S is a face or edge) Add S to the list of starting shapes used for reconstructions. apply AddElement(S).
+		%feature("autodoc", "	* --S is a face or edge-- Add S to the list of starting shapes used for reconstructions. apply AddElement--S--.
 
 	:param S:
 	:type S: TopoDS_Shape &
@@ -3022,7 +1641,7 @@ class TopOpeBRepBuild_ShapeSet {
 ") AddStartElement;
 		virtual void AddStartElement (const TopoDS_Shape & S);
 		%feature("compactdefaultargs") AddElement;
-		%feature("autodoc", "	* for each subshape SE of S of type mySubShapeType - Add subshapes of S to the map of subshapes (mySubShapeMap) - Add S to the list of shape incident to subshapes of S.
+		%feature("autodoc", "	* for each subshape SE of S of type mySubShapeType - Add subshapes of S to the map of subshapes --mySubShapeMap-- - Add S to the list of shape incident to subshapes of S.
 
 	:param S:
 	:type S: TopoDS_Shape &
@@ -3090,7 +1709,7 @@ class TopOpeBRepBuild_ShapeSet {
 ") ChangeStartShapes;
 		TopTools_ListOfShape & ChangeStartShapes ();
 		%feature("compactdefaultargs") FindNeighbours;
-		%feature("autodoc", "	* Build the list of neighbour shapes of myCurrentShape (neighbour shapes and myCurrentShapes are of type t) Initialize myIncidentShapesIter on neighbour shapes.
+		%feature("autodoc", "	* Build the list of neighbour shapes of myCurrentShape --neighbour shapes and myCurrentShapes are of type t-- Initialize myIncidentShapesIter on neighbour shapes.
 
 	:rtype: void
 ") FindNeighbours;
@@ -3264,7 +1883,7 @@ class TopOpeBRepBuild_SolidBuilder {
 ") TopOpeBRepBuild_SolidBuilder;
 		 TopOpeBRepBuild_SolidBuilder ();
 		%feature("compactdefaultargs") TopOpeBRepBuild_SolidBuilder;
-		%feature("autodoc", "	* Create a SolidBuilder to build the areas on the shapes (shells, blocks of faces) described by <LS>.
+		%feature("autodoc", "	* Create a SolidBuilder to build the areas on the shapes --shells, blocks of faces-- described by <LS>.
 
 	:param FS:
 	:type FS: TopOpeBRepBuild_ShellFaceSet &
@@ -3310,7 +1929,7 @@ class TopOpeBRepBuild_SolidBuilder {
 ") IsOldShell;
 		Standard_Boolean IsOldShell ();
 		%feature("compactdefaultargs") OldShell;
-		%feature("autodoc", "	* Returns current shell This shell may be : * an old shell OldShell(), which has not been reconstructed; * a new shell made of faces described by ...NewFace() methods.
+		%feature("autodoc", "	* Returns current shell This shell may be : * an old shell OldShell----, which has not been reconstructed; * a new shell made of faces described by ...NewFace---- methods.
 
 	:rtype: TopoDS_Shape
 ") OldShell;
@@ -3343,14 +1962,6 @@ class TopOpeBRepBuild_SolidBuilder {
 };
 class TopOpeBRepBuild_Tools {
 	public:
-		%feature("compactdefaultargs") DumpMapOfShapeWithState;
-		%feature("autodoc", "	:param iP:
-	:type iP: int
-	:param aMapOfShapeWithState:
-	:type aMapOfShapeWithState: TopOpeBRepDS_IndexedDataMapOfShapeWithState &
-	:rtype: void
-") DumpMapOfShapeWithState;
-		static void DumpMapOfShapeWithState (const Standard_Integer iP,const TopOpeBRepDS_IndexedDataMapOfShapeWithState & aMapOfShapeWithState);
 		%feature("compactdefaultargs") FindState;
 		%feature("autodoc", "	:param aVertex:
 	:type aVertex: TopoDS_Shape &
@@ -3466,7 +2077,7 @@ class TopOpeBRepBuild_Tools {
 ") GetNormalToFaceOnEdge;
 		static void GetNormalToFaceOnEdge (const TopoDS_Face & aFObj,const TopoDS_Edge & anEdgeObj,gp_Vec & aDirNormal);
 		%feature("compactdefaultargs") GetNormalInNearestPoint;
-		%feature("autodoc", "	* This function used to compute normal in point which is located near the point with param UV (used for computation of normals where the normal in the point UV equal to zero).
+		%feature("autodoc", "	* This function used to compute normal in point which is located near the point with param UV --used for computation of normals where the normal in the point UV equal to zero--.
 
 	:param aFace:
 	:type aFace: TopoDS_Face &
@@ -3510,7 +2121,7 @@ class TopOpeBRepBuild_Tools {
 ") UpdatePCurves;
 		static void UpdatePCurves (const TopoDS_Wire & aWire,const TopoDS_Face & fromFace,const TopoDS_Face & toFace);
 		%feature("compactdefaultargs") UpdateEdgeOnPeriodicalFace;
-		%feature("autodoc", "	* recompute PCurves of the closing (SIM , with 2 PCurves) edge on the NewFace
+		%feature("autodoc", "	* recompute PCurves of the closing --SIM , with 2 PCurves-- edge on the NewFace
 
 	:param aEdgeToUpdate:
 	:type aEdgeToUpdate: TopoDS_Edge &
@@ -3552,7 +2163,7 @@ class TopOpeBRepBuild_Tools {
 ") NormalizeFace;
 		static void NormalizeFace (const TopoDS_Shape & oldFace,TopoDS_Shape & corrFace);
 		%feature("compactdefaultargs") CorrectFace2d;
-		%feature("autodoc", "	* test if UV representation of <oldFace> is good (i.e. face is closed in 2d). if face is not closed , this method will try to close such face and will return corrected edges in the <aMapOfCorrect2dEdges>. Parameter <aSourceShapes> used to fix the edge (or wires) which should be correct (Corrector used it as a start shapes). NOTE : Parameter corrFace doesn't mean anything. If you want to use this method , rebuild resulting face after by yourself using corrected edges.
+		%feature("autodoc", "	* test if UV representation of <oldFace> is good --i.e. face is closed in 2d--. if face is not closed , this method will try to close such face and will return corrected edges in the <aMapOfCorrect2dEdges>. Parameter <aSourceShapes> used to fix the edge --or wires-- which should be correct --Corrector used it as a start shapes--. NOTE : Parameter corrFace doesn't mean anything. If you want to use this method , rebuild resulting face after by yourself using corrected edges.
 
 	:param oldFace:
 	:type oldFace: TopoDS_Shape &
@@ -3590,7 +2201,7 @@ class TopOpeBRepBuild_Tools {
 ") CorrectPointOnCurve;
 		static void CorrectPointOnCurve (const TopoDS_Shape & aS,const Standard_Real aTolMax = 0.0001);
 		%feature("compactdefaultargs") CheckFaceClosed2d;
-		%feature("autodoc", "	* Checks if <theFace> has the properly closed in 2D boundary(ies)
+		%feature("autodoc", "	* Checks if <theFace> has the properly closed in 2D boundary--ies--
 
 	:param theFace:
 	:type theFace: TopoDS_Face &
@@ -3858,7 +2469,7 @@ class TopOpeBRepBuild_Area2dBuilder : public TopOpeBRepBuild_AreaBuilder {
 ") TopOpeBRepBuild_Area2dBuilder;
 		 TopOpeBRepBuild_Area2dBuilder ();
 		%feature("compactdefaultargs") TopOpeBRepBuild_Area2dBuilder;
-		%feature("autodoc", "	* Creates a Area2dBuilder to build faces on the (wires,blocks of edge) of <LS>, using the classifier <LC>.
+		%feature("autodoc", "	* Creates a Area2dBuilder to build faces on the --wires,blocks of edge-- of <LS>, using the classifier <LC>.
 
 	:param LS:
 	:type LS: TopOpeBRepBuild_LoopSet &
@@ -3897,7 +2508,7 @@ class TopOpeBRepBuild_Area3dBuilder : public TopOpeBRepBuild_AreaBuilder {
 ") TopOpeBRepBuild_Area3dBuilder;
 		 TopOpeBRepBuild_Area3dBuilder ();
 		%feature("compactdefaultargs") TopOpeBRepBuild_Area3dBuilder;
-		%feature("autodoc", "	* Creates a Area3dBuilder to build Solids on the (shells,blocks of face) of <LS>, using the classifier <LC>.
+		%feature("autodoc", "	* Creates a Area3dBuilder to build Solids on the --shells,blocks of face-- of <LS>, using the classifier <LC>.
 
 	:param LS:
 	:type LS: TopOpeBRepBuild_LoopSet &
@@ -3937,12 +2548,8 @@ class TopOpeBRepBuild_Builder1 : public TopOpeBRepBuild_Builder {
 	:rtype: None
 ") TopOpeBRepBuild_Builder1;
 		 TopOpeBRepBuild_Builder1 (const TopOpeBRepDS_BuildTool & BT);
-		%feature("compactdefaultargs") Destroy;
-		%feature("autodoc", "	:rtype: void
-") Destroy;
-		virtual void Destroy ();
 		%feature("compactdefaultargs") Clear;
-		%feature("autodoc", "	* Removes all splits and merges already performed. Does NOT clear the handled DS (except ShapeWithStatesMaps).
+		%feature("autodoc", "	* Removes all splits and merges already performed. Does NOT clear the handled DS --except ShapeWithStatesMaps--.
 
 	:rtype: void
 ") Clear;
@@ -4347,19 +2954,20 @@ class Handle_TopOpeBRepBuild_Pave : public Handle_TopOpeBRepBuild_Loop {
         static const Handle_TopOpeBRepBuild_Pave DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_TopOpeBRepBuild_Pave {
     TopOpeBRepBuild_Pave* _get_reference() {
-    return (TopOpeBRepBuild_Pave*)$self->Access();
+    return (TopOpeBRepBuild_Pave*)$self->get();
     }
 };
 
 %extend Handle_TopOpeBRepBuild_Pave {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend TopOpeBRepBuild_Pave {
@@ -4464,7 +3072,7 @@ class TopOpeBRepBuild_PaveSet : public TopOpeBRepBuild_LoopSet {
 		%feature("compactdefaultargs") Loop;
 		%feature("autodoc", "	:rtype: Handle_TopOpeBRepBuild_Loop
 ") Loop;
-		Handle_TopOpeBRepBuild_Loop Loop ();
+		virtual Handle_TopOpeBRepBuild_Loop Loop ();
 		%feature("compactdefaultargs") Edge;
 		%feature("autodoc", "	:rtype: TopoDS_Edge
 ") Edge;
@@ -4788,7 +3396,7 @@ class TopOpeBRepBuild_FaceAreaBuilder : public TopOpeBRepBuild_Area2dBuilder {
 ") TopOpeBRepBuild_FaceAreaBuilder;
 		 TopOpeBRepBuild_FaceAreaBuilder ();
 		%feature("compactdefaultargs") TopOpeBRepBuild_FaceAreaBuilder;
-		%feature("autodoc", "	* Creates a FaceAreaBuilder to build faces on the (wires,blocks of edge) of <LS>, using the classifier <LC>.
+		%feature("autodoc", "	* Creates a FaceAreaBuilder to build faces on the --wires,blocks of edge-- of <LS>, using the classifier <LC>.
 
 	:param LS:
 	:type LS: TopOpeBRepBuild_LoopSet &
@@ -4861,7 +3469,7 @@ class TopOpeBRepBuild_ShellFaceClassifier : public TopOpeBRepBuild_CompositeClas
 ") ResetShape;
 		void ResetShape (const TopoDS_Shape & S);
 		%feature("compactdefaultargs") ResetElement;
-		%feature("autodoc", "	* prepare classification involving face <F> define 3D point (later used in Compare()) on first vertex of face <F>.
+		%feature("autodoc", "	* prepare classification involving face <F> define 3D point --later used in Compare------ on first vertex of face <F>.
 
 	:param F:
 	:type F: TopoDS_Shape &
@@ -4898,7 +3506,7 @@ class TopOpeBRepBuild_SolidAreaBuilder : public TopOpeBRepBuild_Area3dBuilder {
 ") TopOpeBRepBuild_SolidAreaBuilder;
 		 TopOpeBRepBuild_SolidAreaBuilder ();
 		%feature("compactdefaultargs") TopOpeBRepBuild_SolidAreaBuilder;
-		%feature("autodoc", "	* Creates a SolidAreaBuilder to build Solids on the (shells,blocks of face) of <LS>, using the classifier <LC>.
+		%feature("autodoc", "	* Creates a SolidAreaBuilder to build Solids on the --shells,blocks of face-- of <LS>, using the classifier <LC>.
 
 	:param LS:
 	:type LS: TopOpeBRepBuild_LoopSet &
@@ -4983,7 +3591,7 @@ class TopOpeBRepBuild_WireEdgeClassifier : public TopOpeBRepBuild_CompositeClass
 ") ResetShape;
 		void ResetShape (const TopoDS_Shape & B);
 		%feature("compactdefaultargs") ResetElement;
-		%feature("autodoc", "	* prepare classification involving edge <E> define 2D point (later used in Compare()) on first vertex of edge <E>.
+		%feature("autodoc", "	* prepare classification involving edge <E> define 2D point --later used in Compare------ on first vertex of edge <E>.
 
 	:param E:
 	:type E: TopoDS_Shape &

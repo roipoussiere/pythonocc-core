@@ -1,5 +1,5 @@
 /*
-Copyright 2008-2017 Thomas Paviot (tpaviot@gmail.com)
+Copyright 2008-2018 Thomas Paviot (tpaviot@gmail.com)
 
 
 This file is part of pythonOCC.
@@ -56,6 +56,10 @@ def register_handle(handle, base_object):
 /* typedefs */
 /* end typedefs declaration */
 
+/* templates */
+%template(StdSelect_IndexedDataMapOfOwnerPrs) NCollection_IndexedDataMap <Handle_SelectBasics_EntityOwner , Handle_StdSelect_Prs , TColStd_MapTransientHasher>;
+/* end templates declaration */
+
 /* public enums */
 enum StdSelect_TypeOfResult {
 	StdSelect_TOR_SIMPLE = 0,
@@ -87,6 +91,16 @@ enum StdSelect_DisplayMode {
 	StdSelect_DM_Wireframe = 0,
 	StdSelect_DM_Shading = 1,
 	StdSelect_DM_HLR = 2,
+};
+
+enum StdSelect_TypeOfSelectionImage {
+	StdSelect_TypeOfSelectionImage_NormalizedDepth = 0,
+	StdSelect_TypeOfSelectionImage_NormalizedDepthInverted = 1,
+	StdSelect_TypeOfSelectionImage_UnnormalizedDepth = 2,
+	StdSelect_TypeOfSelectionImage_ColoredDetectedObject = 3,
+	StdSelect_TypeOfSelectionImage_ColoredEntity = 4,
+	StdSelect_TypeOfSelectionImage_ColoredOwner = 5,
+	StdSelect_TypeOfSelectionImage_ColoredSelectionMode = 6,
 };
 
 /* end public enums declaration */

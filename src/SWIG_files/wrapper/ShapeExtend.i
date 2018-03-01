@@ -1,5 +1,5 @@
 /*
-Copyright 2008-2017 Thomas Paviot (tpaviot@gmail.com)
+Copyright 2008-2018 Thomas Paviot (tpaviot@gmail.com)
 
 
 This file is part of pythonOCC.
@@ -56,6 +56,11 @@ def register_handle(handle, base_object):
 /* typedefs */
 /* end typedefs declaration */
 
+/* templates */
+%template(ShapeExtend_DataMapOfTransientListOfMsg) NCollection_DataMap <Handle_Standard_Transient , Message_ListOfMsg , TColStd_MapTransientHasher>;
+%template(ShapeExtend_DataMapOfShapeListOfMsg) NCollection_DataMap <TopoDS_Shape , Message_ListOfMsg , TopTools_ShapeMapHasher>;
+/* end templates declaration */
+
 /* public enums */
 enum ShapeExtend_Status {
 	ShapeExtend_OK = 0,
@@ -97,7 +102,7 @@ class ShapeExtend {
 ") Init;
 		static void Init ();
 		%feature("compactdefaultargs") EncodeStatus;
-		%feature("autodoc", "	* Encodes status (enumeration) to a bit flag
+		%feature("autodoc", "	* Encodes status --enumeration-- to a bit flag
 
 	:param status:
 	:type status: ShapeExtend_Status
@@ -123,7 +128,7 @@ class ShapeExtend {
 	}
 };
 %nodefaultctor ShapeExtend_BasicMsgRegistrator;
-class ShapeExtend_BasicMsgRegistrator : public MMgt_TShared {
+class ShapeExtend_BasicMsgRegistrator : public Standard_Transient {
 	public:
 		%feature("compactdefaultargs") ShapeExtend_BasicMsgRegistrator;
 		%feature("autodoc", "	* Empty constructor.
@@ -187,7 +192,7 @@ class ShapeExtend_BasicMsgRegistrator : public MMgt_TShared {
 %}
 
 %nodefaultctor Handle_ShapeExtend_BasicMsgRegistrator;
-class Handle_ShapeExtend_BasicMsgRegistrator : public Handle_MMgt_TShared {
+class Handle_ShapeExtend_BasicMsgRegistrator : public Handle_Standard_Transient {
 
     public:
         // constructors
@@ -199,19 +204,20 @@ class Handle_ShapeExtend_BasicMsgRegistrator : public Handle_MMgt_TShared {
         static const Handle_ShapeExtend_BasicMsgRegistrator DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_ShapeExtend_BasicMsgRegistrator {
     ShapeExtend_BasicMsgRegistrator* _get_reference() {
-    return (ShapeExtend_BasicMsgRegistrator*)$self->Access();
+    return (ShapeExtend_BasicMsgRegistrator*)$self->get();
     }
 };
 
 %extend Handle_ShapeExtend_BasicMsgRegistrator {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend ShapeExtend_BasicMsgRegistrator {
@@ -373,7 +379,7 @@ class ShapeExtend_ComplexCurve : public Geom_Curve {
 ") GetScaleFactor;
 		virtual Standard_Real GetScaleFactor (const Standard_Integer ind);
 		%feature("compactdefaultargs") CheckConnectivity;
-		%feature("autodoc", "	* Checks geometrical connectivity of the curves, including closure (sets fields myClosed)
+		%feature("autodoc", "	* Checks geometrical connectivity of the curves, including closure --sets fields myClosed--
 
 	:param Preci:
 	:type Preci: float
@@ -414,19 +420,20 @@ class Handle_ShapeExtend_ComplexCurve : public Handle_Geom_Curve {
         static const Handle_ShapeExtend_ComplexCurve DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_ShapeExtend_ComplexCurve {
     ShapeExtend_ComplexCurve* _get_reference() {
-    return (ShapeExtend_ComplexCurve*)$self->Access();
+    return (ShapeExtend_ComplexCurve*)$self->get();
     }
 };
 
 %extend Handle_ShapeExtend_ComplexCurve {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend ShapeExtend_ComplexCurve {
@@ -444,7 +451,7 @@ class ShapeExtend_CompositeSurface : public Geom_Surface {
 ") ShapeExtend_CompositeSurface;
 		 ShapeExtend_CompositeSurface ();
 		%feature("compactdefaultargs") ShapeExtend_CompositeSurface;
-		%feature("autodoc", "	* Initializes by a grid of surfaces (calls Init()).
+		%feature("autodoc", "	* Initializes by a grid of surfaces --calls Init------.
 
 	:param GridSurf:
 	:type GridSurf: Handle_TColGeom_HArray2OfSurface &
@@ -454,7 +461,7 @@ class ShapeExtend_CompositeSurface : public Geom_Surface {
 ") ShapeExtend_CompositeSurface;
 		 ShapeExtend_CompositeSurface (const Handle_TColGeom_HArray2OfSurface & GridSurf,const ShapeExtend_Parametrisation param = ShapeExtend_Natural);
 		%feature("compactdefaultargs") ShapeExtend_CompositeSurface;
-		%feature("autodoc", "	* Initializes by a grid of surfaces (calls Init()).
+		%feature("autodoc", "	* Initializes by a grid of surfaces --calls Init------.
 
 	:param GridSurf:
 	:type GridSurf: Handle_TColGeom_HArray2OfSurface &
@@ -466,7 +473,7 @@ class ShapeExtend_CompositeSurface : public Geom_Surface {
 ") ShapeExtend_CompositeSurface;
 		 ShapeExtend_CompositeSurface (const Handle_TColGeom_HArray2OfSurface & GridSurf,const TColStd_Array1OfReal & UJoints,const TColStd_Array1OfReal & VJoints);
 		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	* Initializes by a grid of surfaces. All the Surfaces of the grid must have geometrical connectivity as stated above. If geometrical connectivity is not satisfied, method returns False. However, class is initialized even in that case. //! Last parameter defines how global parametrisation (joint values) will be computed: ShapeExtend_Natural: U1 = u11min, Ui+1 = Ui + (ui1max-ui1min), etc. ShapeExtend_Uniform: Ui = i-1, Vj = j-1 ShapeExtend_Unitary: Ui = (i-1)/Nu, Vi = (j-1)/Nv
+		%feature("autodoc", "	* Initializes by a grid of surfaces. All the Surfaces of the grid must have geometrical connectivity as stated above. If geometrical connectivity is not satisfied, method returns False. However, class is initialized even in that case. //! Last parameter defines how global parametrisation --joint values-- will be computed: ShapeExtend_Natural: U1 = u11min, Ui+1 = Ui + --ui1max-ui1min--, etc. ShapeExtend_Uniform: Ui = i-1, Vj = j-1 ShapeExtend_Unitary: Ui = --i-1--/Nu, Vi = --j-1--/Nv
 
 	:param GridSurf:
 	:type GridSurf: Handle_TColGeom_HArray2OfSurface &
@@ -528,7 +535,7 @@ class ShapeExtend_CompositeSurface : public Geom_Surface {
 ") VJointValues;
 		Handle_TColStd_HArray1OfReal VJointValues ();
 		%feature("compactdefaultargs") UJointValue;
-		%feature("autodoc", "	* Returns i-th joint value in U direction (1-st is global Umin, (NbUPatches()+1)-th is global Umax on the composite surface)
+		%feature("autodoc", "	* Returns i-th joint value in U direction --1-st is global Umin, --NbUPatches----+1---th is global Umax on the composite surface--
 
 	:param i:
 	:type i: int
@@ -536,7 +543,7 @@ class ShapeExtend_CompositeSurface : public Geom_Surface {
 ") UJointValue;
 		Standard_Real UJointValue (const Standard_Integer i);
 		%feature("compactdefaultargs") VJointValue;
-		%feature("autodoc", "	* Returns j-th joint value in V direction (1-st is global Vmin, (NbVPatches()+1)-th is global Vmax on the composite surface)
+		%feature("autodoc", "	* Returns j-th joint value in V direction --1-st is global Vmin, --NbVPatches----+1---th is global Vmax on the composite surface--
 
 	:param j:
 	:type j: int
@@ -544,7 +551,7 @@ class ShapeExtend_CompositeSurface : public Geom_Surface {
 ") VJointValue;
 		Standard_Real VJointValue (const Standard_Integer j);
 		%feature("compactdefaultargs") SetUJointValues;
-		%feature("autodoc", "	* Sets the array of U values corresponding to joint points, which define global parametrisation of the surface. Number of values in array should be equal to NbUPatches()+1. All the values should be sorted in increasing order. If this is not satisfied, does nothing and returns False.
+		%feature("autodoc", "	* Sets the array of U values corresponding to joint points, which define global parametrisation of the surface. Number of values in array should be equal to NbUPatches----+1. All the values should be sorted in increasing order. If this is not satisfied, does nothing and returns False.
 
 	:param UJoints:
 	:type UJoints: TColStd_Array1OfReal &
@@ -552,7 +559,7 @@ class ShapeExtend_CompositeSurface : public Geom_Surface {
 ") SetUJointValues;
 		Standard_Boolean SetUJointValues (const TColStd_Array1OfReal & UJoints);
 		%feature("compactdefaultargs") SetVJointValues;
-		%feature("autodoc", "	* Sets the array of V values corresponding to joint points, which define global parametrisation of the surface Number of values in array should be equal to NbVPatches()+1. All the values should be sorted in increasing order. If this is not satisfied, does nothing and returns False.
+		%feature("autodoc", "	* Sets the array of V values corresponding to joint points, which define global parametrisation of the surface Number of values in array should be equal to NbVPatches----+1. All the values should be sorted in increasing order. If this is not satisfied, does nothing and returns False.
 
 	:param VJoints:
 	:type VJoints: TColStd_Array1OfReal &
@@ -560,7 +567,7 @@ class ShapeExtend_CompositeSurface : public Geom_Surface {
 ") SetVJointValues;
 		Standard_Boolean SetVJointValues (const TColStd_Array1OfReal & VJoints);
 		%feature("compactdefaultargs") SetUFirstValue;
-		%feature("autodoc", "	* Changes starting value for global U parametrisation (all other joint values are shifted accordingly)
+		%feature("autodoc", "	* Changes starting value for global U parametrisation --all other joint values are shifted accordingly--
 
 	:param UFirst:
 	:type UFirst: float
@@ -568,7 +575,7 @@ class ShapeExtend_CompositeSurface : public Geom_Surface {
 ") SetUFirstValue;
 		void SetUFirstValue (const Standard_Real UFirst);
 		%feature("compactdefaultargs") SetVFirstValue;
-		%feature("autodoc", "	* Changes starting value for global V parametrisation (all other joint values are shifted accordingly)
+		%feature("autodoc", "	* Changes starting value for global V parametrisation --all other joint values are shifted accordingly--
 
 	:param VFirst:
 	:type VFirst: float
@@ -576,7 +583,7 @@ class ShapeExtend_CompositeSurface : public Geom_Surface {
 ") SetVFirstValue;
 		void SetVFirstValue (const Standard_Real VFirst);
 		%feature("compactdefaultargs") LocateUParameter;
-		%feature("autodoc", "	* Returns number of col that contains given (global) parameter
+		%feature("autodoc", "	* Returns number of col that contains given --global-- parameter
 
 	:param U:
 	:type U: float
@@ -584,7 +591,7 @@ class ShapeExtend_CompositeSurface : public Geom_Surface {
 ") LocateUParameter;
 		Standard_Integer LocateUParameter (const Standard_Real U);
 		%feature("compactdefaultargs") LocateVParameter;
-		%feature("autodoc", "	* Returns number of row that contains given (global) parameter
+		%feature("autodoc", "	* Returns number of row that contains given --global-- parameter
 
 	:param V:
 	:type V: float
@@ -604,7 +611,7 @@ class ShapeExtend_CompositeSurface : public Geom_Surface {
 ") LocateUVPoint;
 		void LocateUVPoint (const gp_Pnt2d & pnt,Standard_Integer &OutValue,Standard_Integer &OutValue);
 		%feature("compactdefaultargs") Patch;
-		%feature("autodoc", "	* Returns one surface patch that contains given (global) parameters
+		%feature("autodoc", "	* Returns one surface patch that contains given --global-- parameters
 
 	:param U:
 	:type U: float
@@ -694,7 +701,7 @@ class ShapeExtend_CompositeSurface : public Geom_Surface {
 ") GlobalToLocal;
 		gp_Pnt2d GlobalToLocal (const Standard_Integer i,const Standard_Integer j,const gp_Pnt2d & UV);
 		%feature("compactdefaultargs") GlobalToLocalTransformation;
-		%feature("autodoc", "	* Computes transformation operator and uFactor descrinbing affine transformation required to convert global parameters on composite surface to local parameters on patch (i,j): uv = ( uFactor, 1. ) X Trsf * UV; NOTE: Thus Trsf contains shift and scale by V, scale by U is stored in uFact. Returns True if transformation is not an identity
+		%feature("autodoc", "	* Computes transformation operator and uFactor descrinbing affine transformation required to convert global parameters on composite surface to local parameters on patch --i,j--: uv = -- uFactor, 1. -- X Trsf * UV; NOTE: Thus Trsf contains shift and scale by V, scale by U is stored in uFact. Returns True if transformation is not an identity
 
 	:param i:
 	:type i: int
@@ -722,7 +729,7 @@ class ShapeExtend_CompositeSurface : public Geom_Surface {
 ") Copy;
 		virtual Handle_Geom_Geometry Copy ();
 		%feature("compactdefaultargs") UReverse;
-		%feature("autodoc", "	* NOT IMPLEMENTED (does nothing)
+		%feature("autodoc", "	* NOT IMPLEMENTED --does nothing--
 
 	:rtype: void
 ") UReverse;
@@ -736,7 +743,7 @@ class ShapeExtend_CompositeSurface : public Geom_Surface {
 ") UReversedParameter;
 		virtual Standard_Real UReversedParameter (const Standard_Real U);
 		%feature("compactdefaultargs") VReverse;
-		%feature("autodoc", "	* NOT IMPLEMENTED (does nothing)
+		%feature("autodoc", "	* NOT IMPLEMENTED --does nothing--
 
 	:rtype: void
 ") VReverse;
@@ -764,13 +771,13 @@ class ShapeExtend_CompositeSurface : public Geom_Surface {
 ") Bounds;
 		virtual void Bounds (Standard_Real &OutValue,Standard_Real &OutValue,Standard_Real &OutValue,Standard_Real &OutValue);
 		%feature("compactdefaultargs") IsUClosed;
-		%feature("autodoc", "	* Returns True if grid is closed in U direction (i.e. connected with Precision::Confusion)
+		%feature("autodoc", "	* Returns True if grid is closed in U direction --i.e. connected with Precision::Confusion--
 
 	:rtype: bool
 ") IsUClosed;
 		virtual Standard_Boolean IsUClosed ();
 		%feature("compactdefaultargs") IsVClosed;
-		%feature("autodoc", "	* Returns True if grid is closed in V direction (i.e. connected with Precision::Confusion)
+		%feature("autodoc", "	* Returns True if grid is closed in V direction --i.e. connected with Precision::Confusion--
 
 	:rtype: bool
 ") IsVClosed;
@@ -788,7 +795,7 @@ class ShapeExtend_CompositeSurface : public Geom_Surface {
 ") IsVPeriodic;
 		virtual Standard_Boolean IsVPeriodic ();
 		%feature("compactdefaultargs") UIso;
-		%feature("autodoc", "	* NOT IMPLEMENTED (returns Null curve)
+		%feature("autodoc", "	* NOT IMPLEMENTED --returns Null curve--
 
 	:param U:
 	:type U: float
@@ -796,7 +803,7 @@ class ShapeExtend_CompositeSurface : public Geom_Surface {
 ") UIso;
 		virtual Handle_Geom_Curve UIso (const Standard_Real U);
 		%feature("compactdefaultargs") VIso;
-		%feature("autodoc", "	* NOT IMPLEMENTED (returns Null curve)
+		%feature("autodoc", "	* NOT IMPLEMENTED --returns Null curve--
 
 	:param V:
 	:type V: float
@@ -906,7 +913,7 @@ class ShapeExtend_CompositeSurface : public Geom_Surface {
 ") D3;
 		virtual void D3 (const Standard_Real U,const Standard_Real V,gp_Pnt & P,gp_Vec & D1U,gp_Vec & D1V,gp_Vec & D2U,gp_Vec & D2V,gp_Vec & D2UV,gp_Vec & D3U,gp_Vec & D3V,gp_Vec & D3UUV,gp_Vec & D3UVV);
 		%feature("compactdefaultargs") DN;
-		%feature("autodoc", "	* Computes the derivative of order Nu in the direction U and Nv in the direction V at the point P(U, V).
+		%feature("autodoc", "	* Computes the derivative of order Nu in the direction U and Nv in the direction V at the point P--U, V--.
 
 	:param U:
 	:type U: float
@@ -936,7 +943,7 @@ class ShapeExtend_CompositeSurface : public Geom_Surface {
 ") ComputeJointValues;
 		void ComputeJointValues (const ShapeExtend_Parametrisation param = ShapeExtend_Natural);
 		%feature("compactdefaultargs") CheckConnectivity;
-		%feature("autodoc", "	* Checks geometrical connectivity of the patches, including closedness (sets fields muUClosed and myVClosed)
+		%feature("autodoc", "	* Checks geometrical connectivity of the patches, including closedness --sets fields muUClosed and myVClosed--
 
 	:param prec:
 	:type prec: float
@@ -977,408 +984,23 @@ class Handle_ShapeExtend_CompositeSurface : public Handle_Geom_Surface {
         static const Handle_ShapeExtend_CompositeSurface DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_ShapeExtend_CompositeSurface {
     ShapeExtend_CompositeSurface* _get_reference() {
-    return (ShapeExtend_CompositeSurface*)$self->Access();
+    return (ShapeExtend_CompositeSurface*)$self->get();
     }
 };
 
 %extend Handle_ShapeExtend_CompositeSurface {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend ShapeExtend_CompositeSurface {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor ShapeExtend_DataMapIteratorOfDataMapOfShapeListOfMsg;
-class ShapeExtend_DataMapIteratorOfDataMapOfShapeListOfMsg : public TCollection_BasicMapIterator {
-	public:
-		%feature("compactdefaultargs") ShapeExtend_DataMapIteratorOfDataMapOfShapeListOfMsg;
-		%feature("autodoc", "	:rtype: None
-") ShapeExtend_DataMapIteratorOfDataMapOfShapeListOfMsg;
-		 ShapeExtend_DataMapIteratorOfDataMapOfShapeListOfMsg ();
-		%feature("compactdefaultargs") ShapeExtend_DataMapIteratorOfDataMapOfShapeListOfMsg;
-		%feature("autodoc", "	:param aMap:
-	:type aMap: ShapeExtend_DataMapOfShapeListOfMsg &
-	:rtype: None
-") ShapeExtend_DataMapIteratorOfDataMapOfShapeListOfMsg;
-		 ShapeExtend_DataMapIteratorOfDataMapOfShapeListOfMsg (const ShapeExtend_DataMapOfShapeListOfMsg & aMap);
-		%feature("compactdefaultargs") Initialize;
-		%feature("autodoc", "	:param aMap:
-	:type aMap: ShapeExtend_DataMapOfShapeListOfMsg &
-	:rtype: None
-") Initialize;
-		void Initialize (const ShapeExtend_DataMapOfShapeListOfMsg & aMap);
-		%feature("compactdefaultargs") Key;
-		%feature("autodoc", "	:rtype: TopoDS_Shape
-") Key;
-		const TopoDS_Shape  Key ();
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:rtype: Message_ListOfMsg
-") Value;
-		const Message_ListOfMsg & Value ();
-};
-
-
-%extend ShapeExtend_DataMapIteratorOfDataMapOfShapeListOfMsg {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor ShapeExtend_DataMapIteratorOfDataMapOfTransientListOfMsg;
-class ShapeExtend_DataMapIteratorOfDataMapOfTransientListOfMsg : public TCollection_BasicMapIterator {
-	public:
-		%feature("compactdefaultargs") ShapeExtend_DataMapIteratorOfDataMapOfTransientListOfMsg;
-		%feature("autodoc", "	:rtype: None
-") ShapeExtend_DataMapIteratorOfDataMapOfTransientListOfMsg;
-		 ShapeExtend_DataMapIteratorOfDataMapOfTransientListOfMsg ();
-		%feature("compactdefaultargs") ShapeExtend_DataMapIteratorOfDataMapOfTransientListOfMsg;
-		%feature("autodoc", "	:param aMap:
-	:type aMap: ShapeExtend_DataMapOfTransientListOfMsg &
-	:rtype: None
-") ShapeExtend_DataMapIteratorOfDataMapOfTransientListOfMsg;
-		 ShapeExtend_DataMapIteratorOfDataMapOfTransientListOfMsg (const ShapeExtend_DataMapOfTransientListOfMsg & aMap);
-		%feature("compactdefaultargs") Initialize;
-		%feature("autodoc", "	:param aMap:
-	:type aMap: ShapeExtend_DataMapOfTransientListOfMsg &
-	:rtype: None
-") Initialize;
-		void Initialize (const ShapeExtend_DataMapOfTransientListOfMsg & aMap);
-		%feature("compactdefaultargs") Key;
-		%feature("autodoc", "	:rtype: Handle_Standard_Transient
-") Key;
-		Handle_Standard_Transient Key ();
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:rtype: Message_ListOfMsg
-") Value;
-		const Message_ListOfMsg & Value ();
-};
-
-
-%extend ShapeExtend_DataMapIteratorOfDataMapOfTransientListOfMsg {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor ShapeExtend_DataMapNodeOfDataMapOfShapeListOfMsg;
-class ShapeExtend_DataMapNodeOfDataMapOfShapeListOfMsg : public TCollection_MapNode {
-	public:
-		%feature("compactdefaultargs") ShapeExtend_DataMapNodeOfDataMapOfShapeListOfMsg;
-		%feature("autodoc", "	:param K:
-	:type K: TopoDS_Shape &
-	:param I:
-	:type I: Message_ListOfMsg &
-	:param n:
-	:type n: TCollection_MapNodePtr &
-	:rtype: None
-") ShapeExtend_DataMapNodeOfDataMapOfShapeListOfMsg;
-		 ShapeExtend_DataMapNodeOfDataMapOfShapeListOfMsg (const TopoDS_Shape & K,const Message_ListOfMsg & I,const TCollection_MapNodePtr & n);
-		%feature("compactdefaultargs") Key;
-		%feature("autodoc", "	:rtype: TopoDS_Shape
-") Key;
-		TopoDS_Shape  Key ();
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:rtype: Message_ListOfMsg
-") Value;
-		Message_ListOfMsg & Value ();
-};
-
-
-%extend ShapeExtend_DataMapNodeOfDataMapOfShapeListOfMsg {
-	%pythoncode {
-		def GetHandle(self):
-		    try:
-		        return self.thisHandle
-		    except:
-		        self.thisHandle = Handle_ShapeExtend_DataMapNodeOfDataMapOfShapeListOfMsg(self)
-		        self.thisown = False
-		        return self.thisHandle
-	}
-};
-
-%pythonappend Handle_ShapeExtend_DataMapNodeOfDataMapOfShapeListOfMsg::Handle_ShapeExtend_DataMapNodeOfDataMapOfShapeListOfMsg %{
-    # register the handle in the base object
-    if len(args) > 0:
-        register_handle(self, args[0])
-%}
-
-%nodefaultctor Handle_ShapeExtend_DataMapNodeOfDataMapOfShapeListOfMsg;
-class Handle_ShapeExtend_DataMapNodeOfDataMapOfShapeListOfMsg : public Handle_TCollection_MapNode {
-
-    public:
-        // constructors
-        Handle_ShapeExtend_DataMapNodeOfDataMapOfShapeListOfMsg();
-        Handle_ShapeExtend_DataMapNodeOfDataMapOfShapeListOfMsg(const Handle_ShapeExtend_DataMapNodeOfDataMapOfShapeListOfMsg &aHandle);
-        Handle_ShapeExtend_DataMapNodeOfDataMapOfShapeListOfMsg(const ShapeExtend_DataMapNodeOfDataMapOfShapeListOfMsg *anItem);
-        void Nullify();
-        Standard_Boolean IsNull() const;
-        static const Handle_ShapeExtend_DataMapNodeOfDataMapOfShapeListOfMsg DownCast(const Handle_Standard_Transient &AnObject);
-
-};
-%extend Handle_ShapeExtend_DataMapNodeOfDataMapOfShapeListOfMsg {
-    ShapeExtend_DataMapNodeOfDataMapOfShapeListOfMsg* _get_reference() {
-    return (ShapeExtend_DataMapNodeOfDataMapOfShapeListOfMsg*)$self->Access();
-    }
-};
-
-%extend Handle_ShapeExtend_DataMapNodeOfDataMapOfShapeListOfMsg {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
-};
-
-%extend ShapeExtend_DataMapNodeOfDataMapOfShapeListOfMsg {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor ShapeExtend_DataMapNodeOfDataMapOfTransientListOfMsg;
-class ShapeExtend_DataMapNodeOfDataMapOfTransientListOfMsg : public TCollection_MapNode {
-	public:
-		%feature("compactdefaultargs") ShapeExtend_DataMapNodeOfDataMapOfTransientListOfMsg;
-		%feature("autodoc", "	:param K:
-	:type K: Handle_Standard_Transient &
-	:param I:
-	:type I: Message_ListOfMsg &
-	:param n:
-	:type n: TCollection_MapNodePtr &
-	:rtype: None
-") ShapeExtend_DataMapNodeOfDataMapOfTransientListOfMsg;
-		 ShapeExtend_DataMapNodeOfDataMapOfTransientListOfMsg (const Handle_Standard_Transient & K,const Message_ListOfMsg & I,const TCollection_MapNodePtr & n);
-		%feature("compactdefaultargs") Key;
-		%feature("autodoc", "	:rtype: Handle_Standard_Transient
-") Key;
-		Handle_Standard_Transient Key ();
-		%feature("compactdefaultargs") Value;
-		%feature("autodoc", "	:rtype: Message_ListOfMsg
-") Value;
-		Message_ListOfMsg & Value ();
-};
-
-
-%extend ShapeExtend_DataMapNodeOfDataMapOfTransientListOfMsg {
-	%pythoncode {
-		def GetHandle(self):
-		    try:
-		        return self.thisHandle
-		    except:
-		        self.thisHandle = Handle_ShapeExtend_DataMapNodeOfDataMapOfTransientListOfMsg(self)
-		        self.thisown = False
-		        return self.thisHandle
-	}
-};
-
-%pythonappend Handle_ShapeExtend_DataMapNodeOfDataMapOfTransientListOfMsg::Handle_ShapeExtend_DataMapNodeOfDataMapOfTransientListOfMsg %{
-    # register the handle in the base object
-    if len(args) > 0:
-        register_handle(self, args[0])
-%}
-
-%nodefaultctor Handle_ShapeExtend_DataMapNodeOfDataMapOfTransientListOfMsg;
-class Handle_ShapeExtend_DataMapNodeOfDataMapOfTransientListOfMsg : public Handle_TCollection_MapNode {
-
-    public:
-        // constructors
-        Handle_ShapeExtend_DataMapNodeOfDataMapOfTransientListOfMsg();
-        Handle_ShapeExtend_DataMapNodeOfDataMapOfTransientListOfMsg(const Handle_ShapeExtend_DataMapNodeOfDataMapOfTransientListOfMsg &aHandle);
-        Handle_ShapeExtend_DataMapNodeOfDataMapOfTransientListOfMsg(const ShapeExtend_DataMapNodeOfDataMapOfTransientListOfMsg *anItem);
-        void Nullify();
-        Standard_Boolean IsNull() const;
-        static const Handle_ShapeExtend_DataMapNodeOfDataMapOfTransientListOfMsg DownCast(const Handle_Standard_Transient &AnObject);
-
-};
-%extend Handle_ShapeExtend_DataMapNodeOfDataMapOfTransientListOfMsg {
-    ShapeExtend_DataMapNodeOfDataMapOfTransientListOfMsg* _get_reference() {
-    return (ShapeExtend_DataMapNodeOfDataMapOfTransientListOfMsg*)$self->Access();
-    }
-};
-
-%extend Handle_ShapeExtend_DataMapNodeOfDataMapOfTransientListOfMsg {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
-};
-
-%extend ShapeExtend_DataMapNodeOfDataMapOfTransientListOfMsg {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor ShapeExtend_DataMapOfShapeListOfMsg;
-class ShapeExtend_DataMapOfShapeListOfMsg : public TCollection_BasicMap {
-	public:
-		%feature("compactdefaultargs") ShapeExtend_DataMapOfShapeListOfMsg;
-		%feature("autodoc", "	:param NbBuckets: default value is 1
-	:type NbBuckets: int
-	:rtype: None
-") ShapeExtend_DataMapOfShapeListOfMsg;
-		 ShapeExtend_DataMapOfShapeListOfMsg (const Standard_Integer NbBuckets = 1);
-		%feature("compactdefaultargs") Assign;
-		%feature("autodoc", "	:param Other:
-	:type Other: ShapeExtend_DataMapOfShapeListOfMsg &
-	:rtype: ShapeExtend_DataMapOfShapeListOfMsg
-") Assign;
-		ShapeExtend_DataMapOfShapeListOfMsg & Assign (const ShapeExtend_DataMapOfShapeListOfMsg & Other);
-		%feature("compactdefaultargs") operator =;
-		%feature("autodoc", "	:param Other:
-	:type Other: ShapeExtend_DataMapOfShapeListOfMsg &
-	:rtype: ShapeExtend_DataMapOfShapeListOfMsg
-") operator =;
-		ShapeExtend_DataMapOfShapeListOfMsg & operator = (const ShapeExtend_DataMapOfShapeListOfMsg & Other);
-		%feature("compactdefaultargs") ReSize;
-		%feature("autodoc", "	:param NbBuckets:
-	:type NbBuckets: int
-	:rtype: None
-") ReSize;
-		void ReSize (const Standard_Integer NbBuckets);
-		%feature("compactdefaultargs") Clear;
-		%feature("autodoc", "	:rtype: None
-") Clear;
-		void Clear ();
-		%feature("compactdefaultargs") Bind;
-		%feature("autodoc", "	:param K:
-	:type K: TopoDS_Shape &
-	:param I:
-	:type I: Message_ListOfMsg &
-	:rtype: bool
-") Bind;
-		Standard_Boolean Bind (const TopoDS_Shape & K,const Message_ListOfMsg & I);
-		%feature("compactdefaultargs") IsBound;
-		%feature("autodoc", "	:param K:
-	:type K: TopoDS_Shape &
-	:rtype: bool
-") IsBound;
-		Standard_Boolean IsBound (const TopoDS_Shape & K);
-		%feature("compactdefaultargs") UnBind;
-		%feature("autodoc", "	:param K:
-	:type K: TopoDS_Shape &
-	:rtype: bool
-") UnBind;
-		Standard_Boolean UnBind (const TopoDS_Shape & K);
-		%feature("compactdefaultargs") Find;
-		%feature("autodoc", "	:param K:
-	:type K: TopoDS_Shape &
-	:rtype: Message_ListOfMsg
-") Find;
-		const Message_ListOfMsg & Find (const TopoDS_Shape & K);
-		%feature("compactdefaultargs") ChangeFind;
-		%feature("autodoc", "	:param K:
-	:type K: TopoDS_Shape &
-	:rtype: Message_ListOfMsg
-") ChangeFind;
-		Message_ListOfMsg & ChangeFind (const TopoDS_Shape & K);
-		%feature("compactdefaultargs") Find1;
-		%feature("autodoc", "	:param K:
-	:type K: TopoDS_Shape &
-	:rtype: Standard_Address
-") Find1;
-		Standard_Address Find1 (const TopoDS_Shape & K);
-		%feature("compactdefaultargs") ChangeFind1;
-		%feature("autodoc", "	:param K:
-	:type K: TopoDS_Shape &
-	:rtype: Standard_Address
-") ChangeFind1;
-		Standard_Address ChangeFind1 (const TopoDS_Shape & K);
-};
-
-
-%extend ShapeExtend_DataMapOfShapeListOfMsg {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor ShapeExtend_DataMapOfTransientListOfMsg;
-class ShapeExtend_DataMapOfTransientListOfMsg : public TCollection_BasicMap {
-	public:
-		%feature("compactdefaultargs") ShapeExtend_DataMapOfTransientListOfMsg;
-		%feature("autodoc", "	:param NbBuckets: default value is 1
-	:type NbBuckets: int
-	:rtype: None
-") ShapeExtend_DataMapOfTransientListOfMsg;
-		 ShapeExtend_DataMapOfTransientListOfMsg (const Standard_Integer NbBuckets = 1);
-		%feature("compactdefaultargs") Assign;
-		%feature("autodoc", "	:param Other:
-	:type Other: ShapeExtend_DataMapOfTransientListOfMsg &
-	:rtype: ShapeExtend_DataMapOfTransientListOfMsg
-") Assign;
-		ShapeExtend_DataMapOfTransientListOfMsg & Assign (const ShapeExtend_DataMapOfTransientListOfMsg & Other);
-		%feature("compactdefaultargs") operator =;
-		%feature("autodoc", "	:param Other:
-	:type Other: ShapeExtend_DataMapOfTransientListOfMsg &
-	:rtype: ShapeExtend_DataMapOfTransientListOfMsg
-") operator =;
-		ShapeExtend_DataMapOfTransientListOfMsg & operator = (const ShapeExtend_DataMapOfTransientListOfMsg & Other);
-		%feature("compactdefaultargs") ReSize;
-		%feature("autodoc", "	:param NbBuckets:
-	:type NbBuckets: int
-	:rtype: None
-") ReSize;
-		void ReSize (const Standard_Integer NbBuckets);
-		%feature("compactdefaultargs") Clear;
-		%feature("autodoc", "	:rtype: None
-") Clear;
-		void Clear ();
-		%feature("compactdefaultargs") Bind;
-		%feature("autodoc", "	:param K:
-	:type K: Handle_Standard_Transient &
-	:param I:
-	:type I: Message_ListOfMsg &
-	:rtype: bool
-") Bind;
-		Standard_Boolean Bind (const Handle_Standard_Transient & K,const Message_ListOfMsg & I);
-		%feature("compactdefaultargs") IsBound;
-		%feature("autodoc", "	:param K:
-	:type K: Handle_Standard_Transient &
-	:rtype: bool
-") IsBound;
-		Standard_Boolean IsBound (const Handle_Standard_Transient & K);
-		%feature("compactdefaultargs") UnBind;
-		%feature("autodoc", "	:param K:
-	:type K: Handle_Standard_Transient &
-	:rtype: bool
-") UnBind;
-		Standard_Boolean UnBind (const Handle_Standard_Transient & K);
-		%feature("compactdefaultargs") Find;
-		%feature("autodoc", "	:param K:
-	:type K: Handle_Standard_Transient &
-	:rtype: Message_ListOfMsg
-") Find;
-		const Message_ListOfMsg & Find (const Handle_Standard_Transient & K);
-		%feature("compactdefaultargs") ChangeFind;
-		%feature("autodoc", "	:param K:
-	:type K: Handle_Standard_Transient &
-	:rtype: Message_ListOfMsg
-") ChangeFind;
-		Message_ListOfMsg & ChangeFind (const Handle_Standard_Transient & K);
-		%feature("compactdefaultargs") Find1;
-		%feature("autodoc", "	:param K:
-	:type K: Handle_Standard_Transient &
-	:rtype: Standard_Address
-") Find1;
-		Standard_Address Find1 (const Handle_Standard_Transient & K);
-		%feature("compactdefaultargs") ChangeFind1;
-		%feature("autodoc", "	:param K:
-	:type K: Handle_Standard_Transient &
-	:rtype: Standard_Address
-") ChangeFind1;
-		Standard_Address ChangeFind1 (const Handle_Standard_Transient & K);
-};
-
-
-%extend ShapeExtend_DataMapOfTransientListOfMsg {
 	%pythoncode {
 	__repr__ = _dumps_object
 	}
@@ -1401,7 +1023,7 @@ class ShapeExtend_Explorer {
 ") CompoundFromSeq;
 		TopoDS_Shape CompoundFromSeq (const Handle_TopTools_HSequenceOfShape & seqval);
 		%feature("compactdefaultargs") SeqFromCompound;
-		%feature("autodoc", "	* Converts a Compound to a list of Shapes if <comp> is not a compound, the list contains only <comp> if <comp> is Null, the list is empty if <comp> is a Compound, its sub-shapes are put into the list then if <expcomp> is True, if a sub-shape is a Compound, it is not put to the list but its sub-shapes are (recursive)
+		%feature("autodoc", "	* Converts a Compound to a list of Shapes if <comp> is not a compound, the list contains only <comp> if <comp> is Null, the list is empty if <comp> is a Compound, its sub-shapes are put into the list then if <expcomp> is True, if a sub-shape is a Compound, it is not put to the list but its sub-shapes are --recursive--
 
 	:param comp:
 	:type comp: TopoDS_Shape &
@@ -1411,7 +1033,7 @@ class ShapeExtend_Explorer {
 ") SeqFromCompound;
 		Handle_TopTools_HSequenceOfShape SeqFromCompound (const TopoDS_Shape & comp,const Standard_Boolean expcomp);
 		%feature("compactdefaultargs") ListFromSeq;
-		%feature("autodoc", "	* Converts a Sequence of Shapes to a List of Shapes <clear> if True (D), commands the list to start from scratch else, the list is cumulated
+		%feature("autodoc", "	* Converts a Sequence of Shapes to a List of Shapes <clear> if True --D--, commands the list to start from scratch else, the list is cumulated
 
 	:param seqval:
 	:type seqval: Handle_TopTools_HSequenceOfShape &
@@ -1441,7 +1063,7 @@ class ShapeExtend_Explorer {
 ") ShapeType;
 		TopAbs_ShapeEnum ShapeType (const TopoDS_Shape & shape,const Standard_Boolean compound);
 		%feature("compactdefaultargs") SortedCompound;
-		%feature("autodoc", "	* Builds a COMPOUND from the given shape. It explores the shape level by level, according to the <explore> argument. If <explore> is False, only COMPOUND items are explored, else all items are. The following shapes are added to resulting compound: - shapes which comply to <type> - if <type> is WIRE, considers also free edges (and makes wires) - if <type> is SHELL, considers also free faces (and makes shells) If <compound> is True, gathers items in compounds which correspond to starting COMPOUND,SOLID or SHELL containers, or items directly contained in a Compound
+		%feature("autodoc", "	* Builds a COMPOUND from the given shape. It explores the shape level by level, according to the <explore> argument. If <explore> is False, only COMPOUND items are explored, else all items are. The following shapes are added to resulting compound: - shapes which comply to <type> - if <type> is WIRE, considers also free edges --and makes wires-- - if <type> is SHELL, considers also free faces --and makes shells-- If <compound> is True, gathers items in compounds which correspond to starting COMPOUND,SOLID or SHELL containers, or items directly contained in a Compound
 
 	:param shape:
 	:type shape: TopoDS_Shape &
@@ -1487,7 +1109,7 @@ class ShapeExtend_Explorer {
 	}
 };
 %nodefaultctor ShapeExtend_WireData;
-class ShapeExtend_WireData : public MMgt_TShared {
+class ShapeExtend_WireData : public Standard_Transient {
 	public:
 		%feature("compactdefaultargs") ShapeExtend_WireData;
 		%feature("autodoc", "	* Empty constructor, creates empty wire with no edges
@@ -1496,7 +1118,7 @@ class ShapeExtend_WireData : public MMgt_TShared {
 ") ShapeExtend_WireData;
 		 ShapeExtend_WireData ();
 		%feature("compactdefaultargs") ShapeExtend_WireData;
-		%feature("autodoc", "	* Constructor initializing the data from TopoDS_Wire. Calls Init(wire,chained).
+		%feature("autodoc", "	* Constructor initializing the data from TopoDS_Wire. Calls Init--wire,chained--.
 
 	:param wire:
 	:type wire: TopoDS_Wire &
@@ -1516,7 +1138,7 @@ class ShapeExtend_WireData : public MMgt_TShared {
 ") Init;
 		void Init (const Handle_ShapeExtend_WireData & other);
 		%feature("compactdefaultargs") Init;
-		%feature("autodoc", "	* Loads an already existing wire If <chained> is True (default), edges are added in the sequence as they are explored by TopoDS_Iterator Else, if <chained> is False, wire is explored by BRepTools_WireExplorer and it is guaranteed that edges will be sequencially connected. Remark : In the latter case it can happen that not all edges will be found (because of limitations of BRepTools_WireExplorer for disconnected wires and wires with seam edges).
+		%feature("autodoc", "	* Loads an already existing wire If <chained> is True --default--, edges are added in the sequence as they are explored by TopoDS_Iterator Else, if <chained> is False, wire is explored by BRepTools_WireExplorer and it is guaranteed that edges will be sequencially connected. Remark : In the latter case it can happen that not all edges will be found --because of limitations of BRepTools_WireExplorer for disconnected wires and wires with seam edges--.
 
 	:param wire:
 	:type wire: TopoDS_Wire &
@@ -1534,7 +1156,7 @@ class ShapeExtend_WireData : public MMgt_TShared {
 ") Clear;
 		void Clear ();
 		%feature("compactdefaultargs") ComputeSeams;
-		%feature("autodoc", "	* Computes the list of seam edges By default (direct call), computing is enforced For indirect call (from IsSeam) it is redone only if not yet already done or if the list of edges has changed Remark : A Seam Edge is an Edge present twice in the list, once as FORWARD and once as REVERSED Each sense has its own PCurve, the one for FORWARD must be set in first
+		%feature("autodoc", "	* Computes the list of seam edges By default --direct call--, computing is enforced For indirect call --from IsSeam-- it is redone only if not yet already done or if the list of edges has changed Remark : A Seam Edge is an Edge present twice in the list, once as FORWARD and once as REVERSED Each sense has its own PCurve, the one for FORWARD must be set in first
 
 	:param enforce: default value is Standard_True
 	:type enforce: bool
@@ -1550,13 +1172,13 @@ class ShapeExtend_WireData : public MMgt_TShared {
 ") SetLast;
 		void SetLast (const Standard_Integer num);
 		%feature("compactdefaultargs") SetDegeneratedLast;
-		%feature("autodoc", "	* When the wire contains at least one degenerated edge, sets it as last one Note : It is useful to process pcurves, for instance, while the pcurve of a DGNR may not be computed from its 3D part (there is none) it is computed after the other edges have been computed and chained.
+		%feature("autodoc", "	* When the wire contains at least one degenerated edge, sets it as last one Note : It is useful to process pcurves, for instance, while the pcurve of a DGNR may not be computed from its 3D part --there is none-- it is computed after the other edges have been computed and chained.
 
 	:rtype: None
 ") SetDegeneratedLast;
 		void SetDegeneratedLast ();
 		%feature("compactdefaultargs") Add;
-		%feature("autodoc", "	* Adds an edge to a wire, being defined (not yet ended) This is the plain, basic, function to add an edge <num> = 0 (D): Appends at end <num> = 1: Preprends at start else, Insert before <num> Remark : Null Edge is simply ignored
+		%feature("autodoc", "	* Adds an edge to a wire, being defined --not yet ended-- This is the plain, basic, function to add an edge <num> = 0 --D--: Appends at end <num> = 1: Preprends at start else, Insert before <num> Remark : Null Edge is simply ignored
 
 	:param edge:
 	:type edge: TopoDS_Edge &
@@ -1566,7 +1188,7 @@ class ShapeExtend_WireData : public MMgt_TShared {
 ") Add;
 		void Add (const TopoDS_Edge & edge,const Standard_Integer atnum = 0);
 		%feature("compactdefaultargs") Add;
-		%feature("autodoc", "	* Adds an entire wire, considered as a list of edges Remark : The wire is assumed to be ordered (TopoDS_Iterator is used)
+		%feature("autodoc", "	* Adds an entire wire, considered as a list of edges Remark : The wire is assumed to be ordered --TopoDS_Iterator is used--
 
 	:param wire:
 	:type wire: TopoDS_Wire &
@@ -1634,7 +1256,7 @@ class ShapeExtend_WireData : public MMgt_TShared {
 ") Remove;
 		void Remove (const Standard_Integer num = 0);
 		%feature("compactdefaultargs") Set;
-		%feature("autodoc", "	* Replaces an edge at the given rank number <num> with new one. Default is last edge (<num> = 0).
+		%feature("autodoc", "	* Replaces an edge at the given rank number <num> with new one. Default is last edge --<num> = 0--.
 
 	:param edge:
 	:type edge: TopoDS_Edge &
@@ -1650,7 +1272,7 @@ class ShapeExtend_WireData : public MMgt_TShared {
 ") Reverse;
 		void Reverse ();
 		%feature("compactdefaultargs") Reverse;
-		%feature("autodoc", "	* Reverses the sense of the list and the orientation of each Edge The face is necessary for swapping pcurves for seam edges (first pcurve corresponds to orientation FORWARD, and second to REVERSED; when edge is reversed, pcurves must be swapped) If face is NULL, no swapping is performed
+		%feature("autodoc", "	* Reverses the sense of the list and the orientation of each Edge The face is necessary for swapping pcurves for seam edges --first pcurve corresponds to orientation FORWARD, and second to REVERSED; when edge is reversed, pcurves must be swapped-- If face is NULL, no swapping is performed
 
 	:param face:
 	:type face: TopoDS_Face &
@@ -1713,7 +1335,7 @@ class ShapeExtend_WireData : public MMgt_TShared {
 ") Index;
 		Standard_Integer Index (const TopoDS_Edge & edge);
 		%feature("compactdefaultargs") IsSeam;
-		%feature("autodoc", "	* Tells if an Edge is seam (see ComputeSeams) An edge is considered as seam if it presents twice in the edge list, once as FORWARD and once as REVERSED.
+		%feature("autodoc", "	* Tells if an Edge is seam --see ComputeSeams-- An edge is considered as seam if it presents twice in the edge list, once as FORWARD and once as REVERSED.
 
 	:param num:
 	:type num: int
@@ -1721,7 +1343,7 @@ class ShapeExtend_WireData : public MMgt_TShared {
 ") IsSeam;
 		Standard_Boolean IsSeam (const Standard_Integer num);
 		%feature("compactdefaultargs") Wire;
-		%feature("autodoc", "	* Makes TopoDS_Wire using BRep_Builder (just creates the TopoDS_Wire object and adds all edges into it). This method should be called when the wire is correct (for example, after successful fixes by ShapeFix_Wire) and adjacent edges share common vertices. In case if adjacent edges do not share the same vertices the resulting TopoDS_Wire will be invalid.
+		%feature("autodoc", "	* Makes TopoDS_Wire using BRep_Builder --just creates the TopoDS_Wire object and adds all edges into it--. This method should be called when the wire is correct --for example, after successful fixes by ShapeFix_Wire-- and adjacent edges share common vertices. In case if adjacent edges do not share the same vertices the resulting TopoDS_Wire will be invalid.
 
 	:rtype: TopoDS_Wire
 ") Wire;
@@ -1754,7 +1376,7 @@ class ShapeExtend_WireData : public MMgt_TShared {
 %}
 
 %nodefaultctor Handle_ShapeExtend_WireData;
-class Handle_ShapeExtend_WireData : public Handle_MMgt_TShared {
+class Handle_ShapeExtend_WireData : public Handle_Standard_Transient {
 
     public:
         // constructors
@@ -1766,19 +1388,20 @@ class Handle_ShapeExtend_WireData : public Handle_MMgt_TShared {
         static const Handle_ShapeExtend_WireData DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_ShapeExtend_WireData {
     ShapeExtend_WireData* _get_reference() {
-    return (ShapeExtend_WireData*)$self->Access();
+    return (ShapeExtend_WireData*)$self->get();
     }
 };
 
 %extend Handle_ShapeExtend_WireData {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend ShapeExtend_WireData {
@@ -1865,19 +1488,20 @@ class Handle_ShapeExtend_MsgRegistrator : public Handle_ShapeExtend_BasicMsgRegi
         static const Handle_ShapeExtend_MsgRegistrator DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_ShapeExtend_MsgRegistrator {
     ShapeExtend_MsgRegistrator* _get_reference() {
-    return (ShapeExtend_MsgRegistrator*)$self->Access();
+    return (ShapeExtend_MsgRegistrator*)$self->get();
     }
 };
 
 %extend Handle_ShapeExtend_MsgRegistrator {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend ShapeExtend_MsgRegistrator {

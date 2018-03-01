@@ -1,5 +1,5 @@
 /*
-Copyright 2008-2017 Thomas Paviot (tpaviot@gmail.com)
+Copyright 2008-2018 Thomas Paviot (tpaviot@gmail.com)
 
 
 This file is part of pythonOCC.
@@ -54,8 +54,11 @@ def register_handle(handle, base_object):
 };
 
 /* typedefs */
-typedef NCollection_Vector <BinLDrivers_DocumentSection> BinLDrivers_VectorOfDocumentSection;
 /* end typedefs declaration */
+
+/* templates */
+%template(BinLDrivers_VectorOfDocumentSection) NCollection_Vector <BinLDrivers_DocumentSection>;
+/* end templates declaration */
 
 /* public enums */
 enum BinLDrivers_Marker {
@@ -66,6 +69,7 @@ enum BinLDrivers_Marker {
 /* end public enums declaration */
 
 %rename(binldrivers) BinLDrivers;
+%nodefaultctor BinLDrivers;
 class BinLDrivers {
 	public:
 		%feature("compactdefaultargs") Factory;
@@ -73,7 +77,15 @@ class BinLDrivers {
 	:type theGUID: Standard_GUID &
 	:rtype: Handle_Standard_Transient
 ") Factory;
-		static Handle_Standard_Transient Factory (const Standard_GUID & theGUID);
+		Handle_Standard_Transient Factory (const Standard_GUID & theGUID);
+		%feature("compactdefaultargs") DefineFormat;
+		%feature("autodoc", "	* Defines format 'BinLOcaf' and registers its read and write drivers in the specified application
+
+	:param theApp:
+	:type theApp: Handle_TDocStd_Application &
+	:rtype: void
+") DefineFormat;
+		static void DefineFormat (const Handle_TDocStd_Application & theApp);
 		%feature("compactdefaultargs") AttributeDrivers;
 		%feature("autodoc", "	* Creates a table of the supported drivers' types
 
@@ -105,22 +117,6 @@ class BinLDrivers_DocumentRetrievalDriver : public PCDM_RetrievalDriver {
 	:rtype: None
 ") BinLDrivers_DocumentRetrievalDriver;
 		 BinLDrivers_DocumentRetrievalDriver ();
-		%feature("compactdefaultargs") SchemaName;
-		%feature("autodoc", "	* pure virtual method definition
-
-	:rtype: TCollection_ExtendedString
-") SchemaName;
-		virtual TCollection_ExtendedString SchemaName ();
-		%feature("compactdefaultargs") Make;
-		%feature("autodoc", "	* pure virtual method definition
-
-	:param PD:
-	:type PD: Handle_PCDM_Document &
-	:param TD:
-	:type TD: Handle_CDM_Document &
-	:rtype: void
-") Make;
-		virtual void Make (const Handle_PCDM_Document & PD,const Handle_CDM_Document & TD);
 		%feature("compactdefaultargs") CreateDocument;
 		%feature("autodoc", "	* pure virtual method definition
 
@@ -139,6 +135,18 @@ class BinLDrivers_DocumentRetrievalDriver : public PCDM_RetrievalDriver {
 	:rtype: void
 ") Read;
 		virtual void Read (const TCollection_ExtendedString & theFileName,const Handle_CDM_Document & theNewDocument,const Handle_CDM_Application & theApplication);
+		%feature("compactdefaultargs") Read;
+		%feature("autodoc", "	:param theIStream:
+	:type theIStream: Standard_IStream &
+	:param theStorageData:
+	:type theStorageData: Handle_Storage_Data &
+	:param theDoc:
+	:type theDoc: Handle_CDM_Document &
+	:param theApplication:
+	:type theApplication: Handle_CDM_Application &
+	:rtype: void
+") Read;
+		virtual void Read (Standard_IStream & theIStream,const Handle_Storage_Data & theStorageData,const Handle_CDM_Document & theDoc,const Handle_CDM_Application & theApplication);
 		%feature("compactdefaultargs") AttributeDrivers;
 		%feature("autodoc", "	:param theMsgDriver:
 	:type theMsgDriver: Handle_CDM_MessageDriver &
@@ -179,19 +187,20 @@ class Handle_BinLDrivers_DocumentRetrievalDriver : public Handle_PCDM_RetrievalD
         static const Handle_BinLDrivers_DocumentRetrievalDriver DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_BinLDrivers_DocumentRetrievalDriver {
     BinLDrivers_DocumentRetrievalDriver* _get_reference() {
-    return (BinLDrivers_DocumentRetrievalDriver*)$self->Access();
+    return (BinLDrivers_DocumentRetrievalDriver*)$self->get();
     }
 };
 
 %extend Handle_BinLDrivers_DocumentRetrievalDriver {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend BinLDrivers_DocumentRetrievalDriver {
@@ -233,31 +242,31 @@ class BinLDrivers_DocumentSection {
 		%feature("compactdefaultargs") Offset;
 		%feature("autodoc", "	* Query the offset of the section in the persistent file
 
-	:rtype: Standard_Size
+	:rtype: uint64_t
 ") Offset;
-		Standard_Size Offset ();
+		uint64_t Offset ();
 		%feature("compactdefaultargs") SetOffset;
 		%feature("autodoc", "	* Set the offset of the section in the persistent file
 
 	:param theOffset:
-	:type theOffset: Standard_Size
+	:type theOffset: uint64_t
 	:rtype: None
 ") SetOffset;
-		void SetOffset (const Standard_Size theOffset);
+		void SetOffset (const uint64_t theOffset);
 		%feature("compactdefaultargs") Length;
 		%feature("autodoc", "	* Query the length of the section in the persistent file
 
-	:rtype: Standard_Size
+	:rtype: uint64_t
 ") Length;
-		Standard_Size Length ();
+		uint64_t Length ();
 		%feature("compactdefaultargs") SetLength;
 		%feature("autodoc", "	* Set the length of the section in the persistent file
 
 	:param theLength:
-	:type theLength: Standard_Size
+	:type theLength: uint64_t
 	:rtype: None
 ") SetLength;
-		void SetLength (const Standard_Size theLength);
+		void SetLength (const uint64_t theLength);
 
         %feature("autodoc", "1");
         %extend{
@@ -267,15 +276,15 @@ class BinLDrivers_DocumentSection {
             return s.str();}
         };
         		%feature("compactdefaultargs") Write;
-		%feature("autodoc", "	* Save Offset and Length data into the Section entry in the Document TOC (list of sections)
+		%feature("autodoc", "	* Save Offset and Length data into the Section entry in the Document TOC --list of sections--
 
 	:param theOS:
 	:type theOS: Standard_OStream &
 	:param theOffset:
-	:type theOffset: Standard_Size
+	:type theOffset: uint64_t
 	:rtype: None
 ") Write;
-		void Write (Standard_OStream & theOS,const Standard_Size theOffset);
+		void Write (Standard_OStream & theOS,const uint64_t theOffset);
 		%feature("compactdefaultargs") ReadTOC;
 		%feature("autodoc", "	* Fill a DocumentSection instance from the data that are read from TOC.
 
@@ -303,12 +312,6 @@ class BinLDrivers_DocumentStorageDriver : public PCDM_StorageDriver {
 	:rtype: None
 ") BinLDrivers_DocumentStorageDriver;
 		 BinLDrivers_DocumentStorageDriver ();
-		%feature("compactdefaultargs") SchemaName;
-		%feature("autodoc", "	* pure virtual method definition
-
-	:rtype: TCollection_ExtendedString
-") SchemaName;
-		virtual TCollection_ExtendedString SchemaName ();
 		%feature("compactdefaultargs") Write;
 		%feature("autodoc", "	* Write <theDocument> to the binary file <theFileName>
 
@@ -319,6 +322,16 @@ class BinLDrivers_DocumentStorageDriver : public PCDM_StorageDriver {
 	:rtype: void
 ") Write;
 		virtual void Write (const Handle_CDM_Document & theDocument,const TCollection_ExtendedString & theFileName);
+		%feature("compactdefaultargs") Write;
+		%feature("autodoc", "	* Write <theDocument> to theOStream
+
+	:param theDocument:
+	:type theDocument: Handle_CDM_Document &
+	:param theOStream:
+	:type theOStream: Standard_OStream &
+	:rtype: void
+") Write;
+		virtual void Write (const Handle_CDM_Document & theDocument,Standard_OStream & theOStream);
 		%feature("compactdefaultargs") AttributeDrivers;
 		%feature("autodoc", "	:param theMsgDriver:
 	:type theMsgDriver: Handle_CDM_MessageDriver &
@@ -369,19 +382,20 @@ class Handle_BinLDrivers_DocumentStorageDriver : public Handle_PCDM_StorageDrive
         static const Handle_BinLDrivers_DocumentStorageDriver DownCast(const Handle_Standard_Transient &AnObject);
 
 };
+
 %extend Handle_BinLDrivers_DocumentStorageDriver {
     BinLDrivers_DocumentStorageDriver* _get_reference() {
-    return (BinLDrivers_DocumentStorageDriver*)$self->Access();
+    return (BinLDrivers_DocumentStorageDriver*)$self->get();
     }
 };
 
 %extend Handle_BinLDrivers_DocumentStorageDriver {
-    %pythoncode {
-        def GetObject(self):
-            obj = self._get_reference()
-            register_handle(self, obj)
-            return obj
-    }
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
 };
 
 %extend BinLDrivers_DocumentStorageDriver {

@@ -1,5 +1,5 @@
 /*
-Copyright 2008-2017 Thomas Paviot (tpaviot@gmail.com)
+Copyright 2008-2018 Thomas Paviot (tpaviot@gmail.com)
 
 
 This file is part of pythonOCC.
@@ -56,6 +56,9 @@ def register_handle(handle, base_object):
 /* typedefs */
 /* end typedefs declaration */
 
+/* templates */
+/* end templates declaration */
+
 /* public enums */
 /* end public enums declaration */
 
@@ -96,10 +99,10 @@ class GCE2d_MakeMirror {
 	:rtype: Handle_Geom2d_Transformation
 ") Value;
 		Handle_Geom2d_Transformation Value ();
-		%feature("compactdefaultargs") Operator;
-		%feature("autodoc", "	:rtype: Handle_Geom2d_Transformation
-") Operator;
-		Handle_Geom2d_Transformation Operator ();
+		%feature("compactdefaultargs") operator constHandle_Geom2d_Transformation&;
+		%feature("autodoc", "	:rtype: None
+") operator constHandle_Geom2d_Transformation&;
+		 operator constHandle_Geom2d_Transformation& ();
 };
 
 
@@ -127,10 +130,10 @@ class GCE2d_MakeRotation {
 	:rtype: Handle_Geom2d_Transformation
 ") Value;
 		Handle_Geom2d_Transformation Value ();
-		%feature("compactdefaultargs") Operator;
-		%feature("autodoc", "	:rtype: Handle_Geom2d_Transformation
-") Operator;
-		Handle_Geom2d_Transformation Operator ();
+		%feature("compactdefaultargs") operator constHandle_Geom2d_Transformation&;
+		%feature("autodoc", "	:rtype: None
+") operator constHandle_Geom2d_Transformation&;
+		 operator constHandle_Geom2d_Transformation& ();
 };
 
 
@@ -158,10 +161,10 @@ class GCE2d_MakeScale {
 	:rtype: Handle_Geom2d_Transformation
 ") Value;
 		Handle_Geom2d_Transformation Value ();
-		%feature("compactdefaultargs") Operator;
-		%feature("autodoc", "	:rtype: Handle_Geom2d_Transformation
-") Operator;
-		Handle_Geom2d_Transformation Operator ();
+		%feature("compactdefaultargs") operator constHandle_Geom2d_Transformation&;
+		%feature("autodoc", "	:rtype: None
+") operator constHandle_Geom2d_Transformation&;
+		 operator constHandle_Geom2d_Transformation& ();
 };
 
 
@@ -182,7 +185,7 @@ class GCE2d_MakeTranslation {
 ") GCE2d_MakeTranslation;
 		 GCE2d_MakeTranslation (const gp_Vec2d & Vect);
 		%feature("compactdefaultargs") GCE2d_MakeTranslation;
-		%feature("autodoc", "	* Constructs a translation along the vector (Point1,Point2) defined from the point Point1 to the point Point2.
+		%feature("autodoc", "	* Constructs a translation along the vector --Point1,Point2-- defined from the point Point1 to the point Point2.
 
 	:param Point1:
 	:type Point1: gp_Pnt2d
@@ -197,10 +200,10 @@ class GCE2d_MakeTranslation {
 	:rtype: Handle_Geom2d_Transformation
 ") Value;
 		Handle_Geom2d_Transformation Value ();
-		%feature("compactdefaultargs") Operator;
-		%feature("autodoc", "	:rtype: Handle_Geom2d_Transformation
-") Operator;
-		Handle_Geom2d_Transformation Operator ();
+		%feature("compactdefaultargs") operator constHandle_Geom2d_Transformation&;
+		%feature("autodoc", "	:rtype: None
+") operator constHandle_Geom2d_Transformation&;
+		 operator constHandle_Geom2d_Transformation& ();
 };
 
 
@@ -235,7 +238,7 @@ class GCE2d_Root {
 class GCE2d_MakeArcOfCircle : public GCE2d_Root {
 	public:
 		%feature("compactdefaultargs") GCE2d_MakeArcOfCircle;
-		%feature("autodoc", "	* Makes an arc of circle (TrimmedCurve from Geom2d) from a circle between two parameters Alpha1 and Alpha2. The two parameters are angles. The parameters are in radians.
+		%feature("autodoc", "	* Makes an arc of circle --TrimmedCurve from Geom2d-- from a circle between two parameters Alpha1 and Alpha2. The two parameters are angles. The parameters are in radians.
 
 	:param Circ:
 	:type Circ: gp_Circ2d
@@ -249,7 +252,7 @@ class GCE2d_MakeArcOfCircle : public GCE2d_Root {
 ") GCE2d_MakeArcOfCircle;
 		 GCE2d_MakeArcOfCircle (const gp_Circ2d & Circ,const Standard_Real Alpha1,const Standard_Real Alpha2,const Standard_Boolean Sense = Standard_True);
 		%feature("compactdefaultargs") GCE2d_MakeArcOfCircle;
-		%feature("autodoc", "	* Makes an arc of circle (TrimmedCurve from Geom2d) from a circle between point <P> and the parameter Alpha. Alpha is given in radians.
+		%feature("autodoc", "	* Makes an arc of circle --TrimmedCurve from Geom2d-- from a circle between point <P> and the parameter Alpha. Alpha is given in radians.
 
 	:param Circ:
 	:type Circ: gp_Circ2d
@@ -263,7 +266,7 @@ class GCE2d_MakeArcOfCircle : public GCE2d_Root {
 ") GCE2d_MakeArcOfCircle;
 		 GCE2d_MakeArcOfCircle (const gp_Circ2d & Circ,const gp_Pnt2d & P,const Standard_Real Alpha,const Standard_Boolean Sense = Standard_True);
 		%feature("compactdefaultargs") GCE2d_MakeArcOfCircle;
-		%feature("autodoc", "	* Makes an arc of circle (TrimmedCurve from Geom2d) from a circle between two points P1 and P2.
+		%feature("autodoc", "	* Makes an arc of circle --TrimmedCurve from Geom2d-- from a circle between two points P1 and P2.
 
 	:param Circ:
 	:type Circ: gp_Circ2d
@@ -277,7 +280,7 @@ class GCE2d_MakeArcOfCircle : public GCE2d_Root {
 ") GCE2d_MakeArcOfCircle;
 		 GCE2d_MakeArcOfCircle (const gp_Circ2d & Circ,const gp_Pnt2d & P1,const gp_Pnt2d & P2,const Standard_Boolean Sense = Standard_True);
 		%feature("compactdefaultargs") GCE2d_MakeArcOfCircle;
-		%feature("autodoc", "	* Makes an arc of circle (TrimmedCurve from Geom2d) from three points P1,P2,P3 between two points P1 and P3, and passing through the point P2.
+		%feature("autodoc", "	* Makes an arc of circle --TrimmedCurve from Geom2d-- from three points P1,P2,P3 between two points P1 and P3, and passing through the point P2.
 
 	:param P1:
 	:type P1: gp_Pnt2d
@@ -289,7 +292,7 @@ class GCE2d_MakeArcOfCircle : public GCE2d_Root {
 ") GCE2d_MakeArcOfCircle;
 		 GCE2d_MakeArcOfCircle (const gp_Pnt2d & P1,const gp_Pnt2d & P2,const gp_Pnt2d & P3);
 		%feature("compactdefaultargs") GCE2d_MakeArcOfCircle;
-		%feature("autodoc", "	* Makes an arc of circle (TrimmedCurve from Geom2d) from two points P1,P2 and the tangente to the solution at the point P1.
+		%feature("autodoc", "	* Makes an arc of circle --TrimmedCurve from Geom2d-- from two points P1,P2 and the tangente to the solution at the point P1.
 
 	:param P1:
 	:type P1: gp_Pnt2d
@@ -306,10 +309,10 @@ class GCE2d_MakeArcOfCircle : public GCE2d_Root {
 	:rtype: Handle_Geom2d_TrimmedCurve
 ") Value;
 		Handle_Geom2d_TrimmedCurve Value ();
-		%feature("compactdefaultargs") Operator;
-		%feature("autodoc", "	:rtype: Handle_Geom2d_TrimmedCurve
-") Operator;
-		Handle_Geom2d_TrimmedCurve Operator ();
+		%feature("compactdefaultargs") operator constHandle_Geom2d_TrimmedCurve&;
+		%feature("autodoc", "	:rtype: None
+") operator constHandle_Geom2d_TrimmedCurve&;
+		 operator constHandle_Geom2d_TrimmedCurve& ();
 };
 
 
@@ -322,7 +325,7 @@ class GCE2d_MakeArcOfCircle : public GCE2d_Root {
 class GCE2d_MakeArcOfEllipse : public GCE2d_Root {
 	public:
 		%feature("compactdefaultargs") GCE2d_MakeArcOfEllipse;
-		%feature("autodoc", "	* Make an arc of Ellipse (TrimmedCurve from Geom2d) from a Ellipse between two parameters Alpha1 and Alpha2.
+		%feature("autodoc", "	* Make an arc of Ellipse --TrimmedCurve from Geom2d-- from a Ellipse between two parameters Alpha1 and Alpha2.
 
 	:param Elips:
 	:type Elips: gp_Elips2d
@@ -336,7 +339,7 @@ class GCE2d_MakeArcOfEllipse : public GCE2d_Root {
 ") GCE2d_MakeArcOfEllipse;
 		 GCE2d_MakeArcOfEllipse (const gp_Elips2d & Elips,const Standard_Real Alpha1,const Standard_Real Alpha2,const Standard_Boolean Sense = Standard_True);
 		%feature("compactdefaultargs") GCE2d_MakeArcOfEllipse;
-		%feature("autodoc", "	* Make an arc of Ellipse (TrimmedCurve from Geom2d) from a Ellipse between point <P> and the parameter Alpha.
+		%feature("autodoc", "	* Make an arc of Ellipse --TrimmedCurve from Geom2d-- from a Ellipse between point <P> and the parameter Alpha.
 
 	:param Elips:
 	:type Elips: gp_Elips2d
@@ -350,7 +353,7 @@ class GCE2d_MakeArcOfEllipse : public GCE2d_Root {
 ") GCE2d_MakeArcOfEllipse;
 		 GCE2d_MakeArcOfEllipse (const gp_Elips2d & Elips,const gp_Pnt2d & P,const Standard_Real Alpha,const Standard_Boolean Sense = Standard_True);
 		%feature("compactdefaultargs") GCE2d_MakeArcOfEllipse;
-		%feature("autodoc", "	* Make an arc of Ellipse (TrimmedCurve from Geom2d) from a Ellipse between two points P1 and P2. Please, note: The orientation of the arc is: - the trigonometric sense if Sense is not defined or is true (default value), or - the opposite sense if Sense is false. - Alpha1, Alpha2 and Alpha are angle values, given in radians. - IsDone always returns true.
+		%feature("autodoc", "	* Make an arc of Ellipse --TrimmedCurve from Geom2d-- from a Ellipse between two points P1 and P2. Please, note: The orientation of the arc is: - the trigonometric sense if Sense is not defined or is true --default value--, or - the opposite sense if Sense is false. - Alpha1, Alpha2 and Alpha are angle values, given in radians. - IsDone always returns true.
 
 	:param Elips:
 	:type Elips: gp_Elips2d
@@ -369,10 +372,10 @@ class GCE2d_MakeArcOfEllipse : public GCE2d_Root {
 	:rtype: Handle_Geom2d_TrimmedCurve
 ") Value;
 		Handle_Geom2d_TrimmedCurve Value ();
-		%feature("compactdefaultargs") Operator;
-		%feature("autodoc", "	:rtype: Handle_Geom2d_TrimmedCurve
-") Operator;
-		Handle_Geom2d_TrimmedCurve Operator ();
+		%feature("compactdefaultargs") operator constHandle_Geom2d_TrimmedCurve&;
+		%feature("autodoc", "	:rtype: None
+") operator constHandle_Geom2d_TrimmedCurve&;
+		 operator constHandle_Geom2d_TrimmedCurve& ();
 };
 
 
@@ -385,7 +388,7 @@ class GCE2d_MakeArcOfEllipse : public GCE2d_Root {
 class GCE2d_MakeArcOfHyperbola : public GCE2d_Root {
 	public:
 		%feature("compactdefaultargs") GCE2d_MakeArcOfHyperbola;
-		%feature("autodoc", "	* Makes an arc of Hyperbola (TrimmedCurve from Geom2d) from a Hyperbola between two parameters Alpha1 and Alpha2.
+		%feature("autodoc", "	* Makes an arc of Hyperbola --TrimmedCurve from Geom2d-- from a Hyperbola between two parameters Alpha1 and Alpha2.
 
 	:param Hypr:
 	:type Hypr: gp_Hypr2d
@@ -399,7 +402,7 @@ class GCE2d_MakeArcOfHyperbola : public GCE2d_Root {
 ") GCE2d_MakeArcOfHyperbola;
 		 GCE2d_MakeArcOfHyperbola (const gp_Hypr2d & Hypr,const Standard_Real Alpha1,const Standard_Real Alpha2,const Standard_Boolean Sense = Standard_True);
 		%feature("compactdefaultargs") GCE2d_MakeArcOfHyperbola;
-		%feature("autodoc", "	* Makes an arc of Hyperbola (TrimmedCurve from Geom2d) from a Hyperbola between point <P> and the parameter Alpha.
+		%feature("autodoc", "	* Makes an arc of Hyperbola --TrimmedCurve from Geom2d-- from a Hyperbola between point <P> and the parameter Alpha.
 
 	:param Hypr:
 	:type Hypr: gp_Hypr2d
@@ -413,7 +416,7 @@ class GCE2d_MakeArcOfHyperbola : public GCE2d_Root {
 ") GCE2d_MakeArcOfHyperbola;
 		 GCE2d_MakeArcOfHyperbola (const gp_Hypr2d & Hypr,const gp_Pnt2d & P,const Standard_Real Alpha,const Standard_Boolean Sense = Standard_True);
 		%feature("compactdefaultargs") GCE2d_MakeArcOfHyperbola;
-		%feature("autodoc", "	* Makes an arc of Hyperbola (TrimmedCurve from Geom2d) from a Hyperbola between two points P1 and P2. Note: the orientation of the arc of hyperbola is: - the trigonometric sense if Sense is not defined or is true (default value), or - the opposite sense if Sense is false. - IsDone always returns true.
+		%feature("autodoc", "	* Makes an arc of Hyperbola --TrimmedCurve from Geom2d-- from a Hyperbola between two points P1 and P2. Note: the orientation of the arc of hyperbola is: - the trigonometric sense if Sense is not defined or is true --default value--, or - the opposite sense if Sense is false. - IsDone always returns true.
 
 	:param Hypr:
 	:type Hypr: gp_Hypr2d
@@ -432,10 +435,10 @@ class GCE2d_MakeArcOfHyperbola : public GCE2d_Root {
 	:rtype: Handle_Geom2d_TrimmedCurve
 ") Value;
 		Handle_Geom2d_TrimmedCurve Value ();
-		%feature("compactdefaultargs") Operator;
-		%feature("autodoc", "	:rtype: Handle_Geom2d_TrimmedCurve
-") Operator;
-		Handle_Geom2d_TrimmedCurve Operator ();
+		%feature("compactdefaultargs") operator constHandle_Geom2d_TrimmedCurve&;
+		%feature("autodoc", "	:rtype: None
+") operator constHandle_Geom2d_TrimmedCurve&;
+		 operator constHandle_Geom2d_TrimmedCurve& ();
 };
 
 
@@ -448,7 +451,7 @@ class GCE2d_MakeArcOfHyperbola : public GCE2d_Root {
 class GCE2d_MakeArcOfParabola : public GCE2d_Root {
 	public:
 		%feature("compactdefaultargs") GCE2d_MakeArcOfParabola;
-		%feature("autodoc", "	* Make an arc of Parabola (TrimmedCurve from Geom2d) from a Parabola between two parameters Alpha1 and Alpha2.
+		%feature("autodoc", "	* Make an arc of Parabola --TrimmedCurve from Geom2d-- from a Parabola between two parameters Alpha1 and Alpha2.
 
 	:param Parab:
 	:type Parab: gp_Parab2d
@@ -462,7 +465,7 @@ class GCE2d_MakeArcOfParabola : public GCE2d_Root {
 ") GCE2d_MakeArcOfParabola;
 		 GCE2d_MakeArcOfParabola (const gp_Parab2d & Parab,const Standard_Real Alpha1,const Standard_Real Alpha2,const Standard_Boolean Sense = Standard_True);
 		%feature("compactdefaultargs") GCE2d_MakeArcOfParabola;
-		%feature("autodoc", "	* Make an arc of Parabola (TrimmedCurve from Geom2d) from a Parabola between point <P> and the parameter Alpha.
+		%feature("autodoc", "	* Make an arc of Parabola --TrimmedCurve from Geom2d-- from a Parabola between point <P> and the parameter Alpha.
 
 	:param Parab:
 	:type Parab: gp_Parab2d
@@ -476,7 +479,7 @@ class GCE2d_MakeArcOfParabola : public GCE2d_Root {
 ") GCE2d_MakeArcOfParabola;
 		 GCE2d_MakeArcOfParabola (const gp_Parab2d & Parab,const gp_Pnt2d & P,const Standard_Real Alpha,const Standard_Boolean Sense = Standard_True);
 		%feature("compactdefaultargs") GCE2d_MakeArcOfParabola;
-		%feature("autodoc", "	* Make an arc of Parabola (TrimmedCurve from Geom2d) from a Parabola between two points P1 and P2. Please, note: the orientation of the arc of parabola is: - the trigonometric sense if Sense is not defined or is true (default value), or - the opposite sense if Sense is false. - IsDone always returns true.
+		%feature("autodoc", "	* Make an arc of Parabola --TrimmedCurve from Geom2d-- from a Parabola between two points P1 and P2. Please, note: the orientation of the arc of parabola is: - the trigonometric sense if Sense is not defined or is true --default value--, or - the opposite sense if Sense is false. - IsDone always returns true.
 
 	:param Parab:
 	:type Parab: gp_Parab2d
@@ -495,10 +498,10 @@ class GCE2d_MakeArcOfParabola : public GCE2d_Root {
 	:rtype: Handle_Geom2d_TrimmedCurve
 ") Value;
 		Handle_Geom2d_TrimmedCurve Value ();
-		%feature("compactdefaultargs") Operator;
-		%feature("autodoc", "	:rtype: Handle_Geom2d_TrimmedCurve
-") Operator;
-		Handle_Geom2d_TrimmedCurve Operator ();
+		%feature("compactdefaultargs") operator constHandle_Geom2d_TrimmedCurve&;
+		%feature("autodoc", "	:rtype: None
+") operator constHandle_Geom2d_TrimmedCurve&;
+		 operator constHandle_Geom2d_TrimmedCurve& ();
 };
 
 
@@ -585,7 +588,7 @@ class GCE2d_MakeCircle : public GCE2d_Root {
 ") GCE2d_MakeCircle;
 		 GCE2d_MakeCircle (const gp_Pnt2d & P,const Standard_Real Radius,const Standard_Boolean Sense = Standard_True);
 		%feature("compactdefaultargs") GCE2d_MakeCircle;
-		%feature("autodoc", "	* Makes a Circle from geom2d <TheCirc> with its center <Center> and a point giving the radius. If Sense is true the local coordinate system of the solution is direct and non direct in the other case. Warning The MakeCircle class does not prevent the construction of a circle with a null radius. If an error occurs (that is, when IsDone returns false), the Status function returns: - gce_NegativeRadius if Radius is less than 0.0, or - gce_IntersectionError if points P1, P2 and P3 are collinear and the three are not coincident.
+		%feature("autodoc", "	* Makes a Circle from geom2d <TheCirc> with its center <Center> and a point giving the radius. If Sense is true the local coordinate system of the solution is direct and non direct in the other case. Warning The MakeCircle class does not prevent the construction of a circle with a null radius. If an error occurs --that is, when IsDone returns false--, the Status function returns: - gce_NegativeRadius if Radius is less than 0.0, or - gce_IntersectionError if points P1, P2 and P3 are collinear and the three are not coincident.
 
 	:param Center:
 	:type Center: gp_Pnt2d
@@ -602,10 +605,10 @@ class GCE2d_MakeCircle : public GCE2d_Root {
 	:rtype: Handle_Geom2d_Circle
 ") Value;
 		Handle_Geom2d_Circle Value ();
-		%feature("compactdefaultargs") Operator;
-		%feature("autodoc", "	:rtype: Handle_Geom2d_Circle
-") Operator;
-		Handle_Geom2d_Circle Operator ();
+		%feature("compactdefaultargs") operator constHandle_Geom2d_Circle&;
+		%feature("autodoc", "	:rtype: None
+") operator constHandle_Geom2d_Circle&;
+		 operator constHandle_Geom2d_Circle& ();
 };
 
 
@@ -669,10 +672,10 @@ class GCE2d_MakeEllipse : public GCE2d_Root {
 	:rtype: Handle_Geom2d_Ellipse
 ") Value;
 		Handle_Geom2d_Ellipse Value ();
-		%feature("compactdefaultargs") Operator;
-		%feature("autodoc", "	:rtype: Handle_Geom2d_Ellipse
-") Operator;
-		Handle_Geom2d_Ellipse Operator ();
+		%feature("compactdefaultargs") operator constHandle_Geom2d_Ellipse&;
+		%feature("autodoc", "	:rtype: None
+") operator constHandle_Geom2d_Ellipse&;
+		 operator constHandle_Geom2d_Ellipse& ();
 };
 
 
@@ -719,7 +722,7 @@ class GCE2d_MakeHyperbola : public GCE2d_Root {
 ") GCE2d_MakeHyperbola;
 		 GCE2d_MakeHyperbola (const gp_Ax22d & Axis,const Standard_Real MajorRadius,const Standard_Real MinorRadius);
 		%feature("compactdefaultargs") GCE2d_MakeHyperbola;
-		%feature("autodoc", "	* Creates a hyperbol centered on the origin of the coordinate system Axis, with major and minor radii MajorRadius and MinorRadius, where the major axis is the 'X Axis' of Axis (Axis is the local coordinate system of the hyperbola). The implicit orientation of the ellipse is: - the sense defined by Axis or H, - the sense defined by points Center, S1 and S2, - the trigonometric sense if Sense is not given or is true, or - the opposite sense if Sense is false. Warning If an error occurs (that is, when IsDone returns false), the Status function returns: - gce_NegativeRadius if MajorRadius or MinorRadius is less than 0.0, or - gce_InvertAxis if the major radius defined by Center and S1 is less than the minor radius defined by Center, S1 and S2.Make an Hyperbola with its center and two apexes.
+		%feature("autodoc", "	* Creates a hyperbol centered on the origin of the coordinate system Axis, with major and minor radii MajorRadius and MinorRadius, where the major axis is the 'X Axis' of Axis --Axis is the local coordinate system of the hyperbola--. The implicit orientation of the ellipse is: - the sense defined by Axis or H, - the sense defined by points Center, S1 and S2, - the trigonometric sense if Sense is not given or is true, or - the opposite sense if Sense is false. Warning If an error occurs --that is, when IsDone returns false--, the Status function returns: - gce_NegativeRadius if MajorRadius or MinorRadius is less than 0.0, or - gce_InvertAxis if the major radius defined by Center and S1 is less than the minor radius defined by Center, S1 and S2.Make an Hyperbola with its center and two apexes.
 
 	:param S1:
 	:type S1: gp_Pnt2d
@@ -736,10 +739,10 @@ class GCE2d_MakeHyperbola : public GCE2d_Root {
 	:rtype: Handle_Geom2d_Hyperbola
 ") Value;
 		Handle_Geom2d_Hyperbola Value ();
-		%feature("compactdefaultargs") Operator;
-		%feature("autodoc", "	:rtype: Handle_Geom2d_Hyperbola
-") Operator;
-		Handle_Geom2d_Hyperbola Operator ();
+		%feature("compactdefaultargs") operator constHandle_Geom2d_Hyperbola&;
+		%feature("autodoc", "	:rtype: None
+") operator constHandle_Geom2d_Hyperbola&;
+		 operator constHandle_Geom2d_Hyperbola& ();
 };
 
 
@@ -798,7 +801,7 @@ class GCE2d_MakeLine : public GCE2d_Root {
 ") GCE2d_MakeLine;
 		 GCE2d_MakeLine (const gp_Lin2d & Lin,const Standard_Real Dist);
 		%feature("compactdefaultargs") GCE2d_MakeLine;
-		%feature("autodoc", "	* Make a Line from Geom2d <TheLin> passing through 2 Pnt <P1>,<P2>. It returns false if <p1> and <P2> are confused. Warning If points P1 and P2 coincident (that is, when IsDone returns false), the Status function returns gce_ConfusedPoints.
+		%feature("autodoc", "	* Make a Line from Geom2d <TheLin> passing through 2 Pnt <P1>,<P2>. It returns false if <p1> and <P2> are confused. Warning If points P1 and P2 coincident --that is, when IsDone returns false--, the Status function returns gce_ConfusedPoints.
 
 	:param P1:
 	:type P1: gp_Pnt2d
@@ -813,10 +816,10 @@ class GCE2d_MakeLine : public GCE2d_Root {
 	:rtype: Handle_Geom2d_Line
 ") Value;
 		Handle_Geom2d_Line Value ();
-		%feature("compactdefaultargs") Operator;
-		%feature("autodoc", "	:rtype: Handle_Geom2d_Line
-") Operator;
-		Handle_Geom2d_Line Operator ();
+		%feature("compactdefaultargs") operator constHandle_Geom2d_Line&;
+		%feature("autodoc", "	:rtype: None
+") operator constHandle_Geom2d_Line&;
+		 operator constHandle_Geom2d_Line& ();
 };
 
 
@@ -859,16 +862,6 @@ class GCE2d_MakeParabola : public GCE2d_Root {
 ") GCE2d_MakeParabola;
 		 GCE2d_MakeParabola (const gp_Ax2d & MirrorAxis,const Standard_Real Focal,const Standard_Boolean Sense);
 		%feature("compactdefaultargs") GCE2d_MakeParabola;
-		%feature("autodoc", "	* Creates a parabola with the local coordinate system and the focus point. The sense of parametrization is given by Sense.
-
-	:param D:
-	:type D: gp_Ax22d
-	:param F:
-	:type F: gp_Pnt2d
-	:rtype: None
-") GCE2d_MakeParabola;
-		 GCE2d_MakeParabola (const gp_Ax22d & D,const gp_Pnt2d & F);
-		%feature("compactdefaultargs") GCE2d_MakeParabola;
 		%feature("autodoc", "	* D is the directrix of the parabola and F the focus point. The symmetry axis 'XAxis' of the parabola is normal to the directrix and pass through the focus point F, but its 'Location' point is the vertex of the parabola. The 'YAxis' of the parabola is parallel to D and its 'Location' point is the vertex of the parabola.
 
 	:param D:
@@ -881,7 +874,7 @@ class GCE2d_MakeParabola : public GCE2d_Root {
 ") GCE2d_MakeParabola;
 		 GCE2d_MakeParabola (const gp_Ax2d & D,const gp_Pnt2d & F,const Standard_Boolean Sense = Standard_True);
 		%feature("compactdefaultargs") GCE2d_MakeParabola;
-		%feature("autodoc", "	* Make a parabola with focal point S1 and center O The branch of the parabola returned will have <S1> as focal point The implicit orientation of the parabola is: - the same one as the parabola Prb, - the sense defined by the coordinate system Axis or the directrix D, - the trigonometric sense if Sense is not given or is true, or - the opposite sense if Sense is false. Warning The MakeParabola class does not prevent the construction of a parabola with a null focal distance. If an error occurs (that is, when IsDone returns false), the Status function returns: - gce_NullFocusLength if Focal is less than 0.0, or - gce_NullAxis if points S1 and O are coincident.
+		%feature("autodoc", "	* Make a parabola with focal point S1 and center O The branch of the parabola returned will have <S1> as focal point The implicit orientation of the parabola is: - the same one as the parabola Prb, - the sense defined by the coordinate system Axis or the directrix D, - the trigonometric sense if Sense is not given or is true, or - the opposite sense if Sense is false. Warning The MakeParabola class does not prevent the construction of a parabola with a null focal distance. If an error occurs --that is, when IsDone returns false--, the Status function returns: - gce_NullFocusLength if Focal is less than 0.0, or - gce_NullAxis if points S1 and O are coincident.
 
 	:param S1:
 	:type S1: gp_Pnt2d
@@ -896,10 +889,10 @@ class GCE2d_MakeParabola : public GCE2d_Root {
 	:rtype: Handle_Geom2d_Parabola
 ") Value;
 		Handle_Geom2d_Parabola Value ();
-		%feature("compactdefaultargs") Operator;
-		%feature("autodoc", "	:rtype: Handle_Geom2d_Parabola
-") Operator;
-		Handle_Geom2d_Parabola Operator ();
+		%feature("compactdefaultargs") operator constHandle_Geom2d_Parabola&;
+		%feature("autodoc", "	:rtype: None
+") operator constHandle_Geom2d_Parabola&;
+		 operator constHandle_Geom2d_Parabola& ();
 };
 
 
@@ -958,7 +951,7 @@ class GCE2d_MakeSegment : public GCE2d_Root {
 ") GCE2d_MakeSegment;
 		 GCE2d_MakeSegment (const gp_Lin2d & Line,const gp_Pnt2d & Point,const Standard_Real Ulast);
 		%feature("compactdefaultargs") GCE2d_MakeSegment;
-		%feature("autodoc", "	* Make a segment of Line from the line <Line> between the two points <P1> and <P2>. It returns NullObject if <P1> and <P2> are confused. Warning If the points which limit the segment are coincident for given points or for the projection of given points on the line which supports the line segment (that is, when IsDone returns false), the Status function returns gce_ConfusedPoints. This warning only concerns the first two constructors.
+		%feature("autodoc", "	* Make a segment of Line from the line <Line> between the two points <P1> and <P2>. It returns NullObject if <P1> and <P2> are confused. Warning If the points which limit the segment are coincident for given points or for the projection of given points on the line which supports the line segment --that is, when IsDone returns false--, the Status function returns gce_ConfusedPoints. This warning only concerns the first two constructors.
 
 	:param Line:
 	:type Line: gp_Lin2d
@@ -975,10 +968,10 @@ class GCE2d_MakeSegment : public GCE2d_Root {
 	:rtype: Handle_Geom2d_TrimmedCurve
 ") Value;
 		Handle_Geom2d_TrimmedCurve Value ();
-		%feature("compactdefaultargs") Operator;
-		%feature("autodoc", "	:rtype: Handle_Geom2d_TrimmedCurve
-") Operator;
-		Handle_Geom2d_TrimmedCurve Operator ();
+		%feature("compactdefaultargs") operator constHandle_Geom2d_TrimmedCurve&;
+		%feature("autodoc", "	:rtype: None
+") operator constHandle_Geom2d_TrimmedCurve&;
+		 operator constHandle_Geom2d_TrimmedCurve& ();
 };
 
 
