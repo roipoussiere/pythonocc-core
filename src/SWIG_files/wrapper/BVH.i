@@ -38,6 +38,7 @@ along with pythonOCC.  If not, see <http://www.gnu.org/licenses/>.
 
 %include BVH_headers.i
 
+%include "BVH_Box.hxx";
 
 %pythoncode {
 def register_handle(handle, base_object):

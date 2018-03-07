@@ -52,12 +52,19 @@ def register_handle(handle, base_object):
     except:
         pass
 };
-
+/* public enums *
+enum Graphic3d_BufferType {
+	Graphic3d_BT_RGB = 0,
+	Graphic3d_BT_RGBA = 1,
+	Graphic3d_BT_Depth = 2,
+	Graphic3d_BT_RGB_RayTraceHdrLeft = 3,
+};
 /* typedefs */
 typedef Standard_Integer Graphic3d_ZLayerId;
 typedef Graphic3d_MapOfStructure::Iterator Graphic3d_MapIteratorOfMapOfStructure;
 /* end typedefs declaration */
-
+%define Handle(Class) opencascade::handle<Class>
+%enddef
 /* templates */
 %template(Graphic3d_Vec4i) NCollection_Vec4 <Standard_Integer>;
 %template(Graphic3d_Vec2b) NCollection_Vec2 <Standard_Character>;
@@ -70,48 +77,33 @@ typedef Graphic3d_MapOfStructure::Iterator Graphic3d_MapIteratorOfMapOfStructure
 %template(Graphic3d_Vec4u) NCollection_Vec4 <unsigned int>;
 %template(Graphic3d_Mat4d) NCollection_Mat4 <Standard_Real>;
 %template(Graphic3d_BndBox3d) BVH_Box <Standard_Real , 3>;
-%template(Graphic3d_UniformVec3i) Graphic3d_UniformValue <Graphic3d_Vec3i>;
 %template(Graphic3d_Vec2) NCollection_Vec2 <Standard_ShortReal>;
 %template(Graphic3d_Vec3) NCollection_Vec3 <Standard_ShortReal>;
 %template(Graphic3d_Vec4) NCollection_Vec4 <Standard_ShortReal>;
-%template(Graphic3d_SequenceOfStructure) NCollection_Sequence <Handle_Graphic3d_Structure>;
-%template(Graphic3d_MapOfStructure) NCollection_Map <Handle_Graphic3d_Structure>;
-%template(Graphic3d_ShaderAttributeList) NCollection_Sequence <Handle_Graphic3d_ShaderAttribute>;
-%template(Graphic3d_UniformVec2) Graphic3d_UniformValue <Graphic3d_Vec2>;
-%template(Graphic3d_NMapOfTransient) NCollection_Shared<NCollection_Map <const Standard_Transient *>>;
-%template(Graphic3d_UniformVec4) Graphic3d_UniformValue <Graphic3d_Vec4>;
+%template(Graphic3d_SequenceOfStructure) NCollection_Sequence <Handle(Graphic3d_Structure)>;
+%template(Graphic3d_MapOfStructure) NCollection_Map <Handle(Graphic3d_Structure)>;
+%template(Graphic3d_ShaderAttributeList) NCollection_Sequence <Handle(Graphic3d_ShaderAttribute)>;
 %template(Graphic3d_Vec3b) NCollection_Vec3 <Standard_Character>;
 %template(Graphic3d_Vec4b) NCollection_Vec4 <Standard_Character>;
 %template(Graphic3d_Vec3i) NCollection_Vec3 <Standard_Integer>;
-%template(Graphic3d_UniformInt) Graphic3d_UniformValue <Standard_Integer>;
-%template(Graphic3d_UniformVec3) Graphic3d_UniformValue <Graphic3d_Vec3>;
 %template(Graphic3d_ListOfCLight) NCollection_List <Graphic3d_CLight>;
 %template(Graphic3d_Vec3u) NCollection_Vec3 <unsigned int>;
 %template(Graphic3d_IndexedMapOfView) NCollection_IndexedMap <Graphic3d_CView *>;
 %template(Graphic3d_Mat4) NCollection_Mat4 <Standard_ShortReal>;
-%template(Graphic3d_ShaderObjectList) NCollection_Sequence <Handle_Graphic3d_ShaderObject>;
+%template(Graphic3d_ShaderObjectList) NCollection_Sequence <Handle(Graphic3d_ShaderObject)>;
 %template(Graphic3d_Array1OfAttribute) NCollection_Array1 <Graphic3d_Attribute>;
-%template(Graphic3d_UniformFloat) Graphic3d_UniformValue <Standard_ShortReal>;
-%template(Graphic3d_IndexedMapOfAddress) NCollection_IndexedMap <const Standard_Address>;
+//%template(Graphic3d_IndexedMapOfAddress) NCollection_IndexedMap <const Standard_Address>;
 %template(Graphic3d_BndBox4d) BVH_Box <Standard_Real , 4>;
 %template(Graphic3d_BndBox4f) BVH_Box <Standard_ShortReal , 4>;
-%template(Graphic3d_ShaderVariableList) NCollection_Sequence <Handle_Graphic3d_ShaderVariable>;
+%template(Graphic3d_ShaderVariableList) NCollection_Sequence <Handle(Graphic3d_ShaderVariable)>;
 %template(Graphic3d_CameraLerp) NCollection_Lerp <Handle_Graphic3d_Camera>;
 %template(Graphic3d_SequenceOfGroup) NCollection_Sequence <Handle_Graphic3d_Group>;
-%template(Graphic3d_UniformVec4i) Graphic3d_UniformValue <Graphic3d_Vec4i>;
 %template(Graphic3d_Vec2ub) NCollection_Vec2 <Standard_Byte>;
-%template(Graphic3d_UniformVec2i) Graphic3d_UniformValue <Graphic3d_Vec2i>;
 %template(Graphic3d_Vec3ub) NCollection_Vec3 <Standard_Byte>;
 %template(Graphic3d_MapOfObject) NCollection_DataMap <const Standard_Transient * , Handle_Graphic3d_ViewAffinity>;
 /* end templates declaration */
 
-/* public enums */
-enum Graphic3d_BufferType {
-	Graphic3d_BT_RGB = 0,
-	Graphic3d_BT_RGBA = 1,
-	Graphic3d_BT_Depth = 2,
-	Graphic3d_BT_RGB_RayTraceHdrLeft = 3,
-};
+
 
 enum Graphic3d_SortType {
 	Graphic3d_ST_Simple = 0,
@@ -1405,7 +1397,7 @@ class Graphic3d_AspectFillArea3d : public Standard_Transient {
 
 	:rtype: Handle_Graphic3d_TextureSet
 ") TextureSet;
-		Handle_Graphic3d_TextureSet TextureSet ();
+		Handle(Graphic3d_TextureSet) TextureSet ();
 		%feature("compactdefaultargs") SetTextureSet;
 		%feature("autodoc", "	* Setup texture array to be mapped.
 
@@ -1413,7 +1405,7 @@ class Graphic3d_AspectFillArea3d : public Standard_Transient {
 	:type theTextures: Handle_Graphic3d_TextureSet &
 	:rtype: None
 ") SetTextureSet;
-		void SetTextureSet (const Handle_Graphic3d_TextureSet & theTextures);
+		void SetTextureSet (const Handle(Graphic3d_TextureSet) & theTextures);
 		%feature("compactdefaultargs") TextureMap;
 		%feature("autodoc", "	* Return texture to be mapped. ////Standard_DEPRECATED--'Deprecated method, TextureSet---- should be used instead'--
 
@@ -4467,7 +4459,7 @@ class Graphic3d_GraphicDriver : public Standard_Transient {
 
 	:rtype: Handle_Aspect_DisplayConnection
 ") GetDisplayConnection;
-		Handle_Aspect_DisplayConnection GetDisplayConnection ();
+		Handle(Aspect_DisplayConnection) GetDisplayConnection ();
 		%feature("compactdefaultargs") NewIdentification;
 		%feature("autodoc", "	* Returns a new identification number for a new structure.
 
@@ -7707,74 +7699,9 @@ class Graphic3d_TransformPers : public Standard_Transient {
 	:rtype: None
 ") SetOffset2d;
 		void SetOffset2d (const Graphic3d_Vec2i & theOffset);
-		%feature("compactdefaultargs") Apply;
-		%feature("autodoc", "	* Apply transformation to bounding box of presentation. @param theCamera [in] camera definition @param theProjection [in] the projection transformation matrix. @param theWorldView [in] the world view transformation matrix. @param theViewportWidth [in] the width of viewport --for 2d persistence--. @param theViewportHeight [in] the height of viewport --for 2d persistence--. @param theBoundingBox [in/out] the bounding box to transform.
 
-	:param theCamera:
-	:type theCamera: Handle_Graphic3d_Camera &
-	:param theProjection:
-	:type theProjection: NCollection_Mat4<T> &
-	:param theWorldView:
-	:type theWorldView: NCollection_Mat4<T> &
-	:param theViewportWidth:
-	:type theViewportWidth: int
-	:param theViewportHeight:
-	:type theViewportHeight: int
-	:param theBoundingBox:
-	:type theBoundingBox: Bnd_Box &
-	:rtype: None
-") Apply;
-		void Apply (const Handle_Graphic3d_Camera & theCamera,const NCollection_Mat4<T> & theProjection,const NCollection_Mat4<T> & theWorldView,const Standard_Integer theViewportWidth,const Standard_Integer theViewportHeight,Bnd_Box & theBoundingBox);
-		%feature("compactdefaultargs") Apply;
-		%feature("autodoc", "	* Apply transformation to bounding box of presentation @param theCamera [in] camera definition @param theProjection [in] the projection transformation matrix. @param theWorldView [in] the world view transformation matrix. @param theViewportWidth [in] the width of viewport --for 2d persistence--. @param theViewportHeight [in] the height of viewport --for 2d persistence--. @param theBoundingBox [in/out] the bounding box to transform.
 
-	:param theCamera:
-	:type theCamera: Handle_Graphic3d_Camera &
-	:param theProjection:
-	:type theProjection: NCollection_Mat4<T> &
-	:param theWorldView:
-	:type theWorldView: NCollection_Mat4<T> &
-	:param theViewportWidth:
-	:type theViewportWidth: int
-	:param theViewportHeight:
-	:type theViewportHeight: int
-	:param theBoundingBox:
-	:type theBoundingBox: BVH_Box<T, 3> &
-	:rtype: None
-") Apply;
-		void Apply (const Handle_Graphic3d_Camera & theCamera,const NCollection_Mat4<T> & theProjection,const NCollection_Mat4<T> & theWorldView,const Standard_Integer theViewportWidth,const Standard_Integer theViewportHeight,BVH_Box<T, 3> & theBoundingBox);
-		%feature("compactdefaultargs") Compute;
-		%feature("autodoc", "	* Compute transformation. Computed matrix can be applied to model world transformation of an object to implement effect of transformation persistence. @param theCamera [in] camera definition @param theProjection [in] the projection transformation matrix. @param theWorldView [in] the world view transformation matrix. @param theViewportWidth [in] the width of viewport --for 2d persistence--. @param theViewportHeight [in] the height of viewport --for 2d persistence--. returns transformation matrix to be applied to model world transformation of an object.
 
-	:param theCamera:
-	:type theCamera: Handle_Graphic3d_Camera &
-	:param theProjection:
-	:type theProjection: NCollection_Mat4<T> &
-	:param theWorldView:
-	:type theWorldView: NCollection_Mat4<T> &
-	:param theViewportWidth:
-	:type theViewportWidth: int
-	:param theViewportHeight:
-	:type theViewportHeight: int
-	:rtype: NCollection_Mat4<T>
-") Compute;
-		NCollection_Mat4<T> Compute (const Handle_Graphic3d_Camera & theCamera,const NCollection_Mat4<T> & theProjection,const NCollection_Mat4<T> & theWorldView,const Standard_Integer theViewportWidth,const Standard_Integer theViewportHeight);
-		%feature("compactdefaultargs") Apply;
-		%feature("autodoc", "	* Apply transformation persistence on specified matrices. @param theCamera camera definition @param theProjection projection matrix to modify @param theWorldView world-view matrix to modify @param theViewportWidth viewport width @param theViewportHeight viewport height
-
-	:param theCamera:
-	:type theCamera: Handle_Graphic3d_Camera &
-	:param theProjection:
-	:type theProjection: NCollection_Mat4<T> &
-	:param theWorldView:
-	:type theWorldView: NCollection_Mat4<T> &
-	:param theViewportWidth:
-	:type theViewportWidth: int
-	:param theViewportHeight:
-	:type theViewportHeight: int
-	:rtype: None
-") Apply;
-		void Apply (const Handle_Graphic3d_Camera & theCamera,const NCollection_Mat4<T> & theProjection,NCollection_Mat4<T> & theWorldView,const Standard_Integer theViewportWidth,const Standard_Integer theViewportHeight);
 };
 
 
@@ -9402,13 +9329,13 @@ class Graphic3d_CView : public Graphic3d_DataStructureManager {
 
 	:rtype: Handle_Graphic3d_NMapOfTransient
 ") HiddenObjects;
-		Handle_Graphic3d_NMapOfTransient HiddenObjects ();
+		Handle(Graphic3d_NMapOfTransient) HiddenObjects ();
 		%feature("compactdefaultargs") ChangeHiddenObjects;
 		%feature("autodoc", "	* Returns map of objects hidden within this specific view --not viewer-wise--.
 
 	:rtype: Handle_Graphic3d_NMapOfTransient
 ") ChangeHiddenObjects;
-		Handle_Graphic3d_NMapOfTransient ChangeHiddenObjects ();
+		Handle(Graphic3d_NMapOfTransient) ChangeHiddenObjects ();
 		%feature("compactdefaultargs") IsComputed;
 		%feature("autodoc", "	* Returns Standard_True in case if the structure with the given <theStructId> is in list of structures to be computed and stores computed struct to <theComputedStruct>.
 

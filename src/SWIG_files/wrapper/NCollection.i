@@ -64,6 +64,10 @@ along with pythonOCC.  If not, see <http://www.gnu.org/licenses/>.
 %include "NCollection_Handle.hxx";
 %include "NCollection_CellFilter.hxx";
 %include "NCollection_Vector.hxx";
+%include "NCollection_Vec2.hxx";
+%include "NCollection_Vec3.hxx";
+%include "NCollection_Vec4.hxx";
+%include "NCollection_Mat4.hxx";
 
 %pythoncode {
 def register_handle(handle, base_object):

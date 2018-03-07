@@ -3004,18 +3004,6 @@ class AIS_InteractiveContext : public Standard_Transient {
 	:rtype: None
 ") ActivatedModes;
 		void ActivatedModes (const Handle_AIS_InteractiveObject & anIobj,TColStd_ListOfInteger & theList);
-		%feature("compactdefaultargs") EntityOwners;
-		%feature("autodoc", "	* Returns a collection containing all entity owners created for the interactive object in specified selection mode --in all active modes if the Mode == -1--
-
-	:param theOwners:
-	:type theOwners: Handle_SelectMgr_IndexedMapOfOwner &
-	:param theIObj:
-	:type theIObj: Handle_AIS_InteractiveObject &
-	:param theMode: default value is -1
-	:type theMode: int
-	:rtype: None
-") EntityOwners;
-		void EntityOwners (Handle_SelectMgr_IndexedMapOfOwner & theOwners,const Handle_AIS_InteractiveObject & theIObj,const Standard_Integer theMode = -1);
 		%feature("compactdefaultargs") Filters;
 		%feature("autodoc", "	* @name Selection Filters management Returns the list of filters active in a local context.
 
@@ -7595,6 +7583,27 @@ class Handle_AIS_Line : public Handle_AIS_InteractiveObject {
 %nodefaultctor AIS_Manipulator;
 class AIS_Manipulator : public AIS_InteractiveObject {
 	public:
+	struct OptionsForAttach {
+
+    OptionsForAttach() : AdjustPosition (Standard_True), AdjustSize (Standard_False), EnableModes (Standard_True) {}
+    OptionsForAttach& SetAdjustPosition (const Standard_Boolean theApply) { AdjustPosition = theApply; return *this; }
+    OptionsForAttach& SetAdjustSize     (const Standard_Boolean theApply) { AdjustSize     = theApply; return *this; }
+    OptionsForAttach& SetEnableModes    (const Standard_Boolean theApply) { EnableModes    = theApply; return *this; }
+
+    Standard_Boolean AdjustPosition;
+    Standard_Boolean AdjustSize;
+    Standard_Boolean EnableModes;
+  };
+  struct BehaviorOnTransform {
+
+    BehaviorOnTransform() : FollowTranslation (Standard_True), FollowRotation (Standard_True) {}
+    BehaviorOnTransform& SetFollowTranslation (const Standard_Boolean theApply) { FollowTranslation = theApply; return *this; }
+    BehaviorOnTransform& SetFollowRotation    (const Standard_Boolean theApply) { FollowRotation    = theApply; return *this; }
+
+    Standard_Boolean FollowTranslation;
+    Standard_Boolean FollowRotation;
+  };
+
 		%feature("compactdefaultargs") AIS_Manipulator;
 		%feature("autodoc", "	* Constructs a manipulator object with default placement and all parts to be displayed.
 

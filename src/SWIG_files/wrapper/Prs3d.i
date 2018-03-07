@@ -38,6 +38,7 @@ along with pythonOCC.  If not, see <http://www.gnu.org/licenses/>.
 
 %include Prs3d_headers.i
 
+%include "Prs3d_Point.hxx";
 
 %pythoncode {
 def register_handle(handle, base_object):

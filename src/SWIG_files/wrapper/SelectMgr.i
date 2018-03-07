@@ -56,23 +56,30 @@ def register_handle(handle, base_object):
 /* typedefs */
 typedef SelectMgr_SelectableObject * SelectMgr_SOPtr;
 /* end typedefs declaration */
+%define Handle(Class) opencascade::handle<Class>
+%enddef
+%define Handle_SelectMgr_BaseFrustum Handle(SelectMgr_BaseFrustum)
+%enddef
+%define Handle_Select3D_BVHBuilder3d Handle(Select3D_BVHBuilder3d)
+%enddef
+%define Handle_Graphic3d_NMapOfTransient Handle(Graphic3d_NMapOfTransient)
+%enddef
 
 /* templates */
 %template(SelectMgr_DataMapOfObjectSelectors) NCollection_DataMap <Handle_SelectMgr_SelectableObject , SelectMgr_SequenceOfSelector , TColStd_MapTransientHasher>;
 %template(SelectMgr_Mat4) NCollection_Mat4 <Standard_Real>;
-%template(SelectMgr_TriangFrustums) NCollection_List <Handle_SelectMgr_TriangularFrustum>;
-%template(SelectMgr_SequenceOfOwner) NCollection_Sequence <Handle_SelectMgr_EntityOwner>;
-%template(SelectMgr_IndexedMapOfHSensitive) NCollection_IndexedMap <Handle_SelectMgr_SensitiveEntity>;
-%template(SelectMgr_MapOfObjectSensitives) NCollection_DataMap <Handle_SelectMgr_SelectableObject , Handle_SelectMgr_SensitiveEntitySet>;
-%template(SelectMgr_SequenceOfSelection) NCollection_Sequence <Handle_SelectMgr_Selection>;
+%template(SelectMgr_TriangFrustums) NCollection_List <Handle(SelectMgr_TriangularFrustum)>;
+%template(SelectMgr_SequenceOfOwner) NCollection_Sequence <Handle(SelectMgr_EntityOwner)>;
+%template(SelectMgr_IndexedMapOfHSensitive) NCollection_IndexedMap <Handle(SelectMgr_SensitiveEntity)>;
+%template(SelectMgr_MapOfObjectSensitives) NCollection_DataMap <Handle(SelectMgr_SelectableObject) , Handle(SelectMgr_SensitiveEntitySet)>;
+%template(SelectMgr_SequenceOfSelection) NCollection_Sequence <Handle(SelectMgr_Selection)>;
 %template(SelectMgr_IndexedDataMapOfOwnerCriterion) NCollection_IndexedDataMap <Handle_SelectBasics_EntityOwner , SelectMgr_SortCriterion , TColStd_MapTransientHasher>;
-%template(SelectMgr_IndexedMapOfOwner) NCollection_Shared<NCollection_IndexedMap <Handle_SelectMgr_EntityOwner>>;
 %template(SelectMgr_Vec3) NCollection_Vec3 <Standard_Real>;
-%template(SelectMgr_SequenceOfSelector) NCollection_Sequence <Handle_SelectMgr_ViewerSelector>;
+%template(SelectMgr_SequenceOfSelector) NCollection_Sequence <Handle(SelectMgr_ViewerSelector)>;
 %template(SelectMgr_FrustumCache) NCollection_DataMap <Standard_Integer , SelectMgr_SelectingVolumeManager>;
 %template(SelectMgr_Vec4) NCollection_Vec4 <Standard_Real>;
-%template(SelectMgr_ListOfFilter) NCollection_List <Handle_SelectMgr_Filter>;
-%template(SelectMgr_SequenceOfFilter) NCollection_Sequence <Handle_SelectMgr_Filter>;
+%template(SelectMgr_ListOfFilter) NCollection_List <Handle(SelectMgr_Filter)>;
+%template(SelectMgr_SequenceOfFilter) NCollection_Sequence <Handle(SelectMgr_Filter)>;
 /* end templates declaration */
 
 /* public enums */
@@ -646,14 +653,6 @@ class SelectMgr_SelectableObject : public PrsMgr_PresentableObject {
 	:rtype: Handle_SelectMgr_EntityOwner
 ") GetAssemblyOwner;
 		Handle_SelectMgr_EntityOwner GetAssemblyOwner ();
-		%feature("compactdefaultargs") BndBoxOfSelected;
-		%feature("autodoc", "	* Returns a bounding box of sensitive entities with the owners given if they are a part of activated selection
-
-	:param theOwners:
-	:type theOwners: Handle_SelectMgr_IndexedMapOfOwner &
-	:rtype: Bnd_Box
-") BndBoxOfSelected;
-		Bnd_Box BndBoxOfSelected (const Handle_SelectMgr_IndexedMapOfOwner & theOwners);
 		%feature("compactdefaultargs") GlobalSelectionMode;
 		%feature("autodoc", "	* Returns the mode for selection of object as a whole
 

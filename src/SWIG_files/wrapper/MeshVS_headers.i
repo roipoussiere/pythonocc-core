@@ -1141,7 +1141,15 @@ along with pythonOCC.  If not, see <http://www.gnu.org/licenses/>.
 #include<V3d_SpotLight.hxx>
 #include<V3d_PositionLight.hxx>
 #include<V3d_Light.hxx>
+#include<TopLoc_MapOfLocation.hxx>
 #include<TopLoc_MapIteratorOfMapOfLocation.hxx>
+#include<TopLoc_Datum3D.hxx>
+#include<TopLoc_ItemLocation.hxx>
+#include<TopLoc_IndexedMapOfLocation.hxx>
+#include<TopLoc_MapLocationHasher.hxx>
+#include<TopLoc_Location.hxx>
+#include<TopLoc_SListNodeOfItemLocation.hxx>
+#include<TopLoc_SListOfItemLocation.hxx>
 #include<TColgp_Array2OfXYZ.hxx>
 #include<TColgp_SequenceOfVec.hxx>
 #include<TColgp_Array1OfCirc2d.hxx>
