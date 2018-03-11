@@ -68,6 +68,7 @@ along with pythonOCC.  If not, see <http://www.gnu.org/licenses/>.
 %include "NCollection_Vec3.hxx";
 %include "NCollection_Vec4.hxx";
 %include "NCollection_Mat4.hxx";
+%include "NCollection_TListIterator.hxx";
 
 %pythoncode {
 def register_handle(handle, base_object):
