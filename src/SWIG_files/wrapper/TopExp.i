@@ -53,15 +53,17 @@ def register_handle(handle, base_object):
         pass
 };
 
-/* typedefs */
-typedef TopoDS_Iterator * TopExp_Stack;
-
-/* end typedefs declaration */
-
+/* templates */
 /* templates */
 %define Handle(Class) opencascade::handle<Class>
 %enddef
 /* end templates declaration */
+
+/* end templates declaration */
+
+/* typedefs */
+typedef TopoDS_Iterator * TopExp_Stack;
+/* end typedefs declaration */
 
 /* public enums */
 /* end public enums declaration */

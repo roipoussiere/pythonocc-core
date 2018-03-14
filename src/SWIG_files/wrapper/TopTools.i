@@ -53,25 +53,16 @@ def register_handle(handle, base_object):
         pass
 };
 
-/* typedefs */
-typedef TopTools_LocationSet * TopTools_LocationSetPtr;
-/* end typedefs declaration */
-
-
+/* templates */
 /* templates */
 %define Handle(Class) opencascade::handle<Class>
 %enddef
-%template(TopTools_DataMapIteratorOfDataMapOfIntegerListOfShape) NCollection_TListIterator<TopTools_DataMapOfIntegerListOfShape>;
-%template(TopTools_DataMapIteratorOfDataMapOfOrientedShapeShape) NCollection_TListIterator<TopTools_DataMapOfOrientedShapeShape>;
 %template(TopTools_DataMapOfOrientedShapeShape) NCollection_DataMap <TopoDS_Shape , TopoDS_Shape , TopTools_OrientedShapeMapHasher>;
 %template(TopTools_IndexedMapOfOrientedShape) NCollection_IndexedMap <TopoDS_Shape , TopTools_OrientedShapeMapHasher>;
 %template(TopTools_MapOfShape) NCollection_Map <TopoDS_Shape , TopTools_ShapeMapHasher>;
 %template(TopTools_DataMapOfShapeReal) NCollection_DataMap <TopoDS_Shape , Standard_Real , TopTools_ShapeMapHasher>;
-%template(TopTools_MapIteratorOfMapOfOrientedShape) NCollection_TListIterator<TopTools_MapOfOrientedShape>;
 %template(TopTools_ListOfShape) NCollection_List <TopoDS_Shape>;
 %template(TopTools_DataMapOfShapeListOfInteger) NCollection_DataMap <TopoDS_Shape , TColStd_ListOfInteger , TopTools_ShapeMapHasher>;
-%template(TopTools_DataMapIteratorOfDataMapOfOrientedShapeInteger) NCollection_TListIterator<TopTools_DataMapOfOrientedShapeInteger>;
-%template(TopTools_MapIteratorOfMapOfShape) NCollection_TListIterator<TopTools_MapOfShape>;
 %template(TopTools_Array1OfShape) NCollection_Array1 <TopoDS_Shape>;
 %template(TopTools_IndexedDataMapOfShapeShape) NCollection_IndexedDataMap <TopoDS_Shape , TopoDS_Shape , TopTools_ShapeMapHasher>;
 %template(TopTools_IndexedDataMapOfShapeListOfShape) NCollection_IndexedDataMap <TopoDS_Shape , TopTools_ListOfShape , TopTools_ShapeMapHasher>;
@@ -79,28 +70,59 @@ typedef TopTools_LocationSet * TopTools_LocationSetPtr;
 %template(TopTools_DataMapOfOrientedShapeInteger) NCollection_DataMap <TopoDS_Shape , Standard_Integer , TopTools_OrientedShapeMapHasher>;
 %template(TopTools_SequenceOfShape) NCollection_Sequence <TopoDS_Shape>;
 %template(TopTools_DataMapOfIntegerListOfShape) NCollection_DataMap <Standard_Integer , TopTools_ListOfShape , TColStd_MapIntegerHasher>;
-%template(TopTools_DataMapIteratorOfDataMapOfShapeInteger) NCollection_TListIterator<TopTools_DataMapOfShapeInteger>;
 %template(TopTools_DataMapOfShapeListOfShape) NCollection_DataMap <TopoDS_Shape , TopTools_ListOfShape , TopTools_ShapeMapHasher>;
 %template(TopTools_DataMapOfShapeShape) NCollection_DataMap <TopoDS_Shape , TopoDS_Shape , TopTools_ShapeMapHasher>;
-%template(TopTools_DataMapIteratorOfDataMapOfShapeReal) NCollection_TListIterator<TopTools_DataMapOfShapeReal>;
 %template(TopTools_DataMapOfShapeInteger) NCollection_DataMap <TopoDS_Shape , Standard_Integer , TopTools_ShapeMapHasher>;
-%template(TopTools_DataMapIteratorOfDataMapOfShapeListOfShape) NCollection_TListIterator<TopTools_DataMapOfShapeListOfShape>;
 %template(TopTools_IndexedDataMapOfShapeAddress) NCollection_IndexedDataMap <TopoDS_Shape , Standard_Address , TopTools_ShapeMapHasher>;
 %template(TopTools_IndexedMapOfShape) NCollection_IndexedMap <TopoDS_Shape , TopTools_ShapeMapHasher>;
 %template(TopTools_DataMapOfShapeSequenceOfShape) NCollection_DataMap <TopoDS_Shape , TopTools_SequenceOfShape , TopTools_ShapeMapHasher>;
 %template(TopTools_ListIteratorOfListOfShape) NCollection_TListIterator<TopoDS_Shape>;
-%template(TopTools_DataMapIteratorOfDataMapOfShapeShape) NCollection_TListIterator<TopTools_DataMapOfShapeShape>;
 %template(TopTools_Array2OfShape) NCollection_Array2 <TopoDS_Shape>;
-%template(TopTools_DataMapIteratorOfDataMapOfIntegerShape) NCollection_TListIterator<TopTools_DataMapOfIntegerShape>;
-%template(TopTools_DataMapIteratorOfDataMapOfShapeSequenceOfShape) NCollection_TListIterator<TopTools_DataMapOfShapeSequenceOfShape>;
 %template(TopTools_DataMapOfIntegerShape) NCollection_DataMap <Standard_Integer , TopoDS_Shape , TColStd_MapIntegerHasher>;
-%template(TopTools_DataMapIteratorOfDataMapOfShapeListOfInteger) NCollection_TListIterator<TopTools_DataMapOfShapeListOfInteger>;
 %template(TopTools_Array1OfListOfShape) NCollection_Array1 <TopTools_ListOfShape>;
 /* end templates declaration */
 
-typedef NCollection_IndexedDataMap<TopoDS_Shape,TopTools_ListOfShape,TopTools_ShapeMapHasher> TopTools_IndexedDataMapOfShapeListOfShape;
-typedef NCollection_List<TopoDS_Shape> TopTools_ListOfShape;
-typedef NCollection_List<TopoDS_Shape>::Iterator TopTools_ListIteratorOfListOfShape;
+/* end templates declaration */
+
+/* typedefs */
+typedef NCollection_DataMap <Standard_Integer , TopTools_ListOfShape , TColStd_MapIntegerHasher>::Iterator TopTools_DataMapIteratorOfDataMapOfIntegerListOfShape;
+typedef NCollection_DataMap <TopoDS_Shape , TopoDS_Shape , TopTools_OrientedShapeMapHasher>::Iterator TopTools_DataMapIteratorOfDataMapOfOrientedShapeShape;
+typedef NCollection_DataMap <TopoDS_Shape , TopoDS_Shape , TopTools_OrientedShapeMapHasher> TopTools_DataMapOfOrientedShapeShape;
+typedef NCollection_IndexedMap <TopoDS_Shape , TopTools_OrientedShapeMapHasher> TopTools_IndexedMapOfOrientedShape;
+typedef NCollection_Map <TopoDS_Shape , TopTools_ShapeMapHasher> TopTools_MapOfShape;
+typedef NCollection_DataMap <TopoDS_Shape , Standard_Real , TopTools_ShapeMapHasher> TopTools_DataMapOfShapeReal;
+typedef NCollection_Map <TopoDS_Shape , TopTools_OrientedShapeMapHasher>::Iterator TopTools_MapIteratorOfMapOfOrientedShape;
+typedef NCollection_List <TopoDS_Shape> TopTools_ListOfShape;
+typedef NCollection_DataMap <TopoDS_Shape , TColStd_ListOfInteger , TopTools_ShapeMapHasher> TopTools_DataMapOfShapeListOfInteger;
+typedef NCollection_DataMap <TopoDS_Shape , Standard_Integer , TopTools_OrientedShapeMapHasher>::Iterator TopTools_DataMapIteratorOfDataMapOfOrientedShapeInteger;
+typedef NCollection_Map <TopoDS_Shape , TopTools_ShapeMapHasher>::Iterator TopTools_MapIteratorOfMapOfShape;
+typedef NCollection_Array1 <TopoDS_Shape> TopTools_Array1OfShape;
+typedef NCollection_IndexedDataMap <TopoDS_Shape , TopoDS_Shape , TopTools_ShapeMapHasher> TopTools_IndexedDataMapOfShapeShape;
+typedef NCollection_IndexedDataMap <TopoDS_Shape , TopTools_ListOfShape , TopTools_ShapeMapHasher> TopTools_IndexedDataMapOfShapeListOfShape;
+typedef NCollection_Map <TopoDS_Shape , TopTools_OrientedShapeMapHasher> TopTools_MapOfOrientedShape;
+typedef NCollection_DataMap <TopoDS_Shape , Standard_Integer , TopTools_OrientedShapeMapHasher> TopTools_DataMapOfOrientedShapeInteger;
+typedef NCollection_Sequence <TopoDS_Shape> TopTools_SequenceOfShape;
+typedef NCollection_DataMap <Standard_Integer , TopTools_ListOfShape , TColStd_MapIntegerHasher> TopTools_DataMapOfIntegerListOfShape;
+typedef NCollection_DataMap <TopoDS_Shape , Standard_Integer , TopTools_ShapeMapHasher>::Iterator TopTools_DataMapIteratorOfDataMapOfShapeInteger;
+typedef NCollection_DataMap <TopoDS_Shape , TopTools_ListOfShape , TopTools_ShapeMapHasher> TopTools_DataMapOfShapeListOfShape;
+typedef NCollection_DataMap <TopoDS_Shape , TopoDS_Shape , TopTools_ShapeMapHasher> TopTools_DataMapOfShapeShape;
+typedef NCollection_DataMap <TopoDS_Shape , Standard_Real , TopTools_ShapeMapHasher>::Iterator TopTools_DataMapIteratorOfDataMapOfShapeReal;
+typedef TopTools_LocationSet * TopTools_LocationSetPtr;
+typedef NCollection_DataMap <TopoDS_Shape , Standard_Integer , TopTools_ShapeMapHasher> TopTools_DataMapOfShapeInteger;
+typedef NCollection_DataMap <TopoDS_Shape , TopTools_ListOfShape , TopTools_ShapeMapHasher>::Iterator TopTools_DataMapIteratorOfDataMapOfShapeListOfShape;
+typedef NCollection_IndexedDataMap <TopoDS_Shape , Standard_Address , TopTools_ShapeMapHasher> TopTools_IndexedDataMapOfShapeAddress;
+typedef NCollection_IndexedMap <TopoDS_Shape , TopTools_ShapeMapHasher> TopTools_IndexedMapOfShape;
+typedef NCollection_DataMap <TopoDS_Shape , TopTools_SequenceOfShape , TopTools_ShapeMapHasher> TopTools_DataMapOfShapeSequenceOfShape;
+typedef NCollection_List <TopoDS_Shape>::Iterator TopTools_ListIteratorOfListOfShape;
+typedef NCollection_DataMap <TopoDS_Shape , TopoDS_Shape , TopTools_ShapeMapHasher>::Iterator TopTools_DataMapIteratorOfDataMapOfShapeShape;
+typedef NCollection_Array2 <TopoDS_Shape> TopTools_Array2OfShape;
+typedef NCollection_DataMap <Standard_Integer , TopoDS_Shape , TColStd_MapIntegerHasher>::Iterator TopTools_DataMapIteratorOfDataMapOfIntegerShape;
+typedef NCollection_DataMap <TopoDS_Shape , TopTools_SequenceOfShape , TopTools_ShapeMapHasher>::Iterator TopTools_DataMapIteratorOfDataMapOfShapeSequenceOfShape;
+typedef NCollection_DataMap <Standard_Integer , TopoDS_Shape , TColStd_MapIntegerHasher> TopTools_DataMapOfIntegerShape;
+typedef NCollection_DataMap <TopoDS_Shape , TColStd_ListOfInteger , TopTools_ShapeMapHasher>::Iterator TopTools_DataMapIteratorOfDataMapOfShapeListOfInteger;
+typedef NCollection_Array1 <TopTools_ListOfShape> TopTools_Array1OfListOfShape;
+/* end typedefs declaration */
+
 /* public enums */
 /* end public enums declaration */
 
