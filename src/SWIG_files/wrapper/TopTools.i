@@ -57,6 +57,7 @@ def register_handle(handle, base_object):
 typedef TopTools_LocationSet * TopTools_LocationSetPtr;
 /* end typedefs declaration */
 
+
 /* templates */
 %define Handle(Class) opencascade::handle<Class>
 %enddef
@@ -87,7 +88,7 @@ typedef TopTools_LocationSet * TopTools_LocationSetPtr;
 %template(TopTools_IndexedDataMapOfShapeAddress) NCollection_IndexedDataMap <TopoDS_Shape , Standard_Address , TopTools_ShapeMapHasher>;
 %template(TopTools_IndexedMapOfShape) NCollection_IndexedMap <TopoDS_Shape , TopTools_ShapeMapHasher>;
 %template(TopTools_DataMapOfShapeSequenceOfShape) NCollection_DataMap <TopoDS_Shape , TopTools_SequenceOfShape , TopTools_ShapeMapHasher>;
-%template(TopTools_ListIteratorOfListOfShape) NCollection_TListIterator<TopTools_ListOfShape>;
+%template(TopTools_ListIteratorOfListOfShape) NCollection_TListIterator<TopoDS_Shape>;
 %template(TopTools_DataMapIteratorOfDataMapOfShapeShape) NCollection_TListIterator<TopTools_DataMapOfShapeShape>;
 %template(TopTools_Array2OfShape) NCollection_Array2 <TopoDS_Shape>;
 %template(TopTools_DataMapIteratorOfDataMapOfIntegerShape) NCollection_TListIterator<TopTools_DataMapOfIntegerShape>;
@@ -97,6 +98,9 @@ typedef TopTools_LocationSet * TopTools_LocationSetPtr;
 %template(TopTools_Array1OfListOfShape) NCollection_Array1 <TopTools_ListOfShape>;
 /* end templates declaration */
 
+typedef NCollection_IndexedDataMap<TopoDS_Shape,TopTools_ListOfShape,TopTools_ShapeMapHasher> TopTools_IndexedDataMapOfShapeListOfShape;
+typedef NCollection_List<TopoDS_Shape> TopTools_ListOfShape;
+typedef NCollection_List<TopoDS_Shape>::Iterator TopTools_ListIteratorOfListOfShape;
 /* public enums */
 /* end public enums declaration */
 

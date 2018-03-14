@@ -55,6 +55,7 @@ def register_handle(handle, base_object):
 
 /* typedefs */
 typedef TopoDS_Iterator * TopExp_Stack;
+
 /* end typedefs declaration */
 
 /* templates */
