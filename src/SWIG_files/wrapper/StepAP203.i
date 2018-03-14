@@ -57,6 +57,8 @@ def register_handle(handle, base_object):
 /* end typedefs declaration */
 
 /* templates */
+%define Handle(Class) opencascade::handle<Class>
+%enddef
 %template(StepAP203_Array1OfApprovedItem) NCollection_Array1 <StepAP203_ApprovedItem>;
 %template(StepAP203_Array1OfContractedItem) NCollection_Array1 <StepAP203_ContractedItem>;
 %template(StepAP203_Array1OfClassifiedItem) NCollection_Array1 <StepAP203_ClassifiedItem>;

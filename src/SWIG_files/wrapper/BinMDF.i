@@ -58,8 +58,12 @@ typedef TColStd_DataMapOfAsciiStringInteger BinMDF_StringIdMap;
 /* end typedefs declaration */
 
 /* templates */
-%template(BinMDF_TypeADriverMap) NCollection_DataMap <Handle_Standard_Type , Handle_BinMDF_ADriver , TColStd_MapTransientHasher>;
-%template(BinMDF_TypeIdMap) NCollection_DoubleMap <Handle_Standard_Type , Standard_Integer , TColStd_MapTransientHasher , TColStd_MapIntegerHasher>;
+%define Handle(Class) opencascade::handle<Class>
+%enddef
+%template(BinMDF_DataMapIteratorOfTypeADriverMap) NCollection_TListIterator<BinMDF_TypeADriverMap>;
+%template(BinMDF_TypeADriverMap) NCollection_DataMap <Handle(Standard_Type) , Handle(BinMDF_ADriver) , TColStd_MapTransientHasher>;
+%template(BinMDF_TypeIdMap) NCollection_DoubleMap <Handle(Standard_Type) , Standard_Integer , TColStd_MapTransientHasher , TColStd_MapIntegerHasher>;
+%template(BinMDF_DoubleMapIteratorOfTypeIdMap) NCollection_TListIterator<BinMDF_TypeIdMap>;
 /* end templates declaration */
 
 /* public enums */

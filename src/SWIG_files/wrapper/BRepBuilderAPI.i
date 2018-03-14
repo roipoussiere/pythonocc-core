@@ -57,6 +57,8 @@ def register_handle(handle, base_object):
 /* end typedefs declaration */
 
 /* templates */
+%define Handle(Class) opencascade::handle<Class>
+%enddef
 %template(VectorOfPoint) NCollection_Vector <gp_XYZ>;
 %template(BRepBuilderAPI_BndBoxTree) NCollection_UBTree <Standard_Integer , Bnd_Box>;
 /* end templates declaration */

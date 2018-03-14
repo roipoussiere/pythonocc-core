@@ -57,6 +57,8 @@ def register_handle(handle, base_object):
 /* end typedefs declaration */
 
 /* templates */
+%define Handle(Class) opencascade::handle<Class>
+%enddef
 %template(BinLDrivers_VectorOfDocumentSection) NCollection_Vector <BinLDrivers_DocumentSection>;
 /* end templates declaration */
 

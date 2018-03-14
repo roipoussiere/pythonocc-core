@@ -57,9 +57,13 @@ def register_handle(handle, base_object):
 /* end typedefs declaration */
 
 /* templates */
+%define Handle(Class) opencascade::handle<Class>
+%enddef
+%template(HLRAlgo_ListIteratorOfListOfBPoint) NCollection_TListIterator<HLRAlgo_ListOfBPoint>;
 %template(HLRAlgo_InterferenceList) NCollection_List <HLRAlgo_Interference>;
 %template(HLRAlgo_Array1OfPHDat) NCollection_Array1 <HLRAlgo_PolyHidingData>;
-%template(HLRAlgo_Array1OfPINod) NCollection_Array1 <Handle_HLRAlgo_PolyInternalNode>;
+%template(HLRAlgo_Array1OfPINod) NCollection_Array1 <Handle(HLRAlgo_PolyInternalNode)>;
+%template(HLRAlgo_ListIteratorOfInterferenceList) NCollection_TListIterator<HLRAlgo_InterferenceList>;
 %template(HLRAlgo_Array1OfTData) NCollection_Array1 <HLRAlgo_TriangleData>;
 %template(HLRAlgo_ListOfBPoint) NCollection_List <HLRAlgo_BiPoint>;
 %template(HLRAlgo_Array1OfPISeg) NCollection_Array1 <HLRAlgo_PolyInternalSegment>;

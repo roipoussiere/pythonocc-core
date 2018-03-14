@@ -57,8 +57,11 @@ def register_handle(handle, base_object):
 /* end typedefs declaration */
 
 /* templates */
+%define Handle(Class) opencascade::handle<Class>
+%enddef
+%template(NLPlate_ListIteratorOfStackOfPlate) NCollection_TListIterator<NLPlate_StackOfPlate>;
 %template(NLPlate_StackOfPlate) NCollection_List <Plate_Plate>;
-%template(NLPlate_SequenceOfHGPPConstraint) NCollection_Sequence <Handle_NLPlate_HGPPConstraint>;
+%template(NLPlate_SequenceOfHGPPConstraint) NCollection_Sequence <Handle(NLPlate_HGPPConstraint)>;
 /* end templates declaration */
 
 /* public enums */

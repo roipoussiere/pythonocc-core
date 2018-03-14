@@ -58,7 +58,10 @@ typedef Handle_NCollection_BaseAllocator IntSurf_Allocator;
 /* end typedefs declaration */
 
 /* templates */
+%define Handle(Class) opencascade::handle<Class>
+%enddef
 %template(IntSurf_SequenceOfCouple) NCollection_Sequence <IntSurf_Couple>;
+%template(IntSurf_ListIteratorOfListOfPntOn2S) NCollection_TListIterator<IntSurf_ListOfPntOn2S>;
 %template(IntSurf_SequenceOfPathPoint) NCollection_Sequence <IntSurf_PathPoint>;
 %template(IntSurf_SequenceOfInteriorPoint) NCollection_Sequence <IntSurf_InteriorPoint>;
 %template(IntSurf_SequenceOfPntOn2S) NCollection_Sequence <IntSurf_PntOn2S>;

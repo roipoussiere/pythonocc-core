@@ -57,8 +57,11 @@ def register_handle(handle, base_object):
 /* end typedefs declaration */
 
 /* templates */
+%define Handle(Class) opencascade::handle<Class>
+%enddef
 %template(BRepClass3d_MapOfInter) NCollection_DataMap <TopoDS_Shape , Standard_Address , TopTools_ShapeMapHasher>;
 %template(BRepClass3d_BndBoxTree) NCollection_UBTree <Standard_Integer , Bnd_Box>;
+%template(BRepClass3d_DataMapIteratorOfMapOfInter) NCollection_TListIterator<BRepClass3d_MapOfInter>;
 /* end templates declaration */
 
 /* public enums */

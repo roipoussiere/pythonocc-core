@@ -62,15 +62,23 @@ typedef TNaming_NamedShape * TNaming_PtrAttribute;
 /* end typedefs declaration */
 
 /* templates */
-%template(TNaming_ListOfNamedShape) NCollection_List <Handle_TNaming_NamedShape>;
+%define Handle(Class) opencascade::handle<Class>
+%enddef
+%template(TNaming_DataMapIteratorOfDataMapOfShapePtrRefShape) NCollection_TListIterator<TNaming_DataMapOfShapePtrRefShape>;
+%template(TNaming_ListOfNamedShape) NCollection_List <Handle(TNaming_NamedShape)>;
+%template(TNaming_MapIteratorOfMapOfNamedShape) NCollection_TListIterator<TNaming_MapOfNamedShape>;
+%template(TNaming_ListIteratorOfListOfIndexedDataMapOfShapeListOfShape) NCollection_TListIterator<TNaming_ListOfIndexedDataMapOfShapeListOfShape>;
 %template(TNaming_MapOfShape) NCollection_Map <TopoDS_Shape>;
-%template(TNaming_NamedShapeHasher) NCollection_DefaultHasher <Handle_TNaming_NamedShape>;
+%template(TNaming_NamedShapeHasher) NCollection_DefaultHasher <Handle(TNaming_NamedShape)>;
 %template(TNaming_DataMapOfShapePtrRefShape) NCollection_DataMap <TopoDS_Shape , TNaming_PtrRefShape , TopTools_ShapeMapHasher>;
 %template(TNaming_ListOfIndexedDataMapOfShapeListOfShape) NCollection_List <TopTools_IndexedDataMapOfShapeListOfShape>;
+%template(TNaming_ListIteratorOfListOfMapOfShape) NCollection_TListIterator<TNaming_ListOfMapOfShape>;
 %template(TNaming_DataMapOfShapeShapesSet) NCollection_DataMap <TopoDS_Shape , TNaming_ShapesSet , TopTools_ShapeMapHasher>;
-%template(TNaming_MapOfNamedShape) NCollection_Map <Handle_TNaming_NamedShape , TNaming_NamedShapeHasher>;
+%template(TNaming_MapOfNamedShape) NCollection_Map <Handle(TNaming_NamedShape) , TNaming_NamedShapeHasher>;
 %template(TNaming_ListOfMapOfShape) NCollection_List <TopTools_MapOfShape>;
+%template(TNaming_DataMapIteratorOfDataMapOfShapeShapesSet) NCollection_TListIterator<TNaming_DataMapOfShapeShapesSet>;
 %template(TNaming_DataMapOfShapeMapOfShape) NCollection_DataMap <TopoDS_Shape , TNaming_MapOfShape>;
+%template(TNaming_ListIteratorOfListOfNamedShape) NCollection_TListIterator<TNaming_ListOfNamedShape>;
 /* end templates declaration */
 
 /* public enums */

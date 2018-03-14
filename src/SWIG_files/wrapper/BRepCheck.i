@@ -57,9 +57,14 @@ def register_handle(handle, base_object):
 /* end typedefs declaration */
 
 /* templates */
+%define Handle(Class) opencascade::handle<Class>
+%enddef
 %template(BRepCheck_DataMapOfShapeListOfStatus) NCollection_DataMap <TopoDS_Shape , BRepCheck_ListOfStatus , TopTools_ShapeMapHasher>;
 %template(BRepCheck_ListOfStatus) NCollection_List <BRepCheck_Status>;
-%template(BRepCheck_DataMapOfShapeResult) NCollection_DataMap <TopoDS_Shape , Handle_BRepCheck_Result , TopTools_OrientedShapeMapHasher>;
+%template(BRepCheck_ListIteratorOfListOfStatus) NCollection_TListIterator<BRepCheck_ListOfStatus>;
+%template(BRepCheck_DataMapIteratorOfDataMapOfShapeListOfStatus) NCollection_TListIterator<BRepCheck_DataMapOfShapeListOfStatus>;
+%template(BRepCheck_DataMapOfShapeResult) NCollection_DataMap <TopoDS_Shape , Handle(BRepCheck_Result) , TopTools_OrientedShapeMapHasher>;
+%template(BRepCheck_DataMapIteratorOfDataMapOfShapeResult) NCollection_TListIterator<BRepCheck_DataMapOfShapeResult>;
 /* end templates declaration */
 
 /* public enums */

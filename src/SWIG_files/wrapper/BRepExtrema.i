@@ -57,6 +57,8 @@ def register_handle(handle, base_object):
 /* end typedefs declaration */
 
 /* templates */
+%define Handle(Class) opencascade::handle<Class>
+%enddef
 %template(BRepExtrema_SeqOfSolution) NCollection_Sequence <BRepExtrema_SolutionElem>;
 %template(BRepExtrema_MapOfIntegerPackedMapOfInteger) NCollection_DataMap <Standard_Integer , TColStd_PackedMapOfInteger>;
 %template(BRepExtrema_ShapeList) NCollection_Vector <TopoDS_Face>;

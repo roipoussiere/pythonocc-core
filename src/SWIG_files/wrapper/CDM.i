@@ -59,12 +59,19 @@ typedef TColStd_DataMapOfStringInteger CDM_NamesDirectory;
 /* end typedefs declaration */
 
 /* templates */
-%template(CDM_ListOfReferences) NCollection_List <Handle_CDM_Reference>;
-%template(CDM_PresentationDirectory) NCollection_DataMap <TCollection_ExtendedString , Handle_CDM_Document , TCollection_ExtendedString>;
-%template(CDM_MapOfDocument) NCollection_Map <Handle_CDM_Document , CDM_DocumentHasher>;
-%template(CDM_MetaDataLookUpTable) NCollection_DataMap <TCollection_ExtendedString , Handle_CDM_MetaData , TCollection_ExtendedString>;
-%template(CDM_ListOfDocument) NCollection_List <Handle_CDM_Document>;
-%template(CDM_DocumentHasher) NCollection_DefaultHasher <Handle_CDM_Document>;
+%define Handle(Class) opencascade::handle<Class>
+%enddef
+%template(CDM_DataMapIteratorOfMetaDataLookUpTable) NCollection_TListIterator<CDM_MetaDataLookUpTable>;
+%template(CDM_DataMapIteratorOfPresentationDirectory) NCollection_TListIterator<CDM_PresentationDirectory>;
+%template(CDM_MapIteratorOfMapOfDocument) NCollection_TListIterator<CDM_MapOfDocument>;
+%template(CDM_ListOfReferences) NCollection_List <Handle(CDM_Reference)>;
+%template(CDM_PresentationDirectory) NCollection_DataMap <TCollection_ExtendedString , Handle(CDM_Document) , TCollection_ExtendedString>;
+%template(CDM_ListIteratorOfListOfReferences) NCollection_TListIterator<CDM_ListOfReferences>;
+%template(CDM_ListIteratorOfListOfDocument) NCollection_TListIterator<CDM_ListOfDocument>;
+%template(CDM_MapOfDocument) NCollection_Map <Handle(CDM_Document) , CDM_DocumentHasher>;
+%template(CDM_MetaDataLookUpTable) NCollection_DataMap <TCollection_ExtendedString , Handle(CDM_MetaData) , TCollection_ExtendedString>;
+%template(CDM_ListOfDocument) NCollection_List <Handle(CDM_Document)>;
+%template(CDM_DocumentHasher) NCollection_DefaultHasher <Handle(CDM_Document)>;
 /* end templates declaration */
 
 /* public enums */

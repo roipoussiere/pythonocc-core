@@ -57,6 +57,8 @@ def register_handle(handle, base_object):
 /* end typedefs declaration */
 
 /* templates */
+%define Handle(Class) opencascade::handle<Class>
+%enddef
 %template(AdvApp2Var_SequenceOfNode) NCollection_Sequence <AdvApp2Var_Node>;
 %template(AdvApp2Var_SequenceOfStrip) NCollection_Sequence <AdvApp2Var_Strip>;
 %template(AdvApp2Var_Strip) NCollection_Sequence <AdvApp2Var_Iso>;

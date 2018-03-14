@@ -676,7 +676,7 @@ along with pythonOCC.  If not, see <http://www.gnu.org/licenses/>.
 #include<IntSurf_TypeTrans.hxx>
 #include<IntSurf_Quadric.hxx>
 #include<IntSurf_ListOfPntOn2S.hxx>
-//#include<IntTools.hxx>
+#include<IntTools.hxx>
 #include<IntTools_ShrunkRange.hxx>
 #include<IntTools_CurveRangeSample.hxx>
 #include<IntTools_SurfaceRangeSampleMapHasher.hxx>

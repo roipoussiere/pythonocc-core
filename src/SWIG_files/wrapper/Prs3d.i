@@ -38,6 +38,7 @@ along with pythonOCC.  If not, see <http://www.gnu.org/licenses/>.
 
 %include Prs3d_headers.i
 
+
 %include "Prs3d_Point.hxx";
 
 %pythoncode {
@@ -60,7 +61,9 @@ typedef Prs3d_NListOfSequenceOfPnt::Iterator Prs3d_NListIteratorOfListOfSequence
 /* end typedefs declaration */
 
 /* templates */
-%template(Prs3d_NListOfSequenceOfPnt) NCollection_List <Handle_TColgp_HSequenceOfPnt>;
+%define Handle(Class) opencascade::handle<Class>
+%enddef
+%template(Prs3d_NListOfSequenceOfPnt) NCollection_List <Handle(TColgp_HSequenceOfPnt)>;
 /* end templates declaration */
 
 /* public enums */

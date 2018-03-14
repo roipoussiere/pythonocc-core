@@ -58,6 +58,8 @@ typedef BRepBuilderAPI_Sewing BRepOffsetAPI_Sewing;
 /* end typedefs declaration */
 
 /* templates */
+%define Handle(Class) opencascade::handle<Class>
+%enddef
 %template(BRepOffsetAPI_SequenceOfSequenceOfShape) NCollection_Sequence <TopTools_SequenceOfShape>;
 %template(BRepOffsetAPI_SequenceOfSequenceOfReal) NCollection_Sequence <TColStd_SequenceOfReal>;
 /* end templates declaration */

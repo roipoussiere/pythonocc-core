@@ -58,10 +58,13 @@ typedef Standard_Boolean ( * Interface_StaticSatisfies ) ( const Handle_TCollect
 /* end typedefs declaration */
 
 /* templates */
+%define Handle(Class) opencascade::handle<Class>
+%enddef
 %template(Interface_Array1OfFileParameter) NCollection_Array1 <Interface_FileParameter>;
-%template(Interface_DataMapOfTransientInteger) NCollection_DataMap <Handle_Standard_Transient , Standard_Integer , TColStd_MapTransientHasher>;
-%template(Interface_Array1OfHAsciiString) NCollection_Array1 <Handle_TCollection_HAsciiString>;
-%template(Interface_SequenceOfCheck) NCollection_Sequence <Handle_Interface_Check>;
+%template(Interface_DataMapOfTransientInteger) NCollection_DataMap <Handle(Standard_Transient) , Standard_Integer , TColStd_MapTransientHasher>;
+%template(Interface_Array1OfHAsciiString) NCollection_Array1 <Handle(TCollection_HAsciiString)>;
+%template(Interface_DataMapIteratorOfDataMapOfTransientInteger) NCollection_TListIterator<Interface_DataMapOfTransientInteger>;
+%template(Interface_SequenceOfCheck) NCollection_Sequence <Handle(Interface_Check)>;
 %template(Interface_VectorOfFileParameter) NCollection_Vector <Interface_FileParameter>;
 %template(Interface_IndexedMapOfAsciiString) NCollection_IndexedMap <TCollection_AsciiString , Interface_MapAsciiStringHasher>;
 /* end templates declaration */

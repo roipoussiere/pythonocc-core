@@ -57,8 +57,11 @@ def register_handle(handle, base_object):
 /* end typedefs declaration */
 
 /* templates */
+%define Handle(Class) opencascade::handle<Class>
+%enddef
 %template(ShapeFix_SequenceOfWireSegment) NCollection_Sequence <ShapeFix_WireSegment>;
 %template(ShapeFix_DataMapOfShapeBox2d) NCollection_DataMap <TopoDS_Shape , Bnd_Box2d , TopTools_ShapeMapHasher>;
+%template(ShapeFix_DataMapIteratorOfDataMapOfShapeBox2d) NCollection_TListIterator<ShapeFix_DataMapOfShapeBox2d>;
 /* end templates declaration */
 
 /* public enums */

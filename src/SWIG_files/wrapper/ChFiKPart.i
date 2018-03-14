@@ -57,6 +57,9 @@ def register_handle(handle, base_object):
 /* end typedefs declaration */
 
 /* templates */
+%define Handle(Class) opencascade::handle<Class>
+%enddef
+%template(ChFiKPart_DataMapIteratorOfRstMap) NCollection_TListIterator<ChFiKPart_RstMap>;
 %template(ChFiKPart_RstMap) NCollection_DataMap <Standard_Integer , Handle_Adaptor2d_HCurve2d , TColStd_MapIntegerHasher>;
 /* end templates declaration */
 

@@ -57,8 +57,12 @@ def register_handle(handle, base_object):
 /* end typedefs declaration */
 
 /* templates */
-%template(XmlMDF_TypeADriverMap) NCollection_DataMap <Handle_Standard_Type , Handle_XmlMDF_ADriver , TColStd_MapTransientHasher>;
-%template(XmlMDF_MapOfDriver) NCollection_DataMap <TCollection_AsciiString , Handle_XmlMDF_ADriver , TCollection_AsciiString>;
+%define Handle(Class) opencascade::handle<Class>
+%enddef
+%template(XmlMDF_DataMapIteratorOfTypeADriverMap) NCollection_TListIterator<XmlMDF_TypeADriverMap>;
+%template(XmlMDF_TypeADriverMap) NCollection_DataMap <Handle(Standard_Type) , Handle(XmlMDF_ADriver) , TColStd_MapTransientHasher>;
+%template(XmlMDF_DataMapIteratorOfMapOfDriver) NCollection_TListIterator<XmlMDF_MapOfDriver>;
+%template(XmlMDF_MapOfDriver) NCollection_DataMap <TCollection_AsciiString , Handle(XmlMDF_ADriver) , TCollection_AsciiString>;
 /* end templates declaration */
 
 /* public enums */

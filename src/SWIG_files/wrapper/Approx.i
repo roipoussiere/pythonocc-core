@@ -57,7 +57,9 @@ def register_handle(handle, base_object):
 /* end typedefs declaration */
 
 /* templates */
-%template(Approx_SequenceOfHArray1OfReal) NCollection_Sequence <Handle_TColStd_HArray1OfReal>;
+%define Handle(Class) opencascade::handle<Class>
+%enddef
+%template(Approx_SequenceOfHArray1OfReal) NCollection_Sequence <Handle(TColStd_HArray1OfReal)>;
 %template(Approx_Array1OfAdHSurface) NCollection_Array1 <Handle_Adaptor3d_HSurface>;
 %template(Approx_Array1OfGTrsf2d) NCollection_Array1 <gp_GTrsf2d>;
 /* end templates declaration */

@@ -57,11 +57,13 @@ def register_handle(handle, base_object):
 /* end typedefs declaration */
 
 /* templates */
+%define Handle(Class) opencascade::handle<Class>
+%enddef
 %template(GeomPlate_Array1OfSequenceOfReal) NCollection_Array1 <TColStd_SequenceOfReal>;
-%template(GeomPlate_SequenceOfPointConstraint) NCollection_Sequence <Handle_GeomPlate_PointConstraint>;
+%template(GeomPlate_SequenceOfPointConstraint) NCollection_Sequence <Handle(GeomPlate_PointConstraint)>;
 %template(GeomPlate_SequenceOfAij) NCollection_Sequence <GeomPlate_Aij>;
 %template(GeomPlate_Array1OfHCurve) NCollection_Array1 <Handle_Adaptor3d_HCurve>;
-%template(GeomPlate_SequenceOfCurveConstraint) NCollection_Sequence <Handle_GeomPlate_CurveConstraint>;
+%template(GeomPlate_SequenceOfCurveConstraint) NCollection_Sequence <Handle(GeomPlate_CurveConstraint)>;
 /* end templates declaration */
 
 /* public enums */

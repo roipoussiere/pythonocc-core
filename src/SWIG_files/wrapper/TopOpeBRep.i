@@ -64,9 +64,13 @@ typedef TopOpeBRep_EdgesIntersector * TopOpeBRep_PEdgesIntersector;
 /* end typedefs declaration */
 
 /* templates */
+%define Handle(Class) opencascade::handle<Class>
+%enddef
 %template(TopOpeBRep_ListOfBipoint) NCollection_List <TopOpeBRep_Bipoint>;
 %template(TopOpeBRep_SequenceOfPoint2d) NCollection_Sequence <TopOpeBRep_Point2d>;
-%template(TopOpeBRep_DataMapOfTopolTool) NCollection_DataMap <TopoDS_Shape , Handle_BRepTopAdaptor_TopolTool , TopTools_ShapeMapHasher>;
+%template(TopOpeBRep_DataMapIteratorOfDataMapOfTopolTool) NCollection_TListIterator<TopOpeBRep_DataMapOfTopolTool>;
+%template(TopOpeBRep_ListIteratorOfListOfBipoint) NCollection_TListIterator<TopOpeBRep_ListOfBipoint>;
+%template(TopOpeBRep_DataMapOfTopolTool) NCollection_DataMap <TopoDS_Shape , Handle(BRepTopAdaptor_TopolTool) , TopTools_ShapeMapHasher>;
 %template(TopOpeBRep_Array1OfVPointInter) NCollection_Array1 <TopOpeBRep_VPointInter>;
 %template(TopOpeBRep_Array1OfLineInter) NCollection_Array1 <TopOpeBRep_LineInter>;
 /* end templates declaration */

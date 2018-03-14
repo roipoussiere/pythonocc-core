@@ -57,6 +57,8 @@ def register_handle(handle, base_object):
 /* end typedefs declaration */
 
 /* templates */
+%define Handle(Class) opencascade::handle<Class>
+%enddef
 %template(Bnd_Array1OfBox) NCollection_Array1 <Bnd_Box>;
 %template(Bnd_Array1OfSphere) NCollection_Array1 <Bnd_Sphere>;
 %template(Bnd_SeqOfBox) NCollection_Sequence <Bnd_Box>;

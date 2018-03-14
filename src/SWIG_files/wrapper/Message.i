@@ -57,12 +57,15 @@ def register_handle(handle, base_object):
 /* end typedefs declaration */
 
 /* templates */
+%define Handle(Class) opencascade::handle<Class>
+%enddef
 %template(Message_ListOfMsg) NCollection_List <Message_Msg>;
-%template(Message_ListOfAlert) NCollection_List <Handle_Message_Alert>;
+%template(Message_ListOfAlert) NCollection_List <Handle(Message_Alert)>;
 %template(Message_HArrayOfMsg) NCollection_Handle <Message_ArrayOfMsg>;
+%template(Message_ListIteratorOfListOfMsg) NCollection_TListIterator<Message_ListOfMsg>;
 %template(Message_ArrayOfMsg) NCollection_Array1 <NCollection_Handle <Message_Msg>>;
 %template(Message_SequenceOfProgressScale) NCollection_Sequence <Message_ProgressScale>;
-%template(Message_SequenceOfPrinters) NCollection_Sequence <Handle_Message_Printer>;
+%template(Message_SequenceOfPrinters) NCollection_Sequence <Handle(Message_Printer)>;
 /* end templates declaration */
 
 /* public enums */

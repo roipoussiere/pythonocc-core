@@ -57,6 +57,8 @@ def register_handle(handle, base_object):
 /* end typedefs declaration */
 
 /* templates */
+%define Handle(Class) opencascade::handle<Class>
+%enddef
 %template(Hatch_SequenceOfLine) NCollection_Sequence <Hatch_Line>;
 %template(Hatch_SequenceOfParameter) NCollection_Sequence <Hatch_Parameter>;
 /* end templates declaration */

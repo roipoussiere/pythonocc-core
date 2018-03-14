@@ -57,15 +57,17 @@ def register_handle(handle, base_object):
 /* end typedefs declaration */
 
 /* templates */
+%define Handle(Class) opencascade::handle<Class>
+%enddef
 %template(StepGeom_Array1OfPcurveOrSurface) NCollection_Array1 <StepGeom_PcurveOrSurface>;
-%template(StepGeom_Array1OfCartesianPoint) NCollection_Array1 <Handle_StepGeom_CartesianPoint>;
+%template(StepGeom_Array1OfCartesianPoint) NCollection_Array1 <Handle(StepGeom_CartesianPoint)>;
 %template(StepGeom_Array1OfSurfaceBoundary) NCollection_Array1 <StepGeom_SurfaceBoundary>;
-%template(StepGeom_Array2OfCartesianPoint) NCollection_Array2 <Handle_StepGeom_CartesianPoint>;
+%template(StepGeom_Array2OfCartesianPoint) NCollection_Array2 <Handle(StepGeom_CartesianPoint)>;
 %template(StepGeom_Array1OfTrimmingSelect) NCollection_Array1 <StepGeom_TrimmingSelect>;
-%template(StepGeom_Array1OfBoundaryCurve) NCollection_Array1 <Handle_StepGeom_BoundaryCurve>;
-%template(StepGeom_Array1OfCurve) NCollection_Array1 <Handle_StepGeom_Curve>;
-%template(StepGeom_Array1OfCompositeCurveSegment) NCollection_Array1 <Handle_StepGeom_CompositeCurveSegment>;
-%template(StepGeom_Array2OfSurfacePatch) NCollection_Array2 <Handle_StepGeom_SurfacePatch>;
+%template(StepGeom_Array1OfBoundaryCurve) NCollection_Array1 <Handle(StepGeom_BoundaryCurve)>;
+%template(StepGeom_Array1OfCurve) NCollection_Array1 <Handle(StepGeom_Curve)>;
+%template(StepGeom_Array1OfCompositeCurveSegment) NCollection_Array1 <Handle(StepGeom_CompositeCurveSegment)>;
+%template(StepGeom_Array2OfSurfacePatch) NCollection_Array2 <Handle(StepGeom_SurfacePatch)>;
 /* end templates declaration */
 
 /* public enums */

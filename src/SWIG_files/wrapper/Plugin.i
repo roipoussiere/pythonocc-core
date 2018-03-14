@@ -57,7 +57,10 @@ def register_handle(handle, base_object):
 /* end typedefs declaration */
 
 /* templates */
+%define Handle(Class) opencascade::handle<Class>
+%enddef
 %template(Plugin_MapOfFunctions) NCollection_DataMap <TCollection_AsciiString , OSD_Function , TCollection_AsciiString>;
+%template(Plugin_DataMapIteratorOfMapOfFunctions) NCollection_TListIterator<Plugin_MapOfFunctions>;
 /* end templates declaration */
 
 /* public enums */

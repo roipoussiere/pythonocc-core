@@ -57,8 +57,10 @@ def register_handle(handle, base_object):
 /* end typedefs declaration */
 
 /* templates */
-%template(STEPSelections_SequenceOfAssemblyComponent) NCollection_Sequence <Handle_STEPSelections_AssemblyComponent>;
-%template(STEPSelections_SequenceOfAssemblyLink) NCollection_Sequence <Handle_STEPSelections_AssemblyLink>;
+%define Handle(Class) opencascade::handle<Class>
+%enddef
+%template(STEPSelections_SequenceOfAssemblyComponent) NCollection_Sequence <Handle(STEPSelections_AssemblyComponent)>;
+%template(STEPSelections_SequenceOfAssemblyLink) NCollection_Sequence <Handle(STEPSelections_AssemblyLink)>;
 /* end templates declaration */
 
 /* public enums */

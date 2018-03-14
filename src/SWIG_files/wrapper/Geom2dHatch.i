@@ -57,8 +57,12 @@ def register_handle(handle, base_object):
 /* end typedefs declaration */
 
 /* templates */
+%define Handle(Class) opencascade::handle<Class>
+%enddef
 %template(Geom2dHatch_MapOfElements) NCollection_DataMap <Standard_Integer , Geom2dHatch_Element , TColStd_MapIntegerHasher>;
 %template(Geom2dHatch_Hatchings) NCollection_DataMap <Standard_Integer , Geom2dHatch_Hatching , TColStd_MapIntegerHasher>;
+%template(Geom2dHatch_DataMapIteratorOfMapOfElements) NCollection_TListIterator<Geom2dHatch_MapOfElements>;
+%template(Geom2dHatch_DataMapIteratorOfHatchings) NCollection_TListIterator<Geom2dHatch_Hatchings>;
 /* end templates declaration */
 
 /* public enums */

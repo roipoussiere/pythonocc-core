@@ -59,6 +59,8 @@ typedef IntPolyh_ListOfCouples::Iterator IntPolyh_ListIteratorOfListOfCouples;
 /* end typedefs declaration */
 
 /* templates */
+%define Handle(Class) opencascade::handle<Class>
+%enddef
 %template(IntPolyh_SeqOfStartPoints) NCollection_Sequence <IntPolyh_StartPoint>;
 %template(IntPolyh_ListOfCouples) NCollection_List <IntPolyh_Couple>;
 /* end templates declaration */

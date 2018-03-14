@@ -58,14 +58,23 @@ typedef TDataStd_TreeNode * TDataStd_PtrTreeNode;
 /* end typedefs declaration */
 
 /* templates */
+%define Handle(Class) opencascade::handle<Class>
+%enddef
+%template(TDataStd_ListIteratorOfListOfByte) NCollection_TListIterator<TDataStd_ListOfByte>;
+%template(TDataStd_DataMapIteratorOfDataMapOfStringString) NCollection_TListIterator<TDataStd_DataMapOfStringString>;
 %template(TDataStd_ListOfByte) NCollection_List <Standard_Byte>;
 %template(TDataStd_DataMapOfStringByte) NCollection_DataMap <TCollection_ExtendedString , Standard_Byte , TCollection_ExtendedString>;
 %template(TDataStd_DataMapOfStringString) NCollection_DataMap <TCollection_ExtendedString , TCollection_ExtendedString , TCollection_ExtendedString>;
+%template(TDataStd_DataMapIteratorOfDataMapOfStringHArray1OfReal) NCollection_TListIterator<TDataStd_DataMapOfStringHArray1OfReal>;
 %template(TDataStd_DataMapOfStringReal) NCollection_DataMap <TCollection_ExtendedString , Standard_Real , TCollection_ExtendedString>;
+%template(TDataStd_DataMapIteratorOfDataMapOfStringHArray1OfInteger) NCollection_TListIterator<TDataStd_DataMapOfStringHArray1OfInteger>;
+%template(TDataStd_DataMapIteratorOfDataMapOfStringByte) NCollection_TListIterator<TDataStd_DataMapOfStringByte>;
 %template(TDataStd_ListOfExtendedString) NCollection_List <TCollection_ExtendedString>;
-%template(TDataStd_DataMapOfStringHArray1OfInteger) NCollection_DataMap <TCollection_ExtendedString , Handle_TColStd_HArray1OfInteger , TCollection_ExtendedString>;
+%template(TDataStd_DataMapIteratorOfDataMapOfStringReal) NCollection_TListIterator<TDataStd_DataMapOfStringReal>;
+%template(TDataStd_DataMapOfStringHArray1OfInteger) NCollection_DataMap <TCollection_ExtendedString , Handle(TColStd_HArray1OfInteger) , TCollection_ExtendedString>;
 %template(TDataStd_LabelArray1) NCollection_Array1 <TDF_Label>;
-%template(TDataStd_DataMapOfStringHArray1OfReal) NCollection_DataMap <TCollection_ExtendedString , Handle_TColStd_HArray1OfReal , TCollection_ExtendedString>;
+%template(TDataStd_DataMapOfStringHArray1OfReal) NCollection_DataMap <TCollection_ExtendedString , Handle(TColStd_HArray1OfReal) , TCollection_ExtendedString>;
+%template(TDataStd_ListIteratorOfListOfExtendedString) NCollection_TListIterator<TDataStd_ListOfExtendedString>;
 /* end templates declaration */
 
 /* public enums */

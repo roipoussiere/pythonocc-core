@@ -63,6 +63,8 @@ typedef PrsMgr_PresentationManager PrsMgr_PresentationManager3d;
 /* end typedefs declaration */
 
 /* templates */
+%define Handle(Class) opencascade::handle<Class>
+%enddef
 %template(PrsMgr_Presentations) NCollection_Sequence <PrsMgr_ModedPresentation>;
 %template(PrsMgr_ListOfPresentations) NCollection_List <Handle_Prs3d_Presentation>;
 /* end templates declaration */

@@ -57,12 +57,18 @@ def register_handle(handle, base_object):
 /* end typedefs declaration */
 
 /* templates */
-%template(MAT_DataMapOfIntegerNode) NCollection_DataMap <Standard_Integer , Handle_MAT_Node , TColStd_MapIntegerHasher>;
-%template(MAT_DataMapOfIntegerArc) NCollection_DataMap <Standard_Integer , Handle_MAT_Arc , TColStd_MapIntegerHasher>;
-%template(MAT_DataMapOfIntegerBisector) NCollection_DataMap <Standard_Integer , Handle_MAT_Bisector , TColStd_MapIntegerHasher>;
-%template(MAT_SequenceOfBasicElt) NCollection_Sequence <Handle_MAT_BasicElt>;
-%template(MAT_SequenceOfArc) NCollection_Sequence <Handle_MAT_Arc>;
-%template(MAT_DataMapOfIntegerBasicElt) NCollection_DataMap <Standard_Integer , Handle_MAT_BasicElt , TColStd_MapIntegerHasher>;
+%define Handle(Class) opencascade::handle<Class>
+%enddef
+%template(MAT_DataMapOfIntegerNode) NCollection_DataMap <Standard_Integer , Handle(MAT_Node) , TColStd_MapIntegerHasher>;
+%template(MAT_DataMapOfIntegerArc) NCollection_DataMap <Standard_Integer , Handle(MAT_Arc) , TColStd_MapIntegerHasher>;
+%template(MAT_DataMapIteratorOfDataMapOfIntegerNode) NCollection_TListIterator<MAT_DataMapOfIntegerNode>;
+%template(MAT_DataMapOfIntegerBisector) NCollection_DataMap <Standard_Integer , Handle(MAT_Bisector) , TColStd_MapIntegerHasher>;
+%template(MAT_DataMapIteratorOfDataMapOfIntegerArc) NCollection_TListIterator<MAT_DataMapOfIntegerArc>;
+%template(MAT_SequenceOfBasicElt) NCollection_Sequence <Handle(MAT_BasicElt)>;
+%template(MAT_DataMapIteratorOfDataMapOfIntegerBasicElt) NCollection_TListIterator<MAT_DataMapOfIntegerBasicElt>;
+%template(MAT_DataMapIteratorOfDataMapOfIntegerBisector) NCollection_TListIterator<MAT_DataMapOfIntegerBisector>;
+%template(MAT_SequenceOfArc) NCollection_Sequence <Handle(MAT_Arc)>;
+%template(MAT_DataMapOfIntegerBasicElt) NCollection_DataMap <Standard_Integer , Handle(MAT_BasicElt) , TColStd_MapIntegerHasher>;
 /* end templates declaration */
 
 /* public enums */

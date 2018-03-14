@@ -57,8 +57,12 @@ def register_handle(handle, base_object):
 /* end typedefs declaration */
 
 /* templates */
+%define Handle(Class) opencascade::handle<Class>
+%enddef
 %template(BRepAlgo_DataMapOfShapeBoolean) NCollection_DataMap <TopoDS_Shape , Standard_Boolean , TopTools_ShapeMapHasher>;
-%template(BRepAlgo_DataMapOfShapeInterference) NCollection_DataMap <TopoDS_Shape , Handle_TopOpeBRepDS_Interference , TopTools_ShapeMapHasher>;
+%template(BRepAlgo_DataMapIteratorOfDataMapOfShapeBoolean) NCollection_TListIterator<BRepAlgo_DataMapOfShapeBoolean>;
+%template(BRepAlgo_DataMapIteratorOfDataMapOfShapeInterference) NCollection_TListIterator<BRepAlgo_DataMapOfShapeInterference>;
+%template(BRepAlgo_DataMapOfShapeInterference) NCollection_DataMap <TopoDS_Shape , Handle(TopOpeBRepDS_Interference) , TopTools_ShapeMapHasher>;
 %template(BRepAlgo_SequenceOfSequenceOfInteger) NCollection_Sequence <TColStd_SequenceOfInteger>;
 /* end templates declaration */
 

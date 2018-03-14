@@ -57,8 +57,10 @@ def register_handle(handle, base_object):
 /* end typedefs declaration */
 
 /* templates */
+%define Handle(Class) opencascade::handle<Class>
+%enddef
 %template(StdPrs_Vertex) Prs3d_Point <TopoDS_Vertex , StdPrs_ToolVertex>;
-%template(StdPrs_Point) Prs3d_Point <Handle_Geom_Point , StdPrs_ToolPoint>;
+%template(StdPrs_Point) Prs3d_Point <Handle(Geom_Point) , StdPrs_ToolPoint>;
 /* end templates declaration */
 
 /* public enums */

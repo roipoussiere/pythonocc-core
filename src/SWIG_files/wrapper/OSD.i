@@ -59,6 +59,8 @@ typedef pthread_t OSD_PThread;
 /* end typedefs declaration */
 
 /* templates */
+%define Handle(Class) opencascade::handle<Class>
+%enddef
 /* end templates declaration */
 
 /* public enums */

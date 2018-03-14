@@ -57,21 +57,23 @@ def register_handle(handle, base_object):
 /* end typedefs declaration */
 
 /* templates */
+%define Handle(Class) opencascade::handle<Class>
+%enddef
 %template(StepVisual_Array1OfStyleContextSelect) NCollection_Array1 <StepVisual_StyleContextSelect>;
 %template(StepVisual_Array1OfFillStyleSelect) NCollection_Array1 <StepVisual_FillStyleSelect>;
 %template(StepVisual_Array1OfInvisibleItem) NCollection_Array1 <StepVisual_InvisibleItem>;
-%template(StepVisual_Array1OfPresentationStyleAssignment) NCollection_Array1 <Handle_StepVisual_PresentationStyleAssignment>;
+%template(StepVisual_Array1OfPresentationStyleAssignment) NCollection_Array1 <Handle(StepVisual_PresentationStyleAssignment)>;
 %template(StepVisual_Array1OfLayeredItem) NCollection_Array1 <StepVisual_LayeredItem>;
 %template(StepVisual_Array1OfPresentationStyleSelect) NCollection_Array1 <StepVisual_PresentationStyleSelect>;
 %template(StepVisual_Array1OfDraughtingCalloutElement) NCollection_Array1 <StepVisual_DraughtingCalloutElement>;
-%template(StepVisual_Array1OfCurveStyleFontPattern) NCollection_Array1 <Handle_StepVisual_CurveStyleFontPattern>;
+%template(StepVisual_Array1OfCurveStyleFontPattern) NCollection_Array1 <Handle(StepVisual_CurveStyleFontPattern)>;
 %template(StepVisual_Array1OfCameraModelD3MultiClippingUnionSelect) NCollection_Array1 <StepVisual_CameraModelD3MultiClippingUnionSelect>;
 %template(StepVisual_Array1OfCameraModelD3MultiClippingInterectionSelect) NCollection_Array1 <StepVisual_CameraModelD3MultiClippingInterectionSelect>;
 %template(StepVisual_Array1OfSurfaceStyleElementSelect) NCollection_Array1 <StepVisual_SurfaceStyleElementSelect>;
 %template(StepVisual_Array1OfDirectionCountSelect) NCollection_Array1 <StepVisual_DirectionCountSelect>;
-%template(StepVisual_Array1OfTessellatedItem) NCollection_Array1 <Handle_StepVisual_TessellatedItem>;
+%template(StepVisual_Array1OfTessellatedItem) NCollection_Array1 <Handle(StepVisual_TessellatedItem)>;
 %template(StepVisual_Array1OfAnnotationPlaneElement) NCollection_Array1 <StepVisual_AnnotationPlaneElement>;
-%template(StepVisual_VectorOfHSequenceOfInteger) NCollection_Vector <Handle_TColStd_HSequenceOfInteger>;
+%template(StepVisual_VectorOfHSequenceOfInteger) NCollection_Vector <Handle(TColStd_HSequenceOfInteger)>;
 %template(StepVisual_Array1OfBoxCharacteristicSelect) NCollection_Array1 <StepVisual_BoxCharacteristicSelect>;
 %template(StepVisual_Array1OfTextOrCharacter) NCollection_Array1 <StepVisual_TextOrCharacter>;
 /* end templates declaration */

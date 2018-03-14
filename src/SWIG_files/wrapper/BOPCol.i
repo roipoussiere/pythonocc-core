@@ -78,6 +78,8 @@ typedef BOPCol_ListOfShape::Iterator BOPCol_ListIteratorOfListOfShape;
 /* end typedefs declaration */
 
 /* templates */
+%define Handle(Class) opencascade::handle<Class>
+%enddef
 %template(BOPCol_DataMapOfShapeListOfShape) NCollection_DataMap <TopoDS_Shape , BOPCol_ListOfShape , TopTools_ShapeMapHasher>;
 %template(BOPCol_MapOfOrientedShape) NCollection_Map <TopoDS_Shape , TopTools_OrientedShapeMapHasher>;
 %template(BOPCol_IndexedDataMapOfIntegerListOfInteger) NCollection_IndexedDataMap <Standard_Integer , BOPCol_ListOfInteger , TColStd_MapIntegerHasher>;
@@ -87,7 +89,7 @@ typedef BOPCol_ListOfShape::Iterator BOPCol_ListIteratorOfListOfShape;
 %template(BOPCol_SequenceOfPnt2d) NCollection_Sequence <gp_Pnt2d>;
 %template(BOPCol_BoxBndTree) NCollection_UBTree <Standard_Integer , Bnd_Box>;
 %template(BOPCol_SequenceOfShape) NCollection_Sequence <TopoDS_Shape>;
-%template(BOPCol_DataMapOfTransientAddress) NCollection_DataMap <Handle_Standard_Transient , Standard_Address , TColStd_MapTransientHasher>;
+%template(BOPCol_DataMapOfTransientAddress) NCollection_DataMap <Handle(Standard_Transient) , Standard_Address , TColStd_MapTransientHasher>;
 %template(BOPCol_IndexedMapOfShape) NCollection_IndexedMap <TopoDS_Shape , TopTools_ShapeMapHasher>;
 %template(BOPCol_DataMapOfShapeReal) NCollection_DataMap <TopoDS_Shape , Standard_Real , TopTools_ShapeMapHasher>;
 %template(BOPCol_DataMapOfShapeInteger) NCollection_DataMap <TopoDS_Shape , Standard_Integer , TopTools_ShapeMapHasher>;

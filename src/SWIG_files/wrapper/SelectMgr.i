@@ -56,6 +56,8 @@ def register_handle(handle, base_object):
 /* typedefs */
 typedef SelectMgr_SelectableObject * SelectMgr_SOPtr;
 /* end typedefs declaration */
+
+/* templates */
 %define Handle(Class) opencascade::handle<Class>
 %enddef
 %define Handle_SelectMgr_BaseFrustum Handle(SelectMgr_BaseFrustum)
@@ -63,18 +65,21 @@ typedef SelectMgr_SelectableObject * SelectMgr_SOPtr;
 %define Handle_Select3D_BVHBuilder3d Handle(Select3D_BVHBuilder3d)
 %enddef
 %define Handle_Graphic3d_NMapOfTransient Handle(Graphic3d_NMapOfTransient)
-%enddef
+%enddef 
 
-/* templates */
-%template(SelectMgr_DataMapOfObjectSelectors) NCollection_DataMap <Handle_SelectMgr_SelectableObject , SelectMgr_SequenceOfSelector , TColStd_MapTransientHasher>;
+%template(SelectMgr_ListIteratorOfListOfFilter) NCollection_TListIterator<SelectMgr_ListOfFilter>;
+%template(SelectMgr_DataMapOfObjectSelectors) NCollection_DataMap <Handle(SelectMgr_SelectableObject) , SelectMgr_SequenceOfSelector , TColStd_MapTransientHasher>;
 %template(SelectMgr_Mat4) NCollection_Mat4 <Standard_Real>;
 %template(SelectMgr_TriangFrustums) NCollection_List <Handle(SelectMgr_TriangularFrustum)>;
 %template(SelectMgr_SequenceOfOwner) NCollection_Sequence <Handle(SelectMgr_EntityOwner)>;
 %template(SelectMgr_IndexedMapOfHSensitive) NCollection_IndexedMap <Handle(SelectMgr_SensitiveEntity)>;
 %template(SelectMgr_MapOfObjectSensitives) NCollection_DataMap <Handle(SelectMgr_SelectableObject) , Handle(SelectMgr_SensitiveEntitySet)>;
+%template(SelectMgr_TriangFrustumsIter) NCollection_TListIterator<SelectMgr_TriangFrustums>;
 %template(SelectMgr_SequenceOfSelection) NCollection_Sequence <Handle(SelectMgr_Selection)>;
-%template(SelectMgr_IndexedDataMapOfOwnerCriterion) NCollection_IndexedDataMap <Handle_SelectBasics_EntityOwner , SelectMgr_SortCriterion , TColStd_MapTransientHasher>;
+%template(SelectMgr_IndexedDataMapOfOwnerCriterion) NCollection_IndexedDataMap <Handle(SelectBasics_EntityOwner) , SelectMgr_SortCriterion , TColStd_MapTransientHasher>;
 %template(SelectMgr_Vec3) NCollection_Vec3 <Standard_Real>;
+%template(SelectMgr_DataMapIteratorOfDataMapOfObjectSelectors) NCollection_TListIterator<SelectMgr_DataMapOfObjectSelectors>;
+%template(SelectMgr_MapOfObjectSensitivesIterator) NCollection_TListIterator<SelectMgr_DataMapOfObjectSelectors>;
 %template(SelectMgr_SequenceOfSelector) NCollection_Sequence <Handle(SelectMgr_ViewerSelector)>;
 %template(SelectMgr_FrustumCache) NCollection_DataMap <Standard_Integer , SelectMgr_SelectingVolumeManager>;
 %template(SelectMgr_Vec4) NCollection_Vec4 <Standard_Real>;

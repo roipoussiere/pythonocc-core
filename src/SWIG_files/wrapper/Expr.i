@@ -57,12 +57,14 @@ def register_handle(handle, base_object):
 /* end typedefs declaration */
 
 /* templates */
-%template(Expr_MapOfNamedUnknown) NCollection_IndexedMap <Handle_Expr_NamedUnknown , TColStd_MapTransientHasher>;
-%template(Expr_SequenceOfGeneralExpression) NCollection_Sequence <Handle_Expr_GeneralExpression>;
-%template(Expr_Array1OfGeneralExpression) NCollection_Array1 <Handle_Expr_GeneralExpression>;
-%template(Expr_SequenceOfGeneralRelation) NCollection_Sequence <Handle_Expr_GeneralRelation>;
-%template(Expr_Array1OfNamedUnknown) NCollection_Array1 <Handle_Expr_NamedUnknown>;
-%template(Expr_Array1OfSingleRelation) NCollection_Array1 <Handle_Expr_SingleRelation>;
+%define Handle(Class) opencascade::handle<Class>
+%enddef
+%template(Expr_MapOfNamedUnknown) NCollection_IndexedMap <Handle(Expr_NamedUnknown) , TColStd_MapTransientHasher>;
+%template(Expr_SequenceOfGeneralExpression) NCollection_Sequence <Handle(Expr_GeneralExpression)>;
+%template(Expr_Array1OfGeneralExpression) NCollection_Array1 <Handle(Expr_GeneralExpression)>;
+%template(Expr_SequenceOfGeneralRelation) NCollection_Sequence <Handle(Expr_GeneralRelation)>;
+%template(Expr_Array1OfNamedUnknown) NCollection_Array1 <Handle(Expr_NamedUnknown)>;
+%template(Expr_Array1OfSingleRelation) NCollection_Array1 <Handle(Expr_SingleRelation)>;
 /* end templates declaration */
 
 /* public enums */

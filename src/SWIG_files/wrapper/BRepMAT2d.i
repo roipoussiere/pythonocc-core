@@ -57,7 +57,11 @@ def register_handle(handle, base_object):
 /* end typedefs declaration */
 
 /* templates */
-%template(BRepMAT2d_DataMapOfBasicEltShape) NCollection_DataMap <Handle_MAT_BasicElt , TopoDS_Shape , TColStd_MapTransientHasher>;
+%define Handle(Class) opencascade::handle<Class>
+%enddef
+%template(BRepMAT2d_DataMapOfBasicEltShape) NCollection_DataMap <Handle(MAT_BasicElt) , TopoDS_Shape , TColStd_MapTransientHasher>;
+%template(BRepMAT2d_DataMapIteratorOfDataMapOfShapeSequenceOfBasicElt) NCollection_TListIterator<BRepMAT2d_DataMapOfShapeSequenceOfBasicElt>;
+%template(BRepMAT2d_DataMapIteratorOfDataMapOfBasicEltShape) NCollection_TListIterator<BRepMAT2d_DataMapOfBasicEltShape>;
 %template(BRepMAT2d_DataMapOfShapeSequenceOfBasicElt) NCollection_DataMap <TopoDS_Shape , MAT_SequenceOfBasicElt , TopTools_ShapeMapHasher>;
 /* end templates declaration */
 

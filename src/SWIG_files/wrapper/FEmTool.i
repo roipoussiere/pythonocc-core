@@ -57,9 +57,12 @@ def register_handle(handle, base_object):
 /* end typedefs declaration */
 
 /* templates */
-%template(FEmTool_AssemblyTable) NCollection_Array2 <Handle_TColStd_HArray1OfInteger>;
+%define Handle(Class) opencascade::handle<Class>
+%enddef
+%template(FEmTool_AssemblyTable) NCollection_Array2 <Handle(TColStd_HArray1OfInteger)>;
 %template(FEmTool_SeqOfLinConstr) NCollection_Sequence <FEmTool_ListOfVectors>;
-%template(FEmTool_ListOfVectors) NCollection_List <Handle_TColStd_HArray1OfReal>;
+%template(FEmTool_ListIteratorOfListOfVectors) NCollection_TListIterator<FEmTool_ListOfVectors>;
+%template(FEmTool_ListOfVectors) NCollection_List <Handle(TColStd_HArray1OfReal)>;
 /* end templates declaration */
 
 /* public enums */

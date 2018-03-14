@@ -57,8 +57,13 @@ def register_handle(handle, base_object):
 /* end typedefs declaration */
 
 /* templates */
+%define Handle(Class) opencascade::handle<Class>
+%enddef
+%template(XCAFPrs_DataMapIteratorOfDataMapOfShapeStyle) NCollection_TListIterator<XCAFPrs_DataMapOfShapeStyle>;
+%template(XCAFPrs_DataMapIteratorOfDataMapOfStyleTransient) NCollection_TListIterator<XCAFPrs_DataMapOfStyleTransient>;
+%template(XCAFPrs_DataMapIteratorOfDataMapOfStyleShape) NCollection_TListIterator<XCAFPrs_DataMapOfStyleShape>;
 %template(XCAFPrs_DataMapOfShapeStyle) NCollection_DataMap <TopoDS_Shape , XCAFPrs_Style , TopTools_ShapeMapHasher>;
-%template(XCAFPrs_DataMapOfStyleTransient) NCollection_DataMap <XCAFPrs_Style , Handle_Standard_Transient , XCAFPrs_Style>;
+%template(XCAFPrs_DataMapOfStyleTransient) NCollection_DataMap <XCAFPrs_Style , Handle(Standard_Transient) , XCAFPrs_Style>;
 %template(XCAFPrs_DataMapOfStyleShape) NCollection_DataMap <XCAFPrs_Style , TopoDS_Shape , XCAFPrs_Style>;
 /* end templates declaration */
 

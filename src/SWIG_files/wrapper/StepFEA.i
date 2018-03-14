@@ -57,15 +57,17 @@ def register_handle(handle, base_object):
 /* end typedefs declaration */
 
 /* templates */
-%template(StepFEA_Array1OfCurveElementEndOffset) NCollection_Array1 <Handle_StepFEA_CurveElementEndOffset>;
-%template(StepFEA_Array1OfNodeRepresentation) NCollection_Array1 <Handle_StepFEA_NodeRepresentation>;
-%template(StepFEA_Array1OfCurveElementEndRelease) NCollection_Array1 <Handle_StepFEA_CurveElementEndRelease>;
-%template(StepFEA_SequenceOfCurve3dElementProperty) NCollection_Sequence <Handle_StepFEA_Curve3dElementProperty>;
-%template(StepFEA_Array1OfElementRepresentation) NCollection_Array1 <Handle_StepFEA_ElementRepresentation>;
-%template(StepFEA_SequenceOfElementGeometricRelationship) NCollection_Sequence <Handle_StepFEA_ElementGeometricRelationship>;
-%template(StepFEA_SequenceOfNodeRepresentation) NCollection_Sequence <Handle_StepFEA_NodeRepresentation>;
-%template(StepFEA_SequenceOfElementRepresentation) NCollection_Sequence <Handle_StepFEA_ElementRepresentation>;
-%template(StepFEA_Array1OfCurveElementInterval) NCollection_Array1 <Handle_StepFEA_CurveElementInterval>;
+%define Handle(Class) opencascade::handle<Class>
+%enddef
+%template(StepFEA_Array1OfCurveElementEndOffset) NCollection_Array1 <Handle(StepFEA_CurveElementEndOffset)>;
+%template(StepFEA_Array1OfNodeRepresentation) NCollection_Array1 <Handle(StepFEA_NodeRepresentation)>;
+%template(StepFEA_Array1OfCurveElementEndRelease) NCollection_Array1 <Handle(StepFEA_CurveElementEndRelease)>;
+%template(StepFEA_SequenceOfCurve3dElementProperty) NCollection_Sequence <Handle(StepFEA_Curve3dElementProperty)>;
+%template(StepFEA_Array1OfElementRepresentation) NCollection_Array1 <Handle(StepFEA_ElementRepresentation)>;
+%template(StepFEA_SequenceOfElementGeometricRelationship) NCollection_Sequence <Handle(StepFEA_ElementGeometricRelationship)>;
+%template(StepFEA_SequenceOfNodeRepresentation) NCollection_Sequence <Handle(StepFEA_NodeRepresentation)>;
+%template(StepFEA_SequenceOfElementRepresentation) NCollection_Sequence <Handle(StepFEA_ElementRepresentation)>;
+%template(StepFEA_Array1OfCurveElementInterval) NCollection_Array1 <Handle(StepFEA_CurveElementInterval)>;
 %template(StepFEA_Array1OfDegreeOfFreedom) NCollection_Array1 <StepFEA_DegreeOfFreedom>;
 /* end templates declaration */
 

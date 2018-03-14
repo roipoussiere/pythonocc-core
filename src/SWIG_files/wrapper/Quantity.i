@@ -136,6 +136,8 @@ typedef Standard_Real Quantity_Scalaire;
 /* end typedefs declaration */
 
 /* templates */
+%define Handle(Class) opencascade::handle<Class>
+%enddef
 %template(Quantity_Array1OfColor) NCollection_Array1 <Quantity_Color>;
 %template(Quantity_Array2OfColor) NCollection_Array2 <Quantity_Color>;
 /* end templates declaration */

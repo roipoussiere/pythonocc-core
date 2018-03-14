@@ -57,6 +57,9 @@ def register_handle(handle, base_object):
 /* end typedefs declaration */
 
 /* templates */
+%define Handle(Class) opencascade::handle<Class>
+%enddef
+%template(LocOpe_DataMapIteratorOfDataMapOfShapePnt) NCollection_TListIterator<LocOpe_DataMapOfShapePnt>;
 %template(LocOpe_DataMapOfShapePnt) NCollection_DataMap <TopoDS_Shape , gp_Pnt , TopTools_ShapeMapHasher>;
 %template(LocOpe_SequenceOfPntFace) NCollection_Sequence <LocOpe_PntFace>;
 %template(LocOpe_SequenceOfLin) NCollection_Sequence <gp_Lin>;

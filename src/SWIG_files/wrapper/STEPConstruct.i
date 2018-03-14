@@ -57,8 +57,12 @@ def register_handle(handle, base_object):
 /* end typedefs declaration */
 
 /* templates */
-%template(STEPConstruct_DataMapOfPointTransient) NCollection_DataMap <gp_Pnt , Handle_Standard_Transient , STEPConstruct_PointHasher>;
-%template(STEPConstruct_DataMapOfAsciiStringTransient) NCollection_DataMap <TCollection_AsciiString , Handle_Standard_Transient , TCollection_AsciiString>;
+%define Handle(Class) opencascade::handle<Class>
+%enddef
+%template(STEPConstruct_DataMapOfPointTransient) NCollection_DataMap <gp_Pnt , Handle(Standard_Transient) , STEPConstruct_PointHasher>;
+%template(STEPConstruct_DataMapIteratorOfDataMapOfAsciiStringTransient) NCollection_TListIterator<STEPConstruct_DataMapOfAsciiStringTransient>;
+%template(STEPConstruct_DataMapOfAsciiStringTransient) NCollection_DataMap <TCollection_AsciiString , Handle(Standard_Transient) , TCollection_AsciiString>;
+%template(STEPConstruct_DataMapIteratorOfDataMapOfPointTransient) NCollection_TListIterator<STEPConstruct_DataMapOfPointTransient>;
 /* end templates declaration */
 
 /* public enums */

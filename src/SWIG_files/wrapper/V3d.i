@@ -63,6 +63,8 @@ typedef Standard_Real V3d_Coordinate;
 /* end typedefs declaration */
 
 /* templates */
+%define Handle(Class) opencascade::handle<Class>
+%enddef
 %template(V3d_ListOfView) NCollection_List <Handle_V3d_View>;
 %template(V3d_ListOfLight) NCollection_List <Handle_V3d_Light>;
 /* end templates declaration */

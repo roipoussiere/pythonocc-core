@@ -57,6 +57,8 @@ def register_handle(handle, base_object):
 /* end typedefs declaration */
 
 /* templates */
+%define Handle(Class) opencascade::handle<Class>
+%enddef
 %template(Plate_Array1OfPinpointConstraint) NCollection_Array1 <Plate_PinpointConstraint>;
 %template(Plate_SequenceOfPinpointConstraint) NCollection_Sequence <Plate_PinpointConstraint>;
 %template(Plate_SequenceOfLinearXYZConstraint) NCollection_Sequence <Plate_LinearXYZConstraint>;

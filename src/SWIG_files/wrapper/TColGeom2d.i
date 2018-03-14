@@ -57,6 +57,8 @@ def register_handle(handle, base_object):
 /* end typedefs declaration */
 
 /* templates */
+%define Handle(Class) opencascade::handle<Class>
+%enddef
 %template(TColGeom2d_SequenceOfCurve) NCollection_Sequence <Handle_Geom2d_Curve>;
 %template(TColGeom2d_Array1OfBezierCurve) NCollection_Array1 <Handle_Geom2d_BezierCurve>;
 %template(TColGeom2d_Array1OfCurve) NCollection_Array1 <Handle_Geom2d_Curve>;

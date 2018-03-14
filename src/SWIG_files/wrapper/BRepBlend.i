@@ -69,7 +69,9 @@ typedef BlendFunc_EvolRadInv BRepBlend_EvolRadInv;
 /* end typedefs declaration */
 
 /* templates */
-%template(BRepBlend_SequenceOfLine) NCollection_Sequence <Handle_BRepBlend_Line>;
+%define Handle(Class) opencascade::handle<Class>
+%enddef
+%template(BRepBlend_SequenceOfLine) NCollection_Sequence <Handle(BRepBlend_Line)>;
 %template(BRepBlend_SequenceOfPointOnRst) NCollection_Sequence <BRepBlend_PointOnRst>;
 /* end templates declaration */
 

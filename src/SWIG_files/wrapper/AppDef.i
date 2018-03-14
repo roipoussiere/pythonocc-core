@@ -57,6 +57,8 @@ def register_handle(handle, base_object):
 /* end typedefs declaration */
 
 /* templates */
+%define Handle(Class) opencascade::handle<Class>
+%enddef
 %template(AppDef_Array1OfMultiPointConstraint) NCollection_Array1 <AppDef_MultiPointConstraint>;
 /* end templates declaration */
 

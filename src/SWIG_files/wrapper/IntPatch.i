@@ -58,11 +58,13 @@ typedef Intf_InterferencePolygon2d IntPatch_SearchPnt;
 /* end typedefs declaration */
 
 /* templates */
+%define Handle(Class) opencascade::handle<Class>
+%enddef
 %template(IntPatch_SequenceOfSegmentOfTheSOnBounds) NCollection_Sequence <IntPatch_TheSegmentOfTheSOnBounds>;
-%template(IntPatch_SequenceOfLine) NCollection_Sequence <Handle_IntPatch_Line>;
+%template(IntPatch_SequenceOfLine) NCollection_Sequence <Handle(IntPatch_Line)>;
 %template(IntPatch_SequenceOfPoint) NCollection_Sequence <IntPatch_Point>;
 %template(IntPatch_SequenceOfPathPointOfTheSOnBounds) NCollection_Sequence <IntPatch_ThePathPointOfTheSOnBounds>;
-%template(IntPatch_SequenceOfIWLineOfTheIWalking) NCollection_Sequence <Handle_IntPatch_TheIWLineOfTheIWalking>;
+%template(IntPatch_SequenceOfIWLineOfTheIWalking) NCollection_Sequence <Handle(IntPatch_TheIWLineOfTheIWalking)>;
 /* end templates declaration */
 
 /* public enums */

@@ -58,6 +58,8 @@ typedef TopoDS_Iterator * TopExp_Stack;
 /* end typedefs declaration */
 
 /* templates */
+%define Handle(Class) opencascade::handle<Class>
+%enddef
 /* end templates declaration */
 
 /* public enums */

@@ -59,6 +59,8 @@ typedef FILE * FSD_BStream;
 /* end typedefs declaration */
 
 /* templates */
+%define Handle(Class) opencascade::handle<Class>
+%enddef
 /* end templates declaration */
 
 /* public enums */

@@ -58,9 +58,12 @@ typedef TDocStd_XLink * TDocStd_XLinkPtr;
 /* end typedefs declaration */
 
 /* templates */
+%define Handle(Class) opencascade::handle<Class>
+%enddef
 %template(TDocStd_LabelIDMapDataMap) NCollection_DataMap <TDF_Label , TDF_IDMap , TDF_LabelMapHasher>;
-%template(TDocStd_SequenceOfApplicationDelta) NCollection_Sequence <Handle_TDocStd_ApplicationDelta>;
-%template(TDocStd_SequenceOfDocument) NCollection_Sequence <Handle_TDocStd_Document>;
+%template(TDocStd_SequenceOfApplicationDelta) NCollection_Sequence <Handle(TDocStd_ApplicationDelta)>;
+%template(TDocStd_DataMapIteratorOfLabelIDMapDataMap) NCollection_TListIterator<TDocStd_LabelIDMapDataMap>;
+%template(TDocStd_SequenceOfDocument) NCollection_Sequence <Handle(TDocStd_Document)>;
 /* end templates declaration */
 
 /* public enums */

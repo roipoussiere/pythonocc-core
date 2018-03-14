@@ -57,8 +57,12 @@ def register_handle(handle, base_object):
 /* end typedefs declaration */
 
 /* templates */
-%template(BRep_ListOfPointRepresentation) NCollection_List <Handle_BRep_PointRepresentation>;
-%template(BRep_ListOfCurveRepresentation) NCollection_List <Handle_BRep_CurveRepresentation>;
+%define Handle(Class) opencascade::handle<Class>
+%enddef
+%template(BRep_ListOfPointRepresentation) NCollection_List <Handle(BRep_PointRepresentation)>;
+%template(BRep_ListIteratorOfListOfPointRepresentation) NCollection_TListIterator<BRep_ListOfPointRepresentation>;
+%template(BRep_ListIteratorOfListOfCurveRepresentation) NCollection_TListIterator<BRep_ListOfCurveRepresentation>;
+%template(BRep_ListOfCurveRepresentation) NCollection_List <Handle(BRep_CurveRepresentation)>;
 /* end templates declaration */
 
 /* public enums */

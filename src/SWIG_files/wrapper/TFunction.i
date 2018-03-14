@@ -57,10 +57,15 @@ def register_handle(handle, base_object):
 /* end typedefs declaration */
 
 /* templates */
+%define Handle(Class) opencascade::handle<Class>
+%enddef
+%template(TFunction_DataMapIteratorOfDataMapOfLabelListOfLabel) NCollection_TListIterator<TFunction_DataMapOfLabelListOfLabel>;
 %template(TFunction_Array1OfDataMapOfGUIDDriver) NCollection_Array1 <TFunction_DataMapOfGUIDDriver>;
-%template(TFunction_DataMapOfGUIDDriver) NCollection_DataMap <Standard_GUID , Handle_TFunction_Driver , Standard_GUID>;
+%template(TFunction_DataMapOfGUIDDriver) NCollection_DataMap <Standard_GUID , Handle(TFunction_Driver) , Standard_GUID>;
 %template(TFunction_DoubleMapOfIntegerLabel) NCollection_DoubleMap <Standard_Integer , TDF_Label , TColStd_MapIntegerHasher , TDF_LabelMapHasher>;
 %template(TFunction_DataMapOfLabelListOfLabel) NCollection_DataMap <TDF_Label , TDF_LabelList , TDF_LabelMapHasher>;
+%template(TFunction_DoubleMapIteratorOfDoubleMapOfIntegerLabel) NCollection_TListIterator<TFunction_DoubleMapOfIntegerLabel>;
+%template(TFunction_DataMapIteratorOfDataMapOfGUIDDriver) NCollection_TListIterator<TFunction_DataMapOfGUIDDriver>;
 /* end templates declaration */
 
 /* public enums */

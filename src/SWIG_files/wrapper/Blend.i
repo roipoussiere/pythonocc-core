@@ -57,6 +57,8 @@ def register_handle(handle, base_object):
 /* end typedefs declaration */
 
 /* templates */
+%define Handle(Class) opencascade::handle<Class>
+%enddef
 %template(Blend_SequenceOfPoint) NCollection_Sequence <Blend_Point>;
 /* end templates declaration */
 

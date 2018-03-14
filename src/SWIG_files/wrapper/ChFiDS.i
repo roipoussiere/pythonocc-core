@@ -57,14 +57,19 @@ def register_handle(handle, base_object):
 /* end typedefs declaration */
 
 /* templates */
+%define Handle(Class) opencascade::handle<Class>
+%enddef
 %template(ChFiDS_SecArray1) NCollection_Array1 <ChFiDS_CircSection>;
-%template(ChFiDS_SequenceOfSpine) NCollection_Sequence <Handle_ChFiDS_Spine>;
+%template(ChFiDS_ListIteratorOfListOfStripe) NCollection_TListIterator<ChFiDS_ListOfStripe>;
+%template(ChFiDS_ListIteratorOfListOfHElSpine) NCollection_TListIterator<ChFiDS_ListOfHElSpine>;
+%template(ChFiDS_SequenceOfSpine) NCollection_Sequence <Handle(ChFiDS_Spine)>;
 %template(ChFiDS_Regularities) NCollection_List <ChFiDS_Regul>;
-%template(ChFiDS_ListOfHElSpine) NCollection_List <Handle_ChFiDS_HElSpine>;
-%template(ChFiDS_SequenceOfSurfData) NCollection_Sequence <Handle_ChFiDS_SurfData>;
+%template(ChFiDS_ListIteratorOfRegularities) NCollection_TListIterator<ChFiDS_Regularities>;
+%template(ChFiDS_ListOfHElSpine) NCollection_List <Handle(ChFiDS_HElSpine)>;
+%template(ChFiDS_SequenceOfSurfData) NCollection_Sequence <Handle(ChFiDS_SurfData)>;
 %template(ChFiDS_IndexedDataMapOfVertexListOfStripe) NCollection_IndexedDataMap <TopoDS_Vertex , ChFiDS_ListOfStripe , TopTools_ShapeMapHasher>;
-%template(ChFiDS_StripeArray1) NCollection_Array1 <Handle_ChFiDS_Stripe>;
-%template(ChFiDS_ListOfStripe) NCollection_List <Handle_ChFiDS_Stripe>;
+%template(ChFiDS_StripeArray1) NCollection_Array1 <Handle(ChFiDS_Stripe)>;
+%template(ChFiDS_ListOfStripe) NCollection_List <Handle(ChFiDS_Stripe)>;
 /* end templates declaration */
 
 /* public enums */

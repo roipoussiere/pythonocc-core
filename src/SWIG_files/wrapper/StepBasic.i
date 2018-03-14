@@ -57,16 +57,18 @@ def register_handle(handle, base_object):
 /* end typedefs declaration */
 
 /* templates */
-%template(StepBasic_Array1OfDocument) NCollection_Array1 <Handle_StepBasic_Document>;
-%template(StepBasic_Array1OfOrganization) NCollection_Array1 <Handle_StepBasic_Organization>;
-%template(StepBasic_Array1OfProduct) NCollection_Array1 <Handle_StepBasic_Product>;
-%template(StepBasic_Array1OfUncertaintyMeasureWithUnit) NCollection_Array1 <Handle_StepBasic_UncertaintyMeasureWithUnit>;
-%template(StepBasic_Array1OfProductDefinition) NCollection_Array1 <Handle_StepBasic_ProductDefinition>;
-%template(StepBasic_Array1OfDerivedUnitElement) NCollection_Array1 <Handle_StepBasic_DerivedUnitElement>;
-%template(StepBasic_Array1OfPerson) NCollection_Array1 <Handle_StepBasic_Person>;
-%template(StepBasic_Array1OfProductContext) NCollection_Array1 <Handle_StepBasic_ProductContext>;
-%template(StepBasic_Array1OfApproval) NCollection_Array1 <Handle_StepBasic_Approval>;
-%template(StepBasic_Array1OfNamedUnit) NCollection_Array1 <Handle_StepBasic_NamedUnit>;
+%define Handle(Class) opencascade::handle<Class>
+%enddef
+%template(StepBasic_Array1OfDocument) NCollection_Array1 <Handle(StepBasic_Document)>;
+%template(StepBasic_Array1OfOrganization) NCollection_Array1 <Handle(StepBasic_Organization)>;
+%template(StepBasic_Array1OfProduct) NCollection_Array1 <Handle(StepBasic_Product)>;
+%template(StepBasic_Array1OfUncertaintyMeasureWithUnit) NCollection_Array1 <Handle(StepBasic_UncertaintyMeasureWithUnit)>;
+%template(StepBasic_Array1OfProductDefinition) NCollection_Array1 <Handle(StepBasic_ProductDefinition)>;
+%template(StepBasic_Array1OfDerivedUnitElement) NCollection_Array1 <Handle(StepBasic_DerivedUnitElement)>;
+%template(StepBasic_Array1OfPerson) NCollection_Array1 <Handle(StepBasic_Person)>;
+%template(StepBasic_Array1OfProductContext) NCollection_Array1 <Handle(StepBasic_ProductContext)>;
+%template(StepBasic_Array1OfApproval) NCollection_Array1 <Handle(StepBasic_Approval)>;
+%template(StepBasic_Array1OfNamedUnit) NCollection_Array1 <Handle(StepBasic_NamedUnit)>;
 /* end templates declaration */
 
 /* public enums */

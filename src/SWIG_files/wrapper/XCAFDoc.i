@@ -58,8 +58,11 @@ typedef TCollection_AsciiString XCAFDoc_PartId;
 /* end typedefs declaration */
 
 /* templates */
+%define Handle(Class) opencascade::handle<Class>
+%enddef
+%template(XCAFDoc_DataMapIteratorOfDataMapOfShapeLabel) NCollection_TListIterator<XCAFDoc_DataMapOfShapeLabel>;
 %template(XCAFDoc_DataMapOfShapeLabel) NCollection_DataMap <TopoDS_Shape , TDF_Label , TopTools_ShapeMapHasher>;
-%template(XCAFDoc_GraphNodeSequence) NCollection_Sequence <Handle_XCAFDoc_GraphNode>;
+%template(XCAFDoc_GraphNodeSequence) NCollection_Sequence <Handle(XCAFDoc_GraphNode)>;
 /* end templates declaration */
 
 /* public enums */

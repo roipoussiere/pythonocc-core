@@ -57,6 +57,9 @@ def register_handle(handle, base_object):
 /* end typedefs declaration */
 
 /* templates */
+%define Handle(Class) opencascade::handle<Class>
+%enddef
+%template(TopBas_ListIteratorOfListOfTestInterference) NCollection_TListIterator<TopBas_ListOfTestInterference>;
 %template(TopBas_ListOfTestInterference) NCollection_List <TopBas_TestInterference>;
 /* end templates declaration */
 

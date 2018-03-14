@@ -57,6 +57,8 @@ def register_handle(handle, base_object):
 /* end typedefs declaration */
 
 /* templates */
+%define Handle(Class) opencascade::handle<Class>
+%enddef
 %template(GccEnt_Array1OfPosition) NCollection_Array1 <GccEnt_Position>;
 /* end templates declaration */
 

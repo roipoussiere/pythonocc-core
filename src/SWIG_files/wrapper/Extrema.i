@@ -57,6 +57,8 @@ def register_handle(handle, base_object):
 /* end typedefs declaration */
 
 /* templates */
+%define Handle(Class) opencascade::handle<Class>
+%enddef
 %template(Extrema_Array2OfPOnCurv2d) NCollection_Array2 <Extrema_POnCurv2d>;
 %template(Extrema_SequenceOfPOnCurv) NCollection_Sequence <Extrema_POnCurv>;
 %template(Extrema_Array1OfPOnCurv2d) NCollection_Array1 <Extrema_POnCurv2d>;

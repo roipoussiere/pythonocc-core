@@ -58,8 +58,10 @@ typedef Storage_BaseDriver * PCDM_BaseDriverPointer;
 /* end typedefs declaration */
 
 /* templates */
+%define Handle(Class) opencascade::handle<Class>
+%enddef
 %template(PCDM_SequenceOfReference) NCollection_Sequence <PCDM_Reference>;
-%template(PCDM_SequenceOfDocument) NCollection_Sequence <Handle_PCDM_Document>;
+%template(PCDM_SequenceOfDocument) NCollection_Sequence <Handle(PCDM_Document)>;
 /* end templates declaration */
 
 /* public enums */

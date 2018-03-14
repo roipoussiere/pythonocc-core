@@ -62,6 +62,8 @@ typedef BOPTools_ListOfShapeSet::Iterator BOPTools_ListIteratorOfListOfShapeSet;
 /* end typedefs declaration */
 
 /* templates */
+%define Handle(Class) opencascade::handle<Class>
+%enddef
 %template(BOPTools_ListOfCoupleOfShape) NCollection_List <BOPTools_CoupleOfShape>;
 %template(BOPTools_ListOfEdgeSet) NCollection_List <BOPTools_EdgeSet>;
 %template(BOPTools_ListOfConnexityBlock) NCollection_List <BOPTools_ConnexityBlock>;

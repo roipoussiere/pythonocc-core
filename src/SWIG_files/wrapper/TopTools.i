@@ -58,6 +58,8 @@ typedef TopTools_LocationSet * TopTools_LocationSetPtr;
 /* end typedefs declaration */
 
 /* templates */
+%define Handle(Class) opencascade::handle<Class>
+%enddef
 %template(TopTools_DataMapIteratorOfDataMapOfIntegerListOfShape) NCollection_TListIterator<TopTools_DataMapOfIntegerListOfShape>;
 %template(TopTools_DataMapIteratorOfDataMapOfOrientedShapeShape) NCollection_TListIterator<TopTools_DataMapOfOrientedShapeShape>;
 %template(TopTools_DataMapOfOrientedShapeShape) NCollection_DataMap <TopoDS_Shape , TopoDS_Shape , TopTools_OrientedShapeMapHasher>;

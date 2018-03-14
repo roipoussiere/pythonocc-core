@@ -57,12 +57,14 @@ def register_handle(handle, base_object):
 /* end typedefs declaration */
 
 /* templates */
-%template(StepRepr_Array1OfShapeAspect) NCollection_Array1 <Handle_StepRepr_ShapeAspect>;
-%template(StepRepr_Array1OfRepresentationItem) NCollection_Array1 <Handle_StepRepr_RepresentationItem>;
-%template(StepRepr_SequenceOfMaterialPropertyRepresentation) NCollection_Sequence <Handle_StepRepr_MaterialPropertyRepresentation>;
-%template(StepRepr_Array1OfMaterialPropertyRepresentation) NCollection_Array1 <Handle_StepRepr_MaterialPropertyRepresentation>;
-%template(StepRepr_Array1OfPropertyDefinitionRepresentation) NCollection_Array1 <Handle_StepRepr_PropertyDefinitionRepresentation>;
-%template(StepRepr_SequenceOfRepresentationItem) NCollection_Sequence <Handle_StepRepr_RepresentationItem>;
+%define Handle(Class) opencascade::handle<Class>
+%enddef
+%template(StepRepr_Array1OfShapeAspect) NCollection_Array1 <Handle(StepRepr_ShapeAspect)>;
+%template(StepRepr_Array1OfRepresentationItem) NCollection_Array1 <Handle(StepRepr_RepresentationItem)>;
+%template(StepRepr_SequenceOfMaterialPropertyRepresentation) NCollection_Sequence <Handle(StepRepr_MaterialPropertyRepresentation)>;
+%template(StepRepr_Array1OfMaterialPropertyRepresentation) NCollection_Array1 <Handle(StepRepr_MaterialPropertyRepresentation)>;
+%template(StepRepr_Array1OfPropertyDefinitionRepresentation) NCollection_Array1 <Handle(StepRepr_PropertyDefinitionRepresentation)>;
+%template(StepRepr_SequenceOfRepresentationItem) NCollection_Sequence <Handle(StepRepr_RepresentationItem)>;
 /* end templates declaration */
 
 /* public enums */

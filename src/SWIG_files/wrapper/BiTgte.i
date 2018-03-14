@@ -57,7 +57,10 @@ def register_handle(handle, base_object):
 /* end typedefs declaration */
 
 /* templates */
+%define Handle(Class) opencascade::handle<Class>
+%enddef
 %template(BiTgte_DataMapOfShapeBox) NCollection_DataMap <TopoDS_Shape , Bnd_Box , TopTools_ShapeMapHasher>;
+%template(BiTgte_DataMapIteratorOfDataMapOfShapeBox) NCollection_TListIterator<BiTgte_DataMapOfShapeBox>;
 /* end templates declaration */
 
 /* public enums */

@@ -57,6 +57,8 @@ def register_handle(handle, base_object):
 /* end typedefs declaration */
 
 /* templates */
+%define Handle(Class) opencascade::handle<Class>
+%enddef
 %template(TColgp_SequenceOfAx1) NCollection_Sequence <gp_Ax1>;
 %template(TColgp_SequenceOfPnt) NCollection_Sequence <gp_Pnt>;
 %template(TColgp_Array2OfVec2d) NCollection_Array2 <gp_Vec2d>;
@@ -67,7 +69,7 @@ def register_handle(handle, base_object):
 %template(TColgp_Array2OfPnt) NCollection_Array2 <gp_Pnt>;
 %template(TColgp_Array1OfVec2d) NCollection_Array1 <gp_Vec2d>;
 %template(TColgp_SequenceOfVec2d) NCollection_Sequence <gp_Vec2d>;
-%template(TColgp_SequenceOfArray1OfPnt2d) NCollection_Sequence <Handle_TColgp_HArray1OfPnt2d>;
+%template(TColgp_SequenceOfArray1OfPnt2d) NCollection_Sequence <Handle(TColgp_HArray1OfPnt2d)>;
 %template(TColgp_SequenceOfXYZ) NCollection_Sequence <gp_XYZ>;
 %template(TColgp_Array1OfXYZ) NCollection_Array1 <gp_XYZ>;
 %template(TColgp_Array2OfCirc2d) NCollection_Array2 <gp_Circ2d>;

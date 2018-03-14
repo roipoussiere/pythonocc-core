@@ -57,6 +57,8 @@ def register_handle(handle, base_object):
 /* end typedefs declaration */
 
 /* templates */
+%define Handle(Class) opencascade::handle<Class>
+%enddef
 %template(LProp_SequenceOfCIType) NCollection_Sequence <LProp_CIType>;
 /* end templates declaration */
 

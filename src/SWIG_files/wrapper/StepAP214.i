@@ -57,6 +57,8 @@ def register_handle(handle, base_object):
 /* end typedefs declaration */
 
 /* templates */
+%define Handle(Class) opencascade::handle<Class>
+%enddef
 %template(StepAP214_Array1OfExternalIdentificationItem) NCollection_Array1 <StepAP214_ExternalIdentificationItem>;
 %template(StepAP214_Array1OfDateAndTimeItem) NCollection_Array1 <StepAP214_DateAndTimeItem>;
 %template(StepAP214_Array1OfAutoDesignPresentedItemSelect) NCollection_Array1 <StepAP214_AutoDesignPresentedItemSelect>;

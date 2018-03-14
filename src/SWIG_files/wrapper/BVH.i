@@ -38,6 +38,7 @@ along with pythonOCC.  If not, see <http://www.gnu.org/licenses/>.
 
 %include BVH_headers.i
 
+
 %include "BVH_Box.hxx";
 
 %pythoncode {
@@ -58,6 +59,8 @@ def register_handle(handle, base_object):
 /* end typedefs declaration */
 
 /* templates */
+%define Handle(Class) opencascade::handle<Class>
+%enddef
 /* end templates declaration */
 
 /* public enums */

@@ -57,9 +57,11 @@ def register_handle(handle, base_object):
 /* end typedefs declaration */
 
 /* templates */
-%template(VrmlData_DataMapOfShapeAppearance) NCollection_DataMap <Handle_TopoDS_TShape , Handle_VrmlData_Appearance>;
-%template(VrmlData_ListOfNode) NCollection_List <Handle_VrmlData_Node>;
-%template(VrmlData_MapOfNode) NCollection_Map <Handle_VrmlData_Node>;
+%define Handle(Class) opencascade::handle<Class>
+%enddef
+%template(VrmlData_DataMapOfShapeAppearance) NCollection_DataMap <Handle(TopoDS_TShape) , Handle(VrmlData_Appearance)>;
+%template(VrmlData_ListOfNode) NCollection_List <Handle(VrmlData_Node)>;
+%template(VrmlData_MapOfNode) NCollection_Map <Handle(VrmlData_Node)>;
 /* end templates declaration */
 
 /* public enums */

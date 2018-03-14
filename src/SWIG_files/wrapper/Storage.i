@@ -58,12 +58,16 @@ typedef long Storage_Position;
 /* end typedefs declaration */
 
 /* templates */
-%template(Storage_ArrayOfSchema) NCollection_Array1 <Handle_Storage_Schema>;
-%template(Storage_MapOfCallBack) NCollection_DataMap <TCollection_AsciiString , Handle_Storage_TypedCallBack , TCollection_AsciiString>;
+%define Handle(Class) opencascade::handle<Class>
+%enddef
+%template(Storage_ArrayOfSchema) NCollection_Array1 <Handle(Storage_Schema)>;
+%template(Storage_MapOfCallBack) NCollection_DataMap <TCollection_AsciiString , Handle(Storage_TypedCallBack) , TCollection_AsciiString>;
 %template(Storage_PType) NCollection_IndexedDataMap <TCollection_AsciiString , Standard_Integer , TCollection_AsciiString>;
-%template(Storage_MapOfPers) NCollection_DataMap <TCollection_AsciiString , Handle_Storage_Root , TCollection_AsciiString>;
-%template(Storage_ArrayOfCallBack) NCollection_Array1 <Handle_Storage_CallBack>;
-%template(Storage_SeqOfRoot) NCollection_Sequence <Handle_Storage_Root>;
+%template(Storage_DataMapIteratorOfMapOfPers) NCollection_TListIterator<Storage_MapOfPers>;
+%template(Storage_DataMapIteratorOfMapOfCallBack) NCollection_TListIterator<Storage_MapOfCallBack>;
+%template(Storage_MapOfPers) NCollection_DataMap <TCollection_AsciiString , Handle(Storage_Root) , TCollection_AsciiString>;
+%template(Storage_ArrayOfCallBack) NCollection_Array1 <Handle(Storage_CallBack)>;
+%template(Storage_SeqOfRoot) NCollection_Sequence <Handle(Storage_Root)>;
 /* end templates declaration */
 
 /* public enums */

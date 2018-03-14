@@ -76,9 +76,11 @@ typedef BOPDS_MapOfPave::Iterator BOPDS_MapIteratorOfMapOfPave;
 /* end typedefs declaration */
 
 /* templates */
+%define Handle(Class) opencascade::handle<Class>
+%enddef
 %template(BOPDS_MapOfPassKey) NCollection_Map <BOPDS_PassKey , BOPDS_PassKeyMapHasher>;
 %template(BOPDS_VectorOfInterfVZ) BOPCol_NCVector <BOPDS_InterfVZ>;
-%template(BOPDS_DataMapOfPaveBlockListOfInteger) NCollection_DataMap <Handle_BOPDS_PaveBlock , BOPCol_ListOfInteger , TColStd_MapTransientHasher>;
+%template(BOPDS_DataMapOfPaveBlockListOfInteger) NCollection_DataMap <Handle(BOPDS_PaveBlock) , BOPCol_ListOfInteger , TColStd_MapTransientHasher>;
 %template(BOPDS_ListOfPave) NCollection_List <BOPDS_Pave>;
 %template(BOPDS_VectorOfInterfEZ) BOPCol_NCVector <BOPDS_InterfEZ>;
 %template(BOPDS_VectorOfInterfVV) BOPCol_NCVector <BOPDS_InterfVV>;
@@ -91,7 +93,7 @@ typedef BOPDS_MapOfPave::Iterator BOPDS_MapIteratorOfMapOfPave;
 %template(BOPDS_MapOfPair) NCollection_Map <BOPDS_Pair , BOPDS_PairMapHasher>;
 %template(BOPDS_VectorOfCurve) BOPCol_NCVector <BOPDS_Curve>;
 %template(BOPDS_VectorOfShapeInfo) BOPCol_NCVector <BOPDS_ShapeInfo>;
-%template(BOPDS_MapOfPaveBlock) NCollection_Map <Handle_BOPDS_PaveBlock , TColStd_MapTransientHasher>;
+%template(BOPDS_MapOfPaveBlock) NCollection_Map <Handle(BOPDS_PaveBlock) , TColStd_MapTransientHasher>;
 %template(BOPDS_VectorOfIndexRange) BOPCol_NCVector <BOPDS_IndexRange>;
 %template(BOPDS_VectorOfInterfFF) BOPCol_NCVector <BOPDS_InterfFF>;
 %template(BOPDS_VectorOfPave) NCollection_Array1 <BOPDS_Pave>;
@@ -99,19 +101,19 @@ typedef BOPDS_MapOfPave::Iterator BOPDS_MapIteratorOfMapOfPave;
 %template(BOPDS_VectorOfPair) BOPCol_NCVector <BOPDS_Pair>;
 %template(BOPDS_MapOfPassKeyBoolean) NCollection_Map <BOPDS_PassKeyBoolean , BOPDS_PassKeyMapHasher>;
 %template(BOPDS_DataMapOfIntegerListOfPaveBlock) NCollection_DataMap <Standard_Integer , BOPDS_ListOfPaveBlock , TColStd_MapIntegerHasher>;
-%template(BOPDS_IndexedMapOfPaveBlock) NCollection_IndexedMap <Handle_BOPDS_PaveBlock , TColStd_MapTransientHasher>;
+%template(BOPDS_IndexedMapOfPaveBlock) NCollection_IndexedMap <Handle(BOPDS_PaveBlock) , TColStd_MapTransientHasher>;
 %template(BOPDS_DataMapOfPassKeyListOfPaveBlock) NCollection_DataMap <BOPDS_PassKey , BOPDS_ListOfPaveBlock , BOPDS_PassKeyMapHasher>;
-%template(BOPDS_MapOfCommonBlock) NCollection_Map <Handle_BOPDS_CommonBlock , TColStd_MapTransientHasher>;
+%template(BOPDS_MapOfCommonBlock) NCollection_Map <Handle(BOPDS_CommonBlock) , TColStd_MapTransientHasher>;
 %template(BOPDS_MapOfPave) NCollection_Map <BOPDS_Pave , BOPDS_PaveMapHasher>;
-%template(BOPDS_DataMapOfPaveBlockListOfPaveBlock) NCollection_DataMap <Handle_BOPDS_PaveBlock , BOPDS_ListOfPaveBlock , TColStd_MapTransientHasher>;
+%template(BOPDS_DataMapOfPaveBlockListOfPaveBlock) NCollection_DataMap <Handle(BOPDS_PaveBlock) , BOPDS_ListOfPaveBlock , TColStd_MapTransientHasher>;
 %template(BOPDS_VectorOfListOfPaveBlock) BOPCol_NCVector <BOPDS_ListOfPaveBlock>;
-%template(BOPDS_IndexedDataMapOfPaveBlockListOfInteger) NCollection_IndexedDataMap <Handle_BOPDS_PaveBlock , BOPCol_ListOfInteger , TColStd_MapTransientHasher>;
+%template(BOPDS_IndexedDataMapOfPaveBlockListOfInteger) NCollection_IndexedDataMap <Handle(BOPDS_PaveBlock) , BOPCol_ListOfInteger , TColStd_MapTransientHasher>;
 %template(BOPDS_VectorOfPoint) BOPCol_NCVector <BOPDS_Point>;
-%template(BOPDS_ListOfPaveBlock) NCollection_List <Handle_BOPDS_PaveBlock>;
+%template(BOPDS_ListOfPaveBlock) NCollection_List <Handle(BOPDS_PaveBlock)>;
 %template(BOPDS_DataMapOfShapeCoupleOfPaveBlocks) NCollection_DataMap <TopoDS_Shape , BOPDS_CoupleOfPaveBlocks , TopTools_ShapeMapHasher>;
 %template(BOPDS_IndexedDataMapOfShapeCoupleOfPaveBlocks) NCollection_IndexedDataMap <TopoDS_Shape , BOPDS_CoupleOfPaveBlocks , TopTools_ShapeMapHasher>;
 %template(BOPDS_VectorOfFaceInfo) BOPCol_NCVector <BOPDS_FaceInfo>;
-%template(BOPDS_IndexedDataMapOfPaveBlockListOfPaveBlock) NCollection_IndexedDataMap <Handle_BOPDS_PaveBlock , BOPDS_ListOfPaveBlock , TColStd_MapTransientHasher>;
+%template(BOPDS_IndexedDataMapOfPaveBlockListOfPaveBlock) NCollection_IndexedDataMap <Handle(BOPDS_PaveBlock) , BOPDS_ListOfPaveBlock , TColStd_MapTransientHasher>;
 %template(BOPDS_VectorOfListOfPassKeyBoolean) BOPCol_NCVector <BOPDS_ListOfPassKeyBoolean>;
 %template(BOPDS_ListOfPassKeyBoolean) NCollection_List <BOPDS_PassKeyBoolean>;
 /* end templates declaration */

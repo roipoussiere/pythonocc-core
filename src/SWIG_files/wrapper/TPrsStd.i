@@ -57,7 +57,10 @@ def register_handle(handle, base_object):
 /* end typedefs declaration */
 
 /* templates */
-%template(TPrsStd_DataMapOfGUIDDriver) NCollection_DataMap <Standard_GUID , Handle_TPrsStd_Driver , Standard_GUID>;
+%define Handle(Class) opencascade::handle<Class>
+%enddef
+%template(TPrsStd_DataMapOfGUIDDriver) NCollection_DataMap <Standard_GUID , Handle(TPrsStd_Driver) , Standard_GUID>;
+%template(TPrsStd_DataMapIteratorOfDataMapOfGUIDDriver) NCollection_TListIterator<TPrsStd_DataMapOfGUIDDriver>;
 /* end templates declaration */
 
 /* public enums */

@@ -58,6 +58,8 @@ typedef Standard_Real ( * CPnts_RealFunction ) ( const Standard_Real , 	 	 	 	 	
 /* end typedefs declaration */
 
 /* templates */
+%define Handle(Class) opencascade::handle<Class>
+%enddef
 /* end templates declaration */
 
 /* public enums */

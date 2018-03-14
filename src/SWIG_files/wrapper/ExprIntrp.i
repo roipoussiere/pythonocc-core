@@ -57,11 +57,16 @@ def register_handle(handle, base_object):
 /* end typedefs declaration */
 
 /* templates */
-%template(ExprIntrp_SequenceOfNamedExpression) NCollection_Sequence <Handle_Expr_NamedExpression>;
-%template(ExprIntrp_StackOfGeneralRelation) NCollection_List <Handle_Expr_GeneralRelation>;
-%template(ExprIntrp_StackOfGeneralExpression) NCollection_List <Handle_Expr_GeneralExpression>;
-%template(ExprIntrp_SequenceOfNamedFunction) NCollection_Sequence <Handle_Expr_NamedFunction>;
-%template(ExprIntrp_StackOfGeneralFunction) NCollection_List <Handle_Expr_GeneralFunction>;
+%define Handle(Class) opencascade::handle<Class>
+%enddef
+%template(ExprIntrp_ListIteratorOfStackOfGeneralFunction) NCollection_TListIterator<ExprIntrp_StackOfGeneralFunction>;
+%template(ExprIntrp_SequenceOfNamedExpression) NCollection_Sequence <Handle(Expr_NamedExpression)>;
+%template(ExprIntrp_ListIteratorOfStackOfGeneralRelation) NCollection_TListIterator<ExprIntrp_StackOfGeneralRelation>;
+%template(ExprIntrp_StackOfGeneralRelation) NCollection_List <Handle(Expr_GeneralRelation)>;
+%template(ExprIntrp_StackOfGeneralExpression) NCollection_List <Handle(Expr_GeneralExpression)>;
+%template(ExprIntrp_SequenceOfNamedFunction) NCollection_Sequence <Handle(Expr_NamedFunction)>;
+%template(ExprIntrp_ListIteratorOfStackOfGeneralExpression) NCollection_TListIterator<ExprIntrp_StackOfGeneralExpression>;
+%template(ExprIntrp_StackOfGeneralFunction) NCollection_List <Handle(Expr_GeneralFunction)>;
 /* end templates declaration */
 
 /* public enums */

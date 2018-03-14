@@ -57,11 +57,13 @@ def register_handle(handle, base_object):
 /* end typedefs declaration */
 
 /* templates */
+%define Handle(Class) opencascade::handle<Class>
+%enddef
 %template(Contap_SequenceOfPathPointOfTheSearch) NCollection_Sequence <Contap_ThePathPointOfTheSearch>;
 %template(Contap_TheSequenceOfPoint) NCollection_Sequence <Contap_Point>;
 %template(Contap_SequenceOfSegmentOfTheSearch) NCollection_Sequence <Contap_TheSegmentOfTheSearch>;
 %template(Contap_TheSequenceOfLine) NCollection_Sequence <Contap_Line>;
-%template(Contap_SequenceOfIWLineOfTheIWalking) NCollection_Sequence <Handle_Contap_TheIWLineOfTheIWalking>;
+%template(Contap_SequenceOfIWLineOfTheIWalking) NCollection_Sequence <Handle(Contap_TheIWLineOfTheIWalking)>;
 /* end templates declaration */
 
 /* public enums */

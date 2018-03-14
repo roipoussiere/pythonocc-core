@@ -57,6 +57,8 @@ def register_handle(handle, base_object):
 /* end typedefs declaration */
 
 /* templates */
+%define Handle(Class) opencascade::handle<Class>
+%enddef
 %template(math_Array1OfValueAndWeight) NCollection_Array1 <math_ValueAndWeight>;
 /* end templates declaration */
 

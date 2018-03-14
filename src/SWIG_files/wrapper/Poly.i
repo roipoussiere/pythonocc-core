@@ -57,7 +57,12 @@ def register_handle(handle, base_object):
 /* end typedefs declaration */
 
 /* templates */
-%template(Poly_ListOfTriangulation) NCollection_List <Handle_Poly_Triangulation>;
+%define Handle(Class) opencascade::handle<Class>
+%enddef
+%template(Poly_BaseIteratorOfCoherentLink) NCollection_TListIterator<Poly_CoherentLink>;
+%template(Poly_ListOfTriangulation) NCollection_List <Handle(Poly_Triangulation)>;
+%template(Poly_BaseIteratorOfCoherentTriangle) NCollection_TListIterator<Poly_CoherentTriangle>;
+%template(Poly_BaseIteratorOfCoherentNode) NCollection_TListIterator<Poly_CoherentNode>;
 %template(Poly_Array1OfTriangle) NCollection_Array1 <Poly_Triangle>;
 /* end templates declaration */
 

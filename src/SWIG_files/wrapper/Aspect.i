@@ -64,6 +64,8 @@ typedef unsigned long Aspect_Handle;
 /* end typedefs declaration */
 
 /* templates */
+%define Handle(Class) opencascade::handle<Class>
+%enddef
 %template(Aspect_SequenceOfColor) NCollection_Sequence <Quantity_Color>;
 /* end templates declaration */
 

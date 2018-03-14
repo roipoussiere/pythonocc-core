@@ -57,6 +57,8 @@ def register_handle(handle, base_object):
 /* end typedefs declaration */
 
 /* templates */
+%define Handle(Class) opencascade::handle<Class>
+%enddef
 %template(AppParCurves_Array1OfConstraintCouple) NCollection_Array1 <AppParCurves_ConstraintCouple>;
 %template(AppParCurves_SequenceOfMultiBSpCurve) NCollection_Sequence <AppParCurves_MultiBSpCurve>;
 %template(AppParCurves_Array1OfMultiCurve) NCollection_Array1 <AppParCurves_MultiCurve>;

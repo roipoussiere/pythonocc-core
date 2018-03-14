@@ -60,8 +60,14 @@ typedef TopTools_ListOfShape * TopOpeBRepTool_Plos;
 /* end typedefs declaration */
 
 /* templates */
+%define Handle(Class) opencascade::handle<Class>
+%enddef
+%template(TopOpeBRepTool_ListIteratorOfListOfC2DF) NCollection_TListIterator<TopOpeBRepTool_ListOfC2DF>;
 %template(TopOpeBRepTool_DataMapOfShapeface) NCollection_DataMap <TopoDS_Shape , TopOpeBRepTool_face , TopTools_ShapeMapHasher>;
+%template(TopOpeBRepTool_DataMapIteratorOfDataMapOfShapeface) NCollection_TListIterator<TopOpeBRepTool_DataMapOfShapeface>;
 %template(TopOpeBRepTool_ListOfC2DF) NCollection_List <TopOpeBRepTool_C2DF>;
+%template(TopOpeBRepTool_DataMapIteratorOfDataMapOfOrientedShapeC2DF) NCollection_TListIterator<TopOpeBRepTool_DataMapOfOrientedShapeC2DF>;
+%template(TopOpeBRepTool_DataMapIteratorOfDataMapOfShapeListOfC2DF) NCollection_TListIterator<TopOpeBRepTool_DataMapOfShapeListOfC2DF>;
 %template(TopOpeBRepTool_DataMapOfShapeListOfC2DF) NCollection_DataMap <TopoDS_Shape , TopOpeBRepTool_ListOfC2DF , TopTools_ShapeMapHasher>;
 %template(TopOpeBRepTool_DataMapOfOrientedShapeC2DF) NCollection_DataMap <TopoDS_Shape , TopOpeBRepTool_C2DF , TopTools_OrientedShapeMapHasher>;
 /* end templates declaration */

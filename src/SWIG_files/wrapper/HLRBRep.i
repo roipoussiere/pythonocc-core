@@ -57,11 +57,15 @@ def register_handle(handle, base_object):
 /* end typedefs declaration */
 
 /* templates */
+%define Handle(Class) opencascade::handle<Class>
+%enddef
 %template(HLRBRep_Array1OfEData) NCollection_Array1 <HLRBRep_EdgeData>;
 %template(HLRBRep_SeqOfShapeBounds) NCollection_Sequence <HLRBRep_ShapeBounds>;
 %template(HLRBRep_ListOfBPoint) NCollection_List <HLRBRep_BiPoint>;
 %template(HLRBRep_Array1OfFData) NCollection_Array1 <HLRBRep_FaceData>;
+%template(HLRBRep_ListIteratorOfListOfBPoint) NCollection_TListIterator<HLRBRep_ListOfBPoint>;
 %template(HLRBRep_ListOfBPnt2D) NCollection_List <HLRBRep_BiPnt2D>;
+%template(HLRBRep_ListIteratorOfListOfBPnt2D) NCollection_TListIterator<HLRBRep_ListOfBPnt2D>;
 /* end templates declaration */
 
 /* public enums */

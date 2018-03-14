@@ -64,6 +64,8 @@ typedef BOPAlgo_PaveFiller * BOPAlgo_PPaveFiller;
 /* end typedefs declaration */
 
 /* templates */
+%define Handle(Class) opencascade::handle<Class>
+%enddef
 %template(BOPAlgo_ListOfCheckResult) NCollection_List <BOPAlgo_CheckResult>;
 /* end templates declaration */
 

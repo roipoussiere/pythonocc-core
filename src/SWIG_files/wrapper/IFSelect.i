@@ -58,11 +58,13 @@ typedef IFSelect_ReturnStatus ( * IFSelect_ActFunc ) ( const Handle_IFSelect_Ses
 /* end typedefs declaration */
 
 /* templates */
-%template(IFSelect_TSeqOfDispatch) NCollection_Sequence <Handle_IFSelect_Dispatch>;
-%template(IFSelect_SequenceOfInterfaceModel) NCollection_Sequence <Handle_Interface_InterfaceModel>;
-%template(IFSelect_SequenceOfGeneralModifier) NCollection_Sequence <Handle_IFSelect_GeneralModifier>;
-%template(IFSelect_SequenceOfAppliedModifiers) NCollection_Sequence <Handle_IFSelect_AppliedModifiers>;
-%template(IFSelect_TSeqOfSelection) NCollection_Sequence <Handle_IFSelect_Selection>;
+%define Handle(Class) opencascade::handle<Class>
+%enddef
+%template(IFSelect_TSeqOfDispatch) NCollection_Sequence <Handle(IFSelect_Dispatch)>;
+%template(IFSelect_SequenceOfInterfaceModel) NCollection_Sequence <Handle(Interface_InterfaceModel)>;
+%template(IFSelect_SequenceOfGeneralModifier) NCollection_Sequence <Handle(IFSelect_GeneralModifier)>;
+%template(IFSelect_SequenceOfAppliedModifiers) NCollection_Sequence <Handle(IFSelect_AppliedModifiers)>;
+%template(IFSelect_TSeqOfSelection) NCollection_Sequence <Handle(IFSelect_Selection)>;
 /* end templates declaration */
 
 /* public enums */

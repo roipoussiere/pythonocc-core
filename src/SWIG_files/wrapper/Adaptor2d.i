@@ -58,6 +58,8 @@ typedef Adaptor2d_Curve2d * Adaptor2d_Curve2dPtr;
 /* end typedefs declaration */
 
 /* templates */
+%define Handle(Class) opencascade::handle<Class>
+%enddef
 /* end templates declaration */
 
 /* public enums */

@@ -57,6 +57,8 @@ def register_handle(handle, base_object):
 /* end typedefs declaration */
 
 /* templates */
+%define Handle(Class) opencascade::handle<Class>
+%enddef
 %template(IntRes2d_SequenceOfIntersectionSegment) NCollection_Sequence <IntRes2d_IntersectionSegment>;
 %template(IntRes2d_SequenceOfIntersectionPoint) NCollection_Sequence <IntRes2d_IntersectionPoint>;
 /* end templates declaration */

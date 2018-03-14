@@ -57,7 +57,10 @@ def register_handle(handle, base_object):
 /* end typedefs declaration */
 
 /* templates */
+%define Handle(Class) opencascade::handle<Class>
+%enddef
 %template(IntAna_ListOfCurve) NCollection_List <IntAna_Curve>;
+%template(IntAna_ListIteratorOfListOfCurve) NCollection_TListIterator<IntAna_ListOfCurve>;
 /* end templates declaration */
 
 /* public enums */

@@ -57,7 +57,13 @@ def register_handle(handle, base_object):
 /* end typedefs declaration */
 
 /* templates */
+%define Handle(Class) opencascade::handle<Class>
+%enddef
+%template(BRepOffset_DataMapIteratorOfDataMapOfShapeListOfInterval) NCollection_TListIterator<BRepOffset_DataMapOfShapeListOfInterval>;
+%template(BRepOffset_DataMapIteratorOfDataMapOfShapeMapOfShape) NCollection_TListIterator<BRepOffset_DataMapOfShapeMapOfShape>;
 %template(BRepOffset_DataMapOfShapeOffset) NCollection_DataMap <TopoDS_Shape , BRepOffset_Offset , TopTools_ShapeMapHasher>;
+%template(BRepOffset_ListIteratorOfListOfInterval) NCollection_TListIterator<BRepOffset_ListOfInterval>;
+%template(BRepOffset_DataMapIteratorOfDataMapOfShapeOffset) NCollection_TListIterator<BRepOffset_DataMapOfShapeOffset>;
 %template(BRepOffset_ListOfInterval) NCollection_List <BRepOffset_Interval>;
 %template(BRepOffset_DataMapOfShapeListOfInterval) NCollection_DataMap <TopoDS_Shape , BRepOffset_ListOfInterval , TopTools_ShapeMapHasher>;
 %template(BRepOffset_DataMapOfShapeMapOfShape) NCollection_DataMap <TopoDS_Shape , TopTools_MapOfShape , TopTools_ShapeMapHasher>;

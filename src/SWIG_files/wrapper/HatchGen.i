@@ -57,6 +57,8 @@ def register_handle(handle, base_object):
 /* end typedefs declaration */
 
 /* templates */
+%define Handle(Class) opencascade::handle<Class>
+%enddef
 %template(HatchGen_PointsOnHatching) NCollection_Sequence <HatchGen_PointOnHatching>;
 %template(HatchGen_Domains) NCollection_Sequence <HatchGen_Domain>;
 %template(HatchGen_PointsOnElement) NCollection_Sequence <HatchGen_PointOnElement>;

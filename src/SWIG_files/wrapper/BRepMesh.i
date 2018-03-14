@@ -58,6 +58,8 @@ typedef Standard_Integer ( * BRepMesh_PluginEntryType ) ( const TopoDS_Shape & t
 /* end typedefs declaration */
 
 /* templates */
+%define Handle(Class) opencascade::handle<Class>
+%enddef
 /* end templates declaration */
 
 /* public enums */

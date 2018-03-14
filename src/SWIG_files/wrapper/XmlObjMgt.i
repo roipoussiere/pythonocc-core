@@ -62,6 +62,8 @@ typedef TColStd_DataMapOfIntegerTransient XmlObjMgt_RRelocationTable;
 /* end typedefs declaration */
 
 /* templates */
+%define Handle(Class) opencascade::handle<Class>
+%enddef
 /* end templates declaration */
 
 /* public enums */

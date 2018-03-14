@@ -57,7 +57,9 @@ def register_handle(handle, base_object):
 /* end typedefs declaration */
 
 /* templates */
-%template(Geom_SequenceOfBSplineSurface) NCollection_Sequence <Handle_Geom_BSplineSurface>;
+%define Handle(Class) opencascade::handle<Class>
+%enddef
+%template(Geom_SequenceOfBSplineSurface) NCollection_Sequence <Handle(Geom_BSplineSurface)>;
 /* end templates declaration */
 
 /* public enums */

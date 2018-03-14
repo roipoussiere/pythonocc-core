@@ -58,6 +58,8 @@ typedef GeomLib_DenominatorMultiplier * GeomLib_DenominatorMultiplierPtr;
 /* end typedefs declaration */
 
 /* templates */
+%define Handle(Class) opencascade::handle<Class>
+%enddef
 %template(GeomLib_Array1OfMat) NCollection_Array1 <gp_Mat>;
 /* end templates declaration */
 

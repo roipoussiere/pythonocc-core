@@ -57,6 +57,8 @@ def register_handle(handle, base_object):
 /* end typedefs declaration */
 
 /* templates */
+%define Handle(Class) opencascade::handle<Class>
+%enddef
 %template(TColQuantity_Array1OfLength) NCollection_Array1 <Quantity_Length>;
 %template(TColQuantity_Array2OfLength) NCollection_Array2 <Quantity_Length>;
 /* end templates declaration */

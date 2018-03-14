@@ -57,6 +57,9 @@ def register_handle(handle, base_object):
 /* end typedefs declaration */
 
 /* templates */
+%define Handle(Class) opencascade::handle<Class>
+%enddef
+%template(TopLoc_MapIteratorOfMapOfLocation) NCollection_TListIterator<TopLoc_MapOfLocation>;
 %template(TopLoc_IndexedMapOfLocation) NCollection_IndexedMap <TopLoc_Location , TopLoc_MapLocationHasher>;
 %template(TopLoc_MapOfLocation) NCollection_Map <TopLoc_Location , TopLoc_MapLocationHasher>;
 %template(TopLoc_MapLocationHasher) NCollection_DefaultHasher <TopLoc_Location>;

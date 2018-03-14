@@ -57,10 +57,12 @@ def register_handle(handle, base_object):
 /* end typedefs declaration */
 
 /* templates */
-%template(GeomFill_Array1OfLocationLaw) NCollection_Array1 <Handle_GeomFill_LocationLaw>;
+%define Handle(Class) opencascade::handle<Class>
+%enddef
+%template(GeomFill_Array1OfLocationLaw) NCollection_Array1 <Handle(GeomFill_LocationLaw)>;
 %template(GeomFill_SequenceOfAx2) NCollection_Sequence <gp_Ax2>;
 %template(GeomFill_SequenceOfTrsf) NCollection_Sequence <gp_Trsf>;
-%template(GeomFill_Array1OfSectionLaw) NCollection_Array1 <Handle_GeomFill_SectionLaw>;
+%template(GeomFill_Array1OfSectionLaw) NCollection_Array1 <Handle(GeomFill_SectionLaw)>;
 /* end templates declaration */
 
 /* public enums */

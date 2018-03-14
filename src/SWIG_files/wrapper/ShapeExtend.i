@@ -57,7 +57,11 @@ def register_handle(handle, base_object):
 /* end typedefs declaration */
 
 /* templates */
-%template(ShapeExtend_DataMapOfTransientListOfMsg) NCollection_DataMap <Handle_Standard_Transient , Message_ListOfMsg , TColStd_MapTransientHasher>;
+%define Handle(Class) opencascade::handle<Class>
+%enddef
+%template(ShapeExtend_DataMapOfTransientListOfMsg) NCollection_DataMap <Handle(Standard_Transient) , Message_ListOfMsg , TColStd_MapTransientHasher>;
+%template(ShapeExtend_DataMapIteratorOfDataMapOfShapeListOfMsg) NCollection_TListIterator<ShapeExtend_DataMapOfShapeListOfMsg>;
+%template(ShapeExtend_DataMapIteratorOfDataMapOfTransientListOfMsg) NCollection_TListIterator<ShapeExtend_DataMapOfTransientListOfMsg>;
 %template(ShapeExtend_DataMapOfShapeListOfMsg) NCollection_DataMap <TopoDS_Shape , Message_ListOfMsg , TopTools_ShapeMapHasher>;
 /* end templates declaration */
 

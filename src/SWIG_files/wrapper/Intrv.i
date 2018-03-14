@@ -57,6 +57,8 @@ def register_handle(handle, base_object):
 /* end typedefs declaration */
 
 /* templates */
+%define Handle(Class) opencascade::handle<Class>
+%enddef
 %template(Intrv_SequenceOfInterval) NCollection_Sequence <Intrv_Interval>;
 /* end templates declaration */
 

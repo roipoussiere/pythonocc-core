@@ -57,8 +57,11 @@ def register_handle(handle, base_object):
 /* end typedefs declaration */
 
 /* templates */
+%define Handle(Class) opencascade::handle<Class>
+%enddef
 %template(ShapeAnalysis_DataMapOfShapeListOfReal) NCollection_DataMap <TopoDS_Shape , TColStd_ListOfReal , TopTools_ShapeMapHasher>;
-%template(ShapeAnalysis_SequenceOfFreeBounds) NCollection_Sequence <Handle_ShapeAnalysis_FreeBoundData>;
+%template(ShapeAnalysis_SequenceOfFreeBounds) NCollection_Sequence <Handle(ShapeAnalysis_FreeBoundData)>;
+%template(ShapeAnalysis_DataMapIteratorOfDataMapOfShapeListOfReal) NCollection_TListIterator<ShapeAnalysis_DataMapOfShapeListOfReal>;
 %template(ShapeAnalysis_BoxBndTree) NCollection_UBTree <Standard_Integer , Bnd_Box>;
 /* end templates declaration */
 

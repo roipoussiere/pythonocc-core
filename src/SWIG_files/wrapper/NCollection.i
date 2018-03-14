@@ -91,6 +91,8 @@ typedef NCollection_Utf8String NCollection_String;
 /* end typedefs declaration */
 
 /* templates */
+%define Handle(Class) opencascade::handle<Class>
+%enddef
 %template(NCollection_Utf16String) NCollection_UtfString <Standard_Utf16Char>;
 %template(NCollection_Utf8String) NCollection_UtfString <Standard_Utf8Char>;
 %template(NCollection_Utf16Iter) NCollection_UtfIterator <Standard_Utf16Char>;

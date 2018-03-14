@@ -57,6 +57,8 @@ def register_handle(handle, base_object):
 /* end typedefs declaration */
 
 /* templates */
+%define Handle(Class) opencascade::handle<Class>
+%enddef
 %template(Draft_IndexedDataMapOfEdgeEdgeInfo) NCollection_IndexedDataMap <TopoDS_Edge , Draft_EdgeInfo , TopTools_ShapeMapHasher>;
 %template(Draft_IndexedDataMapOfVertexVertexInfo) NCollection_IndexedDataMap <TopoDS_Vertex , Draft_VertexInfo , TopTools_ShapeMapHasher>;
 %template(Draft_IndexedDataMapOfFaceFaceInfo) NCollection_IndexedDataMap <TopoDS_Face , Draft_FaceInfo , TopTools_ShapeMapHasher>;

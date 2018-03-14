@@ -57,17 +57,25 @@ def register_handle(handle, base_object):
 /* end typedefs declaration */
 
 /* templates */
-%template(AIS_SequenceOfDimension) NCollection_Sequence <Handle_AIS_Relation>;
-%template(AIS_DataMapOfILC) NCollection_DataMap <Standard_Integer , Handle_AIS_LocalContext , TColStd_MapIntegerHasher>;
-%template(AIS_IndexedDataMapOfOwnerPrs) NCollection_IndexedDataMap <Handle_SelectMgr_EntityOwner , Handle_Prs3d_Presentation , TColStd_MapTransientHasher>;
-%template(AIS_ListOfInteractive) NCollection_List <Handle_AIS_InteractiveObject>;
+%define Handle(Class) opencascade::handle<Class>
+%enddef
+%template(AIS_DataMapIteratorOfDataMapOfIOStatus) NCollection_TListIterator<AIS_DataMapOfIOStatus>;
+%template(AIS_DataMapIteratorOfDataMapofIntegerListOfinteractive) NCollection_TListIterator<AIS_DataMapofIntegerListOfinteractive>;
+%template(AIS_SequenceOfDimension) NCollection_Sequence <Handle(AIS_Relation)>;
+%template(AIS_DataMapOfILC) NCollection_DataMap <Standard_Integer , Handle(AIS_LocalContext) , TColStd_MapIntegerHasher>;
+%template(AIS_ListIteratorOfListOfInteractive) NCollection_TListIterator<AIS_ListOfInteractive>;
+%template(AIS_DataMapIteratorOfDataMapOfILC) NCollection_TListIterator<AIS_DataMapOfILC>;
+%template(AIS_IndexedDataMapOfOwnerPrs) NCollection_IndexedDataMap <Handle(SelectMgr_EntityOwner) , Handle_Prs3d_Presentation , TColStd_MapTransientHasher>;
+%template(AIS_ListOfInteractive) NCollection_List <Handle(AIS_InteractiveObject)>;
 %template(AIS_DataMapofIntegerListOfinteractive) NCollection_DataMap <Standard_Integer , AIS_ListOfInteractive , TColStd_MapIntegerHasher>;
-%template(AIS_SequenceOfInteractive) NCollection_Sequence <Handle_AIS_InteractiveObject>;
-%template(AIS_DataMapOfIOStatus) NCollection_DataMap <Handle_AIS_InteractiveObject , Handle_AIS_GlobalStatus , TColStd_MapTransientHasher>;
-%template(AIS_DataMapOfSelStat) NCollection_DataMap <Handle_SelectMgr_SelectableObject , Handle_AIS_LocalStatus , TColStd_MapTransientHasher>;
-%template(AIS_MapOfInteractive) NCollection_Map <Handle_AIS_InteractiveObject , TColStd_MapTransientHasher>;
-%template(AIS_NListOfEntityOwner) NCollection_List <Handle_SelectMgr_EntityOwner>;
-%template(AIS_DataMapOfShapeDrawer) NCollection_DataMap <TopoDS_Shape , Handle_AIS_ColoredDrawer , TopTools_ShapeMapHasher>;
+%template(AIS_SequenceOfInteractive) NCollection_Sequence <Handle(AIS_InteractiveObject)>;
+%template(AIS_DataMapOfIOStatus) NCollection_DataMap <Handle(AIS_InteractiveObject) , Handle(AIS_GlobalStatus) , TColStd_MapTransientHasher>;
+%template(AIS_DataMapOfSelStat) NCollection_DataMap <Handle(SelectMgr_SelectableObject) , Handle(AIS_LocalStatus) , TColStd_MapTransientHasher>;
+%template(AIS_MapIteratorOfMapOfInteractive) NCollection_TListIterator<AIS_MapOfInteractive>;
+%template(AIS_DataMapIteratorOfDataMapOfSelStat) NCollection_TListIterator<AIS_DataMapOfSelStat>;
+%template(AIS_MapOfInteractive) NCollection_Map <Handle(AIS_InteractiveObject) , TColStd_MapTransientHasher>;
+%template(AIS_NListOfEntityOwner) NCollection_List <Handle(SelectMgr_EntityOwner)>;
+%template(AIS_DataMapOfShapeDrawer) NCollection_DataMap <TopoDS_Shape , Handle(AIS_ColoredDrawer) , TopTools_ShapeMapHasher>;
 /* end templates declaration */
 
 /* public enums */
@@ -7583,27 +7591,6 @@ class Handle_AIS_Line : public Handle_AIS_InteractiveObject {
 %nodefaultctor AIS_Manipulator;
 class AIS_Manipulator : public AIS_InteractiveObject {
 	public:
-	struct OptionsForAttach {
-
-    OptionsForAttach() : AdjustPosition (Standard_True), AdjustSize (Standard_False), EnableModes (Standard_True) {}
-    OptionsForAttach& SetAdjustPosition (const Standard_Boolean theApply) { AdjustPosition = theApply; return *this; }
-    OptionsForAttach& SetAdjustSize     (const Standard_Boolean theApply) { AdjustSize     = theApply; return *this; }
-    OptionsForAttach& SetEnableModes    (const Standard_Boolean theApply) { EnableModes    = theApply; return *this; }
-
-    Standard_Boolean AdjustPosition;
-    Standard_Boolean AdjustSize;
-    Standard_Boolean EnableModes;
-  };
-  struct BehaviorOnTransform {
-
-    BehaviorOnTransform() : FollowTranslation (Standard_True), FollowRotation (Standard_True) {}
-    BehaviorOnTransform& SetFollowTranslation (const Standard_Boolean theApply) { FollowTranslation = theApply; return *this; }
-    BehaviorOnTransform& SetFollowRotation    (const Standard_Boolean theApply) { FollowRotation    = theApply; return *this; }
-
-    Standard_Boolean FollowTranslation;
-    Standard_Boolean FollowRotation;
-  };
-
 		%feature("compactdefaultargs") AIS_Manipulator;
 		%feature("autodoc", "	* Constructs a manipulator object with default placement and all parts to be displayed.
 
@@ -7630,26 +7617,6 @@ class AIS_Manipulator : public AIS_InteractiveObject {
 	:rtype: None
 ") SetPart;
 		void SetPart (const Standard_Integer theAxisIndex,const AIS_ManipulatorMode theMode,const Standard_Boolean theIsEnabled);
-		%feature("compactdefaultargs") Attach;
-		%feature("autodoc", "	* Attaches himself to the input interactive object and become displayed in the same context. It is placed in the center of object bounding box, and its size is adjusted to the object bounding box.
-
-	:param theObject:
-	:type theObject: Handle_AIS_InteractiveObject &
-	:param theOptions: default value is OptionsForAttach()
-	:type theOptions: OptionsForAttach &
-	:rtype: None
-") Attach;
-		void Attach (const Handle_AIS_InteractiveObject & theObject,const OptionsForAttach & theOptions = OptionsForAttach());
-		%feature("compactdefaultargs") Attach;
-		%feature("autodoc", "	* Attaches himself to the input interactive object group and become displayed in the same context. It become attached to the first object, baut manage manipulation of the whole group. It is placed in the center of object bounding box, and its size is adjusted to the object bounding box.
-
-	:param theObject:
-	:type theObject: Handle_AIS_ManipulatorObjectSequence &
-	:param theOptions: default value is OptionsForAttach()
-	:type theOptions: OptionsForAttach &
-	:rtype: None
-") Attach;
-		void Attach (const Handle_AIS_ManipulatorObjectSequence & theObject,const OptionsForAttach & theOptions = OptionsForAttach());
 		%feature("compactdefaultargs") EnableMode;
 		%feature("autodoc", "	* Enable manipualtion mode. @warning It activates selection mode in the current context. If manipulator is not displayed, no mode will be activated.
 
@@ -7846,38 +7813,6 @@ class AIS_Manipulator : public AIS_InteractiveObject {
 	:rtype: None
 ") SetGap;
 		void SetGap (const Standard_ShortReal theValue);
-		%feature("compactdefaultargs") SetTransformBehavior;
-		%feature("autodoc", "	* Sets behavior settings for transformation action carried on the manipulator, whether it translates, rotates together with the transformed object or not.
-
-	:param theSettings:
-	:type theSettings: BehaviorOnTransform &
-	:rtype: None
-") SetTransformBehavior;
-		void SetTransformBehavior (const BehaviorOnTransform & theSettings);
-		%feature("compactdefaultargs") ChangeTransformBehavior;
-		%feature("autodoc", "	* returns behavior settings for transformation action of the manipulator.
-
-	:rtype: BehaviorOnTransform
-") ChangeTransformBehavior;
-		BehaviorOnTransform & ChangeTransformBehavior ();
-		%feature("compactdefaultargs") TransformBehavior;
-		%feature("autodoc", "	* returns behavior settings for transformation action of the manipulator.
-
-	:rtype: BehaviorOnTransform
-") TransformBehavior;
-		const BehaviorOnTransform & TransformBehavior ();
-		%feature("compactdefaultargs") Compute;
-		%feature("autodoc", "	* @name Presentation computation Fills presentation. @note Manipulator presentation does not use display mode and for all modes has the same presenatation.
-
-	:param thePrsMgr:
-	:type thePrsMgr: Handle_PrsMgr_PresentationManager3d &
-	:param thePrs:
-	:type thePrs: Handle_Prs3d_Presentation &
-	:param theMode: default value is 0
-	:type theMode: int
-	:rtype: void
-") Compute;
-		virtual void Compute (const Handle_PrsMgr_PresentationManager3d & thePrsMgr,const Handle_Prs3d_Presentation & thePrs,const Standard_Integer theMode = 0);
 		%feature("compactdefaultargs") ComputeSelection;
 		%feature("autodoc", "	* Computes selection sensitive zones --triangulation-- for manipulator. @param theNode [in] Seldction mode that is treated as transformation mode.
 

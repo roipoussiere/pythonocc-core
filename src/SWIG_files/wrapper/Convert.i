@@ -59,7 +59,9 @@ typedef TColgp_SequenceOfArray1OfPnt2d Convert_SequenceOfArray1OfPoles2d;
 /* end typedefs declaration */
 
 /* templates */
-%template(Convert_SequenceOfArray1OfPoles) NCollection_Sequence <Handle_TColgp_HArray1OfPnt>;
+%define Handle(Class) opencascade::handle<Class>
+%enddef
+%template(Convert_SequenceOfArray1OfPoles) NCollection_Sequence <Handle(TColgp_HArray1OfPnt)>;
 /* end templates declaration */
 
 /* public enums */

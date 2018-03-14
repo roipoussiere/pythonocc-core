@@ -60,6 +60,8 @@ typedef Adaptor3d_CurveOnSurface * Adaptor3d_CurveOnSurfacePtr;
 /* end typedefs declaration */
 
 /* templates */
+%define Handle(Class) opencascade::handle<Class>
+%enddef
 /* end templates declaration */
 
 /* public enums */

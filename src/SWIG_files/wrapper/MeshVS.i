@@ -61,22 +61,37 @@ typedef Standard_Integer MeshVS_BuilderPriority;
 /* end typedefs declaration */
 
 /* templates */
+%define Handle(Class) opencascade::handle<Class>
+%enddef
 %template(MeshVS_DataMapOfIntegerVector) NCollection_DataMap <Standard_Integer , gp_Vec , TColStd_MapIntegerHasher>;
 %template(MeshVS_DataMapOfIntegerAsciiString) NCollection_DataMap <Standard_Integer , TCollection_AsciiString , TColStd_MapIntegerHasher>;
 %template(MeshVS_DataMapOfIntegerBoolean) NCollection_DataMap <Standard_Integer , Standard_Boolean , TColStd_MapIntegerHasher>;
 %template(MeshVS_DataMapOfColorMapOfInteger) NCollection_DataMap <Quantity_Color , TColStd_MapOfInteger , Quantity_ColorHasher>;
+%template(MeshVS_DataMapIteratorOfDataMapOfIntegerTwoColors) NCollection_TListIterator<MeshVS_DataMapOfIntegerTwoColors>;
 %template(MeshVS_DataMapOfIntegerColor) NCollection_DataMap <Standard_Integer , Quantity_Color , TColStd_MapIntegerHasher>;
+%template(MeshVS_MapIteratorOfMapOfTwoNodes) NCollection_TListIterator<MeshVS_MapOfTwoNodes>;
+%template(MeshVS_DataMapIteratorOfDataMapOfIntegerMeshEntityOwner) NCollection_TListIterator<MeshVS_DataMapOfIntegerMeshEntityOwner>;
 %template(MeshVS_DataMapOfIntegerTwoColors) NCollection_DataMap <Standard_Integer , MeshVS_TwoColors , TColStd_MapIntegerHasher>;
+%template(MeshVS_DataMapIteratorOfDataMapOfIntegerColor) NCollection_TListIterator<MeshVS_DataMapOfIntegerColor>;
+%template(MeshVS_DataMapIteratorOfDataMapOfIntegerAsciiString) NCollection_TListIterator<MeshVS_DataMapOfIntegerAsciiString>;
 %template(MeshVS_Array1OfSequenceOfInteger) NCollection_Array1 <TColStd_SequenceOfInteger>;
 %template(MeshVS_TwoColorsHasher) NCollection_DefaultHasher <MeshVS_TwoColors>;
 %template(MeshVS_MapOfTwoNodes) NCollection_Map <MeshVS_TwoNodes , MeshVS_TwoNodesHasher>;
-%template(MeshVS_DataMapOfHArray1OfSequenceOfInteger) NCollection_DataMap <Standard_Integer , Handle_MeshVS_HArray1OfSequenceOfInteger , TColStd_MapIntegerHasher>;
-%template(MeshVS_PolyhedronVerts) NCollection_List <Handle_TColgp_HArray1OfPnt>;
+%template(MeshVS_DataMapIteratorOfDataMapOfHArray1OfSequenceOfInteger) NCollection_TListIterator<MeshVS_DataMapOfHArray1OfSequenceOfInteger>;
+%template(MeshVS_DataMapOfHArray1OfSequenceOfInteger) NCollection_DataMap <Standard_Integer , Handle(MeshVS_HArray1OfSequenceOfInteger) , TColStd_MapIntegerHasher>;
+%template(MeshVS_PolyhedronVerts) NCollection_List <Handle(TColgp_HArray1OfPnt)>;
+%template(MeshVS_DataMapIteratorOfDataMapOfIntegerMaterial) NCollection_TListIterator<MeshVS_DataMapOfIntegerMaterial>;
+%template(MeshVS_DataMapIteratorOfDataMapOfIntegerOwner) NCollection_TListIterator<MeshVS_DataMapOfIntegerOwner>;
 %template(MeshVS_TwoNodesHasher) NCollection_DefaultHasher <MeshVS_TwoNodes>;
 %template(MeshVS_DataMapOfIntegerMaterial) NCollection_DataMap <Standard_Integer , Graphic3d_MaterialAspect , TColStd_MapIntegerHasher>;
-%template(MeshVS_DataMapOfIntegerMeshEntityOwner) NCollection_DataMap <Standard_Integer , Handle_MeshVS_MeshEntityOwner , TColStd_MapIntegerHasher>;
-%template(MeshVS_SequenceOfPrsBuilder) NCollection_Sequence <Handle_MeshVS_PrsBuilder>;
-%template(MeshVS_DataMapOfIntegerOwner) NCollection_DataMap <Standard_Integer , Handle_SelectMgr_EntityOwner , TColStd_MapIntegerHasher>;
+%template(MeshVS_DataMapIteratorOfDataMapOfIntegerVector) NCollection_TListIterator<MeshVS_DataMapOfIntegerVector>;
+%template(MeshVS_DataMapOfIntegerMeshEntityOwner) NCollection_DataMap <Standard_Integer , Handle(MeshVS_MeshEntityOwner) , TColStd_MapIntegerHasher>;
+%template(MeshVS_SequenceOfPrsBuilder) NCollection_Sequence <Handle(MeshVS_PrsBuilder)>;
+%template(MeshVS_DataMapOfIntegerOwner) NCollection_DataMap <Standard_Integer , Handle(SelectMgr_EntityOwner) , TColStd_MapIntegerHasher>;
+%template(MeshVS_DataMapIteratorOfDataMapOfColorMapOfInteger) NCollection_TListIterator<MeshVS_DataMapOfColorMapOfInteger>;
+%template(MeshVS_DataMapIteratorOfDataMapOfTwoColorsMapOfInteger) NCollection_TListIterator<MeshVS_DataMapOfTwoColorsMapOfInteger>;
+%template(MeshVS_DataMapIteratorOfDataMapOfIntegerBoolean) NCollection_TListIterator<MeshVS_DataMapOfIntegerBoolean>;
+%template(MeshVS_PolyhedronVertsIter) NCollection_TListIterator<MeshVS_PolyhedronVerts>;
 %template(MeshVS_DataMapOfTwoColorsMapOfInteger) NCollection_DataMap <MeshVS_TwoColors , TColStd_MapOfInteger , MeshVS_TwoColorsHasher>;
 /* end templates declaration */
 
