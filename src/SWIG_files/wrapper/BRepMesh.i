@@ -53,14 +53,65 @@ def register_handle(handle, base_object):
         pass
 };
 
-/* typedefs */
-typedef Standard_Integer ( * BRepMesh_PluginEntryType ) ( const TopoDS_Shape & theShape , const Standard_Real theLinDeflection , const Standard_Real theAngDeflection , BRepMesh_DiscretRoot * & theMeshAlgoInstance );
-/* end typedefs declaration */
-
+/* templates */
 /* templates */
 %define Handle(Class) opencascade::handle<Class>
 %enddef
 /* end templates declaration */
+
+/* end templates declaration */
+
+/* typedefs */
+typedef BRepMesh::NCollection_DataMap <Handle_Poly_Triangulation , Standard_Boolean> BRepMesh::DMapOfTriangulationBool;
+typedef BRepMesh::NCollection_Handle <BndBox2dTree> BRepMesh::HBndBox2dTree;
+typedef BRepMesh::NCollection_UBTreeFiller <Standard_Integer , Bnd_Box2d> BRepMesh::BndBox2dTreeFiller;
+typedef BRepMesh::NCollection_IndexedDataMap <BRepMesh_Edge , BRepMesh_PairOfIndex> BRepMesh::IDMapOfLink;
+typedef BRepMesh::NCollection_Map <Standard_Real> BRepMesh::MapOfReal;
+typedef BRepMesh::NCollection_Map <Standard_Integer> BRepMesh::MapOfInteger;
+typedef BRepMesh::NCollection_Vector <BRepMesh_Circle> BRepMesh::VectorOfCircle;
+typedef BRepMesh::NCollection_Handle <VectorOfVertex> BRepMesh::HVectorOfVertex;
+typedef BRepMesh::NCollection_EBTree <Standard_Integer , Bnd_Box2d> BRepMesh::BndBox2dTree;
+typedef BRepMesh::NCollection_Array1 <Standard_Integer> BRepMesh::Array1OfInteger;
+typedef BRepMesh::NCollection_Array1 <Standard_Real> BRepMesh::Array1OfReal;
+typedef BRepMesh::NCollection_Sequence <Standard_Real> BRepMesh::SequenceOfReal;
+typedef BRepMesh::NCollection_DataMap <TopoDS_Edge , DMapOfTriangulationBool , TopTools_ShapeMapHasher> BRepMesh::DMapOfEdgeListOfTriangulationBool;
+typedef BRepMesh::NCollection_DataMap <TopoDS_Shape , BRepMesh_PairOfPolygon , TopTools_ShapeMapHasher> BRepMesh::DMapOfShapePairOfPolygon;
+typedef Standard_Integer ( * BRepMesh_PluginEntryType ) ( const TopoDS_Shape & theShape , const Standard_Real theLinDeflection , const Standard_Real theAngDeflection , BRepMesh_DiscretRoot * & theMeshAlgoInstance );
+typedef BRepMesh::NCollection_Sequence <Bnd_B2d> BRepMesh::SequenceOfBndB2d;
+typedef BRepMesh::NCollection_Array1 <BRepMesh_Vertex> BRepMesh::Array1OfVertexOfDelaun;
+typedef BRepMesh::NCollection_IndexedMap <BRepMesh_Triangle> BRepMesh::IMapOfElement;
+typedef BRepMesh::NCollection_DataMap <TopoDS_Face , Handle_BRepMesh_FaceAttribute , TopTools_ShapeMapHasher> BRepMesh::DMapOfFaceAttribute;
+typedef BRepMesh::NCollection_Map <TopoDS_Shape , TopTools_ShapeMapHasher> BRepMesh::MapOfShape;
+typedef BRepMesh::NCollection_List <Standard_Integer> BRepMesh::ListOfInteger;
+typedef BRepMesh::NCollection_Handle <DMapOfIntegerPnt> BRepMesh::HDMapOfIntegerPnt;
+typedef BRepMesh::NCollection_Array1 <SegmentsTree> BRepMesh::Array1OfSegmentsTree;
+typedef BRepMesh::NCollection_Handle <DMapOfIntegerListOfXY> BRepMesh::HDMapOfIntegerListOfXY;
+typedef BRepMesh::NCollection_Vector <Standard_Integer> BRepMesh::VectorOfInteger;
+typedef BRepMesh::NCollection_IndexedMap <Standard_Real> BRepMesh::IMapOfReal;
+typedef BRepMesh::NCollection_DataMap <TopoDS_Vertex , Standard_Integer , TopTools_ShapeMapHasher> BRepMesh::DMapOfVertexInteger;
+typedef BRepMesh::NCollection_Handle <DMapOfVertexInteger> BRepMesh::HDMapOfVertexInteger;
+typedef BRepMesh::NCollection_DataMap <Standard_Integer , ListOfXY> BRepMesh::DMapOfIntegerListOfXY;
+typedef BRepMesh::NCollection_List <BRepMesh_Vertex> BRepMesh::ListOfVertex;
+typedef BRepMesh::NCollection_List <gp_XY> BRepMesh::ListOfXY;
+typedef BRepMesh::NCollection_Handle <MapOfInteger> BRepMesh::HMapOfInteger;
+typedef BRepMesh::NCollection_Sequence <Standard_Integer> BRepMesh::SequenceOfInteger;
+typedef BRepMesh::NCollection_Handle <IMapOfInteger> BRepMesh::HIMapOfInteger;
+typedef BRepMesh::NCollection_Handle <BRepMesh_Classifier> BRepMesh::HClassifier;
+typedef BRepMesh::NCollection_DataMap <Standard_Integer , ListOfInteger> BRepMesh::DMapOfIntegerListOfInteger;
+typedef std::pair <HArray1OfSegments , HBndBox2dTree> BRepMesh::SegmentsTree;
+typedef BRepMesh::NCollection_Array1 <Segment> BRepMesh::Array1OfSegments;
+typedef BRepMesh::NCollection_Handle <Array1OfSegments> BRepMesh::HArray1OfSegments;
+typedef BRepMesh::NCollection_Handle <SequenceOfBndB2d> BRepMesh::HSequenceOfBndB2d;
+typedef BRepMesh::NCollection_CellFilter <BRepMesh_VertexInspector> BRepMesh::VertexCellFilter;
+typedef BRepMesh::NCollection_Handle <DMapOfShapePairOfPolygon> BRepMesh::HDMapOfShapePairOfPolygon;
+typedef BRepMesh::NCollection_Handle <BRepMesh_VertexTool> BRepMesh::HVertexTool;
+typedef BRepMesh::NCollection_DataMap <Standard_Integer , Standard_Integer> BRepMesh::MapOfIntegerInteger;
+typedef BRepMesh::NCollection_Handle <SequenceOfInteger> BRepMesh::HSequenceOfInteger;
+typedef BRepMesh::NCollection_CellFilter <BRepMesh_CircleInspector> BRepMesh::CircleCellFilter;
+typedef BRepMesh::NCollection_Vector <BRepMesh_Vertex> BRepMesh::VectorOfVertex;
+typedef BRepMesh::NCollection_IndexedMap <Standard_Integer> BRepMesh::IMapOfInteger;
+typedef BRepMesh::NCollection_DataMap <Standard_Integer , gp_Pnt> BRepMesh::DMapOfIntegerPnt;
+/* end typedefs declaration */
 
 /* public enums */
 enum BRepMesh_FactoryError {

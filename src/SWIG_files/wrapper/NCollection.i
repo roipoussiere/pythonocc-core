@@ -56,11 +56,8 @@ along with pythonOCC.  If not, see <http://www.gnu.org/licenses/>.
 %include "NCollection_DefineAlloc.hxx";
 %include "Standard_Macro.hxx";
 %include "Standard_DefineAlloc.hxx";
-%include "NCollection_UBTree.hxx";
 %include "NCollection_UBTreeFiller.hxx";
-%include "NCollection_UtfString.hxx";
 %include "NCollection_Lerp.hxx";
-%include "NCollection_UtfIterator.hxx";
 %include "NCollection_Handle.hxx";
 %include "NCollection_CellFilter.hxx";
 %include "NCollection_Vector.hxx";
@@ -69,7 +66,6 @@ along with pythonOCC.  If not, see <http://www.gnu.org/licenses/>.
 %include "NCollection_Vec4.hxx";
 %include "NCollection_Mat4.hxx";
 %include "NCollection_TListIterator.hxx";
-
 
 %pythoncode {
 def register_handle(handle, base_object):
@@ -85,24 +81,27 @@ def register_handle(handle, base_object):
         pass
 };
 
-/* typedefs */
-typedef void ( * NCollection_DelMapNode ) ( NCollection_ListNode * , Handle_NCollection_BaseAllocator & theAl );
-typedef size_t Standard_Size;
-typedef NCollection_Utf8String NCollection_String;
-/* end typedefs declaration */
-
+/* templates */
 /* templates */
 %define Handle(Class) opencascade::handle<Class>
 %enddef
-%template(NCollection_Utf16String) NCollection_UtfString <Standard_Utf16Char>;
-%template(NCollection_Utf8String) NCollection_UtfString <Standard_Utf8Char>;
-%template(NCollection_Utf16Iter) NCollection_UtfIterator <Standard_Utf16Char>;
-%template(NCollection_Utf32Iter) NCollection_UtfIterator <Standard_Utf32Char>;
-%template(NCollection_Utf8Iter) NCollection_UtfIterator <Standard_Utf8Char>;
-%template(NCollection_UtfWideIter) NCollection_UtfIterator <Standard_WideChar>;
-%template(NCollection_Utf32String) NCollection_UtfString <Standard_Utf32Char>;
-%template(NCollection_UtfWideString) NCollection_UtfString <Standard_WideChar>;
 /* end templates declaration */
+
+/* end templates declaration */
+
+/* typedefs */
+typedef NCollection_UtfString <Standard_Utf16Char> NCollection_Utf16String;
+typedef NCollection_UtfString <Standard_Utf8Char> NCollection_Utf8String;
+typedef void ( * NCollection_DelMapNode ) ( NCollection_ListNode * , Handle_NCollection_BaseAllocator & theAl );
+typedef NCollection_UtfIterator <Standard_Utf16Char> NCollection_Utf16Iter;
+typedef NCollection_UtfIterator <Standard_Utf32Char> NCollection_Utf32Iter;
+typedef NCollection_UtfIterator <Standard_Utf8Char> NCollection_Utf8Iter;
+typedef NCollection_UtfIterator <Standard_WideChar> NCollection_UtfWideIter;
+typedef size_t Standard_Size;
+typedef NCollection_UtfString <Standard_Utf32Char> NCollection_Utf32String;
+typedef NCollection_Utf8String NCollection_String;
+typedef NCollection_UtfString <Standard_WideChar> NCollection_UtfWideString;
+/* end typedefs declaration */
 
 /* public enums */
 enum NCollection_CellFilter_Action {

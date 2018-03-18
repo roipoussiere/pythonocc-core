@@ -53,19 +53,26 @@ def register_handle(handle, base_object):
         pass
 };
 
-/* typedefs */
-/* end typedefs declaration */
-
+/* templates */
 /* templates */
 %define Handle(Class) opencascade::handle<Class>
 %enddef
 %template(HLRTopoBRep_ListOfVData) NCollection_List <HLRTopoBRep_VData>;
 %template(HLRTopoBRep_MapOfShapeListOfVData) NCollection_DataMap <TopoDS_Shape , HLRTopoBRep_ListOfVData , TopTools_ShapeMapHasher>;
 %template(HLRTopoBRep_DataMapOfShapeFaceData) NCollection_DataMap <TopoDS_Shape , HLRTopoBRep_FaceData , TopTools_ShapeMapHasher>;
-%template(HLRTopoBRep_DataMapIteratorOfDataMapOfShapeFaceData) NCollection_TListIterator<HLRTopoBRep_DataMapOfShapeFaceData>;
-%template(HLRTopoBRep_DataMapIteratorOfMapOfShapeListOfVData) NCollection_TListIterator<HLRTopoBRep_MapOfShapeListOfVData>;
-%template(HLRTopoBRep_ListIteratorOfListOfVData) NCollection_TListIterator<HLRTopoBRep_ListOfVData>;
+%template(HLRTopoBRep_ListIteratorOfListOfVData) NCollection_TListIterator<HLRTopoBRep_VData>;
 /* end templates declaration */
+
+/* end templates declaration */
+
+/* typedefs */
+typedef NCollection_List <HLRTopoBRep_VData> HLRTopoBRep_ListOfVData;
+typedef NCollection_DataMap <TopoDS_Shape , HLRTopoBRep_ListOfVData , TopTools_ShapeMapHasher> HLRTopoBRep_MapOfShapeListOfVData;
+typedef NCollection_DataMap <TopoDS_Shape , HLRTopoBRep_FaceData , TopTools_ShapeMapHasher> HLRTopoBRep_DataMapOfShapeFaceData;
+typedef NCollection_DataMap <TopoDS_Shape , HLRTopoBRep_FaceData , TopTools_ShapeMapHasher>::Iterator HLRTopoBRep_DataMapIteratorOfDataMapOfShapeFaceData;
+typedef NCollection_DataMap <TopoDS_Shape , HLRTopoBRep_ListOfVData , TopTools_ShapeMapHasher>::Iterator HLRTopoBRep_DataMapIteratorOfMapOfShapeListOfVData;
+typedef NCollection_List <HLRTopoBRep_VData>::Iterator HLRTopoBRep_ListIteratorOfListOfVData;
+/* end typedefs declaration */
 
 /* public enums */
 /* end public enums declaration */

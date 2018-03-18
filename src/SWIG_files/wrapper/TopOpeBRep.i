@@ -53,27 +53,36 @@ def register_handle(handle, base_object):
         pass
 };
 
-/* typedefs */
-typedef TopOpeBRep_FacesIntersector * TopOpeBRep_PFacesIntersector;
-typedef IntPatch_Point * TopOpeBRep_PThePointOfIntersection;
-typedef IntRes2d_IntersectionPoint * TopOpeBRep_PIntRes2d_IntersectionPoint;
-typedef TopOpeBRep_FacesFiller * TopOpeBRep_PFacesFiller;
-typedef IntSurf_PntOn2S * TopOpeBRep_PPntOn2S;
-typedef TopOpeBRep_LineInter * TopOpeBRep_PLineInter;
-typedef TopOpeBRep_EdgesIntersector * TopOpeBRep_PEdgesIntersector;
-/* end typedefs declaration */
-
+/* templates */
 /* templates */
 %define Handle(Class) opencascade::handle<Class>
 %enddef
 %template(TopOpeBRep_ListOfBipoint) NCollection_List <TopOpeBRep_Bipoint>;
 %template(TopOpeBRep_SequenceOfPoint2d) NCollection_Sequence <TopOpeBRep_Point2d>;
-%template(TopOpeBRep_DataMapIteratorOfDataMapOfTopolTool) NCollection_TListIterator<TopOpeBRep_DataMapOfTopolTool>;
-%template(TopOpeBRep_ListIteratorOfListOfBipoint) NCollection_TListIterator<TopOpeBRep_ListOfBipoint>;
+%template(TopOpeBRep_ListIteratorOfListOfBipoint) NCollection_TListIterator<TopOpeBRep_Bipoint>;
 %template(TopOpeBRep_DataMapOfTopolTool) NCollection_DataMap <TopoDS_Shape , Handle(BRepTopAdaptor_TopolTool) , TopTools_ShapeMapHasher>;
 %template(TopOpeBRep_Array1OfVPointInter) NCollection_Array1 <TopOpeBRep_VPointInter>;
 %template(TopOpeBRep_Array1OfLineInter) NCollection_Array1 <TopOpeBRep_LineInter>;
 /* end templates declaration */
+
+/* end templates declaration */
+
+/* typedefs */
+typedef NCollection_List <TopOpeBRep_Bipoint> TopOpeBRep_ListOfBipoint;
+typedef TopOpeBRep_FacesIntersector * TopOpeBRep_PFacesIntersector;
+typedef NCollection_Sequence <TopOpeBRep_Point2d> TopOpeBRep_SequenceOfPoint2d;
+typedef IntPatch_Point * TopOpeBRep_PThePointOfIntersection;
+typedef IntRes2d_IntersectionPoint * TopOpeBRep_PIntRes2d_IntersectionPoint;
+typedef TopOpeBRep_FacesFiller * TopOpeBRep_PFacesFiller;
+typedef NCollection_DataMap <TopoDS_Shape , Handle_BRepTopAdaptor_TopolTool , TopTools_ShapeMapHasher>::Iterator TopOpeBRep_DataMapIteratorOfDataMapOfTopolTool;
+typedef IntSurf_PntOn2S * TopOpeBRep_PPntOn2S;
+typedef TopOpeBRep_LineInter * TopOpeBRep_PLineInter;
+typedef TopOpeBRep_EdgesIntersector * TopOpeBRep_PEdgesIntersector;
+typedef NCollection_List <TopOpeBRep_Bipoint>::Iterator TopOpeBRep_ListIteratorOfListOfBipoint;
+typedef NCollection_DataMap <TopoDS_Shape , Handle_BRepTopAdaptor_TopolTool , TopTools_ShapeMapHasher> TopOpeBRep_DataMapOfTopolTool;
+typedef NCollection_Array1 <TopOpeBRep_VPointInter> TopOpeBRep_Array1OfVPointInter;
+typedef NCollection_Array1 <TopOpeBRep_LineInter> TopOpeBRep_Array1OfLineInter;
+/* end typedefs declaration */
 
 /* public enums */
 enum TopOpeBRep_P2Dstatus {

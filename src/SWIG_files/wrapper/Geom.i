@@ -53,14 +53,18 @@ def register_handle(handle, base_object):
         pass
 };
 
-/* typedefs */
-/* end typedefs declaration */
-
+/* templates */
 /* templates */
 %define Handle(Class) opencascade::handle<Class>
 %enddef
 %template(Geom_SequenceOfBSplineSurface) NCollection_Sequence <Handle(Geom_BSplineSurface)>;
 /* end templates declaration */
+
+/* end templates declaration */
+
+/* typedefs */
+typedef NCollection_Sequence <Handle_Geom_BSplineSurface> Geom_SequenceOfBSplineSurface;
+/* end typedefs declaration */
 
 /* public enums */
 /* end public enums declaration */

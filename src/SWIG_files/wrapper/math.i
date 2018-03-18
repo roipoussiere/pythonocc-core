@@ -53,14 +53,18 @@ def register_handle(handle, base_object):
         pass
 };
 
-/* typedefs */
-/* end typedefs declaration */
-
+/* templates */
 /* templates */
 %define Handle(Class) opencascade::handle<Class>
 %enddef
 %template(math_Array1OfValueAndWeight) NCollection_Array1 <math_ValueAndWeight>;
 /* end templates declaration */
+
+/* end templates declaration */
+
+/* typedefs */
+typedef NCollection_Array1 <math_ValueAndWeight> math_Array1OfValueAndWeight;
+/* end typedefs declaration */
 
 /* public enums */
 enum math_Status {

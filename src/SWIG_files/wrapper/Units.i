@@ -53,9 +53,7 @@ def register_handle(handle, base_object):
         pass
 };
 
-/* typedefs */
-/* end typedefs declaration */
-
+/* templates */
 /* templates */
 %define Handle(Class) opencascade::handle<Class>
 %enddef
@@ -63,6 +61,14 @@ def register_handle(handle, base_object):
 %template(Units_QtsSequence) NCollection_Sequence <Handle(Units_Quantity)>;
 %template(Units_UtsSequence) NCollection_Sequence <Handle(Units_Unit)>;
 /* end templates declaration */
+
+/* end templates declaration */
+
+/* typedefs */
+typedef NCollection_Sequence <Handle_Units_Token> Units_TksSequence;
+typedef NCollection_Sequence <Handle_Units_Quantity> Units_QtsSequence;
+typedef NCollection_Sequence <Handle_Units_Unit> Units_UtsSequence;
+/* end typedefs declaration */
 
 /* public enums */
 /* end public enums declaration */

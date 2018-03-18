@@ -53,9 +53,7 @@ def register_handle(handle, base_object):
         pass
 };
 
-/* typedefs */
-/* end typedefs declaration */
-
+/* templates */
 /* templates */
 %define Handle(Class) opencascade::handle<Class>
 %enddef
@@ -65,6 +63,16 @@ def register_handle(handle, base_object):
 %template(GeomPlate_Array1OfHCurve) NCollection_Array1 <Handle_Adaptor3d_HCurve>;
 %template(GeomPlate_SequenceOfCurveConstraint) NCollection_Sequence <Handle(GeomPlate_CurveConstraint)>;
 /* end templates declaration */
+
+/* end templates declaration */
+
+/* typedefs */
+typedef NCollection_Array1 <TColStd_SequenceOfReal> GeomPlate_Array1OfSequenceOfReal;
+typedef NCollection_Sequence <Handle_GeomPlate_PointConstraint> GeomPlate_SequenceOfPointConstraint;
+typedef NCollection_Sequence <GeomPlate_Aij> GeomPlate_SequenceOfAij;
+typedef NCollection_Array1 <Handle_Adaptor3d_HCurve> GeomPlate_Array1OfHCurve;
+typedef NCollection_Sequence <Handle_GeomPlate_CurveConstraint> GeomPlate_SequenceOfCurveConstraint;
+/* end typedefs declaration */
 
 /* public enums */
 /* end public enums declaration */

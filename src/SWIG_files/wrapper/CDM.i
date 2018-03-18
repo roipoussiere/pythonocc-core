@@ -53,26 +53,37 @@ def register_handle(handle, base_object):
         pass
 };
 
-/* typedefs */
-typedef CDM_Document * CDM_DocumentPointer;
-typedef TColStd_DataMapOfStringInteger CDM_NamesDirectory;
-/* end typedefs declaration */
-
+/* templates */
 /* templates */
 %define Handle(Class) opencascade::handle<Class>
 %enddef
-%template(CDM_DataMapIteratorOfMetaDataLookUpTable) NCollection_TListIterator<CDM_MetaDataLookUpTable>;
-%template(CDM_DataMapIteratorOfPresentationDirectory) NCollection_TListIterator<CDM_PresentationDirectory>;
-%template(CDM_MapIteratorOfMapOfDocument) NCollection_TListIterator<CDM_MapOfDocument>;
 %template(CDM_ListOfReferences) NCollection_List <Handle(CDM_Reference)>;
 %template(CDM_PresentationDirectory) NCollection_DataMap <TCollection_ExtendedString , Handle(CDM_Document) , TCollection_ExtendedString>;
-%template(CDM_ListIteratorOfListOfReferences) NCollection_TListIterator<CDM_ListOfReferences>;
-%template(CDM_ListIteratorOfListOfDocument) NCollection_TListIterator<CDM_ListOfDocument>;
+%template(CDM_ListIteratorOfListOfReferences) NCollection_TListIterator<Handle(CDM_Reference)>;
+%template(CDM_ListIteratorOfListOfDocument) NCollection_TListIterator<Handle(CDM_Document)>;
 %template(CDM_MapOfDocument) NCollection_Map <Handle(CDM_Document) , CDM_DocumentHasher>;
 %template(CDM_MetaDataLookUpTable) NCollection_DataMap <TCollection_ExtendedString , Handle(CDM_MetaData) , TCollection_ExtendedString>;
 %template(CDM_ListOfDocument) NCollection_List <Handle(CDM_Document)>;
 %template(CDM_DocumentHasher) NCollection_DefaultHasher <Handle(CDM_Document)>;
 /* end templates declaration */
+
+/* end templates declaration */
+
+/* typedefs */
+typedef NCollection_DataMap <TCollection_ExtendedString , Handle_CDM_MetaData , TCollection_ExtendedString>::Iterator CDM_DataMapIteratorOfMetaDataLookUpTable;
+typedef CDM_Document * CDM_DocumentPointer;
+typedef NCollection_DataMap <TCollection_ExtendedString , Handle_CDM_Document , TCollection_ExtendedString>::Iterator CDM_DataMapIteratorOfPresentationDirectory;
+typedef NCollection_Map <Handle_CDM_Document , CDM_DocumentHasher>::Iterator CDM_MapIteratorOfMapOfDocument;
+typedef NCollection_List <Handle_CDM_Reference> CDM_ListOfReferences;
+typedef NCollection_DataMap <TCollection_ExtendedString , Handle_CDM_Document , TCollection_ExtendedString> CDM_PresentationDirectory;
+typedef NCollection_List <Handle_CDM_Reference>::Iterator CDM_ListIteratorOfListOfReferences;
+typedef NCollection_List <Handle_CDM_Document>::Iterator CDM_ListIteratorOfListOfDocument;
+typedef TColStd_DataMapOfStringInteger CDM_NamesDirectory;
+typedef NCollection_Map <Handle_CDM_Document , CDM_DocumentHasher> CDM_MapOfDocument;
+typedef NCollection_DataMap <TCollection_ExtendedString , Handle_CDM_MetaData , TCollection_ExtendedString> CDM_MetaDataLookUpTable;
+typedef NCollection_List <Handle_CDM_Document> CDM_ListOfDocument;
+typedef NCollection_DefaultHasher <Handle_CDM_Document> CDM_DocumentHasher;
+/* end typedefs declaration */
 
 /* public enums */
 enum CDM_CanCloseStatus {

@@ -53,10 +53,7 @@ def register_handle(handle, base_object):
         pass
 };
 
-/* typedefs */
-typedef IFSelect_ReturnStatus ( * IFSelect_ActFunc ) ( const Handle_IFSelect_SessionPilot & );
-/* end typedefs declaration */
-
+/* templates */
 /* templates */
 %define Handle(Class) opencascade::handle<Class>
 %enddef
@@ -66,6 +63,17 @@ typedef IFSelect_ReturnStatus ( * IFSelect_ActFunc ) ( const Handle_IFSelect_Ses
 %template(IFSelect_SequenceOfAppliedModifiers) NCollection_Sequence <Handle(IFSelect_AppliedModifiers)>;
 %template(IFSelect_TSeqOfSelection) NCollection_Sequence <Handle(IFSelect_Selection)>;
 /* end templates declaration */
+
+/* end templates declaration */
+
+/* typedefs */
+typedef NCollection_Sequence <Handle_IFSelect_Dispatch> IFSelect_TSeqOfDispatch;
+typedef IFSelect_ReturnStatus ( * IFSelect_ActFunc ) ( const Handle_IFSelect_SessionPilot & );
+typedef NCollection_Sequence <Handle_Interface_InterfaceModel> IFSelect_SequenceOfInterfaceModel;
+typedef NCollection_Sequence <Handle_IFSelect_GeneralModifier> IFSelect_SequenceOfGeneralModifier;
+typedef NCollection_Sequence <Handle_IFSelect_AppliedModifiers> IFSelect_SequenceOfAppliedModifiers;
+typedef NCollection_Sequence <Handle_IFSelect_Selection> IFSelect_TSeqOfSelection;
+/* end typedefs declaration */
 
 /* public enums */
 enum IFSelect_PrintFail {
@@ -4178,7 +4186,7 @@ class Handle_IFSelect_WorkLibrary : public Handle_Standard_Transient {
 %nodefaultctor IFSelect_WorkSession;
 class IFSelect_WorkSession : public Standard_Transient {
 	public:
-		return theerrhand;
+		//return theerrhand;
 		%feature("compactdefaultargs") IFSelect_WorkSession;
 		%feature("autodoc", "	* Creates a Work Session It provides default, empty ShareOut and ModelCopier, which can be replaced --if required, should be done just after creation--.
 

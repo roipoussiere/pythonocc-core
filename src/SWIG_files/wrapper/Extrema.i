@@ -53,26 +53,40 @@ def register_handle(handle, base_object):
         pass
 };
 
-/* typedefs */
-/* end typedefs declaration */
-
+/* templates */
 /* templates */
 %define Handle(Class) opencascade::handle<Class>
 %enddef
 %template(Extrema_Array2OfPOnCurv2d) NCollection_Array2 <Extrema_POnCurv2d>;
 %template(Extrema_SequenceOfPOnCurv) NCollection_Sequence <Extrema_POnCurv>;
 %template(Extrema_Array1OfPOnCurv2d) NCollection_Array1 <Extrema_POnCurv2d>;
-%template(Extrema_UBTreeOfSphere) NCollection_UBTree <Standard_Integer , Bnd_Sphere>;
 %template(Extrema_Array1OfPOnSurf) NCollection_Array1 <Extrema_POnSurf>;
 %template(Extrema_Array2OfPOnSurf) NCollection_Array2 <Extrema_POnSurf>;
 %template(Extrema_Array2OfPOnSurfParams) NCollection_Array2 <Extrema_POnSurfParams>;
-%template(Extrema_UBTreeFillerOfSphere) NCollection_UBTreeFiller <Standard_Integer , Bnd_Sphere>;
 %template(Extrema_Array1OfPOnCurv) NCollection_Array1 <Extrema_POnCurv>;
 %template(Extrema_Array2OfPOnCurv) NCollection_Array2 <Extrema_POnCurv>;
 %template(Extrema_HUBTreeOfSphere) NCollection_Handle <Extrema_UBTreeOfSphere>;
 %template(Extrema_SequenceOfPOnSurf) NCollection_Sequence <Extrema_POnSurf>;
 %template(Extrema_SequenceOfPOnCurv2d) NCollection_Sequence <Extrema_POnCurv2d>;
 /* end templates declaration */
+
+/* end templates declaration */
+
+/* typedefs */
+typedef NCollection_Array2 <Extrema_POnCurv2d> Extrema_Array2OfPOnCurv2d;
+typedef NCollection_Sequence <Extrema_POnCurv> Extrema_SequenceOfPOnCurv;
+typedef NCollection_Array1 <Extrema_POnCurv2d> Extrema_Array1OfPOnCurv2d;
+typedef NCollection_UBTree <Standard_Integer , Bnd_Sphere> Extrema_UBTreeOfSphere;
+typedef NCollection_Array1 <Extrema_POnSurf> Extrema_Array1OfPOnSurf;
+typedef NCollection_Array2 <Extrema_POnSurf> Extrema_Array2OfPOnSurf;
+typedef NCollection_Array2 <Extrema_POnSurfParams> Extrema_Array2OfPOnSurfParams;
+typedef NCollection_UBTreeFiller <Standard_Integer , Bnd_Sphere> Extrema_UBTreeFillerOfSphere;
+typedef NCollection_Array1 <Extrema_POnCurv> Extrema_Array1OfPOnCurv;
+typedef NCollection_Array2 <Extrema_POnCurv> Extrema_Array2OfPOnCurv;
+typedef NCollection_Handle <Extrema_UBTreeOfSphere> Extrema_HUBTreeOfSphere;
+typedef NCollection_Sequence <Extrema_POnSurf> Extrema_SequenceOfPOnSurf;
+typedef NCollection_Sequence <Extrema_POnCurv2d> Extrema_SequenceOfPOnCurv2d;
+/* end typedefs declaration */
 
 /* public enums */
 enum Extrema_ExtAlgo {

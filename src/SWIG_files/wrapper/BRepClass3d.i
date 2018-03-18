@@ -53,16 +53,20 @@ def register_handle(handle, base_object):
         pass
 };
 
-/* typedefs */
-/* end typedefs declaration */
-
+/* templates */
 /* templates */
 %define Handle(Class) opencascade::handle<Class>
 %enddef
 %template(BRepClass3d_MapOfInter) NCollection_DataMap <TopoDS_Shape , Standard_Address , TopTools_ShapeMapHasher>;
-%template(BRepClass3d_BndBoxTree) NCollection_UBTree <Standard_Integer , Bnd_Box>;
-%template(BRepClass3d_DataMapIteratorOfMapOfInter) NCollection_TListIterator<BRepClass3d_MapOfInter>;
 /* end templates declaration */
+
+/* end templates declaration */
+
+/* typedefs */
+typedef NCollection_DataMap <TopoDS_Shape , Standard_Address , TopTools_ShapeMapHasher> BRepClass3d_MapOfInter;
+typedef NCollection_UBTree <Standard_Integer , Bnd_Box> BRepClass3d_BndBoxTree;
+typedef NCollection_DataMap <TopoDS_Shape , Standard_Address , TopTools_ShapeMapHasher>::Iterator BRepClass3d_DataMapIteratorOfMapOfInter;
+/* end typedefs declaration */
 
 /* public enums */
 /* end public enums declaration */

@@ -39,6 +39,13 @@ along with pythonOCC.  If not, see <http://www.gnu.org/licenses/>.
 %include Graphic3d_headers.i
 
 
+%define Handle_Graphic3d_TextureSet Handle(Graphic3d_TextureSet)
+%enddef
+%define Handle_Aspect_DisplayConnection Handle(Aspect_DisplayConnection)
+%enddef
+%define Handle_Graphic3d_NMapOfTransient Handle(Graphic3d_NMapOfTransient)
+%enddef
+
 %pythoncode {
 def register_handle(handle, base_object):
     """
@@ -53,21 +60,10 @@ def register_handle(handle, base_object):
         pass
 };
 
-/* typedefs */
-typedef Standard_Integer Graphic3d_ZLayerId;
-typedef Graphic3d_MapOfStructure::Iterator Graphic3d_MapIteratorOfMapOfStructure;
-/* end typedefs declaration */
-
+/* templates */
 /* templates */
 %define Handle(Class) opencascade::handle<Class>
 %enddef
-%define Handle_Graphic3d_TextureSet Handle(Graphic3d_TextureSet)
-%enddef
-%define Handle_Aspect_DisplayConnection Handle(Aspect_DisplayConnection)
-%enddef
-%define Handle_Graphic3d_NMapOfTransient Handle(Graphic3d_NMapOfTransient)
-%enddef
-
 %template(Graphic3d_Vec4i) NCollection_Vec4 <Standard_Integer>;
 %template(Graphic3d_Vec2b) NCollection_Vec2 <Standard_Character>;
 %template(Graphic3d_Vec2d) NCollection_Vec2 <Standard_Real>;
@@ -78,7 +74,6 @@ typedef Graphic3d_MapOfStructure::Iterator Graphic3d_MapIteratorOfMapOfStructure
 %template(Graphic3d_Vec3d) NCollection_Vec3 <Standard_Real>;
 %template(Graphic3d_Vec4u) NCollection_Vec4 <unsigned int>;
 %template(Graphic3d_Mat4d) NCollection_Mat4 <Standard_Real>;
-%template(Graphic3d_BndBox3d) BVH_Box <Standard_Real , 3>;
 %template(Graphic3d_Vec2) NCollection_Vec2 <Standard_ShortReal>;
 %template(Graphic3d_Vec3) NCollection_Vec3 <Standard_ShortReal>;
 %template(Graphic3d_Vec4) NCollection_Vec4 <Standard_ShortReal>;
@@ -95,8 +90,6 @@ typedef Graphic3d_MapOfStructure::Iterator Graphic3d_MapIteratorOfMapOfStructure
 %template(Graphic3d_ShaderObjectList) NCollection_Sequence <Handle_Graphic3d_ShaderObject>;
 %template(Graphic3d_Array1OfAttribute) NCollection_Array1 <Graphic3d_Attribute>;
 //%template(Graphic3d_IndexedMapOfAddress) NCollection_IndexedMap <const Standard_Address>;
-%template(Graphic3d_BndBox4d) BVH_Box <Standard_Real , 4>;
-%template(Graphic3d_BndBox4f) BVH_Box <Standard_ShortReal , 4>;
 %template(Graphic3d_ShaderVariableList) NCollection_Sequence <Handle_Graphic3d_ShaderVariable>;
 %template(Graphic3d_CameraLerp) NCollection_Lerp <Handle_Graphic3d_Camera>;
 %template(Graphic3d_SequenceOfGroup) NCollection_Sequence <Handle_Graphic3d_Group>;
@@ -104,6 +97,57 @@ typedef Graphic3d_MapOfStructure::Iterator Graphic3d_MapIteratorOfMapOfStructure
 %template(Graphic3d_Vec3ub) NCollection_Vec3 <Standard_Byte>;
 %template(Graphic3d_MapOfObject) NCollection_DataMap <const Standard_Transient * , Handle_Graphic3d_ViewAffinity>;
 /* end templates declaration */
+
+/* end templates declaration */
+
+/* typedefs */
+typedef NCollection_Vec4 <Standard_Integer> Graphic3d_Vec4i;
+typedef NCollection_Vec2 <Standard_Character> Graphic3d_Vec2b;
+typedef NCollection_Vec2 <Standard_Real> Graphic3d_Vec2d;
+typedef NCollection_Vec2 <Standard_Integer> Graphic3d_Vec2i;
+typedef NCollection_Vec4 <Standard_Byte> Graphic3d_Vec4ub;
+typedef NCollection_Vec4 <Standard_Real> Graphic3d_Vec4d;
+typedef NCollection_Vec2 <unsigned int> Graphic3d_Vec2u;
+typedef NCollection_Vec3 <Standard_Real> Graphic3d_Vec3d;
+typedef NCollection_Vec4 <unsigned int> Graphic3d_Vec4u;
+typedef NCollection_Mat4 <Standard_Real> Graphic3d_Mat4d;
+typedef BVH_Box <Standard_Real , 3> Graphic3d_BndBox3d;
+typedef Graphic3d_UniformValue <Graphic3d_Vec3i> Graphic3d_UniformVec3i;
+typedef NCollection_Vec2 <Standard_ShortReal> Graphic3d_Vec2;
+typedef NCollection_Vec3 <Standard_ShortReal> Graphic3d_Vec3;
+typedef NCollection_Vec4 <Standard_ShortReal> Graphic3d_Vec4;
+typedef NCollection_Sequence <Handle_Graphic3d_Structure> Graphic3d_SequenceOfStructure;
+typedef NCollection_Map <Handle_Graphic3d_Structure> Graphic3d_MapOfStructure;
+typedef NCollection_Sequence <Handle_Graphic3d_ShaderAttribute> Graphic3d_ShaderAttributeList;
+typedef Graphic3d_UniformValue <Graphic3d_Vec2> Graphic3d_UniformVec2;
+typedef NCollection_Shared<NCollection_Map <const Standard_Transient *>> Graphic3d_NMapOfTransient;
+typedef Graphic3d_UniformValue <Graphic3d_Vec4> Graphic3d_UniformVec4;
+typedef NCollection_Vec3 <Standard_Character> Graphic3d_Vec3b;
+typedef NCollection_Vec4 <Standard_Character> Graphic3d_Vec4b;
+typedef Standard_Integer Graphic3d_ZLayerId;
+typedef NCollection_Vec3 <Standard_Integer> Graphic3d_Vec3i;
+typedef Graphic3d_UniformValue <Standard_Integer> Graphic3d_UniformInt;
+typedef Graphic3d_UniformValue <Graphic3d_Vec3> Graphic3d_UniformVec3;
+typedef NCollection_List <Graphic3d_CLight> Graphic3d_ListOfCLight;
+typedef NCollection_Vec3 <unsigned int> Graphic3d_Vec3u;
+typedef NCollection_IndexedMap <Graphic3d_CView *> Graphic3d_IndexedMapOfView;
+typedef NCollection_Mat4 <Standard_ShortReal> Graphic3d_Mat4;
+typedef NCollection_Sequence <Handle_Graphic3d_ShaderObject> Graphic3d_ShaderObjectList;
+typedef NCollection_Array1 <Graphic3d_Attribute> Graphic3d_Array1OfAttribute;
+typedef Graphic3d_UniformValue <Standard_ShortReal> Graphic3d_UniformFloat;
+typedef NCollection_IndexedMap <const Standard_Address> Graphic3d_IndexedMapOfAddress;
+typedef BVH_Box <Standard_Real , 4> Graphic3d_BndBox4d;
+typedef BVH_Box <Standard_ShortReal , 4> Graphic3d_BndBox4f;
+typedef NCollection_Sequence <Handle_Graphic3d_ShaderVariable> Graphic3d_ShaderVariableList;
+typedef NCollection_Lerp <Handle_Graphic3d_Camera> Graphic3d_CameraLerp;
+typedef NCollection_Sequence <Handle_Graphic3d_Group> Graphic3d_SequenceOfGroup;
+typedef Graphic3d_UniformValue <Graphic3d_Vec4i> Graphic3d_UniformVec4i;
+typedef NCollection_Vec2 <Standard_Byte> Graphic3d_Vec2ub;
+typedef Graphic3d_MapOfStructure::Iterator Graphic3d_MapIteratorOfMapOfStructure;
+typedef Graphic3d_UniformValue <Graphic3d_Vec2i> Graphic3d_UniformVec2i;
+typedef NCollection_Vec3 <Standard_Byte> Graphic3d_Vec3ub;
+typedef NCollection_DataMap <const Standard_Transient * , Handle_Graphic3d_ViewAffinity> Graphic3d_MapOfObject;
+/* end typedefs declaration */
 
 /* public enums */
 enum Graphic3d_BufferType {
@@ -7556,209 +7600,6 @@ class Graphic3d_TextureSet : public Standard_Transient {
 
 
 %extend Graphic3d_TextureSet {
-	%pythoncode {
-	__repr__ = _dumps_object
-	}
-};
-%nodefaultctor Graphic3d_TransformPers;
-class Graphic3d_TransformPers : public Standard_Transient {
-	public:
-		%feature("compactdefaultargs") IsZoomOrRotate;
-		%feature("autodoc", "	* Return true if specified mode is zoom/rotate transformation persistence.
-
-	:param theMode:
-	:type theMode: Graphic3d_TransModeFlags
-	:rtype: bool
-") IsZoomOrRotate;
-		static Standard_Boolean IsZoomOrRotate (Graphic3d_TransModeFlags theMode);
-		%feature("compactdefaultargs") IsTrihedronOr2d;
-		%feature("autodoc", "	* Return true if specified mode is 2d/trihedron transformation persistence.
-
-	:param theMode:
-	:type theMode: Graphic3d_TransModeFlags
-	:rtype: bool
-") IsTrihedronOr2d;
-		static Standard_Boolean IsTrihedronOr2d (Graphic3d_TransModeFlags theMode);
-		%feature("compactdefaultargs") FromDeprecatedParams;
-		%feature("autodoc", "	* Create Graphic3d_TransformPers instance from deprecated parameters set decoding 2D corner + offset parameters from 3D point.
-
-	:param theFlag:
-	:type theFlag: Graphic3d_TransModeFlags
-	:param thePoint:
-	:type thePoint: gp_Pnt
-	:rtype: Handle_Graphic3d_TransformPers
-") FromDeprecatedParams;
-		static Handle_Graphic3d_TransformPers FromDeprecatedParams (Graphic3d_TransModeFlags theFlag,const gp_Pnt & thePoint);
-		%feature("compactdefaultargs") Graphic3d_TransformPers;
-		%feature("autodoc", "	* Set transformation persistence.
-
-	:param theMode:
-	:type theMode: Graphic3d_TransModeFlags
-	:rtype: None
-") Graphic3d_TransformPers;
-		 Graphic3d_TransformPers (const Graphic3d_TransModeFlags theMode);
-		%feature("compactdefaultargs") Graphic3d_TransformPers;
-		%feature("autodoc", "	* Set Zoom/Rotate transformation persistence with an anchor 3D point. Throws an exception if persistence mode is not Graphic3d_TMF_ZoomPers, Graphic3d_TMF_ZoomRotatePers or Graphic3d_TMF_RotatePers.
-
-	:param theMode:
-	:type theMode: Graphic3d_TransModeFlags
-	:param thePnt:
-	:type thePnt: gp_Pnt
-	:rtype: None
-") Graphic3d_TransformPers;
-		 Graphic3d_TransformPers (const Graphic3d_TransModeFlags theMode,const gp_Pnt & thePnt);
-		%feature("compactdefaultargs") Graphic3d_TransformPers;
-		%feature("autodoc", "	* Set 2d/trihedron transformation persistence with a corner and 2D offset. Throws an exception if persistence mode is not Graphic3d_TMF_TriedronPers or Graphic3d_TMF_2d. The offset is a positive displacement from the view corner in pixels.
-
-	:param theMode:
-	:type theMode: Graphic3d_TransModeFlags
-	:param theCorner:
-	:type theCorner: Aspect_TypeOfTriedronPosition
-	:param theOffset: default value is Graphic3d_Vec2i(0,0)
-	:type theOffset: Graphic3d_Vec2i &
-	:rtype: None
-") Graphic3d_TransformPers;
-		 Graphic3d_TransformPers (const Graphic3d_TransModeFlags theMode,const Aspect_TypeOfTriedronPosition theCorner,const Graphic3d_Vec2i & theOffset = Graphic3d_Vec2i(0,0));
-		%feature("compactdefaultargs") IsZoomOrRotate;
-		%feature("autodoc", "	* Return true for Graphic3d_TMF_ZoomPers, Graphic3d_TMF_ZoomRotatePers or Graphic3d_TMF_RotatePers modes.
-
-	:rtype: bool
-") IsZoomOrRotate;
-		Standard_Boolean IsZoomOrRotate ();
-		%feature("compactdefaultargs") IsTrihedronOr2d;
-		%feature("autodoc", "	* Return true for Graphic3d_TMF_TriedronPers and Graphic3d_TMF_2d modes.
-
-	:rtype: bool
-") IsTrihedronOr2d;
-		Standard_Boolean IsTrihedronOr2d ();
-		%feature("compactdefaultargs") Mode;
-		%feature("autodoc", "	* Transformation persistence mode flags.
-
-	:rtype: Graphic3d_TransModeFlags
-") Mode;
-		Graphic3d_TransModeFlags Mode ();
-		%feature("compactdefaultargs") Flags;
-		%feature("autodoc", "	* Transformation persistence mode flags.
-
-	:rtype: Graphic3d_TransModeFlags
-") Flags;
-		Graphic3d_TransModeFlags Flags ();
-		%feature("compactdefaultargs") SetPersistence;
-		%feature("autodoc", "	* Set Zoom/Rotate transformation persistence with an anchor 3D point. Throws an exception if persistence mode is not Graphic3d_TMF_ZoomPers, Graphic3d_TMF_ZoomRotatePers or Graphic3d_TMF_RotatePers.
-
-	:param theMode:
-	:type theMode: Graphic3d_TransModeFlags
-	:param thePnt:
-	:type thePnt: gp_Pnt
-	:rtype: None
-") SetPersistence;
-		void SetPersistence (const Graphic3d_TransModeFlags theMode,const gp_Pnt & thePnt);
-		%feature("compactdefaultargs") SetPersistence;
-		%feature("autodoc", "	* Set 2d/trihedron transformation persistence with a corner and 2D offset. Throws an exception if persistence mode is not Graphic3d_TMF_TriedronPers or Graphic3d_TMF_2d.
-
-	:param theMode:
-	:type theMode: Graphic3d_TransModeFlags
-	:param theCorner:
-	:type theCorner: Aspect_TypeOfTriedronPosition
-	:param theOffset:
-	:type theOffset: Graphic3d_Vec2i &
-	:rtype: None
-") SetPersistence;
-		void SetPersistence (const Graphic3d_TransModeFlags theMode,const Aspect_TypeOfTriedronPosition theCorner,const Graphic3d_Vec2i & theOffset);
-		%feature("compactdefaultargs") AnchorPoint;
-		%feature("autodoc", "	* Return the anchor point for zoom/rotate transformation persistence.
-
-	:rtype: gp_Pnt
-") AnchorPoint;
-		gp_Pnt AnchorPoint ();
-		%feature("compactdefaultargs") SetAnchorPoint;
-		%feature("autodoc", "	* Set the anchor point for zoom/rotate transformation persistence.
-
-	:param thePnt:
-	:type thePnt: gp_Pnt
-	:rtype: None
-") SetAnchorPoint;
-		void SetAnchorPoint (const gp_Pnt & thePnt);
-		%feature("compactdefaultargs") Corner2d;
-		%feature("autodoc", "	* Return the corner for 2d/trihedron transformation persistence.
-
-	:rtype: Aspect_TypeOfTriedronPosition
-") Corner2d;
-		Aspect_TypeOfTriedronPosition Corner2d ();
-		%feature("compactdefaultargs") SetCorner2d;
-		%feature("autodoc", "	* Set the corner for 2d/trihedron transformation persistence.
-
-	:param thePos:
-	:type thePos: Aspect_TypeOfTriedronPosition
-	:rtype: None
-") SetCorner2d;
-		void SetCorner2d (const Aspect_TypeOfTriedronPosition thePos);
-		%feature("compactdefaultargs") Offset2d;
-		%feature("autodoc", "	* Return the offset from the corner for 2d/trihedron transformation persistence.
-
-	:rtype: Graphic3d_Vec2i
-") Offset2d;
-		Graphic3d_Vec2i Offset2d ();
-		%feature("compactdefaultargs") SetOffset2d;
-		%feature("autodoc", "	* Set the offset from the corner for 2d/trihedron transformation persistence.
-
-	:param theOffset:
-	:type theOffset: Graphic3d_Vec2i &
-	:rtype: None
-") SetOffset2d;
-		void SetOffset2d (const Graphic3d_Vec2i & theOffset);
-
-};
-
-
-%extend Graphic3d_TransformPers {
-	%pythoncode {
-		def GetHandle(self):
-		    try:
-		        return self.thisHandle
-		    except:
-		        self.thisHandle = Handle_Graphic3d_TransformPers(self)
-		        self.thisown = False
-		        return self.thisHandle
-	}
-};
-
-%pythonappend Handle_Graphic3d_TransformPers::Handle_Graphic3d_TransformPers %{
-    # register the handle in the base object
-    if len(args) > 0:
-        register_handle(self, args[0])
-%}
-
-%nodefaultctor Handle_Graphic3d_TransformPers;
-class Handle_Graphic3d_TransformPers : public Handle_Standard_Transient {
-
-    public:
-        // constructors
-        Handle_Graphic3d_TransformPers();
-        Handle_Graphic3d_TransformPers(const Handle_Graphic3d_TransformPers &aHandle);
-        Handle_Graphic3d_TransformPers(const Graphic3d_TransformPers *anItem);
-        void Nullify();
-        Standard_Boolean IsNull() const;
-        static const Handle_Graphic3d_TransformPers DownCast(const Handle_Standard_Transient &AnObject);
-
-};
-
-%extend Handle_Graphic3d_TransformPers {
-    Graphic3d_TransformPers* _get_reference() {
-    return (Graphic3d_TransformPers*)$self->get();
-    }
-};
-
-%extend Handle_Graphic3d_TransformPers {
-     %pythoncode {
-         def GetObject(self):
-             obj = self._get_reference()
-             register_handle(self, obj)
-             return obj
-     }
-};
-
-%extend Graphic3d_TransformPers {
 	%pythoncode {
 	__repr__ = _dumps_object
 	}

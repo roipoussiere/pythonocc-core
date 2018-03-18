@@ -53,20 +53,27 @@ def register_handle(handle, base_object):
         pass
 };
 
-/* typedefs */
-/* end typedefs declaration */
-
+/* templates */
 /* templates */
 %define Handle(Class) opencascade::handle<Class>
 %enddef
-%template(TFunction_DataMapIteratorOfDataMapOfLabelListOfLabel) NCollection_TListIterator<TFunction_DataMapOfLabelListOfLabel>;
 %template(TFunction_Array1OfDataMapOfGUIDDriver) NCollection_Array1 <TFunction_DataMapOfGUIDDriver>;
 %template(TFunction_DataMapOfGUIDDriver) NCollection_DataMap <Standard_GUID , Handle(TFunction_Driver) , Standard_GUID>;
 %template(TFunction_DoubleMapOfIntegerLabel) NCollection_DoubleMap <Standard_Integer , TDF_Label , TColStd_MapIntegerHasher , TDF_LabelMapHasher>;
 %template(TFunction_DataMapOfLabelListOfLabel) NCollection_DataMap <TDF_Label , TDF_LabelList , TDF_LabelMapHasher>;
-%template(TFunction_DoubleMapIteratorOfDoubleMapOfIntegerLabel) NCollection_TListIterator<TFunction_DoubleMapOfIntegerLabel>;
-%template(TFunction_DataMapIteratorOfDataMapOfGUIDDriver) NCollection_TListIterator<TFunction_DataMapOfGUIDDriver>;
 /* end templates declaration */
+
+/* end templates declaration */
+
+/* typedefs */
+typedef NCollection_DataMap <TDF_Label , TDF_LabelList , TDF_LabelMapHasher>::Iterator TFunction_DataMapIteratorOfDataMapOfLabelListOfLabel;
+typedef NCollection_Array1 <TFunction_DataMapOfGUIDDriver> TFunction_Array1OfDataMapOfGUIDDriver;
+typedef NCollection_DataMap <Standard_GUID , Handle_TFunction_Driver , Standard_GUID> TFunction_DataMapOfGUIDDriver;
+typedef NCollection_DoubleMap <Standard_Integer , TDF_Label , TColStd_MapIntegerHasher , TDF_LabelMapHasher> TFunction_DoubleMapOfIntegerLabel;
+typedef NCollection_DataMap <TDF_Label , TDF_LabelList , TDF_LabelMapHasher> TFunction_DataMapOfLabelListOfLabel;
+typedef NCollection_DoubleMap <Standard_Integer , TDF_Label , TColStd_MapIntegerHasher , TDF_LabelMapHasher>::Iterator TFunction_DoubleMapIteratorOfDoubleMapOfIntegerLabel;
+typedef NCollection_DataMap <Standard_GUID , Handle_TFunction_Driver , Standard_GUID>::Iterator TFunction_DataMapIteratorOfDataMapOfGUIDDriver;
+/* end typedefs declaration */
 
 /* public enums */
 enum TFunction_ExecutionStatus {

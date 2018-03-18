@@ -53,15 +53,20 @@ def register_handle(handle, base_object):
         pass
 };
 
-/* typedefs */
-/* end typedefs declaration */
-
+/* templates */
 /* templates */
 %define Handle(Class) opencascade::handle<Class>
 %enddef
 %template(Law_Laws) NCollection_List <Handle(Law_Function)>;
-%template(Law_ListIteratorOfLaws) NCollection_TListIterator<Law_Laws>;
+%template(Law_ListIteratorOfLaws) NCollection_TListIterator<Handle(Law_Function)>;
 /* end templates declaration */
+
+/* end templates declaration */
+
+/* typedefs */
+typedef NCollection_List <Handle_Law_Function> Law_Laws;
+typedef NCollection_List <Handle_Law_Function>::Iterator Law_ListIteratorOfLaws;
+/* end typedefs declaration */
 
 /* public enums */
 /* end public enums declaration */

@@ -53,6 +53,16 @@ def register_handle(handle, base_object):
         pass
 };
 
+/* templates */
+/* templates */
+%define Handle(Class) opencascade::handle<Class>
+%enddef
+%template(Quantity_Array1OfColor) NCollection_Array1 <Quantity_Color>;
+%template(Quantity_Array2OfColor) NCollection_Array2 <Quantity_Color>;
+/* end templates declaration */
+
+/* end templates declaration */
+
 /* typedefs */
 typedef Standard_Real Quantity_Resistivity;
 typedef Standard_Real Quantity_Area;
@@ -114,6 +124,7 @@ typedef Standard_Real Quantity_Energy;
 typedef Standard_Real Quantity_CoefficientOfExpansion;
 typedef Standard_Real Quantity_Entropy;
 typedef Standard_Real Quantity_Activity;
+typedef NCollection_Array1 <Quantity_Color> Quantity_Array1OfColor;
 typedef Standard_Real Quantity_VolumeFlow;
 typedef Standard_Real Quantity_Viscosity;
 typedef Standard_Real Quantity_Consumption;
@@ -123,6 +134,7 @@ typedef Standard_Real Quantity_Power;
 typedef Standard_Real Quantity_Acceleration;
 typedef Standard_Real Quantity_MolarMass;
 typedef Standard_Real Quantity_SoundIntensity;
+typedef NCollection_Array2 <Quantity_Color> Quantity_Array2OfColor;
 typedef Standard_Real Quantity_Illuminance;
 typedef Standard_Real Quantity_AngularVelocity;
 typedef Standard_Real Quantity_Resistance;
@@ -134,13 +146,6 @@ typedef Standard_Real Quantity_Weight;
 typedef Standard_Real Quantity_AmountOfSubstance;
 typedef Standard_Real Quantity_Scalaire;
 /* end typedefs declaration */
-
-/* templates */
-%define Handle(Class) opencascade::handle<Class>
-%enddef
-%template(Quantity_Array1OfColor) NCollection_Array1 <Quantity_Color>;
-%template(Quantity_Array2OfColor) NCollection_Array2 <Quantity_Color>;
-/* end templates declaration */
 
 /* public enums */
 enum Quantity_NameOfColor {

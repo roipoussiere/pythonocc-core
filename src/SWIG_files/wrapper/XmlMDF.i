@@ -53,17 +53,22 @@ def register_handle(handle, base_object):
         pass
 };
 
-/* typedefs */
-/* end typedefs declaration */
-
+/* templates */
 /* templates */
 %define Handle(Class) opencascade::handle<Class>
 %enddef
-%template(XmlMDF_DataMapIteratorOfTypeADriverMap) NCollection_TListIterator<XmlMDF_TypeADriverMap>;
 %template(XmlMDF_TypeADriverMap) NCollection_DataMap <Handle(Standard_Type) , Handle(XmlMDF_ADriver) , TColStd_MapTransientHasher>;
-%template(XmlMDF_DataMapIteratorOfMapOfDriver) NCollection_TListIterator<XmlMDF_MapOfDriver>;
 %template(XmlMDF_MapOfDriver) NCollection_DataMap <TCollection_AsciiString , Handle(XmlMDF_ADriver) , TCollection_AsciiString>;
 /* end templates declaration */
+
+/* end templates declaration */
+
+/* typedefs */
+typedef NCollection_DataMap <Handle_Standard_Type , Handle_XmlMDF_ADriver , TColStd_MapTransientHasher>::Iterator XmlMDF_DataMapIteratorOfTypeADriverMap;
+typedef NCollection_DataMap <Handle_Standard_Type , Handle_XmlMDF_ADriver , TColStd_MapTransientHasher> XmlMDF_TypeADriverMap;
+typedef NCollection_DataMap <TCollection_AsciiString , Handle_XmlMDF_ADriver , TCollection_AsciiString>::Iterator XmlMDF_DataMapIteratorOfMapOfDriver;
+typedef NCollection_DataMap <TCollection_AsciiString , Handle_XmlMDF_ADriver , TCollection_AsciiString> XmlMDF_MapOfDriver;
+/* end typedefs declaration */
 
 /* public enums */
 /* end public enums declaration */

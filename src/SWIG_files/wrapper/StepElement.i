@@ -53,9 +53,7 @@ def register_handle(handle, base_object):
         pass
 };
 
-/* typedefs */
-/* end typedefs declaration */
-
+/* templates */
 /* templates */
 %define Handle(Class) opencascade::handle<Class>
 %enddef
@@ -75,6 +73,26 @@ def register_handle(handle, base_object):
 %template(StepElement_Array2OfCurveElementPurposeMember) NCollection_Array2 <Handle(StepElement_CurveElementPurposeMember)>;
 %template(StepElement_Array1OfCurveElementEndReleasePacket) NCollection_Array1 <Handle(StepElement_CurveElementEndReleasePacket)>;
 /* end templates declaration */
+
+/* end templates declaration */
+
+/* typedefs */
+typedef NCollection_Array1 <Handle_StepElement_HSequenceOfSurfaceElementPurposeMember> StepElement_Array1OfHSequenceOfSurfaceElementPurposeMember;
+typedef NCollection_Sequence <Handle_StepElement_SurfaceElementPurposeMember> StepElement_SequenceOfSurfaceElementPurposeMember;
+typedef NCollection_Sequence <Handle_StepElement_CurveElementPurposeMember> StepElement_SequenceOfCurveElementPurposeMember;
+typedef NCollection_Array1 <StepElement_VolumeElementPurpose> StepElement_Array1OfVolumeElementPurpose;
+typedef NCollection_Array1 <StepElement_MeasureOrUnspecifiedValue> StepElement_Array1OfMeasureOrUnspecifiedValue;
+typedef NCollection_Array1 <Handle_StepElement_SurfaceSection> StepElement_Array1OfSurfaceSection;
+typedef NCollection_Array2 <StepElement_SurfaceElementPurpose> StepElement_Array2OfSurfaceElementPurpose;
+typedef NCollection_Sequence <Handle_StepElement_CurveElementSectionDefinition> StepElement_SequenceOfCurveElementSectionDefinition;
+typedef NCollection_Array1 <Handle_StepElement_VolumeElementPurposeMember> StepElement_Array1OfVolumeElementPurposeMember;
+typedef NCollection_Array1 <Handle_StepElement_HSequenceOfCurveElementPurposeMember> StepElement_Array1OfHSequenceOfCurveElementPurposeMember;
+typedef NCollection_Array2 <Handle_StepElement_SurfaceElementPurposeMember> StepElement_Array2OfSurfaceElementPurposeMember;
+typedef NCollection_Array1 <Handle_StepElement_CurveElementSectionDefinition> StepElement_Array1OfCurveElementSectionDefinition;
+typedef NCollection_Sequence <Handle_StepElement_ElementMaterial> StepElement_SequenceOfElementMaterial;
+typedef NCollection_Array2 <Handle_StepElement_CurveElementPurposeMember> StepElement_Array2OfCurveElementPurposeMember;
+typedef NCollection_Array1 <Handle_StepElement_CurveElementEndReleasePacket> StepElement_Array1OfCurveElementEndReleasePacket;
+/* end typedefs declaration */
 
 /* public enums */
 enum StepElement_ElementVolume {

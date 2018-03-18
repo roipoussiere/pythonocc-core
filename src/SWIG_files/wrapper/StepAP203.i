@@ -53,9 +53,7 @@ def register_handle(handle, base_object):
         pass
 };
 
-/* typedefs */
-/* end typedefs declaration */
-
+/* templates */
 /* templates */
 %define Handle(Class) opencascade::handle<Class>
 %enddef
@@ -70,6 +68,21 @@ def register_handle(handle, base_object):
 %template(StepAP203_Array1OfPersonOrganizationItem) NCollection_Array1 <StepAP203_PersonOrganizationItem>;
 %template(StepAP203_Array1OfCertifiedItem) NCollection_Array1 <StepAP203_CertifiedItem>;
 /* end templates declaration */
+
+/* end templates declaration */
+
+/* typedefs */
+typedef NCollection_Array1 <StepAP203_ApprovedItem> StepAP203_Array1OfApprovedItem;
+typedef NCollection_Array1 <StepAP203_ContractedItem> StepAP203_Array1OfContractedItem;
+typedef NCollection_Array1 <StepAP203_ClassifiedItem> StepAP203_Array1OfClassifiedItem;
+typedef NCollection_Array1 <StepAP203_SpecifiedItem> StepAP203_Array1OfSpecifiedItem;
+typedef NCollection_Array1 <StepAP203_ChangeRequestItem> StepAP203_Array1OfChangeRequestItem;
+typedef NCollection_Array1 <StepAP203_WorkItem> StepAP203_Array1OfWorkItem;
+typedef NCollection_Array1 <StepAP203_DateTimeItem> StepAP203_Array1OfDateTimeItem;
+typedef NCollection_Array1 <StepAP203_StartRequestItem> StepAP203_Array1OfStartRequestItem;
+typedef NCollection_Array1 <StepAP203_PersonOrganizationItem> StepAP203_Array1OfPersonOrganizationItem;
+typedef NCollection_Array1 <StepAP203_CertifiedItem> StepAP203_Array1OfCertifiedItem;
+/* end typedefs declaration */
 
 /* public enums */
 /* end public enums declaration */

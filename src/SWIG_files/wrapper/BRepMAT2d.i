@@ -53,17 +53,22 @@ def register_handle(handle, base_object):
         pass
 };
 
-/* typedefs */
-/* end typedefs declaration */
-
+/* templates */
 /* templates */
 %define Handle(Class) opencascade::handle<Class>
 %enddef
 %template(BRepMAT2d_DataMapOfBasicEltShape) NCollection_DataMap <Handle(MAT_BasicElt) , TopoDS_Shape , TColStd_MapTransientHasher>;
-%template(BRepMAT2d_DataMapIteratorOfDataMapOfShapeSequenceOfBasicElt) NCollection_TListIterator<BRepMAT2d_DataMapOfShapeSequenceOfBasicElt>;
-%template(BRepMAT2d_DataMapIteratorOfDataMapOfBasicEltShape) NCollection_TListIterator<BRepMAT2d_DataMapOfBasicEltShape>;
 %template(BRepMAT2d_DataMapOfShapeSequenceOfBasicElt) NCollection_DataMap <TopoDS_Shape , MAT_SequenceOfBasicElt , TopTools_ShapeMapHasher>;
 /* end templates declaration */
+
+/* end templates declaration */
+
+/* typedefs */
+typedef NCollection_DataMap <Handle_MAT_BasicElt , TopoDS_Shape , TColStd_MapTransientHasher> BRepMAT2d_DataMapOfBasicEltShape;
+typedef NCollection_DataMap <TopoDS_Shape , MAT_SequenceOfBasicElt , TopTools_ShapeMapHasher>::Iterator BRepMAT2d_DataMapIteratorOfDataMapOfShapeSequenceOfBasicElt;
+typedef NCollection_DataMap <Handle_MAT_BasicElt , TopoDS_Shape , TColStd_MapTransientHasher>::Iterator BRepMAT2d_DataMapIteratorOfDataMapOfBasicEltShape;
+typedef NCollection_DataMap <TopoDS_Shape , MAT_SequenceOfBasicElt , TopTools_ShapeMapHasher> BRepMAT2d_DataMapOfShapeSequenceOfBasicElt;
+/* end typedefs declaration */
 
 /* public enums */
 /* end public enums declaration */

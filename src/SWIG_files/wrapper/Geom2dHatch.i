@@ -53,17 +53,22 @@ def register_handle(handle, base_object):
         pass
 };
 
-/* typedefs */
-/* end typedefs declaration */
-
+/* templates */
 /* templates */
 %define Handle(Class) opencascade::handle<Class>
 %enddef
 %template(Geom2dHatch_MapOfElements) NCollection_DataMap <Standard_Integer , Geom2dHatch_Element , TColStd_MapIntegerHasher>;
 %template(Geom2dHatch_Hatchings) NCollection_DataMap <Standard_Integer , Geom2dHatch_Hatching , TColStd_MapIntegerHasher>;
-%template(Geom2dHatch_DataMapIteratorOfMapOfElements) NCollection_TListIterator<Geom2dHatch_MapOfElements>;
-%template(Geom2dHatch_DataMapIteratorOfHatchings) NCollection_TListIterator<Geom2dHatch_Hatchings>;
 /* end templates declaration */
+
+/* end templates declaration */
+
+/* typedefs */
+typedef NCollection_DataMap <Standard_Integer , Geom2dHatch_Element , TColStd_MapIntegerHasher> Geom2dHatch_MapOfElements;
+typedef NCollection_DataMap <Standard_Integer , Geom2dHatch_Hatching , TColStd_MapIntegerHasher> Geom2dHatch_Hatchings;
+typedef NCollection_DataMap <Standard_Integer , Geom2dHatch_Element , TColStd_MapIntegerHasher>::Iterator Geom2dHatch_DataMapIteratorOfMapOfElements;
+typedef NCollection_DataMap <Standard_Integer , Geom2dHatch_Hatching , TColStd_MapIntegerHasher>::Iterator Geom2dHatch_DataMapIteratorOfHatchings;
+/* end typedefs declaration */
 
 /* public enums */
 /* end public enums declaration */

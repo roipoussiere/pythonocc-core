@@ -53,14 +53,18 @@ def register_handle(handle, base_object):
         pass
 };
 
-/* typedefs */
-/* end typedefs declaration */
-
+/* templates */
 /* templates */
 %define Handle(Class) opencascade::handle<Class>
 %enddef
 %template(TDataXtd_Array1OfTrsf) NCollection_Array1 <gp_Trsf>;
 /* end templates declaration */
+
+/* end templates declaration */
+
+/* typedefs */
+typedef NCollection_Array1 <gp_Trsf> TDataXtd_Array1OfTrsf;
+/* end typedefs declaration */
 
 /* public enums */
 enum TDataXtd_ConstraintEnum {

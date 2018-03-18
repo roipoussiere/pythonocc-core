@@ -53,13 +53,16 @@ def register_handle(handle, base_object):
         pass
 };
 
-/* typedefs */
-/* end typedefs declaration */
-
+/* templates */
 /* templates */
 %define Handle(Class) opencascade::handle<Class>
 %enddef
 /* end templates declaration */
+
+/* end templates declaration */
+
+/* typedefs */
+/* end typedefs declaration */
 
 /* public enums */
 /* end public enums declaration */
@@ -1910,6 +1913,152 @@ class XSControl_Utils {
 
 
 %extend XSControl_Utils {
+	%pythoncode {
+	__repr__ = _dumps_object
+	}
+};
+%nodefaultctor XSControl_Vars;
+class XSControl_Vars : public Standard_Transient {
+	public:
+		%feature("compactdefaultargs") XSControl_Vars;
+		%feature("autodoc", "	:rtype: None
+") XSControl_Vars;
+		 XSControl_Vars ();
+		%feature("compactdefaultargs") Set;
+		%feature("autodoc", "	:param name:
+	:type name: char *
+	:param val:
+	:type val: Handle_Standard_Transient &
+	:rtype: void
+") Set;
+		virtual void Set (const char * name,const Handle_Standard_Transient & val);
+		%feature("compactdefaultargs") Get;
+		%feature("autodoc", "	:param name:
+	:type name: char * &
+	:rtype: Handle_Standard_Transient
+") Get;
+		virtual Handle_Standard_Transient Get (const char * & name);
+		%feature("compactdefaultargs") GetGeom;
+		%feature("autodoc", "	:param name:
+	:type name: char * &
+	:rtype: Handle_Geom_Geometry
+") GetGeom;
+		virtual Handle_Geom_Geometry GetGeom (const char * & name);
+		%feature("compactdefaultargs") GetCurve2d;
+		%feature("autodoc", "	:param name:
+	:type name: char * &
+	:rtype: Handle_Geom2d_Curve
+") GetCurve2d;
+		virtual Handle_Geom2d_Curve GetCurve2d (const char * & name);
+		%feature("compactdefaultargs") GetCurve;
+		%feature("autodoc", "	:param name:
+	:type name: char * &
+	:rtype: Handle_Geom_Curve
+") GetCurve;
+		virtual Handle_Geom_Curve GetCurve (const char * & name);
+		%feature("compactdefaultargs") GetSurface;
+		%feature("autodoc", "	:param name:
+	:type name: char * &
+	:rtype: Handle_Geom_Surface
+") GetSurface;
+		virtual Handle_Geom_Surface GetSurface (const char * & name);
+		%feature("compactdefaultargs") SetPoint;
+		%feature("autodoc", "	:param name:
+	:type name: char *
+	:param val:
+	:type val: gp_Pnt
+	:rtype: void
+") SetPoint;
+		virtual void SetPoint (const char * name,const gp_Pnt & val);
+		%feature("compactdefaultargs") SetPoint2d;
+		%feature("autodoc", "	:param name:
+	:type name: char *
+	:param val:
+	:type val: gp_Pnt2d
+	:rtype: void
+") SetPoint2d;
+		virtual void SetPoint2d (const char * name,const gp_Pnt2d & val);
+		%feature("compactdefaultargs") GetPoint;
+		%feature("autodoc", "	:param name:
+	:type name: char * &
+	:param pnt:
+	:type pnt: gp_Pnt
+	:rtype: bool
+") GetPoint;
+		virtual Standard_Boolean GetPoint (const char * & name,gp_Pnt & pnt);
+		%feature("compactdefaultargs") GetPoint2d;
+		%feature("autodoc", "	:param name:
+	:type name: char * &
+	:param pnt:
+	:type pnt: gp_Pnt2d
+	:rtype: bool
+") GetPoint2d;
+		virtual Standard_Boolean GetPoint2d (const char * & name,gp_Pnt2d & pnt);
+		%feature("compactdefaultargs") SetShape;
+		%feature("autodoc", "	:param name:
+	:type name: char *
+	:param val:
+	:type val: TopoDS_Shape &
+	:rtype: void
+") SetShape;
+		virtual void SetShape (const char * name,const TopoDS_Shape & val);
+		%feature("compactdefaultargs") GetShape;
+		%feature("autodoc", "	:param name:
+	:type name: char * &
+	:rtype: TopoDS_Shape
+") GetShape;
+		virtual TopoDS_Shape GetShape (const char * & name);
+};
+
+
+%extend XSControl_Vars {
+	%pythoncode {
+		def GetHandle(self):
+		    try:
+		        return self.thisHandle
+		    except:
+		        self.thisHandle = Handle_XSControl_Vars(self)
+		        self.thisown = False
+		        return self.thisHandle
+	}
+};
+
+%pythonappend Handle_XSControl_Vars::Handle_XSControl_Vars %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
+%nodefaultctor Handle_XSControl_Vars;
+class Handle_XSControl_Vars : public Handle_Standard_Transient {
+
+    public:
+        // constructors
+        Handle_XSControl_Vars();
+        Handle_XSControl_Vars(const Handle_XSControl_Vars &aHandle);
+        Handle_XSControl_Vars(const XSControl_Vars *anItem);
+        void Nullify();
+        Standard_Boolean IsNull() const;
+        static const Handle_XSControl_Vars DownCast(const Handle_Standard_Transient &AnObject);
+
+};
+
+%extend Handle_XSControl_Vars {
+    XSControl_Vars* _get_reference() {
+    return (XSControl_Vars*)$self->get();
+    }
+};
+
+%extend Handle_XSControl_Vars {
+     %pythoncode {
+         def GetObject(self):
+             obj = self._get_reference()
+             register_handle(self, obj)
+             return obj
+     }
+};
+
+%extend XSControl_Vars {
 	%pythoncode {
 	__repr__ = _dumps_object
 	}

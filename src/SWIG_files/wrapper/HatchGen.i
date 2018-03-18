@@ -53,9 +53,7 @@ def register_handle(handle, base_object):
         pass
 };
 
-/* typedefs */
-/* end typedefs declaration */
-
+/* templates */
 /* templates */
 %define Handle(Class) opencascade::handle<Class>
 %enddef
@@ -63,6 +61,14 @@ def register_handle(handle, base_object):
 %template(HatchGen_Domains) NCollection_Sequence <HatchGen_Domain>;
 %template(HatchGen_PointsOnElement) NCollection_Sequence <HatchGen_PointOnElement>;
 /* end templates declaration */
+
+/* end templates declaration */
+
+/* typedefs */
+typedef NCollection_Sequence <HatchGen_PointOnHatching> HatchGen_PointsOnHatching;
+typedef NCollection_Sequence <HatchGen_Domain> HatchGen_Domains;
+typedef NCollection_Sequence <HatchGen_PointOnElement> HatchGen_PointsOnElement;
+/* end typedefs declaration */
 
 /* public enums */
 enum HatchGen_ErrorStatus {

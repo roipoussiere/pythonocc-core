@@ -53,18 +53,23 @@ def register_handle(handle, base_object):
         pass
 };
 
-/* typedefs */
-/* end typedefs declaration */
-
+/* templates */
 /* templates */
 %define Handle(Class) opencascade::handle<Class>
 %enddef
-%template(Poly_BaseIteratorOfCoherentLink) NCollection_TListIterator<Poly_CoherentLink>;
 %template(Poly_ListOfTriangulation) NCollection_List <Handle(Poly_Triangulation)>;
-%template(Poly_BaseIteratorOfCoherentTriangle) NCollection_TListIterator<Poly_CoherentTriangle>;
-%template(Poly_BaseIteratorOfCoherentNode) NCollection_TListIterator<Poly_CoherentNode>;
 %template(Poly_Array1OfTriangle) NCollection_Array1 <Poly_Triangle>;
 /* end templates declaration */
+
+/* end templates declaration */
+
+/* typedefs */
+typedef NCollection_Vector <Poly_CoherentLink>::Iterator Poly_BaseIteratorOfCoherentLink;
+typedef NCollection_List <Handle_Poly_Triangulation> Poly_ListOfTriangulation;
+typedef NCollection_Vector <Poly_CoherentTriangle>::Iterator Poly_BaseIteratorOfCoherentTriangle;
+typedef NCollection_Vector <Poly_CoherentNode>::Iterator Poly_BaseIteratorOfCoherentNode;
+typedef NCollection_Array1 <Poly_Triangle> Poly_Array1OfTriangle;
+/* end typedefs declaration */
 
 /* public enums */
 /* end public enums declaration */

@@ -53,9 +53,7 @@ def register_handle(handle, base_object):
         pass
 };
 
-/* typedefs */
-/* end typedefs declaration */
-
+/* templates */
 /* templates */
 %define Handle(Class) opencascade::handle<Class>
 %enddef
@@ -66,6 +64,17 @@ def register_handle(handle, base_object):
 %template(StepRepr_Array1OfPropertyDefinitionRepresentation) NCollection_Array1 <Handle(StepRepr_PropertyDefinitionRepresentation)>;
 %template(StepRepr_SequenceOfRepresentationItem) NCollection_Sequence <Handle(StepRepr_RepresentationItem)>;
 /* end templates declaration */
+
+/* end templates declaration */
+
+/* typedefs */
+typedef NCollection_Array1 <Handle_StepRepr_ShapeAspect> StepRepr_Array1OfShapeAspect;
+typedef NCollection_Array1 <Handle_StepRepr_RepresentationItem> StepRepr_Array1OfRepresentationItem;
+typedef NCollection_Sequence <Handle_StepRepr_MaterialPropertyRepresentation> StepRepr_SequenceOfMaterialPropertyRepresentation;
+typedef NCollection_Array1 <Handle_StepRepr_MaterialPropertyRepresentation> StepRepr_Array1OfMaterialPropertyRepresentation;
+typedef NCollection_Array1 <Handle_StepRepr_PropertyDefinitionRepresentation> StepRepr_Array1OfPropertyDefinitionRepresentation;
+typedef NCollection_Sequence <Handle_StepRepr_RepresentationItem> StepRepr_SequenceOfRepresentationItem;
+/* end typedefs declaration */
 
 /* public enums */
 /* end public enums declaration */

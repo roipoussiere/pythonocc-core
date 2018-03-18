@@ -53,48 +53,75 @@ def register_handle(handle, base_object):
         pass
 };
 
-/* typedefs */
-typedef Handle_NCollection_BaseAllocator TDF_HAllocator;
-typedef TDF_LabelNode * TDF_LabelNodePtr;
-/* end typedefs declaration */
-
+/* templates */
 /* templates */
 %define Handle(Class) opencascade::handle<Class>
 %enddef
 %template(TDF_AttributeList) NCollection_List <Handle(TDF_Attribute)>;
-%template(TDF_DoubleMapIteratorOfAttributeDoubleMap) NCollection_TListIterator<TDF_AttributeDoubleMap>;
 %template(TDF_IDMap) NCollection_Map <Standard_GUID , Standard_GUID>;
-%template(TDF_DataMapIteratorOfLabelDataMap) NCollection_TListIterator<TDF_LabelDataMap>;
 %template(TDF_LabelSequence) NCollection_Sequence <TDF_Label>;
-%template(TDF_MapIteratorOfIDMap) NCollection_TListIterator<TDF_IDMap>;
 %template(TDF_LabelDoubleMap) NCollection_DoubleMap <TDF_Label , TDF_Label , TDF_LabelMapHasher , TDF_LabelMapHasher>;
-%template(TDF_DataMapIteratorOfAttributeDataMap) NCollection_TListIterator<TDF_AttributeDataMap>;
-%template(TDF_ListIteratorOfAttributeList) NCollection_TListIterator<TDF_AttributeList>;
+%template(TDF_ListIteratorOfAttributeList) NCollection_TListIterator<Handle(TDF_Attribute)>;
 %template(TDF_LabelList) NCollection_List <TDF_Label>;
 %template(TDF_AttributeDoubleMap) NCollection_DoubleMap <Handle(TDF_Attribute) , Handle(TDF_Attribute) , TColStd_MapTransientHasher , TColStd_MapTransientHasher>;
-%template(TDF_ListIteratorOfAttributeDeltaList) NCollection_TListIterator<TDF_AttributeDeltaList>;
+%template(TDF_ListIteratorOfAttributeDeltaList) NCollection_TListIterator<Handle(TDF_AttributeDelta)>;
 %template(TDF_DeltaList) NCollection_List <Handle(TDF_Delta)>;
 %template(TDF_AttributeSequence) NCollection_Sequence <Handle(TDF_Attribute)>;
-%template(TDF_ListIteratorOfDeltaList) NCollection_TListIterator<TDF_DeltaList>;
+%template(TDF_ListIteratorOfDeltaList) NCollection_TListIterator<Handle(TDF_Delta)>;
 %template(TDF_AttributeMap) NCollection_Map <Handle(TDF_Attribute) , TColStd_MapTransientHasher>;
 %template(TDF_GUIDProgIDMap) NCollection_DoubleMap <Standard_GUID , TCollection_ExtendedString , Standard_GUID , TCollection_ExtendedString>;
 %template(TDF_LabelDataMap) NCollection_DataMap <TDF_Label , TDF_Label , TDF_LabelMapHasher>;
-%template(TDF_MapIteratorOfAttributeMap) NCollection_TListIterator<TDF_AttributeMap>;
-%template(TDF_ListIteratorOfIDList) NCollection_TListIterator<TDF_IDList>;
-%template(TDF_DataMapIteratorOfLabelIntegerMap) NCollection_TListIterator<TDF_LabelIntegerMap>;
+%template(TDF_ListIteratorOfIDList) NCollection_TListIterator<Standard_GUID>;
 %template(TDF_AttributeDataMap) NCollection_DataMap <Handle(TDF_Attribute) , Handle(TDF_Attribute) , TColStd_MapTransientHasher>;
 %template(TDF_AttributeArray1) NCollection_Array1 <Handle(TDF_Attribute)>;
 %template(TDF_LabelIntegerMap) NCollection_DataMap <TDF_Label , Standard_Integer , TDF_LabelMapHasher>;
 %template(TDF_IDList) NCollection_List <Standard_GUID>;
-%template(TDF_DoubleMapIteratorOfLabelDoubleMap) NCollection_TListIterator<TDF_LabelDoubleMap>;
-%template(TDF_DoubleMapIteratorOfGUIDProgIDMap) NCollection_TListIterator<TDF_GUIDProgIDMap>;
 %template(TDF_LabelIndexedMap) NCollection_IndexedMap <TDF_Label , TDF_LabelMapHasher>;
 %template(TDF_LabelMap) NCollection_Map <TDF_Label , TDF_LabelMapHasher>;
-%template(TDF_ListIteratorOfLabelList) NCollection_TListIterator<TDF_LabelList>;
+%template(TDF_ListIteratorOfLabelList) NCollection_TListIterator<TDF_Label>;
 %template(TDF_AttributeDeltaList) NCollection_List <Handle(TDF_AttributeDelta)>;
-%template(TDF_MapIteratorOfLabelMap) NCollection_TListIterator<TDF_LabelMap>;
 %template(TDF_AttributeIndexedMap) NCollection_IndexedMap <Handle(TDF_Attribute) , TColStd_MapTransientHasher>;
 /* end templates declaration */
+
+/* end templates declaration */
+
+/* typedefs */
+typedef NCollection_List <Handle_TDF_Attribute> TDF_AttributeList;
+typedef NCollection_DoubleMap <Handle_TDF_Attribute , Handle_TDF_Attribute , TColStd_MapTransientHasher , TColStd_MapTransientHasher>::Iterator TDF_DoubleMapIteratorOfAttributeDoubleMap;
+typedef NCollection_Map <Standard_GUID , Standard_GUID> TDF_IDMap;
+typedef Handle_NCollection_BaseAllocator TDF_HAllocator;
+typedef NCollection_DataMap <TDF_Label , TDF_Label , TDF_LabelMapHasher>::Iterator TDF_DataMapIteratorOfLabelDataMap;
+typedef NCollection_Sequence <TDF_Label> TDF_LabelSequence;
+typedef NCollection_Map <Standard_GUID , Standard_GUID>::Iterator TDF_MapIteratorOfIDMap;
+typedef NCollection_DoubleMap <TDF_Label , TDF_Label , TDF_LabelMapHasher , TDF_LabelMapHasher> TDF_LabelDoubleMap;
+typedef NCollection_DataMap <Handle_TDF_Attribute , Handle_TDF_Attribute , TColStd_MapTransientHasher>::Iterator TDF_DataMapIteratorOfAttributeDataMap;
+typedef TDF_LabelNode * TDF_LabelNodePtr;
+typedef NCollection_List <Handle_TDF_Attribute>::Iterator TDF_ListIteratorOfAttributeList;
+typedef NCollection_List <TDF_Label> TDF_LabelList;
+typedef NCollection_DoubleMap <Handle_TDF_Attribute , Handle_TDF_Attribute , TColStd_MapTransientHasher , TColStd_MapTransientHasher> TDF_AttributeDoubleMap;
+typedef NCollection_List <Handle_TDF_AttributeDelta>::Iterator TDF_ListIteratorOfAttributeDeltaList;
+typedef NCollection_List <Handle_TDF_Delta> TDF_DeltaList;
+typedef NCollection_Sequence <Handle_TDF_Attribute> TDF_AttributeSequence;
+typedef NCollection_List <Handle_TDF_Delta>::Iterator TDF_ListIteratorOfDeltaList;
+typedef NCollection_Map <Handle_TDF_Attribute , TColStd_MapTransientHasher> TDF_AttributeMap;
+typedef NCollection_DoubleMap <Standard_GUID , TCollection_ExtendedString , Standard_GUID , TCollection_ExtendedString> TDF_GUIDProgIDMap;
+typedef NCollection_DataMap <TDF_Label , TDF_Label , TDF_LabelMapHasher> TDF_LabelDataMap;
+typedef NCollection_Map <Handle_TDF_Attribute , TColStd_MapTransientHasher>::Iterator TDF_MapIteratorOfAttributeMap;
+typedef NCollection_List <Standard_GUID>::Iterator TDF_ListIteratorOfIDList;
+typedef NCollection_DataMap <TDF_Label , Standard_Integer , TDF_LabelMapHasher>::Iterator TDF_DataMapIteratorOfLabelIntegerMap;
+typedef NCollection_DataMap <Handle_TDF_Attribute , Handle_TDF_Attribute , TColStd_MapTransientHasher> TDF_AttributeDataMap;
+typedef NCollection_Array1 <Handle_TDF_Attribute> TDF_AttributeArray1;
+typedef NCollection_DataMap <TDF_Label , Standard_Integer , TDF_LabelMapHasher> TDF_LabelIntegerMap;
+typedef NCollection_List <Standard_GUID> TDF_IDList;
+typedef NCollection_DoubleMap <TDF_Label , TDF_Label , TDF_LabelMapHasher , TDF_LabelMapHasher>::Iterator TDF_DoubleMapIteratorOfLabelDoubleMap;
+typedef NCollection_DoubleMap <Standard_GUID , TCollection_ExtendedString , Standard_GUID , TCollection_ExtendedString>::Iterator TDF_DoubleMapIteratorOfGUIDProgIDMap;
+typedef NCollection_IndexedMap <TDF_Label , TDF_LabelMapHasher> TDF_LabelIndexedMap;
+typedef NCollection_Map <TDF_Label , TDF_LabelMapHasher> TDF_LabelMap;
+typedef NCollection_List <TDF_Label>::Iterator TDF_ListIteratorOfLabelList;
+typedef NCollection_List <Handle_TDF_AttributeDelta> TDF_AttributeDeltaList;
+typedef NCollection_Map <TDF_Label , TDF_LabelMapHasher>::Iterator TDF_MapIteratorOfLabelMap;
+typedef NCollection_IndexedMap <Handle_TDF_Attribute , TColStd_MapTransientHasher> TDF_AttributeIndexedMap;
+/* end typedefs declaration */
 
 /* public enums */
 enum  {

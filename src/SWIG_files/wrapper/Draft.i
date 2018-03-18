@@ -53,9 +53,7 @@ def register_handle(handle, base_object):
         pass
 };
 
-/* typedefs */
-/* end typedefs declaration */
-
+/* templates */
 /* templates */
 %define Handle(Class) opencascade::handle<Class>
 %enddef
@@ -63,6 +61,14 @@ def register_handle(handle, base_object):
 %template(Draft_IndexedDataMapOfVertexVertexInfo) NCollection_IndexedDataMap <TopoDS_Vertex , Draft_VertexInfo , TopTools_ShapeMapHasher>;
 %template(Draft_IndexedDataMapOfFaceFaceInfo) NCollection_IndexedDataMap <TopoDS_Face , Draft_FaceInfo , TopTools_ShapeMapHasher>;
 /* end templates declaration */
+
+/* end templates declaration */
+
+/* typedefs */
+typedef NCollection_IndexedDataMap <TopoDS_Edge , Draft_EdgeInfo , TopTools_ShapeMapHasher> Draft_IndexedDataMapOfEdgeEdgeInfo;
+typedef NCollection_IndexedDataMap <TopoDS_Vertex , Draft_VertexInfo , TopTools_ShapeMapHasher> Draft_IndexedDataMapOfVertexVertexInfo;
+typedef NCollection_IndexedDataMap <TopoDS_Face , Draft_FaceInfo , TopTools_ShapeMapHasher> Draft_IndexedDataMapOfFaceFaceInfo;
+/* end typedefs declaration */
 
 /* public enums */
 enum Draft_ErrorStatus {

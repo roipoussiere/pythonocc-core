@@ -53,9 +53,7 @@ def register_handle(handle, base_object):
         pass
 };
 
-/* typedefs */
-/* end typedefs declaration */
-
+/* templates */
 /* templates */
 %define Handle(Class) opencascade::handle<Class>
 %enddef
@@ -90,6 +88,41 @@ def register_handle(handle, base_object):
 %template(TColgp_Array2OfXYZ) NCollection_Array2 <gp_XYZ>;
 %template(TColgp_SequenceOfDir2d) NCollection_Sequence <gp_Dir2d>;
 /* end templates declaration */
+
+/* end templates declaration */
+
+/* typedefs */
+typedef NCollection_Sequence <gp_Ax1> TColgp_SequenceOfAx1;
+typedef NCollection_Sequence <gp_Pnt> TColgp_SequenceOfPnt;
+typedef NCollection_Array2 <gp_Vec2d> TColgp_Array2OfVec2d;
+typedef NCollection_Array1 <gp_Vec> TColgp_Array1OfVec;
+typedef NCollection_Array2 <gp_Pnt2d> TColgp_Array2OfPnt2d;
+typedef NCollection_Array1 <gp_Circ2d> TColgp_Array1OfCirc2d;
+typedef NCollection_Array1 <gp_Lin2d> TColgp_Array1OfLin2d;
+typedef NCollection_Array2 <gp_Pnt> TColgp_Array2OfPnt;
+typedef NCollection_Array1 <gp_Vec2d> TColgp_Array1OfVec2d;
+typedef NCollection_Sequence <gp_Vec2d> TColgp_SequenceOfVec2d;
+typedef NCollection_Sequence <Handle_TColgp_HArray1OfPnt2d> TColgp_SequenceOfArray1OfPnt2d;
+typedef NCollection_Sequence <gp_XYZ> TColgp_SequenceOfXYZ;
+typedef NCollection_Array1 <gp_XYZ> TColgp_Array1OfXYZ;
+typedef NCollection_Array2 <gp_Circ2d> TColgp_Array2OfCirc2d;
+typedef NCollection_Array1 <gp_Pnt2d> TColgp_Array1OfPnt2d;
+typedef NCollection_Array2 <gp_Lin2d> TColgp_Array2OfLin2d;
+typedef NCollection_Sequence <gp_Dir> TColgp_SequenceOfDir;
+typedef NCollection_Array1 <gp_Dir2d> TColgp_Array1OfDir2d;
+typedef NCollection_Array1 <gp_Dir> TColgp_Array1OfDir;
+typedef NCollection_Array2 <gp_Vec> TColgp_Array2OfVec;
+typedef NCollection_Array1 <gp_XY> TColgp_Array1OfXY;
+typedef NCollection_Array2 <gp_Dir> TColgp_Array2OfDir;
+typedef NCollection_Sequence <gp_Vec> TColgp_SequenceOfVec;
+typedef NCollection_Array2 <gp_XY> TColgp_Array2OfXY;
+typedef NCollection_Array1 <gp_Pnt> TColgp_Array1OfPnt;
+typedef NCollection_Sequence <gp_XY> TColgp_SequenceOfXY;
+typedef NCollection_Sequence <gp_Pnt2d> TColgp_SequenceOfPnt2d;
+typedef NCollection_Array2 <gp_Dir2d> TColgp_Array2OfDir2d;
+typedef NCollection_Array2 <gp_XYZ> TColgp_Array2OfXYZ;
+typedef NCollection_Sequence <gp_Dir2d> TColgp_SequenceOfDir2d;
+/* end typedefs declaration */
 
 /* public enums */
 /* end public enums declaration */

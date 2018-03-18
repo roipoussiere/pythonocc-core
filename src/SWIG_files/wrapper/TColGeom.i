@@ -53,9 +53,7 @@ def register_handle(handle, base_object):
         pass
 };
 
-/* typedefs */
-/* end typedefs declaration */
-
+/* templates */
 /* templates */
 %define Handle(Class) opencascade::handle<Class>
 %enddef
@@ -69,6 +67,20 @@ def register_handle(handle, base_object):
 %template(TColGeom_Array2OfBezierSurface) NCollection_Array2 <Handle(Geom_BezierSurface)>;
 %template(TColGeom_Array2OfSurface) NCollection_Array2 <Handle(Geom_Surface)>;
 /* end templates declaration */
+
+/* end templates declaration */
+
+/* typedefs */
+typedef NCollection_Array1 <Handle_Geom_BezierCurve> TColGeom_Array1OfBezierCurve;
+typedef NCollection_Array1 <Handle_Geom_Curve> TColGeom_Array1OfCurve;
+typedef NCollection_Sequence <Handle_Geom_Surface> TColGeom_SequenceOfSurface;
+typedef NCollection_Array1 <Handle_Geom_Surface> TColGeom_Array1OfSurface;
+typedef NCollection_Array1 <Handle_Geom_BSplineCurve> TColGeom_Array1OfBSplineCurve;
+typedef NCollection_Sequence <Handle_Geom_BoundedCurve> TColGeom_SequenceOfBoundedCurve;
+typedef NCollection_Sequence <Handle_Geom_Curve> TColGeom_SequenceOfCurve;
+typedef NCollection_Array2 <Handle_Geom_BezierSurface> TColGeom_Array2OfBezierSurface;
+typedef NCollection_Array2 <Handle_Geom_Surface> TColGeom_Array2OfSurface;
+/* end typedefs declaration */
 
 /* public enums */
 /* end public enums declaration */

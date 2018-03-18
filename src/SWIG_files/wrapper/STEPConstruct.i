@@ -53,17 +53,22 @@ def register_handle(handle, base_object):
         pass
 };
 
-/* typedefs */
-/* end typedefs declaration */
-
+/* templates */
 /* templates */
 %define Handle(Class) opencascade::handle<Class>
 %enddef
 %template(STEPConstruct_DataMapOfPointTransient) NCollection_DataMap <gp_Pnt , Handle(Standard_Transient) , STEPConstruct_PointHasher>;
-%template(STEPConstruct_DataMapIteratorOfDataMapOfAsciiStringTransient) NCollection_TListIterator<STEPConstruct_DataMapOfAsciiStringTransient>;
 %template(STEPConstruct_DataMapOfAsciiStringTransient) NCollection_DataMap <TCollection_AsciiString , Handle(Standard_Transient) , TCollection_AsciiString>;
-%template(STEPConstruct_DataMapIteratorOfDataMapOfPointTransient) NCollection_TListIterator<STEPConstruct_DataMapOfPointTransient>;
 /* end templates declaration */
+
+/* end templates declaration */
+
+/* typedefs */
+typedef NCollection_DataMap <gp_Pnt , Handle_Standard_Transient , STEPConstruct_PointHasher> STEPConstruct_DataMapOfPointTransient;
+typedef NCollection_DataMap <TCollection_AsciiString , Handle_Standard_Transient , TCollection_AsciiString>::Iterator STEPConstruct_DataMapIteratorOfDataMapOfAsciiStringTransient;
+typedef NCollection_DataMap <TCollection_AsciiString , Handle_Standard_Transient , TCollection_AsciiString> STEPConstruct_DataMapOfAsciiStringTransient;
+typedef NCollection_DataMap <gp_Pnt , Handle_Standard_Transient , STEPConstruct_PointHasher>::Iterator STEPConstruct_DataMapIteratorOfDataMapOfPointTransient;
+/* end typedefs declaration */
 
 /* public enums */
 /* end public enums declaration */

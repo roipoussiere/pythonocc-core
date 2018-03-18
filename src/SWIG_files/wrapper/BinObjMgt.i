@@ -53,6 +53,14 @@ def register_handle(handle, base_object):
         pass
 };
 
+/* templates */
+/* templates */
+%define Handle(Class) opencascade::handle<Class>
+%enddef
+/* end templates declaration */
+
+/* end templates declaration */
+
 /* typedefs */
 typedef Standard_Byte * BinObjMgt_PByte;
 typedef Standard_ShortReal * BinObjMgt_PShortReal;
@@ -63,11 +71,6 @@ typedef Standard_Integer * BinObjMgt_PInteger;
 typedef TColStd_DataMapOfIntegerTransient BinObjMgt_RRelocationTable;
 typedef Standard_Character * BinObjMgt_PChar;
 /* end typedefs declaration */
-
-/* templates */
-%define Handle(Class) opencascade::handle<Class>
-%enddef
-/* end templates declaration */
 
 /* public enums */
 /* end public enums declaration */

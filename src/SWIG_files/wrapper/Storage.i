@@ -53,22 +53,31 @@ def register_handle(handle, base_object):
         pass
 };
 
-/* typedefs */
-typedef long Storage_Position;
-/* end typedefs declaration */
-
+/* templates */
 /* templates */
 %define Handle(Class) opencascade::handle<Class>
 %enddef
 %template(Storage_ArrayOfSchema) NCollection_Array1 <Handle(Storage_Schema)>;
 %template(Storage_MapOfCallBack) NCollection_DataMap <TCollection_AsciiString , Handle(Storage_TypedCallBack) , TCollection_AsciiString>;
 %template(Storage_PType) NCollection_IndexedDataMap <TCollection_AsciiString , Standard_Integer , TCollection_AsciiString>;
-%template(Storage_DataMapIteratorOfMapOfPers) NCollection_TListIterator<Storage_MapOfPers>;
-%template(Storage_DataMapIteratorOfMapOfCallBack) NCollection_TListIterator<Storage_MapOfCallBack>;
 %template(Storage_MapOfPers) NCollection_DataMap <TCollection_AsciiString , Handle(Storage_Root) , TCollection_AsciiString>;
 %template(Storage_ArrayOfCallBack) NCollection_Array1 <Handle(Storage_CallBack)>;
 %template(Storage_SeqOfRoot) NCollection_Sequence <Handle(Storage_Root)>;
 /* end templates declaration */
+
+/* end templates declaration */
+
+/* typedefs */
+typedef NCollection_Array1 <Handle_Storage_Schema> Storage_ArrayOfSchema;
+typedef NCollection_DataMap <TCollection_AsciiString , Handle_Storage_TypedCallBack , TCollection_AsciiString> Storage_MapOfCallBack;
+typedef NCollection_IndexedDataMap <TCollection_AsciiString , Standard_Integer , TCollection_AsciiString> Storage_PType;
+typedef NCollection_DataMap <TCollection_AsciiString , Handle_Storage_Root , TCollection_AsciiString>::Iterator Storage_DataMapIteratorOfMapOfPers;
+typedef NCollection_DataMap <TCollection_AsciiString , Handle_Storage_TypedCallBack , TCollection_AsciiString>::Iterator Storage_DataMapIteratorOfMapOfCallBack;
+typedef NCollection_DataMap <TCollection_AsciiString , Handle_Storage_Root , TCollection_AsciiString> Storage_MapOfPers;
+typedef long Storage_Position;
+typedef NCollection_Array1 <Handle_Storage_CallBack> Storage_ArrayOfCallBack;
+typedef NCollection_Sequence <Handle_Storage_Root> Storage_SeqOfRoot;
+/* end typedefs declaration */
 
 /* public enums */
 enum Storage_SolveMode {

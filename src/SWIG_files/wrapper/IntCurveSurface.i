@@ -53,15 +53,20 @@ def register_handle(handle, base_object):
         pass
 };
 
-/* typedefs */
-/* end typedefs declaration */
-
+/* templates */
 /* templates */
 %define Handle(Class) opencascade::handle<Class>
 %enddef
 %template(IntCurveSurface_SequenceOfSeg) NCollection_Sequence <IntCurveSurface_IntersectionSegment>;
 %template(IntCurveSurface_SequenceOfPnt) NCollection_Sequence <IntCurveSurface_IntersectionPoint>;
 /* end templates declaration */
+
+/* end templates declaration */
+
+/* typedefs */
+typedef NCollection_Sequence <IntCurveSurface_IntersectionSegment> IntCurveSurface_SequenceOfSeg;
+typedef NCollection_Sequence <IntCurveSurface_IntersectionPoint> IntCurveSurface_SequenceOfPnt;
+/* end typedefs declaration */
 
 /* public enums */
 enum IntCurveSurface_TransitionOnCurve {

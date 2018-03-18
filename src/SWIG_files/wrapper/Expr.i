@@ -53,9 +53,7 @@ def register_handle(handle, base_object):
         pass
 };
 
-/* typedefs */
-/* end typedefs declaration */
-
+/* templates */
 /* templates */
 %define Handle(Class) opencascade::handle<Class>
 %enddef
@@ -66,6 +64,17 @@ def register_handle(handle, base_object):
 %template(Expr_Array1OfNamedUnknown) NCollection_Array1 <Handle(Expr_NamedUnknown)>;
 %template(Expr_Array1OfSingleRelation) NCollection_Array1 <Handle(Expr_SingleRelation)>;
 /* end templates declaration */
+
+/* end templates declaration */
+
+/* typedefs */
+typedef NCollection_IndexedMap <Handle_Expr_NamedUnknown , TColStd_MapTransientHasher> Expr_MapOfNamedUnknown;
+typedef NCollection_Sequence <Handle_Expr_GeneralExpression> Expr_SequenceOfGeneralExpression;
+typedef NCollection_Array1 <Handle_Expr_GeneralExpression> Expr_Array1OfGeneralExpression;
+typedef NCollection_Sequence <Handle_Expr_GeneralRelation> Expr_SequenceOfGeneralRelation;
+typedef NCollection_Array1 <Handle_Expr_NamedUnknown> Expr_Array1OfNamedUnknown;
+typedef NCollection_Array1 <Handle_Expr_SingleRelation> Expr_Array1OfSingleRelation;
+/* end typedefs declaration */
 
 /* public enums */
 /* end public enums declaration */

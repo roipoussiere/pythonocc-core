@@ -53,24 +53,32 @@ def register_handle(handle, base_object):
         pass
 };
 
-/* typedefs */
-typedef TopOpeBRepTool_ShapeClassifier * TopOpeBRepTool_PShapeClassifier;
-typedef BRepClass3d_SolidClassifier * TopOpeBRepTool_PSoClassif;
-typedef TopTools_ListOfShape * TopOpeBRepTool_Plos;
-/* end typedefs declaration */
-
+/* templates */
 /* templates */
 %define Handle(Class) opencascade::handle<Class>
 %enddef
-%template(TopOpeBRepTool_ListIteratorOfListOfC2DF) NCollection_TListIterator<TopOpeBRepTool_ListOfC2DF>;
+%template(TopOpeBRepTool_ListIteratorOfListOfC2DF) NCollection_TListIterator<TopOpeBRepTool_C2DF>;
 %template(TopOpeBRepTool_DataMapOfShapeface) NCollection_DataMap <TopoDS_Shape , TopOpeBRepTool_face , TopTools_ShapeMapHasher>;
-%template(TopOpeBRepTool_DataMapIteratorOfDataMapOfShapeface) NCollection_TListIterator<TopOpeBRepTool_DataMapOfShapeface>;
 %template(TopOpeBRepTool_ListOfC2DF) NCollection_List <TopOpeBRepTool_C2DF>;
-%template(TopOpeBRepTool_DataMapIteratorOfDataMapOfOrientedShapeC2DF) NCollection_TListIterator<TopOpeBRepTool_DataMapOfOrientedShapeC2DF>;
-%template(TopOpeBRepTool_DataMapIteratorOfDataMapOfShapeListOfC2DF) NCollection_TListIterator<TopOpeBRepTool_DataMapOfShapeListOfC2DF>;
 %template(TopOpeBRepTool_DataMapOfShapeListOfC2DF) NCollection_DataMap <TopoDS_Shape , TopOpeBRepTool_ListOfC2DF , TopTools_ShapeMapHasher>;
 %template(TopOpeBRepTool_DataMapOfOrientedShapeC2DF) NCollection_DataMap <TopoDS_Shape , TopOpeBRepTool_C2DF , TopTools_OrientedShapeMapHasher>;
 /* end templates declaration */
+
+/* end templates declaration */
+
+/* typedefs */
+typedef NCollection_List <TopOpeBRepTool_C2DF>::Iterator TopOpeBRepTool_ListIteratorOfListOfC2DF;
+typedef TopOpeBRepTool_ShapeClassifier * TopOpeBRepTool_PShapeClassifier;
+typedef NCollection_DataMap <TopoDS_Shape , TopOpeBRepTool_face , TopTools_ShapeMapHasher> TopOpeBRepTool_DataMapOfShapeface;
+typedef NCollection_DataMap <TopoDS_Shape , TopOpeBRepTool_face , TopTools_ShapeMapHasher>::Iterator TopOpeBRepTool_DataMapIteratorOfDataMapOfShapeface;
+typedef BRepClass3d_SolidClassifier * TopOpeBRepTool_PSoClassif;
+typedef NCollection_List <TopOpeBRepTool_C2DF> TopOpeBRepTool_ListOfC2DF;
+typedef NCollection_DataMap <TopoDS_Shape , TopOpeBRepTool_C2DF , TopTools_OrientedShapeMapHasher>::Iterator TopOpeBRepTool_DataMapIteratorOfDataMapOfOrientedShapeC2DF;
+typedef TopTools_ListOfShape * TopOpeBRepTool_Plos;
+typedef NCollection_DataMap <TopoDS_Shape , TopOpeBRepTool_ListOfC2DF , TopTools_ShapeMapHasher>::Iterator TopOpeBRepTool_DataMapIteratorOfDataMapOfShapeListOfC2DF;
+typedef NCollection_DataMap <TopoDS_Shape , TopOpeBRepTool_ListOfC2DF , TopTools_ShapeMapHasher> TopOpeBRepTool_DataMapOfShapeListOfC2DF;
+typedef NCollection_DataMap <TopoDS_Shape , TopOpeBRepTool_C2DF , TopTools_OrientedShapeMapHasher> TopOpeBRepTool_DataMapOfOrientedShapeC2DF;
+/* end typedefs declaration */
 
 /* public enums */
 enum TopOpeBRepTool_OutCurveType {

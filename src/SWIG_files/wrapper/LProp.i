@@ -53,14 +53,18 @@ def register_handle(handle, base_object):
         pass
 };
 
-/* typedefs */
-/* end typedefs declaration */
-
+/* templates */
 /* templates */
 %define Handle(Class) opencascade::handle<Class>
 %enddef
 %template(LProp_SequenceOfCIType) NCollection_Sequence <LProp_CIType>;
 /* end templates declaration */
+
+/* end templates declaration */
+
+/* typedefs */
+typedef NCollection_Sequence <LProp_CIType> LProp_SequenceOfCIType;
+/* end typedefs declaration */
 
 /* public enums */
 enum LProp_Status {

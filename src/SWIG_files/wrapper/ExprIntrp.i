@@ -53,21 +53,32 @@ def register_handle(handle, base_object):
         pass
 };
 
-/* typedefs */
-/* end typedefs declaration */
-
+/* templates */
 /* templates */
 %define Handle(Class) opencascade::handle<Class>
 %enddef
-%template(ExprIntrp_ListIteratorOfStackOfGeneralFunction) NCollection_TListIterator<ExprIntrp_StackOfGeneralFunction>;
+%template(ExprIntrp_ListIteratorOfStackOfGeneralFunction) NCollection_TListIterator<Handle(Expr_GeneralFunction)>;
 %template(ExprIntrp_SequenceOfNamedExpression) NCollection_Sequence <Handle(Expr_NamedExpression)>;
-%template(ExprIntrp_ListIteratorOfStackOfGeneralRelation) NCollection_TListIterator<ExprIntrp_StackOfGeneralRelation>;
+%template(ExprIntrp_ListIteratorOfStackOfGeneralRelation) NCollection_TListIterator<Handle(Expr_GeneralRelation)>;
 %template(ExprIntrp_StackOfGeneralRelation) NCollection_List <Handle(Expr_GeneralRelation)>;
 %template(ExprIntrp_StackOfGeneralExpression) NCollection_List <Handle(Expr_GeneralExpression)>;
 %template(ExprIntrp_SequenceOfNamedFunction) NCollection_Sequence <Handle(Expr_NamedFunction)>;
-%template(ExprIntrp_ListIteratorOfStackOfGeneralExpression) NCollection_TListIterator<ExprIntrp_StackOfGeneralExpression>;
+%template(ExprIntrp_ListIteratorOfStackOfGeneralExpression) NCollection_TListIterator<Handle(Expr_GeneralExpression)>;
 %template(ExprIntrp_StackOfGeneralFunction) NCollection_List <Handle(Expr_GeneralFunction)>;
 /* end templates declaration */
+
+/* end templates declaration */
+
+/* typedefs */
+typedef NCollection_List <Handle_Expr_GeneralFunction>::Iterator ExprIntrp_ListIteratorOfStackOfGeneralFunction;
+typedef NCollection_Sequence <Handle_Expr_NamedExpression> ExprIntrp_SequenceOfNamedExpression;
+typedef NCollection_List <Handle_Expr_GeneralRelation>::Iterator ExprIntrp_ListIteratorOfStackOfGeneralRelation;
+typedef NCollection_List <Handle_Expr_GeneralRelation> ExprIntrp_StackOfGeneralRelation;
+typedef NCollection_List <Handle_Expr_GeneralExpression> ExprIntrp_StackOfGeneralExpression;
+typedef NCollection_Sequence <Handle_Expr_NamedFunction> ExprIntrp_SequenceOfNamedFunction;
+typedef NCollection_List <Handle_Expr_GeneralExpression>::Iterator ExprIntrp_ListIteratorOfStackOfGeneralExpression;
+typedef NCollection_List <Handle_Expr_GeneralFunction> ExprIntrp_StackOfGeneralFunction;
+/* end typedefs declaration */
 
 /* public enums */
 /* end public enums declaration */

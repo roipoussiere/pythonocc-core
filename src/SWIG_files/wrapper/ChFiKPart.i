@@ -53,15 +53,19 @@ def register_handle(handle, base_object):
         pass
 };
 
-/* typedefs */
-/* end typedefs declaration */
-
+/* templates */
 /* templates */
 %define Handle(Class) opencascade::handle<Class>
 %enddef
-%template(ChFiKPart_DataMapIteratorOfRstMap) NCollection_TListIterator<ChFiKPart_RstMap>;
 %template(ChFiKPart_RstMap) NCollection_DataMap <Standard_Integer , Handle_Adaptor2d_HCurve2d , TColStd_MapIntegerHasher>;
 /* end templates declaration */
+
+/* end templates declaration */
+
+/* typedefs */
+typedef NCollection_DataMap <Standard_Integer , Handle_Adaptor2d_HCurve2d , TColStd_MapIntegerHasher>::Iterator ChFiKPart_DataMapIteratorOfRstMap;
+typedef NCollection_DataMap <Standard_Integer , Handle_Adaptor2d_HCurve2d , TColStd_MapIntegerHasher> ChFiKPart_RstMap;
+/* end typedefs declaration */
 
 /* public enums */
 /* end public enums declaration */

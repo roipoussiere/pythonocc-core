@@ -53,15 +53,20 @@ def register_handle(handle, base_object):
         pass
 };
 
-/* typedefs */
-/* end typedefs declaration */
-
+/* templates */
 /* templates */
 %define Handle(Class) opencascade::handle<Class>
 %enddef
 %template(GeomInt_VectorOfReal) NCollection_Vector <Standard_Real>;
 %template(GeomInt_SequenceOfParameterAndOrientation) NCollection_Sequence <GeomInt_ParameterAndOrientation>;
 /* end templates declaration */
+
+/* end templates declaration */
+
+/* typedefs */
+typedef NCollection_Vector <Standard_Real> GeomInt_VectorOfReal;
+typedef NCollection_Sequence <GeomInt_ParameterAndOrientation> GeomInt_SequenceOfParameterAndOrientation;
+/* end typedefs declaration */
 
 /* public enums */
 /* end public enums declaration */

@@ -53,16 +53,22 @@ def register_handle(handle, base_object):
         pass
 };
 
-/* typedefs */
-/* end typedefs declaration */
-
+/* templates */
 /* templates */
 %define Handle(Class) opencascade::handle<Class>
 %enddef
-%template(NLPlate_ListIteratorOfStackOfPlate) NCollection_TListIterator<NLPlate_StackOfPlate>;
+%template(NLPlate_ListIteratorOfStackOfPlate) NCollection_TListIterator<Plate_Plate>;
 %template(NLPlate_StackOfPlate) NCollection_List <Plate_Plate>;
 %template(NLPlate_SequenceOfHGPPConstraint) NCollection_Sequence <Handle(NLPlate_HGPPConstraint)>;
 /* end templates declaration */
+
+/* end templates declaration */
+
+/* typedefs */
+typedef NCollection_List <Plate_Plate>::Iterator NLPlate_ListIteratorOfStackOfPlate;
+typedef NCollection_List <Plate_Plate> NLPlate_StackOfPlate;
+typedef NCollection_Sequence <Handle_NLPlate_HGPPConstraint> NLPlate_SequenceOfHGPPConstraint;
+/* end typedefs declaration */
 
 /* public enums */
 /* end public enums declaration */

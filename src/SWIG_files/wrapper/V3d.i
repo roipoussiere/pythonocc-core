@@ -53,21 +53,26 @@ def register_handle(handle, base_object):
         pass
 };
 
-/* typedefs */
-typedef V3d_Viewer * V3d_ViewerPointer;
-typedef V3d_ListOfLight::Iterator V3d_ListOfLightIterator;
-typedef Standard_Real V3d_Parameter;
-typedef V3d_ListOfView::Iterator V3d_ListOfViewIterator;
-typedef V3d_View * V3d_ViewPointer;
-typedef Standard_Real V3d_Coordinate;
-/* end typedefs declaration */
-
+/* templates */
 /* templates */
 %define Handle(Class) opencascade::handle<Class>
 %enddef
 %template(V3d_ListOfView) NCollection_List <Handle_V3d_View>;
 %template(V3d_ListOfLight) NCollection_List <Handle_V3d_Light>;
 /* end templates declaration */
+
+/* end templates declaration */
+
+/* typedefs */
+typedef V3d_Viewer * V3d_ViewerPointer;
+typedef V3d_ListOfLight::Iterator V3d_ListOfLightIterator;
+typedef NCollection_List <Handle_V3d_View> V3d_ListOfView;
+typedef Standard_Real V3d_Parameter;
+typedef NCollection_List <Handle_V3d_Light> V3d_ListOfLight;
+typedef V3d_ListOfView::Iterator V3d_ListOfViewIterator;
+typedef V3d_View * V3d_ViewPointer;
+typedef Standard_Real V3d_Coordinate;
+/* end typedefs declaration */
 
 /* public enums */
 enum V3d_TypeOfPickCamera {

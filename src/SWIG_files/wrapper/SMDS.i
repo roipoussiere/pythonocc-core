@@ -62,13 +62,16 @@ def register_handle(handle, base_object):
         pass
 };
 
-/* typedefs */
-/* end typedefs declaration */
-
+/* templates */
 /* templates */
 %define Handle(Class) opencascade::handle<Class>
 %enddef
 /* end templates declaration */
+
+/* end templates declaration */
+
+/* typedefs */
+/* end typedefs declaration */
 
 /* public enums */
 /* end public enums declaration */

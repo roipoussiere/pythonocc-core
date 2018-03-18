@@ -53,17 +53,24 @@ def register_handle(handle, base_object):
         pass
 };
 
-/* typedefs */
-/* end typedefs declaration */
-
+/* templates */
 /* templates */
 %define Handle(Class) opencascade::handle<Class>
 %enddef
 %template(BRep_ListOfPointRepresentation) NCollection_List <Handle(BRep_PointRepresentation)>;
-%template(BRep_ListIteratorOfListOfPointRepresentation) NCollection_TListIterator<BRep_ListOfPointRepresentation>;
-%template(BRep_ListIteratorOfListOfCurveRepresentation) NCollection_TListIterator<BRep_ListOfCurveRepresentation>;
+%template(BRep_ListIteratorOfListOfPointRepresentation) NCollection_TListIterator<Handle(BRep_PointRepresentation)>;
+%template(BRep_ListIteratorOfListOfCurveRepresentation) NCollection_TListIterator<Handle(BRep_CurveRepresentation)>;
 %template(BRep_ListOfCurveRepresentation) NCollection_List <Handle(BRep_CurveRepresentation)>;
 /* end templates declaration */
+
+/* end templates declaration */
+
+/* typedefs */
+typedef NCollection_List <Handle_BRep_PointRepresentation> BRep_ListOfPointRepresentation;
+typedef NCollection_List <Handle_BRep_PointRepresentation>::Iterator BRep_ListIteratorOfListOfPointRepresentation;
+typedef NCollection_List <Handle_BRep_CurveRepresentation>::Iterator BRep_ListIteratorOfListOfCurveRepresentation;
+typedef NCollection_List <Handle_BRep_CurveRepresentation> BRep_ListOfCurveRepresentation;
+/* end typedefs declaration */
 
 /* public enums */
 /* end public enums declaration */

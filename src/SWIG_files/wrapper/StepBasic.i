@@ -53,9 +53,7 @@ def register_handle(handle, base_object):
         pass
 };
 
-/* typedefs */
-/* end typedefs declaration */
-
+/* templates */
 /* templates */
 %define Handle(Class) opencascade::handle<Class>
 %enddef
@@ -70,6 +68,21 @@ def register_handle(handle, base_object):
 %template(StepBasic_Array1OfApproval) NCollection_Array1 <Handle(StepBasic_Approval)>;
 %template(StepBasic_Array1OfNamedUnit) NCollection_Array1 <Handle(StepBasic_NamedUnit)>;
 /* end templates declaration */
+
+/* end templates declaration */
+
+/* typedefs */
+typedef NCollection_Array1 <Handle_StepBasic_Document> StepBasic_Array1OfDocument;
+typedef NCollection_Array1 <Handle_StepBasic_Organization> StepBasic_Array1OfOrganization;
+typedef NCollection_Array1 <Handle_StepBasic_Product> StepBasic_Array1OfProduct;
+typedef NCollection_Array1 <Handle_StepBasic_UncertaintyMeasureWithUnit> StepBasic_Array1OfUncertaintyMeasureWithUnit;
+typedef NCollection_Array1 <Handle_StepBasic_ProductDefinition> StepBasic_Array1OfProductDefinition;
+typedef NCollection_Array1 <Handle_StepBasic_DerivedUnitElement> StepBasic_Array1OfDerivedUnitElement;
+typedef NCollection_Array1 <Handle_StepBasic_Person> StepBasic_Array1OfPerson;
+typedef NCollection_Array1 <Handle_StepBasic_ProductContext> StepBasic_Array1OfProductContext;
+typedef NCollection_Array1 <Handle_StepBasic_Approval> StepBasic_Array1OfApproval;
+typedef NCollection_Array1 <Handle_StepBasic_NamedUnit> StepBasic_Array1OfNamedUnit;
+/* end typedefs declaration */
 
 /* public enums */
 enum StepBasic_Source {

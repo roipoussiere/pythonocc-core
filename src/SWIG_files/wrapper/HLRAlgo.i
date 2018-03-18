@@ -53,21 +53,32 @@ def register_handle(handle, base_object):
         pass
 };
 
-/* typedefs */
-/* end typedefs declaration */
-
+/* templates */
 /* templates */
 %define Handle(Class) opencascade::handle<Class>
 %enddef
-%template(HLRAlgo_ListIteratorOfListOfBPoint) NCollection_TListIterator<HLRAlgo_ListOfBPoint>;
+%template(HLRAlgo_ListIteratorOfListOfBPoint) NCollection_TListIterator<HLRAlgo_BiPoint>;
 %template(HLRAlgo_InterferenceList) NCollection_List <HLRAlgo_Interference>;
 %template(HLRAlgo_Array1OfPHDat) NCollection_Array1 <HLRAlgo_PolyHidingData>;
 %template(HLRAlgo_Array1OfPINod) NCollection_Array1 <Handle(HLRAlgo_PolyInternalNode)>;
-%template(HLRAlgo_ListIteratorOfInterferenceList) NCollection_TListIterator<HLRAlgo_InterferenceList>;
+%template(HLRAlgo_ListIteratorOfInterferenceList) NCollection_TListIterator<HLRAlgo_Interference>;
 %template(HLRAlgo_Array1OfTData) NCollection_Array1 <HLRAlgo_TriangleData>;
 %template(HLRAlgo_ListOfBPoint) NCollection_List <HLRAlgo_BiPoint>;
 %template(HLRAlgo_Array1OfPISeg) NCollection_Array1 <HLRAlgo_PolyInternalSegment>;
 /* end templates declaration */
+
+/* end templates declaration */
+
+/* typedefs */
+typedef NCollection_List <HLRAlgo_BiPoint>::Iterator HLRAlgo_ListIteratorOfListOfBPoint;
+typedef NCollection_List <HLRAlgo_Interference> HLRAlgo_InterferenceList;
+typedef NCollection_Array1 <HLRAlgo_PolyHidingData> HLRAlgo_Array1OfPHDat;
+typedef NCollection_Array1 <Handle_HLRAlgo_PolyInternalNode> HLRAlgo_Array1OfPINod;
+typedef NCollection_List <HLRAlgo_Interference>::Iterator HLRAlgo_ListIteratorOfInterferenceList;
+typedef NCollection_Array1 <HLRAlgo_TriangleData> HLRAlgo_Array1OfTData;
+typedef NCollection_List <HLRAlgo_BiPoint> HLRAlgo_ListOfBPoint;
+typedef NCollection_Array1 <HLRAlgo_PolyInternalSegment> HLRAlgo_Array1OfPISeg;
+/* end typedefs declaration */
 
 /* public enums */
 enum HLRAlgo_PolyMask {

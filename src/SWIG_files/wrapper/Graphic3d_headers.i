@@ -689,32 +689,6 @@ along with pythonOCC.  If not, see <http://www.gnu.org/licenses/>.
 #include<OSD_SingleProtection.hxx>
 #include<OSD_OpenFile.hxx>
 #include<OSD_PerfMeter.h>
-#include<BVH_BuildThread.hxx>
-#include<BVH_Sorter.hxx>
-#include<BVH_ObjectSet.hxx>
-#include<BVH_Box.hxx>
-#include<BVH_Object.hxx>
-#include<BVH_PrimitiveSet3d.hxx>
-#include<BVH_QuickSorter.hxx>
-#include<BVH_Set.hxx>
-#include<BVH_SpatialMedianBuilder.hxx>
-#include<BVH_QuadTree.hxx>
-#include<BVH_PrimitiveSet.hxx>
-#include<BVH_BuildQueue.hxx>
-#include<BVH_Builder.hxx>
-#include<BVH_Properties.hxx>
-#include<BVH_RadixSorter.hxx>
-#include<BVH_Types.hxx>
-#include<BVH_Triangulation.hxx>
-#include<BVH_Tree.hxx>
-#include<BVH_SweepPlaneBuilder.hxx>
-#include<BVH_Geometry.hxx>
-#include<BVH_Constants.hxx>
-#include<BVH_BinaryTree.hxx>
-#include<BVH_QueueBuilder.hxx>
-#include<BVH_DistanceField.hxx>
-#include<BVH_LinearBuilder.hxx>
-#include<BVH_BinnedBuilder.hxx>
 #include<TShort_SequenceOfShortReal.hxx>
 #include<TShort_HArray1OfShortReal.hxx>
 #include<TShort_HArray2OfShortReal.hxx>
@@ -931,4 +905,3 @@ along with pythonOCC.  If not, see <http://www.gnu.org/licenses/>.
 %import Geom.i
 %import Bnd.i
 %import OSD.i
-%import BVH.i

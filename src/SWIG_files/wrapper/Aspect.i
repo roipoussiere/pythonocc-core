@@ -53,21 +53,25 @@ def register_handle(handle, base_object):
         pass
 };
 
-/* typedefs */
-typedef void * Aspect_Display;
-typedef unsigned long Aspect_Drawable;
-typedef void * HANDLE;
-typedef void * Aspect_FBConfig;
-typedef struct __GLXFBConfigRec * GLXFBConfig;
-typedef void * Aspect_RenderingContext;
-typedef unsigned long Aspect_Handle;
-/* end typedefs declaration */
-
+/* templates */
 /* templates */
 %define Handle(Class) opencascade::handle<Class>
 %enddef
 %template(Aspect_SequenceOfColor) NCollection_Sequence <Quantity_Color>;
 /* end templates declaration */
+
+/* end templates declaration */
+
+/* typedefs */
+typedef void * Aspect_Display;
+typedef unsigned long Aspect_Drawable;
+typedef void * HANDLE;
+typedef void * Aspect_FBConfig;
+typedef NCollection_Sequence <Quantity_Color> Aspect_SequenceOfColor;
+typedef struct __GLXFBConfigRec * GLXFBConfig;
+typedef void * Aspect_RenderingContext;
+typedef unsigned long Aspect_Handle;
+/* end typedefs declaration */
 
 /* public enums */
 enum Aspect_TypeOfDeflection {

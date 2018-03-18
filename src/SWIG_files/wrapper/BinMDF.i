@@ -53,18 +53,23 @@ def register_handle(handle, base_object):
         pass
 };
 
-/* typedefs */
-typedef TColStd_DataMapOfAsciiStringInteger BinMDF_StringIdMap;
-/* end typedefs declaration */
-
+/* templates */
 /* templates */
 %define Handle(Class) opencascade::handle<Class>
 %enddef
-%template(BinMDF_DataMapIteratorOfTypeADriverMap) NCollection_TListIterator<BinMDF_TypeADriverMap>;
 %template(BinMDF_TypeADriverMap) NCollection_DataMap <Handle(Standard_Type) , Handle(BinMDF_ADriver) , TColStd_MapTransientHasher>;
 %template(BinMDF_TypeIdMap) NCollection_DoubleMap <Handle(Standard_Type) , Standard_Integer , TColStd_MapTransientHasher , TColStd_MapIntegerHasher>;
-%template(BinMDF_DoubleMapIteratorOfTypeIdMap) NCollection_TListIterator<BinMDF_TypeIdMap>;
 /* end templates declaration */
+
+/* end templates declaration */
+
+/* typedefs */
+typedef NCollection_DataMap <Handle_Standard_Type , Handle_BinMDF_ADriver , TColStd_MapTransientHasher>::Iterator BinMDF_DataMapIteratorOfTypeADriverMap;
+typedef NCollection_DataMap <Handle_Standard_Type , Handle_BinMDF_ADriver , TColStd_MapTransientHasher> BinMDF_TypeADriverMap;
+typedef NCollection_DoubleMap <Handle_Standard_Type , Standard_Integer , TColStd_MapTransientHasher , TColStd_MapIntegerHasher> BinMDF_TypeIdMap;
+typedef NCollection_DoubleMap <Handle_Standard_Type , Standard_Integer , TColStd_MapTransientHasher , TColStd_MapIntegerHasher>::Iterator BinMDF_DoubleMapIteratorOfTypeIdMap;
+typedef TColStd_DataMapOfAsciiStringInteger BinMDF_StringIdMap;
+/* end typedefs declaration */
 
 /* public enums */
 /* end public enums declaration */

@@ -53,9 +53,7 @@ def register_handle(handle, base_object):
         pass
 };
 
-/* typedefs */
-/* end typedefs declaration */
-
+/* templates */
 /* templates */
 %define Handle(Class) opencascade::handle<Class>
 %enddef
@@ -64,6 +62,15 @@ def register_handle(handle, base_object):
 %template(AdvApp2Var_Strip) NCollection_Sequence <AdvApp2Var_Iso>;
 %template(AdvApp2Var_SequenceOfPatch) NCollection_Sequence <AdvApp2Var_Patch>;
 /* end templates declaration */
+
+/* end templates declaration */
+
+/* typedefs */
+typedef NCollection_Sequence <AdvApp2Var_Node> AdvApp2Var_SequenceOfNode;
+typedef NCollection_Sequence <AdvApp2Var_Strip> AdvApp2Var_SequenceOfStrip;
+typedef NCollection_Sequence <AdvApp2Var_Iso> AdvApp2Var_Strip;
+typedef NCollection_Sequence <AdvApp2Var_Patch> AdvApp2Var_SequenceOfPatch;
+/* end typedefs declaration */
 
 /* public enums */
 enum AdvApp2Var_CriterionRepartition {

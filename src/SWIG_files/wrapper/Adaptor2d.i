@@ -53,14 +53,17 @@ def register_handle(handle, base_object):
         pass
 };
 
-/* typedefs */
-typedef Adaptor2d_Curve2d * Adaptor2d_Curve2dPtr;
-/* end typedefs declaration */
-
+/* templates */
 /* templates */
 %define Handle(Class) opencascade::handle<Class>
 %enddef
 /* end templates declaration */
+
+/* end templates declaration */
+
+/* typedefs */
+typedef Adaptor2d_Curve2d * Adaptor2d_Curve2dPtr;
+/* end typedefs declaration */
 
 /* public enums */
 /* end public enums declaration */

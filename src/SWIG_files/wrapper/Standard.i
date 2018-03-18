@@ -53,6 +53,14 @@ def register_handle(handle, base_object):
         pass
 };
 
+/* templates */
+/* templates */
+%define Handle(Class) opencascade::handle<Class>
+%enddef
+/* end templates declaration */
+
+/* end templates declaration */
+
 /* typedefs */
 typedef bool Standard_Boolean;
 typedef const Standard_Character * Standard_CString;
@@ -73,6 +81,7 @@ typedef pthread_t Standard_ThreadId;
 typedef float Standard_ShortReal;
 typedef Standard_ErrorHandler::Callback Standard_ErrorHandlerCallback;
 typedef wchar_t Standard_WideChar;
+typedef opencascade::handle <Standard_Transient> Handle_Standard_Transient;
 typedef char Standard_Character;
 typedef unsigned char Standard_Utf8UChar;
 typedef char32_t Standard_Utf32Char;
@@ -82,12 +91,7 @@ typedef const Standard_ExtCharacter * Standard_ExtString;
 typedef size_t Standard_Size;
 typedef std::ostream Standard_OStream;
 /* end typedefs declaration */
-
-/* templates */
-%define Handle(Class) opencascade::handle<Class>
-%enddef
-/* end templates declaration */
-
+%include "Standard_TypeDef.hxx"
 /* public enums */
 enum Standard_HandlerStatus {
 	Standard_HandlerVoid = 0,

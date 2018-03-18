@@ -53,9 +53,7 @@ def register_handle(handle, base_object):
         pass
 };
 
-/* typedefs */
-/* end typedefs declaration */
-
+/* templates */
 /* templates */
 %define Handle(Class) opencascade::handle<Class>
 %enddef
@@ -71,6 +69,22 @@ def register_handle(handle, base_object):
 %template(StepShape_Array1OfFaceBound) NCollection_Array1 <Handle(StepShape_FaceBound)>;
 %template(StepShape_Array1OfOrientedClosedShell) NCollection_Array1 <Handle(StepShape_OrientedClosedShell)>;
 /* end templates declaration */
+
+/* end templates declaration */
+
+/* typedefs */
+typedef NCollection_Array1 <Handle_StepShape_Face> StepShape_Array1OfFace;
+typedef NCollection_Array1 <Handle_StepShape_ConnectedEdgeSet> StepShape_Array1OfConnectedEdgeSet;
+typedef NCollection_Array1 <StepShape_ValueQualifier> StepShape_Array1OfValueQualifier;
+typedef NCollection_Array1 <StepShape_ShapeDimensionRepresentationItem> StepShape_Array1OfShapeDimensionRepresentationItem;
+typedef NCollection_Array1 <Handle_StepShape_OrientedEdge> StepShape_Array1OfOrientedEdge;
+typedef NCollection_Array1 <StepShape_Shell> StepShape_Array1OfShell;
+typedef NCollection_Array1 <Handle_StepShape_ConnectedFaceSet> StepShape_Array1OfConnectedFaceSet;
+typedef NCollection_Array1 <Handle_StepShape_Edge> StepShape_Array1OfEdge;
+typedef NCollection_Array1 <StepShape_GeometricSetSelect> StepShape_Array1OfGeometricSetSelect;
+typedef NCollection_Array1 <Handle_StepShape_FaceBound> StepShape_Array1OfFaceBound;
+typedef NCollection_Array1 <Handle_StepShape_OrientedClosedShell> StepShape_Array1OfOrientedClosedShell;
+/* end typedefs declaration */
 
 /* public enums */
 enum StepShape_AngleRelator {

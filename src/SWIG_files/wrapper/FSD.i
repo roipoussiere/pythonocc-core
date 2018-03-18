@@ -53,15 +53,18 @@ def register_handle(handle, base_object):
         pass
 };
 
-/* typedefs */
-typedef fstream FSD_FStream;
-typedef FILE * FSD_BStream;
-/* end typedefs declaration */
-
+/* templates */
 /* templates */
 %define Handle(Class) opencascade::handle<Class>
 %enddef
 /* end templates declaration */
+
+/* end templates declaration */
+
+/* typedefs */
+typedef fstream FSD_FStream;
+typedef FILE * FSD_BStream;
+/* end typedefs declaration */
 
 /* public enums */
 /* end public enums declaration */

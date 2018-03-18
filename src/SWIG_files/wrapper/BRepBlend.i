@@ -53,12 +53,24 @@ def register_handle(handle, base_object):
         pass
 };
 
+/* templates */
+/* templates */
+%define Handle(Class) opencascade::handle<Class>
+%enddef
+%template(BRepBlend_SequenceOfLine) NCollection_Sequence <Handle(BRepBlend_Line)>;
+%template(BRepBlend_SequenceOfPointOnRst) NCollection_Sequence <BRepBlend_PointOnRst>;
+/* end templates declaration */
+
+/* end templates declaration */
+
 /* typedefs */
 typedef BlendFunc_Chamfer BRepBlend_Chamfer;
 typedef BlendFunc_CSConstRad BRepBlend_CSConstRad;
+typedef NCollection_Sequence <Handle_BRepBlend_Line> BRepBlend_SequenceOfLine;
 typedef BlendFunc_ChAsym BRepBlend_ChAsym;
 typedef BlendFunc_ConstRad BRepBlend_ConstRad;
 typedef BlendFunc_ChAsymInv BRepBlend_ChAsymInv;
+typedef NCollection_Sequence <BRepBlend_PointOnRst> BRepBlend_SequenceOfPointOnRst;
 typedef BlendFunc_Ruled BRepBlend_Ruled;
 typedef BlendFunc_ChamfInv BRepBlend_ChamfInv;
 typedef BlendFunc_RuledInv BRepBlend_RuledInv;
@@ -67,13 +79,6 @@ typedef BlendFunc_CSCircular BRepBlend_CSCircular;
 typedef BlendFunc_ConstRadInv BRepBlend_ConstRadInv;
 typedef BlendFunc_EvolRadInv BRepBlend_EvolRadInv;
 /* end typedefs declaration */
-
-/* templates */
-%define Handle(Class) opencascade::handle<Class>
-%enddef
-%template(BRepBlend_SequenceOfLine) NCollection_Sequence <Handle(BRepBlend_Line)>;
-%template(BRepBlend_SequenceOfPointOnRst) NCollection_Sequence <BRepBlend_PointOnRst>;
-/* end templates declaration */
 
 /* public enums */
 /* end public enums declaration */

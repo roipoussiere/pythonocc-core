@@ -53,16 +53,21 @@ def register_handle(handle, base_object):
         pass
 };
 
-/* typedefs */
-typedef Storage_BaseDriver * PCDM_BaseDriverPointer;
-/* end typedefs declaration */
-
+/* templates */
 /* templates */
 %define Handle(Class) opencascade::handle<Class>
 %enddef
 %template(PCDM_SequenceOfReference) NCollection_Sequence <PCDM_Reference>;
 %template(PCDM_SequenceOfDocument) NCollection_Sequence <Handle(PCDM_Document)>;
 /* end templates declaration */
+
+/* end templates declaration */
+
+/* typedefs */
+typedef NCollection_Sequence <PCDM_Reference> PCDM_SequenceOfReference;
+typedef NCollection_Sequence <Handle_PCDM_Document> PCDM_SequenceOfDocument;
+typedef Storage_BaseDriver * PCDM_BaseDriverPointer;
+/* end typedefs declaration */
 
 /* public enums */
 enum PCDM_StoreStatus {

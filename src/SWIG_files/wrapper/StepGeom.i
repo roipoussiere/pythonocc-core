@@ -53,9 +53,7 @@ def register_handle(handle, base_object):
         pass
 };
 
-/* typedefs */
-/* end typedefs declaration */
-
+/* templates */
 /* templates */
 %define Handle(Class) opencascade::handle<Class>
 %enddef
@@ -69,6 +67,20 @@ def register_handle(handle, base_object):
 %template(StepGeom_Array1OfCompositeCurveSegment) NCollection_Array1 <Handle(StepGeom_CompositeCurveSegment)>;
 %template(StepGeom_Array2OfSurfacePatch) NCollection_Array2 <Handle(StepGeom_SurfacePatch)>;
 /* end templates declaration */
+
+/* end templates declaration */
+
+/* typedefs */
+typedef NCollection_Array1 <StepGeom_PcurveOrSurface> StepGeom_Array1OfPcurveOrSurface;
+typedef NCollection_Array1 <Handle_StepGeom_CartesianPoint> StepGeom_Array1OfCartesianPoint;
+typedef NCollection_Array1 <StepGeom_SurfaceBoundary> StepGeom_Array1OfSurfaceBoundary;
+typedef NCollection_Array2 <Handle_StepGeom_CartesianPoint> StepGeom_Array2OfCartesianPoint;
+typedef NCollection_Array1 <StepGeom_TrimmingSelect> StepGeom_Array1OfTrimmingSelect;
+typedef NCollection_Array1 <Handle_StepGeom_BoundaryCurve> StepGeom_Array1OfBoundaryCurve;
+typedef NCollection_Array1 <Handle_StepGeom_Curve> StepGeom_Array1OfCurve;
+typedef NCollection_Array1 <Handle_StepGeom_CompositeCurveSegment> StepGeom_Array1OfCompositeCurveSegment;
+typedef NCollection_Array2 <Handle_StepGeom_SurfacePatch> StepGeom_Array2OfSurfacePatch;
+/* end typedefs declaration */
 
 /* public enums */
 enum StepGeom_KnotType {

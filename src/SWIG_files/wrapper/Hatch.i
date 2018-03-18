@@ -53,15 +53,20 @@ def register_handle(handle, base_object):
         pass
 };
 
-/* typedefs */
-/* end typedefs declaration */
-
+/* templates */
 /* templates */
 %define Handle(Class) opencascade::handle<Class>
 %enddef
 %template(Hatch_SequenceOfLine) NCollection_Sequence <Hatch_Line>;
 %template(Hatch_SequenceOfParameter) NCollection_Sequence <Hatch_Parameter>;
 /* end templates declaration */
+
+/* end templates declaration */
+
+/* typedefs */
+typedef NCollection_Sequence <Hatch_Line> Hatch_SequenceOfLine;
+typedef NCollection_Sequence <Hatch_Parameter> Hatch_SequenceOfParameter;
+/* end typedefs declaration */
 
 /* public enums */
 enum Hatch_LineForm {

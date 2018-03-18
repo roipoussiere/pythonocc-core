@@ -53,17 +53,22 @@ def register_handle(handle, base_object):
         pass
 };
 
-/* typedefs */
-/* end typedefs declaration */
-
+/* templates */
 /* templates */
 %define Handle(Class) opencascade::handle<Class>
 %enddef
 %template(ShapeExtend_DataMapOfTransientListOfMsg) NCollection_DataMap <Handle(Standard_Transient) , Message_ListOfMsg , TColStd_MapTransientHasher>;
-%template(ShapeExtend_DataMapIteratorOfDataMapOfShapeListOfMsg) NCollection_TListIterator<ShapeExtend_DataMapOfShapeListOfMsg>;
-%template(ShapeExtend_DataMapIteratorOfDataMapOfTransientListOfMsg) NCollection_TListIterator<ShapeExtend_DataMapOfTransientListOfMsg>;
 %template(ShapeExtend_DataMapOfShapeListOfMsg) NCollection_DataMap <TopoDS_Shape , Message_ListOfMsg , TopTools_ShapeMapHasher>;
 /* end templates declaration */
+
+/* end templates declaration */
+
+/* typedefs */
+typedef NCollection_DataMap <Handle_Standard_Transient , Message_ListOfMsg , TColStd_MapTransientHasher> ShapeExtend_DataMapOfTransientListOfMsg;
+typedef NCollection_DataMap <TopoDS_Shape , Message_ListOfMsg , TopTools_ShapeMapHasher>::Iterator ShapeExtend_DataMapIteratorOfDataMapOfShapeListOfMsg;
+typedef NCollection_DataMap <Handle_Standard_Transient , Message_ListOfMsg , TColStd_MapTransientHasher>::Iterator ShapeExtend_DataMapIteratorOfDataMapOfTransientListOfMsg;
+typedef NCollection_DataMap <TopoDS_Shape , Message_ListOfMsg , TopTools_ShapeMapHasher> ShapeExtend_DataMapOfShapeListOfMsg;
+/* end typedefs declaration */
 
 /* public enums */
 enum ShapeExtend_Status {

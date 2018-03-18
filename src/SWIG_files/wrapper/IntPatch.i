@@ -53,10 +53,7 @@ def register_handle(handle, base_object):
         pass
 };
 
-/* typedefs */
-typedef Intf_InterferencePolygon2d IntPatch_SearchPnt;
-/* end typedefs declaration */
-
+/* templates */
 /* templates */
 %define Handle(Class) opencascade::handle<Class>
 %enddef
@@ -66,6 +63,17 @@ typedef Intf_InterferencePolygon2d IntPatch_SearchPnt;
 %template(IntPatch_SequenceOfPathPointOfTheSOnBounds) NCollection_Sequence <IntPatch_ThePathPointOfTheSOnBounds>;
 %template(IntPatch_SequenceOfIWLineOfTheIWalking) NCollection_Sequence <Handle(IntPatch_TheIWLineOfTheIWalking)>;
 /* end templates declaration */
+
+/* end templates declaration */
+
+/* typedefs */
+typedef NCollection_Sequence <IntPatch_TheSegmentOfTheSOnBounds> IntPatch_SequenceOfSegmentOfTheSOnBounds;
+typedef NCollection_Sequence <Handle_IntPatch_Line> IntPatch_SequenceOfLine;
+typedef Intf_InterferencePolygon2d IntPatch_SearchPnt;
+typedef NCollection_Sequence <IntPatch_Point> IntPatch_SequenceOfPoint;
+typedef NCollection_Sequence <IntPatch_ThePathPointOfTheSOnBounds> IntPatch_SequenceOfPathPointOfTheSOnBounds;
+typedef NCollection_Sequence <Handle_IntPatch_TheIWLineOfTheIWalking> IntPatch_SequenceOfIWLineOfTheIWalking;
+/* end typedefs declaration */
 
 /* public enums */
 enum IntPatch_SpecPntType {

@@ -53,14 +53,18 @@ def register_handle(handle, base_object):
         pass
 };
 
-/* typedefs */
-/* end typedefs declaration */
-
+/* templates */
 /* templates */
 %define Handle(Class) opencascade::handle<Class>
 %enddef
 %template(ProjLib_SequenceOfHSequenceOfPnt) NCollection_Sequence <Handle(TColgp_HSequenceOfPnt)>;
 /* end templates declaration */
+
+/* end templates declaration */
+
+/* typedefs */
+typedef NCollection_Sequence <Handle_TColgp_HSequenceOfPnt> ProjLib_SequenceOfHSequenceOfPnt;
+/* end typedefs declaration */
 
 /* public enums */
 /* end public enums declaration */

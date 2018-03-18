@@ -53,24 +53,38 @@ def register_handle(handle, base_object):
         pass
 };
 
-/* typedefs */
-/* end typedefs declaration */
-
+/* templates */
 /* templates */
 %define Handle(Class) opencascade::handle<Class>
 %enddef
 %template(ChFiDS_SecArray1) NCollection_Array1 <ChFiDS_CircSection>;
-%template(ChFiDS_ListIteratorOfListOfStripe) NCollection_TListIterator<ChFiDS_ListOfStripe>;
-%template(ChFiDS_ListIteratorOfListOfHElSpine) NCollection_TListIterator<ChFiDS_ListOfHElSpine>;
+%template(ChFiDS_ListIteratorOfListOfStripe) NCollection_TListIterator<Handle(ChFiDS_Stripe)>;
+%template(ChFiDS_ListIteratorOfListOfHElSpine) NCollection_TListIterator<Handle(ChFiDS_HElSpine)>;
 %template(ChFiDS_SequenceOfSpine) NCollection_Sequence <Handle(ChFiDS_Spine)>;
 %template(ChFiDS_Regularities) NCollection_List <ChFiDS_Regul>;
-%template(ChFiDS_ListIteratorOfRegularities) NCollection_TListIterator<ChFiDS_Regularities>;
+%template(ChFiDS_ListIteratorOfRegularities) NCollection_TListIterator<ChFiDS_Regul>;
 %template(ChFiDS_ListOfHElSpine) NCollection_List <Handle(ChFiDS_HElSpine)>;
 %template(ChFiDS_SequenceOfSurfData) NCollection_Sequence <Handle(ChFiDS_SurfData)>;
 %template(ChFiDS_IndexedDataMapOfVertexListOfStripe) NCollection_IndexedDataMap <TopoDS_Vertex , ChFiDS_ListOfStripe , TopTools_ShapeMapHasher>;
 %template(ChFiDS_StripeArray1) NCollection_Array1 <Handle(ChFiDS_Stripe)>;
 %template(ChFiDS_ListOfStripe) NCollection_List <Handle(ChFiDS_Stripe)>;
 /* end templates declaration */
+
+/* end templates declaration */
+
+/* typedefs */
+typedef NCollection_Array1 <ChFiDS_CircSection> ChFiDS_SecArray1;
+typedef NCollection_List <Handle_ChFiDS_Stripe>::Iterator ChFiDS_ListIteratorOfListOfStripe;
+typedef NCollection_List <Handle_ChFiDS_HElSpine>::Iterator ChFiDS_ListIteratorOfListOfHElSpine;
+typedef NCollection_Sequence <Handle_ChFiDS_Spine> ChFiDS_SequenceOfSpine;
+typedef NCollection_List <ChFiDS_Regul> ChFiDS_Regularities;
+typedef NCollection_List <ChFiDS_Regul>::Iterator ChFiDS_ListIteratorOfRegularities;
+typedef NCollection_List <Handle_ChFiDS_HElSpine> ChFiDS_ListOfHElSpine;
+typedef NCollection_Sequence <Handle_ChFiDS_SurfData> ChFiDS_SequenceOfSurfData;
+typedef NCollection_IndexedDataMap <TopoDS_Vertex , ChFiDS_ListOfStripe , TopTools_ShapeMapHasher> ChFiDS_IndexedDataMapOfVertexListOfStripe;
+typedef NCollection_Array1 <Handle_ChFiDS_Stripe> ChFiDS_StripeArray1;
+typedef NCollection_List <Handle_ChFiDS_Stripe> ChFiDS_ListOfStripe;
+/* end typedefs declaration */
 
 /* public enums */
 enum ChFiDS_State {

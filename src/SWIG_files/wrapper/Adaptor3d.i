@@ -53,16 +53,19 @@ def register_handle(handle, base_object):
         pass
 };
 
+/* templates */
+/* templates */
+%define Handle(Class) opencascade::handle<Class>
+%enddef
+/* end templates declaration */
+
+/* end templates declaration */
+
 /* typedefs */
 typedef Adaptor3d_Surface * Adaptor3d_SurfacePtr;
 typedef Adaptor3d_Curve * Adaptor3d_CurvePtr;
 typedef Adaptor3d_CurveOnSurface * Adaptor3d_CurveOnSurfacePtr;
 /* end typedefs declaration */
-
-/* templates */
-%define Handle(Class) opencascade::handle<Class>
-%enddef
-/* end templates declaration */
 
 /* public enums */
 /* end public enums declaration */

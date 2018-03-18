@@ -53,9 +53,7 @@ def register_handle(handle, base_object):
         pass
 };
 
-/* typedefs */
-/* end typedefs declaration */
-
+/* templates */
 /* templates */
 %define Handle(Class) opencascade::handle<Class>
 %enddef
@@ -67,6 +65,18 @@ def register_handle(handle, base_object):
 %template(StepDimTol_Array1OfToleranceZoneTarget) NCollection_Array1 <StepDimTol_ToleranceZoneTarget>;
 %template(StepDimTol_Array1OfGeometricToleranceModifier) NCollection_Array1 <StepDimTol_GeometricToleranceModifier>;
 /* end templates declaration */
+
+/* end templates declaration */
+
+/* typedefs */
+typedef NCollection_Array1 <Handle_StepDimTol_DatumReference> StepDimTol_Array1OfDatumReference;
+typedef NCollection_Array1 <StepDimTol_DatumReferenceModifier> StepDimTol_Array1OfDatumReferenceModifier;
+typedef NCollection_Array1 <Handle_StepDimTol_DatumReferenceElement> StepDimTol_Array1OfDatumReferenceElement;
+typedef NCollection_Array1 <Handle_StepDimTol_DatumReferenceCompartment> StepDimTol_Array1OfDatumReferenceCompartment;
+typedef NCollection_Array1 <StepDimTol_DatumSystemOrReference> StepDimTol_Array1OfDatumSystemOrReference;
+typedef NCollection_Array1 <StepDimTol_ToleranceZoneTarget> StepDimTol_Array1OfToleranceZoneTarget;
+typedef NCollection_Array1 <StepDimTol_GeometricToleranceModifier> StepDimTol_Array1OfGeometricToleranceModifier;
+/* end typedefs declaration */
 
 /* public enums */
 enum StepDimTol_LimitCondition {

@@ -53,17 +53,22 @@ def register_handle(handle, base_object):
         pass
 };
 
-/* typedefs */
-typedef TCollection_AsciiString XCAFDoc_PartId;
-/* end typedefs declaration */
-
+/* templates */
 /* templates */
 %define Handle(Class) opencascade::handle<Class>
 %enddef
-%template(XCAFDoc_DataMapIteratorOfDataMapOfShapeLabel) NCollection_TListIterator<XCAFDoc_DataMapOfShapeLabel>;
 %template(XCAFDoc_DataMapOfShapeLabel) NCollection_DataMap <TopoDS_Shape , TDF_Label , TopTools_ShapeMapHasher>;
 %template(XCAFDoc_GraphNodeSequence) NCollection_Sequence <Handle(XCAFDoc_GraphNode)>;
 /* end templates declaration */
+
+/* end templates declaration */
+
+/* typedefs */
+typedef NCollection_DataMap <TopoDS_Shape , TDF_Label , TopTools_ShapeMapHasher>::Iterator XCAFDoc_DataMapIteratorOfDataMapOfShapeLabel;
+typedef TCollection_AsciiString XCAFDoc_PartId;
+typedef NCollection_DataMap <TopoDS_Shape , TDF_Label , TopTools_ShapeMapHasher> XCAFDoc_DataMapOfShapeLabel;
+typedef NCollection_Sequence <Handle_XCAFDoc_GraphNode> XCAFDoc_GraphNodeSequence;
+/* end typedefs declaration */
 
 /* public enums */
 enum XCAFDoc_ColorType {

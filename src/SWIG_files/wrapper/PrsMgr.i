@@ -53,21 +53,26 @@ def register_handle(handle, base_object):
         pass
 };
 
-/* typedefs */
-typedef Handle_PrsMgr_PresentationManager Handle_PrsMgr_PresentationManager3d;
-typedef PrsMgr_Presentation PrsMgr_Presentation3d;
-typedef PrsMgr_PresentableObject * PrsMgr_PresentableObjectPointer;
-typedef PrsMgr_Presentation * PrsMgr_PresentationPointer;
-typedef Handle_PrsMgr_Presentation Handle_PrsMgr_Presentation3d;
-typedef PrsMgr_PresentationManager PrsMgr_PresentationManager3d;
-/* end typedefs declaration */
-
+/* templates */
 /* templates */
 %define Handle(Class) opencascade::handle<Class>
 %enddef
 %template(PrsMgr_Presentations) NCollection_Sequence <PrsMgr_ModedPresentation>;
 %template(PrsMgr_ListOfPresentations) NCollection_List <Handle_Prs3d_Presentation>;
 /* end templates declaration */
+
+/* end templates declaration */
+
+/* typedefs */
+typedef Handle_PrsMgr_PresentationManager Handle_PrsMgr_PresentationManager3d;
+typedef PrsMgr_Presentation PrsMgr_Presentation3d;
+typedef NCollection_Sequence <PrsMgr_ModedPresentation> PrsMgr_Presentations;
+typedef PrsMgr_PresentableObject * PrsMgr_PresentableObjectPointer;
+typedef PrsMgr_Presentation * PrsMgr_PresentationPointer;
+typedef NCollection_List <Handle_Prs3d_Presentation> PrsMgr_ListOfPresentations;
+typedef Handle_PrsMgr_Presentation Handle_PrsMgr_Presentation3d;
+typedef PrsMgr_PresentationManager PrsMgr_PresentationManager3d;
+/* end typedefs declaration */
 
 /* public enums */
 enum PrsMgr_TypeOfPresentation3d {

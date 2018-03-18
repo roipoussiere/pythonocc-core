@@ -53,17 +53,22 @@ def register_handle(handle, base_object):
         pass
 };
 
-/* typedefs */
-/* end typedefs declaration */
-
+/* templates */
 /* templates */
 %define Handle(Class) opencascade::handle<Class>
 %enddef
 %template(ShapeAnalysis_DataMapOfShapeListOfReal) NCollection_DataMap <TopoDS_Shape , TColStd_ListOfReal , TopTools_ShapeMapHasher>;
 %template(ShapeAnalysis_SequenceOfFreeBounds) NCollection_Sequence <Handle(ShapeAnalysis_FreeBoundData)>;
-%template(ShapeAnalysis_DataMapIteratorOfDataMapOfShapeListOfReal) NCollection_TListIterator<ShapeAnalysis_DataMapOfShapeListOfReal>;
-%template(ShapeAnalysis_BoxBndTree) NCollection_UBTree <Standard_Integer , Bnd_Box>;
 /* end templates declaration */
+
+/* end templates declaration */
+
+/* typedefs */
+typedef NCollection_DataMap <TopoDS_Shape , TColStd_ListOfReal , TopTools_ShapeMapHasher> ShapeAnalysis_DataMapOfShapeListOfReal;
+typedef NCollection_Sequence <Handle_ShapeAnalysis_FreeBoundData> ShapeAnalysis_SequenceOfFreeBounds;
+typedef NCollection_DataMap <TopoDS_Shape , TColStd_ListOfReal , TopTools_ShapeMapHasher>::Iterator ShapeAnalysis_DataMapIteratorOfDataMapOfShapeListOfReal;
+typedef NCollection_UBTree <Standard_Integer , Bnd_Box> ShapeAnalysis_BoxBndTree;
+/* end typedefs declaration */
 
 /* public enums */
 /* end public enums declaration */

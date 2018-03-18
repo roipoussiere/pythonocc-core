@@ -53,16 +53,20 @@ def register_handle(handle, base_object):
         pass
 };
 
-/* typedefs */
-typedef void Convert_CosAndSinEvalFunction ( Standard_Real , 	 	 	 	 	 const Standard_Integer , 	 	 	 	 	 const TColgp_Array1OfPnt2d & , 	 	 	 	 	 const TColStd_Array1OfReal & , 	 	 	 	 	 const TColStd_Array1OfInteger * , 	 	 	 	 	 Standard_Real Result [ 2 ] );
-typedef TColgp_SequenceOfArray1OfPnt2d Convert_SequenceOfArray1OfPoles2d;
-/* end typedefs declaration */
-
+/* templates */
 /* templates */
 %define Handle(Class) opencascade::handle<Class>
 %enddef
 %template(Convert_SequenceOfArray1OfPoles) NCollection_Sequence <Handle(TColgp_HArray1OfPnt)>;
 /* end templates declaration */
+
+/* end templates declaration */
+
+/* typedefs */
+typedef void Convert_CosAndSinEvalFunction ( Standard_Real , 	 	 	 	 	 const Standard_Integer , 	 	 	 	 	 const TColgp_Array1OfPnt2d & , 	 	 	 	 	 const TColStd_Array1OfReal & , 	 	 	 	 	 const TColStd_Array1OfInteger * , 	 	 	 	 	 Standard_Real Result [ 2 ] );
+typedef TColgp_SequenceOfArray1OfPnt2d Convert_SequenceOfArray1OfPoles2d;
+typedef NCollection_Sequence <Handle_TColgp_HArray1OfPnt> Convert_SequenceOfArray1OfPoles;
+/* end typedefs declaration */
 
 /* public enums */
 enum Convert_ParameterisationType {

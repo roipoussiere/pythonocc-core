@@ -53,14 +53,18 @@ def register_handle(handle, base_object):
         pass
 };
 
-/* typedefs */
-/* end typedefs declaration */
-
+/* templates */
 /* templates */
 %define Handle(Class) opencascade::handle<Class>
 %enddef
 %template(TopTrans_Array2OfOrientation) NCollection_Array2 <TopAbs_Orientation>;
 /* end templates declaration */
+
+/* end templates declaration */
+
+/* typedefs */
+typedef NCollection_Array2 <TopAbs_Orientation> TopTrans_Array2OfOrientation;
+/* end typedefs declaration */
 
 /* public enums */
 /* end public enums declaration */

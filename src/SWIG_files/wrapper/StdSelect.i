@@ -53,14 +53,18 @@ def register_handle(handle, base_object):
         pass
 };
 
-/* typedefs */
-/* end typedefs declaration */
-
+/* templates */
 /* templates */
 %define Handle(Class) opencascade::handle<Class>
 %enddef
 %template(StdSelect_IndexedDataMapOfOwnerPrs) NCollection_IndexedDataMap <Handle(SelectBasics_EntityOwner) , Handle(StdSelect_Prs) , TColStd_MapTransientHasher>;
 /* end templates declaration */
+
+/* end templates declaration */
+
+/* typedefs */
+typedef NCollection_IndexedDataMap <Handle_SelectBasics_EntityOwner , Handle_StdSelect_Prs , TColStd_MapTransientHasher> StdSelect_IndexedDataMapOfOwnerPrs;
+/* end typedefs declaration */
 
 /* public enums */
 enum StdSelect_TypeOfResult {

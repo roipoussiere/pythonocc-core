@@ -53,21 +53,32 @@ def register_handle(handle, base_object):
         pass
 };
 
-/* typedefs */
-/* end typedefs declaration */
-
+/* templates */
 /* templates */
 %define Handle(Class) opencascade::handle<Class>
 %enddef
 %define Handle_Select3D_BVHBuilder3d Handle(Select3D_BVHBuilder3d)
 %enddef
-%template(Select3D_VectorOfHPoly) NCollection_Vector <Handle(Select3D_SensitivePoly)>;
-%template(Select3D_IndexedMapOfEntity) NCollection_IndexedMap <Handle(Select3D_SensitiveEntity)>;
-%template(Select3D_EntitySequence) NCollection_Sequence <Handle(Select3D_SensitiveEntity)>;
+
+%template(Select3D_VectorOfHPoly) NCollection_Vector <Handle_Select3D_SensitivePoly>;
+%template(Select3D_IndexedMapOfEntity) NCollection_IndexedMap <Handle_Select3D_SensitiveEntity>;
+%template(Select3D_EntitySequence) NCollection_Sequence <Handle_Select3D_SensitiveEntity>;
 //%template(Select3D_BndBox3d) BVH_Box <Standard_Real , 3>;
-//%template(Select3D_Vec3) NCollection_Vec3 <Standard_Real>;
-%template(Select3D_EntitySequenceIter) NCollection_TListIterator<Select3D_EntitySequenceIter>;
+%template(Select3D_Vec3) NCollection_Vec3 <Standard_Real>;
+%template(Select3D_EntitySequenceIter) NCollection_TListIterator<Select3D_EntitySequence>;
 /* end templates declaration */
+
+/* end templates declaration */
+
+/* typedefs */
+typedef NCollection_Vector <Handle_Select3D_SensitivePoly> Select3D_VectorOfHPoly;
+typedef BVH_Builder <Standard_Real , 3> Select3D_BVHBuilder3d;
+typedef NCollection_IndexedMap <Handle_Select3D_SensitiveEntity> Select3D_IndexedMapOfEntity;
+typedef NCollection_Sequence <Handle_Select3D_SensitiveEntity> Select3D_EntitySequence;
+typedef BVH_Box <Standard_Real , 3> Select3D_BndBox3d;
+typedef NCollection_Vec3 <Standard_Real> Select3D_Vec3;
+typedef NCollection_Sequence <Handle_Select3D_SensitiveEntity>::Iterator Select3D_EntitySequenceIter;
+/* end typedefs declaration */
 
 /* public enums */
 enum Select3D_TypeOfSensitivity {

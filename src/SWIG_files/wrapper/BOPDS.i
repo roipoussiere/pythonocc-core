@@ -55,26 +55,7 @@ def register_handle(handle, base_object):
         pass
 };
 
-/* typedefs */
-typedef BOPDS_DataMapOfPaveBlockListOfPaveBlock::Iterator BOPDS_DataMapIteratorOfDataMapOfPaveBlockListOfPaveBlock;
-typedef BOPDS_IteratorSI * BOPDS_PIteratorSI;
-typedef BOPDS_DataMapOfShapeCoupleOfPaveBlocks::Iterator BOPDS_DataMapIteratorOfDataMapOfShapeCoupleOfPaveBlocks;
-typedef BOPDS_ListOfPave::Iterator BOPDS_ListIteratorOfListOfPave;
-typedef BOPDS_DataMapOfPassKeyListOfPaveBlock::Iterator BOPDS_DataMapIteratorOfDataMapOfPassKeyListOfPaveBlock;
-typedef BOPDS_MapOfPassKeyBoolean::Iterator BOPDS_MapIteratorMapOfPassKeyBoolean;
-typedef BOPDS_DS * BOPDS_PDS;
-typedef BOPDS_ListOfPassKeyBoolean::Iterator BOPDS_ListIteratorOfListOfPassKeyBoolean;
-typedef BOPDS_MapOfPassKey::Iterator BOPDS_MapIteratorMapOfPassKey;
-typedef BOPDS_Iterator * BOPDS_PIterator;
-typedef BOPDS_DataMapOfPaveBlockCommonBlock::Iterator BOPDS_DataMapIteratorOfDataMapOfPaveBlockCommonBlock;
-typedef BOPDS_ListOfPaveBlock::Iterator BOPDS_ListIteratorOfListOfPaveBlock;
-typedef BOPDS_DataMapOfPaveBlockListOfInteger::Iterator BOPDS_DataMapIteratorOfDataMapOfPaveBlockListOfInteger;
-typedef BOPDS_MapOfCommonBlock::Iterator BOPDS_MapIteratorOfMapOfCommonBlock;
-typedef BOPDS_MapOfPaveBlock::Iterator BOPDS_MapIteratorOfMapOfPaveBlock;
-typedef BOPDS_MapOfPair::Iterator BOPDS_MapIteratorOfMapOfPair;
-typedef BOPDS_MapOfPave::Iterator BOPDS_MapIteratorOfMapOfPave;
-/* end typedefs declaration */
-
+/* templates */
 /* templates */
 %define Handle(Class) opencascade::handle<Class>
 %enddef
@@ -117,6 +98,66 @@ typedef BOPDS_MapOfPave::Iterator BOPDS_MapIteratorOfMapOfPave;
 %template(BOPDS_VectorOfListOfPassKeyBoolean) BOPCol_NCVector <BOPDS_ListOfPassKeyBoolean>;
 %template(BOPDS_ListOfPassKeyBoolean) NCollection_List <BOPDS_PassKeyBoolean>;
 /* end templates declaration */
+
+/* end templates declaration */
+
+/* typedefs */
+typedef NCollection_Map <BOPDS_PassKey , BOPDS_PassKeyMapHasher> BOPDS_MapOfPassKey;
+typedef BOPCol_NCVector <BOPDS_InterfVZ> BOPDS_VectorOfInterfVZ;
+typedef NCollection_DataMap <Handle_BOPDS_PaveBlock , BOPCol_ListOfInteger , TColStd_MapTransientHasher> BOPDS_DataMapOfPaveBlockListOfInteger;
+typedef NCollection_List <BOPDS_Pave> BOPDS_ListOfPave;
+typedef BOPDS_DataMapOfPaveBlockListOfPaveBlock::Iterator BOPDS_DataMapIteratorOfDataMapOfPaveBlockListOfPaveBlock;
+typedef BOPCol_NCVector <BOPDS_InterfEZ> BOPDS_VectorOfInterfEZ;
+typedef BOPCol_NCVector <BOPDS_InterfVV> BOPDS_VectorOfInterfVV;
+typedef BOPCol_NCVector <BOPDS_InterfEE> BOPDS_VectorOfInterfEE;
+typedef BOPCol_NCVector <BOPDS_InterfEF> BOPDS_VectorOfInterfEF;
+typedef BOPDS_IteratorSI * BOPDS_PIteratorSI;
+typedef BOPCol_NCVector <BOPDS_InterfZZ> BOPDS_VectorOfInterfZZ;
+typedef BOPCol_NCVector <BOPDS_VectorOfPair> BOPDS_VectorOfVectorOfPair;
+typedef BOPCol_NCVector <BOPDS_InterfVE> BOPDS_VectorOfInterfVE;
+typedef BOPDS_DataMapOfShapeCoupleOfPaveBlocks::Iterator BOPDS_DataMapIteratorOfDataMapOfShapeCoupleOfPaveBlocks;
+typedef BOPCol_NCVector <BOPDS_InterfVF> BOPDS_VectorOfInterfVF;
+typedef NCollection_Map <BOPDS_Pair , BOPDS_PairMapHasher> BOPDS_MapOfPair;
+typedef BOPDS_ListOfPave::Iterator BOPDS_ListIteratorOfListOfPave;
+typedef BOPCol_NCVector <BOPDS_Curve> BOPDS_VectorOfCurve;
+typedef BOPCol_NCVector <BOPDS_ShapeInfo> BOPDS_VectorOfShapeInfo;
+typedef NCollection_Map <Handle_BOPDS_PaveBlock , TColStd_MapTransientHasher> BOPDS_MapOfPaveBlock;
+typedef BOPCol_NCVector <BOPDS_IndexRange> BOPDS_VectorOfIndexRange;
+typedef BOPCol_NCVector <BOPDS_InterfFF> BOPDS_VectorOfInterfFF;
+typedef NCollection_Array1 <BOPDS_Pave> BOPDS_VectorOfPave;
+typedef BOPCol_NCVector <BOPDS_InterfFZ> BOPDS_VectorOfInterfFZ;
+typedef BOPCol_NCVector <BOPDS_Pair> BOPDS_VectorOfPair;
+typedef BOPDS_DataMapOfPassKeyListOfPaveBlock::Iterator BOPDS_DataMapIteratorOfDataMapOfPassKeyListOfPaveBlock;
+typedef BOPDS_MapOfPassKeyBoolean::Iterator BOPDS_MapIteratorMapOfPassKeyBoolean;
+typedef NCollection_Map <BOPDS_PassKeyBoolean , BOPDS_PassKeyMapHasher> BOPDS_MapOfPassKeyBoolean;
+typedef BOPDS_DS * BOPDS_PDS;
+typedef BOPDS_ListOfPassKeyBoolean::Iterator BOPDS_ListIteratorOfListOfPassKeyBoolean;
+typedef BOPDS_MapOfPassKey::Iterator BOPDS_MapIteratorMapOfPassKey;
+typedef BOPDS_Iterator * BOPDS_PIterator;
+typedef BOPDS_DataMapOfPaveBlockCommonBlock::Iterator BOPDS_DataMapIteratorOfDataMapOfPaveBlockCommonBlock;
+typedef NCollection_DataMap <Standard_Integer , BOPDS_ListOfPaveBlock , TColStd_MapIntegerHasher> BOPDS_DataMapOfIntegerListOfPaveBlock;
+typedef NCollection_IndexedMap <Handle_BOPDS_PaveBlock , TColStd_MapTransientHasher> BOPDS_IndexedMapOfPaveBlock;
+typedef NCollection_DataMap <BOPDS_PassKey , BOPDS_ListOfPaveBlock , BOPDS_PassKeyMapHasher> BOPDS_DataMapOfPassKeyListOfPaveBlock;
+typedef NCollection_Map <Handle_BOPDS_CommonBlock , TColStd_MapTransientHasher> BOPDS_MapOfCommonBlock;
+typedef BOPDS_ListOfPaveBlock::Iterator BOPDS_ListIteratorOfListOfPaveBlock;
+typedef NCollection_Map <BOPDS_Pave , BOPDS_PaveMapHasher> BOPDS_MapOfPave;
+typedef NCollection_DataMap <Handle_BOPDS_PaveBlock , BOPDS_ListOfPaveBlock , TColStd_MapTransientHasher> BOPDS_DataMapOfPaveBlockListOfPaveBlock;
+typedef BOPCol_NCVector <BOPDS_ListOfPaveBlock> BOPDS_VectorOfListOfPaveBlock;
+typedef NCollection_IndexedDataMap <Handle_BOPDS_PaveBlock , BOPCol_ListOfInteger , TColStd_MapTransientHasher> BOPDS_IndexedDataMapOfPaveBlockListOfInteger;
+typedef BOPCol_NCVector <BOPDS_Point> BOPDS_VectorOfPoint;
+typedef BOPDS_DataMapOfPaveBlockListOfInteger::Iterator BOPDS_DataMapIteratorOfDataMapOfPaveBlockListOfInteger;
+typedef BOPDS_MapOfCommonBlock::Iterator BOPDS_MapIteratorOfMapOfCommonBlock;
+typedef BOPDS_MapOfPaveBlock::Iterator BOPDS_MapIteratorOfMapOfPaveBlock;
+typedef NCollection_List <Handle_BOPDS_PaveBlock> BOPDS_ListOfPaveBlock;
+typedef NCollection_DataMap <TopoDS_Shape , BOPDS_CoupleOfPaveBlocks , TopTools_ShapeMapHasher> BOPDS_DataMapOfShapeCoupleOfPaveBlocks;
+typedef NCollection_IndexedDataMap <TopoDS_Shape , BOPDS_CoupleOfPaveBlocks , TopTools_ShapeMapHasher> BOPDS_IndexedDataMapOfShapeCoupleOfPaveBlocks;
+typedef BOPCol_NCVector <BOPDS_FaceInfo> BOPDS_VectorOfFaceInfo;
+typedef BOPDS_MapOfPair::Iterator BOPDS_MapIteratorOfMapOfPair;
+typedef NCollection_IndexedDataMap <Handle_BOPDS_PaveBlock , BOPDS_ListOfPaveBlock , TColStd_MapTransientHasher> BOPDS_IndexedDataMapOfPaveBlockListOfPaveBlock;
+typedef BOPCol_NCVector <BOPDS_ListOfPassKeyBoolean> BOPDS_VectorOfListOfPassKeyBoolean;
+typedef BOPDS_MapOfPave::Iterator BOPDS_MapIteratorOfMapOfPave;
+typedef NCollection_List <BOPDS_PassKeyBoolean> BOPDS_ListOfPassKeyBoolean;
+/* end typedefs declaration */
 
 /* public enums */
 /* end public enums declaration */

@@ -53,21 +53,30 @@ def register_handle(handle, base_object):
         pass
 };
 
-/* typedefs */
-typedef Standard_Boolean ( * Interface_StaticSatisfies ) ( const Handle_TCollection_HAsciiString & val );
-/* end typedefs declaration */
-
+/* templates */
 /* templates */
 %define Handle(Class) opencascade::handle<Class>
 %enddef
 %template(Interface_Array1OfFileParameter) NCollection_Array1 <Interface_FileParameter>;
 %template(Interface_DataMapOfTransientInteger) NCollection_DataMap <Handle(Standard_Transient) , Standard_Integer , TColStd_MapTransientHasher>;
 %template(Interface_Array1OfHAsciiString) NCollection_Array1 <Handle(TCollection_HAsciiString)>;
-%template(Interface_DataMapIteratorOfDataMapOfTransientInteger) NCollection_TListIterator<Interface_DataMapOfTransientInteger>;
 %template(Interface_SequenceOfCheck) NCollection_Sequence <Handle(Interface_Check)>;
 %template(Interface_VectorOfFileParameter) NCollection_Vector <Interface_FileParameter>;
 %template(Interface_IndexedMapOfAsciiString) NCollection_IndexedMap <TCollection_AsciiString , Interface_MapAsciiStringHasher>;
 /* end templates declaration */
+
+/* end templates declaration */
+
+/* typedefs */
+typedef NCollection_Array1 <Interface_FileParameter> Interface_Array1OfFileParameter;
+typedef NCollection_DataMap <Handle_Standard_Transient , Standard_Integer , TColStd_MapTransientHasher> Interface_DataMapOfTransientInteger;
+typedef Standard_Boolean ( * Interface_StaticSatisfies ) ( const Handle_TCollection_HAsciiString & val );
+typedef NCollection_Array1 <Handle_TCollection_HAsciiString> Interface_Array1OfHAsciiString;
+typedef NCollection_DataMap <Handle_Standard_Transient , Standard_Integer , TColStd_MapTransientHasher>::Iterator Interface_DataMapIteratorOfDataMapOfTransientInteger;
+typedef NCollection_Sequence <Handle_Interface_Check> Interface_SequenceOfCheck;
+typedef NCollection_Vector <Interface_FileParameter> Interface_VectorOfFileParameter;
+typedef NCollection_IndexedMap <TCollection_AsciiString , Interface_MapAsciiStringHasher> Interface_IndexedMapOfAsciiString;
+/* end typedefs declaration */
 
 /* public enums */
 enum Interface_ParamType {

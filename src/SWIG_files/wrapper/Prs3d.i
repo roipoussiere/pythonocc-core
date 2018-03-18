@@ -55,16 +55,20 @@ def register_handle(handle, base_object):
         pass
 };
 
-/* typedefs */
-typedef Prs3d_Drawer Graphic3d_HighlightStyle;
-typedef Prs3d_NListOfSequenceOfPnt::Iterator Prs3d_NListIteratorOfListOfSequenceOfPnt;
-/* end typedefs declaration */
-
+/* templates */
 /* templates */
 %define Handle(Class) opencascade::handle<Class>
 %enddef
 %template(Prs3d_NListOfSequenceOfPnt) NCollection_List <Handle(TColgp_HSequenceOfPnt)>;
 /* end templates declaration */
+
+/* end templates declaration */
+
+/* typedefs */
+typedef Prs3d_Drawer Graphic3d_HighlightStyle;
+typedef NCollection_List <Handle_TColgp_HSequenceOfPnt> Prs3d_NListOfSequenceOfPnt;
+typedef Prs3d_NListOfSequenceOfPnt::Iterator Prs3d_NListIteratorOfListOfSequenceOfPnt;
+/* end typedefs declaration */
 
 /* public enums */
 enum Prs3d_DimensionTextVerticalPosition {

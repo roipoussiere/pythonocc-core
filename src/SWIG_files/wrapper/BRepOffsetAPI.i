@@ -53,16 +53,21 @@ def register_handle(handle, base_object):
         pass
 };
 
-/* typedefs */
-typedef BRepBuilderAPI_Sewing BRepOffsetAPI_Sewing;
-/* end typedefs declaration */
-
+/* templates */
 /* templates */
 %define Handle(Class) opencascade::handle<Class>
 %enddef
 %template(BRepOffsetAPI_SequenceOfSequenceOfShape) NCollection_Sequence <TopTools_SequenceOfShape>;
 %template(BRepOffsetAPI_SequenceOfSequenceOfReal) NCollection_Sequence <TColStd_SequenceOfReal>;
 /* end templates declaration */
+
+/* end templates declaration */
+
+/* typedefs */
+typedef BRepBuilderAPI_Sewing BRepOffsetAPI_Sewing;
+typedef NCollection_Sequence <TopTools_SequenceOfShape> BRepOffsetAPI_SequenceOfSequenceOfShape;
+typedef NCollection_Sequence <TColStd_SequenceOfReal> BRepOffsetAPI_SequenceOfSequenceOfReal;
+/* end typedefs declaration */
 
 /* public enums */
 /* end public enums declaration */

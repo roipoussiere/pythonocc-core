@@ -53,17 +53,22 @@ def register_handle(handle, base_object):
         pass
 };
 
-/* typedefs */
-/* end typedefs declaration */
-
+/* templates */
 /* templates */
 %define Handle(Class) opencascade::handle<Class>
 %enddef
 %template(Resource_DataMapOfAsciiStringAsciiString) NCollection_DataMap <TCollection_AsciiString , TCollection_AsciiString , TCollection_AsciiString>;
 %template(Resource_DataMapOfAsciiStringExtendedString) NCollection_DataMap <TCollection_AsciiString , TCollection_ExtendedString , TCollection_AsciiString>;
-%template(Resource_DataMapIteratorOfDataMapOfAsciiStringExtendedString) NCollection_TListIterator<Resource_DataMapOfAsciiStringExtendedString>;
-%template(Resource_DataMapIteratorOfDataMapOfAsciiStringAsciiString) NCollection_TListIterator<Resource_DataMapOfAsciiStringAsciiString>;
 /* end templates declaration */
+
+/* end templates declaration */
+
+/* typedefs */
+typedef NCollection_DataMap <TCollection_AsciiString , TCollection_AsciiString , TCollection_AsciiString> Resource_DataMapOfAsciiStringAsciiString;
+typedef NCollection_DataMap <TCollection_AsciiString , TCollection_ExtendedString , TCollection_AsciiString> Resource_DataMapOfAsciiStringExtendedString;
+typedef NCollection_DataMap <TCollection_AsciiString , TCollection_ExtendedString , TCollection_AsciiString>::Iterator Resource_DataMapIteratorOfDataMapOfAsciiStringExtendedString;
+typedef NCollection_DataMap <TCollection_AsciiString , TCollection_AsciiString , TCollection_AsciiString>::Iterator Resource_DataMapIteratorOfDataMapOfAsciiStringAsciiString;
+/* end typedefs declaration */
 
 /* public enums */
 enum Resource_FormatType {

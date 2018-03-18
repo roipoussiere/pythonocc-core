@@ -53,14 +53,18 @@ def register_handle(handle, base_object):
         pass
 };
 
-/* typedefs */
-/* end typedefs declaration */
-
+/* templates */
 /* templates */
 %define Handle(Class) opencascade::handle<Class>
 %enddef
 %template(Blend_SequenceOfPoint) NCollection_Sequence <Blend_Point>;
 /* end templates declaration */
+
+/* end templates declaration */
+
+/* typedefs */
+typedef NCollection_Sequence <Blend_Point> Blend_SequenceOfPoint;
+/* end typedefs declaration */
 
 /* public enums */
 enum Blend_Status {

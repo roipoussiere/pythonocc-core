@@ -53,33 +53,49 @@ def register_handle(handle, base_object):
         pass
 };
 
-/* typedefs */
-/* end typedefs declaration */
-
+/* templates */
 /* templates */
 %define Handle(Class) opencascade::handle<Class>
 %enddef
-%template(BRepFill_DataMapIteratorOfDataMapOfShapeDataMapOfShapeListOfShape) NCollection_TListIterator<BRepFill_DataMapOfShapeDataMapOfShapeListOfShape>;
 %template(BRepFill_SequenceOfEdgeFaceAndOrder) NCollection_Sequence <BRepFill_EdgeFaceAndOrder>;
-%template(BRepFill_DataMapIteratorOfDataMapOfNodeDataMapOfShapeShape) NCollection_TListIterator<BRepFill_DataMapOfNodeDataMapOfShapeShape>;
-%template(BRepFill_DataMapIteratorOfDataMapOfShapeHArray2OfShape) NCollection_TListIterator<BRepFill_DataMapOfShapeHArray2OfShape>;
 %template(BRepFill_DataMapOfOrientedShapeListOfShape) NCollection_DataMap <TopoDS_Shape , TopTools_ListOfShape , TopTools_OrientedShapeMapHasher>;
 %template(BRepFill_SequenceOfFaceAndOrder) NCollection_Sequence <BRepFill_FaceAndOrder>;
 %template(BRepFill_DataMapOfShapeSequenceOfPnt) NCollection_DataMap <TopoDS_Shape , TColgp_SequenceOfPnt , TopTools_ShapeMapHasher>;
-%template(BRepFill_DataMapIteratorOfDataMapOfShapeSequenceOfReal) NCollection_TListIterator<BRepFill_DataMapOfShapeSequenceOfReal>;
 %template(BRepFill_IndexedDataMapOfOrientedShapeListOfShape) NCollection_IndexedDataMap <TopoDS_Shape , TopTools_ListOfShape , TopTools_OrientedShapeMapHasher>;
 %template(BRepFill_DataMapOfNodeDataMapOfShapeShape) NCollection_DataMap <Handle(MAT_Node) , TopTools_DataMapOfShapeShape , TColStd_MapTransientHasher>;
 %template(BRepFill_ListOfOffsetWire) NCollection_List <BRepFill_OffsetWire>;
-%template(BRepFill_ListIteratorOfListOfOffsetWire) NCollection_TListIterator<BRepFill_ListOfOffsetWire>;
-%template(BRepFill_DataMapIteratorOfDataMapOfNodeShape) NCollection_TListIterator<BRepFill_DataMapOfNodeShape>;
+%template(BRepFill_ListIteratorOfListOfOffsetWire) NCollection_TListIterator<BRepFill_OffsetWire>;
 %template(BRepFill_DataMapOfShapeSequenceOfReal) NCollection_DataMap <TopoDS_Shape , TColStd_SequenceOfReal , TopTools_ShapeMapHasher>;
 %template(BRepFill_DataMapOfShapeDataMapOfShapeListOfShape) NCollection_DataMap <TopoDS_Shape , TopTools_DataMapOfShapeListOfShape , TopTools_ShapeMapHasher>;
 %template(BRepFill_DataMapOfNodeShape) NCollection_DataMap <Handle(MAT_Node) , TopoDS_Shape , TColStd_MapTransientHasher>;
-%template(BRepFill_DataMapIteratorOfDataMapOfShapeSequenceOfPnt) NCollection_TListIterator<BRepFill_DataMapOfShapeSequenceOfPnt>;
 %template(BRepFill_DataMapOfShapeHArray2OfShape) NCollection_DataMap <TopoDS_Shape , Handle(TopTools_HArray2OfShape) , TopTools_ShapeMapHasher>;
-%template(BRepFill_DataMapIteratorOfDataMapOfOrientedShapeListOfShape) NCollection_TListIterator<BRepFill_DataMapOfOrientedShapeListOfShape>;
 %template(BRepFill_SequenceOfSection) NCollection_Sequence <BRepFill_Section>;
 /* end templates declaration */
+
+/* end templates declaration */
+
+/* typedefs */
+typedef NCollection_DataMap <TopoDS_Shape , TopTools_DataMapOfShapeListOfShape , TopTools_ShapeMapHasher>::Iterator BRepFill_DataMapIteratorOfDataMapOfShapeDataMapOfShapeListOfShape;
+typedef NCollection_Sequence <BRepFill_EdgeFaceAndOrder> BRepFill_SequenceOfEdgeFaceAndOrder;
+typedef NCollection_DataMap <Handle_MAT_Node , TopTools_DataMapOfShapeShape , TColStd_MapTransientHasher>::Iterator BRepFill_DataMapIteratorOfDataMapOfNodeDataMapOfShapeShape;
+typedef NCollection_DataMap <TopoDS_Shape , Handle_TopTools_HArray2OfShape , TopTools_ShapeMapHasher>::Iterator BRepFill_DataMapIteratorOfDataMapOfShapeHArray2OfShape;
+typedef NCollection_DataMap <TopoDS_Shape , TopTools_ListOfShape , TopTools_OrientedShapeMapHasher> BRepFill_DataMapOfOrientedShapeListOfShape;
+typedef NCollection_Sequence <BRepFill_FaceAndOrder> BRepFill_SequenceOfFaceAndOrder;
+typedef NCollection_DataMap <TopoDS_Shape , TColgp_SequenceOfPnt , TopTools_ShapeMapHasher> BRepFill_DataMapOfShapeSequenceOfPnt;
+typedef NCollection_DataMap <TopoDS_Shape , TColStd_SequenceOfReal , TopTools_ShapeMapHasher>::Iterator BRepFill_DataMapIteratorOfDataMapOfShapeSequenceOfReal;
+typedef NCollection_IndexedDataMap <TopoDS_Shape , TopTools_ListOfShape , TopTools_OrientedShapeMapHasher> BRepFill_IndexedDataMapOfOrientedShapeListOfShape;
+typedef NCollection_DataMap <Handle_MAT_Node , TopTools_DataMapOfShapeShape , TColStd_MapTransientHasher> BRepFill_DataMapOfNodeDataMapOfShapeShape;
+typedef NCollection_List <BRepFill_OffsetWire> BRepFill_ListOfOffsetWire;
+typedef NCollection_List <BRepFill_OffsetWire>::Iterator BRepFill_ListIteratorOfListOfOffsetWire;
+typedef NCollection_DataMap <Handle_MAT_Node , TopoDS_Shape , TColStd_MapTransientHasher>::Iterator BRepFill_DataMapIteratorOfDataMapOfNodeShape;
+typedef NCollection_DataMap <TopoDS_Shape , TColStd_SequenceOfReal , TopTools_ShapeMapHasher> BRepFill_DataMapOfShapeSequenceOfReal;
+typedef NCollection_DataMap <TopoDS_Shape , TopTools_DataMapOfShapeListOfShape , TopTools_ShapeMapHasher> BRepFill_DataMapOfShapeDataMapOfShapeListOfShape;
+typedef NCollection_DataMap <Handle_MAT_Node , TopoDS_Shape , TColStd_MapTransientHasher> BRepFill_DataMapOfNodeShape;
+typedef NCollection_DataMap <TopoDS_Shape , TColgp_SequenceOfPnt , TopTools_ShapeMapHasher>::Iterator BRepFill_DataMapIteratorOfDataMapOfShapeSequenceOfPnt;
+typedef NCollection_DataMap <TopoDS_Shape , Handle_TopTools_HArray2OfShape , TopTools_ShapeMapHasher> BRepFill_DataMapOfShapeHArray2OfShape;
+typedef NCollection_DataMap <TopoDS_Shape , TopTools_ListOfShape , TopTools_OrientedShapeMapHasher>::Iterator BRepFill_DataMapIteratorOfDataMapOfOrientedShapeListOfShape;
+typedef NCollection_Sequence <BRepFill_Section> BRepFill_SequenceOfSection;
+/* end typedefs declaration */
 
 /* public enums */
 enum BRepFill_TypeOfContact {

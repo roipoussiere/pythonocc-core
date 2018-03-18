@@ -53,30 +53,45 @@ def register_handle(handle, base_object):
         pass
 };
 
-/* typedefs */
-/* end typedefs declaration */
-
+/* templates */
 /* templates */
 %define Handle(Class) opencascade::handle<Class>
 %enddef
-%template(AIS_DataMapIteratorOfDataMapOfIOStatus) NCollection_TListIterator<AIS_DataMapOfIOStatus>;
-%template(AIS_DataMapIteratorOfDataMapofIntegerListOfinteractive) NCollection_TListIterator<AIS_DataMapofIntegerListOfinteractive>;
 %template(AIS_SequenceOfDimension) NCollection_Sequence <Handle(AIS_Relation)>;
 %template(AIS_DataMapOfILC) NCollection_DataMap <Standard_Integer , Handle(AIS_LocalContext) , TColStd_MapIntegerHasher>;
-%template(AIS_ListIteratorOfListOfInteractive) NCollection_TListIterator<AIS_ListOfInteractive>;
-%template(AIS_DataMapIteratorOfDataMapOfILC) NCollection_TListIterator<AIS_DataMapOfILC>;
+%template(AIS_ListIteratorOfListOfInteractive) NCollection_TListIterator<Handle(AIS_InteractiveObject)>;
 %template(AIS_IndexedDataMapOfOwnerPrs) NCollection_IndexedDataMap <Handle(SelectMgr_EntityOwner) , Handle_Prs3d_Presentation , TColStd_MapTransientHasher>;
 %template(AIS_ListOfInteractive) NCollection_List <Handle(AIS_InteractiveObject)>;
 %template(AIS_DataMapofIntegerListOfinteractive) NCollection_DataMap <Standard_Integer , AIS_ListOfInteractive , TColStd_MapIntegerHasher>;
 %template(AIS_SequenceOfInteractive) NCollection_Sequence <Handle(AIS_InteractiveObject)>;
 %template(AIS_DataMapOfIOStatus) NCollection_DataMap <Handle(AIS_InteractiveObject) , Handle(AIS_GlobalStatus) , TColStd_MapTransientHasher>;
 %template(AIS_DataMapOfSelStat) NCollection_DataMap <Handle(SelectMgr_SelectableObject) , Handle(AIS_LocalStatus) , TColStd_MapTransientHasher>;
-%template(AIS_MapIteratorOfMapOfInteractive) NCollection_TListIterator<AIS_MapOfInteractive>;
-%template(AIS_DataMapIteratorOfDataMapOfSelStat) NCollection_TListIterator<AIS_DataMapOfSelStat>;
 %template(AIS_MapOfInteractive) NCollection_Map <Handle(AIS_InteractiveObject) , TColStd_MapTransientHasher>;
 %template(AIS_NListOfEntityOwner) NCollection_List <Handle(SelectMgr_EntityOwner)>;
 %template(AIS_DataMapOfShapeDrawer) NCollection_DataMap <TopoDS_Shape , Handle(AIS_ColoredDrawer) , TopTools_ShapeMapHasher>;
 /* end templates declaration */
+
+/* end templates declaration */
+
+/* typedefs */
+typedef NCollection_DataMap <Handle_AIS_InteractiveObject , Handle_AIS_GlobalStatus , TColStd_MapTransientHasher>::Iterator AIS_DataMapIteratorOfDataMapOfIOStatus;
+typedef NCollection_DataMap <Standard_Integer , AIS_ListOfInteractive , TColStd_MapIntegerHasher>::Iterator AIS_DataMapIteratorOfDataMapofIntegerListOfinteractive;
+typedef NCollection_Sequence <Handle_AIS_Relation> AIS_SequenceOfDimension;
+typedef NCollection_DataMap <Standard_Integer , Handle_AIS_LocalContext , TColStd_MapIntegerHasher> AIS_DataMapOfILC;
+typedef NCollection_List <Handle_AIS_InteractiveObject>::Iterator AIS_ListIteratorOfListOfInteractive;
+typedef NCollection_DataMap <Standard_Integer , Handle_AIS_LocalContext , TColStd_MapIntegerHasher>::Iterator AIS_DataMapIteratorOfDataMapOfILC;
+typedef NCollection_IndexedDataMap <Handle_SelectMgr_EntityOwner , Handle_Prs3d_Presentation , TColStd_MapTransientHasher> AIS_IndexedDataMapOfOwnerPrs;
+typedef NCollection_List <Handle_AIS_InteractiveObject> AIS_ListOfInteractive;
+typedef NCollection_DataMap <Standard_Integer , AIS_ListOfInteractive , TColStd_MapIntegerHasher> AIS_DataMapofIntegerListOfinteractive;
+typedef NCollection_Sequence <Handle_AIS_InteractiveObject> AIS_SequenceOfInteractive;
+typedef NCollection_DataMap <Handle_AIS_InteractiveObject , Handle_AIS_GlobalStatus , TColStd_MapTransientHasher> AIS_DataMapOfIOStatus;
+typedef NCollection_DataMap <Handle_SelectMgr_SelectableObject , Handle_AIS_LocalStatus , TColStd_MapTransientHasher> AIS_DataMapOfSelStat;
+typedef NCollection_Map <Handle_AIS_InteractiveObject , TColStd_MapTransientHasher>::Iterator AIS_MapIteratorOfMapOfInteractive;
+typedef NCollection_DataMap <Handle_SelectMgr_SelectableObject , Handle_AIS_LocalStatus , TColStd_MapTransientHasher>::Iterator AIS_DataMapIteratorOfDataMapOfSelStat;
+typedef NCollection_Map <Handle_AIS_InteractiveObject , TColStd_MapTransientHasher> AIS_MapOfInteractive;
+typedef NCollection_List <Handle_SelectMgr_EntityOwner> AIS_NListOfEntityOwner;
+typedef NCollection_DataMap <TopoDS_Shape , Handle_AIS_ColoredDrawer , TopTools_ShapeMapHasher> AIS_DataMapOfShapeDrawer;
+/* end typedefs declaration */
 
 /* public enums */
 enum AIS_TrihedronSelectionMode {
@@ -4417,9 +4432,7 @@ class Handle_AIS_InteractiveObject : public Handle_SelectMgr_SelectableObject {
         Handle_AIS_InteractiveObject();
         Handle_AIS_InteractiveObject(const Handle_AIS_InteractiveObject &aHandle);
         Handle_AIS_InteractiveObject(const AIS_InteractiveObject *anItem);
-        void Nullify();
-        Standard_Boolean IsNull() const;
-        static const Handle_AIS_InteractiveObject DownCast(const Handle_Standard_Transient &AnObject);
+        static const Handle_AIS_InteractiveObject DownCast(const Handle(Standard_Transient) &AnObject);
 
 };
 

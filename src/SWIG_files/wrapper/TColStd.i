@@ -53,17 +53,13 @@ def register_handle(handle, base_object):
         pass
 };
 
-/* typedefs */
-/* end typedefs declaration */
-
+/* templates */
 /* templates */
 %define Handle(Class) opencascade::handle<Class>
 %enddef
-%template(TColStd_DataMapIteratorOfDataMapOfIntegerInteger) NCollection_TListIterator<TColStd_DataMapOfIntegerInteger>;
 %template(TColStd_SequenceOfAddress) NCollection_Sequence <Standard_Address>;
 %template(TColStd_DataMapOfTransientTransient) NCollection_DataMap <Handle(Standard_Transient) , Handle(Standard_Transient) , TColStd_MapTransientHasher>;
 %template(TColStd_Array1OfCharacter) NCollection_Array1 <Standard_Character>;
-%template(TColStd_DataMapIteratorOfDataMapOfTransientTransient) NCollection_TListIterator<TColStd_DataMapOfTransientTransient>;
 %template(TColStd_Array1OfBoolean) NCollection_Array1 <Standard_Boolean>;
 %template(TColStd_DataMapOfIntegerReal) NCollection_DataMap <Standard_Integer , Standard_Real , TColStd_MapIntegerHasher>;
 %template(TColStd_MapOfTransient) NCollection_Map <Handle(Standard_Transient) , TColStd_MapTransientHasher>;
@@ -76,16 +72,14 @@ def register_handle(handle, base_object):
 %template(TColStd_IndexedDataMapOfStringString) NCollection_IndexedDataMap <TCollection_AsciiString , TCollection_AsciiString , TCollection_AsciiString>;
 %template(TColStd_ListOfAsciiString) NCollection_List <TCollection_AsciiString>;
 %template(TColStd_MapTransientHasher) NCollection_DefaultHasher <Handle(Standard_Transient)>;
-%template(TColStd_DataMapIteratorOfDataMapOfStringInteger) NCollection_TListIterator<TColStd_DataMapOfStringInteger>;
 %template(TColStd_DataMapOfIntegerListOfInteger) NCollection_DataMap <Standard_Integer , TColStd_ListOfInteger , TColStd_MapIntegerHasher>;
-%template(TColStd_ListIteratorOfListOfInteger) NCollection_TListIterator<TColStd_ListOfInteger>;
+%template(TColStd_ListIteratorOfListOfInteger) NCollection_TListIterator<Standard_Integer>;
 %template(TColStd_Array2OfCharacter) NCollection_Array2 <Standard_Character>;
 %template(TColStd_SequenceOfBoolean) NCollection_Sequence <Standard_Boolean>;
 %template(TColStd_MapOfInteger) NCollection_Map <Standard_Integer , TColStd_MapIntegerHasher>;
 %template(TColStd_Array2OfBoolean) NCollection_Array2 <Standard_Boolean>;
 %template(TColStd_SequenceOfExtendedString) NCollection_Sequence <TCollection_ExtendedString>;
-%template(TColStd_ListIteratorOfListOfAsciiString) NCollection_TListIterator<TColStd_ListOfAsciiString>;
-%template(TColStd_DataMapIteratorOfDataMapOfAsciiStringInteger) NCollection_TListIterator<TColStd_DataMapOfAsciiStringInteger>;
+%template(TColStd_ListIteratorOfListOfAsciiString) NCollection_TListIterator<TCollection_AsciiString>;
 %template(TColStd_MapRealHasher) NCollection_DefaultHasher <Standard_Real>;
 %template(TColStd_SequenceOfHExtendedString) NCollection_Sequence <Handle(TCollection_HExtendedString)>;
 %template(TColStd_Array2OfReal) NCollection_Array2 <Standard_Real>;
@@ -93,21 +87,17 @@ def register_handle(handle, base_object):
 %template(TColStd_SequenceOfAsciiString) NCollection_Sequence <TCollection_AsciiString>;
 %template(TColStd_ListOfInteger) NCollection_List <Standard_Integer>;
 %template(TColStd_ListOfReal) NCollection_List <Standard_Real>;
-%template(TColStd_ListIteratorOfListOfReal) NCollection_TListIterator<TColStd_ListOfReal>;
-%template(TColStd_MapIteratorOfMapOfAsciiString) NCollection_TListIterator<TColStd_MapOfAsciiString>;
-%template(TColStd_ListIteratorOfListOfTransient) NCollection_TListIterator<TColStd_ListOfTransient>;
+%template(TColStd_ListIteratorOfListOfReal) NCollection_TListIterator<Standard_Real>;
+%template(TColStd_ListIteratorOfListOfTransient) NCollection_TListIterator<Handle(Standard_Transient)>;
 %template(TColStd_MapIntegerHasher) NCollection_DefaultHasher <Standard_Integer>;
-%template(TColStd_MapIteratorOfMapOfReal) NCollection_TListIterator<TColStd_MapOfReal>;
 %template(TColStd_Array1OfListOfInteger) NCollection_Array1 <TColStd_ListOfInteger>;
 %template(TColStd_ListOfTransient) NCollection_List <Handle(Standard_Transient)>;
-%template(TColStd_DataMapIteratorOfDataMapOfIntegerListOfInteger) NCollection_TListIterator<TColStd_DataMapOfIntegerListOfInteger>;
 %template(TColStd_MapOfAsciiString) NCollection_Map <TCollection_AsciiString , TCollection_AsciiString>;
 %template(TColStd_DataMapOfAsciiStringInteger) NCollection_DataMap <TCollection_AsciiString , Standard_Integer , TCollection_AsciiString>;
 %template(TColStd_DataMapOfStringInteger) NCollection_DataMap <TCollection_ExtendedString , Standard_Integer , TCollection_ExtendedString>;
 %template(TColStd_IndexedDataMapOfTransientTransient) NCollection_IndexedDataMap <Handle(Standard_Transient) , Handle(Standard_Transient) , TColStd_MapTransientHasher>;
 %template(TColStd_Array1OfExtendedString) NCollection_Array1 <TCollection_ExtendedString>;
 %template(TColStd_Array1OfTransient) NCollection_Array1 <Handle(Standard_Transient)>;
-%template(TColStd_DataMapIteratorOfDataMapOfIntegerTransient) NCollection_TListIterator<TColStd_DataMapOfIntegerTransient>;
 %template(TColStd_SequenceOfHAsciiString) NCollection_Sequence <Handle(TCollection_HAsciiString)>;
 %template(TColStd_IndexedMapOfInteger) NCollection_IndexedMap <Standard_Integer , TColStd_MapIntegerHasher>;
 %template(TColStd_Array1OfInteger) NCollection_Array1 <Standard_Integer>;
@@ -115,12 +105,75 @@ def register_handle(handle, base_object):
 %template(TColStd_Array2OfTransient) NCollection_Array2 <Handle(Standard_Transient)>;
 %template(TColStd_DataMapOfIntegerTransient) NCollection_DataMap <Standard_Integer , Handle(Standard_Transient) , TColStd_MapIntegerHasher>;
 %template(TColStd_Array1OfReal) NCollection_Array1 <Standard_Real>;
-%template(TColStd_MapIteratorOfMapOfTransient) NCollection_TListIterator<TColStd_MapOfTransient>;
 %template(TColStd_MapOfReal) NCollection_Map <Standard_Real , TColStd_MapRealHasher>;
 %template(TColStd_SequenceOfInteger) NCollection_Sequence <Standard_Integer>;
-%template(TColStd_MapIteratorOfMapOfInteger) NCollection_TListIterator<TColStd_MapOfInteger>;
-%template(TColStd_DataMapIteratorOfDataMapOfIntegerReal) NCollection_TListIterator<TColStd_DataMapOfIntegerReal>;
 /* end templates declaration */
+
+/* end templates declaration */
+
+/* typedefs */
+typedef NCollection_DataMap <Standard_Integer , Standard_Integer , TColStd_MapIntegerHasher>::Iterator TColStd_DataMapIteratorOfDataMapOfIntegerInteger;
+typedef NCollection_Sequence <Standard_Address> TColStd_SequenceOfAddress;
+typedef NCollection_DataMap <Handle_Standard_Transient , Handle_Standard_Transient , TColStd_MapTransientHasher> TColStd_DataMapOfTransientTransient;
+typedef NCollection_Array1 <Standard_Character> TColStd_Array1OfCharacter;
+typedef NCollection_DataMap <Handle_Standard_Transient , Handle_Standard_Transient , TColStd_MapTransientHasher>::Iterator TColStd_DataMapIteratorOfDataMapOfTransientTransient;
+typedef NCollection_Array1 <Standard_Boolean> TColStd_Array1OfBoolean;
+typedef NCollection_DataMap <Standard_Integer , Standard_Real , TColStd_MapIntegerHasher> TColStd_DataMapOfIntegerReal;
+typedef NCollection_Map <Handle_Standard_Transient , TColStd_MapTransientHasher> TColStd_MapOfTransient;
+typedef NCollection_Array2 <Standard_Integer> TColStd_Array2OfInteger;
+typedef NCollection_DataMap <Standard_Integer , Standard_Integer , TColStd_MapIntegerHasher> TColStd_DataMapOfIntegerInteger;
+typedef NCollection_Array1 <TCollection_AsciiString> TColStd_Array1OfAsciiString;
+typedef NCollection_IndexedMap <Standard_Real , TColStd_MapRealHasher> TColStd_IndexedMapOfReal;
+typedef NCollection_Array1 <Standard_Byte> TColStd_Array1OfByte;
+typedef NCollection_IndexedMap <Handle_Standard_Transient , TColStd_MapTransientHasher> TColStd_IndexedMapOfTransient;
+typedef NCollection_IndexedDataMap <TCollection_AsciiString , TCollection_AsciiString , TCollection_AsciiString> TColStd_IndexedDataMapOfStringString;
+typedef NCollection_List <TCollection_AsciiString> TColStd_ListOfAsciiString;
+typedef NCollection_DefaultHasher <Handle_Standard_Transient> TColStd_MapTransientHasher;
+typedef NCollection_DataMap <TCollection_ExtendedString , Standard_Integer , TCollection_ExtendedString>::Iterator TColStd_DataMapIteratorOfDataMapOfStringInteger;
+typedef NCollection_DataMap <Standard_Integer , TColStd_ListOfInteger , TColStd_MapIntegerHasher> TColStd_DataMapOfIntegerListOfInteger;
+typedef NCollection_List <Standard_Integer>::Iterator TColStd_ListIteratorOfListOfInteger;
+typedef NCollection_Array2 <Standard_Character> TColStd_Array2OfCharacter;
+typedef NCollection_Sequence <Standard_Boolean> TColStd_SequenceOfBoolean;
+typedef NCollection_Map <Standard_Integer , TColStd_MapIntegerHasher> TColStd_MapOfInteger;
+typedef NCollection_Array2 <Standard_Boolean> TColStd_Array2OfBoolean;
+typedef NCollection_Sequence <TCollection_ExtendedString> TColStd_SequenceOfExtendedString;
+typedef NCollection_List <TCollection_AsciiString>::Iterator TColStd_ListIteratorOfListOfAsciiString;
+typedef NCollection_DataMap <TCollection_AsciiString , Standard_Integer , TCollection_AsciiString>::Iterator TColStd_DataMapIteratorOfDataMapOfAsciiStringInteger;
+typedef NCollection_DefaultHasher <Standard_Real> TColStd_MapRealHasher;
+typedef NCollection_Sequence <Handle_TCollection_HExtendedString> TColStd_SequenceOfHExtendedString;
+typedef NCollection_Array2 <Standard_Real> TColStd_Array2OfReal;
+typedef NCollection_Sequence <Standard_Real> TColStd_SequenceOfReal;
+typedef NCollection_Sequence <TCollection_AsciiString> TColStd_SequenceOfAsciiString;
+typedef NCollection_List <Standard_Integer> TColStd_ListOfInteger;
+typedef NCollection_List <Standard_Real> TColStd_ListOfReal;
+typedef NCollection_List <Standard_Real>::Iterator TColStd_ListIteratorOfListOfReal;
+typedef NCollection_Map <TCollection_AsciiString , TCollection_AsciiString>::Iterator TColStd_MapIteratorOfMapOfAsciiString;
+typedef NCollection_List <Handle_Standard_Transient>::Iterator TColStd_ListIteratorOfListOfTransient;
+typedef NCollection_DefaultHasher <Standard_Integer> TColStd_MapIntegerHasher;
+typedef NCollection_Map <Standard_Real , TColStd_MapRealHasher>::Iterator TColStd_MapIteratorOfMapOfReal;
+typedef NCollection_Array1 <TColStd_ListOfInteger> TColStd_Array1OfListOfInteger;
+typedef NCollection_List <Handle_Standard_Transient> TColStd_ListOfTransient;
+typedef NCollection_DataMap <Standard_Integer , TColStd_ListOfInteger , TColStd_MapIntegerHasher>::Iterator TColStd_DataMapIteratorOfDataMapOfIntegerListOfInteger;
+typedef NCollection_Map <TCollection_AsciiString , TCollection_AsciiString> TColStd_MapOfAsciiString;
+typedef NCollection_DataMap <TCollection_AsciiString , Standard_Integer , TCollection_AsciiString> TColStd_DataMapOfAsciiStringInteger;
+typedef NCollection_DataMap <TCollection_ExtendedString , Standard_Integer , TCollection_ExtendedString> TColStd_DataMapOfStringInteger;
+typedef NCollection_IndexedDataMap <Handle_Standard_Transient , Handle_Standard_Transient , TColStd_MapTransientHasher> TColStd_IndexedDataMapOfTransientTransient;
+typedef NCollection_Array1 <TCollection_ExtendedString> TColStd_Array1OfExtendedString;
+typedef NCollection_Array1 <Handle_Standard_Transient> TColStd_Array1OfTransient;
+typedef NCollection_DataMap <Standard_Integer , Handle_Standard_Transient , TColStd_MapIntegerHasher>::Iterator TColStd_DataMapIteratorOfDataMapOfIntegerTransient;
+typedef NCollection_Sequence <Handle_TCollection_HAsciiString> TColStd_SequenceOfHAsciiString;
+typedef NCollection_IndexedMap <Standard_Integer , TColStd_MapIntegerHasher> TColStd_IndexedMapOfInteger;
+typedef NCollection_Array1 <Standard_Integer> TColStd_Array1OfInteger;
+typedef NCollection_Sequence <Handle_Standard_Transient> TColStd_SequenceOfTransient;
+typedef NCollection_Array2 <Handle_Standard_Transient> TColStd_Array2OfTransient;
+typedef NCollection_DataMap <Standard_Integer , Handle_Standard_Transient , TColStd_MapIntegerHasher> TColStd_DataMapOfIntegerTransient;
+typedef NCollection_Array1 <Standard_Real> TColStd_Array1OfReal;
+typedef NCollection_Map <Handle_Standard_Transient , TColStd_MapTransientHasher>::Iterator TColStd_MapIteratorOfMapOfTransient;
+typedef NCollection_Map <Standard_Real , TColStd_MapRealHasher> TColStd_MapOfReal;
+typedef NCollection_Sequence <Standard_Integer> TColStd_SequenceOfInteger;
+typedef NCollection_Map <Standard_Integer , TColStd_MapIntegerHasher>::Iterator TColStd_MapIteratorOfMapOfInteger;
+typedef NCollection_DataMap <Standard_Integer , Standard_Real , TColStd_MapIntegerHasher>::Iterator TColStd_DataMapIteratorOfDataMapOfIntegerReal;
+/* end typedefs declaration */
 
 /* public enums */
 /* end public enums declaration */

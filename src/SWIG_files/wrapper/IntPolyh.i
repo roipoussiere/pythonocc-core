@@ -53,17 +53,22 @@ def register_handle(handle, base_object):
         pass
 };
 
-/* typedefs */
-typedef IntPolyh_MaillageAffinage * IntPolyh_PMaillageAffinage;
-typedef IntPolyh_ListOfCouples::Iterator IntPolyh_ListIteratorOfListOfCouples;
-/* end typedefs declaration */
-
+/* templates */
 /* templates */
 %define Handle(Class) opencascade::handle<Class>
 %enddef
 %template(IntPolyh_SeqOfStartPoints) NCollection_Sequence <IntPolyh_StartPoint>;
 %template(IntPolyh_ListOfCouples) NCollection_List <IntPolyh_Couple>;
 /* end templates declaration */
+
+/* end templates declaration */
+
+/* typedefs */
+typedef NCollection_Sequence <IntPolyh_StartPoint> IntPolyh_SeqOfStartPoints;
+typedef IntPolyh_MaillageAffinage * IntPolyh_PMaillageAffinage;
+typedef IntPolyh_ListOfCouples::Iterator IntPolyh_ListIteratorOfListOfCouples;
+typedef NCollection_List <IntPolyh_Couple> IntPolyh_ListOfCouples;
+/* end typedefs declaration */
 
 /* public enums */
 /* end public enums declaration */

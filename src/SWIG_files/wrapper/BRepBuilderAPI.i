@@ -53,15 +53,19 @@ def register_handle(handle, base_object):
         pass
 };
 
-/* typedefs */
-/* end typedefs declaration */
-
+/* templates */
 /* templates */
 %define Handle(Class) opencascade::handle<Class>
 %enddef
 %template(VectorOfPoint) NCollection_Vector <gp_XYZ>;
-%template(BRepBuilderAPI_BndBoxTree) NCollection_UBTree <Standard_Integer , Bnd_Box>;
 /* end templates declaration */
+
+/* end templates declaration */
+
+/* typedefs */
+typedef NCollection_Vector <gp_XYZ> VectorOfPoint;
+typedef NCollection_UBTree <Standard_Integer , Bnd_Box> BRepBuilderAPI_BndBoxTree;
+/* end typedefs declaration */
 
 /* public enums */
 enum BRepBuilderAPI_ShapeModification {

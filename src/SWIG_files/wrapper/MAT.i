@@ -53,23 +53,32 @@ def register_handle(handle, base_object):
         pass
 };
 
-/* typedefs */
-/* end typedefs declaration */
-
+/* templates */
 /* templates */
 %define Handle(Class) opencascade::handle<Class>
 %enddef
 %template(MAT_DataMapOfIntegerNode) NCollection_DataMap <Standard_Integer , Handle(MAT_Node) , TColStd_MapIntegerHasher>;
 %template(MAT_DataMapOfIntegerArc) NCollection_DataMap <Standard_Integer , Handle(MAT_Arc) , TColStd_MapIntegerHasher>;
-%template(MAT_DataMapIteratorOfDataMapOfIntegerNode) NCollection_TListIterator<MAT_DataMapOfIntegerNode>;
 %template(MAT_DataMapOfIntegerBisector) NCollection_DataMap <Standard_Integer , Handle(MAT_Bisector) , TColStd_MapIntegerHasher>;
-%template(MAT_DataMapIteratorOfDataMapOfIntegerArc) NCollection_TListIterator<MAT_DataMapOfIntegerArc>;
 %template(MAT_SequenceOfBasicElt) NCollection_Sequence <Handle(MAT_BasicElt)>;
-%template(MAT_DataMapIteratorOfDataMapOfIntegerBasicElt) NCollection_TListIterator<MAT_DataMapOfIntegerBasicElt>;
-%template(MAT_DataMapIteratorOfDataMapOfIntegerBisector) NCollection_TListIterator<MAT_DataMapOfIntegerBisector>;
 %template(MAT_SequenceOfArc) NCollection_Sequence <Handle(MAT_Arc)>;
 %template(MAT_DataMapOfIntegerBasicElt) NCollection_DataMap <Standard_Integer , Handle(MAT_BasicElt) , TColStd_MapIntegerHasher>;
 /* end templates declaration */
+
+/* end templates declaration */
+
+/* typedefs */
+typedef NCollection_DataMap <Standard_Integer , Handle_MAT_Node , TColStd_MapIntegerHasher> MAT_DataMapOfIntegerNode;
+typedef NCollection_DataMap <Standard_Integer , Handle_MAT_Arc , TColStd_MapIntegerHasher> MAT_DataMapOfIntegerArc;
+typedef NCollection_DataMap <Standard_Integer , Handle_MAT_Node , TColStd_MapIntegerHasher>::Iterator MAT_DataMapIteratorOfDataMapOfIntegerNode;
+typedef NCollection_DataMap <Standard_Integer , Handle_MAT_Bisector , TColStd_MapIntegerHasher> MAT_DataMapOfIntegerBisector;
+typedef NCollection_DataMap <Standard_Integer , Handle_MAT_Arc , TColStd_MapIntegerHasher>::Iterator MAT_DataMapIteratorOfDataMapOfIntegerArc;
+typedef NCollection_Sequence <Handle_MAT_BasicElt> MAT_SequenceOfBasicElt;
+typedef NCollection_DataMap <Standard_Integer , Handle_MAT_BasicElt , TColStd_MapIntegerHasher>::Iterator MAT_DataMapIteratorOfDataMapOfIntegerBasicElt;
+typedef NCollection_DataMap <Standard_Integer , Handle_MAT_Bisector , TColStd_MapIntegerHasher>::Iterator MAT_DataMapIteratorOfDataMapOfIntegerBisector;
+typedef NCollection_Sequence <Handle_MAT_Arc> MAT_SequenceOfArc;
+typedef NCollection_DataMap <Standard_Integer , Handle_MAT_BasicElt , TColStd_MapIntegerHasher> MAT_DataMapOfIntegerBasicElt;
+/* end typedefs declaration */
 
 /* public enums */
 enum MAT_Side {

@@ -53,14 +53,17 @@ def register_handle(handle, base_object):
         pass
 };
 
-/* typedefs */
-typedef Standard_Real ( * CPnts_RealFunction ) ( const Standard_Real , 	 	 	 	 	 const Standard_Address );
-/* end typedefs declaration */
-
+/* templates */
 /* templates */
 %define Handle(Class) opencascade::handle<Class>
 %enddef
 /* end templates declaration */
+
+/* end templates declaration */
+
+/* typedefs */
+typedef Standard_Real ( * CPnts_RealFunction ) ( const Standard_Real , 	 	 	 	 	 const Standard_Address );
+/* end typedefs declaration */
 
 /* public enums */
 /* end public enums declaration */

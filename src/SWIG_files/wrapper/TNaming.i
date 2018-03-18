@@ -53,33 +53,48 @@ def register_handle(handle, base_object):
         pass
 };
 
-/* typedefs */
-typedef TNaming_Node * TNaming_PtrNode;
-typedef TNaming_RefShape * TNaming_PtrRefShape;
-typedef TNaming_MapOfShape::Iterator TNaming_MapIteratorOfMapOfShape;
-typedef TNaming_DataMapOfShapeMapOfShape::Iterator TNaming_DataMapIteratorOfDataMapOfShapeMapOfShape;
-typedef TNaming_NamedShape * TNaming_PtrAttribute;
-/* end typedefs declaration */
-
+/* templates */
 /* templates */
 %define Handle(Class) opencascade::handle<Class>
 %enddef
-%template(TNaming_DataMapIteratorOfDataMapOfShapePtrRefShape) NCollection_TListIterator<TNaming_DataMapOfShapePtrRefShape>;
 %template(TNaming_ListOfNamedShape) NCollection_List <Handle(TNaming_NamedShape)>;
-%template(TNaming_MapIteratorOfMapOfNamedShape) NCollection_TListIterator<TNaming_MapOfNamedShape>;
-%template(TNaming_ListIteratorOfListOfIndexedDataMapOfShapeListOfShape) NCollection_TListIterator<TNaming_ListOfIndexedDataMapOfShapeListOfShape>;
+%template(TNaming_ListIteratorOfListOfIndexedDataMapOfShapeListOfShape) NCollection_TListIterator<TopTools_IndexedDataMapOfShapeListOfShape>;
 %template(TNaming_MapOfShape) NCollection_Map <TopoDS_Shape>;
 %template(TNaming_NamedShapeHasher) NCollection_DefaultHasher <Handle(TNaming_NamedShape)>;
 %template(TNaming_DataMapOfShapePtrRefShape) NCollection_DataMap <TopoDS_Shape , TNaming_PtrRefShape , TopTools_ShapeMapHasher>;
 %template(TNaming_ListOfIndexedDataMapOfShapeListOfShape) NCollection_List <TopTools_IndexedDataMapOfShapeListOfShape>;
-%template(TNaming_ListIteratorOfListOfMapOfShape) NCollection_TListIterator<TNaming_ListOfMapOfShape>;
+%template(TNaming_ListIteratorOfListOfMapOfShape) NCollection_TListIterator<TopTools_MapOfShape>;
 %template(TNaming_DataMapOfShapeShapesSet) NCollection_DataMap <TopoDS_Shape , TNaming_ShapesSet , TopTools_ShapeMapHasher>;
 %template(TNaming_MapOfNamedShape) NCollection_Map <Handle(TNaming_NamedShape) , TNaming_NamedShapeHasher>;
 %template(TNaming_ListOfMapOfShape) NCollection_List <TopTools_MapOfShape>;
-%template(TNaming_DataMapIteratorOfDataMapOfShapeShapesSet) NCollection_TListIterator<TNaming_DataMapOfShapeShapesSet>;
 %template(TNaming_DataMapOfShapeMapOfShape) NCollection_DataMap <TopoDS_Shape , TNaming_MapOfShape>;
-%template(TNaming_ListIteratorOfListOfNamedShape) NCollection_TListIterator<TNaming_ListOfNamedShape>;
+%template(TNaming_ListIteratorOfListOfNamedShape) NCollection_TListIterator<Handle(TNaming_NamedShape)>;
 /* end templates declaration */
+
+/* end templates declaration */
+
+/* typedefs */
+typedef TNaming_Node * TNaming_PtrNode;
+typedef TNaming_RefShape * TNaming_PtrRefShape;
+typedef TNaming_MapOfShape::Iterator TNaming_MapIteratorOfMapOfShape;
+typedef NCollection_DataMap <TopoDS_Shape , TNaming_PtrRefShape , TopTools_ShapeMapHasher>::Iterator TNaming_DataMapIteratorOfDataMapOfShapePtrRefShape;
+typedef NCollection_List <Handle_TNaming_NamedShape> TNaming_ListOfNamedShape;
+typedef NCollection_Map <Handle_TNaming_NamedShape , TNaming_NamedShapeHasher>::Iterator TNaming_MapIteratorOfMapOfNamedShape;
+typedef NCollection_List <TopTools_IndexedDataMapOfShapeListOfShape>::Iterator TNaming_ListIteratorOfListOfIndexedDataMapOfShapeListOfShape;
+typedef TNaming_DataMapOfShapeMapOfShape::Iterator TNaming_DataMapIteratorOfDataMapOfShapeMapOfShape;
+typedef NCollection_Map <TopoDS_Shape> TNaming_MapOfShape;
+typedef TNaming_NamedShape * TNaming_PtrAttribute;
+typedef NCollection_DefaultHasher <Handle_TNaming_NamedShape> TNaming_NamedShapeHasher;
+typedef NCollection_DataMap <TopoDS_Shape , TNaming_PtrRefShape , TopTools_ShapeMapHasher> TNaming_DataMapOfShapePtrRefShape;
+typedef NCollection_List <TopTools_IndexedDataMapOfShapeListOfShape> TNaming_ListOfIndexedDataMapOfShapeListOfShape;
+typedef NCollection_List <TopTools_MapOfShape>::Iterator TNaming_ListIteratorOfListOfMapOfShape;
+typedef NCollection_DataMap <TopoDS_Shape , TNaming_ShapesSet , TopTools_ShapeMapHasher> TNaming_DataMapOfShapeShapesSet;
+typedef NCollection_Map <Handle_TNaming_NamedShape , TNaming_NamedShapeHasher> TNaming_MapOfNamedShape;
+typedef NCollection_List <TopTools_MapOfShape> TNaming_ListOfMapOfShape;
+typedef NCollection_DataMap <TopoDS_Shape , TNaming_ShapesSet , TopTools_ShapeMapHasher>::Iterator TNaming_DataMapIteratorOfDataMapOfShapeShapesSet;
+typedef NCollection_DataMap <TopoDS_Shape , TNaming_MapOfShape> TNaming_DataMapOfShapeMapOfShape;
+typedef NCollection_List <Handle_TNaming_NamedShape>::Iterator TNaming_ListIteratorOfListOfNamedShape;
+/* end typedefs declaration */
 
 /* public enums */
 enum TNaming_Evolution {

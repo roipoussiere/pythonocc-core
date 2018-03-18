@@ -53,20 +53,29 @@ def register_handle(handle, base_object):
         pass
 };
 
-/* typedefs */
-typedef Handle_NCollection_BaseAllocator IntSurf_Allocator;
-/* end typedefs declaration */
-
+/* templates */
 /* templates */
 %define Handle(Class) opencascade::handle<Class>
 %enddef
 %template(IntSurf_SequenceOfCouple) NCollection_Sequence <IntSurf_Couple>;
-%template(IntSurf_ListIteratorOfListOfPntOn2S) NCollection_TListIterator<IntSurf_ListOfPntOn2S>;
+%template(IntSurf_ListIteratorOfListOfPntOn2S) NCollection_TListIterator<IntSurf_PntOn2S>;
 %template(IntSurf_SequenceOfPathPoint) NCollection_Sequence <IntSurf_PathPoint>;
 %template(IntSurf_SequenceOfInteriorPoint) NCollection_Sequence <IntSurf_InteriorPoint>;
 %template(IntSurf_SequenceOfPntOn2S) NCollection_Sequence <IntSurf_PntOn2S>;
 %template(IntSurf_ListOfPntOn2S) NCollection_List <IntSurf_PntOn2S>;
 /* end templates declaration */
+
+/* end templates declaration */
+
+/* typedefs */
+typedef NCollection_Sequence <IntSurf_Couple> IntSurf_SequenceOfCouple;
+typedef NCollection_List <IntSurf_PntOn2S>::Iterator IntSurf_ListIteratorOfListOfPntOn2S;
+typedef NCollection_Sequence <IntSurf_PathPoint> IntSurf_SequenceOfPathPoint;
+typedef NCollection_Sequence <IntSurf_InteriorPoint> IntSurf_SequenceOfInteriorPoint;
+typedef NCollection_Sequence <IntSurf_PntOn2S> IntSurf_SequenceOfPntOn2S;
+typedef NCollection_List <IntSurf_PntOn2S> IntSurf_ListOfPntOn2S;
+typedef Handle_NCollection_BaseAllocator IntSurf_Allocator;
+/* end typedefs declaration */
 
 /* public enums */
 enum IntSurf_Situation {

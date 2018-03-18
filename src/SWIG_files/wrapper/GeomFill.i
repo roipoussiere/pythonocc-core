@@ -53,9 +53,7 @@ def register_handle(handle, base_object):
         pass
 };
 
-/* typedefs */
-/* end typedefs declaration */
-
+/* templates */
 /* templates */
 %define Handle(Class) opencascade::handle<Class>
 %enddef
@@ -64,6 +62,15 @@ def register_handle(handle, base_object):
 %template(GeomFill_SequenceOfTrsf) NCollection_Sequence <gp_Trsf>;
 %template(GeomFill_Array1OfSectionLaw) NCollection_Array1 <Handle(GeomFill_SectionLaw)>;
 /* end templates declaration */
+
+/* end templates declaration */
+
+/* typedefs */
+typedef NCollection_Array1 <Handle_GeomFill_LocationLaw> GeomFill_Array1OfLocationLaw;
+typedef NCollection_Sequence <gp_Ax2> GeomFill_SequenceOfAx2;
+typedef NCollection_Sequence <gp_Trsf> GeomFill_SequenceOfTrsf;
+typedef NCollection_Array1 <Handle_GeomFill_SectionLaw> GeomFill_Array1OfSectionLaw;
+/* end typedefs declaration */
 
 /* public enums */
 enum GeomFill_ApproxStyle {

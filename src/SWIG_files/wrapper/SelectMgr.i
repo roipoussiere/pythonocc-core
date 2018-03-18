@@ -53,10 +53,7 @@ def register_handle(handle, base_object):
         pass
 };
 
-/* typedefs */
-typedef SelectMgr_SelectableObject * SelectMgr_SOPtr;
-/* end typedefs declaration */
-
+/* templates */
 /* templates */
 %define Handle(Class) opencascade::handle<Class>
 %enddef
@@ -67,7 +64,7 @@ typedef SelectMgr_SelectableObject * SelectMgr_SOPtr;
 %define Handle_Graphic3d_NMapOfTransient Handle(Graphic3d_NMapOfTransient)
 %enddef 
 
-%template(SelectMgr_ListIteratorOfListOfFilter) NCollection_TListIterator<SelectMgr_ListOfFilter>;
+%template(SelectMgr_ListIteratorOfListOfFilter) NCollection_TListIterator<Handle(SelectMgr_Filter)>;
 %template(SelectMgr_DataMapOfObjectSelectors) NCollection_DataMap <Handle(SelectMgr_SelectableObject) , SelectMgr_SequenceOfSelector , TColStd_MapTransientHasher>;
 %template(SelectMgr_Mat4) NCollection_Mat4 <Standard_Real>;
 %template(SelectMgr_TriangFrustums) NCollection_List <Handle(SelectMgr_TriangularFrustum)>;
@@ -78,14 +75,37 @@ typedef SelectMgr_SelectableObject * SelectMgr_SOPtr;
 %template(SelectMgr_SequenceOfSelection) NCollection_Sequence <Handle(SelectMgr_Selection)>;
 %template(SelectMgr_IndexedDataMapOfOwnerCriterion) NCollection_IndexedDataMap <Handle(SelectBasics_EntityOwner) , SelectMgr_SortCriterion , TColStd_MapTransientHasher>;
 %template(SelectMgr_Vec3) NCollection_Vec3 <Standard_Real>;
-%template(SelectMgr_DataMapIteratorOfDataMapOfObjectSelectors) NCollection_TListIterator<SelectMgr_DataMapOfObjectSelectors>;
-%template(SelectMgr_MapOfObjectSensitivesIterator) NCollection_TListIterator<SelectMgr_DataMapOfObjectSelectors>;
 %template(SelectMgr_SequenceOfSelector) NCollection_Sequence <Handle(SelectMgr_ViewerSelector)>;
 %template(SelectMgr_FrustumCache) NCollection_DataMap <Standard_Integer , SelectMgr_SelectingVolumeManager>;
 %template(SelectMgr_Vec4) NCollection_Vec4 <Standard_Real>;
 %template(SelectMgr_ListOfFilter) NCollection_List <Handle(SelectMgr_Filter)>;
 %template(SelectMgr_SequenceOfFilter) NCollection_Sequence <Handle(SelectMgr_Filter)>;
 /* end templates declaration */
+
+/* end templates declaration */
+
+/* typedefs */
+typedef NCollection_List <Handle_SelectMgr_Filter>::Iterator SelectMgr_ListIteratorOfListOfFilter;
+typedef SelectMgr_SelectableObject * SelectMgr_SOPtr;
+typedef NCollection_DataMap <Handle_SelectMgr_SelectableObject , SelectMgr_SequenceOfSelector , TColStd_MapTransientHasher> SelectMgr_DataMapOfObjectSelectors;
+typedef NCollection_Mat4 <Standard_Real> SelectMgr_Mat4;
+typedef NCollection_List <Handle_SelectMgr_TriangularFrustum> SelectMgr_TriangFrustums;
+typedef NCollection_Sequence <Handle_SelectMgr_EntityOwner> SelectMgr_SequenceOfOwner;
+typedef NCollection_IndexedMap <Handle_SelectMgr_SensitiveEntity> SelectMgr_IndexedMapOfHSensitive;
+typedef NCollection_DataMap <Handle_SelectMgr_SelectableObject , Handle_SelectMgr_SensitiveEntitySet> SelectMgr_MapOfObjectSensitives;
+typedef NCollection_List <Handle_SelectMgr_TriangularFrustum>::Iterator SelectMgr_TriangFrustumsIter;
+typedef NCollection_Sequence <Handle_SelectMgr_Selection> SelectMgr_SequenceOfSelection;
+typedef NCollection_IndexedDataMap <Handle_SelectBasics_EntityOwner , SelectMgr_SortCriterion , TColStd_MapTransientHasher> SelectMgr_IndexedDataMapOfOwnerCriterion;
+typedef NCollection_Shared<NCollection_IndexedMap <Handle_SelectMgr_EntityOwner>> SelectMgr_IndexedMapOfOwner;
+typedef NCollection_Vec3 <Standard_Real> SelectMgr_Vec3;
+typedef NCollection_DataMap <Handle_SelectMgr_SelectableObject , SelectMgr_SequenceOfSelector , TColStd_MapTransientHasher>::Iterator SelectMgr_DataMapIteratorOfDataMapOfObjectSelectors;
+typedef NCollection_DataMap <Handle_SelectMgr_SelectableObject , Handle_SelectMgr_SensitiveEntitySet>::Iterator SelectMgr_MapOfObjectSensitivesIterator;
+typedef NCollection_Sequence <Handle_SelectMgr_ViewerSelector> SelectMgr_SequenceOfSelector;
+typedef NCollection_DataMap <Standard_Integer , SelectMgr_SelectingVolumeManager> SelectMgr_FrustumCache;
+typedef NCollection_Vec4 <Standard_Real> SelectMgr_Vec4;
+typedef NCollection_List <Handle_SelectMgr_Filter> SelectMgr_ListOfFilter;
+typedef NCollection_Sequence <Handle_SelectMgr_Filter> SelectMgr_SequenceOfFilter;
+/* end typedefs declaration */
 
 /* public enums */
 enum SelectMgr_TypeOfUpdate {

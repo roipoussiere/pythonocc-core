@@ -53,7 +53,17 @@ def register_handle(handle, base_object):
         pass
 };
 
+/* templates */
+/* templates */
+%define Handle(Class) opencascade::handle<Class>
+%enddef
+%template(BOPAlgo_ListOfCheckResult) NCollection_List <BOPAlgo_CheckResult>;
+/* end templates declaration */
+
+/* end templates declaration */
+
 /* typedefs */
+typedef NCollection_List <BOPAlgo_CheckResult> BOPAlgo_ListOfCheckResult;
 typedef BOPAlgo_ListOfCheckResult::Iterator BOPAlgo_ListIteratorOfListOfCheckResult;
 typedef BOPAlgo_WireEdgeSet * BOPAlgo_PWireEdgeSet;
 typedef BOPAlgo_ArgumentAnalyzer * BOPAlgo_PArgumentAnalyzer;
@@ -62,12 +72,6 @@ typedef BOPAlgo_BOP * BOPAlgo_PBOP;
 typedef BOPAlgo_Section * BOPAlgo_PSection;
 typedef BOPAlgo_PaveFiller * BOPAlgo_PPaveFiller;
 /* end typedefs declaration */
-
-/* templates */
-%define Handle(Class) opencascade::handle<Class>
-%enddef
-%template(BOPAlgo_ListOfCheckResult) NCollection_List <BOPAlgo_CheckResult>;
-/* end templates declaration */
 
 /* public enums */
 enum BOPAlgo_CheckStatus {

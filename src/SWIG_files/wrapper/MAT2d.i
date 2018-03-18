@@ -53,31 +53,45 @@ def register_handle(handle, base_object):
         pass
 };
 
-/* typedefs */
-/* end typedefs declaration */
-
+/* templates */
 /* templates */
 %define Handle(Class) opencascade::handle<Class>
 %enddef
 %template(MAT2d_DataMapOfIntegerVec2d) NCollection_DataMap <Standard_Integer , gp_Vec2d , TColStd_MapIntegerHasher>;
 %template(MAT2d_DataMapOfIntegerSequenceOfConnexion) NCollection_DataMap <Standard_Integer , MAT2d_SequenceOfConnexion , TColStd_MapIntegerHasher>;
-%template(MAT2d_DataMapIteratorOfDataMapOfBiIntInteger) NCollection_TListIterator<MAT2d_DataMapOfBiIntInteger>;
 %template(MAT2d_SequenceOfSequenceOfGeometry) NCollection_Sequence <TColGeom2d_SequenceOfGeometry>;
 %template(MAT2d_SequenceOfSequenceOfCurve) NCollection_Sequence <TColGeom2d_SequenceOfCurve>;
 %template(MAT2d_Array2OfConnexion) NCollection_Array2 <Handle_MAT2d_Connexion>;
-%template(MAT2d_DataMapIteratorOfDataMapOfIntegerConnexion) NCollection_TListIterator<MAT2d_DataMapOfIntegerConnexion>;
 %template(MAT2d_SequenceOfConnexion) NCollection_Sequence <Handle_MAT2d_Connexion>;
 %template(MAT2d_DataMapOfIntegerConnexion) NCollection_DataMap <Standard_Integer , Handle_MAT2d_Connexion , TColStd_MapIntegerHasher>;
 %template(MAT2d_DataMapOfBiIntSequenceOfInteger) NCollection_DataMap <MAT2d_BiInt , TColStd_SequenceOfInteger , MAT2d_MapBiIntHasher>;
 %template(MAT2d_DataMapOfBiIntInteger) NCollection_DataMap <MAT2d_BiInt , Standard_Integer , MAT2d_MapBiIntHasher>;
-%template(MAT2d_DataMapIteratorOfDataMapOfBiIntSequenceOfInteger) NCollection_TListIterator<MAT2d_DataMapOfBiIntSequenceOfInteger>;
-%template(MAT2d_DataMapIteratorOfDataMapOfIntegerBisec) NCollection_TListIterator<MAT2d_DataMapOfIntegerBisec>;
-%template(MAT2d_DataMapIteratorOfDataMapOfIntegerSequenceOfConnexion) NCollection_TListIterator<MAT2d_DataMapOfIntegerSequenceOfConnexion>;
 %template(MAT2d_DataMapOfIntegerBisec) NCollection_DataMap <Standard_Integer , Bisector_Bisec , TColStd_MapIntegerHasher>;
-%template(MAT2d_DataMapIteratorOfDataMapOfIntegerPnt2d) NCollection_TListIterator<MAT2d_DataMapOfIntegerPnt2d>;
 %template(MAT2d_DataMapOfIntegerPnt2d) NCollection_DataMap <Standard_Integer , gp_Pnt2d , TColStd_MapIntegerHasher>;
-%template(MAT2d_DataMapIteratorOfDataMapOfIntegerVec2d) NCollection_TListIterator<MAT2d_DataMapOfIntegerVec2d>;
 /* end templates declaration */
+
+/* end templates declaration */
+
+/* typedefs */
+typedef NCollection_DataMap <Standard_Integer , gp_Vec2d , TColStd_MapIntegerHasher> MAT2d_DataMapOfIntegerVec2d;
+typedef NCollection_DataMap <Standard_Integer , MAT2d_SequenceOfConnexion , TColStd_MapIntegerHasher> MAT2d_DataMapOfIntegerSequenceOfConnexion;
+typedef NCollection_DataMap <MAT2d_BiInt , Standard_Integer , MAT2d_MapBiIntHasher>::Iterator MAT2d_DataMapIteratorOfDataMapOfBiIntInteger;
+typedef NCollection_Sequence <TColGeom2d_SequenceOfGeometry> MAT2d_SequenceOfSequenceOfGeometry;
+typedef NCollection_Sequence <TColGeom2d_SequenceOfCurve> MAT2d_SequenceOfSequenceOfCurve;
+typedef NCollection_Array2 <Handle_MAT2d_Connexion> MAT2d_Array2OfConnexion;
+typedef NCollection_DataMap <Standard_Integer , Handle_MAT2d_Connexion , TColStd_MapIntegerHasher>::Iterator MAT2d_DataMapIteratorOfDataMapOfIntegerConnexion;
+typedef NCollection_Sequence <Handle_MAT2d_Connexion> MAT2d_SequenceOfConnexion;
+typedef NCollection_DataMap <Standard_Integer , Handle_MAT2d_Connexion , TColStd_MapIntegerHasher> MAT2d_DataMapOfIntegerConnexion;
+typedef NCollection_DataMap <MAT2d_BiInt , TColStd_SequenceOfInteger , MAT2d_MapBiIntHasher> MAT2d_DataMapOfBiIntSequenceOfInteger;
+typedef NCollection_DataMap <MAT2d_BiInt , Standard_Integer , MAT2d_MapBiIntHasher> MAT2d_DataMapOfBiIntInteger;
+typedef NCollection_DataMap <MAT2d_BiInt , TColStd_SequenceOfInteger , MAT2d_MapBiIntHasher>::Iterator MAT2d_DataMapIteratorOfDataMapOfBiIntSequenceOfInteger;
+typedef NCollection_DataMap <Standard_Integer , Bisector_Bisec , TColStd_MapIntegerHasher>::Iterator MAT2d_DataMapIteratorOfDataMapOfIntegerBisec;
+typedef NCollection_DataMap <Standard_Integer , MAT2d_SequenceOfConnexion , TColStd_MapIntegerHasher>::Iterator MAT2d_DataMapIteratorOfDataMapOfIntegerSequenceOfConnexion;
+typedef NCollection_DataMap <Standard_Integer , Bisector_Bisec , TColStd_MapIntegerHasher> MAT2d_DataMapOfIntegerBisec;
+typedef NCollection_DataMap <Standard_Integer , gp_Pnt2d , TColStd_MapIntegerHasher>::Iterator MAT2d_DataMapIteratorOfDataMapOfIntegerPnt2d;
+typedef NCollection_DataMap <Standard_Integer , gp_Pnt2d , TColStd_MapIntegerHasher> MAT2d_DataMapOfIntegerPnt2d;
+typedef NCollection_DataMap <Standard_Integer , gp_Vec2d , TColStd_MapIntegerHasher>::Iterator MAT2d_DataMapIteratorOfDataMapOfIntegerVec2d;
+/* end typedefs declaration */
 
 /* public enums */
 /* end public enums declaration */

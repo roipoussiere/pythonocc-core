@@ -53,14 +53,7 @@ def register_handle(handle, base_object):
         pass
 };
 
-/* typedefs */
-typedef BOPTools_MapOfSet::Iterator BOPTools_MapIteratorOfMapOfSet;
-typedef BOPTools_ListOfCoupleOfShape::Iterator BOPTools_ListIteratorOfListOfCoupleOfShape;
-typedef BOPTools_ListOfConnexityBlock::Iterator BOPTools_ListIteratorOfListOfConnexityBlock;
-typedef BOPTools_ListOfEdgeSet::Iterator BOPTools_ListIteratorOfListOfEdgeSet;
-typedef BOPTools_ListOfShapeSet::Iterator BOPTools_ListIteratorOfListOfShapeSet;
-/* end typedefs declaration */
-
+/* templates */
 /* templates */
 %define Handle(Class) opencascade::handle<Class>
 %enddef
@@ -70,6 +63,21 @@ typedef BOPTools_ListOfShapeSet::Iterator BOPTools_ListIteratorOfListOfShapeSet;
 %template(BOPTools_ListOfShapeSet) NCollection_List <BOPTools_ShapeSet>;
 %template(BOPTools_MapOfSet) NCollection_Map <BOPTools_Set , BOPTools_SetMapHasher>;
 /* end templates declaration */
+
+/* end templates declaration */
+
+/* typedefs */
+typedef BOPTools_MapOfSet::Iterator BOPTools_MapIteratorOfMapOfSet;
+typedef NCollection_List <BOPTools_CoupleOfShape> BOPTools_ListOfCoupleOfShape;
+typedef NCollection_List <BOPTools_EdgeSet> BOPTools_ListOfEdgeSet;
+typedef BOPTools_ListOfCoupleOfShape::Iterator BOPTools_ListIteratorOfListOfCoupleOfShape;
+typedef BOPTools_ListOfConnexityBlock::Iterator BOPTools_ListIteratorOfListOfConnexityBlock;
+typedef BOPTools_ListOfEdgeSet::Iterator BOPTools_ListIteratorOfListOfEdgeSet;
+typedef NCollection_List <BOPTools_ConnexityBlock> BOPTools_ListOfConnexityBlock;
+typedef BOPTools_ListOfShapeSet::Iterator BOPTools_ListIteratorOfListOfShapeSet;
+typedef NCollection_List <BOPTools_ShapeSet> BOPTools_ListOfShapeSet;
+typedef NCollection_Map <BOPTools_Set , BOPTools_SetMapHasher> BOPTools_MapOfSet;
+/* end typedefs declaration */
 
 /* public enums */
 /* end public enums declaration */

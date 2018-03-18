@@ -53,9 +53,7 @@ def register_handle(handle, base_object):
         pass
 };
 
-/* typedefs */
-/* end typedefs declaration */
-
+/* templates */
 /* templates */
 %define Handle(Class) opencascade::handle<Class>
 %enddef
@@ -77,6 +75,28 @@ def register_handle(handle, base_object):
 %template(StepVisual_Array1OfBoxCharacteristicSelect) NCollection_Array1 <StepVisual_BoxCharacteristicSelect>;
 %template(StepVisual_Array1OfTextOrCharacter) NCollection_Array1 <StepVisual_TextOrCharacter>;
 /* end templates declaration */
+
+/* end templates declaration */
+
+/* typedefs */
+typedef NCollection_Array1 <StepVisual_StyleContextSelect> StepVisual_Array1OfStyleContextSelect;
+typedef NCollection_Array1 <StepVisual_FillStyleSelect> StepVisual_Array1OfFillStyleSelect;
+typedef NCollection_Array1 <StepVisual_InvisibleItem> StepVisual_Array1OfInvisibleItem;
+typedef NCollection_Array1 <Handle_StepVisual_PresentationStyleAssignment> StepVisual_Array1OfPresentationStyleAssignment;
+typedef NCollection_Array1 <StepVisual_LayeredItem> StepVisual_Array1OfLayeredItem;
+typedef NCollection_Array1 <StepVisual_PresentationStyleSelect> StepVisual_Array1OfPresentationStyleSelect;
+typedef NCollection_Array1 <StepVisual_DraughtingCalloutElement> StepVisual_Array1OfDraughtingCalloutElement;
+typedef NCollection_Array1 <Handle_StepVisual_CurveStyleFontPattern> StepVisual_Array1OfCurveStyleFontPattern;
+typedef NCollection_Array1 <StepVisual_CameraModelD3MultiClippingUnionSelect> StepVisual_Array1OfCameraModelD3MultiClippingUnionSelect;
+typedef NCollection_Array1 <StepVisual_CameraModelD3MultiClippingInterectionSelect> StepVisual_Array1OfCameraModelD3MultiClippingInterectionSelect;
+typedef NCollection_Array1 <StepVisual_SurfaceStyleElementSelect> StepVisual_Array1OfSurfaceStyleElementSelect;
+typedef NCollection_Array1 <StepVisual_DirectionCountSelect> StepVisual_Array1OfDirectionCountSelect;
+typedef NCollection_Array1 <Handle_StepVisual_TessellatedItem> StepVisual_Array1OfTessellatedItem;
+typedef NCollection_Array1 <StepVisual_AnnotationPlaneElement> StepVisual_Array1OfAnnotationPlaneElement;
+typedef NCollection_Vector <Handle_TColStd_HSequenceOfInteger> StepVisual_VectorOfHSequenceOfInteger;
+typedef NCollection_Array1 <StepVisual_BoxCharacteristicSelect> StepVisual_Array1OfBoxCharacteristicSelect;
+typedef NCollection_Array1 <StepVisual_TextOrCharacter> StepVisual_Array1OfTextOrCharacter;
+/* end typedefs declaration */
 
 /* public enums */
 enum StepVisual_NullStyle {

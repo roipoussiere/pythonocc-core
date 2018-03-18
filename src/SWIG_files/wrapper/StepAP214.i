@@ -53,9 +53,7 @@ def register_handle(handle, base_object):
         pass
 };
 
-/* typedefs */
-/* end typedefs declaration */
-
+/* templates */
 /* templates */
 %define Handle(Class) opencascade::handle<Class>
 %enddef
@@ -77,6 +75,28 @@ def register_handle(handle, base_object):
 %template(StepAP214_Array1OfSecurityClassificationItem) NCollection_Array1 <StepAP214_SecurityClassificationItem>;
 %template(StepAP214_Array1OfAutoDesignDatedItem) NCollection_Array1 <StepAP214_AutoDesignDatedItem>;
 /* end templates declaration */
+
+/* end templates declaration */
+
+/* typedefs */
+typedef NCollection_Array1 <StepAP214_ExternalIdentificationItem> StepAP214_Array1OfExternalIdentificationItem;
+typedef NCollection_Array1 <StepAP214_DateAndTimeItem> StepAP214_Array1OfDateAndTimeItem;
+typedef NCollection_Array1 <StepAP214_AutoDesignPresentedItemSelect> StepAP214_Array1OfAutoDesignPresentedItemSelect;
+typedef NCollection_Array1 <StepAP214_AutoDesignDateAndTimeItem> StepAP214_Array1OfAutoDesignDateAndTimeItem;
+typedef NCollection_Array1 <StepAP214_AutoDesignDateAndPersonItem> StepAP214_Array1OfAutoDesignDateAndPersonItem;
+typedef NCollection_Array1 <StepAP214_ApprovalItem> StepAP214_Array1OfApprovalItem;
+typedef NCollection_Array1 <StepAP214_DocumentReferenceItem> StepAP214_Array1OfDocumentReferenceItem;
+typedef NCollection_Array1 <StepAP214_OrganizationItem> StepAP214_Array1OfOrganizationItem;
+typedef NCollection_Array1 <StepAP214_AutoDesignReferencingItem> StepAP214_Array1OfAutoDesignReferencingItem;
+typedef NCollection_Array1 <StepAP214_AutoDesignGeneralOrgItem> StepAP214_Array1OfAutoDesignGeneralOrgItem;
+typedef NCollection_Array1 <StepAP214_DateItem> StepAP214_Array1OfDateItem;
+typedef NCollection_Array1 <StepAP214_AutoDesignGroupedItem> StepAP214_Array1OfAutoDesignGroupedItem;
+typedef NCollection_Array1 <StepAP214_GroupItem> StepAP214_Array1OfGroupItem;
+typedef NCollection_Array1 <StepAP214_PersonAndOrganizationItem> StepAP214_Array1OfPersonAndOrganizationItem;
+typedef NCollection_Array1 <StepAP214_PresentedItemSelect> StepAP214_Array1OfPresentedItemSelect;
+typedef NCollection_Array1 <StepAP214_SecurityClassificationItem> StepAP214_Array1OfSecurityClassificationItem;
+typedef NCollection_Array1 <StepAP214_AutoDesignDatedItem> StepAP214_Array1OfAutoDesignDatedItem;
+/* end typedefs declaration */
 
 /* public enums */
 /* end public enums declaration */

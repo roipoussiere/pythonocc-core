@@ -53,14 +53,18 @@ def register_handle(handle, base_object):
         pass
 };
 
-/* typedefs */
-/* end typedefs declaration */
-
+/* templates */
 /* templates */
 %define Handle(Class) opencascade::handle<Class>
 %enddef
 %template(GccEnt_Array1OfPosition) NCollection_Array1 <GccEnt_Position>;
 /* end templates declaration */
+
+/* end templates declaration */
+
+/* typedefs */
+typedef NCollection_Array1 <GccEnt_Position> GccEnt_Array1OfPosition;
+/* end typedefs declaration */
 
 /* public enums */
 enum GccEnt_Position {

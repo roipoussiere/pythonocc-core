@@ -53,21 +53,29 @@ def register_handle(handle, base_object):
         pass
 };
 
-/* typedefs */
-/* end typedefs declaration */
-
+/* templates */
 /* templates */
 %define Handle(Class) opencascade::handle<Class>
 %enddef
-%template(BRepOffset_DataMapIteratorOfDataMapOfShapeListOfInterval) NCollection_TListIterator<BRepOffset_DataMapOfShapeListOfInterval>;
-%template(BRepOffset_DataMapIteratorOfDataMapOfShapeMapOfShape) NCollection_TListIterator<BRepOffset_DataMapOfShapeMapOfShape>;
 %template(BRepOffset_DataMapOfShapeOffset) NCollection_DataMap <TopoDS_Shape , BRepOffset_Offset , TopTools_ShapeMapHasher>;
-%template(BRepOffset_ListIteratorOfListOfInterval) NCollection_TListIterator<BRepOffset_ListOfInterval>;
-%template(BRepOffset_DataMapIteratorOfDataMapOfShapeOffset) NCollection_TListIterator<BRepOffset_DataMapOfShapeOffset>;
+%template(BRepOffset_ListIteratorOfListOfInterval) NCollection_TListIterator<BRepOffset_Interval>;
 %template(BRepOffset_ListOfInterval) NCollection_List <BRepOffset_Interval>;
 %template(BRepOffset_DataMapOfShapeListOfInterval) NCollection_DataMap <TopoDS_Shape , BRepOffset_ListOfInterval , TopTools_ShapeMapHasher>;
 %template(BRepOffset_DataMapOfShapeMapOfShape) NCollection_DataMap <TopoDS_Shape , TopTools_MapOfShape , TopTools_ShapeMapHasher>;
 /* end templates declaration */
+
+/* end templates declaration */
+
+/* typedefs */
+typedef NCollection_DataMap <TopoDS_Shape , BRepOffset_ListOfInterval , TopTools_ShapeMapHasher>::Iterator BRepOffset_DataMapIteratorOfDataMapOfShapeListOfInterval;
+typedef NCollection_DataMap <TopoDS_Shape , TopTools_MapOfShape , TopTools_ShapeMapHasher>::Iterator BRepOffset_DataMapIteratorOfDataMapOfShapeMapOfShape;
+typedef NCollection_DataMap <TopoDS_Shape , BRepOffset_Offset , TopTools_ShapeMapHasher> BRepOffset_DataMapOfShapeOffset;
+typedef NCollection_List <BRepOffset_Interval>::Iterator BRepOffset_ListIteratorOfListOfInterval;
+typedef NCollection_DataMap <TopoDS_Shape , BRepOffset_Offset , TopTools_ShapeMapHasher>::Iterator BRepOffset_DataMapIteratorOfDataMapOfShapeOffset;
+typedef NCollection_List <BRepOffset_Interval> BRepOffset_ListOfInterval;
+typedef NCollection_DataMap <TopoDS_Shape , BRepOffset_ListOfInterval , TopTools_ShapeMapHasher> BRepOffset_DataMapOfShapeListOfInterval;
+typedef NCollection_DataMap <TopoDS_Shape , TopTools_MapOfShape , TopTools_ShapeMapHasher> BRepOffset_DataMapOfShapeMapOfShape;
+/* end typedefs declaration */
 
 /* public enums */
 enum BRepOffset_Error {

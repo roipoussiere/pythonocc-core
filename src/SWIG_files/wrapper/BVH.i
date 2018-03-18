@@ -55,13 +55,38 @@ def register_handle(handle, base_object):
         pass
 };
 
-/* typedefs */
-/* end typedefs declaration */
-
+/* templates */
 /* templates */
 %define Handle(Class) opencascade::handle<Class>
 %enddef
 /* end templates declaration */
+
+/* end templates declaration */
+
+/* typedefs */
+typedef BVH::ArrayType <Standard_Real , 3>::Type BVH_Array3d;
+typedef BVH::VectorType <Standard_Integer , 3>::Type BVH_Vec3i;
+typedef BVH::ArrayType <Standard_ShortReal , 3>::Type BVH_Array3f;
+typedef BVH::VectorType <Standard_Real , 3>::Type BVH_Vec3d;
+typedef BVH::VectorType <Standard_ShortReal , 3>::Type BVH_Vec3f;
+typedef BVH::MatrixType <Standard_ShortReal , 4>::Type BVH_Mat4f;
+typedef BVH::MatrixType <Standard_Real , 4>::Type BVH_Mat4d;
+typedef BVH::ArrayType <Standard_ShortReal , 2>::Type BVH_Array2f;
+typedef BVH::ArrayType <Standard_Real , 2>::Type BVH_Array2d;
+typedef BVH::ArrayType <Standard_Integer , 4>::Type BVH_Array4i;
+typedef BVH::VectorType <Standard_Integer , 2>::Type BVH_Vec2i;
+typedef BVH::VectorType <Standard_Real , 2>::Type BVH_Vec2d;
+typedef BVH::ArrayType <Standard_Real , 4>::Type BVH_Array4d;
+typedef BVH::VectorType <Standard_ShortReal , 2>::Type BVH_Vec2f;
+typedef BVH::ArrayType <Standard_ShortReal , 4>::Type BVH_Array4f;
+typedef BVH::ArrayType <Standard_Integer , 2>::Type BVH_Array2i;
+typedef BVH::ArrayType <Standard_Integer , 3>::Type BVH_Array3i;
+typedef typename BVH_QueueBuilder <T , N>::BVH_PrimitiveRange Range;
+typedef std::pair <Standard_Integer , Standard_Integer> BVH_EncodedLink;
+typedef BVH::VectorType <Standard_Integer , 4>::Type BVH_Vec4i;
+typedef BVH::VectorType <Standard_ShortReal , 4>::Type BVH_Vec4f;
+typedef BVH::VectorType <Standard_Real , 4>::Type BVH_Vec4d;
+/* end typedefs declaration */
 
 /* public enums */
 enum  {

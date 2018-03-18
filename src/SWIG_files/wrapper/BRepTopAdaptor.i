@@ -53,16 +53,20 @@ def register_handle(handle, base_object):
         pass
 };
 
-/* typedefs */
-typedef TColStd_SequenceOfAddress BRepTopAdaptor_SeqOfPtr;
-/* end typedefs declaration */
-
+/* templates */
 /* templates */
 %define Handle(Class) opencascade::handle<Class>
 %enddef
 %template(BRepTopAdaptor_MapOfShapeTool) NCollection_DataMap <TopoDS_Shape , BRepTopAdaptor_Tool , TopTools_ShapeMapHasher>;
-%template(BRepTopAdaptor_DataMapIteratorOfMapOfShapeTool) NCollection_TListIterator<BRepTopAdaptor_MapOfShapeTool>;
 /* end templates declaration */
+
+/* end templates declaration */
+
+/* typedefs */
+typedef NCollection_DataMap <TopoDS_Shape , BRepTopAdaptor_Tool , TopTools_ShapeMapHasher> BRepTopAdaptor_MapOfShapeTool;
+typedef NCollection_DataMap <TopoDS_Shape , BRepTopAdaptor_Tool , TopTools_ShapeMapHasher>::Iterator BRepTopAdaptor_DataMapIteratorOfMapOfShapeTool;
+typedef TColStd_SequenceOfAddress BRepTopAdaptor_SeqOfPtr;
+/* end typedefs declaration */
 
 /* public enums */
 /* end public enums declaration */

@@ -803,6 +803,49 @@ along with pythonOCC.  If not, see <http://www.gnu.org/licenses/>.
 #include<Interface_EntityCluster.hxx>
 #include<Interface_StaticSatisfies.hxx>
 #include<Interface_ReaderModule.hxx>
+#include<StepData.hxx>
+#include<StepData_GlobalNodeOfWriterLib.hxx>
+#include<StepData_GeneralModule.hxx>
+#include<StepData_SelectArrReal.hxx>
+#include<StepData_FieldList1.hxx>
+#include<StepData_FieldList.hxx>
+#include<StepData_SelectMember.hxx>
+#include<StepData_DescrGeneral.hxx>
+#include<StepData_StepReaderTool.hxx>
+#include<StepData_Array1OfField.hxx>
+#include<StepData_Protocol.hxx>
+#include<StepData_FileRecognizer.hxx>
+#include<StepData_StepWriter.hxx>
+#include<StepData_Simple.hxx>
+#include<StepData_WriterLib.hxx>
+#include<StepData_Described.hxx>
+#include<StepData_SelectInt.hxx>
+#include<StepData_SelectType.hxx>
+#include<StepData_FieldListN.hxx>
+#include<StepData_UndefinedEntity.hxx>
+#include<StepData_HeaderTool.hxx>
+#include<StepData_Logical.hxx>
+#include<StepData_HArray1OfField.hxx>
+#include<StepData_SelectNamed.hxx>
+#include<StepData_ESDescr.hxx>
+#include<StepData_NodeOfWriterLib.hxx>
+#include<StepData_DescrReadWrite.hxx>
+#include<StepData_ReadWriteModule.hxx>
+#include<StepData_DescrProtocol.hxx>
+#include<StepData_ECDescr.hxx>
+#include<StepData_PDescr.hxx>
+#include<StepData_StepDumper.hxx>
+#include<StepData_FieldListD.hxx>
+#include<StepData_Field.hxx>
+#include<StepData_Plex.hxx>
+#include<StepData_StepReaderData.hxx>
+#include<StepData_EDescr.hxx>
+#include<StepData_SelectReal.hxx>
+#include<StepData_FreeFormEntity.hxx>
+#include<StepData_DefaultGeneral.hxx>
+#include<StepData_StepModel.hxx>
+#include<StepData_FileProtocol.hxx>
+#include<StepData_EnumTool.hxx>
 #include<TCollection.hxx>
 #include<TCollection_ExtendedString.hxx>
 #include<TCollection_BasicMap.hxx>
@@ -953,6 +996,7 @@ along with pythonOCC.  If not, see <http://www.gnu.org/licenses/>.
 #include<XSControl_TransferWriter.hxx>
 #include<XSControl_Functions.hxx>
 #include<XSControl_FuncShape.hxx>
+#include<XSControl_Vars.hxx>
 #include<XSControl_Writer.hxx>
 #include<XSControl_SelectForTransfer.hxx>
 #include<XSControl_WorkSession.hxx>
@@ -1720,6 +1764,7 @@ along with pythonOCC.  If not, see <http://www.gnu.org/licenses/>.
 %import StepAP203.i
 %import StepGeom.i
 %import Interface.i
+%import StepData.i
 %import TCollection.i
 %import TColStd.i
 %import gp.i

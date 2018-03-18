@@ -53,9 +53,7 @@ def register_handle(handle, base_object):
         pass
 };
 
-/* typedefs */
-/* end typedefs declaration */
-
+/* templates */
 /* templates */
 %define Handle(Class) opencascade::handle<Class>
 %enddef
@@ -63,6 +61,14 @@ def register_handle(handle, base_object):
 %template(TShort_Array1OfShortReal) NCollection_Array1 <Standard_ShortReal>;
 %template(TShort_SequenceOfShortReal) NCollection_Sequence <Standard_ShortReal>;
 /* end templates declaration */
+
+/* end templates declaration */
+
+/* typedefs */
+typedef NCollection_Array2 <Standard_ShortReal> TShort_Array2OfShortReal;
+typedef NCollection_Array1 <Standard_ShortReal> TShort_Array1OfShortReal;
+typedef NCollection_Sequence <Standard_ShortReal> TShort_SequenceOfShortReal;
+/* end typedefs declaration */
 
 /* public enums */
 /* end public enums declaration */

@@ -53,19 +53,33 @@ def register_handle(handle, base_object):
         pass
 };
 
-/* typedefs */
-/* end typedefs declaration */
-
+/* templates */
 /* templates */
 %define Handle(Class) opencascade::handle<Class>
 %enddef
 %template(BRepCheck_DataMapOfShapeListOfStatus) NCollection_DataMap <TopoDS_Shape , BRepCheck_ListOfStatus , TopTools_ShapeMapHasher>;
-%template(BRepCheck_ListOfStatus) NCollection_List <BRepCheck_Status>;
-%template(BRepCheck_ListIteratorOfListOfStatus) NCollection_TListIterator<BRepCheck_ListOfStatus>;
-%template(BRepCheck_DataMapIteratorOfDataMapOfShapeListOfStatus) NCollection_TListIterator<BRepCheck_DataMapOfShapeListOfStatus>;
+%template(BRepCheck_ListOfStatus) NCollection_List <Standard_Integer>;
+%template(BRepCheck_ListIteratorOfListOfStatus) NCollection_TListIterator<BRepCheck_Status>;
 %template(BRepCheck_DataMapOfShapeResult) NCollection_DataMap <TopoDS_Shape , Handle(BRepCheck_Result) , TopTools_OrientedShapeMapHasher>;
-%template(BRepCheck_DataMapIteratorOfDataMapOfShapeResult) NCollection_TListIterator<BRepCheck_DataMapOfShapeResult>;
 /* end templates declaration */
+
+/* end templates declaration */
+
+%include "typemaps.i"
+%apply int* OUTPUT {BRepCheck_Status *r};
+
+/* typedefs */
+typedef NCollection_DataMap <TopoDS_Shape , BRepCheck_ListOfStatus , TopTools_ShapeMapHasher> BRepCheck_DataMapOfShapeListOfStatus;
+typedef NCollection_List <Standard_Integer> BRepCheck_ListOfStatus;
+typedef NCollection_List <BRepCheck_Status>::Iterator BRepCheck_ListIteratorOfListOfStatus;
+typedef NCollection_DataMap <TopoDS_Shape , BRepCheck_ListOfStatus , TopTools_ShapeMapHasher>::Iterator BRepCheck_DataMapIteratorOfDataMapOfShapeListOfStatus;
+typedef NCollection_DataMap <TopoDS_Shape , Handle_BRepCheck_Result , TopTools_OrientedShapeMapHasher> BRepCheck_DataMapOfShapeResult;
+typedef NCollection_DataMap <TopoDS_Shape , Handle_BRepCheck_Result , TopTools_OrientedShapeMapHasher>::Iterator BRepCheck_DataMapIteratorOfDataMapOfShapeResult;
+/* end typedefs declaration */
+
+%inline %{
+    int convert(int *a) {return *a;};	
+%}
 
 /* public enums */
 enum BRepCheck_Status {

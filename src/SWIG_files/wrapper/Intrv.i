@@ -53,14 +53,18 @@ def register_handle(handle, base_object):
         pass
 };
 
-/* typedefs */
-/* end typedefs declaration */
-
+/* templates */
 /* templates */
 %define Handle(Class) opencascade::handle<Class>
 %enddef
 %template(Intrv_SequenceOfInterval) NCollection_Sequence <Intrv_Interval>;
 /* end templates declaration */
+
+/* end templates declaration */
+
+/* typedefs */
+typedef NCollection_Sequence <Intrv_Interval> Intrv_SequenceOfInterval;
+/* end typedefs declaration */
 
 /* public enums */
 enum Intrv_Position {

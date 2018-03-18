@@ -53,14 +53,18 @@ def register_handle(handle, base_object):
         pass
 };
 
-/* typedefs */
-/* end typedefs declaration */
-
+/* templates */
 /* templates */
 %define Handle(Class) opencascade::handle<Class>
 %enddef
 %template(BRepAdaptor_Array1OfCurve) NCollection_Array1 <BRepAdaptor_Curve>;
 /* end templates declaration */
+
+/* end templates declaration */
+
+/* typedefs */
+typedef NCollection_Array1 <BRepAdaptor_Curve> BRepAdaptor_Array1OfCurve;
+/* end typedefs declaration */
 
 /* public enums */
 /* end public enums declaration */

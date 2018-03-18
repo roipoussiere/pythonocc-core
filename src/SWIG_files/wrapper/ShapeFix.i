@@ -53,16 +53,21 @@ def register_handle(handle, base_object):
         pass
 };
 
-/* typedefs */
-/* end typedefs declaration */
-
+/* templates */
 /* templates */
 %define Handle(Class) opencascade::handle<Class>
 %enddef
 %template(ShapeFix_SequenceOfWireSegment) NCollection_Sequence <ShapeFix_WireSegment>;
 %template(ShapeFix_DataMapOfShapeBox2d) NCollection_DataMap <TopoDS_Shape , Bnd_Box2d , TopTools_ShapeMapHasher>;
-%template(ShapeFix_DataMapIteratorOfDataMapOfShapeBox2d) NCollection_TListIterator<ShapeFix_DataMapOfShapeBox2d>;
 /* end templates declaration */
+
+/* end templates declaration */
+
+/* typedefs */
+typedef NCollection_Sequence <ShapeFix_WireSegment> ShapeFix_SequenceOfWireSegment;
+typedef NCollection_DataMap <TopoDS_Shape , Bnd_Box2d , TopTools_ShapeMapHasher> ShapeFix_DataMapOfShapeBox2d;
+typedef NCollection_DataMap <TopoDS_Shape , Bnd_Box2d , TopTools_ShapeMapHasher>::Iterator ShapeFix_DataMapIteratorOfDataMapOfShapeBox2d;
+/* end typedefs declaration */
 
 /* public enums */
 /* end public enums declaration */
@@ -325,12 +330,6 @@ class ShapeFix_Edge : public Standard_Transient {
 	:rtype: None
 ") SetContext;
 		void SetContext (const Handle_ShapeBuild_ReShape & context);
-		%feature("compactdefaultargs") Context;
-		%feature("autodoc", "	* Returns context
-
-	:rtype: Handle_ShapeBuild_ReShape
-") Context;
-		Handle_ShapeBuild_ReShape Context ();
 };
 
 

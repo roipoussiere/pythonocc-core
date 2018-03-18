@@ -53,14 +53,18 @@ def register_handle(handle, base_object):
         pass
 };
 
-/* typedefs */
-/* end typedefs declaration */
-
+/* templates */
 /* templates */
 %define Handle(Class) opencascade::handle<Class>
 %enddef
 %template(XmlLDrivers_SequenceOfNamespaceDef) NCollection_Sequence <XmlLDrivers_NamespaceDef>;
 /* end templates declaration */
+
+/* end templates declaration */
+
+/* typedefs */
+typedef NCollection_Sequence <XmlLDrivers_NamespaceDef> XmlLDrivers_SequenceOfNamespaceDef;
+/* end typedefs declaration */
 
 /* public enums */
 /* end public enums declaration */

@@ -53,18 +53,24 @@ def register_handle(handle, base_object):
         pass
 };
 
-/* typedefs */
-/* end typedefs declaration */
-
+/* templates */
 /* templates */
 %define Handle(Class) opencascade::handle<Class>
 %enddef
 %template(BRepAlgo_DataMapOfShapeBoolean) NCollection_DataMap <TopoDS_Shape , Standard_Boolean , TopTools_ShapeMapHasher>;
-%template(BRepAlgo_DataMapIteratorOfDataMapOfShapeBoolean) NCollection_TListIterator<BRepAlgo_DataMapOfShapeBoolean>;
-%template(BRepAlgo_DataMapIteratorOfDataMapOfShapeInterference) NCollection_TListIterator<BRepAlgo_DataMapOfShapeInterference>;
 %template(BRepAlgo_DataMapOfShapeInterference) NCollection_DataMap <TopoDS_Shape , Handle(TopOpeBRepDS_Interference) , TopTools_ShapeMapHasher>;
 %template(BRepAlgo_SequenceOfSequenceOfInteger) NCollection_Sequence <TColStd_SequenceOfInteger>;
 /* end templates declaration */
+
+/* end templates declaration */
+
+/* typedefs */
+typedef NCollection_DataMap <TopoDS_Shape , Standard_Boolean , TopTools_ShapeMapHasher> BRepAlgo_DataMapOfShapeBoolean;
+typedef NCollection_DataMap <TopoDS_Shape , Standard_Boolean , TopTools_ShapeMapHasher>::Iterator BRepAlgo_DataMapIteratorOfDataMapOfShapeBoolean;
+typedef NCollection_DataMap <TopoDS_Shape , Handle_TopOpeBRepDS_Interference , TopTools_ShapeMapHasher>::Iterator BRepAlgo_DataMapIteratorOfDataMapOfShapeInterference;
+typedef NCollection_DataMap <TopoDS_Shape , Handle_TopOpeBRepDS_Interference , TopTools_ShapeMapHasher> BRepAlgo_DataMapOfShapeInterference;
+typedef NCollection_Sequence <TColStd_SequenceOfInteger> BRepAlgo_SequenceOfSequenceOfInteger;
+/* end typedefs declaration */
 
 /* public enums */
 enum BRepAlgo_CheckStatus {

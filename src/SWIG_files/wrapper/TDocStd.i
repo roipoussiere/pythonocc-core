@@ -53,18 +53,24 @@ def register_handle(handle, base_object):
         pass
 };
 
-/* typedefs */
-typedef TDocStd_XLink * TDocStd_XLinkPtr;
-/* end typedefs declaration */
-
+/* templates */
 /* templates */
 %define Handle(Class) opencascade::handle<Class>
 %enddef
 %template(TDocStd_LabelIDMapDataMap) NCollection_DataMap <TDF_Label , TDF_IDMap , TDF_LabelMapHasher>;
 %template(TDocStd_SequenceOfApplicationDelta) NCollection_Sequence <Handle(TDocStd_ApplicationDelta)>;
-%template(TDocStd_DataMapIteratorOfLabelIDMapDataMap) NCollection_TListIterator<TDocStd_LabelIDMapDataMap>;
 %template(TDocStd_SequenceOfDocument) NCollection_Sequence <Handle(TDocStd_Document)>;
 /* end templates declaration */
+
+/* end templates declaration */
+
+/* typedefs */
+typedef TDocStd_XLink * TDocStd_XLinkPtr;
+typedef NCollection_DataMap <TDF_Label , TDF_IDMap , TDF_LabelMapHasher> TDocStd_LabelIDMapDataMap;
+typedef NCollection_Sequence <Handle_TDocStd_ApplicationDelta> TDocStd_SequenceOfApplicationDelta;
+typedef NCollection_DataMap <TDF_Label , TDF_IDMap , TDF_LabelMapHasher>::Iterator TDocStd_DataMapIteratorOfLabelIDMapDataMap;
+typedef NCollection_Sequence <Handle_TDocStd_Document> TDocStd_SequenceOfDocument;
+/* end typedefs declaration */
 
 /* public enums */
 /* end public enums declaration */

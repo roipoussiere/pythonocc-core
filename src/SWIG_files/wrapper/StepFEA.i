@@ -53,9 +53,7 @@ def register_handle(handle, base_object):
         pass
 };
 
-/* typedefs */
-/* end typedefs declaration */
-
+/* templates */
 /* templates */
 %define Handle(Class) opencascade::handle<Class>
 %enddef
@@ -70,6 +68,21 @@ def register_handle(handle, base_object):
 %template(StepFEA_Array1OfCurveElementInterval) NCollection_Array1 <Handle(StepFEA_CurveElementInterval)>;
 %template(StepFEA_Array1OfDegreeOfFreedom) NCollection_Array1 <StepFEA_DegreeOfFreedom>;
 /* end templates declaration */
+
+/* end templates declaration */
+
+/* typedefs */
+typedef NCollection_Array1 <Handle_StepFEA_CurveElementEndOffset> StepFEA_Array1OfCurveElementEndOffset;
+typedef NCollection_Array1 <Handle_StepFEA_NodeRepresentation> StepFEA_Array1OfNodeRepresentation;
+typedef NCollection_Array1 <Handle_StepFEA_CurveElementEndRelease> StepFEA_Array1OfCurveElementEndRelease;
+typedef NCollection_Sequence <Handle_StepFEA_Curve3dElementProperty> StepFEA_SequenceOfCurve3dElementProperty;
+typedef NCollection_Array1 <Handle_StepFEA_ElementRepresentation> StepFEA_Array1OfElementRepresentation;
+typedef NCollection_Sequence <Handle_StepFEA_ElementGeometricRelationship> StepFEA_SequenceOfElementGeometricRelationship;
+typedef NCollection_Sequence <Handle_StepFEA_NodeRepresentation> StepFEA_SequenceOfNodeRepresentation;
+typedef NCollection_Sequence <Handle_StepFEA_ElementRepresentation> StepFEA_SequenceOfElementRepresentation;
+typedef NCollection_Array1 <Handle_StepFEA_CurveElementInterval> StepFEA_Array1OfCurveElementInterval;
+typedef NCollection_Array1 <StepFEA_DegreeOfFreedom> StepFEA_Array1OfDegreeOfFreedom;
+/* end typedefs declaration */
 
 /* public enums */
 enum StepFEA_ElementVolume {

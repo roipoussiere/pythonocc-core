@@ -53,20 +53,30 @@ def register_handle(handle, base_object):
         pass
 };
 
-/* typedefs */
-/* end typedefs declaration */
-
+/* templates */
 /* templates */
 %define Handle(Class) opencascade::handle<Class>
 %enddef
 %template(Message_ListOfMsg) NCollection_List <Message_Msg>;
 %template(Message_ListOfAlert) NCollection_List <Handle(Message_Alert)>;
 %template(Message_HArrayOfMsg) NCollection_Handle <Message_ArrayOfMsg>;
-%template(Message_ListIteratorOfListOfMsg) NCollection_TListIterator<Message_ListOfMsg>;
+%template(Message_ListIteratorOfListOfMsg) NCollection_TListIterator<Message_Msg>;
 %template(Message_ArrayOfMsg) NCollection_Array1 <NCollection_Handle <Message_Msg>>;
 %template(Message_SequenceOfProgressScale) NCollection_Sequence <Message_ProgressScale>;
 %template(Message_SequenceOfPrinters) NCollection_Sequence <Handle(Message_Printer)>;
 /* end templates declaration */
+
+/* end templates declaration */
+
+/* typedefs */
+typedef NCollection_List <Message_Msg> Message_ListOfMsg;
+typedef NCollection_List <Handle_Message_Alert> Message_ListOfAlert;
+typedef NCollection_Handle <Message_ArrayOfMsg> Message_HArrayOfMsg;
+typedef NCollection_List <Message_Msg>::Iterator Message_ListIteratorOfListOfMsg;
+typedef NCollection_Array1 <NCollection_Handle <Message_Msg>> Message_ArrayOfMsg;
+typedef NCollection_Sequence <Message_ProgressScale> Message_SequenceOfProgressScale;
+typedef NCollection_Sequence <Handle_Message_Printer> Message_SequenceOfPrinters;
+/* end typedefs declaration */
 
 /* public enums */
 enum Message_Status {

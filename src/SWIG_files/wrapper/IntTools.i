@@ -53,35 +53,56 @@ def register_handle(handle, base_object):
         pass
 };
 
-/* typedefs */
-/* end typedefs declaration */
-
+/* templates */
 /* templates */
 %define Handle(Class) opencascade::handle<Class>
 %enddef
 %template(IntTools_MapOfCurveSample) NCollection_Map <IntTools_CurveRangeSample , IntTools_CurveRangeSampleMapHasher>;
 %template(IntTools_ListOfSurfaceRangeSample) NCollection_List <IntTools_SurfaceRangeSample>;
-%template(IntTools_DataMapIteratorOfDataMapOfCurveSampleBox) NCollection_TListIterator<IntTools_DataMapOfCurveSampleBox>;
 %template(IntTools_ListOfBox) NCollection_List <Bnd_Box>;
 %template(IntTools_IndexedDataMapOfTransientAddress) NCollection_IndexedDataMap <Handle(Standard_Transient) , Standard_Address , TColStd_MapTransientHasher>;
-%template(IntTools_MapIteratorOfMapOfSurfaceSample) NCollection_TListIterator<IntTools_MapOfSurfaceSample>;
 %template(IntTools_MapOfSurfaceSample) NCollection_Map <IntTools_SurfaceRangeSample , IntTools_SurfaceRangeSampleMapHasher>;
 %template(IntTools_Array1OfRange) NCollection_Array1 <IntTools_Range>;
-%template(IntTools_ListIteratorOfListOfBox) NCollection_TListIterator<IntTools_ListOfBox>;
-%template(IntTools_ListIteratorOfListOfCurveRangeSample) NCollection_TListIterator<IntTools_ListOfCurveRangeSample>;
+%template(IntTools_ListIteratorOfListOfBox) NCollection_TListIterator<Bnd_Box>;
+%template(IntTools_ListIteratorOfListOfCurveRangeSample) NCollection_TListIterator<IntTools_CurveRangeSample>;
 %template(IntTools_SequenceOfRanges) NCollection_Sequence <IntTools_Range>;
 %template(IntTools_SequenceOfPntOn2Faces) NCollection_Sequence <IntTools_PntOn2Faces>;
 %template(IntTools_SequenceOfCurves) NCollection_Sequence <IntTools_Curve>;
 %template(IntTools_ListOfCurveRangeSample) NCollection_List <IntTools_CurveRangeSample>;
 %template(IntTools_SequenceOfCommonPrts) NCollection_Sequence <IntTools_CommonPrt>;
 %template(IntTools_SequenceOfRoots) NCollection_Sequence <IntTools_Root>;
-%template(IntTools_DataMapIteratorOfDataMapOfSurfaceSampleBox) NCollection_TListIterator<IntTools_DataMapOfSurfaceSampleBox>;
 %template(IntTools_DataMapOfCurveSampleBox) NCollection_DataMap <IntTools_CurveRangeSample , Bnd_Box , IntTools_CurveRangeSampleMapHasher>;
 %template(IntTools_Array1OfRoots) NCollection_Array1 <IntTools_Root>;
-%template(IntTools_MapIteratorOfMapOfCurveSample) NCollection_TListIterator<IntTools_MapOfCurveSample>;
-%template(IntTools_ListIteratorOfListOfSurfaceRangeSample) NCollection_TListIterator<IntTools_ListOfSurfaceRangeSample>;
+%template(IntTools_ListIteratorOfListOfSurfaceRangeSample) NCollection_TListIterator<IntTools_SurfaceRangeSample>;
 %template(IntTools_DataMapOfSurfaceSampleBox) NCollection_DataMap <IntTools_SurfaceRangeSample , Bnd_Box , IntTools_SurfaceRangeSampleMapHasher>;
 /* end templates declaration */
+
+/* end templates declaration */
+
+/* typedefs */
+typedef NCollection_Map <IntTools_CurveRangeSample , IntTools_CurveRangeSampleMapHasher> IntTools_MapOfCurveSample;
+typedef NCollection_List <IntTools_SurfaceRangeSample> IntTools_ListOfSurfaceRangeSample;
+typedef NCollection_DataMap <IntTools_CurveRangeSample , Bnd_Box , IntTools_CurveRangeSampleMapHasher>::Iterator IntTools_DataMapIteratorOfDataMapOfCurveSampleBox;
+typedef NCollection_List <Bnd_Box> IntTools_ListOfBox;
+typedef NCollection_IndexedDataMap <Handle_Standard_Transient , Standard_Address , TColStd_MapTransientHasher> IntTools_IndexedDataMapOfTransientAddress;
+typedef NCollection_Map <IntTools_SurfaceRangeSample , IntTools_SurfaceRangeSampleMapHasher>::Iterator IntTools_MapIteratorOfMapOfSurfaceSample;
+typedef NCollection_Map <IntTools_SurfaceRangeSample , IntTools_SurfaceRangeSampleMapHasher> IntTools_MapOfSurfaceSample;
+typedef NCollection_Array1 <IntTools_Range> IntTools_Array1OfRange;
+typedef NCollection_List <Bnd_Box>::Iterator IntTools_ListIteratorOfListOfBox;
+typedef NCollection_List <IntTools_CurveRangeSample>::Iterator IntTools_ListIteratorOfListOfCurveRangeSample;
+typedef NCollection_Sequence <IntTools_Range> IntTools_SequenceOfRanges;
+typedef NCollection_Sequence <IntTools_PntOn2Faces> IntTools_SequenceOfPntOn2Faces;
+typedef NCollection_Sequence <IntTools_Curve> IntTools_SequenceOfCurves;
+typedef NCollection_List <IntTools_CurveRangeSample> IntTools_ListOfCurveRangeSample;
+typedef NCollection_Sequence <IntTools_CommonPrt> IntTools_SequenceOfCommonPrts;
+typedef NCollection_Sequence <IntTools_Root> IntTools_SequenceOfRoots;
+typedef NCollection_DataMap <IntTools_SurfaceRangeSample , Bnd_Box , IntTools_SurfaceRangeSampleMapHasher>::Iterator IntTools_DataMapIteratorOfDataMapOfSurfaceSampleBox;
+typedef NCollection_DataMap <IntTools_CurveRangeSample , Bnd_Box , IntTools_CurveRangeSampleMapHasher> IntTools_DataMapOfCurveSampleBox;
+typedef NCollection_Array1 <IntTools_Root> IntTools_Array1OfRoots;
+typedef NCollection_Map <IntTools_CurveRangeSample , IntTools_CurveRangeSampleMapHasher>::Iterator IntTools_MapIteratorOfMapOfCurveSample;
+typedef NCollection_List <IntTools_SurfaceRangeSample>::Iterator IntTools_ListIteratorOfListOfSurfaceRangeSample;
+typedef NCollection_DataMap <IntTools_SurfaceRangeSample , Bnd_Box , IntTools_SurfaceRangeSampleMapHasher> IntTools_DataMapOfSurfaceSampleBox;
+/* end typedefs declaration */
 
 /* public enums */
 /* end public enums declaration */

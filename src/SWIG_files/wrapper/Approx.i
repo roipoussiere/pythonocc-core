@@ -53,9 +53,7 @@ def register_handle(handle, base_object):
         pass
 };
 
-/* typedefs */
-/* end typedefs declaration */
-
+/* templates */
 /* templates */
 %define Handle(Class) opencascade::handle<Class>
 %enddef
@@ -63,6 +61,14 @@ def register_handle(handle, base_object):
 %template(Approx_Array1OfAdHSurface) NCollection_Array1 <Handle_Adaptor3d_HSurface>;
 %template(Approx_Array1OfGTrsf2d) NCollection_Array1 <gp_GTrsf2d>;
 /* end templates declaration */
+
+/* end templates declaration */
+
+/* typedefs */
+typedef NCollection_Sequence <Handle_TColStd_HArray1OfReal> Approx_SequenceOfHArray1OfReal;
+typedef NCollection_Array1 <Handle_Adaptor3d_HSurface> Approx_Array1OfAdHSurface;
+typedef NCollection_Array1 <gp_GTrsf2d> Approx_Array1OfGTrsf2d;
+/* end typedefs declaration */
 
 /* public enums */
 enum Approx_Status {

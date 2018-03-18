@@ -53,27 +53,40 @@ def register_handle(handle, base_object):
         pass
 };
 
-/* typedefs */
-typedef TopOpeBRepBuild_GTopo * TopOpeBRepBuild_PGTopo;
-typedef TopOpeBRepBuild_Builder * TopOpeBRepBuild_PBuilder;
-typedef TopOpeBRepBuild_WireEdgeSet * TopOpeBRepBuild_PWireEdgeSet;
-/* end typedefs declaration */
-
+/* templates */
 /* templates */
 %define Handle(Class) opencascade::handle<Class>
 %enddef
-%template(TopOpeBRepBuild_DataMapIteratorOfDataMapOfShapeListOfShapeListOfShape) NCollection_TListIterator<TopOpeBRepBuild_DataMapOfShapeListOfShapeListOfShape>;
 %template(TopOpeBRepBuild_ListOfListOfLoop) NCollection_List <TopOpeBRepBuild_ListOfLoop>;
 %template(TopOpeBRepBuild_ListOfShapeListOfShape) NCollection_List <TopOpeBRepBuild_ShapeListOfShape>;
 %template(TopOpeBRepBuild_ListOfPave) NCollection_List <Handle(TopOpeBRepBuild_Pave)>;
 %template(TopOpeBRepBuild_IndexedDataMapOfShapeVertexInfo) NCollection_IndexedDataMap <TopoDS_Shape , TopOpeBRepBuild_VertexInfo , TopTools_ShapeMapHasher>;
-%template(TopOpeBRepBuild_ListIteratorOfListOfPave) NCollection_TListIterator<TopOpeBRepBuild_ListOfPave>;
+%template(TopOpeBRepBuild_ListIteratorOfListOfPave) NCollection_TListIterator<Handle(TopOpeBRepBuild_Pave)>;
 %template(TopOpeBRepBuild_ListOfLoop) NCollection_List <Handle(TopOpeBRepBuild_Loop)>;
-%template(TopOpeBRepBuild_ListIteratorOfListOfShapeListOfShape) NCollection_TListIterator<TopOpeBRepBuild_ListOfShapeListOfShape>;
-%template(TopOpeBRepBuild_ListIteratorOfListOfLoop) NCollection_TListIterator<TopOpeBRepBuild_ListOfLoop>;
+%template(TopOpeBRepBuild_ListIteratorOfListOfShapeListOfShape) NCollection_TListIterator<TopOpeBRepBuild_ShapeListOfShape>;
+%template(TopOpeBRepBuild_ListIteratorOfListOfLoop) NCollection_TListIterator<Handle(TopOpeBRepBuild_Loop)>;
 %template(TopOpeBRepBuild_DataMapOfShapeListOfShapeListOfShape) NCollection_DataMap <TopoDS_Shape , TopOpeBRepBuild_ListOfShapeListOfShape , TopTools_ShapeMapHasher>;
-%template(TopOpeBRepBuild_ListIteratorOfListOfListOfLoop) NCollection_TListIterator<TopOpeBRepBuild_ListOfListOfLoop>;
+%template(TopOpeBRepBuild_ListIteratorOfListOfListOfLoop) NCollection_TListIterator<TopOpeBRepBuild_ListOfLoop>;
 /* end templates declaration */
+
+/* end templates declaration */
+
+/* typedefs */
+typedef NCollection_DataMap <TopoDS_Shape , TopOpeBRepBuild_ListOfShapeListOfShape , TopTools_ShapeMapHasher>::Iterator TopOpeBRepBuild_DataMapIteratorOfDataMapOfShapeListOfShapeListOfShape;
+typedef NCollection_List <TopOpeBRepBuild_ListOfLoop> TopOpeBRepBuild_ListOfListOfLoop;
+typedef TopOpeBRepBuild_GTopo * TopOpeBRepBuild_PGTopo;
+typedef NCollection_List <TopOpeBRepBuild_ShapeListOfShape> TopOpeBRepBuild_ListOfShapeListOfShape;
+typedef NCollection_List <Handle_TopOpeBRepBuild_Pave> TopOpeBRepBuild_ListOfPave;
+typedef TopOpeBRepBuild_Builder * TopOpeBRepBuild_PBuilder;
+typedef NCollection_IndexedDataMap <TopoDS_Shape , TopOpeBRepBuild_VertexInfo , TopTools_ShapeMapHasher> TopOpeBRepBuild_IndexedDataMapOfShapeVertexInfo;
+typedef NCollection_List <Handle_TopOpeBRepBuild_Pave>::Iterator TopOpeBRepBuild_ListIteratorOfListOfPave;
+typedef NCollection_List <Handle_TopOpeBRepBuild_Loop> TopOpeBRepBuild_ListOfLoop;
+typedef NCollection_List <TopOpeBRepBuild_ShapeListOfShape>::Iterator TopOpeBRepBuild_ListIteratorOfListOfShapeListOfShape;
+typedef NCollection_List <Handle_TopOpeBRepBuild_Loop>::Iterator TopOpeBRepBuild_ListIteratorOfListOfLoop;
+typedef TopOpeBRepBuild_WireEdgeSet * TopOpeBRepBuild_PWireEdgeSet;
+typedef NCollection_DataMap <TopoDS_Shape , TopOpeBRepBuild_ListOfShapeListOfShape , TopTools_ShapeMapHasher> TopOpeBRepBuild_DataMapOfShapeListOfShapeListOfShape;
+typedef NCollection_List <TopOpeBRepBuild_ListOfLoop>::Iterator TopOpeBRepBuild_ListIteratorOfListOfListOfLoop;
+/* end typedefs declaration */
 
 /* public enums */
 enum TopOpeBRepBuild_LoopEnum {

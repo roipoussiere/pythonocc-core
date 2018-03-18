@@ -53,9 +53,7 @@ def register_handle(handle, base_object):
         pass
 };
 
-/* typedefs */
-/* end typedefs declaration */
-
+/* templates */
 /* templates */
 %define Handle(Class) opencascade::handle<Class>
 %enddef
@@ -64,6 +62,15 @@ def register_handle(handle, base_object):
 %template(Intf_SeqOfTangentZone) NCollection_Sequence <Intf_TangentZone>;
 %template(Intf_Array1OfLin) NCollection_Array1 <gp_Lin>;
 /* end templates declaration */
+
+/* end templates declaration */
+
+/* typedefs */
+typedef NCollection_Sequence <Intf_SectionLine> Intf_SeqOfSectionLine;
+typedef NCollection_Sequence <Intf_SectionPoint> Intf_SeqOfSectionPoint;
+typedef NCollection_Sequence <Intf_TangentZone> Intf_SeqOfTangentZone;
+typedef NCollection_Array1 <gp_Lin> Intf_Array1OfLin;
+/* end typedefs declaration */
 
 /* public enums */
 enum Intf_PIType {

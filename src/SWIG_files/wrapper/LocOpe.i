@@ -53,18 +53,25 @@ def register_handle(handle, base_object):
         pass
 };
 
-/* typedefs */
-/* end typedefs declaration */
-
+/* templates */
 /* templates */
 %define Handle(Class) opencascade::handle<Class>
 %enddef
-%template(LocOpe_DataMapIteratorOfDataMapOfShapePnt) NCollection_TListIterator<LocOpe_DataMapOfShapePnt>;
 %template(LocOpe_DataMapOfShapePnt) NCollection_DataMap <TopoDS_Shape , gp_Pnt , TopTools_ShapeMapHasher>;
 %template(LocOpe_SequenceOfPntFace) NCollection_Sequence <LocOpe_PntFace>;
 %template(LocOpe_SequenceOfLin) NCollection_Sequence <gp_Lin>;
 %template(LocOpe_SequenceOfCirc) NCollection_Sequence <gp_Circ>;
 /* end templates declaration */
+
+/* end templates declaration */
+
+/* typedefs */
+typedef NCollection_DataMap <TopoDS_Shape , gp_Pnt , TopTools_ShapeMapHasher>::Iterator LocOpe_DataMapIteratorOfDataMapOfShapePnt;
+typedef NCollection_DataMap <TopoDS_Shape , gp_Pnt , TopTools_ShapeMapHasher> LocOpe_DataMapOfShapePnt;
+typedef NCollection_Sequence <LocOpe_PntFace> LocOpe_SequenceOfPntFace;
+typedef NCollection_Sequence <gp_Lin> LocOpe_SequenceOfLin;
+typedef NCollection_Sequence <gp_Circ> LocOpe_SequenceOfCirc;
+/* end typedefs declaration */
 
 /* public enums */
 enum LocOpe_Operation {

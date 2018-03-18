@@ -53,15 +53,20 @@ def register_handle(handle, base_object):
         pass
 };
 
-/* typedefs */
-/* end typedefs declaration */
-
+/* templates */
 /* templates */
 %define Handle(Class) opencascade::handle<Class>
 %enddef
 %template(TColQuantity_Array1OfLength) NCollection_Array1 <Quantity_Length>;
 %template(TColQuantity_Array2OfLength) NCollection_Array2 <Quantity_Length>;
 /* end templates declaration */
+
+/* end templates declaration */
+
+/* typedefs */
+typedef NCollection_Array1 <Quantity_Length> TColQuantity_Array1OfLength;
+typedef NCollection_Array2 <Quantity_Length> TColQuantity_Array2OfLength;
+/* end typedefs declaration */
 
 /* public enums */
 /* end public enums declaration */

@@ -53,9 +53,7 @@ def register_handle(handle, base_object):
         pass
 };
 
-/* typedefs */
-/* end typedefs declaration */
-
+/* templates */
 /* templates */
 %define Handle(Class) opencascade::handle<Class>
 %enddef
@@ -63,10 +61,22 @@ def register_handle(handle, base_object):
 %template(HLRBRep_SeqOfShapeBounds) NCollection_Sequence <HLRBRep_ShapeBounds>;
 %template(HLRBRep_ListOfBPoint) NCollection_List <HLRBRep_BiPoint>;
 %template(HLRBRep_Array1OfFData) NCollection_Array1 <HLRBRep_FaceData>;
-%template(HLRBRep_ListIteratorOfListOfBPoint) NCollection_TListIterator<HLRBRep_ListOfBPoint>;
+%template(HLRBRep_ListIteratorOfListOfBPoint) NCollection_TListIterator<HLRBRep_BiPoint>;
 %template(HLRBRep_ListOfBPnt2D) NCollection_List <HLRBRep_BiPnt2D>;
-%template(HLRBRep_ListIteratorOfListOfBPnt2D) NCollection_TListIterator<HLRBRep_ListOfBPnt2D>;
+%template(HLRBRep_ListIteratorOfListOfBPnt2D) NCollection_TListIterator<HLRBRep_BiPnt2D>;
 /* end templates declaration */
+
+/* end templates declaration */
+
+/* typedefs */
+typedef NCollection_Array1 <HLRBRep_EdgeData> HLRBRep_Array1OfEData;
+typedef NCollection_Sequence <HLRBRep_ShapeBounds> HLRBRep_SeqOfShapeBounds;
+typedef NCollection_List <HLRBRep_BiPoint> HLRBRep_ListOfBPoint;
+typedef NCollection_Array1 <HLRBRep_FaceData> HLRBRep_Array1OfFData;
+typedef NCollection_List <HLRBRep_BiPoint>::Iterator HLRBRep_ListIteratorOfListOfBPoint;
+typedef NCollection_List <HLRBRep_BiPnt2D> HLRBRep_ListOfBPnt2D;
+typedef NCollection_List <HLRBRep_BiPnt2D>::Iterator HLRBRep_ListIteratorOfListOfBPnt2D;
+/* end typedefs declaration */
 
 /* public enums */
 enum HLRBRep_TypeOfResultingEdge {
