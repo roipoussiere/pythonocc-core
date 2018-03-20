@@ -58,7 +58,7 @@ def register_handle(handle, base_object):
 %define Handle(Class) opencascade::handle<Class>
 %enddef
 /* end templates declaration */
-
+%include "BRepAlgoAPI_Algo.hxx"
 /* end templates declaration */
 
 /* typedefs */
