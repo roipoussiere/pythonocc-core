@@ -40,9 +40,9 @@ from OCC.Core.Geom import Handle_Geom_Curve, Handle_Geom_Surface
 from OCC.Core.Geom2d import Handle_Geom2d_Curve
 from OCC.Core.Visualization import Display3d
 from OCC.Core.V3d import (V3d_ZBUFFER, V3d_PHONG, V3d_Zpos, V3d_Zneg, V3d_Xpos,
-                     V3d_Xneg, V3d_Ypos, V3d_Yneg, V3d_XposYnegZpos, V3d_TEX_ALL,
-                     V3d_TEX_NONE, V3d_TEX_ENVIRONMENT,
-                     V3d_LayerMgr)
+                     V3d_Xneg, V3d_Ypos, V3d_Yneg, V3d_XposYnegZpos)#, V3d_LayerMgr)
+                     #V3d_TEX_ALL, V3d_TEX_NONE, V3d_TEX_ENVIRONMENT,
+                    
 from OCC.Core.TCollection import TCollection_ExtendedString, TCollection_AsciiString
 from OCC.Core.Quantity import (Quantity_Color, Quantity_TOC_RGB, Quantity_NOC_WHITE,
                           Quantity_NOC_BLACK, Quantity_NOC_BLUE1,
@@ -56,7 +56,7 @@ from OCC.Core.Graphic3d import (Graphic3d_NOM_NEON_GNC, Graphic3d_NOT_ENV_CLOUDS
                            Graphic3d_Camera, Graphic3d_RM_RAYTRACING,
                            Graphic3d_RM_RASTERIZATION,
                            Graphic3d_StereoMode_QuadBuffer,
-                           Graphic3d_RenderingParams)
+                           Graphic3d_RenderingParams, Graphic3d_MaterialAspect)
 from OCC.Core.Aspect import Aspect_TOTP_RIGHT_LOWER, Aspect_FM_STRETCH, Aspect_FM_NONE
 
 # Shaders and Units definition must be found by occ
@@ -167,7 +167,7 @@ class Viewer3d(Display3d):
             self._select_callbacks.remove(callback)
 
     def MoveTo(self, X, Y):
-        self.Context.MoveTo(X, Y, self.View_handle)
+        self.Context.MoveTo(X, Y, self.View_handle, True)
 
     def FitAll(self):
         self.View.ZFitAll()
@@ -212,16 +212,18 @@ class Viewer3d(Display3d):
         self._struc_mgr = self.Context.MainPrsMgr().GetObject().StructureManager()
 
         # overlayer
-        self.OverLayer_handle = self.Viewer.Viewer().GetObject().OverLayer()
-        if self.OverLayer_handle.IsNull():
-            aMgr = V3d_LayerMgr(self.View_handle)
-            self.OverLayer_handle = aMgr.Overlay()
-            self.View.SetLayerMgr(aMgr.GetHandle())
-        self.OverLayer = self.OverLayer_handle.GetObject()
-        print("Layer manager created")
-        height, width = self.View.Window().GetObject().Size()
-        print("Layer dimensions: %i, %i" % (height, width))
-        self.OverLayer.SetViewport(height, width)
+        #print(self.Viewer)
+        #print(dir(self.Viewer))
+        #self.OverLayer_handle = self.Viewer.Viewer().GetObject().OverLayer()
+        #if self.OverLayer_handle.IsNull():
+        #    aMgr = V3d_LayerMgr(self.View_handle)
+        #    self.OverLayer_handle = aMgr.Overlay()
+        #    self.View.SetLayerMgr(aMgr.GetHandle())
+        #self.OverLayer = self.OverLayer_handle.GetObject()
+        #print("Layer manager created")
+        #height, width = self.View.Window().GetObject().Size()
+        #print("Layer dimensions: %i, %i" % (height, width))
+        #self.OverLayer.SetViewport(height, width)
 
         # turn self._inited flag to True
         self._inited = True
@@ -234,10 +236,10 @@ class Viewer3d(Display3d):
 
     def Repaint(self):
         # overlayed objects
-        self.OverLayer.Begin()
-        for item in self._overlay_items:
-            item.RedrawLayerPrs()
-        self.OverLayer.End()
+        #self.OverLayer.Begin()
+        #for item in self._overlay_items:
+        #    item.RedrawLayerPrs()
+        #self.OverLayer.End()
         # finally redraw the view
         self.Viewer.Redraw()
 
@@ -247,7 +249,7 @@ class Viewer3d(Display3d):
 
     def SetModeShaded(self):
         self.View.SetComputedMode(False)
-        self.Context.SetDisplayMode(AIS_Shaded)
+        self.Context.SetDisplayMode(AIS_Shaded, True)
 
     def SetModeHLR(self):
         self.View.SetComputedMode(True)
@@ -293,11 +295,11 @@ class Viewer3d(Display3d):
         """
         texture_env = Graphic3d_TextureEnv(name_of_texture)
         self.View.SetTextureEnv(texture_env.GetHandle())
-        self.View.SetSurfaceDetail(V3d_TEX_ENVIRONMENT)
+        #self.View.SetSurfaceDetail(V3d_TEX_ENVIRONMENT)
         self.View.Redraw()
 
     def DisableTextureEnv(self):
-        self.View.SetSurfaceDetail(V3d_TEX_NONE)
+        #self.View.SetSurfaceDetail(V3d_TEX_NONE)
         a_null_texture = Handle_Graphic3d_TextureEnv()
         self.View.SetTextureEnv(a_null_texture) # Passing null handle to clear the texture data
         self.View.Redraw()
@@ -358,7 +360,8 @@ class Viewer3d(Display3d):
     def display_trihedron(self):
         """ Show a black trihedron in lower right corner
         """
-        self.View.TriedronDisplay(Aspect_TOTP_RIGHT_LOWER, Quantity_NOC_BLACK, 0.1, V3d_ZBUFFER)
+        pass
+        #self.View.TriedronDisplay(Aspect_TOTP_RIGHT_LOWER, Quantity_NOC_BLACK, 0.1, V3d_ZBUFFER)
 
     def set_bg_gradient_color(self, R1, G1, B1, R2, G2, B2):
         """ set a bg vertical gradient color.
@@ -520,7 +523,7 @@ class Viewer3d(Display3d):
         if material is None:
             #The default material is too shiny to show the object
             #color well, so I set it to something less reflective
-            shape_to_display.SetMaterial(Graphic3d_NOM_NEON_GNC)
+            shape_to_display.SetMaterial(Graphic3d_MaterialAspect(Graphic3d_NOM_NEON_GNC))
         if color:
             if isinstance(color, str):
                 color = get_color_from_name(color)
@@ -561,17 +564,17 @@ class Viewer3d(Display3d):
         return self.DisplayShape(shapes, color=clr, update=update)
 
     def EnableAntiAliasing(self):
-        self.View.SetAntialiasingOn()
+        #self.View.SetAntialiasingOn()
         self.Repaint()
 
     def DisableAntiAliasing(self):
-        self.View.SetAntialiasingOff()
+        #self.View.SetAntialiasingOff()
         self.Repaint()
 
     def EraseAll(self):
         # nessecary to remove text added by DisplayMessage
         self.Context.PurgeDisplay()
-        self.Context.EraseAll()
+        self.Context.EraseAll(True)
 
     def Tumble(self, num_images, animation=True):
         self.View.Tumble(num_images, animation)
@@ -580,14 +583,14 @@ class Viewer3d(Display3d):
         self.View.Pan(dx, dy)
 
     def SetSelectionMode(self, mode=None):
-        self.Context.CloseAllContexts()
+        self.Context.CloseAllContexts(True)
         self.Context.OpenLocalContext()
         topo_level = next(modes)
         if mode is None:
             self.Context.ActivateStandardMode(topo_level)
         else:
             self.Context.ActivateStandardMode(mode)
-        self.Context.UpdateSelected()
+        self.Context.UpdateSelected(True)
 
     def SetSelectionModeVertex(self):
         self.SetSelectionMode(TopAbs_VERTEX)
@@ -614,7 +617,7 @@ class Viewer3d(Display3d):
         return self.selected_shape
 
     def SelectArea(self, Xmin, Ymin, Xmax, Ymax):
-        self.Context.Select(Xmin, Ymin, Xmax, Ymax, self.View_handle)
+        self.Context.Select(Xmin, Ymin, Xmax, Ymax, self.View_handle, True)
         self.Context.InitSelected()
         # reinit the selected_shapes list
         self.selected_shapes = []
@@ -627,7 +630,7 @@ class Viewer3d(Display3d):
             callback(self.selected_shapes, Xmin, Ymin, Xmax, Ymax)
 
     def Select(self, X, Y):
-        self.Context.Select()
+        self.Context.Select(True)
         self.Context.InitSelected()
 
         self.selected_shapes = []

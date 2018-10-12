@@ -93,6 +93,12 @@ if(APPLE)
   endif(DEFINED ENV{MACOSX_DEPLOYMENT_TARGET})
 endif(APPLE)
 
+if(UNIX)
+   if(NOT APPLE)
+       add_definitions(--std=c++11)
+   endif(NOT APPLE)
+endif(UNIX)
+
 ########
 # SWIG #
 ########
@@ -158,7 +164,7 @@ set(PYTHONOCC_INSTALL_DIRECTORY ${python_lib}/OCC CACHE PATH "pythonOCC install 
 # TODO: this should be build from the module list
 set(OCE_MODEL_LIBRARIES TKernel TKMath TKG2d TKG3d TKGeomBase TKBRep TKGeomAlgo
     TKTopAlgo TKPrim TKBO TKHLR TKMesh TKShHealing TKXMesh TKBool TKFillet TKFeat TKOffset)
-set(OCE_VISUALIZATION_LIBRARIES TKService TKV3d TKMeshVS TKOpenGl TKVoxel TKNIS)
+set(OCE_VISUALIZATION_LIBRARIES TKService TKV3d TKMeshVS TKOpenGl)
 set(OCE_DATAEXCHANGE_LIBRARIES TKSTL TKXSBase TKSTEPBase TKIGES TKSTEPAttr TKSTEP209
     TKSTEP TKVRML)
 set(OCE_OCAF_LIBRARIES TKLCAF TKXCAF TKXDESTEP TKXDEIGES TKXSBase TKV3d)
@@ -174,7 +180,7 @@ if(UNIX)
     ######### Unix/Linux ###########
     set(PLATFORM Unix)
   endif(APPLE)
-  set(CMAKE_SWIG_FLAGS -O -w302,401,314,509,512
+  set(CMAKE_SWIG_FLAGS -O -w302,401,314,509,512,404
         -DCSFDB -DHAVE_CONFIG_H -DOCC_CONVERT_SIGNALS)
   add_definitions(-DHAVE_CONFIG_H -DCSFDB -DOCC_CONVERT_SIGNALS)
 else(UNIX)
@@ -264,7 +270,7 @@ foreach(OCE_MODULE ${OCE_TOOLKIT_MODEL})
   if (CMAKE_VERSION LESS 3.8)
     swig_add_module(${OCE_MODULE} python ${FILE})
   else (CMAKE_VERSION LESS 3.8)
-    swig_add_library (${OCE_MODULE} LANGUAGE python SOURCES ${FILE} TYPE MODULE)
+    swig_add_library(${OCE_MODULE} LANGUAGE python SOURCES ${FILE} TYPE MODULE)
   endif (CMAKE_VERSION LESS 3.8)
  
   swig_link_libraries(${OCE_MODULE} ${PYTHON_LIBRARIES} ${OCE_MODEL_LIBRARIES})
@@ -322,46 +328,48 @@ endif(PYTHONOCC_WRAP_VISU)
 ##########
 # Addons #
 ##########
-execute_process(COMMAND ${CMAKE_COMMAND} -E make_directory src/Addons)
-set_source_files_properties(${CMAKE_CURRENT_SOURCE_DIR}/src/Addons/Addons.i PROPERTIES CPLUSPLUS ON)
-include_directories(${CMAKE_CURRENT_SOURCE_DIR}/src/Addons)
-set(ADDONS_SOURCE_FILES
-${CMAKE_CURRENT_SOURCE_DIR}/src/Addons/Addons.i
-${CMAKE_CURRENT_SOURCE_DIR}/src/Addons/Font3d.cpp
-${CMAKE_CURRENT_SOURCE_DIR}/src/Addons/TextItem.cpp
-${CMAKE_CURRENT_SOURCE_DIR}/src/Addons/LineItem.cpp
-${CMAKE_CURRENT_SOURCE_DIR}/src/Addons/TextureItem.cpp
-)
-
-if (CMAKE_VERSION LESS 3.8)
-  swig_add_module(Addons python ${ADDONS_SOURCE_FILES})
-else (CMAKE_VERSION LESS 3.8)
-  swig_add_library(Addons LANGUAGE python SOURCES ${ADDONS_SOURCE_FILES} TYPE MODULE)
-endif()
-
-swig_link_libraries(Addons ${PYTHON_LIBRARIES} ${OCE_MODEL_LIBRARIES} ${OCE_VISUALIZATION_LIBRARIES})
-if(APPLE)
-    swig_link_libraries(Addons ${PYTHON_LIBRARIES} ${OCE_MODEL_LIBRARIES} ${OCE_VISUALIZATION_LIBRARIES} ${OPENGL_LIBRARIES})
-endif(APPLE)
+# TODO : port TO NEW OCE VERSION !!
+#execute_process(COMMAND ${CMAKE_COMMAND} -E make_directory src/Addons)
+#set_source_files_properties(${CMAKE_CURRENT_SOURCE_DIR}/src/Addons/Addons.i PROPERTIES CPLUSPLUS ON)
+#include_directories(${CMAKE_CURRENT_SOURCE_DIR}/src/Addons)
+#set(ADDONS_SOURCE_FILES
+#${CMAKE_CURRENT_SOURCE_DIR}/src/Addons/Addons.i
+#${CMAKE_CURRENT_SOURCE_DIR}/src/Addons/Font3d.cpp
+#${CMAKE_CURRENT_SOURCE_DIR}/src/Addons/TextItem.cpp
+#${CMAKE_CURRENT_SOURCE_DIR}/src/Addons/LineItem.cpp
+#${CMAKE_CURRENT_SOURCE_DIR}/src/Addons/TextureItem.cpp
+#)
+#
+#if (CMAKE_VERSION LESS 3.8)
+#  swig_add_module(Addons python ${ADDONS_SOURCE_FILES})
+#else (CMAKE_VERSION LESS 3.8)
+#  swig_add_library(Addons LANGUAGE python SOURCES ${ADDONS_SOURCE_FILES} TYPE MODULE)
+#endif()
+#
+#swig_link_libraries(Addons ${PYTHON_LIBRARIES} ${OCE_MODEL_LIBRARIES} ${OCE_VISUALIZATION_LIBRARIES})
+#if(APPLE)
+#    swig_link_libraries(Addons ${PYTHON_LIBRARIES} ${OCE_MODEL_LIBRARIES} ${OCE_VISUALIZATION_LIBRARIES} #${OPENGL_LIBRARIES})
+#endif(APPLE)
 
 ############
 # Splitter #
 ############
-execute_process(COMMAND ${CMAKE_COMMAND} -E make_directory src/Splitter)
-set_source_files_properties(${CMAKE_CURRENT_SOURCE_DIR}/src/Splitter/GEOMAlgo.i PROPERTIES CPLUSPLUS ON)
-include_directories(${CMAKE_CURRENT_SOURCE_DIR}/src/Splitter)
-set(SPLITTER_SOURCE_FILES
-${CMAKE_CURRENT_SOURCE_DIR}/src/Splitter/GEOMAlgo.i
-${CMAKE_CURRENT_SOURCE_DIR}/src/Splitter/GEOMAlgo_Splitter.cxx
-)
+# TODO : port to OCCT720
+#execute_process(COMMAND ${CMAKE_COMMAND} -E make_directory src/Splitter)
+#set_source_files_properties(${CMAKE_CURRENT_SOURCE_DIR}/src/Splitter/GEOMAlgo.i PROPERTIES CPLUSPLUS ON)
+#include_directories(${CMAKE_CURRENT_SOURCE_DIR}/src/Splitter)
+#set(SPLITTER_SOURCE_FILES
+#${CMAKE_CURRENT_SOURCE_DIR}/src/Splitter/GEOMAlgo.i
+#${CMAKE_CURRENT_SOURCE_DIR}/src/Splitter/GEOMAlgo_Splitter.cxx
+#)
+#
+#if (CMAKE_VERSION LESS 3.8)
+  #swig_add_module(GEOMAlgo python ${SPLITTER_SOURCE_FILES})
+#else (CMAKE_VERSION LESS 3.8)
+  #swig_add_library(GEOMAlgo LANGUAGE python SOURCES ${SPLITTER_SOURCE_FILES} TYPE MODULE)
+#endif()
 
-if (CMAKE_VERSION LESS 3.8)
-  swig_add_module(GEOMAlgo python ${SPLITTER_SOURCE_FILES})
-else (CMAKE_VERSION LESS 3.8)
-  swig_add_library(GEOMAlgo LANGUAGE python SOURCES ${SPLITTER_SOURCE_FILES} TYPE MODULE)
-endif()
-
-swig_link_libraries(GEOMAlgo ${PYTHON_LIBRARIES} ${OCE_MODEL_LIBRARIES} ${OCE_VISUALIZATION_LIBRARIES})
+#swig_link_libraries(GEOMAlgo ${PYTHON_LIBRARIES} ${OCE_MODEL_LIBRARIES} ${OCE_VISUALIZATION_LIBRARIES})
 
 ################
 # DataExchange #
@@ -467,8 +475,8 @@ endforeach(SMESH_MODULE)
 endif(PYTHONOCC_WRAP_SMESH)
 
 # install addons
-install(FILES ${BUILD_DIR}/Addons.py DESTINATION ${PYTHONOCC_INSTALL_DIRECTORY}/Core )
-install(TARGETS _Addons DESTINATION ${PYTHONOCC_INSTALL_DIRECTORY}/Core )
+#install(FILES ${BUILD_DIR}/Addons.py DESTINATION ${PYTHONOCC_INSTALL_DIRECTORY}/Core )
+#install(TARGETS _Addons DESTINATION ${PYTHONOCC_INSTALL_DIRECTORY}/Core )
 install(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/src/Display DESTINATION ${PYTHONOCC_INSTALL_DIRECTORY} )
 # install LICENSE file
 install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/LICENSE DESTINATION ${PYTHONOCC_INSTALL_DIRECTORY} )
@@ -478,8 +486,8 @@ install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/AUTHORS DESTINATION ${PYTHONOCC_INSTAL
 install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/cmake/__init__.py DESTINATION ${PYTHONOCC_INSTALL_DIRECTORY} )
 install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/cmake/__init__.py DESTINATION ${PYTHONOCC_INSTALL_DIRECTORY}/Core)
 # install Splitter to Core
-install(FILES ${BUILD_DIR}/GEOMAlgo.py DESTINATION ${PYTHONOCC_INSTALL_DIRECTORY}/Core )
-install(TARGETS _GEOMAlgo DESTINATION ${PYTHONOCC_INSTALL_DIRECTORY}/Core )
+#install(FILES ${BUILD_DIR}/GEOMAlgo.py DESTINATION ${PYTHONOCC_INSTALL_DIRECTORY}/Core )
+#install(TARGETS _GEOMAlgo DESTINATION ${PYTHONOCC_INSTALL_DIRECTORY}/Core )
 # install Extend
 install(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/src/Extend DESTINATION ${PYTHONOCC_INSTALL_DIRECTORY} )
 # install deprecated modules

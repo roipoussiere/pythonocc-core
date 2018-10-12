@@ -9705,6 +9705,8 @@ class AIS_Shape : public AIS_InteractiveObject {
         register_handle(self, args[0])
 %}
 
+%typedef Handle(AIS_Shape) Handle_Standard_Transient
+
 %nodefaultctor Handle_AIS_Shape;
 class Handle_AIS_Shape : public Handle_AIS_InteractiveObject {
 

@@ -1,5 +1,6 @@
 LIST(APPEND OCE_TOOLKIT_MODEL
-# TKERNEL
+
+# TKernel
         FSD
         MMgt
         OSD
@@ -35,6 +36,7 @@ LIST(APPEND OCE_TOOLKIT_MODEL
         gp
         TColgp
         TopLoc
+        BVH
 # TKAdvTools
         Dynamic
         Materials
@@ -208,7 +210,8 @@ LIST(APPEND OCE_TOOLKIT_MODEL
         Draft
         BRepOffset
         BiTgte
-)
+
+        )
 
 LIST(APPEND OCE_TOOLKIT_VISUALIZATION
 # TKVoxel
@@ -221,8 +224,6 @@ LIST(APPEND OCE_TOOLKIT_VISUALIZATION
         Image
         InterfaceGraphic
         TColQuantity
-# TKNIS
-        NIS
 # TKV3d
         V3d
         Graphic3d
@@ -235,11 +236,12 @@ LIST(APPEND OCE_TOOLKIT_VISUALIZATION
         AIS
         DsgPrs
         StdSelect
-        )
+)
 
 LIST(APPEND OCE_TOOLKIT_DATAEXCHANGE
 # TKIGES
         IGESControl
+        IGESData
 # TKSTEPAttr
         RWStepDimTol
         RWStepVisual
@@ -270,6 +272,7 @@ LIST(APPEND OCE_TOOLKIT_DATAEXCHANGE
         StlTransfer
         RWStl
 # TKSTEPBase
+        StepData
         StepBasic
         RWStepBasic
         StepRepr
@@ -282,31 +285,8 @@ LIST(APPEND OCE_TOOLKIT_DATAEXCHANGE
         Interface
         IFSelect
         XSControl
-        )
+)
 
 LIST(APPEND OCE_TOOLKIT_OCAF
-# TKCAF
-        TDataXtd
-        TNaming
-        TPrsStd
-        AppStd
-# TKLCAF
-        TDF
-        TDataStd
-        TFunction
-        TDocStd
-        AppStdL
-# TKCDF
-        CDF
-        CDM
-        PCDM
-        UTL
-# TKXCAF
-        XCAFApp
-        XCAFDoc
-        XCAFPrs
-# TKXDESTEP
-        STEPCAFControl
-# TKXDEIGES
-        IGESCAFControl
+
         )

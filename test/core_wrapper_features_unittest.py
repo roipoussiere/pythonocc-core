@@ -29,6 +29,7 @@ from OCC.Core.BRepBuilderAPI import (BRepBuilderAPI_MakeVertex,
 from OCC.Core.gp import (gp_Pnt, gp_Vec, gp_Pnt2d, gp_Lin, gp_Dir,
                     gp_Quaternion, gp_QuaternionSLerp)
 from OCC.Core.GC import GC_MakeSegment
+import OCC.Core.StepShape
 from OCC.Core.STEPControl import STEPControl_Writer
 from OCC.Core.Interface import Interface_Static_SetCVal, Interface_Static_CVal
 from OCC.Core.GCE2d import GCE2d_MakeSegment
@@ -45,10 +46,11 @@ from OCC.Core.BRep import BRep_Builder
 from OCC.Core.ChFiDS import ChFiDS_ChamfSpine
 from OCC.Core.Graphic3d import Graphic3d_RenderingParams
 from OCC.Core.AIS import (Handle_AIS_Shape, Handle_AIS_Shape_DownCast,
-                     Handle_AIS_InteractiveObject,
-                     AIS_InteractiveObject)
+                          Handle_AIS_InteractiveObject,
+                          AIS_InteractiveObject)
 from OCC.Core.BRepCheck import (BRepCheck_ListIteratorOfListOfStatus,
-                           BRepCheck_ListOfStatus, BRepCheck_Multiple3DCurve,
+                           BRepCheck_ListOfStatus, 
+                           BRepCheck_Multiple3DCurve,
                            BRepCheck_EmptyWire)
 
 class TestWrapperFeatures(unittest.TestCase):
@@ -443,7 +445,8 @@ class TestWrapperFeatures(unittest.TestCase):
     def test_default_constructor_DEFINE_STANDARD_ALLOC(self):
         ''' OCE classes the defines standard alllocator can be instanciated
         if they're not abstract nor define any protected or private
-        constructor '''
+        constructor
+        Update for occt620: not so sure '''
         BRep_Builder()
         TopoDS_Builder()
         ShapeAnalysis_Curve()
@@ -534,7 +537,7 @@ class TestWrapperFeatures(unittest.TestCase):
         import warnings
         catched = False
         with warnings.catch_warnings():
-            from OCC.gp import gp_Pln
+            from OCC.Core.gp import gp_Pln
             catched = True
         assert catched
 

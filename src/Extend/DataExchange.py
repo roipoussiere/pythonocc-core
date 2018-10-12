@@ -19,12 +19,13 @@ import os
 
 from OCC.Core.TopoDS import TopoDS_Shape
 from OCC.Core.BRepMesh import BRepMesh_IncrementalMesh
-from OCC.Core.StlAPI import StlAPI_Reader, StlAPI_Writer
+from OCC.Core.StlAPI import stlapi_Read, StlAPI_Writer
 
 from OCC.Core.BRep import BRep_Builder
 from OCC.Core.TopoDS import TopoDS_Compound
 
 from OCC.Core.IGESControl import IGESControl_Reader, IGESControl_Writer
+import OCC.Core.StepShape  # TODO: circular references !!
 from OCC.Core.STEPControl import STEPControl_Reader, STEPControl_Writer, STEPControl_AsIs
 from OCC.Core.Interface import Interface_Static_SetCVal
 from OCC.Core.IFSelect import IFSelect_RetDone, IFSelect_ItemsByEntity
@@ -122,9 +123,8 @@ def read_stl_file(filename):
     """
     assert os.path.isfile(filename)
 
-    stl_reader = StlAPI_Reader()
     the_shape = TopoDS_Shape()
-    stl_reader.Read(the_shape, filename)
+    stlapi_Read(the_shape, filename)
 
     assert not the_shape.IsNull()
 
