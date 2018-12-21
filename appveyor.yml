@@ -95,7 +95,8 @@ install:
     - cmd: call %CONDA_INSTALL_LOCN%\Scripts\activate.bat
     - cmd: conda config --set show_channel_urls true
     - cmd: conda update conda
-    - cmd: conda install conda-build anaconda-client
+    - cmd: conda install conda-build==3.16.3
+    - cmd: conda install anaconda-client
     - cmd: conda config --add channels https://conda.anaconda.org/conda-forge
     - cmd: conda config --add channels https://conda.anaconda.org/dlr-sc
     - cmd: conda config --add channels https://conda.anaconda.org/oce
