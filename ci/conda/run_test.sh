@@ -1,3 +1,3 @@
 cd ../work/test
-python run_tests.py
+lldb python run_tests.py
 python core_webgl_unittest.py
