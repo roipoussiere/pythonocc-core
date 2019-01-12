@@ -190,6 +190,12 @@ else(UNIX)
 endif(UNIX)
 message(STATUS "Platform:" ${PLATFORM})
 
+if (UNIX)
+  # find out python linking commands
+  execute_process(COMMAND ${PYTHON_EXECUTABLE} -c "from distutils import sysconfig; print(sysconfig.get_config_vars('CFLAGS')[0])" OUTPUT_VARIABLE PYTHON_CFLAGS OUTPUT_STRIP_TRAILING_WHITESPACE )
+  execute_process(COMMAND ${PYTHON_EXECUTABLE} -c "from distutils import sysconfig; print(sysconfig.get_config_vars('BLDSHARED')[0].split(' ', 1)[1])" OUTPUT_VARIABLE PYTHON_LDFLAGS OUTPUT_STRIP_TRAILING_WHITESPACE )
+endif(UNIX)
+
 ##################################
 # Tells Swig to use py3k option  #
 ##################################
@@ -263,7 +269,13 @@ foreach(OCE_MODULE ${OCE_TOOLKIT_MODEL})
     swig_add_library (${OCE_MODULE} LANGUAGE python SOURCES ${FILE} TYPE MODULE)
   endif (CMAKE_VERSION VERSION_LESS 3.8)
  
-  swig_link_libraries(${OCE_MODULE} ${PYTHON_LIBRARIES} ${OCE_MODEL_LIBRARIES})
+  swig_link_libraries(${OCE_MODULE} ${OCE_MODEL_LIBRARIES})
+  if (APPLE)
+    set_target_properties(${SWIG_MODULE_${OCE_MODULE}_REAL_NAME} PROPERTIES COMPILE_FLAGS ${PYTHON_CFLAGS})
+    set_target_properties(${SWIG_MODULE_${OCE_MODULE}_REAL_NAME} PROPERTIES LINK_FLAGS ${PYTHON_LDFLAGS})
+  else(APPLE)
+    swig_link_libraries(${OCE_MODULE} ${PYTHON_LIBRARIES})
+  endif(APPLE)
 endforeach(OCE_MODULE)
 
 #################
@@ -282,7 +294,13 @@ if(PYTHONOCC_WRAP_VISU)
       swig_add_library (${OCE_MODULE} LANGUAGE python SOURCES ${FILE} TYPE MODULE)
     endif()
 
-    swig_link_libraries(${OCE_MODULE} ${PYTHON_LIBRARIES} ${OCE_MODEL_LIBRARIES} ${OCE_VISUALIZATION_LIBRARIES})
+    swig_link_libraries(${OCE_MODULE} ${OCE_MODEL_LIBRARIES} ${OCE_VISUALIZATION_LIBRARIES})
+    if (APPLE)
+      set_target_properties(${SWIG_MODULE_${OCE_MODULE}_REAL_NAME} PROPERTIES COMPILE_FLAGS ${PYTHON_CFLAGS})
+      set_target_properties(${SWIG_MODULE_${OCE_MODULE}_REAL_NAME} PROPERTIES LINK_FLAGS ${PYTHON_LDFLAGS})
+    else(APPLE)
+      swig_link_libraries(${OCE_MODULE} ${PYTHON_LIBRARIES})
+    endif(APPLE)
   endforeach(OCE_MODULE)
   # Build third part modules
   # TODO : the following line is strange but necessary
@@ -304,10 +322,13 @@ if(PYTHONOCC_WRAP_VISU)
   if(APPLE)
     # on OSX, always add /System/Library/Frameworks/Cocoa.framework, even
     # if GLX is enabled
-    swig_link_libraries(Visualization ${PYTHON_LIBRARIES} ${OCE_MODEL_LIBRARIES} ${OCE_VISUALIZATION_LIBRARIES} /System/Library/Frameworks/Cocoa.framework)
+    swig_link_libraries(Visualization ${OCE_MODEL_LIBRARIES} ${OCE_VISUALIZATION_LIBRARIES} /System/Library/Frameworks/Cocoa.framework)
+    set_target_properties(${SWIG_MODULE_Visualization_REAL_NAME} PROPERTIES COMPILE_FLAGS ${PYTHON_CFLAGS})
+    set_target_properties(${SWIG_MODULE_Visualization_REAL_NAME} PROPERTIES LINK_FLAGS ${PYTHON_LDFLAGS})
   else(APPLE)
-    swig_link_libraries(Visualization ${PYTHON_LIBRARIES} ${OCE_MODEL_LIBRARIES} ${OCE_VISUALIZATION_LIBRARIES})
+    swig_link_libraries(Visualization ${OCE_MODEL_LIBRARIES} ${OCE_VISUALIZATION_LIBRARIES} ${PYTHON_LIBRARIES})
   endif(APPLE)
+
 endif(PYTHONOCC_WRAP_VISU)
 
 ##########
@@ -368,7 +389,15 @@ if(PYTHONOCC_WRAP_DATAEXCHANGE)
       swig_add_library(${OCE_MODULE} LANGUAGE python SOURCES ${FILE} TYPE MODULE)
     endif()
 
-    swig_link_libraries(${OCE_MODULE} ${PYTHON_LIBRARIES} ${OCE_MODEL_LIBRARIES} ${OCE_DATAEXCHANGE_LIBRARIES})
+    swig_link_libraries(${OCE_MODULE} ${OCE_MODEL_LIBRARIES} ${OCE_DATAEXCHANGE_LIBRARIES})
+
+    if (APPLE)
+      set_target_properties(${SWIG_MODULE_${OCE_MODULE}_REAL_NAME} PROPERTIES COMPILE_FLAGS ${PYTHON_CFLAGS})
+      set_target_properties(${SWIG_MODULE_${OCE_MODULE}_REAL_NAME} PROPERTIES LINK_FLAGS ${PYTHON_LDFLAGS})
+    else(APPLE)
+     swig_link_libraries(${OCE_MODULE} ${PYTHON_LIBRARIES})
+    endif(APPLE)
+
   endforeach(OCE_MODULE)
 endif(PYTHONOCC_WRAP_DATAEXCHANGE)
 
@@ -386,7 +415,15 @@ if(PYTHONOCC_WRAP_OCAF)
       swig_add_library(${OCE_MODULE} LANGUAGE python SOURCES ${FILE} TYPE MODULE)
     endif()
 
-    swig_link_libraries(${OCE_MODULE} ${PYTHON_LIBRARIES} ${OCE_MODEL_LIBRARIES} ${OCE_OCAF_LIBRARIES})
+    swig_link_libraries(${OCE_MODULE} ${OCE_MODEL_LIBRARIES} ${OCE_OCAF_LIBRARIES})
+
+    if (APPLE)
+      set_target_properties(${SWIG_MODULE_${OCE_MODULE}_REAL_NAME} PROPERTIES COMPILE_FLAGS ${PYTHON_CFLAGS})
+    set_target_properties(${SWIG_MODULE_${OCE_MODULE}_REAL_NAME} PROPERTIES LINK_FLAGS ${PYTHON_LDFLAGS})
+    else(APPLE)
+      swig_link_libraries(${OCE_MODULE} ${PYTHON_LIBRARIES})
+    endif(APPLE)
+
   endforeach(OCE_MODULE)
 endif(PYTHONOCC_WRAP_OCAF)
 
@@ -403,7 +440,6 @@ if(PYTHONOCC_WRAP_SMESH)
     else (CMAKE_VERSION VERSION_LESS 3.8)
       swig_add_library(${SMESH_MODULE} LANGUAGE python SOURCES ${FILE} TYPE MODULE)
     endif()
-
 
     swig_link_libraries(${SMESH_MODULE} ${PYTHON_LIBRARIES} ${OCE_MODEL_LIBRARIES} ${OCE_VISUALIZATION_LIBRARIES} ${OCE_OCAF_LIBRARIES} ${SMESH_LIBRARIES})
   endforeach(SMESH_MODULE)
