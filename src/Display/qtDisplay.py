@@ -20,7 +20,6 @@
 from __future__ import print_function
 
 import logging
-import os
 import sys
 
 from OCC.Display import OCCViewer
@@ -111,8 +110,6 @@ class qtViewer3d(qtBaseViewer):
         self._selection = None
         self._drawtext = True
         self._key_map = {}
-        self._current_cursor = "arrow"
-        self._available_cursors = {}
 
     @property
     def qApp(self):
@@ -130,26 +127,6 @@ class qtViewer3d(qtBaseViewer):
         self._SetupKeyMap()
         #
         self._display.thisown = False
-        self.createCursors()
-
-    def createCursors(self):
-        module_pth = os.path.abspath(os.path.dirname(__file__))
-        icon_pth = os.path.join(module_pth, "icons")
-
-        _CURSOR_PIX_ROT = QtGui.QPixmap(os.path.join(icon_pth, "cursor-rotate.png"))
-        _CURSOR_PIX_PAN = QtGui.QPixmap(os.path.join(icon_pth, "cursor-pan.png"))
-        _CURSOR_PIX_ZOOM = QtGui.QPixmap(os.path.join(icon_pth, "cursor-magnify.png"))
-        _CURSOR_PIX_ZOOM_AREA = QtGui.QPixmap(os.path.join(icon_pth, "cursor-magnify-area.png"))
-
-        self._available_cursors = {
-            "arrow": QtGui.QCursor(QtCore.Qt.ArrowCursor),  # default
-            "pan": QtGui.QCursor(_CURSOR_PIX_PAN),
-            "rotate": QtGui.QCursor(_CURSOR_PIX_ROT),
-            "zoom": QtGui.QCursor(_CURSOR_PIX_ZOOM),
-            "zoom-area": QtGui.QCursor(_CURSOR_PIX_ZOOM_AREA),
-        }
-
-        self._current_cursor = "arrow"
 
     def _SetupKeyMap(self):
         self._key_map = {ord('W'): self._display.SetModeWireFrame,
@@ -197,22 +174,6 @@ class qtViewer3d(qtBaseViewer):
     def dragMoveEvent(self, event):
         pass
 
-    @property
-    def cursor(self):
-        return self._current_cursor
-
-    @cursor.setter
-    def cursor(self, value):
-        if not self._current_cursor == value:
-
-            self._current_cursor = value
-            cursor = self._available_cursors.get(value)
-
-            if cursor:
-                self.qApp.setOverrideCursor(cursor)
-            else:
-                self.qApp.restoreOverrideCursor()
-
     def mousePressEvent(self, event):
         self.setFocus()
         ev = event.pos()
@@ -247,7 +208,6 @@ class qtViewer3d(qtBaseViewer):
                 self._display.ZoomArea(Xmin, Ymin, Xmin + dx, Ymin + dy)
                 self._zoom_area = False
 
-        self.cursor = "arrow"
 
     def DrawBox(self, event):
         tolerance = 2
@@ -266,13 +226,11 @@ class qtViewer3d(qtBaseViewer):
         # ROTATE
         if (buttons == QtCore.Qt.LeftButton and
                 not modifiers == QtCore.Qt.ShiftModifier):
-            self.cursor = "rotate"
             self._display.Rotation(pt.x(), pt.y())
             self._drawbox = False
         # DYNAMIC ZOOM
         elif (buttons == QtCore.Qt.RightButton and
               not modifiers == QtCore.Qt.ShiftModifier):
-            self.cursor = "zoom"
             self._display.Repaint()
             self._display.DynamicZoom(abs(self.dragStartPosX),
                                       abs(self.dragStartPosY), abs(pt.x()),
@@ -286,7 +244,6 @@ class qtViewer3d(qtBaseViewer):
             dy = pt.y() - self.dragStartPosY
             self.dragStartPosX = pt.x()
             self.dragStartPosY = pt.y()
-            self.cursor = "pan"
             self._display.Pan(dx, -dy)
             self._drawbox = False
         # DRAW BOX
@@ -294,7 +251,6 @@ class qtViewer3d(qtBaseViewer):
         elif (buttons == QtCore.Qt.RightButton and
               modifiers == QtCore.Qt.ShiftModifier):
             self._zoom_area = True
-            self.cursor = "zoom-area"
             self.DrawBox(evt)
         # SELECT AREA
         elif (buttons == QtCore.Qt.LeftButton and
@@ -304,4 +260,3 @@ class qtViewer3d(qtBaseViewer):
         else:
             self._drawbox = False
             self._display.MoveTo(pt.x(), pt.y())
-            self.cursor = "arrow"
