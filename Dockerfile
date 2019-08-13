@@ -1,4 +1,4 @@
-FROM cadquery/oce:18.3
+FROM cadquery/oce:latest
 LABEL source="https://github.com/CadQuery/pythonocc-core/tree/master/Dockerfile" \
       issues="https://github.com/CadQuery/pythonocc-core/issues" \
       license="https://github.com/CadQuery/pythonocc-core/blob/master/LICENSE"

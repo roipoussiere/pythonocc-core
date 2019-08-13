@@ -1,0 +1,11 @@
+.git
+.gitignore
+
+*.md
+
+appveyor.yml
+.travis.yml
+ci
+
+Dockerfile
+.dockerignore
